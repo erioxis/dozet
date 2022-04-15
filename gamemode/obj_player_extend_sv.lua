@@ -1699,7 +1699,8 @@ local bossdrops = {
 	"trinket_soulmedical"  -- 25
 }
 local bossdrops1 = {
-	"trinket_bleaksoul",  -- 1
+	"trinket_bleaksoul"
+	--[["trinket_bleaksoul",  -- 1
 	"trinket_spiritess",  -- 2
 	"trinket_samsonsoul",  -- 3
 	"trinket_evesoul",  -- 4
@@ -1723,7 +1724,7 @@ local bossdrops1 = {
 	"trinket_teasoul",  -- 22
 	"trinket_sugersoul",  -- 23
 	"trinket_nulledsoul",  -- 24
-	"trinket_soulmedical"  -- 25
+	"trinket_soulmedical"  -- 25]]
 }
 local bossdrops2 = {
 	--"weapon_zs_plank_q5",  -- 1
