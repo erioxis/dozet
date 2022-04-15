@@ -151,7 +151,7 @@ local statusdisplays = {
 	Color = Color(100, 100, 100),
 	Name = "CURSED!",
 	ValFunc = statusValueFunction("cursed"),
-	Max = 100,
+	Max = GM.MaxCurse or 100,
 	Icon = Material("zombiesurvival/cursed.png")
 }
 }

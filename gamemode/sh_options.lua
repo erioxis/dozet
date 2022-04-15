@@ -849,6 +849,7 @@ GM.TimeAddedPerWaveClassic = 15
 -- Max amount of damage left to tick on these. Any more pending damage is ignored.
 GM.MaxRotDamage = 2000
 GM.MaxBleedDamage = 230
+GM.MaxCurse = 100
 
 -- Give humans this many points when the wave ends.
 GM.EndWavePointsBonus = 7
