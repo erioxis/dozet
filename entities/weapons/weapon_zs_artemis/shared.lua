@@ -1,6 +1,6 @@
-SWEP.PrintName = "'Artemis' Dual Crossbows"
-SWEP.Description = "A pair of miniature crossbows. Fires quick successions of explosive bolts."
 
+SWEP.PrintName = " "..translate.Get("wep_artemis")
+SWEP.Description = " "..translate.Get("wep_d_artemis")
 SWEP.Slot = 3
 SWEP.SlotPos = 0
 

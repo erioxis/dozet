@@ -345,8 +345,8 @@ function meta:GetBossZombieIndex()
 	local desired = self:GetInfo("zs_bossclass") or ""
 	if GAMEMODE:IsBabyMode() then
 		desired = "Giga Gore Child"
-	elseif desired == "[RANDOM]" or desired == "" then
-		desired = "[RANDOM]"
+	elseif desired == "Red Marrow" or desired == "" then
+		desired = "Red Marrow"
 	end
 
 	local bossindex
@@ -1698,9 +1698,107 @@ local bossdrops = {
 	"trinket_nulledsoul",  -- 24
 	"trinket_soulmedical"  -- 25
 }
+local bossdrops1 = {
+	"trinket_bleaksoul",  -- 1
+	"trinket_spiritess",  -- 2
+	"trinket_samsonsoul",  -- 3
+	"trinket_evesoul",  -- 4
+    "trinket_jacobjesausoul",  -- 5
+    "trinket_isaacsoul",  -- 6
+    "trinket_magdalenesoul",  -- 7
+    "trinket_lilithsoul",  -- 8
+    "trinket_whysoul",  -- 9
+    "trinket_blanksoul", -- 10
+    "trinket_classixsoul",  -- 11
+	"trinket_darksoul",  --12
+	"trinket_eriosoul",  --13
+	"trinket_aposoul",  --14
+	"trinket_betsoul",  --15
+	"trinket_lostsoul",  --16
+	"trinket_greedsoul",  --17
+	"trinket_cainsoul",   --18
+	"trinket_lazarussoul",	-- 19
+	"trinket_forsoul",  -- 20
+	"trinket_starsoul",  -- 21
+	"trinket_teasoul",  -- 22
+	"trinket_sugersoul",  -- 23
+	"trinket_nulledsoul",  -- 24
+	"trinket_soulmedical"  -- 25
+}
+local bossdrops2 = {
+	--"weapon_zs_plank_q5",  -- 1
+	--"trinket_altjudassoul",  -- 2
+	--"trinket_altsamsonsoul",  -- 3
+	--"trinket_altevesoul",  -- 4
+    --"trinket_jacobsoul",  -- 5
+    "trinket_altisaacsoul",  -- 6
+    "trinket_altmagdalenesoul",  -- 7
+    "trinket_altlilithsoul",  -- 8
+    "trinket_alteriosoul", -- 10 
+	"trinket_altaposoul",  --14
+	"trinket_altbetsoul",  --15
+	"trinket_altlostsoul",  --16
+	"trinket_altgreedsoul",  --17
+	"trinket_altcainsoul",   --18
+	"trinket_altlazarussoul",	-- 19
+	"trinket_altforsoul",  -- 20
+	--"trinket_altsoul"-- 21
+	
+	
+	
+	
+}
 
 function meta:MakeBossDrop()
 	local drop = table.Random(bossdrops)
+	local inv = string.sub(drop, 1, 4) ~= "weap"
+
+	local pos = self:LocalToWorld(self:OBBCenter())
+	local ent = ents.Create(inv and "prop_invitem" or "prop_weapon")
+	if ent:IsValid() then
+		ent:SetPos(pos)
+		ent:SetAngles(AngleRand())
+		if inv then
+			ent:SetInventoryItemType(drop)
+		else
+			ent:SetWeaponType(drop)
+		end
+		ent:Spawn()
+
+		local phys = ent:GetPhysicsObject()
+		if phys:IsValid() then
+			phys:Wake()
+			phys:SetVelocityInstantaneous(VectorRand():GetNormalized() * math.Rand(24, 100))
+			phys:AddAngleVelocity(VectorRand() * 200)
+		end
+	end
+end
+function meta:Make1BossDrop()
+	local drop = table.Random(bossdrops1)
+	local inv = string.sub(drop, 1, 4) ~= "weap"
+
+	local pos = self:LocalToWorld(self:OBBCenter())
+	local ent = ents.Create(inv and "prop_invitem" or "prop_weapon")
+	if ent:IsValid() then
+		ent:SetPos(pos)
+		ent:SetAngles(AngleRand())
+		if inv then
+			ent:SetInventoryItemType(drop)
+		else
+			ent:SetWeaponType(drop)
+		end
+		ent:Spawn()
+
+		local phys = ent:GetPhysicsObject()
+		if phys:IsValid() then
+			phys:Wake()
+			phys:SetVelocityInstantaneous(VectorRand():GetNormalized() * math.Rand(24, 100))
+			phys:AddAngleVelocity(VectorRand() * 200)
+		end
+	end
+end
+function meta:Make2BossDrop()
+	local drop = table.Random(bossdrops2)
 	local inv = string.sub(drop, 1, 4) ~= "weap"
 
 	local pos = self:LocalToWorld(self:OBBCenter())

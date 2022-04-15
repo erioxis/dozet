@@ -1253,6 +1253,10 @@ function GM:Think()
 					pl.NextRegenerate = time + 60
 					pl:SetHealth(math.min(healmax, pl:Health() + 500))
 				end
+				if pl:HasTrinket("altlazarussoul") and time >= pl.NextRegenerate and pl:Health() < math.min(healmax, pl:GetMaxHealth() * 0.10) then
+					pl.NextRegenerate = time + 60
+					pl:SetHealth(math.min(healmax, pl:Health() + 500))
+				end
 
 				if pl:HasTrinket("adrenaline") and time >= pl.NextRegenerate and pl:Health() < math.min(healmax, pl:GetMaxHealth() * 0.85) then
 					pl.NextRegenerate = time + 60
@@ -1262,6 +1266,10 @@ function GM:Think()
 				if pl:HasTrinket("regenimplant") and time >= pl.NextRegenTrinket and pl:Health() < healmax then
 					pl.NextRegenTrinket = time + 7
 					pl:SetHealth(math.min(healmax, pl:Health() + 7))
+				end
+				if pl:HasTrinket("altmagdalenesoul") and time >= pl.NextRegenTrinket and pl:Health() < healmax then
+					pl.NextRegenTrinket = time + 10
+					pl:SetHealth(math.min(healmax, pl:Health() - 50))
 				end
 				if pl:HasTrinket("nulledher") and time >= pl.NextRegenTrinket and pl:Health() < healmax then
 					pl.NextRegenTrinket = time + 3
@@ -3271,6 +3279,13 @@ function GM:PlayerHurt(victim, attacker, healthremaining, damage)
 		if healthremaining < victim:GetMaxHealth() * 0.12 and victim:GetBloodArmor() < victim.MaxBloodArmor + 60 and victim:HasTrinket("hemostasis") then
 			victim:SetBloodArmor(math.min(victim:GetBloodArmor() + (200 * victim.BloodarmorGainMul), victim.MaxBloodArmor + (70 * victim.MaxBloodArmorMul)))
 			victim:TakeInventoryItem("trinket_lazarussoul")
+			net.Start("zs_trinketconsumed")
+			net.WriteString("Lazarus Soul")
+		net.Send(victim)
+		end
+			if healthremaining < victim:GetMaxHealth() * 0.12 and victim:GetBloodArmor() < victim.MaxBloodArmor + 60 and victim:HasTrinket("altlazarusoul") then
+				victim:SetBloodArmor(math.min(victim:GetBloodArmor() + (200 * victim.BloodarmorGainMul), victim.MaxBloodArmor + (70 * victim.MaxBloodArmorMul)))
+				victim:TakeInventoryItem("trinket_altlazarussoul")
 
 			net.Start("zs_trinketconsumed")
 				net.WriteString("Lazarus Soul")
@@ -3662,6 +3677,12 @@ function GM:DoPlayerDeath(pl, attacker, dmginfo)
 
 			timer.Simple(0, function()
 				pl:MakeBossDrop()
+			end)
+			timer.Simple(0, function()
+				pl:Make1BossDrop()
+			end)
+			timer.Simple(0, function()
+				pl:Make2BossDrop()
 			end)
 
 			pl.BossDeathNotification = nil

@@ -1,6 +1,7 @@
 SWEP.PrintName = "'Hyena' Sticky Bomb Launcher"
 SWEP.Description = "Fires explosives that will stick to surfaces and enemies until detonated. Bombs take 3 seconds to reach maximum damage. Alt fire will remotely detonate bombs."
-
+SWEP.PrintName = " "..translate.Get("wep_hyena")
+SWEP.Description = " "..translate.Get("wep_d_hyena")
 SWEP.Base = "weapon_zs_baseproj"
 
 SWEP.HoldType = "ar2"

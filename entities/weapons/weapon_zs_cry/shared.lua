@@ -1,6 +1,7 @@
 SWEP.PrintName = "'Cry' Crygas"
 SWEP.Description = "dsladhbsdhsa"
-
+SWEP.PrintName = " "..translate.Get("wep_cry")
+SWEP.Description = " "..translate.Get("wep_d_cry")
 SWEP.Base = "weapon_zs_baseproj"
 
 SWEP.HoldType = "ar2"
