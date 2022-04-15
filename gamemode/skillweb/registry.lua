@@ -896,10 +896,10 @@ GM:AddSkill(SKILL_DEFENDEROFM, "Defender of Monsters", BAD.."You get 5% more dam
 GM:AddSkillModifier(SKILL_DEFENDEROFM, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 0.05)
 GM:AddSkillModifier(SKILL_DEFENDEROFM, SKILLMOD_MELEE_DAMAGE_MUL, 0.05)
 SKILL_TRIP = 198
-GM:AddSkill(SKILL_TRIP, "Wall curse", GOOD.."-20% Damage taken\n"..BAD.."Melee damage multiplier 0.73x\n"..BAD.."-60 Speed\nYou have power of the wall!",
+GM:AddSkill(SKILL_TRIP, "Wall curse", GOOD.."-50% Damage taken\n"..BAD.."Melee damage multiplier 0.73x\n"..BAD.."-60 Speed\nYou have power of the curse wall!",
 				                                                            	-2,			2,					{SKILL_DEFENDEROFM}, TREE_DEFENSETREE)
 
-GM:AddSkillModifier(SKILL_TRIP, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.20)
+GM:AddSkillModifier(SKILL_TRIP, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.50)
 GM:AddSkillModifier(SKILL_TRIP, SKILLMOD_MELEE_DAMAGE_MUL, -0.27)
 GM:AddSkillModifier(SKILL_TRIP, SKILLMOD_SPEED, -60)
 SKILL_MERIS = 199

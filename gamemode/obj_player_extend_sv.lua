@@ -215,7 +215,22 @@ function meta:ProcessDamage(dmginfo)
 					self:GiveStatus("bloodrage", 6)
 				end
 				if self:HasTrinket("cursedtrinket")  then
-					self:GiveStatus("cursed", 80)
+					local cursed = self:GetStatus("cursed")
+					if (not cursed) then 
+						self:AddCursed(self:GetOwner(), 80)
+					end
+					if (cursed) then 
+						self:AddCursed(self:GetOwner(), cursed.DieTime - CurTime() + 10)
+					end
+				end
+				if self:IsSkillActive(SKILL_TRIP)  then
+					local cursed = self:GetStatus("cursed")
+					if (not cursed) then 
+						self:AddCursed(self:GetOwner(), 10)
+					end
+					if (cursed) then 
+						self:AddCursed(self:GetOwner(), cursed.DieTime - CurTime() + 10)
+					end
 				end
 				
 				
@@ -1742,7 +1757,7 @@ local bossdrops2 = {
 	"trinket_altgreedsoul",  --17
 	"trinket_altcainsoul",   --18
 	"trinket_altlazarussoul",	-- 19
-	"trinket_altforsoul",  -- 20
+	"trinket_altforsoul" -- 20
 	--"trinket_altsoul"-- 21
 	
 	
