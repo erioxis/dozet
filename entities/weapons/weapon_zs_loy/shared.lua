@@ -1,7 +1,9 @@
 
 
-SWEP.PrintName = "Axel"
-SWEP.Description = "The Ancient axe of Toy,Have 1.5x points multiplier.Big Damage for big knockback"
+--SWEP.PrintName = "Axel"
+--SWEP.Description = "The Ancient axe of Toy,Have 1.5x points multiplier.Big Damage for big knockback"
+SWEP.PrintName = ""..translate.Get("wep_axel")
+SWEP.Description = ""..translate.Get("wep_d_axel")
 
 
 

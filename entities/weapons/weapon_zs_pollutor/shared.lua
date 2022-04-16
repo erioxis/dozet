@@ -1,5 +1,7 @@
-SWEP.PrintName = "'Pollutor' Acid Rifle"
-SWEP.Description = "Launches acidic projectiles that have a chance to remove damage resistance"
+--SWEP.PrintName = "'Pollutor' Acid Rifle"
+--SWEP.Description = "Launches acidic projectiles that have a chance to remove damage resistance"
+SWEP.PrintName = ""..translate.Get("wep_pollutar")
+SWEP.Description = ""..translate.Get("wep_d_pollutar")
 
 SWEP.Base = "weapon_zs_baseproj"
 
@@ -17,7 +19,7 @@ SWEP.Primary.Ammo = "chemical"
 SWEP.Primary.Delay = 0.45
 SWEP.Primary.DefaultClip = 20
 SWEP.Primary.Damage = 71
-SWEP.Primary.NumShots = 1
+SWEP.Primary.NumShots = 3
 
 SWEP.ConeMax = 3
 SWEP.ConeMin = 2.5

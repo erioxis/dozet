@@ -1,6 +1,7 @@
-SWEP.PrintName = "'Zeus' Voltaic Crossbow"
-SWEP.Description = "An electrified crossbow which nullifies zombie buffs and prevents healing or reviving. Has a low flight arc but does not headshot, and shoots a bolt as it travels."
-
+--SWEP.PrintName = "'Zeus' Voltaic Crossbow"
+--SWEP.Description = "An electrified crossbow which nullifies zombie buffs and prevents healing or reviving. Has a low flight arc but does not headshot, and shoots a bolt as it travels."
+SWEP.PrintName = ""..translate.Get("wep_zeus")
+SWEP.Description = ""..translate.Get("wep_d_zeus")
 SWEP.Base = "weapon_zs_baseproj"
 
 SWEP.HoldType = "crossbow"
@@ -15,7 +16,7 @@ SWEP.Primary.Sound = Sound("ambient/levels/labs/electric_explosion5.wav")
 SWEP.ReloadFinishSound = Sound("npc/vort/attack_shoot.wav")
 SWEP.Primary.Delay = 1
 SWEP.Primary.Automatic = true
-SWEP.Primary.Damage = 170
+SWEP.Primary.Damage = 199
 
 SWEP.Primary.ClipSize = 1
 SWEP.Primary.Ammo = "XBowBolt"

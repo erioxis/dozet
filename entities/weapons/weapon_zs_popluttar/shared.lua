@@ -1,6 +1,7 @@
-SWEP.PrintName = "'Popllutor' Acid SMG"
-SWEP.Description = "Launches acidic projectiles that have a chance to remove damage resistance"
-
+--SWEP.PrintName = "'Popllutor' Acid SMG"
+--SWEP.Description = "Launches acidic projectiles that have a chance to remove damage resistance"
+SWEP.PrintName = ""..translate.Get("wep_popllutar")
+SWEP.Description = ""..translate.Get("wep_d_popllutar")
 SWEP.Base = "weapon_zs_baseproj"
 
 SWEP.HoldType = "smg"

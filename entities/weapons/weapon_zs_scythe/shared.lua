@@ -1,6 +1,7 @@
-SWEP.PrintName = "Great Scythe"
-SWEP.Description = "A great scythe that can pierce and cut through multiple zombies. Has a 3 hit combo, the last hit deals extra damage.Gave reaper stack when you kill zombie"
-
+--SWEP.PrintName = "Great Scythe"
+--SWEP.Description = "A great scythe that can pierce and cut through multiple zombies. Has a 3 hit combo, the last hit deals extra damage.Gave reaper stack when you kill zombie"
+SWEP.PrintName = ""..translate.Get("wep_gscythe")
+SWEP.Description = ""..translate.Get("wep_d_gscythe")
 SWEP.Base = "weapon_zs_basemelee"
 
 SWEP.HoldType = "melee2"

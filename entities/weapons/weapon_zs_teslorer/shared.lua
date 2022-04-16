@@ -1,6 +1,7 @@
 SWEP.PrintName = "Teslorer"
 SWEP.Description = "Have small damage but have big range and stun effect."
-
+SWEP.PrintName = ""..translate.Get("wep_teslorer")
+SWEP.Description = ""..translate.Get("wep_d_teslorer")
 SWEP.Base = "weapon_zs_basemelee"
 
 SWEP.HoldType = "melee2"

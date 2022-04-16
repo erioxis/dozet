@@ -1,5 +1,7 @@
-SWEP.PrintName = "'Eminence' Particle Cannon"
-SWEP.Description = "Fires projectiles fire particle tracers whilst moving."
+--SWEP.PrintName = "'Eminence' Particle Cannon"
+--SWEP.Description = "Fires projectiles fire particle tracers whilst moving."
+SWEP.PrintName = " "..translate.Get("wep_eminem")
+SWEP.Description = " "..translate.Get("wep_d_eminem")
 
 SWEP.Base = "weapon_zs_baseproj"
 
@@ -11,13 +13,13 @@ SWEP.UseHands = true
 
 SWEP.CSMuzzleFlashes = false
 
-SWEP.Primary.ClipSize = 1
+SWEP.Primary.ClipSize = 3
 SWEP.Primary.Automatic = true
 SWEP.Primary.Ammo = "impactmine"
 SWEP.Primary.Delay = 0.7
-SWEP.Primary.DefaultClip = 4
-SWEP.Primary.Damage = 26
-SWEP.Primary.NumShots = 1
+SWEP.Primary.DefaultClip = 10
+SWEP.Primary.Damage = 109
+SWEP.Primary.NumShots = 2
 
 SWEP.ConeMax = 3
 SWEP.ConeMin = 2

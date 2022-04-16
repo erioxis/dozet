@@ -1,6 +1,5 @@
-SWEP.PrintName = "Syx"
-SWEP.Description = "A great scythe that can pierce and cut through multiple zombies. Has a 3 hit combo, the last hit deals extra damage."
-
+--SWEP.PrintName = "Syx"
+SWEP.PrintName = ""..translate.Get("wep_syx")
 SWEP.Base = "weapon_zs_basemelee"
 
 SWEP.HoldType = "melee2"

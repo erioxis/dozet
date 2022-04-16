@@ -1,7 +1,7 @@
 --SWEP.PrintName = "'Charon' Repeating Crossbow"
 --SWEP.Description = "A rapid firing crossbow with no other unique properties."
-SWEP.PrintName = " "..translate.Get("wep_charon")
-SWEP.Description = " "..translate.Get("wep_d_charon")
+SWEP.PrintName = ""..translate.Get("wep_charon")
+SWEP.Description = ""..translate.Get("wep_d_charon")
 SWEP.Base = "weapon_zs_baseproj"
 
 SWEP.HoldType = "crossbow"
@@ -33,7 +33,7 @@ SWEP.ConeMin = 3.25
 SWEP.NextZoom = 0
 
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_FIRE_DELAY, -0.03)
-GAMEMODE:AddNewRemantleBranch(SWEP, 1, "'Styx' Repeating Crossbow", "Increases the rate of fire, clip size, but decreases accuracy, reload speed and damage", function(wept)
+GAMEMODE:AddNewRemantleBranch(SWEP, 1, ""..translate.Get("wep_charon_r1"), ""..translate.Get("wep_d_charon_r1"), function(wept)
 	wept.Primary.ClipSize = math.floor(wept.Primary.ClipSize * 2)
 	wept.Primary.Delay = wept.Primary.Delay * 0.5
 	wept.Primary.Damage = wept.Primary.Damage * 0.78

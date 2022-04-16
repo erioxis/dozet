@@ -2,7 +2,7 @@ INC_SERVER()
 
 function SWEP:ApplyMeleeDamage(pl, trace, damage)
 	if SERVER and pl:IsPlayer() then
-		local gt = ent:GiveStatus("frost", 8)
+		local gt = pl:GiveStatus("frost", 8)
 		local cursed = pl:GetStatus("cursed")
 		if (cursed) then 
 			pl:AddCursed(self:GetOwner(), cursed.DieTime - CurTime() + 30)

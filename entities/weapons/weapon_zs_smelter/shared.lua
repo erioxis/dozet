@@ -1,6 +1,7 @@
-SWEP.PrintName = "'Smelter' Flak Cannon"
-SWEP.Description = "Launches a spray of hot shards of scrap in a flak pattern."
-
+--SWEP.PrintName = "'Smelter' Flak Cannon"
+--SWEP.Description = "Launches a spray of hot shards of scrap in a flak pattern."
+SWEP.PrintName = ""..translate.Get("wep_smelter")
+SWEP.Description = ""..translate.Get("wep_d_smelter")
 SWEP.Base = "weapon_zs_baseproj"
 
 SWEP.HoldType = "crossbow"

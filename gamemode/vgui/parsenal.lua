@@ -113,7 +113,7 @@ end
 function GM:ViewerStatBarUpdate(viewer, display, sweptable)
 	local done, statshow = {}
 	local speedtotext = GAMEMODE.SpeedToText
-	for i = 1, 6 do
+	for i = 1, 5 do
 		if display then
 			viewer.ItemStats[i]:SetText("")
 			viewer.ItemStatValues[i]:SetText("")
@@ -252,7 +252,7 @@ local function ItemPanelDoClick(self)
 	purb:SetVisible(true)
 
 	local purl = viewer.m_PurchaseLabel
-	purl:SetPos(purb:GetWide() / 2 - purl:GetWide() / 2, purb:GetTall() * 0.35 - purl:GetTall() * 0.5)
+	purl:SetPos(purb:GetWide() / 2 - purl:GetWide() / 2, purb:GetTall() * 0.35 - purl:GetTall() * 0.3)
 	purl:SetVisible(true)
 
 	local ppurbl = viewer.m_PurchasePrice
@@ -388,13 +388,13 @@ function GM:AddShopItem(list, i, tab, issub, nopointshop)
 
 	local name = tab.Name or ""
 	local namelab = EasyLabel(itempan, name, "ZSHUDFontSmaller", COLOR_WHITE)
-	namelab:SetPos(12 * screenscale, itempan:GetTall() * (nottrinkets and 0.8 or 0.7) - namelab:GetTall() * 0.5)
+	namelab:SetPos(12 * screenscale, itempan:GetTall() * (nottrinkets and 0.8 or 0.7) - namelab:GetTall() * 0.34)
 	if missing_skill then
 		namelab:SetAlpha(30)
 	end
 	itempan.NameLabel = namelab
 
-	local alignri = (issub and (320 + 32) or (nopointshop and 32 or 20)) * screenscale
+	local alignri = (issub and (220 + 32) or (nopointshop and 32 or 20)) * screenscale
 
 	local pricelabel = EasyLabel(itempan, "", "ZSHUDFontTiny")
 	if missing_skill then
@@ -430,7 +430,7 @@ function GM:AddShopItem(list, i, tab, issub, nopointshop)
 	if not nottrinkets and tab.SubCategory then
 		local catlabel = EasyLabel(itempan, GAMEMODE.ItemSubCategories[tab.SubCategory], "ZSBodyTextFont")
 		catlabel:SizeToContents()
-		catlabel:SetPos(10, itempan:GetTall() * 0.3 - catlabel:GetTall() * 0.5)
+		catlabel:SetPos(10, itempan:GetTall() * 0.3 - catlabel:GetTall() * 0.4)
 	end
 
 	return itempan

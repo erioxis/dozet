@@ -1,4 +1,5 @@
-SWEP.PrintName = "'Cinderrod' Zip Gun"
+--SWEP.PrintName = "'Cinderrod' Zip Gun"
+SWEP.PrintName = " "..translate.Get("wep_cinder")
 
 SWEP.Base = "weapon_zs_blareduct"
 

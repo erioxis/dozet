@@ -1,6 +1,7 @@
-SWEP.PrintName = "Luxoid"
-SWEP.Description = "Ancient Luxoid. Secondary attack unleashes a powerful swing, creating an icy explosion when aimed at the ground. Slows zombie movement and attack speed."
-
+--SWEP.PrintName = "Luxoid"
+--SWEP.Description = "Ancient Luxoid. Secondary attack unleashes a powerful swing, creating an icy explosion when aimed at the ground. Slows zombie movement and attack speed."
+SWEP.PrintName = ""..translate.Get("wep_luxoid")
+SWEP.Description = ""..translate.Get("wep_d_luxod")
 SWEP.Base = "weapon_zs_basemelee"
 
 SWEP.ViewModel = "models/weapons/c_stunstick.mdl"
@@ -116,7 +117,7 @@ function SWEP:GetCharge()
 	return self:GetDTFloat(1)
 end
 
-GAMEMODE:AddNewRemantleBranch(SWEP, 1, "Lux", "Have big chance to create explosive than kill, faster but less damage and knockback", function(wept)
+GAMEMODE:AddNewRemantleBranch(SWEP, 1, ""..translate.Get("wep_luxoid_r1"), ""..translate.Get("wep_d_luxoid_r1"), function(wept)
 	wept.Primary.Delay = wept.Primary.Delay * 0.66
 	wept.MeleeDamage = wept.MeleeDamage * 0.45
 	wept.PointsMultiplier = 0.6

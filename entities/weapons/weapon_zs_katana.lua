@@ -2,7 +2,7 @@ AddCSLuaFile()
 
 --SWEP.PrintName = "Axe"
 SWEP.PrintName = ""..translate.Get("wep_katana")
-SWEP.PrintName = ""..translate.Get("wep_d_katana")
+SWEP.Description = ""..translate.Get("wep_d_katana")
 if CLIENT then
 	SWEP.VElements = {
 		["vip"] = { type = "Model", model = "models/props_combine/combine_light001a.mdl", bone = "ValveBiped.Bip01_R_Finger12", rel = "", pos = Vector(1.147, 1.172, -5.23), angle = Angle(-5.622, 19.182, -4.884), size = Vector(0.2, 0.2, 0.2), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
@@ -66,5 +66,12 @@ function SWEP:OnMeleeHit(hitent, hitflesh, tr)
 	if hitent:IsValid() and hitent:IsPlayer() and not self.m_BackStabbing and math.abs(hitent:GetForward():Angle().yaw - self:GetOwner():GetForward():Angle().yaw) <= 90 then
 		self.m_BackStabbing = true
 		self.MeleeDamage = self.MeleeDamage * 10
+	end
+end
+function SWEP:PostOnMeleeHit(hitent, hitflesh, tr)
+	if self.m_BackStabbing then
+		self.m_BackStabbing = false
+
+		self.MeleeDamage = self.MeleeDamage / 5
 	end
 end
