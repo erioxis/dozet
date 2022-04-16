@@ -108,7 +108,6 @@ include("skillweb/sv_skillweb.lua")
 
 include("sv_zombieescape.lua")
 
-include("zsbots/init.lua")
 
 include_library("statistics")
 

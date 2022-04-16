@@ -109,6 +109,7 @@ GM.Assemblies["trinket_evesoul"]						        	= {"trinket_bloodpack",	"trinket_
 GM.Assemblies["weapon_zs_singurhammer"] 						= {"trinket_electromagnet",	"weapon_zs_electrohammer"}
 GM.Assemblies["weapon_zs_megaray"] 						= {"trinket_soulmedical",	"weapon_zs_healingray"}
 GM.Assemblies["weapon_zs_manhack_saw"] 						= {"trinket_aposoul",	"weapon_zs_manhack"}
+GM.Assemblies["weapon_zs_katana"] 						= {"comp_shortblade",	"weapon_zs_teslorer"}
 
 
 GM:AddInventoryItemData("comp_modbarrel",		"Modular Barrel",			"A modular barrel suited for pairing up with another gun barrel.",								"models/props_c17/trappropeller_lever.mdl")
@@ -295,25 +296,25 @@ GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 0.05)
 trinket = GM:AddTrinket(""..translate.Get("t_damager"), "damage222", false, mveles, mweles, 3, ""..translate.Get("t_d_damager"))
 GM:AddSkillModifier(trinket, SKILLMOD_DAMAGE, 0.90)
 
-trinket = GM:AddTrinket("Thermia", "flashlo", false, mveles, mweles, 3, "+8% blood armor convert and you take by 7% more damage,+55 speed\n+8% Конвертации кровавой брони от удара\n Вы получаете на 16% Больше урона,+55 к скорости")
+trinket = GM:AddTrinket(""..translate.Get("t_termia"), "flashlo", false, mveles, mweles, 3, ""..translate.Get("t_d_termia"))
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TO_BLOODARMOR_MUL, 0.08)
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 0.07)
 GM:AddSkillModifier(trinket, SKILLMOD_SPEED, 55)
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_MOVEMENTSPEED_ON_KILL, 55)
 
-GM:AddSkillModifier(GM:AddTrinket("Hemo-Adrenal Converter II", "hemoadrenaliii", false, mveles, mweles, 4, "+22% blood armor convert.\n +22% К Конвертации кровавой брони"), SKILLMOD_MELEE_DAMAGE_TO_BLOODARMOR_MUL, 0.22)
+GM:AddSkillModifier(GM:AddTrinket(""..translate.Get("t_hemoadii"), "hemoadrenaliii", false, mveles, mweles, 4, ""..translate.Get("t_d_hemoadii")), SKILLMOD_MELEE_DAMAGE_TO_BLOODARMOR_MUL, 0.22)
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 0.04)
-GM:AddSkillModifier(GM:AddTrinket("AntiThermia", "sharpkt", false, mveles, mweles, 4, "-8% blood armor convert, -999% speed when you kill zombie on time, and you take by 5% less damage.\n -8% К конвертации кровавой брони,-999% К скорости при убийстве зомби,на 5% меньше получаемый урон"), SKILLMOD_MELEE_DAMAGE_TO_BLOODARMOR_MUL, -0.09)
+GM:AddSkillModifier(GM:AddTrinket(""..translate.Get("t_athermia"), "sharpkt", false, mveles, mweles, 4, ""..translate.Get("t_d_athermia")), SKILLMOD_MELEE_DAMAGE_TO_BLOODARMOR_MUL, -0.09)
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.05)
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TO_BLOODARMOR_MUL, -0.08)
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_MOVEMENTSPEED_ON_KILL, -280)
 
-GM:AddSkillModifier(GM:AddTrinket("Power Gauntlet", "powergauntlet", false, mveles, mweles, 3, "Charges your melee damage up to +45% with each hit\nMissing resets damage\n Заряжает каждый удар на 45% за каждое попадание,сбрасывает счетчик при пропуске"), SKILLMOD_MELEE_POWERATTACK_MUL, 0.45)
+GM:AddSkillModifier(GM:AddTrinket(""..translate.Get("t_gaunt"), "powergauntlet", false, mveles, mweles, 3, ""..translate.Get("t_d_gaunt")), SKILLMOD_MELEE_POWERATTACK_MUL, 0.45)
 
-GM:AddTrinket("Finesse Kit", "sharpkit", false, mveles, mweles, 2, "Deal up to +32% melee damage to slowed zombies\n +32% мили урона замедленным зомби")
+GM:AddTrinket(""..translate.Get("t_fkit"), "sharpkit", false, mveles, mweles, 2, ""..translate.Get("t_d_fkit"))
 
 
-GM:AddTrinket("Sharp Stone", "sharpstone", false, mveles, mweles, 3, "+5% melee damage\n +5% К мили урону")
+GM:AddTrinket(""..translate.Get("t_skit"), "sharpstone", false, mveles, mweles, 3, ""..translate.Get("t_d_skit"))
 --perfomance
 GM:AddSkillModifier(GM:AddTrinket("Adrenaline", "adrenaline", false, pveles, pweles, nil, "Each hit on you gives 15 seconds of buffs.\nКаждый удар по вам будет давать 15 сек баффов"), SKILLMOD_JUMPPOWER_MUL, 0.01)
 GM:AddSkillModifier(GM:AddTrinket("Forgotten Ascorbic Acid", "ass", false, pveles, pweles, nil, "+6 health,-2% Accuracy.\n+6 хп,-2% К аккуратности"), SKILLMOD_HEALTH, 6)

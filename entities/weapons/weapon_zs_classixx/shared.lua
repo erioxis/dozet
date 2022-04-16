@@ -1,6 +1,7 @@
-SWEP.PrintName = "CLASSIXXXXX"
-SWEP.Description = "Свежая струя говна в тебя летит."
-
+--SWEP.PrintName = "CLASSIXXXXX"
+--SWEP.Description = "Свежая струя говна в тебя летит."
+SWEP.PrintName = " "..translate.Get("wep_classixx")
+SWEP.Description = " "..translate.Get("wep_d_classixx")
 SWEP.Base = "weapon_zs_base"
 
 SWEP.HoldType = "ar2"

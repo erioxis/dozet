@@ -1,6 +1,7 @@
-SWEP.PrintName = "Frotchet"
-SWEP.Description = "An axe made from frost. Secondary attack unleashes a powerful swing, creating an icy explosion when aimed at the ground. Slows zombie movement and attack speed."
-
+--SWEP.PrintName = "Frotchet"
+--SWEP.Description = "An axe made from frost. Secondary attack unleashes a powerful swing, creating an icy explosion when aimed at the ground. Slows zombie movement and attack speed."
+SWEP.PrintName = " "..translate.Get("wep_frotchet")
+SWEP.Description = " "..translate.Get("wep_d_frotchet")
 SWEP.Base = "weapon_zs_basemelee"
 
 SWEP.ViewModel = "models/weapons/c_stunstick.mdl"

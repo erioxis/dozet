@@ -1,6 +1,7 @@
-SWEP.PrintName = "'Impaler' Crossbow"
-SWEP.Description = "This ancient weapon can easily skewer groups of zombies."
-
+--SWEP.PrintName = "'Impaler' Crossbow"
+--SWEP.Description = "This ancient weapon can easily skewer groups of zombies."
+SWEP.PrintName = " "..translate.Get("wep_crossbow")
+SWEP.Description = " "..translate.Get("wep_d_crossbow")
 SWEP.Base = "weapon_zs_baseproj"
 
 SWEP.HoldType = "crossbow"

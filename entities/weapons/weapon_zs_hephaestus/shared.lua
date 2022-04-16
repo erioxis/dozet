@@ -1,5 +1,7 @@
-SWEP.PrintName = "'Hephaestus' Tau Cannon"
-SWEP.Description = "Also known as the Gauss Gun. Launches tau projectiles at incredibly high speeds."
+--SWEP.PrintName = "'Hephaestus' Tau Cannon"
+--SWEP.Description = "Also known as the Gauss Gun. Launches tau projectiles at incredibly high speeds."
+SWEP.PrintName = ""..translate.Get("wep_tau")
+SWEP.Description = ""..translate.Get("wep_d_tau")
 
 SWEP.Base = "weapon_zs_base"
 
@@ -31,7 +33,7 @@ SWEP.ChargeDelay = 0.12
 SWEP.Tier = 6
 
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_FIRE_DELAY, -0.01)
-GAMEMODE:AddNewRemantleBranch(SWEP, 1, "'Prometheus' Tau Cannon", "Bounces at low angles, three weaker shots, charges faster, increased fire delay", function(wept)
+GAMEMODE:AddNewRemantleBranch(SWEP, 1, ""..translate.Get("wep_tau_r1"), ""..translate.Get("wep_d_tau_r1"), function(wept)
 	wept.Primary.Delay = wept.Primary.Delay * 1.4
 	wept.Primary.Damage = wept.Primary.Damage * 1.2/3
 	wept.Primary.NumShots = 3

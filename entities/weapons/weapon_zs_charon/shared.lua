@@ -1,6 +1,7 @@
-SWEP.PrintName = "'Charon' Repeating Crossbow"
-SWEP.Description = "A rapid firing crossbow with no other unique properties."
-
+--SWEP.PrintName = "'Charon' Repeating Crossbow"
+--SWEP.Description = "A rapid firing crossbow with no other unique properties."
+SWEP.PrintName = " "..translate.Get("wep_charon")
+SWEP.Description = " "..translate.Get("wep_d_charon")
 SWEP.Base = "weapon_zs_baseproj"
 
 SWEP.HoldType = "crossbow"

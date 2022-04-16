@@ -1,6 +1,7 @@
-SWEP.PrintName = "'Bulwark' Minigun"
-SWEP.Description = "Необычный миниган,с очень маленьким уроном но при этом обладая дробью."
-
+--SWEP.PrintName = "'Bulwark' Minigun"
+--SWEP.Description = "Необычный миниган,с очень маленьким уроном но при этом обладая дробью."
+SWEP.PrintName = " "..translate.Get("wep_bulwark")
+SWEP.Description = " "..translate.Get("wep_d_bulwark")
 SWEP.Base = "weapon_zs_base"
 
 SWEP.HoldType = "shotgun"
