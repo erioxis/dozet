@@ -91,6 +91,8 @@ include("obj_weapon_extend_sv.lua")
 AddCSLuaFile("loader.lua")
 include("loader.lua")
 
+include("zsbots/init.lua")
+
 include("shared.lua")
 include("sv_options.lua")
 include("mapeditor.lua")
