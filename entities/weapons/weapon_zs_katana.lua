@@ -31,14 +31,14 @@ SWEP.UseHands = true
 
 SWEP.HoldType = "melee2"
 SWEP.Tier = 7
-SWEP.MeleeDamage = 210
-SWEP.MeleeRange = 178
+SWEP.MeleeDamage = 231
+SWEP.MeleeRange = 156
 SWEP.MeleeSize = 3
-SWEP.MeleeKnockBack =  10
+SWEP.MeleeKnockBack = 0
 
 SWEP.WalkSpeed = SPEED_FAST
 
-SWEP.SwingTime = 0.56
+SWEP.SwingTime = 0.59
 SWEP.SwingRotation = Angle(0, -20, -40)
 SWEP.SwingOffset = Vector(10, 0, 0)
 SWEP.SwingHoldType = "melee"
@@ -65,13 +65,13 @@ end
 function SWEP:OnMeleeHit(hitent, hitflesh, tr)
 	if hitent:IsValid() and hitent:IsPlayer() and not self.m_BackStabbing and math.abs(hitent:GetForward():Angle().yaw - self:GetOwner():GetForward():Angle().yaw) <= 90 then
 		self.m_BackStabbing = true
-		self.MeleeDamage = self.MeleeDamage * 10
+		self.MeleeDamage = self.MeleeDamage * 8
 	end
 end
 function SWEP:PostOnMeleeHit(hitent, hitflesh, tr)
 	if self.m_BackStabbing then
 		self.m_BackStabbing = false
 
-		self.MeleeDamage = self.MeleeDamage / 5
+		self.MeleeDamage = self.MeleeDamage / 8
 	end
 end

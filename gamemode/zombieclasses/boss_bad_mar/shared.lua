@@ -25,7 +25,7 @@ CLASS.Skeletal = true
 if SERVER then
 function CLASS:ProcessDamage(pl, dmginfo)
 	if dmginfo:GetInflictor().IsMelee then
-		dmginfo:SetDamage(dmginfo:GetDamage() / 7)
+		dmginfo:SetDamage(dmginfo:GetDamage() / 500)
 	end
 end
 end

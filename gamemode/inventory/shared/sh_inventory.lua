@@ -109,7 +109,7 @@ GM.Assemblies["trinket_evesoul"]						        	= {"trinket_bloodpack",	"trinket_
 GM.Assemblies["weapon_zs_singurhammer"] 						= {"trinket_electromagnet",	"weapon_zs_electrohammer"}
 GM.Assemblies["weapon_zs_megaray"] 						= {"trinket_soulmedical",	"weapon_zs_healingray"}
 GM.Assemblies["weapon_zs_manhack_saw"] 						= {"trinket_aposoul",	"weapon_zs_manhack"}
-GM.Assemblies["weapon_zs_katana"] 						= {"comp_shortblade",	"weapon_zs_teslorer"}
+GM.Assemblies["weapon_zs_katana"] 						= {"trinket_altbetsoul",	"weapon_zs_teslorer"}
 
 
 GM:AddInventoryItemData("comp_modbarrel",		"Modular Barrel",			"A modular barrel suited for pairing up with another gun barrel.",								"models/props_c17/trappropeller_lever.mdl")
@@ -318,20 +318,21 @@ GM:AddTrinket(""..translate.Get("t_skit"), "sharpstone", false, mveles, mweles, 
 --perfomance
 GM:AddSkillModifier(GM:AddTrinket( ""..translate.Get("t_adrenaline"), "adrenaline", false, pveles, pweles, nil, ""..translate.Get("t_d_adrenaline")), SKILLMOD_JUMPPOWER_MUL, 0.01)
 GM:AddSkillModifier(GM:AddTrinket("Forgotten Ascorbic Acid", "ass", false, pveles, pweles, nil, "+6 health,-2% Accuracy.\n+6 хп,-2% К аккуратности"), SKILLMOD_HEALTH, 6)
-trinket = GM:AddTrinket("Sports armband", "sarmband", true, pveles, pweles, 2, "+4% Jump Power\n+4% К прыжку")
+GM:AddSkillModifier(trinket, SKILLMOD_AIMSPREAD_MUL, 0.02)
+trinket = GM:AddTrinket(""..translate.Get("t_sarmband"), "sarmband", true, pveles, pweles, 2, ""..translate.Get("t_d_sarmband"))
 GM:AddSkillModifier(trinket, SKILLMOD_JUMPPOWER_MUL, 0.04)
-trinket = GM:AddTrinket("Engineer Gaming", "engineer", true, pveles, pweles, 2, "+12% Deployable convert speed\n+12% К складыванию деплояблов")
+trinket = GM:AddTrinket("Engineer Gaming", "engineer", true, pveles, pweles, 2, ""..translate.Get("t_d_egaming"))
 GM:AddSkillModifier(trinket, SKILLMOD_DEPLOYABLE_PACKTIME_MUL, 0.12)
-trinket = GM:AddTrinket("Scout Gaming", "scout", true, pveles, pweles, 2, "+10 speed\n+10 к скорости")
+trinket = GM:AddTrinket("Scout Gaming", "scout", true, pveles, pweles, 2, ""..translate.Get("t_d_sgaming"))
 GM:AddSkillModifier(trinket, SKILLMOD_SPEED, 10)
-trinket = GM:AddTrinket("Broken hammer", "scour", true, pveles, pweles, 2, "+30% repair hammer,-15% Point multiplier\n+30% к силе починке,-15% К поинтам")
-GM:AddSkillModifier(trinket, SKILLMOD_POINT_MULTIPLIER, -0.15)
-GM:AddSkillModifier(trinket, SKILLMOD_REPAIRRATE_MUL,  0.30)
+trinket = GM:AddTrinket(""..translate.Get("t_bhammer"), "scour", true, pveles, pweles, 2, ""..translate.Get("t_d_bhammer"))
+GM:AddSkillModifier(trinket, SKILLMOD_POINT_MULTIPLIER, -0.05)
+GM:AddSkillModifier(trinket, SKILLMOD_REPAIRRATE_MUL,  0.10)
 
 -- Performance Trinkets
-GM:AddTrinket("Oxygen Tank", "oxygentank", true, nil, {
+GM:AddTrinket(""..translate.Get("t_otank"), "oxygentank", true, nil, {
 	["base"] = { type = "Model", model = "models/props_c17/canister01a.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 3, -1), angle = Angle(180, 0, 0), size = Vector(0.5, 0.5, 0.5), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
-}, nil, "10x breathing time underwater.\n 10x к времени под водой", "oxygentank")
+}, nil, ""..translate.Get("t_d_otank"), "oxygentank")
 
 GM:AddSkillModifier(GM:AddTrinket("Acrobat Frame", "acrobatframe", false, pveles, pweles, nil, "+8% jump power.\n +8% К силе прыжка"), SKILLMOD_JUMPPOWER_MUL, 0.08)
 
