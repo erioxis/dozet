@@ -1,5 +1,7 @@
-SWEP.PrintName = "Strength Shot Gun"
-SWEP.Description = "Fires performance enhancing darts which can increase target damage.\nThe extra damage is given to you as points."
+--SWEP.PrintName = "Strength Shot Gun"
+--SWEP.Description = "Fires performance enhancing darts which can increase target damage.\nThe extra damage is given to you as points."
+SWEP.PrintName = " "..translate.Get("wep_strengthshot")
+SWEP.Description = " "..translate.Get("wep_d_strengthshot")
 SWEP.Slot = 4
 SWEP.SlotPos = 0
 
@@ -39,7 +41,7 @@ SWEP.AllowQualityWeapons = true
 
 GAMEMODE:SetPrimaryWeaponModifier(SWEP, WEAPON_MODIFIER_CLIP_SIZE, 5)
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_BUFF_DURATION, 2)
-GAMEMODE:AddNewRemantleBranch(SWEP, 1, "Defence Shot Gun", "Provides players with a defence boost instead of a strength boost", function(wept)
+GAMEMODE:AddNewRemantleBranch(SWEP, 1, ""..translate.Get("wep_strengthshot_r1"), ""..translate.Get("wep_d_strengthshot_r1"), function(wept)
 	if SERVER then
 		wept.EntModify = function(self, ent)
 			ent:SetDTBool(0, true)

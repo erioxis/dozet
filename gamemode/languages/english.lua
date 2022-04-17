@@ -69,6 +69,7 @@ LANGUAGE.t_athermia                            = "AntiThermia"
 LANGUAGE.t_gaunt                            = "Power Gauntlet"
 LANGUAGE.t_fkit                            = "Finesse Kit"
 LANGUAGE.t_skit                            = "Sharp Kit"
+LANGUAGE.t_adrenaline                           = "Adrenaline"
 --trinket Descriptions
 LANGUAGE.t_d_damager                                  = "useless\nQ:0"
 LANGUAGE.t_d_healthpack                                  = "+10 health,+9% Health Received"
@@ -94,6 +95,7 @@ LANGUAGE.t_d_athermia                            = "-8% blood armor convert\n-99
 LANGUAGE.t_d_gaunt                            = "Charges your melee damage up to +45% with each hit\nMissing resets damage"
 LANGUAGE.t_d_fkit                            = "Deal up to +32% melee damage to slowed zombies"
 LANGUAGE.t_d_skit                            = "+5% Melee damage"
+LANGUAGE.t_d_adrenaline                           = "Each hit on you gives 7 seconds of buffs."
 
 
 
@@ -111,7 +113,8 @@ LANGUAGE.press_left_and_right_to_cycle_targets		= "Press STRAFE LEFT and STRAFE 
 --weapon
 --LANGUAGE.wep_		= ""
 --LANGUAGE.wep_d_		= ""
-
+LANGUAGE.wep_strengthshot = "Strength Gun"
+LANGUAGE.wep_d_strengthshot = "Fires performance enhancing darts which can increase target damage."
 LANGUAGE.wep_waraxe		= "'Waraxe' Better gun"
 LANGUAGE.wep_uzi		= "Sprayer' Uzi 9mm"
 LANGUAGE.wep_d_uzi		= "Quite inaccurate, but has good, cheap and reliable firepower potential"
@@ -302,6 +305,11 @@ LANGUAGE.wep_d_spinner = "Launches pulse projectiles that react on walls, sendin
 LANGUAGE.wep_stabber  = "'Stabber' M1 Garand"
 LANGUAGE.wep_zeus  = "'Zeus' Voltaic Crossbow"
 LANGUAGE.wep_d_zeus = "An electrified crossbow which nullifies zombie buffs and prevents healing or reviving. Has a low flight arc but does not headshot, and shoots a bolt as it travels."
+LANGUAGE.wep_megaray  = "'Erworium' Mega-Healing Ray"
+LANGUAGE.wep_d_megaray  = "Locks on to humans and heals them to full, discharging medical ammo along a ray."
+LANGUAGE.wep_blareduct  = "'Blareduct' Zip Gun"
+LANGUAGE.wep_tithonus = "'Tithonus' Charged Shotgun"
+LANGUAGE.wep_d_tithonus = "Charges a up shotgun blast of pulse projectiles."
 --upgrades
 LANGUAGE.wep_q_1		= "Sturdy"
 LANGUAGE.wep_q_2		= "Honed"
@@ -314,6 +322,10 @@ LANGUAGE.wep_r_3		= "Reformed"
 LANGUAGE.wep_r_4		= "Deadly"
 LANGUAGE.wep_r_5		= "Doomly"
 --weapon upgrades
+LANGUAGE.wep_annabelle_r1    =  "'Annabelle' Birdshot Rifle"
+LANGUAGE.wep_d_annabelle_r1    =  "Fires a spread of less accurate shots that deal more total damage"
+LANGUAGE.wep_strengthshot_r1  = "Defence Gun"
+LANGUAGE.wep_d_strengthshot_r1  = "Provides players with a defence boost instead of a strength boost"
 LANGUAGE.wep_stabber_r1  = "'Puncturer' M1 Garand"
 LANGUAGE.wep_d_stabber_r1 = "Additional damage to targets stabbed with the bayonet recently, reduced bullet damage "
 LANGUAGE.wep_pulseblaster_r1 = "'Nova Helix' Pulse Revolver"

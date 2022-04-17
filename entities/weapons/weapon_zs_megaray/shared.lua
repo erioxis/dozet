@@ -1,6 +1,7 @@
-SWEP.PrintName = "'Erworium' Mega-Healing Ray"
-SWEP.Description = "Locks on to humans and heals them to full, discharging medical ammo along a ray."
-
+--SWEP.PrintName = "'Erworium' Mega-Healing Ray"
+--SWEP.Description = "Locks on to humans and heals them to full, discharging medical ammo along a ray."
+SWEP.PrintName = " "..translate.Get("wep_megaray")
+SWEP.Description = " "..translate.Get("wep_d_megaray")
 SWEP.Base = "weapon_zs_base"
 
 SWEP.HoldType = "physgun"

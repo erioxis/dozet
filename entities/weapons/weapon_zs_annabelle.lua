@@ -51,7 +51,7 @@ SWEP.Tier = 2
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_MAX_SPREAD, -0.5, 1)
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_MIN_SPREAD, -0.05, 1)
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_FIRE_DELAY, -0.1, 1)
-GAMEMODE:AddNewRemantleBranch(SWEP, 1, "'Annabelle' Birdshot Rifle", "Fires a spread of less accurate shots that deal more total damage", function(wept)
+GAMEMODE:AddNewRemantleBranch(SWEP, 1, ""..translate.Get("wep_annabelle_r1"), ""..translate.Get("wep_d_annabelle_r1"), function(wept)
 	wept.Primary.Damage = wept.Primary.Damage / 5
 	wept.Primary.NumShots = 6
 	wept.ConeMin = wept.ConeMin * 8

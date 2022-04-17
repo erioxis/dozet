@@ -1,8 +1,9 @@
 DEFINE_BASECLASS("weapon_zs_baseproj")
 
-SWEP.PrintName = "'Tithonus' Charged Shotgun"
-SWEP.Description = "Charges a up shotgun blast of pulse projectiles."
-
+--SWEP.PrintName = "'Tithonus' Charged Shotgun"
+--SWEP.Description = "Charges a up shotgun blast of pulse projectiles."
+SWEP.PrintName = " "..translate.Get("wep_tithonus")
+SWEP.Description = " "..translate.Get("wep_d_tithonus")
 SWEP.Base = "weapon_zs_baseproj"
 
 SWEP.HoldType = "shotgun"
