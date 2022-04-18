@@ -84,6 +84,7 @@ LANGUAGE.t_ustore                                 = "Upgraded Store"
 
 LANGUAGE.t_d_ustore                                 = "Sale by 5%"
 LANGUAGE.t_d_store                                  = "Sale by 4%"
+LANGUAGE.t_d_bhammer                                  = "+10% Repair mul\n -5% Points mul"
 LANGUAGE.t_d_agility                                  = "+55% Phase Speed multipier\n-45% by the time of teleportation\n+10% jump power"
 LANGUAGE.t_d_whole                                  = "+15% deployable speed convert, reload speed 3% and sale by 1%"
 LANGUAGE.t_d_nightglass                                  = "-20% effect of dim vision and ability to see in the dark\n-20% effect of vision affecting effects\n-45% fright duration"

@@ -31,7 +31,7 @@ SWEP.WorldModel	= "models/weapons/w_grenade.mdl"
 
 SWEP.Weight = 4
 
-SWEP.MeleeDamage = 22.5
+SWEP.MeleeDamage = 32
 
 SWEP.Unarmed = false
 
@@ -43,4 +43,4 @@ SWEP.NoGlassWeapons = false
 
 SWEP.AllowQualityWeapons = true
 
-GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_FIRE_DELAY, -0.06)
+GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_FIRE_DELAY, -0.22)
