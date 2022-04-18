@@ -73,7 +73,17 @@ LANGUAGE.t_adrenaline                           = "Adrenaline"
 LANGUAGE.t_sarmband                                  = "Sports armband"
 LANGUAGE.t_bhammer                                  = "Broken hammer"
 LANGUAGE.t_otank                                  = "Oxygen Tank"
+LANGUAGE.t_aframe                                  = "Acrobat Frame"
+LANGUAGE.t_nightglass                                  = "Night Vision Goggles"
+LANGUAGE.t_whole                                  = "Portable Weapons Satchel"
+LANGUAGE.t_agility                                  = "Agility Magnifier"
+
 --trinket Descriptions
+
+LANGUAGE.t_d_agility                                  = "+55% Phase Speed multipier\n-45% by the time of teleportation\n+10% jump power"
+LANGUAGE.t_d_whole                                  = "+15% deployable speed convert, reload speed 3% and sale by 1%"
+LANGUAGE.t_d_nightglass                                  = "-20% effect of dim vision and ability to see in the dark\n-20% effect of vision affecting effects\n-45% fright duration"
+LANGUAGE.t_d_aframe                               = "+8% jump power."
 LANGUAGE.t_d_otank                               = "10x breathing time underwater"
 LANGUAGE.t_d_sgaming                                  = "+10 Speed"
 LANGUAGE.t_d_egaming                                  = "+12% Deployable convert speed"

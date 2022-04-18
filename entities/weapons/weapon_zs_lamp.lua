@@ -28,11 +28,11 @@ SWEP.HoldType = "melee2"
 
 SWEP.DamageType = DMG_CLUB
 
-SWEP.MeleeDamage = 55
+SWEP.MeleeDamage = 45
 SWEP.MeleeRange = 120
 SWEP.MeleeSize = 1
 
-SWEP.Primary.Delay = 1.2
+SWEP.Primary.Delay = 1.3
 
 SWEP.WalkSpeed = SPEED_SLOW
 

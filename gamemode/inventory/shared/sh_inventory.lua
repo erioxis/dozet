@@ -334,9 +334,9 @@ GM:AddTrinket(""..translate.Get("t_otank"), "oxygentank", true, nil, {
 	["base"] = { type = "Model", model = "models/props_c17/canister01a.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 3, -1), angle = Angle(180, 0, 0), size = Vector(0.5, 0.5, 0.5), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
 }, nil, ""..translate.Get("t_d_otank"), "oxygentank")
 
-GM:AddSkillModifier(GM:AddTrinket("Acrobat Frame", "acrobatframe", false, pveles, pweles, nil, "+8% jump power.\n +8% К силе прыжка"), SKILLMOD_JUMPPOWER_MUL, 0.08)
+GM:AddSkillModifier(GM:AddTrinket(""..translate.Get("t_aframe"), "acrobatframe", false, pveles, pweles, nil, ""..translate.Get("t_d_aframe")), SKILLMOD_JUMPPOWER_MUL, 0.08)
 
-trinket = GM:AddTrinket("Night Vision Goggles", "nightvision", true, pveles, pweles, 2, "-20% effect of dim vision and ability to see in the dark\n-20% effect of vision affecting effects\n-45% fright duration\n -20% К эффективности ослепления,дает способность видеть во тьме\n -20% К другим эффектам влияющим на зрение\n -45% К длительности испуга")
+trinket = GM:AddTrinket(""..translate.Get("t_nightglass"), "nightvision", true, pveles, pweles, 2, ""..translate.Get("t_d_nightglass"))
 GM:AddSkillModifier(trinket, SKILLMOD_DIMVISION_EFF_MUL, -0.20)
 GM:AddSkillModifier(trinket, SKILLMOD_FRIGHT_DURATION_MUL, -0.20)
 GM:AddSkillModifier(trinket, SKILLMOD_VISION_ALTER_DURATION_MUL, -0.2)
@@ -348,15 +348,15 @@ GM:AddSkillFunction(trinket, function(pl, active)
 end)
 trinketwep.PermitDismantle = true
 
-trinket = GM:AddTrinket("Portable Weapons Satchel", "portablehole", false, pveles, pweles, nil, "+15% deployable speed convert, reload speed 3% and sale by 1%\n -15% К времени подбиранию деплоябла,перезарядка увеличена на 3%")
+trinket = GM:AddTrinket(""..translate.Get("t_whole"), "portablehole", false, pveles, pweles, nil, ""..translate.Get("t_d_whole"))
 GM:AddSkillModifier(trinket, SKILLMOD_DEPLOYSPEED_MUL, 0.15)
 GM:AddSkillModifier(trinket, SKILLMOD_RELOADSPEED_MUL, 0.03)
 GM:AddSkillModifier(trinket, SKILLMOD_ARSENAL_DISCOUNT, -0.01)
 
-trinket = GM:AddTrinket("Agility Magnifier", "pathfinder", false, pveles, pweles, 2, "+55% Phase Speed multipier\n-45% by the time of teleportation\n+20% jump power\n+55% скорости в фазе перехода между баррикадами\n-45% к скорости телепортирования сигила \n+20% силе прыжка")
+trinket = GM:AddTrinket(""..translate.Get("t_agility"), "pathfinder", false, pveles, pweles, 2, ""..translate.Get("t_d_agility"))
 GM:AddSkillModifier(trinket, SKILLMOD_BARRICADE_PHASE_SPEED_MUL, 0.55)
 GM:AddSkillModifier(trinket, SKILLMOD_SIGIL_TELEPORT_MUL, -0.45)
-GM:AddSkillModifier(trinket, SKILLMOD_JUMPPOWER_MUL, 0.2)
+GM:AddSkillModifier(trinket, SKILLMOD_JUMPPOWER_MUL, 0.1)
 
 trinket = GM:AddTrinket("Store", "store", false, pveles, pweles, 2, "Sale by 4%\n Скидка в 4%")
 GM:AddSkillModifier(trinket, SKILLMOD_ARSENAL_DISCOUNT, -0.04)
