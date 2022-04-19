@@ -33,7 +33,7 @@ SWEP.BoxPhysicsMin = Vector(-8, -1, -4)]]
 SWEP.MeleeDamage = 31
 SWEP.MeleeRange = 44
 SWEP.MeleeSize = 0.566
-SWEP.Primary.Delay = 0.5
+SWEP.Primary.Delay = 0.3
 
 SWEP.WalkSpeed = SPEED_FAST
 

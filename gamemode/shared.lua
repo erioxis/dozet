@@ -1,4 +1,4 @@
-GM.Name		=	"Zombie Survival"
+GM.Name		=	""
 GM.Author	=	"Toyka(Real Creator - Jetboom)"
 GM.Email	=	"nope"
 GM.Website	=	"https://github.com/erioxis/dozet"
@@ -7,7 +7,8 @@ GM.Website	=	"https://github.com/erioxis/dozet"
 GM.Credits = {
 	{"Version", "Release", "1.57"},
 	{"erioxis", "Phantom coder", "dead"},
-	{"Nullted", "Translater", "thx"},
+	{"erioxis", "Translater", "thx"},
+	{"Nullted", "", "RU-ENG Translation"},
 }
 
 if file.Exists(GM.FolderName.."/gamemode/maps/"..game.GetMap()..".lua", "LUA") then

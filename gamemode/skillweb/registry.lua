@@ -592,7 +592,7 @@ GM:AddSkill(SKILL_INSIGHT, "Buyer's Insight", GOOD.."Locate nearby arsenal crate
 GM:AddSkill(SKILL_U_ZAPPER_ARC, "Unlock: Arc Zapper", GOOD.."Unlocks purchasing the Arc Zapper\nZaps zombies that get nearby, and jumps in an arc\nMid tier deployable and long cooldown\nRequires a steady upkeep of pulse ammo",
 																6,			2,					{SKILL_FIELDAMP, SKILL_TECHNICIAN}, TREE_BUILDINGTREE)
 .AlwaysActive = true
-GM:AddSkill(SKILL_D_LATEBUYER, "Debuff: Late Buyer", GOOD.."+20 starting Worth\n"..GOOD.."33% arsenal discount\n"..BAD.."Unable to use points at arsenal crates until the second half of the round",
+GM:AddSkill(SKILL_D_LATEBUYER, "Debuff: Late Buyer", GOOD.."+20 starting Worth\n"..GOOD.."66% arsenal discount\n"..BAD.."Unable to use points at arsenal crates until the second half of the round",
 																8,			1,					{}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_CARRIER, "Carrier", GOOD.."+100% Speed when you take prop\n"..BAD.."-50% Deployable health\n"..BAD.."-50% Deployable packtime",
 																9,			2,					{SKILL_D_LATEBUYER}, TREE_BUILDINGTREE)
@@ -1490,7 +1490,7 @@ GM:AddSkillFunction(SKILL_D_HEMOPHILIA, function(pl, active)
 end)
 
 GM:AddSkillModifier(SKILL_D_LATEBUYER, SKILLMOD_WORTH, 30)
-GM:AddSkillModifier(SKILL_D_LATEBUYER, SKILLMOD_ARSENAL_DISCOUNT, -0.33)
+GM:AddSkillModifier(SKILL_D_LATEBUYER, SKILLMOD_ARSENAL_DISCOUNT, -0.66)
 
 GM:AddSkillFunction(SKILL_TAUT, function(pl, active)
 	pl.BuffTaut = active
