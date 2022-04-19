@@ -24,6 +24,8 @@ if CLIENT then
 	}
 end
 
+a = math.random(20,60)
+
 SWEP.WalkSpeed = SPEED_FASTEST
 
 SWEP.ViewModel = "models/weapons/c_arms_citizen.mdl"
@@ -31,7 +33,7 @@ SWEP.WorldModel	= "models/weapons/w_grenade.mdl"
 
 SWEP.Weight = 4
 
-SWEP.MeleeDamage = 32
+SWEP.MeleeDamage = a
 
 SWEP.Unarmed = false
 
@@ -43,4 +45,4 @@ SWEP.NoGlassWeapons = false
 
 SWEP.AllowQualityWeapons = true
 
-GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_FIRE_DELAY, -0.22)
+GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_FIRE_DELAY, -0.11)

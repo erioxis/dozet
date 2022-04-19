@@ -362,35 +362,35 @@ trinket = GM:AddTrinket(""..translate.Get("t_store"), "store", false, pveles, pw
 GM:AddSkillModifier(trinket, SKILLMOD_ARSENAL_DISCOUNT, -0.04)
 trinket = GM:AddTrinket(""..translate.Get("t_ustore"), "superstore", false, pveles, pweles, 2, ""..translate.Get("t_d_ustore"))
 GM:AddSkillModifier(trinket, SKILLMOD_ARSENAL_DISCOUNT, -0.05)
-trinket = GM:AddTrinket("Credit Card", "store2", false, pveles, pweles, 2, "Sale by 3%\n Скидка в 3%")
+trinket = GM:AddTrinket(""..translate.Get("t_credit"), "store2", false, pveles, pweles, 2, ""..translate.Get("t_d_credit"))
 GM:AddSkillModifier(trinket, SKILLMOD_ARSENAL_DISCOUNT, -0.03)
 
-trinket = GM:AddTrinket("Galvanizer Implant", "analgestic", false, pveles, pweles, 3, "-50% Slow effect multiplier\n-50% Low hp slow multiplier\n-70% кулдаун падения\n-66% duration of pulling attacks\n+25% weapon switch speed\n -70% To time for ragdoll debuff\n-50% замедления от неполного хп\n-70% кулдаун падения")
+trinket = GM:AddTrinket(""..translate.Get("t_galvanka"), "analgestic", false, pveles, pweles, 3, ""..translate.Get("t_d_galvanka"))
 GM:AddSkillModifier(trinket, SKILLMOD_SLOW_EFF_TAKEN_MUL, -0.50)
 GM:AddSkillModifier(trinket, SKILLMOD_LOW_HEALTH_SLOW_MUL, -0.50)
 GM:AddSkillModifier(trinket, SKILLMOD_KNOCKDOWN_RECOVERY_MUL, -0.7)
 GM:AddSkillModifier(trinket, SKILLMOD_DEPLOYSPEED_MUL, 0.25)
-trinket = GM:AddTrinket("INVALID", "invalid", false, pveles, pweles, 3, "baracat  sucks dicks,you have immune to knockdown\n Ебанный баракот сосет,иммунитет к дебаффу падения")
-GM:AddSkillModifier(trinket, SKILLMOD_KNOCKDOWN_RECOVERY_MUL, -0.6)
+trinket = GM:AddTrinket(""..translate.Get("t_invalid"), "invalid", false, pveles, pweles, 3, ""..translate.Get("t_d_invalid"))
+GM:AddSkillModifier(trinket, SKILLMOD_KNOCKDOWN_RECOVERY_MUL, -1)
 
-trinket = GM:AddTrinket("Credit", "kre", false, pveles, pweles, 3, "Sale by 4%\n Скидка в 4%")
+trinket = GM:AddTrinket(""..translate.Get("t_credit2"), "kre", false, pveles, pweles, 3, ""..translate.Get("t_d_credit2"))
 GM:AddSkillModifier(trinket, SKILLMOD_ARSENAL_DISCOUNT, -0.04)
 
-GM:AddSkillModifier(GM:AddTrinket("Ammo Vest", "ammovestii", false, ammoveles, ammoweles, 2, "+7% reload speed\n +7% К скорости перезарядки"), SKILLMOD_RELOADSPEED_MUL, 0.07)
-GM:AddSkillModifier(GM:AddTrinket("Ammo Bandolier", "ammovestiii", false, ammoveles, ammoweles, 4, "+11% Reload speed\n+11% К скорости перезарядки"), SKILLMOD_RELOADSPEED_MUL, 0.11)
-GM:AddSkillModifier(GM:AddTrinket("Side Sadle", "sammovest", false, ammoveles, ammoweles, 4, "+16% Reload speed\n+16% К скорости перезарядки"), SKILLMOD_RELOADSPEED_MUL, 0.16)
-GM:AddSkillModifier(GM:AddTrinket("Classic Tutorial on reload", "classix", false, book, bookw, 4, "+16% Reload speed\n+16% К скорости перезарядки "), SKILLMOD_RELOADSPEED_MUL, 0.16)
+GM:AddSkillModifier(GM:AddTrinket(""..translate.Get("t_ammovesti"), "ammovestii", false, ammoveles, ammoweles, 2, ""..translate.Get("t_d_ammovesti")), SKILLMOD_RELOADSPEED_MUL, 0.07)
+GM:AddSkillModifier(GM:AddTrinket(""..translate.Get("t_ammovestii"), "ammovestiii", false, ammoveles, ammoweles, 4, ""..translate.Get("t_d_ammovestii")), SKILLMOD_RELOADSPEED_MUL, 0.11)
+GM:AddSkillModifier(GM:AddTrinket(""..translate.Get("t_ammovestiiii"), "sammovest", false, ammoveles, ammoweles, 4, ""..translate.Get("t_d_ammovestinf")), SKILLMOD_RELOADSPEED_MUL, 0.16)
+GM:AddSkillModifier(GM:AddTrinket(""..translate.Get("t_ammovestiii"), "classix", false, book, bookw, 4,""..translate.Get("t_d_ammovestinf")), SKILLMOD_RELOADSPEED_MUL, 0.16)
 
-GM:AddTrinket("Automated Reloader", "autoreload", false, ammoveles, ammoweles, 2, "Reload weapon every 4 seconds\n Перезаряжает оружие каждые 4 секунды")
+GM:AddTrinket(""..translate.Get("t_autor"), "autoreload", false, ammoveles, ammoweles, 2, ""..translate.Get("t_d_autor"))
 
 -- Offensive Implants
-GM:AddSkillModifier(GM:AddTrinket("Targeting Visor", "targetingvisori", false, oveles, oweles, nil, "+6% accuracy\n +6% к аккуратности."), SKILLMOD_AIMSPREAD_MUL, -0.06)
+GM:AddSkillModifier(GM:AddTrinket(""..translate.Get("t_targeti"), "targetingvisori", false, oveles, oweles, nil, ""..translate.Get("t_d_targeti")), SKILLMOD_AIMSPREAD_MUL, -0.06)
 
-GM:AddSkillModifier(GM:AddTrinket("Targeting Unifier", "targetingvisoriii", false, oveles, oweles, 4, "+11% accuracy.\n +11% к аккуратности"), SKILLMOD_AIMSPREAD_MUL, -0.11)
+GM:AddSkillModifier(GM:AddTrinket(""..translate.Get("t_targetii"), "targetingvisoriii", false, oveles, oweles, 4, ""..translate.Get("t_d_targetii")), SKILLMOD_AIMSPREAD_MUL, -0.11)
 
-GM:AddTrinket("Refined Subscope", "refinedsub", false, oveles, oweles, 4, "+27% Accuracy if weapon tier 3 or lower\n+27% к точности если тир оружия 3 или меньше")
+GM:AddTrinket(""..translate.Get("t_targetiii"), "refinedsub", false, oveles, oweles, 4, ""..translate.Get("t_d_targetiii"))
 
-trinket = GM:AddTrinket("Aim Compensator", "aimcomp", false, oveles, oweles, 3, "-52% to strenght aim shake\n+11% accuracy\n You can see hp zombie\n-52% к силе тряски\n+11% к точности \nВы видите здоровье зомби")
+trinket = GM:AddTrinket(""..translate.Get("t_targetiiii"), "aimcomp", false, oveles, oweles, 3, ""..translate.Get("t_d_targetiiii"))
 GM:AddSkillModifier(trinket, SKILLMOD_AIMSPREAD_MUL, -0.11)
 GM:AddSkillModifier(trinket, SKILLMOD_AIM_SHAKE_MUL, -0.52)
 GM:AddSkillFunction(trinket, function(pl, active) pl.TargetLocus = active end)

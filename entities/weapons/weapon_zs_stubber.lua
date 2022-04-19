@@ -49,6 +49,8 @@ SWEP.IronSightsAng = Vector(0, 0, 0)
 
 SWEP.WalkSpeed = SPEED_SLOW
 
+
+
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_CLIP_SIZE, 1)
 GAMEMODE:AddNewRemantleBranch(SWEP, 1, "'Prodder' Rifle", "Slightly more headshot damage and zoom, half clip and increased fire delay", function(wept)
 	wept.HeadshotMulti = 2.2
@@ -84,6 +86,20 @@ if CLIENT then
 
 		if self:IsScoped() then
 			self:DrawRegularScope()
+		end
+	end
+end
+
+SWEP.BulletCallback = function(attacker, tr, dmginfo)
+	local ent = tr.Entity
+	if SERVER and math.random(12) == 1 and ent:IsValidLivingZombie() then
+		ent:Ignite(30)
+		for __, fire in pairs(ents.FindByClass("entityflame")) do
+			if fire:IsValid() and fire:GetParent() == ent then
+				fire:SetOwner(attacker)
+				fire:SetPhysicsAttacker(attacker)
+				fire.AttackerForward = attacker
+			end
 		end
 	end
 end

@@ -30,10 +30,10 @@ SWEP.NoDroppedWorldModel = true
 --[[SWEP.BoxPhysicsMax = Vector(8, 1, 4)
 SWEP.BoxPhysicsMin = Vector(-8, -1, -4)]]
 
-SWEP.MeleeDamage = 31
+SWEP.MeleeDamage = 34
 SWEP.MeleeRange = 44
 SWEP.MeleeSize = 0.566
-SWEP.Primary.Delay = 0.3
+SWEP.Primary.Delay = 0.46 
 
 SWEP.WalkSpeed = SPEED_FAST
 
@@ -50,7 +50,7 @@ SWEP.Tier = 2
 SWEP.AllowQualityWeapons = true
 SWEP.Culinary = true
 
-GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_FIRE_DELAY, -0.06)
+GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_FIRE_DELAY, -0.04)
 
 function SWEP:PlaySwingSound()
 	self:EmitSound("weapons/knife/knife_slash"..math.random(2)..".wav", 72, math.Rand(85, 95))
