@@ -395,66 +395,66 @@ GM:AddSkillModifier(trinket, SKILLMOD_AIMSPREAD_MUL, -0.11)
 GM:AddSkillModifier(trinket, SKILLMOD_AIM_SHAKE_MUL, -0.52)
 GM:AddSkillFunction(trinket, function(pl, active) pl.TargetLocus = active end)
 
-GM:AddSkillModifier(GM:AddTrinket("Pulse Booster", "pulseampi", false, oveles, oweles, nil, "+14% to pulse slowdown\n+14% к замедлению от пульс оружия"), SKILLMOD_PULSE_WEAPON_SLOW_MUL, 0.14)
+GM:AddSkillModifier(GM:AddTrinket(""..translate.Get("t_pulsebooster"), "pulseampi", false, oveles, oweles, nil, ""..translate.Get("t_d_pulsebooster"), SKILLMOD_PULSE_WEAPON_SLOW_MUL, 0.14)
 
-trinket = GM:AddTrinket("Pulse Infuser", "pulseampii", false, oveles, oweles, 3, "+14% to pulse slowdown\n+22% to explosive radius\n+20% к замедлению от пульс оружия\n+22% радиус взрыва")
+trinket = GM:AddTrinket(""..translate.Get("t_pulseboosteri"), "pulseampii", false, oveles, oweles, 3, ""..translate.Get("t_d_pulseboosteri"))
 GM:AddSkillModifier(trinket, SKILLMOD_PULSE_WEAPON_SLOW_MUL, 0.2)
 GM:AddSkillModifier(trinket, SKILLMOD_EXP_DAMAGE_RADIUS, 0.22)
 
-trinket = GM:AddTrinket("Resonance Cascade Device", "resonance", false, oveles, oweles, 4, "When you deal enough damage to the pulse there is a chance of an explosion\n -11% pulse slowdown\nКогда вы наносите достачный урон то есть шанс взрыва\n-11% к замедлению пульс оружия")
+trinket = GM:AddTrinket(""..translate.Get("t_pboom"), "resonance", false, oveles, oweles, 4, ""..translate.Get("t_d_pboom"))
 GM:AddSkillModifier(trinket, SKILLMOD_PULSE_WEAPON_SLOW_MUL, -0.11)
 
-trinket = GM:AddTrinket("Cryogenic Inductor", "cryoindu", false, oveles, oweles, 4, "Ice weapon can blow up zombie\nThe explosion is based on zombie hp\nЛедянное оружие может взорвать зомби,взрыв основан на хп зомби ")
+trinket = GM:AddTrinket(""..translate.Get("t_cryoinductor"), "cryoindu", false, oveles, oweles, 4, ""..translate.Get("t_d_cryoinductor"))
 
-trinket = GM:AddTrinket("Extended Magazine", "extendedmag", false, oveles, oweles, 3, "Increases the maximum clip if it has 8 or more rounds by +15%\nУвеличивает максимальный боезапас если в нем 8 или больше патрон на +15%")
+trinket = GM:AddTrinket(""..translate.Get("t_extendedmag"), "extendedmag", false, oveles, oweles, 3, ""..translate.Get("t_d_extendedmag"))
 
-trinket = GM:AddTrinket("Pulse Impedance Module", "pulseimpedance", false, oveles, oweles, 5, "Slowing down the pulse with a weapon slows down the zombie attack speed\n+24% to pulse slowdown\nЗамедление пульс оружием замедляет скорость атаки зомби\n+24% к замедлению пульс оружием")
+trinket = GM:AddTrinket(""..translate.Get("t_pulseboosterii"), "pulseimpedance", false, oveles, oweles, 5, ""..translate.Get("t_d_pulseboosterii"))
 GM:AddSkillFunction(trinket, function(pl, active) pl.PulseImpedance = active end)
 GM:AddSkillModifier(trinket, SKILLMOD_PULSE_WEAPON_SLOW_MUL, 0.24)
 
-trinket = GM:AddTrinket("Curb Stompers", "curbstompers", false, oveles, oweles, 2, "Instantly kills headcrabs deals 50 damage to the thor class you jumped on \ndeals 300% damage from falling on the zombie you fell on\nyou will not be able to receive damage from falling when you fall on a zombie\t-25% Deceleration after falling\nМоментально убивает хедкрабов наносит 50 урона к торс классу на которого вы прыгнули \nНаносит 300% Урона от падения на зомби на которого вы упали\nВы не сможете получить урон от падения когда упадете на зомби\n-25% Замедлению после падения")
+trinket = GM:AddTrinket(""..translate.Get("t_сurbstompers"), "curbstompers", false, oveles, oweles, 2, ""..translate.Get("t_d_сurbstompers"))
 GM:AddSkillModifier(trinket, SKILLMOD_FALLDAMAGE_SLOWDOWN_MUL, -0.25)
 
-GM:AddTrinket("Superior Assembly", "supasm", false, oveles, oweles, 5, "Increase weapon damage if weapon tier 2 or lower\nУвеличивает урон оружия если тир 2 или выше")
+GM:AddTrinket(""..translate.Get("t_abbiuld"), "supasm", false, oveles, oweles, 5, ""..translate.Get("t_d_abbiuld"))
 
-trinket = GM:AddTrinket("Olympian Frame", "olympianframe", false, oveles, oweles, 2, "+100% object throwing strength\n-25% prop carrying slow down\n-35% movement speed reduction with heavy weapons +3 points to end wave\n +100% К силе броска,-25% К замедлению от несения пропа,-35% К замедлению от тяжолово оружия\n+3 к поинтам под конец волны")
+trinket = GM:AddTrinket(""..translate.Get("t_olymp"), "olympianframe", false, oveles, oweles, 2, ""..translate.Get("t_d_olymp"))
 GM:AddSkillModifier(trinket, SKILLMOD_ENDWAVE_POINTS, 3)
 GM:AddSkillModifier(trinket, SKILLMOD_PROP_CARRY_SLOW_MUL, -0.25)
 GM:AddSkillModifier(trinket, SKILLMOD_WEAPON_WEIGHT_SLOW_MUL, -0.35)
 
 
 -- Defensive Trinkets
-trinket, trinketwep = GM:AddTrinket("Kevlar underbody", "kevlar", false, develes, deweles, 2, "-6% melee damage taken\n-11% projectile damage taken\n-6% полученного урона в ближнем бою\n-11% полученного урона от снаряда")
+trinket, trinketwep = GM:AddTrinket(""..translate.Get("t_defender"), "kevlar", false, develes, deweles, 2, ""..translate.Get("t_d_defender"))
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.06)
 GM:AddSkillModifier(trinket, SKILLMOD_PROJECTILE_DAMAGE_TAKEN_MUL, -0.11)
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TO_BLOODARMOR_MUL, -0.01)
 trinketwep.PermitDismantle = true
 
-trinket = GM:AddTrinket("Barbed Armor", "barbedarmor", false, develes, deweles, 3, "50% of melee damage taken reflected back to melee attackers\nAdditional 10 damage reflected back to melee attackers\nMelee attackers take 30 arm damage\n-4% melee damage taken and you take +3point to end wave\50% полученного урона в ближнем бою отражается атакующим в ближнем бою\nДополнительно 20 урона отражается атакующим в ближнем бою\nАтакующие в ближнем бою получают 30 урона от руки\n-4% полученного урона в ближнем бою, и вы получаете на 3 поинта больше под конец волны")
+trinket = GM:AddTrinket(""..translate.Get("t_defenderi"), "barbedarmor", false, develes, deweles, 3, ""..translate.Get("t_d_defenderi"))
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_ATTACKER_DMG_REFLECT, 11)
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_ATTACKER_DMG_REFLECT_PERCENT, 0.5)
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.04)
 GM:AddSkillModifier(trinket, SKILLMOD_ENDWAVE_POINTS, 3)
 
-trinket = GM:AddTrinket("Antitoxin Package", "antitoxinpack", false, develes, deweles, 2, "-17% poison damage taken\n-40% poison damage over time speed\n-17% полученного урона от яда\n-40% урона от яда с течением времени скорость")
+trinket = GM:AddTrinket(""..translate.Get("t_antitoxin"), "antitoxinpack", false, develes, deweles, 2, ""..translate.Get("t_d_antitoxin"))
 GM:AddSkillModifier(trinket, SKILLMOD_POISON_DAMAGE_TAKEN_MUL, -0.17)
 GM:AddSkillModifier(trinket, SKILLMOD_POISON_SPEED_MUL, -0.4)
 
-trinket = GM:AddTrinket("Hemostasis Implant", "hemostasis", false, develes, deweles, 2, "-30% bleed damage taken\n-60% bleeding speed.\n-30% нанесенного урона от кровотечения\n-60% скорости кровотечения.")
+trinket = GM:AddTrinket(""..translate.Get("t_hemostatis"), "hemostasis", false, develes, deweles, 2, ""..translate.Get("t_d_hemostatis"))
 GM:AddSkillModifier(trinket, SKILLMOD_BLEED_DAMAGE_TAKEN_MUL, -0.3)
 GM:AddSkillModifier(trinket, SKILLMOD_BLEED_SPEED_MUL, -0.6)
 
-trinket = GM:AddTrinket("EOD Vest", "eodvest", false, develes, deweles, 4, "-35% explosive damage taken\n-50% fire damage taken\n-13% self damage taken\n-35% нанесенного урона от взрыва по себе \n-50% нанесенного урона от огня по себе\n-13% нанесенного себе вреда")
+trinket = GM:AddTrinket(""..translate.Get("t_defenderii"), "eodvest", false, develes, deweles, 4, ""..translate.Get("t_d_defenderii"))
 GM:AddSkillModifier(trinket, SKILLMOD_EXP_DAMAGE_TAKEN_MUL, -0.35)
 GM:AddSkillModifier(trinket, SKILLMOD_FIRE_DAMAGE_TAKEN_MUL, -0.50)
 GM:AddSkillModifier(trinket, SKILLMOD_SELF_DAMAGE_MUL, -0.13)
 
-trinket = GM:AddTrinket("Feather Fall Frame", "featherfallframe", false, develes, deweles, 3, "-65% fall damage taken\n+30% fall damage threshold\n-75% slow down from landing or fall damage\n--65% полученного урона при падении\n+30% порога урона при падении\n75% замедление от приземления или урона при падении")
+trinket = GM:AddTrinket(""..translate.Get("t_ffframe"), "featherfallframe", false, develes, deweles, 3, ""..translate.Get("t_d_ffframe"))
 GM:AddSkillModifier(trinket, SKILLMOD_FALLDAMAGE_DAMAGE_MUL, -0.65)
 GM:AddSkillModifier(trinket, SKILLMOD_FALLDAMAGE_THRESHOLD_MUL, 0.30)
 GM:AddSkillModifier(trinket, SKILLMOD_FALLDAMAGE_SLOWDOWN_MUL, -0.75)
 
-trinket = GM:AddTrinket("Супер-Скидка", "stopit", false, develes, deweles, 3, "Sale by 9%\nдает скидку в 9%")
+trinket = GM:AddTrinket(""..translate.Get("t_supersale"), "stopit", false, develes, deweles, 3, ""..translate.Get("t_d_supersale"))
 GM:AddSkillModifier(trinket, SKILLMOD_ARSENAL_DISCOUNT, -0.09)
 
 trinketwep.PermitDismantle = true
@@ -467,7 +467,7 @@ local eicew = {
 	["base"] = { type = "Model", model = "models/gibs/glass_shard04.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3.556, 2.519, -1.468), angle = Angle(0, -5.844, -75.974), size = Vector(0.5, 0.5, 0.5), color = Color(0, 137, 255, 255), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} }
 }
 
-GM:AddTrinket("Iceburst Shield", "iceburst", false, eicev, eicew, nil, "Releases an ice burst when taking a melee hit, slowing zombies down\nRecharges every 40 seconds\nВыпускает ледянной всплеск при получения урона, замедляя зомби\nперезаряжается каждые 40 секунд")
+GM:AddTrinket(""..translate.Get("t_iceshield"), "iceburst", false, eicev, eicew, nil, ""..translate.Get("t_d_iceshield"))
 
 GM:AddSkillModifier(GM:AddTrinket("Force Dampening Field Emitter", "forcedamp", false, develes, deweles, 2, "-33% physics impact damage taken\nImmune to knockdowns from props\nTake normal physics damage from shades.\n -33% урона от урона физическим оружием по себе\nневосприимчив к нокдаунам от пропа\nВы получаете обычный урон от шейда."), SKILLMOD_PHYSICS_DAMAGE_TAKEN_MUL, -0.33)
 
@@ -597,10 +597,10 @@ GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, -30)
 trinket = GM:AddTrinket("King Heart", "kheart", false, supveles, supweles, 4, "+15% К полученым поинтам,-15хп\n+15% Point Multiplier,-15 health")
 GM:AddSkillModifier(trinket, SKILLMOD_POINT_MULTIPLIER, 0.15)
 GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, -15)
-trinket = GM:AddTrinket("Cursed Trinket", "cursedtrinket", false, supveles, supweles, 4, "Всегда меняется(+10% К сопротивляемости урону),+100% К получаемому опыту,-2% К множителю,после получения урона получаешь 10 проклятья если есть проклятье\nEver Change(-10% damage taken),+100% XP mul,-2% Points MUL,curse you for 10 secs ")
-GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.10)
-GM:AddSkillModifier(trinket, SKILLMOD_POINT_MULTIPLIER, -0.02)
-GM:AddSkillModifier(trinket, SKILLMOD_XP, 1)
+trinket = GM:AddTrinket("Cursed Trinket", "cursedtrinket", false, supveles, supweles, 4, "Всегда меняется(+10% К мили урону),+50% К получаемому опыту,-12% К множителю,после получения урона получаешь 10 проклятья если есть проклятье\nEver Change(-10% melee damage),+50% XP mul,-12% Points MUL,curse you for 10 secs ")
+GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_MUL, 0.10)
+GM:AddSkillModifier(trinket, SKILLMOD_POINT_MULTIPLIER, -0.12)
+GM:AddSkillModifier(trinket, SKILLMOD_XP, 0.5)
 
 
 
