@@ -9,7 +9,7 @@ CLASS.CanTaunt = true
 
 CLASS.SWEP = "weapon_zs_zombinie"
 
-CLASS.Model = Model("models/player/zombie_classic_hbfix.mdl")
+
 
 if SERVER then
 function CLASS:ProcessDamage(pl, dmginfo)

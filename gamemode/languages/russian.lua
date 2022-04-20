@@ -69,7 +69,7 @@ LANGUAGE.t_ammovesti                                 = "Жилет с патро
 LANGUAGE.t_autor                                 = "Имплант перезарядки"
 LANGUAGE.t_targeti                                 = "Улучшенный прицел"
 LANGUAGE.t_targetii                                 = "Козырек для прицела"
-LANGUAGE.t_targetiii                                 = "Улучшенный прицел"
+LANGUAGE.t_targetiii                                 = "Изменненый прицел"
 LANGUAGE.t_targetiiii                                 = "Компенстатор тряски"
 --описание тринек
 LANGUAGE.t_d_targetiiii                                 = "+11% К точности\n -52% К силе тряски\n Вы видите здоровье зомби"
