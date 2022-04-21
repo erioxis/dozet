@@ -494,9 +494,9 @@ trinket, trinketwep = GM:AddTrinket(""..translate.Get("t_arspack"), "arsenalpack
 }, 4, ""..translate.Get("t_d_arspack"), "arsenalpack", 3)
 trinketwep.PermitDismantle = true
 
-trinket, trinketwep = GM:AddTrinket(""..translate.Get("t_ammopack"),, "resupplypack", true, nil, {
+trinket, trinketwep = GM:AddTrinket(""..translate.Get("t_ammopack"), "resupplypack", true, nil, {
 	["base"] = { type = "Model", model = "models/Items/ammocrate_ar2.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 2, -1), angle = Angle(0, -90, 180), size = Vector(0.35, 0.35, 0.35), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
-}, 4, ""..translate.Get("t_d_ammopack"),, "resupplypack", 3)
+}, 4, ""..translate.Get("t_d_ammopack"), "resupplypack", 3)
 trinketwep.PermitDismantle = true
 
 GM:AddTrinket(""..translate.Get("t_magnet"), "magnet", true, supveles, supweles, nil, ""..translate.Get("t_d_magnet"), "magnet")
