@@ -581,7 +581,10 @@ function GM:PlayerCanPurchase(pl)
 	if CLIENT and self.CanPurchaseCacheTime and self.CanPurchaseCacheTime >= CurTime() then
 		return self.CanPurchaseCache
 	end
-	local canpurchase = PTeam(pl) == TEAM_HUMAN and self:GetWave() > 0 and pl:Alive() and pl:NearArsenalCrate()
+	local canpurchase = PTeam(pl) == TEAM_HUMAN and self:GetWave() > 0 and pl:Alive()
+	function pl:ZombieCanPurchase(pl)
+		return pl:Team() == TEAM_UNDEAD and self:GetWave() > 0
+	end
 
 	if CLIENT then
 		self.CanPurchaseCache = canpurchase

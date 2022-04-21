@@ -913,6 +913,7 @@ GM:AddSkill(SKILL_DONATE1, "Donate I", GOOD.."-3% Damage taken\n"..GOOD.."+2% Me
 
 GM:AddSkillModifier(SKILL_DONATE1, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.03)
 GM:AddSkillModifier(SKILL_DONATE1, SKILLMOD_MELEE_DAMAGE_MUL, 0.02)
+GM:AddSkillModifier(SKILL_DONATE1, SKILLMOD_DAMAGE, 1)
 SKILL_DONATE2 = 204
 GM:AddSkill(SKILL_DONATE2, "Donate II", GOOD.."+5 Blood armor\n"..GOOD.."-5% Poison Speed!Thank Null",
 				                                                            	20,			21,					{SKILL_DONATE1}, TREE_DONATETREE)
@@ -1052,7 +1053,7 @@ GM:SetSkillModifierFunction(SKILLMOD_MELEE_DAMAGE_MUL, function(pl, amount)
 	pl.MeleeDamageMultiplier = math.Clamp(amount + 1.0, 0.0, 100.0)
 end)
 GM:SetSkillModifierFunction(SKILLMOD_DAMAGE, function(pl, amount)
-	pl.DamageMultiplier = math.Clamp(amount + 1.0, 0.0, 100.0)
+	pl.DamageMulBullet = math.Clamp(amount + 1.0, 0.0, 100.0)
 end)
 
 GM:SetSkillModifierFunction(SKILLMOD_SELF_DAMAGE_MUL, function(pl, amount)

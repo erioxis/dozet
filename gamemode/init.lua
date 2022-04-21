@@ -81,6 +81,7 @@ AddCSLuaFile("vgui/premantle.lua")
 AddCSLuaFile("vgui/zshealtharea.lua")
 AddCSLuaFile("vgui/zsstatusarea.lua")
 AddCSLuaFile("vgui/zsgamestate.lua")
+AddCSLuaFile("vgui/mutshop.lua")
 
 include("sh_globals.lua")
 
@@ -266,6 +267,7 @@ function GM:AddResources()
 			resource.AddFile("sound/zombiesurvival/beats/"..dirname.."/"..filename)
 		end
 	end
+	
 
 	resource.AddFile("materials/refract_ring.vmt")
 	resource.AddFile("materials/killicon/redeem_v2.vtf")
@@ -488,6 +490,8 @@ function GM:AddNetworkStrings()
 	util.AddNetworkString("zs_nestspec")
 	util.AddNetworkString("zs_tvcamera")
 
+	util.AddNetworkString("zs_mutations_table")
+
 	util.AddNetworkString("zs_inventoryitem")
 	util.AddNetworkString("zs_trycraft")
 	util.AddNetworkString("zs_updatealtselwep")
@@ -552,8 +556,12 @@ end
 function GM:ShowTeam(pl)
 	if pl:Team() == TEAM_HUMAN and not self.ZombieEscape then
 		pl:SendLua(self:GetWave() > 0 and "GAMEMODE:OpenArsenalMenu()" or "MakepWorth()")
+
+    elseif pl:Team() == TEAM_UNDEAD then
+	pl:SendLua("MakepMutationShop()")
 	end
 end
+
 
 function GM:ShowSpare1(pl)
 	if pl:Team() == TEAM_UNDEAD then
@@ -1814,12 +1822,17 @@ function GM:RestartGame()
 		pl:SetFrags(0)
 		pl:SetDeaths(0)
 		pl:SetPoints(0)
+		pl:SetTokens(0)
 		if not pl.IsZSBot then
 			pl:ChangeTeam(TEAM_HUMAN)
 		end
 		pl:DoHulls()
 		pl:SetZombieClass(self.DefaultZombieClass)
 		pl.DeathClass = nil
+		pl.UsedMutations = {}
+		net.Start("zs_mutations_table")
+		net.WriteTable(pl.UsedMutations)
+		net.Send(pl)
 	end
 
 	for _, ent in pairs(ents.FindByClass("prop_obj_sigil")) do
@@ -2004,6 +2017,9 @@ function GM:ScalePlayerDamage(pl, hitgroup, dmginfo)
 
 	if not dmginfo:IsBulletDamage() then return end
 
+	--if dmginfo:IsBulletDamage() then dmginfo:Setdamage(dmginfo:GetDamage() * (pl.DamageMulBullet or 1)
+	--end
+
 	if hitgroup == HITGROUP_HEAD and dmginfo:IsBulletDamage() then
 		pl.m_LastHeadShot = CurTime()
 	end
@@ -2012,7 +2028,7 @@ function GM:ScalePlayerDamage(pl, hitgroup, dmginfo)
 
 	if not pl:CallZombieFunction2("ScalePlayerDamage", hitgroup, dmginfo) then
 		if hitgroup == HITGROUP_HEAD then
-			dmginfo:SetDamage(dmginfo:GetDamage() * (inflictor.HeadshotMulti or 2) * (attacker:IsPlayer() and attacker:GetStatus("renegade") and 1.1 or 1))
+			dmginfo:SetDamage(dmginfo:GetDamage() * (pl.DamageMulBullet or 1) * (inflictor.HeadshotMulti or 2) * (attacker:IsPlayer() and attacker:GetStatus("renegade") and 1.1 or 1))
 		elseif hitgroup == HITGROUP_LEFTLEG or hitgroup == HITGROUP_RIGHTLEG then
 			--if not crouchpunish then
 			if not pl:ShouldCrouchJumpPunish() then
@@ -2106,6 +2122,82 @@ concommand.Add("initpostentity", function(sender, command, arguments)
 
 		gamemode.Call("PlayerReady", sender)
 	end
+end)
+concommand.Add("zs_mutationshop_click", function(sender, command, arguments)
+	if not (sender:IsValid() and sender:IsConnected()) or #arguments == 0 then return end
+
+	--[[for _, pl in pairs(player.GetAll(TEAM_HUMAN)) do
+		if LASTHUMAN then
+		sender:CenterNotify(COLOR_RED, translate.ClientGet(sender, "cant_buy_mutations"))
+		sender:SendLua("surface.PlaySound(\"buttons/button10.wav\")")
+		return
+		end
+	end]]
+
+	if  gamemode.Call("ZombieCanPurchase", sender) then
+		sender:CenterNotify(COLOR_RED, translate.ClientGet(sender, "cant_buy_mutations"))
+		sender:SendLua("surface.PlaySound(\"buttons/button10.wav\")")
+		return
+	end
+
+	local cost
+	local hasalready = {}
+	local tokens = sender:GetTokens()
+
+	for _, id in pairs(arguments) do
+		local tab = FindMutation(id)
+		if tab and not hasalready[id] then
+			if tab.Worth and tab.Callback then
+				cost = tab.Worth
+				hasalready[id] = true
+				tab.Callback(sender)
+				sender:TakeTokens(cost)
+				sender:PrintTranslatedMessage(HUD_PRINTTALK, "purchased_x_for_y_btokens", tab.Name, cost )
+				sender:SendLua("surface.PlaySound(\"ambient/levels/labs/coinslot1.wav\")")
+				sender.UsedMutations = sender.UsedMutations or { }
+				table.insert( sender.UsedMutations, tab.Signature )
+				print( sender.UsedMutations, tab.Signature ) --DEBUG
+				print( cost ) --DEBUG
+			end
+		end
+	end
+
+	if cost > tokens then return end
+
+	local itemtab
+	local id = arguments[1]
+	local num = tonumber(id)
+
+	if num then
+		itemtab = GAMEMODE.Mutations[num]
+	else
+		for i, tab in pairs(GAMEMODE.Mutations) do
+			if tab.Signature == id then
+				itemtab = tab
+				break
+			end
+		end
+	end
+
+	--[[if itemtab.Worth then
+	
+		local tokens = sender:GetTokens()
+		local cost = itemtab.Worth
+		
+		cost = math.ceil(cost)
+										-- FIX THIS LATER
+		if tokens < cost  then
+			sender:CenterNotify(COLOR_RED, translate.ClientGet(sender, "you_dont_have_enough_btokens"))
+			sender:SendLua("surface.PlaySound(\"buttons/button10.wav\")")
+			return
+		end
+	
+	end]]
+
+	net.Start("zs_mutations_table")
+		net.WriteTable(sender.UsedMutations)
+	net.Send(sender)
+
 end)
 
 local playerheight = Vector(0, 0, 72)
@@ -2232,6 +2324,14 @@ function GM:PlayerInitialSpawnRound(pl)
 	pl.NestsDestroyed = 0
 	pl.NestSpawns = 0
 	pl.LastRevive = 0
+
+
+	--Normal Mutations (Z-Shop)
+	pl.m_Zombie_Moan = nil
+	pl.m_Zombie_MoanGuard = nil
+
+	-- Boss Mutations (Z-Shop)
+	pl.m_Shade_Force = nil
 
 	pl.ZSInventory = {}
 
@@ -2737,6 +2837,7 @@ function GM:EntityTakeDamage(ent, dmginfo)
 						if myteam == TEAM_UNDEAD then
 							if otherteam == TEAM_HUMAN then
 								attacker:AddLifeHumanDamage(damage)
+								attacker:AddTokens(math.ceil(damage * 1))
 								GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_ZOMBIECLASS, attacker:GetZombieClassTable().Name, "HumanDamage", damage)
 							end
 						elseif myteam == TEAM_HUMAN and otherteam == TEAM_UNDEAD then
@@ -4090,6 +4191,7 @@ function GM:PlayerSpawn(pl)
 					pl:Give("weapon_zs_redeemers")
 					pl:Give("weapon_zs_swissarmyknife")
 					pl:Give("weapon_zs_arsenalcrate")
+
 				end
 			end
 		end

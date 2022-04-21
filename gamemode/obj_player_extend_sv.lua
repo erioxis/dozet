@@ -1127,6 +1127,13 @@ function meta:TakePoints(points)
 		self.PointsVault = self.PointsVault - points
 	end
 end
+function meta:AddTokens(pts)
+	self:SetNWInt('btokens', self:GetTokens() + pts)
+end
+
+function meta:TakeTokens(pts)
+	self:SetNWInt('btokens', self:GetTokens() - pts)
+end
 
 function meta:UpdateAllZombieClasses()
 	for _, pl in pairs(player.GetAll()) do

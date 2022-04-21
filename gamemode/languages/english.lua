@@ -1064,3 +1064,26 @@ LANGUAGE.help_cont_being_a_zombie					= [[<p>Tips for this section:
 ]]
 
 -- Place any custom stuff below here...
+
+LANGUAGE.title_classm                              = "Class Mutations"
+LANGUAGE.title_bossm                              = "Boss Mutations"
+
+
+
+LANGUAGE.you_dont_have_enough_btokens				= "You don't have enough damage tokens!"
+LANGUAGE.purchased_x_for_y_btokens					= "Purchased %s for %d damage tokens!"
+LANGUAGE.cant_buy_mutations							= "You can't use the Mutation Shop right now!"
+LANGUAGE.mutationstokens							= "Tokens"
+LANGUAGE.mutationsdamagetokens						= "Damage Tokens"
+--mutagen
+LANGUAGE.zshop_alphazomb                                = "Alpha Zombie"
+LANGUAGE.zshop_alphazomb2                                = "Increases survivability by increasing maximum health by 50."
+LANGUAGE.zshop_godzomb                                = "God Zombie"
+LANGUAGE.zshop_godzomb2                                = "Increases survivability by increasing maximum health by 1000."
+LANGUAGE.zshop_zombsprint                                = "Zombie Sprint"
+LANGUAGE.zshop_zombsprint2                                = "As a Zombie, gain the ability to sprint, toggle R to start sprinting."
+LANGUAGE.zshop_zombguard                               = "Zombie Guard"
+LANGUAGE.zshop_zombguard2                               = "As a Zombie, taking damage while sprinting no longer breaks your speed."
+-- Boss Mutations
+LANGUAGE.zshop_bossphysicshazard                               = "Physics Hazard"
+LANGUAGE.zshop_bossphysicshazard2                               = "As a Shade, physics strength is tripled for the ultimate carnage."

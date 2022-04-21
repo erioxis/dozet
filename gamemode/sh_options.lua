@@ -33,7 +33,8 @@ ITEMCAT_DEPLOYABLES = 5
 ITEMCAT_TRINKETS = 6
 ITEMCAT_OTHER = 7
 ITEMCAT_SPECIAL = 8
-
+ITEMCAT_MUTATIONS = 9
+ITEMCAT_MUTATIONS_BOSS = 10
 
 ITEMSUBCAT_TRINKETS_DEFENSIVE = 1
 ITEMSUBCAT_TRINKETS_OFFENSIVE = 2
@@ -44,6 +45,8 @@ ITEMSUBCAT_TRINKETS_SPECIAL = 6
 ITEMSUBCAT_TRINKETS_SUPER = 7
 
 
+
+
 GM.ItemCategories = {
 	[ITEMCAT_GUNS] = "Guns",
 	[ITEMCAT_AMMO] = "Ammunition",
@@ -52,7 +55,10 @@ GM.ItemCategories = {
 	[ITEMCAT_DEPLOYABLES] = "Deployables",
 	[ITEMCAT_TRINKETS] = "Trinkets",
 	[ITEMCAT_OTHER] = "Other",
-	[ITEMCAT_SPECIAL] = "Skill"
+	[ITEMCAT_SPECIAL] = "Skill",
+	[ITEMCAT_MUTATIONS]	 = "Mutagen",
+	[ITEMCAT_MUTATIONS_BOSS]	= "Boss Mutagen"
+
 }
 
 GM.ItemSubCategories = {
@@ -86,6 +92,7 @@ function GM:AddItem(signature, category, price, swep, name, desc, model, callbac
 	return tab
 end
 
+
 function GM:AddStartingItem(signature, category, price, swep, name, desc, model, callback)
 	local item = self:AddItem(signature, category, price, swep, name, desc, model, callback)
 	item.WorthShop = true
@@ -98,6 +105,19 @@ function GM:AddPointShopItem(signature, category, price, swep, name, desc, model
 	item.PointShop = true
 
 	return item
+end
+GM.Mutations = {
+
+}
+function GM:AddMutation(signature, name, desc, category, worth, swep, callback, model, worthshop, mutationshop)
+	local tab = {Signature = signature, Name = name, Description = desc, Category = category, Worth = worth or 0, SWEP = swep, Callback = callback, Model = model, WorthShop = worthshop, MutationShop = mutationshop}
+	self.Mutations[#self.Mutations + 1] = tab
+
+	return tab
+end
+
+function GM:AddMutationItem(signature, name, desc, category, brains, worth, callback, model)
+	return self:AddMutation(signature, name, desc, category, brains, worth, callback, model, false, true)
 end
 
 -- How much ammo is considered one 'clip' of ammo? For use with setting up weapon defaults. Works directly with zs_survivalclips
@@ -665,7 +685,14 @@ item.SkillRequirement = SKILL_HEARTS
 item =
 GM:AddPointShopItem("cursedtrinket",		ITEMCAT_SPECIAL,			120,				"trinket_cursedtrinket")
 item.SkillRequirement = SKILL_CURSEDTRINKETS
+--ZS Mutations
+GM:AddMutationItem("m_zombie_health", ""..translate.Get("zshop_alphazomb"), ""..translate.Get("zshop_alphazomb2"), ITEMCAT_MUTATIONS, 50, nil, function(pl) pl:SetMaxHealth(pl:GetMaxHealth() + 50) pl:SetHealth(pl:Health() + 50) end, "models/items/healthkit.mdl")
+GM:AddMutationItem("m_zombie_health1", ""..translate.Get("zshop_godzomb"), ""..translate.Get("zshop_godzomb2"), ITEMCAT_MUTATIONS, 300, nil, function(pl) pl:SetMaxHealth(pl:GetMaxHealth() + 300) pl:SetHealth(pl:Health() + 300) end, "models/items/healthkit.mdl")        
+GM:AddMutationItem("m_zombie_moan", ""..translate.Get("zshop_zombsprint"), ""..translate.Get("zshop_zombsprint2"), ITEMCAT_MUTATIONS, 15, nil, function(pl) pl.m_Zombie_Moan = true end, "models/player/zombie_classic.mdl")
+GM:AddMutationItem("m_zombie_moanguard", ""..translate.Get("zshop_zombguard"), ""..translate.Get("zshop_zombguard2"), ITEMCAT_MUTATIONS, 80, nil, function(pl) pl.m_Zombie_MoanGuard = true end, "models/player/zombie_classic.mdl")
 
+-- Boss Mutations
+GM:AddMutationItem("m_shade_damage", ""..translate.Get("zshop_bossphysicshazard"), ""..translate.Get("zshop_bossphysicshazard2"), ITEMCAT_MUTATIONS_BOSS, 550, nil, function(pl) pl.m_Shade_Force = true end, "models/player/zombie_classic.mdl")
 -- These are the honorable mentions that come at the end of the round.
 
 local function genericcallback(pl, magnitude) return pl:Name(), magnitude end
@@ -686,7 +713,7 @@ GM.HonorableMentions[HM_LASTBITE] = {Name = "Bite the nigger", String = "goes to
 GM.HonorableMentions[HM_USEFULTOOPPOSITE] = {Name = "Helpful", String = "goes to %s for giving up a whopping %d kills!", Callback = genericcallback, Color = COLOR_RED}
 GM.HonorableMentions[HM_STUPID] = {Name = "Childhouse", String = "is what %s is for getting killed %d feet away from a zombie spawn.", Callback = genericcallback, Color = COLOR_RED}
 GM.HonorableMentions[HM_SALESMAN] = {Name = "Buy this!Sale is 0%!", String = "is what %s is for having %d points worth of items taken from their arsenal crate.", Callback = genericcallback, Color = COLOR_CYAN}
-GM.HonorableMentions[HM_WAREHOUSE] = {Name = "Strane man?", String = "describes %s well since they had their resupply boxes used %d times.", Callback = genericcallback, Color = COLOR_CYAN}
+GM.HonorableMentions[HM_WAREHOUSE] = {Name = "Strange man?", String = "describes %s well since they had their resupply boxes used %d times.", Callback = genericcallback, Color = COLOR_CYAN}
 GM.HonorableMentions[HM_DEFENCEDMG] = {Name = "Defender", String = "goes to %s for protecting humans from %d damage with defence boosts.", Callback = genericcallback, Color = COLOR_WHITE}
 GM.HonorableMentions[HM_STRENGTHDMG] = {Name = "Alchemic", String = "is what %s is for boosting players with an additional %d damage.", Callback = genericcallback, Color = COLOR_CYAN}
 GM.HonorableMentions[HM_BARRICADEDESTROYER] = {Name = "Zmainer", String = "goes to %s for doing %d damage to barricades.", Callback = genericcallback, Color = COLOR_LIMEGREEN}

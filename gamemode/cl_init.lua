@@ -52,6 +52,7 @@ include("vgui/dspawnmenu.lua")
 include("vgui/zsgamestate.lua")
 include("vgui/zshealtharea.lua")
 include("vgui/zsstatusarea.lua")
+include("vgui/mutshop.lua")
 
 include("cl_dermaskin.lua")
 include("cl_deathnotice.lua")
@@ -79,7 +80,7 @@ end)
 -- Remove when model decal crash is fixed.
 --[[function util.Decal()
 end]]
-
+UsedMutations = {}
 -- Save on global lookup time.
 local collectgarbage = collectgarbage
 local render = render
@@ -2109,6 +2110,12 @@ function GM:EndRound(winner, nextmap)
 		end
 	end)
 end
+net.Receive("zs_mutations_table", function(len)
+	local mutationstable = net.ReadTable()
+	if mutationstable then
+		UsedMutations = mutationstable
+	end
+end)
 
 function GM:WeaponDeployed(pl, wep)
 	self:DoChangeDeploySpeed(wep)

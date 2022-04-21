@@ -30,8 +30,8 @@ SWEP.CSMuzzleFlashes = false
 SWEP.ReloadDelay = 0.81
 
 SWEP.Primary.Sound = Sound("weapons/shotgun/shotgun_dbl_fire.wav")
-SWEP.Primary.Damage = 33
-SWEP.Primary.NumShots = 4
+SWEP.Primary.Damage = 44
+SWEP.Primary.NumShots = 9
 SWEP.Primary.Delay = 1.2
 
 SWEP.Recoil = 7.5
@@ -60,9 +60,9 @@ SWEP.ReloadSound = Sound("Weapon_Shotgun.Reload")
 GAMEMODE:SetPrimaryWeaponModifier(SWEP, WEAPON_MODIFIER_RELOAD_SPEED, 0.07)
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_CLIP_SIZE, 1)
 GAMEMODE:AddNewRemantleBranch(SWEP, 1, ""..translate.Get("wep_doomstick_r1"), ""..translate.Get("wep_d_doomstick_r1"), function(wept)
-	wept.Primary.Damage = wept.Primary.Damage * 25
-	wept.ReloadSpeed = wept.ReloadSpeed * 1.3
-	wept.Primary.Delay = wept.Primary.Delay * 0.9
+	wept.Primary.Damage = wept.Primary.Damage * 20
+	wept.ReloadSpeed = wept.ReloadSpeed * 1.9
+	wept.Primary.Delay = wept.Primary.Delay * 1.5
 	wept.Knockback = 510
 	wept.WalkSpeed = SPEED_SLOW
 	wept.ConeMax = 2
@@ -75,7 +75,7 @@ branch = GAMEMODE:AddNewRemantleBranch(SWEP, 2, ""..translate.Get("wep_doomstick
 	wept.Primary.Damage = wept.Primary.Damage * 2
 	wept.Primary.NumShots = 6
 	wept.Primary.Delay = 0.29
-	wept.Knockback = 110
+	wept.Knockback = wept.Knockback * 1.1
 	wept.FireAnimSpeed = 0.55
 end)
 branch.Colors = {Color(50, 160, 255), Color(50, 130, 215), Color(40, 115, 175), Color(40, 0, 175)}
