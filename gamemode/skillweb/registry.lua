@@ -463,11 +463,10 @@ GM:AddSkill(SKILL_WARP, "Warp", GOOD.."-5% sigil teleportation time",
 																2,			2,					{}, TREE_SPEEDTREE)
 GM:AddSkill(SKILL_SIGILOL, "Sigil Infection", GOOD.."+300% Speed in phasing phase\n"..BAD.."+100% sigil teleportation time",
 																2,			4,					{SKILL_WARP}, TREE_SPEEDTREE)
-GM:AddSkill(SKILL_CURSEDTRINKETS, "Worth Trinkets", GOOD.."Cursed?\n"..BAD.."Cursed?\n"..GOOD.."Cursed?\n"..BAD.."Cursed?\n"..GOOD.."Cursed?\n"..BAD.."Cursed?\n"..GOOD.."Cursed?",
+GM:AddSkill(SKILL_CURSEDTRINKETS, "Worth Trinkets", GOOD.."Cursed?\n"..BAD.."Cursed?\n"..GOOD.."Cursed?",
 																2,		    5,					{SKILL_SIGILOL}, TREE_SPEEDTREE)
 
-GM:AddSkill(SKILL_UNSIGIL, "Uncorrupter", GOOD.."+24% Reload speed\n"..BAD.."-80% Melee damage",
-																0,			2,					{SKILL_LEVELHEADED}, TREE_GUNTREE)
+
 
 
 
@@ -609,6 +608,9 @@ GM:AddSkill(SKILL_STOWAGE, 	"Stowage", GOOD.."Resupply usages build up when you'
 																4,			-3,					{}, TREE_BUILDINGTREE)
 
 -- Gunnery Tree
+
+GM:AddSkill(SKILL_UNSIGIL, "Uncorrupter", GOOD.."+24% Reload speed\n"..BAD.."-80% Melee damage",
+																0,			2,					{SKILL_LEVELHEADED}, TREE_GUNTREE)
 GM:AddSkill(SKILL_TRIGGER_DISCIPLINE1, "Trigger Discipline I", GOOD.."+2% weapon reload speed\n"..GOOD.."+2% weapon draw speed\n"..BAD.."-9% Melee damage",
 																-5,			6,					{SKILL_TRIGGER_DISCIPLINE2, SKILL_NONE}, TREE_GUNTREE)
 GM:AddSkill(SKILL_TRIGGER_DISCIPLINE2, "Trigger Discipline II", GOOD.."+3% weapon reload speed\n"..GOOD.."+3% weapon draw speed\n"..BAD.."-13% Melee Damage",
