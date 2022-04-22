@@ -957,7 +957,20 @@ LANGUAGE.controls_lacerator_charging				= "> PRIMARY: Bleeding Claws\n> ON HIT H
 LANGUAGE.controls_eradicator						= "> PRIMARY: Claws\n> SECONDARY: Scream\n> ON FATAL HIT: Revive"
 LANGUAGE.controls_howler							= "> PRIMARY: Claws\n> SECONDARY: Howl\n> RELOAD: Moan"
 LANGUAGE.controls_extinctioncrab					= "> PRIMARY: Leap Attack\n> SECONDARY: Extinction Spore"
-
+--Skills speed
+LANGUAGE.skill_slow_d4 = "-20% Jump power"
+LANGUAGE.skill_slow_d3 = "-68 Speed\n"
+LANGUAGE.skill_slow_d2 = "+30 Starting Worth\n"
+LANGUAGE.skill_slow_d1 = "+20 End wave points\n"
+LANGUAGE.skill_slow = "Slow"
+LANGUAGE.skill_motion1 = "Motion I"
+LANGUAGE.skill_motion2 = "Motion II"
+LANGUAGE.skill_motion3 = "Motion III"
+LANGUAGE.skill_motion_d_all = "+5 Speed"
+LANGUAGE.skill_backpeddler = "Backpeddler"
+LANGUAGE.skill_backpeddler_d1 = "Move the same speed in all directions\n"
+LANGUAGE.skill_backpeddler_d2 = "-7 Speed\n"
+LANGUAGE.skill_backpeddler_d3 = "Receive leg damage on any melee hit"
 -- The help file... Quite big! I wouldn't blame you if you didn't translate this part.
 LANGUAGE.help_cat_introduction						= "Introduction"
 LANGUAGE.help_cat_survival							= "Survival"
@@ -1060,6 +1073,7 @@ LANGUAGE.help_cont_being_a_zombie					= [[<p>Tips for this section:
 <li>The Horde Meter at the bottom of the screen indicates how much of a damage and knockback resistance you have. Huddle up with other zombies for a big resistance when taking down strongholds!</li>
 <li>If you don't have enough zombies to take down a barricade, try hunting for new "team mates" elsewhere.</li>
 <li>If an area is too dark, try pressing your FLASHLIGHT button to toggle night vision.</li>
+<li>You can buy mutagens on F2.</li>
 </ul></p>
 ]]
 
@@ -1079,11 +1093,17 @@ LANGUAGE.mutationsdamagetokens						= "Damage Tokens"
 LANGUAGE.zshop_alphazomb                                = "Alpha Zombie"
 LANGUAGE.zshop_alphazomb2                                = "Increases survivability by increasing maximum health by 50."
 LANGUAGE.zshop_godzomb                                = "God Zombie"
-LANGUAGE.zshop_godzomb2                                = "Increases survivability by increasing maximum health by 1000."
+LANGUAGE.zshop_godzomb2                                = "Increases survivability by increasing maximum health by 3000."
+LANGUAGE.zshop_godestzomb                                = "God Of God Zombie"
+LANGUAGE.zshop_godestzomb2                                = "Increases survivability by increasing maximum health by 1000."
 LANGUAGE.zshop_zombsprint                                = "Zombie Sprint"
 LANGUAGE.zshop_zombsprint2                                = "As a Zombie, gain the ability to sprint, toggle R to start sprinting."
 LANGUAGE.zshop_zombguard                               = "Zombie Guard"
 LANGUAGE.zshop_zombguard2                               = "As a Zombie, taking damage while sprinting no longer breaks your speed."
+LANGUAGE.zshop_fasterzombie                               = "Runner"
+LANGUAGE.zshop_fasterzombie2                               = "Faster on 50 speed."
+LANGUAGE.zshop_barbed                              = "Shoe"
+LANGUAGE.zshop_barbed2                               = "Faster on 150 speed."
 -- Boss Mutations
 LANGUAGE.zshop_bossphysicshazard                               = "Physics Hazard"
 LANGUAGE.zshop_bossphysicshazard2                               = "As a Shade, physics strength is tripled for the ultimate carnage."

@@ -6,6 +6,8 @@ SWEP.PrintName = "Shade"
 
 SWEP.ViewModel = Model("models/weapons/v_fza.mdl")
 SWEP.WorldModel = Model("models/weapons/w_crowbar.mdl")
+SWEP.PhysicsForce = 3500
+SWEP.MutationMultiplier = 6000
 
 if CLIENT then
 	SWEP.ViewModelFOV = 70
@@ -36,6 +38,12 @@ function SWEP:PrimaryAttack()
 
 				owner:DoAttackEvent()
 
+				if self.Owner.m_Shade_Force then
+					vel = (self.Owner:TraceLine(10240, MASK_SOLID, filt).HitPos - obj:LocalToWorld(obj:OBBCenter())):GetNormalized() * self.MutationMultiplier
+				else
+					vel = (self.Owner:TraceLine(10240, MASK_SOLID, filt).HitPos - obj:LocalToWorld(obj:OBBCenter())):GetNormalized() * self.PhysicsForce
+				end
+
 				if CLIENT then return end
 
 				local vel = owner:GetAimVector() * 1000
@@ -56,6 +64,8 @@ function SWEP:PrimaryAttack()
 		end
 	end
 end
+
+
 
 function SWEP:CanGrab()
 	local owner = self:GetOwner()

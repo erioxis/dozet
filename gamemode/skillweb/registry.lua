@@ -445,15 +445,15 @@ GM:AddSkill(SKILL_AGILEII, "Agile II", GOOD.."+5% jumping power\n"..BAD.."-3 mov
 																4,			2,					{SKILL_AGILEIII, SKILL_WORTHINESS3}, TREE_SPEEDTREE)
 GM:AddSkill(SKILL_AGILEIII, "Agile III", GOOD.."+6% jumping power\n"..BAD.."-4 movement speed",
 																4,			-2,					{SKILL_SAFEFALL, SKILL_ULTRANIMBLE, SKILL_SURESTEP, SKILL_INTREPID}, TREE_SPEEDTREE)
-GM:AddSkill(SKILL_D_SLOW, "Slow", GOOD.."+30 starting Worth\n"..GOOD.."+20 end of wave points\n"..BAD.."-68.75 movement speed",
+GM:AddSkill(SKILL_D_SLOW, ""..translate.Get("skill_slow"), GOOD..""..translate.Get("skill_slow_d1")..GOOD..""..translate.Get("skill_slow_d2")..BAD..""..translate.Get("skill_slow_d3")..BAD..""..translate.Get("skill_slow_d4"),
 																0,			-4,					{}, TREE_SPEEDTREE)
-GM:AddSkill(SKILL_MOTIONI, "Motion I", GOOD.."+5 movement speed",
+GM:AddSkill(SKILL_MOTIONI, ""..translate.Get("skill_motion1"), GOOD..""..translate.Get("skill_motion_d_all"),
 																-2,			-2,					{SKILL_MOTIONII}, TREE_SPEEDTREE)
-GM:AddSkill(SKILL_MOTIONII, "Motion II", GOOD.."+9 movement speed",
+GM:AddSkill(SKILL_MOTIONII, ""..translate.Get("skill_motion2"), GOOD..""..translate.Get("skill_motion_d_all"),
 																-1,			-1,					{SKILL_MOTIONIII}, TREE_SPEEDTREE)
-GM:AddSkill(SKILL_MOTIONIII, "Motion III", GOOD.."+12 movement speed",
+GM:AddSkill(SKILL_MOTIONIII, ""..translate.Get("skill_motion3"), GOOD..""..translate.Get("skill_motion_d_all"),
 																0,			-2,					{SKILL_D_SLOW}, TREE_SPEEDTREE)
-GM:AddSkill(SKILL_BACKPEDDLER, "Backpeddler", GOOD.."Move the same speed in all directions\n"..BAD.."-7 movement speed\n"..BAD.."Receive leg damage on any melee hit",
+GM:AddSkill(SKILL_BACKPEDDLER, ""..translate.Get("skill_backpeddler"), GOOD..""..translate.Get("skill_backpeddler_d1")..BAD..""..translate.Get("skill_backpeddler_d2")..BAD..""..translate.Get("skill_backpeddler_d3"),
 																-6,			0,					{}, TREE_SPEEDTREE)
 GM:AddSkill(SKILL_PHASER, "Phaser", GOOD.."+15% barricade phasing movement speed\n"..BAD.."+15% sigil teleportation time",
 																-1,			4,					{SKILL_D_WIDELOAD, SKILL_DRIFT}, TREE_SPEEDTREE)
@@ -1336,8 +1336,8 @@ GM:AddSkillModifier(SKILL_CHEESE, SKILLMOD_HEALTH, 10)
 GM:AddSkillModifier(SKILL_CHEESE, SKILLMOD_SPEED, 10)
 
 GM:AddSkillModifier(SKILL_MOTIONI, SKILLMOD_SPEED, 5)
-GM:AddSkillModifier(SKILL_MOTIONII, SKILLMOD_SPEED, 9)
-GM:AddSkillModifier(SKILL_MOTIONIII, SKILLMOD_SPEED, 12)
+GM:AddSkillModifier(SKILL_MOTIONII, SKILLMOD_SPEED, 5)
+GM:AddSkillModifier(SKILL_MOTIONIII, SKILLMOD_SPEED, 5)
 
 GM:AddSkillModifier(SKILL_FOCUS, SKILLMOD_AIMSPREAD_MUL, -0.11)
 GM:AddSkillModifier(SKILL_FOCUS, SKILLMOD_RELOADSPEED_MUL, -0.03)
@@ -1392,6 +1392,8 @@ GM:AddSkillModifier(SKILL_OVERHAND, SKILLMOD_HAMMER_SWING_DELAY_MUL, 0.10)
 GM:AddSkillModifier(SKILL_D_SLOW, SKILLMOD_WORTH, 30)
 GM:AddSkillModifier(SKILL_D_SLOW, SKILLMOD_ENDWAVE_POINTS, 20)
 GM:AddSkillModifier(SKILL_D_SLOW, SKILLMOD_SPEED, -68.75)
+GM:AddSkillModifier(SKILL_D_SLOW, SKILLMOD_JUMPPOWER_MUL, -0.2)
+
 
 GM:AddSkillModifier(SKILL_GOURMET, SKILLMOD_FOODEATTIME_MUL, 2.0)
 GM:AddSkillModifier(SKILL_GOURMET, SKILLMOD_FOODRECOVERY_MUL, 4.0)
