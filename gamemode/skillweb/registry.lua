@@ -979,6 +979,10 @@ GM:AddSkillModifier(SKILL_CHALLENGER3, SKILLMOD_XP, 1)
 
 GM:AddSkillModifier(SKILL_BLOODLOST, SKILLMOD_HEALTH, -30)
 GM:AddSkillModifier(SKILL_ABUSE, SKILLMOD_MELEE_DAMAGE_MUL, 0.1)
+GM:AddSkillFunction(SKILL_ABUSE, function(pl, active)
+	pl:SetDTBool(DT_PLAYER_BOOL_FRAIL, active)
+end)
+
 
 
 
