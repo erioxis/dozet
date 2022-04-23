@@ -1415,29 +1415,34 @@ end
 
 GM.LastCalculatedBossTime = 0
 function GM:CalculateNextBoss()
+	local livingbosses = 0
 	local zombies = {}
 	for _, ent in pairs(team.GetPlayers(TEAM_UNDEAD)) do
-		if ent:GetInfo("zs_nobosspick") == "0" and not ent:GetZombieClassTable().Boss then
-			table.insert(zombies, ent)
+		if ent:GetZombieClassTable().Boss and ent:Alive() then
+			livingbosses = livingbosses + 1
+			if livingbosses >= 3 then return end
+		else
+			if ent:GetInfo("zs_nobosspick") == "0" then
+				table.insert(zombies, ent)
+			end
+		end
+	end
+	if #zombies == 0 then
+		for _, ent in pairs(D3bot.GetBots()) do
+			if ent:Team() == TEAM_UNDEAD and not ent:GetZombieClassTable().Boss then
+				table.insert(zombies, ent)
+			end
 		end
 	end
 	table.sort(zombies, BossZombieSort)
 	local newboss = zombies[1]
+	local newbossclass = ""
 
-	if newboss ~= self.LastCalculatedBoss or CurTime() >= self.LastCalculatedBossTime + 2 then
-		self.LastCalculatedBoss = newboss
-		self.LastCalculatedBossTime = CurTime()
-
-		net.Start("zs_nextboss")
-		if newboss and newboss:IsValid() then
-			net.WriteEntity(newboss)
-			net.WriteUInt(newboss:GetBossZombieIndex(), 8)
-		else
-			net.WriteEntity(NULL)
-			net.WriteUInt(1, 8)
-		end
-		net.Broadcast()
-	end
+	if newboss and newboss:IsValid() then newbossclass = GAMEMODE.ZombieClasses[newboss:GetBossZombieIndex()].Name end
+	net.Start("zs_nextboss")
+	net.WriteEntity(newboss)
+	net.WriteString(newbossclass)
+	net.Broadcast()
 
 	return newboss
 end
