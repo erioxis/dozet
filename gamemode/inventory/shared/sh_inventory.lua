@@ -555,8 +555,9 @@ local ectow = {
 }
 
 trinket = GM:AddTrinket(""..translate.Get("t_chemicals"), "reachem", false, ectov, ectow, 3, ""..translate.Get("t_d_chemicals"))
-GM:AddSkillModifier(trinket, SKILLMOD_EXP_DAMAGE_TAKEN_MUL, 0.4)
+GM:AddSkillModifier(trinket, SKILLMOD_EXP_DAMAGE_MUL, 0.4)
 GM:AddSkillModifier(trinket, SKILLMOD_EXP_DAMAGE_RADIUS, 0.3)
+
 
 trinket = GM:AddTrinket(""..translate.Get("t_deploiii"), "opsmatrix", false, supveles, supweles, 4, ""..translate.Get("t_d_deploiii"))
 GM:AddSkillModifier(trinket, SKILLMOD_FIELD_RANGE_MUL, 0.15)
