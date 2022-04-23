@@ -2335,6 +2335,9 @@ function GM:PlayerInitialSpawnRound(pl)
 	--Normal Mutations (Z-Shop)
 	pl.m_Zombie_Moan = nil
 	pl.m_Zombie_MoanGuard = nil
+	pl.m_Zombie_Health = nil
+	pl.m_Zombie_GodHealth = nil
+	pl.m_Zombie_GodyHealth = nil
 
 	-- Boss Mutations (Z-Shop)
 	pl.m_Shade_Force = nil
@@ -2843,7 +2846,7 @@ function GM:EntityTakeDamage(ent, dmginfo)
 						if myteam == TEAM_UNDEAD then
 							if otherteam == TEAM_HUMAN then
 								attacker:AddLifeHumanDamage(damage)
-								attacker:AddTokens(math.ceil(damage * 1))
+								attacker:AddTokens(math.ceil(damage * 3))
 								GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_ZOMBIECLASS, attacker:GetZombieClassTable().Name, "HumanDamage", damage)
 							end
 						elseif myteam == TEAM_HUMAN and otherteam == TEAM_UNDEAD then
@@ -4226,7 +4229,21 @@ function GM:PlayerSpawn(pl)
 	wcol.y = math.Clamp(wcol.y, 0, 2.5)
 	wcol.z = math.Clamp(wcol.z, 0, 2.5)
 	pl:SetWeaponColor(wcol)
+	if pl:Team() == TEAM_UNDEAD and pl.m_Zombie_Health then
+		pl:SetMaxHealth(pl:GetMaxHealth() + 50) pl:SetHealth(pl:Health() + 50)
+		
+	end
+	if pl:Team() == TEAM_UNDEAD and pl.m_Zombie_GodHealth then
+		pl:SetMaxHealth(pl:GetMaxHealth() + 300) pl:SetHealth(pl:Health() + 300)
+	end
+		
+	if pl:Team() == TEAM_UNDEAD and pl.m_Zombie_GodyHealth then
+		pl:SetMaxHealth(pl:GetMaxHealth() + 1000) pl:SetHealth(pl:Health() + 1000)
+	
+	end
 end
+
+
 
 function GM:SetWave(wave)
 	local previouslylocked = {}
