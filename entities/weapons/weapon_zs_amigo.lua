@@ -30,17 +30,17 @@ SWEP.UseHands = true
 SWEP.ReloadSound = Sound("Weapon_SG552.Clipout")
 SWEP.Primary.Sound = Sound("Weapon_SG552.Single")
 SWEP.Primary.Damage = 23
-SWEP.Primary.NumShots = 4
-SWEP.Primary.Delay = 0.01
+SWEP.Primary.NumShots = 2
+SWEP.Primary.Delay = 0.66
 
-SWEP.Primary.ClipSize = 1
+SWEP.Primary.ClipSize = 10
 SWEP.Primary.Automatic = true
 SWEP.Primary.Ammo = "ar2"
 GAMEMODE:SetupDefaultClip(SWEP.Primary)
 
 SWEP.ConeMax = 30
 SWEP.ConeMin = 0.8
-SWEP.HeadshotMulti = 2.3
+SWEP.HeadshotMulti = 1.7
 
 SWEP.ReloadSpeed = 1.2
 
@@ -52,11 +52,11 @@ SWEP.IronSightsPos = Vector(-5, 1, 3)
 SWEP.IronSightsAng = Vector(0, 0, 0)
 
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_FIRE_DELAY, -0.01, 1)
-GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_HEADSHOT_MULTI, 0.07)
+GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_HEADSHOT_MULTI, 0.1)
 GAMEMODE:AddNewRemantleBranch(SWEP, 1, "'Comrade' Micronaut Rifle", "Reduced accuracy, damage but increased clip size and fires additional projectiles", function(wept)
 	wept.ConeMax = wept.ConeMax * 1.5
 	wept.ConeMin = wept.ConeMin * 1.5
-	wept.Primary.Damage = wept.Primary.Damage * 0.8
+	wept.Primary.Damage = wept.Primary.Damage * 0.5
 	wept.Primary.ClipSize = 35
 
 	wept.ShootBullets = function(self, dmg, numbul, cone)

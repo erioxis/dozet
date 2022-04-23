@@ -369,6 +369,7 @@ SKILLMOD_MEDDART_EFFECTIVENESS_MUL = 99
 SKILLMOD_DAMAGE = 100
 SKILLMOD_HEADSHOT_MUL = 101
 SKILLMOD_XP = 102
+SKILLMOD_LUCK = 103
 
 local GOOD = "^"..COLORID_GREEN
 local BAD = "^"..COLORID_RED
@@ -961,6 +962,7 @@ GM:AddSkillModifier(SKILL_DONATE10, SKILLMOD_WORTH, 10)
 SKILL_CHALLENGER1 = 215
 GM:AddSkill(SKILL_CHALLENGER1, "Challenger I", GOOD.."+20 Health,+5% Sale, help for challenges!\n"..GOOD.."Can use in any challenge",
 				                                                            	25,			26,					{SKILL_NONE, SKILL_CHALLENGER2}, TREE_DONATETREE)
+GM:AddSkillModifier(SKILL_CHALLENGER1, SKILLMOD_LUCK, 20)																				
 GM:AddSkillModifier(SKILL_CHALLENGER1, SKILLMOD_HEALTH, 20)
 GM:AddSkillModifier(SKILL_CHALLENGER1, SKILLMOD_ARSENAL_DISCOUNT, -0.05)
 SKILL_CHALLENGER2 = 216
@@ -990,6 +992,10 @@ end)
 GM:SetSkillModifierFunction(SKILLMOD_SPEED, function(pl, amount)
 	pl.SkillSpeedAdd = amount
 end)
+GM:SetSkillModifierFunction(SKILLMOD_LUCK, function(pl, amount)
+	pl.Luck = amount
+end)
+
 
 GM:SetSkillModifierFunction(SKILLMOD_MEDKIT_EFFECTIVENESS_MUL, function(pl, amount)
 	pl.MedicHealMul = math.Clamp(amount + 1.0, 0.0, 1000.0)

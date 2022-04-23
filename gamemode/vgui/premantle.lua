@@ -115,8 +115,8 @@ function PANEL:Init()
 	end
 
 	self:SetCamPos( Vector( 20000, 0, 0 ) )
-	self:SetLookAt( Vector( 0, 0, 0 ) )
-	self:SetFOV( 10 )
+	self:SetLookAt( Vector( 0, 190, 100 ) )
+	self:SetFOV( 12 )
 
 	self:SetAmbientLight( Color( 50, 50, 50 ) )
 
@@ -144,7 +144,7 @@ function PANEL:Init()
 	end
 
 	local bottom = vgui.Create("Panel", self)
-	bottom:SetSize(ScrW(), 36 * screenscale)
+	bottom:SetSize(ScrW(), 46 * screenscale)
 	bottom:SetMouseInputEnabled(false)
 
 	local scrapcost = vgui.Create("DLabel", bottom)
@@ -300,7 +300,7 @@ function PANEL:Paint(w, h)
 	hovquality = nil
 	hovbranch = nil
 
-	local angle = (realtime * 180) % 360
+	local angle = (realtime * 90) % 180
 
 	for branch, nodes in pairs(self.RemantleNodes) do
 		for id, node in pairs(nodes) do
@@ -308,7 +308,7 @@ function PANEL:Paint(w, h)
 				nodepos = node:GetPos()
 				selected = intersectpos and nodepos:DistToSqr(intersectpos) <= 36
 
-				cam.Start3D2D(node:GetPos() - to_camera * 8, Angle(0, 90, 90), 0.08)
+				cam.Start3D2D(node:GetPos() - to_camera * 16, Angle(0, 90, 90), 0.08)
 				surface.DisableClipping(true)
 				DisableClipping(true)
 
@@ -375,7 +375,7 @@ function PANEL:Paint(w, h)
 	end
 
 	if intersectpos then
-		intersectpos = intersectpos + Vector(16, 0, 0)
+		intersectpos = intersectpos + Vector(8, 0, 0)
 		render.SetMaterial(matGlow)
 		render.DrawQuadEasy(intersectpos, to_camera, 12, 12, color_white, realtime * 90)
 	end
@@ -599,7 +599,7 @@ function GM:OpenRemantlerMenu(remantler)
 	local trinketsframe = vgui.Create("DPanel")
 	sheet = remprop:AddSheet("Trinkets", trinketsframe, GAMEMODE.ItemCategoryIcons[ITEMCAT_TRINKETS], false, false)
 	sheet.Panel:SetPos(0, tabhei + 2)
-	trinketsframe:SetSize(wid - 8, boty - topy - 8 - topspace:GetTall())
+	trinketsframe:SetSize(wid - 16, boty - topy - 8 - topspace:GetTall())
 	trinketsframe:SetPaintBackground(false)
 	frame.TrinketsFrame = trinketsframe
 
@@ -640,13 +640,13 @@ function GM:OpenRemantlerMenu(remantler)
 			local subcats = GAMEMODE.ItemSubCategories
 			local tbn
 			for j = 1, #subcats do
-				local ispacer = ((j-1) % 3)+1
+				local ispacer = ((j-1) % 4)+1
 
-				tbn = EasyButton(tabpane, subcats[j], 8, 4)
+				tbn = EasyButton(tabpane, subcats[j], 9, 4)
 				tbn:SetFont("ZSHUDFontSmallest")
 				tbn:SetAlpha(j == 1 and 255 or 70)
-				tbn:AlignRight(800 * screenscale - (ispacer - 1) * 190 * screenscale)
-				tbn:AlignTop(j <= 3 and 0 or 28)
+				tbn:AlignRight(800 * screenscale - (ispacer - 1) * 120 * screenscale)
+				tbn:AlignTop(j <= 3 and 2 or 32)
 				tbn:SizeToContents()
 				tbn.DoClick = function(me)
 					for k, v in pairs(tabpane.Grids) do

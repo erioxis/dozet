@@ -33,7 +33,7 @@ function ENT:Hit(vHitPos, vHitNormal, eHitEntity)
 	vHitNormal = vHitNormal or Vector(0, 0, 1)
 
 	if eHitEntity:IsValidLivingPlayer() and gamemode.Call("PlayerShouldTakeDamage", eHitEntity, owner) then
-		eHitEntity:GiveStatus("frost", 5)
+		eHitEntity:GiveStatus("frost", 20)
 	end
 
 	local effectdata = EffectData()

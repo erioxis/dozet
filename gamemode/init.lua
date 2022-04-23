@@ -1180,7 +1180,7 @@ function GM:Think()
 			elseif self.BossZombies and not self.PantsMode and not self:IsClassicMode() and not self.ZombieEscape
 			and self.LastBossZombieSpawned ~= wave and wave > 0 and not self.RoundEnded
 			and (self.BossZombiePlayersRequired <= 0 or #player.GetAll() >= self.BossZombiePlayersRequired) then
-				if self:GetWaveStart() - 30 <= time then
+				if self:GetWaveStart() - 20 <= time then
 					self:SpawnBossZombie()
 				else
 					self:CalculateNextBoss()
@@ -1288,6 +1288,7 @@ function GM:Think()
 					pl.NextRegenerate = time + 200
 					pl:SetHealth(math.min(healmax, pl:Health() + 500))
 				end
+
 
 
 				if pl:IsSkillActive(SKILL_BLOODARMOR) and pl.MaxBloodArmor > 0 and time >= pl.NextBloodArmorRegen and pl:GetBloodArmor() < pl.MaxBloodArmor then
@@ -3385,6 +3386,13 @@ function GM:PlayerHurt(victim, attacker, healthremaining, damage)
 			net.WriteString("Lazarus Soul")
 		net.Send(victim)
 		end
+		if healthremaining < victim:GetMaxHealth() * 0.12 and victim:GetBloodArmor() < victim.MaxBloodArmor + 60 and victim:HasTrinket("damage222") then
+			victim:AddPoints(45)
+			victim:TakeInventoryItem("trinket_damage222")
+			net.Start("zs_trinketconsumed")
+			net.WriteString("Lottery ticket")
+		net.Send(victim)
+		end
 			if healthremaining < victim:GetMaxHealth() * 0.12 and victim:GetBloodArmor() < victim.MaxBloodArmor + 60 and victim:HasTrinket("altlazarusoul") then
 				victim:SetBloodArmor(math.min(victim:GetBloodArmor() + (200 * victim.BloodarmorGainMul), victim.MaxBloodArmor + (70 * victim.MaxBloodArmorMul)))
 				victim:TakeInventoryItem("trinket_altlazarussoul")
@@ -4425,7 +4433,7 @@ function GM:WaveStateChanged(newstate)
 			net.WriteInt(self:GetWave(), 16)
 			net.WriteFloat(self:GetWaveStart())
 		net.Broadcast()
-
+       
 		local pointsbonus
 		if self.EndWavePointsBonus > 0 then
 			pointsbonus = self.EndWavePointsBonus + (self:GetWave() - 1) * self.EndWavePointsBonusPerWave
@@ -4438,7 +4446,6 @@ function GM:WaveStateChanged(newstate)
 				end
 				if pointsbonus then
 					local pointsreward = pointsbonus + (pl.EndWavePointsExtra or 0)
-
 					if pl:IsSkillActive(SKILL_SCOURER) then
 						pl:GiveAmmo(math.ceil(pointsreward), "scrap")
 					else

@@ -266,6 +266,8 @@ GM:AddSkillModifier(trinket, SKILLMOD_BLOODARMOR, 40)
 trinket, trinketwep = GM:AddTrinket("Status", "via3", false, hpveles, hpweles, 2, "Vera Via,bloodoarmoro +10")
 GM:AddSkillModifier(trinket, SKILLMOD_BLOODARMOR, 10)
 
+--test
+
 -- Hohol
 trinket, trinketwep = GM:AddTrinket("Сало", "salo", false, mveles, mweles, 2, "Доигрались хохлы?")
 
@@ -508,37 +510,37 @@ GM:AddSkillModifier(trinket, SKILLMOD_DEPLOYABLE_PACKTIME_MUL, -0.2)
 GM:AddSkillModifier(trinket, SKILLMOD_ENDWAVE_POINTS, 2)
 trinketwep.PermitDismantle = true
 
-trinket, trinketwep = GM:AddTrinket("Blueprints", "blueprintsi", false, supveles, supweles, 2, "+10% repair rate\n +10% К силе починке")
+trinket, trinketwep = GM:AddTrinket(""..translate.Get("t_blueprints"), "blueprintsi", false, supveles, supweles, 2, ""..translate.Get("t_d_blueprints"))
 GM:AddSkillModifier(trinket, SKILLMOD_REPAIRRATE_MUL, 0.10)
 trinketwep.PermitDismantle = true
 
-GM:AddSkillModifier(GM:AddTrinket("Advanced Blueprints", "blueprintsii", false, supveles, supweles, 4, "+20% repair rate\n +10% К силе починке"), SKILLMOD_REPAIRRATE_MUL, 0.20)
+GM:AddSkillModifier(GM:AddTrinket(""..translate.Get("t_ablueprints"), "blueprintsii", false, supveles, supweles, 4, ""..translate.Get("t_d_ablueprints")), SKILLMOD_REPAIRRATE_MUL, 0.20)
 
-trinket, trinketwep = GM:AddTrinket("Medical Processor", "processor", false, supveles, supweles, 2, "-10% medic kit cooldown\n-60% medic tool fire delay\nReprocess food into medical ammo with right click")
+trinket, trinketwep = GM:AddTrinket(""..translate.Get("t_medi"), "processor", false, supveles, supweles, 2, ""..translate.Get("t_d_medi"))
 GM:AddSkillModifier(trinket, SKILLMOD_MEDKIT_COOLDOWN_MUL, -0.10)
 GM:AddSkillModifier(trinket, SKILLMOD_MEDGUN_FIRE_DELAY_MUL, -0.6)
 
-trinket = GM:AddTrinket("Curative Kit", "curativeii", false, supveles, supweles, 3, "-20% medic kit cooldown\n-15% medic tool fire delay")
+trinket = GM:AddTrinket(""..translate.Get("t_medii"), "curativeii", false, supveles, supweles, 3, ""..translate.Get("t_d_medii"))
 GM:AddSkillModifier(trinket, SKILLMOD_MEDKIT_COOLDOWN_MUL, -0.20)
 GM:AddSkillModifier(trinket, SKILLMOD_MEDGUN_FIRE_DELAY_MUL, -0.15)
 
-trinket = GM:AddTrinket("Remedial Booster", "remedy", false, supveles, supweles, 3, "+30% medic tool effectiveness\n +30% К эффективности мед инструментов")
+trinket = GM:AddTrinket(""..translate.Get("t_mediii"), "remedy", false, supveles, supweles, 3, ""..translate.Get("t_d_mediii"))
 GM:AddSkillModifier(trinket, SKILLMOD_MEDKIT_EFFECTIVENESS_MUL, 0.3)
 
-trinket = GM:AddTrinket("Maintenance Suite", "mainsuite", false, supveles, supweles, 2, "+10% zapper and repair field range\n-7% zapper and repair field delay\n+10% turret range")
+trinket = GM:AddTrinket(""..translate.Get("t_deploi"), "mainsuite", false, supveles, supweles, 2, ""..translate.Get("t_d_deploi"))
 GM:AddSkillModifier(trinket, SKILLMOD_FIELD_RANGE_MUL, 0.1)
 GM:AddSkillModifier(trinket, SKILLMOD_FIELD_DELAY_MUL, -0.07)
 GM:AddSkillModifier(trinket, SKILLMOD_TURRET_RANGE_MUL, 0.1)
 
-trinket = GM:AddTrinket("Control Platform", "controlplat", false, supveles, supweles, 2, "+15% controllable health\n+15% controllable speed\n+50% manhack damage")
+trinket = GM:AddTrinket(""..translate.Get("t_deploii"), "controlplat", false, supveles, supweles, 2, ""..translate.Get("t_d_deploii"))
 GM:AddSkillModifier(trinket, SKILLMOD_CONTROLLABLE_HEALTH_MUL, 0.15)
 GM:AddSkillModifier(trinket, SKILLMOD_CONTROLLABLE_SPEED_MUL, 0.15)
 GM:AddSkillModifier(trinket, SKILLMOD_MANHACK_DAMAGE_MUL, 0.50)
 
-trinket = GM:AddTrinket("Projectile Guidance", "projguide", false, supveles, supweles, 2, "+400% projectile speed")
+trinket = GM:AddTrinket(""..translate.Get("t_proji"), "projguide", false, supveles, supweles, 2, ""..translate.Get("t_d_proji"))
 GM:AddSkillModifier(trinket, SKILLMOD_PROJ_SPEED, 4)
 
-trinket = GM:AddTrinket("Projectile Weight", "projwei", false, supveles, supweles, 2, "-100% projectile speed\n+60% projectile damage")
+trinket = GM:AddTrinket(""..translate.Get("t_projii"), "projwei", false, supveles, supweles, 2, ""..translate.Get("t_d_projii"))
 GM:AddSkillModifier(trinket, SKILLMOD_PROJ_SPEED, -1)
 GM:AddSkillModifier(trinket, SKILLMOD_PROJECTILE_DAMAGE_MUL, 0.6)
 
@@ -552,38 +554,38 @@ local ectow = {
 	["base+"] = { type = "Model", model = "models/props_c17/oildrum001.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "base", pos = Vector(0, 0, 4.07), angle = Angle(180, 12.243, 0), size = Vector(0.123, 0.123, 0.085), color = Color(0, 0, 255, 255), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} }
 }
 
-trinket = GM:AddTrinket("Reactive Chemicals", "reachem", false, ectov, ectow, 3, "+40% explosive damage taken\n+30% explosive damage radius")
+trinket = GM:AddTrinket(""..translate.Get("t_chemicals"), "reachem", false, ectov, ectow, 3, ""..translate.Get("t_d_chemicals"))
 GM:AddSkillModifier(trinket, SKILLMOD_EXP_DAMAGE_TAKEN_MUL, 0.4)
 GM:AddSkillModifier(trinket, SKILLMOD_EXP_DAMAGE_RADIUS, 0.3)
 
-trinket = GM:AddTrinket("Operations Matrix", "opsmatrix", false, supveles, supweles, 4, "+15% zapper and repair field range\n-13% zapper and repair field delay\n+85% turret range")
+trinket = GM:AddTrinket(""..translate.Get("t_deploiii"), "opsmatrix", false, supveles, supweles, 4, ""..translate.Get("t_d_deploiii"))
 GM:AddSkillModifier(trinket, SKILLMOD_FIELD_RANGE_MUL, 0.15)
 GM:AddSkillModifier(trinket, SKILLMOD_FIELD_DELAY_MUL, -0.13)
 GM:AddSkillModifier(trinket, SKILLMOD_TURRET_RANGE_MUL, 0.85)
-trinket = GM:AddTrinket("Hate O me", "hateome", false, supveles, supweles, 4, "Fucking boomS x1.9 radius of explosive and -0.4 taken damage by explosive.")
+trinket = GM:AddTrinket(""..translate.Get("t_hateme"), "hateome", false, supveles, supweles, 4, ""..translate.Get("t_d_hateme"))
 GM:AddSkillModifier(trinket, SKILLMOD_EXP_DAMAGE_TAKEN_MUL, -0.4)
 GM:AddSkillModifier(trinket, SKILLMOD_EXP_DAMAGE_RADIUS, 1.8)
 -- Super Trinkets
-trinket = GM:AddTrinket("Super Manifest", "sman", false, supveles, supweles, 4, "-19% Ressuply Delay.")
+trinket = GM:AddTrinket(""..translate.Get("t_smanifest"), "sman", false, supveles, supweles, 5, ""..translate.Get("t_d_smanifest"))
 GM:AddSkillModifier(trinket, SKILLMOD_RESUPPLY_DELAY_MUL, -0.19)
-trinket = GM:AddTrinket("Tutorial for Pro", "stutor", false, book, bookw, 4, "+11% Points Multiplier.")
+trinket = GM:AddTrinket(""..translate.Get("t_protutor"), "stutor", false, book, bookw, 5, ""..translate.Get("t_d_protutor"))
 GM:AddSkillModifier(trinket, SKILLMOD_POINT_MULTIPLIER, 0.11)
-trinket = GM:AddTrinket("Gaben Store", "gstore", false, supveles, supweles, 4, "+18% Arsenal Discount\n  +18% Скидка.")
-GM:AddSkillModifier(trinket, SKILLMOD_ARSENAL_DISCOUNT, -0.18)
-trinket = GM:AddTrinket("FutureBluePrints", "futureblu", false, supveles, supweles, 4, "BluePrint From future!.+30% repair rate\n +30% К силе починке")
+trinket = GM:AddTrinket(""..translate.Get("t_gstore"), "gstore", false, supveles, supweles, 5, ""..translate.Get("t_d_gstore"))
+GM:AddSkillModifier(trinket, SKILLMOD_ARSENAL_DISCOUNT, -0.20)
+trinket = GM:AddTrinket("FutureBluePrints", "futureblu", false, supveles, supweles, 5, "BluePrint From future!.+30% repair rate\n +30% К силе починке")
 GM:AddSkillModifier(trinket, SKILLMOD_REPAIRRATE_MUL, 0.30)
-trinket = GM:AddTrinket("Book Of Knowledge", "knowbook", false, book, bookw, 4, "+7% Points Multiplier,+5% Reload Speed.+1% Melee damage.\n+7% К поинтам,+5% К перезарядке,+1% К мили урону")
+trinket = GM:AddTrinket("Book Of Knowledge", "knowbook", false, book, bookw, 5, "+7% Points Multiplier,+5% Reload Speed.+1% Melee damage.\n+7% К поинтам,+5% К перезарядке,+1% К мили урону")
 GM:AddSkillModifier(trinket, SKILLMOD_POINT_MULTIPLIER, 0.07)
 GM:AddSkillModifier(trinket, SKILLMOD_RELOADSPEED_MUL, 0.05)
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_MUL, 0.01)
-trinket = GM:AddTrinket("Bloodlust", "bloodlust", false, book, bookw, 4, "-10 HP,+20% Damage per attack(Reset if miss).\n-10 хп,+20% к мили урону за каждый удар(Сбрасывается при промахе)")
+trinket = GM:AddTrinket("Bloodlust", "bloodlust", false, book, bookw, 5, "-10 HP,+20% Damage per attack(Reset if miss).\n-10 хп,+20% к мили урону за каждый удар(Сбрасывается при промахе)")
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_POWERATTACK_MUL, 0.20)
 GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, -10)
-trinket = GM:AddTrinket("Additional Battery", "adbat", false, supveles, supweles, 4, "+50% Reload Speed For Pulse Weapon\n+50% К скорости перезарядки для пульс оружия")
+trinket = GM:AddTrinket("Additional Battery", "adbat", false, supveles, supweles, 5, "+50% Reload Speed For Pulse Weapon\n+50% К скорости перезарядки для пульс оружия")
 GM:AddSkillModifier(trinket, SKILLMOD_RELOADSPEED_PULSE_MUL, 0.50)
-trinket = GM:AddTrinket("Mech Arm", "marm", false, supveles, supweles, 4, "+22% Reload Speed\n+22% К скорости перезарядки")
+trinket = GM:AddTrinket("Mech Arm", "marm", false, supveles, supweles, 5, "+22% Reload Speed\n+22% К скорости перезарядки")
 GM:AddSkillModifier(trinket, SKILLMOD_RELOADSPEED_MUL, 0.22)
-trinket = GM:AddTrinket("Steel Shield", "sshield", false, supveles, supweles, 4, "-10% Taken Damage,-6% Reload Speed\n-6% К скорости перезарядки,-10% получаемого урона")
+trinket = GM:AddTrinket("Steel Shield", "sshield", false, supveles, supweles, 5, "-10% Taken Damage,-6% Reload Speed\n-6% К скорости перезарядки,-10% получаемого урона")
 GM:AddSkillModifier(trinket, SKILLMOD_RELOADSPEED_MUL, -0.06)
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.10)
 

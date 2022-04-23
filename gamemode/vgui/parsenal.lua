@@ -3,7 +3,7 @@ local function pointslabelThink(self)
 	if self.m_LastPoints ~= points then
 		self.m_LastPoints = points
 
-		self:SetText("Points to spend: "..points)
+		self:SetText(""..translate.Get("spendpoints")..points)
 		self:SizeToContents()
 	end
 end
@@ -189,7 +189,7 @@ function GM:SupplyItemViewerDetail(viewer, sweptable, shoptbl)
 		viewer.m_VBG:SetVisible(true)
 
 		if sweptable.NoDismantle then
-			desctext = desctext .. "\nCannot be dismantled for scrap."
+			desctext = desctext .. ""..translate.Get("nodismantled")
 		end
 
 		viewer.m_Desc:MoveBelow(viewer.m_VBG, 8)
@@ -354,7 +354,7 @@ function GM:AddShopItem(list, i, tab, issub, nopointshop)
 	itempan.DoClick = ItemPanelDoClick
 	itempan.DoRightClick = function()
 		local menu = DermaMenu(itempan)
-		menu:AddOption("Buy", function() RunConsoleCommand("zs_pointsshopbuy", itempan.ID, itempan.NoPoints and "scrap") end)
+		menu:AddOption(""..translate.Get("buy"), function() RunConsoleCommand("zs_pointsshopbuy", itempan.ID, itempan.NoPoints and "scrap") end)
 		menu:Open()
 	end
 	list:AddItem(itempan)
@@ -412,7 +412,7 @@ function GM:AddShopItem(list, i, tab, issub, nopointshop)
 	pricelabel:AlignRight(alignri)
 
 	if tab.MaxStock then
-		local stocklabel = EasyLabel(itempan, tab.MaxStock.." remaining", "ZSHUDFontTiny")
+		local stocklabel = EasyLabel(itempan, tab.MaxStock..""..translate.Get("remaining"), "ZSHUDFontTiny")
 		stocklabel:SizeToContents()
 		stocklabel:AlignRight(alignri)
 		stocklabel:SetPos(itempan:GetWide() - stocklabel:GetWide(), itempan:GetTall() * 0.45 - stocklabel:GetTall() * 0.5)
@@ -610,7 +610,7 @@ function GM:CreateItemInfoViewer(frame, propertysheet, topspace, bottomspace, me
 	purchaseb:SetVisible(false)
 	viewer.m_PurchaseB = purchaseb
 
-	local namelab = EasyLabel(purchaseb, "Purchase", "ZSBodyTextFontBig", COLOR_WHITE)
+	local namelab = EasyLabel(purchaseb, ""..translate.Get("purchase"), "ZSBodyTextFontBig", COLOR_WHITE)
 	namelab:SetVisible(false)
 	viewer.m_PurchaseLabel = namelab
 
@@ -624,7 +624,7 @@ function GM:CreateItemInfoViewer(frame, propertysheet, topspace, bottomspace, me
 	ammopb:SetVisible(false)
 	viewer.m_AmmoB = ammopb
 
-	namelab = EasyLabel(ammopb, "Ammo", "ZSBodyTextFontBig", COLOR_WHITE)
+	namelab = EasyLabel(ammopb, ""..translate.Get("ammo"), "ZSBodyTextFontBig", COLOR_WHITE)
 	namelab:SetVisible(false)
 	viewer.m_AmmoL = namelab
 
@@ -660,7 +660,7 @@ function GM:OpenArsenalMenu()
 	local topspace = vgui.Create("DPanel", frame)
 	topspace:SetWide(wid - 16)
 
-	local title = EasyLabel(topspace, "The Points Shop", "ZSHUDFontSmall", COLOR_WHITE)
+	local title = EasyLabel(topspace, ""..translate.Get("pointshop1"), "ZSHUDFontSmall", COLOR_WHITE)
 	title:CenterHorizontal()
 	local subtitle = EasyLabel(topspace, "For all of your zombie apocalypse needs!", "ZSHUDFontTiny", COLOR_WHITE)
 	subtitle:CenterHorizontal()
@@ -671,7 +671,7 @@ function GM:OpenArsenalMenu()
 	topspace:AlignTop(8)
 	topspace:CenterHorizontal()
 
-	local wsb = EasyButton(topspace, "Worth Menu", 8, 4)
+	local wsb = EasyButton(topspace, ""..translate.Get("worthshop1"), 8, 4)
 	wsb:SetFont("ZSHUDFontSmaller")
 	wsb:SizeToContents()
 	wsb:AlignRight(8)
@@ -722,7 +722,7 @@ function GM:OpenArsenalMenu()
 
 			local usecats = catid == ITEMCAT_GUNS or catid == ITEMCAT_MELEE or catid == ITEMCAT_TRINKETS
 			local trinkets = catid == ITEMCAT_TRINKETS
-			local offset = 64 * screenscale
+			local offset = 84 * screenscale
 
 			local itemframe = vgui.Create("DScrollPanel", tabpane)
 			itemframe:SetSize(propertysheet:GetWide(), propertysheet:GetTall() - (usecats and (32 + offset) or 32))
