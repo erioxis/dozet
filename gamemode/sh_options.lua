@@ -25,6 +25,8 @@ GM.ZombieEscapeWeaponsSecondary = {
 GM.CartFile = "zscarts.txt"
 GM.SkillLoadoutsFile = "zsskloadouts.txt"
 
+
+
 ITEMCAT_GUNS = 1
 ITEMCAT_AMMO = 2
 ITEMCAT_MELEE = 3
@@ -35,6 +37,7 @@ ITEMCAT_OTHER = 7
 ITEMCAT_SPECIAL = 8
 ITEMCAT_MUTATIONS = 9
 ITEMCAT_MUTATIONS_BOSS = 10
+
 
 ITEMSUBCAT_TRINKETS_DEFENSIVE = 1
 ITEMSUBCAT_TRINKETS_OFFENSIVE = 2
@@ -48,7 +51,7 @@ ITEMSUBCAT_TRINKETS_SUPER = 7
 
 
 GM.ItemCategories = {
-	[ITEMCAT_GUNS] = "Guns",
+	[ITEMCAT_GUNS] = "Weapons",
 	[ITEMCAT_AMMO] = "Ammunition",
 	[ITEMCAT_MELEE] = "Melee",
 	[ITEMCAT_TOOLS] = "Tools",
@@ -91,6 +94,7 @@ function GM:AddItem(signature, category, price, swep, name, desc, model, callbac
 
 	return tab
 end
+
 
 
 function GM:AddStartingItem(signature, category, price, swep, name, desc, model, callback)
@@ -325,6 +329,8 @@ item =
 GM:AddStartingItem("nanitecloud",		ITEMCAT_OTHER,			25,				"weapon_zs_nanitecloudbomb")
 item.SkillRequirement = SKILL_U_NANITECLOUD
 GM:AddStartingItem("bloodshot",			ITEMCAT_OTHER,			35,				"weapon_zs_bloodshotbomb")
+
+
 
 ------------
 -- Points --

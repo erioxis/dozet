@@ -24,6 +24,7 @@ AddCSLuaFile("sh_animations.lua")
 AddCSLuaFile("sh_sigils.lua")
 AddCSLuaFile("sh_channel.lua")
 AddCSLuaFile("sh_weaponquality.lua")
+AddCSLuaFile("sh_crafts.lua")
 
 AddCSLuaFile("vault/shared.lua")
 

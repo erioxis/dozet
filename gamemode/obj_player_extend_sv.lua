@@ -1715,7 +1715,8 @@ local bossdrops = {
 	"trinket_teasoul",  -- 22
 	"trinket_sugersoul",  -- 23
 	"trinket_nulledsoul",  -- 24
-	"trinket_soulmedical"  -- 25
+	"trinket_soulmedical",  -- 25
+	"trinket_lampsoul"  -- 26
 }
 local bossdrops1 = {
 	"trinket_bleaksoul"

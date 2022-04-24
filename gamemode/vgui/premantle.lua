@@ -136,7 +136,7 @@ function PANEL:Init()
 	local desc = {}
 	for i=1, 5 do
 		local qualityd = vgui.Create("DLabel", top)
-		qualityd:SetFont("ZSHUDFontSmallest")
+		qualityd:SetFont("ZS3D2DFontSuperTiny")
 		qualityd:SetTextColor(COLOR_GRAY)
 		qualityd:SetContentAlignment(8)
 		qualityd:Dock(TOP)
@@ -597,7 +597,7 @@ function GM:OpenRemantlerMenu(remantler)
 	remantleframe:SetSize(wid - 8, boty - topy - 8 - topspace:GetTall())
 
 	local trinketsframe = vgui.Create("DPanel")
-	sheet = remprop:AddSheet("Trinkets", trinketsframe, GAMEMODE.ItemCategoryIcons[ITEMCAT_TRINKETS], false, false)
+	sheet = remprop:AddSheet("Trinkets",  trinketsframe, GAMEMODE.ItemCategoryIcons[ITEMCAT_TRINKETS], false, false)
 	sheet.Panel:SetPos(0, tabhei + 2)
 	trinketsframe:SetSize(wid - 16, boty - topy - 8 - topspace:GetTall())
 	trinketsframe:SetPaintBackground(false)
@@ -643,7 +643,7 @@ function GM:OpenRemantlerMenu(remantler)
 				local ispacer = ((j-1) % 4)+1
 
 				tbn = EasyButton(tabpane, subcats[j], 9, 4)
-				tbn:SetFont("ZSHUDFontSmallest")
+				tbn:SetFont("ZS3D2DFontSuperTiny")
 				tbn:SetAlpha(j == 1 and 255 or 70)
 				tbn:AlignRight(800 * screenscale - (ispacer - 1) * 120 * screenscale)
 				tbn:AlignTop(j <= 3 and 2 or 32)

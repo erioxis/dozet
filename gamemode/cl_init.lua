@@ -1304,6 +1304,9 @@ function GM:Create3DFonts()
 	local fontsizeadd3D = 0
 	local fontweight3D = 0
 
+	surface.CreateLegacyFont(fontfamily3d, 12, fontweight3D, false, false,  "ZS3D2DFontSuperTiny2", false, true)
+	surface.CreateLegacyFont(fontfamily3d, 15, fontweight3D, false, false,  "ZS3D2DFontSuperTiny", false, true)
+	surface.CreateLegacyFont(fontfamily3d, 20, fontweight3D, false, false,  "ZS3D2DFontTiny", false, true)
 	surface.CreateLegacyFont(fontfamily3d, 28 + fontsizeadd3D, fontweight3D, false, false,  "ZS3D2DFontSmaller", false, true)
 	surface.CreateLegacyFont(fontfamily3d, 48 + fontsizeadd3D, fontweight3D, false, false,  "ZS3D2DFontSmall", false, true)
 	surface.CreateLegacyFont(fontfamily3d, 72 + fontsizeadd3D, fontweight3D, false, false, "ZS3D2DFont", false, true)

@@ -606,7 +606,7 @@ function GM:CreateItemInfoViewer(frame, propertysheet, topspace, bottomspace, me
 
 	local purchaseb = vgui.Create("DButton", viewer)
 	purchaseb:SetText("")
-	purchaseb:SetSize(viewer:GetWide() / 2, 54 * screenscale)
+	purchaseb:SetSize(viewer:GetWide() / 2, 34 * screenscale)
 	purchaseb:SetVisible(false)
 	viewer.m_PurchaseB = purchaseb
 
