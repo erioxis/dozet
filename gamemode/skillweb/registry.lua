@@ -740,10 +740,17 @@ SKILL_POINTIIII = 160
 	GM:AddSkillModifier(SKILL_POINTIIII, SKILLMOD_POINTS, 5)
 GM:AddSkill(SKILL_POINTIIII, "Pointer", NEUTRAL.."+0.40 Luck\n"..GOOD.."+7% Point MUL\n" ..GOOD.. "+5 Start Points",
 																-2,			-3,					{SKILL_POINTIII}, TREE_POINTTREE)
+	SKILL_POINTFUL = 219
+	GM:AddSkillModifier(SKILL_POINTFUL, SKILLMOD_POINT_MULTIPLIER, 0.1)
+	GM:AddSkillModifier(SKILL_POINTFUL, SKILLMOD_POINTS, 5)
+	GM:AddSkillModifier(SKILL_POINTFUL, SKILLMOD_XP, -0.25)
+	GM:AddSkillModifier(SKILL_POINTFUL, SKILLMOD_WORTH, -25)
+GM:AddSkill(SKILL_POINTFUL, "Pointful", BAD.."-25% Xp multiplier\n"..BAD.."-25 Worth\n"..GOOD.."+10% Point MUL\n" ..GOOD.. "+10 Start Points",
+																-2,			0,					{SKILL_POINTIII}, TREE_POINTTREE)
 	SKILL_LUCK = 161
 	GM:AddSkillModifier(SKILL_LUCK, SKILLMOD_POINT_MULTIPLIER, 0.01)
 GM:AddSkill(SKILL_LUCK, "Luck", NEUTRAL.."+1 luck",
-																-3,			-3,					{SKILL_POINTIIII}, TREE_POINTTREE)
+																-2,			-3,					{SKILL_POINTIIII}, TREE_POINTTREE)
 SKILL_LUCKE = 162
 GM:AddSkillModifier(SKILL_LUCKE, SKILLMOD_POINT_MULTIPLIER, 0.1)
 GM:AddSkill(SKILL_LUCKE, "Luckiest", NEUTRAL.."+2 luck\n" ..BAD.. "-10% Points MUL",
