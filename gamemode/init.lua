@@ -1414,6 +1414,9 @@ function GM:CalculateZombieVolunteers()
 	end
 end
 
+
+
+
 GM.LastCalculatedBossTime = 0
 function GM:CalculateNextBoss()
 	local livingbosses = 0
@@ -1438,16 +1441,14 @@ function GM:CalculateNextBoss()
 	table.sort(zombies, BossZombieSort)
 	local newboss = zombies[1]
 	local newbossclass = ""
-
 	if newboss and newboss:IsValid() then newbossclass = GAMEMODE.ZombieClasses[newboss:GetBossZombieIndex()].Name end
 	net.Start("zs_nextboss")
 	net.WriteEntity(newboss)
 	net.WriteString(newbossclass)
+	net.WriteUInt(newboss:GetBossZombieIndex(), 8)
 	net.Broadcast()
-
 	return newboss
 end
-
 function GM:LastBite(victim, attacker)
 	LAST_BITE = attacker
 end

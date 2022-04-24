@@ -155,6 +155,7 @@ GM.BarricadeRepairCapacity = 4
 
 GM.BossZombiePlayersRequired = 4
 
+
 GM.HumanGibs = {
 Model("models/gibs/HGIBS.mdl"),
 Model("models/gibs/HGIBS_spine.mdl"),

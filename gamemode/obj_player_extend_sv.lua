@@ -357,8 +357,8 @@ function meta:GetBossZombieIndex()
 	local desired = self:GetInfo("zs_bossclass") or ""
 	if GAMEMODE:IsBabyMode() then
 		desired = "Giga Gore Child"
-	elseif desired == "Red Marrow" or desired == "" then
-		desired = "Red Marrow"
+	elseif desired == "Bloody Nightmare" or desired == "" then
+		desired = "Bloody Nightmare"
 	end
 
 	local bossindex
