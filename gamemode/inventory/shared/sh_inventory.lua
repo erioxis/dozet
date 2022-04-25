@@ -573,44 +573,45 @@ trinket = GM:AddTrinket(""..translate.Get("t_protutor"), "stutor", false, book, 
 GM:AddSkillModifier(trinket, SKILLMOD_POINT_MULTIPLIER, 0.11)
 trinket = GM:AddTrinket(""..translate.Get("t_gstore"), "gstore", false, supveles, supweles, 5, ""..translate.Get("t_d_gstore"))
 GM:AddSkillModifier(trinket, SKILLMOD_ARSENAL_DISCOUNT, -0.20)
-trinket = GM:AddTrinket("FutureBluePrints", "futureblu", false, supveles, supweles, 5, "BluePrint From future!.+30% repair rate\n +30% К силе починке")
+trinket = GM:AddTrinket(""..translate.Get("t_fblueprints"), "futureblu", false, supveles, supweles, 5, ""..translate.Get("t_d_fblueprints"))
 GM:AddSkillModifier(trinket, SKILLMOD_REPAIRRATE_MUL, 0.30)
-trinket = GM:AddTrinket("Book Of Knowledge", "knowbook", false, book, bookw, 5, "+7% Points Multiplier,+5% Reload Speed.+1% Melee damage.\n+7% К поинтам,+5% К перезарядке,+1% К мили урону")
-GM:AddSkillModifier(trinket, SKILLMOD_POINT_MULTIPLIER, 0.07)
+trinket = GM:AddTrinket(""..translate.Get("t_kbook"), "knowbook", false, book, bookw, 5, ""..translate.Get("t_d_kbook))
+GM:AddSkillModifier(trinket, SKILLMOD_POINT_MULTIPLIER, 0.12)
 GM:AddSkillModifier(trinket, SKILLMOD_RELOADSPEED_MUL, 0.05)
-GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_MUL, 0.01)
-trinket = GM:AddTrinket("Bloodlust", "bloodlust", false, book, bookw, 5, "-10 HP,+20% Damage per attack(Reset if miss).\n-10 хп,+20% к мили урону за каждый удар(Сбрасывается при промахе)")
+GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_MUL, 0.05)
+trinket = GM:AddTrinket(""..translate.Get("t_bloodlust"), "bloodlust", false, book, bookw, 5, ""..translate.Get("t_d_bloodlust"))
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_POWERATTACK_MUL, 0.20)
 GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, -10)
-trinket = GM:AddTrinket("Additional Battery", "adbat", false, supveles, supweles, 5, "+50% Reload Speed For Pulse Weapon\n+50% К скорости перезарядки для пульс оружия")
-GM:AddSkillModifier(trinket, SKILLMOD_RELOADSPEED_PULSE_MUL, 0.50)
-trinket = GM:AddTrinket("Mech Arm", "marm", false, supveles, supweles, 5, "+22% Reload Speed\n+22% К скорости перезарядки")
+trinket = GM:AddTrinket(""..translate.Get("t_adbat"), "adbat", false, supveles, supweles, 5, ""..translate.Get("t_d_adbat"))
+GM:AddSkillModifier(trinket, SKILLMOD_RELOADSPEED_PULSE_MUL, 0.33)
+trinket = GM:AddTrinket(""..translate.Get("t_mecharm"), "marm", false, supveles, supweles, 5, ""..translate.Get("t_d_mecharm"))
 GM:AddSkillModifier(trinket, SKILLMOD_RELOADSPEED_MUL, 0.22)
-trinket = GM:AddTrinket("Steel Shield", "sshield", false, supveles, supweles, 5, "-10% Taken Damage,-6% Reload Speed\n-6% К скорости перезарядки,-10% получаемого урона")
+trinket = GM:AddTrinket(""..translate.Get("t_sshield"), "sshield", false, supveles, supweles, 5, ""..translate.Get("t_d_sshield"))
 GM:AddSkillModifier(trinket, SKILLMOD_RELOADSPEED_MUL, -0.06)
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.10)
 
 --Special Trinkets
-trinket = GM:AddTrinket("Null heart", "nulledher", false, supveles, supweles, 4, "+10% Melee Damage,+20 health,slowly dying after taking damage\n+10% мили урона,+20 хп,медленно умираешь после получения урона")
+trinket = GM:AddTrinket(""..translate.Get("t_nheart"), "nulledher", false, supveles, supweles, 4, ""..translate.Get("t_d_nheart"))
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_MUL, 0.1)
 GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, 20)
-trinket = GM:AddTrinket("Heart of the void", "voidheart", false, supveles, supweles, 4, "+25% К мили урону,-30хп\n+25% Melee damage,-30 health")
-GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_MUL, 0.25)
-GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, -30)
-trinket = GM:AddTrinket("King Heart", "kheart", false, supveles, supweles, 4, "+15% К полученым поинтам,-15хп\n+15% Point Multiplier,-15 health")
-GM:AddSkillModifier(trinket, SKILLMOD_POINT_MULTIPLIER, 0.15)
+trinket = GM:AddTrinket(""..translate.Get("t_voidheart"), "voidheart", false, supveles, supweles, 4, ""..translate.Get("t_d_voidheart"))
+GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_MUL, 0.15)
+GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, -20)
+trinket = GM:AddTrinket(""..translate.Get("t_kheart"), "kheart", false, supveles, supweles, 4, ""..translate.Get("t_d_kheart"))
+GM:AddSkillModifier(trinket, SKILLMOD_POINT_MULTIPLIER, 0.25)
 GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, -15)
-trinket = GM:AddTrinket("Cursed Trinket", "cursedtrinket", false, supveles, supweles, 4, "Всегда меняется(+10% К мили урону),+50% К получаемому опыту,-12% К множителю,после получения урона получаешь 10 проклятья если есть проклятье\nEver Change(-10% melee damage),+50% XP mul,-12% Points MUL,curse you for 10 secs ")
-GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_MUL, 0.10)
-GM:AddSkillModifier(trinket, SKILLMOD_POINT_MULTIPLIER, -0.12)
-GM:AddSkillModifier(trinket, SKILLMOD_XP, 0.5)
+GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 0.15)
+trinket = GM:AddTrinket(""..translate.Get("t_cursedtrinket"), "cursedtrinket", false, supveles, supweles, 4, ""..translate.Get("t_d_cursedtrinket"))
+GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_MUL, 0.05)
+GM:AddSkillModifier(trinket, SKILLMOD_POINT_MULTIPLIER, 0.12)
+GM:AddSkillModifier(trinket, SKILLMOD_XP, 0.2)
 
 
 
 
 -- ???
-GM:AddSkillModifier(GM:AddTrinket("Acquisitions Manifest", "acqmanifest", false, supveles, supweles, 2, "-6% resupply delay time\n-6% к времени амуниции"), SKILLMOD_RESUPPLY_DELAY_MUL, -0.06)
-GM:AddSkillModifier(GM:AddTrinket("Procurement Manifest", "promanifest", false, supveles, supweles, 4, "-15% resupply delay time\n-15% к времени амуниции"), SKILLMOD_RESUPPLY_DELAY_MUL, -0.15)
+GM:AddSkillModifier(GM:AddTrinket(""..translate.Get("t_manifesti"), "acqmanifest", false, supveles, supweles, 2, ""..translate.Get("t_d_manifesti")), SKILLMOD_RESUPPLY_DELAY_MUL, -0.06)
+GM:AddSkillModifier(GM:AddTrinket(""..translate.Get("t_manifestii"), "promanifest", false, supveles, supweles, 4, ""..translate.Get("t_d_manifestio")), SKILLMOD_RESUPPLY_DELAY_MUL, -0.15)
 
 -- Boss Trinkets
 
@@ -772,7 +773,7 @@ trinket = GM:AddTrinket("Soul of Bethany", "betsoul", false, nil, {
 	["black_core"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 2, 0), angle = Angle(0, 0, 0), size = Vector(0.349, 0.349, 0.349), color = Color(55, 0, 5, 255), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} }
 }, nil, "Больше никакой кровавой брони(навсегда)...Только обычное хп и хороший хил по ней!Хил по вам в 200% лучше и дает 150 хп,убирает проклятья\n+150 hp,-200 blood armor(PERMA EFFECT)\n+200% Heal received,immune to curses\n Q:4")
 GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, 150) 
-GM:AddSkillModifier(trinket, SKILLMOD_BLOODARMOR, -200) 
+GM:AddSkillModifier(trinket, SKILLMOD_BLOODARMOR, -1000) 
 GM:AddSkillModifier(trinket, SKILLMOD_HEALING_RECEIVED, 2) 
 trinket = GM:AddTrinket("Soul of Lost", "lostsoul", false, nil, {
 	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 7.697, y = 7.697 }, color = Color(255, 255, 255, 125), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
