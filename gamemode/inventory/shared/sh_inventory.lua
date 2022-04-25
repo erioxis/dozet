@@ -575,7 +575,7 @@ trinket = GM:AddTrinket(""..translate.Get("t_gstore"), "gstore", false, supveles
 GM:AddSkillModifier(trinket, SKILLMOD_ARSENAL_DISCOUNT, -0.20)
 trinket = GM:AddTrinket(""..translate.Get("t_fblueprints"), "futureblu", false, supveles, supweles, 5, ""..translate.Get("t_d_fblueprints"))
 GM:AddSkillModifier(trinket, SKILLMOD_REPAIRRATE_MUL, 0.30)
-trinket = GM:AddTrinket(""..translate.Get("t_kbook"), "knowbook", false, book, bookw, 5, ""..translate.Get("t_d_kbook))
+trinket = GM:AddTrinket(""..translate.Get("t_kbook"), "knowbook", false, book, bookw, 5, ""..translate.Get("t_d_kbook"))
 GM:AddSkillModifier(trinket, SKILLMOD_POINT_MULTIPLIER, 0.12)
 GM:AddSkillModifier(trinket, SKILLMOD_RELOADSPEED_MUL, 0.05)
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_MUL, 0.05)

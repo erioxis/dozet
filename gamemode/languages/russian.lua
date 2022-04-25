@@ -124,7 +124,7 @@ LANGUAGE.t_gstore                                 = "Распродажа сти
 LANGUAGE.t_fblueprints                                 = "Чертежи будущего"
 LANGUAGE.t_kbook                                 = "Книга знаний"
 LANGUAGE.t_bloodlust                                 = "Жажда крови"
-LANGUAGE.t_adbat                                 = "Доп.Батарея
+LANGUAGE.t_adbat                                 = "Доп.Батарея"
 LANGUAGE.t_mecharm                                 = "Механическая рука"
 LANGUAGE.t_sshield                                 = "Стальной щит"
 LANGUAGE.t_nheart                                 = "Сердце Нулла"
@@ -135,7 +135,7 @@ LANGUAGE.t_manifestii                                = "Декларация"
 LANGUAGE.t_manifesti                                 = "Договорная декларация"
 --описание тринек
 LANGUAGE.t_d_manifesti                                = "-6% к времени амуниции"
-LANGUAGE.t_d_manifestii                                = "-15% к времени амуниции
+LANGUAGE.t_d_manifestii                                = "-15% к времени амуниции"
 LANGUAGE.t_d_cursedtrinket                                 = "Всегда меняется(+5% К мили урону),+20% К получаемому опыту,+12% К множителю,после получения урона получаешь 10 проклятья если есть проклятье"
 LANGUAGE.t_d_kheart                                 = "+25% К полученым поинтам,-15хп,+15% к получаемому урону"
 LANGUAGE.t_d_voidheart                                 = "+15% К мили урону,-20хп"
