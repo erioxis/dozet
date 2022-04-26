@@ -288,7 +288,8 @@ GM.ResistableStatuses = {
 	"slow",
 	"frightened",
 	"frost",
-	"cursed"
+	"cursed",
+	"rot"
 }
 
 GM.ScrapVals = {
