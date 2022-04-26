@@ -111,7 +111,8 @@ GM.Assemblies["weapon_zs_megaray"] 						= {"trinket_soulmedical",	"weapon_zs_he
 GM.Assemblies["weapon_zs_manhack_saw"] 						= {"trinket_aposoul",	"weapon_zs_manhack"}
 GM.Assemblies["weapon_zs_katana"] 						= {"trinket_altbetsoul",	"weapon_zs_teslorer"}
 GM.Assemblies["trinket_lotteryticket"] 						= {"comp_ticket",	"trinket_greedeye"}
-GM.Assemblies["trinket_lotteryticket"] 						= {"comp_ticket",	"trinket_greedeye"}
+GM.Assemblies["trinket_mysteryticket"] 						= {"comp_ticket",	"trinket_greedsoul"}
+
 
 GM:AddInventoryItemData("comp_modbarrel",		"Modular Barrel",			"A modular barrel suited for pairing up with another gun barrel.",								"models/props_c17/trappropeller_lever.mdl")
 GM:AddInventoryItemData("comp_burstmech",		"Burst Fire Mechanism",		"A mechanism that could be used to make a gun burst fire.",										"models/props_c17/trappropeller_lever.mdl")
@@ -207,8 +208,10 @@ local bookw = {
 }
 -- some text
 trinket, trinketwep = GM:AddTrinket(""..translate.Get("t_lticket"), "lotteryticket", false, hpveles, hpweles, 2, ""..translate.Get("t_d_lticket"))
-GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, 10)
-GM:AddSkillModifier(trinket, SKILLMOD_HEALING_RECEIVED, 0.09)
+
+trinketwep.PermitDismantle = true
+trinket, trinketwep = GM:AddTrinket(""..translate.Get("t_mticket"), "mysteryticket", false, hpveles, hpweles, 2, ""..translate.Get("t_d_mticket"))
+
 trinketwep.PermitDismantle = true
 -- Health Trinkets
 trinket, trinketwep = GM:AddTrinket(""..translate.Get("t_healthpack"), "vitpackagei", false, hpveles, hpweles, 2, ""..translate.Get("t_d_healthpack"))

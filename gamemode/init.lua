@@ -4488,6 +4488,22 @@ function GM:WaveStateChanged(newstate, pl)
 					net.Send(pl)
 						
 						else end end
+
+					if pl:HasTrinket("mysteryticket")  then 
+						local luck = 40 - pl.Luck 
+						local lucky2 = math.random(1,luck)
+						print(luck)
+						
+						print(lucky2)
+						if lucky2 == 2 then 
+
+						pl:AddZSXP(10000)
+						pl:TakeInventoryItem("trinket_mysteryticket")
+						net.Start("zs_trinketconsumed")
+						net.WriteString("Mystery ticket")
+					net.Send(pl)
+						
+						else end end 
 						print("1 - chance\n2 - number\n3 - luck")
 						print(pl.Luck)
 						pl:AddPoints(pointsreward, nil, nil, true)
