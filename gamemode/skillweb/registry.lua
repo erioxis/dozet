@@ -377,31 +377,31 @@ local NEUTRAL = "^"..COLORID_GRAY
 --
 
 -- Health Tree
-GM:AddSkill(SKILL_STOIC1, "Stoic I", GOOD.."+4 maximum health\n"..BAD.."-5 movement speed",
+GM:AddSkill(SKILL_STOIC1, ""..translate.Get("skill_stoici_0"), GOOD..""..translate.Get("skill_stoici_d1")..BAD..""..translate.Get("skill_stoici_d2"),
 																-4,			-6,					{SKILL_NONE, SKILL_STOIC2}, TREE_HEALTHTREE)
-GM:AddSkill(SKILL_STOIC2, "Stoic II", GOOD.."+5 maximum health\n"..BAD.."-7 movement speed",
+GM:AddSkill(SKILL_STOIC2, ""..translate.Get("skill_stoicii_0"), GOOD..""..translate.Get("skill_stoicii_d1")..BAD..""..translate.Get("skill_stoicii_d2"),
 																-4,			-4,					{SKILL_STOIC3, SKILL_VITALITY1, SKILL_REGENERATOR}, TREE_HEALTHTREE)
-GM:AddSkill(SKILL_STOIC3, "Stoic III", GOOD.."+6 maximum health\n"..BAD.."-9 movement speed",
+GM:AddSkill(SKILL_STOIC3, ""..translate.Get("skill_stoiciii_0"), GOOD..""..translate.Get("skill_stoiciii_d1")..BAD..""..translate.Get("skill_stoiciii_d2"),
 																-3,			-2,					{SKILL_STOIC4}, TREE_HEALTHTREE)
-GM:AddSkill(SKILL_STOIC4, "Stoic IV", GOOD.."+8 maximum health\n"..BAD.."-11 movement speed",
+GM:AddSkill(SKILL_STOIC4, ""..translate.Get("skill_stoiciv_0"), GOOD..""..translate.Get("skill_stoiciv_d1")..BAD..""..translate.Get("skill_stoiciv_d2"),
 																-3,			0,					{SKILL_STOIC5}, TREE_HEALTHTREE)
-GM:AddSkill(SKILL_STOIC5, "Stoic V", GOOD.."+11 maximum health\n"..BAD.."-10 movement speed",
+GM:AddSkill(SKILL_STOIC5, ""..translate.Get("skill_stoicv_0"), GOOD..""..translate.Get("skill_stoicv_d1")..BAD..""..translate.Get("skill_stoicv_d2"),
 																-3,			2,					{SKILL_BLOODARMOR, SKILL_TANKER}, TREE_HEALTHTREE)
-GM:AddSkill(SKILL_D_HEMOPHILIA, "Debuff: Hemophilia", GOOD.."+10 starting Worth\n"..GOOD.."+3 starting scrap\n"..BAD.."Bleed for 25% extra damage when hit",
+GM:AddSkill(SKILL_D_HEMOPHILIA, ""..translate.Get("skill_hemoplilia_0"), GOOD..""..translate.Get("skill_hemoplilia_d1")..GOOD..""..translate.Get("skill_hemoplilia_d2")..BAD..""..translate.Get("skill_hemoplilia_d3"),
 																4,			2,					{}, TREE_HEALTHTREE)
-GM:AddSkill(SKILL_GLUTTON, "Glutton", GOOD.."Gain up to 30 blood armor when you eat food\n"..GOOD.."Blood armor gained can exceed the cap by 40\n"..BAD.."+7 maximum health\n"..BAD.."No longer receive health from eating food",
+GM:AddSkill(SKILL_GLUTTON,  ""..translate.Get("skill_glutton_0"), GOOD.. ""..translate.Get("skill_hemoplilia_d1")..GOOD.. ""..translate.Get("skill_hemoplilia_d2")..GOOD.. ""..translate.Get("skill_hemoplilia_d3")..BAD.. ""..translate.Get("skill_hemoplilia_d4"),
 																3,			-2,					{SKILL_GOURMET, SKILL_BLOODARMOR}, TREE_HEALTHTREE)
-GM:AddSkill(SKILL_PREPAREDNESS, "Preparedness", GOOD.."Your starting item can be a random food item",
+GM:AddSkill(SKILL_PREPAREDNESS, ""..translate.Get("skill_prepadnes_0"), GOOD..""..translate.Get("skill_prepadnes_d"),
 																4,			-6,					{SKILL_NONE}, TREE_HEALTHTREE)
-GM:AddSkill(SKILL_GOURMET, "Gourmet", GOOD.."+400% recovery from food\n"..BAD.."+200% time to eat food",
+GM:AddSkill(SKILL_GOURMET, ""..translate.Get("skill_gurman_0"), GOOD..""..translate.Get("skill_gurman_d1")..BAD..""..translate.Get("skill_gurman_d2"),
 																4,			-4,					{SKILL_PREPAREDNESS, SKILL_VITALITY1}, TREE_HEALTHTREE)
-GM:AddSkill(SKILL_HAEMOSTASIS, "Haemostasis", GOOD.."Resist status effects while you have at least 2 blood armor\n"..BAD.."Lose 2 blood armor on resist\n"..BAD.."-25% blood armor damage absorption",
+GM:AddSkill(SKILL_HAEMOSTASIS, ""..translate.Get("skill_haemostasis_0"), GOOD..""..translate.Get("skill_haemostasis_d1")..BAD..""..translate.Get("skill_haemostasis_d2")..BAD..""..translate.Get("skill_haemostasis_d3"),
 																4,			6,					{}, TREE_HEALTHTREE)
-GM:AddSkill(SKILL_BLOODLETTER, "Bloodletter", GOOD.."+100% blood armor generated\n"..BAD.."Losing all blood armor inflicts 5 bleed damage",
+GM:AddSkill(SKILL_BLOODLETTER, ""..translate.Get("skill_bloodlet_0"), GOOD..""..translate.Get("skill_bloodlet_d1")..BAD..""..translate.Get("skill_bloodlet_d2"),
 																0,			4,					{SKILL_ANTIGEN}, TREE_HEALTHTREE)
-GM:AddSkill(SKILL_REGENERATOR, "Regenerator", GOOD.."Regenerate 1 health every 6s when below 60% health\n"..BAD.."-6 maximum health",
+GM:AddSkill(SKILL_REGENERATOR, ""..translate.Get("skill_regen_0"), GOOD..""..translate.Get("skill_regen_d1")..BAD..""..translate.Get("skill_regen_d2"),
 																-5,			-2,					{}, TREE_HEALTHTREE)
-GM:AddSkill(SKILL_NULLED, "The Immortal", GOOD.."Regenerate 3 health every 5 sec",
+GM:AddSkill(SKILL_NULLED, ""..translate.Get("skill_regen1_0"), GOOD..""..translate.Get("skill_regen1_d1"),
 			                                                   	-5,			0,					{SKILL_REGENERATOR}, TREE_HEALTHTREE)
 GM:AddSkill(SKILL_BLOODARMOR, "Blood Armor", GOOD.."Regenerate 1 blood armor every 8 seconds upto your blood armor max\nBase blood armor maximum is 20\nBase blood armor damage absorption is 50%\n"..BAD.."-13 maximum health",
 																2,			2,					{SKILL_IRONBLOOD, SKILL_BLOODLETTER, SKILL_D_HEMOPHILIA}, TREE_HEALTHTREE)
@@ -967,10 +967,10 @@ GM:AddSkill(SKILL_DONATE10, "Donate X", GOOD.."+ Worth\n"..BAD.."Donate if you w
 				                                                            	21,			26,					{SKILL_DONATE9}, TREE_DONATETREE)
 GM:AddSkillModifier(SKILL_DONATE10, SKILLMOD_WORTH, 10)
 SKILL_CHALLENGER1 = 215
-GM:AddSkill(SKILL_CHALLENGER1, "Challenger I", GOOD.."+20 Health,+5% Sale, help for challenges!\n"..GOOD.."Can use in any challenge",
+GM:AddSkill(SKILL_CHALLENGER1, "Challenger I", GOOD.."+20 Health,+1 luck,+5% Sale, help for challenges!\n"..GOOD.."Can use in any challenge",
 				                                                            	25,			26,					{SKILL_NONE, SKILL_CHALLENGER2}, TREE_DONATETREE)
-GM:AddSkillModifier(SKILL_CHALLENGER1, SKILLMOD_LUCK, 20)																				
-GM:AddSkillModifier(SKILL_CHALLENGER1, SKILLMOD_HEALTH, 20)
+GM:AddSkillModifier(SKILL_CHALLENGER1, SKILLMOD_LUCK, 1)																				
+GM:AddSkillModifier(SKILL_CHALLENGER1, SKILLMOD_HEALTH, 10)
 GM:AddSkillModifier(SKILL_CHALLENGER1, SKILLMOD_ARSENAL_DISCOUNT, -0.05)
 SKILL_CHALLENGER2 = 216
 GM:AddSkill(SKILL_CHALLENGER2, "Challenger II", GOOD.."+20% Reload speed\n"..GOOD.."Can use in any challenge",

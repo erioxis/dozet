@@ -4299,7 +4299,7 @@ function GM:SetWave(wave)
 end
 
 GM.NextEscapeDamage = 0
-function GM:WaveStateChanged(newstate)
+function GM:WaveStateChanged(newstate, pl)
 	if newstate then
 		if self:GetWave() == 0 then
 			gamemode.Call("CreateSigils", true) -- Try creating sigils again. Only really matters if nobody seeded the map yet.
@@ -4473,6 +4473,19 @@ function GM:WaveStateChanged(newstate)
 					if pl:IsSkillActive(SKILL_SCOURER) then
 						pl:GiveAmmo(math.ceil(pointsreward), "scrap")
 					else
+						if pl:HasTrinket("lotteryticket")  then 
+						local luck = 10 - pl.Luck 
+						local lucky1 = math.random(1,luck)
+						print(lucky1)
+						if lucky1 == 5 then 
+
+						pl:AddPoints(120)
+						pl:TakeInventoryItem("trinket_lotteryticket")
+						net.Start("zs_trinketconsumed")
+						net.WriteString("Lottery ticket")
+					net.Send(pl)
+						
+						else end end
 						pl:AddPoints(pointsreward, nil, nil, true)
 					end
 				end
