@@ -4474,8 +4474,10 @@ function GM:WaveStateChanged(newstate, pl)
 						pl:GiveAmmo(math.ceil(pointsreward), "scrap")
 					else
 						if pl:HasTrinket("lotteryticket")  then 
-						local luck = 10 - pl.Luck 
+						local luck = 20 - pl.Luck 
 						local lucky1 = math.random(1,luck)
+						print(luck)
+						
 						print(lucky1)
 						if lucky1 == 5 then 
 
@@ -4486,6 +4488,8 @@ function GM:WaveStateChanged(newstate, pl)
 					net.Send(pl)
 						
 						else end end
+						print("1 - chance\n2 - number\n3 - luck")
+						print(pl.Luck)
 						pl:AddPoints(pointsreward, nil, nil, true)
 					end
 				end
