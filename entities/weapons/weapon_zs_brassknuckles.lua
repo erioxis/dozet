@@ -24,7 +24,7 @@ if CLIENT then
 	}
 end
 
-a = math.random(20,60)
+a = math.random(20,40)
 
 SWEP.WalkSpeed = SPEED_FASTEST
 
@@ -45,4 +45,4 @@ SWEP.NoGlassWeapons = false
 
 SWEP.AllowQualityWeapons = true
 
-GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_FIRE_DELAY, -0.0456)
+GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_FIRE_DELAY, -0.0356)

@@ -828,6 +828,7 @@ function GM:IsSpecialPerson(pl, image)
 	elseif pl:SteamID() == "STEAM_0:1:245602574" then
 			img = "noxiousnet/noxicon.png"
 			tooltip = "Erioxis\nHelper"
+
 	elseif pl:IsAdmin() then
 		img = "VGUI/servers/icon_robotron"
 		tooltip = "Admin"

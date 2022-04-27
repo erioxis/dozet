@@ -223,7 +223,7 @@ function meta:ProcessDamage(dmginfo)
 				if self:HasTrinket("betsoul")  then
 					local cursed = self:GetStatus("cursed")
 					if (cursed) then 
-						self:AddCursed(self:GetOwner(), cursed.DieTime - CurTime() - 50)
+						self:AddCursed(self:GetOwner(), cursed.DieTime - CurTime() - 30)
 					end
 				end
 				if self:IsSkillActive(SKILL_TRIP)  then

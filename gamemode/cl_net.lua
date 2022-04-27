@@ -27,7 +27,7 @@ end)
 net.Receive("zs_nextboss", function(length)
 	GAMEMODE.NextBossZombie = net.ReadEntity()
 
-	GAMEMODE.NextBossZombieClass = GAMEMODE.ZombieClasses[net.ReadUInt(8)].Name
+	GAMEMODE.NextBossZombieClass = net.ReadString()
 end)
 
 net.Receive("zs_zvols", function(length)

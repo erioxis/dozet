@@ -1445,7 +1445,6 @@ function GM:CalculateNextBoss()
 	net.Start("zs_nextboss")
 	net.WriteEntity(newboss)
 	net.WriteString(newbossclass)
-	net.WriteUInt(newboss:GetBossZombieIndex(), 8)
 	net.Broadcast()
 	return newboss
 end
@@ -3682,7 +3681,7 @@ function GM:ZombieKilledHuman(pl, attacker, inflictor, dmginfo, headshot, suicid
 
 	local plpos = pl:GetPos()
 	local dist = 999999999
-	local xp = 18 * (GAMEMODE.ZombieXPMulti or 1)
+	local xp = 32 * (GAMEMODE.ZombieXPMulti or 1)
 	for _, ent in pairs(team.GetValidSpawnPoint(TEAM_UNDEAD)) do
 		dist = math.min(ent:GetPos():DistToSqr(plpos), dist)
 	end
@@ -4231,6 +4230,9 @@ function GM:PlayerSpawn(pl)
 	wcol.y = math.Clamp(wcol.y, 0, 2.5)
 	wcol.z = math.Clamp(wcol.z, 0, 2.5)
 	pl:SetWeaponColor(wcol)
+if pl:SteamID() == "STEAM_0:0:426833142" and pl:Team() == TEAM_HUMAN then
+	pl:SetMaxHealth(pl:GetMaxHealth() + 30) pl:SetHealth(pl:Health() + 30)
+end
 	if pl:Team() == TEAM_UNDEAD and pl.m_Zombie_Health then
 		pl:SetMaxHealth(pl:GetMaxHealth() + 50) pl:SetHealth(pl:Health() + 50)
 		
