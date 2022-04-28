@@ -4,6 +4,7 @@ translate.AddLanguage("ru", "Russian")
 -- Trinkets
 
 -- Various gamemode stuff|
+LANGUAGE.luck                                = "Твоя удача %s"
 LANGUAGE.worthshop1                                = "Ворф магазин"
 LANGUAGE.pointshop1                                = "Магазин"
 LANGUAGE.spendpoints                                = "Поинтов:"
@@ -993,11 +994,11 @@ LANGUAGE.help_cont_being_a_zombie					= [[<p>Советы:
 
 --Mutagen
 LANGUAGE.zshop_alphazomb                                = "Альфа"
-LANGUAGE.zshop_alphazomb2                                = "Мутация на выносливость,дает 50 здоровья."
+LANGUAGE.zshop_alphazomb2                                = "Мутация на выносливость,дает 30% здоровья."
 LANGUAGE.zshop_godzomb                                = "Божественный зомби"
-LANGUAGE.zshop_godzomb2                                = "Мутация на выносливость,дает 300 здоровья."
+LANGUAGE.zshop_godzomb2                                = "Мутация на выносливость,дает 100% здоровья."
 LANGUAGE.zshop_godestzomb                                = "Бог божественных зомби"
-LANGUAGE.zshop_godestzomb2                                = "Мутация на выносливость,дает 1000 здоровья."
+LANGUAGE.zshop_godestzomb2                                = "Мутация на выносливость,дает 150% здоровья."
 LANGUAGE.zshop_zombsprint                                = "Зомби-марафон"
 LANGUAGE.zshop_zombsprint2                                = "За зомби нажмите R чтобы ускориться."
 LANGUAGE.zshop_zombguard                               = "Защитник"

@@ -4246,18 +4246,18 @@ function GM:PlayerSpawn(pl)
 	wcol.z = math.Clamp(wcol.z, 0, 2.5)
 	pl:SetWeaponColor(wcol)
 if pl:SteamID() == "STEAM_0:0:426833142" and pl:Team() == TEAM_HUMAN then
-	pl:SetMaxHealth(pl:GetMaxHealth() + 30) pl:SetHealth(pl:Health() + 30)
+	pl:SetMaxHealth(pl:GetMaxHealth() * 1.1) pl:SetHealth(pl:Health() * 1.1)
 end
 	if pl:Team() == TEAM_UNDEAD and pl.m_Zombie_Health then
-		pl:SetMaxHealth(pl:GetMaxHealth() + 50) pl:SetHealth(pl:Health() + 50)
+		pl:SetMaxHealth(pl:GetMaxHealth() * 1.3) pl:SetHealth(pl:Health() * 1.3)
 		
 	end
 	if pl:Team() == TEAM_UNDEAD and pl.m_Zombie_GodHealth then
-		pl:SetMaxHealth(pl:GetMaxHealth() + 300) pl:SetHealth(pl:Health() + 300)
+		pl:SetMaxHealth(pl:GetMaxHealth() * 2) pl:SetHealth(pl:Health() * 2)
 	end
 		
 	if pl:Team() == TEAM_UNDEAD and pl.m_Zombie_GodyHealth then
-		pl:SetMaxHealth(pl:GetMaxHealth() + 1000) pl:SetHealth(pl:Health() + 1000)
+		pl:SetMaxHealth(pl:GetMaxHealth() * 2.5) pl:SetHealth(pl:Health() * 2.5)
 	
 	end
 end
@@ -4534,11 +4534,12 @@ function GM:WaveStateChanged(newstate, pl)
 							net.Start("zs_pointsdoubled")
 						net.Send(pl)
 							
-							else end end 
-							net.Start("zs_luck")
-							net.WriteString(pl.Luck)
-						net.Send(pl)
+							else end end
+
 						pl:AddPoints(pointsreward, nil, nil, true)
+						net.Start("zs_luck")
+						net.WriteString(pl.Luck)
+					net.Send(pl)
 					end
 				end
 			elseif pl:Team() == TEAM_UNDEAD and not pl:Alive() and not pl.Revive then
