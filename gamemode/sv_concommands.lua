@@ -13,10 +13,6 @@ concommand.Add("zs_pointsshopbuy", function(sender, command, arguments)
 		return
 	end
 
-	if usescrap and not sender:NearRemantler() or not usescrap and not sender:NearArsenalCrate() then
-		GAMEMODE:ConCommandErrorMessage(sender, translate.ClientGet(sender, usescrap and "need_to_be_near_remantler" or "need_to_be_near_arsenal_crate"))
-		return
-	end
 
 	if not (usescrap or gamemode.Call("PlayerCanPurchase", sender)) then
 		GAMEMODE:ConCommandErrorMessage(sender, translate.ClientGet(sender, "cant_purchase_right_now"))
@@ -673,6 +669,18 @@ concommand.Add("teleport", function(sender, command, arguments)
 	if ent then
 		sender:SetPos(ent:WorldSpaceCenter())
 	end
+end)
+concommand.Add("zs_addxp", function(sender, command, arguments)
+	if not sender:IsAdmin() then return end
+	
+	sender:AddZSXP(arguments[1])
+
+end)
+concommand.Add("zs_weapon", function(sender, command, arguments)
+	if not sender:IsAdmin() then return end
+	
+	sender:Give(arguments[1])
+
 end)
 
 

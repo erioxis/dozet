@@ -266,6 +266,8 @@ SKILL_CURSEDTRINKETS = 201
 SKILL_DONATE1 = 203
 SKILL_BLOODLOST = 210
 SKILL_ABUSE = 218
+SKILL_HAMMERDISCIPLINE1 = 220
+SKILL_HAMMERDISCIPLINE2 = 221
 
 
 SKILLMOD_HEALTH = 1
@@ -539,8 +541,12 @@ GM:AddSkill(SKILL_HANDY5, "Handy V", GOOD.."+13% repair rate",
 																-3,			3,					{SKILL_OVERHAND}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_OVERHAND, "OverHandy", GOOD.."+25% repair rate\n"..BAD.."+15% swing delay",
 																-3,			4,					{SKILL_HANDY5}, TREE_BUILDINGTREE)
-GM:AddSkill(SKILL_HAMMERDISCIPLINE, "Hammer Discipline", GOOD.."-40% swing delay with the Carpenter Hammer",
+GM:AddSkill(SKILL_HAMMERDISCIPLINE, "Hammer Discipline I", GOOD.."-20% swing delay with the Carpenter Hammer",
 																0,			1,					{SKILL_BARRICADEEXPERT}, TREE_BUILDINGTREE)
+GM:AddSkill(SKILL_HAMMERDISCIPLINE1, "Hammer Discipline II", GOOD.."-25% swing delay with the Carpenter Hammer",
+																0,			0,					{SKILL_HAMMERDISCIPLINE}, TREE_BUILDINGTREE)
+GM:AddSkill(SKILL_HAMMERDISCIPLINE2, "Hammer Discipline III", GOOD.."-10% swing delay with the Carpenter Hammer",
+																0,			-1,					{SKILL_HAMMERDISCIPLINE1}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_BARRICADEEXPERT, "Reinforcer", GOOD.."Props hit with a hammer in the last 7 seconds take 8% less damage\n"..GOOD.."Gain points from protected props\n"..BAD.."+20% swing delay with the Carpenter Hammer",
 																0,			3,					{}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_LOADEDHULL, "Loaded Hull", GOOD.."Controllables explode when destroyed, dealing explosive damage\n"..BAD.."-10% Controllable health",
@@ -1480,7 +1486,9 @@ GM:AddSkillModifier(SKILL_WARP, SKILLMOD_SIGIL_TELEPORT_MUL, -0.05)
 GM:AddSkillModifier(SKILL_SIGILOL, SKILLMOD_SIGIL_TELEPORT_MUL, 1)
 GM:AddSkillModifier(SKILL_SIGILOL, SKILLMOD_BARRICADE_PHASE_SPEED_MUL, 3)
 
-GM:AddSkillModifier(SKILL_HAMMERDISCIPLINE, SKILLMOD_HAMMER_SWING_DELAY_MUL, -0.4)
+GM:AddSkillModifier(SKILL_HAMMERDISCIPLINE, SKILLMOD_HAMMER_SWING_DELAY_MUL, -0.2)
+GM:AddSkillModifier(SKILL_HAMMERDISCIPLINE1, SKILLMOD_HAMMER_SWING_DELAY_MUL, -0.25)
+GM:AddSkillModifier(SKILL_HAMMERDISCIPLINE2, SKILLMOD_HAMMER_SWING_DELAY_MUL, -0.10)
 GM:AddSkillModifier(SKILL_BARRICADEEXPERT, SKILLMOD_HAMMER_SWING_DELAY_MUL, 0.2)
 
 GM:AddSkillModifier(SKILL_SAFEFALL, SKILLMOD_FALLDAMAGE_DAMAGE_MUL, -0.4)
