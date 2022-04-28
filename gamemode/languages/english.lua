@@ -910,7 +910,10 @@ LANGUAGE.class_cringe   						= "Cringe+"
 LANGUAGE.class_cringe2   						= "Crif"
 LANGUAGE.class_bnightmare   						= "Bloody Nightmare"
 LANGUAGE.class_king_fast   						= "King of Fasts"
+LANGUAGE.class_ipukepus   						= "Icy Puke Pus"
 -- Class descriptions
+LANGUAGE.description_ipukepus						= "The rotting body of the Ice Puke Pus is comprised entirely of organs used for the generation of poison and ice cubes.\nHe corrupt reality for hide\nIt's capable of vomiting gallons of poison puke at a time making it extremely dangerous."
+
 LANGUAGE.description_zombie							= "The basic zombie is very durable and has powerful claws.\nIt's hard to keep down, especially if not shot in the head."
 LANGUAGE.description_zombie_gore_blaster			= "Gore Blaster Zombies send viscera in all direction when killed which can cause minor harm.\nTheir claws can also inflict bleeding."
 LANGUAGE.description_poison_zombie					= "This mutated zombie is not only extremely durable but has abnormal strength.\nIts body is extremely toxic and will even tear out and toss its own flesh at things too far away to hit."

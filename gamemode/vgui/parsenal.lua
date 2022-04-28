@@ -387,7 +387,7 @@ function GM:AddShopItem(list, i, tab, issub, nopointshop)
 	end
 
 	local name = tab.Name or ""
-	local namelab = EasyLabel(itempan, name, "ZSHUDFontSmaller", COLOR_WHITE)
+	local namelab = EasyLabel(itempan, name, "ZSHUDFontTiniest", COLOR_WHITE)
 	namelab:SetPos(12 * screenscale, itempan:GetTall() * (nottrinkets and 0.8 or 0.7) - namelab:GetTall() * 0.34)
 	if missing_skill then
 		namelab:SetAlpha(30)
@@ -527,7 +527,7 @@ function GM:CreateItemViewerGenericElems(viewer)
 	viewer.ModelPanel = modelpanel
 
 	local itemdesc = vgui.Create("DLabel", viewer)
-	itemdesc:SetFont("ZSBodyTextFont")
+	itemdesc:SetFont("ZSHUDFontTiniest")
 	itemdesc:SetTextColor(COLOR_GRAY)
 	itemdesc:SetMultiline(true)
 	itemdesc:SetWrap(true)

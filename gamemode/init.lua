@@ -4494,11 +4494,14 @@ function GM:WaveStateChanged(newstate, pl)
 						local luck = 20 - pl.Luck 
 						local lucky1 = math.random(1,luck)
 						local charge = math.random(1,chargemax)
+
+						print(charge)
 						
 						print(luck)
 						
 						print(lucky1)
 						if lucky1 == 5 then 
+							
 
 						pl:AddPoints(120)
 						pl:TakeInventoryItem("trinket_lotteryticket")

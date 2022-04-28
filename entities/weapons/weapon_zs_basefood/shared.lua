@@ -51,7 +51,7 @@ function SWEP:CanEat()
 		return owner:GetBloodArmor() < owner.MaxBloodArmor + (40 * owner.MaxBloodArmorMul)
 	end
 
-	local max = owner:IsSkillActive(SKILL_D_FRAIL) and math.floor(owner:GetMaxHealth() * 0.25) or owner:GetMaxHealth()
+	local max = owner:IsSkillActive(SKILL_D_FRAIL) and math.floor(owner:GetMaxHealth() * 0.44) or owner:GetMaxHealth()
 	return owner:Health() < max
 end
 

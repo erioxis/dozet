@@ -357,6 +357,7 @@ function PANEL:PerformLayout()
 	self.m_ScoreLabel:SizeToContents()
 	self.m_ScoreLabel:SetPos(self:GetWide() * 0.6 - self.m_ScoreLabel:GetWide() / 2, 0)
 	self.m_ScoreLabel:CenterVertical()
+	
 
 	self.m_SpecialImage:CenterVertical()
 

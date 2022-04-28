@@ -26,3 +26,4 @@ SWEP.Primary.Ammo = "foodwater"
 SWEP.FoodHealth = -45
 SWEP.FoodEatTime = 3
 SWEP.FoodIsLiquid = true
+
