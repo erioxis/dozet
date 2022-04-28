@@ -1,6 +1,6 @@
 AddCSLuaFile()
 
-SWEP.PrintName = "Nightmare"
+SWEP.PrintName = "Bloody Nightmare"
 
 SWEP.Base = "weapon_zs_zombie"
 

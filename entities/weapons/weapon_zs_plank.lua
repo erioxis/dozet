@@ -72,18 +72,19 @@ function SWEP:PostOnMeleeMiss(tr)
 end
 
 GAMEMODE:AddNewRemantleBranch(SWEP, 1, "'Planket'", "Give Bleed when you hit zombie,less damage,", function(wept)
-wept.MeleeDamage = 13
-wept.ApplyMeleeDamage = function(ent, trace, damage)
-	if SERVER and ent:IsPlayer() then
+wept.MeleeDamage = wept.MeleeDamage * 0.8
+wept.BleedDamage = wept.MeleeDamage * 2
+function wept:ApplyMeleeDamage(ent, trace, damage)
+	if ent:IsValidLivingZombie() then
+
 
 		local bleed = ent:GiveStatus("bleed")
 		if bleed and bleed:IsValid() then
-		
+			bleed:AddDamage(12)
 			bleed.Damager = self:GetOwner()
-			bleed:AddDamage(6)
 		end
 	end
 
-	self.BaseClass.ApplyMeleeDamage(self, ent, trace, damage)
 end
+
 end)
