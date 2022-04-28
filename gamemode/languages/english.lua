@@ -19,6 +19,7 @@ RULES FOR TRANSLATORS!!
 translate.AddLanguage("en", "English")
 
 -- Various gamemode stuff
+LANGUAGE.luck                                = "Your Luck %s"
 LANGUAGE.worthshop1                                = "Worth Menu"
 LANGUAGE.pointshop1                                = "The Points Shop"
 LANGUAGE.spendpoints                                = "Points to spend: "

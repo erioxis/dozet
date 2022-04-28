@@ -492,6 +492,8 @@ function GM:AddNetworkStrings()
 	util.AddNetworkString("zs_nestspec")
 	util.AddNetworkString("zs_tvcamera")
 
+	util.AddNetworkString("zs_luck")
+
 	util.AddNetworkString("zs_mutations_table")
 
 	util.AddNetworkString("zs_inventoryitem")
@@ -4533,8 +4535,9 @@ function GM:WaveStateChanged(newstate, pl)
 						net.Send(pl)
 							
 							else end end 
-						print("1 - chance\n2 - number\n3 - luck")
-						print(pl.Luck)
+							net.Start("zs_luck")
+							net.WriteString(pl.Luck)
+						net.Send(pl)
 						pl:AddPoints(pointsreward, nil, nil, true)
 					end
 				end
