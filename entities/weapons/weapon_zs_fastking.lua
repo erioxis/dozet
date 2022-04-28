@@ -55,9 +55,9 @@ function SWEP:Think()
 				local speed = owner:GetVelocity():LengthSqr()
 				if speed >= 2500 then
 					if speed >= 10000 then
-						self.NextClimbSound = curtime + 0.25
+						self.NextClimbSound = curtime + 0.33
 					else
-						self.NextClimbSound = curtime + 0.8
+						self.NextClimbSound = curtime + 0.5
 					end
 
 					self:PlayClimbSound()
@@ -229,23 +229,23 @@ function SWEP:Move(mv)
 		local owner = self:GetOwner()
 		local tr = self:GetClimbSurface()
 		local angs = owner:SyncAngles()
-		local dir = tr and tr.Hit and (tr.HitNormal.z <= -0.5 and (angs:Forward() * -1) or math.abs(tr.HitNormal.z) < 0.75 and tr.HitNormal:Angle():Up()) or Vector(0, 0, 1)
+		local dir = tr and tr.Hit and (tr.HitNormal.z <= -0.5 and (angs:Forward() * -3) or math.abs(tr.HitNormal.z) < 2 and tr.HitNormal:Angle():Up()) or Vector(0, 0, 1)
 		local vel = Vector(0, 0, 4)
 
 		if owner:KeyDown(IN_FORWARD) then
 			owner:SetGroundEntity(nil)
-			vel = vel + dir * 250 --160
+			vel = vel + dir * 750 --160
 		end
 		if owner:KeyDown(IN_BACK) then
-			vel = vel + dir * -250 ---160
+			vel = vel + dir * -950 ---160
 		end
 
 		if vel.z == 4 then
 			if owner:KeyDown(IN_MOVERIGHT) then
-				vel = vel + angs:Right() * 100 --60
+				vel = vel + angs:Right() * 300 --60
 			end
 			if owner:KeyDown(IN_MOVELEFT) then
-				vel = vel + angs:Right() * -100 ---60
+				vel = vel + angs:Right() * -600 ---60
 			end
 		end
 

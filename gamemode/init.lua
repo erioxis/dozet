@@ -2166,8 +2166,6 @@ concommand.Add("zs_mutationshop_click", function(sender, command, arguments)
 				sender:SendLua("surface.PlaySound(\"ambient/levels/labs/coinslot1.wav\")")
 				sender.UsedMutations = sender.UsedMutations or { }
 				table.insert( sender.UsedMutations, tab.Signature )
-				print( sender.UsedMutations, tab.Signature ) --DEBUG
-				print( cost ) --DEBUG
 			end
 		end
 	end
@@ -2850,7 +2848,7 @@ function GM:EntityTakeDamage(ent, dmginfo)
 						if myteam == TEAM_UNDEAD then
 							if otherteam == TEAM_HUMAN then
 								attacker:AddLifeHumanDamage(damage)
-								attacker:AddTokens(math.ceil(damage * 3))
+								attacker:AddTokens(math.ceil(damage * 1.5))
 								GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_ZOMBIECLASS, attacker:GetZombieClassTable().Name, "HumanDamage", damage)
 							end
 						elseif myteam == TEAM_HUMAN and otherteam == TEAM_UNDEAD then
@@ -4491,8 +4489,12 @@ function GM:WaveStateChanged(newstate, pl)
 						pl:GiveAmmo(math.ceil(pointsreward), "scrap")
 					else
 						if pl:HasTrinket("lotteryticket")  then 
+					 local luckdis = (pl.Luck / 4)
+						local	chargemax = 6 - luckdis
 						local luck = 20 - pl.Luck 
 						local lucky1 = math.random(1,luck)
+						local charge = math.random(1,chargemax)
+						
 						print(luck)
 						
 						print(lucky1)
@@ -4500,27 +4502,34 @@ function GM:WaveStateChanged(newstate, pl)
 
 						pl:AddPoints(120)
 						pl:TakeInventoryItem("trinket_lotteryticket")
+						if not charge == 5  then
 						net.Start("zs_trinketconsumed")
 						net.WriteString("Lottery ticket")
 					net.Send(pl)
 						
-						else end end
+						else end end end
 
 					if pl:HasTrinket("mysteryticket")  then 
+						local luckdis = (pl.Luck / 4)
+						local chargemax = 6 - luckdis
 						local luck = 40 - pl.Luck 
 						local lucky2 = math.random(1,luck)
 						print(luck)
 						
+						local charge = math.random(1,chargemax)
 						print(lucky2)
 						if lucky2 == 2 then 
 
 						pl:AddZSXP(10000)
 						pl:TakeInventoryItem("trinket_mysteryticket")
+						if not charge == 1 then
+							
+						print(charge)
 						net.Start("zs_trinketconsumed")
 						net.WriteString("Mystery ticket")
 					net.Send(pl)
 						
-						else end end 
+						else end end end
 						if pl:IsSkillActive(SKILL_ABUSE)  then 
 							local luck = 8 - (pl.Luck / 3)
 							local lucky5 = math.random(1,luck)
