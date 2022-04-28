@@ -564,8 +564,8 @@ GM:AddPointShopItem("medrifle",			ITEMCAT_TOOLS,			55,				"weapon_zs_medicrifle"
 GM:AddPointShopItem("healray",			ITEMCAT_TOOLS,			100,			"weapon_zs_healingray")
 GM:AddPointShopItem("stone",			ITEMCAT_TOOLS,			15,			"weapon_zs_stone")
 GM:AddPointShopItem("scrap",				ITEMCAT_TOOLS,			30,				nil,							"Scrap x20",							"Scrap but is have x15.",					"ammo_scrap",						function(pl) pl:GiveAmmo(20, "Scrap", true) end)
-GM:AddPointShopItem("scrap",				ITEMCAT_TOOLS,			200,				nil,							"Scrap x100",							"Scrap but is have x100.",					"ammo_scrap",						function(pl) pl:GiveAmmo(100, "Scrap", true) end)
-GM:AddPointShopItem("scrap",				ITEMCAT_TOOLS,			1000,				nil,							"Scrap x900",							"Scrap but is have x100.",					"ammo_scrap",						function(pl) pl:GiveAmmo(900, "Scrap", true) end)
+GM:AddPointShopItem("scrap100",				ITEMCAT_TOOLS,			200,				nil,							"Scrap x100",							"Scrap but is have x100.",					"ammo_scrap",						function(pl) pl:GiveAmmo(100, "Scrap", true) end)
+GM:AddPointShopItem("scrap900",				ITEMCAT_TOOLS,			1000,				nil,							"Scrap x900",							"Scrap but is have x100.",					"ammo_scrap",						function(pl) pl:GiveAmmo(900, "Scrap", true) end)
 
 -- Tier 1
 GM:AddPointShopItem("cutlery",			ITEMCAT_TRINKETS,		10,				"trinket_cutlery").SubCategory =								ITEMSUBCAT_TRINKETS_DEFENSIVE
