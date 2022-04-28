@@ -67,7 +67,7 @@ function ENT:Think()
 end
 
 function ENT:SetParticleColor(particle)
-	particle:SetColor(120, 202, 5)
+	particle:SetColor(38, 102, 255)
 end
 
 function ENT:Draw()

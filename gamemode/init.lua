@@ -479,6 +479,7 @@ function GM:AddNetworkStrings()
 	util.AddNetworkString("zs_deployableclaim")
 	util.AddNetworkString("zs_deployableout")
 	util.AddNetworkString("zs_trinketconsumed")
+	util.AddNetworkString("zs_pointsdoubled")
 	util.AddNetworkString("zs_nailremoved")
 	util.AddNetworkString("zs_remantlercontent")
 	util.AddNetworkString("zs_classunlockstate")
@@ -3950,9 +3951,21 @@ function GM:PlayerCanPickupItem(pl, ent)
 			end
 		end
 	end
-
 	return true
 end
+function GM:PlayerCanPickupItem(pl, ent)
+	if pl:IsSkillActive(SKILL_ABUSE) then
+		local class = ent:GetClass()
+		if class == "item_healthkit" or class == "item_healthvial" then
+			local healamount = #class == 14 and 25 or 10
+			if pl:Health() + healamount > math.floor(pl:GetMaxHealth() * 0.44) then
+				return false
+			end
+		end
+	end
+	return true
+end
+
 
 -- This function is only for footsteps for players not in the local player's pvs or something.
 -- The cl_init.lua version usually overrides this number so I just set it to a static number to save cycles.
@@ -4506,6 +4519,20 @@ function GM:WaveStateChanged(newstate, pl)
 					net.Send(pl)
 						
 						else end end 
+						if pl:IsSkillActive(SKILL_ABUSE)  then 
+							local luck = 8 - (pl.Luck / 3)
+							local lucky5 = math.random(1,luck)
+							print(luck)
+							
+							print(lucky5)
+							if lucky5 == 1 then 
+	
+							pl:AddPoints(pointsreward * 2, nil, nil, true)
+
+							net.Start("zs_pointsdoubled")
+						net.Send(pl)
+							
+							else end end 
 						print("1 - chance\n2 - number\n3 - luck")
 						print(pl.Luck)
 						pl:AddPoints(pointsreward, nil, nil, true)

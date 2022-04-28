@@ -157,3 +157,16 @@ function SWEP:GetClimbing()
 	return self:GetDTBool(1)
 end
 SWEP.IsClimbing = SWEP.GetClimbing
+
+function SWEP:ApplyMeleeDamage(pl, trace, damage)
+	if SERVER and pl:IsPlayer() then
+		local rot = pl:GetStatus("rot")
+		if (rot) then 
+			pl:AddRot(self:GetOwner(), rot.DieTime - CurTime() + 5)
+		end
+		if (not rot) then 
+			pl:AddRot(pl:GetOwner(), 5)
+		end
+	end
+	self.BaseClass.ApplyMeleeDamage(self, pl, trace, damage)
+end

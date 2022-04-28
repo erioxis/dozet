@@ -397,6 +397,12 @@ net.Receive("zs_trinketconsumed", function(length)
 
 	GAMEMODE:CenterNotify({killicon = "weapon_zs_trinket"}, " ", COLOR_RORANGE, translate.Format("trinket_consumed", trinket))
 end)
+net.Receive("zs_pointsdoubled", function(length)
+	MySelf:EmitSound("buttons/button3.wav", 75, 50)
+
+	GAMEMODE:CenterNotify({killicon = "weapon_zs_trinket"}, " ", COLOR_RORANGE, translate.Format("pointsdoubled"))
+end)
+
 
 net.Receive("zs_invitem", function(length)
 	local invitemt = net.ReadString()

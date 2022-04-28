@@ -514,6 +514,10 @@ LANGUAGE.wep_d_strengthshot = "Стреляет улучшающими силу 
 LANGUAGE.wep_megaray    = "Мегацелебный луч «Ервориум»"
 LANGUAGE.wep_d_megaray  = "Нацеливается на людей и полностью излечивает их, разряжая медицинские боеприпасы по лучу."
 --Улучшения пушек
+LANGUAGE.wep_glock_r1   = "'Коллайдер' Глок 3"
+LANGUAGE.wep_d_glock_r1 = "Делает на 2 больше,более точных выстрела, меньший базовый урон и шанс получить рипер стаки(13% Доп урона)."
+LANGUAGE.wep_glock_r2   = "'Измельчитель' SOCOM Марк 23"
+LANGUAGE.wep_d_glock_r2 = "Делает 1 выстрел заместо 4, скрывает вашу ауру, наносит БОЛЬШЕ общего урона, точнее"
 LANGUAGE.wep_strengthshot_r1    = "Защитный пистолет"
 LANGUAGE.wep_d_strengthshot_r1  = "Дает игрокам усиление защиты вместо повышения силы."
 LANGUAGE.wep_annabelle_r1   = "Бирдшот Винтовка 'Аннабель'"
@@ -682,6 +686,8 @@ LANGUAGE.integrity_x								= "Целостность: %d%%"
 LANGUAGE.empty										= "ПУСТО"
 LANGUAGE.manual_control								= "УПРАВЛЕНИЕ"
 LANGUAGE.arsenal_crate								= "Арсенальный ящик"
+LANGUAGE.trinket_consumed							= "Ваш %s тринкет был использован."
+LANGUAGE.pointsdoubled							= "Поинты которые даются под конец волны удвоены"
 --переводы пушек
 --переводы милишки
 
