@@ -391,7 +391,7 @@ GM:AddSkill(SKILL_STOIC5, ""..translate.Get("skill_stoicv_0"), GOOD..""..transla
 																-3,			2,					{SKILL_BLOODARMOR, SKILL_TANKER}, TREE_HEALTHTREE)
 GM:AddSkill(SKILL_D_HEMOPHILIA, ""..translate.Get("skill_hemoplilia_0"), GOOD..""..translate.Get("skill_hemoplilia_d1")..GOOD..""..translate.Get("skill_hemoplilia_d2")..BAD..""..translate.Get("skill_hemoplilia_d3"),
 																4,			2,					{}, TREE_HEALTHTREE)
-GM:AddSkill(SKILL_GLUTTON,  ""..translate.Get("skill_glutton_0"), GOOD.. ""..translate.Get("skill_hemoplilia_d1")..GOOD.. ""..translate.Get("skill_hemoplilia_d2")..GOOD.. ""..translate.Get("skill_hemoplilia_d3")..BAD.. ""..translate.Get("skill_hemoplilia_d4"),
+GM:AddSkill(SKILL_GLUTTON,  ""..translate.Get("skill_glutton_0"), GOOD.. ""..translate.Get("skill_glutton_d1")..GOOD.. ""..translate.Get("skill_glutton_d2")..GOOD.. ""..translate.Get("skill_glutton_d3")..BAD.. ""..translate.Get("skill_glutton_d4"),
 																3,			-2,					{SKILL_GOURMET, SKILL_BLOODARMOR}, TREE_HEALTHTREE)
 GM:AddSkill(SKILL_PREPAREDNESS, ""..translate.Get("skill_prepadnes_0"), GOOD..""..translate.Get("skill_prepadnes_d"),
 																4,			-6,					{SKILL_NONE}, TREE_HEALTHTREE)
