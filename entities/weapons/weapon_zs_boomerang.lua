@@ -2,14 +2,21 @@ AddCSLuaFile()
 
 --SWEP.PrintName = "Harpoon MEGA"
 --SWEP.Description = "MEGAAAA."
-SWEP.PrintName = ""..translate.Get("wep_harpoon_m")
-SWEP.Description = ""..translate.Get("wep_d_harpoon_m")
+SWEP.PrintName = ""..translate.Get("wep_boomer")
+SWEP.Description = ""..translate.Get("wep_d_boomer")
 
 if CLIENT then
 	SWEP.ViewModelFOV = 60
 
 	SWEP.ShowViewModel = false
 	SWEP.ShowWorldModel = false
+	SWEP.ViewModelBoneMods = {
+		["ValveBiped.Bip01_R_Finger0"] = { scale = Vector(1, 1, 1), pos = Vector(0, 0, 0), angle = Angle(10.778, 0, 0) },
+		["ValveBiped.Bip01_R_Finger01"] = { scale = Vector(0.825, 0.825, 0.825), pos = Vector(-0.719, 0, 0), angle = Angle(0, 32.335, 0) },
+		["ValveBiped.Bip01_R_Finger1"] = { scale = Vector(1, 1, 1), pos = Vector(-0.359, 0, 0), angle = Angle(0, -12.934, 0) },
+		["ValveBiped.Bip01_R_Finger2"] = { scale = Vector(1, 1, 1), pos = Vector(0, -0.719, 0), angle = Angle(-19.401, 0, 0) }
+	}
+	
 
 	SWEP.VElements = {
 		["boomerang"] = { type = "Model", model = "models/props_c17/truss03a.mdl", bone = "ValveBiped.Bip01_R_Finger4", rel = "", pos = Vector(3.119, 3.797, -1.822), angle = Angle(-179.164, 72.453, -75.066), size = Vector(0.05, 0.05, 0.025), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
@@ -26,10 +33,14 @@ if CLIENT then
 end
 
 SWEP.Base = "weapon_zs_basemelee"
-
-SWEP.HoldType = "knife"
+SWEP.UseHands = true
+SWEP.HoldType = "grenade"
 
 SWEP.DamageType = DMG_SLASH
+
+SWEP.ViewModel = "models/weapons/v_grenade.mdl"
+SWEP.WorldModel = "models/weapons/w_bugbait.mdl"
+
 
 
 
@@ -39,14 +50,14 @@ SWEP.MeleeSize = 1.6
 SWEP.MaxStock = 2
 SWEP.Primary.Delay = 1.98
 
-SWEP.Tier = 6
+SWEP.Tier = 5
 
 SWEP.WalkSpeed = SPEED_SLOWER
 
 SWEP.SwingRotation = Angle(0, -90, -60)
 SWEP.SwingOffset = Vector(0, 30, -40)
 SWEP.SwingTime = 0.6
-SWEP.SwingHoldType = "slam"
+SWEP.SwingHoldType = "grenade"
 
 SWEP.HitAnim = ACT_VM_MISSCENTER
 
@@ -85,14 +96,14 @@ function SWEP:SecondaryAttack()
 			ent:SetPos(owner:GetShootPos())
 			ent:SetAngles(owner:EyeAngles())
 			ent:SetOwner(owner)
-			ent.ProjDamage = self.MeleeDamage * (owner.ProjectileDamageMul or 1)
+			ent.ProjDamage = 134
 			ent.BaseWeapon = self:GetClass()
 			ent:Spawn()
 			ent.Team = owner:Team()
 			local phys = ent:GetPhysicsObject()
 			if phys:IsValid() then
 				phys:Wake()
-				phys:SetVelocityInstantaneous(self:GetOwner():GetAimVector() * 900 * (owner.ObjectThrowStrengthMul or 1))
+				phys:SetVelocityInstantaneous(self:GetOwner():GetAimVector() * 30 * (owner.ObjectThrowStrengthMul or 1))
 			end
 		end
 

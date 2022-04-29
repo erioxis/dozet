@@ -565,6 +565,8 @@ LANGUAGE.wep_d_luxod_r1		= "Have big chance to create explosive than kill, faste
 --[[LANGUAGE.wep_annabelle_r1	=  "'Blaster' Slug gun"
 LANGUAGE.wep_d_annabelle_r1	=  "One very accurate slug round, less total damage"]]
 --melee
+LANGUAGE.wep_boomer		= "Boom-rang"
+LANGUAGE.wep_d_boomer		= "Damage x2 when throwed"
 LANGUAGE.wep_teslorer = "Teslorer"
 LANGUAGE.wep_d_teslorer = "Have small damage but have big range and stun effect."
 LANGUAGE.wep_gscythe = "Great Scythe"

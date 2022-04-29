@@ -464,6 +464,7 @@ GM:AddPointShopItem("frotchet",			ITEMCAT_MELEE,			500,			"weapon_zs_frotchet")
 GM:AddPointShopItem("luxrockj",			ITEMCAT_MELEE,			135,			"weapon_zs_luxshade")
 GM:AddPointShopItem("xouryc",			ITEMCAT_MELEE,			500,			"weapon_zs_loy")
 GM:AddPointShopItem("luxoid",			ITEMCAT_MELEE,			500,			"weapon_zs_luxoid")
+GM:AddPointShopItem("boomerang",		ITEMCAT_MELEE,			500,			"weapon_zs_boomerang")
 -- Tier 6
 GM:AddPointShopItem("megahook",			ITEMCAT_MELEE,			1500,			"weapon_zs_harpoon_mega")
 GM:AddPointShopItem("teslar",			ITEMCAT_MELEE,			1500,			"weapon_zs_teslorer")
