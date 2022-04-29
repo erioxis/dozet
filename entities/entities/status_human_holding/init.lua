@@ -35,6 +35,7 @@ function ENT:Initialize()
 		object.IgnoreTraces = true
 		object.IgnoreBullets = true
 
+
 		for _, ent in pairs(ents.FindByClass("logic_pickupdrop")) do
 			if ent.EntityToWatch == object:GetName() and ent:IsValid() then
 				ent:Input("onpickedup", owner, object, "")
@@ -52,6 +53,9 @@ function ENT:Initialize()
 			objectphys:AddGameFlag(FVPHYSICS_NO_IMPACT_DMG)
 			objectphys:AddGameFlag(FVPHYSICS_NO_NPC_IMPACT_DMG)
 
+			
+
+
 			self:SetObjectMass(objectphys:GetMass())
 
 			object.PreHoldCollisionGroup = object.PreHoldCollisionGroup or object:GetCollisionGroup()
@@ -62,7 +66,8 @@ function ENT:Initialize()
 			object._OriginalMass = objectphys:GetMass()
 
 			objectphys:EnableGravity(false)
-			objectphys:SetMass(2)
+			objectphys:SetMass(3)
+			
 
 			object:SetOwner(owner)
 			object:SetCollisionGroup(COLLISION_GROUP_WEAPON)
@@ -81,7 +86,7 @@ function ENT:Initialize()
 					child.PreHoldAlpha = child.PreHoldAlpha or child:GetAlpha()
 					child.PreHoldRenderMode = child.PreHoldRenderMode or child:GetRenderMode()
 
-					child:SetAlpha(180)
+					child:SetAlpha(110)
 					child:SetRenderMode(RENDERMODE_TRANSALPHA)
 				end
 
@@ -90,6 +95,8 @@ function ENT:Initialize()
 			end
 
 			object:CollisionRulesChanged()
+			
+
 		end
 	end
 end
@@ -284,3 +291,4 @@ function ENT:Think()
 	self:NextThink(ct)
 	return true
 end
+

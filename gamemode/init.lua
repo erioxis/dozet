@@ -210,6 +210,7 @@ function GM:TryHumanPickup(pl, entity)
 					newstatus:SetParent(pl)
 					newstatus:SetObject(entity)
 					newstatus:Spawn()
+					
 				end
 			end
 		end

@@ -16,15 +16,20 @@ function ENT:Initialize()
 
 	self:SetModel("models/props_lab/powerbox01a.mdl")
 	self:SetUseType(SIMPLE_USE)
-	self:SetCollisionGroup(COLLISION_GROUP_WORLD)
 	
-    self:PhysicsInit(SOLID_VPHYSICS)
-self:CollisionRulesChanged()
-	local phys = self:GetPhysicsObject()
-	if phys:IsValid() then
-		phys:EnableMotion(false)
-		phys:AddGameFlag(FVPHYSICS_NO_IMPACT_DMG)
-	end
+	
+	self:PhysicsInit(SOLID_VPHYSICS)
+	self:SetSolid(SOLID_VPHYSICS)
+	self:SetCollisionGroup(COLLISION_GROUP_PROJECTILE)
+	self:SetCustomCollisionCheck(true)
+
+	self:CollisionRulesChanged()
+		local phys = self:GetPhysicsObject()
+		if phys:IsValid() then
+			phys:EnableMotion(false)
+		end
+
+	self:CollisionRulesChanged()
 
 	self:SetMaxObjectHealth(200)
 	self:SetObjectHealth(self:GetMaxObjectHealth())
@@ -128,3 +133,4 @@ function ENT:Use(activator, caller)
 
 	activator:SendLua("GAMEMODE:OpenRemantlerMenu(MySelf:NearestRemantler())")
 end
+

@@ -747,9 +747,16 @@ SKILL_MELEEFAN = 224
 GM:AddSkill(SKILL_MELEEFAN, "True Melee", BAD.."-350% Unarmed melee damage\n"..GOOD.."+35% Melee damage\n"..GOOD.."-15% Melee swing impact delay",
 																9,			-3,					{SKILL_FISTING}, TREE_MELEETREE)
 
-GM:AddSkillModifier(SKILL_MELEEFAN, -SKILLMOD_UNARMED_DAMAGE_MUL, 3.50)
+GM:AddSkillModifier(SKILL_MELEEFAN, SKILLMOD_UNARMED_DAMAGE_MUL, -3.50)
 GM:AddSkillModifier(SKILL_MELEEFAN, SKILLMOD_MELEE_SWING_DELAY_MUL, -0.15)
 GM:AddSkillModifier(SKILL_MELEEFAN, SKILLMOD_MELEE_DAMAGE_MUL, 0.35)
+SKILL_OPM = 225				
+GM:AddSkill(SKILL_OPM, "One Punch Man", GOOD.."+350% Unarmed melee damage\n"..BAD.."-35% Melee damage\n"..GOOD.."+150% time before next unarmed strike ",
+																9,			-5,					{SKILL_MELEEFAN}, TREE_MELEETREE)
+
+GM:AddSkillModifier(SKILL_MELEEFAN, SKILLMOD_UNARMED_DAMAGE_MUL, 3.50)
+GM:AddSkillModifier(SKILL_MELEEFAN, SKILLMOD_UNARMED_SWING_DELAY_MUL, 1.5)
+GM:AddSkillModifier(SKILL_MELEEFAN, SKILLMOD_MELEE_DAMAGE_MUL, -0.35)
 
 
 
