@@ -409,7 +409,7 @@ GM:AddSkill(SKILL_BLOODARMOR, "Blood Armor", GOOD.."Regenerate 1 blood armor eve
 																2,			2,					{SKILL_IRONBLOOD, SKILL_BLOODLETTER, SKILL_D_HEMOPHILIA}, TREE_HEALTHTREE)
 GM:AddSkill(SKILL_IRONBLOOD, "Iron Blood", GOOD.."+25% damage reduction from blood armor\n"..GOOD.."Bonus doubled when health is 50% or less\n"..BAD.."-50% maximum blood armor",
 																2,			4,					{SKILL_HAEMOSTASIS, SKILL_CIRCULATION}, TREE_HEALTHTREE)
-GM:AddSkill(SKILL_D_WEAKNESS, "Debuff: Weakness", GOOD.."+60 starting Worth\n"..GOOD.."+15 end of wave points\n"..BAD.."-60 maximum health\n"..BAD.."-30 Melee Damage\n",
+GM:AddSkill(SKILL_D_WEAKNESS, "Debuff: Weakness", GOOD.."+60 starting Worth\n"..GOOD.."+15 end of wave points\n"..BAD.."-60 maximum health\n"..BAD.."-30% Melee Damage\n",
 																1,			-1,					{}, TREE_HEALTHTREE)
 GM:AddSkill(SKILL_VITALITY1, "Vitality I", GOOD.."+3 maximum health",
 																0,			-4,					{SKILL_VITALITY2}, TREE_HEALTHTREE)
@@ -727,7 +727,32 @@ GM:AddSkill(SKILL_BRASH, "Brash", GOOD.."-16% melee swing impact delay\n"..BAD..
 GM:AddSkill(SKILL_FOUR_IN_ONE, "2 in 1", GOOD.."-9% melee swing impact delay\n"..BAD.."-7 health",
 																-2,			-2,					{}, TREE_MELEETREE)
 GM:AddSkill(SKILL_THREE_IN_ONE, "3 in 1", GOOD.."-16% melee swing impact delay\n"..BAD.."-10 health",
-																-3,			-3,					{SKILL_FOUR_IN_ONE}, TREE_MELEETREE)
+            													-3,			-3,					{SKILL_FOUR_IN_ONE}, TREE_MELEETREE)
+SKILL_LONGARM = 222					
+GM:AddSkill(SKILL_LONGARM, "Longarm", GOOD.."-7% melee swing impact delay\n"..GOOD.."+2% Melee range\n"..BAD.."-7% Reload speed",
+																-3,			-4,					{SKILL_THREE_IN_ONE}, TREE_MELEETREE)
+
+GM:AddSkillModifier(SKILL_LONGARM, SKILLMOD_MELEE_RANGE_MUL, 0.02)
+GM:AddSkillModifier(SKILL_LONGARM, SKILLMOD_MELEE_SWING_DELAY_MUL, -0.07)
+GM:AddSkillModifier(SKILL_LONGARM, SKILLMOD_RELOADSPEED_MUL, -0.07)
+SKILL_FISTING = 223				
+GM:AddSkill(SKILL_FISTING, "Fisting", GOOD.."+25% Unarmed melee damage mul\n"..GOOD.."-15% Unarmed swing delay\n"..BAD.."-25% Melee damage\n"..BAD.."+15% Melee swing impact delay",
+																8,			-2,					{SKILL_CRITICALKNUCKLE}, TREE_MELEETREE)
+
+GM:AddSkillModifier(SKILL_FISTING, SKILLMOD_UNARMED_DAMAGE_MUL, 0.50)
+GM:AddSkillModifier(SKILL_FISTING, SKILLMOD_UNARMED_SWING_DELAY_MUL, -0.30)
+GM:AddSkillModifier(SKILL_FISTING, SKILLMOD_MELEE_SWING_DELAY_MUL, 0.15)
+GM:AddSkillModifier(SKILL_FISTING, SKILLMOD_MELEE_DAMAGE_MUL, -0.25)
+SKILL_MELEEFAN = 224				
+GM:AddSkill(SKILL_MELEEFAN, "True Melee", BAD.."-350% Unarmed melee damage\n"..GOOD.."+35% Melee damage\n"..GOOD.."-15% Melee swing impact delay",
+																9,			-3,					{SKILL_FISTING}, TREE_MELEETREE)
+
+GM:AddSkillModifier(SKILL_MELEEFAN, -SKILLMOD_UNARMED_DAMAGE_MUL, 3.50)
+GM:AddSkillModifier(SKILL_MELEEFAN, SKILLMOD_MELEE_SWING_DELAY_MUL, -0.15)
+GM:AddSkillModifier(SKILL_MELEEFAN, SKILLMOD_MELEE_DAMAGE_MUL, 0.35)
+
+
+
 
 SKILL_POINTI = 157
 GM:AddSkillModifier(SKILL_POINTI, SKILLMOD_POINT_MULTIPLIER, 0.02)
