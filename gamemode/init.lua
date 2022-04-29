@@ -2019,17 +2019,19 @@ function GM:EndRound(winner)
 end
 
 function GM:ScalePlayerDamage(pl, hitgroup, dmginfo)
+	
 	local attacker = dmginfo:GetAttacker()
 	local inflictor = dmginfo:GetInflictor()
+	local damagescalebullet = (attacker.BulletMul or 1)
 	GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_WEAPON, inflictor:GetClass(), "Hits", 1)
 	if hitgroup == HITGROUP_HEAD then
 		GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_WEAPON, inflictor:GetClass(), "Headshots", 1)
 	end
-
+	if dmginfo:IsBulletDamage() then 
+		dmginfo:SetDamage(dmginfo:GetDamage() * damagescalebullet)
+	end
 	if not dmginfo:IsBulletDamage() then return end
 
-	--if dmginfo:IsBulletDamage() then dmginfo:Setdamage(dmginfo:GetDamage() * (pl.DamageMulBullet or 1)
-	--end
 
 	if hitgroup == HITGROUP_HEAD and dmginfo:IsBulletDamage() then
 		pl.m_LastHeadShot = CurTime()
@@ -2039,7 +2041,7 @@ function GM:ScalePlayerDamage(pl, hitgroup, dmginfo)
 
 	if not pl:CallZombieFunction2("ScalePlayerDamage", hitgroup, dmginfo) then
 		if hitgroup == HITGROUP_HEAD then
-			dmginfo:SetDamage(dmginfo:GetDamage() * (pl.DamageMulBullet or 1) * (inflictor.HeadshotMulti or 2) * (attacker:IsPlayer() and attacker:GetStatus("renegade") and 1.1 or 1))
+			dmginfo:SetDamage(dmginfo:GetDamage() * (inflictor.HeadshotMulti or 2) * (attacker:IsPlayer() and attacker:GetStatus("renegade") and 1.1 or 1))
 		elseif hitgroup == HITGROUP_LEFTLEG or hitgroup == HITGROUP_RIGHTLEG then
 			--if not crouchpunish then
 			if not pl:ShouldCrouchJumpPunish() then

@@ -630,12 +630,16 @@ GM:AddSkill(SKILL_LEVELHEADED, "Level Headed", GOOD.."-5% reduced effect of aim 
 																-2,			2,					{}, TREE_GUNTREE)
 GM:AddSkill(SKILL_QUICKDRAW, "Quick Draw", GOOD.."+65% weapon draw speed\n"..BAD.."-15% weapon reload speed",
 																0,			1,					{}, TREE_GUNTREE)
-GM:AddSkill(SKILL_FOCUS, "Focus I", GOOD.."+11% tighter aiming reticule\n"..BAD.."-3% weapon reload speed",
+GM:AddSkill(SKILL_FOCUS, "Focus I", GOOD.."+11% tighter aiming reticule\n"..GOOD.."+1% Bullet Damage\n"..BAD.."-3% weapon reload speed",
 																5,			6,					{SKILL_NONE, SKILL_FOCUSII}, TREE_GUNTREE)
-GM:AddSkill(SKILL_FOCUSII, "Focus II", GOOD.."+9% tighter aiming reticule\n"..BAD.."-7% weapon reload speed",
+GM:AddSkill(SKILL_FOCUSII, "Focus II", GOOD.."+9% tighter aiming reticule\n"..GOOD.."+3% Bullet Damage\n"..BAD.."-7% weapon reload speed",
 																4,			3,					{SKILL_FOCUSIII, SKILL_SCAVENGER, SKILL_D_PALSY, SKILL_PITCHER}, TREE_GUNTREE)
-GM:AddSkill(SKILL_FOCUSIII, "Focus III", GOOD.."+12% tighter aiming reticule\n"..BAD.."-6% weapon reload speed",
+GM:AddSkill(SKILL_FOCUSIII, "Focus III", GOOD.."+12% tighter aiming reticule\n"..GOOD.."+5% Bullet Damage\n"..BAD.."-6% weapon reload speed",
 																3,			0,					{SKILL_EGOCENTRIC, SKILL_WOOISM, SKILL_ORPHICFOCUS, SKILL_SCOURER}, TREE_GUNTREE)
+GM:AddSkillModifier(SKILL_FOCUS, SKILLMOD_DAMAGE, 0.01)
+GM:AddSkillModifier(SKILL_FOCUSII, SKILLMOD_DAMAGE, 0.03)
+GM:AddSkillModifier(SKILL_FOCUSIII, SKILLMOD_DAMAGE, 0.05)
+
 GM:AddSkill(SKILL_QUICKRELOAD, "Quick Reload", GOOD.."+10% weapon reload speed\n"..BAD.."-25% weapon draw speed",
 																-5,			1,					{SKILL_SLEIGHTOFHAND}, TREE_GUNTREE)
 GM:AddSkill(SKILL_SLEIGHTOFHAND, "Sleight of Hand", GOOD.."+10% weapon reload speed\n"..BAD.."-5% tighter aiming reticule",
@@ -746,17 +750,15 @@ GM:AddSkillModifier(SKILL_FISTING, SKILLMOD_MELEE_DAMAGE_MUL, -0.25)
 SKILL_MELEEFAN = 224				
 GM:AddSkill(SKILL_MELEEFAN, "True Melee", BAD.."-350% Unarmed melee damage\n"..GOOD.."+35% Melee damage\n"..GOOD.."-15% Melee swing impact delay",
 																9,			-3,					{SKILL_FISTING}, TREE_MELEETREE)
-
 GM:AddSkillModifier(SKILL_MELEEFAN, SKILLMOD_UNARMED_DAMAGE_MUL, -3.50)
 GM:AddSkillModifier(SKILL_MELEEFAN, SKILLMOD_MELEE_SWING_DELAY_MUL, -0.15)
 GM:AddSkillModifier(SKILL_MELEEFAN, SKILLMOD_MELEE_DAMAGE_MUL, 0.35)
 SKILL_OPM = 225				
-GM:AddSkill(SKILL_OPM, "One Punch Man", GOOD.."+350% Unarmed melee damage\n"..BAD.."-35% Melee damage\n"..GOOD.."+150% time before next unarmed strike ",
+GM:AddSkill(SKILL_OPM, "One Punch Man", GOOD.."+350% Unarmed melee damage\n"..BAD.."-35% Melee damage\n"..BAD.."+150% time before next unarmed strike ",
 																9,			-5,					{SKILL_MELEEFAN}, TREE_MELEETREE)
-
-GM:AddSkillModifier(SKILL_MELEEFAN, SKILLMOD_UNARMED_DAMAGE_MUL, 3.50)
-GM:AddSkillModifier(SKILL_MELEEFAN, SKILLMOD_UNARMED_SWING_DELAY_MUL, 1.5)
-GM:AddSkillModifier(SKILL_MELEEFAN, SKILLMOD_MELEE_DAMAGE_MUL, -0.35)
+GM:AddSkillModifier(SKILL_OPM, SKILLMOD_UNARMED_DAMAGE_MUL, 3.50)
+GM:AddSkillModifier(SKILL_OPM, SKILLMOD_UNARMED_SWING_DELAY_MUL, 1.5)
+GM:AddSkillModifier(SKILL_OPM, SKILLMOD_MELEE_DAMAGE_MUL, -0.35)
 
 
 
@@ -793,7 +795,7 @@ GM:AddSkill(SKILL_POINTFUL, "Pointful", BAD.."-25% Xp multiplier\n"..BAD.."-25 W
 GM:AddSkill(SKILL_LUCK, "Luck", NEUTRAL.."+1 luck",
 																-2,			-5,					{SKILL_POINTIIII}, TREE_POINTTREE)
 SKILL_LUCKE = 162
-GM:AddSkillModifier(SKILL_LUCKE, SKILLMOD_POINT_MULTIPLIER, -0.2)
+GM:AddSkillModifier(SKILL_LUCKE, SKILLMOD_POINT_MULTIPLIER, -0.1)
 GM:AddSkillModifier(SKILL_LUCKE, SKILLMOD_LUCK, 2)	
 GM:AddSkill(SKILL_LUCKE, "Luckiest", NEUTRAL.."+2 luck\n" ..BAD.. "-10% Points MUL",
 	1,			-2,					{SKILL_POINTIIII}, TREE_POINTTREE)
@@ -846,7 +848,7 @@ SKILL_PIGNUS = 175
 GM:AddSkillModifier(SKILL_PIGNUS, SKILLMOD_TURRET_SCANSPEED_MUL, 0.33)
 GM:AddSkillModifier(SKILL_PIGNUS, SKILLMOD_TURRET_HEALTH_MUL, 0.33)
 GM:AddSkillModifier(SKILL_PIGNUS, SKILLMOD_TURRET_RANGE_MUL, 0.33)
-GM:AddSkill(SKILL_PIGNUS, "Pignus", GOOD.."Better turrets!",
+GM:AddSkill(SKILL_PIGNUS, "Pignus", GOOD.."Better turrets!All stats up by 33%",
 					-1,			-5,					{SKILL_VERUS}, TREE_ANCIENTTREE)
 SKILL_STRENGHT = 176
 GM:AddSkillModifier(SKILL_STRENGHT, SKILLMOD_MELEE_DAMAGE_MUL, 0.1)
@@ -966,7 +968,7 @@ GM:AddSkill(SKILL_DONATE1, "Donate I", GOOD.."-3% Damage taken\n"..GOOD.."+2% Me
 
 GM:AddSkillModifier(SKILL_DONATE1, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.03)
 GM:AddSkillModifier(SKILL_DONATE1, SKILLMOD_MELEE_DAMAGE_MUL, 0.02)
-GM:AddSkillModifier(SKILL_DONATE1, SKILLMOD_DAMAGE, 1)
+
 SKILL_DONATE2 = 204
 GM:AddSkill(SKILL_DONATE2, "Donate II", GOOD.."+5 Blood armor\n"..GOOD.."-5% Poison Speed!Thank Null",
 				                                                            	20,			21,					{SKILL_DONATE1}, TREE_DONATETREE)
@@ -1081,6 +1083,9 @@ GM:SetSkillModifierFunction(SKILLMOD_JUMPPOWER_MUL, function(pl, amount)
 		pl:ResetJumpPower()
 	end
 end)
+GM:SetSkillModifierFunction(SKILLMOD_DAMAGE, function(pl, amount)
+	pl.BulletMul = math.Clamp(amount + 1.0, 0.0, 100.0)
+end)
 
 GM:SetSkillModifierFunction(SKILLMOD_DEPLOYSPEED_MUL, function(pl, amount)
 	pl.DeploySpeedMultiplier = math.Clamp(amount + 1.0, 0.05, 100.0)
@@ -1114,9 +1119,7 @@ end)
 GM:SetSkillModifierFunction(SKILLMOD_MELEE_DAMAGE_MUL, function(pl, amount)
 	pl.MeleeDamageMultiplier = math.Clamp(amount + 1.0, 0.0, 100.0)
 end)
-GM:SetSkillModifierFunction(SKILLMOD_DAMAGE, function(pl, amount)
-	pl.DamageMulBullet = math.Clamp(amount + 1.0, 0.0, 100.0)
-end)
+
 
 GM:SetSkillModifierFunction(SKILLMOD_SELF_DAMAGE_MUL, function(pl, amount)
 	pl.SelfDamageMul = math.Clamp(amount + 1.0, 0.0, 100.0)
