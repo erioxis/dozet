@@ -672,16 +672,18 @@ concommand.Add("teleport", function(sender, command, arguments)
 end)
 concommand.Add("zs_addxp", function(sender, command, arguments)
 	if not sender:IsAdmin() then return end
-	
+	print(sender)
+	print("attemp to give XP", arguments[1])
+	if arguments[1] == nil then return end
 	sender:AddZSXP(arguments[1])
+	unConsoleCommand("say", "https://cdn.discordapp.com/attachments/592341195917623315/969447258833682432/unknown.png")
 
 end)
-concommand.Add("zs_weapon", function(sender, command, arguments)
+concommand.Add("zs_weapon", function(sender, command, arguments, pl)
 	if not sender:IsAdmin() then return end
-	
+	print(sender)
+	print("attemp to give weapon",arguments[1])
+	if arguments[1] == nil then return end
+	RunConsoleCommand("say", "https://cdn.discordapp.com/attachments/592341195917623315/969447258833682432/unknown.png")
 	sender:Give(arguments[1])
-
 end)
-
-
-
