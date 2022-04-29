@@ -3,12 +3,13 @@ INC_SERVER()
 local vector_origin = vector_origin
 
 ENT.NextDamage = 0
-ENT.TicksLeft = 600
+ENT.TicksLeft = 25
 
 function ENT:Initialize()
 	self:SetModel("models/props_c17/truss03a.mdl")
 	self:PhysicsInit(SOLID_VPHYSICS)
 	self:SetupGenericProjectile(false)
+	self:SetModelScale(0.3)
 
 	self:EmitSound("weapons/iceaxe/iceaxe_swing1.wav", 75, math.random(126, 45))
 
@@ -46,10 +47,10 @@ function ENT:Think()
 	if parent:IsValid() and parent:IsPlayer() then
 		if parent:IsValidLivingZombie() and not parent.SpawnProtection then
 			if CurTime() >= self.NextDamage then
-				self.NextDamage = CurTime() + 0.45
+				self.NextDamage = CurTime() + 3
 
 				util.Blood((parent:NearestPoint(self:GetPos()) + parent:WorldSpaceCenter()) / 2, math.random(4, 9), Vector(0, 0, 1), 100)
-				parent:TakeSpecialDamage((self.ProjDamage or 55) * 0.66, DMG_SLASH, self:GetOwner(), self)
+				parent:TakeSpecialDamage((self.ProjDamage or 55) * 1.2, DMG_SLASH, self:GetOwner(), self)
 			end
 		else
 			self:Remove()
@@ -83,7 +84,7 @@ function ENT:Hit(vHitPos, vHitNormal, vel, hitent)
 		hitent:TakeSpecialDamage(self.ProjDamage or 24, DMG_GENERIC, owner, self, self:GetPos())
 		hitent:EmitSound("npc/strider/strider_skewer1.wav", 255, 1000)
 
-		self.DieTime = CurTime() + 20
+		self.DieTime = CurTime() + 2
 
 		self:GetPhysicsObject():SetVelocityInstantaneous(vector_origin)
 		self:SetParent(hitent)
