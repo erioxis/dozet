@@ -51,7 +51,7 @@ local function CanBuy(item, pan)
 
 	if not pan.NoPoints and MySelf:GetPoints() < math.floor(item.Price * (MySelf.ArsenalDiscount or 1)) then
 		return false
-	elseif pan.NoPoints and MySelf:GetAmmoCount("scrap") < math.ceil(GAMEMODE:PointsToScrap(item.Price)) then
+	elseif pan.NoPoints and MySelf:GetAmmoCount("scrap") < math.ceil(GAMEMODE:PointsToScrap(item.Price * (MySelf.ScrapDiscount or 1))) then
 		return false
 	end
 
@@ -404,7 +404,7 @@ function GM:AddShopItem(list, i, tab, issub, nopointshop)
 		local points = math.floor(tab.Price * (MySelf.ArsenalDiscount or 1))
 		local price = tostring(points)
 		if nopointshop then
-			price = tostring(math.ceil(self:PointsToScrap(tab.Price)))
+			price = tostring(math.ceil(self:PointsToScrap(tab.Price * (MySelf.ScrapDiscount or 1))))
 		end
 		pricelabel:SetText(price..(nopointshop and " Scrap" or " Points"))
 	end

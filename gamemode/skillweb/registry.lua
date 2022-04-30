@@ -268,6 +268,8 @@ SKILL_BLOODLOST = 210
 SKILL_ABUSE = 218
 SKILL_HAMMERDISCIPLINE1 = 220
 SKILL_HAMMERDISCIPLINE2 = 221
+SKILL_LANKYIII = 226
+SKILL_MECHANIC = 227
 
 
 SKILLMOD_HEALTH = 1
@@ -369,7 +371,7 @@ SKILLMOD_TURRET_RANGE_MUL = 97
 SKILLMOD_AIM_SHAKE_MUL = 98
 SKILLMOD_MEDDART_EFFECTIVENESS_MUL = 99
 SKILLMOD_DAMAGE = 100
-SKILLMOD_HEADSHOT_MUL = 101
+SKILLMOD_SCRAPDISCOUNT = 101
 SKILLMOD_XP = 102
 SKILLMOD_LUCK = 103
 
@@ -432,15 +434,15 @@ GM:AddSkill(SKILL_SANGUINE, "Sanguine", GOOD.."+11 maximum blood armor\n"..BAD..
 GM:AddSkill(SKILL_ANTIGEN, "Antigen", GOOD.."+5% blood armor damage absorption\n"..BAD.."-3 maximum health",
 																-2,			4,					{}, TREE_HEALTHTREE)
 -- Speed Tree
-GM:AddSkill(SKILL_SPEED1, "Speed I", GOOD.."+2 movement speed\n"..BAD.."-1 maximum health",
+GM:AddSkill(SKILL_SPEED1, "Speed I", GOOD.."+5 movement speed\n"..BAD.."-4 maximum health",
 																-4,			6,					{SKILL_NONE, SKILL_SPEED2}, TREE_SPEEDTREE)
-GM:AddSkill(SKILL_SPEED2, "Speed II", GOOD.."3 movement speed\n"..BAD.."-2 maximum health",
+GM:AddSkill(SKILL_SPEED2, "Speed II", GOOD.."+5 movement speed\n"..BAD.."-7 maximum health",
 																-4,			4,					{SKILL_SPEED3, SKILL_PHASER, SKILL_SPEED2, SKILL_U_CORRUPTEDFRAGMENT}, TREE_SPEEDTREE)
-GM:AddSkill(SKILL_SPEED3, "Speed III", GOOD.."+5 movement speed\n"..BAD.."-4 maximum health",
+GM:AddSkill(SKILL_SPEED3, "Speed III", GOOD.."+6 movement speed\n"..BAD.."-6 maximum health",
 																-4,			2,					{SKILL_SPEED4}, TREE_SPEEDTREE)
-GM:AddSkill(SKILL_SPEED4, "Speed IV", GOOD.."+7 movement speed\n"..BAD.."-6 maximum health",
+GM:AddSkill(SKILL_SPEED4, "Speed IV", GOOD.."+11 movement speed\n"..BAD.."-8 maximum health",
 																-4,			0,					{SKILL_SPEED5, SKILL_SAFEFALL}, TREE_SPEEDTREE)
-GM:AddSkill(SKILL_SPEED5, "Speed V", GOOD.."+13 movement speed\n"..BAD.."-10 maximum health",
+GM:AddSkill(SKILL_SPEED5, "Speed V", GOOD.."+10 movement speed\n"..BAD.."-11 maximum health",
 																-4,			-2,					{SKILL_ULTRANIMBLE, SKILL_BACKPEDDLER, SKILL_MOTIONI, SKILL_CARDIOTONIC, SKILL_UNBOUND}, TREE_SPEEDTREE)
 GM:AddSkill(SKILL_AGILEI, "Agile I", GOOD.."+4% jumping power\n"..BAD.."-2 movement speed",
 																4,			6,					{SKILL_NONE, SKILL_AGILEII}, TREE_SPEEDTREE)
@@ -556,7 +558,9 @@ GM:AddSkill(SKILL_REINFORCEDHULL, "Reinforced Hull", GOOD.."+25% Controllable he
 GM:AddSkill(SKILL_STABLEHULL, "Stable Hull", GOOD.."Controllables are immune to high speed impacts\n"..BAD.."-20% Controllable speed",
 																0,			-3,					{SKILL_U_DRONE}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_REINFORCEDBLADES, "Reinforced Blades", GOOD.."+25% Manhack damage\n"..BAD.."-15% Manhack health",
-																0,			-5,					{}, TREE_BUILDINGTREE)
+																0,			-5,					{SKILL_MECHANIC}, TREE_BUILDINGTREE)
+GM:AddSkill(SKILL_MECHANIC, "Mechanic", GOOD.."-15% Scrap cost\n"..BAD.."-15% Arsenal Discount",
+																0,			-6,					{}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_AVIATOR, "Aviator", GOOD.."+40% Controllable speed and handling\n"..BAD.."-25% Controllable health",
 																-4,			-2,					{}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_U_BLASTTURRET, "Unlock: Blast Turret", GOOD.."Unlocks purchasing the Blast Turret\nFires buckshot instead of SMG ammo\nDamage is higher close up\nCannot scan for targets far away",
@@ -616,8 +620,9 @@ GM:AddSkill(SKILL_STOWAGE, 	"Stowage", GOOD.."Resupply usages build up when you'
 
 -- Gunnery Tree
 
-GM:AddSkill(SKILL_UNSIGIL, "Uncorrupter", GOOD.."+24% Reload speed\n"..BAD.."-80% Melee damage",
+GM:AddSkill(SKILL_UNSIGIL, "Uncorrupter", GOOD.."+24% Reload speed\n"..GOOD.."+15% Bullet Damage\n"..BAD.."-80% Melee damage",
 																0,			2,					{SKILL_LEVELHEADED}, TREE_GUNTREE)
+GM:AddSkillModifier(SKILL_TRIGGER_DISCIPLINE3, SKILLMOD_DAMAGE, 0.15)
 GM:AddSkill(SKILL_TRIGGER_DISCIPLINE1, "Trigger Discipline I", GOOD.."+2% weapon reload speed and 3% Bullet damage\n"..GOOD.."+2% weapon draw speed\n"..BAD.."-9% Melee damage",
 																-5,			6,					{SKILL_TRIGGER_DISCIPLINE2, SKILL_NONE}, TREE_GUNTREE)
 GM:AddSkill(SKILL_TRIGGER_DISCIPLINE2, "Trigger Discipline II", GOOD.."+3% weapon reload speed and 5% Bullet damage\n"..GOOD.."+3% weapon draw speed\n"..BAD.."-13% Melee Damage",
@@ -715,13 +720,17 @@ GM:AddSkill(SKILL_COMBOKNUCKLE, "Combo Knuckle", GOOD.."Next unarmed strike is 2
 																6,			-4,					{SKILL_CHEAPKNUCKLE, SKILL_CRITICALKNUCKLE}, TREE_MELEETREE)
 GM:AddSkill(SKILL_HEAVYSTRIKES, "Heavy Strikes", GOOD.."+100% melee knockback\n"..BAD.."8% of melee damage dealt is reflected back to you\n"..BAD.."100% reflected if using unarmed strikes",
 																2,			0,					{SKILL_BATTLER5, SKILL_JOUSTER}, TREE_MELEETREE)
-GM:AddSkill(SKILL_JOUSTER, "Jouster", GOOD.."+20% melee damage\n"..BAD.."-90% melee knockback",
+GM:AddSkill(SKILL_JOUSTER, "Jouster", GOOD.."+30% melee damage\n"..BAD.."-90% melee knockback\n"..BAD.."-50% Bullet Damage",
 																2,			2,					{SKILL_BLOODLOST}, TREE_MELEETREE)
+GM:AddSkillModifier(SKILL_JOUSTER, SKILLMOD_DAMAGE, -0.50)
+																
 GM:AddSkill(SKILL_BLOODLOST, "Bloodlust", GOOD.."+25% Damage Multiplier for  6 secs if take damage\n"..BAD.."-30 health",
 																3,			2,					{}, TREE_MELEETREE)
 GM:AddSkill(SKILL_LANKY, "Lanky I", GOOD.."+10% melee range\n"..BAD.."-15% melee damage",
 																-4,			0,					{SKILL_LANKYII}, TREE_MELEETREE)
 GM:AddSkill(SKILL_LANKYII, "Lanky II", GOOD.."+10% melee range\n"..BAD.."-15% melee damage",
+																-4,			2,					{SKILL_LANKYIII}, TREE_MELEETREE)
+GM:AddSkill(SKILL_LANKYIII, "Lanky III", GOOD.."+10% melee range\n"..BAD.."-15% melee damage",
 																-4,			2,					{}, TREE_MELEETREE)
 GM:AddSkill(SKILL_MASTERCHEF, "Master Chef", GOOD.."Zombies hit by culinary weapons in the past second have a chance to drop food items on death\n"..BAD.."-10% melee damage",
 																0,			-3,					{SKILL_BATTLER4}, TREE_MELEETREE)
@@ -751,11 +760,12 @@ GM:AddSkillModifier(SKILL_FISTING, SKILLMOD_UNARMED_SWING_DELAY_MUL, -0.30)
 GM:AddSkillModifier(SKILL_FISTING, SKILLMOD_MELEE_SWING_DELAY_MUL, 0.15)
 GM:AddSkillModifier(SKILL_FISTING, SKILLMOD_MELEE_DAMAGE_MUL, -0.25)
 SKILL_MELEEFAN = 224				
-GM:AddSkill(SKILL_MELEEFAN, "True Melee", BAD.."-350% Unarmed melee damage\n"..GOOD.."+35% Melee damage\n"..GOOD.."-15% Melee swing impact delay",
+GM:AddSkill(SKILL_MELEEFAN, "True Melee", BAD.."-350% Unarmed melee damage\n"..GOOD.."+45% Melee damage\n"..GOOD.."-15% Melee swing impact delay\n"..BAD.."-50% Bullet Damage",
 																9,			-3,					{SKILL_FISTING}, TREE_MELEETREE)
+GM:AddSkillModifier(SKILL_MELEEFAN, SKILLMOD_DAMAGE, -0.50)
 GM:AddSkillModifier(SKILL_MELEEFAN, SKILLMOD_UNARMED_DAMAGE_MUL, -3.50)
 GM:AddSkillModifier(SKILL_MELEEFAN, SKILLMOD_MELEE_SWING_DELAY_MUL, -0.15)
-GM:AddSkillModifier(SKILL_MELEEFAN, SKILLMOD_MELEE_DAMAGE_MUL, 0.35)
+GM:AddSkillModifier(SKILL_MELEEFAN, SKILLMOD_MELEE_DAMAGE_MUL, 0.45)
 SKILL_OPM = 225				
 GM:AddSkill(SKILL_OPM, "One Punch Man", GOOD.."+350% Unarmed melee damage\n"..BAD.."-35% Melee damage\n"..BAD.."+150% time before next unarmed strike ",
 																9,			-5,					{SKILL_MELEEFAN}, TREE_MELEETREE)
@@ -1059,9 +1069,7 @@ end)
 GM:SetSkillModifierFunction(SKILLMOD_MEDKIT_COOLDOWN_MUL, function(pl, amount)
 	pl.MedicCooldownMul = math.Clamp(amount + 1.0, 0.0, 1000.0)
 end)
-GM:SetSkillModifierFunction(SKILLMOD_HEADSHOT_MUL, function(pl, amount)
-	pl.HeadshotMulti = math.Clamp(amount + 1.0, 0.0, 1000.0)
-end)
+
 
 GM:SetSkillModifierFunction(SKILLMOD_WORTH, function(pl, amount)
 	pl.ExtraStartingWorth = amount
@@ -1349,6 +1357,7 @@ GM:SetSkillModifierFunction(SKILLMOD_ENDWAVE_POINTS, function(pl,amount)
 end)
 
 GM:SetSkillModifierFunction(SKILLMOD_ARSENAL_DISCOUNT, GM:MkGenericMod("ArsenalDiscount"))
+GM:SetSkillModifierFunction(SKILLMOD_SCRAPDISCOUNT, GM:MkGenericMod("ScrapDiscount"))
 GM:SetSkillModifierFunction(SKILLMOD_CLOUD_RADIUS, GM:MkGenericMod("CloudRadius"))
 GM:SetSkillModifierFunction(SKILLMOD_CLOUD_TIME, GM:MkGenericMod("CloudTime"))
 GM:SetSkillModifierFunction(SKILLMOD_EXP_DAMAGE_MUL, GM:MkGenericMod("ExplosiveDamageMul"))
@@ -1367,20 +1376,20 @@ GM:AddSkillModifier(SKILL_BANDOLIER, SKILLMOD_RELOADSPEED_SMG_MUL, 0.12)
 GM:AddSkillModifier(SKILL_BANDOLIER, SKILLMOD_RELOADSPEED_XBOW_MUL, 0.09)
 GM:AddSkillModifier(SKILL_BANDOLIER, SKILLMOD_RELOADSPEED_MUL, 0.05)
 
-GM:AddSkillModifier(SKILL_SPEED1, SKILLMOD_SPEED, 2)
-GM:AddSkillModifier(SKILL_SPEED1, SKILLMOD_HEALTH, -1)
+GM:AddSkillModifier(SKILL_SPEED1, SKILLMOD_SPEED, 5)
+GM:AddSkillModifier(SKILL_SPEED1, SKILLMOD_HEALTH, -4)
 
-GM:AddSkillModifier(SKILL_SPEED2, SKILLMOD_SPEED, 3)
-GM:AddSkillModifier(SKILL_SPEED2, SKILLMOD_HEALTH, -2)
+GM:AddSkillModifier(SKILL_SPEED2, SKILLMOD_SPEED, 5)
+GM:AddSkillModifier(SKILL_SPEED2, SKILLMOD_HEALTH, -7)
 
-GM:AddSkillModifier(SKILL_SPEED3, SKILLMOD_SPEED, 5)
-GM:AddSkillModifier(SKILL_SPEED3, SKILLMOD_HEALTH, -4)
+GM:AddSkillModifier(SKILL_SPEED3, SKILLMOD_SPEED, 6)
+GM:AddSkillModifier(SKILL_SPEED3, SKILLMOD_HEALTH, -6)
 
-GM:AddSkillModifier(SKILL_SPEED4, SKILLMOD_SPEED, 7)
-GM:AddSkillModifier(SKILL_SPEED4, SKILLMOD_HEALTH, -6)
+GM:AddSkillModifier(SKILL_SPEED4, SKILLMOD_SPEED, 11)
+GM:AddSkillModifier(SKILL_SPEED4, SKILLMOD_HEALTH, -8)
 
-GM:AddSkillModifier(SKILL_SPEED5, SKILLMOD_SPEED, 13)
-GM:AddSkillModifier(SKILL_SPEED5, SKILLMOD_HEALTH, -10)
+GM:AddSkillModifier(SKILL_SPEED5, SKILLMOD_SPEED, 10)
+GM:AddSkillModifier(SKILL_SPEED5, SKILLMOD_HEALTH, -11)
 
 GM:AddSkillModifier(SKILL_STOIC1, SKILLMOD_HEALTH, 4)
 GM:AddSkillModifier(SKILL_STOIC1, SKILLMOD_SPEED, -5)
@@ -1473,7 +1482,7 @@ GM:AddSkillModifier(SKILL_BATTLER2, SKILLMOD_MELEE_DAMAGE_MUL, 0.03)
 GM:AddSkillModifier(SKILL_BATTLER3, SKILLMOD_MELEE_DAMAGE_MUL, 0.03)
 GM:AddSkillModifier(SKILL_BATTLER4, SKILLMOD_MELEE_DAMAGE_MUL, 0.07)
 GM:AddSkillModifier(SKILL_BATTLER5, SKILLMOD_MELEE_DAMAGE_MUL, 0.09)
-GM:AddSkillModifier(SKILL_SOULNET, SKILLMOD_MELEE_DAMAGE_MUL,-0.10)
+GM:AddSkillModifier(SKILL_SOULNET, SKILLMOD_MELEE_DAMAGE_MUL, -0.10)
 
 GM:AddSkillModifier(SKILL_BATTLER1, SKILLMOD_RELOADSPEED_MUL, -0.02)
 GM:AddSkillModifier(SKILL_BATTLER2, SKILLMOD_RELOADSPEED_MUL, -0.04)
@@ -1484,7 +1493,7 @@ GM:AddSkillModifier(SKILL_BATTLER5, SKILLMOD_RELOADSPEED_MUL, -0.16)
 GM:AddSkillModifier(SKILL_GLASSMAN, SKILLMOD_MELEE_DAMAGE_MUL, 2.3)
 GM:AddSkillModifier(SKILL_GLASSMAN, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 3)
 
-GM:AddSkillModifier(SKILL_JOUSTER, SKILLMOD_MELEE_DAMAGE_MUL, 0.2)
+GM:AddSkillModifier(SKILL_JOUSTER, SKILLMOD_MELEE_DAMAGE_MUL, 0.3)
 GM:AddSkillModifier(SKILL_JOUSTER, SKILLMOD_MELEE_KNOCKBACK_MUL, -0.9)
 
 GM:AddSkillModifier(SKILL_QUICKDRAW, SKILLMOD_DEPLOYSPEED_MUL, 0.65)
@@ -1615,10 +1624,14 @@ GM:AddSkillModifier(SKILL_RECLAIMSOL, SKILLMOD_MEDGUN_FIRE_DELAY_MUL, 1.5)
 GM:AddSkillModifier(SKILL_RECLAIMSOL, SKILLMOD_MEDGUN_RELOAD_SPEED_MUL, -0.4)
 
 GM:AddSkillModifier(SKILL_LANKY, SKILLMOD_MELEE_DAMAGE_MUL, -0.15)
-GM:AddSkillModifier(SKILL_LANKY, SKILLMOD_MELEE_RANGE_MUL, 0.15)
+GM:AddSkillModifier(SKILL_LANKY, SKILLMOD_MELEE_RANGE_MUL, 0.1)
 
-GM:AddSkillModifier(SKILL_LANKYII, SKILLMOD_MELEE_DAMAGE_MUL, -0.25)
-GM:AddSkillModifier(SKILL_LANKYII, SKILLMOD_MELEE_RANGE_MUL, 0.2)
+GM:AddSkillModifier(SKILL_LANKYII, SKILLMOD_MELEE_DAMAGE_MUL, -0.15)
+GM:AddSkillModifier(SKILL_LANKYII, SKILLMOD_MELEE_RANGE_MUL, 0.1)
+
+
+GM:AddSkillModifier(SKILL_LANKYIII, SKILLMOD_MELEE_DAMAGE_MUL, -0.15)
+GM:AddSkillModifier(SKILL_LANKYIII, SKILLMOD_MELEE_RANGE_MUL, 0.1)
 
 GM:AddSkillModifier(SKILL_D_FRAIL, SKILLMOD_MEDKIT_EFFECTIVENESS_MUL, 0.33)
 GM:AddSkillModifier(SKILL_D_FRAIL, SKILLMOD_MEDKIT_COOLDOWN_MUL, -0.33)
@@ -1710,3 +1723,7 @@ end)
 GM:AddSkillFunction(SKILL_TRUEWOOISM, function(pl, active)
 	pl.TrueWooism = active
 end)
+
+
+GM:AddSkillModifier(SKILL_MECHANIC, SKILLMOD_SCRAPDISCOUNT, -0.15)
+GM:AddSkillModifier(SKILL_MECHANIC, SKILLMOD_ARSENAL_DISCOUNT, 0.15)

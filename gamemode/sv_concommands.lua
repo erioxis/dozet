@@ -113,16 +113,18 @@ concommand.Add("zs_pointsshopbuy", function(sender, command, arguments)
 	else
 		return
 	end
-
+    local scrapd = sender.ScrapDiscount
 	if usescrap then
-		sender:RemoveAmmo(cost, "scrap")
+		sender:RemoveAmmo(cost * scrapd, "scrap")
 		sender:SendLua("surface.PlaySound(\"buttons/lever"..math.random(5)..".wav\")")
+		sender:PrintTranslatedMessage(HUD_PRINTTALK, usescrap and "created_x_for_y_scrap" , itemtab.Name, cost * scrapd)
 	else
 		sender:TakePoints(cost)
 		sender:SendLua("surface.PlaySound(\"ambient/levels/labs/coinslot1.wav\")")
+		sender:PrintTranslatedMessage(HUD_PRINTTALK, "purchased_x_for_y_points", itemtab.Name, cost)
 	end
-	sender:PrintTranslatedMessage(HUD_PRINTTALK, usescrap and "created_x_for_y_scrap" or "purchased_x_for_y_points", itemtab.Name, cost)
 
+	--* self.ScrapDiscount
 	GAMEMODE:AddItemStocks(id, -1)
 
 	if usescrap then
@@ -130,7 +132,7 @@ concommand.Add("zs_pointsshopbuy", function(sender, command, arguments)
 		if nearest then
 			local owner = nearest.GetObjectOwner and nearest:GetObjectOwner() or nearest:GetOwner()
 			if owner:IsValid() and owner ~= sender then
-				local scrapcom = math.ceil(cost / 8)
+				local scrapcom = math.ceil(cost / 6)
 				nearest:SetScraps(nearest:GetScraps() + scrapcom)
 				nearest:GetObjectOwner():CenterNotify(COLOR_GREEN, translate.Format("remantle_used", scrapcom))
 			end
@@ -291,7 +293,7 @@ concommand.Add("zs_upgrade", function(sender, command, arguments)
 
 	local owner = nearest.GetObjectOwner and nearest:GetObjectOwner() or nearest:GetOwner()
 	if owner:IsValid() and owner ~= sender then
-		local scrapcom = math.ceil(scrapcost * 0.08)
+		local scrapcom = math.ceil(scrapcost * 0.13)
 		nearest:SetScraps(nearest:GetScraps() + scrapcom)
 		nearest:GetObjectOwner():CenterNotify(COLOR_GREEN, translate.Format("remantle_used", scrapcom))
 	end
@@ -437,6 +439,7 @@ end
 concommand.Add("zsgiveammo", function(sender, command, arguments)
 	if GAMEMODE.ZombieEscape then return end
 
+
 	if not sender:IsValid() or not sender:Alive() or sender:Team() ~= TEAM_HUMAN then return end
 
 	local ammotype = arguments[1]
@@ -452,6 +455,12 @@ concommand.Add("zsgiveammo", function(sender, command, arguments)
 	if ent and ent:IsValidLivingHuman() then
 		local desiredgive = math.min(count, GAMEMODE.AmmoCache[ammotype])
 		if desiredgive >= 1 then
+
+			if ent:IsSkillActive(SKILL_D_FRAIL) then 
+				GAMEMODE:ConCommandErrorMessage(sender, translate.ClientGet(sender, "have_skill_frail")) 
+				return
+			end
+
 			sender:RemoveAmmo(desiredgive, ammotype)
 			ent:GiveAmmo(desiredgive, ammotype)
 
@@ -476,9 +485,10 @@ concommand.Add("zsgiveammo", function(sender, command, arguments)
 
 			return
 		end
-	else
-		GAMEMODE:ConCommandErrorMessage(sender, translate.ClientGet(sender, "no_person_in_range"))
-	end
+
+    else
+	GAMEMODE:ConCommandErrorMessage(sender, translate.ClientGet(sender, "no_person_in_range")) 
+    end
 end)
 
 concommand.Add("zsgiveweapon", function(sender, command, arguments)
@@ -496,6 +506,10 @@ concommand.Add("zsgiveweapon", function(sender, command, arguments)
 	if not invitem and not IsValid(currentwep) then return end
 
 	local ent = GAMEMODE:TryGetLockOnTrace(sender, arguments)
+	if ent:IsSkillActive(SKILL_D_FRAIL) then 
+		GAMEMODE:ConCommandErrorMessage(sender, translate.ClientGet(sender, "have_skill_frail")) 
+		return
+	end
 	if ent and ent:IsValidLivingHuman() then
 		if not invitem then
 			if ent:HasWeapon(currentwep:GetClass()) then
@@ -516,9 +530,14 @@ concommand.Add("zsgiveweaponclip", function(sender, command, arguments)
 
 	if not (sender:IsValid() and sender:Alive() and sender:Team() == TEAM_HUMAN) then return end
 
+
 	local currentwep = sender:GetActiveWeapon()
 	if currentwep and currentwep:IsValid() then
 		local ent = GAMEMODE:TryGetLockOnTrace(sender, arguments)
+		if ent:IsSkillActive(SKILL_D_FRAIL) then 
+			GAMEMODE:ConCommandErrorMessage(sender, translate.ClientGet(sender, "have_skill_frail")) 
+			return
+		end
 		if ent and ent:IsValidLivingHuman() then
 			if not ent:HasWeapon(currentwep:GetClass()) then
 				sender:GiveWeaponByType(currentwep, ent, true)

@@ -1733,6 +1733,7 @@ function GM:RestartLua()
 	self.MaxFlashlightPickups = nil
 	self.WeaponRequiredForAmmo = nil
 	for _, pl in pairs(player.GetAll()) do
+		
 		pl.AmmoPickups = nil
 		pl.WeaponPickups = nil
 	end
@@ -3937,9 +3938,11 @@ function GM:PlayerKilledByPlayer(pl, attacker, inflictor, headshot, dmginfo, is_
 end
 
 function GM:PlayerCanPickupWeapon(pl, ent)
+
 	if pl:IsSpectator() then return false end
 
 	if pl:Team() == TEAM_UNDEAD then return ent:GetClass() == pl:GetZombieClassTable().SWEP end
+
 
 	return not ent.ZombieOnly
 end
