@@ -11,6 +11,10 @@ function ENT:SetDie(fTime)
 	end
 end
 function ENT:Think()
+	local owner = self:GetOwner()
+	if (owner) then
+		owner:TakeSpecialDamage(owner:Health()*0.017, DMG_ACID, owner, self)
+	end
 	if self.DieTime <= CurTime() then
 		self:Remove()
 	end
