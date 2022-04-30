@@ -61,30 +61,16 @@ function SWEP:CanSecondaryAttack()
 	return self:GetNextSecondaryFire() <= CurTime()
 end
 
-function SWEP:SecondaryAttack()
-	if not self:CanSecondaryAttack() then return end
 
-	self:SetNextSecondaryFire(CurTime() + 0.1)
-
-	local owner = self:GetOwner()
-	if not owner:IsSkillActive(SKILL_SMARTTARGETING) then return end
-
-	local targetent = owner:CompensatedMeleeTrace(2048, 2, nil, nil, true).Entity
-	local locked = targetent and targetent:IsValidLivingHuman() and gamemode.Call("PlayerCanBeHealed", targetent)
-
-	if CLIENT then
-		self:EmitSound(locked and "npc/scanner/combat_scan4.wav" or "npc/scanner/scanner_scan5.wav", 65, locked and 75 or 200)
-	end
-	self:SetSeekedPlayer(locked and targetent)
-end
 
 function SWEP:SetSeekedPlayer(ent)
-	self:SetDTEntity(6, ent)
+	self:SetDTEntity(3, ent)
 end
 
 function SWEP:GetSeekedPlayer()
-	return self:GetDTEntity(6)
+	return self:GetDTEntity(3)
 end
+
 
 function SWEP:Deploy()
 	if CLIENT then
@@ -109,4 +95,21 @@ function SWEP:OnRemove()
 		hook.Remove("PostPlayerDraw", "PostPlayerDrawMedical")
 		GAMEMODE.MedicalAura = false
 	end
+end
+function SWEP:SecondaryAttack()
+	if not self:CanPrimaryAttack() then return end
+
+	self:SetNextPrimaryFire(CurTime() + self:GetFireDelay()/2)
+
+	local owner = self:GetOwner()
+	if not owner:IsSkillActive(SKILL_SMARTTARGETING) then return end
+
+	local targetent = owner:CompensatedMeleeTrace(2048, 2, nil, nil, true).Entity
+	local locked = targetent and targetent:IsValidLivingHuman()
+
+	if CLIENT then
+		self:EmitSound(locked and "npc/scanner/combat_scan4.wav" or "npc/scanner/scanner_scan5.wav", 65, locked and 75 or 200)
+	end
+	if not targetent:IsValidLivingHuman() then return end
+	self:SetSeekedPlayer(locked and targetent)
 end

@@ -1375,6 +1375,7 @@ function meta:RedeemNextFrame()
 	end)
 end
 
+
 local walltrace = {mask = MASK_SOLID_BRUSHONLY, mins = Vector(-8, -8, -8), maxs = Vector(8, 8, 8)}
 function meta:ShouldCrouchJumpPunish()
 	if not self:OnGround() and self:Crouching() and self:GetZombieClassTable().CrouchedWalkSpeed ~= 1 then

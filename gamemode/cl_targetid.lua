@@ -15,6 +15,7 @@ local entitylist = {}
 
 local colTemp = Color(255, 255, 255)
 function GM:DrawTargetID(ent, fade)
+	
 	fade = fade or 1
 	local pos = ent:GetPos()
 	pos.z = pos.z + 16
