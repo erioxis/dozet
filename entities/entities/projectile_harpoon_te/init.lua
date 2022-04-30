@@ -3,7 +3,7 @@ INC_SERVER()
 local vector_origin = vector_origin
 
 ENT.NextDamage = 0
-ENT.TicksLeft = 50
+ENT.TicksLeft = 30
 
 function ENT:Initialize()
 	self:SetModel("models/props_junk/harpoon002a.mdl")
@@ -13,7 +13,7 @@ function ENT:Initialize()
 	self:EmitSound("weapons/iceaxe/iceaxe_swing1.wav", 75, math.random(35, 45))
 
 	self:Fire("kill", "", 30)
-	self.DieTime = CurTime() + 3
+	self.DieTime = CurTime() + 2
 	self.LastPhysicsUpdate = UnPredictedCurTime()
 end
 
@@ -83,7 +83,7 @@ function ENT:Hit(vHitPos, vHitNormal, vel, hitent)
 		hitent:TakeSpecialDamage(self.ProjDamage or 35, DMG_GENERIC, owner, self, self:GetPos())
 		hitent:EmitSound("npc/strider/strider_skewer1.wav", 70, 112)
 
-		self.DieTime = CurTime() + 7
+		self.DieTime = CurTime() + 3.5
 
 		self:GetPhysicsObject():SetVelocityInstantaneous(vector_origin)
 		self:SetParent(hitent)

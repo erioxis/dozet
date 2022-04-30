@@ -731,7 +731,7 @@ GM:AddSkill(SKILL_LANKY, "Lanky I", GOOD.."+10% melee range\n"..BAD.."-15% melee
 GM:AddSkill(SKILL_LANKYII, "Lanky II", GOOD.."+10% melee range\n"..BAD.."-15% melee damage",
 																-4,			2,					{SKILL_LANKYIII}, TREE_MELEETREE)
 GM:AddSkill(SKILL_LANKYIII, "Lanky III", GOOD.."+10% melee range\n"..BAD.."-15% melee damage",
-																-4,			2,					{}, TREE_MELEETREE)
+																-4,			4,					{}, TREE_MELEETREE)
 GM:AddSkill(SKILL_MASTERCHEF, "Master Chef", GOOD.."Zombies hit by culinary weapons in the past second have a chance to drop food items on death\n"..BAD.."-10% melee damage",
 																0,			-3,					{SKILL_BATTLER4}, TREE_MELEETREE)
 GM:AddSkill(SKILL_LIGHTWEIGHT, "Lightweight", GOOD.."+6 movement speed with a melee weapon equipped\n"..BAD.."-20% melee damage",
