@@ -401,7 +401,7 @@ GM:AddSkill(SKILL_PREPAREDNESS, ""..translate.Get("skill_prepadnes_0"), GOOD..""
 																4,			-6,					{SKILL_NONE}, TREE_HEALTHTREE)
 GM:AddSkill(SKILL_GOURMET, ""..translate.Get("skill_gurman_0"), GOOD..""..translate.Get("skill_gurman_d1")..BAD..""..translate.Get("skill_gurman_d2"),
 																4,			-4,					{SKILL_PREPAREDNESS, SKILL_VITALITY1}, TREE_HEALTHTREE)
-GM:AddSkill(SKILL_HAEMOSTASIS, ""..translate.Get("skill_haemostasis_0"), GOOD..""..translate.Get("skill_haemostasis_d1")..BAD..""..translate.Get("skill_haemostasis_d2")..BAD..""..translate.Get("skill_haemostasis_d3"),
+GM:AddSkill(SKILL_HAEMOSTASIS, ""..translate.Get("skill_haemostasis_0"), GOOD..""..translate.Get("skill_haemostasis_d1")..BAD..""..translate.Get("skill_haemostasis_d2")..GOOD..""..translate.Get("skill_haemostasis_d3"),
 																4,			6,					{}, TREE_HEALTHTREE)
 GM:AddSkill(SKILL_BLOODLETTER, ""..translate.Get("skill_bloodlet_0"), GOOD..""..translate.Get("skill_bloodlet_d1")..BAD..""..translate.Get("skill_bloodlet_d2"),
 																0,			4,					{SKILL_ANTIGEN}, TREE_HEALTHTREE)
