@@ -2,7 +2,7 @@ AddCSLuaFile()
 
 SWEP.PrintName = "Fists"
 
-SWEP.Base = "weapon_zs_basemelee"
+SWEP.Base = "weapon_zs_hammer"
 
 SWEP.ViewModel = "models/weapons/c_arms_citizen.mdl"
 SWEP.WorldModel	= ""

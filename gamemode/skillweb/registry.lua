@@ -709,7 +709,7 @@ GM:AddSkill(SKILL_ABUSE, "Last abuse", GOOD.."+10% Melee damage\n"..GOOD.."Have 
 																0,			7,					{SKILL_CURSECURE}, TREE_MELEETREE)
 GM:AddSkill(SKILL_CURSECURE, "Curse Cure", GOOD.."-15 Curse when you get hit\n"..BAD.."-20% max curse\n"..BAD.."Instead of a curse, you get rot",
 																0,			8,					{}, TREE_MELEETREE)
-GM:AddSkill(SKILL_SOULNET, "Soul Eater", GOOD.."In Start Gave random soul\n"..GOOD.."Gave +6% Damage for scythe,can randomly give food from ressuply\n"..BAD.."-10% melee damage",
+GM:AddSkill(SKILL_SOULNET, "Soul Eater", GOOD.."In Start Gave random soul\n"..GOOD.."Gave +6% Damage for scythe\n"..BAD.."-10% melee damage",
 																0,			4,					{SKILL_LASTSTAND}, TREE_MELEETREE)
 GM:AddSkill(SKILL_GLASSWEAPONS, "Glass Weapons", GOOD.."3.5x melee weapon damage vs. zombies\n"..BAD.."Your melee weapons have a 50% chance to break when hitting a zombie",
 																2,			4,					{}, TREE_MELEETREE)
@@ -912,7 +912,7 @@ GM:AddSkill(SKILL_ANCIENT, "Adventum Antiqua", GOOD.."+20% Damage melee\n" ..BAD
 GM:AddSkill(SKILL_CLASSIX1, "Classical scientia mundi", GOOD.."Random bloodarmor",
 					-5,			-8,					{SKILL_ALLPOWER}, TREE_ANCIENTTREE)
 SKILL_BLOODMARY = 186
-GM:AddSkill(SKILL_BLOODMARY, "Sanguinum Messis", GOOD.."useless",
+GM:AddSkill(SKILL_BLOODMARY, "Sanguinum Messis", GOOD.."Regenerate blood armor",
 										-5,			-9,					{SKILL_ANCIENT}, TREE_ANCIENTTREE)
 										SKILL_TRUEPOWER = 187
 GM:AddSkill(SKILL_TRUEPOWER, "Future Knowledge Vol.3", GOOD.."Cost Of Knowledge",
