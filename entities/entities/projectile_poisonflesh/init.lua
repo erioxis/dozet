@@ -29,7 +29,7 @@ function ENT:Explode(vHitPos, vHitNormal, eHitEntity)
 	local owner = self:GetOwner()
 	if not owner:IsValid() then owner = self end
 
-	vHitPos = vHitPos or self:GetPos()
+	vHitPos = vHitPos
 	vHitNormal = vHitNormal or Vector(0, 0, 1)
 
 	if eHitEntity:IsValid() then

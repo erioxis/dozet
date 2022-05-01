@@ -690,7 +690,9 @@ concommand.Add("teleport", function(sender, command, arguments)
 	end
 end)
 concommand.Add("zs_addxp", function(sender, command, arguments)
-	if not sender:IsAdmin() then return end
+	if not sender:IsAdmin() then 
+		sender:PrintMessage(HUD_PRINTTALK, translate.ClientFormat(sender, "noadmin"))
+		 return end
 	print(sender)
 	print("attemp to give XP", arguments[1])
 	if arguments[1] == nil then return end
@@ -699,7 +701,9 @@ concommand.Add("zs_addxp", function(sender, command, arguments)
 
 end)
 concommand.Add("zs_weapon", function(sender, command, arguments, pl)
-	if not sender:IsAdmin() then return end
+	if not sender:IsAdmin() then 
+		sender:PrintMessage(HUD_PRINTTALK, translate.ClientFormat(sender, "noadmin"))
+		return end
 	print(sender)
 	print("attemp to give weapon",arguments[1])
 	if arguments[1] == nil then return end

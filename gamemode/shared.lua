@@ -5,7 +5,7 @@ GM.Website	=	"https://github.com/erioxis/dozet"
 
 -- No, adding a gun doesn't make your name worth being here.
 GM.Credits = {
-	{"Version", "Release", "2.0"},
+	{"Version", "Release", "2.1"},
 	{"erioxis", "Phantom coder", "dead"},
 	{"Nullted", "", "RU-ENG Translation"},
 }
@@ -553,8 +553,8 @@ function GM:OnPlayerHitGround(pl, inwater, hitfloater, speed)
 			groundent:TakeSpecialDamage(4007, DMG_CLUB, pl, pl, pl:GetPos())
 		end
 
-		if math.floor(damage) > 0 then
-			groundent:TakeSpecialDamage(damage * 120, DMG_CLUB, pl, pl, pl:GetPos())
+		if math.floor(120) > 0 then
+			groundent:TakeSpecialDamage(120 * 1.3, DMG_DIRECT, pl, pl, pl:GetPos())
 			return true
 		end
 	end

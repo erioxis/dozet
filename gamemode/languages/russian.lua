@@ -1019,3 +1019,6 @@ LANGUAGE.zshop_cursed1                                = "Увеличивает 
 
 LANGUAGE.worth_worth								= "Ворф: %s"
 LANGUAGE.worth_worth_cost							= "%s Ворфа"
+
+
+LANGUAGE.noadmin                  = "Вы не админ чтобы использовать эту команду"

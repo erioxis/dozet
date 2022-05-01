@@ -4503,23 +4503,24 @@ function GM:WaveStateChanged(newstate, pl)
 						pl:GiveAmmo(math.ceil(pointsreward), "scrap")
 					else
 						if pl:HasTrinket("lotteryticket")  then 
-					 local luckdis = (pl.Luck / 4)
-						local	chargemax = 6 - luckdis
+					    local luckdis = (pl.Luck / 4)
+						local chargemax = 6 - luckdis
 						local luck = 20 - pl.Luck 
 						local lucky1 = math.random(1,luck)
 						local charge = math.random(1,chargemax)
 
-						print(charge)
+						print(charge, pl , "lusk dis")
 						
-						print(luck)
+						print(luck, pl , "Luck of chance")
 						
-						print(lucky1)
+						print(lucky1, pl, "charge")
 						if lucky1 == 5 then 
 							
 
 						pl:AddPoints(120)
-						pl:TakeInventoryItem("trinket_lotteryticket")
+
 						if not charge == 5  then
+							pl:TakeInventoryItem("trinket_lotteryticket")
 						net.Start("zs_trinketconsumed")
 						net.WriteString("Lottery ticket")
 					net.Send(pl)
@@ -4531,15 +4532,16 @@ function GM:WaveStateChanged(newstate, pl)
 						local chargemax = 6 - luckdis
 						local luck = 40 - pl.Luck 
 						local lucky2 = math.random(1,luck)
-						print(luck)
+						print(luck, pl, "mystery ticket chance")
 						
 						local charge = math.random(1,chargemax)
-						print(lucky2)
+						print(lucky2, pl, "dropped number")
 						if lucky2 == 2 then 
 
 						pl:AddZSXP(10000)
-						pl:TakeInventoryItem("trinket_mysteryticket")
+
 						if not charge == 1 then
+						pl:TakeInventoryItem("trinket_mysteryticket")
 							
 						print(charge)
 						net.Start("zs_trinketconsumed")
@@ -4550,9 +4552,9 @@ function GM:WaveStateChanged(newstate, pl)
 						if pl:IsSkillActive(SKILL_ABUSE)  then 
 							local luck = 8 - (pl.Luck / 3)
 							local lucky5 = math.random(1,luck)
-							print(luck)
+							print(luck, pl, "chance")
 							
-							print(lucky5)
+							print(lucky5, pl, "last abuse luck 5")
 							if lucky5 == 1 then 
 	
 							pl:AddPoints(pointsreward * 2, nil, nil, true)

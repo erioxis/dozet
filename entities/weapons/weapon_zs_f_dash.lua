@@ -31,7 +31,7 @@ SWEP.Primary.ClipSize = 1
 SWEP.ReloadSpeed = 1
 SWEP.Primary.Delay = 0.15
 
-SWEP.Knockback = -354
+SWEP.Knockback = -712
 
 function SWEP:PrimaryAttack()
 	if not self:CanPrimaryAttack() then return end
