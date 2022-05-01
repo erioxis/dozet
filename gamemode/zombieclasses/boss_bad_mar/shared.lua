@@ -17,25 +17,19 @@ CLASS.VoicePitch = 0.65
 
 CLASS.SWEP = "weapon_zs_redbad"
 
-CLASS.Health = 3000
+CLASS.Health = 1800
 CLASS.Speed = 210
 
 CLASS.Skeletal = true
 
-if SERVER then
-function CLASS:ProcessDamage(pl, dmginfo)
-	if dmginfo:GetInflictor().IsMelee then
-		dmginfo:SetDamage(dmginfo:GetDamage() / 500)
-	end
-end
-end
+
 
 
 local ACT_HL2MP_SWIM_PISTOL = ACT_HL2MP_SWIM_PISTOL
 local ACT_HL2MP_IDLE_CROUCH_ZOMBIE = ACT_HL2MP_IDLE_CROUCH_ZOMBIE
 local ACT_HL2MP_WALK_CROUCH_ZOMBIE_01 = ACT_HL2MP_WALK_CROUCH_ZOMBIE_01
 local ACT_HL2MP_RUN_ZOMBIE = ACT_HL2MP_RUN_ZOMBIE
-
+local bit_band = bit.band
 local math_random = math.random
 local math_ceil = math.ceil
 local math_Clamp = math.Clamp
@@ -109,6 +103,15 @@ function CLASS:ProcessDamage(pl, dmginfo)
 	local attacker = dmginfo:GetAttacker()
 	local dmg = dmginfo:GetDamage()
 	local hp = pl:Health()
+	if dmginfo:GetInflictor().IsMelee then
+		dmginfo:SetDamage(dmginfo:GetDamage() / 500)
+	end
+	if bit_band(dmginfo:GetDamageType(), DMG_BULLET) ~= 0 then
+		dmginfo:SetDamage(dmginfo:GetDamage() * 0.16)
+	elseif bit_band(dmginfo:GetDamageType(), DMG_SLASH) == 0 and bit_band(dmginfo:GetDamageType(), DMG_CLUB) == 0 then
+		dmginfo:SetDamage(dmginfo:GetDamage() * 0.12)
+	end
+
 
 	if pl:GetStatus("redmad") and attacker:IsPlayer() and attacker:Team() == TEAM_HUMAN then
 		dmginfo:SetDamage(0)

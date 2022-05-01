@@ -1,8 +1,8 @@
-SWEP.Base = "weapon_zs_zombie"
+SWEP.Base = "weapon_zs_base"
 
-SWEP.PrintName = "Ice Puke Pus"
+SWEP.PrintName = "Puke Pus"
 
-SWEP.Primary.Delay = 3.5
+SWEP.Primary.Delay = 5
 
 SWEP.ViewModel = "models/weapons/v_crowbar.mdl"
 SWEP.WorldModel = "models/weapons/w_crowbar.mdl"

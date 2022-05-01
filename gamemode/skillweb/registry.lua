@@ -270,6 +270,7 @@ SKILL_HAMMERDISCIPLINE1 = 220
 SKILL_HAMMERDISCIPLINE2 = 221
 SKILL_LANKYIII = 226
 SKILL_MECHANIC = 227
+SKILL_CURSECURE = 228
 
 
 SKILLMOD_HEALTH = 1
@@ -374,6 +375,7 @@ SKILLMOD_DAMAGE = 100
 SKILLMOD_SCRAPDISCOUNT = 101
 SKILLMOD_XP = 102
 SKILLMOD_LUCK = 103
+SKILLMOD_CURSEM = 104
 
 local GOOD = "^"..COLORID_GREEN
 local BAD = "^"..COLORID_RED
@@ -413,11 +415,11 @@ GM:AddSkill(SKILL_IRONBLOOD, "Iron Blood", GOOD.."+25% damage reduction from blo
 																2,			4,					{SKILL_HAEMOSTASIS, SKILL_CIRCULATION}, TREE_HEALTHTREE)
 GM:AddSkill(SKILL_D_WEAKNESS, "Debuff: Weakness", GOOD.."+60 starting Worth\n"..GOOD.."+15 end of wave points\n"..BAD.."-60 maximum health\n"..BAD.."-30% Melee Damage\n",
 																1,			-1,					{}, TREE_HEALTHTREE)
-GM:AddSkill(SKILL_VITALITY1, "Vitality I", GOOD.."+3 maximum health",
+GM:AddSkill(SKILL_VITALITY1, "Vitality I", GOOD.."+1 maximum health",
 																0,			-4,					{SKILL_VITALITY2}, TREE_HEALTHTREE)
 GM:AddSkill(SKILL_VITALITY2, "Vitality II", GOOD.."+3 maximum health",
 																0,			-2,					{SKILL_VITALITY3}, TREE_HEALTHTREE)
-GM:AddSkill(SKILL_VITALITY3, "Vitality III", GOOD.."+3 maximum health",
+GM:AddSkill(SKILL_VITALITY3, "Vitality III", GOOD.."+7 maximum health",
 																0,			-0,					{SKILL_D_WEAKNESS}, TREE_HEALTHTREE)
 GM:AddSkill(SKILL_CHEESE, "Cheese", GOOD.."+10 maximum health and +10 speed",
 																1,			1,					{SKILL_GOURMET}, TREE_HEALTHTREE)
@@ -701,7 +703,9 @@ GM:AddSkill(SKILL_BATTLER5, "Battler V", GOOD.."+10% melee damage\n"..BAD.."-16%
 GM:AddSkill(SKILL_LASTSTAND, "Last Stand", GOOD.."Double melee damage when below 25% health\n"..BAD.."0.85x melee weapon damage at any other time",
 																0,			6,					{SKILL_ABUSE}, TREE_MELEETREE)
 GM:AddSkill(SKILL_ABUSE, "Last abuse", GOOD.."+10% Melee damage\n"..GOOD.."Have chance to double end wave points,luck can increase chance\n"..BAD.."25% Max health for heal",
-																0,			7,					{}, TREE_MELEETREE)
+																0,			7,					{SKILL_CURSECURE}, TREE_MELEETREE)
+GM:AddSkill(SKILL_CURSECURE, "Curse Cure", GOOD.."-15 Curse when you get hit\n"..BAD.."-20% max curse",
+																0,			8,					{}, TREE_MELEETREE)
 GM:AddSkill(SKILL_SOULNET, "Soul Eater", GOOD.."In Start Gave random soul\n"..GOOD.."Gave +6% Damage for scythe,can randomly give food from ressuply\n"..BAD.."-10% melee damage",
 																0,			4,					{SKILL_LASTSTAND}, TREE_MELEETREE)
 GM:AddSkill(SKILL_GLASSWEAPONS, "Glass Weapons", GOOD.."3.5x melee weapon damage vs. zombies\n"..BAD.."Your melee weapons have a 50% chance to break when hitting a zombie",
@@ -921,6 +925,48 @@ GM:AddSkill(SKILL_DEFEND, "Defender of the Sigil I", GOOD.."You get 2% less dama
 GM:AddSkillModifier(SKILL_DEFEND, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.02)
 GM:AddSkillModifier(SKILL_DEFEND, SKILLMOD_SPEED, -1)
 
+--Tormented SKill
+SKILL_TORMENT1 = 229
+GM:AddSkill(SKILL_TORMENT1, "Torment I", GOOD.."+15% Xp Multiplier\n"..BAD.."-30 Speed\n"..BAD.."-15% Bullet Damage\n",
+				                                                            	1,			26,					{SKILL_NONE}, TREE_ANCIENTTREE)
+
+GM:AddSkillModifier(SKILL_TORMENT1, SKILLMOD_DAMAGE, -0.15)
+GM:AddSkillModifier(SKILL_TORMENT1, SKILLMOD_SPEED, -30)
+GM:AddSkillModifier(SKILL_TORMENT1, SKILLMOD_XP, 0.15)
+SKILL_TORMENT2 = 230
+GM:AddSkill(SKILL_TORMENT2, "Torment II", GOOD.."+15% Xp Multiplier\n"..BAD.."-15% Melee damage\n"..BAD.."-15 Health\n",
+				                                                            	1,			27,					{SKILL_TORMENT1}, TREE_ANCIENTTREE)
+
+GM:AddSkillModifier(SKILL_TORMENT2, SKILLMOD_MELEE_DAMAGE_MUL, -0.15)
+GM:AddSkillModifier(SKILL_TORMENT2, SKILLMOD_HEALTH, -15)
+GM:AddSkillModifier(SKILL_TORMENT2, SKILLMOD_XP, 0.15)
+SKILL_TORMENT3 = 231
+GM:AddSkill(SKILL_TORMENT3, "Torment III", GOOD.."+50% Xp Multiplier\n"..BAD.."+50% Ressuply delay\n"..BAD.."-5% Points multiplier\n",
+				                                                            	1,			28,					{SKILL_TORMENT2}, TREE_ANCIENTTREE)
+
+GM:AddSkillModifier(SKILL_TORMENT3, SKILLMOD_POINT_MULTIPLIER, -0.05)
+GM:AddSkillModifier(SKILL_TORMENT3, SKILLMOD_RESUPPLY_DELAY_MUL, 0.5)
+GM:AddSkillModifier(SKILL_TORMENT3, SKILLMOD_XP, 0.50)
+SKILL_TORMENT4 = 232
+GM:AddSkill(SKILL_TORMENT4, "Torment IV", GOOD.."+100% Xp Multiplier\n"..BAD.."-50% Damage of all weapon\n",
+				                                                            	1,			29,					{SKILL_TORMENT3}, TREE_ANCIENTTREE)
+
+GM:AddSkillModifier(SKILL_TORMENT4, SKILLMOD_DAMAGE, -0.50)
+GM:AddSkillModifier(SKILL_TORMENT4, SKILLMOD_MELEE_DAMAGE_MUL, -0.5)
+GM:AddSkillModifier(SKILL_TORMENT4, SKILLMOD_XP, 1)
+SKILL_TORMENT5 = 233
+GM:AddSkill(SKILL_TORMENT5, "Torment V", GOOD.."+15% Xp Multiplier\n"..BAD.."+15% Melee damage taken mul\n",
+				                                                            	2,			29,					{SKILL_TORMENT4}, TREE_ANCIENTTREE)
+
+GM:AddSkillModifier(SKILL_TORMENT5, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 0.15)
+GM:AddSkillModifier(SKILL_TORMENT5, SKILLMOD_XP, 0.15)
+SKILL_DEATHCURSE = 234
+GM:AddSkill(SKILL_DEATHCURSE, "Curse cleaning", GOOD.."+15% Xp Multiplier\n"..GOOD.."Eating food clear you curses\n"..BAD.."-30% Max curse\n",
+				                                                            	2,			30,					{SKILL_TORMENT5}, TREE_ANCIENTTREE)
+GM:AddSkillModifier(SKILL_DEATHCURSE, SKILLMOD_XP, 0.15)
+GM:AddSkillModifier(SKILL_DEATHCURSE, SKILLMOD_CURSEM, -0.30)
+--Defend skills
+
 SKILL_DEFEND1 = 191
 GM:AddSkill(SKILL_DEFEND1, "Defender of the Sigil II", GOOD.."You get 2% less damage\n"..BAD.."Speed -2",
 				                                                            	0.75,			0,					{SKILL_DEFEND}, TREE_DEFENSETREE)
@@ -964,12 +1010,13 @@ GM:AddSkill(SKILL_DEFENDEROFM, "Defender of Monsters", BAD.."You get 5% more dam
 GM:AddSkillModifier(SKILL_DEFENDEROFM, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 0.05)
 GM:AddSkillModifier(SKILL_DEFENDEROFM, SKILLMOD_MELEE_DAMAGE_MUL, 0.05)
 SKILL_TRIP = 198
-GM:AddSkill(SKILL_TRIP, "Wall curse", GOOD.."-50% Damage taken\n"..BAD.."Melee damage multiplier 0.73x\n"..BAD.."-60 Speed\nYou have power of the curse wall!",
+GM:AddSkill(SKILL_TRIP, "Wall curse", GOOD.."-33% Damage taken\n"..GOOD.."+50% Max curse\n"..BAD.."Melee damage multiplier 0.74x\n"..BAD.."-60 Speed\n+5 Curse when get hit!",
 				                                                            	-2,			2,					{SKILL_DEFENDEROFM}, TREE_DEFENSETREE)
 
-GM:AddSkillModifier(SKILL_TRIP, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.50)
-GM:AddSkillModifier(SKILL_TRIP, SKILLMOD_MELEE_DAMAGE_MUL, -0.27)
+GM:AddSkillModifier(SKILL_TRIP, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.33)
+GM:AddSkillModifier(SKILL_TRIP, SKILLMOD_MELEE_DAMAGE_MUL, -0.36)
 GM:AddSkillModifier(SKILL_TRIP, SKILLMOD_SPEED, -60)
+GM:AddSkillModifier(SKILL_TRIP, SKILLMOD_CURSEM, 0.5)
 SKILL_MERIS = 199
 GM:AddSkill(SKILL_MERIS, "Meris", GOOD.."-10% Damage taken\n"..BAD.."-20% Melee damage!",
 				                                                            	-1,			3.5,					{SKILL_TRIP}, TREE_DEFENSETREE)
@@ -981,6 +1028,7 @@ GM:AddSkill(SKILL_DONATE1, "Donate I", GOOD.."-3% Damage taken\n"..GOOD.."+2% Me
 
 GM:AddSkillModifier(SKILL_DONATE1, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.03)
 GM:AddSkillModifier(SKILL_DONATE1, SKILLMOD_MELEE_DAMAGE_MUL, 0.02)
+
 
 SKILL_DONATE2 = 204
 GM:AddSkill(SKILL_DONATE2, "Donate II", GOOD.."+5 Blood armor\n"..GOOD.."-5% Poison Speed!Thank Null",
@@ -1267,6 +1315,9 @@ end)
 GM:SetSkillModifierFunction(SKILLMOD_FIRE_DAMAGE_TAKEN_MUL, function(pl, amount)
 	pl.FireDamageTakenMul = math.Clamp(amount + 1.0, 0.0, 1000.0)
 end)
+GM:SetSkillModifierFunction(SKILLMOD_CURSEM, function(pl, amount)
+	pl.CurseMultiplier = math.Clamp(amount + 1.0, 0.0, 1000.0)
+end)
 
 GM:SetSkillModifierFunction(SKILLMOD_PROP_CARRY_CAPACITY_MUL, function(pl, amount)
 	pl.PropCarryCapacityMul = math.Clamp(amount + 1.0, 0.0, 1000.0)
@@ -1406,9 +1457,9 @@ GM:AddSkillModifier(SKILL_STOIC4, SKILLMOD_SPEED, -11)
 GM:AddSkillModifier(SKILL_STOIC5, SKILLMOD_HEALTH, 11)
 GM:AddSkillModifier(SKILL_STOIC5, SKILLMOD_SPEED, -10)
 
-GM:AddSkillModifier(SKILL_VITALITY1, SKILLMOD_HEALTH, 3)
+GM:AddSkillModifier(SKILL_VITALITY1, SKILLMOD_HEALTH, 1)
 GM:AddSkillModifier(SKILL_VITALITY2, SKILLMOD_HEALTH, 3)
-GM:AddSkillModifier(SKILL_VITALITY3, SKILLMOD_HEALTH, 3)
+GM:AddSkillModifier(SKILL_VITALITY3, SKILLMOD_HEALTH, 7)
 GM:AddSkillModifier(SKILL_CHEESE, SKILLMOD_HEALTH, 10)
 GM:AddSkillModifier(SKILL_CHEESE, SKILLMOD_SPEED, 10)
 
@@ -1727,3 +1778,6 @@ end)
 
 GM:AddSkillModifier(SKILL_MECHANIC, SKILLMOD_SCRAPDISCOUNT, -0.15)
 GM:AddSkillModifier(SKILL_MECHANIC, SKILLMOD_ARSENAL_DISCOUNT, 0.15)
+
+
+GM:AddSkillModifier(SKILL_CURSECURE, SKILLMOD_CURSEM, -0.20)

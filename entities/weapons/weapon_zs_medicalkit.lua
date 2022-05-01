@@ -66,7 +66,7 @@ function SWEP:PrimaryAttack()
 	if not self:CanPrimaryAttack() then return end
 
 	local owner = self:GetOwner()
-	owner:AddRot(owner, 10)
+
 
 	local trtbl = owner:CompensatedPenetratingMeleeTrace(self.HealRange, 2, nil, nil, true)
 	local ent

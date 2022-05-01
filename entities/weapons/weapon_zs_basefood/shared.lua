@@ -119,7 +119,7 @@ function SWEP:Think()
 
 		if owner:IsSkillActive(SKILL_GLUTTON) or owner:IsSkillActive(SKILL_SUGARRUSH) then return end
 
-		local max = owner:IsSkillActive(SKILL_D_FRAIL) and math.floor(owner:GetMaxHealth() * 0.25) or owner:GetMaxHealth()
+		local max = owner:IsSkillActive(SKILL_D_FRAIL) and math.floor(owner:GetMaxHealth() * 0.44) or owner:GetMaxHealth()
 		if owner:Health() >= max then
 			self:SetEatEndTime(0)
 		end

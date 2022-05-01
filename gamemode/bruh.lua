@@ -1,7 +1,0 @@
-GM:AddPointShopItem("broom",			ITEMCAT_MELEE,			55,				"weapon_zs_pushbroom")
-GM:AddPointShopItem("shovel",			ITEMCAT_MELEE,			55,				"weapon_zs_shovel")
-GM:AddPointShopItem("sledgehammer",		ITEMCAT_MELEE,			55,				"weapon_zs_sledgehammer")
-GM:AddPointShopItem("harpoon",			ITEMCAT_MELEE,			55,				"weapon_zs_harpoon")
-GM:AddPointShopItem("butcherknf",		ITEMCAT_MELEE,			55,				"weapon_zs_butcherknife")
-GM:AddPointShopItem("keyboard",		    ITEMCAT_MELEE,			25,				"weapon_zs_keyboard")
-GM:AddPointShopItem("dash",		    ITEMCAT_MELEE,			55,				"weapon_zs_f_dash")

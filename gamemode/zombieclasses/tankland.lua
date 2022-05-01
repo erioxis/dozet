@@ -17,13 +17,7 @@ CLASS.SWEP = "weapon_zs_tank"
 CLASS.Model = Model("models/player/zombie_classic_hbfix.mdl")
 CLASS.OverrideModel = Model("models/Zombie/Poison.mdl")
 
-if SERVER then
-function CLASS:ProcessDamage(pl, dmginfo)
-	if dmginfo:GetInflictor().IsMelee then
-		dmginfo:SetDamage(dmginfo:GetDamage() / 20)
-	end
-end
-end
+
 
 
 CLASS.VoicePitch = 0.6
@@ -207,14 +201,25 @@ if SERVER then
 		if CurTime() < (pl.NextZombieRevive or 0) then return end
 		pl.NextZombieRevive = CurTime() + 4.25
 
+
+
 		dmginfo:SetDamage(0)
 		pl:SetHealth(10)
 
+
+		if dmginfo:GetInflictor().IsMelee then
+			dmginfo:SetDamage(dmginfo:GetDamage() / 20)
+		end
+		if bit_band(dmginfo:GetDamageType(), DMG_BULLET) ~= 0 then
+			dmginfo:SetDamage(dmginfo:GetDamage() * 0.5)
+		elseif bit_band(dmginfo:GetDamageType(), DMG_SLASH) == 0 and bit_band(dmginfo:GetDamageType(), DMG_CLUB) == 0 then
+			dmginfo:SetDamage(dmginfo:GetDamage() * 0.5)
+		end
 		local status = pl:GiveStatus("revive_slump")
 		if status then
-			status:SetReviveTime(CurTime() + 3)
-			status:SetReviveAnim(3.15)
-			status:SetReviveHeal(130)
+			status:SetReviveTime(CurTime() + 2)
+			status:SetReviveAnim(2.1)
+			status:SetReviveHeal(5000)
 
 			pl.EradiVived = true
 		end

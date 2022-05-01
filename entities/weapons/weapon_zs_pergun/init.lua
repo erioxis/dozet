@@ -8,7 +8,7 @@ function SWEP:Think()
 		self.NextEmit = CurTime() + 0.1
 		pl.LastRangedAttack = CurTime()
 
-		local ent = ents.Create(self.PukeLeft % 6 == 1 and "projectile_poisonpuke" or "projectile_rotflesh")
+		local ent = ents.Create(self.PukeLeft % 6 == 1 and "projectile_puke" or "projectile_puke")
 		if ent:IsValid() then
 			ent:SetPos(pl:EyePos())
 			ent:SetOwner(pl)

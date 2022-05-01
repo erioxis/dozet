@@ -207,9 +207,13 @@ function meta:ProcessDamage(dmginfo)
 					self.BleakSoulMessage = nil
 				end
 				if self:HasTrinket("adrenaline") and (not self.LastBleakSoul or self.LastBleakSoul + 60 < CurTime()) then
+					local boost = self:GiveStatus("adrenalineamp", 7)
 					self:GiveStatus("strengthdartboost", 7)
 					self:GiveStatus("speed", 7)
-					self:GiveStatus("adrenalineamp", 7)
+					
+					if boost and boost:IsValid() then
+						boost:SetSpeed(55)
+					end
 				end
 				if self:IsSkillActive(SKILL_BLOODLOST)  then
 					self:GiveStatus("bloodrage", 6)
@@ -224,6 +228,12 @@ function meta:ProcessDamage(dmginfo)
 					local cursed = self:GetStatus("cursed")
 					if (cursed) then 
 						self:AddCursed(self:GetOwner(), cursed.DieTime - CurTime() - 30)
+					end
+				end
+				if self:IsSkillActive(SKILL_CURSECURE)  then
+					local cursed = self:GetStatus("cursed")
+					if (cursed) then 
+						self:AddCursed(self:GetOwner(), cursed.DieTime - CurTime() - 15)
 					end
 				end
 				if self:IsSkillActive(SKILL_TRIP)  then
@@ -1730,7 +1740,7 @@ local bossdrops = {
 	"trinket_lampsoul"  -- 26
 }
 local bossdrops1 = {
-	"trinket_bleaksoul"
+	"weapon_zs_plank"
 	--[["trinket_bleaksoul",  -- 1
 	"trinket_spiritess",  -- 2
 	"trinket_samsonsoul",  -- 3
