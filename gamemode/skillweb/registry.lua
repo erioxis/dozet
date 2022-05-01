@@ -271,6 +271,7 @@ SKILL_HAMMERDISCIPLINE2 = 221
 SKILL_LANKYIII = 226
 SKILL_MECHANIC = 227
 SKILL_CURSECURE = 228
+SKILL_VKID = 235
 
 
 SKILLMOD_HEALTH = 1
@@ -451,7 +452,9 @@ GM:AddSkill(SKILL_AGILEI, "Agile I", GOOD.."+4% jumping power\n"..BAD.."-2 movem
 GM:AddSkill(SKILL_AGILEII, "Agile II", GOOD.."+5% jumping power\n"..BAD.."-3 movement speed",
 																4,			2,					{SKILL_AGILEIII, SKILL_WORTHINESS3}, TREE_SPEEDTREE)
 GM:AddSkill(SKILL_AGILEIII, "Agile III", GOOD.."+6% jumping power\n"..BAD.."-4 movement speed",
-																4,			-2,					{SKILL_SAFEFALL, SKILL_ULTRANIMBLE, SKILL_SURESTEP, SKILL_INTREPID}, TREE_SPEEDTREE)
+																4,			-2,					{SKILL_SAFEFALL, SKILL_ULTRANIMBLE, SKILL_SURESTEP, SKILL_INTREPID, SKILL_VKID}, TREE_SPEEDTREE)
+GM:AddSkill(SKILL_VKID, "Vkid", GOOD.."+30% jumping power\n"..GOOD.."+60 speed\n"..GOOD.."You can squeeze zombie\n"..BAD.."-50 health",
+																4,			-3,					{}, TREE_SPEEDTREE)
 GM:AddSkill(SKILL_D_SLOW, ""..translate.Get("skill_slow"), GOOD..""..translate.Get("skill_slow_d1")..GOOD..""..translate.Get("skill_slow_d2")..BAD..""..translate.Get("skill_slow_d3")..BAD..""..translate.Get("skill_slow_d4"),
 																0,			-4,					{}, TREE_SPEEDTREE)
 GM:AddSkill(SKILL_MOTIONI, ""..translate.Get("skill_motion1"), GOOD..""..translate.Get("skill_motion_d_all"),
@@ -598,7 +601,7 @@ GM:AddSkill(SKILL_VISION, "Refiner's Vision", GOOD.."Locate nearby remantlers if
 																6,			-6,					{SKILL_NONE, SKILL_ACUITY}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_U_ROCKETTURRET, "Unlock: Rocket Turret", GOOD.."Unlocks purchasing the Rocket Turret\nFires explosives instead of SMG ammo\nDeals damage in a radius\nHigh tier deployable",
 																-8,			-0,					{SKILL_TURRETOVERLOAD}, TREE_BUILDINGTREE)
-GM:AddSkill(SKILL_INSIGHT, "Buyer's Insight", GOOD.."Locate nearby arsenal crates if behind walls\n"..GOOD.."Locate nearby unplaced arsenal crates on players through walls\n"..GOOD.."Locate nearby arsenal packs through walls",
+GM:AddSkill(SKILL_INSIGHT, "Buyer's Insight", GOOD.."+2% Arsenal Discount\n"..GOOD.."Locate nearby unplaced arsenal crates on players through walls\n"..GOOD.."Locate nearby arsenal packs through walls",
 																6,			-0,					{SKILL_U_NANITECLOUD, SKILL_U_ZAPPER_ARC, SKILL_LIGHTCONSTRUCT, SKILL_D_LATEBUYER}, TREE_BUILDINGTREE)
 .AlwaysActive = true
 GM:AddSkill(SKILL_U_ZAPPER_ARC, "Unlock: Arc Zapper", GOOD.."Unlocks purchasing the Arc Zapper\nZaps zombies that get nearby, and jumps in an arc\nMid tier deployable and long cooldown\nRequires a steady upkeep of pulse ammo",
@@ -624,7 +627,7 @@ GM:AddSkill(SKILL_STOWAGE, 	"Stowage", GOOD.."Resupply usages build up when you'
 
 GM:AddSkill(SKILL_UNSIGIL, "Uncorrupter", GOOD.."+24% Reload speed\n"..GOOD.."+15% Bullet Damage\n"..BAD.."-80% Melee damage",
 																0,			2,					{SKILL_LEVELHEADED}, TREE_GUNTREE)
-GM:AddSkillModifier(SKILL_TRIGGER_DISCIPLINE3, SKILLMOD_DAMAGE, 0.15)
+GM:AddSkillModifier(SKILL_UNSIGIL, SKILLMOD_DAMAGE, 0.15)
 GM:AddSkill(SKILL_TRIGGER_DISCIPLINE1, "Trigger Discipline I", GOOD.."+2% weapon reload speed and 3% Bullet damage\n"..GOOD.."+2% weapon draw speed\n"..BAD.."-9% Melee damage",
 																-5,			6,					{SKILL_TRIGGER_DISCIPLINE2, SKILL_NONE}, TREE_GUNTREE)
 GM:AddSkill(SKILL_TRIGGER_DISCIPLINE2, "Trigger Discipline II", GOOD.."+3% weapon reload speed and 5% Bullet damage\n"..GOOD.."+3% weapon draw speed\n"..BAD.."-13% Melee Damage",
@@ -704,7 +707,7 @@ GM:AddSkill(SKILL_LASTSTAND, "Last Stand", GOOD.."Double melee damage when below
 																0,			6,					{SKILL_ABUSE}, TREE_MELEETREE)
 GM:AddSkill(SKILL_ABUSE, "Last abuse", GOOD.."+10% Melee damage\n"..GOOD.."Have chance to double end wave points,luck can increase chance\n"..BAD.."25% Max health for heal",
 																0,			7,					{SKILL_CURSECURE}, TREE_MELEETREE)
-GM:AddSkill(SKILL_CURSECURE, "Curse Cure", GOOD.."-15 Curse when you get hit\n"..BAD.."-20% max curse",
+GM:AddSkill(SKILL_CURSECURE, "Curse Cure", GOOD.."-15 Curse when you get hit\n"..BAD.."-20% max curse\n"..BAD.."Instead of a curse, you get rot",
 																0,			8,					{}, TREE_MELEETREE)
 GM:AddSkill(SKILL_SOULNET, "Soul Eater", GOOD.."In Start Gave random soul\n"..GOOD.."Gave +6% Damage for scythe,can randomly give food from ressuply\n"..BAD.."-10% melee damage",
 																0,			4,					{SKILL_LASTSTAND}, TREE_MELEETREE)
@@ -1781,3 +1784,9 @@ GM:AddSkillModifier(SKILL_MECHANIC, SKILLMOD_ARSENAL_DISCOUNT, 0.15)
 
 
 GM:AddSkillModifier(SKILL_CURSECURE, SKILLMOD_CURSEM, -0.20)
+
+GM:AddSkillModifier(SKILL_INSIGHT, SKILLMOD_ARSENAL_DISCOUNT, -0.02)
+
+GM:AddSkillModifier(SKILL_VKID, SKILLMOD_JUMPPOWER_MUL, 0.30)
+GM:AddSkillModifier(SKILL_VKID, SKILLMOD_SPEED, 60)
+GM:AddSkillModifier(SKILL_VKID, SKILLMOD_HEALTH, -50)

@@ -578,7 +578,7 @@ GM:AddSkillModifier(trinket, SKILLMOD_EXP_DAMAGE_RADIUS, 1.8)
 trinket = GM:AddTrinket(""..translate.Get("t_smanifest"), "sman", false, supveles, supweles, 5, ""..translate.Get("t_d_smanifest"))
 GM:AddSkillModifier(trinket, SKILLMOD_RESUPPLY_DELAY_MUL, -0.19)
 trinket = GM:AddTrinket(""..translate.Get("t_protutor"), "stutor", false, book, bookw, 5, ""..translate.Get("t_d_protutor"))
-GM:AddSkillModifier(trinket, SKILLMOD_POINT_MULTIPLIER, 0.11)
+GM:AddSkillModifier(trinket, SKILLMOD_POINT_MULTIPLIER, 0.30)
 trinket = GM:AddTrinket(""..translate.Get("t_gstore"), "gstore", false, supveles, supweles, 5, ""..translate.Get("t_d_gstore"))
 GM:AddSkillModifier(trinket, SKILLMOD_ARSENAL_DISCOUNT, -0.20)
 trinket = GM:AddTrinket(""..translate.Get("t_fblueprints"), "futureblu", false, supveles, supweles, 5, ""..translate.Get("t_d_fblueprints"))
@@ -705,7 +705,7 @@ trinket = GM:AddTrinket("Soul of Lilith", "lilithsoul", false, nil, {
 	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 7.697, y = 7.697 }, color = Color(255, 0, 0, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core_2+"] = { type = "Sprite", sprite = "effects/splashwake1", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 10, y = 10 }, color = Color(0, 0, 0, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 2, 0), angle = Angle(0, 0, 0), size = Vector(0.349, 0.349, 0.349), color = Color(0, 0, 0, 255), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} }
-}, nil,"Дает большой бафф к туррелям и дронам с амуницией,аммуниция идет быстрее на 10%,на 30% больше хп у всех деплояблов,туррели имеют в 50% больше хп и скорость сканирования на 40% больше\n Give huge buff for turrets and drones\n Q:4")
+}, nil,"Дает большой бафф к туррелям и дронам с амуницией,аммуниция идет быстрее на 10%\nНа 30% больше хп у всех деплояблов,туррели имеют в 50% больше хп и скорость сканирования на 40% больше\n Give huge buff for turrets and drones\n Q:4")
 GM:AddSkillModifier(trinket, SKILLMOD_RESUPPLY_DELAY_MUL, -0.1)
 GM:AddSkillModifier(trinket, SKILLMOD_DEPLOYABLE_HEALTH_MUL, 0.3)
 GM:AddSkillModifier(trinket, SKILLMOD_TURRET_HEALTH_MUL, 0.5)

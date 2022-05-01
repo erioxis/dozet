@@ -49,7 +49,7 @@ SWEP.Base = "weapon_zs_basemelee"
 
 SWEP.Tier = 7
 SWEP.MeleeDamage = 150
-SWEP.MeleeRange = 200
+SWEP.MeleeRange = 122
 SWEP.MeleeSize = 3
 SWEP.MeleeKnockBack = 0
 
@@ -187,102 +187,9 @@ function SWEP:MeleeHitEntity(tr, hitent, damagemultiplier, damage)
 
 	local owner = self:GetOwner()
 
-	if SERVER and hitent:IsPlayer() and owner:IsSkillActive(SKILL_GLASSWEAPONS) then
-		damagemultiplier = damagemultiplier * 3.5
-		owner.GlassWeaponShouldBreak = not owner.GlassWeaponShouldBreak
-	end
-
-	damage = damage * damagemultiplier
-
-	local dmginfo = DamageInfo()
-	dmginfo:SetDamagePosition(tr.HitPos)
-	dmginfo:SetAttacker(owner)
-	dmginfo:SetInflictor(self)
-	dmginfo:SetDamageType(self.DamageType)
-	dmginfo:SetDamage(damage)
-	dmginfo:SetDamageForce(math.min(self.MeleeDamage, 50) * 50 * owner:GetAimVector())
-
-	local vel
-	if hitent:IsPlayer() then
-
-		if owner.MeleePowerAttackMul and owner.MeleePowerAttackMul > 1 then
-			self:SetPowerCombo(self:GetPowerCombo() + 1)
-
-			damage = damage + damage * (owner.MeleePowerAttackMul - 1) * (self:GetPowerCombo()/4)
-			dmginfo:SetDamage(damage)
-
-			if self:GetPowerCombo() >= 4 then
-				self:SetPowerCombo(0)
-				if SERVER then
-					local pitch = math.Clamp(math.random(90, 110) + 15 * (1 - damage/45), 50 , 200)
-					owner:EmitSound("npc/strider/strider_skewer1.wav", 75, pitch)
-				end
-			end
-		end
-
-		hitent:MeleeViewPunch(damage)
-		if hitent:IsHeadcrab() then
-			damage = damage * 2
-			dmginfo:SetDamage(damage)
-		end
-
-		if SERVER then
-			hitent:SetLastHitGroup(tr.HitGroup)
-			if tr.HitGroup == HITGROUP_HEAD then
-				hitent:SetWasHitInHead()
-			end
-
-			if hitent:WouldDieFrom(damage, tr.HitPos) then
-				dmginfo:SetDamageForce(math.min(self.MeleeDamage, 50) * 400 * owner:GetAimVector())
-			end
-		end
-
-		vel = hitent:GetVelocity()
-	else
-		if owner.MeleePowerAttackMul and owner.MeleePowerAttackMul > 1 then
-			self:SetPowerCombo(0)
-		end
-	end
-
-	--if not hitent.LastHeld or CurTime() >= hitent.LastHeld + 0.1 then -- Don't allow people to shoot props out of their hands
-		if self.PointsMultiplier then
-			POINTSMULTIPLIER = self.PointsMultiplier
-		end
-
-		hitent:DispatchTraceAttack(dmginfo, tr, owner:GetAimVector())
-
-		if self.PointsMultiplier then
-			POINTSMULTIPLIER = nil
-		end
-
-		-- Invalidate the engine knockback vs. players
-		if vel then
-			hitent:SetLocalVelocity(vel)
-		end
-	--end
-
-	-- Perform our own knockback vs. players
-	if hitent:IsPlayer() then
-		local knockback = self.MeleeKnockBack * (owner.MeleeKnockbackMultiplier or 1)
-		if knockback > 0 then
-			hitent:ThrowFromPositionSetZ(tr.StartPos, knockback, nil, true)
-		end
-
-		if owner.MeleeLegDamageAdd and owner.MeleeLegDamageAdd > 0 then
-			hitent:AddLegDamage(owner.MeleeLegDamageAdd)
-		end
-	end
-
 	local effectdata = EffectData()
-	effectdata:SetOrigin(tr.HitPos)
-	effectdata:SetStart(tr.StartPos)
-	effectdata:SetNormal(tr.HitNormal)
-	util.Effect("RagdollImpact", effectdata)
-	if not tr.HitSky then
-		effectdata:SetSurfaceProp(tr.SurfaceProps)
-		effectdata:SetDamageType(self.DamageType)
-		effectdata:SetHitBox(tr.HitBox)
-		effectdata:SetEntity(hitent)
-		util.Effect("Impact", effectdata)
-	end
+		effectdata:SetOrigin(tr.HitPos)
+		effectdata:SetNormal(tr.HitNormal)
+	util.Effect("hit_hunter", effectdata)
 end
+
