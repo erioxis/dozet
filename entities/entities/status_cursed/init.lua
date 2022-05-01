@@ -13,8 +13,9 @@ end
 function ENT:Think()
 	self:EmitSound("npc/stalker/breathing3.wav", 30, 85)
 	local cursed = self:GetOwner():GetStatus("cursed")
+	local owner = self:GetOwner()
 	if (cursed) then
-		if (cursed.DieTime >= CurTime()+100) then
+		if (cursed.DieTime >= CurTime() + 100 * owner.CurseMultiplier) then
 			cursed:GetOwner():Kill()
 			cursed:Remove()
 		end

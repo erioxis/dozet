@@ -137,22 +137,20 @@ function CLASS:BuildBonePositions(pl)
 		end
 	end
 end
-
-function CLASS:PrePlayerDraw(pl)
-	render.SetColorModulation(0.1, 0.1, 0.1)
-end
-
-function CLASS:PostPlayerDraw(pl)
-	render.SetColorModulation(1, 1, 1)
-end
-
 local matSkin = Material("Models/Barnacle/barnacle_sheet")
 function CLASS:PrePlayerDraw(pl)
-	render.SetColorModulation(1, 0, 0)
+	render.SetColorModulation(0.788, 0.106, 0.106)
 	render.ModelMaterialOverride(matSkin)
 end
 
 function CLASS:PostPlayerDraw(pl)
-	render.SetColorModulation(1, 1, 1)
-	render.ModelMaterialOverride()
+	render.SetColorModulation(0.969, 0.043, 0.043)
 end
+
+if SERVER then
+	function CLASS:ProcessDamage(pl, dmginfo)
+		if dmginfo:GetInflictor().IsMelee then
+			dmginfo:SetDamage(dmginfo:GetDamage() / 1000)
+		end
+	end
+	end

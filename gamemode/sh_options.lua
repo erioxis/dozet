@@ -509,7 +509,7 @@ GM:AddPointShopItem("rocketturret",		ITEMCAT_DEPLOYABLES,			125,			"weapon_zs_gu
 item.Countables = "prop_gunturret_rocket"
 item.NoClassicMode = true
 item.SkillRequirement = SKILL_U_ROCKETTURRET
-GM:AddPointShopItem("weapon_zs_gunturret_super",		ITEMCAT_DEPLOYABLES,			290,			"weapon_zs_gunturret_super",	nil,							nil,									nil,											function(pl) pl:GiveEmptyWeapon("weapon_zs_gunturret_super") pl:GiveAmmo(1, "turret_super") end)
+GM:AddPointShopItem("weapon_zs_gunturret_super",		ITEMCAT_DEPLOYABLES,			1000,			"weapon_zs_gunturret_super",	nil,							nil,									nil,											function(pl) pl:GiveEmptyWeapon("weapon_zs_gunturret_super") pl:GiveAmmo(1, "turret_super") end)
 item.Countables = "prop_gunturret_super"
 item.NoClassicMode = true
 --GM:AddStartingItem("infturret",			ITEMCAT_DEPLOYABLES,			45,				"weapon_zs_gunturret",			nil,							nil,									nil,											function(pl) pl:GiveEmptyWeapon("weapon_zs_gunturret") pl:GiveAmmo(1, "thumper") pl:GiveAmmo(125, "smg1") end)
@@ -698,7 +698,8 @@ GM:AddMutationItem("m_zombie_moan", ""..translate.Get("zshop_zombsprint"), ""..t
 GM:AddMutationItem("m_zombie_moanguard", ""..translate.Get("zshop_zombguard"), ""..translate.Get("zshop_zombguard2"), ITEMCAT_MUTATIONS, 200, nil, function(pl) pl.m_Zombie_MoanGuard = true end, "models/player/zombie_classic.mdl")
 
 -- Boss Mutagen
-GM:AddMutationItem("m_zombie_health2", ""..translate.Get("zshop_godestzomb"), ""..translate.Get("zshop_godestzomb2"), ITEMCAT_MUTATIONS_BOSS, 1000, nil, function(pl) pl.m_Zombie_GodyHealth = true end, "models/items/healthkit.mdl")   
+GM:AddMutationItem("m_zombie_health2", ""..translate.Get("zshop_godestzomb"), ""..translate.Get("zshop_godestzomb2"), ITEMCAT_MUTATIONS_BOSS, 1000, nil, function(pl) pl.m_Zombie_GodyHealth = true end, "models/items/healthkit.mdl")
+GM:AddMutationItem("m_zombie_healthcursed", ""..translate.Get("zshop_cursed"), ""..translate.Get("zshop_cursed1"), ITEMCAT_MUTATIONS_BOSS, 3000, nil, function(pl) pl.m_Zombie_CursedHealth = true end, "models/items/healthkit.mdl")      
 GM:AddMutationItem("m_shade_damage", ""..translate.Get("zshop_bossphysicshazard"), ""..translate.Get("zshop_bossphysicshazard2"), ITEMCAT_MUTATIONS_BOSS, 550, nil, function(pl) pl.m_Shade_Force = true end, "models/player/zombie_classic.mdl")
 -- These are the honorable mentions that come at the end of the round.
 

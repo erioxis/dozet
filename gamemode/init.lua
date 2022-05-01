@@ -1185,7 +1185,7 @@ function GM:Think()
 			elseif self.BossZombies and not self.PantsMode and not self:IsClassicMode() and not self.ZombieEscape
 			and self.LastBossZombieSpawned ~= wave and wave > 0 and not self.RoundEnded
 			and (self.BossZombiePlayersRequired <= 0 or #player.GetAll() >= self.BossZombiePlayersRequired) then
-				if self:GetWaveStart() - 20 <= time then
+				if self:GetWaveStart() - 10 <= time then
 					self:SpawnBossZombie()
 				else
 					self:CalculateNextBoss()
@@ -2344,9 +2344,11 @@ function GM:PlayerInitialSpawnRound(pl)
 	pl.m_Zombie_Health = nil
 	pl.m_Zombie_GodHealth = nil
 	pl.m_Zombie_GodyHealth = nil
+	
 
 	-- Boss Mutations (Z-Shop)
 	pl.m_Shade_Force = nil
+	pl.m_Zombie_CursedHealth = nil
 
 	pl.ZSInventory = {}
 
@@ -2852,7 +2854,7 @@ function GM:EntityTakeDamage(ent, dmginfo)
 						if myteam == TEAM_UNDEAD then
 							if otherteam == TEAM_HUMAN then
 								attacker:AddLifeHumanDamage(damage)
-								attacker:AddTokens(math.ceil(damage * 1.5))
+								attacker:AddTokens(math.ceil(damage * 2.5))
 								GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_ZOMBIECLASS, attacker:GetZombieClassTable().Name, "HumanDamage", damage)
 							end
 						elseif myteam == TEAM_HUMAN and otherteam == TEAM_UNDEAD then
@@ -4263,6 +4265,10 @@ end
 		
 	if pl:Team() == TEAM_UNDEAD and pl.m_Zombie_GodyHealth then
 		pl:SetMaxHealth(pl:GetMaxHealth() * 2.5) pl:SetHealth(pl:Health() * 2.5)
+	
+	end
+	if pl:Team() == TEAM_UNDEAD and pl.m_Zombie_CursedHealth then
+		pl:SetMaxHealth(pl:GetMaxHealth() * 5) pl:SetHealth(pl:Health() * 5)
 	
 	end
 end

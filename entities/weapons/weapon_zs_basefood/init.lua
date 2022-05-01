@@ -5,9 +5,17 @@ function SWEP:Eat()
 
 	if owner:IsSkillActive(SKILL_SUGARRUSH) then
 		local boost = owner:GiveStatus("adrenalineamp", 14)
+		
 		if boost and boost:IsValid() then
 			boost:SetSpeed(35)
 		end
+	end
+	if owner:IsSkillActive(SKILL_DEATHCURSE) then
+		local cursed = owner:GetStatus("cursed")
+		if (cursed) then 
+			owner:AddCursed(self:GetOwner(), cursed.DieTime - CurTime() - 900)
+		end
+
 	end
 
 	local max = owner:IsSkillActive(SKILL_D_FRAIL) and math.floor(owner:GetMaxHealth() * 0.25) or owner:GetMaxHealth()

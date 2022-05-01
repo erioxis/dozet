@@ -1014,5 +1014,8 @@ LANGUAGE.zshop_fasterzombie2                               = "Мутация н�
 LANGUAGE.zshop_barbed                              = "Бегунок"
 LANGUAGE.zshop_barbed2                               = "Мутация на скорость,Быстрее на 150 единиц."
 
+LANGUAGE.zshop_cursed                               = "Проклятый зомби"
+LANGUAGE.zshop_cursed1                                = "Увеличивает выживаемость на 500%."
+
 LANGUAGE.worth_worth								= "Ворф: %s"
 LANGUAGE.worth_worth_cost							= "%s Ворфа"

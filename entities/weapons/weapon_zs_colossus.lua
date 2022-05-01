@@ -64,7 +64,7 @@ SWEP.UseHands = false
 SWEP.Primary.Damage = 135
 SWEP.Primary.NumShots = 1
 SWEP.Primary.Delay = 1
-SWEP.HeadshotMulti = 1.75
+SWEP.HeadshotMulti = 3
 SWEP.ReloadSound = Sound("ambient/machines/thumper_startup1.wav")
 
 SWEP.Primary.ClipSize = 1
@@ -90,7 +90,7 @@ SWEP.ReloadSpeed = 1
 SWEP.Tier = 5
 
 SWEP.MaxStock = 2
-SWEP.Pierces = 10
+SWEP.Pierces = 30
 
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_RELOAD_SPEED, 0.032)
 
