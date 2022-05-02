@@ -15,7 +15,7 @@ SWEP.Primary.Ammo = "GaussEnergy"
 SWEP.Primary.Delay = 1
 SWEP.Primary.DefaultClip = 32
 
-SWEP.MeleeDamageVsProps = 91
+
 
 SWEP.Secondary.ClipSize = 1
 SWEP.Secondary.DefaultClip = 1
@@ -25,6 +25,8 @@ SWEP.Secondary.Ammo = "dummy"
 SWEP.MeleeDamage = 31
 SWEP.MeleeRange = 89
 SWEP.MeleeSize = 0.3
+
+SWEP.MeleeDamageVsProps = 91
 
 
 SWEP.UseMelee1 = true

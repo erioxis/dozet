@@ -22,6 +22,7 @@ SWEP.MeleeKnockBack = 0
 SWEP.ViewModelFOV = 52
 
 SWEP.AutoSwitchFrom = true
+SWEP.HealStrength = 0.3
 
 SWEP.Unarmed = true
 
