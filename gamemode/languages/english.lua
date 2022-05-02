@@ -561,7 +561,7 @@ LANGUAGE.wep_d_medicrifle_r1  = "Strength boost instead of defence, and makes zo
 LANGUAGE.wep_tau_r1 = "'Prometheus' Tau Cannon"
 LANGUAGE.wep_d_tau_r1 = "Bounces at low angles, three weaker shots, charges faster, increased fire delay"
 LANGUAGE.wep_luxoid_r1		= "Lux"
-LANGUAGE.wep_d_luxod_r1		= "Have big chance to create explosive than kill, faster but less damage and knockback"
+LANGUAGE.wep_d_luxoid_r1		= "Have big chance to create explosive than kill, faster but less damage and knockback"
 --[[LANGUAGE.wep_annabelle_r1	=  "'Blaster' Slug gun"
 LANGUAGE.wep_d_annabelle_r1	=  "One very accurate slug round, less total damage"]]
 --melee

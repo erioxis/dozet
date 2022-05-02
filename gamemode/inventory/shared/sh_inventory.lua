@@ -62,7 +62,7 @@ GM:AddWeaponBreakdownRecipe("weapon_zs_fracture",							"comp_linearactuator")
 GM:AddWeaponBreakdownRecipe("weapon_zs_harpoon",							"comp_metalpole")
 GM:AddWeaponBreakdownRecipe("weapon_zs_cryman",							"comp_mommy")
 GM:AddWeaponBreakdownRecipe("weapon_zs_m5",							"comp_sacred_soul")
-GM:AddWeaponBreakdownRecipe("pills",							"comp_sacred_soul")
+GM:AddWeaponBreakdownRecipe("jacobjesausoul",							"comp_sacred_soul")
 GM:AddWeaponBreakdownRecipe("weapon_zs_crymam",							"trinket_toysoul")
 
 -- Assemblies (Assembly, Component, Weapon)
@@ -853,8 +853,9 @@ trinket = GM:AddTrinket("Soul of Tea", "teasoul", false, nil, {
 	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 7.697, y = 7.697 }, color = Color(255, 0, 255, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core_2+"] = { type = "Sprite", sprite = "effects/splashwake1", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 10, y = 10 }, color = Color(10, 23, 35, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 2, 0), angle = Angle(0, 0, 0), size = Vector(0.349, 0.349, 0.349), color = Color(55, 55, 5, 100), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} }
-}, nil, "Дает 40 скорости\n +40 speed\n Q:1")
+}, nil, "Дает 40 скорости,+15% К силе прыжка\n +40 speed,+15% Jump power\n Q:1")
 GM:AddSkillModifier(trinket, SKILLMOD_SPEED, 40)
+GM:AddSkillModifier(trinket, SKILLMOD_JUMPPOWER_MUL, 0.15)
 trinket = GM:AddTrinket("Soul of Sugger", "sugersoul", false, nil, {
 	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 7.697, y = 7.697 }, color = Color(255, 255, 255, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core_2+"] = { type = "Sprite", sprite = "effects/splashwake1", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 10, y = 10 }, color = Color(255, 255, 255, 25), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},

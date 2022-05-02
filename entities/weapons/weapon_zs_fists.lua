@@ -20,9 +20,10 @@ SWEP.HitDistance = 40
 SWEP.MeleeKnockBack = 0
 
 SWEP.ViewModelFOV = 52
-
+SWEP.Primary.Ammo = "scrap"
+SWEP.Primary.DefaultClip = 5
 SWEP.AutoSwitchFrom = true
-SWEP.HealStrength = 0.3
+SWEP.HealStrength = 0.09
 
 SWEP.Unarmed = true
 

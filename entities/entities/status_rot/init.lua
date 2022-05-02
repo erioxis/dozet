@@ -13,7 +13,7 @@ end
 function ENT:Think()
 	local owner = self:GetOwner()
 	if (owner) then
-		owner:TakeSpecialDamage(owner:GetMaxHealth()*0.005, DMG_ACID, owner, self)
+		owner:TakeSpecialDamage(owner:GetMaxHealth()*0.01, DMG_ACID, owner, self)
 	end
 	if self.DieTime <= CurTime() then
 		self:Remove()

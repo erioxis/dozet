@@ -40,7 +40,7 @@ SWEP.WorldModel = "models/weapons/w_pist_fiveseven.mdl"
 SWEP.UseHands = true
 
 SWEP.Primary.Sound = Sound("weapons/ar2/npc_ar2_altfire.wav")
-SWEP.Primary.Damage = 81
+SWEP.Primary.Damage = 45
 SWEP.Primary.NumShots = 2
 SWEP.Primary.Delay = 1
 SWEP.Primary.BurstShots = 5
@@ -64,13 +64,13 @@ GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_MAX_SPREAD, -0.37, 1)
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_MIN_SPREAD, -0.25, 1)
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_FIRE_DELAY, -0.03, 1)
 GAMEMODE:AddNewRemantleBranch(SWEP, 1, "'Tempest' Создано из чертежей", "Были взяты чертежи adonis ", function(wept)
-	wept.Primary.Damage = wept.Primary.Damage * 0.2
+	wept.Primary.Damage = wept.Primary.Damage * 0.5
 	wept.Primary.Delay = wept.Primary.Delay * 0.375
 	wept.PrimaryAttack = function(self, ent) BaseClass.PrimaryAttack(self) end
 end)
 local branch = GAMEMODE:AddNewRemantleBranch(SWEP, 2, "'Cosmos' Pulse Blaster", "Turns the Tempest in a burst pulse ammo blaster", function(wept)
 	wept.Primary.Damage = wept.Primary.Damage * 2
-	wept.Primary.Delay = wept.Primary.Delay * 2
+	wept.Primary.Delay = wept.Primary.Delay * 1.5
 	wept.ConeMin = wept.ConeMin * 0.75
 
 	wept.MaxDistance = 12000

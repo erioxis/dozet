@@ -373,17 +373,13 @@ end
 function SWEP:KnockedDown(status, exists)
 	self:StopSwinging()
 end
-
 function SWEP:StopMoaning()
 	if not self:IsMoaning() then return end
-	self:SetMoaning(false)
 	if not self.Owner.m_Zombie_MoanGuard then
 		self:SetMoaning(false)
 		self.Owner:ResetSpeed()
 		self:StopMoaningSound()
 	end
-
-	self:StopMoaningSound()
 end
 
 function SWEP:StartMoaning()
@@ -395,7 +391,7 @@ function SWEP:StartMoaning()
 
 	self:SetMoanHealth(self:GetOwner():Health())
 
-	self.Owner:SetWalkSpeed( self.Owner:GetMaxSpeed() * 1.8 )
+	self.Owner:SetWalkSpeed( self.Owner:GetMaxSpeed() * 1.6 )
 
 	self:StartMoaningSound()
 end

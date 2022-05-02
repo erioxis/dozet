@@ -66,6 +66,9 @@ SWEP.TracerName = "AR2Tracer"
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_RELOAD_SPEED, 0.3)
 GAMEMODE:AddNewRemantleBranch(SWEP, 1, ""..translate.Get("wep_classic_r1"), ""..translate.Get("wep_d_classic_r1"), function(wept)
 	wept.Primary.ClipSize = 4
+	wept.Primary.NumShots = 1
+	wept.Primary.Damage = wept.Primary.Damage * 2.5
+	wept.HeadshotMulti = 4
 	wept.RequiredClip = 4
 	wept.ReloadSpeed = 0.6
 

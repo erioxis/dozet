@@ -4557,7 +4557,7 @@ function GM:WaveStateChanged(newstate, pl)
 							print(lucky5, pl, "last abuse luck 5")
 							if lucky5 == 1 then 
 	
-							pl:AddPoints(pointsreward * 2, nil, nil, true)
+							pl:AddPoints(pointsreward, nil, nil, true)
 
 							net.Start("zs_pointsdoubled")
 						net.Send(pl)
