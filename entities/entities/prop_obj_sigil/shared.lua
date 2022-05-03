@@ -1,8 +1,8 @@
 ENT.Type = "anim"
 
-ENT.MaxHealth = 6500
-ENT.HealthRegen = 100
-ENT.RegenDelay = 9
+ENT.MaxHealth = 1200
+ENT.HealthRegen = 5
+ENT.RegenDelay = 5
 
 ENT.ModelScale = 0.85
 

@@ -40,10 +40,10 @@ SWEP.WorldModel = "models/weapons/w_pist_fiveseven.mdl"
 SWEP.UseHands = true
 
 SWEP.Primary.Sound = Sound("weapons/ar2/npc_ar2_altfire.wav")
-SWEP.Primary.Damage = 45
+SWEP.Primary.Damage = 32
 SWEP.Primary.NumShots = 2
 SWEP.Primary.Delay = 1
-SWEP.Primary.BurstShots = 5
+SWEP.Primary.BurstShots = 4
 
 SWEP.Primary.ClipSize = 21
 SWEP.Primary.Automatic = true
@@ -56,7 +56,7 @@ SWEP.ConeMin = 1.8
 SWEP.Tier = 3
 SWEP.FireAnimSpeed = 1.5
 
-SWEP.ReloadSpeed = 0.4
+SWEP.ReloadSpeed = 0.66
 
 SWEP.IronSightsPos = Vector(-5.95, 0, 2.5)
 
@@ -69,7 +69,7 @@ GAMEMODE:AddNewRemantleBranch(SWEP, 1, "'Tempest' Создано из черте
 	wept.PrimaryAttack = function(self, ent) BaseClass.PrimaryAttack(self) end
 end)
 local branch = GAMEMODE:AddNewRemantleBranch(SWEP, 2, "'Cosmos' Pulse Blaster", "Turns the Tempest in a burst pulse ammo blaster", function(wept)
-	wept.Primary.Damage = wept.Primary.Damage * 2
+	wept.Primary.Damage = wept.Primary.Damage * 1.5
 	wept.Primary.Delay = wept.Primary.Delay * 1.5
 	wept.ConeMin = wept.ConeMin * 0.75
 
@@ -104,7 +104,7 @@ local branch = GAMEMODE:AddNewRemantleBranch(SWEP, 2, "'Cosmos' Pulse Blaster", 
 		["lucasarts"] = { type = "Model", model = "models/props_pipes/valve001.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "lucasarts+", pos = Vector(-2, 0, -2), angle = Angle(0, 90, 0), size = Vector(0.1, 0.2, 0.05), color = Color(90, 102, 123, 255), surpresslightning = false, material = "models/props_interiors/radiator01c", skin = 0, bodygroup = {} }
 	}
 end)
-branch.Colors = {Color(100, 130, 180), Color(90, 120, 170), Color(70, 100, 160)}
+branch.Colors = {Color(100, 130, 180), Color(90, 120, 170), Color(70, 100, 160), Color(9, 16, 31), Color(171, 182, 17)}
 branch.NewNames = {"Jovial", "Orbital", "Celestial", "Cosmosic", "Radiance"}
 branch.Killicon = "weapon_zs_cosmos"
 

@@ -14,20 +14,14 @@ CLASS.CanTaunt = true
 
 CLASS.FearPerInstance = 1
 
-CLASS.Points = 30
+CLASS.Points = 300
 
 CLASS.SWEP = "weapon_zs_bnightmare"
 
 CLASS.Model = Model("models/player/zombie_classic_hbfix.mdl")
 CLASS.OverrideModel = Model("models/player/charple.mdl")
 
-if SERVER then
-function CLASS:ProcessDamage(pl, dmginfo)
-	if dmginfo:GetInflictor().IsMelee then
-		dmginfo:SetDamage(dmginfo:GetDamage() * 2)
-	end
-end
-end
+
 
 
 CLASS.VoicePitch = 0.65
@@ -99,6 +93,13 @@ if SERVER then
 		pl:CreateAmbience("nightmareambience")
 	end
 end
+function CLASS:ProcessDamage(pl, dmginfo)
+	if dmginfo:GetInflictor().IsMelee then
+		dmginfo:SetDamage(dmginfo:GetDamage() / 1000)
+	end
+end
+
+
 
 if not CLIENT then return end
 
@@ -137,20 +138,9 @@ function CLASS:BuildBonePositions(pl)
 		end
 	end
 end
-local matSkin = Material("Models/Barnacle/barnacle_sheet")
-function CLASS:PrePlayerDraw(pl)
-	render.SetColorModulation(0.788, 0.106, 0.106)
-	render.ModelMaterialOverride(matSkin)
-end
+
 
 function CLASS:PostPlayerDraw(pl)
 	render.SetColorModulation(0.969, 0.043, 0.043)
 end
 
-if SERVER then
-	function CLASS:ProcessDamage(pl, dmginfo)
-		if dmginfo:GetInflictor().IsMelee then
-			dmginfo:SetDamage(dmginfo:GetDamage() / 1000)
-		end
-	end
-	end

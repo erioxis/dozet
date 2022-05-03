@@ -2,7 +2,6 @@ SWEP.Base = "weapon_zs_zombie"
 
 SWEP.PrintName = "CRINGE"
 
-SWEP.Secondary.Delay = 3.5
 SWEP.Primary.Delay = 1.2
 
 
@@ -64,17 +63,4 @@ end
 local matSheet = Material("Models/Charple/Charple1_sheet")
 function SWEP:PreDrawViewModel(vm)
 	render.ModelMaterialOverride(matSheet)
-end
-
-function SWEP:ApplyMeleeDamage(pl, trace, damage)
-	if SERVER and pl:IsPlayer() then
-		local cursed = pl:GetStatus("cursed")
-		if (cursed) then 
-			pl:AddCursed(self:GetOwner(), cursed.DieTime - CurTime() + 10)
-		end
-		if (not cursed) then 
-			pl:AddCursed(pl:GetOwner(), 10)
-		end
-	end
-	self.BaseClass.ApplyMeleeDamage(self, pl, trace, damage)
 end

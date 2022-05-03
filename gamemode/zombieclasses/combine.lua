@@ -3,7 +3,7 @@ CLASS.TranslationName = "class_zombienie"
 CLASS.Description = "description_zombie"
 CLASS.Help = "controls_zombie"
 
-
+CLASS.Model = Model("models/player/combine_super_soldier.mdl")
 
 CLASS.CanTaunt = true
 
@@ -148,23 +148,6 @@ function CLASS:DoAnimationEvent(pl, event, data)
 	end
 end
 
-if SERVER then
-	function CLASS:ProcessDamage(pl, dmginfo)
-		local wep = pl:GetActiveWeapon()
-		if wep:IsValid() and wep.GetBattlecry and wep:GetBattlecry() > CurTime() then
-			dmginfo:SetDamage(dmginfo:GetDamage() * 0.5)
-		end
-	end
-
-	function CLASS:OnKilled(pl, attacker, inflictor, suicide, headshot, dmginfo)
-		local fakedeath = pl:FakeDeath(234, self.ModelScale)
-		if fakedeath and fakedeath:IsValid() then
-			fakedeath:SetModel(self.OverrideModel)
-		end
-
-		return true
-	end
-end
 
 if not CLIENT then return end
 

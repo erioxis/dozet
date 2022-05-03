@@ -50,9 +50,6 @@ function SWEP:OnMeleeHit(hitent, hitflesh, tr)
 	if hitent:IsValid() and hitent:IsPlayer() then
 		hitent:AddLegDamageExt(self.LegDamage, self:GetOwner(), self, SLOWTYPE_PULSE)
 	end
-end
-
-function SWEP:ApplyMeleeDamage(ent, trace, damage, attacker, tr, dmginfo)
 	local ent = tr.Entity
 	if SERVER and math.random(5) == 1 and ent:IsValidLivingZombie() then
 		ent:Ignite(30)
@@ -65,3 +62,4 @@ function SWEP:ApplyMeleeDamage(ent, trace, damage, attacker, tr, dmginfo)
 		end
 	end
 end
+

@@ -26,6 +26,8 @@ AddCSLuaFile("sh_channel.lua")
 AddCSLuaFile("sh_weaponquality.lua")
 AddCSLuaFile("sh_crafts.lua")
 
+AddCSLuaFile("shared/sh_bullets.lua")
+
 AddCSLuaFile("vault/shared.lua")
 
 AddCSLuaFile("cl_draw.lua")

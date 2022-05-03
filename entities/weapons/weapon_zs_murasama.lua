@@ -1,5 +1,6 @@
 AddCSLuaFile()
 
+
 SWEP.HoldType = "melee"
 SWEP.ViewModelFOV = 75
 SWEP.ViewModelFlip = false
@@ -106,6 +107,20 @@ function SWEP:GetTracesNumPlayers(traces)
 
 	return numplayers
 end
+function SWEP:KeyPress(pl, key)
+	if ( key == IN_ATTACK ) then
+	local damage = DamageInfo()
+    damage:SetAttacker(self)
+	damage:SetInflictor(self)
+	damage:SetDamage(self:Health())
+	damage:SetDamageType(DMG_CLUB)
+	damage:ScaleDamage(0.1)
+
+	damage:SetDamageForce(Vector(0, 120, 0))
+
+	self:TakeDamageInfo(damage)
+	end
+end
 
 function SWEP:GetDamage(numplayers, basedamage)
 	basedamage = basedamage or self.MeleeDamage
@@ -180,16 +195,5 @@ function SWEP:MeleeSwing()
 			self:SetPowerCombo(0)
 		end
 	end
-end
-
-function SWEP:MeleeHitEntity(tr, hitent, damagemultiplier, damage)
-	if not IsFirstTimePredicted() then return end
-
-	local owner = self:GetOwner()
-
-	local effectdata = EffectData()
-		effectdata:SetOrigin(tr.HitPos)
-		effectdata:SetNormal(tr.HitNormal)
-	util.Effect("hit_hunter", effectdata)
 end
 
