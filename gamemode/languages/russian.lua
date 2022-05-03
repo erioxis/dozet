@@ -1015,10 +1015,13 @@ LANGUAGE.zshop_barbed                              = "Бегунок"
 LANGUAGE.zshop_barbed2                               = "Мутация на скорость,Быстрее на 150 единиц."
 
 LANGUAGE.zshop_cursed                               = "Проклятый зомби"
-LANGUAGE.zshop_cursed1                                = "Увеличивает выживаемость на 500%."
+LANGUAGE.zshop_cursed1                                = "Увеличивает выживаемость на 100%."
 
 LANGUAGE.worth_worth								= "Ворф: %s"
 LANGUAGE.worth_worth_cost							= "%s Ворфа"
 
 
 LANGUAGE.noadmin                  = "Вы не админ чтобы использовать эту команду"
+LANGUAGE.jewmoment = "Еврей обнаружен"
+
+LANGUAGE.arsvoid = "Пустотный арсенал выдал оружие:"

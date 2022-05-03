@@ -272,6 +272,7 @@ SKILL_LANKYIII = 226
 SKILL_MECHANIC = 227
 SKILL_CURSECURE = 228
 SKILL_VKID = 235
+SKILL_SOY = 236
 
 
 SKILLMOD_HEALTH = 1
@@ -581,8 +582,15 @@ GM:AddSkill(SKILL_U_DRONE, "Unlock: Pulse Drone", GOOD.."Unlocks the Pulse Drone
 																2,			-3,					{SKILL_HAULMODULE, SKILL_U_ROLLERMINE}, TREE_BUILDINGTREE)
 .AlwaysActive = true
 GM:AddSkill(SKILL_U_NANITECLOUD, "Unlock: Nanite Cloud Bomb", GOOD.."Unlocks purchasing the Nanite Cloud Bomb\nSlowly repairs all props and deployables inside the cloud",
-																3,			1,					{SKILL_HAMMERDISCIPLINE}, TREE_BUILDINGTREE)
+																3,			1,					{SKILL_HAMMERDISCIPLINE,SKILL_JEW}, TREE_BUILDINGTREE)
 .AlwaysActive = true
+SKILL_JEW = 237
+GM:AddSkill(SKILL_JEW, "Jew", GOOD.."+25% Arsenal discount and scrap discount\n+50 Start points\n"..BAD.."-5 Points every time when you get a LOOT",
+																3,			2,					{SKILL_U_NANITECLOUD}, TREE_BUILDINGTREE)
+																
+GM:AddSkillModifier(SKILL_JEW, SKILLMOD_POINTS, 50)
+GM:AddSkillModifier(SKILL_JEW, SKILLMOD_ARSENAL_DISCOUNT, -0.25)
+GM:AddSkillModifier(SKILL_JEW, SKILLMOD_SCRAPDISCOUNT, -0.25)
 GM:AddSkill(SKILL_FIELDAMP, "Field Amplifier", GOOD.."-20% zapper and repair field delay\n"..BAD.."-40% zapper and repair field range",
 																6,			4,					{}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_TECHNICIAN, "Field Technician", GOOD.." +3% zapper and repair field range\n"..GOOD.."-3% zapper and repair field delay",
@@ -652,6 +660,11 @@ GM:AddSkill(SKILL_FOCUSIII, "Focus III", GOOD.."+12% tighter aiming reticule\n".
 GM:AddSkillModifier(SKILL_FOCUS, SKILLMOD_DAMAGE, 0.01)
 GM:AddSkillModifier(SKILL_FOCUSII, SKILLMOD_DAMAGE, 0.03)
 GM:AddSkillModifier(SKILL_FOCUSIII, SKILLMOD_DAMAGE, 0.05)
+SKILL_ARSVOID = 238
+GM:AddSkill(SKILL_ARSVOID, "Arsenal Void", GOOD.."Can give random weapon in end wave\nLuck can increase chance of drop\n"..GOOD.."+15% Bullet Damage\n"..BAD.."-20% Arsenal Discount",
+																6,			-4,					{SKILL_DELIBRATION}, TREE_GUNTREE)
+GM:AddSkillModifier(SKILL_ARSVOID, SKILLMOD_DAMAGE, 0.15)
+GM:AddSkillModifier(SKILL_ARSVOID, SKILLMOD_ARSENAL_DISCOUNT, 0.15)
 
 GM:AddSkill(SKILL_QUICKRELOAD, "Quick Reload", GOOD.."+10% weapon reload speed\n"..BAD.."-25% weapon draw speed",
 																-5,			1,					{SKILL_SLEIGHTOFHAND}, TREE_GUNTREE)
@@ -665,8 +678,9 @@ GM:AddSkill(SKILL_SOFTDET, "Soft Detonation", GOOD.."-40% explosive damage taken
 																0,			-5,					{}, TREE_GUNTREE)
 GM:AddSkill(SKILL_ORPHICFOCUS, "Orphic Focus", GOOD.."90% spread while ironsighting\n"..GOOD.."+2% tighter aiming reticule\n"..BAD.."110% spread at any other time\n"..BAD.."-6% reload speed",
 																5,			-1,					{SKILL_DELIBRATION}, TREE_GUNTREE)
-GM:AddSkill(SKILL_DELIBRATION, "Delibration", GOOD.."+3% tighter aiming reticule",
+GM:AddSkill(SKILL_DELIBRATION, "Delibration", GOOD.."+3% tighter aiming reticule\n"..GOOD.."+1% Bullet damage",
 																6,			-3,					{}, TREE_GUNTREE)
+GM:AddSkillModifier(SKILL_DELIBRATION, SKILLMOD_DAMAGE, 0.01)
 GM:AddSkill(SKILL_EGOCENTRIC, "Egocentric", GOOD.."-40% damage vs. yourself\n"..BAD.."-10 health",
 																0,			-1,					{SKILL_BLASTPROOF}, TREE_GUNTREE)
 GM:AddSkill(SKILL_BLASTPROOF, "Blast Proof", GOOD.."-40% damage vs. yourself\n"..BAD.."-10% reload speed\n"..BAD.."-12% weapon draw speed",
@@ -728,8 +742,12 @@ GM:AddSkill(SKILL_COMBOKNUCKLE, "Combo Knuckle", GOOD.."Next unarmed strike is 2
 GM:AddSkill(SKILL_HEAVYSTRIKES, "Heavy Strikes", GOOD.."+100% melee knockback\n"..BAD.."8% of melee damage dealt is reflected back to you\n"..BAD.."100% reflected if using unarmed strikes",
 																2,			0,					{SKILL_BATTLER5, SKILL_JOUSTER}, TREE_MELEETREE)
 GM:AddSkill(SKILL_JOUSTER, "Jouster", GOOD.."+30% melee damage\n"..BAD.."-90% melee knockback\n"..BAD.."-50% Bullet Damage",
-																2,			2,					{SKILL_BLOODLOST}, TREE_MELEETREE)
+																2,			2,					{SKILL_BLOODLOST,SKILL_SOY}, TREE_MELEETREE)
 GM:AddSkillModifier(SKILL_JOUSTER, SKILLMOD_DAMAGE, -0.50)
+GM:AddSkill(SKILL_SOY, "Soy hits", GOOD.."-50% melee swing impact delay\n"..BAD.."-50% Melee damage\n",
+																3,			3,					{SKILL_JOUSTER}, TREE_MELEETREE)
+GM:AddSkillModifier(SKILL_SOY, SKILLMOD_MELEE_DAMAGE_MUL, -0.50)
+GM:AddSkillModifier(SKILL_SOY, SKILLMOD_MELEE_SWING_DELAY_MUL, -0.50)
 																
 GM:AddSkill(SKILL_BLOODLOST, "Bloodlust", GOOD.."+25% Damage Multiplier for  6 secs if take damage\n"..BAD.."-30 health",
 																3,			2,					{}, TREE_MELEETREE)

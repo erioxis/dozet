@@ -62,7 +62,7 @@ GM:AddWeaponBreakdownRecipe("weapon_zs_fracture",							"comp_linearactuator")
 GM:AddWeaponBreakdownRecipe("weapon_zs_harpoon",							"comp_metalpole")
 GM:AddWeaponBreakdownRecipe("weapon_zs_cryman",							"comp_mommy")
 GM:AddWeaponBreakdownRecipe("weapon_zs_m5",							"comp_sacred_soul")
-GM:AddWeaponBreakdownRecipe("jacobjesausoul",							"comp_sacred_soul")
+GM:AddWeaponBreakdownRecipe("trinket_jacobjesausoul",							"comp_sacred_soul")
 GM:AddWeaponBreakdownRecipe("weapon_zs_crymam",							"trinket_toysoul")
 
 -- Assemblies (Assembly, Component, Weapon)

@@ -382,8 +382,8 @@ function meta:GetBossZombieIndex()
 	local desired = self:GetInfo("zs_bossclass") or ""
 	if GAMEMODE:IsBabyMode() then
 		desired = "Giga Gore Child"
-	elseif desired == "Bloody Nightmare" or desired == "" then
-		desired = "Bloody Nightmare"
+	elseif desired == "Bad Marrow" or desired == "" then
+		desired = "Bad Marrow"
 	end
 
 	local bossindex
@@ -1699,6 +1699,7 @@ function meta:DoSigilTeleport(target, from, corrupted)
 		end
 		hook.Add("Move", self, function(_, p, mv)
 			if p == self then
+
 				hook.Remove("Move", p)
 				mv:SetOrigin(movepos)
 			end
@@ -1749,6 +1750,7 @@ local bossdrops = {
 	"trinket_lampsoul"  -- 26
 }
 local bossdrops1 = {
+	"trinket_altmagdalenesoul",
 	"weapon_zs_plank"
 	--[["trinket_bleaksoul",  -- 1
 	"trinket_spiritess",  -- 2

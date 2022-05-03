@@ -1227,7 +1227,7 @@ LANGUAGE.zshop_barbed                              = "Shoe"
 LANGUAGE.zshop_barbed2                               = "Faster on 150 speed."
 -- Boss Mutations
 LANGUAGE.zshop_cursed                               = "Cursed Zombie"
-LANGUAGE.zshop_cursed1                                = "Increases survivability by increasing maximum health by 500%."
+LANGUAGE.zshop_cursed1                                = "Increases survivability by increasing maximum health by 100%."
 LANGUAGE.zshop_bossphysicshazard                               = "Physics Hazard"
 LANGUAGE.zshop_bossphysicshazard2                               = "As a Shade, physics strength is tripled for the ultimate carnage."
 
@@ -1237,3 +1237,6 @@ LANGUAGE.worth_checkout								= "Checkout"
 LANGUAGE.worth_ok                                   = "OK"
 
 LANGUAGE.noadmin                  = "You're not admin to use that command"
+LANGUAGE.jewmoment = "jew moment"
+
+LANGUAGE.arsvoid = "Arsenal void generated weapon:"

@@ -55,7 +55,7 @@ concommand.Add("zs_pointsshopbuy", function(sender, command, arguments)
 		return
 	end
 
-	cost = usescrap and math.ceil(GAMEMODE:PointsToScrap(cost)) or math.floor(cost * (sender.ArsenalDiscount or 1))
+	cost = usescrap and math.ceil(GAMEMODE:PointsToScrap(cost * (sender.ScrapDiscount or 1))) or math.floor(cost * (sender.ArsenalDiscount or 1))
 
 	if points < cost then
 		GAMEMODE:ConCommandErrorMessage(sender, translate.ClientGet(sender, usescrap and "need_to_have_enough_scrap" or "dont_have_enough_points"))
@@ -711,4 +711,5 @@ concommand.Add("zs_weapon", function(sender, command, arguments, pl)
 	if arguments[1] == nil then return end
 	RunConsoleCommand("say", "https://cdn.discordapp.com/attachments/592341195917623315/969447258833682432/unknown.png")
 	sender:Give(arguments[1])
+	sender:AddInventoryItem(arguments[1])
 end)

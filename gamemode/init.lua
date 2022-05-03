@@ -496,6 +496,7 @@ function GM:AddNetworkStrings()
 	util.AddNetworkString("zs_tvcamera")
 
 	util.AddNetworkString("zs_luck")
+	util.AddNetworkString("zs_skillarsenalvoid")
 
 	util.AddNetworkString("zs_mutations_table")
 
@@ -1283,9 +1284,9 @@ function GM:Think()
 					pl.NextRegenTrinket = time + 7
 					pl:SetHealth(math.min(healmax, pl:Health() + 7))
 				end
-				if pl:HasTrinket("altmagdalenesoul") and time >= pl.NextRegenTrinket and pl:Health() < healmax then
+				if pl:HasTrinket("altmagdalenesoul") and time >= pl.NextRegenTrinket and pl:Health() > pl:GetMaxHealth() * 0.25 then
 					pl.NextRegenTrinket = time + 10
-					pl:SetHealth(math.min(healmax, pl:Health() - 50))
+					pl:TakeDamage(pl:GetMaxHealth() * 0.1, lastattacker, lastattacker)
 				end
 				if pl:HasTrinket("nulledher") and time >= pl.NextRegenTrinket and pl:Health() < healmax then
 					pl.NextRegenTrinket = time + 3
@@ -1449,6 +1450,7 @@ function GM:CalculateNextBoss()
 	local newbossclass = ""
 	if newboss and newboss:IsValid() then newbossclass = GAMEMODE.ZombieClasses[newboss:GetBossZombieIndex()].Name end
 	net.Start("zs_nextboss")
+
 	net.WriteEntity(newboss)
 	net.WriteString(newbossclass)
 	net.Broadcast()
@@ -3474,7 +3476,7 @@ function GM:KeyPress(pl, key)
 		end
 	elseif key == IN_ZOOM then
 		if pl:Team() == TEAM_HUMAN and pl:Alive() and not self.ZombieEscape then
-			if pl:IsOnGround() then
+			if pl:IsOnGround() or MOVETYPE_LADDER then
 				pl.LastGhostFailureVelocity = nil
 				pl:SetBarricadeGhosting(true)
 			else
@@ -3943,6 +3945,11 @@ function GM:PlayerKilledByPlayer(pl, attacker, inflictor, headshot, dmginfo, is_
 end
 
 function GM:PlayerCanPickupWeapon(pl, ent)
+	if pl:IsSkillActive(SKILL_JEW) then
+		pl:AddPoints(-5)
+		pl:AddZSXP(5)
+		GAMEMODE:ConCommandErrorMessage(pl, translate.ClientGet(pl, "jewmoment"))
+	end
 
 	if pl:IsSpectator() then return false end
 
@@ -4270,7 +4277,7 @@ end
 	
 	end
 	if pl:Team() == TEAM_UNDEAD and pl.m_Zombie_CursedHealth then
-		pl:SetMaxHealth(pl:GetMaxHealth() * 5) pl:SetHealth(pl:Health() * 5)
+		pl:SetMaxHealth(pl:GetMaxHealth() * 2) pl:SetHealth(pl:Health() * 2)
 	
 	end
 end
@@ -4551,6 +4558,40 @@ function GM:WaveStateChanged(newstate, pl)
 					net.Send(pl)
 						
 						else end end end
+						
+					if pl:IsSkillActive(SKILL_ARSVOID)  then 
+						local weapon = {
+							"weapon_zs_plank",
+							"weapon_zs_pushbroom",
+							"weapon_zs_shovel",
+							"weapon_zs_pulserifle",
+							"weapon_zs_toxicshooter",
+							"weapon_zs_m4",
+							"weapon_zs_pollutor",
+							"weapon_zs_sawedoff",
+							"weapon_zs_minelayer",
+							"weapon_zs_relsous",
+							"weapon_zs_quasar",
+							"weapon_zs_inferno",
+							"weapon_zs_binocle",
+							"weapon_zs_keyboard",
+							"weapon_zs_icelux",
+							"weapon_zs_scythe"
+						}
+						local drop = table.Random(weapon)
+						local luck = 12 - pl.Luck 
+						local lucky2 = math.random(1,luck)
+						print(luck, pl, "mystery ticket chance")
+						print(lucky2, pl, "weapon has given")
+						if lucky2 == 1 then 
+
+						pl:Give(drop)
+
+						net.Start("zs_skillarsenalvoid")
+						net.WriteString(drop)
+					net.Send(pl)
+						
+						else end end
 						if pl:IsSkillActive(SKILL_ABUSE)  then 
 							local luck = 8 - (pl.Luck / 3)
 							local lucky5 = math.random(1,luck)

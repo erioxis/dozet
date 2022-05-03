@@ -69,8 +69,8 @@ GAMEMODE:AddNewRemantleBranch(SWEP, 1, "'Tempest' Создано из черте
 	wept.PrimaryAttack = function(self, ent) BaseClass.PrimaryAttack(self) end
 end)
 local branch = GAMEMODE:AddNewRemantleBranch(SWEP, 2, "'Cosmos' Pulse Blaster", "Turns the Tempest in a burst pulse ammo blaster", function(wept)
-	wept.Primary.Damage = wept.Primary.Damage * 1.5
-	wept.Primary.Delay = wept.Primary.Delay * 1.5
+	wept.Primary.Damage = wept.Primary.Damage * 0.9
+	wept.Primary.Delay = wept.Primary.Delay * 0.7
 	wept.ConeMin = wept.ConeMin * 0.75
 
 	wept.MaxDistance = 12000
