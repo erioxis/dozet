@@ -453,6 +453,7 @@ GM:AddPointShopItem("executioner",		ITEMCAT_MELEE,			90,				"weapon_zs_execution
 GM:AddPointShopItem("rebarmace",		ITEMCAT_MELEE,			90,				"weapon_zs_rebarmace")
 GM:AddPointShopItem("meattenderizer",	ITEMCAT_MELEE,			90,				"weapon_zs_meattenderizer")
 GM:AddPointShopItem("iceeluxx",	ITEMCAT_MELEE,			90,				"weapon_zs_icelux")
+GM:AddPointShopItem("lamptube",	ITEMCAT_MELEE,			90,				"weapon_zs_lamptube")
 -- Tier 4
 GM:AddPointShopItem("harpoon",			ITEMCAT_MELEE,			135,				"weapon_zs_harpoon")
 GM:AddPointShopItem("graveshvl",		ITEMCAT_MELEE,			135,			"weapon_zs_graveshovel")

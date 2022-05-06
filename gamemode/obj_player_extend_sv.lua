@@ -207,9 +207,9 @@ function meta:ProcessDamage(dmginfo)
 					self.BleakSoulMessage = nil
 				end
 				if self:HasTrinket("adrenaline") and (not self.LastBleakSoul or self.LastBleakSoul + 60 < CurTime()) then
-					local boost = self:GiveStatus("adrenalineamp", 7)
-					self:GiveStatus("strengthdartboost", 7)
-					self:GiveStatus("speed", 7)
+					local boost = self:GiveStatus("adrenalineamp", 3)
+					self:GiveStatus("strengthdartboost", 3)
+					self:GiveStatus("speed", 3)
 					
 					if boost and boost:IsValid() then
 						boost:SetSpeed(55)

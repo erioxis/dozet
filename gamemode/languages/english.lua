@@ -261,7 +261,7 @@ LANGUAGE.t_d_athermia                            = "-8% blood armor convert\n-99
 LANGUAGE.t_d_gaunt                            = "Charges your melee damage up to +45% with each hit\nMissing resets damage"
 LANGUAGE.t_d_fkit                            = "Deal up to +32% melee damage to slowed zombies"
 LANGUAGE.t_d_skit                            = "+5% Melee damage"
-LANGUAGE.t_d_adrenaline                           = "Each hit on you gives 7 seconds of buffs."
+LANGUAGE.t_d_adrenaline                           = "Each hit on you gives 3 seconds of buffs\n Give every 60 seconds buff for damage."
 
 
 
@@ -565,6 +565,7 @@ LANGUAGE.wep_d_luxoid_r1		= "Have big chance to create explosive than kill, fast
 --[[LANGUAGE.wep_annabelle_r1	=  "'Blaster' Slug gun"
 LANGUAGE.wep_d_annabelle_r1	=  "One very accurate slug round, less total damage"]]
 --melee
+LANGUAGE.wep_lampt		= "Lamp Tube"
 LANGUAGE.wep_boomer		= "Boom-rang"
 LANGUAGE.wep_d_boomer		= "Damage x2 when throwed"
 LANGUAGE.wep_teslorer = "Teslorer"

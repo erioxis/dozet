@@ -729,7 +729,7 @@ GM:AddSkill(SKILL_GLASSWEAPONS, "Glass Weapons", GOOD.."3.5x melee weapon damage
 																2,			4,					{}, TREE_MELEETREE)
 GM:AddSkill(SKILL_GLASSMAN, "Glass Touch", GOOD.."You Deal x2.3 Damage\n"..BAD.."You Take x3 Damage",
 																3,			5,					{SKILL_GLASSWEAPONS}, TREE_MELEETREE)
-GM:AddSkill(SKILL_D_CLUMSY, "Debuff: Clumsy", GOOD.."+20 starting Worth\n"..GOOD.."+5 starting points\n"..BAD.."Very easy to be knocked down",
+GM:AddSkill(SKILL_D_CLUMSY, "Debuff: Clumsy", GOOD.."+20 starting Worth\n"..GOOD.."+10 starting points\n"..BAD.."Very easy to be knocked down",
 																-2,			2,					{}, TREE_MELEETREE)
 GM:AddSkill(SKILL_CHEAPKNUCKLE, "Cheap Tactics", GOOD.."Slow targets when striking with a melee weapon from behind\n"..BAD.."-10% melee range",
 																4,			-2,					{SKILL_HEAVYSTRIKES, SKILL_WORTHINESS2}, TREE_MELEETREE)
@@ -909,7 +909,7 @@ GM:AddSkill(SKILL_ANIMA, "Fines de anima", GOOD.."+15% melee damage\n" ..BAD.."+
 										-4,			-7,					{SKILL_ANIMA}, TREE_ANCIENTTREE)
 SKILL_SIGILIBERATOR = 180	
 GM:AddSkillModifier(SKILL_SIGILIBERATOR, SKILLMOD_MELEE_DAMAGE_MUL, 2)
-	GM:AddSkillModifier(SKILL_SIGILIBERATOR, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 2)			
+	GM:AddSkillModifier(SKILL_SIGILIBERATOR, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 1)			
 GM:AddSkill(SKILL_SIGILIBERATOR, "Liberator", GOOD.."x2 damage\n" ..BAD.."x2 damage taken",
 										-3,			-9,					{SKILL_EX2}, TREE_ANCIENTTREE)
 										SKILL_DEATH = 181	
@@ -1619,7 +1619,7 @@ GM:AddSkillFunction(SKILL_BACKPEDDLER, function(pl, active)
 	pl.NoBWSpeedPenalty = active
 end)
 
-GM:AddSkillModifier(SKILL_D_CLUMSY, SKILLMOD_WORTH, 50)
+GM:AddSkillModifier(SKILL_D_CLUMSY, SKILLMOD_WORTH, 20)
 GM:AddSkillModifier(SKILL_D_CLUMSY, SKILLMOD_POINTS, 10)
 GM:AddSkillFunction(SKILL_D_CLUMSY, function(pl, active)
 	pl.IsClumsy = active
