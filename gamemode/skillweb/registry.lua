@@ -382,6 +382,7 @@ SKILLMOD_CURSEM = 104
 local GOOD = "^"..COLORID_GREEN
 local BAD = "^"..COLORID_RED
 local NEUTRAL = "^"..COLORID_GRAY
+local PURPLE = "^"..COLORID_PURPLE
 --
 
 -- Health Tree
@@ -861,84 +862,88 @@ GM:AddSkill(SKILL_DUDEE, "Lucky man", GOOD.."+2 Luck\n",
 			SKILL_SOLARUZ = 169
 			GM:AddSkillModifier(SKILL_SOLARUZ, SKILLMOD_POINT_MULTIPLIER, 0.30)
 			GM:AddSkillModifier(SKILL_SOLARUZ, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 0.40)
-			GM:AddSkill(SKILL_SOLARUZ, "Debuff:Deadly Fortuna", GOOD.."+30% Points Multiplicator \n" ..BAD.. "+40% damage taken melee",
+			GM:AddSkill(SKILL_SOLARUZ, "Debuff:Deadly Fortuna", PURPLE.."+30% Points Multiplicator \n" ..BAD.. "+40% damage taken melee",
 				3,			-9,					{SKILL_SCAM}, TREE_POINTTREE)
 SKILL_ANCK = 170
-GM:AddSkill(SKILL_ANCK, "Ancient knowledge", GOOD.."Learn The Ancient knowledge \n" ..BAD.. "The cost of knowledge",
+GM:AddSkill(SKILL_ANCK, "Ancient knowledge", PURPLE.."Learn The Ancient knowledge \n" ..BAD.. "The cost of knowledge",
 					0,			0,					{SKILL_SOLARUZ}, TREE_ANCIENTTREE)
 SKILL_ANCK1 = 171
-GM:AddSkill(SKILL_ANCK1, "Ancient Volume 1", GOOD.."Learn The Ancient knowledge\n You know only 50%",
+GM:AddSkill(SKILL_ANCK1, "Ancient Volume 1", PURPLE.."Learn The Ancient knowledge\n You know only 50%",
 					0,			-1,					{SKILL_ANCK}, TREE_ANCIENTTREE)
 SKILL_ANCK2 = 172
-GM:AddSkill(SKILL_ANCK2, "Ancient Volume 2", GOOD.."You Know 100%!",
+GM:AddSkill(SKILL_ANCK2, "Ancient Volume 2", PURPLE.."You Know 100%!",
 					0,			-2,					{SKILL_ANCK1}, TREE_ANCIENTTREE)
 
 SKILL_STRICTE = 173
 GM:AddSkillModifier(SKILL_STRICTE, SKILLMOD_MELEE_DAMAGE_MUL, 0.05)
-GM:AddSkill(SKILL_STRICTE, "Stricte praecepta", GOOD.."+ 5% Melee damage!",
+GM:AddSkill(SKILL_STRICTE, "Stricte praecepta", PURPLE.."+ 5% Melee damage!",
 					1,			-4,					{SKILL_ANCK2}, TREE_ANCIENTTREE)
 SKILL_VERUS = 174
 GM:AddSkillModifier(SKILL_VERUS, SKILLMOD_MANHACK_DAMAGE_MUL, 0.33)
 GM:AddSkillModifier(SKILL_VERUS, SKILLMOD_MANHACK_HEALTH_MUL, 0.33)
-GM:AddSkill(SKILL_VERUS, "Verus", GOOD.."Better  +33% manhack!",
+GM:AddSkill(SKILL_VERUS, "Verus", PURPLE.."Better  +33% manhack!",
 					-1,			-4,					{SKILL_ANCK2}, TREE_ANCIENTTREE)
 SKILL_PIGNUS = 175
 GM:AddSkillModifier(SKILL_PIGNUS, SKILLMOD_TURRET_SCANSPEED_MUL, 0.33)
 GM:AddSkillModifier(SKILL_PIGNUS, SKILLMOD_TURRET_HEALTH_MUL, 0.33)
 GM:AddSkillModifier(SKILL_PIGNUS, SKILLMOD_TURRET_RANGE_MUL, 0.33)
-GM:AddSkill(SKILL_PIGNUS, "Pignus", GOOD.."Better turrets!All stats up by 33%",
+GM:AddSkill(SKILL_PIGNUS, "Pignus", PURPLE.."Better turrets!All stats up by 33%",
 					-1,			-5,					{SKILL_VERUS}, TREE_ANCIENTTREE)
 SKILL_STRENGHT = 176
 GM:AddSkillModifier(SKILL_STRENGHT, SKILLMOD_MELEE_DAMAGE_MUL, 0.1)
-GM:AddSkill(SKILL_STRENGHT, "Strongman", GOOD.."+10% Melee damage!",
+GM:AddSkill(SKILL_STRENGHT, "Strongman", PURPLE.."+10% Melee damage!",
 					1,			-5,					{SKILL_STRICTE}, TREE_ANCIENTTREE)
 SKILL_EX = 177
-GM:AddSkill(SKILL_EX, "Exsecrandus", GOOD.."USELESS!",
+GM:AddSkill(SKILL_EX, "Exsecrandus", PURPLE.."USELESS!",
 					0,			-6,					{SKILL_PIGNUS,SKILL_STRENGHT}, TREE_ANCIENTTREE)
 SKILL_EX2 = 178					
-GM:AddSkill(SKILL_EX2, "Scientia", GOOD.."Science!",
+GM:AddSkill(SKILL_EX2, "Scientia", PURPLE.."Science!",
 					0,			-7,					{SKILL_EX}, TREE_ANCIENTTREE)
 					SKILL_ANIMA = 179		
 GM:AddSkillModifier(SKILL_ANIMA, SKILLMOD_MELEE_DAMAGE_MUL, 0.15)
 GM:AddSkillModifier(SKILL_ANIMA, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 0.10)			
-GM:AddSkill(SKILL_ANIMA, "Fines de anima", GOOD.."+15% melee damage\n" ..BAD.."+10% Melee damage taken!",
+GM:AddSkill(SKILL_ANIMA, "Fines de anima", PURPLE.."+15% melee damage\n" ..BAD.."+10% Melee damage taken!",
 					-3,			-7,					{SKILL_EX2}, TREE_ANCIENTTREE)
 	SKILL_MERCUS = 184
 					GM:AddSkillModifier(SKILL_MERCUS, SKILLMOD_RESUPPLY_DELAY_MUL, -0.10)			
-					GM:AddSkill(SKILL_MERCUS, "Mortiferum Pompam", GOOD.."-10% Ressuply Delay",
+					GM:AddSkill(SKILL_MERCUS, "Mortiferum Pompam", PURPLE.."-10% Ressuply Delay",
 										-4,			-7,					{SKILL_ANIMA}, TREE_ANCIENTTREE)
 SKILL_SIGILIBERATOR = 180	
 GM:AddSkillModifier(SKILL_SIGILIBERATOR, SKILLMOD_MELEE_DAMAGE_MUL, 2)
 	GM:AddSkillModifier(SKILL_SIGILIBERATOR, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 1)			
-GM:AddSkill(SKILL_SIGILIBERATOR, "Liberator", GOOD.."x2 damage\n" ..BAD.."x2 damage taken",
+GM:AddSkill(SKILL_SIGILIBERATOR, "Liberator", PURPLE.."x2 damage\n" ..BAD.."x2 damage taken",
 										-3,			-9,					{SKILL_EX2}, TREE_ANCIENTTREE)
 										SKILL_DEATH = 181	
 GM:AddSkillModifier(SKILL_DEATH, SKILLMOD_MEDKIT_COOLDOWN_MUL, 0.2)
 GM:AddSkillModifier(SKILL_DEATH, SKILLMOD_MEDKIT_EFFECTIVENESS_MUL, 0.2)		
-GM:AddSkill(SKILL_DEATH, "Morieris", GOOD.."Better medicine\n" ..BAD.."+20% Medkit Cooldown\n"..GOOD.."+20% Medkit effectiveness",
+GM:AddSkill(SKILL_DEATH, "Morieris", PURPLE.."Better medicine\n" ..BAD.."+20% Medkit Cooldown\n"..PURPLE.."+20% Medkit effectiveness",
 										-3,			-8,					{SKILL_EX2}, TREE_ANCIENTTREE)
 										SKILL_ALLPOWER = 182
 GM:AddSkillModifier(SKILL_ALLPOWER, SKILLMOD_REPAIRRATE_MUL, 0.10)		
-GM:AddSkill(SKILL_ALLPOWER, "Cunctipotens", GOOD.."Better cades\n" ..GOOD.."+10% Repair Mul",
+GM:AddSkill(SKILL_ALLPOWER, "Cunctipotens", PURPLE.."Better cades\n" ..PURPLE.."+10% Repair Mul",
 					-4,			-8,					{SKILL_DEATH}, TREE_ANCIENTTREE)
 SKILL_ANCIENT = 183
 GM:AddSkillModifier(SKILL_ANCIENT, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 0.47)
 GM:AddSkillModifier(SKILL_ANCIENT, SKILLMOD_MELEE_DAMAGE_MUL, 0.2)		
-GM:AddSkill(SKILL_ANCIENT, "Adventum Antiqua", GOOD.."+20% Damage melee\n" ..BAD.."+47% Damage taken mul",
+GM:AddSkill(SKILL_ANCIENT, "Adventum Antiqua", PURPLE.."+20% Damage melee\n" ..BAD.."+47% Damage taken mul",
 					-4,			-9,					{SKILL_SIGILIBERATOR}, TREE_ANCIENTTREE)
 					SKILL_CLASSIX1 = 185	
-GM:AddSkill(SKILL_CLASSIX1, "Classical scientia mundi", GOOD.."Random bloodarmor",
+GM:AddSkill(SKILL_CLASSIX1, "Classical scientia mundi", PURPLE.."Random bloodarmor",
 					-5,			-8,					{SKILL_ALLPOWER}, TREE_ANCIENTTREE)
 SKILL_BLOODMARY = 186
-GM:AddSkill(SKILL_BLOODMARY, "Sanguinum Messis", GOOD.."Regenerate blood armor",
+GM:AddSkill(SKILL_BLOODMARY, "Sanguinum Messis", PURPLE.."Regenerate blood armor",
 										-5,			-9,					{SKILL_ANCIENT}, TREE_ANCIENTTREE)
 										SKILL_TRUEPOWER = 187
-GM:AddSkill(SKILL_TRUEPOWER, "Future Knowledge Vol.3", GOOD.."Cost Of Knowledge",
+GM:AddSkill(SKILL_TRUEPOWER, "Future Knowledge Vol.3", PURPLE.."Cost Of Knowledge",
 																				-5,			-10,					{SKILL_BLOODMARY}, TREE_ANCIENTTREE)
 																														SKILL_HEARTS = 202
-GM:AddSkill(SKILL_HEARTS, "Ancient Hearts", GOOD.."Unlock Heart Trinkets",
-																				-5,			-11,					{SKILL_TRUEPOWER}, TREE_ANCIENTTREE)
-
+GM:AddSkill(SKILL_HEARTS, "Ancient Hearts", PURPLE.."Unlock Heart Trinkets",
+																				-5,			-11,					{SKILL_TRUEPOWER,SKILL_NANOMACHINES}, TREE_ANCIENTTREE)
+SKILL_NANOMACHINES = 239
+GM:AddSkill(SKILL_NANOMACHINES, "Nanotech", PURPLE.."+10% Bullet damage\n"..PURPLE.."+50% DMG reflect",
+																				-6,			-12,					{SKILL_HEARTS}, TREE_ANCIENTTREE)
+GM:AddSkillModifier(SKILL_NANOMACHINES, SKILLMOD_DAMAGE, 0.10)
+GM:AddSkillModifier(SKILL_NANOMACHINES, SKILLMOD_MELEE_ATTACKER_DMG_REFLECT_PERCENT, 0.5)
 SKILL_DEFEND = 190
 GM:AddSkill(SKILL_DEFEND, "Defender of the Sigil I", GOOD.."You get 2% less damage\n"..BAD.."Speed -1",
 				                                                            	-0.25,			-0.5,					{SKILL_NONE}, TREE_DEFENSETREE)
