@@ -327,19 +327,19 @@ GM:AddTrinket(""..translate.Get("t_fkit"), "sharpkit", false, mveles, mweles, 2,
 GM:AddTrinket(""..translate.Get("t_skit"), "sharpstone", false, mveles, mweles, 3, ""..translate.Get("t_d_skit"))
 --perfomance
 GM:AddSkillModifier(GM:AddTrinket( ""..translate.Get("t_adrenaline"), "adrenaline", false, pveles, pweles, nil, ""..translate.Get("t_d_adrenaline")), SKILLMOD_JUMPPOWER_MUL, 0.01)
-GM:AddSkillModifier(GM:AddTrinket("Forgotten Ascorbic Acid", "ass", false, pveles, pweles, nil, "+6 health,-2% Accuracy.\n+6 хп,-2% К аккуратности"), SKILLMOD_HEALTH, 6)
+GM:AddSkillModifier(GM:AddTrinket( ""..translate.Get("t_ass"), "ass", false, pveles, pweles, nil,  ""..translate.Get("t_d_ass")), SKILLMOD_HEALTH, 6)
 GM:AddSkillModifier(trinket, SKILLMOD_AIMSPREAD_MUL, 0.02)
-trinket = GM:AddTrinket(""..translate.Get("t_sarmband"), "sarmband", true, pveles, pweles, 2, ""..translate.Get("t_d_sarmband"))
+trinket = GM:AddTrinket(""..translate.Get("t_sarmband"), "supraband", false, pveles, pweles, 1, ""..translate.Get("t_d_sarmband"))
 GM:AddSkillModifier(trinket, SKILLMOD_JUMPPOWER_MUL, 0.04)
-trinket = GM:AddTrinket("Engineer Gaming", "engineer", true, pveles, pweles, 2, ""..translate.Get("t_d_egaming"))
+trinket = GM:AddTrinket("Engineer Gaming", "engineer", false, pveles, pweles, 1, ""..translate.Get("t_d_egaming"))
 GM:AddSkillModifier(trinket, SKILLMOD_DEPLOYABLE_PACKTIME_MUL, 0.12)
-trinket = GM:AddTrinket("Scout Gaming", "megascout", true, pveles, pweles, 2, ""..translate.Get("t_d_sgaming"))
+trinket = GM:AddTrinket("Scout Gaming", "scout", false, pveles, pweles, 2, ""..translate.Get("t_d_sgaming"))
 GM:AddSkillModifier(trinket, SKILLMOD_SPEED, 10)
-trinket = GM:AddTrinket(""..translate.Get("t_bhammer"), "brokenhammer", true, pveles, pweles, 2, ""..translate.Get("t_d_bhammer"))
+trinket = GM:AddTrinket(""..translate.Get("t_bhammer"), "brokenhammer", false, pveles, pweles, 3, ""..translate.Get("t_d_bhammer"))
 GM:AddSkillModifier(trinket, SKILLMOD_POINT_MULTIPLIER, -0.05)
 GM:AddSkillModifier(trinket, SKILLMOD_REPAIRRATE_MUL,  0.10)
 
--- Performance Trinkets
+-- Special Trinkets
 GM:AddTrinket(""..translate.Get("t_otank"), "oxygentank", true, nil, {
 	["base"] = { type = "Model", model = "models/props_c17/canister01a.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 3, -1), angle = Angle(180, 0, 0), size = Vector(0.5, 0.5, 0.5), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
 }, nil, ""..translate.Get("t_d_otank"), "oxygentank")
@@ -1040,7 +1040,7 @@ GM:AddSkillModifier(trinket, SKILLMOD_FOODRECOVERY_MUL, 0.90)
 GM:AddSkillModifier(trinket, SKILLMOD_FOODEATTIME_MUL, -0.20)
 trinketwep.PermitDismantle = true
 
-trinket, trinketwep = GM:AddTrinket("Escape Manual", "emanual", false, develes, deweles, nil, "+200% phasing speed\n-12% low health slow intensity\n +90% К скорости передвижения в фазе\n -12% к эффективности замедления от лоу хп")
+trinket, trinketwep = GM:AddTrinket("Escape Manual", "emanual", false, develes, deweles, nil, "+90% phasing speed\n-12% low health slow intensity\n +90% К скорости передвижения в фазе\n -12% к эффективности замедления от лоу хп")
 GM:AddSkillModifier(trinket, SKILLMOD_BARRICADE_PHASE_SPEED_MUL, 0.90)
 GM:AddSkillModifier(trinket, SKILLMOD_LOW_HEALTH_SLOW_MUL, -0.12)
 trinketwep.PermitDismantle = true
