@@ -203,7 +203,7 @@ GM:AddStartingItem("scraper",			ITEMCAT_AMMO,			30,				nil,			"Scrap 25",				nil
 
 
 
-GM:AddStartingItem("brassknuckles",		ITEMCAT_TOOLS,			25,				"weapon_zs_brassknuckles").Model = "models/props_c17/utilityconnecter005.mdl"
+GM:AddStartingItem("brassknuckles",		ITEMCAT_MELEE,			25,				"weapon_zs_brassknuckles").Model = "models/props_c17/utilityconnecter005.mdl"
 GM:AddStartingItem("zpaxe",				ITEMCAT_MELEE,			25,				"weapon_zs_axe")
 GM:AddStartingItem("stnbtn",			ITEMCAT_MELEE,			25,				"weapon_zs_stunbaton")
 GM:AddStartingItem("csknf",				ITEMCAT_MELEE,			10,				"weapon_zs_swissarmyknife")
@@ -429,7 +429,7 @@ GM:AddPointShopItem("nailsz",			ITEMCAT_AMMO,			7,				nil,			"8 nails",						nil
 
 item.NoClassicMode = true
 -- Tier 1
-GM:AddPointShopItem("brassknuckles",	ITEMCAT_TOOLS,			25,				"weapon_zs_brassknuckles").Model = "models/props_c17/utilityconnecter005.mdl"
+GM:AddPointShopItem("brassknuckles",	ITEMCAT_MELEE,			25,				"weapon_zs_brassknuckles").Model = "models/props_c17/utilityconnecter005.mdl"
 GM:AddPointShopItem("knife",			ITEMCAT_MELEE,			25,				"weapon_zs_swissarmyknife")
 GM:AddPointShopItem("zpplnk",			ITEMCAT_MELEE,			25,				"weapon_zs_plank")
 GM:AddPointShopItem("axe",				ITEMCAT_MELEE,			25,				"weapon_zs_axe")

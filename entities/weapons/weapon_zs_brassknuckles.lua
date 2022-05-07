@@ -1,6 +1,6 @@
 AddCSLuaFile()
 
-SWEP.Base = "weapon_zs_fists"
+SWEP.Base = "weapon_zs_fistz"
 
 --SWEP.PrintName = "Brass Knuckles"
 --SWEP.Description = "A pair of brass knuckles used to concentrate strikes from one's fists, increasing the damage done, while keeping their movement speed up."
@@ -23,7 +23,7 @@ if CLIENT then
 		["base+"] = { type = "Model", model = "models/props_c17/utilityconnecter005.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(4.085, 0.674, 0), angle = Angle(0, -99.708, 82.794), size = Vector(0.458, 0.349, 0.395), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
 	}
 end
-SWEP.HealStrength = 0.03
+
 a = math.random(20,40)
 
 SWEP.WalkSpeed = SPEED_FASTEST
@@ -44,7 +44,6 @@ SWEP.NoDismantle = false
 SWEP.NoGlassWeapons = false
 
 SWEP.AllowQualityWeapons = true
-SWEP.Primary.DefaultClip = 5
-SWEP.Primary.Ammo = "scrap"
+
 
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_FIRE_DELAY, -0.0206)
