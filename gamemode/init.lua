@@ -2859,6 +2859,7 @@ function GM:EntityTakeDamage(ent, dmginfo)
 							if otherteam == TEAM_HUMAN then
 								attacker:AddLifeHumanDamage(damage)
 								attacker:AddTokens(math.ceil(damage * 2.5))
+								attacker:AddZSXP(math.ceil(damage * 2))
 								GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_ZOMBIECLASS, attacker:GetZombieClassTable().Name, "HumanDamage", damage)
 							end
 						elseif myteam == TEAM_HUMAN and otherteam == TEAM_UNDEAD then

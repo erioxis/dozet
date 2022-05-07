@@ -620,7 +620,7 @@ GM:AddSkill(SKILL_U_ZAPPER_ARC, "Unlock: Arc Zapper", GOOD.."Unlocks purchasing 
 GM:AddSkill(SKILL_D_LATEBUYER, "Debuff: Late Buyer", GOOD.."+20 starting Worth\n"..GOOD.."66% arsenal discount\n"..BAD.."Unable to use points at arsenal crates until the second half of the round",
 																8,			1,					{SKILL_HAMMERDOOR}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_HAMMERDOOR, "Door destroyer 3000", GOOD.."Door take 350 damage when hit them with hammer\n"..BAD.."+10% Hammer swing delay",
-																8,			2,					{SKILL_D_LATEBUYER}, TREE_BUILDINGTREE)
+																8,			3,					{SKILL_D_LATEBUYER}, TREE_BUILDINGTREE)
 GM:AddSkillModifier(SKILL_HAMMERDOOR, SKILLMOD_HAMMER_SWING_DELAY_MUL, 0.10)
 GM:AddSkill(SKILL_CARRIER, "Carrier", GOOD.."+100% Speed when you take prop\n"..BAD.."-50% Deployable health\n"..BAD.."-50% Deployable packtime",
 																9,			2,					{SKILL_D_LATEBUYER}, TREE_BUILDINGTREE)
