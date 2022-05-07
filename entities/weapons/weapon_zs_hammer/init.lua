@@ -58,13 +58,17 @@ function SWEP:Reload()
 	end
 end
 
-function SWEP:OnMeleeHit(hitent, hitflesh, tr)
+function SWEP:OnMeleeHit(hitent, hitflesh, tr, dmginfo)
 	if not hitent:IsValid() then return end
 
 	local owner = self:GetOwner()
 
 	if hitent.HitByHammer and hitent:HitByHammer(self, owner, tr) then
 		return
+	end
+
+	if hitent:GetClass() == "prop_door_rotating" and owner:IsSkillActive(SKILL_HAMMERDOOR) then
+		hitent:TakeDamage(350, owner, hitent)
 	end
 
 	if hitent:IsNailed() then

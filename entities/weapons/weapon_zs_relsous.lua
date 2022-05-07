@@ -61,7 +61,7 @@ SWEP.ViewModel = "models/weapons/cstrike/c_shot_xm1014.mdl"
 SWEP.WorldModel = "models/weapons/w_shot_xm1014.mdl"
 SWEP.UseHands = false
 
-SWEP.Primary.Damage = 47
+SWEP.Primary.Damage = 22
 SWEP.Primary.NumShots = 2
 SWEP.Primary.Delay = 2
 SWEP.HeadshotMulti = 2.5

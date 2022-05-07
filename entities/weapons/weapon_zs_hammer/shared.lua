@@ -44,6 +44,7 @@ SWEP.AllowQualityWeapons = true
 GAMEMODE:SetPrimaryWeaponModifier(SWEP, WEAPON_MODIFIER_FIRE_DELAY, -0.07)
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_MELEE_RANGE, 3, 1)
 
+
 function SWEP:SetNextAttack()
 	local owner = self:GetOwner()
 	local armdelay = owner:GetMeleeSpeedMul()
@@ -57,3 +58,4 @@ end
 function SWEP:PlayRepairSound(hitent)
 	hitent:EmitSound("npc/dog/dog_servo"..math.random(7, 8)..".wav", 70, math.random(100, 105))
 end
+

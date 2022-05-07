@@ -733,18 +733,6 @@ GM.HonorableMentions[HM_NESTMASTER] = {Name = "Good man", String = "goes to %s f
 -- Don't let humans use these models because they look like undead models. Must be lower case.
 GM.RestrictedModels = {
 	"models/player/zombie_classic.mdl",
-	"models/player/zombie_classic_hbfix.mdl",
-	"models/player/zombine.mdl",
-	"models/player/zombie_soldier.mdl",
-	"models/player/zombie_fast.mdl",
-	"models/player/corpse1.mdl",
-	"models/player/charple.mdl",
-	"models/player/skeleton.mdl",
-	"models/player/combine_soldier_prisonguard.mdl",
-	"models/player/soldier_stripped.mdl",
-	"models/player/zelpa/stalker.mdl",
-	"models/player/fatty/fatty.mdl",
-	"models/player/zombie_lacerator2.mdl"
 }
 
 -- If a person has no player model then use one of these (auto-generated).
