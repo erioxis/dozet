@@ -117,25 +117,25 @@ GM.MaxNails = 4
 -- Moved from options to globals because the game is now balanced around it being static. The gamemode will BREAK if this is not 6!!
 GM.NumberOfWaves = 12
 
-GM.PulsePointsMultiplier = 1.35
+GM.PulsePointsMultiplier = 1.5
 
 -- The amount of damage you need to inflict to a zombie type to get a point
-GM.HumanoidZombiePointRatio = 56
+GM.HumanoidZombiePointRatio = 67
 GM.PoisonZombiePointRatio = 75 -- Has an enormous head hitbox
 GM.HeadcrabZombiePointRatio = 32
 GM.NoHeadboxZombiePointRatio = 44
 GM.TorsoZombiePointRatio = 61
 GM.LegsZombiePointRatio = 44
-GM.SkeletonPointRatio = GM.HumanoidZombiePointRatio/3
+GM.SkeletonPointRatio = GM.HumanoidZombiePointRatio/4
 
-SPEED_NORMAL = 230
-SPEED_SLOWEST = SPEED_NORMAL - 60
-SPEED_SLOWER = SPEED_NORMAL - 30
-SPEED_SLOW = SPEED_NORMAL - 8
-SPEED_FAST = SPEED_NORMAL + 7
-SPEED_FASTER = SPEED_NORMAL + 11
-SPEED_FASTEST = SPEED_NORMAL + 33
-SPEED_VKID = SPEED_NORMAL + 120
+SPEED_NORMAL = 245
+SPEED_SLOWEST = SPEED_NORMAL * 0.5
+SPEED_SLOWER = SPEED_NORMAL * 0.75
+SPEED_SLOW = SPEED_NORMAL * 0.9
+SPEED_FAST = SPEED_NORMAL * 1.1
+SPEED_FASTER = SPEED_NORMAL * 1.3
+SPEED_FASTEST = SPEED_NORMAL * 1.4
+SPEED_VKID = SPEED_NORMAL * 2
 
 SPEED_ZOMBIEESCAPE_SLOWEST = 240
 SPEED_ZOMBIEESCAPE_SLOWER = 260
@@ -147,7 +147,7 @@ ZE_KNOCKBACKSCALE = 0.1
 
 MASK_HOVER = bit.bor(CONTENTS_SOLID, CONTENTS_WATER, CONTENTS_SLIME, CONTENTS_GRATE, CONTENTS_WINDOW, CONTENTS_HITBOX)
 
-GM.BarricadeHealthMin = 800
+GM.BarricadeHealthMin = 400
 GM.BarricadeHealthMax = 5600
 GM.BarricadeHealthMassFactor = 3 * 0.85
 GM.BarricadeHealthVolumeFactor = 4 * 0.85

@@ -31,6 +31,7 @@ CLASS.Hull = {Vector(-16, -16, 0), Vector(16, 16, 86)}
 CLASS.HullDuck = {Vector(-16, -16, 0), Vector(16, 16, 48)}
 
 local math_random = math.random
+local bit_band = bit.band
 local math_Approach = math.Approach
 local math_min = math.min
 local math_ceil = math.ceil
@@ -127,6 +128,24 @@ if SERVER then
 	function CLASS:OnSpawned(pl)
 		pl:CreateAmbience("ticklemonsterambience")
 	end
+		function CLASS:ProcessDamage(pl, dmginfo)
+			local attacker = dmginfo:GetAttacker()
+			local dmg = dmginfo:GetDamage()
+			local hp = pl:Health()
+			if dmginfo:GetInflictor().IsMelee then
+				dmginfo:SetDamage(dmginfo:GetDamage() / 2)
+			end
+			if bit_band(dmginfo:GetDamageType(), DMG_BULLET) ~= 0 then
+				dmginfo:SetDamage(dmginfo:GetDamage() * 0.5)
+			elseif bit_band(dmginfo:GetDamageType(), DMG_SLASH) == 0 and bit_band(dmginfo:GetDamageType(), DMG_CLUB) == 0 then
+				dmginfo:SetDamage(dmginfo:GetDamage() * 0.5)
+			end
+	
+	
+	
+	
+		end
+
 end
 
 

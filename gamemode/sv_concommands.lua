@@ -713,3 +713,25 @@ concommand.Add("zs_weapon", function(sender, command, arguments, pl)
 	sender:Give(arguments[1])
 	sender:AddInventoryItem(arguments[1])
 end)
+concommand.Add("zs_waveset", function(sender, command, arguments, pl)
+	if sender == nil then return end
+	if not sender:IsAdmin() then 
+		sender:PrintMessage(HUD_PRINTTALK, translate.ClientFormat(sender, "noadmin"))
+		return end
+	print(sender)
+	print("wave set"..tonumber(arguments[1]))
+	if arguments[1] == nil then return end
+	RunConsoleCommand("say", "wave set"..arguments[1])
+	GAMEMODE:SetWave(tonumber(arguments[1]))
+end)
+concommand.Add("zs_botmod", function(sender, command, arguments, pl)
+	if sender == nil then return end
+	if not sender:IsAdmin() then 
+		sender:PrintMessage(HUD_PRINTTALK, translate.ClientFormat(sender, "noadmin"))
+		return end
+	print(sender)
+	print("botmod"..tonumber(arguments[1]))
+	if arguments[1] == nil then return end
+	RunConsoleCommand("botmod", arguments[1])
+	
+end)

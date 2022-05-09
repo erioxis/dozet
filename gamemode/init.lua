@@ -3947,8 +3947,9 @@ end
 
 function GM:PlayerCanPickupWeapon(pl, ent)
 	if pl:IsSkillActive(SKILL_JEW) then
+
 		pl:AddPoints(-5)
-		pl:AddZSXP(5)
+		pl:AddZSXP(5.5 *(GAMEMODE.HumanXPMulti))
 		GAMEMODE:ConCommandErrorMessage(pl, translate.ClientGet(pl, "jewmoment"))
 	end
 
@@ -4529,7 +4530,7 @@ function GM:WaveStateChanged(newstate, pl)
 
 						pl:AddPoints(120)
 
-						if not charge == 5  then
+						if not charge == 1  then
 							pl:TakeInventoryItem("trinket_lotteryticket")
 						net.Start("zs_trinketconsumed")
 						net.WriteString("Lottery ticket")

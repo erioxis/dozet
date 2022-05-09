@@ -918,7 +918,11 @@ LANGUAGE.class_cringe2   						= "Crif"
 LANGUAGE.class_bnightmare   						= "Bloody Nightmare"
 LANGUAGE.class_king_fast   						= "King of Fasts"
 LANGUAGE.class_ipukepus   						= "Icy Puke Pus"
+LANGUAGE.class_skeleton                 = "Skeleton"
+
 -- Class descriptions
+
+LANGUAGE.description_skeleton				= "Animated skeletons have a lot of health but they take minimal damage from bullets."
 LANGUAGE.description_ipukepus						= "The rotting body of the Ice Puke Pus is comprised entirely of organs used for the generation of poison and ice cubes.\nHe corrupt reality for hide\nIt's capable of vomiting gallons of poison puke at a time making it extremely dangerous."
 
 LANGUAGE.description_zombie							= "The basic zombie is very durable and has powerful claws.\nIt's hard to keep down, especially if not shot in the head."

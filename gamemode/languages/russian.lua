@@ -788,8 +788,11 @@ LANGUAGE.class_agile_dead   						= "Легкий зараженный"
 LANGUAGE.class_fast_zombie_slingshot   						= "Рогатка зомби"
 LANGUAGE.class_tormented_spy   						= "Шпион"
 LANGUAGE.class_ipukepus   						= "Ледоблюватель"
+LANGUAGE.class_skeleton                 = "Костник"
 
 -- Class descriptions
+
+LANGUAGE.description_skeleton				= "Ележивой скелет получающий невероятно мало урона от пуль."
 LANGUAGE.description_ipukepus						= "Гниющее ледянное тело Лдеблювателя использует внутренние органы для создания яда и льда.\nОН искажает пространство вокруг себя чтобы спрятаться\nОн способен извергать массы рвоты яда и льда, который очень опасен и способен отморозить все!."
 
 LANGUAGE.description_zombie							= "Обычный зомби очень стойкий и довольно силен.\nЕго сложно положить, особенно если не стрелять в голову."

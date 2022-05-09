@@ -215,6 +215,7 @@ if SERVER then
 		return true
 	end
 
+
 	function CLASS:OnSpawned(pl)
 		pl:CreateAmbience("eradicatorambience")
 		pl.EradiVived = false

@@ -9,7 +9,7 @@ CLASS.KnockbackScale = 0
 
 CLASS.CanTaunt = true
 
-CLASS.Health = 4500
+CLASS.Health = 2500
 CLASS.Speed = 195
 
 
@@ -33,6 +33,7 @@ CLASS.PainSounds = {"npc/zombie/zombie_pain1.wav", "npc/zombie/zombie_pain2.wav"
 CLASS.DeathSounds = {"npc/zombie/zombie_die1.wav", "npc/zombie/zombie_die2.wav", "npc/zombie/zombie_die3.wav"}
 
 local math_random = math.random
+local bit_band = bit.band
 
 local STEPSOUNDTIME_NORMAL = STEPSOUNDTIME_NORMAL
 local STEPSOUNDTIME_WATER_FOOT = STEPSOUNDTIME_WATER_FOOT
@@ -64,11 +65,23 @@ function CLASS:PlayerStepSoundTime(pl, iType, bWalking)
 end
 
 if SERVER then
-function CLASS:ProcessDamage(pl, dmginfo)
-	if dmginfo:GetInflictor().IsMelee then
-		dmginfo:SetDamage(dmginfo:GetDamage() / 2)
+	function CLASS:ProcessDamage(pl, dmginfo)
+		local attacker = dmginfo:GetAttacker()
+		local dmg = dmginfo:GetDamage()
+		local hp = pl:Health()
+		if dmginfo:GetInflictor().IsMelee then
+			dmginfo:SetDamage(dmginfo:GetDamage() / 2)
+		end
+		if bit_band(dmginfo:GetDamageType(), DMG_BULLET) ~= 0 then
+			dmginfo:SetDamage(dmginfo:GetDamage() * 0.01)
+		elseif bit_band(dmginfo:GetDamageType(), DMG_SLASH) == 0 and bit_band(dmginfo:GetDamageType(), DMG_CLUB) == 0 then
+			dmginfo:SetDamage(dmginfo:GetDamage() * 0.01)
+		end
+
+
+
+
 	end
-end
 end
 
 function CLASS:CalcMainActivity(pl, velocity)

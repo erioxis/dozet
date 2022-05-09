@@ -915,7 +915,7 @@ GM:AddSkill(SKILL_ANIMA, "Fines de anima", PURPLE.."+15% melee damage\n" ..BAD..
 SKILL_SIGILIBERATOR = 180	
 GM:AddSkillModifier(SKILL_SIGILIBERATOR, SKILLMOD_MELEE_DAMAGE_MUL, 2)
 	GM:AddSkillModifier(SKILL_SIGILIBERATOR, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 1)			
-GM:AddSkill(SKILL_SIGILIBERATOR, "Liberator", PURPLE.."x2 damage\n" ..BAD.."x2 damage taken",
+GM:AddSkill(SKILL_SIGILIBERATOR, "Liberator", PURPLE.."x3 damage\n" ..BAD.."x2 damage taken",
 										-3,			-9,					{SKILL_EX2}, TREE_ANCIENTTREE)
 										SKILL_DEATH = 181	
 GM:AddSkillModifier(SKILL_DEATH, SKILLMOD_MEDKIT_COOLDOWN_MUL, 0.2)
@@ -927,9 +927,9 @@ GM:AddSkillModifier(SKILL_ALLPOWER, SKILLMOD_REPAIRRATE_MUL, 0.10)
 GM:AddSkill(SKILL_ALLPOWER, "Cunctipotens", PURPLE.."Better cades\n" ..PURPLE.."+10% Repair Mul",
 					-4,			-8,					{SKILL_DEATH}, TREE_ANCIENTTREE)
 SKILL_ANCIENT = 183
-GM:AddSkillModifier(SKILL_ANCIENT, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 0.47)
+GM:AddSkillModifier(SKILL_ANCIENT, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 0.10)
 GM:AddSkillModifier(SKILL_ANCIENT, SKILLMOD_MELEE_DAMAGE_MUL, 0.2)		
-GM:AddSkill(SKILL_ANCIENT, "Adventum Antiqua", PURPLE.."+20% Damage melee\n" ..BAD.."+47% Damage taken mul",
+GM:AddSkill(SKILL_ANCIENT, "Adventum Antiqua", PURPLE.."+20% Damage melee\n" ..BAD.."+10% Damage taken mul",
 					-4,			-9,					{SKILL_SIGILIBERATOR}, TREE_ANCIENTTREE)
 					SKILL_CLASSIX1 = 185	
 GM:AddSkill(SKILL_CLASSIX1, "Classical scientia mundi", PURPLE.."Random bloodarmor",
