@@ -634,7 +634,11 @@ GM:AddSkill(SKILL_D_NOODLEARMS, "Debuff: Noodle Arms", GOOD.."+5 starting Worth\
 GM:AddSkill(SKILL_INSTRUMENTS, "Instruments", GOOD.."+5% turret range",
 																-10,		-3,					{}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_STOWAGE, 	"Stowage", GOOD.."Resupply usages build up when you're not there\n"..BAD.."-15% resupply delay",
-																4,			-3,					{}, TREE_BUILDINGTREE)
+																4,			-3,					{SKILL_NANITES}, TREE_BUILDINGTREE)
+SKILL_NANITES = 241
+GM:AddSkill(SKILL_NANITES, 	"Nanites", GOOD.."Props hit with a hammer take only 20% damage for 0.3 secs\n"..BAD.."-10% repair strenght",
+																4,			-4,					{SKILL_STOWAGE}, TREE_BUILDINGTREE)
+GM:AddSkillModifier(SKILL_NANITES, SKILLMOD_REPAIRRATE_MUL, -0.10)
 
 -- Gunnery Tree
 
@@ -826,17 +830,49 @@ SKILL_POINTIIII = 160
 	GM:AddSkillModifier(SKILL_POINTIIII, SKILLMOD_LUCK, 0.40)
 GM:AddSkill(SKILL_POINTIIII, "Pointer", NEUTRAL.."+0.40 Luck\n"..GOOD.."+7% Point MUL\n" ..GOOD.. "+5 Start Points",
 																-2,			-3,					{SKILL_POINTIII}, TREE_POINTTREE)
+SKILL_POINTD = 248
+GM:AddSkillModifier(SKILL_POINTD, SKILLMOD_POINT_MULTIPLIER, -0.25)
+GM:AddSkillModifier(SKILL_POINTD, SKILLMOD_LUCK, -0.5)
+GM:AddSkill(SKILL_POINTD, "Double trouble", BAD.."-0.5 luck\n"..GOOD.."Can double points\n" ..BAD.. "-25% Points multiplier",
+																-3.5,			-3,					{SKILL_POINTIIII}, TREE_POINTTREE)
 	SKILL_POINTFUL = 219
 	GM:AddSkillModifier(SKILL_POINTFUL, SKILLMOD_POINT_MULTIPLIER, 0.1)
-	GM:AddSkillModifier(SKILL_POINTFUL, SKILLMOD_POINTS, 5)
 	GM:AddSkillModifier(SKILL_POINTFUL, SKILLMOD_XP, -0.25)
 	GM:AddSkillModifier(SKILL_POINTFUL, SKILLMOD_WORTH, -25)
 GM:AddSkill(SKILL_POINTFUL, "Pointful", BAD.."-25% Xp multiplier\n"..BAD.."-25 Worth\n"..GOOD.."+10% Point MUL\n" ..GOOD.. "+10 Start Points",
 																-2,			0,					{SKILL_POINTIII}, TREE_POINTTREE)
+SKILL_POINTMEGA = 242
+GM:AddSkillModifier(SKILL_POINTMEGA, SKILLMOD_POINT_MULTIPLIER, -0.1)
+GM:AddSkillModifier(SKILL_POINTMEGA, SKILLMOD_XP, -0.05)
+GM:AddSkillModifier(SKILL_POINTMEGA, SKILLMOD_WORTH, 25)
+GM:AddSkill(SKILL_POINTMEGA, "Megapoint", BAD.."-5% Xp multiplier\n"..GOOD.."+25 Worth\n"..BAD.."-10% Point MUL\n" ..GOOD.. "+50 Start Points",
+																-2,			1,					{SKILL_POINTFUL}, TREE_POINTTREE)
 	SKILL_LUCK = 161
-	GM:AddSkillModifier(SKILL_LUCK, SKILLMOD_LUCK, 1)
-GM:AddSkill(SKILL_LUCK, "Luck", NEUTRAL.."+1 luck",
+	GM:AddSkillModifier(SKILL_LUCK, SKILLMOD_LUCK, 0.5)
+GM:AddSkill(SKILL_LUCK, "Luck", GOOD.."+0.5 luck",
 																-2,			-5,					{SKILL_POINTIIII}, TREE_POINTTREE)
+SKILL_LUCK1 = 243
+GM:AddSkillModifier(SKILL_LUCK1, SKILLMOD_LUCK, 0.5)
+GM:AddSkill(SKILL_LUCK1, "Luck I", GOOD.."+0.5 luck",
+									                    		-2,			-6,					{SKILL_LUCK}, TREE_POINTTREE)
+SKILL_LUCK2 = 244
+GM:AddSkillModifier(SKILL_LUCK2, SKILLMOD_LUCK, 0.5)
+GM:AddSkill(SKILL_LUCK2, "Luck II", GOOD.."+0.5 luck",
+									                    		-3,			-7,					{SKILL_LUCK1}, TREE_POINTTREE)
+SKILL_LUCK3 = 245
+GM:AddSkillModifier(SKILL_LUCK3, SKILLMOD_LUCK, 0.5)
+GM:AddSkill(SKILL_LUCK3, "Luck III", GOOD.."+0.5 luck",
+									                    		-3,			-8,					{SKILL_LUCK2}, TREE_POINTTREE)
+SKILL_LUCK4 = 246
+GM:AddSkillModifier(SKILL_LUCK4, SKILLMOD_LUCK, 1)
+GM:AddSkill(SKILL_LUCK4, "Luck IV", GOOD.."+1 luck",
+																-4,			-8,					{SKILL_LUCK3}, TREE_POINTTREE)		
+SKILL_ULUCK = 247
+GM:AddSkillModifier(SKILL_ULUCK, SKILLMOD_LUCK, 5)
+GM:AddSkillModifier(SKILL_ULUCK, SKILLMOD_RESUPPLY_DELAY_MUL, 0.15)
+GM:AddSkillModifier(SKILL_ULUCK, SKILLMOD_POINT_MULTIPLIER, -0.15)
+GM:AddSkill(SKILL_ULUCK, "Ultra lucky", GOOD.."+5 luck\n"..BAD.."-15% Point multiplier\n"..BAD.."+15% Ressuply delay",
+																-4,			-6,					{SKILL_LUCK4}, TREE_POINTTREE)														
 SKILL_LUCKE = 162
 GM:AddSkillModifier(SKILL_LUCKE, SKILLMOD_POINT_MULTIPLIER, -0.1)
 GM:AddSkillModifier(SKILL_LUCKE, SKILLMOD_LUCK, 2)	

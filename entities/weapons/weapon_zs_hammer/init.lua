@@ -76,6 +76,10 @@ function SWEP:OnMeleeHit(hitent, hitflesh, tr, dmginfo)
 			hitent.ReinforceEnd = CurTime() + 7
 			hitent.ReinforceApplier = owner
 		end
+		if owner:IsSkillActive(SKILL_NANITES) then
+			hitent.naniteEnd = CurTime() + 0.3
+			hitent.naniteApplier = owner
+		end
 
 		local healstrength = self.HealStrength * GAMEMODE.NailHealthPerRepair * (owner.RepairRateMul or 1)
 		local oldhealth = hitent:GetBarricadeHealth()

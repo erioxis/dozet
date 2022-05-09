@@ -4608,6 +4608,20 @@ function GM:WaveStateChanged(newstate, pl)
 						net.Send(pl)
 							
 							else end end
+							if pl:IsSkillActive(SKILL_POINTD)  then 
+								local luck = 8 - (pl.Luck / 3)
+								local lucky5 = math.random(1,luck)
+								print(luck, pl, "chance")
+								
+								print(lucky5, pl, "double trouble luck 5")
+								if lucky5 == 1 then 
+		
+								pl:AddPoints(pointsreward, nil, nil, true)
+	
+								net.Start("zs_pointsdoubled")
+							net.Send(pl)
+								
+								else end end
 
 						pl:AddPoints(pointsreward, nil, nil, true)
 						net.Start("zs_luck")
