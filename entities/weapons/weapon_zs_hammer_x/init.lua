@@ -1,5 +1,7 @@
 INC_SERVER()
 
+
+
 function SWEP:Reload()
 	if CurTime() < self:GetNextPrimaryFire() then return end
 
@@ -56,6 +58,24 @@ function SWEP:Reload()
 	else
 		owner:GiveAmmo(1, self.Primary.Ammo)
 	end
+end
+function SWEP:OnMeleeHit(hitent, hitflesh, tr, dmginfo)
+	if not hitent:IsValid() then return end
+
+	local owner = self:GetOwner()
+
+	if hitent.HitByHammer and hitent:HitByHammer(self, owner, tr) then
+		return
+	end
+
+
+	if hitent:IsNailed() then
+
+			hitent.BrokendEnd = CurTime() + 20
+			hitent.BrokendApplier = owner
+
+	end
+
 end
 
 

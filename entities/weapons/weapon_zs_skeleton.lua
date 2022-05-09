@@ -32,6 +32,7 @@ function SWEP:PlayAttackSound()
 	self:EmitSound("npc/fast_zombie/wake1.wav", 70, math.random(115, 140))
 end
 
+
 if not CLIENT then return end
 
 local matSheet = Material("models/props_c17/doll01")
