@@ -1001,11 +1001,16 @@ GM:AddSkillModifier(SKILL_TORMENT1, SKILLMOD_SPEED, -30)
 GM:AddSkillModifier(SKILL_TORMENT1, SKILLMOD_XP, 0.15)
 SKILL_TORMENT2 = 230
 GM:AddSkill(SKILL_TORMENT2, "Torment II", GOOD.."+15% Xp Multiplier\n"..BAD.."-15% Melee damage\n"..BAD.."-15 Health\n",
-				                                                            	1,			27,					{SKILL_TORMENT1}, TREE_ANCIENTTREE)
+				                                                            	1,			27,					{SKILL_TORMENT1,SKILL_SLAVEC}, TREE_ANCIENTTREE)
 
 GM:AddSkillModifier(SKILL_TORMENT2, SKILLMOD_MELEE_DAMAGE_MUL, -0.15)
 GM:AddSkillModifier(SKILL_TORMENT2, SKILLMOD_HEALTH, -15)
 GM:AddSkillModifier(SKILL_TORMENT2, SKILLMOD_XP, 0.15)
+SKILL_SLAVEC = 251
+GM:AddSkill(SKILL_SLAVEC, "Chains of time", GOOD.."Have chance to 10% to give defend buff\n"..GOOD.."+20 speed\n"..BAD.."-15 Health\n",
+				                                                            	2,			27,					{SKILL_TORMENT2}, TREE_ANCIENTTREE)
+GM:AddSkillModifier(SKILL_SLAVEC, SKILLMOD_HEALTH, -15)
+GM:AddSkillModifier(SKILL_SLAVEC, SKILLMOD_SPEED, 20)
 SKILL_TORMENT3 = 231
 GM:AddSkill(SKILL_TORMENT3, "Torment III", GOOD.."+50% Xp Multiplier\n"..BAD.."+50% Ressuply delay\n"..BAD.."-5% Points multiplier\n",
 				                                                            	1,			28,					{SKILL_TORMENT2}, TREE_ANCIENTTREE)
@@ -1075,9 +1080,17 @@ GM:AddSkill(SKILL_DEFENDEROFM, "Defender of Monsters", BAD.."You get 5% more dam
 
 GM:AddSkillModifier(SKILL_DEFENDEROFM, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 0.05)
 GM:AddSkillModifier(SKILL_DEFENDEROFM, SKILLMOD_MELEE_DAMAGE_MUL, 0.05)
+SKILL_TTIMES = 249
+GM:AddSkill(SKILL_TTIMES, "Tougher Times", GOOD.."Have 20% Chance to block damage\n"..BAD.."+15% Melee damage taken",
+				                                                            	-3,			1.5,					{SKILL_TRIP,SKILL_TTIMES1}, TREE_DEFENSETREE)
+GM:AddSkillModifier(SKILL_TTIMES, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 0.15)
+SKILL_TTIMES1 = 250
+GM:AddSkill(SKILL_TTIMES1, "Tough Times", GOOD.."-7% Melee damage taken\n",
+				                                                            	-4,			2,					{SKILL_TTIMES}, TREE_DEFENSETREE)
+GM:AddSkillModifier(SKILL_TTIMES1, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.07)
 SKILL_TRIP = 198
 GM:AddSkill(SKILL_TRIP, "Wall curse", GOOD.."-33% Damage taken\n"..GOOD.."+50% Max curse\n"..BAD.."Melee damage multiplier 0.74x\n"..BAD.."-60 Speed\n+5 Curse when get hit!",
-				                                                            	-2,			2,					{SKILL_DEFENDEROFM}, TREE_DEFENSETREE)
+				                                                            	-2,			2,					{SKILL_DEFENDEROFM,SKILL_TTIMES}, TREE_DEFENSETREE)
 
 GM:AddSkillModifier(SKILL_TRIP, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.33)
 GM:AddSkillModifier(SKILL_TRIP, SKILLMOD_MELEE_DAMAGE_MUL, -0.36)

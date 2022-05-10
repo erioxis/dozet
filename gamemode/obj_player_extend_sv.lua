@@ -195,6 +195,30 @@ function meta:ProcessDamage(dmginfo)
 					self.LastBleakSoul = CurTime()
 					self.BleakSoulMessage = nil
 				end
+				local chance = math.random(1,5)
+				if self:IsSkillActive(SKILL_D_FRAIL) and chance == 1 then
+					attacker:GiveStatus("dimvision", 1)
+
+					self:EmitSound("ambient/creatures/town_child_scream1.wav", 120, 40)
+					dmginfo:SetDamage(dmginfo:GetDamage() / 1200)
+
+				end
+				local trinkett = math.random(1,10)
+				if self:HasTrinket("ttimes") and trinkett == 1 then
+					attacker:GiveStatus("dimvision", 1)
+
+					self:EmitSound("ambient/creatures/town_child_scream1.wav", 120, 60)
+					dmginfo:SetDamage(dmginfo:GetDamage() / 1200)
+
+				end
+				local slavec = math.random(1,10)
+				if self:IsSkillActive(SKILL_SLAVEC) and slavec == 1 then
+					attacker:GiveStatus("dimvision", 5)
+
+					self:EmitSound("ambient/creatures/town_child_scream1.wav", 20, 10)
+					self:GiveStatus("medrifledefboost", 10)
+
+				end
 		        if self:HasTrinket("lazarussoul") and (not self.LastBleakSoul or self.LastBleakSoul + 30 < CurTime()) then
 					attacker:GiveStatus("bleed", 50)
 					attacker:SetGroundEntity(nil)

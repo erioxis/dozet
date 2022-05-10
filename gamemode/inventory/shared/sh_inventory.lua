@@ -490,6 +490,7 @@ trinket = GM:AddTrinket(""..translate.Get("t_defenderiii"), "composite", false, 
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.11)
 GM:AddSkillModifier(trinket, SKILLMOD_PROJECTILE_DAMAGE_TAKEN_MUL, -0.16)
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TO_BLOODARMOR_MUL, -0.07)
+trinket = GM:AddTrinket(""..translate.Get("t_ttimes"), "ttimes", false, develes, deweles, 5, ""..translate.Get("t_d_ttimes"))
 
 trinket = GM:AddTrinket(""..translate.Get("t_defenderiiii"), "toysite", false, develes, deweles, 4, ""..translate.Get("t_d_defenderiiii"))
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.09)

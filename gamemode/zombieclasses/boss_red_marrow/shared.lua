@@ -107,16 +107,26 @@ function CLASS:ProcessDamage(pl, dmginfo)
 		dmg = 0
 	end
 
+
 	local numthreshold = math_Clamp(math_ceil(hp / 100), 1, 9)
 	local dmgthreshold = math_Clamp(numthreshold * 100 - 100, 1, 800)
 
 	local newhp = hp - dmg
 	local nulldmg = dmgthreshold - newhp
 
+	local slavec = math.random(1,3)
+	if slavec == 1 then
+		attacker:GiveStatus("dimvision", 5)
+
+		pl:EmitSound("ambient/creatures/town_child_scream1.wav", 20, 10)
+		dmginfo:SetDamage(dmginfo:GetDamage() / 1200)
+
+	end
+
 	if newhp <= dmgthreshold and pl["bloodth"..numthreshold] then
 		pl["bloodth"..numthreshold] = false
 		dmginfo:SetDamage(dmg - nulldmg)
-		pl:GiveStatus("redmarrow", 30)
+		pl:GiveStatus("redmarrow", 10)
 
 		local effectdata = EffectData()
 			effectdata:SetOrigin(pl:WorldSpaceCenter())
@@ -126,11 +136,4 @@ function CLASS:ProcessDamage(pl, dmginfo)
 		util.BlastDamageEx(pl, pl, pl:GetPos(), 55, 7, DMG_CLUB)
 		pl:GodDisable()
 	end
-end
-if SERVER then
-function CLASS:ProcessDamage(pl, dmginfo)
-	if dmginfo:GetInflictor().IsMelee then
-		dmginfo:SetDamage(dmginfo:GetDamage() / 6)
-	end
-end
 end
