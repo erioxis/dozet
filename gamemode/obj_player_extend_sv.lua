@@ -195,9 +195,12 @@ function meta:ProcessDamage(dmginfo)
 					self.LastBleakSoul = CurTime()
 					self.BleakSoulMessage = nil
 				end
+
 				local chance = math.random(1,5)
-				if self:IsSkillActive(SKILL_D_FRAIL) and chance == 1 then
+				if self:IsSkillActive(SKILL_TTIMES) and chance == 1 then
 					attacker:GiveStatus("dimvision", 1)
+					net.Start("zs_damageblock")
+					net.Send(self)
 
 					self:EmitSound("ambient/creatures/town_child_scream1.wav", 120, 40)
 					dmginfo:SetDamage(dmginfo:GetDamage() / 1200)
@@ -206,6 +209,8 @@ function meta:ProcessDamage(dmginfo)
 				local trinkett = math.random(1,10)
 				if self:HasTrinket("ttimes") and trinkett == 1 then
 					attacker:GiveStatus("dimvision", 1)
+					net.Start("zs_damageblock")
+					net.Send(self)
 
 					self:EmitSound("ambient/creatures/town_child_scream1.wav", 120, 60)
 					dmginfo:SetDamage(dmginfo:GetDamage() / 1200)

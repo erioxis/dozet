@@ -4,6 +4,7 @@ translate.AddLanguage("ru", "Russian")
 -- Trinkets
 
 -- Various gamemode stuff|
+LANGUAGE.damageblock                         = "Урон по тебе заблокирован"
 LANGUAGE.luck                                = "Твоя удача %s"
 LANGUAGE.worthshop1                                = "Ворф магазин"
 LANGUAGE.pointshop1                                = "Магазин"
