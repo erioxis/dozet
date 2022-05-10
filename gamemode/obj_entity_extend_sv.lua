@@ -417,13 +417,13 @@ function meta:DamageNails(attacker, inflictor, damage, dmginfo)
 		local applier = self.naniteApplier
 		local multi = 0.20
 		local dmgbefore = damage * 0.80
-		local points = dmgbefore / 8
+
 
 		dmginfo:SetDamage(dmginfo:GetDamage() * multi)
 		damage = damage * multi
 
 		applier.PropDef = (applier.PropDef or 0) + dmgbefore
-		applier:AddPoints(points)
+
 	end
 	if self.BrokendEnd and CurTime() < self.BrokendEnd and self.BrokendApplier and self.BrokendApplier:IsValidLivingZombie() then
 		local applier = self.BrokendApplier
