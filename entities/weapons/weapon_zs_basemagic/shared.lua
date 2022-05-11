@@ -11,10 +11,8 @@ SWEP.ConeRamp = 2
 
 SWEP.CSMuzzleFlashes = true
 
-SWEP.Primary.ClipSize = 8
-SWEP.Primary.DefaultClip = 0
 SWEP.Primary.Automatic = false
-SWEP.Primary.Ammo = "pistol"
+SWEP.Primary.ArmorBleed = 20
 SWEP.RequiredClip = 1
 
 SWEP.Secondary.ClipSize = 1
@@ -67,14 +65,21 @@ end
 
 
 function SWEP:PrimaryAttack()
+	local owner = self:GetOwner()
+	if owner:GetBloodArmor() == nil then return end
 	if not self:CanPrimaryAttack() then return end
+	if owner:GetBloodArmor() > 0 and self.Primary.ArmorBleed < owner:GetBloodArmor() then
 
 	self:SetNextPrimaryFire(CurTime() + self:GetFireDelay())
 
 	self:EmitFireSound()
-	self:TakeAmmo()
+
+	owner:SetBloodArmor(owner:GetBloodArmor() - self.Primary.ArmorBleed)
+	
+	self:EmitFireSound()
 	self:ShootBullets(self.Primary.Damage, self.Primary.NumShots, self:GetCone())
 	self.IdleAnimation = CurTime() + self:SequenceDuration()
+	end
 end
 
 function SWEP:SecondaryAttack()
@@ -83,36 +88,8 @@ function SWEP:SecondaryAttack()
 	end
 end
 
-function SWEP:Reload()
-	local owner = self:GetOwner()
-	if owner:IsHolding() then return end
-
-	if self:GetIronsights() then
-		self:SetIronsights(false)
-	end
-
-	-- Custom reload function to change reload speed.
-	if self:CanReload() then
-		self.IdleAnimation = CurTime() + self:SequenceDuration()
-		self:SetNextReload(self.IdleAnimation)
-		self:SetReloadStart(CurTime())
-
-		self:SendReloadAnimation()
-		self:ProcessReloadEndTime()
-
-		owner:DoReloadEvent()
-
-		self:EmitReloadSound()
-	end
-end
 
 
-function SWEP:GetPrimaryClipSize()
-	local owner = self:GetOwner()
-	local multi = self.Primary.ClipSize/self.RequiredClip >= 8 and owner:HasTrinket("extendedmag") and 1.15 or 1
-
-	return math.floor(self:GetMaxClip1() * multi)
-end
 
 function SWEP:FinishReload()
 	self:SendWeaponAnim(ACT_VM_IDLE)
