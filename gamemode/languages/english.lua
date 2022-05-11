@@ -644,6 +644,8 @@ LANGUAGE.wep_syx = "Syx"
 LANGUAGE.wep_luxoids		= "Luxoid Shade"
 LANGUAGE.wep_d_luxoids		= "Stealed from shade,this high tech machine.\n R - Summon rock\n ATTACK Throw prop or rock"
 LANGUAGE.wep_sawhack		= "Sawhack"
+LANGUAGE.wep_powerfists7		= "Ultra-powered fists"
+LANGUAGE.wep_d_powerfists7		= "WTH REALLY?"
 
 --Some
 LANGUAGE.observing_x								= "Observing %s (%d)"

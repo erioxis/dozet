@@ -346,6 +346,7 @@ killicon.Add("weapon_zs_rebarmace", "zombiesurvival/killicons/weapon_zs_rebarmac
 killicon.Add("weapon_zs_executioner", "zombiesurvival/killicons/weapon_zs_executioner2")
 killicon.Add("weapon_zs_brassknuckles", "zombiesurvival/killicons/weapon_zs_brassknuckles")
 killicon.Add("weapon_zs_powerfists", "zombiesurvival/killicons/weapon_zs_powerfist.png")
+killicon.Add("weapon_zs_powerfists_t7", "zombiesurvival/killicons/weapon_zs_powerfist.png")
 killicon.Add("weapon_zs_ladel", "zombiesurvival/killicons/weapon_zs_ladel")
 killicon.Add("weapon_zs_glassbottle", "zombiesurvival/killicons/glass_bottle")
 killicon.Add("weapon_zs_crackedbottle", "zombiesurvival/killicons/glass_bottle")

@@ -324,6 +324,8 @@ LANGUAGE.wep_teslorer = "Тесловик"
 LANGUAGE.wep_d_teslorer = "Небольшой урон и неплохая дальнось и стан."
 LANGUAGE.wep_luxoids		= "Шейд манипулятор"
 LANGUAGE.wep_d_luxoids		= "Спиздили механику шейда.\n R - Призвать камень\n Атака чтобы бросить камень или проп"
+LANGUAGE.wep_powerfists7		= "Сверх-перчатки"
+LANGUAGE.wep_d_powerfists7		= "Стоп это реально?"
 --пушки
 LANGUAGE.wep_zeus  = "'Зевс' Вольт-Арбалет"
 LANGUAGE.wep_d_zeus = "Стреляет нулевыми стрелами,которые убивают любое лечение или восстание.Имеет длинную цепочку но без попаданий в голову."
