@@ -150,7 +150,7 @@ SKILL_WORTHINESS1 = 42
 SKILL_WORTHINESS2 = 43
 SKILL_WOOISM = 46
 SKILL_U_DRONE = 28
-SKILL_U_NANITECLOUD = 29
+SKILL_NANITECLOUD = 29
 SKILL_STOIC1 = 6
 SKILL_STOIC2 = 7
 SKILL_STOIC3 = 8
@@ -583,12 +583,13 @@ GM:AddSkill(SKILL_TURRETOVERLOAD, "Turret Overload", GOOD.." +100% Turret scan s
 GM:AddSkill(SKILL_U_DRONE, "Unlock: Pulse Drone", GOOD.."Unlocks the Pulse Drone Variant\nFires short range pulse projectiles instead of bullets",
 																2,			-3,					{SKILL_HAULMODULE, SKILL_U_ROLLERMINE}, TREE_BUILDINGTREE)
 .AlwaysActive = true
-GM:AddSkill(SKILL_U_NANITECLOUD, "Unlock: Nanite Cloud Bomb", GOOD.."Unlocks purchasing the Nanite Cloud Bomb\nSlowly repairs all props and deployables inside the cloud",
+GM:AddSkill(SKILL_NANITECLOUD, "Nanite", GOOD.."+12% Repair rate",
 																3,			1,					{SKILL_HAMMERDISCIPLINE,SKILL_JEW}, TREE_BUILDINGTREE)
 .AlwaysActive = true
+GM:AddSkillModifier(SKILL_NANITECLOUD, SKILLMOD_REPAIRRATE_MUL, 0.12)
 SKILL_JEW = 237
 GM:AddSkill(SKILL_JEW, "Jew", GOOD.."+25% Arsenal discount and scrap discount\n+50 Start points\n"..BAD.."-5 Points every time when you get a LOOT",
-																3,			2,					{SKILL_U_NANITECLOUD}, TREE_BUILDINGTREE)
+																3,			2,					{SKILL_NANITECLOUD}, TREE_BUILDINGTREE)
 																
 GM:AddSkillModifier(SKILL_JEW, SKILLMOD_POINTS, 50)
 GM:AddSkillModifier(SKILL_JEW, SKILLMOD_ARSENAL_DISCOUNT, -0.25)
@@ -600,7 +601,7 @@ GM:AddSkill(SKILL_TECHNICIAN, "Field Technician", GOOD.." +3% zapper and repair 
 GM:AddSkill(SKILL_U_ROLLERMINE, "Unlock: Rollermine", GOOD.."Unlocks purchasing Rollermines\nRolls along the ground, shocking zombies and dealing damage",
 																3,			-5,					{}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_HAULMODULE, "Unlock: Hauling Drone", GOOD.."Unlocks the Hauling Drone\nRapidly transports props and items but cannot attack",
-																2,			-1,					{SKILL_U_NANITECLOUD}, TREE_BUILDINGTREE)
+																2,			-1,					{SKILL_NANITECLOUD}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_LIGHTCONSTRUCT, "Light Construction", GOOD.."-25% deployable pack time\n"..BAD.."-25% deployable health",
 																8,			-1,					{}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_STOCKPILE, "Stockpiling", GOOD.."Collect twice as much from resupplies\n"..BAD.."2x resupply box delay",
@@ -612,7 +613,7 @@ GM:AddSkill(SKILL_VISION, "Refiner's Vision", GOOD.."Locate nearby remantlers if
 GM:AddSkill(SKILL_U_ROCKETTURRET, "Unlock: Rocket Turret", GOOD.."Unlocks purchasing the Rocket Turret\nFires explosives instead of SMG ammo\nDeals damage in a radius\nHigh tier deployable",
 																-8,			-0,					{SKILL_TURRETOVERLOAD}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_INSIGHT, "Buyer's Insight", GOOD.."+2% Arsenal Discount\n"..GOOD.."Locate nearby unplaced arsenal crates on players through walls\n"..GOOD.."Locate nearby arsenal packs through walls",
-																6,			-0,					{SKILL_U_NANITECLOUD, SKILL_U_ZAPPER_ARC, SKILL_LIGHTCONSTRUCT, SKILL_D_LATEBUYER}, TREE_BUILDINGTREE)
+																6,			-0,					{SKILL_NANITECLOUD, SKILL_U_ZAPPER_ARC, SKILL_LIGHTCONSTRUCT, SKILL_D_LATEBUYER}, TREE_BUILDINGTREE)
 .AlwaysActive = true
 GM:AddSkill(SKILL_U_ZAPPER_ARC, "Unlock: Arc Zapper", GOOD.."Unlocks purchasing the Arc Zapper\nZaps zombies that get nearby, and jumps in an arc\nMid tier deployable and long cooldown\nRequires a steady upkeep of pulse ammo",
 																6,			2,					{SKILL_FIELDAMP, SKILL_TECHNICIAN}, TREE_BUILDINGTREE)
@@ -655,7 +656,7 @@ GM:AddSkillModifier(SKILL_TRIGGER_DISCIPLINE1, SKILLMOD_DAMAGE, 0.03)
 GM:AddSkillModifier(SKILL_TRIGGER_DISCIPLINE2, SKILLMOD_DAMAGE, 0.05)
 GM:AddSkillModifier(SKILL_TRIGGER_DISCIPLINE3, SKILLMOD_DAMAGE, 0.09)
 GM:AddSkill(SKILL_D_PALSY, "Debuff: Palsy", GOOD.."+10 starting Worth\n"..GOOD.."-3% resupply delay\n"..BAD.."Aiming ability reduced when health is low",
-																0,			4,					{SKILL_LEVELHEADED}, TREE_GUNTREE)
+																0,			4,					{SKILL_LEVELHEADED,SKILL_GUNSLINGER}, TREE_GUNTREE)
 GM:AddSkill(SKILL_LEVELHEADED, "Level Headed", GOOD.."-5% reduced effect of aim shake effects",
 																-2,			2,					{}, TREE_GUNTREE)
 GM:AddSkill(SKILL_QUICKDRAW, "Quick Draw", GOOD.."+65% weapon draw speed\n"..BAD.."-15% weapon reload speed",
@@ -674,6 +675,13 @@ GM:AddSkill(SKILL_ARSVOID, "Arsenal Void", GOOD.."Can give random weapon in end 
 																6,			-4,					{SKILL_DELIBRATION}, TREE_GUNTREE)
 GM:AddSkillModifier(SKILL_ARSVOID, SKILLMOD_DAMAGE, 0.15)
 GM:AddSkillModifier(SKILL_ARSVOID, SKILLMOD_ARSENAL_DISCOUNT, 0.15)
+SKILL_GUNSLINGER = 252
+GM:AddSkill(SKILL_GUNSLINGER, "Gunslinger", GOOD.."+15% Accuracy\n"..GOOD.."+15% Bullet Damage\n"..BAD.."-30% Melee damage\n"..BAD.."-50% Melee range",
+																0,			5,					{SKILL_D_PALSY}, TREE_GUNTREE)
+GM:AddSkillModifier(SKILL_GUNSLINGER, SKILLMOD_DAMAGE, 0.15)
+GM:AddSkillModifier(SKILL_GUNSLINGER, SKILLMOD_AIMSPREAD_MUL, -0.15)
+GM:AddSkillModifier(SKILL_GUNSLINGER, SKILLMOD_MELEE_DAMAGE_MUL, -0.30)
+GM:AddSkillModifier(SKILL_GUNSLINGER, SKILLMOD_MELEE_RANGE_MUL, -0.50)
 
 GM:AddSkill(SKILL_QUICKRELOAD, "Quick Reload", GOOD.."+10% weapon reload speed\n"..BAD.."-25% weapon draw speed",
 																-5,			1,					{SKILL_SLEIGHTOFHAND}, TREE_GUNTREE)
@@ -1031,6 +1039,13 @@ GM:AddSkill(SKILL_TORMENT5, "Torment V", GOOD.."+15% Xp Multiplier\n"..BAD.."+15
 
 GM:AddSkillModifier(SKILL_TORMENT5, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 0.15)
 GM:AddSkillModifier(SKILL_TORMENT5, SKILLMOD_XP, 0.15)
+SKILL_TORMENT6 = 253
+GM:AddSkill(SKILL_TORMENT6, "Torment VI", GOOD.."+30% Xp Multiplier\n"..BAD.."-50% Repair rate and -50% Medtool effectiveness",
+				                                                            	3,			30,					{SKILL_TORMENT5}, TREE_ANCIENTTREE)
+
+GM:AddSkillModifier(SKILL_TORMENT5, SKILLMOD_REPAIRRATE_MUL, -0.50)
+GM:AddSkillModifier(SKILL_TORMENT5, SKILLMOD_MEDKIT_EFFECTIVENESS_MUL, -0.50)
+GM:AddSkillModifier(SKILL_TORMENT5, SKILLMOD_XP, 0.30)
 SKILL_DEATHCURSE = 234
 GM:AddSkill(SKILL_DEATHCURSE, "Curse cleaning", GOOD.."+15% Xp Multiplier\n"..GOOD.."Eating food clear you curses\n"..BAD.."-30% Max curse\n",
 				                                                            	2,			30,					{SKILL_TORMENT5}, TREE_ANCIENTTREE)
@@ -1080,6 +1095,13 @@ GM:AddSkill(SKILL_DEFENDEROFM, "Defender of Monsters", BAD.."You get 5% more dam
 
 GM:AddSkillModifier(SKILL_DEFENDEROFM, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 0.05)
 GM:AddSkillModifier(SKILL_DEFENDEROFM, SKILLMOD_MELEE_DAMAGE_MUL, 0.05)
+SKILL_HEAVY = 254
+GM:AddSkill(SKILL_HEAVY, "Heavy", GOOD.."-10% Melee damage taken\n"..BAD.."-30 speed\n"..BAD.."-50% Jump power mul",
+				                                                            	-3,		    0.5,					{SKILL_DEFENDEROFM}, TREE_DEFENSETREE)
+
+GM:AddSkillModifier(SKILL_HEAVY, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.1)
+GM:AddSkillModifier(SKILL_HEAVY, SKILLMOD_SPEED, -30)
+GM:AddSkillModifier(SKILL_HEAVY, SKILLMOD_JUMPPOWER_MUL, -0.5)
 SKILL_TTIMES = 249
 GM:AddSkill(SKILL_TTIMES, "Tougher Times", GOOD.."Have 20% Chance to block damage\n"..BAD.."+15% Melee damage taken",
 				                                                            	-3,			1.5,					{SKILL_TRIP,SKILL_TTIMES1}, TREE_DEFENSETREE)
