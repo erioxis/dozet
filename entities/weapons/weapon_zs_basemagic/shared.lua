@@ -12,8 +12,9 @@ SWEP.ConeRamp = 2
 SWEP.CSMuzzleFlashes = true
 
 SWEP.Primary.Automatic = false
-SWEP.Primary.ArmorBleed = 20
+SWEP.Primary.ArmorBleed = 10
 SWEP.RequiredClip = 1
+SWEP.ArmorRegen = 1
 
 SWEP.Secondary.ClipSize = 1
 SWEP.Secondary.DefaultClip = 1
@@ -66,27 +67,35 @@ end
 
 function SWEP:PrimaryAttack()
 	local owner = self:GetOwner()
-	if owner:GetBloodArmor() == nil then return end
+	if not owner:IsValid() then return end
+
 	if not self:CanPrimaryAttack() then return end
-	if owner:GetBloodArmor() > 0 and self.Primary.ArmorBleed < owner:GetBloodArmor() then
-
+	
+	if owner:GetBloodArmor() > 0 and self.Primary.ArmorBleed <= owner:GetBloodArmor() then
 	self:SetNextPrimaryFire(CurTime() + self:GetFireDelay())
-
 	self:EmitFireSound()
-
-	owner:SetBloodArmor(owner:GetBloodArmor() - self.Primary.ArmorBleed)
+	owner:SetBloodArmor(math.min(owner:GetBloodArmor() - self.Primary.ArmorBleed))
 	
 	self:EmitFireSound()
 	self:ShootBullets(self.Primary.Damage, self.Primary.NumShots, self:GetCone())
 	self.IdleAnimation = CurTime() + self:SequenceDuration()
 	end
+
 end
 
 function SWEP:SecondaryAttack()
+	local owner = self:GetOwner()
+	
 	if self:GetNextSecondaryFire() <= CurTime() and not self:GetOwner():IsHolding() and self:GetReloadFinish() == 0 then
 		self:SetIronsights(true)
+		if not owner:IsValid() then return end
+		if owner:GetBloodArmor() < owner.MaxBloodArmor then
+			
+		owner:SetBloodArmor(math.min(owner:GetBloodArmor() + self.ArmorRegen))
+		end
 	end
 end
+
 
 
 
