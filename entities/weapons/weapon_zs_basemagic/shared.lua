@@ -1,4 +1,4 @@
-SWEP.Primary.Sound = Sound("Weapon_Pistol.Single")
+SWEP.Primary.Sound = Sound("ambient/explosions/explode_9.wav")
 SWEP.DryFireSound = Sound("Weapon_Pistol.Empty")
 SWEP.Primary.Damage = 30
 SWEP.Primary.KnockbackScale = 1
@@ -68,23 +68,34 @@ end
 function SWEP:PrimaryAttack()
 	local owner = self:GetOwner()
 	if not owner:IsValid() then return end
+	if not owner:IsSkillActive(SKILL_MAGIC) then return end
 
 	if not self:CanPrimaryAttack() then return end
 	
-	if owner:GetBloodArmor() > 0 and self.Primary.ArmorBleed <= owner:GetBloodArmor() then
-	self:SetNextPrimaryFire(CurTime() + self:GetFireDelay())
-	self:EmitFireSound()
-	owner:SetBloodArmor(math.min(owner:GetBloodArmor() - self.Primary.ArmorBleed))
+	    if owner:GetBloodArmor() > 0 and self.Primary.ArmorBleed <= owner:GetBloodArmor() then
+	    self:SetNextPrimaryFire(CurTime() + self:GetFireDelay())
+	    self:EmitFireSound()
+	    owner:SetBloodArmor(math.min(owner:GetBloodArmor() - self.Primary.ArmorBleed))
 	
-	self:EmitFireSound()
-	self:ShootBullets(self.Primary.Damage, self.Primary.NumShots, self:GetCone())
-	self.IdleAnimation = CurTime() + self:SequenceDuration()
-	end
+	    self:EmitFireSound()
+	    self:ShootBullets(self.Primary.Damage, self.Primary.NumShots, self:GetCone())
+	    self.IdleAnimation = CurTime() + self:SequenceDuration()
+
+		elseif owner:GetBloodArmor() < self.Primary.ArmorBleed then
+		self:SetNextPrimaryFire(CurTime() + self:GetFireDelay())
+		self:EmitFireSound()
+		
+		self:EmitFireSound()
+		self:ShootBullets(self.Primary.Damage, self.Primary.NumShots, self:GetCone())
+		self.IdleAnimation = CurTime() + self:SequenceDuration()
+		owner:TakeDamage(self.Primary.ArmorBleed)
+	    end
 
 end
 
 function SWEP:SecondaryAttack()
 	local owner = self:GetOwner()
+	if not owner:IsSkillActive(SKILL_MAGIC) then return end
 	
 	if self:GetNextSecondaryFire() <= CurTime() and not self:GetOwner():IsHolding() and self:GetReloadFinish() == 0 then
 		self:SetIronsights(true)

@@ -1,7 +1,7 @@
 AddCSLuaFile()
 
 --SWEP.PrintName = "Axe"
-SWEP.PrintName = ""..translate.Get("wep_magic1")
+SWEP.PrintName = ""..translate.Get("wep_m_heal")
 
 if CLIENT then
 	SWEP.ViewModelFOV = 55
@@ -24,11 +24,8 @@ SWEP.WorldModel = "models/props/cs_militia/axe.mdl"
 SWEP.UseHands = true
 
 SWEP.HoldType = "melee2"
+SWEP.ArmorRegen = 1
 
-SWEP.MeleeDamage = 71
-SWEP.MeleeRange = 71
-SWEP.MeleeSize = 1.71
-SWEP.MeleeKnockBack =  71
 
 SWEP.WalkSpeed = SPEED_FAST
 
@@ -41,16 +38,33 @@ SWEP.HitDecal = "Manhackcut"
 
 SWEP.AllowQualityWeapons = true
 
-GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_MELEE_RANGE, 3)
 
-function SWEP:PlaySwingSound()
-	self:EmitSound("weapons/iceaxe/iceaxe_swing1.wav", 75, math.random(65, 70))
+
+function SWEP:PrimaryAttack()
+	local owner = self:GetOwner()
+	if not owner:IsValid() then return end
+
+	if not self:CanPrimaryAttack() then return end
+
+end
+function SWEP:SecondaryAttack()
+	local owner = self:GetOwner()
+	if not owner:IsSkillActive(SKILL_MAGIC) then return end
+	
+	if self:GetNextSecondaryFire() <= CurTime() and not self:GetOwner():IsHolding() and self:GetReloadFinish() == 0 then
+		self:SetIronsights(true)
+		if not owner:IsValid() then return end
+		if owner:GetBloodArmor() < owner.MaxBloodArmor then
+		owner:SetBloodArmor(math.min(owner:GetBloodArmor() + self.ArmorRegen))
+		end
+local healmax = owner:IsSkillActive(SKILL_D_FRAIL) and math.floor(owner:GetMaxHealth() * 0.44) or owner:GetMaxHealth()
+local healmax = owner:IsSkillActive(SKILL_ABUSE) and math.floor(owner:GetMaxHealth() * 0.25) or owner:GetMaxHealth()
+		if owner:GetBloodArmor() > 0 and self.Primary.ArmorBleed <= owner:GetBloodArmor() and owner:Health() < math.min(healmax, owner:GetMaxHealth() * 0.9) then
+			owner:SetHealth(owner:Health() + self.Primary.ArmorBleed)
+			owner:SetBloodArmor(math.min(owner:GetBloodArmor() - self.Primary.ArmorBleed))
+		end
+	end
+
 end
 
-function SWEP:PlayHitSound()
-	self:EmitSound("weapons/melee/golf club/golf_hit-0"..math.random(4)..".ogg")
-end
 
-function SWEP:PlayHitFleshSound()
-	self:EmitSound("physics/body/body_medium_break"..math.random(2, 4)..".wav")
-end
