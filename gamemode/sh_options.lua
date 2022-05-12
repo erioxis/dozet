@@ -37,6 +37,7 @@ ITEMCAT_OTHER = 7
 ITEMCAT_SPECIAL = 8
 ITEMCAT_MUTATIONS = 9
 ITEMCAT_MUTATIONS_BOSS = 10
+ITEMCAT_MAGIC = 11
 
 
 ITEMSUBCAT_TRINKETS_DEFENSIVE = 1
@@ -60,7 +61,8 @@ GM.ItemCategories = {
 	[ITEMCAT_OTHER] = "Other",
 	[ITEMCAT_SPECIAL] = "Skill",
 	[ITEMCAT_MUTATIONS]	 = "Mutagen",
-	[ITEMCAT_MUTATIONS_BOSS]	= "Boss Mutagen"
+	[ITEMCAT_MUTATIONS_BOSS]	= "Boss Mutagen",
+	[ITEMCAT_MAGIC]	= "Magic"
 
 }
 
@@ -332,6 +334,9 @@ GM:AddStartingItem("bloodshot",			ITEMCAT_OTHER,			35,				"weapon_zs_bloodshotbo
 ------------
 -- Points --
 ------------
+--Magic
+GM:AddPointShopItem("magicheal",			ITEMCAT_MAGIC,			200,				"weapon_zs_m_heal")
+GM:AddPointShopItem("magicdamage",			ITEMCAT_MAGIC,			200,				"weapon_zs_m_damage")
 
 -- Tier 1
 GM:AddPointShopItem("pshtr",			ITEMCAT_GUNS,			35,				"weapon_zs_peashooter", nil, nil, nil, function(pl) pl:GiveEmptyWeapon("weapon_zs_peashooter") end)

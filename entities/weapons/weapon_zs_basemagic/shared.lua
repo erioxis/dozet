@@ -98,7 +98,6 @@ function SWEP:SecondaryAttack()
 	if not owner:IsSkillActive(SKILL_MAGIC) then return end
 	
 	if self:GetNextSecondaryFire() <= CurTime() and not self:GetOwner():IsHolding() and self:GetReloadFinish() == 0 then
-		self:SetIronsights(true)
 		if not owner:IsValid() then return end
 		if owner:GetBloodArmor() < owner.MaxBloodArmor then
 			

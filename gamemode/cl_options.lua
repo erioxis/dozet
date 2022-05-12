@@ -8,8 +8,9 @@ GM.ItemCategoryIcons = {
 	[ITEMCAT_TOOLS] = "icon16/wrench.png",
 	[ITEMCAT_DEPLOYABLES] = "icon16/package.png",
 	[ITEMCAT_OTHER] = "icon16/world.png",
-	[ITEMCAT_TRINKETS] = "icon16/ruby.png" --[[,
+	[ITEMCAT_TRINKETS] = "icon16/ruby.png", --[[,
 	[ITEMCAT_RETURNS] = "icon16/user_delete.png"]]
+	[ITEMCAT_MAGIC] = "icon16/user_delete.png"
 }
 
 GM.RemortColors = {
