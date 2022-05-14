@@ -32,6 +32,7 @@ SWEP.ViewModel = "models/weapons/c_arms_citizen.mdl"
 SWEP.WorldModel	= "models/weapons/w_grenade.mdl"
 
 SWEP.Weight = 4
+SWEP.HitDistance = 61
 
 SWEP.MeleeDamage = a
 

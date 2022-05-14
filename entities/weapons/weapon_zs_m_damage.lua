@@ -77,6 +77,7 @@ function SWEP:SecondaryAttack()
 
 		if not owner:IsValid() then return end
 		if owner:GetBloodArmor() < owner.MaxBloodArmor then
+			self:EmitSound("weapons/iceaxe/iceaxe_swing1.wav", 75, math.random(65, 70))
 			if SERVER then
 		
 			

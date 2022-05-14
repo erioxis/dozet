@@ -38,6 +38,7 @@ SWEP.Weight = 4
 
 SWEP.MeleeDamage = 222
 SWEP.LegDamage = 120
+SWEP.HitDistance = 50
 
 SWEP.Unarmed = false
 

@@ -61,6 +61,7 @@ function SWEP:SecondaryAttack()
 	
 	if self:GetNextSecondaryFire() <= CurTime() and not self:GetOwner():IsHolding() and self:GetReloadFinish() == 0 then
 		if not owner:IsValid() then return end
+		self:EmitSound("physics/body/body_medium_break"..math.random(2, 4)..".wav")
 		if SERVER then
 		if owner:GetBloodArmor() < owner.MaxBloodArmor then
 		owner:SetBloodArmor(math.min(owner:GetBloodArmor() + self.ArmorRegen))

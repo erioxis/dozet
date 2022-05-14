@@ -71,26 +71,28 @@ function SWEP:PrimaryAttack()
 	if not owner:IsSkillActive(SKILL_MAGIC) then return end
 
 	if not self:CanPrimaryAttack() then return end
-	if SERVER then
+
 	
 	    if owner:GetBloodArmor() > 0 and self.Primary.ArmorBleed <= owner:GetBloodArmor() then
 	    self:SetNextPrimaryFire(CurTime() + self:GetFireDelay())
 	    self:EmitFireSound()
-	    owner:SetBloodArmor(math.min(owner:GetBloodArmor() - self.Primary.ArmorBleed))
+	
 	
 	    self:EmitFireSound()
+		if SERVER then
+		owner:SetBloodArmor(math.min(owner:GetBloodArmor() - self.Primary.ArmorBleed))
 	    self:ShootBullets(self.Primary.Damage, self.Primary.NumShots, self:GetCone())
 	    self.IdleAnimation = CurTime() + self:SequenceDuration()
-
+	end
 		elseif owner:GetBloodArmor() < self.Primary.ArmorBleed then
 		self:SetNextPrimaryFire(CurTime() + self:GetFireDelay())
-		self:EmitFireSound()
 		
 		self:EmitFireSound()
 		self:ShootBullets(self.Primary.Damage, self.Primary.NumShots, self:GetCone())
 		self.IdleAnimation = CurTime() + self:SequenceDuration()
+		if SERVER then
 		owner:TakeDamage(self.Primary.ArmorBleed)
-	    end
+	end
 	end
 end
 
