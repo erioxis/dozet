@@ -30,16 +30,17 @@ function CLASS:PlayerFootstep(pl, vFootPos, iFoot, strSoundName, fVolume, pFilte
 
 	return true
 end
+if SERVER then
+	function CLASS:ProcessDamage(pl, dmginfo)
+		if dmginfo:GetInflictor().IsMelee then
+			dmginfo:SetDamage(dmginfo:GetDamage() / 1000)
+		end
+	end
+	end
 
 if not CLIENT then return end
 
 CLASS.Icon = "zombiesurvival/killicons/ancient_nightmare"
 
-if SERVER then
-function CLASS:ProcessDamage(pl, dmginfo)
-	if dmginfo:GetInflictor().IsMelee then
-		dmginfo:SetDamage(dmginfo:GetDamage() / 1000)
-	end
-end
-end
+
 

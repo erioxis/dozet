@@ -15,7 +15,7 @@ if file.Exists(GM.FolderName.."/gamemode/maps/"..game.GetMap()..".lua", "LUA") t
 end
 
 function GM:GetNumberOfWaves()
-	local default = GetGlobalBool("classicmode") and 10 or self.NumberOfWaves
+	local default = GetGlobalBool("classicmode") and 100 or self.NumberOfWaves
 	local num = GetGlobalInt("numwaves", default) -- This is controlled by logic_waves.
 	return num == -2 and default or num
 end

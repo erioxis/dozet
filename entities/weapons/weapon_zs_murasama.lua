@@ -49,7 +49,7 @@ end
 SWEP.Base = "weapon_zs_basemelee"
 
 SWEP.Tier = 7
-SWEP.MeleeDamage = 581
+SWEP.MeleeDamage = 812
 SWEP.MeleeRange = 177
 SWEP.MeleeSize = 3
 SWEP.MeleeKnockBack = 0

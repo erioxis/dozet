@@ -812,7 +812,7 @@ SKILL_OPM = 225
 GM:AddSkill(SKILL_OPM, "One Punch Man", GOOD.."+350% Unarmed melee damage\n"..BAD.."-35% Melee damage\n"..BAD.."+150% time before next unarmed strike ",
 																9,			-5,					{SKILL_MELEEFAN}, TREE_MELEETREE)
 GM:AddSkillModifier(SKILL_OPM, SKILLMOD_UNARMED_DAMAGE_MUL, 3.50)
-GM:AddSkillModifier(SKILL_OPM, SKILLMOD_UNARMED_SWING_DELAY_MUL, 1.5)
+GM:AddSkillModifier(SKILL_OPM, SKILLMOD_UNARMED_SWING_DELAY_MUL, 3)
 GM:AddSkillModifier(SKILL_OPM, SKILLMOD_MELEE_DAMAGE_MUL, -0.35)
 
 

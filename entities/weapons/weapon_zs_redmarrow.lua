@@ -6,22 +6,26 @@ end
 
 SWEP.Base = "weapon_zs_zombie"
 
-SWEP.MeleeDamage = 30
-SWEP.MeleeDamageShielded = 50
+SWEP.MeleeDamage = 120
+SWEP.MeleeDamageShielded = 230
 SWEP.MeleeDelay = 0.74
+SWEP.MeleeDamageVsProps = 50
 
 function SWEP:MeleeHit(ent, trace, damage, forcescale)
 	local owner = self:GetOwner()
 	if owner:GetStatus("redmarrow") then
 		damage = self.MeleeDamageShielded
 	end
-
+	if not ent:IsPlayer() then
+		damage = self.MeleeDamageVsProps
+	end
 	self.BaseClass.MeleeHit(self, ent, trace, damage, forcescale)
 end
 
 function SWEP:Reload()
 	self:SecondaryAttack()
 end
+
 
 function SWEP:PlayAlertSound()
 	self:GetOwner():EmitSound("npc/fast_zombie/fz_scream1.wav", 75, math.random(60,70), 0.5)

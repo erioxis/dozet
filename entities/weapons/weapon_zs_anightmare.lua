@@ -4,11 +4,19 @@ SWEP.PrintName = "Ancient Nightmare"
 
 SWEP.Base = "weapon_zs_zombie"
 
-SWEP.MeleeDamage = 67
+SWEP.MeleeDamage = 510
 SWEP.SlowDownScale = 0.3
+SWEP.MeleeDamageVsProps = 33
 
 function SWEP:Reload()
 	self:SecondaryAttack()
+end
+function SWEP:MeleeHit(ent, trace, damage, forcescale)
+	if not ent:IsPlayer() then
+		damage = self.MeleeDamageVsProps
+	end
+
+	self.BaseClass.MeleeHit(self, ent, trace, damage, forcescale)
 end
 
 function SWEP:ApplyMeleeDamage(pl, trace, damage)
