@@ -49,8 +49,8 @@ end
 SWEP.Base = "weapon_zs_basemelee"
 
 SWEP.Tier = 7
-SWEP.MeleeDamage = 150
-SWEP.MeleeRange = 122
+SWEP.MeleeDamage = 255
+SWEP.MeleeRange = 177
 SWEP.MeleeSize = 3
 SWEP.MeleeKnockBack = 0
 
@@ -107,20 +107,7 @@ function SWEP:GetTracesNumPlayers(traces)
 
 	return numplayers
 end
-function SWEP:KeyPress(pl, key)
-	if ( key == IN_ATTACK ) then
-	local damage = DamageInfo()
-    damage:SetAttacker(self)
-	damage:SetInflictor(self)
-	damage:SetDamage(self:Health())
-	damage:SetDamageType(DMG_CLUB)
-	damage:ScaleDamage(0.1)
 
-	damage:SetDamageForce(Vector(0, 120, 0))
-
-	self:TakeDamageInfo(damage)
-	end
-end
 
 function SWEP:GetDamage(numplayers, basedamage)
 	basedamage = basedamage or self.MeleeDamage
@@ -134,6 +121,7 @@ end
 
 function SWEP:MeleeSwing()
 	local owner = self:GetOwner()
+	local damage = DamageInfo()
 
 	owner:DoAttackEvent()
 	self:SendWeaponAnim(self.MissAnim)
@@ -152,6 +140,7 @@ function SWEP:MeleeSwing()
 			damagemultiplier = damagemultiplier * 0.85
 		end
 	end
+
 
 	for _, trace in ipairs(tr) do
 		if not trace.Hit then continue end
@@ -188,12 +177,18 @@ function SWEP:MeleeSwing()
 
 	if hit then
 		self:PlayHitSound()
+
 	else
 		self:PlaySwingSound()
+
 
 		if owner.MeleePowerAttackMul and owner.MeleePowerAttackMul > 1 then
 			self:SetPowerCombo(0)
 		end
+	end
+	if SERVER then
+	owner:TakeDamage(owner:Health() * 0.01)
+	owner:SetHealth(owner:Health() * 0.9)
 	end
 end
 

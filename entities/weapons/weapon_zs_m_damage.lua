@@ -72,10 +72,12 @@ function SWEP:SecondaryAttack()
 	local owner = self:GetOwner()
 	if not owner:IsSkillActive(SKILL_MAGIC) then return end
 	
+	
 	if self:GetNextSecondaryFire() <= CurTime() and not self:GetOwner():IsHolding() and self:GetReloadFinish() == 0 then
 
 		if not owner:IsValid() then return end
 		if owner:GetBloodArmor() < owner.MaxBloodArmor then
+			if SERVER then
 		
 			
 		owner:SetBloodArmor(math.min(owner:GetBloodArmor() + self.ArmorRegen))
@@ -86,5 +88,6 @@ function SWEP:SecondaryAttack()
 			owner:SetBloodArmor(math.min(owner:GetBloodArmor() - self.Primary.ArmorBleed))
 		end
 	end
+end
 end
 

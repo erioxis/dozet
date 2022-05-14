@@ -407,12 +407,32 @@ function meta:GetBossZombieIndex()
 	end
 
 	if #bossclasses == 0 then return -1 end
+	local bosses = {
+		"Bad Marrow",  -- 1
+		"Miss ASS",  -- 2
+		"Giga Shadow Child",  -- 3
+		"Red Marrow",  -- 4
+		"Shit Slapper",  -- 5
+		"Ancient Nightmare",  -- 6
+		"Bloody Nightmare",  -- 7
+		"Bonemesh",  -- 8
+		"The Butcher",  -- 9
+		"Devourer", -- 10
+		"Fast King",  -- 11
+		"God of Shitcade",  --12
+		"Giga Gore Child",  --13
+		"The Grave Darkness",  --14
+		"Ice Puke Pus",  --15
+		"Nightmare",
+		"Puke Pus",
+		"Skeleton"  --16
+	}
 
 	local desired = self:GetInfo("zs_bossclass") or ""
 	if GAMEMODE:IsBabyMode() then
 		desired = "Giga Gore Child"
-	elseif desired == "Bad Marrow" or desired == "" then
-		desired = "Bad Marrow"
+	elseif desired == table.Random(bosses) or desired == "" then
+		desired = table.Random(bosses)
 	end
 
 	local bossindex
@@ -1779,7 +1799,7 @@ local bossdrops = {
 	"trinket_lampsoul"  -- 26
 }
 local bossdrops1 = {
-	"trinket_altmagdalenesoul",
+	"weapon_zs_null",
 	"weapon_zs_plank"
 	--[["trinket_bleaksoul",  -- 1
 	"trinket_spiritess",  -- 2

@@ -71,6 +71,7 @@ function SWEP:PrimaryAttack()
 	if not owner:IsSkillActive(SKILL_MAGIC) then return end
 
 	if not self:CanPrimaryAttack() then return end
+	if SERVER then
 	
 	    if owner:GetBloodArmor() > 0 and self.Primary.ArmorBleed <= owner:GetBloodArmor() then
 	    self:SetNextPrimaryFire(CurTime() + self:GetFireDelay())
@@ -90,7 +91,7 @@ function SWEP:PrimaryAttack()
 		self.IdleAnimation = CurTime() + self:SequenceDuration()
 		owner:TakeDamage(self.Primary.ArmorBleed)
 	    end
-
+	end
 end
 
 function SWEP:SecondaryAttack()
