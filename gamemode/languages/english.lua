@@ -574,6 +574,8 @@ LANGUAGE.wep_d_luxoid_r1		= "Have big chance to create explosive than kill, fast
 --[[LANGUAGE.wep_annabelle_r1	=  "'Blaster' Slug gun"
 LANGUAGE.wep_d_annabelle_r1	=  "One very accurate slug round, less total damage"]]
 --melee
+LANGUAGE.wep_murasama		= "Murasama"
+LANGUAGE.wep_d_murasama		= "Sam Jetstream murasama,damage you for 10% health,can trace more zombies and x8 backstab damage "
 LANGUAGE.wep_lampt		= "Lamp Tube"
 LANGUAGE.wep_boomer		= "Boom-rang"
 LANGUAGE.wep_d_boomer		= "Damage x2 when throwed"

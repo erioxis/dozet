@@ -101,9 +101,11 @@ function SWEP:SecondaryAttack()
 	if self:GetNextSecondaryFire() <= CurTime() and not self:GetOwner():IsHolding() and self:GetReloadFinish() == 0 then
 		if not owner:IsValid() then return end
 		if owner:GetBloodArmor() < owner.MaxBloodArmor then
+			if SERVER then
 			
 		owner:SetBloodArmor(math.min(owner:GetBloodArmor() + self.ArmorRegen))
 		end
+	end
 	end
 end
 

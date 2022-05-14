@@ -36,7 +36,7 @@ SWEP.WorldModel	= "models/weapons/w_grenade.mdl"
 
 SWEP.Weight = 4
 
-SWEP.MeleeDamage = 321
+SWEP.MeleeDamage = 222
 SWEP.LegDamage = 120
 
 SWEP.Unarmed = false
@@ -56,7 +56,7 @@ SWEP.MeleeKnockBack = 200
 
 SWEP.Primary.Delay = 0.85
 
-SWEP.Tier = 7
+SWEP.Tier = 6
 
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_FIRE_DELAY, -0.031, 1)
 

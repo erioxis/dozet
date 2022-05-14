@@ -145,6 +145,7 @@ killicon.Add("weapon_zs_noxiousghoul", "zombiesurvival/killicons/ghoul", Color(2
 
 
 killicon.Add("weapon_zs_katana", "zombiesurvival/killicons/weapon_zs_katana")
+killicon.Add("weapon_zs_murasama", "zombiesurvival/killicons/weapon_zs_katana", Color(194, 12, 12))
 killicon.Add("weapon_zs_lamptube", "zombiesurvival/killicons/weapon_zs_lamptube")
 
 killicon.Add("weapon_zs_classic", "zombiesurvival/killicons/weapon_zs_classix")

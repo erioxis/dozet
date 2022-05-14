@@ -49,10 +49,11 @@ end
 SWEP.Base = "weapon_zs_basemelee"
 
 SWEP.Tier = 7
-SWEP.MeleeDamage = 255
+SWEP.MeleeDamage = 581
 SWEP.MeleeRange = 177
 SWEP.MeleeSize = 3
 SWEP.MeleeKnockBack = 0
+SWEP.MaxStock = 2
 
 SWEP.WalkSpeed = SPEED_FAST
 
@@ -63,7 +64,7 @@ SWEP.SwingHoldType = "melee"
 
 SWEP.HitDecal = "Manhackcut"
 
-SWEP.AllowQualityWeapons = true
+SWEP.AllowQualityWeapons = false
 
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_MELEE_RANGE, 3)
 
