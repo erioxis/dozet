@@ -17,7 +17,7 @@ CLASS.VoicePitch = 0.65
 
 CLASS.SWEP = "weapon_zs_redbad"
 
-CLASS.Health = 1800
+CLASS.Health = 3400
 CLASS.Speed = 210
 
 CLASS.Skeletal = true
@@ -104,12 +104,12 @@ function CLASS:ProcessDamage(pl, dmginfo)
 	local dmg = dmginfo:GetDamage()
 	local hp = pl:Health()
 	if dmginfo:GetInflictor().IsMelee then
-		dmginfo:SetDamage(dmginfo:GetDamage() / 500)
+		dmginfo:SetDamage(dmginfo:GetDamage() / 4)
 	end
 	if bit_band(dmginfo:GetDamageType(), DMG_BULLET) ~= 0 then
-		dmginfo:SetDamage(dmginfo:GetDamage() * 0.50)
+		dmginfo:SetDamage(dmginfo:GetDamage() * 0.75)
 	elseif bit_band(dmginfo:GetDamageType(), DMG_SLASH) == 0 and bit_band(dmginfo:GetDamageType(), DMG_CLUB) == 0 then
-		dmginfo:SetDamage(dmginfo:GetDamage() * 0.52)
+		dmginfo:SetDamage(dmginfo:GetDamage() * 0.75)
 	end
 
 

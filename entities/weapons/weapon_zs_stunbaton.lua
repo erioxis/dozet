@@ -56,7 +56,6 @@ function SWEP:OnMeleeHit(hitent, hitflesh, tr)
 		for __, fire in pairs(ents.FindByClass("entityflame")) do
 			if fire:IsValid() and fire:GetParent() == ent then
 				fire:SetOwner(attacker)
-				fire:SetPhysicsAttacker(attacker)
 				fire.AttackerForward = attacker
 			end
 		end
