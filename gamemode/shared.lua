@@ -630,10 +630,10 @@ end
 
 function GM:GetDamageResistance(fearpower)
 	if self.MaxSigils > 0 and self:GetUseSigils() then
-		return fearpower * 0.04 + self:NumSigilsCorrupted() / self.MaxSigils * 0.22
+		return fearpower * 0.04 + self:NumSigilsCorrupted() / self.MaxSigils * 0.35
 	end
 
-	return fearpower * 0.12
+	return fearpower * 0.30
 end
 
 function GM:FindUseEntity(pl, ent)

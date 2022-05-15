@@ -51,6 +51,8 @@ SWEP.SwingOffset = Vector(10, 0, 0)
 SWEP.SwingHoldType = "melee"
 
 SWEP.HitDecal = "Manhackcut"
+SWEP.Primary.Damage = 121
+SWEP.ArmorRegen = 2
 
 SWEP.AllowQualityWeapons = true
 

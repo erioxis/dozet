@@ -188,7 +188,7 @@ function SWEP:MeleeSwing()
 		end
 	end
 	if SERVER then
-	owner:TakeDamage(owner:Health() * 0.01)
+	owner:TakeDamage((owner:Health() * 0.01) + 1)
 	owner:SetHealth(owner:Health() * 0.9)
 	end
 end

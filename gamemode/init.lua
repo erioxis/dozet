@@ -2028,7 +2028,7 @@ function GM:ScalePlayerDamage(pl, hitgroup, dmginfo)
 	
 	local attacker = dmginfo:GetAttacker()
 	local inflictor = dmginfo:GetInflictor()
-	local damagescalebullet = (attacker.BulletMul or 1)
+	local damagescalebullet = (attacker.BulletMul)
 	GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_WEAPON, inflictor:GetClass(), "Hits", 1)
 	if hitgroup == HITGROUP_HEAD then
 		GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_WEAPON, inflictor:GetClass(), "Headshots", 1)
@@ -4579,10 +4579,26 @@ function GM:WaveStateChanged(newstate, pl)
 							"weapon_zs_binocle",
 							"weapon_zs_keyboard",
 							"weapon_zs_icelux",
-							"weapon_zs_scythe"
+							"weapon_zs_scythe",
+							"weapon_zs_plank_q1",
+							"weapon_zs_pushbroom_q1",
+							"weapon_zs_shovel_q1",
+							"weapon_zs_pulserifle_q1",
+							"weapon_zs_toxicshooter_q1",
+							"weapon_zs_m4_q1",
+							"weapon_zs_pollutor_q1",
+							"weapon_zs_sawedoff_q1",
+							"weapon_zs_minelayer_q1",
+							"weapon_zs_relsous_q1",
+							"weapon_zs_quasar_q1",
+							"weapon_zs_inferno_q1",
+							"weapon_zs_binocle_q1",
+							"weapon_zs_keyboard_q1",
+							"weapon_zs_icelux",
+							"weapon_zs_scythe_q1"
 						}
 						local drop = table.Random(weapon)
-						local luck = 12 - pl.Luck 
+						local luck = 12 - (pl.Luck / 2.5)
 						local lucky2 = math.random(1,luck)
 						print(luck, pl, "mystery ticket chance")
 						print(lucky2, pl, "weapon has given")
