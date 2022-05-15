@@ -15,7 +15,7 @@ function ENT:Think()
 	local cursed = self:GetOwner():GetStatus("cursed")
 	local owner = self:GetOwner()
 	if (cursed) then
-		if (cursed.DieTime >= CurTime() + 100 * owner.CurseMultiplier) then
+		if (cursed.DieTime >= CurTime() + 100 * (owner.CurseMultiplier or 1)) then
 			cursed:GetOwner():Kill()
 			cursed:Remove()
 		end
