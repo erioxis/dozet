@@ -13,10 +13,9 @@ end
 function ENT:Think()
 	local hallow = self
 	local owner = self:GetOwner()
-	owner:TakeSpecialDamage(1, DMG_ACID, owner, self)
 	if (hallow) then
-		if (hallow.DieTime >= CurTime() + 100 * (owner.CurseMultiplier or 1)) then
-			owner:TakeSpecialDamage(maxHallow, DMG_ACID, owner, self)
+		if (hallow.DieTime <= CurTime()) then
+			owner:TakeSpecialDamage(self.maxHallow, DMG_ACID, owner, self)
 			hallow:Remove()
 		end
 		if (hallow.DieTime-CurTime()>self.maxHallow) then
