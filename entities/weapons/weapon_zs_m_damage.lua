@@ -90,6 +90,8 @@ function SWEP:SecondaryAttack()
 			owner:GiveStatus("cursed", -20)
 
 			owner:SetBloodArmor(math.min(owner:GetBloodArmor() - self.Primary.ArmorBleed))
+
+
 		end
 	end
 end

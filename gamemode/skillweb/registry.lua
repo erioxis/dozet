@@ -485,7 +485,7 @@ GM:AddSkill(SKILL_CURSEDTRINKETS, "Worth Trinkets", GOOD.."Cursed?\n"..BAD.."Cur
 
 GM:AddSkill(SKILL_SAFEFALL, "Safe Fall", GOOD.."-40% fall damage taken\n"..GOOD.."+20% faster fall damage knockdown recovery\n"..BAD.."+10% slow down from landing or fall damage",
 																0,			0,					{}, TREE_SPEEDTREE)
-GM:AddSkill(SKILL_D_WIDELOAD, "Debuff: Wide Load", GOOD.."+20 starting Worth\n"..GOOD.."-5% resupply delay\n"..BAD.."Phasing speed limited to 1 for the first 6 seconds of phasing",
+GM:AddSkill(SKILL_D_WIDELOAD, "Debuff: Wide Load", GOOD.."+20 starting Worth\n"..GOOD.."-20% resupply delay\n"..BAD.."Phasing speed limited to 1 for the first 6 seconds of phasing",
 																1,			1,					{}, TREE_SPEEDTREE)
 GM:AddSkill(SKILL_U_CORRUPTEDFRAGMENT, "Unlock: Corrupted Fragment", GOOD.."Unlocks purchasing the Corrupted Fragment\nGoes to corrupted sigils instead",
 																-2,			2,					{}, TREE_SPEEDTREE)
@@ -1749,8 +1749,8 @@ GM:AddSkillModifier(SKILL_D_WEAKNESS, SKILLMOD_ENDWAVE_POINTS, 15)
 GM:AddSkillModifier(SKILL_D_WEAKNESS, SKILLMOD_HEALTH, -60)
 GM:AddSkillModifier(SKILL_D_WEAKNESS, SKILLMOD_MELEE_DAMAGE_MUL, -0.3)
 
-GM:AddSkillModifier(SKILL_D_WIDELOAD, SKILLMOD_WORTH, -10)
-GM:AddSkillModifier(SKILL_D_WIDELOAD, SKILLMOD_RESUPPLY_DELAY_MUL, -0.05)
+GM:AddSkillModifier(SKILL_D_WIDELOAD, SKILLMOD_WORTH, 20)
+GM:AddSkillModifier(SKILL_D_WIDELOAD, SKILLMOD_RESUPPLY_DELAY_MUL, -0.20)
 GM:AddSkillFunction(SKILL_D_WIDELOAD, function(pl, active)
 	pl.NoGhosting = active
 end)
