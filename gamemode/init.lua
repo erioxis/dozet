@@ -1057,7 +1057,9 @@ local function BossZombieSort(za, zb)
 	return ascore > bscore
 end
 
+
 function GM:SpawnBossZombie(bossplayer, silent, bossindex, triggerboss)
+
 	if not bossplayer then
 		bossplayer = self:CalculateNextBoss()
 	end
@@ -1178,6 +1180,7 @@ function GM:Think()
 	local time = CurTime()
 	local wave = self:GetWave()
 
+
 	if not self.RoundEnded then
 		if self:GetWaveActive() then
 			if self:GetWaveEnd() <= time and self:GetWaveEnd() ~= -1 then
@@ -1297,6 +1300,8 @@ function GM:Think()
 					pl.NextRegenerate = time + 200
 					pl:SetHealth(math.min(healmax, pl:Health() + 500))
 				end
+
+		
 
 
 
@@ -1851,7 +1856,7 @@ function GM:RestartGame()
 		net.WriteTable(pl.UsedMutations)
 		net.Send(pl)
 	end
-
+ 
 	for _, ent in pairs(ents.FindByClass("prop_obj_sigil")) do
 		ent:Remove()
 	end
@@ -2034,7 +2039,7 @@ function GM:ScalePlayerDamage(pl, hitgroup, dmginfo)
 		GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_WEAPON, inflictor:GetClass(), "Headshots", 1)
 	end
 	if dmginfo:IsBulletDamage() then 
-		dmginfo:SetDamage(dmginfo:GetDamage() * damagescalebullet)
+		dmginfo:SetDamage((dmginfo:GetDamage() * damagescalebullet) - attacker.zKills / 30)
 	end
 	if not dmginfo:IsBulletDamage() then return end
 
@@ -2298,6 +2303,7 @@ function GM:PlayerInitialSpawnRound(pl)
 	pl.ZombiesKilledAssists = 0
 	pl.Headshots = 0
 	pl.BrainsEaten = 0
+	pl.zKills = 0
 
 	pl.ResupplyBoxUsedByOthers = 0
 
@@ -3644,6 +3650,8 @@ function GM:HumanKilledZombie(pl, attacker, inflictor, dmginfo, headshot, suicid
 	end
 
 	attacker.ZombiesKilled = attacker.ZombiesKilled + 1
+	attacker.zKills = attacker.zKills + 1
+
 
 	if mostdamager then
 		attacker:PointCashOut(pl, FM_LOCALKILLOTHERASSIST)
@@ -3678,6 +3686,7 @@ function GM:HumanKilledZombie(pl, attacker, inflictor, dmginfo, headshot, suicid
 
 		if wep.OnZombieKilled then
 			wep:OnZombieKilled(pl, totaldamage, dmginfo)
+			
 		end
 	end
 
@@ -3953,6 +3962,7 @@ function GM:PlayerCanPickupWeapon(pl, ent)
 		pl:AddZSXP(5.5 *(GAMEMODE.HumanXPMulti))
 		GAMEMODE:ConCommandErrorMessage(pl, translate.ClientGet(pl, "jewmoment"))
 	end
+
 
 	if pl:IsSpectator() then return false end
 

@@ -71,6 +71,7 @@ function meta:ProcessDamage(dmginfo)
 				if attacker:HasTrinket("sharpkit") then
 					dmginfo:SetDamage(dmginfo:GetDamage() * (1 + self:GetFlatLegDamage()/75))
 				end
+				
 
 				if wep.Culinary and attacker:IsSkillActive(SKILL_MASTERCHEF) and math.random(5) == 1 then
 					self.ChefMarkOwner = attacker
