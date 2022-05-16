@@ -67,6 +67,8 @@ function SWEP:PrimaryAttack()
 
 	local owner = self:GetOwner()
 
+	owner.AddHallow(owner, 100)
+	owner.AddCursed(owner, 100)
 
 	local trtbl = owner:CompensatedPenetratingMeleeTrace(self.HealRange, 2, nil, nil, true)
 	local ent

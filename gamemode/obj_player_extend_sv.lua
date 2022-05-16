@@ -630,6 +630,11 @@ function meta:AddCursed(attacker, count)
 	local status = self:GiveStatus("cursed", count)
 end
 
+function meta:AddHallow(attacker, count)
+	--damage = math.ceil(damage)
+	local status = self:GiveStatus("hallow", count)
+end
+
 function meta:AddRot(attacker, count)
 	--damage = math.ceil(damage)
 	local status = self:GiveStatus("rot", count)
