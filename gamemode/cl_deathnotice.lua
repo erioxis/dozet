@@ -523,6 +523,7 @@ net.Receive("zs_pl_kill_self", function(length)
 	end
 end)
 
+
 net.Receive("zs_playerredeemed", function(length)
 	local pl = net.ReadEntity()
 

@@ -112,13 +112,14 @@ function ENT:Destroy()
 	self.Destroyed = true
 
 	local pos = self:WorldSpaceCenter()
-
+    
 	local effectdata = EffectData()
 		effectdata:SetEntity(self)
 		effectdata:SetOrigin(pos)
 	util.Effect("gib_player", effectdata, true, true)
 
 	util.Blood(pos, 100, self:GetUp(), 256)
+
 
 	self:Fire("kill", "", 0.01)
 end
@@ -128,6 +129,7 @@ function ENT:OnRemove()
 		for _, pl in pairs(team.GetPlayers(TEAM_UNDEAD)) do
 			pl:CenterNotify(COLOR_RED, translate.ClientFormat(pl, "nest_destroyed", name))
 		end
+		
 
 		local pos = self:WorldSpaceCenter()
 		for i=1, 8 do
