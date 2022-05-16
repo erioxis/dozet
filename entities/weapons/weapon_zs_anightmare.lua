@@ -4,7 +4,7 @@ SWEP.PrintName = "Ancient Nightmare"
 
 SWEP.Base = "weapon_zs_zombie"
 
-SWEP.MeleeDamage = 510
+SWEP.MeleeDamage = 55
 SWEP.SlowDownScale = 0.3
 SWEP.MeleeDamageVsProps = 33
 
@@ -21,13 +21,12 @@ end
 
 function SWEP:ApplyMeleeDamage(pl, trace, damage)
 	if SERVER and pl:IsPlayer() then
-		local cursed = pl:GetStatus("cursed")
-		if (cursed) then 
-			pl:AddCursed(self:GetOwner(), cursed.DieTime - CurTime() + 40)
-		end
-		if (not cursed) then 
-			pl:AddCursed(pl:GetOwner(), 80)
-		end
+		
+		local killer = self:GetOwner()
+		timer.Simple(0.15, function()
+			pl:Kill()
+		end)
+        
 	end
 	self.BaseClass.ApplyMeleeDamage(self, pl, trace, damage)
 end
