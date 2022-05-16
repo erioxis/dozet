@@ -536,6 +536,7 @@ function GM:AddNetworkStrings()
 	util.AddNetworkString("voice_zombiepain")
 end
 
+
 function GM:IsClassicMode()
 	return self.ClassicMode
 end
@@ -543,6 +544,7 @@ end
 function GM:IsBabyMode()
 	return self.BabyMode
 end
+
 
 function GM:CenterNotifyAll(...)
 	net.Start("zs_centernotify")
@@ -1180,7 +1182,6 @@ function GM:Think()
 	local time = CurTime()
 	local wave = self:GetWave()
 
-
 	if not self.RoundEnded then
 		if self:GetWaveActive() then
 			if self:GetWaveEnd() <= time and self:GetWaveEnd() ~= -1 then
@@ -1192,14 +1193,16 @@ function GM:Think()
 			elseif self.BossZombies and not self.PantsMode and not self:IsClassicMode() and not self.ZombieEscape
 			and self.LastBossZombieSpawned ~= wave and wave > 0 and not self.RoundEnded
 			and (self.BossZombiePlayersRequired <= 0 or #player.GetAll() >= self.BossZombiePlayersRequired) then
-				if self:GetWaveStart() - 10 <= time then
+				if self:GetWaveStart() - 10 <= time or GM.AllzKills <= 10 then
 					self:SpawnBossZombie()
 				else
 					self:CalculateNextBoss()
 				end
 			end
 		end
-	end
+	end 
+	
+
 
 	local allplayers = player_GetAll()
 
@@ -1698,6 +1701,7 @@ function GM:LoadNextMap()
 	end
 end
 
+
 function GM:PreRestartRound()
 	for _, pl in pairs(player.GetAll()) do
 		pl:StripWeapons()
@@ -2039,7 +2043,7 @@ function GM:ScalePlayerDamage(pl, hitgroup, dmginfo)
 		GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_WEAPON, inflictor:GetClass(), "Headshots", 1)
 	end
 	if dmginfo:IsBulletDamage() then 
-		dmginfo:SetDamage((dmginfo:GetDamage() * damagescalebullet) - attacker.zKills / 30)
+		dmginfo:SetDamage((dmginfo:GetDamage() * damagescalebullet) - attacker.zKills / 100)
 	end
 	if not dmginfo:IsBulletDamage() then return end
 
@@ -2365,6 +2369,8 @@ function GM:PlayerInitialSpawnRound(pl)
 
 	--local nosend = not pl.DidInitPostEntity
 	pl.DamageVulnerability = nil
+
+	
 
 	self:LoadVault(pl)
 
@@ -2826,6 +2832,7 @@ function GM:EntityTakeDamage(ent, dmginfo)
 			if inflictor:IsPlayer() then
 				ent.LastDamagedByTeam = inflictor:Team()
 				ent.LastDamagedBy = inflictor
+				
 			elseif (dmgtype == DMG_ALWAYSGIB or dmgtype == DMG_BURN or dmgtype == DMG_SLOWBURN) and string.sub(inflictor:GetClass(), 1, 12) == "prop_physics" then -- A barrel damaging a barrel. Probably.
 				if inflictor.LastDamagedByTeam then
 					ent.LastDamagedByTeam = inflictor.LastDamagedByTeam
@@ -2843,6 +2850,7 @@ function GM:EntityTakeDamage(ent, dmginfo)
 
 	if ent:IsPlayer() then
 		dispatchdamagedisplay = true
+		
 
 		if attacker.PBAttacker and attacker.PBAttacker:IsValid() then
 			attacker = attacker.PBAttacker
@@ -2863,11 +2871,16 @@ function GM:EntityTakeDamage(ent, dmginfo)
 						attacker.DamageDealt[myteam] = attacker.DamageDealt[myteam] + damage
 
 						if myteam == TEAM_UNDEAD then
+							
+
+
 							if otherteam == TEAM_HUMAN then
 								attacker:AddLifeHumanDamage(damage)
 								attacker:AddTokens(math.ceil(damage * 2.5))
 								attacker:AddZSXP(math.ceil(damage * 2))
 								GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_ZOMBIECLASS, attacker:GetZombieClassTable().Name, "HumanDamage", damage)
+						
+							
 							end
 						elseif myteam == TEAM_HUMAN and otherteam == TEAM_UNDEAD then
 							ent.DamagedBy[attacker] = (ent.DamagedBy[attacker] or 0) + damage
@@ -3651,7 +3664,7 @@ function GM:HumanKilledZombie(pl, attacker, inflictor, dmginfo, headshot, suicid
 
 	attacker.ZombiesKilled = attacker.ZombiesKilled + 1
 	attacker.zKills = attacker.zKills + 1
-
+ 
 
 	if mostdamager then
 		attacker:PointCashOut(pl, FM_LOCALKILLOTHERASSIST)
