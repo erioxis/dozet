@@ -168,7 +168,7 @@ local statusdisplays = {
 	Max = 1000,
 	Icon = Material("zombiesurvival/hallow.png")
 }
-}
+
 
 local PANEL = {}
 
