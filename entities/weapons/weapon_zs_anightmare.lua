@@ -7,6 +7,7 @@ SWEP.Base = "weapon_zs_zombie"
 SWEP.MeleeDamage = 55
 SWEP.SlowDownScale = 0.3
 SWEP.MeleeDamageVsProps = 33
+SWEP.MeleeReach = 32
 
 function SWEP:Reload()
 	self:SecondaryAttack()
