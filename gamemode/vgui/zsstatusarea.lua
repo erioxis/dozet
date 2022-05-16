@@ -162,7 +162,7 @@ local statusdisplays = {
 	Icon = Material("zombiesurvival/rot.png")
 },
 {
-	Color = Color(20, 20, 20),
+	Color = Color(100, 100, 100),
 	Name = "HALLOWED!",
 	ValFunc = statusValueFunction("hallow"),
 	Max = 1000,
