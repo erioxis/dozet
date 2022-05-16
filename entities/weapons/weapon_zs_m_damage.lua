@@ -87,7 +87,6 @@ function SWEP:SecondaryAttack()
 		end
 		if owner:GetBloodArmor() > 0 and self.Primary.ArmorBleed <= owner:GetBloodArmor() then
 			owner:GiveStatus("strengthdartboost", 20)
-			owner:GiveStatus("cursed", -20)
 
 			owner:SetBloodArmor(math.min(owner:GetBloodArmor() - self.Primary.ArmorBleed))
 
