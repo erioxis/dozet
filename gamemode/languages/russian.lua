@@ -1,8 +1,15 @@
 -- Translated by Mr. Darkness (http://www.noxiousnet.com/forums/index.php?action=profile;u=6296)
 
 translate.AddLanguage("ru", "Russian")
--- Trinkets
-
+-- Настройки
+LANGUAGE.op_naildisplay = "Всегда показывать хп гвоздей"
+LANGUAGE.op_knockdown_camera = "Показывать камеру при рагдоле от 3 лица"
+LANGUAGE.op_bezombie = "Всегда быть зомби"
+LANGUAGE.op_alwaysquickbuy = "Всегда быстро покупать с арсенала или ремантлера"
+LANGUAGE.op_suicidechange = "Автоматически умирать при смене класса"
+LANGUAGE.op_redeem = "Отключить возрождение (Только на следующем раунде)"
+LANGUAGE.op_deposit = "Отключить передачу патрон деплояблам на Е"
+LANGUAGE.op_noboss = "Не быть боссом"
 -- Various gamemode stuff|
 LANGUAGE.damageblock                         = "Урон по тебе заблокирован"
 LANGUAGE.luck                                = "Твоя удача %s"

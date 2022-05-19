@@ -86,6 +86,7 @@ TREE_POINTTREE = 7
 TREE_ANCIENTTREE = 8
 TREE_DEFENSETREE = 9
 TREE_DONATETREE = 10
+TREE_USELESSTREE = 11
 
 -- Dummy skill used for "connecting" to their trees.
 SKILL_NONE = 0
@@ -274,6 +275,8 @@ SKILL_CURSECURE = 228
 SKILL_VKID = 235
 SKILL_SOY = 236
 SKILL_HAMMERDOOR = 240
+SKILL_DAMAGER = 256
+SKILL_CURSEDHEALTH = 257
 
 
 SKILLMOD_HEALTH = 1
@@ -439,6 +442,8 @@ GM:AddSkill(SKILL_SANGUINE, "Sanguine", GOOD.."+11 maximum blood armor\n"..BAD..
 																6,			2,					{}, TREE_HEALTHTREE)
 GM:AddSkill(SKILL_ANTIGEN, "Antigen", GOOD.."+5% blood armor damage absorption\n"..BAD.."-3 maximum health",
 																-2,			4,					{}, TREE_HEALTHTREE)
+GM:AddSkill(SKILL_DAMAGER, "Bad Health", GOOD.."+50 Health\n"..BAD.."Can take random damage in any time",
+																-2,			5,					{SKILL_ANTIGEN}, TREE_HEALTHTREE)
 -- Speed Tree
 GM:AddSkill(SKILL_SPEED1, "Speed I", GOOD.."+5 movement speed\n"..BAD.."-4 maximum health",
 																-4,			6,					{SKILL_NONE, SKILL_SPEED2}, TREE_SPEEDTREE)
@@ -478,12 +483,14 @@ GM:AddSkill(SKILL_SIGILOL, "Sigil Infection", GOOD.."+300% Speed in phasing phas
 																2,			4,					{SKILL_WARP}, TREE_SPEEDTREE)
 GM:AddSkill(SKILL_CURSEDTRINKETS, "Worth Trinkets", GOOD.."Cursed?\n"..BAD.."Cursed?\n"..GOOD.."Cursed?",
 																2,		    5,					{SKILL_SIGILOL}, TREE_SPEEDTREE)
+GM:AddSkill(SKILL_CURSEDHEALTH, "Cursed Health", GOOD.."Max Health = Max curse\n"..BAD.."-25% Max curse\n",
+																1,		    4.5,					{SKILL_CURSEDTRINKETS}, TREE_SPEEDTREE)
 
 
 
 
 
-GM:AddSkill(SKILL_SAFEFALL, "Safe Fall", GOOD.."-40% fall damage taken\n"..GOOD.."+20% faster fall damage knockdown recovery\n"..BAD.."+10% slow down from landing or fall damage",
+GM:AddSkill(SKILL_SAFEFALL, "Safe Fall", GOOD.."-15% fall damage taken\n"..GOOD.."+20% faster fall damage knockdown recovery\n"..BAD.."+10% slow down from landing or fall damage",
 																0,			0,					{}, TREE_SPEEDTREE)
 GM:AddSkill(SKILL_D_WIDELOAD, "Debuff: Wide Load", GOOD.."+20 starting Worth\n"..GOOD.."-20% resupply delay\n"..BAD.."Phasing speed limited to 1 for the first 6 seconds of phasing",
 																1,			1,					{}, TREE_SPEEDTREE)
@@ -891,8 +898,8 @@ GM:AddSkill(SKILL_LUCKE, "Luckiest", NEUTRAL.."+2 luck\n" ..BAD.. "-10% Points M
 GM:AddSkill(SKILL_BLUCK, "Quad", GOOD.."Better quality system\n" ..BAD.. "-3% Points Multiplier",
 	2,			-2.75,					{SKILL_LUCKE}, TREE_POINTTREE)
 	SKILL_PILLUCK = 164
-	GM:AddSkillModifier(SKILL_PILLUCK, SKILLMOD_POINT_MULTIPLIER, 0.03)
-GM:AddSkill(SKILL_PILLUCK, "Lucky Pill", GOOD.."Luck up if you eat good pill\n" ..BAD.. "Luck Down if you eat bad pill",
+	GM:AddSkillModifier(SKILL_PILLUCK, SKILLMOD_LUCK, -35)
+GM:AddSkill(SKILL_PILLUCK, "Lucky Pill", GOOD.."On kill give 0.05 luck\n"..BAD.."-35 luck",
 	-1,			-4,					{SKILL_POINTIIII}, TREE_POINTTREE)
 	SKILL_DUDEE = 166
 	GM:AddSkillModifier(SKILL_DUDEE, SKILLMOD_LUCK, 2)
@@ -1192,6 +1199,27 @@ SKILL_CHALLENGER3 = 217
 GM:AddSkill(SKILL_CHALLENGER3, "Challenger III", GOOD.."+100% XP Multiplier\n"..GOOD.."Can use in any challenge",
 				                                                            	25,			20,					{}, TREE_DONATETREE)
 GM:AddSkillModifier(SKILL_CHALLENGER3, SKILLMOD_XP, 1)
+--Skill for high-remort
+SKILL_USELESS_1 = 500
+GM:AddSkill(SKILL_USELESS_1, "Useless 1", GOOD.."+5% XP MUL",
+				                                                            	0,			0,					{SKILL_NONE}, TREE_USELESSTREE)
+GM:AddSkillModifier(SKILL_USELESS_1, SKILLMOD_XP, 0.05)
+SKILL_USELESS_2 = 501
+GM:AddSkill(SKILL_USELESS_2, "Useless 2", GOOD.."+5 Health",
+				                                                            	0,			1,					{SKILL_USELESS_1}, TREE_USELESSTREE)
+GM:AddSkillModifier(SKILL_USELESS_2, SKILLMOD_HEALTH, 5)
+SKILL_USELESS_3 = 502
+GM:AddSkill(SKILL_USELESS_3, "Useless 3", GOOD.."+2% Arsenal discount",
+				                                                            	1,			2,					{SKILL_USELESS_2}, TREE_USELESSTREE)
+GM:AddSkillModifier(SKILL_USELESS_3, SKILLMOD_ARSENAL_DISCOUNT, -0.02)
+SKILL_USELESS_4 = 503
+GM:AddSkill(SKILL_USELESS_4, "Useless 4", GOOD.."+5 speed",
+				                                                            	2,			2,					{SKILL_USELESS_3}, TREE_USELESSTREE)
+GM:AddSkillModifier(SKILL_USELESS_4, SKILLMOD_SPEED, 5)
+SKILL_USELESS_5 = 504
+GM:AddSkill(SKILL_USELESS_5, "Useless 5", GOOD.."+6% Max curse",
+				                                                            	1,			3,					{SKILL_USELESS_4}, TREE_USELESSTREE)
+GM:AddSkillModifier(SKILL_USELESS_5, SKILLMOD_CURSEM, 0.06)
 
 
 
@@ -1695,7 +1723,7 @@ GM:AddSkillModifier(SKILL_HAMMERDISCIPLINE1, SKILLMOD_HAMMER_SWING_DELAY_MUL, -0
 GM:AddSkillModifier(SKILL_HAMMERDISCIPLINE2, SKILLMOD_HAMMER_SWING_DELAY_MUL, -0.15)
 GM:AddSkillModifier(SKILL_BARRICADEEXPERT, SKILLMOD_HAMMER_SWING_DELAY_MUL, 0.2)
 
-GM:AddSkillModifier(SKILL_SAFEFALL, SKILLMOD_FALLDAMAGE_DAMAGE_MUL, -0.4)
+GM:AddSkillModifier(SKILL_SAFEFALL, SKILLMOD_FALLDAMAGE_DAMAGE_MUL, -0.15)
 GM:AddSkillModifier(SKILL_SAFEFALL, SKILLMOD_FALLDAMAGE_RECOVERY_MUL, -0.2)
 GM:AddSkillModifier(SKILL_SAFEFALL, SKILLMOD_FALLDAMAGE_SLOWDOWN_MUL, 0.1)
 
@@ -1862,6 +1890,8 @@ GM:AddSkillModifier(SKILL_SANGUINE, SKILLMOD_HEALTH, -9)
 GM:AddSkillModifier(SKILL_ANTIGEN, SKILLMOD_BLOODARMOR_DMG_REDUCTION, 0.05)
 GM:AddSkillModifier(SKILL_ANTIGEN, SKILLMOD_HEALTH, -3)
 
+GM:AddSkillModifier(SKILL_DAMAGER, SKILLMOD_HEALTH, 50)
+
 GM:AddSkillModifier(SKILL_INSTRUMENTS, SKILLMOD_TURRET_RANGE_MUL, 0.05)
 
 GM:AddSkillModifier(SKILL_LEVELHEADED, SKILLMOD_AIM_SHAKE_MUL, -0.05)
@@ -1893,3 +1923,5 @@ GM:AddSkillModifier(SKILL_INSIGHT, SKILLMOD_ARSENAL_DISCOUNT, -0.02)
 GM:AddSkillModifier(SKILL_VKID, SKILLMOD_JUMPPOWER_MUL, 0.30)
 GM:AddSkillModifier(SKILL_VKID, SKILLMOD_SPEED, 60)
 GM:AddSkillModifier(SKILL_VKID, SKILLMOD_HEALTH, -50)
+
+GM:AddSkillModifier(SKILL_CURSEDHEALTH, SKILLMOD_CURSEM, -0.25)

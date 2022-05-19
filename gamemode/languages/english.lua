@@ -18,6 +18,16 @@ RULES FOR TRANSLATORS!!
 
 translate.AddLanguage("en", "English")
 
+-- Options
+LANGUAGE.op_naildisplay = "Always display nail health"
+LANGUAGE.op_knockdown_camera = "Always third person knockdown camera"
+LANGUAGE.op_bezombie = "Always volunteer to start as a zombie"
+LANGUAGE.op_alwaysquickbuy = "Always quick buy from arsenal and remantler"
+LANGUAGE.op_suicidechange = "Automatic suicide when changing classes"
+LANGUAGE.op_redeem = "Disable automatic redeeming (next round)"
+LANGUAGE.op_deposit = "Disable pressing use to deposit ammo in deployables"
+LANGUAGE.op_noboss = "Prevent being picked as a boss zombie"
+
 -- Various gamemode stuff
 LANGUAGE.damageblock                         = "Damage has been blocked"
 LANGUAGE.luck                                = "Your Luck %s"

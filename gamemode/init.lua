@@ -1193,7 +1193,7 @@ function GM:Think()
 			elseif self.BossZombies and not self.PantsMode and not self:IsClassicMode() and not self.ZombieEscape
 			and self.LastBossZombieSpawned ~= wave and wave > 0 and not self.RoundEnded
 			and (self.BossZombiePlayersRequired <= 0 or #player.GetAll() >= self.BossZombiePlayersRequired) then
-				if self:GetWaveStart() - 10 <= time or GM.AllzKills <= 10 then
+				if self:GetWaveStart() - 10 <= time then
 					self:SpawnBossZombie()
 				else
 					self:CalculateNextBoss()
@@ -1319,6 +1319,11 @@ function GM:Think()
 				if pl:IsSkillActive(SKILL_BLOODLOST) and pl.EndWavePointsExtra > 0 and time >= pl.NextBloodArmorRegen and pl:GetBloodArmor() < pl.MaxBloodArmor then
 					pl.NextBloodArmorRegen = time + 3
 					pl:SetBloodArmor(math.min(pl.MaxBloodArmor, pl:GetBloodArmor() + (5 * pl.BloodarmorGainMul)))
+				end
+				damaged = math.random(1,100)
+				if pl:IsSkillActive(SKILL_DAMAGER) and damaged == 1 then
+                   pl:TakeDamage((pl:GetMaxHealth() * 0.10) + 1)
+				   pl:SetHealth((pl:Health() * 0.9) - ((pl:GetMaxHealth() * 0.05)))
 				end
 
 
@@ -2043,7 +2048,7 @@ function GM:ScalePlayerDamage(pl, hitgroup, dmginfo)
 		GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_WEAPON, inflictor:GetClass(), "Headshots", 1)
 	end
 	if dmginfo:IsBulletDamage() then 
-		dmginfo:SetDamage((dmginfo:GetDamage() * damagescalebullet) - attacker.zKills / 100)
+		dmginfo:SetDamage((dmginfo:GetDamage() * damagescalebullet) - attacker.zKills / 50)
 	end
 	if not dmginfo:IsBulletDamage() then return end
 
@@ -3664,6 +3669,7 @@ function GM:HumanKilledZombie(pl, attacker, inflictor, dmginfo, headshot, suicid
 
 	attacker.ZombiesKilled = attacker.ZombiesKilled + 1
 	attacker.zKills = attacker.zKills + 1
+
  
 
 	if mostdamager then
@@ -3693,6 +3699,9 @@ function GM:HumanKilledZombie(pl, attacker, inflictor, dmginfo, headshot, suicid
 
 		if pl:WasHitInHead() then
 			attacker.Headshots = (attacker.Headshots or 0) + 1
+		end
+		if pl.LuckFromKillYes and pl.LuckFromKillYes > CurTime() and pl.LuckFromKillYesOwner == attacker then
+			attacker.Luck = attacker.Luck + 0.05
 		end
 
 		GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_WEAPON, wep:GetClass(), "Kills", 1)

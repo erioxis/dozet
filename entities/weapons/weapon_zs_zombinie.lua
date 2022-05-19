@@ -5,10 +5,18 @@ SWEP.PrintName = "Combine"
 SWEP.Base = "weapon_zs_zombie"
 
 if CLIENT then
-	SWEP.ViewModelFOV = 48
+	SWEP.ViewModelFOV = 39
+	SWEP.ShowWorldModel = false
+	SWEP.VElements = {
+
+	}
+	SWEP.WElements = {
+		["zs_1"] = { type = "Model", model = "models/props_combine/breen_arm.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(-27.17, 0, 13.082), angle = Angle(-97.358, -180, 0), size = Vector(0.2, 0.2, 0.2), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	}
 end
 
 SWEP.ViewModel = Model("models/weapons/v_pza.mdl")
+SWEP.WorldModel = "models/weapons/w_shot_xm1014.mdl"
 
 SWEP.MeleeReach = 78
 SWEP.MeleeForceScale = 1.45
@@ -18,9 +26,7 @@ SWEP.MeleeDamage = 38
 SWEP.AlertDelay = 3.2
 
 SWEP.SwingAnimSpeed = 0.58
-SWEP.WElements = {
-	["zs_1"] = { type = "Model", model = "models/props_combine/breen_arm.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(-27.17, 0, 13.082), angle = Angle(-97.358, -180, 0), size = Vector(0.2, 0.2, 0.2), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
-}
+
 
 
 
