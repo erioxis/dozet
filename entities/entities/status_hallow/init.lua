@@ -15,13 +15,14 @@ function ENT:Think()
 	local owner = self:GetOwner()
 	if (hallow) then
 		if (hallow.DieTime <= CurTime()) then
-			owner:TakeSpecialDamage(self.maxHallow, DMG_ACID, owner, self)
+			owner:TakeSpecialDamage(self.maxHallow, DMG_DIRECT, owner, self)
+			owner:SetHealth(owner:Health() - self.maxHallow)
 			hallow:Remove()
 		end
 		if (hallow.DieTime-CurTime()>self.maxHallow) then
 			self.maxHallow = hallow.DieTime-CurTime()
 		end
-		print(self.maxHallow)
+		
 	end
 
 	if self.DieTime <= CurTime() then

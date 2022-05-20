@@ -11,6 +11,9 @@ function meta:ProcessDamage(dmginfo)
 
 	local dmgbypass = bit.band(dmgtype, DMG_DIRECT) ~= 0
 
+
+	
+
 	if self.DamageVulnerability and not dmgbypass then
 		dmginfo:SetDamage(dmginfo:GetDamage() * self.DamageVulnerability)
 	end
@@ -86,7 +89,7 @@ function meta:ProcessDamage(dmginfo)
 
 		return not dmgbypass and self:CallZombieFunction1("ProcessDamage", dmginfo)
 	end
-	if self:IsSkillActive(SKILL_FOLGA)then
+	if self:IsSkillActive(SKILL_FOLGA) then
 		dmginfo:SetDamage(dmginfo:GetDamage() - 5)
 	end
 	if self:IsSkillActive(SKILL_BLESSEDROD) and dmginfo:GetDamage() >= 30 then
@@ -153,6 +156,24 @@ function meta:ProcessDamage(dmginfo)
 					attacker:TakeSpecialDamage(self.BarbedArmor, DMG_SLASH, self, self)
 					attacker:AddArmDamage(self.BarbedArmor)
 				end
+				if self:IsSkillActive(SKILL_UPLOAD) then
+					local cursed = self:GetStatus("hallow")
+					if (cursed) then 
+						self:AddHallow(self:GetOwner(),cursed.DieTime - CurTime() + (dmginfo:GetDamage() * 1.5))
+					end
+					if (not cursed) then 
+						self:AddHallow(self:GetOwner(),dmginfo:GetDamage() * 1.5)
+					end
+					if (cursed) and ((cursed.DieTime) >= 500) then
+						self:TakeSpecialDamage(500, DMG_DIRECT, owner, self)
+						self:AddHallow(self:GetOwner(),cursed.DieTime - (CurTime() - -1500))
+
+					end
+					dmginfo:SetDamage(0)
+				end
+						
+					
+		
 
 				if self.BarbedArmorPercent and self.BarbedArmorPercent > 0 then
 					attacker:TakeSpecialDamage(damage * self.BarbedArmorPercent, DMG_SLASH, self, self)

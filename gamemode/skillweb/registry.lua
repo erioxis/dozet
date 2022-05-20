@@ -279,6 +279,7 @@ SKILL_DAMAGER = 256
 SKILL_CURSEDHEALTH = 257
 SKILL_FOLGA = 258
 SKILL_BLESSEDROD = 259
+SKILL_UPLOAD = 261
 
 SKILLMOD_HEALTH = 1
 SKILLMOD_SPEED = 2
@@ -662,7 +663,7 @@ GM:AddSkill(SKILL_UNSIGIL, "Uncorrupter", GOOD.."+24% Reload speed\n"..GOOD.."+1
 																0,			2,					{SKILL_LEVELHEADED}, TREE_GUNTREE)
 GM:AddSkillModifier(SKILL_UNSIGIL, SKILLMOD_DAMAGE, 0.15)
 SKILL_PHOENIX = 260
-GM:AddSkill(SKILL_PHOENIX, "Phoenix", GOOD.."Have chance to block death\n",
+GM:AddSkill(SKILL_PHOENIX, "Phoenix", GOOD.."Instead of death, it can redeem\nOnly once",
 																0,			6,					{SKILL_GUNSLINGER}, TREE_GUNTREE)
 GM:AddSkill(SKILL_TRIGGER_DISCIPLINE1, "Trigger Discipline I", GOOD.."+2% weapon reload speed and 3% Bullet damage\n"..GOOD.."+2% weapon draw speed\n"..BAD.."-9% Melee damage",
 																-5,			6,					{SKILL_TRIGGER_DISCIPLINE2, SKILL_NONE}, TREE_GUNTREE)
@@ -1144,6 +1145,8 @@ GM:AddSkillModifier(SKILL_TRIP, SKILLMOD_CURSEM, 0.5)
 SKILL_MERIS = 199
 GM:AddSkill(SKILL_MERIS, "Meris", GOOD.."-10% Damage taken\n"..BAD.."-20% Melee damage!",
 				                                                            	-1,			3.5,					{SKILL_TRIP}, TREE_DEFENSETREE)
+GM:AddSkill(SKILL_UPLOAD, "Later", GOOD.."You will take damage later\n+50% Later damage\n"..BAD.."If HALLOW more than 500 you take 500 damage",
+				                                                            	-1,			5,					{SKILL_MERIS}, TREE_DEFENSETREE)
 
 GM:AddSkillModifier(SKILL_MERIS, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.10)
 GM:AddSkillModifier(SKILL_MERIS, SKILLMOD_MELEE_DAMAGE_MUL, -0.2)

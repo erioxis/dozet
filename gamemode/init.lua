@@ -2702,18 +2702,13 @@ function GM:PlayerCanCheckout(pl)
 end
 
 function GM:PlayerDeathThink(pl)
-	if pl:IsSkillActive(SKILL_PHOENIX) and pl.RedeemedOnce <= 1 then
+	if pl:IsSkillActive(SKILL_PHOENIX) and pl.RedeemedOnce == 1 then
 		pl:Respawn()
 		pl:Redeem()
 		
 		pl:SetHealth(300)
 		
 		pl:SetModel(player_manager.TranslatePlayerModel(GAMEMODE.RandomPlayerModels[math.random(#GAMEMODE.RandomPlayerModels)]))
-		
-			
-	
-			
-			return
 		
 			end
 	if self.RoundEnded or pl.Revive or self:GetWave() == 0 then return end
@@ -3621,20 +3616,14 @@ end
 
 
 function GM:PlayerDeath(pl, inflictor, attacker)
-	deathblock = math.random(6)
-	if pl:IsSkillActive(SKILL_PHOENIX) and deathblock == 2 and pl.RedeemedOnce <= 1 then
-		pl:Redeem()
-		pl:Respawn()
-		pl:SetHealth(300)
-		pl:SetModel(player_manager.TranslatePlayerModel(GAMEMODE.RandomPlayerModels[math.random(#GAMEMODE.RandomPlayerModels)]))
+	deathblock = math.random(2)
+	if pl:IsSkillActive(SKILL_PHOENIX) and deathblock == 1 and pl.RedeemedOnce <= 1 then
+
 		
 		pl.RedeemedOnce = pl.RedeemedOnce + 1
-        return
-
-	
-		
-
-	end
+	elseif pl.RedeemedOnce == 1 then 
+		pl.RedeemedOnce = pl.RedeemedOnce + 1
+		return end
 end
 
 function GM:PlayerDeathSound()
@@ -3813,13 +3802,13 @@ local function DelayedChangeToZombie(pl)
 	end
 end
 function GM:DoPlayerDeath(pl, attacker, dmginfo)
-	if pl:IsSkillActive(SKILL_PHOENIX) and pl.RedeemedOnce <= 1 then
+	if pl:IsSkillActive(SKILL_PHOENIX) and pl.RedeemedOnce == 1 then
 			
 pl:Redeem()
 		pl:SetHealth(300)
 		pl:SetModel(player_manager.TranslatePlayerModel(GAMEMODE.RandomPlayerModels[math.random(#GAMEMODE.RandomPlayerModels)]))
 		pl:Respawn()
-	   return
+	  
    end
 	pl:RemoveEphemeralStatuses()
 	pl:Extinguish()
