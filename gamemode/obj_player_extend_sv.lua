@@ -289,15 +289,7 @@ function meta:ProcessDamage(dmginfo)
 						self:AddRot(self:GetOwner(), 1)
 					end
 				end
-				if self:IsSkillActive(SKILL_TRIP)  then
-					local cursed = self:GetStatus("cursed")
-					if (not cursed) then 
-						self:AddCursed(self:GetOwner(), 5)
-					end
-					if (cursed) then 
-						self:AddCursed(self:GetOwner(), cursed.DieTime - CurTime() + 5)
-					end
-				end
+
 				
 				
 

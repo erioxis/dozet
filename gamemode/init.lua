@@ -1304,6 +1304,16 @@ function GM:Think()
 					pl.NextRegenerate = time + 200
 					pl:SetHealth(math.min(healmax, pl:Health() + 500))
 				end
+				if pl:IsSkillActive(SKILL_TRIP) and time >= pl.NextRegenerate   then
+					pl.NextRegenerate = time + 1
+					local cursed = pl:GetStatus("cursed")
+					if (not cursed) then 
+						pl:AddCursed(pl:GetOwner(), 1)
+					end
+					if (cursed) then 
+						pl:AddCursed(pl:GetOwner(), cursed.DieTime - CurTime() + 1)
+					end
+				end
 
 		
 
