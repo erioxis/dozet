@@ -171,7 +171,7 @@ LANGUAGE.t_mticket                                 = "Mystery ticket"
 LANGUAGE.t_ass                                    = "Forgotten Ascorbic Acid"
 LANGUAGE.t_ttimes                                 = "Tough Times"
 --trinket Descriptions
-LANGUAGE.t_d_ttimes                                 = "10% chance to block damage"
+LANGUAGE.t_d_ttimes                                 = "10% chance to block damage\nReduces damage received by 6"
 LANGUAGE.t_d_ass                                   = "+6 health,-2% Accuracy"
 LANGUAGE.t_d_mticket                                 = "Every end wave can give 10000 XP(Chance Increase with luck)"
 LANGUAGE.t_d_lticket                                 = "Every end wave can give 120 points(Chance Increase with luck)"

@@ -590,6 +590,7 @@ function GM:ShowSpare2(pl)
 	pl:SendLua("MakepOptions()")
 end
 
+
 function GM:SetupSpawnPoints()
 	local ztab = ents.FindByClass("info_player_undead")
 	ztab = table.Add(ztab, ents.FindByClass("info_player_zombie"))
@@ -2313,6 +2314,7 @@ function GM:PlayerInitialSpawnRound(pl)
 	pl.Headshots = 0
 	pl.BrainsEaten = 0
 	pl.zKills = 0
+	pl.RedeemedOnce = 0
 
 	pl.ResupplyBoxUsedByOthers = 0
 
@@ -2690,6 +2692,20 @@ function GM:PlayerCanCheckout(pl)
 end
 
 function GM:PlayerDeathThink(pl)
+	if pl:IsSkillActive(SKILL_PHOENIX) and pl.RedeemedOnce <= 1 then
+		pl:Respawn()
+		pl:Redeem()
+		
+		pl:SetHealth(300)
+		
+		pl:SetModel(player_manager.TranslatePlayerModel(GAMEMODE.RandomPlayerModels[math.random(#GAMEMODE.RandomPlayerModels)]))
+		
+			
+	
+			
+			return
+		
+			end
 	if self.RoundEnded or pl.Revive or self:GetWave() == 0 then return end
 
 	if pl:GetObserverMode() == OBS_MODE_CHASE then
@@ -2706,6 +2722,9 @@ function GM:PlayerDeathThink(pl)
 		pl.StartSpectating = nil
 		return
 	end
+
+	
+
 
 	if pl.NextSpawnTime and pl.NextSpawnTime <= CurTime() then -- Force spawn.
 		pl.NextSpawnTime = nil
@@ -3592,6 +3611,20 @@ end
 
 
 function GM:PlayerDeath(pl, inflictor, attacker)
+	deathblock = math.random(6)
+	if pl:IsSkillActive(SKILL_PHOENIX) and deathblock == 2 and pl.RedeemedOnce <= 1 then
+		pl:Redeem()
+		pl:Respawn()
+		pl:SetHealth(300)
+		pl:SetModel(player_manager.TranslatePlayerModel(GAMEMODE.RandomPlayerModels[math.random(#GAMEMODE.RandomPlayerModels)]))
+		
+		pl.RedeemedOnce = pl.RedeemedOnce + 1
+        return
+
+	
+		
+
+	end
 end
 
 function GM:PlayerDeathSound()
@@ -3770,9 +3803,19 @@ local function DelayedChangeToZombie(pl)
 	end
 end
 function GM:DoPlayerDeath(pl, attacker, dmginfo)
+	if pl:IsSkillActive(SKILL_PHOENIX) and pl.RedeemedOnce <= 1 then
+			
+pl:Redeem()
+		pl:SetHealth(300)
+		pl:SetModel(player_manager.TranslatePlayerModel(GAMEMODE.RandomPlayerModels[math.random(#GAMEMODE.RandomPlayerModels)]))
+		pl:Respawn()
+	   return
+   end
 	pl:RemoveEphemeralStatuses()
 	pl:Extinguish()
 	pl:SetPhantomHealth(0)
+
+
 
 	local inflictor = dmginfo:GetInflictor()
 	local plteam = pl:Team()

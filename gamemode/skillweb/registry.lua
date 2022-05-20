@@ -277,7 +277,8 @@ SKILL_SOY = 236
 SKILL_HAMMERDOOR = 240
 SKILL_DAMAGER = 256
 SKILL_CURSEDHEALTH = 257
-
+SKILL_FOLGA = 258
+SKILL_BLESSEDROD = 259
 
 SKILLMOD_HEALTH = 1
 SKILLMOD_SPEED = 2
@@ -647,12 +648,22 @@ SKILL_NANITES = 241
 GM:AddSkill(SKILL_NANITES, 	"Nanites", GOOD.."Props hit with a hammer take only 20% damage for 0.3 secs\n"..BAD.."-10% repair strenght",
 																4,			-4,					{SKILL_STOWAGE}, TREE_BUILDINGTREE)
 GM:AddSkillModifier(SKILL_NANITES, SKILLMOD_REPAIRRATE_MUL, -0.10)
+GM:AddSkill(SKILL_FOLGA, 	"Rigid Foil", GOOD.."Reduces damage received by 5",
+																4,			-5.5,					{SKILL_U_ROLLERMINE}, TREE_BUILDINGTREE)
+GM:AddSkill(SKILL_BLESSEDROD, 	"Blessed Rod", GOOD.."Reduces damage received by 12\n But only if damage higher than 30\n"..GOOD.."+15% Max Curse\n"..BAD.."+6% Melee damage taken",
+																4,			-7,					{SKILL_FOLGA}, TREE_BUILDINGTREE)
+GM:AddSkillModifier(SKILL_BLESSEDROD, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 0.06)
+GM:AddSkillModifier(SKILL_BLESSEDROD, SKILLMOD_CURSEM, 0.15)
+
 
 -- Gunnery Tree
 
 GM:AddSkill(SKILL_UNSIGIL, "Uncorrupter", GOOD.."+24% Reload speed\n"..GOOD.."+15% Bullet Damage\n"..BAD.."-80% Melee damage",
 																0,			2,					{SKILL_LEVELHEADED}, TREE_GUNTREE)
 GM:AddSkillModifier(SKILL_UNSIGIL, SKILLMOD_DAMAGE, 0.15)
+SKILL_PHOENIX = 260
+GM:AddSkill(SKILL_PHOENIX, "Phoenix", GOOD.."Have chance to block death\n",
+																0,			6,					{SKILL_GUNSLINGER}, TREE_GUNTREE)
 GM:AddSkill(SKILL_TRIGGER_DISCIPLINE1, "Trigger Discipline I", GOOD.."+2% weapon reload speed and 3% Bullet damage\n"..GOOD.."+2% weapon draw speed\n"..BAD.."-9% Melee damage",
 																-5,			6,					{SKILL_TRIGGER_DISCIPLINE2, SKILL_NONE}, TREE_GUNTREE)
 GM:AddSkill(SKILL_TRIGGER_DISCIPLINE2, "Trigger Discipline II", GOOD.."+3% weapon reload speed and 5% Bullet damage\n"..GOOD.."+3% weapon draw speed\n"..BAD.."-13% Melee Damage",
@@ -684,7 +695,7 @@ GM:AddSkillModifier(SKILL_ARSVOID, SKILLMOD_DAMAGE, 0.15)
 GM:AddSkillModifier(SKILL_ARSVOID, SKILLMOD_ARSENAL_DISCOUNT, 0.15)
 SKILL_GUNSLINGER = 252
 GM:AddSkill(SKILL_GUNSLINGER, "Gunslinger", GOOD.."+15% Accuracy\n"..GOOD.."+15% Bullet Damage\n"..BAD.."-30% Melee damage\n"..BAD.."-50% Melee range",
-																0,			5,					{SKILL_D_PALSY}, TREE_GUNTREE)
+																0,			5,					{SKILL_D_PALSY, SKILL_PHOENIX}, TREE_GUNTREE)
 GM:AddSkillModifier(SKILL_GUNSLINGER, SKILLMOD_DAMAGE, 0.15)
 GM:AddSkillModifier(SKILL_GUNSLINGER, SKILLMOD_AIMSPREAD_MUL, -0.15)
 GM:AddSkillModifier(SKILL_GUNSLINGER, SKILLMOD_MELEE_DAMAGE_MUL, -0.30)
