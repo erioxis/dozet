@@ -2703,7 +2703,9 @@ end
 
 function GM:PlayerDeathThink(pl)
 	if pl:IsSkillActive(SKILL_PHOENIX) and pl.RedeemedOnce == 1 then
+		
 		pl:Respawn()
+		pl:SetTeam(TEAM_HUMAN)
 		pl:Redeem()
 		
 		pl:SetHealth(300)
@@ -3803,6 +3805,7 @@ local function DelayedChangeToZombie(pl)
 end
 function GM:DoPlayerDeath(pl, attacker, dmginfo)
 	if pl:IsSkillActive(SKILL_PHOENIX) and pl.RedeemedOnce == 1 then
+		pl:SetTeam(TEAM_HUMAN)
 			
 pl:Redeem()
 		pl:SetHealth(300)

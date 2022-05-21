@@ -25,6 +25,9 @@ function ENT:Think()
 		
 	end
 
+	
+	
+
 	if self.DieTime <= CurTime() then
 		self:Remove()
 	end
