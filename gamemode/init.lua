@@ -2703,16 +2703,14 @@ end
 
 function GM:PlayerDeathThink(pl)
 	if pl:IsSkillActive(SKILL_PHOENIX) and pl.RedeemedOnce == 1 then
-		
-		pl:Respawn()
-		pl:SetTeam(TEAM_HUMAN)
 		pl:Redeem()
-		
-		pl:SetHealth(300)
-		
+		pl:Respawn()
 		pl:SetModel(player_manager.TranslatePlayerModel(GAMEMODE.RandomPlayerModels[math.random(#GAMEMODE.RandomPlayerModels)]))
-		
-			end
+		pl:SetHealth(300)
+		pl:SetTeam(TEAM_HUMAN)
+	   end
+
+
 	if self.RoundEnded or pl.Revive or self:GetWave() == 0 then return end
 
 	if pl:GetObserverMode() == OBS_MODE_CHASE then
@@ -2788,6 +2786,7 @@ function GM:PlayerDeathThink(pl)
 			end
 		end
 	end
+
 end
 
 function GM:ShouldAntiGrief(ent, attacker, dmginfo, health)
@@ -3623,6 +3622,7 @@ function GM:PlayerDeath(pl, inflictor, attacker)
 
 		
 		pl.RedeemedOnce = pl.RedeemedOnce + 1
+		
 	elseif pl.RedeemedOnce == 1 then 
 		pl.RedeemedOnce = pl.RedeemedOnce + 1
 		return end
@@ -3804,15 +3804,7 @@ local function DelayedChangeToZombie(pl)
 	end
 end
 function GM:DoPlayerDeath(pl, attacker, dmginfo)
-	if pl:IsSkillActive(SKILL_PHOENIX) and pl.RedeemedOnce == 1 then
-		pl:SetTeam(TEAM_HUMAN)
-			
-pl:Redeem()
-		pl:SetHealth(300)
-		pl:SetModel(player_manager.TranslatePlayerModel(GAMEMODE.RandomPlayerModels[math.random(#GAMEMODE.RandomPlayerModels)]))
-		pl:Respawn()
-	  
-   end
+
 	pl:RemoveEphemeralStatuses()
 	pl:Extinguish()
 	pl:SetPhantomHealth(0)
@@ -4011,6 +4003,7 @@ pl:Redeem()
 			net.WriteUInt(plteam, 8)
 		net.Broadcast()
 	end
+
 end
 
 function GM:WeaponEquip(wep)

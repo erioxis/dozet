@@ -1464,6 +1464,8 @@ function meta:Redeem(silent, noequip)
 			net.WriteEntity(self)
 		net.Broadcast()
 	end
+	timer.Create( "GodOn", 1, 1, function() self:GodEnable() end )
+	timer.Create( "Godoff", 15, 1, function() self:GodDisable() end )
 
 	gamemode.Call("PostPlayerRedeemed", self)
 end
