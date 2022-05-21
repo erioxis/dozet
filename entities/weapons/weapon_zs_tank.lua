@@ -30,6 +30,18 @@ function SWEP:MeleeHit(ent, trace, damage, forcescale)
 
 	self.BaseClass.MeleeHit(self, ent, trace, damage, forcescale)
 end
+function SWEP:ApplyMeleeDamage(pl, trace, damage)
+	if SERVER and pl:IsPlayer() then
+		local cursed = pl:GetStatus("hallow")
+		if (cursed) then 
+			pl:AddHallow(self:GetOwner(), cursed.DieTime - CurTime() + 5)
+		end
+		if (not cursed) then 
+			pl:AddHallow(pl:GetOwner(), 5)
+		end
+	end
+	self.BaseClass.ApplyMeleeDamage(self, pl, trace, damage)
+end
 
 if not CLIENT then return end
 

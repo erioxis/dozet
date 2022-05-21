@@ -590,6 +590,7 @@ function GM:ShowSpare2(pl)
 	pl:SendLua("MakepOptions()")
 end
 
+
 function GM:SetupSpawnPoints()
 	local ztab = ents.FindByClass("info_player_undead")
 	ztab = table.Add(ztab, ents.FindByClass("info_player_zombie"))
@@ -1193,7 +1194,7 @@ function GM:Think()
 			elseif self.BossZombies and not self.PantsMode and not self:IsClassicMode() and not self.ZombieEscape
 			and self.LastBossZombieSpawned ~= wave and wave > 0 and not self.RoundEnded
 			and (self.BossZombiePlayersRequired <= 0 or #player.GetAll() >= self.BossZombiePlayersRequired) then
-				if self:GetWaveStart() - 10 <= time or GM.AllzKills <= 10 then
+				if self:GetWaveStart() - 10 <= time then
 					self:SpawnBossZombie()
 				else
 					self:CalculateNextBoss()
@@ -1303,6 +1304,16 @@ function GM:Think()
 					pl.NextRegenerate = time + 200
 					pl:SetHealth(math.min(healmax, pl:Health() + 500))
 				end
+				if pl:IsSkillActive(SKILL_TRIP) and time >= pl.NextRegenerate   then
+					pl.NextRegenerate = time + 0.9
+					local cursed = pl:GetStatus("cursed")
+					if (not cursed) then 
+						pl:AddCursed(pl:GetOwner(), 1)
+					end
+					if (cursed) then 
+						pl:AddCursed(pl:GetOwner(), cursed.DieTime - CurTime() + 1)
+					end
+				end
 
 		
 
@@ -1319,6 +1330,11 @@ function GM:Think()
 				if pl:IsSkillActive(SKILL_BLOODLOST) and pl.EndWavePointsExtra > 0 and time >= pl.NextBloodArmorRegen and pl:GetBloodArmor() < pl.MaxBloodArmor then
 					pl.NextBloodArmorRegen = time + 3
 					pl:SetBloodArmor(math.min(pl.MaxBloodArmor, pl:GetBloodArmor() + (5 * pl.BloodarmorGainMul)))
+				end
+				damaged = math.random(1,100)
+				if pl:IsSkillActive(SKILL_DAMAGER) and damaged == 1 then
+                   pl:TakeDamage((pl:GetMaxHealth() * 0.10) + 1)
+				   pl:SetHealth((pl:Health() * 0.9) - ((pl:GetMaxHealth() * 0.05)))
 				end
 
 
@@ -2043,7 +2059,7 @@ function GM:ScalePlayerDamage(pl, hitgroup, dmginfo)
 		GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_WEAPON, inflictor:GetClass(), "Headshots", 1)
 	end
 	if dmginfo:IsBulletDamage() then 
-		dmginfo:SetDamage((dmginfo:GetDamage() * damagescalebullet) - attacker.zKills / 100)
+		dmginfo:SetDamage((dmginfo:GetDamage() * damagescalebullet) - attacker.zKills / 50)
 	end
 	if not dmginfo:IsBulletDamage() then return end
 
@@ -2308,6 +2324,7 @@ function GM:PlayerInitialSpawnRound(pl)
 	pl.Headshots = 0
 	pl.BrainsEaten = 0
 	pl.zKills = 0
+	pl.RedeemedOnce = 0
 
 	pl.ResupplyBoxUsedByOthers = 0
 
@@ -2685,6 +2702,17 @@ function GM:PlayerCanCheckout(pl)
 end
 
 function GM:PlayerDeathThink(pl)
+	if pl:IsSkillActive(SKILL_PHOENIX) and pl.RedeemedOnce == 1 then
+		
+		pl:Respawn()
+		pl:SetTeam(TEAM_HUMAN)
+		pl:Redeem()
+		
+		pl:SetHealth(300)
+		
+		pl:SetModel(player_manager.TranslatePlayerModel(GAMEMODE.RandomPlayerModels[math.random(#GAMEMODE.RandomPlayerModels)]))
+		
+			end
 	if self.RoundEnded or pl.Revive or self:GetWave() == 0 then return end
 
 	if pl:GetObserverMode() == OBS_MODE_CHASE then
@@ -2701,6 +2729,9 @@ function GM:PlayerDeathThink(pl)
 		pl.StartSpectating = nil
 		return
 	end
+
+	
+
 
 	if pl.NextSpawnTime and pl.NextSpawnTime <= CurTime() then -- Force spawn.
 		pl.NextSpawnTime = nil
@@ -3587,6 +3618,14 @@ end
 
 
 function GM:PlayerDeath(pl, inflictor, attacker)
+	deathblock = math.random(2)
+	if pl:IsSkillActive(SKILL_PHOENIX) and deathblock == 1 and pl.RedeemedOnce <= 1 then
+
+		
+		pl.RedeemedOnce = pl.RedeemedOnce + 1
+	elseif pl.RedeemedOnce == 1 then 
+		pl.RedeemedOnce = pl.RedeemedOnce + 1
+		return end
 end
 
 function GM:PlayerDeathSound()
@@ -3664,6 +3703,7 @@ function GM:HumanKilledZombie(pl, attacker, inflictor, dmginfo, headshot, suicid
 
 	attacker.ZombiesKilled = attacker.ZombiesKilled + 1
 	attacker.zKills = attacker.zKills + 1
+
  
 
 	if mostdamager then
@@ -3693,6 +3733,9 @@ function GM:HumanKilledZombie(pl, attacker, inflictor, dmginfo, headshot, suicid
 
 		if pl:WasHitInHead() then
 			attacker.Headshots = (attacker.Headshots or 0) + 1
+		end
+		if pl.LuckFromKillYes and pl.LuckFromKillYes > CurTime() and pl.LuckFromKillYesOwner == attacker then
+			attacker.Luck = attacker.Luck + 0.05
 		end
 
 		GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_WEAPON, wep:GetClass(), "Kills", 1)
@@ -3761,9 +3804,20 @@ local function DelayedChangeToZombie(pl)
 	end
 end
 function GM:DoPlayerDeath(pl, attacker, dmginfo)
+	if pl:IsSkillActive(SKILL_PHOENIX) and pl.RedeemedOnce == 1 then
+		pl:SetTeam(TEAM_HUMAN)
+			
+pl:Redeem()
+		pl:SetHealth(300)
+		pl:SetModel(player_manager.TranslatePlayerModel(GAMEMODE.RandomPlayerModels[math.random(#GAMEMODE.RandomPlayerModels)]))
+		pl:Respawn()
+	  
+   end
 	pl:RemoveEphemeralStatuses()
 	pl:Extinguish()
 	pl:SetPhantomHealth(0)
+
+
 
 	local inflictor = dmginfo:GetInflictor()
 	local plteam = pl:Team()

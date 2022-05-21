@@ -5,6 +5,7 @@ SWEP.PrintName = "Zombie"
 
 SWEP.ViewModel = Model("models/Weapons/v_zombiearms.mdl")
 SWEP.WorldModel = ""
+SWEP.ShowWorldModel = false
 
 SWEP.MeleeDelay = 0.74
 SWEP.MeleeReach = 48
@@ -51,7 +52,6 @@ function SWEP:PlayAttackSound()
 end
 
 function SWEP:Initialize()
-	self:HideWorldModel()
 end
 
 function SWEP:CheckIdleAnimation()

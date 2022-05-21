@@ -11,6 +11,9 @@ function meta:ProcessDamage(dmginfo)
 
 	local dmgbypass = bit.band(dmgtype, DMG_DIRECT) ~= 0
 
+
+	
+
 	if self.DamageVulnerability and not dmgbypass then
 		dmginfo:SetDamage(dmginfo:GetDamage() * self.DamageVulnerability)
 	end
@@ -71,6 +74,10 @@ function meta:ProcessDamage(dmginfo)
 				if attacker:HasTrinket("sharpkit") then
 					dmginfo:SetDamage(dmginfo:GetDamage() * (1 + self:GetFlatLegDamage()/75))
 				end
+				if wep.Culinary and attacker:IsSkillActive(SKILL_PILLUCK) and math.random(2) == 1 then
+					self.LuckFromKillYesOwner = attacker
+					self.LuckFromKillYes = CurTime() + 0.1
+				end
 				
 
 				if wep.Culinary and attacker:IsSkillActive(SKILL_MASTERCHEF) and math.random(5) == 1 then
@@ -81,6 +88,15 @@ function meta:ProcessDamage(dmginfo)
 		end
 
 		return not dmgbypass and self:CallZombieFunction1("ProcessDamage", dmginfo)
+	end
+	if self:IsSkillActive(SKILL_FOLGA) then
+		dmginfo:SetDamage(dmginfo:GetDamage() - 5)
+	end
+	if self:IsSkillActive(SKILL_BLESSEDROD) and dmginfo:GetDamage() >= 30 then
+		dmginfo:SetDamage(dmginfo:GetDamage() - 12)
+	end
+	if self:HasTrinket("ttimes") then
+		dmginfo:SetDamage(dmginfo:GetDamage() - 6)
 	end
 
 	-- Opted for multiplicative.
@@ -140,6 +156,24 @@ function meta:ProcessDamage(dmginfo)
 					attacker:TakeSpecialDamage(self.BarbedArmor, DMG_SLASH, self, self)
 					attacker:AddArmDamage(self.BarbedArmor)
 				end
+				if self:IsSkillActive(SKILL_UPLOAD) then
+					local cursed = self:GetStatus("hallow")
+					if (cursed) then 
+						self:AddHallow(self:GetOwner(),cursed.DieTime - CurTime() + (dmginfo:GetDamage() * 1.5))
+					end
+					if (not cursed) then 
+						self:AddHallow(self:GetOwner(),dmginfo:GetDamage() * 1.5)
+					end
+					if (cursed) and ((cursed.DieTime) >= 500) then
+						self:TakeSpecialDamage(500, DMG_DIRECT, owner, self)
+						self:AddHallow(self:GetOwner(),cursed.DieTime - (CurTime() - -1500))
+
+					end
+					dmginfo:SetDamage(0)
+				end
+						
+					
+		
 
 				if self.BarbedArmorPercent and self.BarbedArmorPercent > 0 then
 					attacker:TakeSpecialDamage(damage * self.BarbedArmorPercent, DMG_SLASH, self, self)
@@ -207,6 +241,7 @@ function meta:ProcessDamage(dmginfo)
 					dmginfo:SetDamage(dmginfo:GetDamage() / 1200)
 
 				end
+
 				local trinkett = math.random(1,10)
 				if self:HasTrinket("ttimes") and trinkett == 1 then
 					attacker:GiveStatus("dimvision", 1)
@@ -275,15 +310,7 @@ function meta:ProcessDamage(dmginfo)
 						self:AddRot(self:GetOwner(), 1)
 					end
 				end
-				if self:IsSkillActive(SKILL_TRIP)  then
-					local cursed = self:GetStatus("cursed")
-					if (not cursed) then 
-						self:AddCursed(self:GetOwner(), 5)
-					end
-					if (cursed) then 
-						self:AddCursed(self:GetOwner(), cursed.DieTime - CurTime() + 5)
-					end
-				end
+
 				
 				
 

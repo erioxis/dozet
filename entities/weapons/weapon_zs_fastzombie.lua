@@ -37,6 +37,18 @@ SWEP.Secondary.Automatic = false
 
 SWEP.NextClimbSound = 0
 SWEP.NextAllowPounce = 0
+function SWEP:ApplyMeleeDamage(pl, trace, damage)
+	if SERVER and pl:IsPlayer() then
+		local cursed = pl:GetStatus("hallow")
+		if (cursed) then 
+			pl:AddHallow(self:GetOwner(), cursed.DieTime - CurTime() + 2)
+		end
+		if (not cursed) then 
+			pl:AddHallow(pl:GetOwner(), 2)
+		end
+	end
+	self.BaseClass.ApplyMeleeDamage(self, pl, trace, damage)
+end
 function SWEP:Think()
 	BaseClass.Think(self)
 
