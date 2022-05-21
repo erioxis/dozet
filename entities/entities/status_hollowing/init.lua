@@ -26,10 +26,11 @@ function ENT:Think()
 		
 	end
 
+
 	self.timer = self.timer + 1
 	if self.timer >= self.maxTimer then
-		self.DieTime = self.DieTime - 1
-		self.timer = 0
+		self.DieTime = self.DieTime - 5
+		self.timer = 1
 		self:SetDuration(self.DieTime - CurTime())
 	end
 
