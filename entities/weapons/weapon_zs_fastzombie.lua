@@ -39,7 +39,7 @@ SWEP.NextClimbSound = 0
 SWEP.NextAllowPounce = 0
 function SWEP:ApplyMeleeDamage(pl, trace, damage)
 	if SERVER and pl:IsPlayer() then
-		local cursed = pl:GetStatus("hallow")
+		local cursed = pl:GetStatus("hollowing")
 		if (cursed) then 
 			pl:AddHallow(self:GetOwner(), cursed.DieTime - CurTime() + 2)
 		end

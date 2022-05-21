@@ -10,6 +10,8 @@ AccessorFuncDT(ENT, "StartTime", "Float", 4)
 
 function ENT:Initialize()
 	self.maxHallow = 0
+	self.maxTimer = 3
+	self.timer = 0
 	self.BaseClass.Initialize(self)
 
 	if SERVER then

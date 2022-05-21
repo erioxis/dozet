@@ -157,7 +157,7 @@ function meta:ProcessDamage(dmginfo)
 					attacker:AddArmDamage(self.BarbedArmor)
 				end
 				if self:IsSkillActive(SKILL_UPLOAD) then
-					local cursed = self:GetStatus("hallow")
+					local cursed = self:GetStatus("hollowing")
 					if (cursed) then 
 						self:AddHallow(self:GetOwner(),cursed.DieTime - CurTime() + (dmginfo:GetDamage() * 1.5))
 					end
@@ -660,7 +660,7 @@ end
 
 function meta:AddHallow(attacker, count)
 	--damage = math.ceil(damage)
-	local status = self:GiveStatus("hallow", count)
+	local status = self:GiveStatus("hollowing", count)
 end
 
 function meta:AddRot(attacker, count)

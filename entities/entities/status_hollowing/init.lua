@@ -11,24 +11,26 @@ function ENT:SetDie(fTime)
 	end
 end
 function ENT:Think()
-	local hallow = self
+	
+	local hollowing = self
 	local owner = self:GetOwner()
-	if (hallow) then
-		if (hallow.DieTime <= CurTime()) then
+	if (hollowing) then
+		if (hollowing.DieTime <= CurTime()) then
 			owner:TakeSpecialDamage(self.maxHallow, DMG_DIRECT, owner, self)
 			owner:SetHealth(owner:Health() - self.maxHallow)
-			hallow:Remove()
+			hollowing:Remove()
 		end
-		if (hallow.DieTime-CurTime()>self.maxHallow) then
-			self.maxHallow = hallow.DieTime-CurTime()
+		if (hollowing.DieTime-CurTime()>self.maxHallow) then
+			self.maxHallow = hollowing.DieTime-CurTime()
 		end
 		
 	end
 
-	
-	
-
-	if self.DieTime <= CurTime() then
-		self:Remove()
+	self.timer = self.timer + 1
+	if self.timer >= self.maxTimer then
+		self.DieTime = self.DieTime - 1
+		self.timer = 0
+		self:SetDuration(self.DieTime - CurTime())
 	end
+
 end

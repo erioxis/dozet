@@ -32,7 +32,7 @@ function SWEP:MeleeHit(ent, trace, damage, forcescale)
 end
 function SWEP:ApplyMeleeDamage(pl, trace, damage)
 	if SERVER and pl:IsPlayer() then
-		local cursed = pl:GetStatus("hallow")
+		local cursed = pl:GetStatus("hollowing")
 		if (cursed) then 
 			pl:AddHallow(self:GetOwner(), cursed.DieTime - CurTime() + 5)
 		end
