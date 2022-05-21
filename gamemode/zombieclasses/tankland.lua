@@ -186,6 +186,13 @@ end
 if SERVER then
 	function CLASS:ProcessDamage(pl, dmginfo)
 		if pl.EradiVived then return end
+		dmgblock = math.random(1,5)
+	
+		if dmgblock == 1 then
+			dmginfo:SetDamage(0)
+			net.Start("zs_damageblock")
+			net.Send(pl)
+		end
 
 		local damage = dmginfo:GetDamage()
 		if damage >= 80 or damage < pl:Health() then return end
@@ -223,6 +230,7 @@ if SERVER then
 
 			pl.EradiVived = true
 		end
+
 
 		return true
 	end

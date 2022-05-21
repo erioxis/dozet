@@ -20,7 +20,7 @@ if CLIENT then
 	SWEP.IronSightsPos = Vector(-6.35, 5, 1.7)
 end
 
-SWEP.PointsMultiplier = 0.5
+SWEP.PointsMultiplier = 0.35
 SWEP.Base = "weapon_zs_base"
 SWEP.HoldType = "pistol"
 SWEP.ViewModelFOV = 70
@@ -34,7 +34,7 @@ SWEP.ViewModelBoneMods = {}
 SWEP.Primary.Sound = Sound("Weapon_Deagle.Single")
 SWEP.Primary.Damage = 87
 SWEP.Primary.NumShots = 1
-SWEP.Primary.Delay = 0.24
+SWEP.Primary.Delay = 0.66
 SWEP.Primary.KnockbackScale = 2
 SWEP.MaxStock = 2
 SWEP.Primary.ClipSize = 10
@@ -45,15 +45,13 @@ GAMEMODE:SetupDefaultClip(SWEP.Primary)
 SWEP.ConeMax = 3.4
 SWEP.ConeMin = 1.25
 
-SWEP.ReloadSpeed = 0.7
+SWEP.ReloadSpeed = 0.3
 
 SWEP.FireAnimSpeed = 1.8
 
 SWEP.Tier = 7
 
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_CLIP_SIZE, 1)
-
-GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_RELOAD_SPEED, 0.1, 1)
 
 function SWEP:ShootBullets(dmg, numbul, cone)
 	dmg = dmg + dmg * (4.6 * self:Clip1() / self.Primary.ClipSize)
