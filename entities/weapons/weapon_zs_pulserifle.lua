@@ -28,11 +28,11 @@ SWEP.CSMuzzleFlashes = false
 
 SWEP.ReloadSound = Sound("Weapon_SMG1.Reload")
 SWEP.Primary.Sound = Sound("Airboat.FireGunHeavy")
-SWEP.Primary.Damage = 51
+SWEP.Primary.Damage = 32
 SWEP.Primary.NumShots = 1
 SWEP.Primary.Delay = 0.17
 
-SWEP.Primary.ClipSize = 28
+SWEP.Primary.ClipSize = 12
 SWEP.Primary.Automatic = true
 SWEP.Primary.Ammo = "pulse"
 GAMEMODE:SetupDefaultClip(SWEP.Primary)
@@ -59,7 +59,7 @@ GAMEMODE:AddNewRemantleBranch(SWEP, 1, ""..translate.Get("wep_adonis_r1"), ""..t
 	wept.ConeMin = 2.25
 	wept.ConeMax = 3.75
 	wept.ReloadSpeed = 0.2
-	wept.LegDamage = 99
+	wept.LegDamage = 45
 
 	wept.OnZombieKilled = function(self)
 		local killer = self:GetOwner()

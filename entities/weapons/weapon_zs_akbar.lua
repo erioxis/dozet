@@ -30,6 +30,7 @@ SWEP.Primary.Sound = Sound("Weapon_AK47.Single")
 SWEP.Primary.Damage = 21.75
 SWEP.Primary.NumShots = 1
 SWEP.Primary.Delay = 0.12
+SWEP.MultiplierOfShots = 1
 
 SWEP.Primary.ClipSize = 30
 SWEP.Primary.Automatic = true
@@ -47,3 +48,22 @@ SWEP.IronSightsPos = Vector(-6.6, 20, 3.1)
 
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_MAX_SPREAD, -0.344)
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_MIN_SPREAD, -0.172)
+
+function SWEP:PrimaryAttack()
+	if not self:CanPrimaryAttack() then return end
+
+
+
+	self:EmitFireSound()
+	if SERVER then
+	self:SetNextPrimaryFire(CurTime() + self:GetFireDelay())
+	self.IdleAnimation = CurTime() + self:SequenceDuration()
+	self:TakeAmmo()
+	self:ShootBullets(self.Primary.Damage + (self.Primary.Damage * self.MultiplierOfShots / 3), self.Primary.NumShots, self:GetCone())
+	self.MultiplierOfShots = self.MultiplierOfShots + 1
+	end
+	if self.MultiplierOfShots >= 5 then
+		self.MultiplierOfShots = self.MultiplierOfShots - 4
+	end
+
+end
