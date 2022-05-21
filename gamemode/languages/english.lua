@@ -29,6 +29,7 @@ LANGUAGE.op_deposit = "Disable pressing use to deposit ammo in deployables"
 LANGUAGE.op_noboss = "Prevent being picked as a boss zombie"
 
 -- Various gamemode stuff
+LANGUAGE.holymantle = "Holy mantle absorb damage"
 LANGUAGE.damageblock                         = "Damage has been blocked"
 LANGUAGE.luck                                = "Your Luck %s"
 LANGUAGE.worthshop1                                = "Worth Menu"
@@ -655,7 +656,7 @@ LANGUAGE.wep_d_frotchet	= "An axe made from frost. Secondary attack unleashes a 
 LANGUAGE.wep_katana		= "Electro-Katana"
 LANGUAGE.wep_d_katana		= "Thanks to nano-particles, it deals x10 damage to the back"
 LANGUAGE.wep_gshovel		= "Grave Shovel"
-LANGUAGE.wep_d_gshovel		= "The Grave Digger's shovel. Instantly kills knocked down zombies and permanently gains damage when doing so."
+LANGUAGE.wep_d_gshovel		= "The Grave Digger's shovel. Instantly kills knocked down zombies and permanently gains damage when doing so(+13 damage)."
 LANGUAGE.wep_syx = "Syx"
 LANGUAGE.wep_luxoids		= "Luxoid Shade"
 LANGUAGE.wep_d_luxoids		= "Stealed from shade,this high tech machine.\n R - Summon rock\n ATTACK Throw prop or rock"

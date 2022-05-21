@@ -280,6 +280,7 @@ SKILL_CURSEDHEALTH = 257
 SKILL_FOLGA = 258
 SKILL_BLESSEDROD = 259
 SKILL_UPLOAD = 261
+SKILL_HOLY_MANTLE = 262
 
 SKILLMOD_HEALTH = 1
 SKILLMOD_SPEED = 2
@@ -449,6 +450,11 @@ GM:AddSkill(SKILL_DAMAGER, "Bad Health", GOOD.."+50 Health\n"..BAD.."Can take ra
 -- Speed Tree
 GM:AddSkill(SKILL_SPEED1, "Speed I", GOOD.."+5 movement speed\n"..BAD.."-4 maximum health",
 																-4,			6,					{SKILL_NONE, SKILL_SPEED2}, TREE_SPEEDTREE)
+SKILL_DODGE = 263
+GM:AddSkill(SKILL_DODGE, "Dodge", GOOD.."Have chance to block attack\n"..GOOD.."With higher speed,higher block chance\n"..BAD.."-50 Speed",
+																-3,			1,					{SKILL_NONE, SKILL_SPEED2}, TREE_SPEEDTREE)
+GM:AddSkillModifier(SKILL_DODGE, SKILLMOD_SPEED, -50)
+
 GM:AddSkill(SKILL_SPEED2, "Speed II", GOOD.."+5 movement speed\n"..BAD.."-7 maximum health",
 																-4,			4,					{SKILL_SPEED3, SKILL_PHASER, SKILL_SPEED2, SKILL_U_CORRUPTEDFRAGMENT}, TREE_SPEEDTREE)
 GM:AddSkill(SKILL_SPEED3, "Speed III", GOOD.."+6 movement speed\n"..BAD.."-6 maximum health",
@@ -1142,6 +1148,8 @@ GM:AddSkillModifier(SKILL_TRIP, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.33)
 GM:AddSkillModifier(SKILL_TRIP, SKILLMOD_MELEE_DAMAGE_MUL, -0.36)
 GM:AddSkillModifier(SKILL_TRIP, SKILLMOD_SPEED, -60)
 GM:AddSkillModifier(SKILL_TRIP, SKILLMOD_CURSEM, 0.5)
+GM:AddSkill(SKILL_HOLY_MANTLE, "Holy Mantle", GOOD.."Absorb damage every 15 seconds\n",
+				                                                            	-4,			3,					{SKILL_TTIMES}, TREE_DEFENSETREE)
 SKILL_MERIS = 199
 GM:AddSkill(SKILL_MERIS, "Meris", GOOD.."-10% Damage taken\n"..BAD.."-20% Melee damage!",
 				                                                            	-1,			3.5,					{SKILL_TRIP}, TREE_DEFENSETREE)

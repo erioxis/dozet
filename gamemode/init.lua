@@ -460,6 +460,7 @@ function GM:AddNetworkStrings()
 	util.AddNetworkString("zs_boss_spawned")
 	util.AddNetworkString("zs_boss_slain")
 	util.AddNetworkString("zs_damageblock")
+	util.AddNetworkString("zs_holymantle")
 	util.AddNetworkString("zs_commission")
 	util.AddNetworkString("zs_healother")
 	util.AddNetworkString("zs_healby")
@@ -1202,6 +1203,7 @@ function GM:Think()
 			end
 		end
 	end 
+
 	
 
 
@@ -1282,6 +1284,11 @@ function GM:Think()
 					pl.NextRegenerate = time + 60
 					pl:SetHealth(math.min(healmax, pl:Health() + 500))
 				end
+				if time >= pl.NextRegenerate and pl.HolyMantle == 0 then
+					pl.NextRegenerate = time + 15
+					pl.HolyMantle = pl.HolyMantle + 1
+				end
+
 
 				if pl:HasTrinket("adrenaline") and time >= pl.NextRegenerate and pl:Health() < math.min(healmax, pl:GetMaxHealth() * 0.85) then
 					pl.NextRegenerate = time + 60
@@ -2325,6 +2332,7 @@ function GM:PlayerInitialSpawnRound(pl)
 	pl.BrainsEaten = 0
 	pl.zKills = 0
 	pl.RedeemedOnce = 0
+	pl.HolyMantle = 1
 
 	pl.ResupplyBoxUsedByOthers = 0
 
@@ -2908,6 +2916,7 @@ function GM:EntityTakeDamage(ent, dmginfo)
 								attacker:AddLifeHumanDamage(damage)
 								attacker:AddTokens(math.ceil(damage * 2.5))
 								attacker:AddZSXP(math.ceil(damage * 2))
+								
 								GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_ZOMBIECLASS, attacker:GetZombieClassTable().Name, "HumanDamage", damage)
 						
 							

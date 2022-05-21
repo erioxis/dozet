@@ -98,6 +98,22 @@ function meta:ProcessDamage(dmginfo)
 	if self:HasTrinket("ttimes") then
 		dmginfo:SetDamage(dmginfo:GetDamage() - 6)
 	end
+    truedogder = 30 - (self:GetWalkSpeed() / 20)
+	rngdogde = math.random(1,truedogder)
+ 
+	if self:IsSkillActive(SKILL_DODGE) and rngdogde == 1 then
+		dmginfo:SetDamage(0)
+		net.Start("zs_damageblock")
+		net.Send(self)
+		
+    end
+
+	if self:IsSkillActive(SKILL_HOLY_MANTLE) and self.HolyMantle == 1 then
+		dmginfo:SetDamage(0)
+		net.Start("zs_holymantle")
+		net.Send(self)
+		self.HolyMantle = self.HolyMantle - 1
+    end
 
 	-- Opted for multiplicative.
 	if attacker == self and dmgtype ~= DMG_CRUSH and dmgtype ~= DMG_FALL and self.SelfDamageMul then
@@ -606,6 +622,8 @@ end
 function meta:AddLifeBarricadeDamage(amount)
 	self.LifeBarricadeDamage = self.LifeBarricadeDamage + amount
 	self.WaveBarricadeDamage = self.WaveBarricadeDamage + amount
+	self:AddZSXP((self.WaveBarricadeDamage * 0.3) + (self.self.LifeBarricadeDamage * 0.15))
+	self:AddTokens((self.WaveBarricadeDamage * 0.3) + (self.self.LifeBarricadeDamage * 0.15))
 
 	if not self:Alive() and not self:GetZombieClassTable().NeverAlive then
 		timer.Simple(0, function() if self:IsValid() then self:SendLifeStats() end end)
