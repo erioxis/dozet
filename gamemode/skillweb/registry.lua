@@ -282,6 +282,8 @@ SKILL_BLESSEDROD = 259
 SKILL_UPLOAD = 261
 SKILL_HOLY_MANTLE = 262
 SKILL_BOUNTYKILLER = 264
+SKILL_LIVER = 265
+SKILL_LUCKY_UNLIVER = 266
 
 SKILLMOD_HEALTH = 1
 SKILLMOD_SPEED = 2
@@ -435,7 +437,11 @@ GM:AddSkill(SKILL_VITALITY3, "Vitality III", GOOD.."+7 maximum health",
 GM:AddSkill(SKILL_CHEESE, "Cheese", GOOD.."+10 maximum health and +10 speed",
 																1,			1,					{SKILL_GOURMET}, TREE_HEALTHTREE)
 GM:AddSkill(SKILL_TANKER, "Tanker", GOOD.."+60 maximum health\n"..BAD.."-40 movement speed",
-																-5,			4,					{}, TREE_HEALTHTREE)
+																-5,			4,					{SKILL_LIVER}, TREE_HEALTHTREE)
+GM:AddSkill(SKILL_LIVER, "Upgrowthing", GOOD.."+7% Max health per wave\n"..BAD.."-20 movement speed\n"..BAD.."-30 health",
+																-5,			5,					{SKILL_TANKER}, TREE_HEALTHTREE)
+GM:AddSkillModifier(SKILL_LIVER, SKILLMOD_SPEED, -20)
+GM:AddSkillModifier(SKILL_LIVER, SKILLMOD_HEALTH, -30)
 GM:AddSkill(SKILL_FORAGER, "Forager", GOOD.."25% chance to collect food from resupply boxes\n"..BAD.."+20% resupply box delay",
 																5,			-2,					{SKILL_GOURMET}, TREE_HEALTHTREE)
 GM:AddSkill(SKILL_SUGARRUSH, "Sugar Rush", GOOD.."+35 speed boost from food for 14 seconds\n"..BAD.."-35% recovery from food\n",
@@ -453,7 +459,7 @@ GM:AddSkill(SKILL_SPEED1, "Speed I", GOOD.."+5 movement speed\n"..BAD.."-4 maxim
 																-4,			6,					{SKILL_NONE, SKILL_SPEED2}, TREE_SPEEDTREE)
 SKILL_DODGE = 263
 GM:AddSkill(SKILL_DODGE, "Dodge", GOOD.."Have chance to block attack\n"..GOOD.."With higher speed,higher block chance\n"..BAD.."-50 Speed",
-																-3,			1,					{SKILL_NONE, SKILL_SPEED2}, TREE_SPEEDTREE)
+																-3,			1,					{SKILL_SPEED2}, TREE_SPEEDTREE)
 GM:AddSkillModifier(SKILL_DODGE, SKILLMOD_SPEED, -50)
 
 GM:AddSkill(SKILL_SPEED2, "Speed II", GOOD.."+5 movement speed\n"..BAD.."-7 maximum health",
@@ -914,6 +920,8 @@ GM:AddSkill(SKILL_ULUCK, "Ultra lucky", GOOD.."+5 luck\n"..BAD.."-15% Point mult
 SKILL_LUCKE = 162
 GM:AddSkillModifier(SKILL_LUCKE, SKILLMOD_POINT_MULTIPLIER, -0.1)
 GM:AddSkillModifier(SKILL_LUCKE, SKILLMOD_LUCK, 2)	
+GM:AddSkill(SKILL_LUCKY_UNLIVER, "The luck stacker", GOOD.."+2 luck per wave\n" ..BAD.. "-10% max health per wave",
+	1,			-3,					{SKILL_LUCKE}, TREE_POINTTREE)
 GM:AddSkill(SKILL_LUCKE, "Luckiest", NEUTRAL.."+2 luck\n" ..BAD.. "-10% Points MUL",
 	1,			-2,					{SKILL_POINTIIII}, TREE_POINTTREE)
 	SKILL_BLUCK = 163
@@ -1153,7 +1161,7 @@ GM:AddSkillModifier(SKILL_TRIP, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.33)
 GM:AddSkillModifier(SKILL_TRIP, SKILLMOD_MELEE_DAMAGE_MUL, -0.36)
 GM:AddSkillModifier(SKILL_TRIP, SKILLMOD_SPEED, -60)
 GM:AddSkillModifier(SKILL_TRIP, SKILLMOD_CURSEM, 0.5)
-GM:AddSkill(SKILL_HOLY_MANTLE, "Holy Mantle", GOOD.."Absorb damage every 15 seconds\n",
+GM:AddSkill(SKILL_HOLY_MANTLE, "Holy Mantle", GOOD.."Absorb damage every 15 seconds\nThan higher luck - faster reloading",
 				                                                            	-4,			3,					{SKILL_TTIMES}, TREE_DEFENSETREE)
 SKILL_MERIS = 199
 GM:AddSkill(SKILL_MERIS, "Meris", GOOD.."-10% Damage taken\n"..BAD.."-20% Melee damage!",

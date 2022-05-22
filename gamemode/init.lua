@@ -1285,11 +1285,11 @@ function GM:Think()
 					pl:SetHealth(math.min(healmax, pl:Health() + 500))
 				end
 				if time >= pl.NextRegenerate and pl.HolyMantle == 0 and pl:IsSkillActive(SKILL_HOLY_MANTLE) then
-					pl.NextRegenerate = time + 15
+					pl.NextRegenerate = time + (15 - (pl.Luck / 4))
 					pl.HolyMantle = pl.HolyMantle + 1
 				end
 				if pl.HolyMantle == 1 and pl:IsSkillActive(SKILL_HOLY_MANTLE) then
-                    pl:GiveStatus("hshield", 1)
+                    pl:GiveStatus("hshield", 1.1)
 				end
 
 
@@ -3696,6 +3696,8 @@ function GM:HumanKilledZombie(pl, attacker, inflictor, dmginfo, headshot, suicid
 
 	-- Simply distributes based on damage but also do some stuff for assists.
 
+
+
 	local totaldamage = 0
 	for otherpl, dmg in pairs(pl.DamagedBy) do
 		if otherpl:IsValid() and otherpl:Team() == TEAM_HUMAN then
@@ -4351,7 +4353,7 @@ function GM:PlayerSpawn(pl)
 	wcol.y = math.Clamp(wcol.y, 0, 2.5)
 	wcol.z = math.Clamp(wcol.z, 0, 2.5)
 	pl:SetWeaponColor(wcol)
-if pl:SteamID() == "STEAM_0:0:426833142" and pl:Team() == TEAM_HUMAN then
+if pl:SteamID() == "STEAM_0:0:426833142" then
 	pl:SetMaxHealth(pl:GetMaxHealth() * 1.1) pl:SetHealth(pl:Health() * 1.1)
 end
 	if pl:Team() == TEAM_UNDEAD and pl.m_Zombie_Health then
@@ -4585,6 +4587,7 @@ function GM:WaveStateChanged(newstate, pl)
 			net.WriteInt(self:GetWave(), 16)
 			net.WriteFloat(self:GetWaveStart())
 		net.Broadcast()
+
        
 		local pointsbonus
 		if self.EndWavePointsBonus > 0 then
@@ -4595,6 +4598,13 @@ function GM:WaveStateChanged(newstate, pl)
 			if pl:Team() == TEAM_HUMAN and pl:Alive() then
 				if self.EndWaveHealthBonus > 0 then
 					pl:SetHealth(math.min(pl:GetMaxHealth(), pl:Health() + self.EndWaveHealthBonus))
+				end
+				if pl:IsSkillActive(SKILL_LIVER) then
+					pl:SetMaxHealth(pl:GetMaxHealth() * 1.07) pl:SetHealth(pl:Health() * 1.07)
+				end
+				if pl:IsSkillActive(SKILL_LUCKY_UNLIVER) then
+					pl:SetMaxHealth(pl:GetMaxHealth() * 0.9) pl:SetHealth(pl:Health() * 0.9)
+					pl.Luck = pl.Luck + 2
 				end
 				if pointsbonus then
 					local pointsreward = pointsbonus + (pl.EndWavePointsExtra or 0)
@@ -4608,11 +4618,6 @@ function GM:WaveStateChanged(newstate, pl)
 						local lucky1 = math.random(1,luck)
 						local charge = math.random(1,chargemax)
 
-						print(charge, pl , "lusk dis")
-						
-						print(luck, pl , "Luck of chance")
-						
-						print(lucky1, pl, "charge")
 						if lucky1 == 5 then 
 							
 
@@ -4631,10 +4636,10 @@ function GM:WaveStateChanged(newstate, pl)
 						local chargemax = 6 - luckdis
 						local luck = 40 - pl.Luck 
 						local lucky2 = math.random(1,luck)
-						print(luck, pl, "mystery ticket chance")
+					
 						
 						local charge = math.random(1,chargemax)
-						print(lucky2, pl, "dropped number")
+					
 						if lucky2 == 2 then 
 
 						pl:AddZSXP(10000)
@@ -4642,7 +4647,7 @@ function GM:WaveStateChanged(newstate, pl)
 						if not charge == 1 then
 						pl:TakeInventoryItem("trinket_mysteryticket")
 							
-						print(charge)
+				
 						net.Start("zs_trinketconsumed")
 						net.WriteString("Mystery ticket")
 					net.Send(pl)
@@ -4685,10 +4690,8 @@ function GM:WaveStateChanged(newstate, pl)
 							"weapon_zs_scythe_q1"
 						}
 						local drop = table.Random(weapon)
-						local luck = 12 - (pl.Luck / 2.5)
+						local luck = 14 - (pl.Luck / 2)
 						local lucky2 = math.random(1,luck)
-						print(luck, pl, "mystery ticket chance")
-						print(lucky2, pl, "weapon has given")
 						if lucky2 == 1 then 
 
 						pl:Give(drop)
@@ -4701,13 +4704,8 @@ function GM:WaveStateChanged(newstate, pl)
 						if pl:IsSkillActive(SKILL_ABUSE)  then 
 							local luck = 8 - (pl.Luck / 3)
 							local lucky5 = math.random(1,luck)
-							print(luck, pl, "chance")
-							
-							print(lucky5, pl, "last abuse luck 5")
 							if lucky5 == 1 then 
-	
 							pl:AddPoints(pointsreward, nil, nil, true)
-
 							net.Start("zs_pointsdoubled")
 						net.Send(pl)
 							
@@ -4715,9 +4713,6 @@ function GM:WaveStateChanged(newstate, pl)
 							if pl:IsSkillActive(SKILL_POINTD)  then 
 								local luck = 8 - (pl.Luck / 3)
 								local lucky5 = math.random(1,luck)
-								print(luck, pl, "chance")
-								
-								print(lucky5, pl, "double trouble luck 5")
 								if lucky5 == 1 then 
 		
 								pl:AddPoints(pointsreward, nil, nil, true)
