@@ -2335,7 +2335,7 @@ function GM:PlayerInitialSpawnRound(pl)
 	pl.BrainsEaten = 0
 	pl.zKills = 0
 	pl.RedeemedOnce = 0
-	pl.HolyMantle = 1
+	pl.HolyMantle = 0
 
 	pl.ResupplyBoxUsedByOthers = 0
 

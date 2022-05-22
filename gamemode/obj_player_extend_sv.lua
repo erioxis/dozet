@@ -109,6 +109,7 @@ function meta:ProcessDamage(dmginfo)
 		net.Start("zs_holymantle")
 		net.Send(self)
 		self.HolyMantle = self.HolyMantle - 1
+		self:GiveStatus("hshield", 3)
 		timer.Create( "GodOnHM", 0.3, 1, function() self:GodEnable() end )
 		timer.Create( "GodoffHM", 3, 1, function() self:GodDisable() end )
     end
