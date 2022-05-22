@@ -54,15 +54,8 @@ SWEP.WalkSpeed = SPEED_SLOW
 SWEP.Tier = 7
 SWEP.MaxStock = 2
 function SWEP:OnZombieKilled()
-	local killer = self:GetOwner()
+	self.Primary.Damage = self.Primary.Damage + 1.2
 
-	if killer:IsValid() then
-		local reaperstatus = killer:GiveStatus("bloodlust", 60)
-		if reaperstatus and reaperstatus:IsValid() then
-			reaperstatus:SetDTInt(1, math.min(reaperstatus:GetDTInt(1) + 5, 120))
-			killer:EmitSound("hl1/ambience/particle_suck1.wav", 55, 150 + reaperstatus:GetDTInt(1) * 30, 0.45)
-		end
-	end
 end
 
 

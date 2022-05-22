@@ -1196,17 +1196,17 @@ GM:AddSkill(SKILL_DONATE7, "Donate VII", GOOD.."+20% Hammer repair mul\n"..BAD..
 				                                                            	21,			24,					{SKILL_DONATE6}, TREE_DONATETREE)
 GM:AddSkillModifier(SKILL_DONATE7, SKILLMOD_REPAIRRATE_MUL, 0.20)
 SKILL_DONATE8 = 212
-GM:AddSkill(SKILL_DONATE8, "Donate VIII", GOOD.."+% Reload speed\n"..BAD.."Donate if you want to unlock this skill",
-				                                                            	21,			25,					{SKILL_DONATE9}, TREE_DONATETREE)
-GM:AddSkillModifier(SKILL_DONATE8, SKILLMOD_RELOADSPEED_MUL, 0.10)
+GM:AddSkill(SKILL_DONATE8, "Donate VIII", GOOD.."+21% Reload speed\n"..BAD.."Donate if you want to unlock this skill",
+				                                                            	21,			25,					{SKILL_DONATE7}, TREE_DONATETREE)
+GM:AddSkillModifier(SKILL_DONATE8, SKILLMOD_RELOADSPEED_MUL, 0.21)
 SKILL_DONATE9 = 213
-GM:AddSkill(SKILL_DONATE9, "Donate IX", GOOD.."+ Health\n"..BAD.."Donate if you want to unlock this skill",
+GM:AddSkill(SKILL_DONATE9, "Donate IX", GOOD.."+35 Health\n"..BAD.."Donate if you want to unlock this skill",
 				                                                            	20,			25,					{SKILL_DONATE8}, TREE_DONATETREE)
-GM:AddSkillModifier(SKILL_DONATE9, SKILLMOD_HEALTH, 5)
+GM:AddSkillModifier(SKILL_DONATE9, SKILLMOD_HEALTH, 35)
 SKILL_DONATE10 = 214
-GM:AddSkill(SKILL_DONATE10, "Donate X", GOOD.."+ Worth\n"..BAD.."Donate if you want to unlock this skill",
+GM:AddSkill(SKILL_DONATE10, "Donate X", GOOD.."+20 Worth\n"..BAD.."Donate if you want to unlock this skill",
 				                                                            	21,			26,					{SKILL_DONATE9}, TREE_DONATETREE)
-GM:AddSkillModifier(SKILL_DONATE10, SKILLMOD_WORTH, 10)
+GM:AddSkillModifier(SKILL_DONATE10, SKILLMOD_WORTH, 40)
 SKILL_CHALLENGER1 = 215
 GM:AddSkill(SKILL_CHALLENGER1, "Challenger I", GOOD.."+20 Health,+1 luck,+5% Sale, help for challenges!\n"..GOOD.."Can use in any challenge",
 				                                                            	25,			26,					{SKILL_NONE, SKILL_CHALLENGER2}, TREE_DONATETREE)
