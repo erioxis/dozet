@@ -625,8 +625,7 @@ end
 function meta:AddLifeBarricadeDamage(amount)
 	self.LifeBarricadeDamage = self.LifeBarricadeDamage + amount
 	self.WaveBarricadeDamage = self.WaveBarricadeDamage + amount
-	self:AddZSXP((self.WaveBarricadeDamage * 0.3) + (self.self.LifeBarricadeDamage * 0.15))
-	self:AddTokens((self.WaveBarricadeDamage * 0.3) + (self.self.LifeBarricadeDamage * 0.15))
+
 
 	if not self:Alive() and not self:GetZombieClassTable().NeverAlive then
 		timer.Simple(0, function() if self:IsValid() then self:SendLifeStats() end end)

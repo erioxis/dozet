@@ -167,6 +167,13 @@ local statusdisplays = {
 	ValFunc = statusValueFunction("hollowing"),
 	Max = 1000,
 	Icon = Material("zombiesurvival/hallow.png")
+},
+{
+	Color = Color(255, 255, 255),
+	Name = "HOLY MANTLE!",
+	ValFunc = statusValueFunction("hshield"),
+	Max = 2999,
+	Icon = Material("zombiesurvival/defense.png")
 }
 }
 

@@ -1288,6 +1288,9 @@ function GM:Think()
 					pl.NextRegenerate = time + 15
 					pl.HolyMantle = pl.HolyMantle + 1
 				end
+				if pl.HolyMantle == 1 then
+                    pl:GiveStatus("hshield", 1)
+				end
 
 
 				if pl:HasTrinket("adrenaline") and time >= pl.NextRegenerate and pl:Health() < math.min(healmax, pl:GetMaxHealth() * 0.85) then
