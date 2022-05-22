@@ -2066,7 +2066,7 @@ function GM:ScalePlayerDamage(pl, hitgroup, dmginfo)
 		GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_WEAPON, inflictor:GetClass(), "Headshots", 1)
 	end
 	if dmginfo:IsBulletDamage() then 
-		dmginfo:SetDamage((dmginfo:GetDamage() * damagescalebullet) - attacker.zKills / 50)
+		dmginfo:SetDamage((dmginfo:GetDamage() * damagescalebullet) - attacker.zKills / 25)
 	end
 	if not dmginfo:IsBulletDamage() then return end
 
@@ -3712,6 +3712,11 @@ function GM:HumanKilledZombie(pl, attacker, inflictor, dmginfo, headshot, suicid
 
 	attacker.ZombiesKilled = attacker.ZombiesKilled + 1
 	attacker.zKills = attacker.zKills + 1
+	attacker:AddZSXP(1)
+	if attacker:IsSkillActive(SKILL_BOUNTYKILLER) then
+		attacker:AddZSXP(5)
+	end
+	
 
  
 
