@@ -1284,11 +1284,11 @@ function GM:Think()
 					pl.NextRegenerate = time + 60
 					pl:SetHealth(math.min(healmax, pl:Health() + 500))
 				end
-				if time >= pl.NextRegenerate and pl.HolyMantle == 0 then
+				if time >= pl.NextRegenerate and pl.HolyMantle == 0 and pl:IsSkillActive(SKILL_HOLY_MANTLE) then
 					pl.NextRegenerate = time + 15
 					pl.HolyMantle = pl.HolyMantle + 1
 				end
-				if pl.HolyMantle == 1 then
+				if pl.HolyMantle == 1 and pl:IsSkillActive(SKILL_HOLY_MANTLE) then
                     pl:GiveStatus("hshield", 1)
 				end
 
