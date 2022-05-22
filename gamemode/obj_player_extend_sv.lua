@@ -89,15 +89,11 @@ function meta:ProcessDamage(dmginfo)
 
 		return not dmgbypass and self:CallZombieFunction1("ProcessDamage", dmginfo)
 	end
-	if self:IsSkillActive(SKILL_FOLGA) then
-		dmginfo:SetDamage(dmginfo:GetDamage() - 5)
-	end
+
 	if self:IsSkillActive(SKILL_BLESSEDROD) and dmginfo:GetDamage() >= 30 then
 		dmginfo:SetDamage(dmginfo:GetDamage() - 12)
 	end
-	if self:HasTrinket("ttimes") then
-		dmginfo:SetDamage(dmginfo:GetDamage() - 6)
-	end
+
     truedogder = 30 - (self:GetWalkSpeed() / 20)
 	rngdogde = math.random(1,truedogder)
  
@@ -189,7 +185,12 @@ function meta:ProcessDamage(dmginfo)
 					end
 					dmginfo:SetDamage(0)
 				end
-						
+				if self:HasTrinket("ttimes") then
+					dmginfo:SetDamage(dmginfo:GetDamage() - 6)
+				end
+				if self:IsSkillActive(SKILL_FOLGA) then
+					dmginfo:SetDamage(dmginfo:GetDamage() - 5)
+				end
 					
 		
 

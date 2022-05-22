@@ -1201,15 +1201,15 @@ GM:AddSkill(SKILL_DONATE7, "Donate VII", GOOD.."+20% Hammer repair mul\n"..BAD..
 				                                                            	21,			24,					{SKILL_DONATE6}, TREE_DONATETREE)
 GM:AddSkillModifier(SKILL_DONATE7, SKILLMOD_REPAIRRATE_MUL, 0.20)
 SKILL_DONATE8 = 212
-GM:AddSkill(SKILL_DONATE8, "Donate VIII", GOOD.."+21% Reload speed\n"..BAD.."Donate if you want to unlock this skill",
+GM:AddSkill(SKILL_DONATE8, "Donate VIII", GOOD.."+21% Reload speed\n"..GOOD.."thx shepard",
 				                                                            	21,			25,					{SKILL_DONATE7}, TREE_DONATETREE)
 GM:AddSkillModifier(SKILL_DONATE8, SKILLMOD_RELOADSPEED_MUL, 0.21)
 SKILL_DONATE9 = 213
-GM:AddSkill(SKILL_DONATE9, "Donate IX", GOOD.."+35 Health\n"..BAD.."Donate if you want to unlock this skill",
+GM:AddSkill(SKILL_DONATE9, "Donate IX", GOOD.."+35 Health\n"..GOOD.."thx shepard",
 				                                                            	20,			25,					{SKILL_DONATE8}, TREE_DONATETREE)
 GM:AddSkillModifier(SKILL_DONATE9, SKILLMOD_HEALTH, 35)
 SKILL_DONATE10 = 214
-GM:AddSkill(SKILL_DONATE10, "Donate X", GOOD.."+20 Worth\n"..BAD.."Donate if you want to unlock this skill",
+GM:AddSkill(SKILL_DONATE10, "Donate X", GOOD.."+20 Worth\n"..GOOD.."thx shepard",
 				                                                            	21,			26,					{SKILL_DONATE9}, TREE_DONATETREE)
 GM:AddSkillModifier(SKILL_DONATE10, SKILLMOD_WORTH, 40)
 SKILL_CHALLENGER1 = 215

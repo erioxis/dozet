@@ -1,14 +1,15 @@
+
 INC_SERVER()
 
 function SWEP:ApplyMeleeDamage(pl, trace, damage)
 	if SERVER and pl:IsPlayer() then
 		local cursed = pl:GetStatus("cursed")
 		if (cursed) then 
-			ent:GiveStatus("dimvision", 6)
+			pl:GiveStatus("dimvision", 6)
 			pl:AddCursed(self:GetOwner(), cursed.DieTime - CurTime() + 20)
 		end
 		if (not cursed) then 
-			ent:GiveStatus("dimvision", 6)
+			pl:GiveStatus("dimvision", 12)
 			pl:AddCursed(pl:GetOwner(), 20)
 		end
 	end
