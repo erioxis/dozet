@@ -423,19 +423,19 @@ GM:AddSkill(SKILL_REGENERATOR, ""..translate.Get("skill_regen_0"), GOOD..""..tra
 																-5,			-2,					{}, TREE_HEALTHTREE)
 GM:AddSkill(SKILL_NULLED, ""..translate.Get("skill_regen1_0"), GOOD..""..translate.Get("skill_regen1_d1"),
 			                                                   	-5,			0,					{SKILL_REGENERATOR}, TREE_HEALTHTREE)
-GM:AddSkill(SKILL_BLOODARMOR, "Blood Armor", GOOD.."Regenerate 1 blood armor every 8 seconds upto your blood armor max\nBase blood armor maximum is 20\nBase blood armor damage absorption is 50%\n"..BAD.."-13 maximum health",
+GM:AddSkill(SKILL_BLOODARMOR, ""..translate.Get("skill_bloodarmor_0"), GOOD..translate.Get("skill_bloodarmor_d1") ..BAD..translate.Get("skill_bloodarmor_d2"),
 																2,			2,					{SKILL_IRONBLOOD, SKILL_BLOODLETTER, SKILL_D_HEMOPHILIA}, TREE_HEALTHTREE)
-GM:AddSkill(SKILL_IRONBLOOD, "Iron Blood", GOOD.."+25% damage reduction from blood armor\n"..GOOD.."Bonus doubled when health is 50% or less\n"..BAD.."-50% maximum blood armor",
+GM:AddSkill(SKILL_IRONBLOOD, ""..translate.Get("skill_ironblood_0"), GOOD..translate.Get("skill_ironblood_d1") ..GOOD..translate.Get("skill_ironblood_d2") ..BAD..translate.Get"skill_ironblood_d3",
 																2,			4,					{SKILL_HAEMOSTASIS, SKILL_CIRCULATION}, TREE_HEALTHTREE)
 GM:AddSkill(SKILL_D_WEAKNESS, "Debuff: Weakness", GOOD.."+60 starting Worth\n"..GOOD.."+15 end of wave points\n"..BAD.."-60 maximum health\n"..BAD.."-30% Melee Damage\n",
 																1,			-1,					{}, TREE_HEALTHTREE)
-GM:AddSkill(SKILL_VITALITY1, "Vitality I", GOOD.."+1 maximum health",
+GM:AddSkill(SKILL_VITALITY1, ""..translate.Get("skill_vitalityi_0"), GOOD..translate.Get("skill_vitalityi_d1"),
 																0,			-4,					{SKILL_VITALITY2}, TREE_HEALTHTREE)
-GM:AddSkill(SKILL_VITALITY2, "Vitality II", GOOD.."+3 maximum health",
+GM:AddSkill(SKILL_VITALITY2, ""..translate.Get("skill_vitalityii_0"), GOOD..translate.Get("skill_vitalityii_d1"),
 																0,			-2,					{SKILL_VITALITY3}, TREE_HEALTHTREE)
-GM:AddSkill(SKILL_VITALITY3, "Vitality III", GOOD.."+7 maximum health",
+GM:AddSkill(SKILL_VITALITY3, ""..translate.Get("skill_vitalityiii_0"), GOOD..translate.Get("skill_vitalityiii_d1"),
 																0,			-0,					{SKILL_D_WEAKNESS}, TREE_HEALTHTREE)
-GM:AddSkill(SKILL_CHEESE, "Cheese", GOOD.."+10 maximum health and +10 speed",
+GM:AddSkill(SKILL_CHEESE, ""..translate.Get("skill_cheese_0"), GOOD..translate.Get"skill_cheese_d1",
 																1,			1,					{SKILL_GOURMET}, TREE_HEALTHTREE)
 GM:AddSkill(SKILL_TANKER, "Tanker", GOOD.."+60 maximum health\n"..BAD.."-40 movement speed",
 																-5,			4,					{SKILL_LIVER}, TREE_HEALTHTREE)
@@ -477,14 +477,14 @@ GM:AddSkill(SKILL_AGILEII, "Agile II", GOOD.."+5% jumping power\n"..BAD.."-3 mov
 																4,			2,					{SKILL_AGILEIII, SKILL_WORTHINESS3}, TREE_SPEEDTREE)
 GM:AddSkill(SKILL_AGILEIII, "Agile III", GOOD.."+6% jumping power\n"..BAD.."-4 movement speed",
 																4,			-2,					{SKILL_SAFEFALL, SKILL_ULTRANIMBLE, SKILL_SURESTEP, SKILL_INTREPID, SKILL_VKID, SKILL_NOSEE}, TREE_SPEEDTREE)
-GM:AddSkill(SKILL_NOSEE, "Curse of vision", GOOD.."+50 Speed\n"..GOOD.."+30 worth\n"..BAD.."Dim Vision forever\nEvery 10 seconds is only rare moments when you have 0.5 seconds to see",
-																6.5,			-2,					{SKILL_AGILEIII}, TREE_SPEEDTREE)
-GM:AddSkillModifier(SKILL_NOSEE, SKILLMOD_SPEED, 50)
-GM:AddSkillModifier(SKILL_NOSEE, SKILLMOD_WORTH, 30)
 GM:AddSkill(SKILL_VKID, "Vkid", GOOD.."+30% jumping power\n"..GOOD.."+60 speed\n"..GOOD.."You can squeeze zombie\n"..BAD.."-50 health",
 																4,			-3,					{}, TREE_SPEEDTREE)
 GM:AddSkill(SKILL_D_SLOW, ""..translate.Get("skill_slow"), GOOD..""..translate.Get("skill_slow_d1")..GOOD..""..translate.Get("skill_slow_d2")..BAD..""..translate.Get("skill_slow_d3")..BAD..""..translate.Get("skill_slow_d4"),
 																0,			-4,					{}, TREE_SPEEDTREE)
+GM:AddSkill(SKILL_NOSEE, "Curse of vision", GOOD.."+50 Speed\n"..GOOD.."+30 worth\n"..BAD.."Dim Vision forever\nEvery 10 seconds is only rare moments when you have 0.5 seconds to see",
+																6.5,			-2,					{SKILL_AGILEIII}, TREE_SPEEDTREE)
+GM:AddSkillModifier(SKILL_NOSEE, SKILLMOD_SPEED, 50)
+GM:AddSkillModifier(SKILL_NOSEE, SKILLMOD_WORTH, 30)
 GM:AddSkill(SKILL_MOTIONI, ""..translate.Get("skill_motion1"), GOOD..""..translate.Get("skill_motion_d_all"),
 																-2,			-2,					{SKILL_MOTIONII}, TREE_SPEEDTREE)
 GM:AddSkill(SKILL_MOTIONII, ""..translate.Get("skill_motion2"), GOOD..""..translate.Get("skill_motion_d_all"),
