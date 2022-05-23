@@ -285,6 +285,7 @@ SKILL_BOUNTYKILLER = 264
 SKILL_LIVER = 265
 SKILL_LUCKY_UNLIVER = 266
 SKILL_NOSEE = 267
+SKILL_XPHUNTER = 270
 
 SKILLMOD_HEALTH = 1
 SKILLMOD_SPEED = 2
@@ -916,6 +917,8 @@ SKILL_LUCK4 = 246
 GM:AddSkillModifier(SKILL_LUCK4, SKILLMOD_LUCK, 1)
 GM:AddSkill(SKILL_LUCK4, "Luck IV", GOOD.."+1 luck",
 																-4,			-8,					{SKILL_LUCK3}, TREE_POINTTREE)		
+GM:AddSkill(SKILL_XPHUNTER, "XP hunter", GOOD.."Give 5xp if wave ended\n Based on current wave",
+																-4,			-10,					{SKILL_LUCK4}, TREE_POINTTREE)		
 SKILL_ULUCK = 247
 GM:AddSkillModifier(SKILL_ULUCK, SKILLMOD_LUCK, 5)
 GM:AddSkillModifier(SKILL_ULUCK, SKILLMOD_RESUPPLY_DELAY_MUL, 0.15)
@@ -1166,7 +1169,7 @@ GM:AddSkillModifier(SKILL_TRIP, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.23)
 GM:AddSkillModifier(SKILL_TRIP, SKILLMOD_MELEE_DAMAGE_MUL, -0.12)
 GM:AddSkillModifier(SKILL_TRIP, SKILLMOD_SPEED, -70)
 GM:AddSkillModifier(SKILL_TRIP, SKILLMOD_CURSEM, 0.5)
-GM:AddSkill(SKILL_HOLY_MANTLE, "Holy Mantle", GOOD.."Absorb damage every 30 seconds\nThan higher luck - faster reloading",
+GM:AddSkill(SKILL_HOLY_MANTLE, "Holy Mantle", GOOD.."Absorb damage every 30 seconds\nThan higher luck - faster reloading\nWith each wave,the Holy Mantle recharge rate slows down",
 				                                                            	-4,			3,					{SKILL_TTIMES}, TREE_DEFENSETREE)
 SKILL_MERIS = 199
 GM:AddSkill(SKILL_MERIS, "Meris", GOOD.."-10% Damage taken\n"..BAD.."-20% Melee damage!",
@@ -1225,6 +1228,15 @@ SKILL_DONATE10 = 214
 GM:AddSkill(SKILL_DONATE10, "Donate X", GOOD.."+20 Worth\n"..GOOD.."thx shepard",
 				                                                            	21,			26,					{SKILL_DONATE9}, TREE_DONATETREE)
 GM:AddSkillModifier(SKILL_DONATE10, SKILLMOD_WORTH, 20)
+SKILL_DONATE11 = 268
+GM:AddSkill(SKILL_DONATE11, "Donate XI", GOOD.."+% Max curse\n"..GOOD.."Donate for unlocking!",
+				                                                            	23,			27,					{SKILL_DONATE11}, TREE_DONATETREE)
+GM:AddSkillModifier(SKILL_DONATE11, SKILLMOD_CURSEM, 0.2)
+SKILL_DONATE12 = 269
+GM:AddSkill(SKILL_DONATE12, "Donate XII", GOOD.."+% Bullet damage\n"..GOOD.."Donate for unlocking!",
+				                                                            	22,			28,					{SKILL_DONATE11}, TREE_DONATETREE)
+GM:AddSkillModifier(SKILL_DONATE12, SKILLMOD_DAMAGE, 0.2)
+
 SKILL_CHALLENGER1 = 215
 GM:AddSkill(SKILL_CHALLENGER1, "Challenger I", GOOD.."+20 Health,+1 luck,+5% Sale, help for challenges!\n"..GOOD.."Can use in any challenge",
 				                                                            	25,			26,					{SKILL_NONE, SKILL_CHALLENGER2}, TREE_DONATETREE)

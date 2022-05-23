@@ -1204,6 +1204,7 @@ function GM:Think()
 		end
 	end 
 
+
 	
 
 
@@ -1285,8 +1286,9 @@ function GM:Think()
 					pl:SetHealth(math.min(healmax, pl:Health() + 500))
 				end
 				if time >= pl.NextRegenerate and pl.HolyMantle == 0 and pl:IsSkillActive(SKILL_HOLY_MANTLE) then
-					pl.NextRegenerate = time + (30 - (pl.Luck / 4))
+					pl.NextRegenerate = time + ((30 - (pl.Luck / 4)) + self.GetWave())
 					pl.HolyMantle = pl.HolyMantle + 1
+					
 				end
 				if pl.HolyMantle == 1 and pl:IsSkillActive(SKILL_HOLY_MANTLE) then
                     pl:GiveStatus("hshield", 1.1)
@@ -1295,6 +1297,7 @@ function GM:Think()
 					pl.NextRegenerate = time + 9
                     pl:GiveStatus("dimvision", 10)
 				end
+
 
 
 				if pl:HasTrinket("adrenaline") and time >= pl.NextRegenerate and pl:Health() < math.min(healmax, pl:GetMaxHealth() * 0.85) then
@@ -4610,6 +4613,10 @@ function GM:WaveStateChanged(newstate, pl)
 					pl:SetMaxHealth(pl:GetMaxHealth() * 0.9) pl:SetHealth(pl:Health() * 0.9)
 					pl.Luck = pl.Luck + 2
 				end
+				if pl:IsSkillActive(SKILL_XPHUNTER) then
+					pl:AddZSXP(5 + self.GetWave())
+				end
+				
 				if pointsbonus then
 					local pointsreward = pointsbonus + (pl.EndWavePointsExtra or 0)
 					if pl:IsSkillActive(SKILL_SCOURER) then
@@ -4690,11 +4697,10 @@ function GM:WaveStateChanged(newstate, pl)
 							"weapon_zs_inferno_q1",
 							"weapon_zs_binocle_q1",
 							"weapon_zs_keyboard_q1",
-							"weapon_zs_icelux",
 							"weapon_zs_scythe_q1"
 						}
 						local drop = table.Random(weapon)
-						local luck = 14 - (pl.Luck / 2)
+						local luck = 9 - (pl.Luck / 4)
 						local lucky2 = math.random(1,luck)
 						if lucky2 == 1 then 
 
