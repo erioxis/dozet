@@ -504,7 +504,7 @@ GM:AddSkill(SKILL_SIGILOL, "Sigil Infection", GOOD.."+300% Speed in phasing phas
 																2,			4,					{SKILL_WARP}, TREE_SPEEDTREE)
 GM:AddSkill(SKILL_CURSEDTRINKETS, "Worth Trinkets", GOOD.."Cursed?\n"..BAD.."Cursed?\n"..GOOD.."Cursed?",
 																2,		    5,					{SKILL_SIGILOL}, TREE_SPEEDTREE)
-GM:AddSkill(SKILL_CURSEDHEALTH, "Cursed Health", GOOD.."Max Health = Max curse\n"..BAD.."-25% Max curse\n",
+GM:AddSkill(SKILL_CURSEDHEALTH, "Cursed Health", GOOD.."Max Health = Max curse * 2\n"..BAD.."-25% Max curse\n",
 																1,		    4.5,					{SKILL_CURSEDTRINKETS}, TREE_SPEEDTREE)
 
 

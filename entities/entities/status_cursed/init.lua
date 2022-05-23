@@ -20,7 +20,7 @@ function ENT:Think()
 			cursed:GetOwner():Kill()
 			cursed:Remove()
 		
-		elseif (cursed.DieTime >= CurTime() + owner:GetMaxHealth() * (owner.CurseMultiplier or 1)) and owner:IsSkillActive(SKILL_CURSEDHEALTH) then
+		elseif (cursed.DieTime >= CurTime() + (owner:GetMaxHealth() * 2) * (owner.CurseMultiplier or 1)) and owner:IsSkillActive(SKILL_CURSEDHEALTH) then
 			cursed:GetOwner():Kill()
 			cursed:Remove()
 		end
