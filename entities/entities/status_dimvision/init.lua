@@ -10,3 +10,12 @@ function ENT:SetDie(fTime)
 		self:SetDuration(fTime)
 	end
 end
+
+function ENT:Think()
+	self:DrawShadow(false)
+	self.AmbientSound = CreateSound(self, "zombiesurvival/nightmare_ambiance.ogg")
+	self.AmbientSound:PlayEx(2, 300)
+	if self.DieTime <= CurTime() then
+		self:Remove()
+	end
+end

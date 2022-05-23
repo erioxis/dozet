@@ -10,6 +10,7 @@ function ENT:Initialize()
 	self.BaseClass.Initialize(self)
 
 	self:DrawShadow(false)
+	
 
 	if CLIENT then
 		hook.Add("RenderScreenspaceEffects", self, self.RenderScreenspaceEffects)

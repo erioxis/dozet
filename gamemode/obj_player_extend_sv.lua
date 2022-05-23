@@ -304,7 +304,7 @@ function meta:ProcessDamage(dmginfo)
 						boost:SetSpeed(55)
 					end
 				end
-				if self:IsSkillActive(SKILL_BLOODLOST)  then
+				if self:IsSkillActive(SKILL_BLOODLOST) then
 					self:GiveStatus("bloodrage", 6)
 				end
 				if self:HasTrinket("cursedtrinket")  then

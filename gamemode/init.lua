@@ -1291,6 +1291,10 @@ function GM:Think()
 				if pl.HolyMantle == 1 and pl:IsSkillActive(SKILL_HOLY_MANTLE) then
                     pl:GiveStatus("hshield", 1.1)
 				end
+				if time >= pl.NextRegenerate and pl:IsSkillActive(SKILL_NOSEE) then
+					pl.NextRegenerate = time + 9
+                    pl:GiveStatus("dimvision", 10)
+				end
 
 
 				if pl:HasTrinket("adrenaline") and time >= pl.NextRegenerate and pl:Health() < math.min(healmax, pl:GetMaxHealth() * 0.85) then

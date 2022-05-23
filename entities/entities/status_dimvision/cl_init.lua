@@ -1,5 +1,6 @@
 INC_CLIENT()
 
+
 function ENT:GetDim()
 	local creation_time = self:GetStartTime()
 	local time = CurTime()
@@ -16,6 +17,8 @@ function ENT:GetDim()
 
 	return 1
 end
+
+
 
 function ENT:Draw()
 end

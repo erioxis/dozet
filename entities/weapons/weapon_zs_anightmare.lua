@@ -21,7 +21,7 @@ function SWEP:MeleeHit(ent, trace, damage, forcescale)
 end
 
 function SWEP:ApplyMeleeDamage(pl, trace, damage)
-	if SERVER and pl:IsPlayer() and not pl:IsSkillActive(SKILL_HOLY_MANTLE) then
+	if SERVER and pl:IsPlayer() and (not pl:GetStatus("hshield")) then
 		
 		local killer = self:GetOwner()
 		timer.Simple(0.15, function()

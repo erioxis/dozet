@@ -284,6 +284,7 @@ SKILL_HOLY_MANTLE = 262
 SKILL_BOUNTYKILLER = 264
 SKILL_LIVER = 265
 SKILL_LUCKY_UNLIVER = 266
+SKILL_NOSEE = 267
 
 SKILLMOD_HEALTH = 1
 SKILLMOD_SPEED = 2
@@ -475,7 +476,11 @@ GM:AddSkill(SKILL_AGILEI, "Agile I", GOOD.."+4% jumping power\n"..BAD.."-2 movem
 GM:AddSkill(SKILL_AGILEII, "Agile II", GOOD.."+5% jumping power\n"..BAD.."-3 movement speed",
 																4,			2,					{SKILL_AGILEIII, SKILL_WORTHINESS3}, TREE_SPEEDTREE)
 GM:AddSkill(SKILL_AGILEIII, "Agile III", GOOD.."+6% jumping power\n"..BAD.."-4 movement speed",
-																4,			-2,					{SKILL_SAFEFALL, SKILL_ULTRANIMBLE, SKILL_SURESTEP, SKILL_INTREPID, SKILL_VKID}, TREE_SPEEDTREE)
+																4,			-2,					{SKILL_SAFEFALL, SKILL_ULTRANIMBLE, SKILL_SURESTEP, SKILL_INTREPID, SKILL_VKID, SKILL_NOSEE}, TREE_SPEEDTREE)
+GM:AddSkill(SKILL_NOSEE, "Curse of vision", GOOD.."+50 Speed\n"..GOOD.."+30 worth\n"..BAD.."Dim Vision forever\nEvery 10 seconds is only rare moments when you have 0.5 seconds to see",
+																6.5,			-2,					{SKILL_AGILEIII}, TREE_SPEEDTREE)
+GM:AddSkillModifier(SKILL_NOSEE, SKILLMOD_SPEED, 50)
+GM:AddSkillModifier(SKILL_NOSEE, SKILLMOD_WORTH, 30)
 GM:AddSkill(SKILL_VKID, "Vkid", GOOD.."+30% jumping power\n"..GOOD.."+60 speed\n"..GOOD.."You can squeeze zombie\n"..BAD.."-50 health",
 																4,			-3,					{}, TREE_SPEEDTREE)
 GM:AddSkill(SKILL_D_SLOW, ""..translate.Get("skill_slow"), GOOD..""..translate.Get("skill_slow_d1")..GOOD..""..translate.Get("skill_slow_d2")..BAD..""..translate.Get("skill_slow_d3")..BAD..""..translate.Get("skill_slow_d4"),
