@@ -1285,7 +1285,7 @@ function GM:Think()
 					pl:SetHealth(math.min(healmax, pl:Health() + 500))
 				end
 				if time >= pl.NextRegenerate and pl.HolyMantle == 0 and pl:IsSkillActive(SKILL_HOLY_MANTLE) then
-					pl.NextRegenerate = time + (15 - (pl.Luck / 4))
+					pl.NextRegenerate = time + (30 - (pl.Luck / 4))
 					pl.HolyMantle = pl.HolyMantle + 1
 				end
 				if pl.HolyMantle == 1 and pl:IsSkillActive(SKILL_HOLY_MANTLE) then
@@ -2069,7 +2069,7 @@ function GM:ScalePlayerDamage(pl, hitgroup, dmginfo)
 		GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_WEAPON, inflictor:GetClass(), "Headshots", 1)
 	end
 	if dmginfo:IsBulletDamage() then 
-		dmginfo:SetDamage((dmginfo:GetDamage() * damagescalebullet) - attacker.zKills / 25)
+		dmginfo:SetDamage((dmginfo:GetDamage() * damagescalebullet) - attacker.zKills / 15)
 	end
 	if not dmginfo:IsBulletDamage() then return end
 

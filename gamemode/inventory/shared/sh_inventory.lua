@@ -210,7 +210,7 @@ local bookw = {
 trinket, trinketwep = GM:AddTrinket(""..translate.Get("t_lticket"), "lotteryticket", false, hpveles, hpweles, 2, ""..translate.Get("t_d_lticket"))
 
 trinketwep.PermitDismantle = true
-trinket, trinketwep = GM:AddTrinket(""..translate.Get("t_mticket"), "mysteryticket", false, hpveles, hpweles, 2, ""..translate.Get("t_d_mticket"))
+trinket, trinketwep = GM:AddTrinket(""..translate.Get("t_mticket"), "mysteryticket", false, hpveles, hpweles, 5, ""..translate.Get("t_d_mticket"))
 
 trinketwep.PermitDismantle = true
 -- Health Trinkets

@@ -1154,14 +1154,14 @@ GM:AddSkill(SKILL_TTIMES1, "Tough Times", GOOD.."-7% Melee damage taken\n",
 				                                                            	-4,			2,					{SKILL_TTIMES}, TREE_DEFENSETREE)
 GM:AddSkillModifier(SKILL_TTIMES1, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.07)
 SKILL_TRIP = 198
-GM:AddSkill(SKILL_TRIP, "Wall curse", GOOD.."-33% Damage taken\n"..GOOD.."+50% Max curse\n"..BAD.."Melee damage multiplier 0.74x\n"..BAD.."-60 Speed\nCurse can't end",
+GM:AddSkill(SKILL_TRIP, "Wall curse", GOOD.."-23% Damage taken\n"..GOOD.."+50% Max curse\n"..BAD.."Melee damage multiplier 0.88x\n"..BAD.."-70 Speed\nCurse can't end",
 				                                                            	-2,			2,					{SKILL_DEFENDEROFM,SKILL_TTIMES}, TREE_DEFENSETREE)
 
-GM:AddSkillModifier(SKILL_TRIP, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.33)
-GM:AddSkillModifier(SKILL_TRIP, SKILLMOD_MELEE_DAMAGE_MUL, -0.36)
-GM:AddSkillModifier(SKILL_TRIP, SKILLMOD_SPEED, -60)
+GM:AddSkillModifier(SKILL_TRIP, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.23)
+GM:AddSkillModifier(SKILL_TRIP, SKILLMOD_MELEE_DAMAGE_MUL, -0.12)
+GM:AddSkillModifier(SKILL_TRIP, SKILLMOD_SPEED, -70)
 GM:AddSkillModifier(SKILL_TRIP, SKILLMOD_CURSEM, 0.5)
-GM:AddSkill(SKILL_HOLY_MANTLE, "Holy Mantle", GOOD.."Absorb damage every 15 seconds\nThan higher luck - faster reloading",
+GM:AddSkill(SKILL_HOLY_MANTLE, "Holy Mantle", GOOD.."Absorb damage every 30 seconds\nThan higher luck - faster reloading",
 				                                                            	-4,			3,					{SKILL_TTIMES}, TREE_DEFENSETREE)
 SKILL_MERIS = 199
 GM:AddSkill(SKILL_MERIS, "Meris", GOOD.."-10% Damage taken\n"..BAD.."-20% Melee damage!",
@@ -1213,13 +1213,13 @@ GM:AddSkill(SKILL_DONATE8, "Donate VIII", GOOD.."+21% Reload speed\n"..GOOD.."th
 				                                                            	21,			25,					{SKILL_DONATE7}, TREE_DONATETREE)
 GM:AddSkillModifier(SKILL_DONATE8, SKILLMOD_RELOADSPEED_MUL, 0.21)
 SKILL_DONATE9 = 213
-GM:AddSkill(SKILL_DONATE9, "Donate IX", GOOD.."+35 Health\n"..GOOD.."thx shepard",
+GM:AddSkill(SKILL_DONATE9, "Donate IX", GOOD.."+15 Health\n"..GOOD.."thx shepard",
 				                                                            	20,			25,					{SKILL_DONATE8}, TREE_DONATETREE)
-GM:AddSkillModifier(SKILL_DONATE9, SKILLMOD_HEALTH, 35)
+GM:AddSkillModifier(SKILL_DONATE9, SKILLMOD_HEALTH, 15)
 SKILL_DONATE10 = 214
 GM:AddSkill(SKILL_DONATE10, "Donate X", GOOD.."+20 Worth\n"..GOOD.."thx shepard",
 				                                                            	21,			26,					{SKILL_DONATE9}, TREE_DONATETREE)
-GM:AddSkillModifier(SKILL_DONATE10, SKILLMOD_WORTH, 40)
+GM:AddSkillModifier(SKILL_DONATE10, SKILLMOD_WORTH, 20)
 SKILL_CHALLENGER1 = 215
 GM:AddSkill(SKILL_CHALLENGER1, "Challenger I", GOOD.."+20 Health,+1 luck,+5% Sale, help for challenges!\n"..GOOD.."Can use in any challenge",
 				                                                            	25,			26,					{SKILL_NONE, SKILL_CHALLENGER2}, TREE_DONATETREE)

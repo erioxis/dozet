@@ -21,12 +21,21 @@ function SWEP:MeleeHit(ent, trace, damage, forcescale)
 end
 
 function SWEP:ApplyMeleeDamage(pl, trace, damage)
-	if SERVER and pl:IsPlayer() then
+	if SERVER and pl:IsPlayer() and not pl:IsSkillActive(SKILL_HOLY_MANTLE) then
 		
 		local killer = self:GetOwner()
 		timer.Simple(0.15, function()
 			pl:Kill()
 		end)
+		local cursed = pl:GetStatus("cursed")
+		if (cursed) then 
+			pl:GiveStatus("dimvision", 6)
+			pl:AddCursed(self:GetOwner(), cursed.DieTime - CurTime() + 80)
+		end
+		if (not cursed) then 
+			pl:GiveStatus("dimvision", 12)
+			pl:AddCursed(pl:GetOwner(), 80)
+		end
         
 	end
 	self.BaseClass.ApplyMeleeDamage(self, pl, trace, damage)
