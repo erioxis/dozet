@@ -1309,6 +1309,7 @@ function GM:Think()
 
 
 
+
 				if pl:HasTrinket("adrenaline") and time >= pl.NextRegenerate and pl:Health() < math.min(healmax, pl:GetMaxHealth() * 0.85) then
 					pl.NextRegenerate = time + 60
 					pl:GiveStatus("strengthdartboost", 20)

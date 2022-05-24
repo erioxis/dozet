@@ -187,7 +187,7 @@ function SWEP:MeleeSwing()
 			self:SetPowerCombo(0)
 		end
 	end
-	if SERVER then
+	if SERVER and not owner:IsSkillActive(SKILL_MELEEFAN) then
 	owner:TakeDamage((owner:Health() * 0.01) + 1)
 	owner:SetHealth(owner:Health() * 0.9)
 	end
