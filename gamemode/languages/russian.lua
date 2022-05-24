@@ -11,6 +11,7 @@ LANGUAGE.op_redeem = "Отключить возрождение (Только н
 LANGUAGE.op_deposit = "Отключить передачу патрон деплояблам на Е"
 LANGUAGE.op_noboss = "Не быть боссом"
 -- Various gamemode stuff|
+LANGUAGE.weaponblocked = "Вы блокируете оружием!Невозможно атаковать!"
 LANGUAGE.holymantle = "Святая броня поглотила урон"
 LANGUAGE.damageblock                         = "Урон по тебе заблокирован"
 LANGUAGE.luck                                = "Твоя удача %s"

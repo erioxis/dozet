@@ -16,6 +16,10 @@ SWEP.Secondary.ClipSize = 1
 SWEP.Secondary.DefaultClip = 1
 SWEP.Secondary.Ammo = "dummy"
 SWEP.Secondary.Automatic = true
+SWEP.BlockTrue = true
+
+
+SWEP.Block = 0
 
 SWEP.WalkSpeed = SPEED_FAST
 
@@ -83,14 +87,24 @@ function SWEP:Think()
 		self:SendWeaponAnim(ACT_VM_IDLE)
 	end
 
+
 	if self:IsSwinging() and self:GetSwingEnd() <= CurTime() then
 		self:StopSwinging()
 		self:MeleeSwing()
 	end
 end
 
+
 function SWEP:SecondaryAttack()
+	if self.Block == 0 then
+	self.Block = self.Block + 1
+	elseif self.Block >= 1 then
+	self.Block = self.Block - 1
+	end
+
+
 end
+
 
 function SWEP:Reload()
 	return false
@@ -98,8 +112,16 @@ end
 
 function SWEP:CanPrimaryAttack()
 	if self:GetOwner():IsHolding() or self:GetOwner():GetBarricadeGhosting() then return false end
+	
+	if self.Block == 1 then 
+	
+		net.Start("zs_weaponblocked")
+		net.Send(self:GetOwner())
+		return 
+		false end
 
 	return self:GetNextPrimaryFire() <= CurTime() and not self:IsSwinging()
+	
 end
 
 function SWEP:PlaySwingSound()

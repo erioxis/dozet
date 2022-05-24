@@ -147,6 +147,10 @@ function meta:ProcessDamage(dmginfo)
 		dmginfo:SetDamage(damage)
 	end
 
+	if self:GetActiveWeapon().Block == 1 and self:GetActiveWeapon().IsMelee and attacker:Team() == TEAM_UNDEAD then
+		dmginfo:SetDamage(dmginfo:GetDamage() * (0.85 * (self.BlockMultiplier or 1)))
+	end
+
 	if attacker:IsValid() and attacker:IsPlayer() and inflictor:IsValid() and attacker:Team() == TEAM_UNDEAD then
 		if inflictor == attacker:GetActiveWeapon() then
 			local damage = dmginfo:GetDamage()

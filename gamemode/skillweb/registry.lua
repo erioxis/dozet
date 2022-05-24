@@ -390,6 +390,7 @@ SKILLMOD_SCRAPDISCOUNT = 101
 SKILLMOD_XP = 102
 SKILLMOD_LUCK = 103
 SKILLMOD_CURSEM = 104
+SKILLMOD_BLOCKMULTIPLIER = 105
 
 local GOOD = "^"..COLORID_GREEN
 local BAD = "^"..COLORID_RED
@@ -1542,6 +1543,10 @@ end)
 
 GM:SetSkillModifierFunction(SKILLMOD_SIGIL_TELEPORT_MUL, function(pl, amount)
 	pl.SigilTeleportTimeMul = math.Clamp(amount + 1.0, 0.1, 1000.0)
+end)
+
+GM:SetSkillModifierFunction(SKILLMOD_BLOCKMULTIPLIER, function(pl, amount)
+	pl.BlockMultiplier = math.Clamp(amount + 1.0, 0.1, 1000.0)
 end)
 
 GM:SetSkillModifierFunction(SKILLMOD_MELEE_ATTACKER_DMG_REFLECT_PERCENT, function(pl, amount)

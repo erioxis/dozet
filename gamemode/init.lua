@@ -497,6 +497,8 @@ function GM:AddNetworkStrings()
 	util.AddNetworkString("zs_nestspec")
 	util.AddNetworkString("zs_tvcamera")
 
+	util.AddNetworkString("zs_weaponblocked")
+
 	util.AddNetworkString("zs_luck")
 	util.AddNetworkString("zs_skillarsenalvoid")
 
@@ -4044,8 +4046,7 @@ end
 function GM:PlayerCanPickupWeapon(pl, ent)
 	if pl:IsSkillActive(SKILL_JEW) then
 
-		pl:AddPoints(-5)
-		pl:AddZSXP(5.5 *(GAMEMODE.HumanXPMulti))
+		pl:SetPoints(pl:GetPoints() - 5)
 		GAMEMODE:ConCommandErrorMessage(pl, translate.ClientGet(pl, "jewmoment"))
 	end
 

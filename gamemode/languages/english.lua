@@ -29,6 +29,7 @@ LANGUAGE.op_deposit = "Disable pressing use to deposit ammo in deployables"
 LANGUAGE.op_noboss = "Prevent being picked as a boss zombie"
 
 -- Various gamemode stuff
+LANGUAGE.weaponblocked = "You're blocking with a weapon!It is impossible to attack!"
 LANGUAGE.holymantle = "Holy mantle absorb damage"
 LANGUAGE.damageblock                         = "Damage has been blocked"
 LANGUAGE.luck                                = "Your Luck %s"
