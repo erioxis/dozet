@@ -2027,8 +2027,7 @@ end
 
 function meta:GetRandomStartingItem()
 	local pool = {}
-	local pool2 = {}
-	local pool3 = {}
+
 
 	if self:IsSkillActive(SKILL_PREPAREDNESS) and #GAMEMODE.Food > 0 then
 		pool[#pool + 1] = GAMEMODE.Food[math.random(#GAMEMODE.Food)]
@@ -2037,22 +2036,36 @@ function meta:GetRandomStartingItem()
 	if self:IsSkillActive(SKILL_EQUIPPED) then
 		pool[#pool + 1] = GAMEMODE.StarterTrinkets[math.random(#GAMEMODE.StarterTrinkets)]
 	end
-	if self:IsSkillActive(SKILL_SOULNET) then
-		pool2[#pool2 + 1] = GAMEMODE.StarterSoul[math.random(#GAMEMODE.StarterSoul)]
-	end
-	if self:IsSkillActive(SKILL_CLASSIX1) then
-		pool3[#pool3 + 1] = GAMEMODE.Via[math.random(#GAMEMODE.Via)]
-	end
+
 
 	if #pool > 0 then
 		return pool[math.random(#pool)]
 	end
+
+end
+function meta:GetRandomStartingItem1()
+	local pool2 = {}
+	if self:IsSkillActive(SKILL_SOULNET) then
+		pool2[#pool2 + 1] = GAMEMODE.StarterSoul[math.random(#GAMEMODE.StarterSoul)]
+	end
+
+
 	if #pool2 > 0 then
 		return pool2[math.random(#pool2)]
+	end
+	
+
+end
+function meta:GetRandomStartingItem2()
+	local pool3 = {}
+
+	if self:IsSkillActive(SKILL_CLASSIX1) then
+		pool3[#pool3 + 1] = GAMEMODE.Via[math.random(#GAMEMODE.Via)]
 	end
 	if #pool3 > 0 then
 		return pool3[math.random(#pool3)]
 	end
+
 end
 
 function meta:PulseResonance(attacker, inflictor)

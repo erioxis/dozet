@@ -4343,6 +4343,16 @@ function GM:PlayerSpawn(pl)
 				local func = self:GetInventoryItemType(start) == INVCAT_TRINKETS and pl.AddInventoryItem or pl.Give
 				func(pl, start)
 			end
+			local start1 = pl:GetRandomStartingItem1()
+			if start1 then
+				local func1 = self:GetInventoryItemType(start1) == INVCAT_TRINKETS and pl.AddInventoryItem or pl.Give
+				func1(pl, start1)
+			end
+			local start21 = pl:GetRandomStartingItem2()
+			if start21 then
+				local func21 = self:GetInventoryItemType(start21) == INVCAT_TRINKETS and pl.AddInventoryItem or pl.Give
+				func21(pl, start21)
+			end
 
 			pl:Give("weapon_zs_fists")
 
