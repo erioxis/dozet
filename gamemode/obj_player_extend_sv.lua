@@ -1038,6 +1038,7 @@ end
 function meta:DropWeaponByType(class)
 	if GAMEMODE.ZombieEscape then return end
 
+
 	local wep = self:GetWeapon(class)
 	if wep and wep:IsValid() and not wep.Undroppable then
 		local ent = ents.Create("prop_weapon")
@@ -2026,6 +2027,8 @@ end
 
 function meta:GetRandomStartingItem()
 	local pool = {}
+	local pool2 = {}
+	local pool3 = {}
 
 	if self:IsSkillActive(SKILL_PREPAREDNESS) and #GAMEMODE.Food > 0 then
 		pool[#pool + 1] = GAMEMODE.Food[math.random(#GAMEMODE.Food)]
@@ -2035,14 +2038,20 @@ function meta:GetRandomStartingItem()
 		pool[#pool + 1] = GAMEMODE.StarterTrinkets[math.random(#GAMEMODE.StarterTrinkets)]
 	end
 	if self:IsSkillActive(SKILL_SOULNET) then
-		pool[#pool + 1] = GAMEMODE.StarterSoul[math.random(#GAMEMODE.StarterSoul)]
+		pool2[#pool2 + 1] = GAMEMODE.StarterSoul[math.random(#GAMEMODE.StarterSoul)]
 	end
 	if self:IsSkillActive(SKILL_CLASSIX1) then
-		pool[#pool + 1] = GAMEMODE.Via[math.random(#GAMEMODE.Via)]
+		pool3[#pool3 + 1] = GAMEMODE.Via[math.random(#GAMEMODE.Via)]
 	end
 
 	if #pool > 0 then
 		return pool[math.random(#pool)]
+	end
+	if #pool2 > 0 then
+		return pool2[math.random(#pool2)]
+	end
+	if #pool3 > 0 then
+		return pool3[math.random(#pool3)]
 	end
 end
 

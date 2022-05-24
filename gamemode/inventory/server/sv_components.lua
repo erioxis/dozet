@@ -41,6 +41,14 @@ GM.Via = {
 	"trinket_via2",
 	"trinket_via3"
 }
+GM.Curses = {
+	"trinket_curse_dropping",
+	"trinket_hurt_curse",
+	"trinket_uncurse",
+	"trinket_curse_faster",
+	"trinket_curse_slow"
+
+}
 
 function GM:AddWorldPropConversionRecipe(model, result)
 	local datatab = {Result = result, Index = wcindex}

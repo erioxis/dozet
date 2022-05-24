@@ -441,6 +441,7 @@ function GM:AddNetworkStrings()
 	util.AddNetworkString("zs_endround")
 	util.AddNetworkString("zs_centernotify")
 	util.AddNetworkString("zs_topnotify")
+	util.AddNetworkString("zs_getacurse")
 	util.AddNetworkString("zs_zvols")
 	util.AddNetworkString("zs_nextboss")
 	util.AddNetworkString("zs_classunlock")
@@ -1285,6 +1286,10 @@ function GM:Think()
 					pl.NextRegenerate = time + 60
 					pl:SetHealth(math.min(healmax, pl:Health() + 500))
 				end
+				if pl:HasTrinket("hurt_curse") and time >= pl.NextRegenerate then
+					pl.NextRegenerate = time + 20
+					pl:TakeDamage(15)
+				end
 				if pl:HasTrinket("altlazarussoul") and time >= pl.NextRegenerate and pl:Health() < math.min(healmax, pl:GetMaxHealth() * 0.10) then
 					pl.NextRegenerate = time + 60
 					pl:SetHealth(math.min(healmax, pl:Health() + 500))
@@ -1304,7 +1309,6 @@ function GM:Think()
 				if time >= pl.NextRegenerate then
 					pl.NextRegenerate = time + 45
                     pl.zKills = pl.zKills - 10
-					print(pl.zKills)
 				end
 
 
@@ -3715,6 +3719,9 @@ function GM:HumanKilledZombie(pl, attacker, inflictor, dmginfo, headshot, suicid
 	if attacker.zKills >= 100 then
 		attacker:TakeDamage((attacker.zKills / 30) + (attacker:GetPoints() / 50))
 	end
+	if attacker:HasTrinket("curse_faster") then 
+        attacker.zKills = attacker.zKills + 4
+	end
 
 
 
@@ -4723,6 +4730,13 @@ function GM:WaveStateChanged(newstate, pl)
 					net.Send(pl)
 						
 						else end end
+						if pl:IsSkillActive(SKILL_LIVER)  then 
+							pl:AddInventoryItem(GAMEMODE.Curses[math.random(#GAMEMODE.Curses)])
+	
+							net.Start("zs_getacurse")
+						net.Send(pl)
+							
+						end
 						if pl:IsSkillActive(SKILL_ABUSE)  then 
 							local luck = 8 - (pl.Luck / 3)
 							local lucky5 = math.random(1,luck)

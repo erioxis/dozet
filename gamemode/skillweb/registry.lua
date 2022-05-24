@@ -441,10 +441,10 @@ GM:AddSkill(SKILL_CHEESE, ""..translate.Get("skill_cheese_0"), GOOD..translate.G
 																1,			1,					{SKILL_GOURMET}, TREE_HEALTHTREE)
 GM:AddSkill(SKILL_TANKER, "Tanker", GOOD.."+60 maximum health\n"..BAD.."-40 movement speed",
 																-5,			4,					{SKILL_LIVER}, TREE_HEALTHTREE)
-GM:AddSkill(SKILL_LIVER, "Upgrowthing", GOOD.."+7% Max health per wave\n"..BAD.."-20 movement speed\n"..BAD.."-30 health",
+GM:AddSkill(SKILL_LIVER, "Curse of curses", BAD.."On end wave give random curse\n"..GOOD.."+60 movement speed\n"..GOOD.."+30 health",
 																-5,			5,					{SKILL_TANKER}, TREE_HEALTHTREE)
-GM:AddSkillModifier(SKILL_LIVER, SKILLMOD_SPEED, -20)
-GM:AddSkillModifier(SKILL_LIVER, SKILLMOD_HEALTH, -30)
+GM:AddSkillModifier(SKILL_LIVER, SKILLMOD_SPEED, 60)
+GM:AddSkillModifier(SKILL_LIVER, SKILLMOD_HEALTH, 30)
 GM:AddSkill(SKILL_FORAGER, "Forager", GOOD.."25% chance to collect food from resupply boxes\n"..BAD.."+20% resupply box delay",
 																5,			-2,					{SKILL_GOURMET}, TREE_HEALTHTREE)
 GM:AddSkill(SKILL_SUGARRUSH, "Sugar Rush", GOOD.."+35 speed boost from food for 14 seconds\n"..BAD.."-35% recovery from food\n",

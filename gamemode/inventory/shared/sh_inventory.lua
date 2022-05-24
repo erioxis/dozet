@@ -325,6 +325,15 @@ GM:AddTrinket(""..translate.Get("t_fkit"), "sharpkit", false, mveles, mweles, 2,
 
 
 GM:AddTrinket(""..translate.Get("t_skit"), "sharpstone", false, mveles, mweles, 3, ""..translate.Get("t_d_skit"))
+--curses
+GM:AddTrinket(""..translate.Get("t_curse_dropping"), "curse_dropping", false, { ["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 10.697, y = 10.697 }, color = Color(67, 28, 129, 195) }, nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false}, mweles, 3, ""..translate.Get("t_d_curse_dropping"))
+GM:AddTrinket(""..translate.Get("t_hurt_curse"), "hurt_curse", false,  { ["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 10.697, y = 10.697 }, color = Color(231, 231, 231, 195) },nocull = false , additive = true, vertexalpha = true, vertexcolor = true, ignorez = false}, mweles, 3, ""..translate.Get("t_d_hurt_curse"))
+GM:AddTrinket(""..translate.Get("t_uncurse"), "uncurse", false,  { ["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 10.697, y = 10.697 }, color = Color(209, 10, 10, 195) },nocull = false , additive = true, vertexalpha = true, vertexcolor = true, ignorez = false}, mweles, 3, ""..translate.Get("t_d_uncurse"))
+GM:AddSkillModifier(trinket, SKILLMOD_CURSEM, -0.70)
+GM:AddTrinket(""..translate.Get("t_curse_faster"), "curse_faster", false,  { ["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 10.697, y = 10.697 }, color = Color(59, 197, 5, 195) },nocull = false , additive = true, vertexalpha = true, vertexcolor = true, ignorez = false}, mweles, 3, ""..translate.Get("t_d_curse_faster"))
+GM:AddTrinket(""..translate.Get("t_curse_slow"), "curse_slow", false,  { ["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 10.697, y = 10.697 }, color = Color(59, 197, 5, 195) },nocull = false , additive = true, vertexalpha = true, vertexcolor = true, ignorez = false}, mweles, 3, ""..translate.Get("t_d_curse_slow"))
+GM:AddSkillModifier(trinket, SKILLMOD_SPEED, -80)
+
 --perfomance
 GM:AddSkillModifier(GM:AddTrinket( ""..translate.Get("t_adrenaline"), "adrenaline", false, pveles, pweles, nil, ""..translate.Get("t_d_adrenaline")), SKILLMOD_JUMPPOWER_MUL, 0.01)
 GM:AddSkillModifier(GM:AddTrinket( ""..translate.Get("t_ass"), "ass", false, pveles, pweles, nil,  ""..translate.Get("t_d_ass")), SKILLMOD_HEALTH, 6)
