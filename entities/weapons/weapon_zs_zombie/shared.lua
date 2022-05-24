@@ -52,6 +52,7 @@ function SWEP:PlayAttackSound()
 end
 
 function SWEP:Initialize()
+	self:HideWorldModel()
 end
 
 function SWEP:CheckIdleAnimation()

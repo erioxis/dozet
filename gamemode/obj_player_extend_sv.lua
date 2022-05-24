@@ -424,6 +424,7 @@ function meta:ProcessDamage(dmginfo)
 	end
 end
 
+
 GM.TrinketRecharges = {
 	reactiveflasher = {"ReactiveFlashMessage", "LastReactiveFlash", "Reactive Flasher", 35},
 	bleaksoul = {"BleakSoulMessage", "LastBleakSoul", "Bleak Soul", 15},

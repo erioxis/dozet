@@ -1268,6 +1268,8 @@ function GM:Think()
 					pl:GiveStatus("drown")
 				end
 
+			
+
 				local healmax = pl:IsSkillActive(SKILL_D_FRAIL) and math.floor(pl:GetMaxHealth() * 0.44) or pl:GetMaxHealth()
 				local healmax = pl:IsSkillActive(SKILL_ABUSE) and math.floor(pl:GetMaxHealth() * 0.25) or pl:GetMaxHealth()
 
@@ -1298,6 +1300,11 @@ function GM:Think()
 				if time >= pl.NextRegenerate and pl:IsSkillActive(SKILL_NOSEE) then
 					pl.NextRegenerate = time + 9
                     pl:GiveStatus("dimvision", 10)
+				end
+				if time >= pl.NextRegenerate then
+					pl.NextRegenerate = time + 45
+                    pl.zKills = pl.zKills - 10
+					print(pl.zKills)
 				end
 
 
@@ -3704,6 +3711,9 @@ function GM:HumanKilledZombie(pl, attacker, inflictor, dmginfo, headshot, suicid
 	if (pl:GetZombieClassTable().Points or 0) == 0 or self.RoundEnded then return end
 
 	-- Simply distributes based on damage but also do some stuff for assists.
+	if attacker.zKills >= 100 then
+		attacker:TakeDamage((attacker.zKills / 30) + (attacker:GetPoints() / 50))
+	end
 
 
 
@@ -4611,7 +4621,7 @@ function GM:WaveStateChanged(newstate, pl)
 					pl:SetMaxHealth(pl:GetMaxHealth() * 1.07) pl:SetHealth(pl:Health() * 1.07)
 				end
 				if pl:IsSkillActive(SKILL_LUCKY_UNLIVER) then
-					pl:SetMaxHealth(pl:GetMaxHealth() * 0.9) pl:SetHealth(pl:Health() * 0.9)
+					pl:SetMaxHealth(pl:GetMaxHealth() * 0.9) pl:SetHealth(pl:Health() * 0.5)
 					pl.Luck = pl.Luck + 2
 				end
 				if pl:IsSkillActive(SKILL_XPHUNTER) then

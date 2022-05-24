@@ -98,6 +98,7 @@ function SWEP:PrimaryAttack()
 		owner:DoAttackEvent()
 		self.IdleAnimation = CurTime() + self:SequenceDuration()
 	end
+
 end
 
 function SWEP:SecondaryAttack()

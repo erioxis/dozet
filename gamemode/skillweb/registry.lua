@@ -1027,9 +1027,9 @@ GM:AddSkill(SKILL_ANCIENT, "Adventum Antiqua", PURPLE.."+20% Damage melee\n" ..B
 GM:AddSkill(SKILL_CLASSIX1, "Classical scientia mundi", PURPLE.."Random bloodarmor",
 					-5,			-8,					{SKILL_ALLPOWER}, TREE_ANCIENTTREE)
 SKILL_MAGIC = 255
-GM:AddSkill(SKILL_MAGIC, "Magic", PURPLE.."Open a usage of magic\n"..BAD.."-200% Effectiveness of blood armor",
+GM:AddSkill(SKILL_MAGIC, "Magic", PURPLE.."Open a usage of magic\n",
 					-6,			-8,					{SKILL_CLASSIX1}, TREE_ANCIENTTREE)
-GM:AddSkillModifier(SKILL_MAGIC, SKILLMOD_BLOODARMOR_DMG_REDUCTION, -2)					
+				
 SKILL_BLOODMARY = 186
 GM:AddSkill(SKILL_BLOODMARY, "Sanguinum Messis", PURPLE.."Regenerate blood armor",
 										-5,			-9,					{SKILL_ANCIENT}, TREE_ANCIENTTREE)
