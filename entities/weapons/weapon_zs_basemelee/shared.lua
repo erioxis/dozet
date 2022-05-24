@@ -100,11 +100,13 @@ end
 
 
 function SWEP:SecondaryAttack()
-	--[[if self.Block == 0 then
+    if self.Block == 0 then
 	self.Block = self.Block + 1
-	elseif self.Block >= 1 then
+	self:SetWeaponHoldType("revolver")
+	else 
+	self:SetWeaponHoldType(self.HoldType)
 	self.Block = self.Block - 1
-	end]]
+	end
 
 
 end
@@ -117,12 +119,7 @@ end
 function SWEP:CanPrimaryAttack()
 	if self:GetOwner():IsHolding() or self:GetOwner():GetBarricadeGhosting() then return false end
 	
-	--[[if self.Block == 1 then 
-	
-		net.Start("zs_weaponblocked")
-		net.Send(self:GetOwner())
-		return 
-		false end]]
+	if self.Block == 1 then return false end
 
 	return self:GetNextPrimaryFire() <= CurTime() and not self:IsSwinging()
 	
@@ -145,7 +142,16 @@ end
 
 function SWEP:PrimaryAttack()
 	if not self:CanPrimaryAttack() then return end
+
+	if self.Block == 1 then 
+	
+		net.Start("zs_weaponblocked")
+		net.Send(self:GetOwner())
+		return 
+
+	end
 	self:SetNextAttack()
+	
 
 	if self.SwingTime == 0 then
 		self:MeleeSwing()
