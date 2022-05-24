@@ -100,11 +100,11 @@ end
 
 
 function SWEP:SecondaryAttack()
-	if self.Block == 0 then
+	--[[if self.Block == 0 then
 	self.Block = self.Block + 1
 	elseif self.Block >= 1 then
 	self.Block = self.Block - 1
-	end
+	end]]
 
 
 end
@@ -117,45 +117,15 @@ end
 function SWEP:CanPrimaryAttack()
 	if self:GetOwner():IsHolding() or self:GetOwner():GetBarricadeGhosting() then return false end
 	
-	if self.Block == 1 then 
+	--[[if self.Block == 1 then 
 	
 		net.Start("zs_weaponblocked")
 		net.Send(self:GetOwner())
 		return 
-		false end
+		false end]]
 
 	return self:GetNextPrimaryFire() <= CurTime() and not self:IsSwinging()
 	
-end
-function SWEP:DrawHUD()
-	local wid, hei = 384, 16
-	local x, y = ScrW() - wid - 32, ScrH() - hei - 72
-	local texty = y - 4 - draw.GetFontHeight("ZSHUDFontSmall")
-
-	if 0 < self.Block  then
-		surface.SetDrawColor(5, 5, 5, 180)
-		surface.DrawRect(x, y, wid, hei)
-
-		surface.SetDrawColor(50, 255, 50, 180)
-		surface.SetTexture(texGradDown)
-		surface.Text(x, y, math.min(1, self.Block) * wid, hei)
-
-		surface.SetDrawColor(50, 255, 50, 180)
-		surface.DrawOutlinedRect(x, y, wid, hei)
-	end
-
-	draw.SimpleText(self.PrintName, "ZSHUDFontSmall", x, texty, COLOR_GREEN, TEXT_ALIGN_LEFT)
-
-
-	if self.Block <= 0 then
-		draw.SimpleText(self.Block, "ZSHUDFontSmall", x + wid, "Block", COLOR_GREEN, TEXT_ALIGN_RIGHT)
-	else
-		draw.SimpleText(self.Block, "ZSHUDFontSmall", x + wid, "None block", COLOR_DARKRED, TEXT_ALIGN_RIGHT)
-	end
-
-	if GetConVar("crosshair"):GetInt() == 1 then
-		self:DrawCrosshairDot()
-	end
 end
 
 function SWEP:PlaySwingSound()
