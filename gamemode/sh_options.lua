@@ -625,6 +625,7 @@ GM:AddPointShopItem("adrenaline",ITEMCAT_TRINKETS,		30,				"trinket_adrenaline")
 GM:AddPointShopItem("brokenhammer",ITEMCAT_TRINKETS,		30,				"trinket_brokenhammer").SubCategory =						ITEMSUBCAT_TRINKETS_PERFOMANCE
 GM:AddPointShopItem("scout",ITEMCAT_TRINKETS,		30,				"trinket_scout").SubCategory =						ITEMSUBCAT_TRINKETS_PERFOMANCE
 GM:AddPointShopItem("ass",ITEMCAT_TRINKETS,		15,				"trinket_ass").SubCategory =						ITEMSUBCAT_TRINKETS_PERFOMANCE
+GM:AddPointShopItem("longgrip",		ITEMCAT_TRINKETS,		30,				"trinket_longgrip").SubCategory =								ITEMSUBCAT_TRINKETS_MELEE
 GM:AddPointShopItem("powergauntlet",	ITEMCAT_TRINKETS,		30,				"trinket_powergauntlet").SubCategory =							ITEMSUBCAT_TRINKETS_MELEE
 GM:AddPointShopItem("hemoadrenalii",	ITEMCAT_TRINKETS,		30,				"trinket_hemoadrenalii").SubCategory =							ITEMSUBCAT_TRINKETS_MELEE
 GM:AddPointShopItem("sharpstone",		ITEMCAT_TRINKETS,		30,				"trinket_sharpstone").SubCategory =								ITEMSUBCAT_TRINKETS_MELEE

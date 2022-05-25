@@ -100,16 +100,12 @@ end
 
 
 function SWEP:SecondaryAttack()
-    if self.Block == 0 then
+   if self.Block == 1 then
+	self.Block = self.Block - 1
+	self:SetWeaponHoldType(self.HoldType)
+	else 
 	self.Block = self.Block + 1
 	self:SetWeaponHoldType("revolver")
-
-
-	elseif self.Block == 1 then
-	self:SetWeaponHoldType(self.HoldType)
-	self.Block = self.Block - 1
-
-
 	end
 
 
@@ -125,10 +121,8 @@ function SWEP:CanPrimaryAttack()
 	
 	if self.Block == 1 then 
 
-		return false end
-
-	return self:GetNextPrimaryFire() <= CurTime() and not self:IsSwinging()
-	
+	return false end	
+		return self:GetNextPrimaryFire() <= CurTime() and not self:IsSwinging()
 end
 
 function SWEP:PlaySwingSound()
@@ -150,11 +144,8 @@ function SWEP:PrimaryAttack()
 	if not self:CanPrimaryAttack() then return end
 
 	if self.Block == 1 then 
-	
-		net.Start("zs_weaponblocked")
-		net.Send(self:GetOwner())
 		return 
-
+		false
 	end
 	self:SetNextAttack()
 	
@@ -167,6 +158,8 @@ function SWEP:PrimaryAttack()
 end
 
 function SWEP:SetNextAttack()
+--[[ 	if self.Block == 1 then
+    return false end]]
 	local owner = self:GetOwner()
 	local armdelay = owner:GetMeleeSpeedMul()
 	self:SetNextPrimaryFire(CurTime() + self.Primary.Delay * armdelay)
@@ -186,12 +179,12 @@ end
 
 function SWEP:StartSwinging()
 	local owner = self:GetOwner()
-	if self.Block == 1 then 
+	--[[ if self.Block == 1 then 
 	
 
 		return 
-
-	end
+        false  
+	end]]
 
 	if self.StartSwingAnimation then
 		self:SendWeaponAnim(self.StartSwingAnimation)
@@ -209,13 +202,13 @@ end
 
 function SWEP:MeleeSwing()
 	local owner = self:GetOwner()
-	if self.Block == 1 then 
+	--[[if self.Block == 1 then 
 	
 		net.Start("zs_weaponblocked")
 		net.Send(self:GetOwner())
 		return 
-
-	end
+        false
+	end]]
 
 	self:DoMeleeAttackAnim()
 
@@ -300,12 +293,12 @@ end]]
 end
 
 function SWEP:PlayerHitUtil(owner, damage, hitent, dmginfo)
-	if self.Block == 1 then 
+	--[[if self.Block == 1 then 
 	
 
 		return 
-
-	end
+false
+	end]]
 	if owner.MeleePowerAttackMul and owner.MeleePowerAttackMul > 1 then
 		self:SetPowerCombo(self:GetPowerCombo() + 1)
 
@@ -371,12 +364,12 @@ end
 
 function SWEP:MeleeHitEntity(tr, hitent, damagemultiplier)
 	if not IsFirstTimePredicted() then return end
-	if self.Block == 1 then 
+	--[[if self.Block == 1 then 
 	
 
 		return 
-
-	end
+false
+	end]]
 
 	if self.MeleeFlagged then self.IsMelee = true end
 

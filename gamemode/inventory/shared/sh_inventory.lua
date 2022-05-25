@@ -253,6 +253,8 @@ GM:AddSkillModifier(trinket, SKILLMOD_BLOODARMOR, 20)
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TO_BLOODARMOR_MUL, 0.12)
 
 GM:AddTrinket(""..translate.Get("t_regimp"), "regenimplant", false, hpveles, hpweles, 3, ""..translate.Get("t_d_regimp"))
+GM:AddTrinket(""..translate.Get("t_longgrip"), "longgrip", false, hpveles, hpweles, 3, ""..translate.Get("t_d_longgrip"))
+GM:AddSkillModifier(trinket, SKILLMOD_MELEE_RANGE_MUL, 0.10)
 
 trinket, trinketwep = GM:AddTrinket(""..translate.Get("t_bioclean"), "biocleanser", false, hpveles, hpweles, 2, ""..translate.Get("t_d_bioclean"))
 trinketwep.PermitDismantle = true

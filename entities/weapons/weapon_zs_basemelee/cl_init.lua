@@ -10,8 +10,12 @@ SWEP.Slot = 0
 SWEP.SlotPos = 0
 
 function SWEP:TranslateFOV(fov)
+
+
 	return GAMEMODE.FOVLerp * fov
+
 end
+
 
 function SWEP:DrawWeaponSelection(x, y, w, h, alpha)
 	self:BaseDrawWeaponSelection(x, y, w, h, alpha)

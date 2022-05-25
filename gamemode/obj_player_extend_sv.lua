@@ -172,7 +172,7 @@ function meta:ProcessDamage(dmginfo)
 				end
 			end
 			if self:GetActiveWeapon().Block == 1 and self:GetActiveWeapon().IsMelee and attacker:Team() == TEAM_UNDEAD then
-				dmginfo:SetDamage(dmginfo:GetDamage() * (0.85 * (self.BlockMultiplier or 1)))
+				dmginfo:SetDamage(dmginfo:GetDamage() * (0.50 * (self.BlockMultiplier or 1)))
 			end
 
 			if bit.band(dmgtype, DMG_SLASH) ~= 0 or inflictor.IsMelee then
