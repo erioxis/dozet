@@ -1310,6 +1310,11 @@ function GM:Think()
 					pl.NextRegenerate = time + 45
                     pl.zKills = pl.zKills - 10
 				end
+				if pl:GetActiveWeapon().Block == 1 and pl:GetActiveWeapon().IsMelee then
+					pl:SetWalkSpeed(pl:GetWalkSpeed() * 0.5)
+				elseif pl:GetActiveWeapon().Block == 0 and pl:GetActiveWeapon().IsMelee then
+					pl:ResetSpeed()
+				end
 
 
 
