@@ -101,11 +101,15 @@ end
 
 function SWEP:SecondaryAttack()
    if self.Block == 0 then
+	timer.Create("blocked1",0.3,1, function() 
 	self.Block = self.Block + 1
 	self:SetWeaponHoldType("revolver")
+	end)
 	else 
+	timer.Create("unblock",0.3,1, function() 
 	self.Block = self.Block - 1
 	self:SetWeaponHoldType(self.HoldType)
+	end)
 	end
 
 
