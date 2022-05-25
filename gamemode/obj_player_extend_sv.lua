@@ -147,9 +147,7 @@ function meta:ProcessDamage(dmginfo)
 		dmginfo:SetDamage(damage)
 	end
 
-	if self:GetActiveWeapon().Block == 1 and self:GetActiveWeapon().IsMelee and attacker:Team() == TEAM_UNDEAD then
-		dmginfo:SetDamage(dmginfo:GetDamage() * (0.85 * (self.BlockMultiplier or 1)))
-	end
+
 
 	if attacker:IsValid() and attacker:IsPlayer() and inflictor:IsValid() and attacker:Team() == TEAM_UNDEAD then
 		if inflictor == attacker:GetActiveWeapon() then
@@ -172,6 +170,9 @@ function meta:ProcessDamage(dmginfo)
 						self:RawCapLegDamage(self:GetLegDamage() + CurTime() + damage * 0.04 * (inflictor.SlowDownScale or 1) * (self.SlowEffTakenMul or 1))
 					end
 				end
+			end
+			if self:GetActiveWeapon().Block == 1 and self:GetActiveWeapon().IsMelee and attacker:Team() == TEAM_UNDEAD then
+				dmginfo:SetDamage(dmginfo:GetDamage() * (0.85 * (self.BlockMultiplier or 1)))
 			end
 
 			if bit.band(dmgtype, DMG_SLASH) ~= 0 or inflictor.IsMelee then

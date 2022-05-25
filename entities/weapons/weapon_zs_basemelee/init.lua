@@ -32,3 +32,17 @@ function SWEP:ServerHitFleshEffects(hitent, tr, damagemultiplier)
 
 	util.Blood(tr.HitPos, math.Rand(damage * 0.25, damage * 0.6), (tr.HitPos - owner:GetShootPos()):GetNormalized(), math.min(400, math.Rand(damage * 6, damage * 12)), true)
 end
+function SWEP:CanPrimaryAttack()
+
+	
+	if self.Block == 1 then 
+		if self:GetOwner():GetInfo("zs_blockunable") == "0" then
+
+			net.Start("zs_weaponblocked")
+			net.Send(self:GetOwner())
+        
+	end
+		return false end
+
+
+end

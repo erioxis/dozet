@@ -268,5 +268,6 @@ function SWEP:MeleeHitEntity(tr, hitent, damagemultiplier, damage)
 		effectdata:SetHitBox(tr.HitBox)
 		effectdata:SetEntity(hitent)
 		util.Effect("Impact", effectdata)
+
 	end
 end
