@@ -100,12 +100,12 @@ end
 
 
 function SWEP:SecondaryAttack()
-   if self.Block == 1 then
-	self.Block = self.Block - 1
-	self:SetWeaponHoldType(self.HoldType)
-	else 
+   if self.Block == 0 then
 	self.Block = self.Block + 1
 	self:SetWeaponHoldType("revolver")
+	else 
+	self.Block = self.Block - 1
+	self:SetWeaponHoldType(self.HoldType)
 	end
 
 
@@ -158,8 +158,8 @@ function SWEP:PrimaryAttack()
 end
 
 function SWEP:SetNextAttack()
---[[ 	if self.Block == 1 then
-    return false end]]
+	if self.Block == 1 then
+    return false end
 	local owner = self:GetOwner()
 	local armdelay = owner:GetMeleeSpeedMul()
 	self:SetNextPrimaryFire(CurTime() + self.Primary.Delay * armdelay)
@@ -179,12 +179,12 @@ end
 
 function SWEP:StartSwinging()
 	local owner = self:GetOwner()
-	--[[ if self.Block == 1 then 
+	if self.Block == 1 then 
 	
 
 		return 
         false  
-	end]]
+	end
 
 	if self.StartSwingAnimation then
 		self:SendWeaponAnim(self.StartSwingAnimation)
@@ -202,13 +202,12 @@ end
 
 function SWEP:MeleeSwing()
 	local owner = self:GetOwner()
-	--[[if self.Block == 1 then 
+	if self.Block == 1 then 
 	
-		net.Start("zs_weaponblocked")
-		net.Send(self:GetOwner())
+
 		return 
         false
-	end]]
+	end
 
 	self:DoMeleeAttackAnim()
 

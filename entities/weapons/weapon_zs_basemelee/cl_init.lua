@@ -24,6 +24,14 @@ end
 function SWEP:DrawHUD()
 	if GetConVar("crosshair"):GetInt() ~= 1 then return end
 	self:DrawCrosshairDot()
+	local wid, hei = 384, 16
+	local x, y = ScrW() - wid - 32, ScrH() - hei - 72
+	local texty = y - 4 - draw.GetFontHeight("ZSHUDFontSmall")
+	if self.Block == 1 then
+	draw.SimpleText("BLOCK", "ZSHUDFontSmall", x + wid, texty, COLOR_GREEN, TEXT_ALIGN_RIGHT)
+	else
+		draw.SimpleText("NOT BLOCK", "ZSHUDFontSmall", x + wid, texty, COLOR_RED, TEXT_ALIGN_RIGHT)
+	end
 end
 
 function SWEP:OnRemove()
