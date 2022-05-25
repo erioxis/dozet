@@ -21,6 +21,7 @@ SWEP.UseHands = true
 SWEP.MeleeDamage = 41
 SWEP.MeleeRange = 52
 SWEP.MeleeSize = 0.875
+SWEP.BlockMultiplierWeapon = 1.5
 
 SWEP.WalkSpeed = SPEED_FASTEST
 

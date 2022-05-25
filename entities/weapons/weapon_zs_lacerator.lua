@@ -22,9 +22,9 @@ sound.Add({
 
 SWEP.MeleeDamage = 9
 
-SWEP.SlowMeleeDelay = 0.8
-SWEP.SlowMeleeDamage = 22
-SWEP.PounceDamage = 30
+SWEP.SlowMeleeDelay = 0.6
+SWEP.SlowMeleeDamage = 44
+SWEP.PounceDamage = 81
 
 function SWEP:MeleeHit(ent, trace, damage, forcescale)
 	if not ent:IsPlayer() then

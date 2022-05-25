@@ -40,6 +40,7 @@ SWEP.DamageType = DMG_CLUB
 SWEP.MeleeDamage = 81
 SWEP.MeleeRange = 108
 SWEP.MeleeSize = 1
+SWEP.BlockMultiplierWeapon = 0.25
 
 SWEP.Primary.Delay = 1.1
 

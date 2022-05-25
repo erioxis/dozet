@@ -54,6 +54,7 @@ SWEP.MeleeRange = 177
 SWEP.MeleeSize = 3
 SWEP.MeleeKnockBack = 0
 SWEP.MaxStock = 2
+SWEP.BlockMultiplierWeapon = 0.75
 
 SWEP.WalkSpeed = SPEED_FAST
 

@@ -177,8 +177,11 @@ function SWEP:Holster()
 
 		return true
 	end
-
+	if self.Block == 1 then
+		self.Block = self.Block - 1
+	end
 	return false
+
 end
 
 function SWEP:StartSwinging()
