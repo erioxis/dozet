@@ -483,7 +483,7 @@ GM:AddSkill(SKILL_VKID, "Vkid", GOOD.."+30% jumping power\n"..GOOD.."+60 speed\n
 																4,			-3,					{}, TREE_SPEEDTREE)
 GM:AddSkill(SKILL_D_SLOW, ""..translate.Get("skill_slow"), GOOD..""..translate.Get("skill_slow_d1")..GOOD..""..translate.Get("skill_slow_d2")..BAD..""..translate.Get("skill_slow_d3")..BAD..""..translate.Get("skill_slow_d4"),
 																0,			-4,					{}, TREE_SPEEDTREE)
-GM:AddSkill(SKILL_NOSEE, "Curse of vision", GOOD.."+50 Speed\n"..GOOD.."+30 worth\n"..BAD.."Dim Vision forever\nEvery 10 seconds is only rare moments when you have 0.5 seconds to see",
+GM:AddSkill(SKILL_NOSEE, ""..translate.Get("skill_cursevision_0"), GOOD..""..translate.Get("skill_cursevision_d1")..GOOD..""..translate.Get("skill_cursevision_d2")..BAD..""..translate.Get("skill_cursevision_d3"),
 																6.5,			-2,					{SKILL_AGILEIII}, TREE_SPEEDTREE)
 GM:AddSkillModifier(SKILL_NOSEE, SKILLMOD_SPEED, 50)
 GM:AddSkillModifier(SKILL_NOSEE, SKILLMOD_WORTH, 30)
