@@ -427,9 +427,9 @@ GM:AddSkill(SKILL_NULLED, ""..translate.Get("skill_regen1_0"), GOOD..""..transla
 			                                                   	-5,			0,					{SKILL_REGENERATOR}, TREE_HEALTHTREE)
 GM:AddSkill(SKILL_BLOODARMOR, ""..translate.Get("skill_bloodarmor_0"), GOOD..translate.Get("skill_bloodarmor_d1") ..BAD..translate.Get("skill_bloodarmor_d2"),
 																2,			2,					{SKILL_IRONBLOOD, SKILL_BLOODLETTER, SKILL_D_HEMOPHILIA}, TREE_HEALTHTREE)
-GM:AddSkill(SKILL_IRONBLOOD, ""..translate.Get("skill_ironblood_0"), GOOD..translate.Get("skill_ironblood_d1") ..GOOD..translate.Get("skill_ironblood_d2") ..BAD..translate.Get"skill_ironblood_d3",
+GM:AddSkill(SKILL_IRONBLOOD, ""..translate.Get("skill_ironblood_0"), GOOD..translate.Get("skill_ironblood_d1") ..GOOD..translate.Get("skill_ironblood_d2") ..BAD..translate.Get("skill_ironblood_d3"),
 																2,			4,					{SKILL_HAEMOSTASIS, SKILL_CIRCULATION}, TREE_HEALTHTREE)
-GM:AddSkill(SKILL_D_WEAKNESS, "Debuff: Weakness", GOOD.."+60 starting Worth\n"..GOOD.."+15 end of wave points\n"..BAD.."-60 maximum health\n"..BAD.."-30% Melee Damage\n",
+GM:AddSkill(SKILL_D_WEAKNESS, ""..translate.Get("skill_d_weakness_0"), GOOD..""..translate.Get("skill_d_weakness_d1")..GOOD..""..translate.Get("skill_d_weakness_d2")..BAD..""..translate.Get("skill_d_weakness_d3")..BAD..""..translate.Get("skill_d_weakness_d4"),
 																1,			-1,					{}, TREE_HEALTHTREE)
 GM:AddSkill(SKILL_VITALITY1, ""..translate.Get("skill_vitalityi_0"), GOOD..translate.Get("skill_vitalityi_d1"),
 																0,			-4,					{SKILL_VITALITY2}, TREE_HEALTHTREE)
@@ -437,25 +437,25 @@ GM:AddSkill(SKILL_VITALITY2, ""..translate.Get("skill_vitalityii_0"), GOOD..tran
 																0,			-2,					{SKILL_VITALITY3}, TREE_HEALTHTREE)
 GM:AddSkill(SKILL_VITALITY3, ""..translate.Get("skill_vitalityiii_0"), GOOD..translate.Get("skill_vitalityiii_d1"),
 																0,			-0,					{SKILL_D_WEAKNESS}, TREE_HEALTHTREE)
-GM:AddSkill(SKILL_CHEESE, ""..translate.Get("skill_cheese_0"), GOOD..translate.Get"skill_cheese_d1",
+GM:AddSkill(SKILL_CHEESE, ""..translate.Get("skill_cheese_0"), GOOD..translate.Get("skill_cheese_d1"),
 																1,			1,					{SKILL_GOURMET}, TREE_HEALTHTREE)
-GM:AddSkill(SKILL_TANKER, "Tanker", GOOD.."+60 maximum health\n"..BAD.."-40 movement speed",
+GM:AddSkill(SKILL_TANKER, ""..translate.Get("skill_tanker_0"), GOOD..""..translate.Get("skill_tanker_d1")..BAD..""..translate.Get("skill_tanker_d2"),
 																-5,			4,					{SKILL_LIVER}, TREE_HEALTHTREE)
-GM:AddSkill(SKILL_LIVER, "Curse of curses", BAD.."On end wave give random curse\n"..GOOD.."+60 movement speed\n"..GOOD.."+30 health",
+GM:AddSkill(SKILL_LIVER,  ""..translate.Get("skill_curse_0"), BAD..""..translate.Get("skill_curse_d1")..GOOD..""..translate.Get("skill_curse_d2")..GOOD..""..translate.Get("skill_curse_d3"),
 																-5,			5,					{SKILL_TANKER}, TREE_HEALTHTREE)
 GM:AddSkillModifier(SKILL_LIVER, SKILLMOD_SPEED, 60)
 GM:AddSkillModifier(SKILL_LIVER, SKILLMOD_HEALTH, 30)
-GM:AddSkill(SKILL_FORAGER, "Forager", GOOD.."25% chance to collect food from resupply boxes\n"..BAD.."+20% resupply box delay",
+GM:AddSkill(SKILL_FORAGER, ""..translate.Get("skill_f_0"), GOOD..""..translate.Get("skill_f_d1")..BAD..""..translate.Get("skill_f_d2"),
 																5,			-2,					{SKILL_GOURMET}, TREE_HEALTHTREE)
-GM:AddSkill(SKILL_SUGARRUSH, "Sugar Rush", GOOD.."+35 speed boost from food for 14 seconds\n"..BAD.."-35% recovery from food\n",
+GM:AddSkill(SKILL_SUGARRUSH, ""..translate.Get("skill_srush_0"), GOOD..""..translate.Get("skill_srush_d1")..BAD..""..translate.Get("skill_srush_d2"),
 																4,			0,					{SKILL_GOURMET}, TREE_HEALTHTREE)
-GM:AddSkill(SKILL_CIRCULATION, "Circulation", GOOD.."+1 maximum blood armor",
+GM:AddSkill(SKILL_CIRCULATION, ""..translate.Get("skill_cir_0"), GOOD..""..translate.Get("skill_cir_d1"),
 																4,			4,					{SKILL_SANGUINE}, TREE_HEALTHTREE)
-GM:AddSkill(SKILL_SANGUINE, "Sanguine", GOOD.."+11 maximum blood armor\n"..BAD.."-9 maximum health",
+GM:AddSkill(SKILL_SANGUINE, ""..translate.Get("skill_san_0"), GOOD..""..translate.Get("skill_san_d1")..BAD..""..translate.Get("skill_san_d2"),
 																6,			2,					{}, TREE_HEALTHTREE)
-GM:AddSkill(SKILL_ANTIGEN, "Antigen", GOOD.."+5% blood armor damage absorption\n"..BAD.."-3 maximum health",
+GM:AddSkill(SKILL_ANTIGEN, ""..translate.Get("skill_agen_0"), GOOD..""..translate.Get("skill_agen_d1")..BAD..""..translate.Get("skill_agen_d2"),
 																-2,			4,					{}, TREE_HEALTHTREE)
-GM:AddSkill(SKILL_DAMAGER, "Bad Health", GOOD.."+50 Health\n"..BAD.."Can take random damage in any time",
+GM:AddSkill(SKILL_DAMAGER, ""..translate.Get("skill_bhealth_0"), GOOD..""..translate.Get("skill_bhealth_d1")..BAD..""..translate.Get("skill_bhealth_d2"),
 																-2,			5,					{SKILL_ANTIGEN}, TREE_HEALTHTREE)
 -- Speed Tree
 GM:AddSkill(SKILL_SPEED1, "Speed I", GOOD.."+5 movement speed\n"..BAD.."-4 maximum health",
