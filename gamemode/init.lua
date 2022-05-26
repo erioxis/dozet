@@ -2097,6 +2097,7 @@ function GM:ScalePlayerDamage(pl, hitgroup, dmginfo)
 	if dmginfo:IsBulletDamage() then 
 		dmginfo:SetDamage((dmginfo:GetDamage() * damagescalebullet) - attacker.zKills / 15)
 	end
+
 	if not dmginfo:IsBulletDamage() then return end
 
 

@@ -52,6 +52,8 @@ function meta:ProcessDamage(dmginfo)
 			local attackermaxhp = math.floor(attacker:GetMaxHealth() * (attacker:IsSkillActive(SKILL_D_FRAIL) and 0.44 or 1))
 			local attackermaxhp = math.floor(attacker:GetMaxHealth() * (attacker:IsSkillActive(SKILL_ABUSE) and 0.25 or 1))
 
+		
+
 			if wep.IsMelee then
 				if attacker:IsSkillActive(SKILL_CHEAPKNUCKLE) and math.abs(self:GetForward():Angle().yaw - attacker:GetForward():Angle().yaw) <= 90 then
 					self:AddLegDamage(12)
@@ -119,6 +121,7 @@ function meta:ProcessDamage(dmginfo)
     end
 
 	-- Opted for multiplicative.
+
 	if attacker == self and dmgtype ~= DMG_CRUSH and dmgtype ~= DMG_FALL and self.SelfDamageMul then
 		dmginfo:SetDamage(dmginfo:GetDamage() * self.SelfDamageMul)
 	end
@@ -128,6 +131,7 @@ function meta:ProcessDamage(dmginfo)
 	if bit.band(dmgtype, DMG_BURN) ~= 0 and self.FireDamageTakenMul then
 		dmginfo:SetDamage(dmginfo:GetDamage() * self.FireDamageTakenMul)
 	end
+
 
 	if inflictor:IsValid() and (inflictor:IsPhysicsModel() or inflictor.IsPhysbox) and self:IsValidLivingHuman() then
 		local damage = dmginfo:GetDamage()
@@ -422,6 +426,18 @@ function meta:ProcessDamage(dmginfo)
 		self.NextRegenTrinket = CurTime() + 12
 
 		self.ShouldFlinch = true
+	end
+	if dmginfo:IsBulletDamage() and attacker:HasTrinket("fire_at") then 
+		dmginfo:SetDamage(dmginfo:GetDamage(),dmginfo:SetDamageType(DMG_BURN))
+	end
+	if dmginfo:IsBulletDamage() and attacker:HasTrinket("pulse_at") then 
+		dmginfo:SetDamage(dmginfo:GetDamage(),dmginfo:SetDamageType(DMG_SHOCK))
+	end
+	if dmginfo:IsBulletDamage() and attacker:HasTrinket("acid_at") then 
+		dmginfo:SetDamage(dmginfo:GetDamage(),dmginfo:SetDamageType(DMG_ACID))
+	end
+	if dmginfo:IsBulletDamage() and attacker:HasTrinket("ultra_at") then 
+		dmginfo:SetDamage(dmginfo:GetDamage(),dmginfo:SetDamageType(DMG_DIRECT))
 	end
 end
 
