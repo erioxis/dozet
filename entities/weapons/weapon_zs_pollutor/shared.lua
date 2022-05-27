@@ -47,7 +47,7 @@ local branch = GAMEMODE:AddNewRemantleBranch(SWEP, 1, "'Scorch' Napalm Rifle", "
 		wept.WElements["bio++++++"].color = Color(230, 150, 100)
 	end
 end)
-branch.Colors = {Color(255, 160, 50), Color(215, 120, 50), Color(175, 100, 40)}
+branch.Colors = {Color(255, 160, 50), Color(215, 120, 50), Color(175, 100, 40), Color(161, 26, 26)}
 branch.NewNames = {"Hot", "Searing", "Torching", "Lava", "HotHeart"}
 
 branch = GAMEMODE:AddNewRemantleBranch(SWEP, 2, "'Glaze' Cryo Rifle", "Launches cryoblobs that slow zombies down at the cost of damage", function(wept)
@@ -64,7 +64,7 @@ branch = GAMEMODE:AddNewRemantleBranch(SWEP, 2, "'Glaze' Cryo Rifle", "Launches 
 		wept.WElements["bio++++++"].color = Color(100, 190, 230)
 	end
 end)
-branch.Colors = {Color(50, 160, 255), Color(50, 130, 215), Color(40, 115, 175)}
+branch.Colors = {Color(50, 160, 255), Color(50, 130, 215), Color(40, 115, 175), Color(0, 35, 65)}
 branch.NewNames = {"Cold", "Arctic", "Glacial", "Ice-o-berg", "Cooljack"}
 
 function SWEP:EmitFireSound()

@@ -150,6 +150,9 @@ function meta:ProcessDamage(dmginfo)
 
 		dmginfo:SetDamage(damage)
 	end
+	if attacker:IsValid() and attacker:IsPlayer() and inflictor:IsValid() and self:GetActiveWeapon().Block == 1 and self:GetActiveWeapon().IsMelee then
+		dmginfo:SetDamage(dmginfo:GetDamage() * ((0.50 * (self.BlockMultiplier or 1)) * ( self:GetActiveWeapon().BlockMultiplierWeapon or 1)))
+	end
 
 
 
@@ -175,9 +178,7 @@ function meta:ProcessDamage(dmginfo)
 					end
 				end
 			end
-			if self:GetActiveWeapon().Block == 1 and self:GetActiveWeapon().IsMelee and attacker:Team() == TEAM_UNDEAD then
-				dmginfo:SetDamage(dmginfo:GetDamage() * ((0.50 * (self.BlockMultiplier or 1)) * ( self:GetActiveWeapon().BlockMultiplierWeapon or 1)))
-			end
+
 
 			if bit.band(dmgtype, DMG_SLASH) ~= 0 or inflictor.IsMelee then
 				if self.BarbedArmor and self.BarbedArmor > 0 then
