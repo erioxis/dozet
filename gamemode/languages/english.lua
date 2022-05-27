@@ -37,7 +37,7 @@ LANGUAGE.op_hidepacks = "Don't hide resupply packs"
 LANGUAGE.op_mcore = "Multi Core Rendering(RECOMMENDED)"
 LANGUAGE.op_color_c = "Color Correction"
 -- Various gamemode stuff
-LANGUAGE.blockisfalse = "NOT BLOCK"
+LANGUAGE.blockisfalse = "NOT BLOCK(PRESS ATTACK2 FOR CHANGE BLOCK STATUS)"
 LANGUAGE.blockistrue = "BLOCK"
 LANGUAGE.getacurse = "CURSED"
 LANGUAGE.weaponblocked = "You're blocking with a weapon!It is impossible to attack!"

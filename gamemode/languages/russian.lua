@@ -20,7 +20,7 @@ LANGUAGE.op_hidepacks = "Не прятать переносные ящики"
 LANGUAGE.op_mcore = "Мулти-ядерный рендеринг(РЕКОМЕНДУЕТСЯ)"
 LANGUAGE.op_color_c = "Цветокоррекция(Убирает мочу с экрана)"
 -- Various gamemode stuff|
-LANGUAGE.blockisfalse = "НЕТУ БЛОКА"
+LANGUAGE.blockisfalse = "НЕТУ БЛОК(НАЖМИТЕ ВТОРУЮ АТАКУ ДЛЯ СМЕНЫ СОСТОЯНИЯ БЛОКА)"
 LANGUAGE.blockistrue = "БЛОК"
 LANGUAGE.getacurse = "ПРОКЛЯТ"
 LANGUAGE.weaponblocked = "Вы блокируете оружием!Невозможно атаковать!"
