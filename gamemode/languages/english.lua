@@ -1098,7 +1098,12 @@ LANGUAGE.controls_lacerator_charging				= "> PRIMARY: Bleeding Claws\n> ON HIT H
 LANGUAGE.controls_eradicator						= "> PRIMARY: Claws\n> SECONDARY: Scream\n> ON FATAL HIT: Revive"
 LANGUAGE.controls_howler							= "> PRIMARY: Claws\n> SECONDARY: Howl\n> RELOAD: Moan"
 LANGUAGE.controls_extinctioncrab					= "> PRIMARY: Leap Attack\n> SECONDARY: Extinction Spore"
+ --модификаторы
+ LANGUAGE.health = " health\n"
+LANGUAGE.speed = " speed\n"
+LANGUAGE.meleedamage = " melee damage\n"
 --Skills speed
+LANGUAGE.skill_speed = "Speed "
 LANGUAGE.skill_slow_d4 = "-20% Jump power"
 LANGUAGE.skill_slow_d3 = "-68 Speed\n"
 LANGUAGE.skill_slow_d2 = "+30 Starting Worth\n"

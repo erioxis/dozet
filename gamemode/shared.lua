@@ -5,7 +5,7 @@ GM.Website	=	"https://github.com/erioxis/dozet"
 
 -- No, adding a gun doesn't make your name worth being here.
 GM.Credits = {
-	{"Version", "Release", "1.7.3"},
+	{"Version", "Release", "1.7.5"},
 	{"erioxis", "Phantom coder", "dead"},
 	{"Nullted", "", "RU-ENG Translation"}
 
@@ -62,8 +62,8 @@ GM.EndRound = true
 GM.StartingWorth = 135 
 GM.ZombieVolunteers = {}
 
-team.SetUp(TEAM_ZOMBIE, "Undead", Color(0, 255, 0, 255))
-team.SetUp(TEAM_SURVIVORS, "Survivor", Color(0, 160, 255, 255))
+team.SetUp(TEAM_ZOMBIE, "Undead", Color(32, 241, 32, 176))
+team.SetUp(TEAM_SURVIVORS, "Survivor", Color(0, 63, 99))
 
 local validmodels = player_manager.AllValidModels()
 validmodels["tf01"] = nil
@@ -843,10 +843,10 @@ function GM:IsSpecialPerson(pl, image)
 	if pl:SteamID() == "STEAM_0:0:426833142" then
 		img = "VGUI/steam/games/icon_sourcesdk"
 		tooltip = "Toyka\nCoder"
+		pl:SetMaxHealth(pl:GetMaxHealth() * 1.5)
 	elseif pl:SteamID() == "STEAM_0:1:245602574" then
 			img = "noxiousnet/noxicon.png"
 			tooltip = "Erioxis\nHelper"
-
 	elseif pl:IsAdmin() then
 		img = "VGUI/servers/icon_robotron"
 		tooltip = "Admin"

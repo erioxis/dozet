@@ -901,8 +901,13 @@ LANGUAGE.controls_shade								= "> ПЕРВИЧНЫЙ: Левитация\n> В
 -- The help file... Quite big! I wouldn't blame you if you didn't translate this part.
 
 
+ --модификаторы
+LANGUAGE.health = " максимум здоровья\n"
+LANGUAGE.speed = " скорости\n"
+LANGUAGE.meleedamage = " урона от ближнего оружия\n"
 
 --Скиллы скорость
+LANGUAGE.skill_speed = "Ускоренный "
 LANGUAGE.skill_slow_d4 = "-20% Сила прыжка"
 LANGUAGE.skill_slow_d3 = "-68 Скорости\n"
 LANGUAGE.skill_slow_d2 = "+30 Старт ворфа\n"

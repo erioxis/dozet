@@ -458,20 +458,20 @@ GM:AddSkill(SKILL_ANTIGEN, ""..translate.Get("skill_agen_0"), GOOD..""..translat
 GM:AddSkill(SKILL_DAMAGER, ""..translate.Get("skill_bhealth_0"), GOOD..""..translate.Get("skill_bhealth_d1")..BAD..""..translate.Get("skill_bhealth_d2"),
 																-2,			5,					{SKILL_ANTIGEN}, TREE_HEALTHTREE)
 -- Speed Tree
-GM:AddSkill(SKILL_SPEED1, "Speed I", GOOD.."+5 movement speed\n"..BAD.."-4 maximum health",
+GM:AddSkill(SKILL_SPEED1, translate.Get("skill_speed").."I", GOOD.."+5 movement speed\n"..BAD.."-4 maximum health",
 																-4,			6,					{SKILL_NONE, SKILL_SPEED2}, TREE_SPEEDTREE)
 SKILL_DODGE = 263
 GM:AddSkill(SKILL_DODGE, "Dodge", GOOD.."Have chance to block attack\n"..GOOD.."With higher speed,higher block chance\n"..BAD.."-50 Speed",
 																-3,			1,					{SKILL_SPEED2}, TREE_SPEEDTREE)
 GM:AddSkillModifier(SKILL_DODGE, SKILLMOD_SPEED, -50)
 
-GM:AddSkill(SKILL_SPEED2, "Speed II", GOOD.."+5 movement speed\n"..BAD.."-7 maximum health",
+GM:AddSkill(SKILL_SPEED2, translate.Get("skill_speed").."II", GOOD.."+5"..translate.Get("speed")..BAD.."-7"..translate.Get("health"),
 																-4,			4,					{SKILL_SPEED3, SKILL_PHASER, SKILL_SPEED2, SKILL_U_CORRUPTEDFRAGMENT}, TREE_SPEEDTREE)
-GM:AddSkill(SKILL_SPEED3, "Speed III", GOOD.."+6 movement speed\n"..BAD.."-6 maximum health",
+GM:AddSkill(SKILL_SPEED3, translate.Get("skill_speed").."III", GOOD.."+6"..translate.Get("speed")..BAD.."-6"..translate.Get("health"),
 																-4,			2,					{SKILL_SPEED4}, TREE_SPEEDTREE)
-GM:AddSkill(SKILL_SPEED4, "Speed IV", GOOD.."+11 movement speed\n"..BAD.."-8 maximum health",
+GM:AddSkill(SKILL_SPEED4, translate.Get("skill_speed").."IV", GOOD.."+11"..translate.Get("speed")..BAD.."-8"..translate.Get("health"),
 																-4,			0,					{SKILL_SPEED5, SKILL_SAFEFALL}, TREE_SPEEDTREE)
-GM:AddSkill(SKILL_SPEED5, "Speed V", GOOD.."+10 movement speed\n"..BAD.."-11 maximum health",
+GM:AddSkill(SKILL_SPEED5, translate.Get("skill_speed").."V", GOOD.."+10"..translate.Get("speed")..BAD.."-11"..translate.Get("health"),
 																-4,			-2,					{SKILL_ULTRANIMBLE, SKILL_BACKPEDDLER, SKILL_MOTIONI, SKILL_CARDIOTONIC, SKILL_UNBOUND}, TREE_SPEEDTREE)
 GM:AddSkill(SKILL_AGILEI, "Agile I", GOOD.."+4% jumping power\n"..BAD.."-2 movement speed",
 																4,			6,					{SKILL_NONE, SKILL_AGILEII}, TREE_SPEEDTREE)
