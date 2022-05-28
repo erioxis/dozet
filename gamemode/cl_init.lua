@@ -821,7 +821,7 @@ function GM:DrawPackUpBar(x, y, fraction, notowner, screenscale)
 	draw_SimpleText(notowner and CurTime() % 2 < 1 and translate.Format("requires_x_people", 4) or notowner and translate.Get("packing_others_object") or translate.Get("packing"), "ZSHUDFontSmall", x, y - draw_GetFontHeight("ZSHUDFontSmall") - 2, col, TEXT_ALIGN_CENTER)
 end
 
-local colSigilTeleport = Color(125, 215, 255, 220)
+local colSigilTeleport = Color(236, 65, 131, 220)
 function GM:DrawSigilTeleportBar(x, y, fraction, target, screenscale)
 	local maxbarwidth = 270 * screenscale
 	local barheight = 11 * screenscale

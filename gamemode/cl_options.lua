@@ -240,6 +240,18 @@ GM.YRadiusBlock = CreateClientConVar("zs_block_func", 140, true, false):GetInt()
 cvars.AddChangeCallback("zs_block_func", function(cvar, oldvalue, newvalue)
 	GAMEMODE.YRadiusBlock = math.Clamp(tonumber(newvalue) or 0, 0, 300)
 end)
+GM.RHealth = CreateClientConVar("zs_rhealth", 140, true, false):GetInt(), 0, GM.XRadiusBlock
+cvars.AddChangeCallback("zs_rhealth", function(cvar, oldvalue, newvalue)
+	GAMEMODE.RHealth = math.Clamp(tonumber(newvalue) or 0, 0, 255)
+end)
+GM.GHealth = CreateClientConVar("zs_ghealth", 140, true, false):GetInt(), 0, GM.YRadiusBlock
+cvars.AddChangeCallback("zs_ghealth", function(cvar, oldvalue, newvalue)
+	GAMEMODE.GHealth = math.Clamp(tonumber(newvalue) or 0, 0, 255)
+end)
+GM.BHealth = CreateClientConVar("zs_bhealth", 140, true, false):GetInt(), 0, GM.YRadiusBlock
+cvars.AddChangeCallback("zs_bhealth", function(cvar, oldvalue, newvalue)
+	GAMEMODE.BHealth = math.Clamp(tonumber(newvalue) or 0, 0, 255)
+end)
 
 GM.MovementViewRoll = CreateClientConVar("zs_movementviewroll", "0", true, false):GetBool()
 cvars.AddChangeCallback("zs_movementviewroll", function(cvar, oldvalue, newvalue)
