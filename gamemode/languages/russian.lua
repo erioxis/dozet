@@ -19,7 +19,7 @@ LANGUAGE.op_nofloatingscore = "Не отображать всплывающие 
 LANGUAGE.op_hidepacks = "Не прятать переносные ящики"
 LANGUAGE.op_mcore = "Мулти-ядерный рендеринг(РЕКОМЕНДУЕТСЯ)"
 LANGUAGE.op_color_c = "Цветокоррекция(Убирает мочу с экрана)"
-LANGUAGE.op_blockposition = "Смена позиции текста блока"
+LANGUAGE.op_blockposition = "Кастомная позиция блока"
 
 -- Various gamemode stuff|
 LANGUAGE.blockisfalse = "НЕТУ БЛОКА(ПКМ СМЕНИТЬ СОСТОЯНИЕ)"

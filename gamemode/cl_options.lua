@@ -232,6 +232,14 @@ GM.TransparencyRadius3p = math.Clamp(CreateClientConVar("zs_transparencyradius3p
 cvars.AddChangeCallback("zs_transparencyradius3p", function(cvar, oldvalue, newvalue)
 	GAMEMODE.TransparencyRadius3p = math.Clamp(tonumber(newvalue) or 0, 0, GAMEMODE.TransparencyRadiusMax) ^ 2
 end)
+GM.XRadiusBlock = CreateClientConVar("zs_x_block_func", 140, true, false):GetInt(), 0, GM.XRadiusBlock
+cvars.AddChangeCallback("zs_x_block_func", function(cvar, oldvalue, newvalue)
+	GAMEMODE.XRadiusBlock = math.Clamp(tonumber(newvalue) or 0, 0, 3000)
+end)
+GM.YRadiusBlock = CreateClientConVar("zs_block_func", 140, true, false):GetInt(), 0, GM.YRadiusBlock
+cvars.AddChangeCallback("zs_block_func", function(cvar, oldvalue, newvalue)
+	GAMEMODE.YRadiusBlock = math.Clamp(tonumber(newvalue) or 0, 0, 300)
+end)
 
 GM.MovementViewRoll = CreateClientConVar("zs_movementviewroll", "0", true, false):GetBool()
 cvars.AddChangeCallback("zs_movementviewroll", function(cvar, oldvalue, newvalue)

@@ -34,16 +34,17 @@ function SWEP:DrawHUD()
 		draw.SimpleText(""..translate.Get("blockisfalse"), "ZSHUDFontSmall", x + wid, texty, COLOR_RED, TEXT_ALIGN_CENTER)
 	end
 elseif self.BlockTrue == true and self:GetOwner():GetInfo("zs_blockposition") == "1" then
-	local wid1, hei1 = 100, 16
-	local x1, y1 = ScrW() - wid1 - 410, ScrH() - hei1 - 120
-	local texty1 = y1 - 8 - draw.GetFontHeight("ZSHUDFontSmall")
+	local widC, heiC = self:GetOwner():GetInfo("zs_block_func"), self:GetOwner():GetInfo("zs_x_block_func")
+	local xC, yC = ScrW() - widC - self:GetOwner():GetInfo("zs_block_func") , ScrH() - self:GetOwner():GetInfo("zs_x_block_func")
+	local textyC = yC - 8 - draw.GetFontHeight("ZSHUDFontSmall")
 	if self.Block == 1 then
-	draw.SimpleText(""..translate.Get("blockistrue"), "ZSHUDFontSmall", x1 + wid1, texty1, COLOR_GREEN, TEXT_ALIGN_CENTER)
+	draw.SimpleText(""..translate.Get("blockistrue"), "ZSHUDFontSmall", xC + widC, textyC, COLOR_GREEN, TEXT_ALIGN_CENTER)
 	else
-		draw.SimpleText(""..translate.Get("blockisfalse"), "ZSHUDFontSmall", x1 + wid1, texty1, COLOR_RED, TEXT_ALIGN_CENTER)
+		draw.SimpleText(""..translate.Get("blockisfalse"), "ZSHUDFontSmall", xC + widC, textyC, COLOR_RED, TEXT_ALIGN_CENTER)
 	end
-end 
 end
+end
+
 
 --[[function SWEP:DrawHUD()
 	if GetConVar("crosshair"):GetInt() ~= 1 then return end
