@@ -1099,10 +1099,11 @@ GM:AddSkillModifier(SKILL_TORMENT5, SKILLMOD_REPAIRRATE_MUL, -0.50)
 GM:AddSkillModifier(SKILL_TORMENT5, SKILLMOD_MEDKIT_EFFECTIVENESS_MUL, -0.50)
 GM:AddSkillModifier(SKILL_TORMENT5, SKILLMOD_XP, 0.30)
 SKILL_DEATHCURSE = 234
-GM:AddSkill(SKILL_DEATHCURSE, "Curse cleaning", GOOD.."+15% Xp Multiplier\n"..GOOD.."Eating food clear you curses\n"..BAD.."-30% Max curse\n",
+GM:AddSkill(SKILL_DEATHCURSE, "Curse cleaning", GOOD.."+15% Xp Multiplier\n"..GOOD.."Eating food blesses you, forgiving your curse\nIf you cursed and eat food give 35 seconds of defence\n"..BAD.."-30% Max curse\n"..BAD.."+30% time to eat food",
 				                                                            	2,			30,					{SKILL_TORMENT5}, TREE_ANCIENTTREE)
 GM:AddSkillModifier(SKILL_DEATHCURSE, SKILLMOD_XP, 0.15)
 GM:AddSkillModifier(SKILL_DEATHCURSE, SKILLMOD_CURSEM, -0.30)
+GM:AddSkillModifier(SKILL_DEATHCURSE, SKILLMOD_FOODEATTIME_MUL, 0.30)
 --Defend skills
 
 SKILL_DEFEND1 = 191
@@ -1273,6 +1274,43 @@ SKILL_USELESS_5 = 504
 GM:AddSkill(SKILL_USELESS_5, "Useless 5", GOOD.."+6% Max curse",
 				                                                            	1,			3,					{SKILL_USELESS_4}, TREE_USELESSTREE)
 GM:AddSkillModifier(SKILL_USELESS_5, SKILLMOD_CURSEM, 0.06)
+SKILL_USELESS_6 = 505
+GM:AddSkill(SKILL_USELESS_6, "Useless 6", GOOD.."+5 Health",
+				                                                            	1,			4,					{SKILL_USELESS_5}, TREE_USELESSTREE)
+GM:AddSkillModifier(SKILL_USELESS_6, SKILLMOD_HEALTH, 5)
+SKILL_USELESS_7 = 506
+GM:AddSkill(SKILL_USELESS_7, "Useless 7", GOOD.."+5 worth",
+				                                                            	2,			4,					{SKILL_USELESS_6}, TREE_USELESSTREE)
+GM:AddSkillModifier(SKILL_USELESS_7, SKILLMOD_WORTH, 5)
+SKILL_USELESS_8 = 507
+GM:AddSkill(SKILL_USELESS_8, "Useless 8", GOOD.."+8 starting scrap",
+				                                                            	2,			5,					{SKILL_USELESS_7}, TREE_USELESSTREE)
+GM:AddSkillModifier(SKILL_USELESS_8, SKILLMOD_SCRAP_START, 8)
+SKILL_USELESS_9 = 508
+GM:AddSkill(SKILL_USELESS_9, "Useless 9", GOOD.."+20% manhack health",
+				                                                            	4,			3,					{SKILL_USELESS_8}, TREE_USELESSTREE)
+GM:AddSkillModifier(SKILL_USELESS_9, SKILLMOD_MANHACK_HEALTH_MUL, 0.2)
+SKILL_USELESS_10 = 509
+GM:AddSkill(SKILL_USELESS_10, "Useless 10", GOOD.."+9 speed",
+				                                                            	4,			2,					{SKILL_USELESS_9}, TREE_USELESSTREE)
+GM:AddSkillModifier(SKILL_USELESS_10, SKILLMOD_SPEED, 9)
+SKILL_USELESS_11 = 510
+GM:AddSkill(SKILL_USELESS_11, "Useless 11", GOOD.."-10% knockdown time",
+				                                                            	3,		    1,					{SKILL_USELESS_10}, TREE_USELESSTREE)
+GM:AddSkillModifier(SKILL_USELESS_11, SKILLMOD_KNOCKDOWN_RECOVERY_MUL, -0.1)
+SKILL_USELESS_12 = 511
+GM:AddSkill(SKILL_USELESS_12, "Useless 12", GOOD.."+5% Bullet damage",
+				                                                            	3,		    0,					{SKILL_USELESS_11}, TREE_USELESSTREE)
+GM:AddSkillModifier(SKILL_USELESS_12, SKILLMOD_DAMAGE, 0.05)
+SKILL_USELESS_13 = 512
+GM:AddSkill(SKILL_USELESS_13, "Useless 13", GOOD.."+5% Melee damage",
+				                                                            	2,		    -1,					{SKILL_USELESS_12}, TREE_USELESSTREE)
+GM:AddSkillModifier(SKILL_USELESS_13, SKILLMOD_MELEE_DAMAGE_MUL, 0.05)
+SKILL_USELESS_14 = 513
+GM:AddSkill(SKILL_USELESS_14, "Useless 14", GOOD.."-5% Melee damage taken mul\n You have TOO MUCH USELESS SKILL POINTS???",
+				                                                            	1,		    -1,					{SKILL_USELESS_13}, TREE_USELESSTREE)
+GM:AddSkillModifier(SKILL_USELESS_14, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.05)
+
 
 
 

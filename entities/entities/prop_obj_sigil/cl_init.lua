@@ -30,8 +30,9 @@ ENT.Rotation = math.random(360)
 
 local matWhite = Material("models/debug/debugwhite")
 local matGlow = Material("sprites/light_glow02_add")
-local cDraw = Color(255, 15, 120)
+
 local cDrawWhite = Color(0, 255, 255)
+local cDraw = Color(125, 0, 0)
 
 local math_sin = math.sin
 local math_cos = math.cos
@@ -46,6 +47,7 @@ local render_DrawQuadEasy = render.DrawQuadEasy
 local render_DrawSprite = render.DrawSprite
 
 function ENT:DrawTranslucent()
+
 	self:RemoveAllDecals()
 
 	local scale = self.ModelScale

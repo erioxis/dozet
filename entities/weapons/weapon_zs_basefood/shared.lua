@@ -10,6 +10,7 @@ SWEP.UseHands = true
 
 SWEP.HoldType = "slam"
 SWEP.SwingHoldType = "camera"
+SWEP.BlockTrue = false
 
 SWEP.Primary.ClipSize = 1
 SWEP.Primary.Automatic = false

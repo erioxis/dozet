@@ -288,7 +288,6 @@ GM.ResistableStatuses = {
 	"slow",
 	"frightened",
 	"frost",
-	"cursed",
 	"rot"
 }
 
@@ -298,7 +297,7 @@ GM.ScrapVals = {
 }
 
 GM.ScrapValsTrinkets = {
-	3, 6, 9, 15, 17, 21
+	3, 6, 7, 12, 15, 20, 36
 }
 
 GM.DismantleMultipliers = {

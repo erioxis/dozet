@@ -34,7 +34,7 @@ LANGUAGE.op_disablescopes = "Disable ironsight scopes"
 LANGUAGE.op_xpdisplay = "Display experience"
 LANGUAGE.op_nofloatingscore = "Don't show point floaters"
 LANGUAGE.op_hidepacks = "Don't hide resupply packs"
-LANGUAGE.op_mcore = "Multi Core Rendering(RECOMMENDED)"
+LANGUAGE.op_mcore = "Multicore rendering (Increases FPS, RECOMMENDED"
 LANGUAGE.op_color_c = "Color Correction"
 LANGUAGE.op_blockposition = "Custom block position"
 -- Various gamemode stuff

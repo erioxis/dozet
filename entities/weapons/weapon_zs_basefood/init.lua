@@ -14,6 +14,7 @@ function SWEP:Eat()
 		local cursed = owner:GetStatus("cursed")
 		if (cursed) then 
 			owner:AddCursed(self:GetOwner(), cursed.DieTime - CurTime() - 900)
+			owner:GiveStatus("medrifledefboost", 35)
 		end
 
 	end
