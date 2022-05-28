@@ -8,6 +8,7 @@ SWEP.DamageType = DMG_CLUB
 SWEP.ViewModel = "models/weapons/v_hammer/c_hammer.mdl"
 SWEP.WorldModel = "models/weapons/w_hammer.mdl"
 SWEP.UseHands = true
+SWEP.BlockTrue = false
 
 SWEP.Primary.ClipSize = 1
 SWEP.Primary.Automatic = true
