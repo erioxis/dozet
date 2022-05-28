@@ -458,10 +458,10 @@ GM:AddSkill(SKILL_ANTIGEN, ""..translate.Get("skill_agen_0"), GOOD..""..translat
 GM:AddSkill(SKILL_DAMAGER, ""..translate.Get("skill_bhealth_0"), GOOD..""..translate.Get("skill_bhealth_d1")..BAD..""..translate.Get("skill_bhealth_d2"),
 																-2,			5,					{SKILL_ANTIGEN}, TREE_HEALTHTREE)
 -- Speed Tree
-GM:AddSkill(SKILL_SPEED1, translate.Get("skill_speed").."I", GOOD.."+5 movement speed\n"..BAD.."-4 maximum health",
+GM:AddSkill(SKILL_SPEED1, translate.Get("skill_speed").."I", GOOD.."+5"..translate.Get("speed")..BAD.."-4"..translate.Get("health"),
 																-4,			6,					{SKILL_NONE, SKILL_SPEED2}, TREE_SPEEDTREE)
 SKILL_DODGE = 263
-GM:AddSkill(SKILL_DODGE, "Dodge", GOOD.."Have chance to block attack\n"..GOOD.."With higher speed,higher block chance\n"..BAD.."-50 Speed",
+GM:AddSkill(SKILL_DODGE, ""..translate.Get("skill_dodge"), GOOD..""..translate.Get("skill_dodge_d1")..GOOD..""..translate.Get("skill_dodge_d2")..BAD.."-50"..translate.Get("speed"),
 																-3,			1,					{SKILL_SPEED2}, TREE_SPEEDTREE)
 GM:AddSkillModifier(SKILL_DODGE, SKILLMOD_SPEED, -50)
 
@@ -473,13 +473,13 @@ GM:AddSkill(SKILL_SPEED4, translate.Get("skill_speed").."IV", GOOD.."+11"..trans
 																-4,			0,					{SKILL_SPEED5, SKILL_SAFEFALL}, TREE_SPEEDTREE)
 GM:AddSkill(SKILL_SPEED5, translate.Get("skill_speed").."V", GOOD.."+10"..translate.Get("speed")..BAD.."-11"..translate.Get("health"),
 																-4,			-2,					{SKILL_ULTRANIMBLE, SKILL_BACKPEDDLER, SKILL_MOTIONI, SKILL_CARDIOTONIC, SKILL_UNBOUND}, TREE_SPEEDTREE)
-GM:AddSkill(SKILL_AGILEI, "Agile I", GOOD.."+4% jumping power\n"..BAD.."-2 movement speed",
+GM:AddSkill(SKILL_AGILEI, translate.Get("skill_agile").."I", GOOD.."+4%"..translate.Get("jump")..BAD.."-2"..translate.Get("speed"),
 																4,			6,					{SKILL_NONE, SKILL_AGILEII}, TREE_SPEEDTREE)
-GM:AddSkill(SKILL_AGILEII, "Agile II", GOOD.."+5% jumping power\n"..BAD.."-3 movement speed",
+GM:AddSkill(SKILL_AGILEII, translate.Get("skill_agile").."II", GOOD.."+5%"..translate.Get("jump")..BAD.."-3"..translate.Get("speed"),
 																4,			2,					{SKILL_AGILEIII, SKILL_WORTHINESS3}, TREE_SPEEDTREE)
-GM:AddSkill(SKILL_AGILEIII, "Agile III", GOOD.."+6% jumping power\n"..BAD.."-4 movement speed",
+GM:AddSkill(SKILL_AGILEIII, translate.Get("skill_agile").."III", GOOD.."+6%"..translate.Get("jump")..BAD.."-4"..translate.Get("speed"),
 																4,			-2,					{SKILL_SAFEFALL, SKILL_ULTRANIMBLE, SKILL_SURESTEP, SKILL_INTREPID, SKILL_VKID, SKILL_NOSEE}, TREE_SPEEDTREE)
-GM:AddSkill(SKILL_VKID, "Vkid", GOOD.."+30% jumping power\n"..GOOD.."+60 speed\n"..GOOD.."You can squeeze zombie\n"..BAD.."-50 health",
+GM:AddSkill(SKILL_VKID, ""..translate.Get("skill_vkid"), GOOD.."+30%"..translate.Get("jump")..GOOD.."+60"..translate.Get("speed")..GOOD..""..translate.Get("skill_vkid_d")..BAD.."-50"..translate.Get("health"),
 																4,			-3,					{}, TREE_SPEEDTREE)
 GM:AddSkill(SKILL_D_SLOW, ""..translate.Get("skill_slow"), GOOD..""..translate.Get("skill_slow_d1")..GOOD..""..translate.Get("skill_slow_d2")..BAD..""..translate.Get("skill_slow_d3")..BAD..""..translate.Get("skill_slow_d4"),
 																0,			-4,					{}, TREE_SPEEDTREE)
@@ -495,17 +495,17 @@ GM:AddSkill(SKILL_MOTIONIII, ""..translate.Get("skill_motion3"), GOOD..""..trans
 																0,			-2,					{SKILL_D_SLOW}, TREE_SPEEDTREE)
 GM:AddSkill(SKILL_BACKPEDDLER, ""..translate.Get("skill_backpeddler"), GOOD..""..translate.Get("skill_backpeddler_d1")..BAD..""..translate.Get("skill_backpeddler_d2")..BAD..""..translate.Get("skill_backpeddler_d3"),
 																-6,			0,					{}, TREE_SPEEDTREE)
-GM:AddSkill(SKILL_PHASER, "Phaser", GOOD.."+15% barricade phasing movement speed\n"..BAD.."+15% sigil teleportation time",
+GM:AddSkill(SKILL_PHASER, ""..translate.Get("skill_phaser"), GOOD.."+15%"..translate.Get("barricadespeed")..BAD.."+15%"..translate.Get("sigilteleport"),
 																-1,			4,					{SKILL_D_WIDELOAD, SKILL_DRIFT}, TREE_SPEEDTREE)
-GM:AddSkill(SKILL_DRIFT, "Drift", GOOD.."+5% barricade phasing movement speed",
+GM:AddSkill(SKILL_DRIFT, ""..translate.Get("skill_drifter"), GOOD.."+5%"..translate.Get("barricadespeed"),
 																1,			3,					{SKILL_WARP}, TREE_SPEEDTREE)
-GM:AddSkill(SKILL_WARP, "Warp", GOOD.."-5% sigil teleportation time",
+GM:AddSkill(SKILL_WARP, ""..translate.Get("skill_warp"), GOOD.."-5%"..translate.Get("sigilteleport"),
 																2,			2,					{}, TREE_SPEEDTREE)
-GM:AddSkill(SKILL_SIGILOL, "Sigil Infection", GOOD.."+300% Speed in phasing phase\n"..BAD.."+100% sigil teleportation time",
+GM:AddSkill(SKILL_SIGILOL, ""..translate.Get("skill_s_inf"), GOOD.."+300%"..translate.Get("barricadespeed")..BAD.."+100%"..translate.Get("sigilteleport"),
 																2,			4,					{SKILL_WARP}, TREE_SPEEDTREE)
-GM:AddSkill(SKILL_CURSEDTRINKETS, "Worth Trinkets", GOOD.."Cursed?\n"..BAD.."Cursed?\n"..GOOD.."Cursed?",
+GM:AddSkill(SKILL_CURSEDTRINKETS, ""..translate.Get("skill_cursedd"), GOOD..""..translate.Get("skill_cursed")..BAD..""..translate.Get("skill_cursed")..GOOD..""..translate.Get("skill_cursed"),
 																2,		    5,					{SKILL_SIGILOL}, TREE_SPEEDTREE)
-GM:AddSkill(SKILL_CURSEDHEALTH, "Cursed Health", GOOD.."Max Health = Max curse * 2\n"..BAD.."-25% Max curse\n",
+GM:AddSkill(SKILL_CURSEDHEALTH, ""..translate.Get("skill_mda"), GOOD..""..translate.Get("skill_mda_d")..BAD.."-25%"..translate.Get("m_curse"),
 																1,		    4.5,					{SKILL_CURSEDTRINKETS}, TREE_SPEEDTREE)
 
 
