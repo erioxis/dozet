@@ -36,6 +36,7 @@ LANGUAGE.op_nofloatingscore = "Don't show point floaters"
 LANGUAGE.op_hidepacks = "Don't hide resupply packs"
 LANGUAGE.op_mcore = "Multi Core Rendering(RECOMMENDED)"
 LANGUAGE.op_color_c = "Color Correction"
+LANGUAGE.op_blockposition = "Change position of block"
 -- Various gamemode stuff
 LANGUAGE.blockisfalse = "NOT BLOCK(PRESS ATTACK2 FOR CHANGE BLOCK STATUS)"
 LANGUAGE.blockistrue = "BLOCK"

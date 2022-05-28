@@ -54,13 +54,13 @@ GM.WeaponStatBarVals = {
 	{"MeleeRange", "Range", 30, 100, false},
 	{"MeleeSize", "Size", 0.2, 3, false},
 
-	{"Damage", "Damage", 1, 105, false, "Primary"},
-	{"Delay", "Attack Delay", 0.05, 2, true, "Primary"},
+	{"Damage", "Damage", 1, 506, false, "Primary"},
+	{"Delay", "Attack Delay", 0.05, 3, true, "Primary"},
 	{"ClipSize", "Clip Size", 1, 35, false, "Primary"},
 
 	{"ConeMin", "Min Spread", 0, 5, true},
-	{"ConeMax", "Max Spread", 1.5, 7, true},
-	{"WalkSpeed", "Move Speed", 200, 250, false}
+	{"ConeMax", "Max Spread", 1, 7, true},
+	{"WalkSpeed", "Move Speed", 200, 350, false}
 }
 
 GM.LifeStatsLifeTime = 5
@@ -90,6 +90,7 @@ CreateClientConVar("zs_noredeem", "0", true, true)
 CreateClientConVar("zs_alwaysvolunteer", "0", true, true)
 CreateClientConVar("zs_nobosspick", "0", true, true)
 CreateClientConVar("zs_blockunable", "0", true, true)
+CreateClientConVar("zs_blockposition", "0", true, true)
 CreateClientConVar("zs_nousetodeposit", "0", true, true)
 CreateClientConVar("zs_nopickupprops", "0", true, true)
 

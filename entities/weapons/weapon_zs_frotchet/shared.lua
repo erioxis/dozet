@@ -10,10 +10,13 @@ SWEP.UseHands = true
 
 SWEP.HoldType = "melee2"
 
+
+
 SWEP.MeleeDamage = 177
 SWEP.MeleeRange = 91
 SWEP.MeleeSize = 3
 SWEP.MeleeKnockBack = 240
+SWEP.BlockTrue = false
 
 SWEP.MeleeDamageSecondaryMul = 1.2273
 SWEP.MeleeKnockBackSecondaryMul = 1.25
@@ -71,6 +74,7 @@ function SWEP:Think()
 		self.ChargeSound:Stop()
 	end
 end
+
 
 function SWEP:PlaySwingSound()
 	self:EmitSound("nox/sword_miss.ogg", 75, math.random(40, 45))

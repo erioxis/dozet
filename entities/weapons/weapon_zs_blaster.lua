@@ -15,6 +15,8 @@ if CLIENT then
 	SWEP.HUD3DScale = 0.02
 	SWEP.HUD3DBone = "SS.Grip.Dummy"
 end
+SWEP.IsChangeWeapon = 1
+SWEP.ChangeMode = 0
 
 SWEP.HoldType = "shotgun"
 
@@ -44,13 +46,28 @@ SWEP.ReloadSound = Sound("Weapon_Shotgun.Reload")
 
 SWEP.PumpActivity = ACT_SHOTGUN_PUMP
 
+
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_CLIP_SIZE, 1)
 GAMEMODE:AddNewRemantleBranch(SWEP, 1, ""..translate.Get("wep_blaster_r1"), ""..translate.Get("wep_d_blaster_r1"), function(wept)
 	wept.Primary.Damage = wept.Primary.Damage * 4
 	wept.Primary.NumShots = 1
 	wept.ConeMin = wept.ConeMin * 0.45
 	wept.ConeMax = wept.ConeMax * 0.2
+
 end)
+	
+function SWEP:PrimaryAttack()
+	if not self:CanPrimaryAttack() then return end
+
+	self:SetNextPrimaryFire(CurTime() + self:GetFireDelay())
+
+	self:EmitFireSound()
+	self:TakeAmmo()
+	self:ShootBullets(self.Primary.Damage, self.Primary.NumShots, self:GetCone())
+	self.IdleAnimation = CurTime() + self:SequenceDuration()
+end
+
+
 
 function SWEP:SendWeaponAnimation()
 	self:SendWeaponAnim(ACT_VM_PRIMARYATTACK)
@@ -67,3 +84,4 @@ function SWEP:SendWeaponAnimation()
 		end
 	end)
 end
+

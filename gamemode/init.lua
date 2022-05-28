@@ -2197,6 +2197,7 @@ function GM:FullGameUpdate(pl)
 	end
 end
 
+
 concommand.Add("initpostentity", function(sender, command, arguments)
 	if not sender.DidInitPostEntity then
 		sender.DidInitPostEntity = true
@@ -3587,6 +3588,8 @@ function GM:KeyPress(pl, key)
 			end
 		end
 	end
+
+
 end
 
 function GM:GetNearestSpawn(pos, teamid)

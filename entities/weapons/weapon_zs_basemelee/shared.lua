@@ -50,9 +50,6 @@ local MAT_FLESH = MAT_FLESH
 local MAT_BLOODYFLESH = MAT_BLOODYFLESH
 local MAT_ANTLION = MAT_ANTLION
 local MAT_ALIENFLESH = MAT_ALIENFLESH
-function SWEP:OnZombieKilled()
-	self.zKills = self.zKills + 1
-end
 
 
 
@@ -100,20 +97,21 @@ end
 
 
 function SWEP:SecondaryAttack()
-   if self.Block == 0 and not self.BlockTrue == false then
-	timer.Create("blocked1",0.15,1, function() 
-	self.Block = self.Block + 1
-	self:SetWeaponHoldType("revolver")
+	if self.BlockTrue == true then
+    if self.Block == 0 then
+	    timer.Create("blocked1",0.15,1, function() 
+	    self.Block = self.Block + 1
+	    self:SetWeaponHoldType("revolver")
 	end)
-    elseif self.Block == 1 and not self.BlockTrue == false then
-	timer.Create("unblock",0.1,1, function() 
-	self.Block = self.Block - 1
-	self:SetWeaponHoldType(self.HoldType)
+    else
+	    timer.Create("unblock",0.1,1, function() 
+	    self.Block = self.Block - 1
+	    self:SetWeaponHoldType(self.HoldType)
 	end)
-	end 
-
-
 end
+end
+end
+
 
 
 function SWEP:Reload()
@@ -326,6 +324,10 @@ false
 		dmginfo:SetDamage(damage)
 	end
 end
+function SWEP:OnZombieKilled()
+	self.zKills = self.zKills + 1
+end
+
 
 function SWEP:PostHitUtil(owner, hitent, dmginfo, tr, vel)
 	if self.PointsMultiplier then
@@ -387,7 +389,7 @@ false
 	end
 
 
-	local damage = ((self.MeleeDamage * damagemultiplier) - (self.zKills / 15))
+	local damage = ((self.MeleeDamage * damagemultiplier) - ((self.zKills or 1) / 15))
 
 	local dmginfo = DamageInfo()
 	dmginfo:SetDamagePosition(tr.HitPos)

@@ -23,7 +23,7 @@ end
 
 function SWEP:DrawHUD()
 	if GetConVar("crosshair"):GetInt() ~= 1 then return end
-	if self.BlockTrue == true and self:GetOwner():GetInfo("zs_blockunable") == "0" then
+	if self.BlockTrue == true and self:GetOwner():GetInfo("zs_blockposition") == "0" then
 	self:DrawCrosshairDot()
 	local wid, hei = 500, 900
 	local x, y = ScrW() - wid - 602, ScrH() - hei - 72
@@ -33,7 +33,7 @@ function SWEP:DrawHUD()
 	else
 		draw.SimpleText(""..translate.Get("blockisfalse"), "ZSHUDFontSmall", x + wid, texty, COLOR_RED, TEXT_ALIGN_RIGHT)
 	end
-elseif self:GetOwner():GetInfo("zs_blockunable") == "1" then
+elseif self.BlockTrue == true and self:GetOwner():GetInfo("zs_blockposition") == "1" then
 	local wid1, hei1 = 384, 16
 	local x1, y1 = ScrW() - wid1 - 32, ScrH() - hei1 - 72
 	local texty1 = y1 - 4 - draw.GetFontHeight("ZSHUDFontSmall")
@@ -44,6 +44,25 @@ elseif self:GetOwner():GetInfo("zs_blockunable") == "1" then
 	end
 end 
 end
+
+--[[function SWEP:DrawHUD()
+	if GetConVar("crosshair"):GetInt() ~= 1 then return end
+	if self.BlockTrue == true then
+	self:DrawCrosshairDot()
+	local wid, hei = 384, 16
+	local x, y = ScrW() - wid - 32, ScrH() - hei - 72
+	local texty = y - 4 - draw.GetFontHeight("ZSHUDFontSmall")
+	if self.Block == 1 then
+	draw.SimpleText(""..translate.Get("blockistrue"), "ZSHUDFontSmall", x + wid, texty, COLOR_GREEN, TEXT_ALIGN_RIGHT)
+	else
+		draw.SimpleText(""..translate.Get("blockisfalse"), "ZSHUDFontSmall", x + wid, texty, COLOR_RED, TEXT_ALIGN_RIGHT)
+	end
+end]]
+
+
+
+
+
 
 function SWEP:OnRemove()
 	self:Anim_OnRemove()
