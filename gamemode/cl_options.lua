@@ -252,6 +252,18 @@ GM.BHealth = CreateClientConVar("zs_bhealth", 140, true, false):GetInt(), 0, GM.
 cvars.AddChangeCallback("zs_bhealth", function(cvar, oldvalue, newvalue)
 	GAMEMODE.BHealth = math.Clamp(tonumber(newvalue) or 0, 0, 255)
 end)
+GM.Rblood = CreateClientConVar("zs_rblood", 140, true, false):GetInt(), 0, GM.XRadiusBlock
+cvars.AddChangeCallback("zs_rblood", function(cvar, oldvalue, newvalue)
+	GAMEMODE.Rblood = math.Clamp(tonumber(newvalue) or 0, 0, 255)
+end)
+GM.Gblood = CreateClientConVar("zs_gblood", 140, true, false):GetInt(), 0, GM.YRadiusBlock
+cvars.AddChangeCallback("zs_gblood", function(cvar, oldvalue, newvalue)
+	GAMEMODE.Gblood = math.Clamp(tonumber(newvalue) or 0, 0, 255)
+end)
+GM.Bblood = CreateClientConVar("zs_bblood", 140, true, false):GetInt(), 0, GM.YRadiusBlock
+cvars.AddChangeCallback("zs_bblood", function(cvar, oldvalue, newvalue)
+	GAMEMODE.Bblood = math.Clamp(tonumber(newvalue) or 0, 0, 255)
+end)
 
 GM.MovementViewRoll = CreateClientConVar("zs_movementviewroll", "0", true, false):GetBool()
 cvars.AddChangeCallback("zs_movementviewroll", function(cvar, oldvalue, newvalue)

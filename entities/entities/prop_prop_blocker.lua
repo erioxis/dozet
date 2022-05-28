@@ -12,7 +12,7 @@ function ENT:Initialize()
 	self:SetNoDraw(true)
 
 	if SERVER then
-		self:PhysicsInitBox(Vector(-20, -20, 0), Vector(20, 20, 86))
+		self:PhysicsInitBox(Vector(-10, -10, 0), Vector(10, 10, 36))
 	end
 
 	self:SetCustomCollisionCheck(true)
