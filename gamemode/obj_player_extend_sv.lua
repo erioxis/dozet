@@ -188,12 +188,12 @@ function meta:ProcessDamage(dmginfo)
 				if self:IsSkillActive(SKILL_UPLOAD) then
 					local cursed = self:GetStatus("hollowing")
 					if (cursed) then 
-						self:AddHallow(self:GetOwner(),cursed.DieTime - CurTime() + (dmginfo:GetDamage() * 1.5))
+						self:AddHallow(self:GetOwner(),cursed.DieTime - CurTime() + (dmginfo:GetDamage() * 0.5))
 					end
 					if (not cursed) then 
-						self:AddHallow(self:GetOwner(),dmginfo:GetDamage() * 1.5)
+						self:AddHallow(self:GetOwner(),dmginfo:GetDamage() * 0.5)
 					end
-					if (cursed) and ((cursed.DieTime) >= 500) then
+					if (cursed) and ((cursed.DieTime) >= 800) then
 						self:TakeSpecialDamage(500, DMG_DIRECT, owner, self)
 						self:AddHallow(self:GetOwner(),cursed.DieTime - (CurTime() - -1500))
 

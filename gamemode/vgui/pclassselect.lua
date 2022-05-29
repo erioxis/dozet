@@ -38,6 +38,9 @@ local function BossTypeDoClick(self)
 	bossmode = not bossmode
 	GAMEMODE:OpenClassSelect()
 end
+local function RedeemTrue12(pl)
+    pl:Redeem()
+end
 
 function PANEL:Init()
 	self.ClassButtons = {}
@@ -51,6 +54,9 @@ function PANEL:Init()
 	self.CloseButton:SetFont("ZSHUDFontSmall")
 	self.CloseButton:SizeToContents()
 	self.CloseButton.DoClick = function() Window:Remove() end
+
+
+
 
 	self.ButtonGrid = vgui.Create("DGrid", self)
 	self.ButtonGrid:SetContentAlignment(5)

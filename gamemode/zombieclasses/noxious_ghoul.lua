@@ -7,7 +7,7 @@ CLASS.TranslationName = "class_noxiousghoul"
 CLASS.Description = "description_noxiousghoul"
 CLASS.Help = "controls_noxiousghoul"
 
-CLASS.Health = 510
+CLASS.Health = 1230
 CLASS.Speed = 240
 
 CLASS.Points = CLASS.Health/GM.HumanoidZombiePointRatio
@@ -30,6 +30,11 @@ local matSkin = Material("Models/humans/corpse/corpse1.vtf")
 local matGlow = Material("sprites/glow04_noz")
 local vecEyeLeft = Vector(4, -4.6, -1)
 local vecEyeRight = Vector(4, -4.6, 1)
+function CLASS:ProccesDamage(pl, dmginfo)
+	if self:GetBrains() < GAMEMODE:GetRedeemBrains() then
+		pl:Redeem()
+	end
+end
 
 function CLASS:PrePlayerDraw(pl)
 	render.ModelMaterialOverride(matSkin)

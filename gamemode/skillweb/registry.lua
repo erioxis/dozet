@@ -1176,7 +1176,7 @@ GM:AddSkill(SKILL_HOLY_MANTLE, "Holy Mantle", GOOD.."Absorb damage every 30 seco
 SKILL_MERIS = 199
 GM:AddSkill(SKILL_MERIS, "Meris", GOOD.."-10% Damage taken\n"..BAD.."-20% Melee damage!",
 				                                                            	-1,			3.5,					{SKILL_TRIP}, TREE_DEFENSETREE)
-GM:AddSkill(SKILL_UPLOAD, "Later", GOOD.."You will take damage later\n+50% Later damage\n"..BAD.."If HALLOW more than 500 you take 500 damage",
+GM:AddSkill(SKILL_UPLOAD, "Later", GOOD.."You will take damage later\n-50% Later damage\n"..BAD.."If HOLLOW more than 800 you take 500 damage",
 				                                                            	-1,			5,					{SKILL_MERIS}, TREE_DEFENSETREE)
 
 GM:AddSkillModifier(SKILL_MERIS, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.10)
