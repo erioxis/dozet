@@ -1065,7 +1065,7 @@ local function BossZombieSort(za, zb)
 end
 
 
-function GM:BeBoss(bossplayer, silent, bossindex, triggerboss)
+function GM:SpawnBossZombie(bossplayer, silent, bossindex, triggerboss)
 
 	if not bossplayer then
 		bossplayer = self:CalculateNextBoss()
@@ -1199,7 +1199,7 @@ function GM:Think()
 			and self.LastBossZombieSpawned ~= wave and wave > 0 and not self.RoundEnded
 			and (self.BossZombiePlayersRequired <= 0 or #player.GetAll() >= self.BossZombiePlayersRequired) then
 				if self:GetWaveStart() - 10 <= time then
-					self:BeBoss()
+					self:SpawnBossZombie()
 				else
 					self:CalculateNextBoss()
 				end
