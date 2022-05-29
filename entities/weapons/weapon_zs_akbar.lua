@@ -54,6 +54,7 @@ function SWEP:PrimaryAttack()
 
 
 
+owner = self:GetOwner()
 	self:EmitFireSound()
 	if SERVER then
 	self:SetNextPrimaryFire(CurTime() + self:GetFireDelay())
@@ -61,6 +62,8 @@ function SWEP:PrimaryAttack()
 	self:TakeAmmo()
 	self:ShootBullets(self.Primary.Damage + (self.Primary.Damage * self.MultiplierOfShots / 3), self.Primary.NumShots, self:GetCone())
 	self.MultiplierOfShots = self.MultiplierOfShots + 1
+
+
 	end
 	if self.MultiplierOfShots >= 5 then
 		self.MultiplierOfShots = self.MultiplierOfShots - 4

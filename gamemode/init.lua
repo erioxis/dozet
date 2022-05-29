@@ -1898,6 +1898,7 @@ function GM:RestartGame()
 		pl:StripWeapons()
 		pl:StripAmmo()
 		pl:SetFrags(0)
+
 		pl:SetDeaths(0)
 		pl:SetPoints(0)
 		pl:SetTokens(0)
@@ -2526,6 +2527,7 @@ end
 function GM:CanRemoveNail(pl, nail)
 	return not nail.m_NailUnremovable
 end
+
 
 function GM:CanRemoveOthersNail(pl, nailowner, ent)
 	-- obsolete
@@ -3636,6 +3638,7 @@ end
 function GM:PlayerUse(pl, ent)
 	if not pl:Alive() or pl:Team() == TEAM_UNDEAD and pl:GetZombieClassTable().NoUse or pl:GetBarricadeGhosting() then return false end
 
+
 	if pl:IsHolding() and pl:GetHolding() ~= ent then return false end
 
 	local entclass = ent:GetClass()
@@ -4156,6 +4159,7 @@ function GM:PlayerSpawn(pl)
 	if pl:GetMaterial() ~= "" then
 		pl:SetMaterial("")
 	end
+
 
 	pl:UnSpectate()
 

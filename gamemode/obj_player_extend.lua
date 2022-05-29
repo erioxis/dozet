@@ -293,6 +293,7 @@ function meta:GetPoints()
 	return self:GetDTInt(1)
 end
 
+
 function meta:SetTokens(pts)
 	self:SetNWInt('btokens', pts)	
 end	

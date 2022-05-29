@@ -6,6 +6,7 @@ ENT.StrictNoSkyCade = true
 function ENT:Initialize()
 	self:SetModel("models/props_debris/wood_board05a.mdl")
 	self:PhysicsInit(SOLID_VPHYSICS)
+	
 
 	self:CollisionRulesChanged()
 
@@ -80,6 +81,11 @@ end
 function ENT:AltUse(activator, tr)
 	self:PackUp(activator)
 end
+--[[function ENT.NoCollide()
+ if ent:GetClass() == "prop_physics" or "prop_physics_multiplier" then
+	self:EnableCustomCollisions( boolean useCustom )
+ end
+end]]
 
 function ENT:OnPackedUp(pl)
 	--pl:GiveEmptyWeapon("weapon_zs_barricadekit")
@@ -89,9 +95,7 @@ function ENT:OnPackedUp(pl)
 
 	self:Remove()
 end
-function ENT.NoCollide()
 
-end
 
 function ENT:Think()
 	if self.Destroyed then

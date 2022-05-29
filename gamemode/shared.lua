@@ -474,6 +474,7 @@ function GM:ShouldCollide(enta, entb)
 		return false
 	end]]
 
+	
 	return true
 end
 
