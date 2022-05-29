@@ -921,6 +921,7 @@ LANGUAGE.skill_holymantle_d1 = "Поглощает любой каждые 30 с
 LANGUAGE.skill_surg = "Хирург "
 LANGUAGE.skill_bio = "Биолог "
 --Скиллы скорость
+LANGUAGE.skill_salostealer = "Крадитель сала"
 LANGUAGE.skill_sfall = "Безопасное падение"
 LANGUAGE.skill_sfall_d2 = "+20% к быстроте поднимания после падения\n"
 LANGUAGE.skill_sfall_d1 = "-15% урона от падения\n"

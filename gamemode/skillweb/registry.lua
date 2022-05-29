@@ -518,7 +518,7 @@ GM:AddSkill(SKILL_D_WIDELOAD, ""..translate.Get("skill_wideroad_0"), GOOD.."+20"
 																1,			1,					{}, TREE_SPEEDTREE)
 GM:AddSkill(SKILL_U_CORRUPTEDFRAGMENT, "Unlock: Corrupted Fragment", GOOD.."Unlocks purchasing the Corrupted Fragment\nGoes to corrupted sigils instead",
 																-2,			2,					{}, TREE_SPEEDTREE)
-GM:AddSkill(SKILL_ULTRANIMBLE, "Ultra Nimble", GOOD.."+30 movement speed\n"..BAD.."-10 maximum health",
+GM:AddSkill(SKILL_ULTRANIMBLE, ""..translate.Get("skill_salostealer"), GOOD.."+30"..translate.Get("speed")..BAD.."-10"..translate.Get("health"),
 																0,			-6,					{}, TREE_SPEEDTREE)
 GM:AddSkill(SKILL_WORTHINESS3, "Worthiness III", GOOD.."+10"..translate.Get("worth")..BAD.."-3"..translate.Get("start_points"),
 																6,			2,					{}, TREE_SPEEDTREE)

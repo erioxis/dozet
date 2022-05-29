@@ -27,7 +27,15 @@ function ENT:OnDamaged(damage, attacker, inflictor, dmginfo)
 	end
 end
 
+ENT.TimeNext = CurTime() + 0.5
+function ENT:Think()
+    if self.EntPos and self.TimeNext < CurTime() and self.EntPos:Distance( self:GetBaseEntity():GetPos() ) > 1 then
+        self:Remove()
+    end
+end
+
 function ENT:AttachTo(baseent, attachent, physbone, physbone2)
+    self.EntPos = baseent:GetPos()
 	self:SetBaseEntity(baseent)
 	self:SetAttachEntity(attachent, physbone, physbone2)
 

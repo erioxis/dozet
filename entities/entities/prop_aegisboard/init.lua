@@ -2,6 +2,7 @@ INC_SERVER()
 
 ENT.StrictNoSkyCade = true
 
+
 function ENT:Initialize()
 	self:SetModel("models/props_debris/wood_board05a.mdl")
 	self:PhysicsInit(SOLID_VPHYSICS)
@@ -87,6 +88,9 @@ function ENT:OnPackedUp(pl)
 	pl:PushPackedItem(self:GetClass(), self:GetObjectHealth())
 
 	self:Remove()
+end
+function ENT.NoCollide()
+
 end
 
 function ENT:Think()

@@ -1118,6 +1118,7 @@ LANGUAGE.skill_holymantle_d1 = "Absorb damage every 30 seconds\nThan higher luck
 LANGUAGE.skill_surg = "Surgeon "
 LANGUAGE.skill_bio = "Biology "
 --Skills speed
+LANGUAGE.skill_salostealer = "Ultra Nimble"
 LANGUAGE.skill_sfall = "Safe Fall"
 LANGUAGE.skill_sfall_d2 = "+20% faster fall damage knockdown recovery\n"
 LANGUAGE.skill_sfall_d1 = "-15% fall damage taken\n"
