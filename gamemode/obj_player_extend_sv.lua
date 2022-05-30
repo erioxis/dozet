@@ -569,6 +569,7 @@ function meta:SetPoints(points)
 	self:SetDTInt(1, points)
 end
 
+
 function meta:SetBloodArmor(armor)
 	self:SetDTInt(DT_PLAYER_INT_BLOODARMOR, armor)
 end
@@ -1252,6 +1253,7 @@ function meta:AddPoints(points, floatingscoreobject, fmtype, nomul)
 	end
 
 	self:AddFrags(wholepoints)
+	self:MetaAddScore(self:GetMScore() + wholepoints)
 	self:SetPoints(self:GetPoints() + wholepoints)
 
 	if self.PointsVault then
@@ -1544,11 +1546,13 @@ function meta:ShouldCrouchJumpPunish()
 end
 
 function meta:TakeBrains(amount)
+	self:MetaAddScore(self:GetMScore() - amount)
 	self:AddFrags(-amount)
 	self.BrainsEaten = self.BrainsEaten - 1
 end
 
 function meta:AddBrains(amount)
+	self:MetaAddScore(self:GetMScore() + amount)
 	self:AddFrags(amount)
 	self.BrainsEaten = self.BrainsEaten + 1
 	self:CheckRedeem()

@@ -292,6 +292,12 @@ end
 function meta:GetPoints()
 	return self:GetDTInt(1)
 end
+function meta:GetMScore()
+	return self:GetNWInt('metascore', metascore)	
+end
+function meta:MetaAddScore(metascore)
+	self:SetNWInt('metascore', metascore)
+end
 
 
 function meta:SetTokens(pts)

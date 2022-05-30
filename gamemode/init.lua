@@ -1275,6 +1275,7 @@ function GM:Think()
 				local healmax = pl:IsSkillActive(SKILL_D_FRAIL) and math.floor(pl:GetMaxHealth() * 0.44) or pl:GetMaxHealth()
 				local healmax = pl:IsSkillActive(SKILL_ABUSE) and math.floor(pl:GetMaxHealth() * 0.25) or pl:GetMaxHealth()
 
+
 				if pl:IsSkillActive(SKILL_REGENERATOR) and time >= pl.NextRegenerate and pl:Health() < math.min(healmax, pl:GetMaxHealth() * 0.6) then
 					pl.NextRegenerate = time + 6
 					pl:SetHealth(math.min(healmax, pl:Health() + 1))
@@ -1899,6 +1900,7 @@ function GM:RestartGame()
 		pl:StripWeapons()
 		pl:StripAmmo()
 		pl:SetFrags(0)
+		pl:MetaAddScore(0)
 
 		pl:SetDeaths(0)
 		pl:SetPoints(0)
@@ -3231,6 +3233,7 @@ function GM:SetRandomToZombie()
 	if not pl then return end
 
 	pl:ChangeTeam(TEAM_UNDEAD)
+	pl:MetaAddScore(0)
 	pl:SetFrags(0)
 	pl:SetDeaths(0)
 
@@ -3445,6 +3448,7 @@ function GM:SetClosestsToZombie()
 			self.PreviouslyDied[pl:UniqueID()] = CurTime()
 			self.InitialVolunteers[pl:UniqueID()] = true
 		end
+		pl:MetaAddScore(0)
 		pl:SetFrags(0)
 		pl:SetDeaths(0)
 

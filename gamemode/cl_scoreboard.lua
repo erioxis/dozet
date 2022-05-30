@@ -411,7 +411,7 @@ function PANEL:RefreshPlayer()
 	self.m_PlayerLabel:SetAlpha(240)
 
 
-	self.m_ScoreLabel:SetText(math.max(pl:Frags()).."|"..pl:GetPoints())
+	self.m_ScoreLabel:SetText(pl:GetMScore().."|"..pl:GetPoints())
 	self.m_ScoreLabel:SetAlpha(240)
 
 
