@@ -73,8 +73,8 @@ function PANEL:Init()
 	self.m_ZombieHeading = vgui.Create("DTeamHeading", self)
 	self.m_ZombieHeading:SetTeam(TEAM_UNDEAD)
 
-	self.m_PointsLabel = EasyLabel(self, "Points", "ZSScoreBoardPlayer", COLOR_GRAY)
-	self.m_PointstrueLabel = EasyLabel(self, "S|", "ZSScoreBoardPlayer", COLOR_GRAY)
+	self.m_PointsLabel = EasyLabel(self, "S|Points", "ZSScoreBoardPlayer", COLOR_GRAY)
+
 	self.m_RemortCLabel = EasyLabel(self, "R.LVL", "ZSScoreBoardPlayer", COLOR_GRAY)
 
 	self.m_BrainsLabel = EasyLabel(self, "Brains", "ZSScoreBoardPlayer", COLOR_GRAY)
@@ -107,9 +107,10 @@ function PANEL:PerformLayout()
 	self.m_PointsLabel:SetPos((self:GetWide() / 2 - 24) * 0.6 - self.m_PointsLabel:GetWide() * 0.35, 110 * screenscale - self.m_HumanHeading:GetTall())
 	self.m_PointsLabel:MoveBelow(self.m_HumanHeading, 1 * screenscale)
 
-	self.m_PointstrueLabel:SizeToContents()
-	self.m_PointstrueLabel:SetPos((self:GetWide() / 2 - 14) * 0.54 - self.m_PointstrueLabel:GetWide() * 0.35, 110 * screenscale - self.m_HumanHeading:GetTall())
-	self.m_PointstrueLabel:MoveBelow(self.m_HumanHeading, 1 * screenscale)
+
+
+
+	--team.TotalFrags(pl:Team())
 
 
 
@@ -367,9 +368,6 @@ function PANEL:PerformLayout()
 	self.m_ScoreLabel:SetPos(self:GetWide() * 0.6 - self.m_ScoreLabel:GetWide() / 2, 0)
 	self.m_ScoreLabel:CenterVertical()
 
-	self.m_ScoreTLabel:SizeToContents()
-	self.m_ScoreTLabel:SetPos(self:GetWide() * 0.54 - self.m_ScoreTLabel:GetWide() / 2, 0)
-	self.m_ScoreTLabel:CenterVertical()
 
 
 	self.m_SpecialImage:CenterVertical()
@@ -403,6 +401,7 @@ function PANEL:RefreshPlayer()
 		self:Remove()
 		return
 	end
+	
 
 	local name = pl:Name()
 	if #name > 23 then
@@ -411,15 +410,9 @@ function PANEL:RefreshPlayer()
 	self.m_PlayerLabel:SetText(name)
 	self.m_PlayerLabel:SetAlpha(240)
 
-	self.m_ScoreLabel:SetText(pl:GetPoints())
+
+	self.m_ScoreLabel:SetText(math.max(pl:Frags()).."|"..pl:GetPoints())
 	self.m_ScoreLabel:SetAlpha(240)
-
-
-	self.m_ScoreTLabel:SetText(pl:Frags().."|")
-	self.m_ScoreTLabel:SetAlpha(240)
-
-
-
 
 
 	local rlvl = pl:GetZSRemortLevel()
