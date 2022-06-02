@@ -6,10 +6,10 @@ end
 
 SWEP.Base = "weapon_zs_zombie"
 
-SWEP.MeleeDamage = 120
-SWEP.MeleeDamageShielded = 230
+SWEP.MeleeDamage = 45
+SWEP.MeleeDamageShielded = 66
 SWEP.MeleeDelay = 0.74
-SWEP.MeleeDamageVsProps = 50
+SWEP.MeleeDamageVsProps = 15
 
 function SWEP:MeleeHit(ent, trace, damage, forcescale)
 	local owner = self:GetOwner()

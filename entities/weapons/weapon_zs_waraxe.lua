@@ -34,8 +34,8 @@ SWEP.ViewModel = "models/weapons/cstrike/c_pist_glock18.mdl"
 SWEP.WorldModel = "models/weapons/w_pist_glock18.mdl"
 SWEP.UseHands = true
 
-SWEP.Primary.Damage = 16
-SWEP.Primary.NumShots = 4
+SWEP.Primary.Damage = 14
+SWEP.Primary.NumShots = 2
 SWEP.Primary.Delay = 0.3
 
 SWEP.Primary.ClipSize = 9
@@ -46,7 +46,7 @@ GAMEMODE:SetupDefaultClip(SWEP.Primary)
 
 SWEP.ConeMax = 2.75
 SWEP.ConeMin = 1.2
-SWEP.HeadshotMulti = 3
+SWEP.HeadshotMulti = 2
 
 SWEP.Tier = 2
 
@@ -61,7 +61,7 @@ GAMEMODE:AddNewRemantleBranch(SWEP, 1, "'Halberd' Handgun", "Deals extra damage 
 		if SERVER then
 			local hitent = tr.Entity
 			if hitent:IsValidLivingZombie() and hitent:Health() == hitent:GetMaxHealthEx() and gamemode.Call("PlayerShouldTakeDamage", hitent, attacker) then
-				hitent:TakeSpecialDamage(hitent:Health() * 0.1, DMG_DIRECT, attacker, attacker:GetActiveWeapon(), tr.HitPos)
+				hitent:TakeSpecialDamage(hitent:Health() * 0.3, DMG_DIRECT, attacker, attacker:GetActiveWeapon(), tr.HitPos)
 			end
 		end
 	end

@@ -17,7 +17,7 @@ local ammonames = {
 	["xbowbolt"] = "crossbowammo",
 	["impactmine"] = "impactmine",
 	["chemical"] = "chemical",
-	["gaussenergy"] = "nail",
+	["gaussenergy"] = "nailsz",
 	["battery"]  = "100mkit",
 	["scrap"]  = "scrap"
 }

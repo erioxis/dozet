@@ -1302,7 +1302,7 @@ function GM:Think()
 					
 				end
 				if pl.HolyMantle == 1 and pl:IsSkillActive(SKILL_HOLY_MANTLE) then
-                    pl:GiveStatus("hshield", 1.1)
+                    pl:GiveStatus("hshield", 1.3)
 				end
 				if time >= pl.NextRegenerate and pl:IsSkillActive(SKILL_NOSEE) then
 					pl.NextRegenerate = time + 9

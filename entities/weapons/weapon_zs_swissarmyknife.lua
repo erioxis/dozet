@@ -18,7 +18,7 @@ SWEP.ViewModel = "models/weapons/cstrike/c_knife_t.mdl"
 SWEP.WorldModel = "models/weapons/w_knife_t.mdl"
 SWEP.UseHands = true
 
-SWEP.MeleeDamage = 41
+SWEP.MeleeDamage = 22
 SWEP.MeleeRange = 52
 SWEP.MeleeSize = 0.875
 SWEP.BlockMultiplierWeapon = 1.5

@@ -441,10 +441,11 @@ GM:AddSkill(SKILL_CHEESE, ""..translate.Get("skill_cheese_0"), GOOD..translate.G
 																1,			1,					{SKILL_GOURMET}, TREE_HEALTHTREE)
 GM:AddSkill(SKILL_TANKER, ""..translate.Get("skill_tanker_0"), GOOD..""..translate.Get("skill_tanker_d1")..BAD..""..translate.Get("skill_tanker_d2"),
 																-5,			4,					{SKILL_LIVER}, TREE_HEALTHTREE)
-GM:AddSkill(SKILL_LIVER,  ""..translate.Get("skill_curse_0"), BAD..""..translate.Get("skill_curse_d1")..GOOD..""..translate.Get("skill_curse_d2")..GOOD..""..translate.Get("skill_curse_d3"),
+GM:AddSkill(SKILL_LIVER,  ""..translate.Get("skill_curse_0"), BAD..""..translate.Get("skill_curse_d1")..GOOD..""..translate.Get("skill_curse_d2")..GOOD..""..translate.Get("skill_curse_d3")..GOOD.."+30"..translate.Get("worth"),
 																-5,			5,					{SKILL_TANKER}, TREE_HEALTHTREE)
 GM:AddSkillModifier(SKILL_LIVER, SKILLMOD_SPEED, 60)
 GM:AddSkillModifier(SKILL_LIVER, SKILLMOD_HEALTH, 30)
+GM:AddSkillModifier(SKILL_LIVER, SKILLMOD_WORTH, 30)
 GM:AddSkill(SKILL_FORAGER, ""..translate.Get("skill_f_0"), GOOD..""..translate.Get("skill_f_d1")..BAD..""..translate.Get("skill_f_d2"),
 																5,			-2,					{SKILL_GOURMET}, TREE_HEALTHTREE)
 GM:AddSkill(SKILL_SUGARRUSH, ""..translate.Get("skill_srush_0"), GOOD..""..translate.Get("skill_srush_d1")..BAD..""..translate.Get("skill_srush_d2"),
@@ -516,15 +517,15 @@ GM:AddSkill(SKILL_SAFEFALL, ""..translate.Get("skill_sfall"), GOOD..""..translat
 																0,			0,					{}, TREE_SPEEDTREE)
 GM:AddSkill(SKILL_D_WIDELOAD, ""..translate.Get("skill_wideroad_0"), GOOD.."+20"..translate.Get("worth")..GOOD.."-20%"..translate.Get("res_delay")..BAD..""..translate.Get("skill_wideroad_d1"),
 																1,			1,					{}, TREE_SPEEDTREE)
-GM:AddSkill(SKILL_U_CORRUPTEDFRAGMENT, "Unlock: Corrupted Fragment", GOOD.."Unlocks purchasing the Corrupted Fragment\nGoes to corrupted sigils instead",
+GM:AddSkill(SKILL_U_CORRUPTEDFRAGMENT, ""..translate.Get("skill_sigil_corrupt_0"), GOOD..""..translate.Get("skill_sigil_corrupt_d0"),
 																-2,			2,					{}, TREE_SPEEDTREE)
 GM:AddSkill(SKILL_ULTRANIMBLE, ""..translate.Get("skill_salostealer"), GOOD.."+30"..translate.Get("speed")..BAD.."-10"..translate.Get("health"),
 																0,			-6,					{}, TREE_SPEEDTREE)
-GM:AddSkill(SKILL_WORTHINESS3, "Worthiness III", GOOD.."+10"..translate.Get("worth")..BAD.."-3"..translate.Get("start_points"),
+GM:AddSkill(SKILL_WORTHINESS3, translate.Get("worthness").."III", GOOD.."+10"..translate.Get("worth")..BAD.."-3"..translate.Get("start_points"),
 																6,			2,					{}, TREE_SPEEDTREE)
-GM:AddSkill(SKILL_SURESTEP, "Sure Step", GOOD.."-30% effectiveness of slows\n"..BAD.."-4"..translate.Get("speed"),
+GM:AddSkill(SKILL_SURESTEP, ""..translate.Get("skill_step_0"), GOOD..""..translate.Get("skill_step_d0")..BAD.."-4"..translate.Get("speed"),
 																6,			0,					{}, TREE_SPEEDTREE)
-GM:AddSkill(SKILL_INTREPID, "Intrepid", GOOD.."-35% low health slow intensity\n"..BAD.."-4"..translate.Get("speed"),
+GM:AddSkill(SKILL_INTREPID, ""..translate.Get("skill_int_0"), GOOD..""..translate.Get("skill_int_d0")..BAD.."-4"..translate.Get("speed"),
 																6,			-4,					{SKILL_ROBUST}, TREE_SPEEDTREE)
 GM:AddSkill(SKILL_ROBUST, "Robust", GOOD.."-6% movement speed reduction with heavy weapons",
 																5,			-5,					{}, TREE_SPEEDTREE)
@@ -741,7 +742,7 @@ GM:AddSkill(SKILL_ORPHICFOCUS, "Orphic Focus", GOOD.."90% spread while ironsight
 GM:AddSkill(SKILL_DELIBRATION, "Delibration", GOOD.."+3% tighter aiming reticule\n"..GOOD.."+1% Bullet damage",
 																6,			-3,					{}, TREE_GUNTREE)
 GM:AddSkillModifier(SKILL_DELIBRATION, SKILLMOD_DAMAGE, 0.01)
-GM:AddSkill(SKILL_EGOCENTRIC, "Egocentric", GOOD.."-40% damage vs. yourself\n"..BAD.."-10 health",
+GM:AddSkill(SKILL_EGOCENTRIC, "Egocentric", GOOD.."-15% damage vs. yourself\n"..BAD.."-5 health",
 																0,			-1,					{SKILL_BLASTPROOF}, TREE_GUNTREE)
 GM:AddSkill(SKILL_BLASTPROOF, "Blast Proof", GOOD.."-40% damage vs. yourself\n"..BAD.."-10% reload speed\n"..BAD.."-12% weapon draw speed",
 																0,			-3,					{SKILL_SOFTDET, SKILL_CANNONBALL, SKILL_CONEFFECT}, TREE_GUNTREE)
@@ -1720,8 +1721,8 @@ GM:AddSkillModifier(SKILL_TANKER, SKILLMOD_SPEED, -40)
 GM:AddSkillModifier(SKILL_ULTRANIMBLE, SKILLMOD_HEALTH, -10)
 GM:AddSkillModifier(SKILL_ULTRANIMBLE, SKILLMOD_SPEED, 30)
 
-GM:AddSkillModifier(SKILL_EGOCENTRIC, SKILLMOD_SELF_DAMAGE_MUL, -0.4)
-GM:AddSkillModifier(SKILL_EGOCENTRIC, SKILLMOD_HEALTH, -10)
+GM:AddSkillModifier(SKILL_EGOCENTRIC, SKILLMOD_SELF_DAMAGE_MUL, -0.15)
+GM:AddSkillModifier(SKILL_EGOCENTRIC, SKILLMOD_HEALTH, -5)
 
 GM:AddSkillModifier(SKILL_BLASTPROOF, SKILLMOD_SELF_DAMAGE_MUL, -0.40)
 GM:AddSkillModifier(SKILL_BLASTPROOF, SKILLMOD_RELOADSPEED_MUL, -0.10)

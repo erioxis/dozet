@@ -1117,7 +1117,15 @@ LANGUAGE.skill_holymantle_d1 = "Absorb damage every 30 seconds\nThan higher luck
 --SKILLS ON MEDICAL
 LANGUAGE.skill_surg = "Surgeon "
 LANGUAGE.skill_bio = "Biology "
+-- WOrthness
+LANGUAGE.worthness = "Worthiness "
 --Skills speed
+LANGUAGE.skill_int_d0 = "-35% low health slow intensity\n"
+LANGUAGE.skill_int_0 = "Intrepid"
+LANGUAGE.skill_step_d0 = "-30% effectiveness of slows\n"
+LANGUAGE.skill_step_0 = "Sure Step"
+LANGUAGE.skill_sigil_corrupt_d0 = "Unlocks purchasing the Corrupted Fragment\nGoes to corrupted sigils instead"
+LANGUAGE.skill_sigil_corrupt_0 = "Unlock: Corrupted Fragment"
 LANGUAGE.skill_salostealer = "Ultra Nimble"
 LANGUAGE.skill_sfall = "Safe Fall"
 LANGUAGE.skill_sfall_d2 = "+20% faster fall damage knockdown recovery\n"

@@ -920,7 +920,15 @@ LANGUAGE.skill_holymantle_d1 = "Поглощает любой каждые 30 с
 --SKILLS ON MEDICAL
 LANGUAGE.skill_surg = "Хирург "
 LANGUAGE.skill_bio = "Биолог "
+-- WOrthness
+LANGUAGE.worthness = "Обмен"
 --Скиллы скорость
+LANGUAGE.skill_int_d0 = "-35% Замедления от лоу хп\n"
+LANGUAGE.skill_int_0 = "Вставший"
+LANGUAGE.skill_step_d0 = "-30% эффективность замедления\n"
+LANGUAGE.skill_step_0 = "Стойкий шаг"
+LANGUAGE.skill_sigil_corrupt_d0 = "Открывает испорченный фрагмент сигила\nВы можете переместится на испорченный сигил"
+LANGUAGE.skill_sigil_corrupt_0 = "Испорченный сигил"
 LANGUAGE.skill_salostealer = "Крадитель сала"
 LANGUAGE.skill_sfall = "Безопасное падение"
 LANGUAGE.skill_sfall_d2 = "+20% к быстроте поднимания после падения\n"

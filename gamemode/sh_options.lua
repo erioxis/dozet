@@ -128,13 +128,13 @@ end
 
 -- How much ammo is considered one 'clip' of ammo? For use with setting up weapon defaults. Works directly with zs_survivalclips
 GM.AmmoCache = {}
-GM.AmmoCache["ar2"]							= 46		-- Assault rifles.
+GM.AmmoCache["ar2"]							= 70		-- Assault rifles.
 GM.AmmoCache["alyxgun"]						= 24		-- Not used.
-GM.AmmoCache["pistol"]						= 24		-- Pistols.
-GM.AmmoCache["smg1"]						= 55		-- SMG's and some rifles.
-GM.AmmoCache["357"]							= 12		-- Rifles, especially of the sniper variety.
-GM.AmmoCache["xbowbolt"]					= 8		-- Crossbows
-GM.AmmoCache["buckshot"]					= 14		-- Shotguns
+GM.AmmoCache["pistol"]						= 30		-- Pistols.
+GM.AmmoCache["smg1"]						= 65		-- SMG's and some rifles.
+GM.AmmoCache["357"]							= 16		-- Rifles, especially of the sniper variety.
+GM.AmmoCache["xbowbolt"]					= 10		-- Crossbows
+GM.AmmoCache["buckshot"]					= 16		-- Shotguns
 GM.AmmoCache["ar2altfire"]					= 1			-- Not used.
 GM.AmmoCache["slam"]						= 1			-- Force Field Emitters.
 GM.AmmoCache["rpg_round"]					= 1			-- Not used. Rockets?
@@ -144,7 +144,7 @@ GM.AmmoCache["sniperpenetratedround"]		= 1			-- Remote Det pack.
 GM.AmmoCache["grenade"]						= 1			-- Grenades.
 GM.AmmoCache["thumper"]						= 1			-- Gun turret.
 GM.AmmoCache["gravity"]						= 1			-- Unused.
-GM.AmmoCache["battery"]						= 40		-- Used with the Medical Kit.
+GM.AmmoCache["battery"]						= 45		-- Used with the Medical Kit.
 GM.AmmoCache["gaussenergy"]					= 4		-- Nails used with the Carpenter's Hammer.
 GM.AmmoCache["combinecannon"]				= 1			-- Not used.
 GM.AmmoCache["airboatgun"]					= 1			-- Arsenal crates.
@@ -154,9 +154,9 @@ GM.AmmoCache["spotlamp"]					= 1
 GM.AmmoCache["manhack"]						= 1
 GM.AmmoCache["repairfield"]					= 1
 GM.AmmoCache["zapper"]						= 1
-GM.AmmoCache["pulse"]						= 35
+GM.AmmoCache["pulse"]						= 50
 GM.AmmoCache["impactmine"]					= 5
-GM.AmmoCache["chemical"]					= 35
+GM.AmmoCache["chemical"]					= 60
 GM.AmmoCache["flashbomb"]					= 1
 GM.AmmoCache["turret_buckshot"]				= 1
 GM.AmmoCache["turret_assault"]				= 1
@@ -852,7 +852,7 @@ GM.EndGameTime = 15
 GM.SurvivalClips = 4 --2
 
 -- How long do humans have to wait before being able to get more ammo from a resupply box?
-GM.ResupplyBoxCooldown = 45
+GM.ResupplyBoxCooldown = 70
 
 -- Put your unoriginal, 5MB Rob Zombie and Metallica music here.
 GM.LastHumanSound = Sound("zombiesurvival/lasthuman.ogg")

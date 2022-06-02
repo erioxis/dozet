@@ -186,16 +186,16 @@ function meta:ProcessDamage(dmginfo)
 					attacker:AddArmDamage(self.BarbedArmor)
 				end
 				if self:IsSkillActive(SKILL_UPLOAD) then
-					local cursed = self:GetStatus("hollowing")
-					if (cursed) then 
-						self:AddHallow(self:GetOwner(),cursed.DieTime - CurTime() + (dmginfo:GetDamage() * 0.5))
+					local cursed5 = self:GetStatus("hollowing")
+					if (cursed5) then 
+						self:AddHallow(self:GetOwner(),cursed5.DieTime - CurTime() + (dmginfo:GetDamage() * 0.5))
 					end
-					if (not cursed) then 
+					if (not cursed5) then 
 						self:AddHallow(self:GetOwner(),dmginfo:GetDamage() * 0.5)
 					end
-					if (cursed) and ((cursed.DieTime) >= 800) then
+					if (cursed5) and (cursed5.DieTime) > 800 then
 						self:TakeSpecialDamage(500, DMG_DIRECT, owner, self)
-						self:AddHallow(self:GetOwner(),cursed.DieTime - (CurTime() - -1500))
+						self:AddHallow(self:GetOwner(),cursed5.DieTime - (CurTime() - -1500))
 
 					end
 					dmginfo:SetDamage(0)
