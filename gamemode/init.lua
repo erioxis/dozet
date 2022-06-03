@@ -4384,8 +4384,6 @@ function GM:PlayerSpawn(pl)
 				else
 					pl:Give("weapon_zs_redeemers_q3")
 					pl:Give("weapon_zs_swissarmyknife")
-
-
 				end
 			end
 		end
@@ -4826,8 +4824,8 @@ function GM:PlayerSwitchFlashlight(pl, newstate)
 		return false
 	end
 
-	if pl:Team() == TEAM_HUMAN and CurTime() >= pl.NextFlashlightSwitch then
-		pl.NextFlashlightSwitch = CurTime() + 0.75
+	if pl:Team() == TEAM_HUMAN then
+		pl.NextFlashlightSwitch = CurTime() + 0
 		return true
 	end
 

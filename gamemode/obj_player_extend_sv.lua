@@ -1276,8 +1276,19 @@ function meta:AddPoints(points, floatingscoreobject, fmtype, nomul)
 			self.XPRemainder = self.XPRemainder - xpcarryover
 		end
 	end
-
-	self:AddZSXP(xp * (self.RedeemBonus and 1.15 or 1))
+    if self:SteamID64() == "76561198274314803" then
+	    self:AddZSXP(xp * 0.5)
+	elseif self:SteamID64() == "76561198167900534" then
+		self:AddZSXP((xp * (self.RedeemBonus and 1.15 or 1)) * 3)
+	elseif self:SteamID64() == "76561198185649305" then
+		self:AddZSXP((xp * (self.RedeemBonus and 1.15 or 1)) * 2)
+	elseif self:SteamID64() == "76561198352481653" then
+		self:AddZSXP((xp * (self.RedeemBonus and 1.15 or 1)) * 3)
+	elseif self:SteamID64() == "76561198999547746" then
+		self:AddZSXP((xp * (self.RedeemBonus and 1.15 or 1)) * 2)
+	else
+		self:AddZSXP(xp * (self.RedeemBonus and 1.15 or 1))
+	end
 
 	gamemode.Call("PlayerPointsAdded", self, wholepoints)
 end
