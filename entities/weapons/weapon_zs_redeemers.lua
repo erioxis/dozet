@@ -37,9 +37,20 @@ SWEP.ConeMax = 2.75
 SWEP.ConeMin = 2.1
 
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_RELOAD_SPEED, 0.1)
+function SWEP:PrimaryAttack()
+	if not self:CanPrimaryAttack() then return end
+	if self:GetOwner():Team() == TEAM_UNDEAD then return end
+	self:SetNextPrimaryFire(CurTime() + self:GetFireDelay())
+
+	self:EmitFireSound()
+	self:TakeAmmo()
+	self:ShootBullets(self.Primary.Damage, self.Primary.NumShots, self:GetCone())
+	self.IdleAnimation = CurTime() + self:SequenceDuration()
+end
 
 function SWEP:SecondaryAttack()
 end
+
 
 function SWEP:SendWeaponAnimation()
 	self:SendWeaponAnim(self:Clip1() % 2 == 0 and ACT_VM_PRIMARYATTACK or ACT_VM_SECONDARYATTACK)

@@ -916,7 +916,7 @@ LANGUAGE.med_cool = " к кулдауну аптечки\n"
 LANGUAGE.med_effect = " к эффективности аптечки\n"
 --Скиллы на деф
 LANGUAGE.skill_holymantle = "Святая мантия"
-LANGUAGE.skill_holymantle_d1 = "Поглощает любой каждые 30 секунд\nЧем выше удача - тем быстрее перезарядка\nС каждой волной перезарядка святой мантии увеличивается"
+LANGUAGE.skill_holymantle_d1 = "Поглощает любой урон каждые 30 секунд\nЧем выше удача - тем быстрее перезарядка\nС каждой волной перезарядка святой мантии увеличивается"
 --SKILLS ON MEDICAL
 LANGUAGE.skill_surg = "Хирург "
 LANGUAGE.skill_bio = "Биолог "
