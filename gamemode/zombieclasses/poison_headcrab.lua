@@ -16,6 +16,8 @@ CLASS.Health = 160
 CLASS.Speed = 110
 CLASS.JumpPower = 130
 
+CLASS.DynamicHealth = 0.2
+
 CLASS.NoFallDamage = true
 CLASS.NoFallSlowdown = true
 

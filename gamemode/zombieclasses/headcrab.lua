@@ -26,6 +26,8 @@ end
 CLASS.NoFallDamage = true
 CLASS.NoFallSlowdown = true
 
+CLASS.DynamicHealth = 0.2
+
 CLASS.Points = CLASS.Health/GM.HeadcrabZombiePointRatio
 
 CLASS.Hull = {Vector(-12, -12, 0), Vector(12, 12, 18.1)}

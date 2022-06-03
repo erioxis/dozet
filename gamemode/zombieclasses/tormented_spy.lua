@@ -11,6 +11,8 @@ CLASS.Speed = 450
 
 CLASS.Wave = 5 / 6
 
+CLASS.DynamicHealth = 0.5
+
 CLASS.SWEP = "weapon_zs_tormentedspy"
 
 function CLASS:Move(pl, move)

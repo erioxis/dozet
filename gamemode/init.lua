@@ -4252,7 +4252,7 @@ function GM:PlayerSpawn(pl)
 			local lowundead = team.NumPlayers(TEAM_UNDEAD) < 4
 
 			local healthmulti = (self.ObjectiveMap or self.ZombieEscape) and 1 or lowundead and 1.5 or 1
-			pl:SetHealth((classtab.Health * healthmulti) + (self:GetWave() * 45))
+			pl:SetHealth((classtab.Health * healthmulti) + ((self:GetWave() * 45) * (classtab.DynamicHealth or 1)) )
 		end
 
 		if classtab.SWEP then

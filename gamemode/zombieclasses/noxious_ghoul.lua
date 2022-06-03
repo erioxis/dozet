@@ -14,7 +14,7 @@ CLASS.Points = CLASS.Health/GM.HumanoidZombiePointRatio
 CLASS.NoPlayerColor = true
 
 CLASS.SWEP = "weapon_zs_noxiousghoul"
-
+CLASS.DynamicHealth = 5
 if not CLIENT then return end
 
 CLASS.Icon = "zombiesurvival/killicons/ghoul"

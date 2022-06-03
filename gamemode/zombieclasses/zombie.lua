@@ -14,6 +14,8 @@ CLASS.Health = 320
 CLASS.Speed = 175
 CLASS.Revives = true
 
+CLASS.DynamicHealth = 1
+
 CLASS.CanTaunt = true
 
 CLASS.Points = CLASS.Health/GM.HumanoidZombiePointRatio
