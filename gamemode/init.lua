@@ -3742,6 +3742,9 @@ function GM:HumanKilledZombie(pl, attacker, inflictor, dmginfo, headshot, suicid
 	if attacker:HasTrinket("curse_faster") then 
         attacker.zKills = attacker.zKills + 4
 	end
+	if attacker:IsSkillActive(SKILL_SIGILIBERATOR) then
+		attacker.zKills = attacker.zKills + 2
+	end
 
 
 
