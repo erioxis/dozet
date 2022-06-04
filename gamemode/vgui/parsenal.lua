@@ -19,6 +19,7 @@ hook.Add("Think", "ArsenalMenuThink", function()
 	end
 end)
 
+
 local function ArsenalMenuCenterMouse(self)
 	local x, y = self:GetPos()
 	local w, h = self:GetSize()
@@ -57,6 +58,7 @@ local function CanBuy(item, pan)
 
 	return true
 end
+
 
 local function ItemPanelThink(self)
 	local itemtab = FindItem(self.ID)

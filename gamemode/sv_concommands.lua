@@ -245,7 +245,7 @@ concommand.Add("zs_upgrade", function(sender, command, arguments)
 	if not (nearest and nearest:IsValid() and contents) then return end
 
 	local wtbl = weapons.Get(contents)
-	local scrapcost = GAMEMODE:GetUpgradeScrap(wtbl, desiredqua) * (sender.ScrapDiscount or 1)
+	local scrapcost = math.floor(GAMEMODE:GetUpgradeScrap(wtbl, desiredqua) * (sender.ScrapDiscount or 1))
 
 	if wtbl.AmmoIfHas and sender:GetAmmoCount(wtbl.Primary.Ammo) == 0 then
 		sender:SendLua("surface.PlaySound(\"buttons/button10.wav\")")

@@ -395,7 +395,7 @@ function PANEL:Paint(w, h)
 			local quals = GAMEMODE.WeaponQualities[hovquality]
 			if quals then
 				txt = self.RemantleNodes[hovbranch][hovquality].Name or hovbranch == 0 and quals[1] or quals[3]
-				scost = GAMEMODE:GetUpgradeScrap(self.GunTab, hovquality) * (MySelf.ScrapDiscount or 1)
+				scost = math.floor(GAMEMODE:GetUpgradeScrap(self.GunTab, hovquality) * (MySelf.ScrapDiscount or 1))
 			end
 
 			self.QualityName:SetText(txt)
@@ -484,7 +484,7 @@ function PANEL:OnMousePressed(mc)
 				return
 			end
 
-			local scost = GAMEMODE:GetUpgradeScrap(self.GunTab, hovquality)
+			local scost = math.floor(GAMEMODE:GetUpgradeScrap(self.GunTab, hovquality) * (MySelf.ScrapDiscount or 1))
 			if MySelf:GetAmmoCount("scrap") >= scost then
 				RunConsoleCommand("zs_upgrade", hovbranch ~= 0 and hovbranch)
 

@@ -38,6 +38,7 @@ function meta:ProcessDamage(dmginfo)
 			dmginfo:SetDamageForce(vector_origin)
 			return
 		end
+		dmginfo:SetDamage(damage * (1 - (self:GetWave() * 0.04)))
 		if self.m_zombiedef == true then
 			dmginfo:SetDamage(dmginfo:GetDamage() * 0.75)
 		end
