@@ -47,6 +47,9 @@ function meta:ProcessDamage(dmginfo)
 		if self ~= attacker and not corrosion and not dmgbypass then
 			dmginfo:SetDamage(dmginfo:GetDamage() * GAMEMODE:GetZombieDamageScale(dmginfo:GetDamagePosition(), self))
 		end
+		if attacker:IsValidLivingHuman() and attacker:IsSkillActive(SKILL_SIGILIBERATOR) then
+            dmginfo:ScaleDamage(3)
+		end
 
 		self.ShouldFlinch = true
 
