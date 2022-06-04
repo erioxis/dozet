@@ -51,16 +51,13 @@ GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_MIN_SPREAD, -0.172)
 
 function SWEP:PrimaryAttack()
 	if not self:CanPrimaryAttack() then return end
-
-
-
 owner = self:GetOwner()
 	self:EmitFireSound()
 	if SERVER then
 	self:SetNextPrimaryFire(CurTime() + self:GetFireDelay())
 	self.IdleAnimation = CurTime() + self:SequenceDuration()
 	self:TakeAmmo()
-	self:ShootBullets(self.Primary.Damage + (self.Primary.Damage * self.MultiplierOfShots / 3), self.Primary.NumShots, self:GetCone())
+	self:ShootBullets(self.Primary.Damage + (self.Primary.Damage * self.MultiplierOfShots / 7), self.Primary.NumShots, self:GetCone())
 	self.MultiplierOfShots = self.MultiplierOfShots + 1
 
 

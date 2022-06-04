@@ -38,7 +38,7 @@ function meta:ProcessDamage(dmginfo)
 			dmginfo:SetDamageForce(vector_origin)
 			return
 		end
-		dmginfo:SetDamage(damage * (1 - (self:GetWave() * 0.04)))
+		dmginfo:SetDamage(dmginfo:GetDamage() * (1 - (GAMEMODE:GetWave() * 0.04)))
 		if self.m_zombiedef == true then
 			dmginfo:SetDamage(dmginfo:GetDamage() * 0.75)
 		end
@@ -160,6 +160,8 @@ function meta:ProcessDamage(dmginfo)
 	if attacker:IsValid() and attacker:IsPlayer() and inflictor:IsValid() and self:GetActiveWeapon().Block == 1 and self:GetActiveWeapon().IsMelee then
 		dmginfo:SetDamage(dmginfo:GetDamage() * ((0.50 * (self.BlockMultiplier or 1)) * ( self:GetActiveWeapon().BlockMultiplierWeapon or 1)))
 	end
+
+
 
 
 
@@ -436,17 +438,18 @@ function meta:ProcessDamage(dmginfo)
 		self.ShouldFlinch = true
 	end
 	if dmginfo:IsBulletDamage() and attacker:HasTrinket("fire_at") then 
-		dmginfo:SetDamage(dmginfo:GetDamage(),dmginfo:SetDamageType(DMG_BURN))
+		dmginfo:SetDamageType(DMG_BURN)
 	end
 	if dmginfo:IsBulletDamage() and attacker:HasTrinket("pulse_at") then 
-		dmginfo:SetDamage(dmginfo:GetDamage(),dmginfo:SetDamageType(DMG_SHOCK))
+		dmginfo:SetDamageType(DMG_SHOCK)
 	end
 	if dmginfo:IsBulletDamage() and attacker:HasTrinket("acid_at") then 
-		dmginfo:SetDamage(dmginfo:GetDamage(),dmginfo:SetDamageType(DMG_ACID))
+		dmginfo:SetDamageType(DMG_ACID)
 	end
 	if dmginfo:IsBulletDamage() and attacker:HasTrinket("ultra_at") then 
-		dmginfo:SetDamage(dmginfo:GetDamage(),dmginfo:SetDamageType(DMG_DIRECT))
+		dmginfo:SetDamageType(DMG_DIRECT)
 	end
+
 end
 
 
@@ -715,13 +718,17 @@ function meta:AddCursed(attacker, count)
 end
 
 function meta:AddHallow(attacker, count)
-	--damage = math.ceil(damage)
+
 	local status = self:GiveStatus("hollowing", count)
 end
 
 function meta:AddRot(attacker, count)
-	--damage = math.ceil(damage)
+
 	local status = self:GiveStatus("rot", count)
+end
+function meta:AddBurn(attacker, count)
+
+	local status = self:GiveStatus("burn", count)
 end
 
 function meta:AddBleedDamage(damage, attacker)

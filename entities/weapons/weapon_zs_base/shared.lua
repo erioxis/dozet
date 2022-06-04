@@ -16,6 +16,7 @@ SWEP.Primary.DefaultClip = 0
 SWEP.Primary.Automatic = false
 SWEP.Primary.Ammo = "pistol"
 SWEP.RequiredClip = 1
+SWEP.Souleater = 0
 
 SWEP.Secondary.ClipSize = 1
 SWEP.Secondary.DefaultClip = 1

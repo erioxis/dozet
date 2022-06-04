@@ -540,7 +540,11 @@ LANGUAGE.wep_r_2		= "Modified"
 LANGUAGE.wep_r_3		= "Reformed"
 LANGUAGE.wep_r_4		= "Deadly"
 LANGUAGE.wep_r_5		= "Doomly"
---weapon upgrades
+LANGUAGE.wep_smorning    = "Solemn mourning"
+LANGUAGE.wep_d_smorning  = "Every 4-5 shots have double damage."
+--Улучшения пушек
+LANGUAGE.wep_smorning_r1    = "Hollow mourning"
+LANGUAGE.wep_d_smorning_r1  = "Instead of doubling damage every 4-5 shots adds 200 additional damage in hollowing status,-50% damage."
 LANGUAGE.wep_glock_r1 = "'Collider' Glock 3"
 LANGUAGE.wep_d_glock_r1 = "Fires 4 less but more accurate shots, lesser base damage, and a chance to gain reaper stacks"
 LANGUAGE.wep_glock_r2 = "Shredder' SOCOM Mark 23"

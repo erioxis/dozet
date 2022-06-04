@@ -413,6 +413,7 @@ GM:AddPointShopItem("plasmk",			ITEMCAT_GUNS,			2000,			"weapon_zs_plasmatik")
 GM:AddPointShopItem("deathdlrs",		ITEMCAT_GUNS,			2000,			"weapon_zs_deathdealers")
 GM:AddPointShopItem("boomstick",		ITEMCAT_GUNS,			2000,			"weapon_zs_boomstick")
 GM:AddPointShopItem("hephaa",		ITEMCAT_GUNS,			2000,			"weapon_zs_hephaestus")
+GM:AddPointShopItem("smorning",		ITEMCAT_GUNS,			2000,			"weapon_zs_smorning")
 -- Tier 7
 GM:AddPointShopItem("sacredhh",			ITEMCAT_GUNS,			5000,			"weapon_zs_m6")
 GM:AddPointShopItem("gaysseagle",   	ITEMCAT_GUNS,			5000,			"weapon_zs_gaeagle")
