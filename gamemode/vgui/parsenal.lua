@@ -637,6 +637,7 @@ function GM:OpenArsenalMenu()
 	if self.ArsenalInterface and self.ArsenalInterface:IsValid() then
 		self.ArsenalInterface:SetVisible(true)
 		self.ArsenalInterface:CenterMouse()
+		self.ArsenalInterface:Refresh()
 		return
 	end
 
@@ -650,6 +651,7 @@ function GM:OpenArsenalMenu()
 	frame:SetDeleteOnClose(false)
 	frame:SetTitle(" ")
 	frame:SetDraggable(false)
+	frame:Refresh()
 	if frame.btnClose and frame.btnClose:IsValid() then frame.btnClose:SetVisible(false) end
 	if frame.btnMinim and frame.btnMinim:IsValid() then frame.btnMinim:SetVisible(false) end
 	if frame.btnMaxim and frame.btnMaxim:IsValid() then frame.btnMaxim:SetVisible(false) end

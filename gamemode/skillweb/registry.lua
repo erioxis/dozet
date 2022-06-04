@@ -1232,12 +1232,12 @@ GM:AddSkill(SKILL_DONATE10, "Donate X", GOOD.."+20 Worth\n"..GOOD.."thx shepard"
 				                                                            	21,			26,					{SKILL_DONATE9}, TREE_DONATETREE)
 GM:AddSkillModifier(SKILL_DONATE10, SKILLMOD_WORTH, 20)
 SKILL_DONATE11 = 268
-GM:AddSkill(SKILL_DONATE11, "Donate XI", GOOD.."+% Max curse\n"..GOOD.."Donate for unlocking!",
-				                                                            	23,			27,					{SKILL_DONATE11}, TREE_DONATETREE)
-GM:AddSkillModifier(SKILL_DONATE11, SKILLMOD_CURSEM, 0.2)
+GM:AddSkill(SKILL_DONATE11, "Donate XI", GOOD.."+30% Max curse\n"..GOOD.."THX for Bro3!",
+				                                                            	23,			27,					{SKILL_DONATE10}, TREE_DONATETREE)
+GM:AddSkillModifier(SKILL_DONATE11, SKILLMOD_CURSEM, 0.3)
 SKILL_DONATE12 = 269
 GM:AddSkill(SKILL_DONATE12, "Donate XII", GOOD.."+% Bullet damage\n"..GOOD.."Donate for unlocking!",
-				                                                            	22,			28,					{SKILL_DONATE11}, TREE_DONATETREE)
+				                                                            	22,			28,					{SKILL_DONATE12}, TREE_DONATETREE)
 GM:AddSkillModifier(SKILL_DONATE12, SKILLMOD_DAMAGE, 0.2)
 
 SKILL_CHALLENGER1 = 215
@@ -1311,6 +1311,10 @@ SKILL_USELESS_14 = 513
 GM:AddSkill(SKILL_USELESS_14, "Useless 14", GOOD.."-5% Melee damage taken mul\n You have TOO MUCH USELESS SKILL POINTS???",
 				                                                            	1,		    -1,					{SKILL_USELESS_13}, TREE_USELESSTREE)
 GM:AddSkillModifier(SKILL_USELESS_14, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.05)
+SKILL_USELESS_15 = 514
+GM:AddSkill(SKILL_USELESS_15, "Useless 15", GOOD.."+10% Block damage multiplier",
+				                                                            	1,		    -2,					{SKILL_USELESS_14}, TREE_USELESSTREE)
+GM:AddSkillModifier(SKILL_USELESS_15, SKILLMOD_BLOCKMULTIPLIER, -0.10)
 
 
 

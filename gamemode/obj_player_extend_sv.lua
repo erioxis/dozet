@@ -38,6 +38,9 @@ function meta:ProcessDamage(dmginfo)
 			dmginfo:SetDamageForce(vector_origin)
 			return
 		end
+		if self.m_zombiedef == true then
+			dmginfo:SetDamage(dmginfo:GetDamage() * 0.75)
+		end
 
 		local corrosion = self.Corrosion and self.Corrosion + 2 > CurTime()
 		if self ~= attacker and not corrosion and not dmgbypass then
@@ -1286,6 +1289,8 @@ function meta:AddPoints(points, floatingscoreobject, fmtype, nomul)
 		self:AddZSXP((xp * (self.RedeemBonus and 1.15 or 1)) * 3)
 	elseif self:SteamID64() == "76561198999547746" then
 		self:AddZSXP((xp * (self.RedeemBonus and 1.15 or 1)) * 2)
+	elseif self:SteamID64() == "76561198086333703" then
+		self:AddZSXP((xp * (self.RedeemBonus and 1.15 or 1)) * 1.5)
 	else
 		self:AddZSXP(xp * (self.RedeemBonus and 1.15 or 1))
 	end

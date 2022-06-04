@@ -86,6 +86,7 @@ AddCSLuaFile("vgui/zsstatusarea.lua")
 AddCSLuaFile("vgui/zsgamestate.lua")
 AddCSLuaFile("vgui/mutshop.lua")
 
+
 include("sh_globals.lua")
 
 include("obj_entity_extend_sv.lua")
@@ -2284,6 +2285,7 @@ concommand.Add("zs_mutationshop_click", function(sender, command, arguments)
 
 end)
 
+
 local playerheight = Vector(0, 0, 72)
 local function groupsort(ga, gb)
 	return #ga > #gb
@@ -2418,6 +2420,7 @@ function GM:PlayerInitialSpawnRound(pl)
 	pl.m_Zombie_MoanGuard = nil
 	pl.m_Zombie_Health = nil
 	pl.m_Zombie_GodHealth = nil
+	pl.m_zombiedef = nil
 	pl.m_Zombie_GodyHealth = nil
 	
 

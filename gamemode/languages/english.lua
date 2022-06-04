@@ -1371,6 +1371,8 @@ LANGUAGE.cant_buy_mutations							= "You can't use the Mutation Shop right now!"
 LANGUAGE.mutationstokens							= "Tokens"
 LANGUAGE.mutationsdamagetokens						= "Damage Tokens"
 --mutagen
+LANGUAGE.zshop_zdef1                                = "Defence"
+LANGUAGE.zshop_def                                = "-25% damage taken"
 LANGUAGE.zshop_alphazomb                                = "Alpha Zombie"
 LANGUAGE.zshop_alphazomb2                                = "Increases survivability by increasing maximum health by 30%."
 LANGUAGE.zshop_godzomb                                = "God Zombie"

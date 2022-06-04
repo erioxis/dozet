@@ -1157,6 +1157,8 @@ LANGUAGE.help_cont_being_a_zombie					= [[<p>Советы:
 -- Place any custom stuff below here...
 
 --Mutagen
+LANGUAGE.zshop_zdef1                                = "Защита"
+LANGUAGE.zshop_def                                = "-25% Получаемого урона"
 LANGUAGE.zshop_alphazomb                                = "Альфа"
 LANGUAGE.zshop_alphazomb2                                = "Мутация на выносливость,дает 30% здоровья."
 LANGUAGE.zshop_godzomb                                = "Божественный зомби"

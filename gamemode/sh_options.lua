@@ -709,7 +709,8 @@ GM:AddPointShopItem("cursedtrinket",		ITEMCAT_SPECIAL,			120,				"trinket_cursed
 item.SkillRequirement = SKILL_CURSEDTRINKETS
 --ZS Mutagens
 GM:AddMutationItem("m_zombie_health", ""..translate.Get("zshop_alphazomb"), ""..translate.Get("zshop_alphazomb2"), ITEMCAT_MUTATIONS, 150, nil, function(pl) pl.m_Zombie_Health = true end, "models/items/healthkit.mdl")
-GM:AddMutationItem("m_zombie_health1", ""..translate.Get("zshop_godzomb"), ""..translate.Get("zshop_godzomb2"), ITEMCAT_MUTATIONS, 1000, nil, function(pl) pl.m_Zombie_GodHealth = true end, "models/player/fatty/fatty.mdl")        
+GM:AddMutationItem("m_zombie_health1", ""..translate.Get("zshop_godzomb"), ""..translate.Get("zshop_godzomb2"), ITEMCAT_MUTATIONS, 1000, nil, function(pl) pl.m_Zombie_GodHealth = true end, "models/player/fatty/fatty.mdl")    
+GM:AddMutationItem("m_zombie_zdef", ""..translate.Get("zshop_zdef1"), ""..translate.Get("zshop_def"), ITEMCAT_MUTATIONS, 1000, nil, function(pl) pl.m_zombiedef = true end, "models/player/fatty/fatty.mdl")      
 GM:AddMutationItem("m_zombie_moan", ""..translate.Get("zshop_zombsprint"), ""..translate.Get("zshop_zombsprint2"), ITEMCAT_MUTATIONS, 400, nil, function(pl) pl.m_Zombie_Moan = true end, "models/player/zombie_classic.mdl")
 GM:AddMutationItem("m_zombie_moanguard", ""..translate.Get("zshop_zombguard"), ""..translate.Get("zshop_zombguard2"), ITEMCAT_MUTATIONS, 200, nil, function(pl) pl.m_Zombie_MoanGuard = true end, "models/player/zombie_classic.mdl")
 
