@@ -434,6 +434,9 @@ end
 function meta:GetZombieClass()
 	return self.Class or GAMEMODE.DefaultZombieClass
 end
+function meta:GetHumanClass()
+	return self.HClass or GAMEMODE.DefaultHumanClass
+end
 
 local ZombieClasses = {}
 if GAMEMODE then

@@ -1568,7 +1568,7 @@ GM:SetSkillModifierFunction(SKILLMOD_DIMVISION_EFF_MUL, function(pl, amount)
 end)
 
 GM:SetSkillModifierFunction(SKILLMOD_XP, function(pl, amount)
-	GAMEMODE.HumanXPMulti = math.Clamp(amount + 1.0, 0.0, 1000.0)
+	pl.XPMulti = math.Clamp(amount + 1.0, 0.0, 1000.0)
 end)
 GM:SetSkillModifierFunction(SKILLMOD_PROP_CARRY_SLOW_MUL, function(pl, amount)
 	pl.PropCarrySlowMul = math.Clamp(amount + 1.0, 0.0, 1000.0)

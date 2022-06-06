@@ -20,6 +20,7 @@ AddCSLuaFile("sh_globals.lua")
 AddCSLuaFile("sh_util.lua")
 AddCSLuaFile("sh_options.lua")
 AddCSLuaFile("sh_zombieclasses.lua")
+AddCSLuaFile("sh_humanclasses.lua")
 AddCSLuaFile("sh_animations.lua")
 AddCSLuaFile("sh_sigils.lua")
 AddCSLuaFile("sh_channel.lua")
@@ -76,6 +77,7 @@ AddCSLuaFile("vgui/pmainmenu.lua")
 AddCSLuaFile("vgui/poptions.lua")
 AddCSLuaFile("vgui/phelp.lua")
 AddCSLuaFile("vgui/pclassselect.lua")
+AddCSLuaFile("vgui/phumanclass.lua")
 AddCSLuaFile("vgui/pweapons.lua")
 AddCSLuaFile("vgui/pendboard.lua")
 AddCSLuaFile("vgui/pworth.lua")
@@ -588,6 +590,7 @@ function GM:ShowSpare1(pl)
 		end
 	elseif pl:Team() == TEAM_HUMAN then
 		pl:SendLua("GAMEMODE:ToggleSkillWeb()")
+		--pl:SendLua("GAMEMODE:OpenHClassSelect()")
 	end
 end
 
@@ -4667,6 +4670,8 @@ function GM:WaveStateChanged(newstate, pl)
 				if pl:IsSkillActive(SKILL_XPHUNTER) then
 					pl:AddZSXP(5 + self.GetWave())
 				end
+
+			
 				
 				if pointsbonus then
 					local pointsreward = pointsbonus + (pl.EndWavePointsExtra or 0)

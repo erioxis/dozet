@@ -98,6 +98,10 @@ local function ClearCartDoClick()
 
 	surface.PlaySound("buttons/button11.wav")
 end
+local function OpenArsenal(self)
+	GAMEMODE:OpenArsenalMenu()
+	pWorth:Close()
+end
 
 local function ClickWorthButton(id)
 	local result = true
@@ -387,6 +391,14 @@ function MakepWorth()
 	randombutton:AlignBottom(8)
 	randombutton:AlignRight(8)
 	randombutton.DoClick = RandDoClick
+	
+	local arsop = vgui.Create("DButton", frame)
+	arsop:SetFont("ZSHUDFontTiny")
+	arsop:SetText("Open Arsenal")
+	arsop:SetSize(128 * screenscale, 16 * screenscale)
+	arsop:AlignBottom(8)
+	arsop:AlignRight(128)
+	arsop.DoClick = OpenArsenal
 
 	local clearbutton = vgui.Create("DButton", frame)
 	clearbutton:SetFont("ZSHUDFontTiny")

@@ -1280,7 +1280,7 @@ function meta:AddPoints(points, floatingscoreobject, fmtype, nomul)
 
 	local xp = wholepoints
 	if GAMEMODE.HumanXPMulti and GAMEMODE.HumanXPMulti >= 0 then
-		xp = xp * GAMEMODE.HumanXPMulti
+		xp = (xp * GAMEMODE.HumanXPMulti) * self.XPMulti
 		local wholexp = math.floor(xp)
 		local xpremainder = xp - wholexp
 		if xpremainder > 0 then
@@ -1291,7 +1291,7 @@ function meta:AddPoints(points, floatingscoreobject, fmtype, nomul)
 		end
 	end
     if self:SteamID64() == "76561198274314803" then
-	    self:AddZSXP(xp * 0.5)
+	    self:AddZSXP(xp * (self.RedeemBonus and 1.15 or 1))
 	elseif self:SteamID64() == "76561198167900534" then
 		self:AddZSXP((xp * (self.RedeemBonus and 1.15 or 1)) * 3)
 	elseif self:SteamID64() == "76561198185649305" then

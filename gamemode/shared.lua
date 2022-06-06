@@ -5,7 +5,7 @@ GM.Website	=	"https://github.com/erioxis/dozet"
 
 -- No, adding a gun doesn't make your name worth being here.
 GM.Credits = {
-	{"Version", "Release", "1.8.5"},
+	{"Version", "Release", "1.9.0"},
 	{"erioxis", "Phantom coder", "dead"},
 	{"Nullted", "", "RU-ENG Translation"}
 
@@ -40,6 +40,7 @@ include("skillweb/sh_skillweb.lua")
 
 include("sh_options.lua")
 include("sh_zombieclasses.lua")
+include("sh_humanclasses.lua")
 include("sh_animations.lua")
 include("sh_sigils.lua")
 include("sh_channel.lua")
@@ -275,6 +276,21 @@ function GM:GetBestAvailableZombieClass(baseclass_id)
 	end
 
 	return self.ZombieClasses[baseclass_id].Index
+end
+function GM:GetBestAvailableHumanClass(baseclass_id)
+
+		local baseclass
+
+		while true do
+			baseclass = self.HumanClasses[baseclass_id]
+			if baseclass and baseclass.BetterVersion and self:IsClassUnlocked(baseclass.BetterVersion) then
+				baseclass_id = baseclass.BetterVersion
+			else
+				break
+			end
+		end
+
+	return self.HumanClasses[baseclass_id].Index
 end
 
 function GM:ShouldUseBetterVersionSystem()
@@ -599,7 +615,7 @@ function GM:PlayerCanPurchase(pl)
 	if CLIENT and self.CanPurchaseCacheTime and self.CanPurchaseCacheTime >= CurTime() then
 		return self.CanPurchaseCache
 	end
-	local canpurchase = PTeam(pl) == TEAM_HUMAN and self:GetWave() > 0 and pl:Alive()
+	local canpurchase = PTeam(pl) == TEAM_HUMAN and pl:Alive()
 	function pl:ZombieCanPurchase(pl)
 		return pl:Team() == TEAM_UNDEAD and self:GetWave() > 0
 	end

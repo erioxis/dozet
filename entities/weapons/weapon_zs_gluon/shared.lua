@@ -12,11 +12,11 @@ SWEP.ShowViewModel = false
 SWEP.ShowWorldModel = false
 SWEP.UseHands = true
 
-SWEP.Primary.Damage = 27
+SWEP.Primary.Damage = 34
 SWEP.Primary.NumShots = 1
-SWEP.Primary.Delay = 0.02
+SWEP.Primary.Delay = 0.15
 SWEP.Primary.KnockbackScale = 0.1
-SWEP.Primary.MaxDistance = 1028
+SWEP.Primary.MaxDistance = 208
 
 SWEP.Primary.ClipSize = 30
 SWEP.Primary.Automatic = true
@@ -46,7 +46,7 @@ SWEP.TracerName = "tracer_gluon"
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_SHORT_TEAM_HEAT, -0.01, 1)
 
 local branch = GAMEMODE:AddNewRemantleBranch(SWEP, 1, ""..translate.Get("wep_gluon_r1"), ""..translate.Get("wep_d_gluon_r1"), function(wept)
-	wept.Primary.Damage = wept.Primary.Damage * 10.5/12.5
+	wept.Primary.Damage = wept.Primary.Damage * 0.8
 	wept.TracerName = "tracer_higgs"
 	wept.EmitStartFiringSound = function(self)
 		self:EmitSound("ambient/machines/teleport1.wav", 75, 210)
@@ -65,7 +65,7 @@ GAMEMODE:AddNewRemantleBranch(SWEP, 2, ""..translate.Get("wep_gluon_r2"), ""..tr
 	wept.TracerName = "tracer_muon"
 	wept.FireSoundPitch = 65
 	wept.Overheat = true
-	wept.Primary.MaxDistance = 512
+	wept.Primary.MaxDistance = 128
 end).Colors = {Color(150, 110, 180), Color(130, 90, 160), Color(110, 60, 150), Color(110, 120, 150)}
 
 function SWEP:Initialize()
