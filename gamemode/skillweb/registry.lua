@@ -286,6 +286,7 @@ SKILL_LIVER = 265
 SKILL_LUCKY_UNLIVER = 266
 SKILL_NOSEE = 267
 SKILL_XPHUNTER = 270
+SKILL_FREEAMMO = 271
 
 SKILLMOD_HEALTH = 1
 SKILLMOD_SPEED = 2
@@ -391,6 +392,7 @@ SKILLMOD_XP = 102
 SKILLMOD_LUCK = 103
 SKILLMOD_CURSEM = 104
 SKILLMOD_BLOCKMULTIPLIER = 105
+SKILLMOD_RES_AMMO_MUL = 106
 
 local GOOD = "^"..COLORID_GREEN
 local BAD = "^"..COLORID_RED
@@ -618,12 +620,13 @@ GM:AddSkill(SKILL_NANITECLOUD, "Nanite", GOOD.."+12% Repair rate",
 .AlwaysActive = true
 GM:AddSkillModifier(SKILL_NANITECLOUD, SKILLMOD_REPAIRRATE_MUL, 0.12)
 SKILL_JEW = 237
-GM:AddSkill(SKILL_JEW, "Jew", GOOD.."+25% Arsenal discount and scrap discount\n+50 Start points\n"..BAD.."-5 Points every time when you get a LOOT",
+GM:AddSkill(SKILL_JEW, "Jew", GOOD.."+25% Arsenal discount and scrap discount\n+50 Start points\n"..GOOD.."+15% Ammo from ressuply\n"..BAD.."-5 Points every time when you get a LOOT",
 																3,			2,					{SKILL_NANITECLOUD}, TREE_BUILDINGTREE)
 																
 GM:AddSkillModifier(SKILL_JEW, SKILLMOD_POINTS, 50)
 GM:AddSkillModifier(SKILL_JEW, SKILLMOD_ARSENAL_DISCOUNT, -0.25)
 GM:AddSkillModifier(SKILL_JEW, SKILLMOD_SCRAPDISCOUNT, -0.25)
+GM:AddSkillModifier(SKILL_JEW, SKILLMOD_RES_AMMO_MUL, 0.15)
 GM:AddSkill(SKILL_FIELDAMP, "Field Amplifier", GOOD.."-20% zapper and repair field delay\n"..BAD.."-40% zapper and repair field range",
 																6,			4,					{}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_TECHNICIAN, "Field Technician", GOOD.." +3% zapper and repair field range\n"..GOOD.."-3% zapper and repair field delay",
@@ -634,8 +637,10 @@ GM:AddSkill(SKILL_HAULMODULE, "Unlock: Hauling Drone", GOOD.."Unlocks the Haulin
 																2,			-1,					{SKILL_NANITECLOUD}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_LIGHTCONSTRUCT, "Light Construction", GOOD.."-25% deployable pack time\n"..BAD.."-25% deployable health",
 																8,			-1,					{}, TREE_BUILDINGTREE)
-GM:AddSkill(SKILL_STOCKPILE, "Stockpiling", GOOD.."Collect twice as much from resupplies\n"..BAD.."2x resupply box delay",
-																8,			-3,					{}, TREE_BUILDINGTREE)
+GM:AddSkill(SKILL_STOCKPILE, "Stockpiling", GOOD.."Collect twice as much from resupplies\n+50% Ammo from ressuply\n"..BAD.."2x resupply box delay",
+																8,			-3,					{SKILL_FREEAMMO}, TREE_BUILDINGTREE)
+GM:AddSkill(SKILL_FREEAMMO, "Big finances", GOOD.."+5% Ammo from ressuply",
+																9,			-4,					{SKILL_STOCKPILE}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_ACUITY, "Supplier's Acuity", GOOD.."Locate nearby resupply boxes if behind walls\n"..GOOD.."Locate nearby unplaced resupply boxes on players through walls\n"..GOOD.."Locate nearby resupply packs through walls",
 																6,			-3,					{SKILL_INSIGHT, SKILL_STOCKPILE, SKILL_U_CRAFTINGPACK, SKILL_STOWAGE}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_VISION, "Refiner's Vision", GOOD.."Locate nearby remantlers if behind walls\n"..GOOD.."Locate nearby unplaced remantlers on players through walls",
@@ -664,7 +669,7 @@ GM:AddSkill(SKILL_D_NOODLEARMS, "Debuff: Noodle Arms", GOOD.."+5 starting Worth\
 																-7,			2,					{}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_INSTRUMENTS, "Instruments", GOOD.."+5% turret range",
 																-10,		-3,					{}, TREE_BUILDINGTREE)
-GM:AddSkill(SKILL_STOWAGE, 	"Stowage", GOOD.."Resupply usages build up when you're not there\n"..BAD.."-15% resupply delay",
+GM:AddSkill(SKILL_STOWAGE, 	"Stowage", GOOD.."Resupply usages build up when you're not there\n"..BAD.."-15% ammo from ressuply",
 																4,			-3,					{SKILL_NANITES}, TREE_BUILDINGTREE)
 SKILL_NANITES = 241
 GM:AddSkill(SKILL_NANITES, 	"Nanites", GOOD.."Props hit with a hammer take only 20% damage for 0.3 secs\n"..BAD.."-10% repair strenght",
@@ -1562,6 +1567,9 @@ end)
 GM:SetSkillModifierFunction(SKILLMOD_VISION_ALTER_DURATION_MUL, function(pl, amount)
 	pl.VisionAlterDurationMul = math.Clamp(amount + 1.0, 0.0, 1000.0)
 end)
+GM:SetSkillModifierFunction(SKILLMOD_RES_AMMO_MUL, function(pl, amount)
+	pl.RessuplyMul = math.Clamp(amount + 1.0, 0.0, 1000.0)
+end)
 
 GM:SetSkillModifierFunction(SKILLMOD_DIMVISION_EFF_MUL, function(pl, amount)
 	pl.DimVisionEffMul = math.Clamp(amount + 1.0, 0.0, 1000.0)
@@ -1857,6 +1865,10 @@ end)
 GM:AddSkillModifier(SKILL_D_LATEBUYER, SKILLMOD_WORTH, 30)
 GM:AddSkillModifier(SKILL_D_LATEBUYER, SKILLMOD_ARSENAL_DISCOUNT, -0.66)
 
+GM:AddSkillModifier(SKILL_STOCKPILE, SKILLMOD_RES_AMMO_MUL, 0.50)
+
+GM:AddSkillModifier(SKILL_FREEAMMO, SKILLMOD_RES_AMMO_MUL, 0.05)
+
 GM:AddSkillFunction(SKILL_TAUT, function(pl, active)
 	pl.BuffTaut = active
 end)
@@ -2000,7 +2012,7 @@ GM:AddSkillModifier(SKILL_TAUT, SKILLMOD_PROP_CARRY_SLOW_MUL, 0.4)
 
 GM:AddSkillModifier(SKILL_TURRETOVERLOAD, SKILLMOD_TURRET_RANGE_MUL, -0.3)
 
-GM:AddSkillModifier(SKILL_STOWAGE, SKILLMOD_RESUPPLY_DELAY_MUL, 0.05)
+GM:AddSkillModifier(SKILL_STOWAGE, SKILLMOD_RES_AMMO_MUL, -0.15)
 GM:AddSkillFunction(SKILL_STOWAGE, function(pl, active)
 	pl.Stowage = active
 end)

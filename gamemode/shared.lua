@@ -40,7 +40,6 @@ include("skillweb/sh_skillweb.lua")
 
 include("sh_options.lua")
 include("sh_zombieclasses.lua")
-include("sh_humanclasses.lua")
 include("sh_animations.lua")
 include("sh_sigils.lua")
 include("sh_channel.lua")

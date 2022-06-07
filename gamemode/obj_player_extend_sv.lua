@@ -189,12 +189,14 @@ function meta:ProcessDamage(dmginfo)
 			end
 
 
+
 			if bit.band(dmgtype, DMG_SLASH) ~= 0 or inflictor.IsMelee then
 				if self.BarbedArmor and self.BarbedArmor > 0 then
 					attacker:TakeSpecialDamage(self.BarbedArmor, DMG_SLASH, self, self)
 					attacker:AddArmDamage(self.BarbedArmor)
 				end
-				if self:IsSkillActive(SKILL_UPLOAD) then
+				if self:IsSkillActive(SKILL_UPLOAD) and not self:GetStatus("hshield") then
+					
 					local cursed5 = self:GetStatus("hollowing")
 					if (cursed5) then 
 						self:AddHallow(self:GetOwner(),cursed5.DieTime - CurTime() + (dmginfo:GetDamage() * 0.5))
@@ -203,12 +205,20 @@ function meta:ProcessDamage(dmginfo)
 						self:AddHallow(self:GetOwner(),dmginfo:GetDamage() * 0.5)
 					end
 					if (cursed5) and (cursed5.DieTime) > 800 then
-						self:TakeSpecialDamage(500, DMG_DIRECT, owner, self)
-						self:AddHallow(self:GetOwner(),cursed5.DieTime - (CurTime() - -1500))
-
+						self:TakeSpecialDamage(500, DMG_DIRECT, attacker, self)
+						self:AddHallow(self:GetOwner(),cursed5.DieTime - (CurTime() + 1500))
+						print("Уебало"..self..(cursed5.DieTime))
+						PrintMessage(HUD_PRINTCONSOLE,"Уебало"..self..(cursed5.DieTime))
+						
 					end
 					dmginfo:SetDamage(0)
 				end
+				--[[if self:IsSkillActive(SKILL_UPLOAD) then
+					timer.Simple(5, function()
+						self:TakeSpecialDamage(dmginfo:GetDamage() * 0.5, DMG_DIRECT, attacker, self)
+					end)
+					dmginfo:SetDamage(0.1)
+				end]]
 				if self:HasTrinket("ttimes") then
 					dmginfo:SetDamage(dmginfo:GetDamage() - 6)
 				end
@@ -1195,11 +1205,11 @@ function meta:Resupply(owner, obj)
 
 	for i = 1, stockpiling and not stowage and 2 or 1 do
 		net.Start("zs_ammopickup")
-			net.WriteUInt(amount, 16)
+			net.WriteUInt(amount * (self.RessuplyMul or 1), 16)
 			net.WriteString(ammotype)
 		net.Send(self)
 
-		self:GiveAmmo(amount, ammotype)
+		self:GiveAmmo(amount * (self.RessuplyMul or 1), ammotype)
 
 		if self:IsSkillActive(SKILL_FORAGER) and math.random(7) == 1 and #GAMEMODE.Food > 0 then
 			self:Give(GAMEMODE.Food[math.random(#GAMEMODE.Food)])
