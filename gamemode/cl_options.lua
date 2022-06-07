@@ -93,6 +93,7 @@ CreateClientConVar("zs_blockunable", "0", true, true)
 CreateClientConVar("zs_blockposition", "0", true, true)
 CreateClientConVar("zs_nousetodeposit", "0", true, true)
 CreateClientConVar("zs_nopickupprops", "0", true, true)
+CreateClientConVar("zs_nodiscord", "0", true, true)
 
 GM.DisableScopes = CreateClientConVar("zs_disablescopes", "0", true, false):GetBool()
 cvars.AddChangeCallback("zs_disablescopes", function(cvar, oldvalue, newvalue)

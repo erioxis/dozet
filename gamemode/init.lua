@@ -1455,6 +1455,7 @@ function GM:Think()
 	end
 end
 
+
 function GM:PlayerSwitchWeapon(pl, old, new)
 	if pl:HasTrinket("autoreload") then
 		pl.NextAutomatedReload = CurTime() + 2.5
@@ -2017,6 +2018,7 @@ end
 function GM:OnPlayerLose(pl)
 end
 
+
 function GM:EndRound(winner)
 	if self.RoundEnded then return end
 	self.RoundEnded = true
@@ -2134,13 +2136,21 @@ function GM:ScalePlayerDamage(pl, hitgroup, dmginfo)
 	end
 end
 
+
 function GM:PlayerReady(pl)
 	gamemode.Call("PlayerReadyRound", pl)
 
 	self:PlayerReadyVault(pl)
 
 	pl.PlayerReady = true
+	
 end
+hook.Add("PlayerReady", "post_discord_link", function(pl)
+	if pl:GetInfo("zs_nodiscord") ~= "1" then
+	pl:PrintTranslatedMessage(HUD_PRINTTALK, "post_discord_init_text")
+	pl:PrintTranslatedMessage(HUD_PRINTTALK, "post_discord_init_text2") 
+	end 
+end)
 
 function GM:PlayerReadyRound(pl)
 	if not pl:IsValid() then return end

@@ -37,6 +37,7 @@ LANGUAGE.op_hidepacks = "Don't hide resupply packs"
 LANGUAGE.op_mcore = "Multicore rendering (Increases FPS, RECOMMENDED"
 LANGUAGE.op_color_c = "Color Correction"
 LANGUAGE.op_blockposition = "Custom block position"
+LANGUAGE.op_nodiscord = "Don't show the official Discord link in chat"
 -- Various gamemode stuff
 LANGUAGE.blockisfalse = "NOT BLOCK(PRESS ATTACK2 FOR CHANGE BLOCK STATUS)"
 LANGUAGE.blockistrue = "BLOCK"
@@ -1396,7 +1397,7 @@ LANGUAGE.zshop_cursed                               = "Cursed Zombie"
 LANGUAGE.zshop_cursed1                                = "Increases survivability by increasing maximum health by 100%."
 LANGUAGE.zshop_bossphysicshazard                               = "Physics Hazard"
 LANGUAGE.zshop_bossphysicshazard2                               = "As a Shade, physics strength is tripled for the ultimate carnage."
-
+-- Something else
 LANGUAGE.worth_worth								= "Worth: %s"
 LANGUAGE.worth_worth_cost							= "%s Worth"
 LANGUAGE.worth_checkout								= "Checkout"
@@ -1406,3 +1407,6 @@ LANGUAGE.noadmin                  = "You're not admin to use that command"
 LANGUAGE.jewmoment = "jew moment"
 
 LANGUAGE.arsvoid = "Arsenal void generated weapon:"
+
+LANGUAGE.post_discord_init_text						= "Hey there! This server has an Discord.\nYou can be part of it by following this link - \nhttps://discord.gg/QVCxXBqrgj"
+LANGUAGE.post_discord_init_text2					= "You can disable this message with the console command\nzs_nodiscord 1"

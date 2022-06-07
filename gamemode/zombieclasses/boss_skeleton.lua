@@ -26,6 +26,8 @@ CLASS.BloodColor = -1
 CLASS.Skeletal = true
 CLASS.SkeletalRes = true
 
+CLASS.Unstone = 1
+
 local math_random = math.random
 --local math_ceil = math.ceil
 local math_min = math.min
