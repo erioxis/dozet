@@ -110,7 +110,6 @@ function meta:ProcessDamage(dmginfo)
 		dmginfo:SetDamage(0)
 		net.Start("zs_damageblock")
 		net.Send(self)
-		
     end
 
 	if self:IsSkillActive(SKILL_HOLY_MANTLE) and self.HolyMantle == 1 then
@@ -119,12 +118,13 @@ function meta:ProcessDamage(dmginfo)
 		net.Send(self)
 		self.HolyMantle = self.HolyMantle - 1
 		self:GiveStatus("hshield", 3)
-		timer.Create( "GodOnHM", 0.3, 1, function()
+		timer.Simple(0.05,function()
 			 self:GodEnable()
 			 end )
-		timer.Create( "GodoffHM", 3, 1, function()
-			 self:GodDisable() 
-			end )
+			 timer.Simple(3,function()
+				self:GodDisable()
+				end )
+
     end
 
 	-- Opted for multiplicative.
@@ -1553,8 +1553,8 @@ function meta:Redeem(silent, noequip)
 			net.WriteEntity(self)
 		net.Broadcast()
 	end
-	timer.Create( "GodOn", 1, 1, function() self:GodEnable() end )
-	timer.Create( "Godoff", 15, 1, function() self:GodDisable() end )
+	timer.Simple(0.3,function() self:GodEnable() end )
+	timer.Simple(15,function() self:GodDisable() end )
 
 	gamemode.Call("PostPlayerRedeemed", self)
 end
