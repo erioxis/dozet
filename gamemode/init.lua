@@ -2765,9 +2765,9 @@ function GM:PlayerDeathThink(pl)
 	if pl:IsSkillActive(SKILL_PHOENIX) and pl.RedeemedOnce == 1 then
 		pl:Redeem()
 		pl:Respawn()
+		pl:ChangeTeam(TEAM_HUMAN)
 		pl:SetModel(player_manager.TranslatePlayerModel(GAMEMODE.RandomPlayerModels[math.random(#GAMEMODE.RandomPlayerModels)]))
 		pl:SetHealth(300)
-		pl:SetTeam(TEAM_HUMAN)
 	   end
 
 
