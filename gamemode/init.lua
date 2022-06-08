@@ -3683,8 +3683,7 @@ end
 
 
 function GM:PlayerDeath(pl, inflictor, attacker)
-	deathblock = math.random(2)
-	if pl:IsSkillActive(SKILL_PHOENIX) and deathblock == 1 and pl.RedeemedOnce <= 1 then
+	if pl:IsSkillActive(SKILL_PHOENIX) and pl.RedeemedOnce <= 1 then
 
 		
 		pl.RedeemedOnce = pl.RedeemedOnce + 1
