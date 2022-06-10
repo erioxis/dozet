@@ -103,18 +103,12 @@ function SWEP:SecondaryAttack()
 	    self.Block = self.Block + 1
 	    self:SetWeaponHoldType("revolver")
 	end)
-	timer.Simple(0.3, function() 
-		self:GetOwner():GodEnable()
-	end)
-	timer.Simple(0.5, function() 
-		self:GetOwner():GodDisable()
-	end)
     else
 	    timer.Create("unblock",0.1,1, function() 
 	    self.Block = self.Block - 1
 	    self:SetWeaponHoldType(self.HoldType)
 	end)
-end
+    end
 end
 end
 

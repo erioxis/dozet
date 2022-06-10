@@ -919,14 +919,28 @@ LANGUAGE.res_delay = " к задержки амуниции\n"
 LANGUAGE.start_points = " Стартовых поинтов\n"
 LANGUAGE.med_cool = " к кулдауну аптечки\n"
 LANGUAGE.med_effect = " к эффективности аптечки\n"
+LANGUAGE.barmor = " кровавой брони\n"
+LANGUAGE.repair = " к силе починке\n"
+--Skill repairsman
+LANGUAGE.skill_handy = "Чинитель "
 --Скиллы на деф
 LANGUAGE.skill_holymantle = "Святая мантия"
 LANGUAGE.skill_holymantle_d1 = "Поглощает любой урон каждые 30 секунд\nЧем выше удача - тем быстрее перезарядка\nС каждой волной перезарядка святой мантии увеличивается"
 --SKILLS ON MEDICAL
 LANGUAGE.skill_surg = "Хирург "
 LANGUAGE.skill_bio = "Биолог "
+LANGUAGE.skill_frail = "Самоучка"
+LANGUAGE.skill_frail_d1 = "Нельзя быть вылеченным выше чем 44% здоровья"
+LANGUAGE.skill_u_medcloud = "Мед.бомба"
+LANGUAGE.skill_u_medcloud_d1 = "Открывает покупку мед бомбы\nМедленно лечит людей в своем радиусе"
+LANGUAGE.skill_starget = "Самонаводка"
+LANGUAGE.skill_starget_d1 = "Мед.оружие с дротиками самонаводится\n"
+LANGUAGE.skill_starget_d2 = "+75% к задержке между выстрелами у мед.оружия\n"
+LANGUAGE.skill_starget_d3 = "-30% эффективность лечения у мед.оружия"
+LANGUAGE.skill_sshot = "Силовой пистолет"
+LANGUAGE.skill_sshot_d1 = "Открывает покупку Силового пистолета\nЦель дамажит на 25% больше урона\nЭкстра урон дается в поинтах\nЦель не лечится"
 -- WOrthness
-LANGUAGE.worthness = "Обмен"
+LANGUAGE.worthness = "Обмен "
 --Скиллы скорость
 LANGUAGE.skill_int_d0 = "-35% Замедления от лоу хп\n"
 LANGUAGE.skill_int_0 = "Вставший"
@@ -974,6 +988,7 @@ LANGUAGE.skill_cursevision_d3 = "Слепота навсегда\nКаждые 1
 LANGUAGE.skill_wideroad_0 = "Долгая дорога"
 LANGUAGE.skill_wideroad_d1 = "Максимальная скорость для прохождения сквозь пропы будет равна 1,через 6 секунд она станет нормальной"
 --Скиллы на хп
+LANGUAGE.skill_blife_0 = "Кровавая жизнь"
 LANGUAGE.skill_stoici_0 = "Устойчивый I"
 LANGUAGE.skill_stoicii_0 = "Устойчивый II"
 LANGUAGE.skill_stoiciii_0 = "Устойчивый II"

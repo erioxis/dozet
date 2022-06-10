@@ -287,6 +287,7 @@ SKILL_LUCKY_UNLIVER = 266
 SKILL_NOSEE = 267
 SKILL_XPHUNTER = 270
 SKILL_FREEAMMO = 271
+SKILL_BLOODLIFE = 272
 
 SKILLMOD_HEALTH = 1
 SKILLMOD_SPEED = 2
@@ -460,6 +461,10 @@ GM:AddSkill(SKILL_ANTIGEN, ""..translate.Get("skill_agen_0"), GOOD..""..translat
 																-2,			4,					{}, TREE_HEALTHTREE)
 GM:AddSkill(SKILL_DAMAGER, ""..translate.Get("skill_bhealth_0"), GOOD..""..translate.Get("skill_bhealth_d1")..BAD..""..translate.Get("skill_bhealth_d2"),
 																-2,			5,					{SKILL_ANTIGEN}, TREE_HEALTHTREE)
+GM:AddSkill(SKILL_BLOODLIFE, ""..translate.Get("skill_blife_0"), GOOD.."+50"..translate.Get("barmor")..BAD.."-60"..translate.Get("health"),
+																-2,			6,					{SKILL_DAMAGER}, TREE_HEALTHTREE)
+GM:AddSkillModifier(SKILL_BLOODLIFE, SKILLMOD_HEALTH, -60)
+GM:AddSkillModifier(SKILL_BLOODLIFE, SKILLMOD_BLOODARMOR, 50)
 -- Speed Tree
 GM:AddSkill(SKILL_SPEED1, translate.Get("skill_speed").."I", GOOD.."+5"..translate.Get("speed")..BAD.."-4"..translate.Get("health"),
 																-4,			6,					{SKILL_NONE, SKILL_SPEED2}, TREE_SPEEDTREE)
@@ -552,18 +557,18 @@ GM:AddSkill(SKILL_BIOLOGYIII, translate.Get("skill_bio").."III", GOOD.."+18%"..t
 																2,			0,					{SKILL_U_MEDICCLOUD, SKILL_U_ANTITODESHOT, SKILL_BIOLOGYIV}, TREE_SUPPORTTREE)
 GM:AddSkill(SKILL_BIOLOGYIV, translate.Get("skill_bio").."IV", GOOD.."+21%"..translate.Get("med_effect"),
 																2,			-3,					{}, TREE_SUPPORTTREE)
-GM:AddSkill(SKILL_D_FRAIL, "Debuff: Frail", GOOD.."-33%"..translate.Get("med_cool")..GOOD.."+33%"..translate.Get("med_effect")..BAD.."Cannot be healed above 44% health",
+GM:AddSkill(SKILL_D_FRAIL,  translate.Get("skill_frail"), GOOD.."-33%"..translate.Get("med_cool")..GOOD.."+33%"..translate.Get("med_effect")..BAD..translate.Get("skill_frail_d1"),
 																-4,			-2,					{}, TREE_SUPPORTTREE)
-GM:AddSkill(SKILL_U_MEDICCLOUD, "Unlock: Medic Cloud Bomb", GOOD.."Unlocks purchasing the Medic Cloud Bomb\nSlowly heals all humans inside the cloud",
+GM:AddSkill(SKILL_U_MEDICCLOUD, translate.Get("skill_u_medcloud"), GOOD..translate.Get("skill_u_medcloud_d1"),
 																0,			-2,					{SKILL_DISPERSION}, TREE_SUPPORTTREE)
 .AlwaysActive = true
-GM:AddSkill(SKILL_SMARTTARGETING, "Smart Targeting", GOOD.."Medical weapon darts lock onto targets with right click\n"..BAD.."+75% medic tool fire delay\n"..BAD.."-30% healing effectiveness on medical darts",
+GM:AddSkill(SKILL_SMARTTARGETING, translate.Get("skill_starget"), GOOD..translate.Get("skill_starget_d1")..BAD..translate.Get("skill_starget_d2")..BAD..translate.Get("skill_starget_d3"),
 																0,			2,					{}, TREE_SUPPORTTREE)
 GM:AddSkill(SKILL_RECLAIMSOL, "Recoverable Solution", GOOD.."60% of wasted medical dart ammo is returned to you\n"..BAD.."+150% medic tool fire delay\n"..BAD.."-40% medic tool reload speed\n"..BAD.."Cannot speed boost full health players",
 																0,			4,					{SKILL_SMARTTARGETING}, TREE_SUPPORTTREE)
-GM:AddSkill(SKILL_U_STRENGTHSHOT, "Unlock: Strength Shot Gun", GOOD.."Unlocks purchasing the Strength Shot Gun\nTarget damage +25% for 10 seconds\nExtra damage is given to you as points\nTarget is not healed",
+GM:AddSkill(SKILL_U_STRENGTHSHOT, translate.Get("skill_sshot"), GOOD..translate.Get("skill_sshot_d1"),
 																0,			0,					{SKILL_SMARTTARGETING}, TREE_SUPPORTTREE)
-GM:AddSkill(SKILL_WORTHINESS4, "Worthiness IV", GOOD.."+10 starting worth\n"..BAD.."-3 starting points",
+GM:AddSkill(SKILL_WORTHINESS4, translate.Get("worthness").."IV", GOOD.."+10"..translate.Get("worth")..BAD.."-3"..translate.Get("start_points"),
 																-5,			2,					{}, TREE_SUPPORTTREE)
 GM:AddSkill(SKILL_U_ANTITODESHOT, "Unlock: Antidote Handgun", GOOD.."Unlocks purchasing the Antidote Handgun\nFires piercing blasts that heal poison greatly\nCleanses statuses from targets with a small point gain\nDoes not heal health",
 																4,			-2,					{}, TREE_SUPPORTTREE)
@@ -571,17 +576,17 @@ GM:AddSkill(SKILL_DISPERSION, "Dispersion", GOOD.."+15% cloud bomb radius\n"..BA
 																0,			-4,					{}, TREE_SUPPORTTREE)
 
 -- Defence Tree
-GM:AddSkill(SKILL_HANDY1, "Handy I", GOOD.."+5% repair rate",
+GM:AddSkill(SKILL_HANDY1, translate.Get("skill_handy").."I", GOOD.."+5%"..translate.Get("repair"),
 																-5,			-6,					{SKILL_NONE, SKILL_HANDY2}, TREE_BUILDINGTREE)
-GM:AddSkill(SKILL_HANDY2, "Handy II", GOOD.."+6% repair rate",
+GM:AddSkill(SKILL_HANDY2, translate.Get("skill_handy").."II", GOOD.."+6%"..translate.Get("repair"),
 																-5,			-4,					{SKILL_HANDY3, SKILL_U_BLASTTURRET, SKILL_LOADEDHULL}, TREE_BUILDINGTREE)
-GM:AddSkill(SKILL_HANDY3, "Handy III", GOOD.."+8% repair rate",
+GM:AddSkill(SKILL_HANDY3, translate.Get("skill_handy").."III", GOOD.."+8%"..translate.Get("repair"),
 																-5,			-1,					{SKILL_TAUT, SKILL_HAMMERDISCIPLINE, SKILL_D_NOODLEARMS, SKILL_HANDY4}, TREE_BUILDINGTREE)
-GM:AddSkill(SKILL_HANDY4, "Handy IV", GOOD.."+11% repair rate",
+GM:AddSkill(SKILL_HANDY4, translate.Get("skill_handy").."IV", GOOD.."+11%"..translate.Get("repair"),
 																-3,			1,					{SKILL_HANDY5}, TREE_BUILDINGTREE)
-GM:AddSkill(SKILL_HANDY5, "Handy V", GOOD.."+13% repair rate",
+GM:AddSkill(SKILL_HANDY5, translate.Get("skill_handy").."V", GOOD.."+13%"..translate.Get("repair"),
 																-3,			3,					{SKILL_OVERHAND}, TREE_BUILDINGTREE)
-GM:AddSkill(SKILL_OVERHAND, "OverHandy", GOOD.."+25% repair rate\n"..BAD.."+15% swing delay",
+GM:AddSkill(SKILL_OVERHAND, "OverHandy", GOOD.."+25%"..translate.Get("repair")..BAD.."+15% swing delay with the Carpenter Hammer",
 																-3,			4,					{SKILL_HANDY5}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_HAMMERDISCIPLINE, "Hammer Discipline I", GOOD.."-5% swing delay with the Carpenter Hammer",
 																0,			1,					{SKILL_BARRICADEEXPERT}, TREE_BUILDINGTREE)
@@ -620,12 +625,12 @@ GM:AddSkill(SKILL_NANITECLOUD, "Nanite", GOOD.."+12% Repair rate",
 .AlwaysActive = true
 GM:AddSkillModifier(SKILL_NANITECLOUD, SKILLMOD_REPAIRRATE_MUL, 0.12)
 SKILL_JEW = 237
-GM:AddSkill(SKILL_JEW, "Jew", GOOD.."+25% Arsenal discount and scrap discount\n+50 Start points\n"..GOOD.."+15% Ammo from ressuply\n"..BAD.."-5 Points every time when you get a LOOT",
+GM:AddSkill(SKILL_JEW, "Jew", GOOD.."+15% Arsenal discount and scrap discount\n+50 Start points\n"..GOOD.."+15% Ammo from ressuply\n"..BAD.."-5 Points every time when you get a LOOT",
 																3,			2,					{SKILL_NANITECLOUD}, TREE_BUILDINGTREE)
 																
 GM:AddSkillModifier(SKILL_JEW, SKILLMOD_POINTS, 50)
-GM:AddSkillModifier(SKILL_JEW, SKILLMOD_ARSENAL_DISCOUNT, -0.25)
-GM:AddSkillModifier(SKILL_JEW, SKILLMOD_SCRAPDISCOUNT, -0.25)
+GM:AddSkillModifier(SKILL_JEW, SKILLMOD_ARSENAL_DISCOUNT, -0.15)
+GM:AddSkillModifier(SKILL_JEW, SKILLMOD_SCRAPDISCOUNT, -0.15)
 GM:AddSkillModifier(SKILL_JEW, SKILLMOD_RES_AMMO_MUL, 0.15)
 GM:AddSkill(SKILL_FIELDAMP, "Field Amplifier", GOOD.."-20% zapper and repair field delay\n"..BAD.."-40% zapper and repair field range",
 																6,			4,					{}, TREE_BUILDINGTREE)

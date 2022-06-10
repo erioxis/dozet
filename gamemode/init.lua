@@ -4265,7 +4265,7 @@ function GM:PlayerSpawn(pl)
 		end
 
 		if classtab.Boss then
-			pl:SetHealth(classtab.Health)
+			pl:SetHealth(classtab.Health + (self:GetWave() * 1000))
 		else
 			local lowundead = team.NumPlayers(TEAM_UNDEAD) < 4
 

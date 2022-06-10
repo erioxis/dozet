@@ -1116,12 +1116,27 @@ LANGUAGE.res_delay = " Ressuply Delay\n"
 LANGUAGE.start_points = " Starting Points\n"
 LANGUAGE.med_cool = " medical kit cooldown\n"
 LANGUAGE.med_effect = " medic tool effectiveness\n"
+LANGUAGE.barmor = " blood armor\n"
+LANGUAGE.repair = " repair rate\n"
+--Skill repairsman
+LANGUAGE.skill_handy = "Handy "
+
 -- Skills defence
 LANGUAGE.skill_holymantle = "Holy mantle"
 LANGUAGE.skill_holymantle_d1 = "Absorb damage every 30 seconds\nThan higher luck - faster reloading\nWith each wave,the Holy Mantle recharge rate slows down"
 --SKILLS ON MEDICAL
 LANGUAGE.skill_surg = "Surgeon "
 LANGUAGE.skill_bio = "Biology "
+LANGUAGE.skill_frail = "Frail"
+LANGUAGE.skill_frail_d1 = "Cannot be health above 44% health"
+LANGUAGE.skill_u_medcloud = "Unlock: Medic Cloud Bomb"
+LANGUAGE.skill_u_medcloud_d1 = "Unlocks purchasing the Medic Cloud Bomb\nSlowly heals all humans inside the cloud"
+LANGUAGE.skill_starget = "Smart Targeting"
+LANGUAGE.skill_starget_d1 = "Medical weapon darts lock onto targets with right click\n"
+LANGUAGE.skill_starget_d2 = "+75% medic tool fire delay\n"
+LANGUAGE.skill_starget_d3 = "-30% healing effectiveness on medical darts"
+LANGUAGE.skill_sshot = "Unlock: Strength Shot Gun"
+LANGUAGE.skill_sshot_d1 = "Unlocks purchasing the Strength Shot Gun\nTarget damage +25% for 10 seconds\nExtra damage is given to you as points\nTarget is not healed"
 -- WOrthness
 LANGUAGE.worthness = "Worthiness "
 --Skills speed
@@ -1171,6 +1186,7 @@ LANGUAGE.skill_cursevision_d3 = "Dim Vision forever\nEvery 10 seconds is only ra
 LANGUAGE.skill_wideroad_0 = "Debuff: Wide Load"
 LANGUAGE.skill_wideroad_d1 = "Phasing speed limited to 1 for the first 6 seconds of phasing"
 --Skills health
+LANGUAGE.skill_blife_0 = "Bloody life"
 LANGUAGE.skill_stoici_0 = "Stoic I"
 LANGUAGE.skill_stoicii_0 = "Stoic II"
 LANGUAGE.skill_stoiciii_0 = "Stoic II"
