@@ -32,7 +32,7 @@ SWEP.FireAnimSpeed = 0.4
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_FIRE_DELAY, -0.15)
 
 local branch = GAMEMODE:AddNewRemantleBranch(SWEP, 1, "'Poplaer' Napalm Rifle", "Chance to ignite instead of corrode", function(wept)
-	wept.Primary.Damage = wept.Primary.Damage * 1.3
+	wept.Primary.Damage = wept.Primary.Damage * 0.8
 	wept.Primary.Delay = 0.55
 
 	if SERVER then
@@ -50,7 +50,7 @@ branch.Colors = {Color(255, 160, 50), Color(215, 120, 50), Color(175, 100, 40), 
 branch.NewNames = {"Hot", "Searing", "Lavpool", "Vulkanoo", "Boomkalo"}
 
 branch = GAMEMODE:AddNewRemantleBranch(SWEP, 2, "'Popupar' Cryo Rifle", "Launches cryoblobs that slow zombies down at the cost of numshot", function(wept)
-	wept.Primary.Damage = wept.Primary.Damage * 2
+	wept.Primary.Damage = wept.Primary.Damage * 0.8
 	wept.Primary.NumShots = 1
 	wept.Primary.Delay = 0.31
 

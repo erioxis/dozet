@@ -32,7 +32,7 @@ SWEP.WorldModel = "models/weapons/w_stunbaton.mdl"
 
 SWEP.HoldType = "melee2"
 SWEP.Tier = 7
-SWEP.MeleeDamage = 231
+SWEP.MeleeDamage = 456
 SWEP.MeleeRange = 156
 SWEP.MeleeSize = 3
 SWEP.MeleeKnockBack = 0
@@ -96,7 +96,7 @@ function SWEP:GetDamage(numplayers, basedamage)
 	basedamage = basedamage or self.MeleeDamage
 
 	if numplayers then
-		return basedamage * math.Clamp(1.25 - numplayers * 0.25, 0.5, 1)
+		return basedamage * math.Clamp(1.25 + numplayers * 5, 0.5, 1)
 	end
 
 	return basedamage

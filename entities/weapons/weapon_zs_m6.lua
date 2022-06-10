@@ -34,7 +34,7 @@ SWEP.Base = "weapon_zs_base"
 SWEP.ViewModel = "models/weapons/v_rif_m4a1.mdl"
 SWEP.WorldModel = "models/weapons/w_rif_m4a1.mdl"
 SWEP.Primary.Sound = Sound("Weapon_m4a1.Single")
-SWEP.Primary.Damage = 45
+SWEP.Primary.Damage = 99
 SWEP.Primary.NumShots = 1
 SWEP.Primary.Delay = 0.16
 
@@ -54,10 +54,7 @@ SWEP.WalkSpeed = SPEED_SLOW
 SWEP.Tier = 7
 SWEP.MaxStock = 2
 function SWEP:OnZombieKilled()
-	self.Primary.Damage = self.Primary.Damage + 1.2
-	if self.Primary.Damage >= 300 then
-	self.Primary.Damage = self.Primary.Damage - 250
-	end
+	self.Primary.Damage = self.Primary.Damage + 2
 
 end
 

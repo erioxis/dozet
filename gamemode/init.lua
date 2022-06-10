@@ -4669,12 +4669,9 @@ function GM:WaveStateChanged(newstate, pl)
 				if self.EndWaveHealthBonus > 0 then
 					pl:SetHealth(math.min(pl:GetMaxHealth(), pl:Health() + self.EndWaveHealthBonus))
 				end
-				if pl:IsSkillActive(SKILL_LIVER) then
-					pl:SetMaxHealth(pl:GetMaxHealth() * 1.07) pl:SetHealth(pl:Health() * 1.07)
-				end
 				if pl:IsSkillActive(SKILL_LUCKY_UNLIVER) then
 					pl:SetMaxHealth(pl:GetMaxHealth() * 0.9) pl:SetHealth(pl:Health() * 0.5)
-					pl.Luck = pl.Luck + 2
+					pl.Luck = pl.Luck + 1
 				end
 				if pl:IsSkillActive(SKILL_XPHUNTER) then
 					pl:AddZSXP(5 + self.GetWave())

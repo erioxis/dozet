@@ -18,7 +18,7 @@ SWEP.Primary.Automatic = true
 SWEP.Primary.Ammo = "chemical"
 SWEP.Primary.Delay = 0.45
 SWEP.Primary.DefaultClip = 20
-SWEP.Primary.Damage = 71
+SWEP.Primary.Damage = 45
 SWEP.Primary.NumShots = 3
 
 SWEP.ConeMax = 3
@@ -34,7 +34,7 @@ SWEP.FireAnimSpeed = 0.4
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_FIRE_DELAY, -0.05)
 
 local branch = GAMEMODE:AddNewRemantleBranch(SWEP, 1, "'Scorch' Napalm Rifle", "Chance to ignite instead of corrode at the cost of damage", function(wept)
-	wept.Primary.Damage = wept.Primary.Damage * 0.86
+	wept.Primary.Damage = wept.Primary.Damage * 0.60
 
 	if SERVER then
 		wept.EntModify = function(self, ent)
