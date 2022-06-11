@@ -10,13 +10,12 @@ if self.Block == 1 then
 			net.Start("zs_weaponblocked")
 			net.Send(self:GetOwner())
 		end)
-
-			
-		
 	end
 end	
 return self:GetNextPrimaryFire() <= CurTime() and not self:IsSwinging()
 end
+
+
 
 function SWEP:ServerMeleeHitEntity(tr, hitent, damagemultiplier)
 	if not hitent or not hitent:IsValid() then return end

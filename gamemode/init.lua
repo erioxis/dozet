@@ -1318,8 +1318,11 @@ function GM:Think()
 				end
 				if pl:GetActiveWeapon().Block == 1 and pl:GetActiveWeapon().IsMelee then
 					pl:SetWalkSpeed(pl:GetWalkSpeed() * 0.5)
+					pl:SetRunSpeed(pl:GetRunSpeed() * 0.5)
+					pl:GetActiveWeapon():SetWeaponHoldType("revolver")
 				elseif pl:GetActiveWeapon().Block == 0 and pl:GetActiveWeapon().IsMelee then
 					pl:ResetSpeed()
+					pl:GetActiveWeapon():SetWeaponHoldType(pl:GetActiveWeapon().HoldType)
 				end
 
 

@@ -52,6 +52,8 @@ function MakepOptions()
 	check:SetConVar("zs_alwaysvolunteer")
 	check:SizeToContents()
 	list:AddItem(check)
+	
+
 
 
 	check = vgui.Create("DCheckBoxLabel", Window)
@@ -443,6 +445,7 @@ function MakepOptions()
 	slider:SetConVar("zs_block_func")
 	slider:SetText("Y align for block")
 	slider:SizeToContents()
+	list:AddItem(check)
 	list:AddItem(slider)
 	list:AddItem(EasyLabel(Window, "Health Color"))
 	local colpicker = vgui.Create("DColorMixer", Window)
@@ -452,6 +455,7 @@ function MakepOptions()
 	colpicker:SetConVarG("zs_ghealth")
 	colpicker:SetConVarB("zs_bhealth")
 	colpicker:SetTall(72)
+
 	list:AddItem(colpicker)
 	list:AddItem(EasyLabel(Window, "Blood armor color"))
 	local colpicker = vgui.Create("DColorMixer", Window)	
@@ -462,6 +466,7 @@ function MakepOptions()
 	colpicker:SetConVarB("zs_bblood")
 	colpicker:SetTall(72)
 	list:AddItem(colpicker)
+
 
 
 	list:AddItem(EasyLabel(Window, "Crosshair primary color"))

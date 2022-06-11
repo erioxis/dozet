@@ -44,6 +44,11 @@ function GM:DrawTargetID(ent, fade)
 				draw.SimpleTextBlur("(FRAIL)", "ZSHUDFontSmaller", x, y, colTemp, TEXT_ALIGN_CENTER)
 				y = y + draw.GetFontHeight("ZSHUDFontSmaller") + 2
 			end
+			if ent:GetDTBool(DT_PLAYER_BOOL_LABUSE) then
+				util.ColorCopy(COLOR_LBLUE, colTemp)
+				draw.SimpleTextBlur("(LAST ABUSE)", "ZSHUDFontSmaller", x, y, colTemp, TEXT_ALIGN_CENTER)
+				y = y + draw.GetFontHeight("ZSHUDFontSmaller") + 2
+			end
 
 			local poison = ent:GetPoisonDamage()
 			local bleed = ent:GetBleedDamage()

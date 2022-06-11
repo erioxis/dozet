@@ -10,7 +10,7 @@ local function ContentsPaint(self, w, h)
 		local health = math.max(lp:Health(), 0)
 		local healthperc = math.Clamp(health / lp:GetMaxHealthEx(), 0, 1)
 		local wid, hei = 300 * screenscale, 18 * screenscale
-
+ 
 		colHealth.r = (lp:GetInfo("zs_rhealth") + healthperc) * 100
 		colHealth.g = lp:GetInfo("zs_ghealth") - healthperc
 		colHealth.b = lp:GetInfo("zs_bhealth")

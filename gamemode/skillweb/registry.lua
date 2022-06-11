@@ -1333,7 +1333,7 @@ GM:AddSkillModifier(SKILL_USELESS_15, SKILLMOD_BLOCKMULTIPLIER, -0.10)
 GM:AddSkillModifier(SKILL_BLOODLOST, SKILLMOD_HEALTH, -30)
 GM:AddSkillModifier(SKILL_ABUSE, SKILLMOD_MELEE_DAMAGE_MUL, 0.1)
 GM:AddSkillFunction(SKILL_ABUSE, function(pl, active)
-	pl:SetDTBool(DT_PLAYER_BOOL_FRAIL, active)
+	pl:SetDTBool(DT_PLAYER_BOOL_LABUSE, active)
 end)
 
 

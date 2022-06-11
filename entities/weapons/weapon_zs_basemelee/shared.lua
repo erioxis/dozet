@@ -98,18 +98,20 @@ end
 
 function SWEP:SecondaryAttack()
 	if self.BlockTrue == true then
-    if self.Block == 0 then
-	    timer.Create("blocked1",0.15,1, function() 
-	    self.Block = self.Block + 1
-	    self:SetWeaponHoldType("revolver")
-	end)
-    else
-	    timer.Create("unblock",0.1,1, function() 
-	    self.Block = self.Block - 1
-	    self:SetWeaponHoldType(self.HoldType)
-	end)
+        if self.Block == 0 then
+	        timer.Create("blocked1",0.15,1, function() 
+	            self.Block = self.Block + 1
+	            self:SetWeaponHoldType("revolver")
+				self:SetWeaponSwingHoldType("revolver")
+	        end)
+        else
+	        timer.Create("unblock",0.1,1, function() 
+	            self.Block = self.Block - 1
+	            self:SetWeaponHoldType(self.HoldType)
+				self:SetWeaponSwingHoldType(self.SwingHoldType)
+	        end)
+        end
     end
-end
 end
 
 
@@ -208,8 +210,6 @@ end
 function SWEP:MeleeSwing()
 	local owner = self:GetOwner()
 	if self.Block == 1 then 
-	
-
 		return 
         false
 	end
@@ -467,6 +467,7 @@ function SWEP:SetWeaponHoldType( t )
 
 	t = string.lower( t )
 	local index = ActIndex[ t ]
+
 
 	if ( index == nil ) then
 		Msg( "SWEP:SetWeaponHoldType - ActIndex[ \""..t.."\" ] isn't set! (defaulting to normal)\n" )

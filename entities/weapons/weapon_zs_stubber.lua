@@ -28,7 +28,7 @@ SWEP.UseHands = true
 
 SWEP.ReloadSound = Sound("Weapon_Scout.ClipOut")
 SWEP.Primary.Sound = Sound("Weapon_Scout.Single")
-SWEP.Primary.Damage = 55
+SWEP.Primary.Damage = 82
 SWEP.Primary.NumShots = 1
 SWEP.Primary.Delay = 1.25
 SWEP.ReloadDelay = SWEP.Primary.Delay

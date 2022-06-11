@@ -32,12 +32,12 @@ SWEP.ShowViewModel = true
 SWEP.ShowWorldModel = true
 SWEP.ViewModelBoneMods = {}
 SWEP.Primary.Sound = Sound("Weapon_Deagle.Single")
-SWEP.Primary.Damage = 111
+SWEP.Primary.Damage = 134
 SWEP.Primary.NumShots = 1
 SWEP.Primary.Delay = 0.66
 SWEP.Primary.KnockbackScale = 2
 SWEP.MaxStock = 2
-SWEP.Primary.ClipSize = 10
+SWEP.Primary.ClipSize = 12
 SWEP.Primary.Automatic = false
 SWEP.Primary.Ammo = "pistol"
 GAMEMODE:SetupDefaultClip(SWEP.Primary)
