@@ -3758,7 +3758,7 @@ function GM:HumanKilledZombie(pl, attacker, inflictor, dmginfo, headshot, suicid
         attacker.zKills = attacker.zKills + 4
 	end
 	if attacker:IsSkillActive(SKILL_SIGILIBERATOR) then
-		attacker.zKills = attacker.zKills + 2
+		attacker.zKills = attacker.zKills + 1
 	end
 
 

@@ -39,9 +39,9 @@ SWEP.UseHands = true
 SWEP.MeleeDamage = 342
 SWEP.MeleeRange = 81
 SWEP.MeleeSize = 3.55
-SWEP.MeleeKnockBack = 1
+SWEP.MeleeKnockBack = 7600
 
-SWEP.Primary.Delay = 5
+SWEP.Primary.Delay = 4.1
 
 SWEP.Tier = 3
 
@@ -49,13 +49,13 @@ SWEP.WalkSpeed = SPEED_SLOW
 
 SWEP.SwingRotation = Angle(60, 0, -80)
 SWEP.SwingOffset = Vector(0, -30, 0)
-SWEP.SwingTime = 0.75
+SWEP.SwingTime = 0.44
 SWEP.SwingHoldType = "melee"
 
 SWEP.AllowQualityWeapons = true
 SWEP.Culinary = true
 
-GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_MELEE_IMPACT_DELAY, -0.12)
+GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_MELEE_IMPACT_DELAY, -0.42)
 
 function SWEP:PlaySwingSound()
 	self:EmitSound("weapons/iceaxe/iceaxe_swing1.wav", 75, math.random(25, 35))

@@ -90,10 +90,11 @@ GAMEMODE:AddNewRemantleBranch(SWEP, 1, ""..translate.Get("wep_megamasher_r1"), "
 					killer:GiveStatus("strengthdartboost", 15)
 				end
 	
-
+            if not killer:IsSkillActive(SKILL_SIGILIBERATOR) or (not killer:GetStatus("strengthdartboost")) then
 			timer.Simple(0.15, function()
 				util.BlastDamagePlayer(killer:GetActiveWeapon(), killer, pos, 72, minushp, DMG_ALWAYSGIB, 3)
 			end)
+		end
 
 			local effectdata = EffectData()
 				effectdata:SetOrigin(pos)

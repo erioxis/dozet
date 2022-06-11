@@ -11,6 +11,11 @@ function SWEP:ApplyMeleeDamage(ent, trace, damage)
 		ent:KnockDown()
 		ent:SetGroundEntity(NULL)
 		ent:SetVelocity(vel)]]
+		if math.random(20) == 1 then
+			timer.Simple(3, function()
+				ent:Kill()
+			end)
+		end
 		local noknockdown = true
 		if CurTime() >= (ent.NextKnockdown or 0) then
 			noknockdown = false
@@ -18,16 +23,6 @@ function SWEP:ApplyMeleeDamage(ent, trace, damage)
 		end
 		ent:ThrowFromPositionSetZ(trace.StartPos, ent:IsPlayer() and 1200 or 3200, nil, noknockdown)
 	end
-		if math.random(20) == 1 then
-			local killer = self:GetOwner()
-			timer.Simple(3, function()
-				ent:Kill()
-			end)
-			
-		end
-		
-	
-	
 
 	self.BaseClass.ApplyMeleeDamage(self, ent, trace, damage)
 end

@@ -48,22 +48,37 @@ SWEP.IronSightsPos = Vector(-6.6, 20, 3.1)
 
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_MAX_SPREAD, -0.344)
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_MIN_SPREAD, -0.172)
+function SWEP:SecondaryAttack()
+if self.Primary.Ammo == "357" then
+	timer.Simple(0.5,function()
+		self:TakeAmmo(10)
+		self.Primary.Ammo = "ar2"
+	end)
+else
+	timer.Simple(0.5,function()
+		self:TakeAmmo(-10)
+		self.Primary.Ammo = "357"
+	end)
+end
+end
 
 function SWEP:PrimaryAttack()
 	if not self:CanPrimaryAttack() then return end
 owner = self:GetOwner()
 	self:EmitFireSound()
-	if SERVER then
+	if SERVER and self.Primary.Ammo == "ar2" then
 	self:SetNextPrimaryFire(CurTime() + self:GetFireDelay())
 	self.IdleAnimation = CurTime() + self:SequenceDuration()
 	self:TakeAmmo()
-	self:ShootBullets(self.Primary.Damage + (self.Primary.Damage * self.MultiplierOfShots / 7), self.Primary.NumShots, self:GetCone())
+	self:ShootBullets(self.Primary.Damage + (6 * self.MultiplierOfShots / 7), self.Primary.NumShots, self:GetCone())
 	self.MultiplierOfShots = self.MultiplierOfShots + 1
-
-
-	end
 	if self.MultiplierOfShots >= 5 then
 		self.MultiplierOfShots = self.MultiplierOfShots - 4
 	end
-
+    elseif SERVER and self.Primary.Ammo == "357" then
+	self:SetNextPrimaryFire(CurTime() + self:GetFireDelay())
+	self.IdleAnimation = CurTime() + self:SequenceDuration()
+	self:TakeAmmo()
+	self:ShootBullets(self.Primary.Damage * 2, self.Primary.NumShots, self:GetCone())
+	end
 end

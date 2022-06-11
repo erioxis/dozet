@@ -48,7 +48,7 @@ function meta:ProcessDamage(dmginfo)
 			dmginfo:SetDamage(dmginfo:GetDamage() * GAMEMODE:GetZombieDamageScale(dmginfo:GetDamagePosition(), self))
 		end
 		if attacker:IsValidLivingHuman() and attacker:IsSkillActive(SKILL_SIGILIBERATOR) then
-            dmginfo:ScaleDamage(3)
+            dmginfo:ScaleDamage(2)
 		end
 
 		self.ShouldFlinch = true
