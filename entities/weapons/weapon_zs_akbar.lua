@@ -51,12 +51,12 @@ GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_MIN_SPREAD, -0.172)
 function SWEP:SecondaryAttack()
 if self.Primary.Ammo == "357" then
 	timer.Simple(0.5,function()
-		self:TakeAmmo(10)
+		self:TakeAmmo()
 		self.Primary.Ammo = "ar2"
 	end)
 else
 	timer.Simple(0.5,function()
-		self:TakeAmmo(-10)
+		self:TakeAmmo()
 		self.Primary.Ammo = "357"
 	end)
 end

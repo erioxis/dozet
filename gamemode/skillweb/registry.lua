@@ -288,6 +288,7 @@ SKILL_NOSEE = 267
 SKILL_XPHUNTER = 270
 SKILL_FREEAMMO = 271
 SKILL_BLOODLIFE = 272
+SKILL_TORMENT7 = 273
 
 SKILLMOD_HEALTH = 1
 SKILLMOD_SPEED = 2
@@ -534,11 +535,11 @@ GM:AddSkill(SKILL_SURESTEP, ""..translate.Get("skill_step_0"), GOOD..""..transla
 																6,			0,					{}, TREE_SPEEDTREE)
 GM:AddSkill(SKILL_INTREPID, ""..translate.Get("skill_int_0"), GOOD..""..translate.Get("skill_int_d0")..BAD.."-4"..translate.Get("speed"),
 																6,			-4,					{SKILL_ROBUST}, TREE_SPEEDTREE)
-GM:AddSkill(SKILL_ROBUST, "Robust", GOOD.."-6% movement speed reduction with heavy weapons",
+GM:AddSkill(SKILL_ROBUST,  ""..translate.Get("skill_rob_0"), GOOD.. ""..translate.Get("skill_rob_d0"),
 																5,			-5,					{}, TREE_SPEEDTREE)
-GM:AddSkill(SKILL_CARDIOTONIC, "Cardiotonic", GOOD.."Hold shift to run whilst draining blood armor\n"..BAD.."-12"..translate.Get("speed")..BAD.."-20% blood armor damage absorption\nSprinting grants +40 move speed",
+GM:AddSkill(SKILL_CARDIOTONIC,""..translate.Get("skill_cardi_0"), GOOD..""..translate.Get("skill_cardi_d0")..BAD.."-12"..translate.Get("speed")..BAD..""..translate.Get("skill_cardi_d1"),
 																-6,			-4,					{}, TREE_SPEEDTREE)
-GM:AddSkill(SKILL_UNBOUND, "Unbound", GOOD.."-60% reduced delay from switching weapons affecting movement speed\n"..BAD.."-4"..translate.Get("speed"),
+GM:AddSkill(SKILL_UNBOUND,""..translate.Get("skill_unbound_0"), GOOD..""..translate.Get("skill_unbound_d0")..BAD.."-4"..translate.Get("speed"),
 																-4,			-4,					{}, TREE_SPEEDTREE)
 -- Medic Tree
 GM:AddSkill(SKILL_SURGEON1, translate.Get("skill_surg").."I", GOOD.."-6%"..translate.Get("med_cool"),
@@ -564,15 +565,15 @@ GM:AddSkill(SKILL_U_MEDICCLOUD, translate.Get("skill_u_medcloud"), GOOD..transla
 .AlwaysActive = true
 GM:AddSkill(SKILL_SMARTTARGETING, translate.Get("skill_starget"), GOOD..translate.Get("skill_starget_d1")..BAD..translate.Get("skill_starget_d2")..BAD..translate.Get("skill_starget_d3"),
 																0,			2,					{}, TREE_SUPPORTTREE)
-GM:AddSkill(SKILL_RECLAIMSOL, "Recoverable Solution", GOOD.."60% of wasted medical dart ammo is returned to you\n"..BAD.."+150% medic tool fire delay\n"..BAD.."-40% medic tool reload speed\n"..BAD.."Cannot speed boost full health players",
+GM:AddSkill(SKILL_RECLAIMSOL, translate.Get("skill_rec_sol"), GOOD..translate.Get("skill_rec_sol_d1")..BAD..translate.Get("skill_rec_sol_d2")..BAD..translate.Get("skill_rec_sol_d3")..BAD..translate.Get("skill_rec_sol_d4"),
 																0,			4,					{SKILL_SMARTTARGETING}, TREE_SUPPORTTREE)
 GM:AddSkill(SKILL_U_STRENGTHSHOT, translate.Get("skill_sshot"), GOOD..translate.Get("skill_sshot_d1"),
 																0,			0,					{SKILL_SMARTTARGETING}, TREE_SUPPORTTREE)
 GM:AddSkill(SKILL_WORTHINESS4, translate.Get("worthness").."IV", GOOD.."+10"..translate.Get("worth")..BAD.."-3"..translate.Get("start_points"),
 																-5,			2,					{}, TREE_SUPPORTTREE)
-GM:AddSkill(SKILL_U_ANTITODESHOT, "Unlock: Antidote Handgun", GOOD.."Unlocks purchasing the Antidote Handgun\nFires piercing blasts that heal poison greatly\nCleanses statuses from targets with a small point gain\nDoes not heal health",
+GM:AddSkill(SKILL_U_ANTITODESHOT, translate.Get("skill_u_antidote"), GOOD..translate.Get("skill_u_antidote_d1"),
 																4,			-2,					{}, TREE_SUPPORTTREE)
-GM:AddSkill(SKILL_DISPERSION, "Dispersion", GOOD.."+15% cloud bomb radius\n"..BAD.."-10% cloud bomb time",
+GM:AddSkill(SKILL_DISPERSION, translate.Get("skill_disp"), GOOD..translate.Get("skill_disp_d1")..BAD..translate.Get("skill_disp_d2"),
 																0,			-4,					{}, TREE_SUPPORTTREE)
 
 -- Defence Tree
@@ -586,13 +587,13 @@ GM:AddSkill(SKILL_HANDY4, translate.Get("skill_handy").."IV", GOOD.."+11%"..tran
 																-3,			1,					{SKILL_HANDY5}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_HANDY5, translate.Get("skill_handy").."V", GOOD.."+13%"..translate.Get("repair"),
 																-3,			3,					{SKILL_OVERHAND}, TREE_BUILDINGTREE)
-GM:AddSkill(SKILL_OVERHAND, "OverHandy", GOOD.."+25%"..translate.Get("repair")..BAD.."+15% swing delay with the Carpenter Hammer",
+GM:AddSkill(SKILL_OVERHAND, translate.Get("skill_ohandy"), GOOD.."+25%"..translate.Get("repair")..BAD.."+15%"..translate.Get("hammerd"),
 																-3,			4,					{SKILL_HANDY5}, TREE_BUILDINGTREE)
-GM:AddSkill(SKILL_HAMMERDISCIPLINE, "Hammer Discipline I", GOOD.."-5% swing delay with the Carpenter Hammer",
+GM:AddSkill(SKILL_HAMMERDISCIPLINE, translate.Get("skill_h_disp").."I", GOOD.."-5%"..translate.Get("hammerd"),
 																0,			1,					{SKILL_BARRICADEEXPERT}, TREE_BUILDINGTREE)
-GM:AddSkill(SKILL_HAMMERDISCIPLINE1, "Hammer Discipline II", GOOD.."-10% swing delay with the Carpenter Hammer",
+GM:AddSkill(SKILL_HAMMERDISCIPLINE1, translate.Get("skill_h_disp").."II", GOOD.."-10%"..translate.Get("hammerd"),
 																0,			0,					{SKILL_HAMMERDISCIPLINE}, TREE_BUILDINGTREE)
-GM:AddSkill(SKILL_HAMMERDISCIPLINE2, "Hammer Discipline III", GOOD.."-15% swing delay with the Carpenter Hammer",
+GM:AddSkill(SKILL_HAMMERDISCIPLINE2, translate.Get("skill_h_disp").."III", GOOD.."-15%"..translate.Get("hammerd"),
 																0,			-1,					{SKILL_HAMMERDISCIPLINE1}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_BARRICADEEXPERT, "Reinforcer", GOOD.."Props hit with a hammer in the last 7 seconds take 8% less damage\n"..GOOD.."Gain points from protected props\n"..BAD.."+20% swing delay with the Carpenter Hammer",
 																0,			3,					{}, TREE_BUILDINGTREE)
@@ -1113,6 +1114,17 @@ GM:AddSkill(SKILL_DEATHCURSE, "Curse cleaning", GOOD.."+15% Xp Multiplier\n"..GO
 GM:AddSkillModifier(SKILL_DEATHCURSE, SKILLMOD_XP, 0.15)
 GM:AddSkillModifier(SKILL_DEATHCURSE, SKILLMOD_CURSEM, -0.30)
 GM:AddSkillModifier(SKILL_DEATHCURSE, SKILLMOD_FOODEATTIME_MUL, 0.30)
+GM:AddSkill(SKILL_TORMENT7, "Torment VII", GOOD.."+150% Xp Multiplier\n"..BAD.."-30% Damage and -5 luck and -45 Health and -55 speed\n"..BAD.."+25% Arsenal price\n"..BAD.."-50% Medical and repair effectiveness\nFull of pain",
+				                                                            	2,			31,					{SKILL_TORMENT6}, TREE_ANCIENTTREE)
+GM:AddSkillModifier(SKILL_TORMENT7, SKILLMOD_XP, 1.5)
+GM:AddSkillModifier(SKILL_TORMENT7, SKILLMOD_MELEE_DAMAGE_MUL, -0.30)
+GM:AddSkillModifier(SKILL_TORMENT7, SKILLMOD_DAMAGE, -0.30)
+GM:AddSkillModifier(SKILL_TORMENT7, SKILLMOD_LUCK, -5)
+GM:AddSkillModifier(SKILL_TORMENT7, SKILLMOD_HEALTH, -45)
+GM:AddSkillModifier(SKILL_TORMENT7, SKILLMOD_SPEED, -55)
+GM:AddSkillModifier(SKILL_TORMENT7, SKILLMOD_ARSENAL_DISCOUNT, 0.25)
+GM:AddSkillModifier(SKILL_TORMENT5, SKILLMOD_REPAIRRATE_MUL, -0.50)
+GM:AddSkillModifier(SKILL_TORMENT5, SKILLMOD_MEDKIT_EFFECTIVENESS_MUL, -0.50)
 --Defend skills
 
 SKILL_DEFEND1 = 191
