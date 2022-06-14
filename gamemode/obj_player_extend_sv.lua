@@ -205,13 +205,6 @@ function meta:ProcessDamage(dmginfo)
 					if (not cursed5) then 
 						self:AddHallow(self:GetOwner(),dmginfo:GetDamage() * 0.5)
 					end
-					if (cursed5) and (cursed5.DieTime) > 800 then
-						self:TakeSpecialDamage(500, DMG_DIRECT, attacker, self)
-						self:AddHallow(self:GetOwner(),cursed5.DieTime - (CurTime() + 1500))
-						print("Уебало"..self:Nick()..(cursed5.DieTime))
-						PrintMessage(HUD_PRINTCONSOLE,"Уебало"..self:Nick()..(cursed5.DieTime))
-						
-					end
 					dmginfo:SetDamage(0)
 				end
 				--[[if self:IsSkillActive(SKILL_UPLOAD) then

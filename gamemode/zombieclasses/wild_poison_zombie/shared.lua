@@ -10,6 +10,8 @@ CLASS.Wave = 5 / 6
 CLASS.Health = 760
 CLASS.SWEP = "weapon_zs_wildpoisonzombie"
 
+CLASS.DynamicHealth = 12
+
 CLASS.Points = CLASS.Health/GM.PoisonZombiePointRatio
 
 local math_random = math.random

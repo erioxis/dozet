@@ -33,7 +33,7 @@ SWEP.MeleeRange = 2021
 SWEP.MeleeSize = 1.15
 SWEP.Knockback = 120
 
-SWEP.Primary.Delay = 0.31
+SWEP.Primary.Delay = 0.78
 
 SWEP.UseMelee1 = true
 
@@ -41,7 +41,7 @@ SWEP.HitGesture = ACT_HL2MP_GESTURE_RANGE_ATTACK_MELEE
 SWEP.MissGesture = SWEP.HitGesture
 
 SWEP.SwingRotation = Angle(30, -30, -30)
-SWEP.SwingTime = 0.4
+SWEP.SwingTime = 0.9
 SWEP.SwingHoldType = "grenade"
 
 SWEP.AllowQualityWeapons = true

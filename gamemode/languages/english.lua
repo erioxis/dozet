@@ -449,7 +449,7 @@ LANGUAGE.wep_d_annabelle	=  "This rifle loads rounds individually, at the cost o
 LANGUAGE.wep_amigo	= "'Amigo' Assault Rifle"
 LANGUAGE.wep_d_amigo	=  "The Amigo gets extra headshot damage, but has a slow fire rate for an assault rifle."
 LANGUAGE.wep_akbar	= "'Akbar' Assault Rifle"
-LANGUAGE.wep_d_akbar	=  "Reliable assault rifle with a very fast reload speed. Not quite as accurate as other assault rifles, but still precise enough nonetheless."
+LANGUAGE.wep_d_akbar	=  "Reliable assault rifle with a very fast reload speed. Not quite as accurate as other assault rifles, but still precise enough nonetheless.\nChange Fire mode on SECONDARY ATTACK"
 LANGUAGE.wep_antidoteshot = "'Purger' Antidote Handgun"
 LANGUAGE.wep_d_antidoteshot = "Fires piercing antidote blasts. Heals poison and cleanses statuses."
 LANGUAGE.wep_artemis  = "'Artemis' Dual Crossbows"
@@ -1125,6 +1125,9 @@ LANGUAGE.skill_handy = "Handy "
 LANGUAGE.skill_ohandy = "OverHandy"
 
 -- Skills defence
+LANGUAGE.skill_later = "Maybe later"
+LANGUAGE.skill_later_d1 = "You will take damage later\n-50% Later damage\n"
+LANGUAGE.skill_later_d2 = "If HOLLOW more than 800 you take 500 damage\nImmune to curse"
 LANGUAGE.skill_holymantle = "Holy mantle"
 LANGUAGE.skill_holymantle_d1 = "Absorb damage every 30 seconds\nThan higher luck - faster reloading\nWith each wave,the Holy Mantle recharge rate slows down"
 --SKILLS ON MEDICAL

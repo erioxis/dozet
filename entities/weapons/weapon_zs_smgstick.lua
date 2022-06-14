@@ -68,7 +68,9 @@ function SWEP:PrimaryAttack()
 
 	self:ShootBullets(self.Primary.Damage, self.Primary.NumShots * 2, self:GetCone())
 
+	owner:SetHealth(owner:Health() - 2)
 	
+	owner:TakeSpecialDamage(1, DMG_DIRECT, owner, self)
 	owner:ViewPunch( 0.5 * self.Recoil * Angle(math.Rand(-0.1, -0.1), math.Rand(-0.1, 0.1), 0))
 
 	owner:SetGroundEntity(NULL)

@@ -9,7 +9,7 @@ ENT.ModelScale = 0.85
 ENT.m_NoNailUnfreeze = true
 ENT.NoNails = true
 ENT.IsBarricadeObject = false
-ENT.IgnoreBullets = true
+ENT.IgnoreBullets = false
 
 
 AccessorFuncDT(ENT, "SigilHealthBase", "Float", 0)
@@ -58,5 +58,5 @@ function ENT:CanBeDamagedByTeam(teamid)
 end
 
 function ENT:ShouldNotCollide(ent)
-	return ent:IsPlayer() and ent:Team() == TEAM_HUMAN or ent:IsProjectile()
+	return ent:IsPlayer() and ent:Team() == TEAM_HUMAN
 end

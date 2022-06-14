@@ -6,6 +6,7 @@ SWEP.MeleeKnockBack = 160
 
 SWEP.Primary.Delay = 0.4
 SWEP.BlockTrue = false
+SWEP.CanPickup = true
 
 SWEP.ViewModel = Model("models/weapons/c_crowbar.mdl")
 SWEP.WorldModel = "models/weapons/w_crowbar.mdl"

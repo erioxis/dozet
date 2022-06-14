@@ -193,8 +193,12 @@ concommand.Add("_zs_rotateang", function(sender, command, arguments)
 	local y = tonumbersafe(arguments[2])
 
 	if x and y then
-		sender.InputMouseX = math.NormalizeAngle(x)--sender.InputMouseX + math.Clamp(x * 0.02, -180, 180)
-		sender.InputMouseY = math.NormalizeAngle(y)--sender.InputMouseY + math.Clamp(y * 0.02, -180, 180)
+--		angle:RotateAroundAxis(angle:Right(),ho)
+--angle:RotateAroundAxis(angle:Up(),range-(range*2)*((num)/maxNum))
+	    sender.InputMouseX =  math.Clamp(math.NormalizeAngle(x) * 0.75, -180, 180) -- sender.InputMouseX + math.Clamp(x * 0.02, -180, 180)
+		sender.InputMouseY =  math.Clamp(math.NormalizeAngle(y)* 0.75, -180, 180) --sender.InputMouseY + math.Clamp(y * 0.02, -180, 180)
+		--sender.InputMouseX = math.Clamp(x * 0.02, -180, 180)
+		--sender.InputMouseY = math.Clamp(y * 0.02, -180, 180)
 	end
 end)
 

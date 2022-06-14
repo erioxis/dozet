@@ -11,10 +11,13 @@ function SWEP:ApplyMeleeDamage(ent, trace, damage)
 		ent:KnockDown()
 		ent:SetGroundEntity(NULL)
 		ent:SetVelocity(vel)]]
-		if math.random(20) == 1 then
+		if math.random(20) == 1 and ent:IsPlayer() then
 			timer.Simple(3, function()
 				ent:Kill()
 			end)
+		end
+		if math.random(50) == 1 and not ent:IsPlayer() then
+			ent:Remove()
 		end
 		local noknockdown = true
 		if CurTime() >= (ent.NextKnockdown or 0) then

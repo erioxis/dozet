@@ -717,7 +717,7 @@ function GM:SetupProps()
 			if mdl == "models/props_c17/furniturestove001a.mdl" then
 				local phys = ent:GetPhysicsObject()
 				if phys:IsValid() then
-					phys:SetMass(500)
+					phys:SetMass(200)
 				end
 			end
 			if table.HasValue(self.BannedProps, mdl) then
@@ -758,6 +758,8 @@ function GM:SetupProps()
 			end
 		end
 	end
+
+        
 end
 
 function GM:RemoveUnusedEntities()
@@ -1323,6 +1325,13 @@ function GM:Think()
 				elseif pl:GetActiveWeapon().Block == 0 and pl:GetActiveWeapon().IsMelee then
 					pl:ResetSpeed()
 					pl:GetActiveWeapon():SetWeaponHoldType(pl:GetActiveWeapon().HoldType)
+				end
+				local cursed5 = pl:GetStatus("hollowing")
+				if (cursed5) and (cursed5.DieTime) > 800 and pl:IsSkillActive(SKILL_UPLOAD) then
+					pl:Kill()
+					pl:AddHallow(pl:GetOwner(),cursed5.DieTime - (CurTime() + cursed5.DieTime))
+					print(" Уебало "..pl:Nick()..(cursed5.DieTime))
+					PrintMessage(HUD_PRINTCONSOLE," Уебало "..pl:Nick()..(cursed5.DieTime))
 				end
 
 
