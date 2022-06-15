@@ -159,6 +159,13 @@ function meta:ProcessDamage(dmginfo)
 	end
 	if attacker:IsValid() and attacker:IsPlayer() and inflictor:IsValid() and self:GetActiveWeapon().Block == 1 and self:GetActiveWeapon().IsMelee then
 		dmginfo:SetDamage(dmginfo:GetDamage() * ((0.50 * (self.BlockMultiplier or 1)) * ( self:GetActiveWeapon().BlockMultiplierWeapon or 1)))
+		if self:IsSkillActive(SKILL_AVOID_BLOCK) then
+			xpadded = dmginfo:GetDamage() * 0.25
+			net.Start("zs_xp_damage")
+			net.WriteString(xpadded)
+			net.Send(self)
+			self:AddZSXP(xpadded)
+		end
 
 	end
 	local mythrilchance = math.random(1,3)

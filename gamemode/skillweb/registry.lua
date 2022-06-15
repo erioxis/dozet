@@ -289,6 +289,7 @@ SKILL_XPHUNTER = 270
 SKILL_FREEAMMO = 271
 SKILL_BLOODLIFE = 272
 SKILL_TORMENT7 = 273
+SKILL_AVOID_BLOCK = 275
 
 SKILLMOD_HEALTH = 1
 SKILLMOD_SPEED = 2
@@ -779,6 +780,10 @@ GM:AddSkill(SKILL_TRUEWOOISM, "Wooism", GOOD.."No accuracy penalty from moving o
 -- Melee Tree
 GM:AddSkill(SKILL_WORTHINESS2, "Worthiness II", GOOD.."+10 starting worth\n"..BAD.."-3 starting points",
 																4,			0,					{}, TREE_MELEETREE)
+
+GM:AddSkill(SKILL_AVOID_BLOCK, "Transfer damage", GOOD.."Blocked damage = XP\n"..BAD.."-25% Block multiplier",
+																5,			1,					{SKILL_WORTHINESS2}, TREE_MELEETREE)
+GM:AddSkillModifier(SKILL_AVOID_BLOCK, SKILLMOD_BLOCKMULTIPLIER, 0.25)
 GM:AddSkill(SKILL_BATTLER1, "Battler I", GOOD.."+3% melee damage\n"..BAD.."-2% weapon reload speed",
 																-6,			-6,					{SKILL_BATTLER2, SKILL_NONE}, TREE_MELEETREE)
 GM:AddSkill(SKILL_BATTLER2, "Battler II", GOOD.."+6% melee damage\n"..BAD.."-4% weapon reload speed",
