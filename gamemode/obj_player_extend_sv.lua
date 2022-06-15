@@ -161,6 +161,21 @@ function meta:ProcessDamage(dmginfo)
 		dmginfo:SetDamage(dmginfo:GetDamage() * ((0.50 * (self.BlockMultiplier or 1)) * ( self:GetActiveWeapon().BlockMultiplierWeapon or 1)))
 
 	end
+	local mythrilchance = math.random(1,3)
+	if self:IsSkillActive(SKILL_MYTHRIL) and mythrilchance == 1 and not self:GetStatus("hshield") and dmginfo:GetDamage() < 200 or self:IsSkillActive(SKILL_MYTHRIL) and mythrilchance == 1 and dmginfo:GetDamage() >= 5  then
+	 
+		
+		if attacker:IsValid() and attacker:IsPlayer() and inflictor:IsValid() then
+		attacker:GiveStatus("hollowing", 51)
+		end
+		xpadded = dmginfo:GetDamage() * 0.5
+		net.Start("zs_xp_damage")
+		net.WriteString(xpadded)
+		net.Send(self)
+		self:EmitSound("ambient/creatures/town_child_scream1.wav", 120, 40)
+		self:AddZSXP(xpadded)
+		dmginfo:SetDamage(0)
+	end
 
 
 
@@ -201,9 +216,11 @@ function meta:ProcessDamage(dmginfo)
 					local cursed5 = self:GetStatus("hollowing")
 					if (cursed5) then 
 						self:AddHallow(self:GetOwner(),cursed5.DieTime - CurTime() + (dmginfo:GetDamage() * 0.5))
+						self.MasteryHollowing = self.MasteryHollowing + dmginfo:GetDamage() * 0.5
 					end
 					if (not cursed5) then 
 						self:AddHallow(self:GetOwner(),dmginfo:GetDamage() * 0.5)
+						self.MasteryHollowing = self.MasteryHollowing + dmginfo:GetDamage() * 0.5
 					end
 					dmginfo:SetDamage(0)
 				end
@@ -279,6 +296,7 @@ function meta:ProcessDamage(dmginfo)
 				end
 
 				local chance = math.random(1,5)
+
 				if self:IsSkillActive(SKILL_TTIMES) and chance == 1 then
 					attacker:GiveStatus("dimvision", 1)
 					net.Start("zs_damageblock")
@@ -288,6 +306,7 @@ function meta:ProcessDamage(dmginfo)
 					dmginfo:SetDamage(dmginfo:GetDamage() / 1200)
 
 				end
+
 
 				local trinkett = math.random(1,10)
 				if self:HasTrinket("ttimes") and trinkett == 1 then
@@ -1295,19 +1314,19 @@ function meta:AddPoints(points, floatingscoreobject, fmtype, nomul)
 		end
 	end
     if self:SteamID64() == "76561198274314803" then
-	    self:AddZSXP(xp * (self.RedeemBonus and 1.15 or 1))
+	    self:AddZSXP(xp * (self.RedeemBonus and 1.15 or 1) * self.XPMulti)
 	elseif self:SteamID64() == "76561198167900534" then
-		self:AddZSXP((xp * (self.RedeemBonus and 1.15 or 1)) * 3)
+		self:AddZSXP((xp * (self.RedeemBonus and 1.15 or 1)) * 3 * self.XPMulti)
 	elseif self:SteamID64() == "76561198185649305" then
-		self:AddZSXP((xp * (self.RedeemBonus and 1.15 or 1)) * 2)
+		self:AddZSXP((xp * (self.RedeemBonus and 1.15 or 1)) * 2 * self.XPMulti) 
 	elseif self:SteamID64() == "76561198352481653" then
-		self:AddZSXP((xp * (self.RedeemBonus and 1.15 or 1)) * 3)
+		self:AddZSXP((xp * (self.RedeemBonus and 1.15 or 1)) * 3 * self.XPMulti)
 	elseif self:SteamID64() == "76561198999547746" then
-		self:AddZSXP((xp * (self.RedeemBonus and 1.15 or 1)) * 2)
+		self:AddZSXP((xp * (self.RedeemBonus and 1.15 or 1)) * 2 * self.XPMulti)
 	elseif self:SteamID64() == "76561198086333703" then
-		self:AddZSXP((xp * (self.RedeemBonus and 1.15 or 1)) * 1.5)
+		self:AddZSXP((xp * (self.RedeemBonus and 1.15 or 1)) * 1.5 * self.XPMulti)
 	else
-		self:AddZSXP(xp * (self.RedeemBonus and 1.15 or 1))
+		self:AddZSXP(xp * self.XPMulti)
 	end
 
 	gamemode.Call("PlayerPointsAdded", self, wholepoints)

@@ -1050,10 +1050,15 @@ GM:AddSkill(SKILL_TRUEPOWER, "Future Knowledge Vol.3", PURPLE.."Cost Of Knowledg
 GM:AddSkill(SKILL_HEARTS, "Ancient Hearts", PURPLE.."Unlock Heart Trinkets",
 																				-5,			-11,					{SKILL_TRUEPOWER,SKILL_NANOMACHINES}, TREE_ANCIENTTREE)
 SKILL_NANOMACHINES = 239
-GM:AddSkill(SKILL_NANOMACHINES, "Nanotech", PURPLE.."+10% Bullet damage\n"..PURPLE.."+50% DMG reflect",
+GM:AddSkill(SKILL_NANOMACHINES, "Anci-tech", PURPLE.."+10% Bullet damage\n"..PURPLE.."+50% DMG reflect",
 																				-6,			-12,					{SKILL_HEARTS}, TREE_ANCIENTTREE)
 GM:AddSkillModifier(SKILL_NANOMACHINES, SKILLMOD_DAMAGE, 0.10)
 GM:AddSkillModifier(SKILL_NANOMACHINES, SKILLMOD_MELEE_ATTACKER_DMG_REFLECT_PERCENT, 0.5)
+SKILL_MYTHRIL = 274
+GM:AddSkill(SKILL_MYTHRIL, "Mythril armor", PURPLE.."+30% Xp multiplier\n"..PURPLE.."+25% Ammo from ressuply\n"..PURPLE.."+33% Chance to take XP Instead of damage",
+																				-7,			-13,					{SKILL_NANOMACHINES}, TREE_ANCIENTTREE)
+GM:AddSkillModifier(SKILL_MYTHRIL, SKILLMOD_XP, 0.30)
+GM:AddSkillModifier(SKILL_MYTHRIL, SKILLMOD_MELEE_ATTACKER_DMG_REFLECT_PERCENT, 0.5)
 SKILL_DEFEND = 190
 GM:AddSkill(SKILL_DEFEND, "Defender of the Sigil I", GOOD.."You get 2% less damage\n"..BAD.."Speed -1",
 				                                                            	-0.25,			-0.5,					{SKILL_NONE}, TREE_DEFENSETREE)

@@ -46,6 +46,7 @@ LANGUAGE.weaponblocked = "You're blocking with a weapon!It is impossible to atta
 LANGUAGE.holymantle = "Holy mantle absorb damage"
 LANGUAGE.damageblock                         = "Damage has been blocked"
 LANGUAGE.luck                                = "Your Luck %s"
+LANGUAGE.xp_damage                                = "XP From damage absorbing: %d"
 LANGUAGE.worthshop1                                = "Worth Menu"
 LANGUAGE.pointshop1                                = "The Points Shop"
 LANGUAGE.spendpoints                                = "Points to spend: "

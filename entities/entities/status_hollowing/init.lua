@@ -18,6 +18,7 @@ function ENT:Think()
 		if (hollowing.DieTime <= CurTime()) then
 			owner:TakeSpecialDamage(self.maxHallow, DMG_DIRECT, owner, self)
 			hollowing:Remove()
+			owner.MasteryHollowing = 0
 		end
 		if (hollowing.DieTime-CurTime()>self.maxHallow) then
 			self.maxHallow = (math.ceil(hollowing.DieTime-CurTime()))

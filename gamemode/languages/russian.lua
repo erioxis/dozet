@@ -30,6 +30,7 @@ LANGUAGE.weaponblocked = "Вы блокируете оружием!Невозм�
 LANGUAGE.holymantle = "Святая мантия поглотила урон"
 LANGUAGE.damageblock                         = "Урон по тебе заблокирован"
 LANGUAGE.luck                                = "Твоя удача %s"
+LANGUAGE.xp_damage                                = "Получено опыта из урона: %d"
 LANGUAGE.worthshop1                                = "Ворф магазин"
 LANGUAGE.pointshop1                                = "Магазин"
 LANGUAGE.spendpoints                                = "Поинтов:"

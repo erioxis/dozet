@@ -502,6 +502,7 @@ function GM:AddNetworkStrings()
 	util.AddNetworkString("zs_tvcamera")
 
 	util.AddNetworkString("zs_weaponblocked")
+	util.AddNetworkString("zs_xp_damage")
 
 	util.AddNetworkString("zs_luck")
 	util.AddNetworkString("zs_skillarsenalvoid")
@@ -1327,7 +1328,7 @@ function GM:Think()
 					pl:GetActiveWeapon():SetWeaponHoldType(pl:GetActiveWeapon().HoldType)
 				end
 				local cursed5 = pl:GetStatus("hollowing")
-				if (cursed5) and (cursed5.DieTime) > 800 and pl:IsSkillActive(SKILL_UPLOAD) then
+				if pl.MasteryHollowing > 800 and pl:IsSkillActive(SKILL_UPLOAD) then
 					pl:Kill()
 					pl:AddHallow(pl:GetOwner(),cursed5.DieTime - (CurTime() + cursed5.DieTime))
 					print(" Уебало "..pl:Nick()..(cursed5.DieTime))
@@ -1918,6 +1919,7 @@ function GM:RestartGame()
 		pl:StripAmmo()
 		pl:SetFrags(0)
 		pl:MetaAddScore(0)
+		pl.MasteryHollowing = 0
 
 		pl:SetDeaths(0)
 		pl:SetPoints(0)
@@ -4202,6 +4204,8 @@ function GM:PlayerSpawn(pl)
 	pl.StartSpectating = nil
 	pl.NextSpawnTime = nil
 	pl.Gibbed = nil
+
+	pl.MasteryHollowing = 0
 
 	pl.SpawnNoSuicide = CurTime() + 1
 	pl.SpawnedTime = CurTime()

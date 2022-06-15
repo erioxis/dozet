@@ -572,7 +572,7 @@ function GM:OnPlayerHitGround(pl, inwater, hitfloater, speed)
 		end
 
 		if math.floor(120) > 0 then
-			groundent:TakeSpecialDamage(120 * 1.3, DMG_DIRECT, pl, pl, pl:GetPos())
+			groundent:TakeSpecialDamage((120 * 5), DMG_DIRECT, pl, pl, pl:GetPos())
 			return true
 		end
 	end

@@ -12,6 +12,8 @@ GM:SetSkillModifierFunction(SKILLMOD_POINTS, function(pl, amount)
 	end
 end)
 
+
+
 GM:SetSkillModifierFunction(SKILLMOD_SCRAP_START, function(pl, amount)
 	if not pl.AdjustedStartScrapSkill then
 		pl:GiveAmmo(amount, "scrap")
@@ -26,6 +28,7 @@ end)
 GM:SetSkillModifierFunction(SKILLMOD_FALLDAMAGE_DAMAGE_MUL, function(pl, amount)
 	pl.FallDamageDamageMul = math.Clamp(amount + 1.0, 0.0, 1000.0)
 end)
+
 
 GM:SetSkillModifierFunction(SKILLMOD_FALLDAMAGE_RECOVERY_MUL, function(pl, amount)
 	pl.FallDamageRecoveryMul = math.Clamp(amount + 1.0, 0.0, 1000.0)
