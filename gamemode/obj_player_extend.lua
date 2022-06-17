@@ -352,6 +352,12 @@ function meta:AddLegDamageExt(damage, attacker, inflictor, type)
 		if SERVER and attacker:HasTrinket("cryoindu") then
 			self:CryogenicInduction(attacker, inflictor, damage)
 		end
+	elseif type == SLOWTYPE_FLAME then
+		self:AddLegDamage(damage)
+		self:AddArmDamage(damage)
+		if SERVER and attacker:HasTrinket("fire_at") then
+			self:FireInduction(attacker, inflictor, damage)
+		end
 	end
 end
 

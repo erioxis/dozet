@@ -1195,10 +1195,10 @@ GM:AddSkill(SKILL_TTIMES1, "Tough Times", GOOD.."-7% Melee damage taken\n",
 				                                                            	-4,			2,					{SKILL_TTIMES}, TREE_DEFENSETREE)
 GM:AddSkillModifier(SKILL_TTIMES1, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.07)
 SKILL_TRIP = 198
-GM:AddSkill(SKILL_TRIP, "Wall curse", GOOD.."-23% Damage taken\n"..GOOD.."+50% Max curse\n"..BAD.."Melee damage multiplier 0.88x\n"..BAD.."-70 Speed\nCurse can't end",
+GM:AddSkill(SKILL_TRIP, "Wall curse", GOOD.."-33% Damage taken\n"..GOOD.."+50% Max curse\n"..BAD.."Melee damage multiplier 0.88x\n"..BAD.."-70 Speed\nCurse can't end",
 				                                                            	-2,			2,					{SKILL_DEFENDEROFM,SKILL_TTIMES}, TREE_DEFENSETREE)
 
-GM:AddSkillModifier(SKILL_TRIP, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.23)
+GM:AddSkillModifier(SKILL_TRIP, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.33)
 GM:AddSkillModifier(SKILL_TRIP, SKILLMOD_MELEE_DAMAGE_MUL, -0.12)
 GM:AddSkillModifier(SKILL_TRIP, SKILLMOD_SPEED, -70)
 GM:AddSkillModifier(SKILL_TRIP, SKILLMOD_CURSEM, 0.5)

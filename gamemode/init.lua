@@ -3002,6 +3002,18 @@ function GM:EntityTakeDamage(ent, dmginfo)
 								GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_WEAPON, inflictor:GetClass(), "PointsEarned", points)
 								GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_WEAPON, inflictor:GetClass(), "Damage", damage)
 							end
+							if attacker:HasTrinket("fire_at") then
+								ent:AddLegDamageExt(12, attacker, attacker, SLOWTYPE_FLAME)
+								ent:GiveStatus("burn",12)
+							end
+							if attacker:HasTrinket("pulse_at") then
+								ent:AddLegDamageExt(12, attacker, attacker, SLOWTYPE_PULSE)
+							end
+							if attacker:HasTrinket("acid_at") then
+								ent:AddLegDamageExt(12, attacker, attacker, SLOWTYPE_COLD)
+							end
+
+							
 
 							local pos = ent:GetPos()
 							pos.z = pos.z + 32

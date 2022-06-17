@@ -20,6 +20,7 @@ end
 function SWEP:ServerMeleeHitEntity(tr, hitent, damagemultiplier)
 	if not hitent or not hitent:IsValid() then return end
 
+
 	local phys = hitent:GetPhysicsObject()
 	if hitent:GetMoveType() == MOVETYPE_VPHYSICS and phys:IsValid() and phys:IsMoveable() then
 		hitent:SetPhysicsAttacker(self:GetOwner())

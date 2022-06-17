@@ -83,7 +83,8 @@ function meta:ProcessDamage(dmginfo)
 				if attacker:HasTrinket("sharpkit") then
 					dmginfo:SetDamage(dmginfo:GetDamage() * (1 + self:GetFlatLegDamage()/75))
 				end
-				if wep.Culinary and attacker:IsSkillActive(SKILL_PILLUCK) and math.random(2) == 1 then
+
+				if attacker:IsSkillActive(SKILL_PILLUCK) then
 					self.LuckFromKillYesOwner = attacker
 					self.LuckFromKillYes = CurTime() + 0.1
 				end
@@ -2199,6 +2200,32 @@ function meta:CryogenicInduction(attacker, inflictor, damage)
 			effectdata:SetOrigin(pos)
 			effectdata:SetNormal(attacker:GetShootPos())
 		util.Effect("hit_ice", effectdata)
+	end)
+end
+function meta:FireInduction(attacker, inflictor, damage)
+	if self:Health() > self:GetMaxHealthEx() * (damage/100) or math.random(50) > damage then return end
+
+	timer.Create("Fire_inder" .. attacker:UniqueID(), 0.06, 1, function()
+		if not attacker:IsValid() or not self:IsValid() then return end
+
+		local pos = self:WorldSpaceCenter()
+		pos.z = pos.z + 16
+
+		self:TakeSpecialDamage(self:Health() + 210, DMG_DIRECT, attacker, inflictor, pos)
+
+		if attacker:IsValidLivingHuman() then
+			util.BlastDamagePlayer(inflictor, attacker, pos, 100, self:GetMaxHealthEx() * 3, DMG_BURN, 0.83)
+			for _, ent in pairs(util.BlastAlloc(inflictor, attacker, pos, 100 * (attacker.ExpDamageRadiusMul or 1))) do
+				if ent:IsValidLivingPlayer() and gamemode.Call("PlayerShouldTakeDamage", ent, attacker) then
+					ent:AddLegDamageExt(6, attacker, inflictor, SLOWTYPE_FLAME)
+				end
+			end
+		end
+
+		local effectdata = EffectData()
+			effectdata:SetOrigin(pos)
+			effectdata:SetNormal(attacker:GetShootPos())
+		util.Effect("hit_fire", effectdata)
 	end)
 end
 

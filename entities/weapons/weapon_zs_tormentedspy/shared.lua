@@ -8,7 +8,7 @@ SWEP.MeleeReach = 48
 SWEP.MeleeSize = 4.5
 SWEP.MeleeDamage = 231
 SWEP.MeleeAnimationDelay = 0
-SWEP.MeleeDamageVsProps = 55
+SWEP.MeleeDamageVsProps = 22
 
 SWEP.Secondary.Delay = 0.88
 
