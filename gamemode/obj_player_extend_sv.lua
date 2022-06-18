@@ -83,6 +83,9 @@ function meta:ProcessDamage(dmginfo)
 				if attacker:HasTrinket("sharpkit") then
 					dmginfo:SetDamage(dmginfo:GetDamage() * (1 + self:GetFlatLegDamage()/75))
 				end
+				if attacker:IsSkillActive(SKILL_BLOODLIFE) then
+					dmginfo:SetDamage(dmginfo:GetDamage() + (attacker:GetBloodArmor() * 0.25))
+				end
 
 				if attacker:IsSkillActive(SKILL_PILLUCK) then
 					self.LuckFromKillYesOwner = attacker

@@ -1227,6 +1227,7 @@ LANGUAGE.skill_wideroad_0 = "Debuff: Wide Load"
 LANGUAGE.skill_wideroad_d1 = "Phasing speed limited to 1 for the first 6 seconds of phasing"
 --Skills health
 LANGUAGE.skill_blife_0 = "Bloody life"
+LANGUAGE.skill_blife_d1 = "+5% Melee damage for 10 blood armor,-25% melee damage"
 LANGUAGE.skill_stoici_0 = "Stoic I"
 LANGUAGE.skill_stoicii_0 = "Stoic II"
 LANGUAGE.skill_stoiciii_0 = "Stoic II"

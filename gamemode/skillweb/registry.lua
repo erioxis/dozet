@@ -463,17 +463,18 @@ GM:AddSkill(SKILL_ANTIGEN, ""..translate.Get("skill_agen_0"), GOOD..""..translat
 																-2,			4,					{}, TREE_HEALTHTREE)
 GM:AddSkill(SKILL_DAMAGER, ""..translate.Get("skill_bhealth_0"), GOOD..""..translate.Get("skill_bhealth_d1")..BAD..""..translate.Get("skill_bhealth_d2"),
 																-2,			5,					{SKILL_ANTIGEN}, TREE_HEALTHTREE)
-GM:AddSkill(SKILL_BLOODLIFE, ""..translate.Get("skill_blife_0"), GOOD.."+50"..translate.Get("barmor")..BAD.."-60"..translate.Get("health"),
+GM:AddSkill(SKILL_BLOODLIFE, ""..translate.Get("skill_blife_0"), GOOD.."+50"..translate.Get("barmor")..BAD.."-60"..translate.Get("health")..NEUTRAL..translate.Get("skill_blife_d1"),
 																-2,			6,					{SKILL_DAMAGER}, TREE_HEALTHTREE)
 GM:AddSkillModifier(SKILL_BLOODLIFE, SKILLMOD_HEALTH, -60)
 GM:AddSkillModifier(SKILL_BLOODLIFE, SKILLMOD_BLOODARMOR, 50)
+GM:AddSkillModifier(SKILL_BLOODLIFE, SKILLMOD_MELEE_DAMAGE_MUL, -0.25)
 -- Speed Tree
 GM:AddSkill(SKILL_SPEED1, translate.Get("skill_speed").."I", GOOD.."+5"..translate.Get("speed")..BAD.."-4"..translate.Get("health"),
 																-4,			6,					{SKILL_NONE, SKILL_SPEED2}, TREE_SPEEDTREE)
 SKILL_DODGE = 263
-GM:AddSkill(SKILL_DODGE, ""..translate.Get("skill_dodge"), GOOD..""..translate.Get("skill_dodge_d1")..GOOD..""..translate.Get("skill_dodge_d2")..BAD.."-50"..translate.Get("speed"),
+GM:AddSkill(SKILL_DODGE, ""..translate.Get("skill_dodge"), GOOD..""..translate.Get("skill_dodge_d1")..GOOD..""..translate.Get("skill_dodge_d2")..BAD.."-25"..translate.Get("speed"),
 																-3,			1,					{SKILL_SPEED2}, TREE_SPEEDTREE)
-GM:AddSkillModifier(SKILL_DODGE, SKILLMOD_SPEED, -50)
+GM:AddSkillModifier(SKILL_DODGE, SKILLMOD_SPEED, -25)
 
 GM:AddSkill(SKILL_SPEED2, translate.Get("skill_speed").."II", GOOD.."+5"..translate.Get("speed")..BAD.."-7"..translate.Get("health"),
 																-4,			4,					{SKILL_SPEED3, SKILL_PHASER, SKILL_SPEED2, SKILL_U_CORRUPTEDFRAGMENT}, TREE_SPEEDTREE)

@@ -1028,6 +1028,7 @@ LANGUAGE.skill_wideroad_0 = "Долгая дорога"
 LANGUAGE.skill_wideroad_d1 = "Максимальная скорость для прохождения сквозь пропы будет равна 1,через 6 секунд она станет нормальной"
 --Скиллы на хп
 LANGUAGE.skill_blife_0 = "Кровавая жизнь"
+LANGUAGE.skill_blife_d1 = "Урон милишки зависит от кровавой брони,-25% мили урона"
 LANGUAGE.skill_stoici_0 = "Устойчивый I"
 LANGUAGE.skill_stoicii_0 = "Устойчивый II"
 LANGUAGE.skill_stoiciii_0 = "Устойчивый II"
