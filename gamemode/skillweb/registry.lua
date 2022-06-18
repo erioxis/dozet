@@ -596,7 +596,7 @@ GM:AddSkill(SKILL_HAMMERDISCIPLINE1, translate.Get("skill_h_disp").."II", GOOD..
 																0,			0,					{SKILL_HAMMERDISCIPLINE}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_HAMMERDISCIPLINE2, translate.Get("skill_h_disp").."III", GOOD.."-15%"..translate.Get("hammerd"),
 																0,			-1,					{SKILL_HAMMERDISCIPLINE1}, TREE_BUILDINGTREE)
-GM:AddSkill(SKILL_BARRICADEEXPERT, "Reinforcer", GOOD.."Props hit with a hammer in the last 7 seconds take 8% less damage\n"..GOOD.."Gain points from protected props\n"..BAD.."+20% swing delay with the Carpenter Hammer",
+GM:AddSkill(SKILL_BARRICADEEXPERT, "Reinforcer", GOOD..translate.Get("skill_rein_d1")..GOOD..translate.Get("skill_rein_d2")..BAD.."+20%"..translate.Get("hammerd"),
 																0,			3,					{}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_LOADEDHULL, "Loaded Hull", GOOD.."Controllables explode when destroyed, dealing explosive damage\n"..BAD.."-10% Controllable health",
 																-2,			-4,					{SKILL_REINFORCEDHULL, SKILL_REINFORCEDBLADES, SKILL_AVIATOR}, TREE_BUILDINGTREE)
@@ -606,7 +606,7 @@ GM:AddSkill(SKILL_STABLEHULL, "Stable Hull", GOOD.."Controllables are immune to 
 																0,			-3,					{SKILL_U_DRONE}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_REINFORCEDBLADES, "Reinforced Blades", GOOD.."+25% Manhack damage\n"..BAD.."-15% Manhack health",
 																0,			-5,					{SKILL_MECHANIC}, TREE_BUILDINGTREE)
-GM:AddSkill(SKILL_MECHANIC, "Mechanic", GOOD.."-15% Scrap cost\n"..BAD.."-15% Arsenal Discount",
+GM:AddSkill(SKILL_MECHANIC, translate.Get("skill_mech"), GOOD.."-15%"..translate.Get("s_cost")..BAD.."-15%"..translate.Get("sale"),
 																0,			-6,					{}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_AVIATOR, "Aviator", GOOD.."+40% Controllable speed and handling\n"..BAD.."-25% Controllable health",
 																-4,			-2,					{}, TREE_BUILDINGTREE)
@@ -692,56 +692,56 @@ GM:AddSkillModifier(SKILL_BLESSEDROD, SKILLMOD_CURSEM, 0.15)
 
 -- Gunnery Tree
 
-GM:AddSkill(SKILL_UNSIGIL, "Uncorrupter", GOOD.."+24% Reload speed\n"..GOOD.."+15% Bullet Damage\n"..BAD.."-80% Melee damage",
+GM:AddSkill(SKILL_UNSIGIL, "Uncorrupter", GOOD.."+24% Reload speed\n"..GOOD.."+15% Bullet Damage\n"..BAD.."-80%"..translate.Get("meleedamage"),
 																0,			2,					{SKILL_LEVELHEADED}, TREE_GUNTREE)
 GM:AddSkillModifier(SKILL_UNSIGIL, SKILLMOD_DAMAGE, 0.15)
 SKILL_PHOENIX = 260
-GM:AddSkill(SKILL_PHOENIX, "Phoenix", GOOD.."Instead of death, it can redeem\nOnly once",
+GM:AddSkill(SKILL_PHOENIX, translate.Get("skill_phoenix"), GOOD..translate.Get("skill_phoenix_d1"),
 																0,			6,					{SKILL_GUNSLINGER}, TREE_GUNTREE)
-GM:AddSkill(SKILL_TRIGGER_DISCIPLINE1, "Trigger Discipline I", GOOD.."+2% weapon reload speed and 3% Bullet damage\n"..GOOD.."+2% weapon draw speed\n"..BAD.."-9% Melee damage",
+GM:AddSkill(SKILL_TRIGGER_DISCIPLINE1, translate.Get("skill_t_d").."I", GOOD.."+2%"..translate.Get("r_speed")..GOOD.."+3%"..translate.Get("b_damage")..GOOD.."+2%"..translate.Get("w_draw")..BAD.."-9%"..translate.Get("meleedamage"),
 																-5,			6,					{SKILL_TRIGGER_DISCIPLINE2, SKILL_NONE}, TREE_GUNTREE)
-GM:AddSkill(SKILL_TRIGGER_DISCIPLINE2, "Trigger Discipline II", GOOD.."+3% weapon reload speed and 5% Bullet damage\n"..GOOD.."+3% weapon draw speed\n"..BAD.."-13% Melee Damage",
+GM:AddSkill(SKILL_TRIGGER_DISCIPLINE2, translate.Get("skill_t_d").."II", GOOD.."+3%"..translate.Get("r_speed")..GOOD.."+5%"..translate.Get("b_damage")..GOOD.."+3%"..translate.Get("w_draw")..BAD.."-13%"..translate.Get("meleedamage"),
 																-4,			3,					{SKILL_TRIGGER_DISCIPLINE3, SKILL_D_PALSY, SKILL_EQUIPPED}, TREE_GUNTREE)
-GM:AddSkill(SKILL_TRIGGER_DISCIPLINE3, "Trigger Discipline III", GOOD.."+4% weapon reload speed and 9% Bullet damage\n"..GOOD.."+4% weapon draw speed\n"..BAD.."-18% Melee damage",
+GM:AddSkill(SKILL_TRIGGER_DISCIPLINE3, translate.Get("skill_t_d").."III", GOOD.."+4%"..translate.Get("r_speed")..GOOD.."+9%"..translate.Get("b_damage")..GOOD.."+4%"..translate.Get("w_draw")..BAD.."-18%"..translate.Get("meleedamage"),
 																-3,			0,					{SKILL_QUICKRELOAD, SKILL_QUICKDRAW, SKILL_WORTHINESS1, SKILL_EGOCENTRIC}, TREE_GUNTREE)
 GM:AddSkillModifier(SKILL_TRIGGER_DISCIPLINE1, SKILLMOD_DAMAGE, 0.03)
 GM:AddSkillModifier(SKILL_TRIGGER_DISCIPLINE2, SKILLMOD_DAMAGE, 0.05)
 GM:AddSkillModifier(SKILL_TRIGGER_DISCIPLINE3, SKILLMOD_DAMAGE, 0.09)
-GM:AddSkill(SKILL_D_PALSY, "Debuff: Palsy", GOOD.."+10 starting Worth\n"..GOOD.."-3% resupply delay\n"..BAD.."Aiming ability reduced when health is low",
+GM:AddSkill(SKILL_D_PALSY, "Debuff: Palsy", GOOD.."+20 starting Worth\n"..GOOD.."-15% resupply delay\n"..BAD.."Aiming ability reduced when health is low",
 																0,			4,					{SKILL_LEVELHEADED,SKILL_GUNSLINGER}, TREE_GUNTREE)
 GM:AddSkill(SKILL_LEVELHEADED, "Level Headed", GOOD.."-5% reduced effect of aim shake effects",
 																-2,			2,					{}, TREE_GUNTREE)
-GM:AddSkill(SKILL_QUICKDRAW, "Quick Draw", GOOD.."+65% weapon draw speed\n"..BAD.."-15% weapon reload speed",
+GM:AddSkill(SKILL_QUICKDRAW, "Quick Draw", GOOD.."+65%"..translate.Get("w_draw")..BAD.."-15%"..translate.Get("r_speed"),
 																0,			1,					{}, TREE_GUNTREE)
-GM:AddSkill(SKILL_FOCUS, "Focus I", GOOD.."+11% tighter aiming reticule\n"..GOOD.."+1% Bullet Damage\n"..BAD.."-3% weapon reload speed",
+GM:AddSkill(SKILL_FOCUS, translate.Get("skill_focus").."I", GOOD.."+11%"..translate.Get("w_ac")..GOOD.."+1%"..translate.Get("b_damage")..BAD.."-3%"..translate.Get("r_speed"),
 																5,			6,					{SKILL_NONE, SKILL_FOCUSII}, TREE_GUNTREE)
-GM:AddSkill(SKILL_FOCUSII, "Focus II", GOOD.."+9% tighter aiming reticule\n"..GOOD.."+3% Bullet Damage\n"..BAD.."-7% weapon reload speed",
+GM:AddSkill(SKILL_FOCUSII, translate.Get("skill_focus").."II", GOOD.."+9%"..translate.Get("w_ac")..GOOD.."+3%"..translate.Get("b_damage")..BAD.."-7%"..translate.Get("r_speed"),
 																4,			3,					{SKILL_FOCUSIII, SKILL_SCAVENGER, SKILL_D_PALSY, SKILL_PITCHER}, TREE_GUNTREE)
-GM:AddSkill(SKILL_FOCUSIII, "Focus III", GOOD.."+12% tighter aiming reticule\n"..GOOD.."+5% Bullet Damage\n"..BAD.."-6% weapon reload speed",
+GM:AddSkill(SKILL_FOCUSIII, translate.Get("skill_focus").."III", GOOD.."+12%"..translate.Get("w_ac")..GOOD.."+5"..translate.Get("b_damage")..BAD.."-6%"..translate.Get("r_speed"),
 																3,			0,					{SKILL_EGOCENTRIC, SKILL_WOOISM, SKILL_ORPHICFOCUS, SKILL_SCOURER}, TREE_GUNTREE)
 GM:AddSkillModifier(SKILL_FOCUS, SKILLMOD_DAMAGE, 0.01)
 GM:AddSkillModifier(SKILL_FOCUSII, SKILLMOD_DAMAGE, 0.03)
 GM:AddSkillModifier(SKILL_FOCUSIII, SKILLMOD_DAMAGE, 0.05)
 SKILL_ARSVOID = 238
-GM:AddSkill(SKILL_ARSVOID, "Arsenal Void", GOOD.."Can give random weapon in end wave\nLuck can increase chance of drop\n"..GOOD.."+15% Bullet Damage\n"..BAD.."-20% Arsenal Discount",
+GM:AddSkill(SKILL_ARSVOID, "Arsenal Void", GOOD.."Can give random weapon in end wave\nLuck can increase chance of drop\n"..GOOD.."+15%"..translate.Get("b_damage")..BAD.."-20%"..translate.Get("sale"),
 																6,			-4,					{SKILL_DELIBRATION}, TREE_GUNTREE)
 GM:AddSkillModifier(SKILL_ARSVOID, SKILLMOD_DAMAGE, 0.15)
 GM:AddSkillModifier(SKILL_ARSVOID, SKILLMOD_ARSENAL_DISCOUNT, 0.15)
 SKILL_GUNSLINGER = 252
-GM:AddSkill(SKILL_GUNSLINGER, "Gunslinger", GOOD.."+15% Accuracy\n"..GOOD.."+15% Bullet Damage\n"..BAD.."-30% Melee damage\n"..BAD.."-50% Melee range",
+GM:AddSkill(SKILL_GUNSLINGER, "Gunslinger", GOOD.."+15%"..translate.Get("w_ac")..GOOD.."+15%"..translate.Get("b_damage")..BAD.."-30%"..translate.Get("meleedamage")..BAD.."-50% Melee range",
 																0,			5,					{SKILL_D_PALSY, SKILL_PHOENIX}, TREE_GUNTREE)
 GM:AddSkillModifier(SKILL_GUNSLINGER, SKILLMOD_DAMAGE, 0.15)
 GM:AddSkillModifier(SKILL_GUNSLINGER, SKILLMOD_AIMSPREAD_MUL, -0.15)
 GM:AddSkillModifier(SKILL_GUNSLINGER, SKILLMOD_MELEE_DAMAGE_MUL, -0.30)
 GM:AddSkillModifier(SKILL_GUNSLINGER, SKILLMOD_MELEE_RANGE_MUL, -0.50)
-GM:AddSkill(SKILL_BOUNTYKILLER, "Bounty", GOOD.."On kill give 5 xp\n"..BAD.."-15% Bullet Damage",
+GM:AddSkill(SKILL_BOUNTYKILLER, "Bounty", GOOD.."On kill give 5 xp\n"..BAD.."-15%"..translate.Get("b_damage"),
 																1,			6,					{SKILL_GUNSLINGER}, TREE_GUNTREE)
 GM:AddSkillModifier(SKILL_BOUNTYKILLER, SKILLMOD_DAMAGE, -0.15)
 
 
-GM:AddSkill(SKILL_QUICKRELOAD, "Quick Reload", GOOD.."+10% weapon reload speed\n"..BAD.."-25% weapon draw speed",
+GM:AddSkill(SKILL_QUICKRELOAD, "Quick Reload", GOOD.."+10%"..translate.Get("r_speed")..BAD.."-25%"..translate.Get("w_draw"),
 																-5,			1,					{SKILL_SLEIGHTOFHAND}, TREE_GUNTREE)
-GM:AddSkill(SKILL_SLEIGHTOFHAND, "Sleight of Hand", GOOD.."+10% weapon reload speed\n"..BAD.."-5% tighter aiming reticule",
+GM:AddSkill(SKILL_SLEIGHTOFHAND, "Sleight of Hand", GOOD.."+10%"..translate.Get("r_speed")..BAD.."-5%"..translate.Get("w_ac"),
 																-5,			-2,					{}, TREE_GUNTREE)
 GM:AddSkill(SKILL_BANDOLIER, "Bandolier", GOOD.."Give specific buff for reload speed for every weapon and passive +5%\n+13% For Assault;+9% To Explosive\n+21% To Pistol;+11% to Pulse\n+20% To Rifle;+44% For Shotgun\n+12% To SMG;+9% To crossbow",
 																-6,			-1,					{SKILL_SLEIGHTOFHAND}, TREE_GUNTREE)
@@ -756,7 +756,7 @@ GM:AddSkill(SKILL_DELIBRATION, "Delibration", GOOD.."+3% tighter aiming reticule
 GM:AddSkillModifier(SKILL_DELIBRATION, SKILLMOD_DAMAGE, 0.01)
 GM:AddSkill(SKILL_EGOCENTRIC, "Egocentric", GOOD.."-15% damage vs. yourself\n"..BAD.."-5 health",
 																0,			-1,					{SKILL_BLASTPROOF}, TREE_GUNTREE)
-GM:AddSkill(SKILL_BLASTPROOF, "Blast Proof", GOOD.."-40% damage vs. yourself\n"..BAD.."-10% reload speed\n"..BAD.."-12% weapon draw speed",
+GM:AddSkill(SKILL_BLASTPROOF, "Blast Proof", GOOD.."-40% damage vs. yourself\n"..BAD.."-10%"..translate.Get("r_speed")..BAD.."-12%"..translate.Get("w_draw"),
 																0,			-3,					{SKILL_SOFTDET, SKILL_CANNONBALL, SKILL_CONEFFECT}, TREE_GUNTREE)
 GM:AddSkill(SKILL_WOOISM, "Zeal", GOOD.."-50% speed reduction from being ironsighted\n"..BAD.."-25% accuracy bonus from ironsighting",
 																5,			1,					{SKILL_TRUEWOOISM}, TREE_GUNTREE)
@@ -1877,8 +1877,8 @@ GM:AddSkillFunction(SKILL_D_NOODLEARMS, function(pl, active)
 	pl.NoObjectPickup = active
 end)
 
-GM:AddSkillModifier(SKILL_D_PALSY, SKILLMOD_WORTH, 10)
-GM:AddSkillModifier(SKILL_D_PALSY, SKILLMOD_RESUPPLY_DELAY_MUL, -0.03)
+GM:AddSkillModifier(SKILL_D_PALSY, SKILLMOD_WORTH, 20)
+GM:AddSkillModifier(SKILL_D_PALSY, SKILLMOD_RESUPPLY_DELAY_MUL, -0.15)
 GM:AddSkillFunction(SKILL_D_PALSY, function(pl, active)
 	pl.HasPalsy = active
 end)

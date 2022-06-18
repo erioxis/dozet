@@ -630,7 +630,9 @@ GM:AddSkillModifier(trinket, SKILLMOD_POINT_MULTIPLIER, 0.25)
 GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, -15)
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 0.15)
 trinket = GM:AddTrinket(""..translate.Get("t_cursedtrinket"), "cursedtrinket", false, supveles, supweles, 4, ""..translate.Get("t_d_cursedtrinket"))
-GM:AddSkillModifier(trinket, SKILLMOD_DAMAGE, 0.55)
+GM:AddSkillModifier(trinket, SKILLMOD_DAMAGE, -0.15)
+GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, 60)
+GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.15)
 
 
 --Attachment

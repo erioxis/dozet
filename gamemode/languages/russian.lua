@@ -172,11 +172,11 @@ LANGUAGE.t_curse_faster                                 = "Проклятье т
 LANGUAGE.t_curse_slow                              = "Проклятье черепахи"
 LANGUAGE.t_ultra_at = "Поглощающий урон"
 LANGUAGE.t_fire_at = "Огненный урон"
-LANGUAGE.t_acid_at = "Токсичный урон"
+LANGUAGE.t_acid_at = "Ледянной урон"
 LANGUAGE.t_pulse_at = "Пульс урон"
 --описание тринек
-LANGUAGE.t_d_fire_at = "Огненный урон\n Не работает с другими модификаторами"
-LANGUAGE.t_d_acid_at = "Токсичный урон\nНе работает с другими модификаторами"
+LANGUAGE.t_d_fire_at = "Огненный урон\nМожет разорвать зомби\n Не работает с другими модификаторами"
+LANGUAGE.t_d_acid_at = "Ледянной урон\nНе работает с другими модификаторами"
 LANGUAGE.t_d_pulse_at = "Замедляющий пульс урон\nНе работает с другими модификаторами"
 LANGUAGE.t_d_ultra_at = "Урон пробивающий сквозь все?\nНе работает с другими модификаторами"
 
@@ -192,7 +192,7 @@ LANGUAGE.t_d_mticket                                 = "В конце волны
 LANGUAGE.t_d_lticket                                 = "В конце волны может дать 120 поинтов(удача влияет на шанс)"
 LANGUAGE.t_d_manifesti                                = "-6% к времени амуниции"
 LANGUAGE.t_d_manifestii                                = "-15% к времени амуниции"
-LANGUAGE.t_d_cursedtrinket                                 = "Всегда меняется,+55% Урона пулям,после получения урона получаешь 10 проклятья если есть проклятье"
+LANGUAGE.t_d_cursedtrinket                                 = "Всегда меняется,-15% Урона пулям,дает 70 хп,-15% получаемого урона,после получения урона получаешь 10 проклятья если есть проклятье"
 LANGUAGE.t_d_kheart                                 = "+25% К полученым поинтам,-15хп,+15% к получаемому урону"
 LANGUAGE.t_d_voidheart                                 = "+15% К мили урону,-20хп"
 LANGUAGE.t_d_nheart                                 = "+10% мили урона,+20 хп,медленно умираешь после получения урона"
@@ -907,7 +907,11 @@ LANGUAGE.controls_shade								= "> ПЕРВИЧНЫЙ: Левитация\n> В
 -- The help file... Quite big! I wouldn't blame you if you didn't translate this part.
 
 
- --модификаторы
+--модификаторы
+LANGUAGE.w_ac = " К точности\n"
+LANGUAGE.w_draw = " к скорости смене оружия\n"
+LANGUAGE.b_damage = " к урону от пуль\n"
+LANGUAGE.r_speed = " к скорости перезарядки\n"
 LANGUAGE.health = " максимум здоровья\n"
 LANGUAGE.speed = " скорости\n"
 LANGUAGE.meleedamage = " урона от ближнего оружия\n"
@@ -923,10 +927,21 @@ LANGUAGE.med_effect = " к эффективности аптечки\n"
 LANGUAGE.barmor = " кровавой брони\n"
 LANGUAGE.repair = " к силе починке\n"
 LANGUAGE.hammerd = " к времени перед следующем взмахе молотка\n"
+LANGUAGE.sale = " К стоимости вещей в п-шопе\n"
+LANGUAGE.s_cost = " К стоимости тринкетов и прокачки\n"
+--Стрелок
+LANGUAGE.skill_focus = "Фокусировка "
+LANGUAGE.skill_t_d = "Ускоренная перезарядка "
+LANGUAGE.skill_phoenix = "Феникс"
+LANGUAGE.skill_phoenix_d1 = "Вместо смерти оживляет\nТолько один раз\n Но на чьей стороне..."
 --Skill repairsman
 LANGUAGE.skill_h_disp = "Дисциплина "
 LANGUAGE.skill_handy = "Чинитель "
 LANGUAGE.skill_ohandy = "ОверЧинила"
+LANGUAGE.skill_rein = "Усилитель"
+LANGUAGE.skill_rein_d1 = "Пропы после удара по ним на 7 секунд получает 12% защиту\n"
+LANGUAGE.skill_rein_d2 = "Получаешь поинты с защиты\n"
+LANGUAGE.skill_mech = "Механик"
 --Скиллы на деф
 LANGUAGE.skill_holymantle = "Святая мантия"
 LANGUAGE.skill_holymantle_d1 = "Поглощает любой урон каждые 30 секунд\nЧем выше удача - тем быстрее перезарядка\nС каждой волной перезарядка святой мантии увеличивается"

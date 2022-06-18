@@ -2205,7 +2205,7 @@ end
 function meta:FireInduction(attacker, inflictor, damage)
 	if self:Health() > self:GetMaxHealthEx() * (damage/100) or math.random(50) > damage then return end
 
-	timer.Create("Fire_inder" .. attacker:UniqueID(), 0.06, 1, function()
+	timer.Create("Fire_inder" .. attacker:UniqueID(), 0.3, 2, function()
 		if not attacker:IsValid() or not self:IsValid() then return end
 
 		local pos = self:WorldSpaceCenter()
@@ -2214,7 +2214,7 @@ function meta:FireInduction(attacker, inflictor, damage)
 		self:TakeSpecialDamage(self:Health() + 210, DMG_DIRECT, attacker, inflictor, pos)
 
 		if attacker:IsValidLivingHuman() then
-			util.BlastDamagePlayer(inflictor, attacker, pos, 100, self:GetMaxHealthEx() * 3, DMG_BURN, 0.83)
+			util.BlastDamagePlayer(inflictor, attacker, pos, 100, self:GetMaxHealthEx() * 0.5, DMG_BURN, 0.83)
 			for _, ent in pairs(util.BlastAlloc(inflictor, attacker, pos, 100 * (attacker.ExpDamageRadiusMul or 1))) do
 				if ent:IsValidLivingPlayer() and gamemode.Call("PlayerShouldTakeDamage", ent, attacker) then
 					ent:AddLegDamageExt(6, attacker, inflictor, SLOWTYPE_FLAME)
