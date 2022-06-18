@@ -1,15 +1,13 @@
 CLASS.Base = "zombie_legs"
 
-CLASS.Name = "Baracat"
-CLASS.TranslationName = "class_baracat"
-CLASS.Description = "description_baracat"
+CLASS.Name = "Baragat"
+CLASS.TranslationName = "class_baragat"
+CLASS.Description = "class_baragat"
 CLASS.Help = "controls_asskicker"
 
-CLASS.BetterVersion = "Baragat"
 
 
-
-CLASS.Wave = 4 / 6
+CLASS.Wave = 6 / 6
 
 CLASS.KnockbackScale = 0
 
@@ -17,11 +15,11 @@ CLASS.FearPerInstance = 1
 
 CLASS.Points = 5
 
-CLASS.SWEP = "weapon_zs_baracat"
+CLASS.SWEP = "weapon_zs_baragat"
 
-CLASS.Health = 560
-CLASS.Speed = 410
-CLASS.JumpPower = 400
+CLASS.Health = 3000
+CLASS.Speed = 700
+CLASS.JumpPower = 760
 
 
 CLASS.ModelScale = 0.7
@@ -31,13 +29,12 @@ CLASS.ViewOffset = Vector(0, 0, 32 * CLASS.ModelScale)
 CLASS.ViewOffsetDucked = Vector(0, 0, 32 * CLASS.ModelScale)
 CLASS.StepSize = 25
 CLASS.CrouchedWalkSpeed = 1
-CLASS.Mass = DEFAULT_MASS * CLASS.ModelScale * 0.5
+CLASS.Mass = DEFAULT_MASS * CLASS.ModelScale * 0.45
 
 --CLASS.NoCollideAll = true
 
 CLASS.CantDuck = true
 
-CLASS.SWEP = "weapon_zs_baracat"
 
 CLASS.BloodColor = -1
 

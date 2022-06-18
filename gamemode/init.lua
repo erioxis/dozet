@@ -4217,6 +4217,8 @@ function GM:PlayerSpawn(pl)
 	pl.NextSpawnTime = nil
 	pl.Gibbed = nil
 
+	pl.dpsmeter = 0
+
 	pl.MasteryHollowing = 0
 
 	pl.SpawnNoSuicide = CurTime() + 1

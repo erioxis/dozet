@@ -12,6 +12,8 @@ function meta:ProcessDamage(dmginfo)
 	local dmgbypass = bit.band(dmgtype, DMG_DIRECT) ~= 0
 
 
+
+
 	
 
 	if self.DamageVulnerability and not dmgbypass then
@@ -59,12 +61,20 @@ function meta:ProcessDamage(dmginfo)
 			local attackermaxhp = math.floor(attacker:GetMaxHealth() * (attacker:IsSkillActive(SKILL_D_FRAIL) and 0.44 or 1))
 			local attackermaxhp = math.floor(attacker:GetMaxHealth() * (attacker:IsSkillActive(SKILL_ABUSE) and 0.25 or 1))
 
+			attacker.dpsmeter = damage/wep.Primary.Delay
+			attacker:SetDPS(damage/wep.Primary.Delay)
+
+
+
+
+
 		
 
 			if wep.IsMelee then
 				if attacker:IsSkillActive(SKILL_CHEAPKNUCKLE) and math.abs(self:GetForward():Angle().yaw - attacker:GetForward():Angle().yaw) <= 90 then
 					self:AddLegDamage(12)
 				end
+				
 
 				if attacker.MeleeDamageToBloodArmorMul and attacker.MeleeDamageToBloodArmorMul > 0 and attacker:GetBloodArmor() < attacker.MaxBloodArmor then
 					attacker:SetBloodArmor(math.min(attacker.MaxBloodArmor, attacker:GetBloodArmor() + math.min(damage, self:Health()) * attacker.MeleeDamageToBloodArmorMul * attacker.BloodarmorGainMul))
@@ -226,12 +236,12 @@ function meta:ProcessDamage(dmginfo)
 					
 					local cursed5 = self:GetStatus("hollowing")
 					if (cursed5) then 
-						self:AddHallow(self:GetOwner(),cursed5.DieTime - CurTime() + (dmginfo:GetDamage() * 0.5))
-						self.MasteryHollowing = self.MasteryHollowing + dmginfo:GetDamage() * 0.5
+						self:AddHallow(self:GetOwner(),cursed5.DieTime - CurTime() + (dmginfo:GetDamage() * 1.5))
+						self.MasteryHollowing = self.MasteryHollowing + dmginfo:GetDamage() * 1.5
 					end
 					if (not cursed5) then 
-						self:AddHallow(self:GetOwner(),dmginfo:GetDamage() * 0.5)
-						self.MasteryHollowing = self.MasteryHollowing + dmginfo:GetDamage() * 0.5
+						self:AddHallow(self:GetOwner(),dmginfo:GetDamage() * 1.5)
+						self.MasteryHollowing = self.MasteryHollowing + dmginfo:GetDamage() * 1.5
 					end
 					dmginfo:SetDamage(0)
 				end
@@ -624,7 +634,7 @@ end
 
 function meta:KnockDown(time)
 	if P_Team(self) == TEAM_HUMAN then
-		self:GiveStatus("knockdown", time or 3)
+		self:GiveStatus("knockdown", time or 4)
 	end
 end
 
@@ -693,6 +703,10 @@ function meta:SendLifeStats()
 		net.WriteUInt(math.ceil(self.LifeHumanDamage or 0), 16)
 		net.WriteUInt(self.LifeBrainsEaten or 0, 8)
 	net.Send(self)
+end
+function meta:Block()
+    dmginfo:SetDamage(0)
+    return dmginfo:GetDamage()
 end
 
 function meta:AddLifeBarricadeDamage(amount)

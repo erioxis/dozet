@@ -403,8 +403,8 @@ function meta:DamageNails(attacker, inflictor, damage, dmginfo)
 
 	if self.ReinforceEnd and CurTime() < self.ReinforceEnd and self.ReinforceApplier and self.ReinforceApplier:IsValidLivingHuman() then
 		local applier = self.ReinforceApplier
-		local multi = 0.92
-		local dmgbefore = damage * 0.08
+		local multi = 0.88
+		local dmgbefore = damage * 0.1
 		local points = dmgbefore / 8
 
 		dmginfo:SetDamage(dmginfo:GetDamage() * multi)
@@ -427,7 +427,7 @@ function meta:DamageNails(attacker, inflictor, damage, dmginfo)
 	end
 	if self.BrokendEnd and CurTime() < self.BrokendEnd and self.BrokendApplier and self.BrokendApplier:IsValidLivingZombie() then
 		local applier = self.BrokendApplier
-		local multi = 1.5
+		local multi = 3
 		local dmgbefore = damage / 0.20
 
 		dmginfo:SetDamage(dmginfo:GetDamage() * multi)

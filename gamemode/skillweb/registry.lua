@@ -290,6 +290,7 @@ SKILL_FREEAMMO = 271
 SKILL_BLOODLIFE = 272
 SKILL_TORMENT7 = 273
 SKILL_AVOID_BLOCK = 275
+SKILL_CAN_EATER = 276
 
 SKILLMOD_HEALTH = 1
 SKILLMOD_SPEED = 2
@@ -468,6 +469,9 @@ GM:AddSkill(SKILL_BLOODLIFE, ""..translate.Get("skill_blife_0"), GOOD.."+50"..tr
 GM:AddSkillModifier(SKILL_BLOODLIFE, SKILLMOD_HEALTH, -60)
 GM:AddSkillModifier(SKILL_BLOODLIFE, SKILLMOD_BLOODARMOR, 50)
 GM:AddSkillModifier(SKILL_BLOODLIFE, SKILLMOD_MELEE_DAMAGE_MUL, -0.25)
+GM:AddSkill(SKILL_CAN_EATER, ""..translate.Get("skill_cani_0"), BAD.."-33"..translate.Get("health")..GOOD..translate.Get("skill_cani_d1"),
+																0,			5,					{SKILL_DAMAGER}, TREE_HEALTHTREE)
+GM:AddSkillModifier(SKILL_CAN_EATER, SKILLMOD_HEALTH, -33)
 -- Speed Tree
 GM:AddSkill(SKILL_SPEED1, translate.Get("skill_speed").."I", GOOD.."+5"..translate.Get("speed")..BAD.."-4"..translate.Get("health"),
 																-4,			6,					{SKILL_NONE, SKILL_SPEED2}, TREE_SPEEDTREE)

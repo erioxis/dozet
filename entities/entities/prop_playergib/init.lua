@@ -85,5 +85,18 @@ function ENT:StartTouch(ent)
 
 		self:EmitSound("physics/body/body_medium_break"..math.random(2, 4)..".wav")
 		util.Blood(self:GetPos(), math.random(2), Vector(0, 0, 1), 100, self:GetDTInt(0), true)
+    elseif self.DieTime ~= 0 and ent:IsSkillActive(SKILL_CAN_EATER) and not ent:IsSkillActive(SKILL_GLUTTON) then
+		self.DieTime = 0
+
+		ent:SetHealth(math.min(ent:GetMaxHealth(), ent:Health() + 20))
+		local cursed = ent:GetStatus("cursed")
+		ent:AddCursed(ent, cursed.DieTime - CurTime() - 20)
+		self:EmitSound("physics/body/body_medium_break"..math.random(2, 4)..".wav")
+		util.Blood(self:GetPos(), math.random(2), Vector(0, 0, 1), 100, self:GetDTInt(0), true)
+	elseif self.DieTime ~= 0 and ent:IsSkillActive(SKILL_CAN_EATER) and ent:IsSkillActive(SKILL_GLUTTON)  then
+		self.DieTime = 0
+		ent:SetBloodArmor(math.min(ent.MaxBloodArmor + 40, ent:GetBloodArmor() + 10))
+		self:EmitSound("physics/body/body_medium_break"..math.random(2, 4)..".wav")
+		util.Blood(self:GetPos(), math.random(2), Vector(0, 0, 1), 100, self:GetDTInt(0), true)
 	end
 end

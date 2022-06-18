@@ -132,7 +132,7 @@ function PANEL:Text3Paint()
 			end
 		else
 			--draw.SimpleText(translate.Format("points_x", MySelf:GetPoints().." / "..MySelf:Frags()), self.Font, 0, 0, COLOR_DARKRED)
-			draw.SimpleText("Points: "..MySelf:GetPoints().."  Score: "..MySelf:GetMScore(), self.Font, 0, 0, COLOR_SOFTRED)
+			draw.SimpleText("Points: "..MySelf:GetPoints().."  Score: "..MySelf:GetMScore().." DPS: "..math.Round(MySelf:GetDPS()), self.Font, 0, 0, COLOR_SOFTRED)
 		end
 	end
 

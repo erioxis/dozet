@@ -295,9 +295,15 @@ end
 function meta:GetMScore()
 	return self:GetNWInt('metascore', metascore)	
 end
+function meta:GetDPS()
+	return self:GetNWInt('dpsmeter', dpser) 
+end
 function meta:MetaAddScore(metascore)
 	self:SetNWInt('metascore', metascore)
 end
+function meta:SetDPS(dpser)
+	self:SetNWInt('dpsmeter', dpser)	
+end	
 
 
 function meta:SetTokens(pts)
