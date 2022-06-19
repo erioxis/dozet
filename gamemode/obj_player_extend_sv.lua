@@ -11,11 +11,6 @@ function meta:ProcessDamage(dmginfo)
 
 	local dmgbypass = bit.band(dmgtype, DMG_DIRECT) ~= 0
 
-
-
-
-	
-
 	if self.DamageVulnerability and not dmgbypass then
 		dmginfo:SetDamage(dmginfo:GetDamage() * self.DamageVulnerability)
 	end
@@ -63,13 +58,7 @@ function meta:ProcessDamage(dmginfo)
 
 			attacker.dpsmeter = damage/wep.Primary.Delay
 			attacker:SetDPS(damage/wep.Primary.Delay)
-
-
-
-
-
 		
-
 			if wep.IsMelee then
 				if attacker:IsSkillActive(SKILL_CHEAPKNUCKLE) and math.abs(self:GetForward():Angle().yaw - attacker:GetForward():Angle().yaw) <= 90 then
 					self:AddLegDamage(12)
@@ -133,11 +122,11 @@ function meta:ProcessDamage(dmginfo)
 		self.HolyMantle = self.HolyMantle - 1
 		self:GiveStatus("hshield", 3)
 		timer.Simple(0.05,function()
-			 self:GodEnable()
-			 end )
-			 timer.Simple(3,function()
+			self:GodEnable()
+			end )
+			timer.Simple(3,function()
 				self:GodDisable()
-				end )
+			end )
 
     end
 
@@ -183,11 +172,9 @@ function meta:ProcessDamage(dmginfo)
 
 	end
 	local mythrilchance = math.random(1,3)
-	if self:IsSkillActive(SKILL_MYTHRIL) and mythrilchance == 1 and not self:GetStatus("hshield") and dmginfo:GetDamage() < 200 or self:IsSkillActive(SKILL_MYTHRIL) and mythrilchance == 1 and dmginfo:GetDamage() >= 5  then
-	 
-		
+	if self:IsSkillActive(SKILL_MYTHRIL) and mythrilchance == 1 and not self:GetStatus("hshield") and dmginfo:GetDamage() < 200 then
 		if attacker:IsValid() and attacker:IsPlayer() and inflictor:IsValid() then
-		attacker:GiveStatus("hollowing", 51)
+		    attacker:GiveStatus("hollowing", 51)
 		end
 		xpadded = dmginfo:GetDamage() * 0.5
 		net.Start("zs_xp_damage")

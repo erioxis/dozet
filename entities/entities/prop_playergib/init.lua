@@ -76,27 +76,30 @@ function ENT:Think()
 		self:Remove()
 	end
 end
+function ENT:Use(activator, caller)
+if self.DieTime ~= 0 and activator:IsSkillActive(SKILL_CAN_EATER) and not activator:IsSkillActive(SKILL_GLUTTON) and not activator:IsValidLivingZombie() then
+	self.DieTime = 0
+
+	activator:SetHealth(math.min(activator:GetMaxHealth(), activator:Health() + 20))
+	local cursed = activator:GetStatus("cursed")
+	activator:AddCursed(activator, cursed.DieTime - CurTime() - 20)
+	self:EmitSound("physics/body/body_medium_break"..math.random(2, 4)..".wav")
+	util.Blood(self:GetPos(), math.random(2), Vector(0, 0, 1), 100, self:GetDTInt(0), true)
+elseif self.DieTime ~= 0 and activator:IsSkillActive(SKILL_CAN_EATER) and activator:IsSkillActive(SKILL_GLUTTON)  then
+	self.DieTime = 0
+	activator:SetBloodArmor(math.min(activator.MaxBloodArmor + 40, activator:GetBloodArmor() + 10))
+	self:EmitSound("physics/body/body_medium_break"..math.random(2, 4)..".wav")
+	util.Blood(self:GetPos(), math.random(2), Vector(0, 0, 1), 100, self:GetDTInt(0), true)
+end
+end
 
 function ENT:StartTouch(ent)
 	if self.DieTime ~= 0 and ent:IsValidLivingZombie() and ent:Health() < ent:GetMaxZombieHealth() and not ent:GetStatus("shockdebuff") --[[and not ent:GetZombieClassTable().Boss]] then
 		self.DieTime = 0
 
-		ent:SetHealth(math.min(ent:GetMaxZombieHealth(), ent:Health() + 10))
+		ent:SetHealth(math.min(ent:GetMaxZombieHealth(), ent:Health() + 40))
 
 		self:EmitSound("physics/body/body_medium_break"..math.random(2, 4)..".wav")
 		util.Blood(self:GetPos(), math.random(2), Vector(0, 0, 1), 100, self:GetDTInt(0), true)
-    elseif self.DieTime ~= 0 and ent:IsSkillActive(SKILL_CAN_EATER) and not ent:IsSkillActive(SKILL_GLUTTON) then
-		self.DieTime = 0
-
-		ent:SetHealth(math.min(ent:GetMaxHealth(), ent:Health() + 20))
-		local cursed = ent:GetStatus("cursed")
-		ent:AddCursed(ent, cursed.DieTime - CurTime() - 20)
-		self:EmitSound("physics/body/body_medium_break"..math.random(2, 4)..".wav")
-		util.Blood(self:GetPos(), math.random(2), Vector(0, 0, 1), 100, self:GetDTInt(0), true)
-	elseif self.DieTime ~= 0 and ent:IsSkillActive(SKILL_CAN_EATER) and ent:IsSkillActive(SKILL_GLUTTON)  then
-		self.DieTime = 0
-		ent:SetBloodArmor(math.min(ent.MaxBloodArmor + 40, ent:GetBloodArmor() + 10))
-		self:EmitSound("physics/body/body_medium_break"..math.random(2, 4)..".wav")
-		util.Blood(self:GetPos(), math.random(2), Vector(0, 0, 1), 100, self:GetDTInt(0), true)
-	end
+    end
 end

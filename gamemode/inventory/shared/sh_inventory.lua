@@ -230,7 +230,7 @@ GM:AddSkillModifier(trinket, SKILLMOD_HEALING_RECEIVED, 0.11)
 --GM:AddWeaponModifier(trinket, WEAPON_MODIFIER_DAMAGE, 3)
 
 
-trinket = GM:AddTrinket(""..translate.Get("t_richeye"), "greedeye", false, hpveles, hpweles, 4, ""..translate.Get("t_d_richeye"))
+trinket = GM:AddTrinket(""..translate.Get("t_richeye"), "greedeye", false, hpveles, hpweles, 3, ""..translate.Get("t_d_richeye"))
 GM:AddSkillModifier(trinket, SKILLMOD_ENDWAVE_POINTS, 20)
 GM:AddSkillModifier(trinket, SKILLMOD_ARSENAL_DISCOUNT, 0.05)
 
