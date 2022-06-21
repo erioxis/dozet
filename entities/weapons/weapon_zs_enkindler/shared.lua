@@ -17,7 +17,7 @@ SWEP.ViewModelFOV = 60
 SWEP.Primary.Sound = Sound("weapons/grenade_launcher1.wav")
 SWEP.Primary.Delay = 0.3
 
-SWEP.Primary.Damage = 310
+SWEP.Primary.Damage = 210
 SWEP.Primary.ClipSize = 4
 SWEP.Primary.Automatic = false
 SWEP.Primary.Ammo = "impactmine"
@@ -32,9 +32,9 @@ SWEP.WalkSpeed = SPEED_SLOWEST * 0.9
 
 SWEP.UseHands = true
 
-SWEP.MaxMines = 1000
+SWEP.MaxMines = 5
 
-SWEP.Tier = 6
+SWEP.Tier = 7
 
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_MAXIMUM_MINES, 1)
 

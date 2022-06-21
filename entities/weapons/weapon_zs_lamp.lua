@@ -28,6 +28,8 @@ SWEP.HoldType = "melee2"
 
 SWEP.DamageType = DMG_CLUB
 
+SWEP.Tier = 1
+
 SWEP.MeleeDamage = 45
 SWEP.MeleeRange = 120
 SWEP.MeleeSize = 1
@@ -43,7 +45,7 @@ SWEP.SwingTime = 0.4
 SWEP.SwingHoldType = "melee"
 
 SWEP.AllowQualityWeapons = true
-SWEP.DismantleDiv = 2
+
 
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_FIRE_DELAY, -0.1)
 

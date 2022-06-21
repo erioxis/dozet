@@ -1276,7 +1276,7 @@ function GM:Think()
 				if pl:WaterLevel() >= 3 and not (pl.status_drown and pl.status_drown:IsValid()) then
 					pl:GiveStatus("drown")
 				end
-
+                pl:SetDKills(pl.zKills)
 			
 
 				local healmax = pl:IsSkillActive(SKILL_D_FRAIL) and math.floor(pl:GetMaxHealth() * 0.44) or pl:GetMaxHealth()
@@ -1304,22 +1304,23 @@ function GM:Think()
 					pl:SetHealth(math.min(healmax, pl:Health() + 500))
 				end
 				if time >= pl.NextRegenerate and pl.HolyMantle == 0 and pl:IsSkillActive(SKILL_HOLY_MANTLE) then
-					pl.NextRegenerate = time + ((30 - (pl.Luck / 4)) + self.GetWave())
+					pl.NextRegenerate = time + ((30 - (pl.Luck / 4)) + self.GetWave() * 3)
 					pl.HolyMantle = pl.HolyMantle + 1
 					
 				end
 				if pl.HolyMantle == 1 and pl:IsSkillActive(SKILL_HOLY_MANTLE) then
                     pl:GiveStatus("hshield", 1.3)
 				end
-				if time >= pl.NextRegenerate and pl:IsSkillActive(SKILL_NOSEE) then
+				if time >= pl.NextRegenerate and pl:IsSkillActive(SKILL_NOSEE) and not self:GetWave() == 0 then
 					pl.NextRegenerate = time + 9
                     pl:GiveStatus("dimvision", 10)
 				end
 				if time >= pl.NextRegenerate then
-					pl.NextRegenerate = time + 45
+					pl.NextRegenerate = time + 15
                     pl.zKills = pl.zKills - 10
+					
 				end
-				if pl:GetActiveWeapon().Block == 1 and pl:GetActiveWeapon().IsMelee then
+				if pl:GetActiveWeapon().Block == 1 and pl:GetActiveWeapon().IsMelee and not pl:GetWalkSpeed() <= 0 then
 					pl:SetWalkSpeed(pl:GetWalkSpeed() * 0.5)
 					pl:SetRunSpeed(pl:GetRunSpeed() * 0.5)
 					pl:GetActiveWeapon():SetWeaponHoldType("revolver")
@@ -1331,8 +1332,8 @@ function GM:Think()
 				if pl.MasteryHollowing > 800 and pl:IsSkillActive(SKILL_UPLOAD) then
 					pl:Kill()
 					pl:AddHallow(pl:GetOwner(),cursed5.DieTime - (CurTime() + cursed5.DieTime))
-					print(" Уебало "..pl:Nick()..(cursed5.DieTime))
-					PrintMessage(HUD_PRINTCONSOLE," Уебало "..pl:Nick()..(cursed5.DieTime))
+					print(" Уебало "..pl:Nick()..(" "..pl.MasteryHollowing))
+					PrintMessage(HUD_PRINTCONSOLE," Уебало "..pl:Nick()..(" "..pl.MasteryHollowing))
 				end
 
 
@@ -1359,8 +1360,8 @@ function GM:Think()
 					pl.NextRegenerate = time + 200
 					pl:SetHealth(math.min(healmax, pl:Health() + 500))
 				end
-				if pl:IsSkillActive(SKILL_TRIP) and time >= pl.NextRegenerate   then
-					pl.NextRegenerate = time + 0.9
+				if pl:IsSkillActive(SKILL_TRIP) and time >= pl.NextRegenerate and not self:GetWave() == 0 then
+					pl.NextRegenerate = time + 0.8
 					local cursed = pl:GetStatus("cursed")
 					if (not cursed) then 
 						pl:AddCursed(pl:GetOwner(), 1)
@@ -3012,6 +3013,12 @@ function GM:EntityTakeDamage(ent, dmginfo)
 							if attacker:HasTrinket("acid_at") then
 								ent:AddLegDamageExt(12, attacker, attacker, SLOWTYPE_COLD)
 							end
+							local debuffed = ent:GetStatus("zombiestrdebuff")
+							if attacker:HasTrinket("ultra_at") and math.random(12) == 1 then
+								ent:GiveStatus("zombiestrdebuff",20)
+							elseif attacker:HasTrinket("ultra_at") and (ent:GetStatus("zombiestrdebuff")) and math.random(12) == 1 then
+								ent:GiveStatus("zombiestrdebuff",40)
+							end
 
 							
 
@@ -3805,6 +3812,7 @@ function GM:HumanKilledZombie(pl, attacker, inflictor, dmginfo, headshot, suicid
 
 	attacker.ZombiesKilled = attacker.ZombiesKilled + 1
 	attacker.zKills = attacker.zKills + 1
+	attacker:SetDKills(attacker.zKills)
 	attacker:AddZSXP(1)
 	if attacker:IsSkillActive(SKILL_BOUNTYKILLER) then
 		attacker:AddZSXP(5)
@@ -4220,6 +4228,10 @@ function GM:PlayerSpawn(pl)
 	pl.dpsmeter = 0
 
 	pl.MasteryHollowing = 0
+
+	pl.FireDamage = 0
+
+	pl.UltraCharge = 0
 
 	pl.SpawnNoSuicide = CurTime() + 1
 	pl.SpawnedTime = CurTime()

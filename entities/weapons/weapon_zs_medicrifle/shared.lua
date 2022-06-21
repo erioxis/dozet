@@ -20,27 +20,27 @@ SWEP.ReloadSound = Sound("Weapon_Pistol.Reload")
 
 SWEP.Primary.Delay = 0.85
 SWEP.Primary.ClipSize = 64
-SWEP.Primary.DefaultClip = 120
+SWEP.Primary.DefaultClip = 60
 SWEP.Primary.Ammo = "Battery"
 
 SWEP.RequiredClip = 8
-SWEP.Primary.Damage = 75
-SWEP.ReloadSpeed = 1
+SWEP.Primary.Damage = 45
+SWEP.ReloadSpeed = 3
 
 SWEP.WalkSpeed = SPEED_SLOW
 
 SWEP.ConeMax = 0
 SWEP.ConeMin = 0
 
-SWEP.FireAnimSpeed = 1.4
+SWEP.FireAnimSpeed = 2
 
-SWEP.BuffDuration = 10
+SWEP.BuffDuration = 5
 
 SWEP.Tier = 2
 
 SWEP.AllowQualityWeapons = true
 
-SWEP.Heal = 10
+SWEP.Heal = 4.5
 
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_BUFF_DURATION, 3)
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_HEALING, 1.1)

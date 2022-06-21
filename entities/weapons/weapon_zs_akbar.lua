@@ -70,7 +70,7 @@ owner = self:GetOwner()
 	self:SetNextPrimaryFire(CurTime() + self:GetFireDelay())
 	self.IdleAnimation = CurTime() + self:SequenceDuration()
 	self:TakeAmmo()
-	self:ShootBullets(self.Primary.Damage + (6 * self.MultiplierOfShots / 7), self.Primary.NumShots, self:GetCone())
+	self:ShootBullets(self.Primary.Damage + (6 * self.MultiplierOfShots), self.Primary.NumShots, self:GetCone())
 	self.MultiplierOfShots = self.MultiplierOfShots + 1
 	if self.MultiplierOfShots >= 5 then
 		self.MultiplierOfShots = self.MultiplierOfShots - 4

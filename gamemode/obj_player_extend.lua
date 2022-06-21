@@ -295,6 +295,9 @@ end
 function meta:GetMScore()
 	return self:GetNWInt('metascore', metascore)	
 end
+function meta:GetDKills()
+	return self:GetNWInt('zkills', zkills)	
+end
 function meta:GetDPS()
 	return self:GetNWInt('dpsmeter', dpser) 
 end
@@ -303,6 +306,9 @@ function meta:MetaAddScore(metascore)
 end
 function meta:SetDPS(dpser)
 	self:SetNWInt('dpsmeter', dpser)	
+end	
+function meta:SetDKills(zkills)
+	self:SetNWInt('zkills', zkills)	
 end	
 
 
@@ -361,7 +367,7 @@ function meta:AddLegDamageExt(damage, attacker, inflictor, type)
 	elseif type == SLOWTYPE_FLAME then
 		self:AddLegDamage(damage)
 		self:AddArmDamage(damage)
-		if SERVER and attacker:HasTrinket("fire_at") then
+		if SERVER and attacker:HasTrinket("fire_ind") then
 			self:FireInduction(attacker, inflictor, damage)
 		end
 	end

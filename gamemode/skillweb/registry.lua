@@ -291,6 +291,7 @@ SKILL_BLOODLIFE = 272
 SKILL_TORMENT7 = 273
 SKILL_AVOID_BLOCK = 275
 SKILL_CAN_EATER = 276
+SKILL_MEDICBOOSTER = 277
 
 SKILLMOD_HEALTH = 1
 SKILLMOD_SPEED = 2
@@ -566,6 +567,8 @@ GM:AddSkill(SKILL_BIOLOGYIV, translate.Get("skill_bio").."IV", GOOD.."+21%"..tra
 																2,			-3,					{}, TREE_SUPPORTTREE)
 GM:AddSkill(SKILL_D_FRAIL,  translate.Get("skill_frail"), GOOD.."-33%"..translate.Get("med_cool")..GOOD.."+33%"..translate.Get("med_effect")..BAD..translate.Get("skill_frail_d1"),
 																-4,			-2,					{}, TREE_SUPPORTTREE)
+GM:AddSkill(SKILL_MEDICBOOSTER,  translate.Get("skill_boostermed"), BAD.."+33%"..translate.Get("med_cool")..GOOD..translate.Get("skill_boostermed_d1"),
+																-4,			-3,					{SKILL_D_FRAIL}, TREE_SUPPORTTREE)
 GM:AddSkill(SKILL_U_MEDICCLOUD, translate.Get("skill_u_medcloud"), GOOD..translate.Get("skill_u_medcloud_d1"),
 																0,			-2,					{SKILL_DISPERSION}, TREE_SUPPORTTREE)
 .AlwaysActive = true
@@ -728,7 +731,7 @@ GM:AddSkillModifier(SKILL_FOCUS, SKILLMOD_DAMAGE, 0.01)
 GM:AddSkillModifier(SKILL_FOCUSII, SKILLMOD_DAMAGE, 0.03)
 GM:AddSkillModifier(SKILL_FOCUSIII, SKILLMOD_DAMAGE, 0.05)
 SKILL_ARSVOID = 238
-GM:AddSkill(SKILL_ARSVOID, translate.Get("skill_ars_void"), GOOD..translate.Get("skill_ars_void_d1")..GOOD.."+15%"..translate.Get("b_damage")..BAD.."-20%"..translate.Get("sale"),
+GM:AddSkill(SKILL_ARSVOID, translate.Get("skill_ars_void"), GOOD..translate.Get("skill_ars_void_d1")..GOOD.."+15%"..translate.Get("b_damage")..BAD.."+20%"..translate.Get("sale"),
 																6,			-4,					{SKILL_DELIBRATION}, TREE_GUNTREE)
 GM:AddSkillModifier(SKILL_ARSVOID, SKILLMOD_DAMAGE, 0.15)
 GM:AddSkillModifier(SKILL_ARSVOID, SKILLMOD_ARSENAL_DISCOUNT, 0.15)
@@ -748,7 +751,7 @@ GM:AddSkill(SKILL_QUICKRELOAD, translate.Get("skill_q_r"), GOOD.."+10%"..transla
 																-5,			1,					{SKILL_SLEIGHTOFHAND}, TREE_GUNTREE)
 GM:AddSkill(SKILL_SLEIGHTOFHAND, translate.Get("skill_s_hand"), GOOD.."+10%"..translate.Get("r_speed")..BAD.."-5%"..translate.Get("w_ac"),
 																-5,			-2,					{}, TREE_GUNTREE)
-GM:AddSkill(SKILL_BANDOLIER, "Bandolier", GOOD.."Give specific buff for reload speed for every weapon and passive +5%\n+13% For Assault;+9% To Explosive\n+21% To Pistol;+11% to Pulse\n+20% To Rifle;+44% For Shotgun\n+12% To SMG;+9% To crossbow",
+GM:AddSkill(SKILL_BANDOLIER, translate.Get("skill_bandolier"), GOOD..translate.Get("skill_bandolier_d1"),
 																-6,			-1,					{SKILL_SLEIGHTOFHAND}, TREE_GUNTREE)
 GM:AddSkill(SKILL_U_CRYGASGREN, "Unlock: Cryo Gas Grenade", GOOD.."Unlocks purchasing the Cryo Gas Grenade\nVariant of the Corrosive Gas Grenade\nCryo gas deals a bit of damage over time\nZombies are slowed in the effect",
 																2,			-3,					{SKILL_EGOCENTRIC}, TREE_GUNTREE)
@@ -771,7 +774,7 @@ GM:AddSkill(SKILL_PITCHER, "Pitcher", GOOD.."+10% object throw and thrown weapon
 																6,			2,					{}, TREE_GUNTREE)
 GM:AddSkill(SKILL_EQUIPPED, "Alacrity", GOOD.."Your starting item can be a random special trinket",
 																-6,			2,					{}, TREE_GUNTREE)
-GM:AddSkill(SKILL_WORTHINESS1, "Worthiness I", GOOD.."+10 starting worth\n"..BAD.."-3 starting points",
+GM:AddSkill(SKILL_WORTHINESS1, translate.Get("worthness"), GOOD.."+10"..translate.Get("worth")..BAD.."-3"..translate.Get("start_points"),
 																-4,			-3,					{}, TREE_GUNTREE)
 GM:AddSkill(SKILL_CANNONBALL, "Cannonball", "-25% projectile speed\n"..GOOD.."+3% projectile damage",
 																-2,			-3,					{}, TREE_GUNTREE)
@@ -1167,11 +1170,12 @@ GM:AddSkill(SKILL_DEFEND4, "Defender of the Sigil V", GOOD.."You get 6% less dam
 GM:AddSkillModifier(SKILL_DEFEND4, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.06)
 GM:AddSkillModifier(SKILL_DEFEND4, SKILLMOD_SPEED, -12)
 SKILL_DEFEND5 = 195
-GM:AddSkill(SKILL_DEFEND5, "Defender of the Sigil VI", GOOD.."You get 9% less damage\n"..BAD.."Speed -16",
+GM:AddSkill(SKILL_DEFEND5, "Defender of the Sigil VI", GOOD.."You get 9% less damage\n"..GOOD.."+25% Knockdown recovery multiplier"..BAD.."Speed -16",
 				                                                            	0,			3.5,					{SKILL_DEFEND4}, TREE_DEFENSETREE)
 
 GM:AddSkillModifier(SKILL_DEFEND5, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.09)
 GM:AddSkillModifier(SKILL_DEFEND5, SKILLMOD_SPEED, -16)
+GM:AddSkillModifier(SKILL_DEFEND5, SKILLMOD_KNOCKDOWN_RECOVERY_MUL, -0.25)
 SKILL_DEFENDER = 196
 GM:AddSkill(SKILL_DEFENDER, "Defender of Humans", GOOD.."You get 4% less damage\n"..BAD.."Melee damage multiplier 0.96x",
 				                                                            	-1.5,			0,					{SKILL_DEFEND}, TREE_DEFENSETREE)
@@ -1185,12 +1189,13 @@ GM:AddSkill(SKILL_DEFENDEROFM, "Defender of Monsters", BAD.."You get 5% more dam
 GM:AddSkillModifier(SKILL_DEFENDEROFM, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 0.05)
 GM:AddSkillModifier(SKILL_DEFENDEROFM, SKILLMOD_MELEE_DAMAGE_MUL, 0.05)
 SKILL_HEAVY = 254
-GM:AddSkill(SKILL_HEAVY, "Heavy", GOOD.."-10% Melee damage taken\n"..BAD.."-30 speed\n"..BAD.."-50% Jump power mul",
+GM:AddSkill(SKILL_HEAVY, "Heavy", GOOD.."-10% Melee damage taken\n"..BAD.."-30 speed\n+50% Knockdown speed recovery multiplier"..BAD.."-50% Jump power mul",
 				                                                            	-3,		    0.5,					{SKILL_DEFENDEROFM}, TREE_DEFENSETREE)
 
 GM:AddSkillModifier(SKILL_HEAVY, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.1)
 GM:AddSkillModifier(SKILL_HEAVY, SKILLMOD_SPEED, -30)
 GM:AddSkillModifier(SKILL_HEAVY, SKILLMOD_JUMPPOWER_MUL, -0.5)
+GM:AddSkillModifier(SKILL_HEAVY, SKILLMOD_KNOCKDOWN_RECOVERY_MUL, -0.5)
 SKILL_TTIMES = 249
 GM:AddSkill(SKILL_TTIMES, "Tougher Times", GOOD.."Have 20% Chance to block damage\n"..BAD.."+15% Melee damage taken",
 				                                                            	-3,			1.5,					{SKILL_TRIP,SKILL_TTIMES1}, TREE_DEFENSETREE)
@@ -1965,6 +1970,7 @@ GM:AddSkillModifier(SKILL_D_FRAIL, SKILLMOD_MEDKIT_COOLDOWN_MUL, -0.33)
 GM:AddSkillFunction(SKILL_D_FRAIL, function(pl, active)
 	pl:SetDTBool(DT_PLAYER_BOOL_FRAIL, active)
 end)
+GM:AddSkillModifier(SKILL_MEDICBOOSTER, SKILLMOD_MEDKIT_COOLDOWN_MUL, 0.33)
 
 GM:AddSkillModifier(SKILL_MASTERCHEF, SKILLMOD_MELEE_DAMAGE_MUL, -0.10)
 

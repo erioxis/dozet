@@ -26,6 +26,8 @@ SWEP.Primary.ClipSize = 30
 SWEP.Primary.DefaultClip = 150
 SWEP.Primary.Ammo = "Battery"
 
+SWEP.UltraCharge = 0
+
 SWEP.Secondary.DelayMul = 13 / SWEP.Primary.Delay
 SWEP.Secondary.HealMul = 11 / SWEP.Heal
 
@@ -86,6 +88,18 @@ function SWEP:PrimaryAttack()
 	local totake = self.FixUsage and 15 or math.ceil(healed / multiplier)
 
 	if totake > 0 then
+		if owner:IsSkillActive(SKILL_MEDICBOOSTER) then
+
+			self.UltraCharge = self.UltraCharge + 1
+
+		end
+		if self.UltraCharge >= 4 and owner:IsSkillActive(SKILL_MEDICBOOSTER) then
+		    ent:GiveStatus("strengthdartboost",30)
+			ent:GiveStatus("medrifledefboost",30)
+
+			self.UltraCharge = 0
+
+	    end
 		self:SetNextCharge(CurTime() + self.Primary.Delay * math.min(1, healed / self.Heal) * cooldownmultiplier)
 		owner.NextMedKitUse = self:GetNextCharge()
 
@@ -97,6 +111,7 @@ function SWEP:PrimaryAttack()
 
 		owner:DoAttackEvent()
 		self.IdleAnimation = CurTime() + self:SequenceDuration()
+
 	end
 
 end

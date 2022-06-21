@@ -248,7 +248,7 @@ GM:AddSkillModifier(trinket, SKILLMOD_BLOODARMOR, 20)
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TO_BLOODARMOR_MUL, 0.07)
 trinketwep.PermitDismantle = true
 
-trinket = GM:AddTrinket(""..translate.Get("t_bloodpackii"), "cardpackageii", false, hpveles, hpweles, 4, ""..translate.Get("t_d_bloodpackii"))
+trinket = GM:AddTrinket(""..translate.Get("t_bloodpackii"), "cardpackageii", false, hpveles, hpweles, 3, ""..translate.Get("t_d_bloodpackii"))
 GM:AddSkillModifier(trinket, SKILLMOD_BLOODARMOR, 20)
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TO_BLOODARMOR_MUL, 0.12)
 
@@ -483,6 +483,8 @@ GM:AddSkillModifier(trinket, SKILLMOD_FALLDAMAGE_SLOWDOWN_MUL, -0.75)
 
 trinket = GM:AddTrinket(""..translate.Get("t_supersale"), "stopit", false, develes, deweles, 3, ""..translate.Get("t_d_supersale"))
 GM:AddSkillModifier(trinket, SKILLMOD_ARSENAL_DISCOUNT, -0.09)
+trinket = GM:AddTrinket(""..translate.Get("t_fire_ind"), "fire_ind", false, develes, deweles, 3, ""..translate.Get("t_d_fire_ind"))
+
 
 trinketwep.PermitDismantle = true
 

@@ -13,7 +13,7 @@ CLASS.KnockbackScale = 0
 
 CLASS.FearPerInstance = 1
 
-CLASS.Points = 5
+CLASS.Points = 250
 
 CLASS.SWEP = "weapon_zs_baragat"
 
@@ -29,7 +29,7 @@ CLASS.ViewOffset = Vector(0, 0, 32 * CLASS.ModelScale)
 CLASS.ViewOffsetDucked = Vector(0, 0, 32 * CLASS.ModelScale)
 CLASS.StepSize = 25
 CLASS.CrouchedWalkSpeed = 1
-CLASS.Mass = DEFAULT_MASS * CLASS.ModelScale * 0.45
+CLASS.Mass = DEFAULT_MASS * CLASS.ModelScale * 0.35
 
 --CLASS.NoCollideAll = true
 

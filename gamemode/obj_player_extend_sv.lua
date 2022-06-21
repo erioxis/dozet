@@ -470,6 +470,7 @@ function meta:ProcessDamage(dmginfo)
 	end
 	if dmginfo:IsBulletDamage() and attacker:HasTrinket("fire_at") then 
 		dmginfo:SetDamageType(DMG_BURN)
+		self.FireDamage = self.FireDamage + 1
 	end
 	if dmginfo:IsBulletDamage() and attacker:HasTrinket("pulse_at") then 
 		dmginfo:SetDamageType(DMG_SHOCK)
@@ -1279,7 +1280,7 @@ function meta:AddPoints(points, floatingscoreobject, fmtype, nomul)
 	if gamemode.Call("IsEscapeDoorOpen") then return end
 
 	if points > 0 and not nomul and self.PointIncomeMul then
-		points = points * self.PointIncomeMul
+		points = (points * self.PointIncomeMul) + (self.zKills * 0.01)
 	end
 
 	-- This lets us add partial amounts of points (floats)
@@ -2207,8 +2208,8 @@ function meta:CryogenicInduction(attacker, inflictor, damage)
 	end)
 end
 function meta:FireInduction(attacker, inflictor, damage)
-	if self:Health() > self:GetMaxHealthEx() * (damage/100) or math.random(50) > damage then return end
-
+	if math.random(10) == 1 or self.FireDamage >= 100 then
+		self.FireDamage = 0
 	timer.Create("Fire_inder" .. attacker:UniqueID(), 0.3, 2, function()
 		if not attacker:IsValid() or not self:IsValid() then return end
 
@@ -2231,6 +2232,7 @@ function meta:FireInduction(attacker, inflictor, damage)
 			effectdata:SetNormal(attacker:GetShootPos())
 		util.Effect("hit_fire", effectdata)
 	end)
+end
 end
 
 function meta:SetPhantomHealth(amount)
