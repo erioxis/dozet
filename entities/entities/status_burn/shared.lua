@@ -1,7 +1,12 @@
+
+AddCSLuaFile()
 ENT.Type = "anim"
 ENT.Base = "status__base"
 
+
 ENT.Ephemeral = true
+AccessorFuncDT(ENT, "Duration", "Float", 0)
+AccessorFuncDT(ENT, "StartTime", "Float", 4)
 
 function ENT:Initialize()
 	self:DrawShadow(false)
@@ -9,6 +14,8 @@ function ENT:Initialize()
 		self:SetDTFloat(1, CurTime())
 	end
 end
+
+
 
 function ENT:AddDamage(damage)
 	self:SetDamage(self:GetDamage() + damage)
@@ -20,4 +27,7 @@ end
 
 function ENT:GetDamage()
 	return self:GetDTFloat(0)
+end
+function ENT:PlayerSet()
+	self:SetStartTime(CurTime())
 end

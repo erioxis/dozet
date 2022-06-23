@@ -1316,11 +1316,12 @@ function GM:Think()
                     pl:GiveStatus("dimvision", 10)
 				end
 				if time >= pl.NextRegenerate then
-					pl.NextRegenerate = time + 15
-                    pl.zKills = pl.zKills - 10
+					pl.NextRegenerate = time + 60
+                    pl.zKills = pl.zKills - 5
 					
 				end
-				if pl:GetActiveWeapon().Block == 1 and pl:GetActiveWeapon().IsMelee and not pl:GetWalkSpeed() <= 0 then
+
+				if pl:GetActiveWeapon().Block == 1 and pl:GetActiveWeapon().IsMelee then
 					pl:SetWalkSpeed(pl:GetWalkSpeed() * 0.5)
 					pl:SetRunSpeed(pl:GetRunSpeed() * 0.5)
 					pl:GetActiveWeapon():SetWeaponHoldType("revolver")
@@ -1387,7 +1388,7 @@ function GM:Think()
 					pl.NextBloodArmorRegen = time + 3
 					pl:SetBloodArmor(math.min(pl.MaxBloodArmor, pl:GetBloodArmor() + (5 * pl.BloodarmorGainMul)))
 				end
-				damaged = math.random(1,100)
+				damaged = math.random(1,250)
 				if pl:IsSkillActive(SKILL_DAMAGER) and damaged == 1 then
                    pl:TakeDamage((pl:GetMaxHealth() * 0.10) + 1)
 				   pl:SetHealth((pl:Health() * 0.9) - ((pl:GetMaxHealth() * 0.05)))
@@ -1442,7 +1443,7 @@ function GM:Think()
 					pl.OldWeaponToReload = nil
 				end
 
-				if pl:IsSkillActive(SKILL_STOWAGE) and self:GetWave() > 0 and time > (pl.NextResupplyUse or 0) then
+				if pl:IsSkillActive(SKILL_STOWAGE) and time > (pl.NextResupplyUse or 0) then
 					local stockpiling = pl:IsSkillActive(SKILL_STOCKPILE)
 
 					pl.NextResupplyUse = time + self.ResupplyBoxCooldown * (pl.ResupplyDelayMul or 1) * (stockpiling and 2 or 1)
@@ -2953,6 +2954,7 @@ function GM:EntityTakeDamage(ent, dmginfo)
 	local dispatchdamagedisplay = false
 	local entclass = ent:GetClass()
 
+
 	if ent:IsPlayer() then
 		dispatchdamagedisplay = true
 		
@@ -2973,6 +2975,7 @@ function GM:EntityTakeDamage(ent, dmginfo)
 					if damage > 0 then
 						local time = CurTime()
 
+
 						attacker.DamageDealt[myteam] = attacker.DamageDealt[myteam] + damage
 
 						if myteam == TEAM_UNDEAD then
@@ -2985,8 +2988,6 @@ function GM:EntityTakeDamage(ent, dmginfo)
 								attacker:AddZSXP(math.ceil(damage * 2))
 								
 								GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_ZOMBIECLASS, attacker:GetZombieClassTable().Name, "HumanDamage", damage)
-						
-							
 							end
 						elseif myteam == TEAM_HUMAN and otherteam == TEAM_UNDEAD then
 							ent.DamagedBy[attacker] = (ent.DamagedBy[attacker] or 0) + damage
@@ -4307,7 +4308,7 @@ function GM:PlayerSpawn(pl)
 		end
 
 		if classtab.Boss then
-			pl:SetHealth(classtab.Health + (self:GetWave() * 1000))
+			pl:SetHealth(classtab.Health + (((self:GetWave() * 500)) * team.NumPlayers(TEAM_HUMAN)))
 		else
 			local lowundead = team.NumPlayers(TEAM_UNDEAD) < 4
 
@@ -4442,8 +4443,17 @@ function GM:PlayerSpawn(pl)
 						pl:Give(class)
 					end
 				else
-					pl:Give("weapon_zs_redeemers_q3")
-					pl:Give("weapon_zs_swissarmyknife")
+					if self:GetWave() > 7 then
+						pl:Give("weapon_zs_redeemers_q5")
+						pl:Give("weapon_zs_loy_q5")
+					elseif self:GetWave() > 11 then
+						pl:Give("weapon_zs_redeemers_q5")
+						pl:Give("weapon_zs_loy_q5")
+						pl:SetPoints(1200)
+					else
+						pl:Give("weapon_zs_redeemers_q5")
+						pl:Give("weapon_zs_swissarmyknife_q5")
+					end
 				end
 			end
 		end
@@ -4914,7 +4924,7 @@ net.Receive("zs_changeclass", function(len, sender)
 		sender.DeathClass = classtab.Index
 		sender:CenterNotify(translate.ClientFormat(sender, "you_will_spawn_as_a_x", translate.ClientGet(sender, classtab.TranslationName)))
 
-		if suicide and sender:Alive() and GAMEMODE:GetWaveActive() and (CurTime() < GAMEMODE:GetWaveEnd() - 4 or GAMEMODE:GetWaveEnd() < 0) and not sender:GetZombieClassTable().Boss and gamemode.Call("CanPlayerSuicide", sender) then
+		if suicide and sender:Alive() and GAMEMODE:GetWaveActive() and (CurTime() < GAMEMODE:GetWaveEnd() - 4) and not sender:GetZombieClassTable().Boss and gamemode.Call("CanPlayerSuicide", sender) then
 			sender:Kill()
 		end
 	end

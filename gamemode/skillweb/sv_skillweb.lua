@@ -59,6 +59,7 @@ net.Receive("zs_skill_is_unlocked", function(length, pl)
 		if activate then
 			pl:SetSkillDesired(skillid, true)
 		end
+
 	end
 end)
 
@@ -192,7 +193,7 @@ function meta:SendSkillDesired(skillid, desired)
 		net.WriteUInt(skillid, 16)
 		net.WriteBool(desired)
 	net.Send(self)
-end
+end									
 
 function meta:SendSkillUnlocked(skillid, unlocked)
 	net.Start("zs_skill_is_unlocked")

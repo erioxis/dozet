@@ -56,8 +56,8 @@ function meta:ProcessDamage(dmginfo)
 			local attackermaxhp = math.floor(attacker:GetMaxHealth() * (attacker:IsSkillActive(SKILL_D_FRAIL) and 0.44 or 1))
 			local attackermaxhp = math.floor(attacker:GetMaxHealth() * (attacker:IsSkillActive(SKILL_ABUSE) and 0.25 or 1))
 
-			attacker.dpsmeter = damage/wep.Primary.Delay
-			attacker:SetDPS(damage/wep.Primary.Delay)
+			attacker.dpsmeter = damage/wep.Primary.Delay * (wep.Primary.NumShots or 1)
+			attacker:SetDPS(damage/wep.Primary.Delay * (wep.Primary.NumShots or 1))
 		
 			if wep.IsMelee then
 				if attacker:IsSkillActive(SKILL_CHEAPKNUCKLE) and math.abs(self:GetForward():Angle().yaw - attacker:GetForward():Angle().yaw) <= 90 then
@@ -106,14 +106,16 @@ function meta:ProcessDamage(dmginfo)
 		dmginfo:SetDamage(dmginfo:GetDamage() - 12)
 	end
 
-    truedogder = 30 - (self:GetWalkSpeed() / 20)
-	rngdogde = math.random(1,truedogder)
+    truedogder = 30 - (self:GetWalkSpeed() / 15)
+	rngdogde = math.max(0,math.random(1,truedogder))
  
 	if self:IsSkillActive(SKILL_DODGE) and rngdogde == 1 then
 		dmginfo:SetDamage(0)
 		net.Start("zs_damageblock")
 		net.Send(self)
     end
+
+ 
 
 	if self:IsSkillActive(SKILL_HOLY_MANTLE) and self.HolyMantle == 1 then
 		dmginfo:SetDamage(0)
@@ -1211,20 +1213,21 @@ function meta:Resupply(owner, obj)
 		self:CenterNotify(COLOR_RED, translate.ClientGet(self, "no_ammo_here"))
 		return
 	end
-
 	if not stowage then
 		self.NextResupplyUse = CurTime() + GAMEMODE.ResupplyBoxCooldown * (self.ResupplyDelayMul or 1) * (stockpiling and 2 or 1)
-
 		net.Start("zs_nextresupplyuse")
 			net.WriteFloat(self.NextResupplyUse)
 		net.Send(self)
 	else
+
+
 		self.StowageCaches = self.StowageCaches - 1
 
 		net.Start("zs_stowagecaches")
 			net.WriteInt(self.StowageCaches, 8)
 		net.Send(self)
 	end
+
 
 	local ammotype = self:GetResupplyAmmoType()
 	local amount = GAMEMODE.AmmoCache[ammotype]
@@ -1280,7 +1283,7 @@ function meta:AddPoints(points, floatingscoreobject, fmtype, nomul)
 	if gamemode.Call("IsEscapeDoorOpen") then return end
 
 	if points > 0 and not nomul and self.PointIncomeMul then
-		points = (points * self.PointIncomeMul) + (self.zKills * 0.01)
+		points = points * self.PointIncomeMul
 	end
 
 	-- This lets us add partial amounts of points (floats)
@@ -2208,7 +2211,7 @@ function meta:CryogenicInduction(attacker, inflictor, damage)
 	end)
 end
 function meta:FireInduction(attacker, inflictor, damage)
-	if math.random(10) == 1 or self.FireDamage >= 100 then
+	if math.random(40 * (self:GetActiveWeapon().Primary.Numshots or 1)) == 1 or self.FireDamage >= (15 * (self:GetActiveWeapon().Primary.Numshots or 1)) or damage > 300 then
 		self.FireDamage = 0
 	timer.Create("Fire_inder" .. attacker:UniqueID(), 0.3, 2, function()
 		if not attacker:IsValid() or not self:IsValid() then return end
@@ -2216,13 +2219,13 @@ function meta:FireInduction(attacker, inflictor, damage)
 		local pos = self:WorldSpaceCenter()
 		pos.z = pos.z + 16
 
-		self:TakeSpecialDamage(self:Health() + 210, DMG_DIRECT, attacker, inflictor, pos)
+		self:TakeSpecialDamage(self:Health() + 30, DMG_DIRECT, attacker, inflictor, pos)
 
 		if attacker:IsValidLivingHuman() then
-			util.BlastDamagePlayer(inflictor, attacker, pos, 100, self:GetMaxHealthEx() * 0.5, DMG_BURN, 0.83)
-			for _, ent in pairs(util.BlastAlloc(inflictor, attacker, pos, 100 * (attacker.ExpDamageRadiusMul or 1))) do
+			util.BlastDamagePlayer(inflictor, attacker, pos, 100, (self:GetMaxHealthEx() * 0.33), DMG_BURN, 0.83)
+			for _, ent in pairs(util.BlastAlloc(inflictor, attacker, pos, 245 * (attacker.ExpDamageRadiusMul or 1))) do
 				if ent:IsValidLivingPlayer() and gamemode.Call("PlayerShouldTakeDamage", ent, attacker) then
-					ent:AddLegDamageExt(6, attacker, inflictor, SLOWTYPE_FLAME)
+					ent:AddLegDamageExt(55, attacker, inflictor, SLOWTYPE_FLAME)
 				end
 			end
 		end

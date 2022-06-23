@@ -78,6 +78,13 @@ local statusdisplays = {
 	Icon = Material("zombiesurvival/sickness.png")
 },
 {
+	Color = Color(255, 120, 0),
+	Name = "BURNED!",
+	ValFunc = statusValueFunction("burn"),
+	Max = 600,
+	Icon = Material("zombiesurvival/burn.png")
+},
+{
 	Color = Color(157, 75, 20),
 	Name = "KNOCK DOWN!",
 	ValFunc = statusValueFunction("knockdown"),
@@ -288,6 +295,8 @@ function PANEL:Paint(w, h)
 	surface.DrawTexturedRect(w/2 - boxsize/2, h/2 - boxsize/2, boxsize, boxsize)
 	surface.SetDrawColor(col.r * 0.8, col.g * 0.8, col.b * 0.8, col.a * 0.3)
 	surface.DrawRect(w/2 - boxsize/2, h/2 - boxsize/2, boxsize, boxsize)
+
+
 
 	local perc = function(add) return math.Clamp((value - max * add) / (max * 0.25), 0, 1) end
 

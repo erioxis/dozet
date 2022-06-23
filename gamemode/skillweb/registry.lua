@@ -753,26 +753,26 @@ GM:AddSkill(SKILL_SLEIGHTOFHAND, translate.Get("skill_s_hand"), GOOD.."+10%"..tr
 																-5,			-2,					{}, TREE_GUNTREE)
 GM:AddSkill(SKILL_BANDOLIER, translate.Get("skill_bandolier"), GOOD..translate.Get("skill_bandolier_d1"),
 																-6,			-1,					{SKILL_SLEIGHTOFHAND}, TREE_GUNTREE)
-GM:AddSkill(SKILL_U_CRYGASGREN, "Unlock: Cryo Gas Grenade", GOOD.."Unlocks purchasing the Cryo Gas Grenade\nVariant of the Corrosive Gas Grenade\nCryo gas deals a bit of damage over time\nZombies are slowed in the effect",
+GM:AddSkill(SKILL_U_CRYGASGREN, translate.Get("skill_u_cryogas"), GOOD..translate.Get("skill_u_cryogas_d1"),
 																2,			-3,					{SKILL_EGOCENTRIC}, TREE_GUNTREE)
-GM:AddSkill(SKILL_SOFTDET, "Soft Detonation", GOOD.."-40% explosive damage taken\n"..BAD.."-10% explosive damage radius",
+GM:AddSkill(SKILL_SOFTDET, translate.Get("skill_sdeton"), GOOD.."-40%"..translate.Get("exp_damage_t")..BAD.."-10%"..translate.Get("exp_damage_t"),
 																0,			-5,					{}, TREE_GUNTREE)
-GM:AddSkill(SKILL_ORPHICFOCUS, "Orphic Focus", GOOD.."90% spread while ironsighting\n"..GOOD.."+2%"..translate.Get("w_ac")..BAD.."110% spread at any other time\n"..BAD.."-6%"..translate.Get("r_speed"),
+GM:AddSkill(SKILL_ORPHICFOCUS, translate.Get("skill_orfocus"), GOOD..translate.Get("skill_orfocus_d1")..GOOD.."+2%"..translate.Get("w_ac")..BAD..translate.Get("skill_orfocus_d2")..BAD.."-6%"..translate.Get("r_speed"),
 																5,			-1,					{SKILL_DELIBRATION}, TREE_GUNTREE)
 GM:AddSkill(SKILL_DELIBRATION, translate.Get("skill_deli"), GOOD.."+3%"..translate.Get("w_ac")..GOOD.."+1%"..translate.Get("b_damage"),
 																6,			-3,					{}, TREE_GUNTREE)
 GM:AddSkillModifier(SKILL_DELIBRATION, SKILLMOD_DAMAGE, 0.01)
-GM:AddSkill(SKILL_EGOCENTRIC, "Egocentric", GOOD.."-15% damage vs. yourself\n"..BAD.."-5 health",
+GM:AddSkill(SKILL_EGOCENTRIC, translate.Get("skill_ego"), GOOD.."-15%"..translate.Get("self_d")..BAD.."-5"..translate.Get("health"),
 																0,			-1,					{SKILL_BLASTPROOF}, TREE_GUNTREE)
-GM:AddSkill(SKILL_BLASTPROOF, "Blast Proof", GOOD.."-40% damage vs. yourself\n"..BAD.."-10%"..translate.Get("r_speed")..BAD.."-12%"..translate.Get("w_draw"),
+GM:AddSkill(SKILL_BLASTPROOF, translate.Get("skill_bproof"), GOOD.."-40%"..translate.Get("self_d")..BAD.."-10%"..translate.Get("r_speed")..BAD.."-12%"..translate.Get("w_draw")..translate.Get("hagilore"),
 																0,			-3,					{SKILL_SOFTDET, SKILL_CANNONBALL, SKILL_CONEFFECT}, TREE_GUNTREE)
-GM:AddSkill(SKILL_WOOISM, "Zeal", GOOD.."-50% speed reduction from being ironsighted\n"..BAD.."-25% accuracy bonus from ironsighting",
+GM:AddSkill(SKILL_WOOISM, translate.Get("skill_ziga"), GOOD..translate.Get("skill_ziga_d1")..BAD..translate.Get("skill_ziga_d2"),
 																5,			1,					{SKILL_TRUEWOOISM}, TREE_GUNTREE)
 GM:AddSkill(SKILL_SCAVENGER, translate.Get("skill_eyes"), GOOD.. translate.Get("skill_eyes_d1"),
 																7,			4,					{}, TREE_GUNTREE)
-GM:AddSkill(SKILL_PITCHER, "Pitcher", GOOD.."+10% object throw and thrown weapon velocity",
+GM:AddSkill(SKILL_PITCHER, translate.Get("skill_pitcher"), GOOD..translate.Get("skill_pitcher_d1"),
 																6,			2,					{}, TREE_GUNTREE)
-GM:AddSkill(SKILL_EQUIPPED, "Alacrity", GOOD.."Your starting item can be a random special trinket",
+GM:AddSkill(SKILL_EQUIPPED, translate.Get("skill_alacraty"), GOOD.. translate.Get("skill_alacraty_d1"),
 																-6,			2,					{}, TREE_GUNTREE)
 GM:AddSkill(SKILL_WORTHINESS1, translate.Get("worthness"), GOOD.."+10"..translate.Get("worth")..BAD.."-3"..translate.Get("start_points"),
 																-4,			-3,					{}, TREE_GUNTREE)
@@ -780,7 +780,7 @@ GM:AddSkill(SKILL_CANNONBALL, "Cannonball", "-25% projectile speed\n"..GOOD.."+3
 																-2,			-3,					{}, TREE_GUNTREE)
 GM:AddSkill(SKILL_SCOURER, "Scourer", GOOD.."Earn end of wave points as scrap\n"..BAD.."Earn no end of wave points",
 																4,			-3,					{}, TREE_GUNTREE)
-GM:AddSkill(SKILL_CONEFFECT, "Concentrated Effect", GOOD.."+5% explosive damage\n"..BAD.."-20% explosive damage radius",
+GM:AddSkill(SKILL_CONEFFECT, "Concentrated Effect", GOOD.."+5% explosive damage\n"..BAD.."-20%"..translate.Get("exp_r"),
 																2,			-5,					{}, TREE_GUNTREE)
 GM:AddSkill(SKILL_TRUEWOOISM, "Wooism", GOOD.."No accuracy penalty from moving or jumping\n"..BAD.."No accuracy bonus from crouching or ironsighting",
 																7,			0,					{}, TREE_GUNTREE)
@@ -1170,12 +1170,12 @@ GM:AddSkill(SKILL_DEFEND4, "Defender of the Sigil V", GOOD.."You get 6% less dam
 GM:AddSkillModifier(SKILL_DEFEND4, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.06)
 GM:AddSkillModifier(SKILL_DEFEND4, SKILLMOD_SPEED, -12)
 SKILL_DEFEND5 = 195
-GM:AddSkill(SKILL_DEFEND5, "Defender of the Sigil VI", GOOD.."You get 9% less damage\n"..GOOD.."+25% Knockdown recovery multiplier"..BAD.."Speed -16",
+GM:AddSkill(SKILL_DEFEND5, "Defender of the Sigil VI", GOOD.."You get 9% less damage\n"..GOOD.."+15% Knockdown recovery multiplier\n"..BAD.."Speed -16",
 				                                                            	0,			3.5,					{SKILL_DEFEND4}, TREE_DEFENSETREE)
 
 GM:AddSkillModifier(SKILL_DEFEND5, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.09)
 GM:AddSkillModifier(SKILL_DEFEND5, SKILLMOD_SPEED, -16)
-GM:AddSkillModifier(SKILL_DEFEND5, SKILLMOD_KNOCKDOWN_RECOVERY_MUL, -0.25)
+GM:AddSkillModifier(SKILL_DEFEND5, SKILLMOD_KNOCKDOWN_RECOVERY_MUL, -0.15)
 SKILL_DEFENDER = 196
 GM:AddSkill(SKILL_DEFENDER, "Defender of Humans", GOOD.."You get 4% less damage\n"..BAD.."Melee damage multiplier 0.96x",
 				                                                            	-1.5,			0,					{SKILL_DEFEND}, TREE_DEFENSETREE)
@@ -1189,13 +1189,13 @@ GM:AddSkill(SKILL_DEFENDEROFM, "Defender of Monsters", BAD.."You get 5% more dam
 GM:AddSkillModifier(SKILL_DEFENDEROFM, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 0.05)
 GM:AddSkillModifier(SKILL_DEFENDEROFM, SKILLMOD_MELEE_DAMAGE_MUL, 0.05)
 SKILL_HEAVY = 254
-GM:AddSkill(SKILL_HEAVY, "Heavy", GOOD.."-10% Melee damage taken\n"..BAD.."-30 speed\n+50% Knockdown speed recovery multiplier"..BAD.."-50% Jump power mul",
+GM:AddSkill(SKILL_HEAVY, "Heavy", GOOD.."-10% Melee damage taken\n"..BAD.."-30 speed\n+33% Knockdown speed recovery multiplier\n"..BAD.."-50% Jump power mul",
 				                                                            	-3,		    0.5,					{SKILL_DEFENDEROFM}, TREE_DEFENSETREE)
 
 GM:AddSkillModifier(SKILL_HEAVY, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.1)
 GM:AddSkillModifier(SKILL_HEAVY, SKILLMOD_SPEED, -30)
 GM:AddSkillModifier(SKILL_HEAVY, SKILLMOD_JUMPPOWER_MUL, -0.5)
-GM:AddSkillModifier(SKILL_HEAVY, SKILLMOD_KNOCKDOWN_RECOVERY_MUL, -0.5)
+GM:AddSkillModifier(SKILL_HEAVY, SKILLMOD_KNOCKDOWN_RECOVERY_MUL, -0.33)
 SKILL_TTIMES = 249
 GM:AddSkill(SKILL_TTIMES, "Tougher Times", GOOD.."Have 20% Chance to block damage\n"..BAD.."+15% Melee damage taken",
 				                                                            	-3,			1.5,					{SKILL_TRIP,SKILL_TTIMES1}, TREE_DEFENSETREE)

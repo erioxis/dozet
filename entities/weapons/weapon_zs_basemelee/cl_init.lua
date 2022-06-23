@@ -75,6 +75,7 @@ function SWEP:ViewModelDrawn()
 end
 
 function SWEP:PreDrawViewModel(vm)
+
 	if self.ShowViewModel == false then
 		render.SetBlend(0)
 	end
@@ -117,6 +118,11 @@ function SWEP:GetViewModelPosition(pos, ang)
 		ang:RotateAroundAxis(ang:Right(), rot.pitch * power)
 		ang:RotateAroundAxis(ang:Up(), rot.yaw * power)
 		ang:RotateAroundAxis(ang:Forward(), rot.roll * power)
+	end
+	if self.Block == 1 then
+		ang:RotateAroundAxis(ang:Right(),13)
+		ang:RotateAroundAxis(ang:Up(),13)
+		ang:RotateAroundAxis(ang:Forward(),13)
 	end
 
 	if owner:GetBarricadeGhosting() then

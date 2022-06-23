@@ -82,12 +82,14 @@ if self.DieTime ~= 0 and activator:IsSkillActive(SKILL_CAN_EATER) and not activa
 
 	activator:SetHealth(math.min(activator:GetMaxHealth(), activator:Health() + 20))
 	local cursed = activator:GetStatus("cursed")
+	if (cursed) then
 	activator:AddCursed(activator, cursed.DieTime - CurTime() - 20)
+	end
 	self:EmitSound("physics/body/body_medium_break"..math.random(2, 4)..".wav")
 	util.Blood(self:GetPos(), math.random(2), Vector(0, 0, 1), 100, self:GetDTInt(0), true)
 elseif self.DieTime ~= 0 and activator:IsSkillActive(SKILL_CAN_EATER) and activator:IsSkillActive(SKILL_GLUTTON)  then
 	self.DieTime = 0
-	activator:SetBloodArmor(math.min(activator.MaxBloodArmor + 40, activator:GetBloodArmor() + 10))
+	activator:SetBloodArmor(math.min(activator.MaxBloodArmor + 40, activator:GetBloodArmor() + 30))
 	self:EmitSound("physics/body/body_medium_break"..math.random(2, 4)..".wav")
 	util.Blood(self:GetPos(), math.random(2), Vector(0, 0, 1), 100, self:GetDTInt(0), true)
 end

@@ -42,15 +42,25 @@ SWEP.HealRange = 36
 SWEP.NoMagazine = true
 SWEP.AllowQualityWeapons = true
 
+
 SWEP.HoldType = "slam"
 
 GAMEMODE:SetPrimaryWeaponModifier(SWEP, WEAPON_MODIFIER_HEALCOOLDOWN, -0.8)
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_HEALRANGE, 4, 1)
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_HEALING, 1.5)
-GAMEMODE:AddNewRemantleBranch(SWEP, 1, ""..translate.Get("wep_medkit_r1"), ""..translate.Get("wep_d_medkit_r1"), function(wept)
+local branch = GAMEMODE:AddNewRemantleBranch(SWEP, 1, ""..translate.Get("wep_medkit_r1"), ""..translate.Get("wep_d_medkit_r1"), function(wept)
 	wept.FixUsage = true
 	wept.Primary.Delay = wept.Primary.Delay * 1.5
 end)
+branch.Colors = {Color(255, 160, 50), Color(215, 120, 50), Color(175, 100, 40), Color(10, 115, 15), Color(36, 32, 32)}
+branch.NewNames = {translate.Get("wep_r_1"), translate.Get("wep_r_2"), translate.Get("wep_r_3"), translate.Get("wep_r_4"), translate.Get("wep_r_5")}
+local branch = GAMEMODE:AddNewRemantleBranch(SWEP, 2, ""..translate.Get("wep_medkit_f1"), ""..translate.Get("wep_d_medkit_f1"), function(wept)
+	wept.BloodHeal = true
+	wept.Primary.Delay = wept.Primary.Delay * 0.5
+	wept.Heal = wept.Heal * 0.3
+end)
+branch.Colors = {Color(255, 160, 50), Color(215, 120, 50), Color(175, 100, 40), Color(10, 115, 15), Color(36, 32, 32)}
+branch.NewNames = {"Bloody", "Bloodlust", "Blood-shed", "Biggy blood", "Blud"}
 
 function SWEP:Initialize()
 	self:SetWeaponHoldType(self.HoldType)
@@ -84,22 +94,24 @@ function SWEP:PrimaryAttack()
 
 	local multiplier = self.MedicHealMul or 1
 	local cooldownmultiplier = self.MedicCooldownMul or 1
-	local healed = owner:HealPlayer(ent, math.min(self:GetCombinedPrimaryAmmo(), self.Heal))
+
+	    local healed = owner:HealPlayer(ent, math.min(self:GetCombinedPrimaryAmmo(), self.Heal))
+
 	local totake = self.FixUsage and 15 or math.ceil(healed / multiplier)
 
 	if totake > 0 then
 		if owner:IsSkillActive(SKILL_MEDICBOOSTER) then
-
 			self.UltraCharge = self.UltraCharge + 1
-
 		end
 		if self.UltraCharge >= 4 and owner:IsSkillActive(SKILL_MEDICBOOSTER) then
 		    ent:GiveStatus("strengthdartboost",30)
 			ent:GiveStatus("medrifledefboost",30)
-
 			self.UltraCharge = 0
-
 	    end
+		
+		if self.BloodHeal == true and SERVER then
+			ent:SetBloodArmor(math.min(ent.MaxBloodArmor + 100, ent:GetBloodArmor() + self.Heal * 3))
+		end
 		self:SetNextCharge(CurTime() + self.Primary.Delay * math.min(1, healed / self.Heal) * cooldownmultiplier)
 		owner.NextMedKitUse = self:GetNextCharge()
 

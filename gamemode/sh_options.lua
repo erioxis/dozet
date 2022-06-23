@@ -710,14 +710,14 @@ GM:AddPointShopItem("cursedtrinket",		ITEMCAT_SPECIAL,			120,				"trinket_cursed
 item.SkillRequirement = SKILL_CURSEDTRINKETS
 --ZS Mutagens
 GM:AddMutationItem("m_zombie_health", ""..translate.Get("zshop_alphazomb"), ""..translate.Get("zshop_alphazomb2"), ITEMCAT_MUTATIONS, 150, nil, function(pl) pl.m_Zombie_Health = true end, "models/items/healthkit.mdl")
-GM:AddMutationItem("m_zombie_health1", ""..translate.Get("zshop_godzomb"), ""..translate.Get("zshop_godzomb2"), ITEMCAT_MUTATIONS, 1000, nil, function(pl) pl.m_Zombie_GodHealth = true end, "models/player/fatty/fatty.mdl")    
-GM:AddMutationItem("m_zombie_zdef", ""..translate.Get("zshop_zdef1"), ""..translate.Get("zshop_def"), ITEMCAT_MUTATIONS, 1000, nil, function(pl) pl.m_zombiedef = true end, "models/player/fatty/fatty.mdl")      
+GM:AddMutationItem("m_zombie_health1", ""..translate.Get("zshop_godzomb"), ""..translate.Get("zshop_godzomb2"), ITEMCAT_MUTATIONS, 500, nil, function(pl) pl.m_Zombie_GodHealth = true end, "models/player/fatty/fatty.mdl")    
+GM:AddMutationItem("m_zombie_zdef", ""..translate.Get("zshop_zdef1"), ""..translate.Get("zshop_def"), ITEMCAT_MUTATIONS, 300, nil, function(pl) pl.m_zombiedef = true end, "models/player/fatty/fatty.mdl")      
 GM:AddMutationItem("m_zombie_moan", ""..translate.Get("zshop_zombsprint"), ""..translate.Get("zshop_zombsprint2"), ITEMCAT_MUTATIONS, 400, nil, function(pl) pl.m_Zombie_Moan = true end, "models/player/zombie_classic.mdl")
 GM:AddMutationItem("m_zombie_moanguard", ""..translate.Get("zshop_zombguard"), ""..translate.Get("zshop_zombguard2"), ITEMCAT_MUTATIONS, 200, nil, function(pl) pl.m_Zombie_MoanGuard = true end, "models/player/zombie_classic.mdl")
 
 -- Boss Mutagen
-GM:AddMutationItem("m_zombie_health2", ""..translate.Get("zshop_godestzomb"), ""..translate.Get("zshop_godestzomb2"), ITEMCAT_MUTATIONS_BOSS, 2000, nil, function(pl) pl.m_Zombie_GodyHealth = true end, "models/items/healthkit.mdl")
-GM:AddMutationItem("m_zombie_healthcursed", ""..translate.Get("zshop_cursed"), ""..translate.Get("zshop_cursed1"), ITEMCAT_MUTATIONS_BOSS, 3000, nil, function(pl) pl.m_Zombie_CursedHealth = true end, "models/items/healthkit.mdl")      
+GM:AddMutationItem("m_zombie_health2", ""..translate.Get("zshop_godestzomb"), ""..translate.Get("zshop_godestzomb2"), ITEMCAT_MUTATIONS_BOSS, 1000, nil, function(pl) pl.m_Zombie_GodyHealth = true end, "models/items/healthkit.mdl")
+GM:AddMutationItem("m_zombie_healthcursed", ""..translate.Get("zshop_cursed"), ""..translate.Get("zshop_cursed1"), ITEMCAT_MUTATIONS_BOSS, 900, nil, function(pl) pl.m_Zombie_CursedHealth = true end, "models/items/healthkit.mdl")      
 GM:AddMutationItem("m_shade_damage", ""..translate.Get("zshop_bossphysicshazard"), ""..translate.Get("zshop_bossphysicshazard2"), ITEMCAT_MUTATIONS_BOSS, 550, nil, function(pl) pl.m_Shade_Force = true end, "models/player/zombie_classic.mdl")
 -- These are the honorable mentions that come at the end of the round.
 

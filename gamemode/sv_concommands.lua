@@ -367,20 +367,24 @@ concommand.Add("zsdropweapon", function(sender, command, arguments)
 	local currentwep = sender:GetActiveWeapon()
 	if sender:HasTrinket("curse_dropping") then
 		sender:Kill()
+		sender:TakeInventoryItem("curse_dropping")
 		
 	end
 	if sender:HasTrinket("hurt_curse") then
 		sender:TakeDamage(60)
+		sender:TakeInventoryItem("hurt_curse")
 	end
 	if sender:HasTrinket("uncurse") then
 		sender:SetHealth(1)
+		sender:TakeInventoryItem("uncurse")
 	end
 	if sender:HasTrinket("curse_faster") then
 		sender.zKills = sender.zKills + 50
-		
+		sender:TakeInventoryItem("curse_faster")
 	end
 	if sender:HasTrinket("curse_slow") then
 		sender:TakeDamage(100)
+		sender:TakeInventoryItem("curse_slow")
 		
 	end
 	if GAMEMODE.ZombieEscape then
@@ -517,23 +521,29 @@ concommand.Add("zsgiveweapon", function(sender, command, arguments)
 	if GAMEMODE.ZombieEscape then return end
 	if sender:HasTrinket("curse_dropping") then
 		sender:Kill()
+		sender:TakeInventoryItem("curse_dropping")
 		return
 	end
 	if sender:HasTrinket("hurt_curse") then
 		sender:TakeDamage(60)
+		sender:TakeInventoryItem("hurt_curse")
 		return
 	end
 	if sender:HasTrinket("uncurse") then
 		sender:SetHealth(1)
+		sender:TakeInventoryItem("uncurse")
 		return
 	end
 	if sender:HasTrinket("curse_faster") then
 		sender.zKills = sender.zKills + 50
+		sender:TakeInventoryItem("curse_faster")
 		return
 	end
 	if sender:HasTrinket("curse_slow") then
 		sender:TakeDamage(100)
+		sender:TakeInventoryItem("curse_slow")
 		return
+		
 	end
 
 	if not (sender:IsValid() and sender:Alive() and sender:Team() == TEAM_HUMAN) then return end

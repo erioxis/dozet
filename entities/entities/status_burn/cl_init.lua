@@ -8,7 +8,7 @@ function ENT:Draw()
 
 
 	if CurTime() < self.NextEmit then return end
-	self.NextEmit = CurTime() + 1
+	self.NextEmit = CurTime() + 0.25
 
 	local pos = owner:WorldSpaceCenter()
 

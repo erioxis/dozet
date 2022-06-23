@@ -80,6 +80,7 @@ function meta:TryAssembleItem(component, heldclass)
 			desiassembly = assembly
 			break
 		end
+
 	end
 
 	if not desiassembly then

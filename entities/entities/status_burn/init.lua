@@ -1,18 +1,29 @@
 INC_SERVER()
+function ENT:SetDie(fTime)
+	if fTime == 0 or not fTime then
+		self.DieTime = 0
+	elseif fTime == -1 then
+		self.DieTime = 999999999
+	else
+		self.DieTime = CurTime() + fTime
+		self:SetDuration(fTime)
+	end
+end
+
 
 function ENT:Think()
 	local owner = self:GetOwner()
 
-	if self:GetDamage() <= 0 or owner:WaterLevel() > 0 or not owner:Alive() or (owner:Team() == self.Damager:Team() and owner ~= self.Damager) then
-		self:Remove()
-		return
-	end
 
-	local dmg = math.Clamp(self:GetDamage(), 16, 27)
+	local dmg = math.Clamp(self:GetDamage(), 1, 8)
 
 	owner:TakeSpecialDamage(dmg, DMG_BURN, self.Damager and self.Damager:IsValid() and self.Damager:IsPlayer() and self.Damager:Team() ~= owner:Team() and self.Damager or owner, self)
 	self:AddDamage(-dmg)
+	owner:AddLegDamageExt(1, owner, owner, SLOWTYPE_FLAME)
 
-	self:NextThink(CurTime() + 0.1)
+	self:NextThink(CurTime() + 0.25)
+	if self.DieTime <= CurTime() then
+		self:Remove()
+	end
 	return true
 end
