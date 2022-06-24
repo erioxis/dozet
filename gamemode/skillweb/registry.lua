@@ -29,14 +29,14 @@ function GM:AddSkill(id, name, description, x, y, connections, tree)
 end
 
 -- Use this after all skills have been added. It assigns dynamic IDs!
-function GM:AddTrinket(name, swepaffix, pairedweapon, veles, weles, tier, description, status, stocks)
+function GM:AddTrinket(name, swepaffix, pairedweapon, veles, weles, tier, description, status, stocks, icon)
 	local skill = {Connections = {}}
 
 	skill.Name = name
 	skill.Trinket = swepaffix
 	skill.Status = status
 
-	local datatab = {PrintName = name, DroppedEles = weles, Tier = tier, Description = description, Status = status, Stocks = stocks}
+	local datatab = {PrintName = name, DroppedEles = weles, Tier = tier, Description = description, Status = status, Stocks = stocks, Icon = icon}
 
 	if pairedweapon then
 		skill.PairedWeapon = "weapon_zs_t_" .. swepaffix

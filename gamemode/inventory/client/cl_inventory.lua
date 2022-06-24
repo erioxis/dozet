@@ -32,6 +32,26 @@ net.Receive("zs_inventoryitem", function()
 		MySelf:ApplyTrinkets()
 	end
 end)
+net.Receive("zs_upgradeitem", function()
+	local item = net.ReadString()
+	local count = net.ReadInt(5)
+	local prevcount = GAMEMODE.ZSInventory[item] or 0
+
+	GAMEMODE.ZSInventory[item] = count
+
+	if GAMEMODE.InventoryMenu and GAMEMODE.InventoryMenu:IsValid() then
+		if count > prevcount then
+			GAMEMODE:InventoryAddGridItem(item, GAMEMODE:GetInventoryItemType(item))
+		else
+			GAMEMODE:InventoryRemoveGridItem(item)
+		end
+	end
+
+	if MySelf and MySelf:IsValid() then
+		MySelf:ApplyTrinkets()
+	end
+end)
+
 
 net.Receive("zs_wipeinventory", function()
 	GAMEMODE.ZSInventory = {}
@@ -273,8 +293,8 @@ function GM:InventoryAddGridItem(item, category)
 		trintier:CenterHorizontal(0.8)
 		trintier:CenterVertical(0.8)
 	end
-
-	local kitbl = killicon.Get(category == INVCAT_TRINKETS and "weapon_zs_trinket" or "weapon_zs_craftables")
+    local icon = GAMEMODE.ZSInventoryItemData[item].Icon or "weapon_zs_trinket"
+	local kitbl = killicon.Get(category == INVCAT_TRINKETS and icon or "weapon_zs_craftables")
 	if kitbl then
 		self:AttachKillicon(kitbl, itempan, mdlframe)
 	end
@@ -325,7 +345,7 @@ function GM:OpenInventory()
 	end
 
 	local screenscale = BetterScreenScale()
-	local wid, hei = math.max(400, math.min(ScrW(), 200) * screenscale), math.min(ScrH(), 370) * screenscale
+	local wid, hei = math.max(500, math.min(ScrW(), 400) * screenscale), math.min(ScrH(), 450) * screenscale
 
 	local frame = vgui.Create("DFrame")
 	frame:SetSize(wid, hei)
@@ -362,7 +382,7 @@ function GM:OpenInventory()
 	local invgrid = vgui.Create("DGrid", invListPanel)
 	invgrid:SetSize(invListPanel:GetWide() - sbar:GetWide(), invListPanel:GetTall())
 	invgrid:SetCols(5)
-	invgrid:SetColWide((70 + (invgrid:GetWide() - 70*5) / 4) * screenscale)
+	invgrid:SetColWide((50 + (invgrid:GetWide() - 70*5) / 4) * screenscale)
 	invgrid:SetRowHeight(70 * screenscale)
 	frame.Grid = invgrid
 

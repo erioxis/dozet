@@ -19,7 +19,7 @@ function ENT:PhysicsUpdate(phys)
 	local dt = (UnPredictedCurTime() - self.LastPhysicsUpdate)
 	self.LastPhysicsUpdate = UnPredictedCurTime()
 
-	phys:AddVelocity(self.InitVelocity * dt * -1.8)
+	phys:AddVelocity(self.InitVelocity * dt * -0.3)
 end
 
 function ENT:Think()

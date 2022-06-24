@@ -24,7 +24,7 @@ function ENT:EntityTakeDamage(ent, dmginfo)
 		dmginfo:SetDamage(dmginfo:GetDamage() * (1 - protect))
 
 		local hpperpoint = GAMEMODE.MedkitPointsPerHealth
-		local points = (dmgfraction / hpperpoint) * 1.5
+		local points = (dmgfraction / hpperpoint) * 0.2
 
 		if self.Applier and self.Applier:IsValidLivingHuman() and not self:GetOwner():IsSkillActive(SKILL_SIGILIBERATOR) then
 			self.Applier.DefenceDamage = (Applier.DefenceDamage or 0) + dmgfraction

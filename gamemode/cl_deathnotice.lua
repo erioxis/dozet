@@ -418,10 +418,27 @@ killicon.Add("weapon_zs_craftables", "zombiesurvival/killicons/weapon_zs_craftab
 killicon.Add("weapon_zs_craftingpack", "zombiesurvival/killicons/weapon_zs_craftables")
 killicon.Add("weapon_zs_camera", "zombiesurvival/killicons/weapon_zs_camera")
 
+killicon.Add("weapon_zs_defence_trinket", "zombiesurvival/defense.png")
+killicon.Add("weapon_zs_special_trinket", "zombiesurvival/speed_up.png")
+killicon.Add("weapon_zs_melee_trinket", "zombiesurvival/reaper.png")
+killicon.Add("weapon_zs_shot_trinket", "zombiesurvival/tremors.png")
+killicon.Add("weapon_zs_help_trinket", "zombiesurvival/sickness.png")
+
+killicon.Add("weapon_zs_soul", "zombiesurvival/bleed.png")
+
+
+
+killicon.Add("weapon_zs_cursed", "zombiesurvival/reaper.png", Color(255, 1, 255))
+killicon.Add("weapon_zs_defence_trinket_d", "zombiesurvival/defense.png", Color(255, 0, 0))
+killicon.Add("weapon_zs_melee_trinket_d", "zombiesurvival/defense.png", Color(255, 0, 0))
+killicon.Add("weapon_zs_special_trinket_d", "zombiesurvival/speed_up.png", Color(255, 0, 0))
+
 killicon.Add("status_bleed", "zombiesurvival/killicons/bleed", Color(255, 0, 0))
+killicon.Add("status_rot", "zombiesurvival/killicons/rot", Color(255, 0, 0))
 killicon.Add("status_poison", "zombiesurvival/killicons/projectile_poisonflesh")
 killicon.Add("env_fire", "zombiesurvival/killicons/burn")
 killicon.Add("entityflame", "zombiesurvival/killicons/burn")
+killicon.Add("status_burn", "zombiesurvival/killicons/burn", Color(255, 99, 27))
 
 killicon.Add("ammo_pistol", "zombiesurvival/killicons/pistol_ammo_icon", Color(255, 255, 200))
 killicon.Add("ammo_shotgun", "zombiesurvival/killicons/shotgun_ammo_icon", Color(255, 140, 120))
