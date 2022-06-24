@@ -173,7 +173,7 @@ function meta:ProcessDamage(dmginfo)
 		end
 
 	end
-	local mythrilchance = math.random(1,3)
+	local mythrilchance = math.random(1,25)
 	if self:IsSkillActive(SKILL_MYTHRIL) and mythrilchance == 1 and not self:GetStatus("hshield") and dmginfo:GetDamage() < 200 then
 		if attacker:IsValid() and attacker:IsPlayer() and inflictor:IsValid() then
 		    attacker:GiveStatus("hollowing", 51)
@@ -2219,10 +2219,10 @@ function meta:FireInduction(attacker, inflictor, damage)
 		local pos = self:WorldSpaceCenter()
 		pos.z = pos.z + 16
 
-		self:TakeSpecialDamage(self:Health() + 30, DMG_DIRECT, attacker, inflictor, pos)
+		self:TakeSpecialDamage(self:Health() * 0.15, DMG_DIRECT, attacker, inflictor, pos)
 
 		if attacker:IsValidLivingHuman() then
-			util.BlastDamagePlayer(inflictor, attacker, pos, 100, (self:GetMaxHealthEx() * 0.33), DMG_BURN, 0.83)
+			util.BlastDamagePlayer(inflictor, attacker, pos, 100, (self:Health() * 0.25), DMG_BURN, 0.83)
 			for _, ent in pairs(util.BlastAlloc(inflictor, attacker, pos, 245 * (attacker.ExpDamageRadiusMul or 1))) do
 				if ent:IsValidLivingPlayer() and gamemode.Call("PlayerShouldTakeDamage", ent, attacker) then
 					ent:AddLegDamageExt(55, attacker, inflictor, SLOWTYPE_FLAME)

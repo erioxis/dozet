@@ -4308,7 +4308,7 @@ function GM:PlayerSpawn(pl)
 		end
 
 		if classtab.Boss then
-			pl:SetHealth(classtab.Health + (((self:GetWave() * 500)) * team.NumPlayers(TEAM_HUMAN)))
+			pl:SetHealth(classtab.Health + (((self:GetWave() * 250)) * team.NumPlayers(TEAM_HUMAN)))
 		else
 			local lowundead = team.NumPlayers(TEAM_UNDEAD) < 4
 
@@ -4447,7 +4447,7 @@ function GM:PlayerSpawn(pl)
 						pl:Give("weapon_zs_redeemers_q5")
 						pl:Give("weapon_zs_loy_q5")
 					elseif self:GetWave() > 11 then
-						pl:Give("weapon_zs_redeemers_q5")
+						pl:Give("weapon_zs_smorning_q5")
 						pl:Give("weapon_zs_loy_q5")
 						pl:SetPoints(1200)
 					else
