@@ -2365,7 +2365,7 @@ function GM:AttemptHumanDynamicSpawn(pl)
 end
 
 function GM:PlayerInitialSpawn(pl)
-	pl.MaxBloodArmor = GAMEMODE.ZombieEscape and 0 or 10
+	pl.MaxBloodArmor = GAMEMODE.ZombieEscape and 0 or 25
 	pl.NextFlashlightSwitch = 0
 	pl.NextPainSound = 0
 	pl.NextFlinch = 0

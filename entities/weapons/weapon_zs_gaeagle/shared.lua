@@ -32,11 +32,11 @@ SWEP.ShowViewModel = true
 SWEP.ShowWorldModel = true
 SWEP.ViewModelBoneMods = {}
 SWEP.Primary.Sound = Sound("Weapon_Deagle.Single")
-SWEP.Primary.Damage = 134
+SWEP.Primary.Damage = 98
 SWEP.Primary.NumShots = 1
 SWEP.Primary.Delay = 0.66
 SWEP.Primary.KnockbackScale = 2
-SWEP.MaxStock = 2
+SWEP.MaxStock = 1
 SWEP.Primary.ClipSize = 12
 SWEP.Primary.Automatic = false
 SWEP.Primary.Ammo = "pistol"
@@ -54,7 +54,7 @@ SWEP.Tier = 7
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_CLIP_SIZE, 2)
 
 function SWEP:ShootBullets(dmg, numbul, cone)
-	dmg = dmg + dmg * (11 * self:Clip1() / self.Primary.ClipSize)
+	dmg = dmg + dmg * (10 * self:Clip1() / self.Primary.ClipSize)
 
 	BaseClass.ShootBullets(self, dmg, numbul, cone)
 end
