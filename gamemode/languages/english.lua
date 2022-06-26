@@ -1155,6 +1155,8 @@ LANGUAGE.s_cost = " Scrap cost\n"
 LANGUAGE.skill_battler = "Battler "
 LANGUAGE.skill_lanky = "Lanky "
 --shooter
+LANGUAGE.skill_vampirism = "Life Stealer"
+LANGUAGE.skill_vampirism_d1 = "Have 25% chance to restore health on zombie damage\n"
 LANGUAGE.skill_alacraty = "Alacrity"
 LANGUAGE.skill_alacraty_d1 = "Your starting item can be a random special trinket"
 LANGUAGE.skill_pitcher = "Pitcher"

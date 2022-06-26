@@ -58,6 +58,9 @@ function meta:ProcessDamage(dmginfo)
 
 			attacker.dpsmeter = damage/wep.Primary.Delay * (wep.Primary.NumShots or 1)
 			attacker:SetDPS(damage/wep.Primary.Delay * (wep.Primary.NumShots or 1))
+			if attacker:IsSkillActive(SKILL_VAMPIRISM) and math.random(1,4 * (wep.Primary.NumShots or 1)) == 1 then
+				attacker:SetHealth(math.min(attacker:GetMaxHealth(), attacker:Health() + self:Health() * 0.03))
+			end
 		
 			if wep.IsMelee then
 				if attacker:IsSkillActive(SKILL_CHEAPKNUCKLE) and math.abs(self:GetForward():Angle().yaw - attacker:GetForward():Angle().yaw) <= 90 then
@@ -68,6 +71,7 @@ function meta:ProcessDamage(dmginfo)
 				if attacker.MeleeDamageToBloodArmorMul and attacker.MeleeDamageToBloodArmorMul > 0 and attacker:GetBloodArmor() < attacker.MaxBloodArmor then
 					attacker:SetBloodArmor(math.min(attacker.MaxBloodArmor, attacker:GetBloodArmor() + math.min(damage, self:Health()) * attacker.MeleeDamageToBloodArmorMul * attacker.BloodarmorGainMul))
 				end
+
 
 				if attacker:IsSkillActive(SKILL_HEAVYSTRIKES) and not self:GetZombieClassTable().Boss and (wep.IsFistWeapon and attacker:IsSkillActive(SKILL_CRITICALKNUCKLE) or wep.MeleeKnockBack > 0) then
 					attacker:TakeSpecialDamage(damage * (wep.Unarmed and 1 or 0.08), DMG_SLASH, self, self:GetActiveWeapon())
@@ -115,7 +119,9 @@ function meta:ProcessDamage(dmginfo)
 		net.Send(self)
     end
 
- 
+
+
+    
 
 	if self:IsSkillActive(SKILL_HOLY_MANTLE) and self.HolyMantle == 1 then
 		dmginfo:SetDamage(0)

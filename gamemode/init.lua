@@ -3851,8 +3851,8 @@ function GM:HumanKilledZombie(pl, attacker, inflictor, dmginfo, headshot, suicid
 		if pl:WasHitInHead() then
 			attacker.Headshots = (attacker.Headshots or 0) + 1
 		end
-		if pl.LuckFromKillYes and pl.LuckFromKillYes > CurTime() and pl.LuckFromKillYesOwner == attacker then
-			attacker.Luck = attacker.Luck + 0.05
+		if attacker:IsSkillActive(SKILL_PILLUCK) then
+			attacker.Luck = attacker.Luck + 0.1
 		end
 
 		GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_WEAPON, wep:GetClass(), "Kills", 1)

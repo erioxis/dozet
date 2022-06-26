@@ -998,6 +998,7 @@ function meta:GetMaxHealth()
 	return oldmaxhealth(self)
 end
 
+
 if not meta.OldAlive then
 	meta.OldAlive = meta.Alive
 	function meta:Alive()

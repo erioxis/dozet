@@ -124,7 +124,7 @@ concommand.Add("zs_pointsshopbuy", function(sender, command, arguments)
 		sender:PrintTranslatedMessage(HUD_PRINTTALK, "purchased_x_for_y_points", itemtab.Name, cost)
 	end
 
-	--* self.ScrapDiscount
+
 	GAMEMODE:AddItemStocks(id, -1)
 
 	if usescrap then

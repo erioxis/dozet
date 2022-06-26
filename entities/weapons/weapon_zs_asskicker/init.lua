@@ -16,7 +16,7 @@ function SWEP:ApplyMeleeDamage(ent, trace, damage)
 				ent:Kill()
 			end)
 		end
-		if math.random(30) == 1 and not ent:IsPlayer() then
+		if math.random(60) == 1 and not ent:IsPlayer() then
 			ent:Remove()
 		end
 		local noknockdown = true

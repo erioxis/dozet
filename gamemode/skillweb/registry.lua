@@ -292,6 +292,7 @@ SKILL_TORMENT7 = 273
 SKILL_AVOID_BLOCK = 275
 SKILL_CAN_EATER = 276
 SKILL_MEDICBOOSTER = 277
+SKILL_VAMPIRISM = 278
 
 SKILLMOD_HEALTH = 1
 SKILLMOD_SPEED = 2
@@ -398,6 +399,7 @@ SKILLMOD_LUCK = 103
 SKILLMOD_CURSEM = 104
 SKILLMOD_BLOCKMULTIPLIER = 105
 SKILLMOD_RES_AMMO_MUL = 106
+SKILLMOD_HEALTHMUL = 107
 
 local GOOD = "^"..COLORID_GREEN
 local BAD = "^"..COLORID_RED
@@ -743,8 +745,11 @@ GM:AddSkillModifier(SKILL_GUNSLINGER, SKILLMOD_AIMSPREAD_MUL, -0.15)
 GM:AddSkillModifier(SKILL_GUNSLINGER, SKILLMOD_MELEE_DAMAGE_MUL, -0.30)
 GM:AddSkillModifier(SKILL_GUNSLINGER, SKILLMOD_MELEE_RANGE_MUL, -0.50)
 GM:AddSkill(SKILL_BOUNTYKILLER, translate.Get("skill_bounty"), GOOD..translate.Get("skill_bounty_d1")..BAD.."-15%"..translate.Get("b_damage"),
-																1,			6,					{SKILL_GUNSLINGER}, TREE_GUNTREE)
+																1,			6,					{SKILL_GUNSLINGER, SKILL_VAMPIRISM}, TREE_GUNTREE)
 GM:AddSkillModifier(SKILL_BOUNTYKILLER, SKILLMOD_DAMAGE, -0.15)
+GM:AddSkill(SKILL_VAMPIRISM, translate.Get("skill_vampirism"), GOOD..translate.Get("skill_vampirism_d1")..BAD.."-35%"..translate.Get("b_damage"),
+																1,		    7,					{SKILL_BOUNTYKILLER}, TREE_GUNTREE)
+GM:AddSkillModifier(SKILL_BOUNTYKILLER, SKILLMOD_DAMAGE, -0.35)
 
 
 GM:AddSkill(SKILL_QUICKRELOAD, translate.Get("skill_q_r"), GOOD.."+10%"..translate.Get("r_speed")..BAD.."-25%"..translate.Get("w_draw"),
@@ -1222,11 +1227,12 @@ GM:AddSkill(SKILL_UPLOAD, ""..translate.Get("skill_later"), GOOD..""..translate.
 
 GM:AddSkillModifier(SKILL_MERIS, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.10)
 GM:AddSkillModifier(SKILL_MERIS, SKILLMOD_MELEE_DAMAGE_MUL, -0.2)
-GM:AddSkill(SKILL_DONATE1, "Donate I", GOOD.."-3% Damage taken\n"..GOOD.."+2% Melee damage! Thank Null",
+GM:AddSkill(SKILL_DONATE1, "Donate I", GOOD.."-3% Damage taken\n"..GOOD.."+2% Melee damage! Thank Null\n"..GOOD.."",
 				                                                            	21,			20,					{SKILL_NONE}, TREE_DONATETREE)
 
 GM:AddSkillModifier(SKILL_DONATE1, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.03)
 GM:AddSkillModifier(SKILL_DONATE1, SKILLMOD_MELEE_DAMAGE_MUL, 0.02)
+GM:AddSkillModifier(SKILL_DONATE1, SKILLMOD_HEALTHMUL, 0.05)
 
 
 SKILL_DONATE2 = 204
@@ -1440,6 +1446,7 @@ GM:SetSkillModifierFunction(SKILLMOD_BLOODARMOR, function(pl, amount)
 		end
 	end
 end)
+GM:SetSkillModifierFunction(SKILLMOD_HEALTHMUL, GM:MkGenericMod("HealthMul"))
 
 GM:SetSkillModifierFunction(SKILLMOD_RELOADSPEED_MUL, function(pl, amount)
 	pl.ReloadSpeedMultiplier = math.Clamp(amount + 1.0, 0.05, 100.0)
