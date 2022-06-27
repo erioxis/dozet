@@ -19,16 +19,40 @@ SWEP.IronSightsAng = Vector(0, 0, 0)
 qual = math.random(1,6)
 if qual == 2 then
     dada = "qual_1"
+	SWEP.Primary.Delay = 0.27
+	SWEP.SwingTime = 0.06
+	SWEP.MeleeDamage = 176
+	SWEP.MeleeRange = 111
 elseif qual == 3 then
 dada = "qual_2"
+SWEP.Primary.Delay = 0.36
+SWEP.MeleeDamage = 145
+SWEP.SwingTime = 0.12
+SWEP.MeleeRange = 109
 elseif qual == 4 then
 dada = "qual_3"
+SWEP.MeleeRange = 77
+SWEP.MeleeDamage = 121
+SWEP.SwingTime = 0.07
+SWEP.Primary.Delay = 0.33
 elseif qual == 5 then
 dada = "qual_4"
+SWEP.MeleeRange = 161
+SWEP.MeleeDamage = 176
+SWEP.Primary.Delay = 0.33
+SWEP.SwingTime = 0.07
 elseif qual == 6 then
 	dada = "qual_5"
+	SWEP.MeleeDamage = 74
+	SWEP.SwingTime = 0.07
+	SWEP.MeleeRange = 109
+	SWEP.Primary.Delay = 0.33
 else
 	dada = "qual_0"
+	SWEP.MeleeDamage = 121
+    SWEP.MeleeRange = 109
+	SWEP.Primary.Delay = 0.33
+	SWEP.SwingTime = 0.07
 end
 
 SWEP.PrintName = translate.Get(dada)..translate.Get("wep_muramasa")
@@ -52,15 +76,12 @@ end
 SWEP.Base = "weapon_zs_basemelee"
 
 SWEP.Tier = 3
-SWEP.MeleeDamage = 120
-SWEP.MeleeRange = 109
 SWEP.MeleeSize = 3
 SWEP.MeleeKnockBack = 0
 SWEP.BlockMultiplierWeapon = 0.75
-SWEP.Primary.Delay = 0.33
 SWEP.WalkSpeed = 350
 
-SWEP.SwingTime = 0.06
+
 SWEP.SwingRotation = Angle(0, -80, -40)
 SWEP.SwingOffset = Vector(10, 80, 0)
 SWEP.SwingHoldType = "melee"
@@ -89,22 +110,6 @@ function SWEP:OnMeleeHit(hitent, hitflesh, tr)
 		self.m_BackStabbing = true
 		self.MeleeDamage = self.MeleeDamage * 8
 	end
-	if qual == 2 then
-		self.Primary.Delay = 0.21
-		self.SwingTime = 0.04
-		self.MeleeDamage = 176
-	elseif qual == 3 then
-		self.Primary.Delay = 0.36
-		self.MeleeDamage = 145
-		self.SwingTime = 0.09
-		elseif qual == 4 then
-			self.MeleeRange = 77
-		elseif qual == 5 then
-			self.MeleeRange = 161
-			self.MeleeDamage = 176
-		elseif qual == 6 then
-			self.MeleeDamage = 74
-		end
 end
 function SWEP:PostOnMeleeHit(hitent, hitflesh, tr)
 	if self.m_BackStabbing then
