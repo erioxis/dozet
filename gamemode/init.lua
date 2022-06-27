@@ -2122,7 +2122,7 @@ function GM:ScalePlayerDamage(pl, hitgroup, dmginfo)
 		GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_WEAPON, inflictor:GetClass(), "Headshots", 1)
 	end
 	if dmginfo:IsBulletDamage() then 
-		dmginfo:SetDamage((dmginfo:GetDamage() * damagescalebullet) - attacker.zKills / 15)
+		dmginfo:SetDamage((dmginfo:GetDamage() * damagescalebullet) - attacker.zKills / 7)
 	end
 
 	if not dmginfo:IsBulletDamage() then return end
@@ -2294,7 +2294,7 @@ concommand.Add("zs_mutationshop_click", function(sender, command, arguments)
 		end
 	end
 
-	--[[if itemtab.Worth then
+	if itemtab.Worth then
 	
 		local tokens = sender:GetTokens()
 		local cost = itemtab.Worth
@@ -2307,7 +2307,7 @@ concommand.Add("zs_mutationshop_click", function(sender, command, arguments)
 			return
 		end
 	
-	end]]
+	end
 
 	net.Start("zs_mutations_table")
 		net.WriteTable(sender.UsedMutations)

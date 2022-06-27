@@ -1159,6 +1159,7 @@ function PANEL:OnMousePressed(mc)
 
 					return
 				end
+
 			else
 				self:DisplayMessage("You need to unlock an adjacent skill and meet any listed requirements!", COLOR_RED)
 				surface.PlaySound("buttons/button8.wav")

@@ -47,10 +47,10 @@ function MakepMutationShop(used)
 	local panfont = "ZSHUDFontSmall"
 	local panhei = 40
 
-	for catid, catname in ipairs(GAMEMODE.ItemCategories) do
+	for catid, catname in ipairs(GAMEMODE.MutItemCategories) do
 		local hasitems = false
 		for i, tab in ipairs(GAMEMODE.Mutations) do
-			if tab.Category == catid and tab.MutationShop then
+			if tab.MutCategory == catid and tab.MutationShop then
 				hasitems = true
 				break
 			end
@@ -66,7 +66,7 @@ function MakepMutationShop(used)
 			list:SetPadding(2)
 
 			for i, tab in ipairs(GAMEMODE.Mutations) do
-				if tab.Category == catid and tab.MutationShop then
+				if tab.MutCategory == catid and tab.MutationShop then
 					local button = vgui.Create("ZSMutationButton")
 					button:SetMutationID(i)
 					list:AddItem(button)

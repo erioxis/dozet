@@ -959,6 +959,7 @@ LANGUAGE.pshop_magic = "Магия"
 LANGUAGE.skill_battler = "Боец "
 LANGUAGE.skill_lanky = "Тягун "
 --Стрелок
+LANGUAGE.skill_d_truecurse = "Проклятье?"
 LANGUAGE.skill_vampirism = "Вампиризм"
 LANGUAGE.skill_vampirism_d1 = "Есть 25% шанс восстановить здоровье при попадание по зомби\n"
 LANGUAGE.skill_alacraty = "Бесплатный тринкет"

@@ -35,9 +35,10 @@ ITEMCAT_DEPLOYABLES = 5
 ITEMCAT_TRINKETS = 6
 ITEMCAT_OTHER = 7
 ITEMCAT_SPECIAL = 8
-ITEMCAT_MUTATIONS = 9
-ITEMCAT_MUTATIONS_BOSS = 10
-ITEMCAT_MAGIC = 11
+ITEMCAT_MAGIC = 9
+
+ITEMCAT_MUTATIONS = 1
+ITEMCAT_MUTATIONS_BOSS = 2
 
 
 ITEMSUBCAT_TRINKETS_DEFENSIVE = 1
@@ -60,10 +61,13 @@ GM.ItemCategories = {
 	[ITEMCAT_TRINKETS] = "Trinkets",
 	[ITEMCAT_OTHER] = "Other",
 	[ITEMCAT_SPECIAL] = "Skill",
-	[ITEMCAT_MUTATIONS]	 = "Mutagen",
-	[ITEMCAT_MUTATIONS_BOSS]	= "Boss Mutagen",
 	[ITEMCAT_MAGIC]	= "Magic"
 
+
+}
+GM.MutItemCategories = {
+	[ITEMCAT_MUTATIONS]	 = "Mutagen",
+	[ITEMCAT_MUTATIONS_BOSS]	= "Boss Mutagen"
 }
 
 GM.ItemSubCategories = {
@@ -112,18 +116,17 @@ function GM:AddPointShopItem(signature, category, price, swep, name, desc, model
 
 	return item
 end
-GM.Mutations = {
+GM.Mutations = {}
 
-}
-function GM:AddMutation(signature, name, desc, category, worth, swep, callback, model, worthshop, mutationshop)
-	local tab = {Signature = signature, Name = name, Description = desc, Category = category, Worth = worth or 0, SWEP = swep, Callback = callback, Model = model, WorthShop = worthshop, MutationShop = mutationshop}
+function GM:AddMutation(signature, name, desc, mutcategory, worth, swep, callback, model, worthshop, mutationshop)
+	local tab = {Signature = signature, Name = name, Description = desc, MutCategory = mutcategory, Worth = worth or 0, SWEP = swep, Callback = callback, Model = model, WorthShop = worthshop, MutationShop = mutationshop}
 	self.Mutations[#self.Mutations + 1] = tab
 
 	return tab
 end
 
-function GM:AddMutationItem(signature, name, desc, category, brains, worth, callback, model)
-	return self:AddMutation(signature, name, desc, category, brains, worth, callback, model, false, true)
+function GM:AddMutationItem(signature, name, desc, mutcategory, brains, worth, callback, model)
+	return self:AddMutation(signature, name, desc, mutcategory, brains, worth, callback, model, false, true)
 end
 
 -- How much ammo is considered one 'clip' of ammo? For use with setting up weapon defaults. Works directly with zs_survivalclips
@@ -710,16 +713,16 @@ item =
 GM:AddPointShopItem("cursedtrinket",		ITEMCAT_SPECIAL,			120,				"trinket_cursedtrinket")
 item.SkillRequirement = SKILL_CURSEDTRINKETS
 --ZS Mutagens
-GM:AddMutationItem("m_zombie_health", ""..translate.Get("zshop_alphazomb"), ""..translate.Get("zshop_alphazomb2"), ITEMCAT_MUTATIONS, 150, nil, function(pl) pl.m_Zombie_Health = true end, "models/items/healthkit.mdl")
-GM:AddMutationItem("m_zombie_health1", ""..translate.Get("zshop_godzomb"), ""..translate.Get("zshop_godzomb2"), ITEMCAT_MUTATIONS, 500, nil, function(pl) pl.m_Zombie_GodHealth = true end, "models/player/fatty/fatty.mdl")    
-GM:AddMutationItem("m_zombie_zdef", ""..translate.Get("zshop_zdef1"), ""..translate.Get("zshop_def"), ITEMCAT_MUTATIONS, 300, nil, function(pl) pl.m_zombiedef = true end, "models/player/fatty/fatty.mdl")      
-GM:AddMutationItem("m_zombie_moan", ""..translate.Get("zshop_zombsprint"), ""..translate.Get("zshop_zombsprint2"), ITEMCAT_MUTATIONS, 400, nil, function(pl) pl.m_Zombie_Moan = true end, "models/player/zombie_classic.mdl")
-GM:AddMutationItem("m_zombie_moanguard", ""..translate.Get("zshop_zombguard"), ""..translate.Get("zshop_zombguard2"), ITEMCAT_MUTATIONS, 200, nil, function(pl) pl.m_Zombie_MoanGuard = true end, "models/player/zombie_classic.mdl")
+GM:AddMutationItem("m_zombie_health", translate.Get("zshop_alphazomb"), translate.Get("zshop_alphazomb2"), ITEMCAT_MUTATIONS, 150, nil, function(pl) pl.m_Zombie_Health = true end, "models/items/healthkit.mdl")
+GM:AddMutationItem("m_zombie_health1", translate.Get("zshop_godzomb"), translate.Get("zshop_godzomb2"), ITEMCAT_MUTATIONS, 500, nil, function(pl) pl.m_Zombie_GodHealth = true end, "models/player/fatty/fatty.mdl")    
+GM:AddMutationItem("m_zombie_zdef", translate.Get("zshop_zdef1"), translate.Get("zshop_def"), ITEMCAT_MUTATIONS, 300, nil, function(pl) pl.m_zombiedef = true end, "models/player/fatty/fatty.mdl")      
+GM:AddMutationItem("m_zombie_moan", translate.Get("zshop_zombsprint"), translate.Get("zshop_zombsprint2"), ITEMCAT_MUTATIONS, 400, nil, function(pl) pl.m_Zombie_Moan = true end, "models/player/zombie_classic.mdl")
+GM:AddMutationItem("m_zombie_moanguard", translate.Get("zshop_zombguard"), translate.Get("zshop_zombguard2"), ITEMCAT_MUTATIONS, 200, nil, function(pl) pl.m_Zombie_MoanGuard = true end, "models/player/zombie_classic.mdl")
 
 -- Boss Mutagen
-GM:AddMutationItem("m_zombie_health2", ""..translate.Get("zshop_godestzomb"), ""..translate.Get("zshop_godestzomb2"), ITEMCAT_MUTATIONS_BOSS, 1000, nil, function(pl) pl.m_Zombie_GodyHealth = true end, "models/items/healthkit.mdl")
-GM:AddMutationItem("m_zombie_healthcursed", ""..translate.Get("zshop_cursed"), ""..translate.Get("zshop_cursed1"), ITEMCAT_MUTATIONS_BOSS, 900, nil, function(pl) pl.m_Zombie_CursedHealth = true end, "models/items/healthkit.mdl")      
-GM:AddMutationItem("m_shade_damage", ""..translate.Get("zshop_bossphysicshazard"), ""..translate.Get("zshop_bossphysicshazard2"), ITEMCAT_MUTATIONS_BOSS, 550, nil, function(pl) pl.m_Shade_Force = true end, "models/player/zombie_classic.mdl")
+GM:AddMutationItem("m_zombie_health2", translate.Get("zshop_godestzomb"), translate.Get("zshop_godestzomb2"), ITEMCAT_MUTATIONS_BOSS, 1000, nil, function(pl) pl.m_Zombie_GodyHealth = true end, "models/items/healthkit.mdl")
+GM:AddMutationItem("m_zombie_healthcursed", translate.Get("zshop_cursed"), translate.Get("zshop_cursed1"), ITEMCAT_MUTATIONS_BOSS, 900, nil, function(pl) pl.m_Zombie_CursedHealth = true end, "models/items/healthkit.mdl")      
+GM:AddMutationItem("m_shade_damage", translate.Get("zshop_bossphysicshazard"), translate.Get("zshop_bossphysicshazard2"), ITEMCAT_MUTATIONS_BOSS, 550, nil, function(pl) pl.m_Shade_Force = true end, "models/player/zombie_classic.mdl")
 -- These are the honorable mentions that come at the end of the round.
 
 local function genericcallback(pl, magnitude) return pl:Name(), magnitude end

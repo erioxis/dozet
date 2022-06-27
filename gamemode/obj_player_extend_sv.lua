@@ -59,14 +59,13 @@ function meta:ProcessDamage(dmginfo)
 			attacker.dpsmeter = damage/wep.Primary.Delay * (wep.Primary.NumShots or 1)
 			attacker:SetDPS(damage/wep.Primary.Delay * (wep.Primary.NumShots or 1))
 			if attacker:IsSkillActive(SKILL_VAMPIRISM) and math.random(1,4 * (wep.Primary.NumShots or 1)) == 1 then
-				attacker:SetHealth(math.min(attacker:GetMaxHealth(), attacker:Health() + self:Health() * 0.03))
+				attacker:SetHealth(math.min(attacker:GetMaxHealth(), attacker:Health() + attacker:GetMaxHealth() * 0.11))
 			end
 		
 			if wep.IsMelee then
 				if attacker:IsSkillActive(SKILL_CHEAPKNUCKLE) and math.abs(self:GetForward():Angle().yaw - attacker:GetForward():Angle().yaw) <= 90 then
 					self:AddLegDamage(12)
 				end
-				
 
 				if attacker.MeleeDamageToBloodArmorMul and attacker.MeleeDamageToBloodArmorMul > 0 and attacker:GetBloodArmor() < attacker.MaxBloodArmor then
 					attacker:SetBloodArmor(math.min(attacker.MaxBloodArmor, attacker:GetBloodArmor() + math.min(damage, self:Health()) * attacker.MeleeDamageToBloodArmorMul * attacker.BloodarmorGainMul))

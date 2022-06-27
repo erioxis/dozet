@@ -293,6 +293,8 @@ SKILL_AVOID_BLOCK = 275
 SKILL_CAN_EATER = 276
 SKILL_MEDICBOOSTER = 277
 SKILL_VAMPIRISM = 278
+SKILL_D_CURSEDTRUE = 279
+SKILL_TORMENT8 = 280
 
 SKILLMOD_HEALTH = 1
 SKILLMOD_SPEED = 2
@@ -750,6 +752,14 @@ GM:AddSkillModifier(SKILL_BOUNTYKILLER, SKILLMOD_DAMAGE, -0.15)
 GM:AddSkill(SKILL_VAMPIRISM, translate.Get("skill_vampirism"), GOOD..translate.Get("skill_vampirism_d1")..BAD.."-35%"..translate.Get("b_damage"),
 																1,		    7,					{SKILL_BOUNTYKILLER}, TREE_GUNTREE)
 GM:AddSkillModifier(SKILL_BOUNTYKILLER, SKILLMOD_DAMAGE, -0.35)
+GM:AddSkill(SKILL_D_CURSEDTRUE, translate.Get("skill_d_truecurse"), BAD.."-100%"..translate.Get("m_curse")..GOOD.."+35"..translate.Get("health")..GOOD.."+40"..translate.Get("speed")..GOOD.."+15%"..translate.Get("r_speed"),
+																2,		    8,					{SKILL_VAMPIRISM}, TREE_GUNTREE)
+GM:AddSkillModifier(SKILL_D_CURSEDTRUE, SKILLMOD_CURSEM, -1)
+GM:AddSkillModifier(SKILL_D_CURSEDTRUE, SKILLMOD_SPEED, 40)
+GM:AddSkillModifier(SKILL_D_CURSEDTRUE, SKILLMOD_HEALTH, 35)
+GM:AddSkillModifier(SKILL_D_CURSEDTRUE, SKILLMOD_RELOADSPEED_MUL, 0.15)
+
+
 
 
 GM:AddSkill(SKILL_QUICKRELOAD, translate.Get("skill_q_r"), GOOD.."+10%"..translate.Get("r_speed")..BAD.."-25%"..translate.Get("w_draw"),
@@ -1128,9 +1138,9 @@ SKILL_TORMENT6 = 253
 GM:AddSkill(SKILL_TORMENT6, "Torment VI", GOOD.."+30% Xp Multiplier\n"..BAD.."-50% Repair rate and -50% Medtool effectiveness",
 				                                                            	3,			30,					{SKILL_TORMENT5}, TREE_ANCIENTTREE)
 
-GM:AddSkillModifier(SKILL_TORMENT5, SKILLMOD_REPAIRRATE_MUL, -0.50)
-GM:AddSkillModifier(SKILL_TORMENT5, SKILLMOD_MEDKIT_EFFECTIVENESS_MUL, -0.50)
-GM:AddSkillModifier(SKILL_TORMENT5, SKILLMOD_XP, 0.30)
+GM:AddSkillModifier(SKILL_TORMENT6, SKILLMOD_REPAIRRATE_MUL, -0.50)
+GM:AddSkillModifier(SKILL_TORMENT6, SKILLMOD_MEDKIT_EFFECTIVENESS_MUL, -0.50)
+GM:AddSkillModifier(SKILL_TORMENT6, SKILLMOD_XP, 0.30)
 SKILL_DEATHCURSE = 234
 GM:AddSkill(SKILL_DEATHCURSE, "Curse cleaning", GOOD.."+15% Xp Multiplier\n"..GOOD.."Eating food blesses you, forgiving your curse\nIf you cursed and eat food give 35 seconds of defence\n"..BAD.."-30% Max curse\n"..BAD.."+30% time to eat food",
 				                                                            	2,			30,					{SKILL_TORMENT5}, TREE_ANCIENTTREE)
@@ -1138,7 +1148,7 @@ GM:AddSkillModifier(SKILL_DEATHCURSE, SKILLMOD_XP, 0.15)
 GM:AddSkillModifier(SKILL_DEATHCURSE, SKILLMOD_CURSEM, -0.30)
 GM:AddSkillModifier(SKILL_DEATHCURSE, SKILLMOD_FOODEATTIME_MUL, 0.30)
 GM:AddSkill(SKILL_TORMENT7, "Torment VII", GOOD.."+150% Xp Multiplier\n"..BAD.."-30% Damage and -5 luck and -45 Health and -55 speed\n"..BAD.."+25% Arsenal price\n"..BAD.."-50% Medical and repair effectiveness\nFull of pain",
-				                                                            	2,			31,					{SKILL_TORMENT6}, TREE_ANCIENTTREE)
+				                                                            	2,			31,					{SKILL_TORMENT6,SKILL_TORMENT8}, TREE_ANCIENTTREE)
 GM:AddSkillModifier(SKILL_TORMENT7, SKILLMOD_XP, 1.5)
 GM:AddSkillModifier(SKILL_TORMENT7, SKILLMOD_MELEE_DAMAGE_MUL, -0.30)
 GM:AddSkillModifier(SKILL_TORMENT7, SKILLMOD_DAMAGE, -0.30)
@@ -1148,6 +1158,12 @@ GM:AddSkillModifier(SKILL_TORMENT7, SKILLMOD_SPEED, -55)
 GM:AddSkillModifier(SKILL_TORMENT7, SKILLMOD_ARSENAL_DISCOUNT, 0.25)
 GM:AddSkillModifier(SKILL_TORMENT5, SKILLMOD_REPAIRRATE_MUL, -0.50)
 GM:AddSkillModifier(SKILL_TORMENT5, SKILLMOD_MEDKIT_EFFECTIVENESS_MUL, -0.50)
+GM:AddSkill(SKILL_TORMENT8, "Torment VIII", GOOD.."+30% Xp Multiplier\n"..BAD.."-50 Health",
+				                                                            	3,			32,					{SKILL_TORMENT7}, TREE_ANCIENTTREE)
+
+GM:AddSkillModifier(SKILL_TORMENT8, SKILLMOD_HEALTH, -50)
+GM:AddSkillModifier(SKILL_TORMENT8, SKILLMOD_XP, 0.30)
+
 --Defend skills
 
 SKILL_DEFEND1 = 191
