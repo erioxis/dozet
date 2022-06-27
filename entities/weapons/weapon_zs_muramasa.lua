@@ -16,17 +16,19 @@ SWEP.SCKMaterials = {"cs_assault/concretefloor026a",}
 
 SWEP.IronSightsPos = Vector(0.64, 0, 4.76)
 SWEP.IronSightsAng = Vector(0, 0, 0)
-qual = math.random(1,5)
-if qual == 1 then
+qual = math.random(1,6)
+if qual == 2 then
     dada = "qual_1"
-elseif qual == 2 then
-dada = "qual_2"
 elseif qual == 3 then
-dada = "qual_3"
+dada = "qual_2"
 elseif qual == 4 then
+dada = "qual_3"
+elseif qual == 5 then
 dada = "qual_4"
-else
+elseif qual == 6 then
 	dada = "qual_5"
+else
+	dada = "qual_0"
 end
 
 SWEP.PrintName = translate.Get(dada)..translate.Get("wep_muramasa")
@@ -87,19 +89,20 @@ function SWEP:OnMeleeHit(hitent, hitflesh, tr)
 		self.m_BackStabbing = true
 		self.MeleeDamage = self.MeleeDamage * 8
 	end
-	if qual == 1 then
+	if qual == 2 then
 		self.Primary.Delay = 0.21
 		self.SwingTime = 0.04
-	elseif qual == 2 then
+		self.MeleeDamage = 176
+	elseif qual == 3 then
 		self.Primary.Delay = 0.36
 		self.MeleeDamage = 145
 		self.SwingTime = 0.09
-		elseif qual == 3 then
-			self.MeleeRange = 77
 		elseif qual == 4 then
+			self.MeleeRange = 77
+		elseif qual == 5 then
 			self.MeleeRange = 161
 			self.MeleeDamage = 176
-		else
+		elseif qual == 6 then
 			self.MeleeDamage = 74
 		end
 end

@@ -634,6 +634,7 @@ LANGUAGE.qual_2 = "Terrible "
 LANGUAGE.qual_3 = "Tiny "
 LANGUAGE.qual_4 = "Massive "
 LANGUAGE.qual_5 = "Dull "
+LANGUAGE.qual_0 = ""
 --melee
 LANGUAGE.wep_muramasa		= "Muramasa"
 LANGUAGE.wep_d_muramasa		= "Hmm what?Ancient weapon with WTF WITH QUALITY WHY IS "

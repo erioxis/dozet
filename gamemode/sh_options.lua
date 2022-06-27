@@ -459,6 +459,7 @@ GM:AddPointShopItem("butcherknf",		ITEMCAT_MELEE,			55,				"weapon_zs_butcherkni
 GM:AddPointShopItem("keyboard",		    ITEMCAT_MELEE,			25,				"weapon_zs_keyboard")
 GM:AddPointShopItem("dash",		    ITEMCAT_MELEE,			55,				"weapon_zs_f_dash")
 -- Tier 3
+GM:AddPointShopItem("muramasa",		ITEMCAT_MELEE,			90,				"weapon_zs_muramasa")
 GM:AddPointShopItem("longsword",		ITEMCAT_MELEE,			90,				"weapon_zs_longsword")
 GM:AddPointShopItem("executioner",		ITEMCAT_MELEE,			90,				"weapon_zs_executioner")
 GM:AddPointShopItem("rebarmace",		ITEMCAT_MELEE,			90,				"weapon_zs_rebarmace")
@@ -482,7 +483,7 @@ GM:AddPointShopItem("megahook",			ITEMCAT_MELEE,			1500,			"weapon_zs_harpoon_me
 GM:AddPointShopItem("teslar",			ITEMCAT_MELEE,			1500,			"weapon_zs_teslorer")
 GM:AddPointShopItem("pw7",			ITEMCAT_MELEE,			1500,			"weapon_zs_powerfists_t7")
 -- Tier 7
-GM:AddPointShopItem("speed",			ITEMCAT_MELEE,			40600,			"weapon_zs_speed")
+GM:AddPointShopItem("speed",			ITEMCAT_MELEE,			80600,			"weapon_zs_speed")
 
 GM:AddPointShopItem("murasama",			ITEMCAT_MELEE,			3000,			"weapon_zs_murasama")
 -- Super Trinkets ------------------------------------------------------------------------------------------------------------------------------------------------
