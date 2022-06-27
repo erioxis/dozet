@@ -919,12 +919,12 @@ GM:AddSkill(SKILL_POINTIII, "Point III", NEUTRAL.."+0.15 Luck\n"..GOOD.."+5% Poi
 SKILL_POINTIIII = 160
 	GM:AddSkillModifier(SKILL_POINTIIII, SKILLMOD_POINT_MULTIPLIER, 0.07)
 	GM:AddSkillModifier(SKILL_POINTIIII, SKILLMOD_LUCK, 0.40)
-GM:AddSkill(SKILL_POINTIIII, "Pointer", NEUTRAL.."+0.40 Luck\n"..GOOD.."+7% Point MUL\n" ..GOOD.. "+5 Start Points",
+GM:AddSkill(SKILL_POINTIIII, "Point IV", NEUTRAL.."+0.40 Luck\n"..GOOD.."+7% Point MUL\n" ..GOOD.. "+5 Start Points",
 																-2,			-3,					{SKILL_POINTIII}, TREE_POINTTREE)
 SKILL_POINTD = 248
-GM:AddSkillModifier(SKILL_POINTD, SKILLMOD_POINT_MULTIPLIER, -0.25)
-GM:AddSkillModifier(SKILL_POINTD, SKILLMOD_LUCK, -0.5)
-GM:AddSkill(SKILL_POINTD, "Double trouble", BAD.."-0.5 luck\n"..GOOD.."Can double points\n" ..BAD.. "-25% Points multiplier",
+GM:AddSkillModifier(SKILL_POINTD, SKILLMOD_POINT_MULTIPLIER, -0.10)
+GM:AddSkillModifier(SKILL_POINTD, SKILLMOD_LUCK, -0.9)
+GM:AddSkill(SKILL_POINTD, "Double trouble", BAD.."-0.9 luck\n"..GOOD.."Can double points on end wave\n" ..BAD.. "-10% Points multiplier",
 																-3.5,			-3,					{SKILL_POINTIIII}, TREE_POINTTREE)
 	SKILL_POINTFUL = 219
 	GM:AddSkillModifier(SKILL_POINTFUL, SKILLMOD_POINT_MULTIPLIER, 0.1)

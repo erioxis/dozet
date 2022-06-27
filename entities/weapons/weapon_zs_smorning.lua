@@ -143,7 +143,8 @@ GAMEMODE:AddNewRemantleBranch(SWEP, 1, ""..translate.Get("wep_smorning_r1"), "".
 	wept.BulletCallback = function(attacker, tr, dmginfo)
 		local ent = tr.Entity
 		if SERVER and math.random(7) == 1 and ent:IsValidLivingZombie() then
-				 ent:GiveStatus("hollowing",300)
+			ent:GiveStatus("hollowing",300)
+			attacker:SetHealth(math.min(attacker:GetMaxHealth(), attacker:Health() + (attacker:GetMaxHealth() * 1.11))) 
 		end
 	end 
 	

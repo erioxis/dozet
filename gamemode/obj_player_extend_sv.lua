@@ -61,6 +61,7 @@ function meta:ProcessDamage(dmginfo)
 			if attacker:IsSkillActive(SKILL_VAMPIRISM) and math.random(1,4 * (wep.Primary.NumShots or 1)) == 1 then
 				attacker:SetHealth(math.min(attacker:GetMaxHealth(), attacker:Health() + attacker:GetMaxHealth() * 0.11))
 			end
+			attacker.FireDamage = attacker.FireDamage + 1
 		
 			if wep.IsMelee then
 				if attacker:IsSkillActive(SKILL_CHEAPKNUCKLE) and math.abs(self:GetForward():Angle().yaw - attacker:GetForward():Angle().yaw) <= 90 then
@@ -251,6 +252,7 @@ function meta:ProcessDamage(dmginfo)
 				if self:IsSkillActive(SKILL_FOLGA) then
 					dmginfo:SetDamage(dmginfo:GetDamage() - 5)
 				end
+			
 					
 		
 
@@ -475,19 +477,7 @@ function meta:ProcessDamage(dmginfo)
 
 		self.ShouldFlinch = true
 	end
-	if dmginfo:IsBulletDamage() and attacker:HasTrinket("fire_at") then 
-		dmginfo:SetDamageType(DMG_BURN)
-		self.FireDamage = self.FireDamage + 1
-	end
-	if dmginfo:IsBulletDamage() and attacker:HasTrinket("pulse_at") then 
-		dmginfo:SetDamageType(DMG_SHOCK)
-	end
-	if dmginfo:IsBulletDamage() and attacker:HasTrinket("acid_at") then 
-		dmginfo:SetDamageType(DMG_ACID)
-	end
-	if dmginfo:IsBulletDamage() and attacker:HasTrinket("ultra_at") then 
-		dmginfo:SetDamageType(DMG_DIRECT)
-	end
+
 
 end
 
