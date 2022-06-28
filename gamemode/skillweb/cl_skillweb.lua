@@ -1122,7 +1122,7 @@ function PANEL:OnMousePressed(mc)
 			local mx, my = gui.MousePos()
 			local can_remort = MySelf:CanSkillsRemort()
 			contextmenu:SetPos(mx - contextmenu:GetWide() / 2, my - contextmenu:GetTall() / 2)
-
+			if (GAMEMODE.Skills[hoveredskill].LevelReq or 1) < MySelf:GetZSLevel() then
 			if hoveredskill == -1 and can_remort then
 				Derma_Query(
 					"Are you ABSOLUTELY sure you want to remort?\nYou will revert to level 1, lose all skills, but have 2 extra SP.\nThis cannot be undone!",
@@ -1150,7 +1150,6 @@ function PANEL:OnMousePressed(mc)
 				contextmenu.Button:SetText("Deactivate")
 			elseif MySelf:IsSkillUnlocked(hoveredskill) then
 				contextmenu.Button:SetText("Activate")
-			    if (GAMEMODE.Skills[hoveredskill].LevelReq or 1) <= MySelf:GetZSLevel() then
 			elseif MySelf:SkillCanUnlock(hoveredskill) then
 
 				if MySelf:GetZSSPRemaining() >= 1 then
@@ -1161,26 +1160,18 @@ function PANEL:OnMousePressed(mc)
 
 					return
 				end
-
-				self:DisplayMessage("You need %s level to unlock!", COLOR_RED)
-				surface.PlaySound("buttons/button8.wav")
-
-				return
 			else
 				self:DisplayMessage("You need to unlock an adjacent skill and meet any listed requirements!", COLOR_RED)
 				surface.PlaySound("buttons/button8.wav")
 
 				return
 			end
-		elseif (GAMEMODE.Skills[hoveredskill].LevelReq or 1) >= MySelf:GetZSLevel() then
+		elseif (GAMEMODE.Skills[hoveredskill].LevelReq or 1) > MySelf:GetZSLevel() then
 			self:DisplayMessage("You need have to level - "..GAMEMODE.Skills[hoveredskill].LevelReq, COLOR_RED)
 			surface.PlaySound("buttons/button8.wav")
 
 			return
 		end
-
-		
-
 			contextmenu.SkillID = hoveredskill
 
 			contextmenu:SetVisible(true)
