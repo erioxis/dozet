@@ -459,6 +459,7 @@ GM:AddPointShopItem("butcherknf",		ITEMCAT_MELEE,			55,				"weapon_zs_butcherkni
 GM:AddPointShopItem("keyboard",		    ITEMCAT_MELEE,			25,				"weapon_zs_keyboard")
 GM:AddPointShopItem("dash",		    ITEMCAT_MELEE,			55,				"weapon_zs_f_dash")
 -- Tier 3
+GM:AddPointShopItem("muramasa",		ITEMCAT_MELEE,			90,				"weapon_zs_muramasa")
 GM:AddPointShopItem("longsword",		ITEMCAT_MELEE,			90,				"weapon_zs_longsword")
 GM:AddPointShopItem("executioner",		ITEMCAT_MELEE,			90,				"weapon_zs_executioner")
 GM:AddPointShopItem("rebarmace",		ITEMCAT_MELEE,			90,				"weapon_zs_rebarmace")
@@ -472,10 +473,8 @@ GM:AddPointShopItem("kongol",			ITEMCAT_MELEE,			135,			"weapon_zs_kongolaxe")
 GM:AddPointShopItem("scythe",			ITEMCAT_MELEE,			135,			"weapon_zs_scythe")
 GM:AddPointShopItem("powerfists",		ITEMCAT_MELEE,			135,			"weapon_zs_powerfists")
 -- Tier 5
-GM:AddPointShopItem("muramasa",		ITEMCAT_MELEE,			500,				"weapon_zs_muramasa")
 GM:AddPointShopItem("frotchet",			ITEMCAT_MELEE,			500,			"weapon_zs_frotchet")
 GM:AddPointShopItem("luxrockj",			ITEMCAT_MELEE,			135,			"weapon_zs_luxshade")
-GM:AddPointShopItem("xouryc",			ITEMCAT_MELEE,			500,			"weapon_zs_loy")
 GM:AddPointShopItem("luxoid",			ITEMCAT_MELEE,			500,			"weapon_zs_luxoid")
 GM:AddPointShopItem("boomerang",		ITEMCAT_MELEE,			500,			"weapon_zs_boomerang")
 -- Tier 6
@@ -484,7 +483,7 @@ GM:AddPointShopItem("teslar",			ITEMCAT_MELEE,			1500,			"weapon_zs_teslorer")
 GM:AddPointShopItem("pw7",			ITEMCAT_MELEE,			1500,			"weapon_zs_powerfists_t7")
 -- Tier 7
 GM:AddPointShopItem("speed",			ITEMCAT_MELEE,			80600,			"weapon_zs_speed")
-
+GM:AddPointShopItem("xouryc",			ITEMCAT_MELEE,			3000,			"weapon_zs_loy")
 GM:AddPointShopItem("murasama",			ITEMCAT_MELEE,			3000,			"weapon_zs_murasama")
 -- Super Trinkets ------------------------------------------------------------------------------------------------------------------------------------------------
 
