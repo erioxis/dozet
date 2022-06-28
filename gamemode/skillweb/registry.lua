@@ -1002,6 +1002,7 @@ GM:AddSkill(SKILL_DUDEE, "Lucky man", GOOD.."+2 Luck\n",
 SKILL_ANCK = 170
 GM:AddSkill(SKILL_ANCK, "Ancient knowledge", PURPLE.."Learn The Ancient knowledge \n" ..BAD.. "The cost of knowledge",
 					0,			0,					{SKILL_SOLARUZ}, TREE_ANCIENTTREE)
+.LevelReq = 60
 SKILL_ANCK1 = 171
 GM:AddSkill(SKILL_ANCK1, "Ancient Volume 1", PURPLE.."Learn The Ancient knowledge\n You know only 50%",
 					0,			-1,					{SKILL_ANCK}, TREE_ANCIENTTREE)

@@ -1150,7 +1150,9 @@ function PANEL:OnMousePressed(mc)
 				contextmenu.Button:SetText("Deactivate")
 			elseif MySelf:IsSkillUnlocked(hoveredskill) then
 				contextmenu.Button:SetText("Activate")
+			    if (GAMEMODE.Skills[hoveredskill].LevelReq or 1) <= MySelf:GetZSLevel() then
 			elseif MySelf:SkillCanUnlock(hoveredskill) then
+
 				if MySelf:GetZSSPRemaining() >= 1 then
 					contextmenu.Button:SetText("Unlock")
 				else
@@ -1160,12 +1162,24 @@ function PANEL:OnMousePressed(mc)
 					return
 				end
 
+				self:DisplayMessage("You need %s level to unlock!", COLOR_RED)
+				surface.PlaySound("buttons/button8.wav")
+
+				return
 			else
 				self:DisplayMessage("You need to unlock an adjacent skill and meet any listed requirements!", COLOR_RED)
 				surface.PlaySound("buttons/button8.wav")
 
 				return
 			end
+		elseif (GAMEMODE.Skills[hoveredskill].LevelReq or 1) >= MySelf:GetZSLevel() then
+			self:DisplayMessage("You need have to level - "..GAMEMODE.Skills[hoveredskill].LevelReq, COLOR_RED)
+			surface.PlaySound("buttons/button8.wav")
+
+			return
+		end
+
+		
 
 			contextmenu.SkillID = hoveredskill
 
