@@ -1099,7 +1099,7 @@ GM:AddSkillModifier(SKILL_DEFEND, SKILLMOD_SPEED, -1)
 SKILL_TORMENT1 = 229
 GM:AddSkill(SKILL_TORMENT1, "Torment I", GOOD.."+15% Xp Multiplier\n"..BAD.."-30 Speed\n"..BAD.."-15% Bullet Damage\n",
 				                                                            	1,			26,					{SKILL_NONE}, TREE_ANCIENTTREE)
-
+.RemortReq = 2
 GM:AddSkillModifier(SKILL_TORMENT1, SKILLMOD_DAMAGE, -0.15)
 GM:AddSkillModifier(SKILL_TORMENT1, SKILLMOD_SPEED, -30)
 GM:AddSkillModifier(SKILL_TORMENT1, SKILLMOD_XP, 0.15)
