@@ -1321,6 +1321,7 @@ GM:AddSkillModifier(SKILL_CHALLENGER3, SKILLMOD_XP, 1)
 SKILL_USELESS_1 = 500
 GM:AddSkill(SKILL_USELESS_1, "Useless 1", GOOD.."+5% XP MUL",
 				                                                            	0,			0,					{SKILL_NONE}, TREE_USELESSTREE)
+.RemortReq = 16
 GM:AddSkillModifier(SKILL_USELESS_1, SKILLMOD_XP, 0.05)
 SKILL_USELESS_2 = 501
 GM:AddSkill(SKILL_USELESS_2, "Useless 2", GOOD.."+5 Health",
