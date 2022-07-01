@@ -113,6 +113,13 @@ local statusdisplays = {
 	Icon = Material("zombiesurvival/speed_up.png")
 },
 {
+	Color = Color(255, 255, 255),
+	Name = "Holly!",
+	ValFunc = statusValueFunction("holly"),
+	Max = 20,
+	Icon = Material("zombiesurvival/cursed.png")
+},
+{
 	Color = Color(130, 220, 110),
 	Name = "SPEED!",
 	ValFunc = statusValueFunction("healdartboost"),

@@ -579,8 +579,10 @@ function meta:ResetSpeed(noset, health)
 		speed = SPEED_NORMAL - (SPEED_NORMAL - speed) * (self.WeaponWeightSlowMul or 1)
 	end
 
-	if self.SkillSpeedAdd and P_Team(self) == TEAM_HUMAN then
+	if self.SkillSpeedAdd and P_Team(self) == TEAM_HUMAN and not self:HasTrinket("altchayok") then
 		speed = speed + self.SkillSpeedAdd
+	elseif self.SkillSpeedAdd and P_Team(self) == TEAM_HUMAN and self:HasTrinket("altchayok") then
+		speed = speed + self.SkillSpeedAdd * math.max(1, GAMEMODE:GetWave() * 0.6 or 1)
 	end
 
 	if self:IsSkillActive(SKILL_LIGHTWEIGHT) and wep:IsValid() and wep.IsMelee then

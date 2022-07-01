@@ -913,11 +913,11 @@ GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_MUL, 0.20)
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 0.12)
 GM:AddSkillModifier(trinket, SKILLMOD_HEALING_RECEIVED, 0.12)
 GM:AddSkillModifier(trinket, SKILLMOD_ARSENAL_DISCOUNT, -0.06)
-trinket = GM:AddTrinket("Soul of Chesus", "lampsoul", false, nil, {
+trinket = GM:AddTrinket("Soul of Shitus", "lampsoul", false, nil, {
 	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 7.697, y = 7.697 }, color = Color(10, 255, 35, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core_2+"] = { type = "Sprite", sprite = "effects/splashwake1", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 10, y = 10 }, color = Color(29, 53, 104), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 2, 0), angle = Angle(0, 0, 0), size = Vector(0.349, 0.349, 0.349), color = Color(226, 226, 19, 100), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} }
-}, nil, "+30% Мили ренжа\n +30% Melee range\n Q:4", nil, nil, "weapon_zs_soul")
+}, nil, "+30% Мили ренжа fdkosfdskffsk лампа\n +30% Melee range\n Q:4", nil, nil, "weapon_zs_soul")
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_RANGE_MUL, 0.30)
 
 
@@ -939,39 +939,47 @@ GM:AddSkillModifier(trinket, SKILLMOD_MELEE_RANGE_MUL, 0.30)
 
 
 
-GM:AddTrinket("Soul of Alter Judas", "altjudassoul", false, blcorev, blcorew, nil, "Blinds and knocks zombies away when attacked\nRecharges every 15 seconds\nОслепляет и откидывает назад зомби(Которые атаковали вас)\n Перезарядка каждые 15 сек\n Q:2")
+GM:AddTrinket("Soul of Alter Judas", "altjudassoul", false, blcorev, blcorew, nil, "If health lower than 20% give buffs\nЕсли здоровье ниже 20% то дает баффы\n Q:2", nil, nil, "weapon_zs_soulalt")
 
 trinket = GM:AddTrinket("Soul of Alt ???", "altsoul", false, nil, {
 	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 10.697, y = 10.697 }, color = Color(255, 255, 255, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core_2+"] = { type = "Sprite", sprite = "effects/splashwake1", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 30, y = 30 }, color = Color(255, 255, 255, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 2, 0), angle = Angle(0, 0, 0), size = Vector(0.349, 0.349, 0.349), color = Color(255, 255, 255, 255), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} }
-}, nil, "+22% jump height\n+22% К силе прыжка.", nil, nil, "weapon_zs_soul")
-GM:AddSkillModifier(trinket, SKILLMOD_JUMPPOWER_MUL, 0.22)
+}, nil, "+22% К радиусу взрыва\n+22% Explosion radius.", nil, nil, "weapon_zs_soulalt")
+GM:AddSkillModifier(trinket, SKILLMOD_EXP_DAMAGE_RADIUS, 0.22)
+trinket = GM:AddTrinket("Soul of Alt Eden", "soulalteden", false, nil, {
+	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 17.697, y = 17.697 }, color = Color(4, 8, 255, 208), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
+	["black_core_2+"] = { type = "Sprite", sprite = "effects/splashwake1", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 30, y = 30 }, color = Color(165, 39, 39), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
+	["black_core"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 2, 0), angle = Angle(0, 0, 0), size = Vector(0.349, 0.349, 0.349), color = Color(26, 201, 245), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} }
+}, nil, "On kill give random Dkills,can give -20 Dkills\nПри убийстве дает рандомные Dkills они могут уйти в минус\n Q:D20", nil, nil, "weapon_zs_soulalt")
+
+trinket = GM:AddTrinket("Soul of Alt Tea", "altchayok", false, nil, {
+	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 17.697, y = 17.697 }, color = Color(255, 0, 255, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
+	["black_core_2+"] = { type = "Sprite", sprite = "effects/splashwake1", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 10, y = 10 }, color = Color(10, 23, 35, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
+	["black_core"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 2, 0), angle = Angle(0, 0, 0), size = Vector(0.349, 0.349, 0.349), color = Color(55, 55, 5, 100), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} }
+}, nil, "+10 скорости но под конец волны скорость умножается на кол-во волн\n +10 Speed,on endwave multiple speed on wave count\n Q:1", nil, nil, "weapon_zs_altsoul")
+GM:AddSkillModifier(trinket, SKILLMOD_SPEED, 10)
 
 
 trinket = GM:AddTrinket("Alt Samson Soul", "altsamsonsoul", false, nil, {
 	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 10.697, y = 10.697 }, color = Color(255, 0, 0, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core_2+"] = { type = "Sprite", sprite = "effects/splashwake1", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 30, y = 30 }, color = Color(255, 5, 11, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 2, 0), angle = Angle(0, 0, 0), size = Vector(0.349, 0.349, 0.349), color = Color(255, 0, 0, 255), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} }
-}, nil,"Вы наносите на 10% больше урона мили оружием и получаете в 30% раз больше урона от яда и кровотока.\nYou deal to 10% more melee damage and take by 30% more poison and blood damage\n Q:3", nil, nil, "weapon_zs_soul")
-GM:AddSkillModifier(trinket, SKILLMOD_POISON_DAMAGE_TAKEN_MUL, 0.30)
-GM:AddSkillModifier(trinket, SKILLMOD_BLEED_DAMAGE_TAKEN_MUL, 0.30)
-GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_MUL, 0.10)
+}, nil,"Нанесение или получение урона добавляет вам ярость,мед винтовка понизит вашу ярость.\nDealing or taking damage adds to your rage,Medical rifle removes the RAGE\n Q:3", nil, nil, "weapon_zs_soulalt")
+
 
 trinket = GM:AddTrinket("Soul of Alt Eve", "altevesoul", false, nil, {
 	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 10.697, y = 10.697 }, color = Color(0, 0, 0, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core_2+"] = { type = "Sprite", sprite = "effects/splashwake1", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 30, y = 30 }, color = Color(0, 0, 0, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 2, 0), angle = Angle(0, 0, 0), size = Vector(0.349, 0.349, 0.349), color = Color(0, 0, 0, 255), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} }
-}, nil,"Вы наносите на 22% меньше урона мили оружием но яд и кровотечение наносит на 88% меньше урона.\n-22% melee damage but you take by -88% damage from effects\n Q:2", nil, nil, "weapon_zs_soul")
-GM:AddSkillModifier(trinket, SKILLMOD_POISON_DAMAGE_TAKEN_MUL, -0.88)
-GM:AddSkillModifier(trinket, SKILLMOD_BLEED_DAMAGE_TAKEN_MUL, -0.88)
-GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_MUL, -0.22)
+}, nil,"Скорость атаки быстрее огнестрелом быстрее если хп ниже 50.\nFire speed faster if health lower than 50\n Q:2", nil, nil, "weapon_zs_soulalt")
+
 
 trinket = GM:AddTrinket("Soul of Jacob", "jacobsoul", false, nil, {
 	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 10.697, y = 10.697 }, color = Color(255, 0, 0, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core_2+"] = { type = "Sprite", sprite = "effects/splashwake1", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 30, y = 30 }, color = Color(0, 5, 255, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 2, 0), angle = Angle(0, 0, 0), size = Vector(0.349, 0.349, 0.349), color = Color(255, 0, 255, 255), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} }
-}, nil,"Вы не сможете получать поинты после волны но теперь вы получаете на 20% больше поинтов.\nYou now don't take point's per wave,+20% point multiplier \n Q:5", nil, nil, "weapon_zs_soul")
+}, nil,"Вы не сможете получать поинты после волны но теперь вы получаете на 20% больше поинтов.\nYou now don't take point's per wave,+20% point multiplier \n Q:5", nil, nil, "weapon_zs_soulalt")
 GM:AddSkillModifier(trinket, SKILLMOD_ENDWAVE_POINTS , -9999)
 GM:AddSkillModifier(trinket, SKILLMOD_POINT_MULTIPLIER, 0.20)
 
@@ -979,7 +987,7 @@ trinket = GM:AddTrinket("Soul of Alt Isaac", "altisaacsoul", false, nil, {
 	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 10.697, y = 10.697 }, color = Color(34, 120, 255, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core_2+"] = { type = "Sprite", sprite = "effects/splashwake1", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 30, y = 30 }, color = Color(0, 5, 255, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 2, 0), angle = Angle(0, 0, 0), size = Vector(0.349, 0.349, 0.349), color = Color(115, 0, 0, 255), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} }
-}, nil,"Забыт\nForgotten\n Q:2", nil, nil, "weapon_zs_soul")
+}, nil,"Забыт\nForgotten\n Q:2", nil, nil, "weapon_zs_soulalt")
 GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, 10)
 GM:AddSkillModifier(trinket, SKILLMOD_RELOADSPEED_MUL, 0.08)
 GM:AddSkillModifier(trinket, SKILLMOD_POINT_MULTIPLIER, 0.1)
@@ -997,7 +1005,7 @@ trinket = GM:AddTrinket("Soul of Alt Lilith", "altlilithsoul", false, nil, {
 	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 10.697, y = 10.697 }, color = Color(255, 0, 0, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core_2+"] = { type = "Sprite", sprite = "effects/splashwake1", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 30, y = 30 }, color = Color(0, 0, 0, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 2, 0), angle = Angle(0, 0, 0), size = Vector(0.349, 0.349, 0.349), color = Color(87, 4, 28), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} }
-}, nil,"МАНХАК\n Manhack\n Q:4", nil, nil, "weapon_zs_soul")
+}, nil,"МАНХАК\n Manhack\n Q:4", nil, nil, "weapon_zs_soulalt")
 GM:AddSkillModifier(trinket, SKILLMOD_MANHACK_DAMAGE_MUL, 0.5)
 GM:AddSkillModifier(trinket, SKILLMOD_MANHACK_HEALTH_MUL, 0.8)
 
@@ -1008,7 +1016,7 @@ trinket = GM:AddTrinket("Soul of Alt Azazel", "alteriosoul", false, nil, {
 	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 10.697, y = 10.697 }, color = Color(255, 255, 0, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core_2+"] = { type = "Sprite", sprite = "effects/splashwake1", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 30, y = 30 }, color = Color(255, 165, 00, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 2, 0), angle = Angle(0, 0, 0), size = Vector(0.349, 0.349, 0.349), color = Color(255, 255, 0, 255), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} }
-}, nil, "На 60% больше урон от мили!-20 хп и -10 кровавой брони,-60% мили ренжа.\n Melee damage multiplier 1.60x! -20 hp -10 blood armor,-60% Melee range\n Q:3", nil, nil, "weapon_zs_soul")
+}, nil, "На 60% больше урон от мили!-20 хп и -10 кровавой брони,-60% мили ренжа.\n Melee damage multiplier 1.60x! -20 hp -10 blood armor,-60% Melee range\n Q:3", nil, nil, "weapon_zs_soulalt")
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_MUL, 0.60)
 GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, -20) 
 GM:AddSkillModifier(trinket, SKILLMOD_BLOODARMOR, -10) 
@@ -1017,14 +1025,14 @@ trinket = GM:AddTrinket("Soul of Alt Appolyon", "altaposoul", false, nil, {
 	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 10.697, y = 10.697 }, color = Color(30, 111, 51, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core_2+"] = { type = "Sprite", sprite = "effects/splashwake1", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 30, y = 30 }, color = Color(0, 105, 20, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 2, 0), angle = Angle(0, 0, 0), size = Vector(0.349, 0.349, 0.349), color = Color(255, 30, 255, 255), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} }
-}, nil, "Проджектайлы быстрее.\n Better Projectile Speed\n Q:3", nil, nil, "weapon_zs_soul")
+}, nil, "Проджектайлы быстрее.\n Better Projectile Speed\n Q:3", nil, nil, "weapon_zs_soulalt")
 GM:AddSkillModifier(trinket, SKILLMOD_PROJ_SPEED, 2)  
 GM:AddSkillModifier(trinket, SKILLMOD_PROJECTILE_DAMAGE_MUL, 1) 
 trinket = GM:AddTrinket("Soul of Alt Bethany", "altbetsoul", false, nil, {
 	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 10.697, y = 10.697 }, color = Color(33, 33, 31, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core_2+"] = { type = "Sprite", sprite = "effects/splashwake1", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 30, y = 30 }, color = Color(120, 200, 255, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 2, 0), angle = Angle(0, 0, 0), size = Vector(0.349, 0.349, 0.349), color = Color(55, 0, 5, 255), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} }
-}, nil, "Больше никакого хп!...Только кровка и хороший хил по хп!\n-100 HP hp,+700 blood armor\n+100% Heal received\n Q:4", nil, nil, "weapon_zs_soul")
+}, nil, "Больше никакого хп!...Только кровка и хороший хил по хп!\n-100 HP hp,+700 blood armor\n+100% Heal received\n Q:4", nil, nil, "weapon_zs_soulalt")
 GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, -100) 
 GM:AddSkillModifier(trinket, SKILLMOD_BLOODARMOR, 700) 
 GM:AddSkillModifier(trinket, SKILLMOD_HEALING_RECEIVED, 2) 
@@ -1033,7 +1041,7 @@ trinket = GM:AddTrinket("Soul of Alt Lost", "altlostsoul", false, nil, {
 	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 10.697, y = 10.697 }, color = Color(255, 255, 255, 125), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core_2+"] = { type = "Sprite", sprite = "effects/splashwake1", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 30, y = 30 }, color = Color(0, 255, 20, 125), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 2, 0), angle = Angle(0, 0, 0), size = Vector(0.349, 0.349, 0.349), color = Color(255, 30, 255, 95), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} }
-}, nil, "Быстрее двигаешься через пропы,но ты получаешь в 1000% раза больше урона!Вы быстрее на 500 единиц\nYou move faster through prop,+500 speed\n1000% Damage taken mul \nQ:1", nil, nil, "weapon_zs_soul")
+}, nil, "Быстрее двигаешься через пропы,но ты получаешь в 1000% раза больше урона!Вы быстрее на 500 единиц\nYou move faster through prop,+500 speed\n1000% Damage taken mul \nQ:1", nil, nil, "weapon_zs_soulalt")
 GM:AddSkillModifier(trinket, SKILLMOD_BARRICADE_PHASE_SPEED_MUL, 100) 
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 10) 
 GM:AddSkillModifier(trinket, SKILLMOD_SPEED, 500)
@@ -1041,27 +1049,27 @@ trinket = GM:AddTrinket("Soul of Alt Greed", "altgreedsoul", false, nil, {
 	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 10.697, y = 10.697 }, color = Color(21, 255, 1, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core_2+"] = { type = "Sprite", sprite = "effects/splashwake1", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 30, y = 30 }, color = Color(120, 0, 255, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 2, 0), angle = Angle(0, 0, 0), size = Vector(0.349, 0.349, 0.349), color = Color(55, 0, 255, 255), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} }
-}, nil, "Ваша жадность дает 10% скидку и -25% к поинтам,+2 удачи+20% к скидке\n Sale by 10%,scrap discount +20%,-25% Point Multiplier,+2 luck\n Q:5", nil, nil, "weapon_zs_soul")
+}, nil, "Ваша жадность дает 10% скидку и -25% к поинтам,+2 удачи+20% к скидке\n Sale by 10%,scrap discount +10%,-25% Point Multiplier,+2 luck\n Q:5", nil, nil, "weapon_zs_soulalt")
 GM:AddSkillModifier(trinket, SKILLMOD_ARSENAL_DISCOUNT, -0.10)
-GM:AddSkillModifier(trinket, SKILLMOD_SCRAPDISCOUNT, -0.20)
+GM:AddSkillModifier(trinket, SKILLMOD_SCRAPDISCOUNT, -0.10)
 GM:AddSkillModifier(trinket, SKILLMOD_POINT_MULTIPLIER, -0.25)
 GM:AddSkillModifier(trinket, SKILLMOD_LUCK, 2.0)
 trinket = GM:AddTrinket("Soul of Alt Cain", "altcainsoul", false, nil, {
 	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 10.697, y = 10.697 }, color = Color(9, 155, 9, 55), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core_2+"] = { type = "Sprite", sprite = "effects/splashwake1", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 30, y = 30 }, color = Color(125, 0, 255, 100), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 2, 0), angle = Angle(0, 0, 0), size = Vector(0.349, 0.349, 0.349), color = Color(55, 0, 255, 155), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} }
-}, nil, "Искажает другие души\nCorrupt Souls\n Q:Alt", nil, nil, "weapon_zs_soul")
+}, nil, "Искажает другие души\nCorrupt Souls\n Q:Alt", nil, nil, "weapon_zs_soulalt")
 
 trinket = GM:AddTrinket("Soul of Alt Lazarus", "altlazarussoul", false, nil, {
 	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 10.697, y = 10.697 }, color = Color(9, 0, 0, 195), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core_2+"] = { type = "Sprite", sprite = "effects/splashwake1", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 30, y = 30 }, color = Color(125, 0, 255, 0), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 2, 0), angle = Angle(0, 0, 0), size = Vector(0.349, 0.349, 0.349), color = Color(55, 0, 5, 255), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} }
-}, nil, "Спасает вас!\nSave You!\n Q:Alt")
+}, nil, "Спасает вас!\nSave You!\n Q:Alt", nil, nil, "weapon_zs_soulalt")
 trinket = GM:AddTrinket("Soul of Alt Forgotten", "altforsoul", false, nil, {
 	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 10.697, y = 10.697 }, color = Color(2, 0, 61), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core_2+"] = { type = "Sprite", sprite = "effects/splashwake1", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 30, y = 30 }, color = Color(0, 0, 255, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 2, 0), angle = Angle(0, 0, 0), size = Vector(0.349, 0.349, 0.349), color = Color(55, 55, 5, 100), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} }
-}, nil, "Бьете хуже мили оружием!Вы сможете нормально атаковать другим оружием и наносить больше урона\nmelee is dead! you can use other weapon \n Q:Alt", nil, nil, "weapon_zs_soul")
+}, nil, "Бьете хуже мили оружием!Вы сможете нормально атаковать другим оружием и наносить больше урона\nmelee is dead! you can use other weapon \n Q:Alt", nil, nil, "weapon_zs_soulalt")
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_MUL, -1.20)
 GM:AddSkillModifier(trinket, SKILLMOD_AIMSPREAD_MUL, -0.5)
 GM:AddSkillModifier(trinket, SKILLMOD_RELOADSPEED_MUL, 0.12)

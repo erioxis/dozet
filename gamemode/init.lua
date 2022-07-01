@@ -186,6 +186,20 @@ function GM:CreateGibs(pos, headoffset)
 		end
 	end
 end
+function GM:CreateAura(pos, headoffset)
+	headoffset = headoffset or 0
+
+	local headpos = Vector(pos.x, pos.y, pos.z + headoffset)
+	for i = 1, 2 do
+		local ent = ents.CreateLimited("prop_aura")
+		if ent:IsValid() then
+			ent:SetPos(headpos + VectorRand():GetNormalized() * math.Rand(1, 5))
+			ent:SetAngles(VectorRand():Angle())
+			ent:SetGibType(i)
+			ent:Spawn()
+		end
+	end
+end
 
 function GM:DisallowHumanPickup(pl, entity)
 end
@@ -1311,11 +1325,17 @@ function GM:Think()
 				end
 				if pl:HasTrinket("hurt_curse") and time >= pl.NextRegenerate then
 					pl.NextRegenerate = time + 20
-					pl:TakeDamage(15)
+					pl:TakeDamage(pl:Health() * 0.25)
 				end
 				if pl:HasTrinket("altlazarussoul") and time >= pl.NextRegenerate and pl:Health() < math.min(healmax, pl:GetMaxHealth() * 0.10) then
 					pl.NextRegenerate = time + 60
 					pl:SetHealth(math.min(healmax, pl:Health() + 500))
+				end
+				if pl:HasTrinket("altjudassoul") and time >= pl.NextRegenerate and pl:Health() < math.min(healmax, pl:GetMaxHealth() * 0.20) then
+					pl.NextRegenerate = time + 1
+					pl:GiveStatus("holly", 1.3)
+					pl:GiveStatus("strengthdartboost", 1.3)
+					pl:GiveStatus("medrifledefboost", 1.3)
 				end
 				if time >= pl.NextRegenerate and pl.HolyMantle == 0 and pl:IsSkillActive(SKILL_HOLY_MANTLE) then
 					pl.NextRegenerate = time + ((30 - (pl.Luck / 4)) + self.GetWave() * 3)
@@ -3807,7 +3827,6 @@ function GM:HumanKilledZombie(pl, attacker, inflictor, dmginfo, headshot, suicid
 	end
 
 
-
 	local totaldamage = 0
 	for otherpl, dmg in pairs(pl.DamagedBy) do
 		if otherpl:IsValid() and otherpl:Team() == TEAM_HUMAN then
@@ -3828,6 +3847,9 @@ function GM:HumanKilledZombie(pl, attacker, inflictor, dmginfo, headshot, suicid
 	attacker.ZombiesKilled = attacker.ZombiesKilled + 1
 	attacker.zKills = attacker.zKills + 1
 	attacker:SetDKills(attacker.zKills)
+	if attacker:HasTrinket("soulalteden") then
+		attacker.zKills = attacker.zKills + math.random(-20,20)
+	end
 	attacker:AddZSXP(1)
 	if attacker:IsSkillActive(SKILL_BOUNTYKILLER) then
 		attacker:AddZSXP(5)
@@ -4742,6 +4764,9 @@ function GM:WaveStateChanged(newstate, pl)
 				if pl:IsSkillActive(SKILL_XPHUNTER) then
 					pl:AddZSXP(5 + self.GetWave())
 				end
+
+
+			
 
 			
 				

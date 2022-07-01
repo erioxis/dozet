@@ -106,6 +106,7 @@ function SWEP:PrimaryAttack()
 		if self.UltraCharge >= 4 and owner:IsSkillActive(SKILL_MEDICBOOSTER) then
 		    ent:GiveStatus("strengthdartboost",30)
 			ent:GiveStatus("medrifledefboost",30)
+			ent:GiveStatus("holly",30)
 			self.UltraCharge = 0
 	    end
 		

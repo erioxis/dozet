@@ -67,6 +67,15 @@ function meta:ProcessDamage(dmginfo)
 				if attacker:IsSkillActive(SKILL_CHEAPKNUCKLE) and math.abs(self:GetForward():Angle().yaw - attacker:GetForward():Angle().yaw) <= 90 then
 					self:AddLegDamage(12)
 				end
+				if attacker:HasTrinket("altsamsonsoul")  then
+					local rot = attacker:GetStatus("strengthdartboost")
+					if (rot) then 
+						attacker:AddBloodlust(attacker:GetOwner(), rot.DieTime - CurTime() + dmginfo:GetDamage() * 0.05)
+					end
+					if (not rot) then 
+						attacker:AddBloodlust(attacker:GetOwner(), dmginfo:GetDamage() * 0.09)
+					end
+				end
 
 				if attacker.MeleeDamageToBloodArmorMul and attacker.MeleeDamageToBloodArmorMul > 0 and attacker:GetBloodArmor() < attacker.MaxBloodArmor then
 					attacker:SetBloodArmor(math.min(attacker.MaxBloodArmor, attacker:GetBloodArmor() + math.min(damage, self:Health()) * attacker.MeleeDamageToBloodArmorMul * attacker.BloodarmorGainMul))
@@ -251,6 +260,15 @@ function meta:ProcessDamage(dmginfo)
 				end
 				if self:IsSkillActive(SKILL_FOLGA) then
 					dmginfo:SetDamage(dmginfo:GetDamage() - 5)
+				end
+				if self:HasTrinket("altsamsonsoul")  then
+					local rot = self:GetStatus("strengthdartboost")
+					if (rot) then 
+						self:AddBloodlust(self:GetOwner(), rot.DieTime - CurTime() + dmginfo:GetDamage() * 0.1)
+					end
+					if (not rot) then 
+						self:AddBloodlust(self:GetOwner(), dmginfo:GetDamage() * 0.3)
+					end
 				end
 			
 					
@@ -756,8 +774,10 @@ function meta:AddHallow(attacker, count)
 end
 
 function meta:AddRot(attacker, count)
-
 	local status = self:GiveStatus("rot", count)
+end
+function meta:AddBloodlust(attacker, count)
+	local status = self:GiveStatus("strengthdartboost", count)
 end
 function meta:AddBurn(attacker, count)
 
@@ -1979,9 +1999,9 @@ local bossdrops1 = {
 }
 local bossdrops2 = {
 	--"weapon_zs_plank_q5",  -- 1
-	--"trinket_altjudassoul",  -- 2
-	--"trinket_altsamsonsoul",  -- 3
-	--"trinket_altevesoul",  -- 4
+	"trinket_altjudassoul",  -- 2
+	"trinket_altsamsonsoul",  -- 3
+	"trinket_altevesoul",  -- 4
     --"trinket_jacobsoul",  -- 5
     "trinket_altisaacsoul",  -- 6
     "trinket_altmagdalenesoul",  -- 7
@@ -1993,9 +2013,10 @@ local bossdrops2 = {
 	"trinket_altgreedsoul",  --17
 	"trinket_altcainsoul",   --18
 	"trinket_altlazarussoul",	-- 19
-	"trinket_altforsoul" -- 20
-	--"trinket_altsoul"-- 21
-	
+	"trinket_altforsoul", -- 20
+	"trinket_altsoul",-- 21
+	"trinket_soulalteden", -- 22
+	"trinket_altchayok" -- 23
 	
 	
 	

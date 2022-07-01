@@ -426,7 +426,9 @@ killicon.Add("weapon_zs_melee_trinket", "zombiesurvival/reaper.png")
 killicon.Add("weapon_zs_shot_trinket", "zombiesurvival/tremors.png")
 killicon.Add("weapon_zs_help_trinket", "zombiesurvival/sickness.png")
 
-killicon.Add("weapon_zs_soul", "zombiesurvival/bleed.png")
+killicon.Add("weapon_zs_soul", "zombiesurvival/soul.png")
+
+killicon.Add("weapon_zs_soulalt", "zombiesurvival/soul.png", Color(255, 0, 195, 56))
 
 
 

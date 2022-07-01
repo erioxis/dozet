@@ -13,8 +13,10 @@ end
 function ENT:Think()
 	self:EmitSound("npc/stalker/breathing3.wav", 30, 85)
 	local cursed = self:GetOwner():GetStatus("cursed")
+	local holly = self:GetOwner():GetStatus("holly")
 	local owner = self:GetOwner()
 
+    if not (holly) then
 	if (cursed) and not owner:IsSkillActive(SKILL_UPLOAD) then
 		if (cursed.DieTime >= CurTime() + 100 * (owner.CurseMultiplier or 1)) and not owner:IsSkillActive(SKILL_CURSEDHEALTH) then
 			if not owner:IsSkillActive(SKILL_UPLOAD) then
@@ -29,6 +31,7 @@ function ENT:Think()
 			end
 		end
 	end
+    end
 
 	if self.DieTime <= CurTime() then
 		self:Remove()

@@ -672,7 +672,7 @@ GM:AddSkill(SKILL_INSIGHT, translate.Get("skill_vision_ar"), GOOD.."-2%"..transl
 GM:AddSkill(SKILL_U_ZAPPER_ARC, translate.Get("skill_u_arc_z"), GOOD..translate.Get("skill_u_arc_z_d1"),
 																6,			2,					{SKILL_FIELDAMP, SKILL_TECHNICIAN}, TREE_BUILDINGTREE)
 .AlwaysActive = true
-GM:AddSkill(SKILL_D_LATEBUYER, translate.Get("skill_d_lbuyer"), GOOD.."+20"..translate.Get("worth")..GOOD.."-66%"..translate.Get("sale")..BAD..translate.Get("skill_d_lbuyer_d1"),
+GM:AddSkill(SKILL_D_LATEBUYER, translate.Get("skill_d_lbuyer"), GOOD.."+20"..translate.Get("worth")..GOOD.."-33%"..translate.Get("sale")..BAD..translate.Get("skill_d_lbuyer_d1"),
 																8,			1,					{SKILL_HAMMERDOOR}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_HAMMERDOOR, translate.Get("skill_dd_3"), GOOD..translate.Get("skill_dd_3_d1")..BAD.."+10%"..translate.Get("hammerd"),
 																8,			3,					{SKILL_D_LATEBUYER}, TREE_BUILDINGTREE)
@@ -958,7 +958,7 @@ SKILL_LUCK4 = 246
 GM:AddSkillModifier(SKILL_LUCK4, SKILLMOD_LUCK, 1)
 GM:AddSkill(SKILL_LUCK4, "Luck IV", GOOD.."+1 luck",
 																-4,			-8,					{SKILL_LUCK3}, TREE_POINTTREE)		
-GM:AddSkill(SKILL_XPHUNTER, "XP hunter", GOOD.."Give 5xp if wave ended\n Based on current wave",
+GM:AddSkill(SKILL_XPHUNTER, "Bonus XP", GOOD.."Give 5xp if wave ended\nBased on current wave",
 																-4,			-10,					{SKILL_LUCK4}, TREE_POINTTREE)		
 SKILL_ULUCK = 247
 GM:AddSkillModifier(SKILL_ULUCK, SKILLMOD_LUCK, 5)
@@ -971,7 +971,7 @@ GM:AddSkillModifier(SKILL_LUCKE, SKILLMOD_POINT_MULTIPLIER, -0.1)
 GM:AddSkillModifier(SKILL_LUCKE, SKILLMOD_LUCK, 2)	
 GM:AddSkill(SKILL_LUCKY_UNLIVER, "The luck stacker", GOOD.."+2 luck per wave\n" ..BAD.. "-10% max health per wave",
 	1,			-3,					{SKILL_LUCKE}, TREE_POINTTREE)
-GM:AddSkill(SKILL_LUCKE, "Luckiest", NEUTRAL.."+2 luck\n" ..BAD.. "-10% Points MUL",
+GM:AddSkill(SKILL_LUCKE, "Bad luck", NEUTRAL.."+2 luck\n" ..BAD.. "-10% Points MUL",
 	1,			-2,					{SKILL_POINTIIII}, TREE_POINTTREE)
 	SKILL_BLUCK = 163
 	GM:AddSkillModifier(SKILL_BLUCK, SKILLMOD_POINT_MULTIPLIER, 0.01)
@@ -1925,7 +1925,7 @@ GM:AddSkillFunction(SKILL_D_HEMOPHILIA, function(pl, active)
 end)
 
 GM:AddSkillModifier(SKILL_D_LATEBUYER, SKILLMOD_WORTH, 30)
-GM:AddSkillModifier(SKILL_D_LATEBUYER, SKILLMOD_ARSENAL_DISCOUNT, -0.66)
+GM:AddSkillModifier(SKILL_D_LATEBUYER, SKILLMOD_ARSENAL_DISCOUNT, -0.33)
 
 GM:AddSkillModifier(SKILL_STOCKPILE, SKILLMOD_RES_AMMO_MUL, 0.50)
 

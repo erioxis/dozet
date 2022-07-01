@@ -69,8 +69,14 @@ end
 
 function SWEP:PrimaryAttack()
 	if not self:CanPrimaryAttack() then return end
-
+	
+	if not self:GetOwner():HasTrinket("altevesoul") then
 	self:SetNextPrimaryFire(CurTime() + self:GetFireDelay())
+elseif self:GetOwner():HasTrinket("altevesoul") and self:GetOwner():Health() < 50 then
+	self:SetNextPrimaryFire(CurTime() + self:GetFireDelay() * 0.33)
+else
+	self:SetNextPrimaryFire(CurTime() + self:GetFireDelay())
+end
 
 	self:EmitFireSound()
 	self:TakeAmmo()
@@ -277,13 +283,11 @@ end
 
 function SWEP:CanPrimaryAttack()
 	if self:GetOwner():IsHolding() or self:GetOwner():GetBarricadeGhosting() or self:GetReloadFinish() > 0 then return false end
-
 	if self:Clip1() < self.RequiredClip then
 		self:EmitSound(self.DryFireSound)
 		self:SetNextPrimaryFire(CurTime() + math.max(0.25, self.Primary.Delay))
 		return false
 	end
-
 	return self:GetNextPrimaryFire() <= CurTime()
 end
 
