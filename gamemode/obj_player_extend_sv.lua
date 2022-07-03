@@ -1319,10 +1319,15 @@ function meta:AddPoints(points, floatingscoreobject, fmtype, nomul)
 		if wholepoints <= 0 then return end
 		self.PointsToAbsorb = nil
 	end
-
+    if not self:HasTrinket("sin_greed") then
 	self:AddFrags(wholepoints)
 	self:MetaAddScore(self:GetMScore() + wholepoints)
 	self:SetPoints(self:GetPoints() + wholepoints)
+	elseif self:HasTrinket("sin_greed") and math.random(1,3) == 1 then
+		self:AddFrags(wholepoints * 2)
+		self:MetaAddScore(self:GetMScore() + wholepoints * 2)
+		self:SetPoints(self:GetPoints() + wholepoints * 2)
+	end
 
 	if self.PointsVault then
 		self.PointsVault = self.PointsVault + wholepoints * GAMEMODE.PointSaving
@@ -1359,6 +1364,7 @@ function meta:AddPoints(points, floatingscoreobject, fmtype, nomul)
 	else
 		self:AddZSXP(xp * (self.XPMulti or 1))
 	end
+
 
 	gamemode.Call("PlayerPointsAdded", self, wholepoints)
 end
@@ -1969,33 +1975,11 @@ local bossdrops = {
 	"trinket_lampsoul"  -- 26
 }
 local bossdrops1 = {
-	"weapon_zs_null",
-	"weapon_zs_plank"
-	--[["trinket_bleaksoul",  -- 1
-	"trinket_spiritess",  -- 2
-	"trinket_samsonsoul",  -- 3
-	"trinket_evesoul",  -- 4
-    "trinket_jacobjesausoul",  -- 5
-    "trinket_isaacsoul",  -- 6
-    "trinket_magdalenesoul",  -- 7
-    "trinket_lilithsoul",  -- 8
-    "trinket_whysoul",  -- 9
-    "trinket_blanksoul", -- 10
-    "trinket_classixsoul",  -- 11
-	"trinket_darksoul",  --12
-	"trinket_eriosoul",  --13
-	"trinket_aposoul",  --14
-	"trinket_betsoul",  --15
-	"trinket_lostsoul",  --16
-	"trinket_greedsoul",  --17
-	"trinket_cainsoul",   --18
-	"trinket_lazarussoul",	-- 19
-	"trinket_forsoul",  -- 20
-	"trinket_starsoul",  -- 21
-	"trinket_teasoul",  -- 22
-	"trinket_sugersoul",  -- 23
-	"trinket_nulledsoul",  -- 24
-	"trinket_soulmedical"  -- 25]]
+	"trinket_sin_greed",
+	"trinket_sin_wrath",
+	"trinket_sin_gluttony",
+	"trinket_sin_sloth"
+
 }
 local bossdrops2 = {
 	--"weapon_zs_plank_q5",  -- 1
@@ -2172,6 +2156,7 @@ function meta:GetRandomStartingItem2()
 	end
 
 end
+
 
 function meta:PulseResonance(attacker, inflictor)
 	-- Weird things happen with multishot weapons..

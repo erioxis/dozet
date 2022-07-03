@@ -295,6 +295,7 @@ SKILL_MEDICBOOSTER = 277
 SKILL_VAMPIRISM = 278
 SKILL_D_CURSEDTRUE = 279
 SKILL_TORMENT8 = 280
+SKILL_SINS = 281
 
 SKILLMOD_HEALTH = 1
 SKILLMOD_SPEED = 2
@@ -990,6 +991,8 @@ GM:AddSkill(SKILL_DUDEE, "Lucky man", GOOD.."+2 Luck\n",
 	GM:AddSkillModifier(SKILL_BADTRIP, SKILLMOD_POINT_MULTIPLIER, 0.10)
 	GM:AddSkill(SKILL_BADTRIP, "Bad Trip", GOOD.."+10% Points multiplier\n" ..BAD.. "System of Quality does not work",
 		2,			-6,					{SKILL_DUDEE}, TREE_POINTTREE)
+	GM:AddSkill(SKILL_SINS, "Sins", GOOD.."Instead of souls,you're get a sin(From boss kill)",
+		1,			-6,					{SKILL_BADTRIP}, TREE_POINTTREE)
 		SKILL_SCAM = 168
 		GM:AddSkillModifier(SKILL_SCAM, SKILLMOD_POINT_MULTIPLIER, 0.10)
 		GM:AddSkill(SKILL_SCAM, "Scam", GOOD.."+10% Points Multiplier \n" ..BAD.. "Quality is worse",

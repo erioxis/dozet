@@ -173,7 +173,9 @@ function ENT:DrawTranslucent()
 					local val = math.Clamp(repairs - i, 0, 200)
 
 					surface.SetDrawColor(100, 170, 215, 240 * vis)
-					surface.DrawRect(x + 1 + i/5 + i/50, y + 1, val/5, hei - 2)
+					surface.DrawRect(x + 1 + i/10 + i/100, y + 1, 50, hei - 2)
+
+
 				end
 
 				local mu = math.Clamp(nhp / mnhp, 0, 1)
@@ -200,8 +202,10 @@ function ENT:DrawTranslucent()
 					local col = redname and colDead or colText
 					col.a = 125 * vis
 
+
 					draw.SimpleText(displayowner, "ZS3D2DUnstyleSmallest", 0, y + 20, col, TEXT_ALIGN_CENTER)
-					draw.SimpleText(math.floor(nhp) .. "/" .. math.floor(self:GetMaxNailHealth()), "ZS3D2DUnstyleTiny", x + 25, y - 30, col, TEXT_ALIGN_CENTER)
+					draw.SimpleText(math.floor(nhp) .. "/" .. math.floor(self:GetMaxNailHealth()), "ZS3D2DUnstyleTiny", x + 25, y - 30,  COLOR_RPINK, TEXT_ALIGN_CENTER)
+					draw.SimpleText(math.floor(repairs) .. "/" .. math.floor(mrps), "ZS3D2DUnstyleTiny", x + 25, y - 50, COLOR_CYAN, TEXT_ALIGN_CENTER)
 				end
 			end
 		cam.End3D2D()

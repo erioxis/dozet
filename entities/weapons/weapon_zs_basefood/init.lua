@@ -18,6 +18,22 @@ function SWEP:Eat()
 		end
 
 	end
+	if owner:HasTrinket("sin_gluttony") then
+		debuff = math.random(1,6)
+		if debuff == 1 then
+			owner:GiveStatus("medrifledefboost", 15)
+		elseif debuff == 2 then
+			owner:GiveStatus("rot", 3)
+		elseif debuff == 3 then
+			owner:GiveStatus("frost", 15)
+		elseif debuff == 4 then
+			owner:AddPoisonDamage(15, self)
+		elseif debuff == 5 then
+			owner:GiveStatus("reaper", 70)
+		else
+			owner:GiveStatus("status_strengthdartboost", 70)
+		end
+	end
 
 	local max = owner:IsSkillActive(SKILL_D_FRAIL) and math.floor(owner:GetMaxHealth() * 0.25) or owner:GetMaxHealth()
 

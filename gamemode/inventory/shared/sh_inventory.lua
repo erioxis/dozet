@@ -37,6 +37,7 @@ function GM:AddInventoryItemData(intname, name, description, weles, tier, stocks
 end
 
 
+
 function GM:AddWeaponBreakdownRecipe(weapon, result)
 	local datatab = {Result = result, Index = index}
 	self.Breakdowns[weapon] = datatab
@@ -634,10 +635,54 @@ trinket = GM:AddTrinket(""..translate.Get("t_kheart"), "kheart", false, supveles
 GM:AddSkillModifier(trinket, SKILLMOD_POINT_MULTIPLIER, 0.25)
 GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, -15)
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 0.15)
-trinket = GM:AddTrinket(""..translate.Get("t_cursedtrinket"), "cursedtrinket", false, supveles, supweles, 4, ""..translate.Get("t_d_cursedtrinket"))
-GM:AddSkillModifier(trinket, SKILLMOD_DAMAGE, -0.15)
-GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, 60)
-GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.15)
+d = math.random(1,5)
+skill1 =  math.Rand(-0.5,0.5)
+skill2 =  math.random(-30,70)
+skill3 = math.Rand(-0.5,0.5)
+if d == 1 then
+skill1d = "b_damage"
+skill2d = "health"
+skill3d = "meleedamagetaken"
+	elseif d == 2 then
+		skill1d = "p_mul"
+		skill2d = "speed"
+		skill3d = "sale"
+	elseif d == 3 then
+		skill1d = "res_ammo"
+		skill2d = "barmor"
+		skill3d = "man_damage"
+	elseif d == 4 then
+		skill1d = "self_d"
+		skill2d = "health"
+		skill3d = "meleedamage"
+	else
+		skill1 = ""
+skill2 =  ""
+skill3 = ""
+skill1d = "qual_0"
+skill2d = "qual_0"
+skill3d = "qual_0"
+end
+trinket = GM:AddTrinket(translate.Get("t_cursedtrinket"), "cursedtrinket", false, supveles, supweles, 4, skill1..translate.Get(skill1d)..skill2..translate.Get(skill2d)..skill3..translate.Get(skill3d)..translate.Get("t_d_cursedtrinket"))
+if d == 1 then
+GM:AddSkillModifier(trinket, SKILLMOD_DAMAGE, skill1)
+GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, skill2)
+GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, skill3)
+elseif d == 2 then
+GM:AddSkillModifier(trinket, SKILLMOD_POINT_MULTIPLIER, skill1)
+GM:AddSkillModifier(trinket, SKILLMOD_SPEED, skill2)
+GM:AddSkillModifier(trinket, SKILLMOD_ARSENAL_DISCOUNT, skill3)
+elseif d == 3 then
+GM:AddSkillModifier(trinket, SKILLMOD_RES_AMMO_MUL, skill1)
+GM:AddSkillModifier(trinket, SKILLMOD_BLOODARMOR, skill2)
+GM:AddSkillModifier(trinket, SKILLMOD_MANHACK_DAMAGE_MUL, skill3)
+elseif d == 4 then
+GM:AddSkillModifier(trinket, SKILLMOD_SELF_DAMAGE_MUL, skill1)
+GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, skill2)
+GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_MUL, skill3)
+else
+	
+end
 
 
 --Attachment
@@ -1118,3 +1163,13 @@ trinket, trinketwep = GM:AddTrinket("Chemistry Set", "chemistry", false, hpveles
 GM:AddSkillModifier(trinket, SKILLMOD_MEDKIT_EFFECTIVENESS_MUL, 0.13)
 GM:AddSkillModifier(trinket, SKILLMOD_CLOUD_TIME, 1)
 trinketwep.PermitDismantle = true
+
+--Sins
+trinket = GM:AddTrinket(""..translate.Get("t_sin_greed"), "sin_greed", false, supveles, supweles, 1, ""..translate.Get("t_d_sin_greed"))
+trinket = GM:AddTrinket(""..translate.Get("t_sin_sloth"), "sin_sloth", false, supveles, supweles, 1, ""..translate.Get("t_d_sin_sloth"))
+GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_MUL, 2)
+GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL , 4)
+trinket = GM:AddTrinket(""..translate.Get("t_sin_wrath"), "sin_wrath", false, supveles, supweles, 1, ""..translate.Get("t_d_sin_wrath"))
+trinket = GM:AddTrinket(""..translate.Get("t_sin_gluttony"), "sin_gluttony", false, supveles, supweles, 1, ""..translate.Get("t_d_sin_gluttony"))
+trinket = GM:AddTrinket(""..translate.Get("t_sin_pride"), "sin_pride", false, supveles, supweles, 1, ""..translate.Get("t_d_sin_pride"))
+GM:AddSkillModifier(trinket, SKILLMOD_ARSENAL_DISCOUNT, -0.30)

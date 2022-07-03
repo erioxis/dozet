@@ -1305,6 +1305,9 @@ function GM:Think()
 					pl:GiveStatus("drown")
 				end
                 pl:SetDKills(pl.zKills)
+				if (pl:GetActiveWeapon().Tier or 1) >= 5 and pl:HasTrinket("sin_pride") then
+					pl:StripWeapon(pl:GetActiveWeapon():GetClass())
+				end
 			
 
 				local healmax = pl:IsSkillActive(SKILL_D_FRAIL) and math.floor(pl:GetMaxHealth() * 0.44) or pl:GetMaxHealth()
@@ -1377,6 +1380,10 @@ function GM:Think()
 				if pl:HasTrinket("adrenaline") and time >= pl.NextRegenerate and pl:Health() < math.min(healmax, pl:GetMaxHealth() * 0.85) then
 					pl.NextRegenerate = time + 60
 					pl:GiveStatus("strengthdartboost", 20)
+				end
+				if pl:HasTrinket("sin_sloth") and (pl:GetVelocity():Length() <= 0) then
+					pl:GiveStatus("strengthdartboost", 2)
+					pl:GiveStatus("rot", 1)
 				end
 
 				if pl:HasTrinket("regenimplant") and time >= pl.NextRegenTrinket and pl:Health() < healmax then
@@ -4027,13 +4034,16 @@ function GM:DoPlayerDeath(pl, attacker, dmginfo)
 				net.WriteEntity(pl)
 				net.WriteUInt(classtable.Index, 8)
 			net.Broadcast()
+			if attacker:IsSkillActive(SKILL_SINS) then
+				timer.Simple(0, function()
+					pl:Make1BossDrop()
+				end)
+			end
             if not attacker:HasTrinket("altcainsoul") then
 			timer.Simple(0, function()
 				pl:MakeBossDrop()
 			end)
-			timer.Simple(0, function()
-				pl:Make1BossDrop()
-			end)
+
 			timer.Simple(0, function()
 				pl:Make2BossDrop()
 			end)

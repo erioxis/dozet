@@ -49,6 +49,15 @@ GM.Curses = {
 	"trinket_curse_slow"
 
 }
+GM.Sins = {
+	"trinket_sin_greed",
+	"trinket_hurt_curse",
+	"trinket_uncurse",
+	"trinket_curse_faster",
+	"trinket_curse_slow"
+
+}
+
 
 function GM:AddWorldPropConversionRecipe(model, result)
 	local datatab = {Result = result, Index = wcindex}
