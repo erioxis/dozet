@@ -4027,7 +4027,7 @@ function GM:DoPlayerDeath(pl, attacker, dmginfo)
 				net.WriteEntity(pl)
 				net.WriteUInt(classtable.Index, 8)
 			net.Broadcast()
-
+            if not attacker:HasTrinket("altcainsoul") then
 			timer.Simple(0, function()
 				pl:MakeBossDrop()
 			end)
@@ -4037,6 +4037,14 @@ function GM:DoPlayerDeath(pl, attacker, dmginfo)
 			timer.Simple(0, function()
 				pl:Make2BossDrop()
 			end)
+		    elseif attacker:HasTrinket("altcainsoul") then
+				timer.Simple(0, function()
+					pl:Make2BossDrop()
+				end)
+				timer.Simple(1, function()
+					pl:Make2BossDrop()
+				end)
+			end
 
 			pl.BossDeathNotification = nil
 		end
