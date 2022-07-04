@@ -1308,6 +1308,9 @@ function GM:Think()
 				if (pl:GetActiveWeapon().Tier or 1) >= 5 and pl:HasTrinket("sin_pride") then
 					pl:StripWeapon(pl:GetActiveWeapon():GetClass())
 				end
+				if (pl:GetActiveWeapon().Tier or 1) <= 4 and pl:HasTrinket("sin_envy") then
+					pl:StripWeapon(pl:GetActiveWeapon():GetClass())
+				end
 			
 
 				local healmax = pl:IsSkillActive(SKILL_D_FRAIL) and math.floor(pl:GetMaxHealth() * 0.44) or pl:GetMaxHealth()

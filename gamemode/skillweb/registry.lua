@@ -820,12 +820,14 @@ GM:AddSkill(SKILL_BATTLER5, translate.Get("skill_battler").."V", GOOD.."+13%"..t
 																0,			2,					{SKILL_GLASSWEAPONS, SKILL_BLOODLUST}, TREE_MELEETREE)
 GM:AddSkill(SKILL_LASTSTAND, "Last Stand", GOOD.."Double melee damage when below 25% health\n"..BAD.."0.85x melee weapon damage at any other time",
 																0,			6,					{SKILL_ABUSE}, TREE_MELEETREE)
+.RemortReq = 4
 GM:AddSkill(SKILL_ABUSE, "Last abuse", GOOD.."+10%"..translate.Get("meleedamage")..GOOD.."Have chance to double end wave points,luck can increase chance\n"..BAD.."25% Max health for heal",
 																0,			7,					{SKILL_CURSECURE}, TREE_MELEETREE)
 GM:AddSkill(SKILL_CURSECURE, "Curse Cure", GOOD.."-15 Curse when you get hit\n"..BAD.."-20% max curse\n"..BAD.."Instead of a curse, you get rot",
 																0,			8,					{}, TREE_MELEETREE)
 GM:AddSkill(SKILL_SOULNET, "Soul Eater", GOOD.."In Start Gave random soul\n"..GOOD.."Gave +6% Damage for scythe\n"..BAD.."-10%"..translate.Get("meleedamage"),
 																0,			4,					{SKILL_LASTSTAND}, TREE_MELEETREE)
+.RemortReq = 4
 GM:AddSkill(SKILL_GLASSWEAPONS, "Glass Weapons", GOOD.."3.5x melee weapon damage vs. zombies\n"..BAD.."Your melee weapons have a 50% chance to break when hitting a zombie",
 																2,			4,					{}, TREE_MELEETREE)
 GM:AddSkill(SKILL_GLASSMAN, "Glass Touch", GOOD.."You Deal x2.3 Melee Damage\n"..BAD.."You Take x3 Damage",
@@ -993,6 +995,7 @@ GM:AddSkill(SKILL_DUDEE, "Lucky man", GOOD.."+2 Luck\n",
 		2,			-6,					{SKILL_DUDEE}, TREE_POINTTREE)
 	GM:AddSkill(SKILL_SINS, "Sins", GOOD.."Instead of souls,you're get a sin(From boss kill)",
 		1,			-6,					{SKILL_BADTRIP}, TREE_POINTTREE)
+		.RemortReq = 26
 		SKILL_SCAM = 168
 		GM:AddSkillModifier(SKILL_SCAM, SKILLMOD_POINT_MULTIPLIER, 0.10)
 		GM:AddSkill(SKILL_SCAM, "Scam", GOOD.."+10% Points Multiplier \n" ..BAD.. "Quality is worse",

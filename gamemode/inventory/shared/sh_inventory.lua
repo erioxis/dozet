@@ -1173,3 +1173,6 @@ trinket = GM:AddTrinket(""..translate.Get("t_sin_wrath"), "sin_wrath", false, su
 trinket = GM:AddTrinket(""..translate.Get("t_sin_gluttony"), "sin_gluttony", false, supveles, supweles, 1, ""..translate.Get("t_d_sin_gluttony"))
 trinket = GM:AddTrinket(""..translate.Get("t_sin_pride"), "sin_pride", false, supveles, supweles, 1, ""..translate.Get("t_d_sin_pride"))
 GM:AddSkillModifier(trinket, SKILLMOD_ARSENAL_DISCOUNT, -0.30)
+trinket = GM:AddTrinket(""..translate.Get("t_sin_envy"), "sin_envy", false, supveles, supweles, 1, ""..translate.Get("t_d_sin_envy"))
+GM:AddSkillModifier(trinket, SKILLMOD_ARSENAL_DISCOUNT, -0.30)
+trinket = GM:AddTrinket(""..translate.Get("t_sin_lust"), "sin_lust", false, supveles, supweles, 1, ""..translate.Get("t_d_sin_lust"))

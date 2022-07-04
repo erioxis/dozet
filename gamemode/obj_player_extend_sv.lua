@@ -85,6 +85,11 @@ function meta:ProcessDamage(dmginfo)
 				if attacker:IsSkillActive(SKILL_HEAVYSTRIKES) and not self:GetZombieClassTable().Boss and (wep.IsFistWeapon and attacker:IsSkillActive(SKILL_CRITICALKNUCKLE) or wep.MeleeKnockBack > 0) then
 					attacker:TakeSpecialDamage(damage * (wep.Unarmed and 1 or 0.08), DMG_SLASH, self, self:GetActiveWeapon())
 				end
+				
+				if attacker:HasTrinket("sin_lust") and math.abs(self:GetForward():Angle().yaw - attacker:GetForward():Angle().yaw) <= 90 then
+					attacker:TakeSpecialDamage(damage * 0.05, DMG_SLASH, self, self:GetActiveWeapon())
+                    dmginfo:SetDamage(damage * 2)
+				end
 
 				if attacker:IsSkillActive(SKILL_BLOODLUST) and attacker:GetPhantomHealth() > 0 and attacker:Health() < attackermaxhp then
 					local toheal = math.min(attacker:GetPhantomHealth(), math.min(self:Health(), damage * 0.65))
@@ -1978,8 +1983,10 @@ local bossdrops1 = {
 	"trinket_sin_greed",
 	"trinket_sin_wrath",
 	"trinket_sin_gluttony",
-	"trinket_sin_sloth"
-
+	"trinket_sin_sloth",
+	"trinket_sin_envy",
+	"trinket_sin_pride",
+    "trinket_sin_lust"
 }
 local bossdrops2 = {
 	--"weapon_zs_plank_q5",  -- 1
