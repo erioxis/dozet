@@ -1311,6 +1311,7 @@ function GM:Think()
 				if (pl:GetActiveWeapon().Tier or 1) <= 4 and pl:HasTrinket("sin_envy") then
 					pl:StripWeapon(pl:GetActiveWeapon():GetClass())
 				end
+
 			
 
 				local healmax = pl:IsSkillActive(SKILL_D_FRAIL) and math.floor(pl:GetMaxHealth() * 0.44) or pl:GetMaxHealth()
@@ -2443,6 +2444,8 @@ function GM:PlayerInitialSpawnRound(pl)
 	pl.zKills = 0
 	pl.RedeemedOnce = 0
 	pl.HolyMantle = 0
+
+	pl.CanBuy = nil
 
 	pl.ResupplyBoxUsedByOthers = 0
 
@@ -4686,6 +4689,9 @@ function GM:WaveStateChanged(newstate, pl)
 		for _, pl in pairs(player.GetAll()) do
 			pl.WaveBarricadeDamage = 0
 			pl.WaveHumanDamage = 0
+			if pl:HasTrinket("vir_pat") then
+				pl.CanBuy = false
+			end
 		end
 
 		local curwave = self:GetWave()
@@ -4728,7 +4734,7 @@ function GM:WaveStateChanged(newstate, pl)
 
 				-- Some time to escape.
 				gamemode.Call("SetWaveActive", true)
-				gamemode.Call("SetWaveEnd", CurTime() + 45)
+				gamemode.Call("SetWaveEnd", CurTime() + 30)
 				self:SetEscapeStage(ESCAPESTAGE_ESCAPE)
 
 				local curwave = self:GetWave()
@@ -4784,6 +4790,9 @@ function GM:WaveStateChanged(newstate, pl)
 				end
 				if pl:IsSkillActive(SKILL_XPHUNTER) then
 					pl:AddZSXP(5 + self.GetWave())
+				end
+				if pl:HasTrinket("vir_pat") then
+					pl.CanBuy = true
 				end
 
 

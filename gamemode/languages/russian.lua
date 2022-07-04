@@ -23,6 +23,7 @@ LANGUAGE.op_blockposition = "Кастомная позиция блока"
 LANGUAGE.op_nodiscord = "Не показывать ссылку на дискорд"
 
 -- Various gamemode stuff|
+LANGUAGE.created_x_for_y_scrap						= "Создан %s из %d скрапа!"
 LANGUAGE.blockisfalse = "НЕТУ БЛОКА(ПКМ СМЕНИТЬ СОСТОЯНИЕ)"
 LANGUAGE.blockistrue = "БЛОК"
 LANGUAGE.getacurse = "ПРОКЛЯТ"
@@ -182,7 +183,12 @@ LANGUAGE.t_sin_gluttony = "Грех чревоугодия"
 LANGUAGE.t_sin_pride = "Грех гордыни"
 LANGUAGE.t_sin_envy = "Грех зависти"
 LANGUAGE.t_sin_lust = "Грех похоти"
+--Добродетели
+LANGUAGE.vir_pat_warning = "Нельзя закупится из-за терпения,подождите конца волны!(не выбрасывать)"
+
+LANGUAGE.t_vir_pat = "Добродетель терпения"
 --описание тринек
+LANGUAGE.t_d_vir_pat = "Покупка только когда перерыв\nСкидка в 10%"
 LANGUAGE.t_d_sin_lust = "Ты можешь ударять в спину(получаешь 5% своего урона обратно)"
 LANGUAGE.t_d_sin_envy = "Нельзя получить оружие низкого тира\nСкидка 30%"
 LANGUAGE.t_d_sin_pride = "Нельзя получить оружие высокого тира\nСкидка в 30%"

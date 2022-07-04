@@ -12,6 +12,10 @@ concommand.Add("zs_pointsshopbuy", function(sender, command, arguments)
 		GAMEMODE:ConCommandErrorMessage(sender, translate.ClientGet(sender, "late_buyer_warning"))
 		return
 	end
+	if not sender.CanBuy and sender:HasTrinket("vir_pat") then
+		GAMEMODE:ConCommandErrorMessage(sender, translate.ClientGet(sender, "vir_pat_warning"))
+		return
+	end
 
 
 	if not (usescrap or gamemode.Call("PlayerCanPurchase", sender)) then
@@ -117,7 +121,7 @@ concommand.Add("zs_pointsshopbuy", function(sender, command, arguments)
 	if usescrap then
 		sender:RemoveAmmo(cost * scrapd, "scrap")
 		sender:SendLua("surface.PlaySound(\"buttons/lever"..math.random(5)..".wav\")")
-		sender:PrintTranslatedMessage(HUD_PRINTTALK, usescrap and "created_x_for_y_scrap" , itemtab.Name, cost * scrapd)
+		sender:PrintTranslatedMessage(HUD_PRINTTALK, usescrap and "created_x_for_y_scrap" ,itemtab.Name, cost * scrapd)
 	else
 		sender:TakePoints(cost)
 		sender:SendLua("surface.PlaySound(\"ambient/levels/labs/coinslot1.wav\")")

@@ -1176,3 +1176,5 @@ GM:AddSkillModifier(trinket, SKILLMOD_ARSENAL_DISCOUNT, -0.30)
 trinket = GM:AddTrinket(""..translate.Get("t_sin_envy"), "sin_envy", false, supveles, supweles, 1, ""..translate.Get("t_d_sin_envy"))
 GM:AddSkillModifier(trinket, SKILLMOD_ARSENAL_DISCOUNT, -0.30)
 trinket = GM:AddTrinket(""..translate.Get("t_sin_lust"), "sin_lust", false, supveles, supweles, 1, ""..translate.Get("t_d_sin_lust"))
+
+trinket = GM:AddTrinket(""..translate.Get("t_vir_pat"), "vir_pat", false, supveles, supweles, 1, ""..translate.Get("t_d_vir_pat"))

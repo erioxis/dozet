@@ -204,7 +204,11 @@ LANGUAGE.t_sin_gluttony = "Sin of gluttony"
 LANGUAGE.t_sin_pride = "Sin of pride"
 LANGUAGE.t_sin_envy = "Sin of envy"
 LANGUAGE.t_sin_lust = "Sin of lust"
+-- virtues
+LANGUAGE.vir_pat_warning = "You can't buy!Wait a endwave!(don't drop)"
+LANGUAGE.t_vir_pat = "Virtue of patience"
 --trinket Descriptions
+LANGUAGE.t_d_vir_pat = "You can buy only on endwave\nSale by 10%"
 LANGUAGE.t_d_sin_lust = "You can backstab(but take 5% of you damage on hit)"
 LANGUAGE.t_d_sin_envy = "You can't get low-tier weapon\nSale by 30%"
 LANGUAGE.t_d_sin_pride = "You can't get high-tier weapon\nSale by 30%"

@@ -4,7 +4,8 @@ CLASS.Name = "Baracat"
 CLASS.TranslationName = "class_baracat"
 CLASS.Description = "description_baracat"
 CLASS.Help = "controls_asskicker"
-
+CLASS.Model = Model("models/player/catpants.mdl")
+CLASS.OverrideModel = Model("models/player/catpants.mdl")
 CLASS.BetterVersion = "Baragat"
 
 
