@@ -4936,6 +4936,7 @@ function GM:WaveStateChanged(newstate, pl)
 				pl.DeathClass = nil
 				pl:UnSpectateAndSpawn()
 				pl.DeathClass = curclass
+				pl:AddTokens(math.ceil(self:GetWave() * 100))
 			end
 
 			pl.SkipCrow = nil

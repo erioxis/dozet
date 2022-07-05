@@ -136,7 +136,7 @@ function PANEL:Init()
 	local desc = {}
 	for i=1, 5 do
 		local qualityd = vgui.Create("DLabel", top)
-		qualityd:SetFont("ZS3D2DFontSuperTiny")
+		qualityd:SetFont("ZS3D2DFontTiny")
 		qualityd:SetTextColor(COLOR_GRAY)
 		qualityd:SetContentAlignment(8)
 		qualityd:Dock(TOP)
@@ -148,7 +148,7 @@ function PANEL:Init()
 	bottom:SetMouseInputEnabled(false)
 
 	local scrapcost = vgui.Create("DLabel", bottom)
-	scrapcost:SetFont("ZSHUDFontSmaller")
+	scrapcost:SetFont("ZSHUDFontSmall")
 	scrapcost:SetTextColor(COLOR_WHITE)
 	scrapcost:SetContentAlignment(2)
 	scrapcost:Dock(TOP)
@@ -643,10 +643,10 @@ function GM:OpenRemantlerMenu(remantler)
 				local ispacer = ((j-1) % 4)+1
 
 				tbn = EasyButton(tabpane, subcats[j], 9, 4)
-				tbn:SetFont("ZS3D2DFontSuperTiny")
+				tbn:SetFont("ZS3D2DFontTiny")
 				tbn:SetAlpha(j == 1 and 255 or 70)
 				tbn:AlignRight(800 * screenscale - (ispacer - 1) * 120 * screenscale)
-				tbn:AlignTop(j <= 3 and 2 or 32)
+				tbn:AlignTop(j <= 3 and 2 or 40)
 				tbn:SizeToContents()
 				tbn.DoClick = function(me)
 					for k, v in pairs(tabpane.Grids) do
@@ -671,11 +671,11 @@ function GM:OpenRemantlerMenu(remantler)
 			list:SetSize(curframe:GetWide() - 312, curframe:GetTall())
 			list:SetCols(2)
 			list:SetColWide(290 * screenscale)
-			list:SetRowHeight(100 * screenscale)
+			list:SetRowHeight(120 * screenscale)
 
 			list:SetPos(8, 16)
 			list:SetWide(ammoframe:GetWide() - 16)
-			list:SetTall(ammoframe:GetTall() - 32)
+			list:SetTall(ammoframe:GetTall() - 38)
 
 			for j, tab in ipairs(GAMEMODE.Items) do
 				if tab.PointShop and tab.Category == ITEMCAT_AMMO or tab.CanMakeFromScrap then

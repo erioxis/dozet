@@ -1012,7 +1012,7 @@ LANGUAGE.class_bnightmare   						= "Bloody Nightmare"
 LANGUAGE.class_king_fast   						= "King of Fasts"
 LANGUAGE.class_ipukepus   						= "Icy Puke Pus"
 LANGUAGE.class_skeleton                 = "Skeleton"
-
+LANGUAGE.class_god                 = "God of baracats"
 -- Class descriptions
 
 LANGUAGE.description_skeleton				= "Animated skeletons have a lot of health but they take minimal damage from bullets."
@@ -1083,6 +1083,7 @@ LANGUAGE.description_extinctioncrab					= "Vile diseases churn within this giant
 LANGUAGE.description_bnightmare						= "An extremely rare mutation gives the Nightmare its abnormal abilities.\nStronger than the every day zombie in almost every way, the Bloody Nightmare is a force to be reckoned with.\nOne swipe of its claws is enough to put down almost any person."
 LANGUAGE.description_baw						= "Zombie last fate.\nStronger than the every day zombie in almost every way, have immune to high damage.\nFast swips of the claws."
 LANGUAGE.description_king_fast						= "Fast zombie evolution.\nGood boss!Can easily kill humans.\nThis boss is bad?."
+LANGUAGE.description_god						= "The evolution from dozei!\n Maximum power!"
 -- Class control schemes
 LANGUAGE.controls_zombie							= "> PRIMARY: Claws\n> SECONDARY: Scream\n> RELOAD: Moan\n> SPRINT: Feign death\n> ON FATAL HIT IN LEGS: Revive / Transform"
 LANGUAGE.controls_zombie_gore_blaster				= "> PRIMARY: Claws\n> ON HIT HUMAN: Bleed\n> SECONDARY: Scream\n> SPRINT: Feign death\n> ON DEATH: Gore Blast"

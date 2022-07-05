@@ -1298,9 +1298,9 @@ function surface.CreateLegacyFont(font, size, weight, antialias, additive, name,
 	surface.CreateFont(name, {font = font, size = size, weight = weight, antialias = antialias, additive = additive, shadow = shadow, outline = outline, blursize = blursize})
 end
 
-local fontfamily = "Ghoulish Fright AOE"
-local fontfamilysm = "Remington Noiseless"
-local fontfamily3d = "hidden"
+local fontfamily = "Open Sans Condensed"
+local fontfamilysm = "Open Sans Condensed"
+local fontfamily3d = "Open Sans Condensed"
 local fontsizeadd = 8
 local fontweight = 0
 
@@ -1308,11 +1308,11 @@ function GM:Create3DFonts()
 	local fontsizeadd3D = 0
 	local fontweight3D = 0
 
-	surface.CreateLegacyFont(fontfamily3d, 12, fontweight3D, false, false,  "ZS3D2DFontSuperTiny2", false, true)
-	surface.CreateLegacyFont(fontfamily3d, 15, fontweight3D, false, false,  "ZS3D2DFontSuperTiny", false, true)
-	surface.CreateLegacyFont(fontfamily3d, 20, fontweight3D, false, false,  "ZS3D2DFontTiny", false, true)
-	surface.CreateLegacyFont(fontfamily3d, 28 + fontsizeadd3D, fontweight3D, false, false,  "ZS3D2DFontSmaller", false, true)
-	surface.CreateLegacyFont(fontfamily3d, 48 + fontsizeadd3D, fontweight3D, false, false,  "ZS3D2DFontSmall", false, true)
+	surface.CreateLegacyFont(fontfamily3d, 16, fontweight3D, false, false,  "ZS3D2DFontSuperTiny2", false, true)
+	surface.CreateLegacyFont(fontfamily3d, 18, fontweight3D, false, false,  "ZS3D2DFontSuperTiny", false, true)
+	surface.CreateLegacyFont(fontfamily3d, 22, fontweight3D, false, false,  "ZS3D2DFontTiny", false, true)
+	surface.CreateLegacyFont(fontfamily3d, 36 + fontsizeadd3D, fontweight3D, false, false,  "ZS3D2DFontSmaller", false, true)
+	surface.CreateLegacyFont(fontfamily3d, 50 + fontsizeadd3D, fontweight3D, false, false,  "ZS3D2DFontSmall", false, true)
 	surface.CreateLegacyFont(fontfamily3d, 72 + fontsizeadd3D, fontweight3D, false, false, "ZS3D2DFont", false, true)
 	surface.CreateLegacyFont(fontfamily3d, 128 + fontsizeadd3D, fontweight3D, false, false, "ZS3D2DFontBig", false, true)
 	surface.CreateLegacyFont(fontfamily3d, 28 + fontsizeadd3D, fontweight3D, false, false,  "ZS3D2DFontSmallerBlur", false, false, 16)
@@ -1365,11 +1365,11 @@ function GM:CreateScalingFonts()
 	surface.CreateLegacyFont("csd", screenscale * 72, 100, true, false, "zsdeathnoticecspa", false, false)
 	surface.CreateLegacyFont("HL2MP", screenscale * 72, 100, true, false, "zsdeathnoticepa", false, false)
 
-	surface.CreateLegacyFont(fontfamily, screenscale * (12 + fontsizeadd), fontweight, fontaa, false, "ZSHUDFontTiniest", fontshadow, fontoutline)
-	surface.CreateLegacyFont(fontfamily, screenscale * (16 + fontsizeadd), fontweight, fontaa, false, "ZSHUDFontTiny", fontshadow, fontoutline)
-	surface.CreateLegacyFont(fontfamily, screenscale * (20 + fontsizeadd), fontweight, fontaa, false, "ZSHUDFontSmallest", fontshadow, fontoutline)
-	surface.CreateLegacyFont(fontfamily, screenscale * (22 + fontsizeadd), fontweight, fontaa, false, "ZSHUDFontSmaller", fontshadow, fontoutline)
-	surface.CreateLegacyFont(fontfamily, screenscale * (28 + fontsizeadd), fontweight, fontaa, false, "ZSHUDFontSmall", fontshadow, fontoutline)
+	surface.CreateLegacyFont(fontfamily, screenscale * (14 + fontsizeadd), fontweight, fontaa, false, "ZSHUDFontTiniest", fontshadow, fontoutline)
+	surface.CreateLegacyFont(fontfamily, screenscale * (18 + fontsizeadd), fontweight, fontaa, false, "ZSHUDFontTiny", fontshadow, fontoutline)
+	surface.CreateLegacyFont(fontfamily, screenscale * (22 + fontsizeadd), fontweight, fontaa, false, "ZSHUDFontSmallest", fontshadow, fontoutline)
+	surface.CreateLegacyFont(fontfamily, screenscale * (24 + fontsizeadd), fontweight, fontaa, false, "ZSHUDFontSmaller", fontshadow, fontoutline)
+	surface.CreateLegacyFont(fontfamily, screenscale * (30 + fontsizeadd), fontweight, fontaa, false, "ZSHUDFontSmall", fontshadow, fontoutline)
 	surface.CreateLegacyFont(fontfamily, screenscale * (42 + fontsizeadd), fontweight, fontaa, false, "ZSHUDFont", fontshadow, fontoutline)
 	surface.CreateLegacyFont(fontfamily, screenscale * (72 + fontsizeadd), fontweight, fontaa, false, "ZSHUDFontBig", fontshadow, fontoutline)
 	surface.CreateLegacyFont(fontfamily, screenscale * (16 + fontsizeadd), fontweight, fontaa, false, "ZSHUDFontTinyBlur", false, false, 8)

@@ -13,8 +13,8 @@ function ENT:Hit(vHitPos, vHitNormal, eHitEntity)
 
 	if eHitEntity:IsValidLivingPlayer() and gamemode.Call("PlayerShouldTakeDamage", eHitEntity, owner) then
 		eHitEntity:GiveStatus("frost", 5)
-		eHitEntity:GiveStatus("rot", 4)
-		eHitEntity:AddArmDamage(18)
+		eHitEntity:GiveStatus("rot", 1)
+		eHitEntity:AddArmDamage(11)
 	end
 
 	local effectdata = EffectData()
