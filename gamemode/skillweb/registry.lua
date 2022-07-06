@@ -644,8 +644,8 @@ GM:AddSkill(SKILL_JEW, translate.Get("skill_jew"), GOOD..translate.Get("skill_je
 																3,			2,					{SKILL_NANITECLOUD}, TREE_BUILDINGTREE)
 																
 GM:AddSkillModifier(SKILL_JEW, SKILLMOD_POINTS, 50)
-GM:AddSkillModifier(SKILL_JEW, SKILLMOD_ARSENAL_DISCOUNT, -0.15)
-GM:AddSkillModifier(SKILL_JEW, SKILLMOD_SCRAPDISCOUNT, -0.15)
+GM:AddSkillModifier(SKILL_JEW, SKILLMOD_ARSENAL_DISCOUNT, -0.10)
+GM:AddSkillModifier(SKILL_JEW, SKILLMOD_SCRAPDISCOUNT, -0.10)
 GM:AddSkillModifier(SKILL_JEW, SKILLMOD_RES_AMMO_MUL, 0.15)
 GM:AddSkill(SKILL_FIELDAMP, translate.Get("skill_field_amp"), GOOD..translate.Get("skill_field_amp_d1")..BAD..translate.Get("skill_field_amp_d2"),
 																6,			4,					{}, TREE_BUILDINGTREE)

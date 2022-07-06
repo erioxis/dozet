@@ -1126,7 +1126,7 @@ LANGUAGE.skill_nanite_r = "Наниты"
 LANGUAGE.skill_u_pulse_drone = "Пульс Дрон"
 LANGUAGE.skill_u_pulse_d1 = "Открывает вариацию дрона - Пульс дрон\nСтреляет на короткое расстояние проджектайлами заместо пуль"
 LANGUAGE.skill_jew = "Еврей"
-LANGUAGE.skill_jew_d1 = "+15% к скидке в арсенале и в мастерской\n+50 Стартовых поинтов\n"
+LANGUAGE.skill_jew_d1 = "+10% к скидке в арсенале и в мастерской\n+50 Стартовых поинтов\n"
 LANGUAGE.skill_jew_d2 = "+15% К патронам из амуниции\n"
 LANGUAGE.skill_jew_d3 = "-5 Поинтов когда ты получаешь ОРУЖИЕ"
 --Скиллы на деф

@@ -37,28 +37,6 @@ function EFFECT:Init(data)
 
 	local maxbound = Vector(3, 3, 3)
 	local minbound = maxbound * -1
-	for i=1, math.random(6,8) do
-		local dir = (norm * 2 + VectorRand()) / 3
-		dir:Normalize()
-
-		local ent = ClientsideModel("models/props_junk/Rock001a.mdl", RENDERGROUP_OPAQUE)
-		if ent:IsValid() then
-			ent:SetModelScale(math.Rand(0.6, 0.9), 0)
-			ent:SetMaterial("models/shadertest/shader2")
-			ent:SetColor(Color(209, 33, 9))
-			ent:SetPos(pos + dir * 6)
-			ent:PhysicsInitBox(minbound, maxbound)
-			ent:SetCollisionBounds(minbound, maxbound)
-
-			local phys = ent:GetPhysicsObject()
-			if phys:IsValid() then
-				phys:SetMaterial("rock")
-				phys:ApplyForceCenter(dir * math.Rand(200, 300))
-			end
-
-			SafeRemoveEntityDelayed(ent, math.Rand(6, 10))
-		end
-	end
 end
 
 function EFFECT:Think()

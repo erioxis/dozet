@@ -2338,7 +2338,7 @@ concommand.Add("zs_mutationshop_click", function(sender, command, arguments)
 		end
 	end
 
-	if itemtab.Worth then
+	--[[if itemtab.Worth then
 	
 		local tokens = sender:GetTokens()
 		local cost = itemtab.Worth
@@ -2351,7 +2351,7 @@ concommand.Add("zs_mutationshop_click", function(sender, command, arguments)
 			return
 		end
 	
-	end
+	end]]
 
 	net.Start("zs_mutations_table")
 		net.WriteTable(sender.UsedMutations)

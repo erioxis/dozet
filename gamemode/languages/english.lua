@@ -1318,7 +1318,7 @@ LANGUAGE.skill_nanite_r = "Nanites"
 LANGUAGE.skill_u_pulse_drone = "Unlock: Pulse Drone"
 LANGUAGE.skill_u_pulse_d1 = "Unlocks the Pulse Drone Variant\nFires short range pulse projectiles instead of bullets"
 LANGUAGE.skill_jew = "Jew"
-LANGUAGE.skill_jew_d1 = "+15% Arsenal discount and scrap discount\n+50 Start points\n"
+LANGUAGE.skill_jew_d1 = "+10% Arsenal discount and scrap discount\n+50 Start points\n"
 LANGUAGE.skill_jew_d2 = "+15% Ammo from ressuply\n"
 LANGUAGE.skill_jew_d3 = "-5 Points every time when you get a LOOT"
 -- Skills defence
