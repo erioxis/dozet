@@ -539,6 +539,8 @@ function PANEL:Init()
 			net.SendToServer()
 
 			self:DisplayMessage(name.." activated.", COLOR_DARKGREEN)
+		elseif MySelf:CanUpgradeSkill(skillid) then
+			
 		else
 			net.Start("zs_skill_is_unlocked")
 				net.WriteUInt(skillid, 16)
@@ -550,7 +552,28 @@ function PANEL:Init()
 
 		contextmenu:SetVisible(false)
 	end
+	local upgrademenu = vgui.Create("Panel", self)
+	upgrademenu:SetSize(128 * screenscale, 128 * screenscale)
+	upgrademenu:SetVisible(false)
+	local button = vgui.Create("DButton", upgrademenu)
+	button:SetText("Upgrade")
+	button:SetFont("ZSHUDFontSmall")
+	button:SetDisabled(false)
+	button:SetSize(128 * screenscale, 32 * screenscale)
+	button:AlignTop()
+	button:CenterHorizontal()
+	button.DoClick = function(me)
+		local skillid = upgrademenu.SkillID
+		local name = allskills[skillid].Name
+
+		if MySelf:CanUpgradeSkill(skillid) then
+			
+		end
+
+		upgrademenu:SetVisible(false)
+	end
 	contextmenu.Button = button
+	upgrademenu.Button = button
 
 	local messagebox = vgui.Create("Panel", self)
 	messagebox:SetSize(850 * screenscale, 48)
@@ -591,6 +614,7 @@ function PANEL:Init()
 	self.SkillName = skillname
 	self.SkillDesc = desc
 	self.ContextMenu = contextmenu
+	self.UpgradeMenu = upgrademenu
 	self.MessageBox = messagebox
 	self.MessageText = messagetext
 	self.WarningText = warningtext
@@ -790,6 +814,9 @@ function PANEL:DoEdgeScroll(deltatime)
 
 	if scrolldir.y ~= 0 or scrolldir.z ~= 0 and self.ContextMenu and self.ContextMenu:IsVisible() then
 		self.ContextMenu:SetVisible(false)
+	end
+	if scrolldir.y ~= 0 or scrolldir.z ~= 0 and self.UpgradeMenu and self.UpgradeMenu:IsVisible() then
+		self.UpgradeMenu:SetVisible(false)
 	end
 
 	camera_velocity = LerpVector(deltatime * (scrolldir.y == 0 and scrolldir.z == 0 and 3 or 1), camera_velocity, scrolldir)
@@ -1187,6 +1214,14 @@ function PANEL:OnMousePressed(mc)
 		else
 			contextmenu:SetVisible(false)
 		end
+	elseif MOUSE_RIGHT then
+		local contextmenu = self.UpgradeMenu
+		if MySelf:IsSkillUnlocked(hoveredskill) then
+			local mx, my = gui.MousePos()
+			contextmenu:SetPos(mx - contextmenu:GetWide() / 2, my - contextmenu:GetTall() / 2)
+			contextmenu.Button:SetText("Upgrade")
+			contextmenu:SetVisible(true)
+		end
 	end
 end
 
@@ -1354,3 +1389,7 @@ end
 function meta:SetUnlockedSkills(skills, nosend)
 	self.UnlockedSkills = table.ToKeyValues(skills)
 end
+function meta:SetUpgradeSkills(skills, nosend)
+	self.UpgradableSkills = table.ToKeyValues(skills)
+end
+

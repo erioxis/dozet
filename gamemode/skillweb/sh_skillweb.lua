@@ -70,6 +70,12 @@ function meta:IsSkillUnlocked(skillid)
 	return table.HasValue(self:GetUnlockedSkills(), skillid)
 end
 
+
+function meta:CanUpgradeSkill(skillid)
+	return table.HasValue(self:UpgradesSkill(), skillid)
+end
+
+
 function meta:SkillCanUnlock(skillid)
 	return GAMEMODE:SkillCanUnlock(self, skillid, self:GetUnlockedSkills())
 end
@@ -269,6 +275,9 @@ end
 
 function meta:GetUnlockedSkills()
 	return self.UnlockedSkills or {}
+end
+function meta:UpgradesSkill()
+	return self.UpgradableSkills or {}
 end
 
 function meta:GetTotalAdditiveModifier(...)

@@ -239,6 +239,7 @@ function meta:SkillsRemort()
 	self:SetZSRemortLevel(rl)
 	self:SetZSXP(0)
 	self:SetUnlockedSkills({})
+	self:SetUpgradeSkills({})
 	self:SetDesiredActiveSkills({})
 	self.NextSkillReset = nil
 
@@ -257,6 +258,7 @@ end
 
 function meta:SkillsReset()
 	self:SetUnlockedSkills({})
+	self:SetUpgradeSkills({})
 	self:SetDesiredActiveSkills({})
 	self.NextSkillReset = os.time() + 0 
 
