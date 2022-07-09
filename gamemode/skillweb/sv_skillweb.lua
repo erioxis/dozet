@@ -201,6 +201,11 @@ function meta:SendSkillUnlocked(skillid, unlocked)
 		net.WriteBool(unlocked)
 	net.Send(self)
 end
+function meta:SendSkillUpgraded(skillid, upgraded)
+	net.Start("zs_skill_upgraged")
+		net.WriteUInt(skillid, 16)
+	net.Send(self)
+end
 
 function meta:SetDesiredActiveSkills(skills, nosend)
 	self.DesiredActiveSkills = table.ToKeyValues(skills)

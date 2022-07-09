@@ -539,8 +539,6 @@ function PANEL:Init()
 			net.SendToServer()
 
 			self:DisplayMessage(name.." activated.", COLOR_DARKGREEN)
-		elseif MySelf:CanUpgradeSkill(skillid) then
-			
 		else
 			net.Start("zs_skill_is_unlocked")
 				net.WriteUInt(skillid, 16)
@@ -566,8 +564,11 @@ function PANEL:Init()
 		local skillid = upgrademenu.SkillID
 		local name = allskills[skillid].Name
 
-		if MySelf:CanUpgradeSkill(skillid) then
-			
+		if GAMEMODE.Skills[skillid].SkillLevel <= (GAMEMODE.Skills[skillid].MaxSkillLevel or 1) then
+			GAMEMODE.Skills[skillid].SkillLevel = GAMEMODE.Skills[skillid].SkillLevel + 1
+			self:DisplayMessage(name.." upgraded.")
+		else
+			self:DisplayMessage(name.." have max level!", COLOR_RED)
 		end
 
 		upgrademenu:SetVisible(false)
@@ -1216,12 +1217,20 @@ function PANEL:OnMousePressed(mc)
 		end
 	elseif MOUSE_RIGHT then
 		local contextmenu = self.UpgradeMenu
-		if MySelf:IsSkillUnlocked(hoveredskill) then
+		if MySelf:IsSkillUnlocked(hoveredskill) and (GAMEMODE.Skills[hoveredskill].CanUpgrade or 0) >= 1 then
 			local mx, my = gui.MousePos()
-			contextmenu:SetPos(mx - contextmenu:GetWide() / 2, my - contextmenu:GetTall() / 2)
-			contextmenu.Button:SetText("Upgrade")
-			contextmenu:SetVisible(true)
+			if MySelf:GetZSSPRemaining() >= 1 then
+				contextmenu:SetPos(mx - contextmenu:GetWide() / 2, my - contextmenu:GetTall() / 2)
+				contextmenu.Button:SetText("Upgrade")
+				contextmenu:SetVisible(true)
+			else
+				self:DisplayMessage("You need SP to upgrade this skill!", COLOR_RED)
+				surface.PlaySound("buttons/button8.wav")
+
+				return
+			end
 		end
+		contextmenu.SkillID = hoveredskill
 	end
 end
 

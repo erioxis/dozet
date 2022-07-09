@@ -132,6 +132,9 @@ function meta:ProcessDamage(dmginfo)
 		net.Start("zs_damageblock")
 		net.Send(self)
     end
+	if self:IsSkillActive(SKILL_HELPLIFER) and math.random(1,3) == 1 and dmginfo:GetDamage() >= self:Health() then
+		dmginfo:SetDamage(0)
+    end
 
 
 

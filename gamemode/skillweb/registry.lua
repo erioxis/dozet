@@ -28,6 +28,7 @@ function GM:AddSkill(id, name, description, x, y, connections, tree)
 	return skill
 end
 
+
 -- Use this after all skills have been added. It assigns dynamic IDs!
 function GM:AddTrinket(name, swepaffix, pairedweapon, veles, weles, tier, description, status, stocks, icon)
 	local skill = {Connections = {}}
@@ -296,6 +297,7 @@ SKILL_VAMPIRISM = 278
 SKILL_D_CURSEDTRUE = 279
 SKILL_TORMENT8 = 280
 SKILL_SINS = 281
+SKILL_HELPLIFER = 282
 
 SKILLMOD_HEALTH = 1
 SKILLMOD_SPEED = 2
@@ -1059,6 +1061,9 @@ GM:AddSkillModifier(SKILL_DEATH, SKILLMOD_MEDKIT_COOLDOWN_MUL, 0.2)
 GM:AddSkillModifier(SKILL_DEATH, SKILLMOD_MEDKIT_EFFECTIVENESS_MUL, 0.2)		
 GM:AddSkill(SKILL_DEATH, "Morieris", PURPLE.."Better medicine\n" ..BAD.."+20% Medkit Cooldown\n"..PURPLE.."+20% Medkit effectiveness",
 										-3,			-8,					{SKILL_EX2}, TREE_ANCIENTTREE)
+GM:AddSkill(SKILL_HELPLIFER, "Chance", PURPLE.."Can save from fatal hit\n33% Chance\nOn upgrade chance is 50%",
+										2,			-7,					{SKILL_EX2}, TREE_ANCIENTTREE)
+.CanUpgrade = 1
 										SKILL_ALLPOWER = 182
 GM:AddSkillModifier(SKILL_ALLPOWER, SKILLMOD_REPAIRRATE_MUL, 0.10)		
 GM:AddSkill(SKILL_ALLPOWER, "Cunctipotens", PURPLE.."Better cades\n" ..PURPLE.."+10% Repair Mul",

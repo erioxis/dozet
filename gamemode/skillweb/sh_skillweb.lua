@@ -69,13 +69,6 @@ if not meta then return end
 function meta:IsSkillUnlocked(skillid)
 	return table.HasValue(self:GetUnlockedSkills(), skillid)
 end
-
-
-function meta:CanUpgradeSkill(skillid)
-	return table.HasValue(self:UpgradesSkill(), skillid)
-end
-
-
 function meta:SkillCanUnlock(skillid)
 	return GAMEMODE:SkillCanUnlock(self, skillid, self:GetUnlockedSkills())
 end
@@ -254,7 +247,7 @@ function meta:GetZSXP()
 end
 
 function meta:GetZSSPUsed()
-	return #self:GetUnlockedSkills()
+	return #self:GetUnlockedSkills() + (#self:UpgradesSkill() or 0)
 end
 
 function meta:GetZSSPRemaining()
