@@ -36,9 +36,9 @@ SWEP.WorldModel	= "models/weapons/w_grenade.mdl"
 
 SWEP.Weight = 4
 
-SWEP.MeleeDamage = 222
-SWEP.LegDamage = 120
-SWEP.HitDistance = 50
+SWEP.MeleeDamage = 451
+SWEP.LegDamage = 321
+SWEP.HitDistance = 77
 
 SWEP.Unarmed = false
 
@@ -59,7 +59,7 @@ SWEP.Primary.Delay = 0.85
 
 SWEP.Tier = 6
 
-GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_FIRE_DELAY, -0.031, 1)
+GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_FIRE_DELAY, -0.091, 1)
 
 function SWEP:OnMeleeHit(hitent, hitflesh, tr)
 	if hitent:IsValid() then

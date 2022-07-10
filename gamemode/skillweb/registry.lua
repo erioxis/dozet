@@ -794,20 +794,20 @@ GM:AddSkill(SKILL_EQUIPPED, translate.Get("skill_alacraty"), GOOD.. translate.Ge
 																-6,			2,					{}, TREE_GUNTREE)
 GM:AddSkill(SKILL_WORTHINESS1, translate.Get("worthness"), GOOD.."+10"..translate.Get("worth")..BAD.."-3"..translate.Get("start_points"),
 																-4,			-3,					{}, TREE_GUNTREE)
-GM:AddSkill(SKILL_CANNONBALL, "Cannonball", "-25% projectile speed\n"..GOOD.."+3% projectile damage",
+GM:AddSkill(SKILL_CANNONBALL, translate.Get("skill_cannonball"), translate.Get("skill_cannonball_d1")..GOOD..translate.Get("skill_cannonball_d2"),
 																-2,			-3,					{}, TREE_GUNTREE)
-GM:AddSkill(SKILL_SCOURER, "Scourer", GOOD.."Earn end of wave points as scrap\n"..BAD.."Earn no end of wave points",
+GM:AddSkill(SKILL_SCOURER, translate.Get("skill_scourer"), GOOD..translate.Get("skill_scourer_d1")..BAD..translate.Get("skill_scourer_d2"),
 																4,			-3,					{}, TREE_GUNTREE)
-GM:AddSkill(SKILL_CONEFFECT, "Concentrated Effect", GOOD.."+5% explosive damage\n"..BAD.."-20%"..translate.Get("exp_r"),
+GM:AddSkill(SKILL_CONEFFECT, translate.Get("skill_concetrate"), GOOD..translate.Get("skill_concetrate_d1")..BAD.."-20%"..translate.Get("exp_r"),
 																2,			-5,					{}, TREE_GUNTREE)
-GM:AddSkill(SKILL_TRUEWOOISM, "Wooism", GOOD.."No accuracy penalty from moving or jumping\n"..BAD.."No accuracy bonus from crouching or ironsighting",
+GM:AddSkill(SKILL_TRUEWOOISM, translate.Get("skill_wooism"), GOOD..translate.Get("skill_wooism_d1")..BAD..translate.Get("skill_wooism_d2"),
 																7,			0,					{}, TREE_GUNTREE)
 
 -- Melee Tree
 GM:AddSkill(SKILL_WORTHINESS2, translate.Get("worthness").."II", GOOD.."+10"..translate.Get("worth")..BAD.."-3"..translate.Get("start_points"),
 																4,			0,					{}, TREE_MELEETREE)
 
-GM:AddSkill(SKILL_AVOID_BLOCK, "Transfer damage", GOOD.."Blocked damage = XP\n"..BAD.."-25% Block multiplier",
+GM:AddSkill(SKILL_AVOID_BLOCK, translate.Get("skill_xpdamage"), GOOD..translate.Get("skill_xpdamage_d1")..BAD.."-25%"..translate.Get("b_mul"),
 																5,			1,					{SKILL_WORTHINESS2}, TREE_MELEETREE)
 GM:AddSkillModifier(SKILL_AVOID_BLOCK, SKILLMOD_BLOCKMULTIPLIER, 0.25)
 GM:AddSkill(SKILL_BATTLER1, translate.Get("skill_battler").."I", GOOD.."+3%"..translate.Get("meleedamage")..BAD.."-2%"..translate.Get("r_speed"),
@@ -820,21 +820,21 @@ GM:AddSkill(SKILL_BATTLER4, translate.Get("skill_battler").."IV", GOOD.."+9%"..t
 																-2,			0,					{SKILL_BATTLER5, SKILL_MASTERCHEF, SKILL_D_CLUMSY}, TREE_MELEETREE)
 GM:AddSkill(SKILL_BATTLER5, translate.Get("skill_battler").."V", GOOD.."+13%"..translate.Get("meleedamage")..BAD.."-16%"..translate.Get("r_speed"),
 																0,			2,					{SKILL_GLASSWEAPONS, SKILL_BLOODLUST}, TREE_MELEETREE)
-GM:AddSkill(SKILL_LASTSTAND, "Last Stand", GOOD.."Double melee damage when below 25% health\n"..BAD.."0.85x melee weapon damage at any other time",
+GM:AddSkill(SKILL_LASTSTAND, translate.Get("skill_laststand"), GOOD..translate.Get("skill_laststand_d1")..BAD..translate.Get("skill_laststand_d2"),
 																0,			6,					{SKILL_ABUSE}, TREE_MELEETREE)
 .RemortReq = 4
-GM:AddSkill(SKILL_ABUSE, "Last abuse", GOOD.."+10%"..translate.Get("meleedamage")..GOOD.."Have chance to double end wave points,luck can increase chance\n"..BAD.."25% Max health for heal",
+GM:AddSkill(SKILL_ABUSE, translate.Get("skill_lastabuse"), GOOD.."+10%"..translate.Get("meleedamage")..GOOD..translate.Get("skill_lastabuse_d1")..BAD..translate.Get("skill_laststand_d2"),
 																0,			7,					{SKILL_CURSECURE}, TREE_MELEETREE)
-GM:AddSkill(SKILL_CURSECURE, "Curse Cure", GOOD.."-15 Curse when you get hit\n"..BAD.."-20% max curse\n"..BAD.."Instead of a curse, you get rot",
+GM:AddSkill(SKILL_CURSECURE, translate.Get("skill_cursecure"), GOOD..translate.Get("skill_cursecure_d1")..BAD.."-20%"..translate.Get("m_curse")..BAD..translate.Get("skill_cursecure_d2"),
 																0,			8,					{}, TREE_MELEETREE)
-GM:AddSkill(SKILL_SOULNET, "Soul Eater", GOOD.."In Start Gave random soul\n"..GOOD.."Gave +6% Damage for scythe\n"..BAD.."-10%"..translate.Get("meleedamage"),
+GM:AddSkill(SKILL_SOULNET, translate.Get("skill_souleater"), GOOD..translate.Get("skill_souleater_d1")..BAD.."-10%"..translate.Get("meleedamage"),
 																0,			4,					{SKILL_LASTSTAND}, TREE_MELEETREE)
 .RemortReq = 4
 GM:AddSkill(SKILL_GLASSWEAPONS, "Glass Weapons", GOOD.."3.5x melee weapon damage vs. zombies\n"..BAD.."Your melee weapons have a 50% chance to break when hitting a zombie",
 																2,			4,					{}, TREE_MELEETREE)
-GM:AddSkill(SKILL_GLASSMAN, "Glass Touch", GOOD.."You Deal x2.3 Melee Damage\n"..BAD.."You Take x3 Damage",
+GM:AddSkill(SKILL_GLASSMAN, translate.Get("skill_glassman"), GOOD.."+230%"..translate.Get("meleedamage")..BAD.."+200%"..translate.Get("meleedamagetaken"),
 																3,			5,					{SKILL_GLASSWEAPONS}, TREE_MELEETREE)
-GM:AddSkill(SKILL_D_CLUMSY, "Debuff: Clumsy", GOOD.."+20 starting Worth\n"..GOOD.."+10 starting points\n"..BAD.."Very easy to be knocked down",
+GM:AddSkill(SKILL_D_CLUMSY, "Debuff: Clumsy", GOOD.."+20"..translate.Get("worth")..GOOD.."+10 starting points\n"..BAD.."Very easy to be knocked down",
 																-2,			2,					{}, TREE_MELEETREE)
 GM:AddSkill(SKILL_CHEAPKNUCKLE, "Cheap Tactics", GOOD.."Slow targets when striking with a melee weapon from behind\n"..BAD.."-10%"..translate.Get("m_range"),
 																4,			-2,					{SKILL_HEAVYSTRIKES, SKILL_WORTHINESS2}, TREE_MELEETREE)
