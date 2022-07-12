@@ -11,7 +11,7 @@ function SWEP:ApplyMeleeDamage(ent, trace, damage)
 		ent:KnockDown()
 		ent:SetGroundEntity(NULL)
 		ent:SetVelocity(vel)]]
-		if math.random(7) == 1 and ent:IsPlayer() then
+		if math.random(15) == 1 and ent:IsPlayer() then
 			timer.Simple(3, function()
 				ent:Kill()
 			end)

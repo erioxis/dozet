@@ -390,7 +390,7 @@ function GM:AddShopItem(list, i, tab, issub, nopointshop)
 
 	local name = tab.Name or ""
 	local namelab = EasyLabel(itempan, name, "ZSHUDFontTiniest", COLOR_WHITE)
-	namelab:SetPos(12 * screenscale, itempan:GetTall() * (nottrinkets and 0.8 or 0.7) - namelab:GetTall() * 0.34)
+	namelab:SetPos(12 * screenscale, itempan:GetTall() * (nottrinkets and 0.8 or 0.7) - namelab:GetTall() * 0.44)
 	if missing_skill then
 		namelab:SetAlpha(30)
 	end

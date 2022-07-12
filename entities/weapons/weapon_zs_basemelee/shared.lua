@@ -386,6 +386,7 @@ false
 	if SERVER and hitent:IsPlayer() and not self.NoGlassWeapons and owner:IsSkillActive(SKILL_GLASSWEAPONS) then
 		damagemultiplier = damagemultiplier * 3.5
 		owner.GlassWeaponShouldBreak = not owner.GlassWeaponShouldBreak
+
 	end
 
 

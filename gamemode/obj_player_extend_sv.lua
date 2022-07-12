@@ -249,11 +249,11 @@ function meta:ProcessDamage(dmginfo)
 					local cursed5 = self:GetStatus("hollowing")
 					if (cursed5) then 
 						self:AddHallow(self:GetOwner(),cursed5.DieTime - CurTime() + (dmginfo:GetDamage() * 1.5))
-						self.MasteryHollowing = self.MasteryHollowing + dmginfo:GetDamage() * 1.5
+						self.MasteryHollowing = self.MasteryHollowing + dmginfo:GetDamage()
 					end
 					if (not cursed5) then 
 						self:AddHallow(self:GetOwner(),dmginfo:GetDamage() * 1.5)
-						self.MasteryHollowing = self.MasteryHollowing + dmginfo:GetDamage() * 1.5
+						self.MasteryHollowing = self.MasteryHollowing + dmginfo:GetDamage()
 					end
 					dmginfo:SetDamage(0)
 				end

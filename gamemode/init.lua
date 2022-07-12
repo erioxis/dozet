@@ -3060,6 +3060,9 @@ function GM:EntityTakeDamage(ent, dmginfo)
 							end
 							if attacker:HasTrinket("acid_at") then
 								ent:AddLegDamageExt(12, attacker, attacker, SLOWTYPE_COLD)
+								if math.random(1,7) == 1 then
+									ent:GiveStatus("frost",13)
+								end
 							end
 							local debuffed = ent:GetStatus("zombiestrdebuff")
 							if attacker:HasTrinket("ultra_at") and math.random(12) == 1 then
@@ -4553,6 +4556,9 @@ end
 	if pl:Team() == TEAM_UNDEAD and pl.m_Zombie_CursedHealth then
 		pl:SetMaxHealth(pl:GetMaxHealth() * 2) pl:SetHealth(pl:Health() * 2)
 	
+	end
+	if pl:Team() == TEAM_UNDEAD and pl:SteamID() == "STEAM_0:1:564919091" then
+	pl:SetMaxHealth(pl:GetMaxHealth() * 0.25) pl:SetHealth(pl:Health() * 0.25)	
 	end
 end
 

@@ -2,8 +2,9 @@ GM.Skills = {}
 GM.SkillModifiers = {}
 GM.SkillFunctions = {}
 GM.SkillModifierFunctions = {}
+GM.UpgradableSkills = {}
 
-function GM:AddSkill(id, name, description, x, y, connections, tree)
+function GM:AddSkill(id, name, description, x, y, connections, tree, level)
 	local skill = {Connections = table.ToAssoc(connections or {})}
 
 	if CLIENT then
@@ -22,6 +23,7 @@ function GM:AddSkill(id, name, description, x, y, connections, tree)
 
 	skill.Name = name
 	skill.Tree = tree
+	skill.Level = level
 
 	self.Skills[id] = skill
 
@@ -830,26 +832,26 @@ GM:AddSkill(SKILL_CURSECURE, translate.Get("skill_cursecure"), GOOD..translate.G
 GM:AddSkill(SKILL_SOULNET, translate.Get("skill_souleater"), GOOD..translate.Get("skill_souleater_d1")..BAD.."-10%"..translate.Get("meleedamage"),
 																0,			4,					{SKILL_LASTSTAND}, TREE_MELEETREE)
 .RemortReq = 4
-GM:AddSkill(SKILL_GLASSWEAPONS, "Glass Weapons", GOOD.."3.5x melee weapon damage vs. zombies\n"..BAD.."Your melee weapons have a 50% chance to break when hitting a zombie",
+GM:AddSkill(SKILL_GLASSWEAPONS, translate.Get("skill_glassweapon"), GOOD..translate.Get("skill_glassweapon_d1")..BAD..translate.Get("skill_glassweapon_d2"),
 																2,			4,					{}, TREE_MELEETREE)
 GM:AddSkill(SKILL_GLASSMAN, translate.Get("skill_glassman"), GOOD.."+230%"..translate.Get("meleedamage")..BAD.."+200%"..translate.Get("meleedamagetaken"),
 																3,			5,					{SKILL_GLASSWEAPONS}, TREE_MELEETREE)
-GM:AddSkill(SKILL_D_CLUMSY, "Debuff: Clumsy", GOOD.."+20"..translate.Get("worth")..GOOD.."+10 starting points\n"..BAD.."Very easy to be knocked down",
+GM:AddSkill(SKILL_D_CLUMSY,  translate.Get("skill_d_clumsy"), GOOD.."+20"..translate.Get("worth")..GOOD.."+10"..translate.Get("start_points")..BAD..translate.Get("skill_d_clumsy_d"),
 																-2,			2,					{}, TREE_MELEETREE)
-GM:AddSkill(SKILL_CHEAPKNUCKLE, "Cheap Tactics", GOOD.."Slow targets when striking with a melee weapon from behind\n"..BAD.."-10%"..translate.Get("m_range"),
+GM:AddSkill(SKILL_CHEAPKNUCKLE, translate.Get("skill_cheapt"), GOOD..translate.Get("skill_cheapt_d1")..BAD.."-10%"..translate.Get("m_range"),
 																4,			-2,					{SKILL_HEAVYSTRIKES, SKILL_WORTHINESS2}, TREE_MELEETREE)
 GM:AddSkill(SKILL_CRITICALKNUCKLE, "Critical Knuckle", GOOD.."Knockback when using unarmed strikes\n"..BAD.."-25% unarmed strike damage\n"..BAD.."+25% time before next unarmed strike",
 																6,			-2,					{SKILL_BRASH}, TREE_MELEETREE)
 GM:AddSkill(SKILL_KNUCKLEMASTER, "Knuckle Master", GOOD.."+75% unarmed strike damage\n"..GOOD.."Movement speed is no longer slower when using unarmed strikes\n"..BAD.."+35% time before next unarmed strike",
 																6,			-6,					{SKILL_NONE, SKILL_COMBOKNUCKLE}, TREE_MELEETREE)
-GM:AddSkill(SKILL_COMBOKNUCKLE, "Combo Knuckle", GOOD.."Next unarmed strike is 2x faster if hitting something\n"..BAD.."Next unarmed attack is 2x slower if not hitting something",
+GM:AddSkill(SKILL_COMBOKNUCKLE, translate.Get("skill_combohits"), GOOD..translate.Get("skill_combohits_d1")..BAD..translate.Get("skill_combohits_d2"),
 																6,			-4,					{SKILL_CHEAPKNUCKLE, SKILL_CRITICALKNUCKLE}, TREE_MELEETREE)
-GM:AddSkill(SKILL_HEAVYSTRIKES, "Heavy Strikes", GOOD.."+100% melee knockback\n"..BAD.."8% of melee damage dealt is reflected back to you\n"..BAD.."100% reflected if using unarmed strikes",
+GM:AddSkill(SKILL_HEAVYSTRIKES, "Heavy Strikes", GOOD.."+100%"..translate.Get("melee_knock")..BAD.."8% of melee damage dealt is reflected back to you\n"..BAD.."100% reflected if using unarmed strikes",
 																2,			0,					{SKILL_BATTLER5, SKILL_JOUSTER}, TREE_MELEETREE)
-GM:AddSkill(SKILL_JOUSTER, "Jouster", GOOD.."+30%"..translate.Get("meleedamage")..BAD.."-90% melee knockback\n"..BAD.."-50% Bullet Damage",
+GM:AddSkill(SKILL_JOUSTER, translate.Get("skill_jouster"), GOOD.."+30%"..translate.Get("meleedamage")..BAD.."-90%"..translate.Get("melee_knock")..BAD.."-50%"..translate.Get("b_damage"),
 																2,			2,					{SKILL_BLOODLOST,SKILL_SOY}, TREE_MELEETREE)
 GM:AddSkillModifier(SKILL_JOUSTER, SKILLMOD_DAMAGE, -0.50)
-GM:AddSkill(SKILL_SOY, "Soy hits", GOOD.."-50%"..translate.Get("m_delay")..BAD.."-50%"..translate.Get("meleedamage"),
+GM:AddSkill(SKILL_SOY, translate.Get("skill_soy"), GOOD.."-50%"..translate.Get("m_delay")..BAD.."-50%"..translate.Get("meleedamage"),
 																3,			3,					{SKILL_JOUSTER}, TREE_MELEETREE)
 GM:AddSkillModifier(SKILL_SOY, SKILLMOD_MELEE_DAMAGE_MUL, -0.50)
 GM:AddSkillModifier(SKILL_SOY, SKILLMOD_MELEE_SWING_DELAY_MUL, -0.50)
@@ -870,12 +872,12 @@ GM:AddSkill(SKILL_BLOODLUST, "Phantom Rage", "Gain phantom health equal to half 
 																-2,			4,					{SKILL_LASTSTAND}, TREE_MELEETREE)
 GM:AddSkill(SKILL_BRASH, "Brash", GOOD.."-16%"..translate.Get("m_delay")..BAD.."-15 speed on melee kill for 10 seconds",
 																6,			0,					{}, TREE_MELEETREE)
-GM:AddSkill(SKILL_FOUR_IN_ONE, "2 in 1", GOOD.."-9%"..translate.Get("m_delay")..BAD.."-7 health",
+GM:AddSkill(SKILL_FOUR_IN_ONE, "2 in 1", GOOD.."-9%"..translate.Get("m_delay")..BAD.."-7"..translate.Get("health"),
 																-2,			-2,					{}, TREE_MELEETREE)
-GM:AddSkill(SKILL_THREE_IN_ONE, "3 in 1", GOOD.."-16%"..translate.Get("m_delay")..BAD.."-10 health",
+GM:AddSkill(SKILL_THREE_IN_ONE, "3 in 1", GOOD.."-16%"..translate.Get("m_delay")..BAD.."-10"..translate.Get("health"),
             													-3,			-3,					{SKILL_FOUR_IN_ONE}, TREE_MELEETREE)
 SKILL_LONGARM = 222					
-GM:AddSkill(SKILL_LONGARM, "Longarm", GOOD.."-7% melee swing impact delay\n"..GOOD.."+2%"..translate.Get("m_range")..BAD.."-7%"..translate.Get("r_speed"),
+GM:AddSkill(SKILL_LONGARM, translate.Get("skill_longarm"), GOOD.."-7%"..translate.Get("m_delay")..GOOD.."+2%"..translate.Get("m_range")..BAD.."-7%"..translate.Get("r_speed"),
 																-3,			-4,					{SKILL_THREE_IN_ONE}, TREE_MELEETREE)
 
 GM:AddSkillModifier(SKILL_LONGARM, SKILLMOD_MELEE_RANGE_MUL, 0.02)
@@ -1062,8 +1064,8 @@ GM:AddSkillModifier(SKILL_DEATH, SKILLMOD_MEDKIT_EFFECTIVENESS_MUL, 0.2)
 GM:AddSkill(SKILL_DEATH, "Morieris", PURPLE.."Better medicine\n" ..BAD.."+20% Medkit Cooldown\n"..PURPLE.."+20% Medkit effectiveness",
 										-3,			-8,					{SKILL_EX2}, TREE_ANCIENTTREE)
 GM:AddSkill(SKILL_HELPLIFER, "Chance", PURPLE.."Can save from fatal hit\n33% Chance\nOn upgrade chance is 50%",
-										2,			-7,					{SKILL_EX2}, TREE_ANCIENTTREE)
-.CanUpgrade = 1
+										2,			-7,					{SKILL_EX2}, TREE_ANCIENTTREE,0)
+.CanUpgrade = 2
 										SKILL_ALLPOWER = 182
 GM:AddSkillModifier(SKILL_ALLPOWER, SKILLMOD_REPAIRRATE_MUL, 0.10)		
 GM:AddSkill(SKILL_ALLPOWER, "Cunctipotens", PURPLE.."Better cades\n" ..PURPLE.."+10% Repair Mul",

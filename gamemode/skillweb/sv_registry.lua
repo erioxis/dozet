@@ -1,4 +1,4 @@
-ApplySkills()
+
 GM:SetSkillModifierFunction(SKILLMOD_HEALTH, function(pl, amount)
 	local current = pl:GetMaxHealth()
 	local new = 100 + math.Clamp(amount, -99, 1000) 

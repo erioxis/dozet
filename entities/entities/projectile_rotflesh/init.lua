@@ -13,7 +13,13 @@ function ENT:Hit(vHitPos, vHitNormal, eHitEntity)
 
 	if eHitEntity:IsValidLivingPlayer() and gamemode.Call("PlayerShouldTakeDamage", eHitEntity, owner) then
 		eHitEntity:GiveStatus("frost", 5)
-		eHitEntity:GiveStatus("rot", 1)
+		local rot = eHitEntity:GetStatus("rot")
+		if (rot) then 
+			eHitEntity:AddRot(self:GetOwner(), rot.DieTime - CurTime() + 1)
+		end
+		if (not rot) then 
+			eHitEntity:AddRot(eHitEntity:GetOwner(), 1)
+		end
 		eHitEntity:AddArmDamage(11)
 	end
 

@@ -564,9 +564,16 @@ function PANEL:Init()
 		local skillid = upgrademenu.SkillID
 		local name = allskills[skillid].Name
 
-		if GAMEMODE.Skills[skillid].SkillLevel <= (GAMEMODE.Skills[skillid].MaxSkillLevel or 1) then
-			GAMEMODE.Skills[skillid].SkillLevel = GAMEMODE.Skills[skillid].SkillLevel + 1
-			self:DisplayMessage(name.." upgraded.")
+		if (GAMEMODE.Skills[skillid].Level or 1) < (GAMEMODE.Skills[skillid].CanUpgrade or 1) then
+			if MySelf:GetZSSPRemaining() >= 1 then
+				GAMEMODE.Skills[skillid].Level = GAMEMODE.Skills[skillid].Level + 1
+				self:DisplayMessage(name.." upgraded.")
+			else
+				self:DisplayMessage("You need SP to upgrade this skill!", COLOR_RED)
+				surface.PlaySound("buttons/button8.wav")
+
+				return
+			end
 		else
 			self:DisplayMessage(name.." have max level!", COLOR_RED)
 		end
@@ -1167,8 +1174,8 @@ function PANEL:OnMousePressed(mc)
 
 				return
 			end
-			if (GAMEMODE.Skills[hoveredskill].LevelReq or 1) < MySelf:GetZSLevel() then
 				if (GAMEMODE.Skills[hoveredskill].RemortReq or 0) < MySelf:GetZSRemortLevel() then
+				if (GAMEMODE.Skills[hoveredskill].LevelReq or 1) < MySelf:GetZSLevel() then
 			if MySelf:IsSkillDesired(hoveredskill) then
 				if GAMEMODE.Skills[hoveredskill].AlwaysActive then
 					self:DisplayMessage("You can't deactivate this skill!", COLOR_RED)
@@ -1196,7 +1203,7 @@ function PANEL:OnMousePressed(mc)
 
 				return
 			end
-				elseif (GAMEMODE.Skills[hoveredskill].RemortReq or 0) > MySelf:GetZSRemortLevel()then
+				elseif (GAMEMODE.Skills[hoveredskill].RemortReq or 0) > MySelf:GetZSRemortLevel() then
 					self:DisplayMessage("You need to have remort "..GAMEMODE.Skills[hoveredskill].RemortReq.." to unlock", COLOR_RED)
 					surface.PlaySound("buttons/button8.wav")
 
