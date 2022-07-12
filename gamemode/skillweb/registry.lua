@@ -840,13 +840,13 @@ GM:AddSkill(SKILL_D_CLUMSY,  translate.Get("skill_d_clumsy"), GOOD.."+20"..trans
 																-2,			2,					{}, TREE_MELEETREE)
 GM:AddSkill(SKILL_CHEAPKNUCKLE, translate.Get("skill_cheapt"), GOOD..translate.Get("skill_cheapt_d1")..BAD.."-10%"..translate.Get("m_range"),
 																4,			-2,					{SKILL_HEAVYSTRIKES, SKILL_WORTHINESS2}, TREE_MELEETREE)
-GM:AddSkill(SKILL_CRITICALKNUCKLE, "Critical Knuckle", GOOD.."Knockback when using unarmed strikes\n"..BAD.."-25% unarmed strike damage\n"..BAD.."+25% time before next unarmed strike",
+GM:AddSkill(SKILL_CRITICALKNUCKLE, translate.Get("skill_critknuckle"), GOOD..translate.Get("skill_critknuckle_d1")..BAD.."-25%"..translate.Get("fist_damage")..BAD.."+25% "..translate.Get("fist_delay"),
 																6,			-2,					{SKILL_BRASH}, TREE_MELEETREE)
-GM:AddSkill(SKILL_KNUCKLEMASTER, "Knuckle Master", GOOD.."+75% unarmed strike damage\n"..GOOD.."Movement speed is no longer slower when using unarmed strikes\n"..BAD.."+35% time before next unarmed strike",
+GM:AddSkill(SKILL_KNUCKLEMASTER, translate.Get("skill_knuckmaster"), GOOD.."+75%"..translate.Get("fist_damage")..GOOD..translate.Get("skill_knuckmaster_d1")..BAD.."+35%"..translate.Get("fist_delay"),
 																6,			-6,					{SKILL_NONE, SKILL_COMBOKNUCKLE}, TREE_MELEETREE)
 GM:AddSkill(SKILL_COMBOKNUCKLE, translate.Get("skill_combohits"), GOOD..translate.Get("skill_combohits_d1")..BAD..translate.Get("skill_combohits_d2"),
 																6,			-4,					{SKILL_CHEAPKNUCKLE, SKILL_CRITICALKNUCKLE}, TREE_MELEETREE)
-GM:AddSkill(SKILL_HEAVYSTRIKES, "Heavy Strikes", GOOD.."+100%"..translate.Get("melee_knock")..BAD.."8% of melee damage dealt is reflected back to you\n"..BAD.."100% reflected if using unarmed strikes",
+GM:AddSkill(SKILL_HEAVYSTRIKES, translate.Get("skill_hknucke"), GOOD.."+100%"..translate.Get("melee_knock")..BAD..translate.Get("skill_hknucke_d1")..BAD..translate.Get("skill_hknucke_d2"),
 																2,			0,					{SKILL_BATTLER5, SKILL_JOUSTER}, TREE_MELEETREE)
 GM:AddSkill(SKILL_JOUSTER, translate.Get("skill_jouster"), GOOD.."+30%"..translate.Get("meleedamage")..BAD.."-90%"..translate.Get("melee_knock")..BAD.."-50%"..translate.Get("b_damage"),
 																2,			2,					{SKILL_BLOODLOST,SKILL_SOY}, TREE_MELEETREE)
@@ -856,7 +856,7 @@ GM:AddSkill(SKILL_SOY, translate.Get("skill_soy"), GOOD.."-50%"..translate.Get("
 GM:AddSkillModifier(SKILL_SOY, SKILLMOD_MELEE_DAMAGE_MUL, -0.50)
 GM:AddSkillModifier(SKILL_SOY, SKILLMOD_MELEE_SWING_DELAY_MUL, -0.50)
 																
-GM:AddSkill(SKILL_BLOODLOST, "Bloodlust", GOOD.."+25% Damage Multiplier for  6 secs if take damage\n"..BAD.."-30 health",
+GM:AddSkill(SKILL_BLOODLOST, translate.Get("skill_bloodlust"), GOOD..translate.Get("skill_bloodlust_d1")..BAD.."-30"..translate.Get("health"),
 																3,			2,					{}, TREE_MELEETREE)
 GM:AddSkill(SKILL_LANKY, translate.Get("skill_lanky").."I", GOOD.."+10%"..translate.Get("m_range")..BAD.."-15%"..translate.Get("meleedamage"),
 																-4,			0,					{SKILL_LANKYII}, TREE_MELEETREE)
@@ -864,13 +864,13 @@ GM:AddSkill(SKILL_LANKYII, translate.Get("skill_lanky").."II", GOOD.."+10%"..tra
 																-4,			2,					{SKILL_LANKYIII}, TREE_MELEETREE)
 GM:AddSkill(SKILL_LANKYIII, translate.Get("skill_lanky").."III", GOOD.."+10%"..translate.Get("m_range")..BAD.."-15%"..translate.Get("meleedamage"),
 																-4,			4,					{}, TREE_MELEETREE)
-GM:AddSkill(SKILL_MASTERCHEF, "Master Chef", GOOD.."Zombies hit by culinary weapons in the past second have a chance to drop food items on death\n"..BAD.."-10%"..translate.Get("meleedamage"),
+GM:AddSkill(SKILL_MASTERCHEF, translate.Get("skill_mchef"), GOOD..translate.Get("skill_mchef_d1")..BAD.."-10%"..translate.Get("meleedamage"),
 																0,			-3,					{SKILL_BATTLER4}, TREE_MELEETREE)
-GM:AddSkill(SKILL_LIGHTWEIGHT, "Lightweight", GOOD.."+6 movement speed with a melee weapon equipped\n"..BAD.."-20%"..translate.Get("meleedamage"),
+GM:AddSkill(SKILL_LIGHTWEIGHT, translate.Get("skill_lweight"), GOOD..translate.Get("skill_lweight_d1")..BAD.."-20%"..translate.Get("meleedamage"),
 																-6,			-2,					{}, TREE_MELEETREE)
-GM:AddSkill(SKILL_BLOODLUST, "Phantom Rage", "Gain phantom health equal to half the damage taken from zombies\nLose phantom health equal to any healing received\nPhantom health decreases by 5 per second\n"..GOOD.."Heal 25% of damage done with melee from remaining phantom health\n"..BAD.."-50% healing received",
+GM:AddSkill(SKILL_BLOODLUST,  translate.Get("skill_phantomhealth"), translate.Get("skill_phantomhealth_d1")..GOOD..translate.Get("skill_phantomhealth_d2"),
 																-2,			4,					{SKILL_LASTSTAND}, TREE_MELEETREE)
-GM:AddSkill(SKILL_BRASH, "Brash", GOOD.."-16%"..translate.Get("m_delay")..BAD.."-15 speed on melee kill for 10 seconds",
+GM:AddSkill(SKILL_BRASH, translate.Get("skill_brash"), GOOD.."-16%"..translate.Get("m_delay")..BAD..translate.Get("skill_brash_d1"),
 																6,			0,					{}, TREE_MELEETREE)
 GM:AddSkill(SKILL_FOUR_IN_ONE, "2 in 1", GOOD.."-9%"..translate.Get("m_delay")..BAD.."-7"..translate.Get("health"),
 																-2,			-2,					{}, TREE_MELEETREE)
@@ -884,7 +884,7 @@ GM:AddSkillModifier(SKILL_LONGARM, SKILLMOD_MELEE_RANGE_MUL, 0.02)
 GM:AddSkillModifier(SKILL_LONGARM, SKILLMOD_MELEE_SWING_DELAY_MUL, -0.07)
 GM:AddSkillModifier(SKILL_LONGARM, SKILLMOD_RELOADSPEED_MUL, -0.07)
 SKILL_FISTING = 223				
-GM:AddSkill(SKILL_FISTING, "Fisting", GOOD.."+25% Unarmed melee damage mul\n"..GOOD.."-15% Unarmed swing delay\n"..BAD.."-25%"..translate.Get("meleedamage")..BAD.."+15%"..translate.Get("m_delay"),
+GM:AddSkill(SKILL_FISTING, translate.Get("skill_fisting"), GOOD.."+25%"..translate.Get("fist_damage")..GOOD.."-15%"..translate.Get("fist_delay")..BAD.."-25%"..translate.Get("meleedamage")..BAD.."+15%"..translate.Get("m_delay"),
 																8,			-2,					{SKILL_CRITICALKNUCKLE}, TREE_MELEETREE)
 
 GM:AddSkillModifier(SKILL_FISTING, SKILLMOD_UNARMED_DAMAGE_MUL, 0.50)
@@ -892,14 +892,14 @@ GM:AddSkillModifier(SKILL_FISTING, SKILLMOD_UNARMED_SWING_DELAY_MUL, -0.30)
 GM:AddSkillModifier(SKILL_FISTING, SKILLMOD_MELEE_SWING_DELAY_MUL, 0.15)
 GM:AddSkillModifier(SKILL_FISTING, SKILLMOD_MELEE_DAMAGE_MUL, -0.25)
 SKILL_MELEEFAN = 224				
-GM:AddSkill(SKILL_MELEEFAN, "True Melee", BAD.."-350% Unarmed melee damage\n"..GOOD.."+45%"..translate.Get("meleedamage")..GOOD.."-15%"..translate.Get("m_delay")..BAD.."-50%"..translate.Get("b_damage"),
+GM:AddSkill(SKILL_MELEEFAN, translate.Get("skill_truemelee"), BAD.."-350%"..translate.Get("fist_damage")..GOOD.."+45%"..translate.Get("meleedamage")..GOOD.."-15%"..translate.Get("m_delay")..BAD.."-50%"..translate.Get("b_damage"),
 																9,			-3,					{SKILL_FISTING}, TREE_MELEETREE)
 GM:AddSkillModifier(SKILL_MELEEFAN, SKILLMOD_DAMAGE, -0.50)
 GM:AddSkillModifier(SKILL_MELEEFAN, SKILLMOD_UNARMED_DAMAGE_MUL, -3.50)
 GM:AddSkillModifier(SKILL_MELEEFAN, SKILLMOD_MELEE_SWING_DELAY_MUL, -0.15)
 GM:AddSkillModifier(SKILL_MELEEFAN, SKILLMOD_MELEE_DAMAGE_MUL, 0.45)
 SKILL_OPM = 225				
-GM:AddSkill(SKILL_OPM, "One Punch Man", GOOD.."+350% Unarmed melee damage\n"..BAD.."-35%"..translate.Get("meleedamage")..BAD.."+150% time before next unarmed strike ",
+GM:AddSkill(SKILL_OPM, translate.Get("skill_opm"), GOOD.."+350%"..translate.Get("fist_damage")..BAD.."-35%"..translate.Get("meleedamage")..BAD.."+150%"..translate.Get("fist_delay"),
 																9,			-5,					{SKILL_MELEEFAN}, TREE_MELEETREE)
 GM:AddSkillModifier(SKILL_OPM, SKILLMOD_UNARMED_DAMAGE_MUL, 3.50)
 GM:AddSkillModifier(SKILL_OPM, SKILLMOD_UNARMED_SWING_DELAY_MUL, 3)
@@ -911,59 +911,59 @@ GM:AddSkillModifier(SKILL_OPM, SKILLMOD_MELEE_DAMAGE_MUL, -0.35)
 SKILL_POINTI = 157
 GM:AddSkillModifier(SKILL_POINTI, SKILLMOD_POINT_MULTIPLIER, 0.02)
 GM:AddSkillModifier(SKILL_POINTI, SKILLMOD_LUCK, 0.15)
-GM:AddSkill(SKILL_POINTI, "Point I", GOOD.."+0.15 Luck,+2% Point MUL\n The quality system increases the chances of getting a better soul",
+GM:AddSkill(SKILL_POINTI, translate.Get("skill_point").."I", GOOD.."+0.15"..translate.Get("luck")..GOOD.."+2%"..translate.Get("p_mul"),
 																0,			0,					{SKILL_NONE}, TREE_POINTTREE)
 SKILL_POINTII = 158
 GM:AddSkillModifier(SKILL_POINTII, SKILLMOD_POINT_MULTIPLIER, 0.03)
 GM:AddSkillModifier(SKILL_POINTII, SKILLMOD_LUCK, 0.15)
-GM:AddSkill(SKILL_POINTII, "Point II", GOOD.."+0.15 Luck,+3% Point MUL",
+GM:AddSkill(SKILL_POINTII, translate.Get("skill_point").."II", GOOD.."+0.15"..translate.Get("luck")..GOOD.."+3%"..translate.Get("p_mul"),
 																-0.5,			-1,					{SKILL_POINTI}, TREE_POINTTREE)
 SKILL_POINTIII = 159
 GM:AddSkillModifier(SKILL_POINTIII, SKILLMOD_POINT_MULTIPLIER, 0.05)
 GM:AddSkillModifier(SKILL_POINTIII, SKILLMOD_LUCK, 0.15)
-GM:AddSkill(SKILL_POINTIII, "Point III", NEUTRAL.."+0.15 Luck\n"..GOOD.."+5% Point MUL",
+GM:AddSkill(SKILL_POINTIII, translate.Get("skill_point").."III", NEUTRAL.."+0.15"..translate.Get("luck")..GOOD.."+5%"..translate.Get("p_mul"),
 																-1,			-2,					{SKILL_POINTII}, TREE_POINTTREE)
 SKILL_POINTIIII = 160
 	GM:AddSkillModifier(SKILL_POINTIIII, SKILLMOD_POINT_MULTIPLIER, 0.07)
 	GM:AddSkillModifier(SKILL_POINTIIII, SKILLMOD_LUCK, 0.40)
-GM:AddSkill(SKILL_POINTIIII, "Point IV", NEUTRAL.."+0.40 Luck\n"..GOOD.."+7% Point MUL\n" ..GOOD.. "+5 Start Points",
+GM:AddSkill(SKILL_POINTIIII, translate.Get("skill_point").."IV", NEUTRAL.."+0.40"..translate.Get("luck")..GOOD.."+7%"..translate.Get("p_mul") ..GOOD.. "+5"..translate.Get("start_points"),
 																-2,			-3,					{SKILL_POINTIII}, TREE_POINTTREE)
 SKILL_POINTD = 248
 GM:AddSkillModifier(SKILL_POINTD, SKILLMOD_POINT_MULTIPLIER, -0.10)
 GM:AddSkillModifier(SKILL_POINTD, SKILLMOD_LUCK, -0.9)
-GM:AddSkill(SKILL_POINTD, "Double trouble", BAD.."-0.9 luck\n"..GOOD.."Can double points on end wave\n" ..BAD.. "-10% Points multiplier",
+GM:AddSkill(SKILL_POINTD, "Double trouble", BAD.."-0.9"..translate.Get("luck")..GOOD..translate.Get("skill_lastabuse_d1") ..BAD.. "-10%"..translate.Get("p_mul"),
 																-3.5,			-3,					{SKILL_POINTIIII}, TREE_POINTTREE)
 	SKILL_POINTFUL = 219
 	GM:AddSkillModifier(SKILL_POINTFUL, SKILLMOD_POINT_MULTIPLIER, 0.1)
 	GM:AddSkillModifier(SKILL_POINTFUL, SKILLMOD_XP, -0.25)
 	GM:AddSkillModifier(SKILL_POINTFUL, SKILLMOD_WORTH, -25)
-GM:AddSkill(SKILL_POINTFUL, "Pointful", BAD.."-25% Xp multiplier\n"..BAD.."-25 Worth\n"..GOOD.."+10% Point MUL\n" ..GOOD.. "+10 Start Points",
+GM:AddSkill(SKILL_POINTFUL, "Pointful", BAD.."-25%"..translate.Get("xpmul")..BAD.."-25"..translate.Get("worth")..GOOD.."+10%"..translate.Get("p_mul") ..GOOD.. "+10"..translate.Get("start_points"),
 																-2,			0,					{SKILL_POINTIII}, TREE_POINTTREE)
 SKILL_POINTMEGA = 242
 GM:AddSkillModifier(SKILL_POINTMEGA, SKILLMOD_POINT_MULTIPLIER, -0.1)
 GM:AddSkillModifier(SKILL_POINTMEGA, SKILLMOD_XP, -0.05)
 GM:AddSkillModifier(SKILL_POINTMEGA, SKILLMOD_WORTH, 25)
-GM:AddSkill(SKILL_POINTMEGA, "Megapoint", BAD.."-5% Xp multiplier\n"..GOOD.."+25 Worth\n"..BAD.."-10% Point MUL\n" ..GOOD.. "+50 Start Points",
+GM:AddSkill(SKILL_POINTMEGA, "Megapoint", BAD.."-5%"..translate.Get("xpmul")..GOOD.."+25"..translate.Get("worth")..BAD.."-10%"..translate.Get("p_mul") ..GOOD.. "+50"..translate.Get("start_points"),
 																-2,			1,					{SKILL_POINTFUL}, TREE_POINTTREE)
 	SKILL_LUCK = 161
 	GM:AddSkillModifier(SKILL_LUCK, SKILLMOD_LUCK, 0.5)
-GM:AddSkill(SKILL_LUCK, "Luck", GOOD.."+0.5 luck",
+GM:AddSkill(SKILL_LUCK, translate.Get("skill_luck"), GOOD.."+0.5"..translate.Get("luck"),
 																-2,			-5,					{SKILL_POINTIIII}, TREE_POINTTREE)
 SKILL_LUCK1 = 243
 GM:AddSkillModifier(SKILL_LUCK1, SKILLMOD_LUCK, 0.5)
-GM:AddSkill(SKILL_LUCK1, "Luck I", GOOD.."+0.5 luck",
+GM:AddSkill(SKILL_LUCK1, translate.Get("skill_luck").."I", GOOD.."+0.5"..translate.Get("luck"),
 									                    		-2,			-6,					{SKILL_LUCK}, TREE_POINTTREE)
 SKILL_LUCK2 = 244
 GM:AddSkillModifier(SKILL_LUCK2, SKILLMOD_LUCK, 0.5)
-GM:AddSkill(SKILL_LUCK2, "Luck II", GOOD.."+0.5 luck",
+GM:AddSkill(SKILL_LUCK2, translate.Get("skill_luck").."II", GOOD.."+0.5"..translate.Get("luck"),
 									                    		-3,			-7,					{SKILL_LUCK1}, TREE_POINTTREE)
 SKILL_LUCK3 = 245
 GM:AddSkillModifier(SKILL_LUCK3, SKILLMOD_LUCK, 0.5)
-GM:AddSkill(SKILL_LUCK3, "Luck III", GOOD.."+0.5 luck",
+GM:AddSkill(SKILL_LUCK3, translate.Get("skill_luck").."III", GOOD.."+0.5"..translate.Get("luck"),
 									                    		-3,			-8,					{SKILL_LUCK2}, TREE_POINTTREE)
 SKILL_LUCK4 = 246
 GM:AddSkillModifier(SKILL_LUCK4, SKILLMOD_LUCK, 1)
-GM:AddSkill(SKILL_LUCK4, "Luck IV", GOOD.."+1 luck",
+GM:AddSkill(SKILL_LUCK4, translate.Get("skill_luck").."IV", GOOD.."+1"..translate.Get("luck"),
 																-4,			-8,					{SKILL_LUCK3}, TREE_POINTTREE)		
 GM:AddSkill(SKILL_XPHUNTER, "Bonus XP", GOOD.."Give 5xp if wave ended\nBased on current wave",
 																-4,			-10,					{SKILL_LUCK4}, TREE_POINTTREE)		
@@ -971,22 +971,22 @@ SKILL_ULUCK = 247
 GM:AddSkillModifier(SKILL_ULUCK, SKILLMOD_LUCK, 5)
 GM:AddSkillModifier(SKILL_ULUCK, SKILLMOD_RESUPPLY_DELAY_MUL, 0.15)
 GM:AddSkillModifier(SKILL_ULUCK, SKILLMOD_POINT_MULTIPLIER, -0.15)
-GM:AddSkill(SKILL_ULUCK, "Ultra lucky", GOOD.."+5 luck\n"..BAD.."-15% Point multiplier\n"..BAD.."+15% Ressuply delay",
+GM:AddSkill(SKILL_ULUCK, "Ultra lucky", GOOD.."+5"..translate.Get("luck")..BAD.."-15%"..translate.Get("p_mul")..BAD.."+15%"..translate.Get("res_delay"),
 																-4,			-6,					{SKILL_LUCK4}, TREE_POINTTREE)														
 SKILL_LUCKE = 162
 GM:AddSkillModifier(SKILL_LUCKE, SKILLMOD_POINT_MULTIPLIER, -0.1)
 GM:AddSkillModifier(SKILL_LUCKE, SKILLMOD_LUCK, 2)	
 GM:AddSkill(SKILL_LUCKY_UNLIVER, "The luck stacker", GOOD.."+2 luck per wave\n" ..BAD.. "-10% max health per wave",
 	1,			-3,					{SKILL_LUCKE}, TREE_POINTTREE)
-GM:AddSkill(SKILL_LUCKE, "Bad luck", NEUTRAL.."+2 luck\n" ..BAD.. "-10% Points MUL",
+GM:AddSkill(SKILL_LUCKE, "Bad luck", NEUTRAL.."+2"..translate.Get("luck")..BAD.. "-10%"..translate.Get("p_mul"),
 	1,			-2,					{SKILL_POINTIIII}, TREE_POINTTREE)
 	SKILL_BLUCK = 163
 	GM:AddSkillModifier(SKILL_BLUCK, SKILLMOD_POINT_MULTIPLIER, 0.01)
-GM:AddSkill(SKILL_BLUCK, "Quad", GOOD.."Better quality system\n" ..BAD.. "-3% Points Multiplier",
+GM:AddSkill(SKILL_BLUCK, "Quad", GOOD.."Better quality system\n" ..BAD.. "-3%"..translate.Get("p_mul"),
 	2,			-2.75,					{SKILL_LUCKE}, TREE_POINTTREE)
 	SKILL_PILLUCK = 164
 	GM:AddSkillModifier(SKILL_PILLUCK, SKILLMOD_LUCK, -35)
-GM:AddSkill(SKILL_PILLUCK, "Lucky Pill", GOOD.."On kill give 0.05 luck\n"..BAD.."-35 luck",
+GM:AddSkill(SKILL_PILLUCK, "Lucky Pill", GOOD.."On kill give 0.05 luck\n"..BAD.."-35"..translate.Get("luck"),
 	-1,			-4,					{SKILL_POINTIIII}, TREE_POINTTREE)
 	SKILL_DUDEE = 166
 	GM:AddSkillModifier(SKILL_DUDEE, SKILLMOD_LUCK, 2)
@@ -1002,7 +1002,7 @@ GM:AddSkill(SKILL_DUDEE, "Lucky man", GOOD.."+2 Luck\n",
 		.RemortReq = 26
 		SKILL_SCAM = 168
 		GM:AddSkillModifier(SKILL_SCAM, SKILLMOD_POINT_MULTIPLIER, 0.10)
-		GM:AddSkill(SKILL_SCAM, "Scam", GOOD.."+10% Points Multiplier \n" ..BAD.. "Quality is worse",
+		GM:AddSkill(SKILL_SCAM, "Scam", GOOD.."+10%"..translate.Get("p_mul")..BAD.. "Quality is worse",
 			3,			-8,					{SKILL_BADTRIP}, TREE_POINTTREE)
 			SKILL_SOLARUZ = 169
 			GM:AddSkillModifier(SKILL_SOLARUZ, SKILLMOD_POINT_MULTIPLIER, 0.30)
@@ -1102,7 +1102,7 @@ GM:AddSkill(SKILL_MYTHRIL, "Mythril armor", PURPLE.."+30% Xp multiplier\n"..PURP
 GM:AddSkillModifier(SKILL_MYTHRIL, SKILLMOD_XP, 0.30)
 GM:AddSkillModifier(SKILL_MYTHRIL, SKILLMOD_MELEE_ATTACKER_DMG_REFLECT_PERCENT, 0.5)
 SKILL_DEFEND = 190
-GM:AddSkill(SKILL_DEFEND, "Defender of the Sigil I", GOOD.."You get 2% less damage\n"..BAD.."Speed -1",
+GM:AddSkill(SKILL_DEFEND, translate.Get("skill_sdefender").."I", GOOD.."-2%"..translate.Get("meleedamagetaken")..BAD.."-1"..translate.Get("speed"),
 				                                                            	-0.25,			-0.5,					{SKILL_NONE}, TREE_DEFENSETREE)
 
 GM:AddSkillModifier(SKILL_DEFEND, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.02)
@@ -1110,14 +1110,14 @@ GM:AddSkillModifier(SKILL_DEFEND, SKILLMOD_SPEED, -1)
 
 --Tormented SKill
 SKILL_TORMENT1 = 229
-GM:AddSkill(SKILL_TORMENT1, "Torment I", GOOD.."+15% Xp Multiplier\n"..BAD.."-30 Speed\n"..BAD.."-15% Bullet Damage\n",
+GM:AddSkill(SKILL_TORMENT1, "Torment I", GOOD.."+15%"..translate.Get("xpmul")..BAD.."-30"..translate.Get("speed")..BAD.."-15% Bullet Damage\n",
 				                                                            	1,			26,					{SKILL_NONE}, TREE_ANCIENTTREE)
 .RemortReq = 2
 GM:AddSkillModifier(SKILL_TORMENT1, SKILLMOD_DAMAGE, -0.15)
 GM:AddSkillModifier(SKILL_TORMENT1, SKILLMOD_SPEED, -30)
 GM:AddSkillModifier(SKILL_TORMENT1, SKILLMOD_XP, 0.15)
 SKILL_TORMENT2 = 230
-GM:AddSkill(SKILL_TORMENT2, "Torment II", GOOD.."+15% Xp Multiplier\n"..BAD.."-15% Melee damage\n"..BAD.."-15 Health\n",
+GM:AddSkill(SKILL_TORMENT2, "Torment II", GOOD.."+15%"..translate.Get("xpmul")..BAD.."-15% Melee damage\n"..BAD.."-15 Health\n",
 				                                                            	1,			27,					{SKILL_TORMENT1,SKILL_SLAVEC}, TREE_ANCIENTTREE)
 
 GM:AddSkillModifier(SKILL_TORMENT2, SKILLMOD_MELEE_DAMAGE_MUL, -0.15)
@@ -1129,39 +1129,39 @@ GM:AddSkill(SKILL_SLAVEC, "Chains of time", GOOD.."Have chance to 10% to give de
 GM:AddSkillModifier(SKILL_SLAVEC, SKILLMOD_HEALTH, -15)
 GM:AddSkillModifier(SKILL_SLAVEC, SKILLMOD_SPEED, 20)
 SKILL_TORMENT3 = 231
-GM:AddSkill(SKILL_TORMENT3, "Torment III", GOOD.."+50% Xp Multiplier\n"..BAD.."+50% Ressuply delay\n"..BAD.."-5% Points multiplier\n",
+GM:AddSkill(SKILL_TORMENT3, "Torment III", GOOD.."+50%"..translate.Get("xpmul")..BAD.."+50% Ressuply delay\n"..BAD.."-5% Points multiplier\n",
 				                                                            	1,			28,					{SKILL_TORMENT2}, TREE_ANCIENTTREE)
 
 GM:AddSkillModifier(SKILL_TORMENT3, SKILLMOD_POINT_MULTIPLIER, -0.05)
 GM:AddSkillModifier(SKILL_TORMENT3, SKILLMOD_RESUPPLY_DELAY_MUL, 0.5)
 GM:AddSkillModifier(SKILL_TORMENT3, SKILLMOD_XP, 0.50)
 SKILL_TORMENT4 = 232
-GM:AddSkill(SKILL_TORMENT4, "Torment IV", GOOD.."+100% Xp Multiplier\n"..BAD.."-50% Damage of all weapon\n",
+GM:AddSkill(SKILL_TORMENT4, "Torment IV", GOOD.."+100%"..translate.Get("xpmul")..BAD.."-50% Damage of all weapon\n",
 				                                                            	1,			29,					{SKILL_TORMENT3}, TREE_ANCIENTTREE)
 
 GM:AddSkillModifier(SKILL_TORMENT4, SKILLMOD_DAMAGE, -0.50)
 GM:AddSkillModifier(SKILL_TORMENT4, SKILLMOD_MELEE_DAMAGE_MUL, -0.5)
 GM:AddSkillModifier(SKILL_TORMENT4, SKILLMOD_XP, 1)
 SKILL_TORMENT5 = 233
-GM:AddSkill(SKILL_TORMENT5, "Torment V", GOOD.."+15% Xp Multiplier\n"..BAD.."+15% Melee damage taken mul\n",
+GM:AddSkill(SKILL_TORMENT5, "Torment V", GOOD.."+15%"..translate.Get("xpmul")..BAD.."+15% Melee damage taken mul\n",
 				                                                            	2,			29,					{SKILL_TORMENT4}, TREE_ANCIENTTREE)
 
 GM:AddSkillModifier(SKILL_TORMENT5, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 0.15)
 GM:AddSkillModifier(SKILL_TORMENT5, SKILLMOD_XP, 0.15)
 SKILL_TORMENT6 = 253
-GM:AddSkill(SKILL_TORMENT6, "Torment VI", GOOD.."+30% Xp Multiplier\n"..BAD.."-50% Repair rate and -50% Medtool effectiveness",
+GM:AddSkill(SKILL_TORMENT6, "Torment VI", GOOD.."+30%"..translate.Get("xpmul")..BAD.."-50% Repair rate and -50% Medtool effectiveness",
 				                                                            	3,			30,					{SKILL_TORMENT5}, TREE_ANCIENTTREE)
 
 GM:AddSkillModifier(SKILL_TORMENT6, SKILLMOD_REPAIRRATE_MUL, -0.50)
 GM:AddSkillModifier(SKILL_TORMENT6, SKILLMOD_MEDKIT_EFFECTIVENESS_MUL, -0.50)
 GM:AddSkillModifier(SKILL_TORMENT6, SKILLMOD_XP, 0.30)
 SKILL_DEATHCURSE = 234
-GM:AddSkill(SKILL_DEATHCURSE, "Curse cleaning", GOOD.."+15% Xp Multiplier\n"..GOOD.."Eating food blesses you, forgiving your curse\nIf you cursed and eat food give 35 seconds of defence\n"..BAD.."-30% Max curse\n"..BAD.."+30% time to eat food",
+GM:AddSkill(SKILL_DEATHCURSE, "Curse cleaning", GOOD.."+15%"..translate.Get("xpmul")..GOOD.."Eating food blesses you, forgiving your curse\nIf you cursed and eat food give 35 seconds of defence\n"..BAD.."-30% Max curse\n"..BAD.."+30% time to eat food",
 				                                                            	2,			30,					{SKILL_TORMENT5}, TREE_ANCIENTTREE)
 GM:AddSkillModifier(SKILL_DEATHCURSE, SKILLMOD_XP, 0.15)
 GM:AddSkillModifier(SKILL_DEATHCURSE, SKILLMOD_CURSEM, -0.30)
 GM:AddSkillModifier(SKILL_DEATHCURSE, SKILLMOD_FOODEATTIME_MUL, 0.30)
-GM:AddSkill(SKILL_TORMENT7, "Torment VII", GOOD.."+150% Xp Multiplier\n"..BAD.."-30% Damage and -5 luck and -45 Health and -55 speed\n"..BAD.."+25% Arsenal price\n"..BAD.."-50% Medical and repair effectiveness\nFull of pain",
+GM:AddSkill(SKILL_TORMENT7, "Torment VII", GOOD.."+150%"..translate.Get("xpmul")..BAD.."-30% Damage and -5 luck and -45 Health and -55 speed\n"..BAD.."+25% Arsenal price\n"..BAD.."-50% Medical and repair effectiveness\nFull of pain",
 				                                                            	2,			31,					{SKILL_TORMENT6,SKILL_TORMENT8}, TREE_ANCIENTTREE)
 GM:AddSkillModifier(SKILL_TORMENT7, SKILLMOD_XP, 1.5)
 GM:AddSkillModifier(SKILL_TORMENT7, SKILLMOD_MELEE_DAMAGE_MUL, -0.30)
@@ -1172,7 +1172,7 @@ GM:AddSkillModifier(SKILL_TORMENT7, SKILLMOD_SPEED, -55)
 GM:AddSkillModifier(SKILL_TORMENT7, SKILLMOD_ARSENAL_DISCOUNT, 0.25)
 GM:AddSkillModifier(SKILL_TORMENT5, SKILLMOD_REPAIRRATE_MUL, -0.50)
 GM:AddSkillModifier(SKILL_TORMENT5, SKILLMOD_MEDKIT_EFFECTIVENESS_MUL, -0.50)
-GM:AddSkill(SKILL_TORMENT8, "Torment VIII", GOOD.."+30% Xp Multiplier\n"..BAD.."-50 Health",
+GM:AddSkill(SKILL_TORMENT8, "Torment VIII", GOOD.."+30%"..translate.Get("xpmul")..BAD.."-50 Health",
 				                                                            	3,			32,					{SKILL_TORMENT7}, TREE_ANCIENTTREE)
 
 GM:AddSkillModifier(SKILL_TORMENT8, SKILLMOD_HEALTH, -50)
@@ -1181,50 +1181,50 @@ GM:AddSkillModifier(SKILL_TORMENT8, SKILLMOD_XP, 0.30)
 --Defend skills
 
 SKILL_DEFEND1 = 191
-GM:AddSkill(SKILL_DEFEND1, "Defender of the Sigil II", GOOD.."You get 2% less damage\n"..BAD.."Speed -2",
+GM:AddSkill(SKILL_DEFEND1, translate.Get("skill_sdefender").."II", GOOD.."-2%"..translate.Get("meleedamagetaken")..BAD.."Speed -2",
 				                                                            	0.75,			0,					{SKILL_DEFEND}, TREE_DEFENSETREE)
 
 GM:AddSkillModifier(SKILL_DEFEND1, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.02)
 GM:AddSkillModifier(SKILL_DEFEND1, SKILLMOD_SPEED, -2)
 SKILL_DEFEND2 = 192
-GM:AddSkill(SKILL_DEFEND2, "Defender of the Sigil III", GOOD.."You get 3% less damage\n"..BAD.."Speed -4",
+GM:AddSkill(SKILL_DEFEND2,translate.Get("skill_sdefender").."III", GOOD.."-3%"..translate.Get("meleedamagetaken")..BAD.."Speed -4",
 				                                                            	1.5,			1,					{SKILL_DEFEND1}, TREE_DEFENSETREE)
 
 GM:AddSkillModifier(SKILL_DEFEND2, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.03)
 GM:AddSkillModifier(SKILL_DEFEND2, SKILLMOD_SPEED, -4)
 SKILL_DEFEND3 = 193
-GM:AddSkill(SKILL_DEFEND3, "Defender of the Sigil IV", GOOD.."You get 4% less damage\n"..BAD.."Speed -6",
+GM:AddSkill(SKILL_DEFEND3, translate.Get("skill_sdefender").." IV", GOOD.."-4%"..translate.Get("meleedamagetaken")..BAD.."Speed -6",
 				                                                            	1.5,			2,					{SKILL_DEFEND2}, TREE_DEFENSETREE)
 
 GM:AddSkillModifier(SKILL_DEFEND3, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.04)
 GM:AddSkillModifier(SKILL_DEFEND3, SKILLMOD_SPEED, -6)
 SKILL_DEFEND4 = 194
-GM:AddSkill(SKILL_DEFEND4, "Defender of the Sigil V", GOOD.."You get 6% less damage\n"..BAD.."Speed -12",
+GM:AddSkill(SKILL_DEFEND4, translate.Get("skill_sdefender").."V", GOOD.."-6%"..translate.Get("meleedamagetaken")..BAD.."Speed -12",
 				                                                            	0.75,			3,					{SKILL_DEFEND3}, TREE_DEFENSETREE)
 
 GM:AddSkillModifier(SKILL_DEFEND4, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.06)
 GM:AddSkillModifier(SKILL_DEFEND4, SKILLMOD_SPEED, -12)
 SKILL_DEFEND5 = 195
-GM:AddSkill(SKILL_DEFEND5, "Defender of the Sigil VI", GOOD.."You get 9% less damage\n"..GOOD.."+15% Knockdown recovery multiplier\n"..BAD.."Speed -16",
+GM:AddSkill(SKILL_DEFEND5, translate.Get("skill_sdefender").."VI", GOOD.."-9%"..translate.Get("meleedamagetaken")..GOOD.."+15% Knockdown recovery multiplier\n"..BAD.."Speed -16",
 				                                                            	0,			3.5,					{SKILL_DEFEND4}, TREE_DEFENSETREE)
 
 GM:AddSkillModifier(SKILL_DEFEND5, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.09)
 GM:AddSkillModifier(SKILL_DEFEND5, SKILLMOD_SPEED, -16)
 GM:AddSkillModifier(SKILL_DEFEND5, SKILLMOD_KNOCKDOWN_RECOVERY_MUL, -0.15)
 SKILL_DEFENDER = 196
-GM:AddSkill(SKILL_DEFENDER, "Defender of Humans", GOOD.."You get 4% less damage\n"..BAD.."Melee damage multiplier 0.96x",
+GM:AddSkill(SKILL_DEFENDER, "Defender of Humans", GOOD.."-4%"..translate.Get("meleedamagetaken")..BAD.."-4%"..translate.Get("meleedamage"),
 				                                                            	-1.5,			0,					{SKILL_DEFEND}, TREE_DEFENSETREE)
 
 GM:AddSkillModifier(SKILL_DEFENDER, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.04)
 GM:AddSkillModifier(SKILL_DEFENDER, SKILLMOD_MELEE_DAMAGE_MUL, -0.04)
 SKILL_DEFENDEROFM = 197
-GM:AddSkill(SKILL_DEFENDEROFM, "Defender of Monsters", BAD.."You get 5% more damage\n"..GOOD.."Melee damage multiplier 1.05x",
+GM:AddSkill(SKILL_DEFENDEROFM, "Defender of Monsters", BAD.."5%"..translate.Get("meleedamagetaken")..GOOD.."+5%"..translate.Get("meleedamage"),
 				                                                            	-2,			1,					{SKILL_DEFENDER}, TREE_DEFENSETREE)
 
 GM:AddSkillModifier(SKILL_DEFENDEROFM, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 0.05)
 GM:AddSkillModifier(SKILL_DEFENDEROFM, SKILLMOD_MELEE_DAMAGE_MUL, 0.05)
 SKILL_HEAVY = 254
-GM:AddSkill(SKILL_HEAVY, "Heavy", GOOD.."-10% Melee damage taken\n"..BAD.."-30 speed\n+33% Knockdown speed recovery multiplier\n"..BAD.."-50% Jump power mul",
+GM:AddSkill(SKILL_HEAVY, "Heavy", GOOD.."-10%"..translate.Get("meleedamagetaken")..BAD.."-30 speed\n+33% Knockdown speed recovery multiplier\n"..BAD.."-50% Jump power mul",
 				                                                            	-3,		    0.5,					{SKILL_DEFENDEROFM}, TREE_DEFENSETREE)
 
 GM:AddSkillModifier(SKILL_HEAVY, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.1)
@@ -1232,15 +1232,15 @@ GM:AddSkillModifier(SKILL_HEAVY, SKILLMOD_SPEED, -30)
 GM:AddSkillModifier(SKILL_HEAVY, SKILLMOD_JUMPPOWER_MUL, -0.5)
 GM:AddSkillModifier(SKILL_HEAVY, SKILLMOD_KNOCKDOWN_RECOVERY_MUL, -0.33)
 SKILL_TTIMES = 249
-GM:AddSkill(SKILL_TTIMES, "Tougher Times", GOOD.."Have 20% Chance to block damage\n"..BAD.."+15% Melee damage taken",
+GM:AddSkill(SKILL_TTIMES, "Tougher Times", GOOD.."Have 20% Chance to block damage\n"..BAD.."+15%"..translate.Get("meleedamagetaken"),
 				                                                            	-3,			1.5,					{SKILL_TRIP,SKILL_TTIMES1}, TREE_DEFENSETREE)
 GM:AddSkillModifier(SKILL_TTIMES, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 0.15)
 SKILL_TTIMES1 = 250
-GM:AddSkill(SKILL_TTIMES1, "Tough Times", GOOD.."-7% Melee damage taken\n",
+GM:AddSkill(SKILL_TTIMES1, "Tough Times", GOOD.."-7%"..translate.Get("meleedamagetaken"),
 				                                                            	-4,			2,					{SKILL_TTIMES}, TREE_DEFENSETREE)
 GM:AddSkillModifier(SKILL_TTIMES1, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.07)
 SKILL_TRIP = 198
-GM:AddSkill(SKILL_TRIP, "Wall curse", GOOD.."-33% Damage taken\n"..GOOD.."+50% Max curse\n"..BAD.."Melee damage multiplier 0.88x\n"..BAD.."-70 Speed\nCurse can't end",
+GM:AddSkill(SKILL_TRIP, "Wall curse", GOOD.."-33%"..translate.Get("meleedamagetaken")..GOOD.."+50% "..translate.Get("m_curse")..BAD.."Melee damage multiplier 0.88x\n"..BAD.."-70 Speed\nCurse can't end",
 				                                                            	-2,			2,					{SKILL_DEFENDEROFM,SKILL_TTIMES}, TREE_DEFENSETREE)
 
 GM:AddSkillModifier(SKILL_TRIP, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.33)
@@ -1250,7 +1250,7 @@ GM:AddSkillModifier(SKILL_TRIP, SKILLMOD_CURSEM, 0.5)
 GM:AddSkill(SKILL_HOLY_MANTLE, ""..translate.Get("skill_holymantle"), GOOD..""..translate.Get("skill_holymantle_d1"),
 				                                                            	-4,			3,					{SKILL_TTIMES}, TREE_DEFENSETREE)
 SKILL_MERIS = 199
-GM:AddSkill(SKILL_MERIS, "Meris", GOOD.."-10% Damage taken\n"..BAD.."-20% Melee damage!",
+GM:AddSkill(SKILL_MERIS, "Meris", GOOD.."-10%"..translate.Get("meleedamagetaken")..BAD.."-20%"..translate.Get("meleedamage"),
 				                                                            	-1,			3.5,					{SKILL_TRIP}, TREE_DEFENSETREE)
 GM:AddSkill(SKILL_UPLOAD, ""..translate.Get("skill_later"), GOOD..""..translate.Get("skill_later_d1")..BAD..""..translate.Get("skill_later_d2"),
 				                                                            	-1,			5,					{SKILL_MERIS}, TREE_DEFENSETREE)

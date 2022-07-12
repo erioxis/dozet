@@ -263,6 +263,7 @@ local function ItemPanelDoClick(self)
 	ppurbl:SizeToContents()
 	ppurbl:SetPos(purb:GetWide() / 2 - ppurbl:GetWide() / 2, purb:GetTall() * 0.75 - ppurbl:GetTall() * 0.5)
 	ppurbl:SetVisible(true)
+	ppurbl:Refresh()
 
 	purb = viewer.m_AmmoB
 	if canammo then
@@ -412,6 +413,7 @@ function GM:AddShopItem(list, i, tab, issub, nopointshop)
 	end
 	pricelabel:SizeToContents()
 	pricelabel:AlignRight(alignri)
+		pricelabel:Refresh()
 
 	if tab.MaxStock then
 		local stocklabel = EasyLabel(itempan, tab.MaxStock..""..translate.Get("remaining"), "ZSHUDFontTiny")
@@ -652,7 +654,7 @@ function GM:OpenArsenalMenu()
 	frame:Center()
 	frame:SetDeleteOnClose(false)
 	frame:SetTitle(" ")
-	frame:SetDraggable(false)
+	frame:SetDraggable(true)
 	frame:Refresh()
 	if frame.btnClose and frame.btnClose:IsValid() then frame.btnClose:SetVisible(false) end
 	if frame.btnMinim and frame.btnMinim:IsValid() then frame.btnMinim:SetVisible(false) end
@@ -708,6 +710,7 @@ function GM:OpenArsenalMenu()
 	propertysheet:MoveBelow(topspace, 4)
 	propertysheet:SetPadding(1)
 	propertysheet:CenterHorizontal(0.33)
+	propertysheet:SetPos(30,12)
 
 	for catid, catname in ipairs(GAMEMODE.ItemCategories) do
 		local hasitems = false
@@ -719,6 +722,7 @@ function GM:OpenArsenalMenu()
 		end
 
 		if hasitems then
+		
 			local tabpane = vgui.Create("DPanel", propertysheet)
 			tabpane.Paint = function() end
 			tabpane.Grids = {}
@@ -773,7 +777,6 @@ function GM:OpenArsenalMenu()
 			else
 				tabpane.Grid = mkgrid()
 			end
-
 			local sheet = propertysheet:AddSheet(catname, tabpane, GAMEMODE.ItemCategoryIcons[catid], false, false)
 			sheet.Panel:SetPos(50, tabhei + 2)
 

@@ -53,15 +53,15 @@ ITEMSUBCAT_TRINKETS_SUPER = 7
 
 
 GM.ItemCategories = {
-	[ITEMCAT_GUNS] = "Weapons",
-	[ITEMCAT_AMMO] = "Ammunition",
-	[ITEMCAT_MELEE] = "Melee",
-	[ITEMCAT_TOOLS] = "Tools",
-	[ITEMCAT_DEPLOYABLES] = "Deployables",
-	[ITEMCAT_TRINKETS] = "Trinkets",
-	[ITEMCAT_OTHER] = "Other",
+	[ITEMCAT_GUNS] = translate.Get("pshop_w"),
+	[ITEMCAT_AMMO] = translate.Get("pshop_ammo"),
+	[ITEMCAT_MELEE] = translate.Get("pshop_melee"),
+	[ITEMCAT_TOOLS] = translate.Get("pshop_tools"),
+	[ITEMCAT_DEPLOYABLES] = translate.Get("pshop_dep"),
+	[ITEMCAT_TRINKETS] = translate.Get("pshop_trinkets"),
+	[ITEMCAT_OTHER] = translate.Get("pshop_other"),
 	[ITEMCAT_SPECIAL] = "Skill",
-	[ITEMCAT_MAGIC]	= "Magic"
+	[ITEMCAT_MAGIC]	= translate.Get("pshop_magic")
 
 
 }
@@ -753,6 +753,7 @@ GM.HonorableMentions[HM_NESTMASTER] = {Name = "Good man", String = "goes to %s f
 -- Don't let humans use these models because they look like undead models. Must be lower case.
 GM.RestrictedModels = {
 	"models/player/zombie_classic.mdl",
+	"models/player/catpants.mdl"
 }
 
 -- If a person has no player model then use one of these (auto-generated).

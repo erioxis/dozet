@@ -6,7 +6,7 @@ CLASS.Description = "description_god"
 CLASS.Help = "controls_god"
 CLASS.Model = Model("models/player/catpants.mdl")
 CLASS.OverrideModel = Model("models/player/catpants.mdl")
-
+CLASS.Hidden = true
 CLASS.Boss = false
 
 CLASS.KnockbackScale = 0
