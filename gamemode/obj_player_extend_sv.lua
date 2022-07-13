@@ -210,7 +210,12 @@ function meta:ProcessDamage(dmginfo)
 		dmginfo:SetDamage(0)
 	end
 
-
+	if self:IsSkillActive(SKILL_CQARMOR) then
+		dmginfo:SetDamage(dmginfo:GetDamage() * 0.5)
+	end
+		if self:IsSkillActive(SKILL_DOSETHELP) then
+		dmginfo:SetDamage(dmginfo:GetDamage() * (1 - GAMEMODE:GetWave() * 2))
+	end
 
 
 

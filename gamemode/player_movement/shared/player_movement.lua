@@ -53,8 +53,8 @@ function GM:Move(pl, move)
 		end
 	else
 		if pt.SpawnProtection then
-			M_SetMaxSpeed(move, M_GetMaxSpeed(move) * 1.30)
-			M_SetMaxClientSpeed(move, M_GetMaxClientSpeed(move) * 1.30)
+			M_SetMaxSpeed(move, M_GetMaxSpeed(move) * 1.90)
+			M_SetMaxClientSpeed(move, M_GetMaxClientSpeed(move) * 1.90)
 		end
 
 		if P_CallZombieFunction1(pl, "Move", move) then return end

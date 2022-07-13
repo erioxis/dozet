@@ -1316,7 +1316,9 @@ function GM:Think()
 
 				local healmax = pl:IsSkillActive(SKILL_D_FRAIL) and math.floor(pl:GetMaxHealth() * 0.44) or pl:GetMaxHealth()
 				local healmax = pl:IsSkillActive(SKILL_ABUSE) and math.floor(pl:GetMaxHealth() * 0.25) or pl:GetMaxHealth()
-
+					if pl:IsSkillActive(SKILL_CQARMOR) then
+						pl:SetModelScale(1.2)
+					end
 
 				if pl:IsSkillActive(SKILL_REGENERATOR) and time >= pl.NextRegenerate and pl:Health() < math.min(healmax, pl:GetMaxHealth() * 0.6) then
 					pl.NextRegenerate = time + 6
@@ -1388,6 +1390,9 @@ function GM:Think()
 				if pl:HasTrinket("sin_sloth") and (pl:GetVelocity():Length() <= 0) then
 					pl:GiveStatus("strengthdartboost", 2)
 					pl:GiveStatus("rot", 1)
+				end
+				if pl:IsSkillActive(SKILL_OMEGA) and (pl:GetVelocity():Length() <= 0) and pl:Health() > pl:GetMaxHealth() * 0.35 then
+					pl:TakeDamage(pl:GetMaxHealth() * 0.05)
 				end
 
 				if pl:HasTrinket("regenimplant") and time >= pl.NextRegenTrinket and pl:Health() < healmax then
@@ -4795,7 +4800,7 @@ function GM:WaveStateChanged(newstate, pl)
 					pl.Luck = pl.Luck + 1
 				end
 				if pl:IsSkillActive(SKILL_XPHUNTER) then
-					pl:AddZSXP(5 + self.GetWave())
+					pl:AddZSXP(5 + self.GetWave() * 10)
 				end
 				if pl:HasTrinket("vir_pat") then
 					pl.CanBuy = true

@@ -1174,8 +1174,8 @@ function PANEL:OnMousePressed(mc)
 
 				return
 			end
-				if (GAMEMODE.Skills[hoveredskill].RemortReq or 0) < MySelf:GetZSRemortLevel() then
 				if (GAMEMODE.Skills[hoveredskill].LevelReq or 1) < MySelf:GetZSLevel() then
+				if (GAMEMODE.Skills[hoveredskill].RemortReq or 0) < MySelf:GetZSRemortLevel() then
 			if MySelf:IsSkillDesired(hoveredskill) then
 				if GAMEMODE.Skills[hoveredskill].AlwaysActive then
 					self:DisplayMessage("You can't deactivate this skill!", COLOR_RED)
