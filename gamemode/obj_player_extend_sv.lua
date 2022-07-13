@@ -214,7 +214,7 @@ function meta:ProcessDamage(dmginfo)
 		dmginfo:SetDamage(dmginfo:GetDamage() * 0.5)
 	end
 		if self:IsSkillActive(SKILL_DOSETHELP) then
-		dmginfo:SetDamage(dmginfo:GetDamage() * (1 - GAMEMODE:GetWave() * 2))
+		dmginfo:SetDamage(dmginfo:GetDamage() * (1 - GAMEMODE:GetWave() * 0.02))
 	end
 
 
