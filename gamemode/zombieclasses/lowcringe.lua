@@ -129,6 +129,13 @@ if SERVER then
 	function CLASS:OnSpawned(pl)
 		pl:CreateAmbience("ticklemonsterambience")
 	end
+	function CLASS:ProcessDamage(pl, dmginfo)
+		if bit_band(dmginfo:GetDamageType(), DMG_BULLET) ~= 0 then
+			dmginfo:SetDamage(0)
+		elseif bit_band(dmginfo:GetDamageType(), DMG_SLASH) == 0 and bit_band(dmginfo:GetDamageType(), DMG_CLUB) == 0 then
+			dmginfo:SetDamage(0)
+		end
+	end
 end
 
 if not CLIENT then return end

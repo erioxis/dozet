@@ -313,6 +313,7 @@ SKILL_DEADINSIDE = 292
 SKILL_SKYHELP = 293
 SKILL_TRUEBLOCK = 294
 SKILL_GOODATTACK = 295
+SKILL_VKID2 = 296
 
 SKILLMOD_HEALTH = 1
 SKILLMOD_SPEED = 2
@@ -523,7 +524,9 @@ GM:AddSkill(SKILL_AGILEII, translate.Get("skill_agile").."II", GOOD.."+5%"..tran
 GM:AddSkill(SKILL_AGILEIII, translate.Get("skill_agile").."III", GOOD.."+6%"..translate.Get("jump")..BAD.."-4"..translate.Get("speed"),
 																4,			-2,					{SKILL_SAFEFALL, SKILL_ULTRANIMBLE, SKILL_SURESTEP, SKILL_INTREPID, SKILL_VKID, SKILL_NOSEE}, TREE_SPEEDTREE)
 GM:AddSkill(SKILL_VKID, ""..translate.Get("skill_vkid"), GOOD.."+30%"..translate.Get("jump")..GOOD.."+60"..translate.Get("speed")..GOOD..""..translate.Get("skill_vkid_d")..BAD.."-50"..translate.Get("health"),
-																4,			-3,					{}, TREE_SPEEDTREE)
+																4,			-3,					{SKILL_VKID2}, TREE_SPEEDTREE)
+GM:AddSkill(SKILL_VKID2, ""..translate.Get("skill_vkid2"), GOOD.."+30%"..translate.Get("jump")..GOOD.."+15"..translate.Get("speed")..GOOD..translate.Get("skill_vkid_d")..BAD.."-25"..translate.Get("health"),
+																4,			-4,					{}, TREE_SPEEDTREE)
 GM:AddSkill(SKILL_D_SLOW, ""..translate.Get("skill_slow"), GOOD..""..translate.Get("skill_slow_d1")..GOOD..""..translate.Get("skill_slow_d2")..BAD..""..translate.Get("skill_slow_d3")..BAD..""..translate.Get("skill_slow_d4"),
 																0,			-4,					{}, TREE_SPEEDTREE)
 GM:AddSkill(SKILL_NOSEE, ""..translate.Get("skill_cursevision_0"), GOOD..""..translate.Get("skill_cursevision_d1")..GOOD..""..translate.Get("skill_cursevision_d2")..BAD..""..translate.Get("skill_cursevision_d3"),
@@ -2167,5 +2170,9 @@ GM:AddSkillModifier(SKILL_INSIGHT, SKILLMOD_ARSENAL_DISCOUNT, -0.02)
 GM:AddSkillModifier(SKILL_VKID, SKILLMOD_JUMPPOWER_MUL, 0.30)
 GM:AddSkillModifier(SKILL_VKID, SKILLMOD_SPEED, 60)
 GM:AddSkillModifier(SKILL_VKID, SKILLMOD_HEALTH, -50)
+
+GM:AddSkillModifier(SKILL_VKID2, SKILLMOD_JUMPPOWER_MUL, 0.30)
+GM:AddSkillModifier(SKILL_VKID2, SKILLMOD_SPEED, 15)
+GM:AddSkillModifier(SKILL_VKID2, SKILLMOD_HEALTH, -25)
 
 GM:AddSkillModifier(SKILL_CURSEDHEALTH, SKILLMOD_CURSEM, -0.25)

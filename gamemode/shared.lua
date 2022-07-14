@@ -576,6 +576,13 @@ function GM:OnPlayerHitGround(pl, inwater, hitfloater, speed)
 			return true
 		end
 	end
+		if groundent:IsValid() and groundent:IsPlayer() and PTeam(groundent) == TEAM_UNDEAD and pl:IsSkillActive(SKILL_VKID2) then
+
+		if math.floor(120) > 0 then
+			groundent:TakeSpecialDamage((55 * 10), DMG_DIRECT, pl, pl, pl:GetPos())
+			return true
+		end
+	end
 end
 
 

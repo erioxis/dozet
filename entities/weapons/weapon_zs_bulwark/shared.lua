@@ -12,9 +12,9 @@ SWEP.ShowViewModel = false
 SWEP.ShowWorldModel = false
 SWEP.UseHands = true
 
-SWEP.Primary.Damage = 9
-SWEP.Primary.NumShots = 2
-SWEP.Primary.Delay = 0.22
+SWEP.Primary.Damage = 31
+SWEP.Primary.NumShots = 5
+SWEP.Primary.Delay = 0.18
 
 SWEP.Primary.ClipSize = 100
 SWEP.Primary.Automatic = true
@@ -34,7 +34,7 @@ SWEP.MaxStock = 2
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_MAX_SPREAD, -0.169)
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_MIN_SPREAD, -0.256)
 GAMEMODE:AddNewRemantleBranch(SWEP, 1, "'Citadel' Minicannon", "Uses 3 ammo per shot, shoots slower, but more damage and accuracy", function(wept)
-	wept.Primary.Damage = wept.Primary.Damage * 2
+	wept.Primary.Damage = wept.Primary.Damage * 5
 	wept.ConeMin = wept.ConeMin * 2
 	wept.ConeMax = wept.ConeMax * 2
 	wept.Primary.Delay = wept.Primary.Delay * 4

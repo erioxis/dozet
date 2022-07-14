@@ -4530,7 +4530,7 @@ function GM:PlayerSpawn(pl)
 					if self:GetWave() > 7 then
 						pl:Give("weapon_zs_redeemers_q5")
 						pl:Give("weapon_zs_loy_q5")
-					elseif self:GetWave() > 11 then
+					elseif self:GetWave() > 9 then
 						pl:Give("weapon_zs_smorning_q5")
 						pl:Give("weapon_zs_loy_q5")
 						pl:SetPoints(1200)
@@ -4973,7 +4973,9 @@ function GM:WaveStateChanged(newstate, pl)
 				pl.DeathClass = nil
 				pl:UnSpectateAndSpawn()
 				pl.DeathClass = curclass
-				pl:AddTokens(math.ceil(self:GetWave() * 100))
+			end
+			if pl:Team() == TEAM_UNDEAD then
+				pl:AddTokens(math.ceil(self:GetWave() * 150))
 			end
 
 			pl.SkipCrow = nil

@@ -16,11 +16,11 @@ SWEP.UseHands = true
 
 SWEP.HoldType = "melee"
 
-SWEP.MeleeDamage = 22
-SWEP.LegDamage = 32
+SWEP.MeleeDamage = 12
+SWEP.LegDamage = 7
 SWEP.MeleeRange = 49
 SWEP.MeleeSize = 1.5
-SWEP.Primary.Delay = 0.7
+SWEP.Primary.Delay = 0.77
 
 SWEP.SwingTime = 0.25
 SWEP.SwingRotation = Angle(60, 0, 0)

@@ -15,7 +15,7 @@ SWEP.CSMuzzleFlashes = false
 SWEP.Primary.Sound = Sound("Weapon_Crossbow.Single")
 SWEP.Primary.Delay = 2.0
 SWEP.Primary.Automatic = true
-SWEP.Primary.Damage = 90
+SWEP.Primary.Damage = 213
 
 SWEP.Primary.ClipSize = 1
 SWEP.Primary.Ammo = "XBowBolt"
