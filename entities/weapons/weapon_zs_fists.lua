@@ -25,6 +25,8 @@ SWEP.Primary.DefaultClip = 5
 SWEP.AutoSwitchFrom = true
 SWEP.HealStrength = 0.09
 
+SWEP.GoodAttackPerk = 0
+
 SWEP.Unarmed = true
 
 SWEP.Undroppable = true
@@ -99,6 +101,7 @@ function SWEP:PrimaryAttack(right)
 			owner:GetViewModel():SetPlaybackRate(0.5 / armdelay)
 		end
 	end
+
 
 	self:SetNextMeleeAttack( time + hitdelay )
 
@@ -178,12 +181,21 @@ function SWEP:DealDamage()
 		if anim == "fists_uppercut" then
 			damagemultiplier = damagemultiplier * self.UppercutDamageMultiplier
 		end
+			if owner:IsSkillActive(SKILL_GOODATTACK) then
+			    if self.GoodAttackPerk == 3 then
+					damagemultiplier = damagemultiplier * 3
+					self.GoodAttackPerk = 0
+				else
+					self.GoodAttackPerk = self.GoodAttackPerk + 1 
+				end
+			end		
 
 		local damage = self.MeleeDamage * damagemultiplier
 		local dmginfo = self:GenerateDamageInfo(damage, tr.HitPos)
 
 		local vel
 		if hitent:IsPlayer() then
+
 			self:PlayerHitUtil(owner, damage, hitent, dmginfo)
 
 			if SERVER then

@@ -14,6 +14,9 @@ function ENT:Think()
 	local owner = self:GetOwner()
 	if (owner) then
 		owner:TakeDamage(owner:GetMaxHealth()*0.03, DMG_DIRECT, owner, self)
+		if owner:IsSkillActive(SKILL_CQARMOR) then
+			owner:SetHealth(owner:Health() * 0.99)
+		end
 	end
 	if self.DieTime <= CurTime() then
 		self:Remove()

@@ -412,7 +412,7 @@ net.Receive("zs_luck", function(length)
 	local luck = net.ReadString()
 	MySelf:EmitSound("buttons/button3.wav", 75, 50)
 
-	GAMEMODE:CenterNotify({killicon = "weapon_zs_trinket"}, " ", COLOR_RED, translate.Format("luck", luck))
+	GAMEMODE:CenterNotify({killicon = "weapon_zs_trinket"}, " ", COLOR_RED, translate.Format("yluck", luck))
 end)
 net.Receive("zs_damageblock", function(length)
 	GAMEMODE:CenterNotify(" ", COLOR_GREEN, translate.Format("damageblock"))

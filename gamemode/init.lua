@@ -1236,6 +1236,15 @@ function GM:Think()
 			and (self.BossZombiePlayersRequired <= 0 or #player.GetAll() >= self.BossZombiePlayersRequired) then
 				if self:GetWaveStart() - 10 <= time then
 					self:SpawnBossZombie()
+					if self:GetWave() > 5 then
+					   timer.Simple(0.5, function()	self:SpawnBossZombie() end)
+					end
+					if self:GetWave() > 10 then
+					   timer.Simple(0.51, function()	self:SpawnBossZombie() end)
+					   timer.Simple(0.52, function()	self:SpawnBossZombie() end)
+					   timer.Simple(0.53, function()	self:SpawnBossZombie() end)
+					   timer.Simple(0.54, function()	self:SpawnBossZombie() end)
+					end
 				else
 					self:CalculateNextBoss()
 				end
@@ -1316,9 +1325,7 @@ function GM:Think()
 
 				local healmax = pl:IsSkillActive(SKILL_D_FRAIL) and math.floor(pl:GetMaxHealth() * 0.44) or pl:GetMaxHealth()
 				local healmax = pl:IsSkillActive(SKILL_ABUSE) and math.floor(pl:GetMaxHealth() * 0.25) or pl:GetMaxHealth()
-					if pl:IsSkillActive(SKILL_CQARMOR) then
-						pl:SetModelScale(1.2)
-					end
+
 
 				if pl:IsSkillActive(SKILL_REGENERATOR) and time >= pl.NextRegenerate and pl:Health() < math.min(healmax, pl:GetMaxHealth() * 0.6) then
 					pl.NextRegenerate = time + 6
@@ -1347,7 +1354,7 @@ function GM:Think()
 					pl:GiveStatus("medrifledefboost", 1.3)
 				end
 				if time >= pl.NextRegenerate and pl.HolyMantle == 0 and pl:IsSkillActive(SKILL_HOLY_MANTLE) then
-					pl.NextRegenerate = time + ((30 - (pl.Luck / 4)) + self.GetWave() * 3)
+					pl.NextRegenerate = time + ((27 - (pl.Luck / 3)) + self.GetWave() * 3)
 					pl.HolyMantle = pl.HolyMantle + 1
 					
 				end
@@ -2503,7 +2510,10 @@ function GM:PlayerInitialSpawnRound(pl)
 	pl.m_Zombie_GodHealth = nil
 	pl.m_zombiedef = nil
 	pl.m_Zombie_GodyHealth = nil
-	
+	pl.m_Zombie_Bara = nil
+	pl.m_Zombie_Bara1 = nil
+	pl.m_Gigachad = nil
+	pl.m_Zombie_16 = nil
 
 	-- Boss Mutations (Z-Shop)
 	pl.m_Shade_Force = nil
@@ -4315,6 +4325,9 @@ function GM:PlayerSpawn(pl)
 	pcol.y = math.Clamp(pcol.y, 0, 2.5)
 	pcol.z = math.Clamp(pcol.z, 0, 2.5)
 	pl:SetPlayerColor(pcol)
+	if pl:IsSkillActive(SKILL_CQARMOR) then
+		pl:SetModelScale(1.2)
+	end
 
 	if pl:Team() == TEAM_UNDEAD then
 		if pl.ActivatedHumanSkills then
@@ -4387,6 +4400,9 @@ function GM:PlayerSpawn(pl)
 		if classtab.SWEP then
 			pl:Give(classtab.SWEP)
 		end
+			if pl.m_Zombie_16 then
+				pl:Give("weapon_zs_grenade_z")
+			end
 
 		pl:SetNoTarget(true)
 		pl:SetMaxHealth(1)
@@ -4562,8 +4578,12 @@ end
 		pl:SetMaxHealth(pl:GetMaxHealth() * 2) pl:SetHealth(pl:Health() * 2)
 	
 	end
-	if pl:Team() == TEAM_UNDEAD and pl:SteamID() == "STEAM_0:1:564919091" then
+	if pl:Team() == TEAM_UNDEAD and pl:SteamID() == "STEAM_0:1:585943777" then
 	pl:SetMaxHealth(pl:GetMaxHealth() * 0.25) pl:SetHealth(pl:Health() * 0.25)	
+	end
+	if pl:Team() == TEAM_UNDEAD and pl.m_Gigachad then
+		pl:SetMaxHealth(pl:GetMaxHealth() * 2) pl:SetHealth(pl:Health() * 2)
+		
 	end
 end
 
@@ -4835,6 +4855,12 @@ function GM:WaveStateChanged(newstate, pl)
 					net.Send(pl)
 						
 						else end end end
+						local blyat = math.random(1,10)
+						if pl:IsSkillActive(SKILL_DEADINSIDE) and blyat < 3 then
+						pl:TakeDamage(20000)
+					elseif pl:IsSkillActive(SKILL_DEADINSIDE) and blyat > 3 then
+					pl:AddPoints(120)
+					end
 
 					if pl:HasTrinket("mysteryticket")  then 
 						local luckdis = (pl.Luck / 4)

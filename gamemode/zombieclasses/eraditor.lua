@@ -186,6 +186,13 @@ if SERVER then
 	function CLASS:ProcessDamage(pl, dmginfo)
 		if pl.EradiVived then return end
 
+		if bit_band(dmginfo:GetDamageType(), DMG_BULLET) ~= 0 then
+			dmginfo:SetDamage(dmginfo:GetDamage() * 0.05)
+		elseif bit_band(dmginfo:GetDamageType(), DMG_SLASH) == 0 and bit_band(dmginfo:GetDamageType(), DMG_CLUB) == 0 then
+			dmginfo:SetDamage(dmginfo:GetDamage() * 0.05)
+		end
+
+
 		local damage = dmginfo:GetDamage()
 		if damage >= 80 or damage < pl:Health() then return end
 
@@ -221,6 +228,7 @@ if SERVER then
 		pl.EradiVived = false
 	end
 end
+
 
 if not CLIENT then return end
 

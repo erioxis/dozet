@@ -308,6 +308,11 @@ SKILL_DOSETHELP = 287
 SKILL_BLOODYMAN = 288
 SKILL_FREESKILL = 289
 SKILL_FREESKILL1 = 290
+SKILL_FREESKILL2 = 291
+SKILL_DEADINSIDE = 292
+SKILL_SKYHELP = 293
+SKILL_TRUEBLOCK = 294
+SKILL_GOODATTACK = 295
 
 SKILLMOD_HEALTH = 1
 SKILLMOD_SPEED = 2
@@ -617,9 +622,11 @@ GM:AddSkill(SKILL_HANDY2, translate.Get("skill_handy").."II", GOOD.."+6%"..trans
 GM:AddSkill(SKILL_HANDY3, translate.Get("skill_handy").."III", GOOD.."+8%"..translate.Get("repair"),
 																-5,			-1,					{SKILL_TAUT, SKILL_HAMMERDISCIPLINE, SKILL_D_NOODLEARMS, SKILL_HANDY4}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_HANDY4, translate.Get("skill_handy").."IV", GOOD.."+11%"..translate.Get("repair"),
-																-3,			1,					{SKILL_HANDY5}, TREE_BUILDINGTREE)
+																-3,			1,					{SKILL_HANDY5,SKILL_SKYHELP}, TREE_BUILDINGTREE)
+GM:AddSkill(SKILL_SKYHELP, translate.Get("skill_skyhelp"), GOOD.."+40"..translate.Get("start_points")..BAD..translate.Get("skill_skyhelp_d1"),
+																-1,			2,					{SKILL_HANDY4}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_HANDY5, translate.Get("skill_handy").."V", GOOD.."+13%"..translate.Get("repair"),
-																-3,			3,					{SKILL_OVERHAND}, TREE_BUILDINGTREE)
+																-4,			3,					{SKILL_OVERHAND}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_OVERHAND, translate.Get("skill_ohandy"), GOOD.."+25%"..translate.Get("repair")..BAD.."+15%"..translate.Get("hammerd"),
 																-3,			4,					{SKILL_HANDY5}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_HAMMERDISCIPLINE, translate.Get("skill_h_disp").."I", GOOD.."-5%"..translate.Get("hammerd"),
@@ -731,6 +738,10 @@ GM:AddSkill(SKILL_FREESKILL1, translate.Get("skill_freeskill"), GOOD.."+5"..tran
 																-9,			9,					{SKILL_NONE}, TREE_GUNTREE)
 .RemortReq = 24
 GM:AddSkillModifier(SKILL_FREESKILL1, SKILLMOD_SPOINT, 6)
+GM:AddSkill(SKILL_FREESKILL2, translate.Get("skill_freeskill"), GOOD.."+8"..translate.Get("spoint"),
+																-9,			8,					{SKILL_NONE}, TREE_GUNTREE)
+.RemortReq = 80
+GM:AddSkillModifier(SKILL_FREESKILL2, SKILLMOD_SPOINT, 9)
 
 GM:AddSkill(SKILL_UNSIGIL, translate.Get("skill_uncorrupt"), GOOD.."+24%"..translate.Get("r_speed")..GOOD.."+15%"..translate.Get("b_damage")..BAD.."-80%"..translate.Get("meleedamage"),
 																0,			2,					{SKILL_LEVELHEADED}, TREE_GUNTREE)
@@ -827,6 +838,8 @@ GM:AddSkill(SKILL_CONEFFECT, translate.Get("skill_concetrate"), GOOD..translate.
 																2,			-5,					{}, TREE_GUNTREE)
 GM:AddSkill(SKILL_TRUEWOOISM, translate.Get("skill_wooism"), GOOD..translate.Get("skill_wooism_d1")..BAD..translate.Get("skill_wooism_d2"),
 																7,			0,					{}, TREE_GUNTREE)
+GM:AddSkill(SKILL_DEADINSIDE, translate.Get("skill_dinside"), BAD..translate.Get("skill_dinside_d1")..GOOD..translate.Get("skill_dinside_d2"),
+																7,			-2,					{SKILL_TRUEWOOISM}, TREE_GUNTREE)
 
 -- Melee Tree
 GM:AddSkill(SKILL_WORTHINESS2, translate.Get("worthness").."II", GOOD.."+10"..translate.Get("worth")..BAD.."-3"..translate.Get("start_points"),
@@ -859,7 +872,7 @@ GM:AddSkill(SKILL_GLASSWEAPONS, translate.Get("skill_glassweapon"), GOOD..transl
 																2,			4,					{}, TREE_MELEETREE)
 GM:AddSkill(SKILL_GLASSMAN, translate.Get("skill_glassman"), GOOD.."+230%"..translate.Get("meleedamage")..BAD.."+200%"..translate.Get("meleedamagetaken"),
 																3,			5,					{SKILL_GLASSWEAPONS}, TREE_MELEETREE)
-GM:AddSkill(SKILL_D_CLUMSY,  translate.Get("skill_d_clumsy"), GOOD.."+20"..translate.Get("worth")..GOOD.."+10"..translate.Get("start_points")..BAD..translate.Get("skill_d_clumsy_d"),
+GM:AddSkill(SKILL_D_CLUMSY,  translate.Get("skill_d_clumsy"), GOOD.."+20"..translate.Get("worth")..GOOD.."+10"..translate.Get("start_points")..BAD..translate.Get("skill_d_clumsy_d1"),
 																-2,			2,					{}, TREE_MELEETREE)
 GM:AddSkill(SKILL_CHEAPKNUCKLE, translate.Get("skill_cheapt"), GOOD..translate.Get("skill_cheapt_d1")..BAD.."-10%"..translate.Get("m_range"),
 																4,			-2,					{SKILL_HEAVYSTRIKES, SKILL_WORTHINESS2}, TREE_MELEETREE)
@@ -894,7 +907,9 @@ GM:AddSkill(SKILL_LIGHTWEIGHT, translate.Get("skill_lweight"), GOOD..translate.G
 GM:AddSkill(SKILL_BLOODLUST,  translate.Get("skill_phantomhealth"), translate.Get("skill_phantomhealth_d1")..GOOD..translate.Get("skill_phantomhealth_d2"),
 																-2,			4,					{SKILL_LASTSTAND}, TREE_MELEETREE)
 GM:AddSkill(SKILL_BRASH, translate.Get("skill_brash"), GOOD.."-16%"..translate.Get("m_delay")..BAD..translate.Get("skill_brash_d1"),
-																6,			0,					{}, TREE_MELEETREE)
+																6,			0,					{SKILL_TRUEBLOCK}, TREE_MELEETREE)
+GM:AddSkill(SKILL_TRUEBLOCK, translate.Get("skill_trueblock"), BAD.."-15%"..translate.Get("meleedamage")..GOOD..translate.Get("skill_trueblock_d1"),
+																7,			1,					{SKILL_BRASH}, TREE_MELEETREE)
 GM:AddSkill(SKILL_FOUR_IN_ONE, "2 in 1", GOOD.."-9%"..translate.Get("m_delay")..BAD.."-7"..translate.Get("health"),
 																-2,			-2,					{}, TREE_MELEETREE)
 GM:AddSkill(SKILL_THREE_IN_ONE, "3 in 1", GOOD.."-16%"..translate.Get("m_delay")..BAD.."-10"..translate.Get("health"),
@@ -914,6 +929,9 @@ GM:AddSkillModifier(SKILL_FISTING, SKILLMOD_UNARMED_DAMAGE_MUL, 0.50)
 GM:AddSkillModifier(SKILL_FISTING, SKILLMOD_UNARMED_SWING_DELAY_MUL, -0.30)
 GM:AddSkillModifier(SKILL_FISTING, SKILLMOD_MELEE_SWING_DELAY_MUL, 0.15)
 GM:AddSkillModifier(SKILL_FISTING, SKILLMOD_MELEE_DAMAGE_MUL, -0.25)
+GM:AddSkill(SKILL_GOODATTACK, translate.Get("skill_goodattack"), BAD.."-15%"..translate.Get("fist_damage")..GOOD..translate.Get("skill_goodattack_d1"),
+																8,			-3.5,					{SKILL_FISTING}, TREE_MELEETREE)
+GM:AddSkillModifier(SKILL_GOODATTACK, SKILLMOD_UNARMED_DAMAGE_MUL, -0.15)
 SKILL_MELEEFAN = 224				
 GM:AddSkill(SKILL_MELEEFAN, translate.Get("skill_truemelee"), BAD.."-350%"..translate.Get("fist_damage")..GOOD.."+45%"..translate.Get("meleedamage")..GOOD.."-15%"..translate.Get("m_delay")..BAD.."-50%"..translate.Get("b_damage"),
 																9,			-3,					{SKILL_FISTING}, TREE_MELEETREE)
@@ -2096,6 +2114,8 @@ end)
 
 GM:AddSkillModifier(SKILL_DISPERSION, SKILLMOD_CLOUD_RADIUS, 0.15)
 GM:AddSkillModifier(SKILL_DISPERSION, SKILLMOD_CLOUD_TIME, -0.1)
+
+GM:AddSkillModifier(SKILL_TRUEBLOCK, SKILLMOD_MELEE_DAMAGE_MUL, -0.15)
 
 GM:AddSkillModifier(SKILL_BRASH, SKILLMOD_MELEE_SWING_DELAY_MUL, -0.16)
 GM:AddSkillModifier(SKILL_BRASH, SKILLMOD_MELEE_MOVEMENTSPEED_ON_KILL, -15)

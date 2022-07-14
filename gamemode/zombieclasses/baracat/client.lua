@@ -1,5 +1,5 @@
 include("shared.lua")
 
-CLASS.Icon = "zombiesurvival/baracat"
+CLASS.Icon = "zombiesurvival/killicons/legs"
 
 

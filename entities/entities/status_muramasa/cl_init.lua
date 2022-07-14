@@ -3,6 +3,7 @@ INC_CLIENT()
 ENT.NextEmit = 0.02
 
 function ENT:Draw()
+   if not MySelf:KeyDown(IN_SPEED) then return end
 	local owner = self:GetOwner()
 
 

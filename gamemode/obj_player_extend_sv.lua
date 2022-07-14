@@ -36,8 +36,11 @@ function meta:ProcessDamage(dmginfo)
 			return
 		end
 		dmginfo:SetDamage(dmginfo:GetDamage() * (1 - (GAMEMODE:GetWave() * 0.04)))
-		if self.m_zombiedef == true then
+		if self.m_zombiedef then
 			dmginfo:SetDamage(dmginfo:GetDamage() * 0.75)
+		end
+		if self.m_Zombie_Bara1 then
+				dmginfo:SetDamage(dmginfo:GetDamage() * 1.5)
 		end
 
 		local corrosion = self.Corrosion and self.Corrosion + 2 > CurTime()
@@ -76,6 +79,7 @@ function meta:ProcessDamage(dmginfo)
 						attacker:AddBloodlust(attacker:GetOwner(), dmginfo:GetDamage() * 0.09)
 					end
 				end
+
 
 				if attacker.MeleeDamageToBloodArmorMul and attacker.MeleeDamageToBloodArmorMul > 0 and attacker:GetBloodArmor() < attacker.MaxBloodArmor then
 					attacker:SetBloodArmor(math.min(attacker.MaxBloodArmor, attacker:GetBloodArmor() + math.min(damage, self:Health()) * attacker.MeleeDamageToBloodArmorMul * attacker.BloodarmorGainMul))
@@ -135,6 +139,10 @@ function meta:ProcessDamage(dmginfo)
 	if self:IsSkillActive(SKILL_HELPLIFER) and math.random(1,3) == 1 and dmginfo:GetDamage() >= self:Health() then
 		dmginfo:SetDamage(0)
     end
+		if self:IsSkillActive(SKILL_SKYHELP) then
+		self:SetVelocity(VectorRand() * math.random(200,1700))
+    end
+
 
 
 
@@ -194,7 +202,10 @@ function meta:ProcessDamage(dmginfo)
 			net.Send(self)
 			self:AddZSXP(xpadded)
 		end
-
+		if self:IsSkillActive(SKILL_TRUEBLOCK) and (self:GetActiveWeapon().ParryTiming or 0) == 1 then 
+		   attacker:TakeDamage(self:GetActiveWeapon().MeleeDamage * 6, self, self:GetActiveWeapon())
+           dmginfo:SetDamage(0)
+		end
 	end
 	local mythrilchance = math.random(1,25)
 	if self:IsSkillActive(SKILL_MYTHRIL) and mythrilchance == 1 and not self:GetStatus("hshield") and dmginfo:GetDamage() < 200 then
@@ -211,7 +222,7 @@ function meta:ProcessDamage(dmginfo)
 	end
 
 	if self:IsSkillActive(SKILL_CQARMOR) then
-		dmginfo:SetDamage(dmginfo:GetDamage() * 0.5)
+		dmginfo:SetDamage(dmginfo:GetDamage() * 0.75)
 	end
 		if self:IsSkillActive(SKILL_DOSETHELP) then
 		dmginfo:SetDamage(dmginfo:GetDamage() * (1 - GAMEMODE:GetWave() * 0.02))
@@ -283,7 +294,18 @@ function meta:ProcessDamage(dmginfo)
 						self:AddBloodlust(self:GetOwner(), dmginfo:GetDamage() * 0.3)
 					end
 				end
-			
+				if attacker.m_Zombie_Bara then
+					self:GiveStatus("knockdown",1)
+					local vel = self:GetPos() - self:GetPos()
+		vel.z = 0
+		vel:Normalize()
+		vel = vel * 2800
+		vel.z = 700
+			self:SetVelocity(vel)
+				end
+				if attacker.m_Zombie_Bara1 then
+				dmginfo:SetDamage(dmginfo:GetDamage() * 2)
+				end
 					
 		
 
@@ -1474,9 +1496,17 @@ function meta:DoHulls(classid, teamid)
 			end
 
 			if classtab.ModelScale then
-				self:SetModelScale(classtab.ModelScale, 0)
+			    if self.m_Gigachad then
+					self:SetModelScale(classtab.ModelScale * 1.5, 0)
+				else
+					self:SetModelScale(classtab.ModelScale, 0)
+				end
 			elseif self:GetModelScale() ~= DEFAULT_MODELSCALE then
-				self:SetModelScale(DEFAULT_MODELSCALE, 0)
+			    if self.m_Gigachad then
+					self:SetModelScale(1.5, 0)
+				else
+					self:SetModelScale(DEFAULT_MODELSCALE, 0)
+				end
 			end
 
 			if not classtab.Hull or not classtab.HullDuck then

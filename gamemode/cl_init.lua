@@ -1331,6 +1331,7 @@ function GM:Create3DFonts()
 	surface.CreateLegacyFont(fontfamilysm, 14 + fontsizeadd3D, fontweight3D, false, false,  "ZS3D2DUnstyleTiny", false, true)
 	surface.CreateLegacyFont(fontfamilysm, 24 + fontsizeadd3D, fontweight3D, false, false,  "ZS3D2DUnstyleSmallest", false, true)
 	surface.CreateLegacyFont(fontfamilysm, 36 + fontsizeadd3D, fontweight3D, false, false,  "ZS3D2DUnstyleSmaller", false, true)
+	surface.CreateLegacyFont(fontfamilysm, 22 + fontsizeadd3D, fontweight3D, false, false,  "ZS3D2DUnstyleNail", false, true)
 end
 
 function GM:CreateNonScaleFonts()

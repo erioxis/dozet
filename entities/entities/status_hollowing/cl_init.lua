@@ -5,6 +5,7 @@ INC_CLIENT()
 ENT.NextEmit = 0
 
 function ENT:Draw()
+   if not MySelf:KeyDown(IN_SPEED) then return end
 	local owner = self:GetOwner()
 	if not owner:IsValid() or owner == MySelf and not owner:ShouldDrawLocalPlayer() then return end
 	if owner:GetZombieClassTable().IgnoreTargetAssist then return end

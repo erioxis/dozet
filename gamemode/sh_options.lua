@@ -71,13 +71,13 @@ GM.MutItemCategories = {
 }
 
 GM.ItemSubCategories = {
-	[ITEMSUBCAT_TRINKETS_DEFENSIVE] = "Defensive",
-	[ITEMSUBCAT_TRINKETS_OFFENSIVE] = "Offensive",
-	[ITEMSUBCAT_TRINKETS_MELEE] = "Melee",
-	[ITEMSUBCAT_TRINKETS_PERFOMANCE] = "Performance",
-	[ITEMSUBCAT_TRINKETS_SUPPORT] = "Support",
-	[ITEMSUBCAT_TRINKETS_SPECIAL] = "Special",
-	[ITEMSUBCAT_TRINKETS_SUPER] = "Super"
+	[ITEMSUBCAT_TRINKETS_DEFENSIVE] = translate.Get("t_subcat_def"),
+	[ITEMSUBCAT_TRINKETS_OFFENSIVE] = translate.Get("t_subcat_off"),
+	[ITEMSUBCAT_TRINKETS_MELEE] = translate.Get("t_subcat_mel"),
+	[ITEMSUBCAT_TRINKETS_PERFOMANCE] = translate.Get("t_subcat_per"),
+	[ITEMSUBCAT_TRINKETS_SUPPORT] = translate.Get("t_subcat_sup"),
+	[ITEMSUBCAT_TRINKETS_SPECIAL] = translate.Get("t_subcat_spc"),
+	[ITEMSUBCAT_TRINKETS_SUPER] = translate.Get("t_subcat_sup")
 
 }
 
@@ -718,6 +718,10 @@ GM:AddMutationItem("m_zombie_health1", translate.Get("zshop_godzomb"), translate
 GM:AddMutationItem("m_zombie_zdef", translate.Get("zshop_zdef1"), translate.Get("zshop_def"), ITEMCAT_MUTATIONS, 300, nil, function(pl) pl.m_zombiedef = true end, "models/player/fatty/fatty.mdl")      
 GM:AddMutationItem("m_zombie_moan", translate.Get("zshop_zombsprint"), translate.Get("zshop_zombsprint2"), ITEMCAT_MUTATIONS, 400, nil, function(pl) pl.m_Zombie_Moan = true end, "models/player/zombie_classic.mdl")
 GM:AddMutationItem("m_zombie_moanguard", translate.Get("zshop_zombguard"), translate.Get("zshop_zombguard2"), ITEMCAT_MUTATIONS, 200, nil, function(pl) pl.m_Zombie_MoanGuard = true end, "models/player/zombie_classic.mdl")
+GM:AddMutationItem("m_zombie_bara", translate.Get("zshop_baracurse"), translate.Get("zshop_baracurse_d1"), ITEMCAT_MUTATIONS, 900, nil, function(pl) pl.m_Zombie_Bara = true end, "models/player/catpants.mdl")
+GM:AddMutationItem("m_zombie_hitter", translate.Get("zshop_hit"), translate.Get("zshop_hit_d1"), ITEMCAT_MUTATIONS, 1200, nil, function(pl) pl.m_Zombie_Bara1 = true end, "models/player/catpants.mdl")
+GM:AddMutationItem("m_zombie_gigachad", translate.Get("zshop_gigachad"), translate.Get("zshop_gigachad_d1"), ITEMCAT_MUTATIONS, 1200, nil, function(pl) pl.m_Gigachad = true end, "models/player/catpants.mdl")
+GM:AddMutationItem("m_zombie_16", translate.Get("zshop_16"), translate.Get("zshop_16_d1"), ITEMCAT_MUTATIONS, 1200, nil, function(pl) pl.m_Zombie_16 = true end, "models/player/catpants.mdl")
 
 -- Boss Mutagen
 GM:AddMutationItem("m_zombie_health2", translate.Get("zshop_godestzomb"), translate.Get("zshop_godestzomb2"), ITEMCAT_MUTATIONS_BOSS, 1000, nil, function(pl) pl.m_Zombie_GodyHealth = true end, "models/items/healthkit.mdl")

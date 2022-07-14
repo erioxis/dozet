@@ -195,8 +195,8 @@ concommand.Add("_zs_rotateang", function(sender, command, arguments)
 	if x and y then
 --		angle:RotateAroundAxis(angle:Right(),ho)
 --angle:RotateAroundAxis(angle:Up(),range-(range*2)*((num)/maxNum))
-	    sender.InputMouseX =  math.Clamp(math.NormalizeAngle(x) * 0.75, -180, 180) -- sender.InputMouseX + math.Clamp(x * 0.02, -180, 180)
-		sender.InputMouseY =  math.Clamp(math.NormalizeAngle(y)* 0.75, -180, 180) --sender.InputMouseY + math.Clamp(y * 0.02, -180, 180)
+		sender.InputMouseX = math.NormalizeAngle(x)--sender.InputMouseX + math.Clamp(x * 0.02, -180, 180)
+		sender.InputMouseY = math.NormalizeAngle(y)--sender.InputMouseY + math.Clamp(y * 0.02, -180, 180) --sender.InputMouseY + math.Clamp(y * 0.02, -180, 180)
 		--sender.InputMouseX = math.Clamp(x * 0.02, -180, 180)
 		--sender.InputMouseY = math.Clamp(y * 0.02, -180, 180)
 	end
@@ -241,6 +241,7 @@ function ENT:Think()
 		object:SetPhysicsAttacker(owner)
 
 		self:Remove()
+		
 		return
 	elseif self:GetIsHeavy() then
 		local pullpos = self:GetPullPos()
@@ -265,16 +266,14 @@ function ENT:Think()
 				self.ObjectAngles = object:GetAngles()
 			end
 		end
-
-		if owner:KeyDown(IN_SPEED) then
-			if owner:KeyPressed(IN_SPEED) then
-				self.ObjectAngles = object:GetAngles()
-			end
-		elseif owner:KeyDown(IN_WALK) then
+		if owner:KeyPressed(IN_SPEED) then
+			self.ObjectAngles = object:GetAngles()
+		end
+		if owner:KeyDown(IN_WALK) then
 			local xdiff = math.NormalizeAngle(self.StartX - (owner.InputMouseX or 0))
 			local ydiff = math.NormalizeAngle(self.StartY - (owner.InputMouseY or 0))
-			local sxdiff = xdiff * FrameTime() * 8
-			local sydiff = ydiff * FrameTime() * 8
+			local sxdiff = xdiff * FrameTime() * 12
+			local sydiff = ydiff * FrameTime() * 12
 
 			self.ObjectAngles:RotateAroundAxis(owner:GetUp(), sxdiff)
 			self.ObjectAngles:RotateAroundAxis(owner:GetRight(), sydiff)

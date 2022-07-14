@@ -18,6 +18,8 @@ SWEP.Secondary.Ammo = "dummy"
 SWEP.Secondary.Automatic = true
 SWEP.BlockTrue = true
 
+SWEP.ParryTiming = 0
+
 
 SWEP.Block = 0
 
@@ -104,11 +106,20 @@ function SWEP:SecondaryAttack()
 	            self:SetHoldType("revolver")
 				self:SetWeaponSwingHoldType("revolver")
 	        end)
+	        timer.Create("trueparrydead1",0.15,1, function() 
+	            self.ParryTiming = 0
+	        end)
         else
 	        timer.Create("unblock",0.1,1, function() 
 	            self.Block = 0
 	            self:SetHoldType(self.HoldType)
 				self:SetWeaponSwingHoldType(self.SwingHoldType)
+	        end)
+	        timer.Create("trueparry",0.15,1, function() 
+	            self.ParryTiming = 1
+	        end)
+	        timer.Create("trueparrydead",0.35,1, function() 
+	            self.ParryTiming = 0
 	        end)
         end
     end
