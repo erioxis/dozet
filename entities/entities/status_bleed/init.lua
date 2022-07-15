@@ -13,9 +13,13 @@ function ENT:Think()
 	end
 
 	local dmg = math.Clamp(self:GetDamage(), 1, 2)
-
+	if not owner:IsSkillActive(SKILL_DEFENDBLOOD) then
 	owner:TakeDamage(dmg, self.Damager and self.Damager:IsValid() and self.Damager:IsPlayer() and self.Damager or owner, self)
-	self:AddDamage(-dmg)
+		self:AddDamage(-dmg)
+	elseif owner:IsSkillActive(SKILL_DEFENDBLOOD) then
+		owner:SetHealth(owner:Health() + dmg)
+		self:AddDamage(-dmg)
+	end
 
 	local dir = VectorRand()
 	dir:Normalize()

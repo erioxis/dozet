@@ -314,6 +314,13 @@ SKILL_SKYHELP = 293
 SKILL_TRUEBLOCK = 294
 SKILL_GOODATTACK = 295
 SKILL_VKID2 = 296
+SKILL_FREEPOINT1 = 297
+SKILL_FREEPOINT2 = 298
+SKILL_FREEPOINT3 = 299
+SKILL_FREEPOINT4 = 300
+SKILL_BLOODBUFF = 301
+SKILL_JUSTICE = 302
+SKILL_DEFENDBLOOD = 303
 
 SKILLMOD_HEALTH = 1
 SKILLMOD_SPEED = 2
@@ -468,6 +475,11 @@ GM:AddSkill(SKILL_VITALITY2, ""..translate.Get("skill_vitalityii_0"), GOOD..tran
 																0,			-2,					{SKILL_VITALITY3}, TREE_HEALTHTREE)
 GM:AddSkill(SKILL_VITALITY3, ""..translate.Get("skill_vitalityiii_0"), GOOD..translate.Get("skill_vitalityiii_d1"),
 																0,			-0,					{SKILL_D_WEAKNESS}, TREE_HEALTHTREE)
+GM:AddSkill(SKILL_BLOODBUFF, ""..translate.Get("skill_bbuff"), GOOD..translate.Get("skill_bbuff_d1")..BAD.."-20"..translate.Get("barmor"),
+																-1,			1,					{SKILL_VITALITY3}, TREE_HEALTHTREE)
+GM:AddSkillModifier(SKILL_BLOODBUFF, SKILLMOD_BLEED_DAMAGE_TAKEN_MUL, -0.25)
+GM:AddSkillModifier(SKILL_BLOODBUFF, SKILLMOD_POISON_DAMAGE_TAKEN_MUL, -0.25)
+GM:AddSkillModifier(SKILL_BLOODBUFF, SKILLMOD_BLOODARMOR, -20)
 GM:AddSkill(SKILL_CHEESE, ""..translate.Get("skill_cheese_0"), GOOD..translate.Get("skill_cheese_d1"),
 																1,			1,					{SKILL_GOURMET}, TREE_HEALTHTREE)
 GM:AddSkill(SKILL_CHEESE2, translate.Get("skill_cheese_0").." II", GOOD..translate.Get("skill_cheese_d2"),
@@ -481,6 +493,9 @@ GM:AddSkillModifier(SKILL_LIVER, SKILLMOD_HEALTH, 30)
 GM:AddSkillModifier(SKILL_LIVER, SKILLMOD_WORTH, 30)
 GM:AddSkill(SKILL_FORAGER, ""..translate.Get("skill_f_0"), GOOD..""..translate.Get("skill_f_d1")..BAD..""..translate.Get("skill_f_d2"),
 																5,			-2,					{SKILL_GOURMET}, TREE_HEALTHTREE)
+GM:AddSkill(SKILL_JUSTICE, ""..translate.Get("skill_justice"), GOOD.."-8%"..translate.Get("res_delay"),
+																6,			-1,					{SKILL_FORAGER}, TREE_HEALTHTREE)
+GM:AddSkillModifier(SKILL_JUSTICE, SKILLMOD_RESUPPLY_DELAY_MUL, -0.08)		
 GM:AddSkill(SKILL_SUGARRUSH, ""..translate.Get("skill_srush_0"), GOOD..""..translate.Get("skill_srush_d1")..BAD..""..translate.Get("skill_srush_d2"),
 																4,			0,					{SKILL_GOURMET}, TREE_HEALTHTREE)
 GM:AddSkill(SKILL_CIRCULATION, ""..translate.Get("skill_cir_0"), GOOD..""..translate.Get("skill_cir_d1"),
@@ -1169,7 +1184,7 @@ GM:AddSkillModifier(SKILL_TORMENT2, SKILLMOD_HEALTH, -15)
 GM:AddSkillModifier(SKILL_TORMENT2, SKILLMOD_XP, 0.15)
 SKILL_SLAVEC = 251
 GM:AddSkill(SKILL_SLAVEC, translate.Get("skill_cot"), GOOD..translate.Get("skill_cot_d1")..GOOD.."+20"..translate.Get("speed")..BAD.."-15"..translate.Get("health"),
-				                                                            	2,			27,					{SKILL_TORMENT2}, TREE_ANCIENTTREE)
+				                                                            	3,			27,					{SKILL_TORMENT2}, TREE_ANCIENTTREE)
 GM:AddSkillModifier(SKILL_SLAVEC, SKILLMOD_HEALTH, -15)
 GM:AddSkillModifier(SKILL_SLAVEC, SKILLMOD_SPEED, 20)
 SKILL_TORMENT3 = 231
@@ -1188,7 +1203,7 @@ GM:AddSkillModifier(SKILL_TORMENT4, SKILLMOD_MELEE_DAMAGE_MUL, -0.5)
 GM:AddSkillModifier(SKILL_TORMENT4, SKILLMOD_XP, 1)
 SKILL_TORMENT5 = 233
 GM:AddSkill(SKILL_TORMENT5, translate.Get("skill_torment").."V", GOOD.."+15%"..translate.Get("xpmul")..BAD.."+15%"..translate.Get("meleedamagetaken"),
-				                                                            	2,			29,					{SKILL_TORMENT4}, TREE_ANCIENTTREE)
+				                                                            	2,			28.5,					{SKILL_TORMENT4}, TREE_ANCIENTTREE)
 
 GM:AddSkillModifier(SKILL_TORMENT5, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 0.15)
 GM:AddSkillModifier(SKILL_TORMENT5, SKILLMOD_XP, 0.15)
@@ -1221,6 +1236,18 @@ GM:AddSkill(SKILL_TORMENT8,translate.Get("skill_torment").."VIII", GOOD.."+30%".
 
 GM:AddSkillModifier(SKILL_TORMENT8, SKILLMOD_HEALTH, -50)
 GM:AddSkillModifier(SKILL_TORMENT8, SKILLMOD_XP, 0.30)
+GM:AddSkill(SKILL_FREEPOINT1,translate.Get("skill_freexp").."I", GOOD.."+3%"..translate.Get("xpmul"),
+				                                                            	4,			33,					{SKILL_TORMENT8}, TREE_ANCIENTTREE)
+GM:AddSkillModifier(SKILL_FREEPOINT1, SKILLMOD_XP, 0.03)
+GM:AddSkill(SKILL_FREEPOINT2,translate.Get("skill_freexp").."II", GOOD.."+5%"..translate.Get("xpmul"),
+				                                                            	5,			32,					{SKILL_FREEPOINT1}, TREE_ANCIENTTREE)
+GM:AddSkillModifier(SKILL_FREEPOINT2, SKILLMOD_XP, 0.05)
+GM:AddSkill(SKILL_FREEPOINT3,translate.Get("skill_freexp").."III", GOOD.."+9%"..translate.Get("xpmul"),
+				                                                            	6,			34,					{SKILL_FREEPOINT2}, TREE_ANCIENTTREE)
+GM:AddSkillModifier(SKILL_FREEPOINT3, SKILLMOD_XP, 0.09)
+GM:AddSkill(SKILL_FREEPOINT4,translate.Get("skill_freexp").."IV", GOOD.."+12%"..translate.Get("xpmul"),
+				                                                            	6,			35,					{SKILL_FREEPOINT3}, TREE_ANCIENTTREE)
+GM:AddSkillModifier(SKILL_FREEPOINT4, SKILLMOD_XP, 0.12)
 
 --Defend skills
 
@@ -1236,6 +1263,8 @@ GM:AddSkill(SKILL_DEFEND2,translate.Get("skill_sdefender").."III", GOOD.."-3%"..
 
 GM:AddSkillModifier(SKILL_DEFEND2, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.03)
 GM:AddSkillModifier(SKILL_DEFEND2, SKILLMOD_SPEED, -4)
+GM:AddSkill(SKILL_DEFENDBLOOD,translate.Get("skill_blooddefender"), GOOD..translate.Get("skill_blooddefender_d1")..BAD..translate.Get("skill_blooddefender_d2"),
+				                                                            	3,			0,					{SKILL_DEFEND2}, TREE_DEFENSETREE)
 SKILL_DEFEND3 = 193
 GM:AddSkill(SKILL_DEFEND3, translate.Get("skill_sdefender").." IV", GOOD.."-4%"..translate.Get("meleedamagetaken")..BAD.."-6"..translate.Get("speed"),
 				                                                            	1.5,			2,					{SKILL_DEFEND2}, TREE_DEFENSETREE)
@@ -2013,6 +2042,8 @@ GM:AddSkillModifier(SKILL_CARRIER, SKILLMOD_PROP_CARRY_SLOW_MUL, -1)
 GM:AddSkillModifier(SKILL_BLOODARMOR, SKILLMOD_HEALTH, -5)
 
 GM:AddSkillModifier(SKILL_HAEMOSTASIS, SKILLMOD_BLOODARMOR_DMG_REDUCTION, 0.16)
+
+GM:AddSkillModifier(SKILL_DEFENDBLOOD, SKILLMOD_BLOODARMOR_DMG_REDUCTION, -1)
 
 GM:AddSkillModifier(SKILL_REGENERATOR, SKILLMOD_HEALTH, -6)
 

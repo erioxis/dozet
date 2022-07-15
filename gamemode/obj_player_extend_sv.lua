@@ -1076,7 +1076,7 @@ function meta:GiveStatus(sType, fDie)
 		return
 	end
 
-	if resistable and self:HasTrinket("biocleanser") and (not self.LastBioCleanser or self.LastBioCleanser + 20 < CurTime()) then
+	if resistable and self:HasTrinket("biocleanser") and (not self.LastBioCleanser or self.LastBioCleanser + 10 < CurTime()) then
 		self.LastBioCleanser = CurTime()
 		self.BioCleanserMessage = nil
 	end

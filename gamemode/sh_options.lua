@@ -77,7 +77,7 @@ GM.ItemSubCategories = {
 	[ITEMSUBCAT_TRINKETS_PERFOMANCE] = translate.Get("t_subcat_per"),
 	[ITEMSUBCAT_TRINKETS_SUPPORT] = translate.Get("t_subcat_sup"),
 	[ITEMSUBCAT_TRINKETS_SPECIAL] = translate.Get("t_subcat_spc"),
-	[ITEMSUBCAT_TRINKETS_SUPER] = translate.Get("t_subcat_sup")
+	[ITEMSUBCAT_TRINKETS_SUPER] = translate.Get("t_subcat_spr")
 
 }
 
@@ -339,8 +339,8 @@ GM:AddStartingItem("bloodshot",			ITEMCAT_OTHER,			35,				"weapon_zs_bloodshotbo
 -- Points --
 ------------
 --Magic
-GM:AddPointShopItem("magicheal",			ITEMCAT_MAGIC,			200,				"weapon_zs_m_heal")
-GM:AddPointShopItem("magicdamage",			ITEMCAT_MAGIC,			200,				"weapon_zs_m_damage")
+GM:AddPointShopItem("magicheal",			ITEMCAT_MAGIC,			400,				"weapon_zs_m_heal")
+GM:AddPointShopItem("magicdamage",			ITEMCAT_MAGIC,			400,				"weapon_zs_m_damage")
 
 -- Tier 1
 GM:AddPointShopItem("pshtr",			ITEMCAT_GUNS,			35,				"weapon_zs_peashooter", nil, nil, nil, function(pl) pl:GiveEmptyWeapon("weapon_zs_peashooter") end)
@@ -394,13 +394,14 @@ GM:AddPointShopItem("inferno",			ITEMCAT_GUNS,			300,			"weapon_zs_inferno")
 GM:AddPointShopItem("quasar",			ITEMCAT_GUNS,			300,			"weapon_zs_quasar")
 GM:AddPointShopItem("barrage",			ITEMCAT_GUNS,			300,			"weapon_zs_barrage")
 GM:AddPointShopItem("toxico",			ITEMCAT_GUNS,			300,			"weapon_zs_toxicshooter")
+GM:AddPointShopItem("scar",				ITEMCAT_GUNS,			300,			"weapon_zs_scar")
+GM:AddPointShopItem("juggernaut",		ITEMCAT_GUNS,		    300,			"weapon_zs_juggernaut")
+GM:AddPointShopItem("zenith",		ITEMCAT_GUNS,			300,			"weapon_zs_zenith")
 -- Tier 5
 GM:AddPointShopItem("slugrifle",		ITEMCAT_GUNS,			700,			"weapon_zs_slugrifle")
 GM:AddPointShopItem("gluon",			ITEMCAT_GUNS,			700,			"weapon_zs_gluon")
 GM:AddPointShopItem("novacolt",			ITEMCAT_GUNS,			700,			"weapon_zs_novacolt")
 GM:AddPointShopItem("bulwark",			ITEMCAT_GUNS,		    700,			"weapon_zs_bulwark")
-GM:AddPointShopItem("juggernaut",		ITEMCAT_GUNS,		    700,			"weapon_zs_juggernaut")
-GM:AddPointShopItem("scar",				ITEMCAT_GUNS,			700,			"weapon_zs_scar")
 GM:AddPointShopItem("colossus",			ITEMCAT_GUNS,			700,			"weapon_zs_colossus")
 GM:AddPointShopItem("renegade",			ITEMCAT_GUNS,			700,			"weapon_zs_renegade")
 GM:AddPointShopItem("crossbow",			ITEMCAT_GUNS,			700,			"weapon_zs_crossbow")
@@ -422,6 +423,7 @@ GM:AddPointShopItem("smorning",		ITEMCAT_GUNS,			2000,			"weapon_zs_smorning")
 GM:AddPointShopItem("sacredhh",			ITEMCAT_GUNS,			5000,			"weapon_zs_m6")
 GM:AddPointShopItem("gaysseagle",   	ITEMCAT_GUNS,			5000,			"weapon_zs_gaeagle")
 GM:AddPointShopItem("doomstick",   	ITEMCAT_GUNS,			5000,			"weapon_zs_doomstick")
+GM:AddPointShopItem("zenith2",		ITEMCAT_GUNS,			5000,			"weapon_zs_zenithmega")
 
 
 GM:AddPointShopItem("pistolammo",		ITEMCAT_AMMO,			9,				nil,							"24 pistol ammo",				nil,									"ammo_pistol",						function(pl) pl:GiveAmmo(25, "pistol", true) end)
@@ -458,8 +460,8 @@ GM:AddPointShopItem("sledgehammer",		ITEMCAT_MELEE,			55,				"weapon_zs_sledgeha
 GM:AddPointShopItem("butcherknf",		ITEMCAT_MELEE,			55,				"weapon_zs_butcherknife")
 GM:AddPointShopItem("keyboard",		    ITEMCAT_MELEE,			25,				"weapon_zs_keyboard")
 GM:AddPointShopItem("dash",		    ITEMCAT_MELEE,			55,				"weapon_zs_f_dash")
+GM:AddPointShopItem("muramasa",		ITEMCAT_MELEE,			55,				"weapon_zs_muramasa")
 -- Tier 3
-GM:AddPointShopItem("muramasa",		ITEMCAT_MELEE,			90,				"weapon_zs_muramasa")
 GM:AddPointShopItem("longsword",		ITEMCAT_MELEE,			90,				"weapon_zs_longsword")
 GM:AddPointShopItem("executioner",		ITEMCAT_MELEE,			90,				"weapon_zs_executioner")
 GM:AddPointShopItem("rebarmace",		ITEMCAT_MELEE,			90,				"weapon_zs_rebarmace")
@@ -477,6 +479,7 @@ GM:AddPointShopItem("frotchet",			ITEMCAT_MELEE,			500,			"weapon_zs_frotchet")
 GM:AddPointShopItem("luxrockj",			ITEMCAT_MELEE,			135,			"weapon_zs_luxshade")
 GM:AddPointShopItem("luxoid",			ITEMCAT_MELEE,			500,			"weapon_zs_luxoid")
 GM:AddPointShopItem("boomerang",		ITEMCAT_MELEE,			500,			"weapon_zs_boomerang")
+GM:AddPointShopItem("pipemega",		ITEMCAT_MELEE,			500,			"weapon_zs_pipemega")
 -- Tier 6
 GM:AddPointShopItem("megahook",			ITEMCAT_MELEE,			1500,			"weapon_zs_harpoon_mega")
 GM:AddPointShopItem("teslar",			ITEMCAT_MELEE,			1500,			"weapon_zs_teslorer")
@@ -485,6 +488,7 @@ GM:AddPointShopItem("pw7",			ITEMCAT_MELEE,			1500,			"weapon_zs_powerfists_t7")
 GM:AddPointShopItem("speed",			ITEMCAT_MELEE,			80600,			"weapon_zs_speed")
 GM:AddPointShopItem("xouryc",			ITEMCAT_MELEE,			3000,			"weapon_zs_loy")
 GM:AddPointShopItem("murasama",			ITEMCAT_MELEE,			3000,			"weapon_zs_murasama")
+GM:AddPointShopItem("bannahuy",			ITEMCAT_MELEE,			80000,			"weapon_zs_banhammer")
 -- Super Trinkets ------------------------------------------------------------------------------------------------------------------------------------------------
 
 --
@@ -718,7 +722,7 @@ GM:AddMutationItem("m_zombie_health1", translate.Get("zshop_godzomb"), translate
 GM:AddMutationItem("m_zombie_zdef", translate.Get("zshop_zdef1"), translate.Get("zshop_def"), ITEMCAT_MUTATIONS, 300, nil, function(pl) pl.m_zombiedef = true end, "models/player/fatty/fatty.mdl")      
 GM:AddMutationItem("m_zombie_moan", translate.Get("zshop_zombsprint"), translate.Get("zshop_zombsprint2"), ITEMCAT_MUTATIONS, 400, nil, function(pl) pl.m_Zombie_Moan = true end, "models/player/zombie_classic.mdl")
 GM:AddMutationItem("m_zombie_moanguard", translate.Get("zshop_zombguard"), translate.Get("zshop_zombguard2"), ITEMCAT_MUTATIONS, 200, nil, function(pl) pl.m_Zombie_MoanGuard = true end, "models/player/zombie_classic.mdl")
-GM:AddMutationItem("m_zombie_bara", translate.Get("zshop_baracurse"), translate.Get("zshop_baracurse_d1"), ITEMCAT_MUTATIONS, 900, nil, function(pl) pl.m_Zombie_Bara = true end, "models/player/catpants.mdl")
+GM:AddMutationItem("m_zombie_bara", translate.Get("zshop_baracurse"), translate.Get("zshop_baracurse_d1"), ITEMCAT_MUTATIONS, 2500, nil, function(pl) pl.m_Zombie_Bara = true end, "models/player/catpants.mdl")
 GM:AddMutationItem("m_zombie_hitter", translate.Get("zshop_hit"), translate.Get("zshop_hit_d1"), ITEMCAT_MUTATIONS, 1200, nil, function(pl) pl.m_Zombie_Bara1 = true end, "models/player/catpants.mdl")
 GM:AddMutationItem("m_zombie_gigachad", translate.Get("zshop_gigachad"), translate.Get("zshop_gigachad_d1"), ITEMCAT_MUTATIONS, 1200, nil, function(pl) pl.m_Gigachad = true end, "models/player/catpants.mdl")
 GM:AddMutationItem("m_zombie_16", translate.Get("zshop_16"), translate.Get("zshop_16_d1"), ITEMCAT_MUTATIONS, 1200, nil, function(pl) pl.m_Zombie_16 = true end, "models/player/catpants.mdl")

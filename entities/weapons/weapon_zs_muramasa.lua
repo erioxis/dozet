@@ -75,7 +75,7 @@ end
 
 SWEP.Base = "weapon_zs_basemelee"
 
-SWEP.Tier = 3
+SWEP.Tier = 2
 SWEP.MeleeSize = 3
 SWEP.MeleeKnockBack = 0
 SWEP.BlockMultiplierWeapon = 1

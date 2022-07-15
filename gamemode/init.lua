@@ -1321,7 +1321,9 @@ function GM:Think()
 					pl:StripWeapon(pl:GetActiveWeapon():GetClass())
 				end
 
-			
+				if pl:IsSkillActive(SKILL_CQARMOR) then
+					pl:SetModelScale(1.2)
+				end
 
 				local healmax = pl:IsSkillActive(SKILL_D_FRAIL) and math.floor(pl:GetMaxHealth() * 0.44) or pl:GetMaxHealth()
 				local healmax = pl:IsSkillActive(SKILL_ABUSE) and math.floor(pl:GetMaxHealth() * 0.25) or pl:GetMaxHealth()
@@ -3027,6 +3029,7 @@ function GM:EntityTakeDamage(ent, dmginfo)
 
 		if attacker:IsValid() then
 			if attacker:IsPlayer() then
+
 				ent:SetLastAttacker(attacker)
 
 				local myteam = attacker:Team()
@@ -3046,8 +3049,8 @@ function GM:EntityTakeDamage(ent, dmginfo)
 
 							if otherteam == TEAM_HUMAN then
 								attacker:AddLifeHumanDamage(damage)
-								attacker:AddTokens(math.ceil(damage * 2.5))
-								attacker:AddZSXP(math.ceil(damage * 2))
+								attacker:AddTokens(math.ceil(damage * 2))
+								attacker:AddZSXP(math.ceil(damage * 0.2))
 								
 								GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_ZOMBIECLASS, attacker:GetZombieClassTable().Name, "HumanDamage", damage)
 							end
@@ -3068,7 +3071,7 @@ function GM:EntityTakeDamage(ent, dmginfo)
 							end
 							if attacker:HasTrinket("fire_at") then
 								ent:AddLegDamageExt(12, attacker, attacker, SLOWTYPE_FLAME)
-								ent:GiveStatus("burn",12)
+								ent:GiveStatus("burn",math.random(1,7))
 							end
 							if attacker:HasTrinket("pulse_at") then
 								ent:AddLegDamageExt(12, attacker, attacker, SLOWTYPE_PULSE)
@@ -3076,14 +3079,14 @@ function GM:EntityTakeDamage(ent, dmginfo)
 							if attacker:HasTrinket("acid_at") then
 								ent:AddLegDamageExt(12, attacker, attacker, SLOWTYPE_COLD)
 								if math.random(1,7) == 1 then
-									ent:GiveStatus("frost",13)
+									ent:GiveStatus("frost",math.random(1,7))
 								end
 							end
 							local debuffed = ent:GetStatus("zombiestrdebuff")
 							if attacker:HasTrinket("ultra_at") and math.random(12) == 1 then
-								ent:GiveStatus("zombiestrdebuff",20)
+								ent:GiveStatus("zombiestrdebuff",math.random(1,7))
 							elseif attacker:HasTrinket("ultra_at") and (ent:GetStatus("zombiestrdebuff")) and math.random(12) == 1 then
-								ent:GiveStatus("zombiestrdebuff",40)
+								ent:GiveStatus("zombiestrdebuff",math.random(7,14))
 							end
 
 							
@@ -3129,6 +3132,7 @@ function GM:EntityTakeDamage(ent, dmginfo)
 			col.b = 255 * brit
 			ent:SetColor(col)
 		end
+
 	elseif entclass == "func_door_rotating" then
 		if ent:GetKeyValues().damagefilter == "invul" or ent.Broken then return end
 
@@ -3152,6 +3156,7 @@ function GM:EntityTakeDamage(ent, dmginfo)
 
 		if dmginfo:GetDamage() >= 20 and attacker:IsPlayer() and attacker:Team() == TEAM_UNDEAD then
 			ent:EmitSound(math.random(2) == 1 and "npc/zombie/zombie_pound_door.wav" or "ambient/materials/door_hit1.wav")
+
 		end
 
 		ent.Heal = ent.Heal - dmginfo:GetDamage()
@@ -4325,9 +4330,10 @@ function GM:PlayerSpawn(pl)
 	pcol.y = math.Clamp(pcol.y, 0, 2.5)
 	pcol.z = math.Clamp(pcol.z, 0, 2.5)
 	pl:SetPlayerColor(pcol)
-	if pl:IsSkillActive(SKILL_CQARMOR) then
-		pl:SetModelScale(1.2)
-	end
+
+			if pl.m_Zombie_16 and pl:Team() == TEAM_UNDEAD then
+				pl:Give("weapon_zs_grenade_z")
+			end
 
 	if pl:Team() == TEAM_UNDEAD then
 		if pl.ActivatedHumanSkills then
@@ -4400,9 +4406,6 @@ function GM:PlayerSpawn(pl)
 		if classtab.SWEP then
 			pl:Give(classtab.SWEP)
 		end
-			if pl.m_Zombie_16 then
-				pl:Give("weapon_zs_grenade_z")
-			end
 
 		pl:SetNoTarget(true)
 		pl:SetMaxHealth(1)
@@ -4975,7 +4978,7 @@ function GM:WaveStateChanged(newstate, pl)
 				pl.DeathClass = curclass
 			end
 			if pl:Team() == TEAM_UNDEAD then
-				pl:AddTokens(math.ceil(self:GetWave() * 150))
+				pl:AddTokens(math.ceil(self:GetWave() * 50))
 			end
 
 			pl.SkipCrow = nil
