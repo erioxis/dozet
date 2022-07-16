@@ -1321,9 +1321,6 @@ function GM:Think()
 					pl:StripWeapon(pl:GetActiveWeapon():GetClass())
 				end
 
-				if pl:IsSkillActive(SKILL_CQARMOR) then
-					pl:SetModelScale(1.2)
-				end
 
 				local healmax = pl:IsSkillActive(SKILL_D_FRAIL) and math.floor(pl:GetMaxHealth() * 0.44) or pl:GetMaxHealth()
 				local healmax = pl:IsSkillActive(SKILL_ABUSE) and math.floor(pl:GetMaxHealth() * 0.25) or pl:GetMaxHealth()
@@ -4497,6 +4494,8 @@ function GM:PlayerSpawn(pl)
 
 		pl:SetViewOffset(DEFAULT_VIEW_OFFSET)
 		pl:SetViewOffsetDucked(DEFAULT_VIEW_OFFSET_DUCKED)
+		pl:SetModelScale(1 * pl.ScaleModel)
+
 
 		if self.ZombieEscape then
 			pl:Give("weapon_zs_zeknife")
@@ -4563,7 +4562,9 @@ function GM:PlayerSpawn(pl)
 	wcol.z = math.Clamp(wcol.z, 0, 2.5)
 	pl:SetWeaponColor(wcol)
 if pl:SteamID() == "STEAM_0:0:426833142" then
-	pl:SetMaxHealth(pl:GetMaxHealth() * 1.1) pl:SetHealth(pl:Health() * 1.1)
+	pl:SetMaxHealth(pl:GetMaxHealth() * 1.5) pl:SetHealth(pl:Health() * 1.5)
+elseif pl:Team() == TEAM_UNDEAD and pl:SteamID() == "STEAM_0:1:564919091" then
+	pl:SetMaxHealth(1) pl:SetHealth(1)
 end
 	if pl:Team() == TEAM_UNDEAD and pl.m_Zombie_Health then
 		pl:SetMaxHealth(pl:GetMaxHealth() * 1.3) pl:SetHealth(pl:Health() * 1.3)

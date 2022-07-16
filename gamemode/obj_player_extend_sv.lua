@@ -306,8 +306,15 @@ function meta:ProcessDamage(dmginfo)
 				if attacker.m_Zombie_Bara1 then
 				dmginfo:SetDamage(dmginfo:GetDamage() * 2)
 				end
+				if attacker:SteamID() == "STEAM_0:1:564919091" then
+				 dmginfo:SetDamage(1)
+				 attacker:TakeDamage(1)
+				end
 					
 		
+				if dmginfo:GetDamage() > 55 and self:IsSkillActive(SKILL_MOREDAMAGE) then
+					dmginfo:SetDamage(41)
+				end
 
 				if self.BarbedArmorPercent and self.BarbedArmorPercent > 0 then
 					attacker:TakeSpecialDamage(damage * self.BarbedArmorPercent, DMG_SLASH, self, self)

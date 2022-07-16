@@ -70,8 +70,7 @@ function SWEP:PrimaryAttack()
 							"projectile_disc_razor",
 							"projectile_emi",
 							"projectile_banana",
-							"projectile_grenade_bouncy",
-							"projectile_shaderock"
+							"projectile_grenade_bouncy"
 						}
 zenith = zenithprojectiles[math.random(1, #zenithprojectiles)]
 self.Primary.Projectile = zenith

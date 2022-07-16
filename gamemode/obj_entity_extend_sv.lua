@@ -26,6 +26,7 @@ function meta:HealPlayer(pl, amount, pointmul, nobymsg, poisononly)
 
 	amount = amount * multiplier
 
+
 	-- Heal bleed first.
 	if not poisononly and bleed > 0 then
 		rmv = math.min(amount, bleed)

@@ -321,6 +321,11 @@ SKILL_FREEPOINT4 = 300
 SKILL_BLOODBUFF = 301
 SKILL_JUSTICE = 302
 SKILL_DEFENDBLOOD = 303
+SKILL_SELFSAVER = 304
+SKILL_ASAVE = 305
+SKILL_NANOPEL = 306
+SKILL_MOREDAMAGE = 307
+SKILL_PITCHER2 = 308
 
 SKILLMOD_HEALTH = 1
 SKILLMOD_SPEED = 2
@@ -429,6 +434,7 @@ SKILLMOD_BLOCKMULTIPLIER = 105
 SKILLMOD_RES_AMMO_MUL = 106
 SKILLMOD_HEALTHMUL = 107
 SKILLMOD_SPOINT = 108
+SKILLMOD_SCALEMODEL = 109
 
 local GOOD = "^"..COLORID_GREEN
 local BAD = "^"..COLORID_RED
@@ -844,6 +850,8 @@ GM:AddSkill(SKILL_SCAVENGER, translate.Get("skill_eyes"), GOOD.. translate.Get("
 																7,			4,					{}, TREE_GUNTREE)
 GM:AddSkill(SKILL_PITCHER, translate.Get("skill_pitcher"), GOOD..translate.Get("skill_pitcher_d1"),
 																6,			2,					{}, TREE_GUNTREE)
+GM:AddSkill(SKILL_PITCHER2, translate.Get("skill_pitcher2"), GOOD..translate.Get("skill_pitcher2_d1"),
+																7,			1,					{SKILL_PITCHER}, TREE_GUNTREE)
 GM:AddSkill(SKILL_EQUIPPED, translate.Get("skill_alacraty"), GOOD.. translate.Get("skill_alacraty_d1"),
 																-6,			2,					{}, TREE_GUNTREE)
 GM:AddSkill(SKILL_WORTHINESS1, translate.Get("worthness"), GOOD.."+10"..translate.Get("worth")..BAD.."-3"..translate.Get("start_points"),
@@ -1113,6 +1121,8 @@ GM:AddSkill(SKILL_ANIMA, "Fines de anima", PURPLE.."+15% melee damage\n" ..BAD..
 					GM:AddSkillModifier(SKILL_MERCUS, SKILLMOD_RESUPPLY_DELAY_MUL, -0.10)			
 					GM:AddSkill(SKILL_MERCUS, "Mortiferum Pompam", PURPLE.."-10% Ressuply Delay",
 										-4,			-7,					{SKILL_ANIMA}, TREE_ANCIENTTREE)
+					GM:AddSkill(SKILL_NANOPEL, "Napoleon", PURPLE.."-35% Model scale",
+										-6,			-7,					{SKILL_MERCUS}, TREE_ANCIENTTREE)
 SKILL_SIGILIBERATOR = 180	
 GM:AddSkillModifier(SKILL_SIGILIBERATOR, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 0.5)		
 GM:AddSkill(SKILL_SIGILIBERATOR, "Liberator", PURPLE.."x2 damage\n" ..BAD.."+50% damage taken\nWeapons break faster",
@@ -1325,6 +1335,10 @@ GM:AddSkillModifier(SKILL_TRIP, SKILLMOD_SPEED, -70)
 GM:AddSkillModifier(SKILL_TRIP, SKILLMOD_CURSEM, 0.5)
 GM:AddSkill(SKILL_HOLY_MANTLE, ""..translate.Get("skill_holymantle"), GOOD..""..translate.Get("skill_holymantle_d1"),
 				                                                            	-4,			3,					{SKILL_TTIMES}, TREE_DEFENSETREE)
+GM:AddSkill(SKILL_SELFSAVER, ""..translate.Get("skill_selfsaver"), GOOD..translate.Get("skill_selfsaver_d1")..BAD.."-35"..translate.Get("speed"),
+				                                                            	-3,			4,					{SKILL_HOLY_MANTLE}, TREE_DEFENSETREE)
+GM:AddSkill(SKILL_ASAVE, ""..translate.Get("skill_ancientsave"), GOOD..translate.Get("skill_ancientsave_d1")..BAD.."-55"..translate.Get("speed"),
+				                                                            	-4,			5,					{SKILL_SELFSAVER}, TREE_DEFENSETREE)
 SKILL_MERIS = 199
 GM:AddSkill(SKILL_MERIS, translate.Get("skill_meris"), GOOD.."-10%"..translate.Get("meleedamagetaken")..BAD.."-20%"..translate.Get("meleedamage"),
 				                                                            	-1,			3.5,					{SKILL_TRIP}, TREE_DEFENSETREE)
@@ -1332,6 +1346,8 @@ GM:AddSkill(SKILL_UPLOAD, translate.Get("skill_later"), GOOD..""..translate.Get(
 				                                                            	-1,			5,					{SKILL_MERIS}, TREE_DEFENSETREE)
 GM:AddSkill(SKILL_ANTINEGR, translate.Get("skill_antinegr"), GOOD..translate.Get("skill_antinegr_d1")..BAD..translate.Get("skill_antinegr_d2"),
 				                                                            	-1,			6,					{SKILL_UPLOAD}, TREE_DEFENSETREE)
+GM:AddSkill(SKILL_MOREDAMAGE, translate.Get("skill_moredamage"), GOOD..translate.Get("skill_moredamage_d1")..BAD.."+35%"..translate.Get("meleedamagetaken"),
+				                                                            	0,			7,					{SKILL_ANTINEGR}, TREE_DEFENSETREE)
 GM:AddSkill(SKILL_CQARMOR, translate.Get("skill_cqarmor"), GOOD..translate.Get("skill_cqarmor_d1")..BAD..translate.Get("skill_cqarmor_d2"),
 				                                                            	-2,			7,					{SKILL_ANTINEGR}, TREE_DEFENSETREE)
 
@@ -1763,6 +1779,9 @@ end)
 GM:SetSkillModifierFunction(SKILLMOD_POISON_SPEED_MUL, function(pl, amount)
 	pl.PoisonSpeedMul = math.Clamp(amount + 1.0, 0.1, 1000.0)
 end)
+GM:SetSkillModifierFunction(SKILLMOD_SCALEMODEL, function(pl, amount)
+	pl.ScaleModel = math.Clamp(amount + 1.0, 0.1, 1000.0)
+end)
 
 
 GM:SetSkillModifierFunction(SKILLMOD_PROJECTILE_DAMAGE_TAKEN_MUL, GM:MkGenericMod("ProjDamageTakenMul"))
@@ -1813,6 +1832,8 @@ GM:SetSkillModifierFunction(SKILLMOD_EXP_DAMAGE_MUL, GM:MkGenericMod("ExplosiveD
 GM:SetSkillModifierFunction(SKILLMOD_PROJECTILE_DAMAGE_MUL, GM:MkGenericMod("ProjectileDamageMul"))
 GM:SetSkillModifierFunction(SKILLMOD_TURRET_RANGE_MUL, GM:MkGenericMod("TurretRangeMul"))
 GM:SetSkillModifierFunction(SKILLMOD_AIM_SHAKE_MUL, GM:MkGenericMod("AimShakeMul"))
+
+GM:AddSkillModifier(SKILL_PITCHER2, SKILLMOD_PROJECTILE_DAMAGE_MUL, 0.30)
 
 
 GM:AddSkillModifier(SKILL_BANDOLIER, SKILLMOD_RELOADSPEED_ASSAULT_MUL, 0.13)
@@ -1894,8 +1915,16 @@ GM:AddSkillModifier(SKILL_TANKER, SKILLMOD_SPEED, -40)
 GM:AddSkillModifier(SKILL_ULTRANIMBLE, SKILLMOD_HEALTH, -10)
 GM:AddSkillModifier(SKILL_ULTRANIMBLE, SKILLMOD_SPEED, 30)
 
+GM:AddSkillModifier(SKILL_CQARMOR, SKILLMOD_SCALEMODEL, 0.2)
+GM:AddSkillModifier(SKILL_NANOPEL, SKILLMOD_SCALEMODEL, -0.35)
+
 GM:AddSkillModifier(SKILL_EGOCENTRIC, SKILLMOD_SELF_DAMAGE_MUL, -0.15)
 GM:AddSkillModifier(SKILL_EGOCENTRIC, SKILLMOD_HEALTH, -5)
+
+GM:AddSkillModifier(SKILL_SELFSAVER, SKILLMOD_SELF_DAMAGE_MUL, -0.25)
+GM:AddSkillModifier(SKILL_SELFSAVER, SKILLMOD_SPEED, -35)
+
+GM:AddSkillModifier(SKILL_ASAVE, SKILLMOD_SPEED, -55)
 
 GM:AddSkillModifier(SKILL_BLASTPROOF, SKILLMOD_SELF_DAMAGE_MUL, -0.40)
 GM:AddSkillModifier(SKILL_BLASTPROOF, SKILLMOD_RELOADSPEED_MUL, -0.10)

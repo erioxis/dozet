@@ -12,9 +12,9 @@ SWEP.ShowViewModel = false
 SWEP.ShowWorldModel = false
 SWEP.UseHands = true
 
-SWEP.Primary.Damage = 31
-SWEP.Primary.NumShots = 5
-SWEP.Primary.Delay = 0.18
+SWEP.Primary.Damage = 24
+SWEP.Primary.NumShots = 3
+SWEP.Primary.Delay = 0.32
 
 SWEP.Primary.ClipSize = 100
 SWEP.Primary.Automatic = true
@@ -54,8 +54,8 @@ GAMEMODE:AddNewRemantleBranch(SWEP, 1, "'Citadel' Minicannon", "Uses 3 ammo per 
 	end
 end)
 
-SWEP.WalkSpeed = SPEED_SLOWEST * 0.15
-SWEP.FireAnimSpeed = 0.25
+SWEP.WalkSpeed = SPEED_SLOWEST * 0.55
+SWEP.FireAnimSpeed = 0.33
 
 function SWEP:Initialize()
 	self.BaseClass.Initialize(self)

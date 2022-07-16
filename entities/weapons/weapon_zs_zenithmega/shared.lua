@@ -30,7 +30,7 @@ SWEP.UseHands = true
 SWEP.CSMuzzleFlashes = false
 
 SWEP.Primary.Damage = 621
-SWEP.Primary.Delay = 0.4
+SWEP.Primary.Delay = 0.12
 SWEP.Primary.Automatic = false
 SWEP.Primary.Ammo = "pulse"
 SWEP.Primary.Sound = Sound("Weapon_Slayer.Single")
@@ -39,14 +39,16 @@ SWEP.Primary.ClipSize = 30
 SWEP.Primary.DefaultClip = 30
 SWEP.RequiredClip = 3
 
+SWEP.NumShots = 3
+
 SWEP.ReloadSpeed = 0.9
 
 SWEP.Recoil = 3
 
 SWEP.WalkSpeed = SPEED_SLOWER
 
-SWEP.ConeMax = 0
-SWEP.ConeMin = 0
+SWEP.ConeMax = 5
+SWEP.ConeMin = 2
 
 SWEP.Tier = 7
 SWEP.MaxStock = 2
@@ -64,7 +66,9 @@ function SWEP:PrimaryAttack()
 	else
 		self:SetNextPrimaryFire(CurTime() + self:GetFireDelay())
 	end
-							 zenithprojectiles = {
+	lmao = math.random(200,2000)
+						zenithprojectiles = {
+							"projectile_flakbomb",
 							"projectile_biorifle",
 							"projectile_crymam",
 							"projectile_arrow_mini",
@@ -72,10 +76,12 @@ function SWEP:PrimaryAttack()
 							"projectile_emi",
 							"projectile_banana",
 							"projectile_melon",
+							"projectile_rocket",
 							"projectile_grenade_bouncy"
 						}
-zenith = zenithprojectiles[math.random(1, #zenithprojectiles)]
-self.Primary.Projectile = zenith
+	zenith = zenithprojectiles[math.random(1, #zenithprojectiles)]
+	self.Primary.Projectile = zenith
+	self.Primary.ProjVelocity = lmao
 	self:EmitFireSound()
 	self:TakeAmmo()
 	self:ShootBullets(self.Primary.Damage, self.Primary.NumShots, self:GetCone())
