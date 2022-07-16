@@ -4492,8 +4492,8 @@ function GM:PlayerSpawn(pl)
 		pl:ResetJumpPower()
 		pl:SetCrouchedWalkSpeed(0.45)
 
-		pl:SetViewOffset(DEFAULT_VIEW_OFFSET)
-		pl:SetViewOffsetDucked(DEFAULT_VIEW_OFFSET_DUCKED)
+		pl:SetViewOffset(Vector(0, 0, 64 * pl.ScaleModel))
+		pl:SetViewOffsetDucked(Vector(0, 0, 32 * pl.ScaleModel))
 		pl:SetModelScale(1 * pl.ScaleModel)
 
 
