@@ -193,7 +193,7 @@ function meta:ProcessDamage(dmginfo)
 
 		dmginfo:SetDamage(damage)
 	end
-	if attacker:IsValid() and attacker:IsPlayer() and inflictor:IsValid() and self:GetActiveWeapon().Block == 1 and self:GetActiveWeapon().IsMelee then
+	if attacker:IsValid() and attacker:IsPlayer() and inflictor:IsValid() and self:GetActiveWeapon().Block and self:GetActiveWeapon().IsMelee then
 		dmginfo:SetDamage(dmginfo:GetDamage() * ((0.50 * (self.BlockMultiplier or 1)) * ( self:GetActiveWeapon().BlockMultiplierWeapon or 1)))
 		if self:IsSkillActive(SKILL_AVOID_BLOCK) then
 			xpadded = dmginfo:GetDamage() * 0.25
@@ -226,6 +226,11 @@ function meta:ProcessDamage(dmginfo)
 	end
 		if self:IsSkillActive(SKILL_DOSETHELP) then
 		dmginfo:SetDamage(dmginfo:GetDamage() * (1 - GAMEMODE:GetWave() * 0.02))
+	end
+		if self:IsSkillActive(SKILL_SECONDCHANCE) and self.LetalSave and dmginfo:GetDamage() >= self:Health() then
+		dmginfo:SetDamage(0)
+		self.LetalSave = false
+		self:SetHealth(self:GetMaxHealth())
 	end
 
 

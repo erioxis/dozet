@@ -84,7 +84,15 @@ function wept:ApplyMeleeDamage(ent, trace, damage)
 			bleed.Damager = self:GetOwner()
 		end
 	end
-
 end
+		wept.OnMeleeHit = function(self, hitent, hitflesh, tr)
+		if self:GetOwner():GetBleedDamage() > 1 then
+			self.MeleeDamage = wept.MeleeDamage * 1.5
+		end
+	end
+
+	wept.PostOnMeleeHit = function(self, hitent, hitflesh, tr)
+		self.MeleeDamage = wept.MeleeDamage
+	end
 
 end)

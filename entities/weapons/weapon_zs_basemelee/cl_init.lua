@@ -29,7 +29,7 @@ function SWEP:DrawHUD()
 	local wid, hei = 10, 900
 	local x, y = ScrW() + wid - 960, ScrH() - hei - 72
 	local texty = y - 4 - draw.GetFontHeight("ZSHUDFontSmall")
-	if self.Block == 1 then
+	if self.Block then
 	draw.SimpleText(""..translate.Get("blockistrue"), "ZSHUDFontSmall", x + wid, texty, COLOR_GREEN, TEXT_ALIGN_CENTER)
 	else
 		draw.SimpleText(""..translate.Get("blockisfalse"), "ZSHUDFontSmall", x + wid, texty, COLOR_RED, TEXT_ALIGN_CENTER)
@@ -38,7 +38,7 @@ elseif self.BlockTrue == true and self:GetOwner():GetInfo("zs_blockposition") ==
 	local widC, heiC = self:GetOwner():GetInfo("zs_block_func"), self:GetOwner():GetInfo("zs_x_block_func")
 	local xC, yC = ScrW() - widC - self:GetOwner():GetInfo("zs_block_func") , ScrH() - self:GetOwner():GetInfo("zs_x_block_func")
 	local textyC = yC - 8 - draw.GetFontHeight("ZSHUDFontSmall")
-	if self.Block == 1 then
+	if self.Block then
 	draw.SimpleText(""..translate.Get("blockistrue"), "ZSHUDFontSmall", xC + widC, textyC, COLOR_GREEN, TEXT_ALIGN_CENTER)
 	else
 		draw.SimpleText(""..translate.Get("blockisfalse"), "ZSHUDFontSmall", xC + widC, textyC, COLOR_RED, TEXT_ALIGN_CENTER)
@@ -119,7 +119,7 @@ function SWEP:GetViewModelPosition(pos, ang)
 		ang:RotateAroundAxis(ang:Up(), rot.yaw * power)
 		ang:RotateAroundAxis(ang:Forward(), rot.roll * power)
 	end
-	if self.Block == 1 then
+	if self.Block then
 		ang:RotateAroundAxis(ang:Right(),13)
 		ang:RotateAroundAxis(ang:Up(),13)
 		ang:RotateAroundAxis(ang:Forward(),13)

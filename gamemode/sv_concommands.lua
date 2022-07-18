@@ -391,6 +391,11 @@ concommand.Add("zsdropweapon", function(sender, command, arguments)
 		sender:TakeInventoryItem("curse_slow")
 		
 	end
+		if sender:HasTrinket("curse_heart") then
+		sender:TakeDamage(sender:Health())
+		sender:TakeInventoryItem("curse_heart")
+		
+	end
 	if GAMEMODE.ZombieEscape then
 		local hwep, zwep = sender:GetWeapon("weapon_elite"), sender:GetWeapon("weapon_knife")
 		if hwep and hwep:IsValid() then
@@ -549,6 +554,11 @@ concommand.Add("zsgiveweapon", function(sender, command, arguments)
 		return
 		
 	end
+		if sender:HasTrinket("curse_heart") then
+		sender:TakeDamage(sender:Health())
+		sender:TakeInventoryItem("curse_heart")
+		
+	end
 
 	if not (sender:IsValid() and sender:Alive() and sender:Team() == TEAM_HUMAN) then return end
 
@@ -584,7 +594,11 @@ end)
 concommand.Add("zsgiveweaponclip", function(sender, command, arguments)
 	if GAMEMODE.ZombieEscape then return end
 
+
 	if not (sender:IsValid() and sender:Alive() and sender:Team() == TEAM_HUMAN) then return end
+	if sender:HasTrinket("curse_dropping") then
+		sender:Kill()
+	end
 
 
 	local currentwep = sender:GetActiveWeapon()

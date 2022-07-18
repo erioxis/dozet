@@ -46,7 +46,7 @@ function PANEL:PerformLayout()
 	self.m_Text2:SizeToContentsY()
 	self.m_Text2:MoveRightOf(self.m_HumanCount, 16)
 	self.m_Text2:CenterVertical()
-	self.m_Text3:SetWide(self:GetWide())
+	self.m_Text3:SetWide(self:GetWide() * 1.5)
 	self.m_Text3:SizeToContentsY()
 	self.m_Text3:MoveRightOf(self.m_HumanCount, 16)
 	self.m_Text3:AlignBottom(4)
@@ -132,7 +132,8 @@ function PANEL:Text3Paint()
 			end
 		else
 			--draw.SimpleText(translate.Format("points_x", MySelf:GetPoints().." / "..MySelf:Frags()), self.Font, 0, 0, COLOR_DARKRED)
-			draw.SimpleText("Points: "..MySelf:GetPoints().."  Score: "..MySelf:GetMScore().." DPS: "..math.Round(MySelf:GetDPS()).." DKills:"..MySelf:GetDKills(), self.Font, 0, 0, COLOR_SOFTRED)
+			draw.SimpleText("Points: "..MySelf:GetPoints().."  Score: "..MySelf:GetMScore().." DPS: "..math.Round(MySelf:GetDPS()), self.Font, 0, 0, COLOR_SOFTRED)
+			draw.SimpleText("DKills:"..MySelf:GetDKills(), self.Font, 0, 16, COLOR_SOFTRED)
 		end
 	end
 
@@ -142,10 +143,10 @@ end
 local matGradientLeft = CreateMaterial("gradient-l", "UnlitGeneric", {["$basetexture"] = "vgui/gradient-l", ["$vertexalpha"] = "1", ["$vertexcolor"] = "1", ["$ignorez"] = "1", ["$nomip"] = "1"})
 function PANEL:Paint(w, h)
 	surface.SetDrawColor(0, 0, 0, 180)
-	surface.DrawRect(0, 0, w * 0.4, h)
+	surface.DrawRect(0, 0, w * 0.4, h * 2)
 	surface.SetMaterial(matGradientLeft)
-	surface.DrawTexturedRect(w * 0.4, 0, w * 0.6, h)
-	--surface.DrawLine(0, h - 1, w, h - 1)
+	surface.DrawTexturedRect(w * 0.4, 0, w * 0.6, h * 2)
+	surface.DrawLine(0, h - 1, w, h - 1)
 	surface.SetDrawColor(0, 0, 0, 250)
 	surface.SetMaterial(matGradientLeft)
 	surface.DrawTexturedRect(0, h - 1, w, 1)

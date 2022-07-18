@@ -21,7 +21,7 @@ SWEP.BlockTrue = true
 SWEP.ParryTiming = 0
 
 
-SWEP.Block = 0
+SWEP.Block = false
 
 SWEP.WalkSpeed = SPEED_FAST
 
@@ -100,25 +100,25 @@ end
 
 function SWEP:SecondaryAttack()
 	if self.BlockTrue == true then
-        if self.Block == 0 then
+        if not self.Block then
 	        timer.Create("blocked1",0.15,1, function() 
-	            self.Block = 1
+	            self.Block = true
 	            self:SetHoldType("revolver")
 				self:SetWeaponSwingHoldType("revolver")
-	        end)
-	        timer.Create("trueparrydead1",0.15,1, function() 
-	            self.ParryTiming = 0
-	        end)
-        else
-	        timer.Create("unblock",0.1,1, function() 
-	            self.Block = 0
-	            self:SetHoldType(self.HoldType)
-				self:SetWeaponSwingHoldType(self.SwingHoldType)
 	        end)
 	        timer.Create("trueparry",0.15,1, function() 
 	            self.ParryTiming = 1
 	        end)
 	        timer.Create("trueparrydead",0.35,1, function() 
+	            self.ParryTiming = 0
+	        end)
+        elseif self.Block then
+	        timer.Create("unblock",0.1,1, function() 
+	            self.Block = false
+	            self:SetHoldType(self.HoldType)
+				self:SetWeaponSwingHoldType(self.SwingHoldType)
+	        end)
+	        timer.Create("trueparrydead1",0.15,1, function() 
 	            self.ParryTiming = 0
 	        end)
         end
@@ -134,7 +134,7 @@ end
 function SWEP:CanPrimaryAttack()
 	if self:GetOwner():IsHolding() or self:GetOwner():GetBarricadeGhosting() then return false end
 	
-	if self.Block == 1 then 
+	if self.Block then 
 
 	return false end	
 		return self:GetNextPrimaryFire() <= CurTime() and not self:IsSwinging()
@@ -158,7 +158,7 @@ end
 function SWEP:PrimaryAttack()
 	if not self:CanPrimaryAttack() then return end
 
-	if self.Block == 1 then 
+	if self.Block then 
 		return 
 		false
 	end
@@ -173,7 +173,7 @@ function SWEP:PrimaryAttack()
 end
 
 function SWEP:SetNextAttack()
-	if self.Block == 1 then
+	if self.Block then
     return false end
 	local owner = self:GetOwner()
 	local armdelay = owner:GetMeleeSpeedMul()
@@ -188,8 +188,8 @@ function SWEP:Holster()
 
 		return true
 	end
-	if self.Block == 1 then
-		self.Block = self.Block - 1
+	if self.Block then
+		self.Block = false
 	end
 	return false
 
@@ -197,7 +197,7 @@ end
 
 function SWEP:StartSwinging()
 	local owner = self:GetOwner()
-	if self.Block == 1 then 
+	if self.Block then 
 	
 
 		return 
@@ -220,7 +220,7 @@ end
 
 function SWEP:MeleeSwing()
 	local owner = self:GetOwner()
-	if self.Block == 1 then 
+	if self.Block then 
 		return 
         false
 	end

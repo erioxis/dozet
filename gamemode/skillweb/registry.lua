@@ -326,6 +326,8 @@ SKILL_ASAVE = 305
 SKILL_NANOPEL = 306
 SKILL_MOREDAMAGE = 307
 SKILL_PITCHER2 = 308
+SKILL_SECONDCHANCE = 309
+SKILL_DONATE13 = 310
 
 SKILLMOD_HEALTH = 1
 SKILLMOD_SPEED = 2
@@ -1348,6 +1350,8 @@ GM:AddSkill(SKILL_ANTINEGR, translate.Get("skill_antinegr"), GOOD..translate.Get
 				                                                            	-1,			6,					{SKILL_UPLOAD}, TREE_DEFENSETREE)
 GM:AddSkill(SKILL_MOREDAMAGE, translate.Get("skill_moredamage"), GOOD..translate.Get("skill_moredamage_d1")..BAD.."+35%"..translate.Get("meleedamagetaken"),
 				                                                            	0,			7,					{SKILL_ANTINEGR}, TREE_DEFENSETREE)
+GM:AddSkill(SKILL_SECONDCHANCE, translate.Get("skill_schance"), GOOD..translate.Get("skill_schance_d1"),
+				                                                            	0,			8,					{SKILL_MOREDAMAGE}, TREE_DEFENSETREE)
 GM:AddSkill(SKILL_CQARMOR, translate.Get("skill_cqarmor"), GOOD..translate.Get("skill_cqarmor_d1")..BAD..translate.Get("skill_cqarmor_d2"),
 				                                                            	-2,			7,					{SKILL_ANTINEGR}, TREE_DEFENSETREE)
 
@@ -1408,9 +1412,12 @@ GM:AddSkill(SKILL_DONATE11, "Donate XI", GOOD.."+30% Max curse\n"..GOOD.."THX fo
 				                                                            	23,			27,					{SKILL_DONATE10}, TREE_DONATETREE)
 GM:AddSkillModifier(SKILL_DONATE11, SKILLMOD_CURSEM, 0.3)
 SKILL_DONATE12 = 269
-GM:AddSkill(SKILL_DONATE12, "Donate XII", GOOD.."+% Bullet damage\n"..GOOD.."Donate for unlocking!",
-				                                                            	22,			28,					{SKILL_DONATE12}, TREE_DONATETREE)
-GM:AddSkillModifier(SKILL_DONATE12, SKILLMOD_DAMAGE, 0.2)
+GM:AddSkill(SKILL_DONATE12, "Donate XII", GOOD.."+15% Bullet damage\n"..GOOD.."Thx TTo3oR!",
+				                                                            	22,			28,					{SKILL_DONATE11}, TREE_DONATETREE)
+GM:AddSkillModifier(SKILL_DONATE12, SKILLMOD_DAMAGE, 0.15)
+GM:AddSkill(SKILL_DONATE13, "Donate XIII", GOOD.."+% Scale model"..GOOD.."Donate",
+				                                                            	23,			29,					{SKILL_DONATE13}, TREE_DONATETREE)
+GM:AddSkillModifier(SKILL_DONATE13, SKILLMOD_SCALEMODEL, 0.15)
 
 SKILL_CHALLENGER1 = 215
 GM:AddSkill(SKILL_CHALLENGER1, "Challenger I", GOOD.."+20 Health,+1 luck,+5% Sale, help for challenges!\n"..GOOD.."Can use in any challenge",

@@ -116,6 +116,7 @@ GM.Assemblies["weapon_zs_katana"] 						= {"trinket_altbetsoul",	"weapon_zs_tesl
 GM.Assemblies["trinket_lotteryticket"] 						= {"comp_ticket",	"trinket_greedeye"}
 GM.Assemblies["trinket_mysteryticket"] 						= {"comp_ticket",	"trinket_greedsoul"}
 GM.Assemblies["trinket_soulrepairman"] 						= {"trinket_soulmedical",	"weapon_zs_hammer"}
+GM.Assemblies["trinket_soulmedical"] 						= {"trinket_curse_dropping",	"trinket_altisaacsoul"}
 
 
 GM:AddInventoryItemData("comp_modbarrel",		"Modular Barrel",			"A modular barrel suited for pairing up with another gun barrel.",								"models/props_c17/trappropeller_lever.mdl")
@@ -141,7 +142,7 @@ GM:AddInventoryItemData("comp_shortblade",		"Short Blade",				"A short metal bla
 GM:AddInventoryItemData("comp_multibarrel",		"Multi-Bored Barrel",		"An unusual gun barrel which allows multiple bullets to pass through.",							"models/props_lab/pipesystem03a.mdl")
 GM:AddInventoryItemData("comp_holoscope",		"Holographic Scope",		"A holographic weapon sight with magnification.",												{
 	["base"] = { type = "Model", model = "models/props_c17/utilityconnecter005.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3.273, 1.728, -0.843), angle = Angle(74.583, 180, 0), size = Vector(2.207, 0.105, 0.316), color = Color(50, 50, 66, 255), surpresslightning = false, material = "models/props_pipes/pipeset_metal02", skin = 0, bodygroup = {} },
-	["base+"] = { type = "Model", model = "models/props_combine/tprotato1.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "base", pos = Vector(0.492, -1.03, 0), angle = Angle(0, -78.715, 90), size = Vector(0.03, 0.02, 0.032), color = Color(50, 50, 66, 255), surpresslightning = false, material = "models/props_pipes/pipeset_metal02", skin = 0, bodygroup = {} }
+	["base+"] = { type = "Model", model = "models/props_c1цombine/tprotato1.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "base", pos = Vector(0.492, -1.03, 0), angle = Angle(0, -78.715, 90), size = Vector(0.03, 0.02, 0.032), color = Color(50, 50, 66, 255), surpresslightning = false, material = "models/props_pipes/pipeset_metal02", skin = 0, bodygroup = {} }
 })
 GM:AddInventoryItemData("comp_scoper",		"Scopy",		"Heh for classix.",												{
 	["base"] = { type = "Model", model = "models/props_c17/utilityconnecter005.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3.273, 1.728, -0.843), angle = Angle(74.583, 180, 0), size = Vector(2.207, 0.105, 0.316), color = Color(50, 50, 66, 255), surpresslightning = false, material = "models/props_pipes/pipeset_metal02", skin = 0, bodygroup = {} },
@@ -346,6 +347,9 @@ trinket, trinketwep = GM:AddTrinket(""..translate.Get("t_curse_faster"), "curse_
 trinketwep.PermitDismantle = true
 trinket, trinketwep = GM:AddTrinket(""..translate.Get("t_curse_slow"), "curse_slow", false, nil, cursesoul, 3, ""..translate.Get("t_d_curse_slow"), nil, nil, "weapon_zs_cursed")
 GM:AddSkillModifier(trinket, SKILLMOD_SPEED, -80)
+trinketwep.PermitDismantle = true
+trinket, trinketwep = GM:AddTrinket(""..translate.Get("t_curse_heart"), "curse_heart", false, nil, cursesoul, 3, ""..translate.Get("t_d_curse_heart"), nil, nil, "weapon_zs_cursed")
+GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, -80)
 trinketwep.PermitDismantle = true
 
 --perfomance

@@ -63,6 +63,7 @@ function SWEP:Eat()
 	if owner:IsSkillActive(SKILL_PILLUCK) then
 	   owner.Luck = owner.Luck + 12
 	end
+	 owner:TakeInventoryItem("trinket_curse_dropping")
 
 	local max = owner:IsSkillActive(SKILL_D_FRAIL) and math.floor(owner:GetMaxHealth() * 0.25) or owner:GetMaxHealth()
 

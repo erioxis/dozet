@@ -1240,10 +1240,10 @@ function GM:Think()
 					   timer.Simple(0.5, function()	self:SpawnBossZombie() end)
 					end
 					if self:GetWave() > 10 then
-					   timer.Simple(0.51, function()	self:SpawnBossZombie() end)
-					   timer.Simple(0.52, function()	self:SpawnBossZombie() end)
-					   timer.Simple(0.53, function()	self:SpawnBossZombie() end)
-					   timer.Simple(0.54, function()	self:SpawnBossZombie() end)
+					   timer.Simple(0.6, function()	self:SpawnBossZombie() end)
+					   timer.Simple(0.7, function()	self:SpawnBossZombie() end)
+					   timer.Simple(0.8, function()	self:SpawnBossZombie() end)
+					   timer.Simple(0.9, function()	self:SpawnBossZombie() end)
 					end
 				else
 					self:CalculateNextBoss()
@@ -1317,13 +1317,13 @@ function GM:Think()
 				if (pl:GetActiveWeapon().Tier or 1) >= 5 and pl:HasTrinket("sin_pride") then
 					pl:StripWeapon(pl:GetActiveWeapon():GetClass())
 				end
-				if (pl:GetActiveWeapon().Tier or 1) <= 4 and pl:HasTrinket("sin_envy") then
+				if (pl:GetActiveWeapon().Tier or 1) <= 4 and pl:HasTrinket("sin_envy") and pl:GetActiveWeapon():GetClass() ~= "weapon_zs_fists" then
 					pl:StripWeapon(pl:GetActiveWeapon():GetClass())
 				end
 
 
-				local healmax = pl:IsSkillActive(SKILL_D_FRAIL) and math.floor(pl:GetMaxHealth() * 0.44) or pl:GetMaxHealth()
-				local healmax = pl:IsSkillActive(SKILL_ABUSE) and math.floor(pl:GetMaxHealth() * 0.25) or pl:GetMaxHealth()
+				local healmax = pl:IsSkillActive(SKILL_D_FRAIL) and math.floor(pl:GetMaxHealth() * 0.44) or pl:IsSkillActive(SKILL_ABUSE) and math.floor(pl:GetMaxHealth() * 0.25)  or pl:GetMaxHealth()
+
 
 
 				if pl:IsSkillActive(SKILL_REGENERATOR) and time >= pl.NextRegenerate and pl:Health() < math.min(healmax, pl:GetMaxHealth() * 0.6) then
@@ -1370,11 +1370,11 @@ function GM:Think()
 					
 				end
 
-				if pl:GetActiveWeapon().Block == 1 and pl:GetActiveWeapon().IsMelee then
+				if pl:GetActiveWeapon().Block and pl:GetActiveWeapon().IsMelee then
 					pl:SetWalkSpeed(pl:GetWalkSpeed() * 0.5)
 					pl:SetRunSpeed(pl:GetRunSpeed() * 0.5)
 					pl:GetActiveWeapon():SetWeaponHoldType("revolver")
-				elseif pl:GetActiveWeapon().Block == 0 and pl:GetActiveWeapon().IsMelee then
+				elseif not pl:GetActiveWeapon().Block and pl:GetActiveWeapon().IsMelee then
 					pl:ResetSpeed()
 					pl:GetActiveWeapon():SetWeaponHoldType(pl:GetActiveWeapon().HoldType)
 				end
@@ -2453,7 +2453,7 @@ function GM:PlayerInitialSpawnRound(pl)
 	pl.Headshots = 0
 	pl.BrainsEaten = 0
 	pl.zKills = 0
-	pl.RedeemedOnce = 0
+	pl.RedeemedOnce = true
 	pl.HolyMantle = 0
 
 	pl.CanBuy = nil
@@ -2839,13 +2839,6 @@ function GM:PlayerCanCheckout(pl)
 end
 
 function GM:PlayerDeathThink(pl)
-	if pl:IsSkillActive(SKILL_PHOENIX) and pl.RedeemedOnce == 1 then
-		pl:Redeem()
-		pl:Respawn()
-		pl:ChangeTeam(TEAM_HUMAN)
-		pl:SetModel(player_manager.TranslatePlayerModel(GAMEMODE.RandomPlayerModels[math.random(#GAMEMODE.RandomPlayerModels)]))
-		pl:SetHealth(300)
-	   end
 
 
 	if self.RoundEnded or pl.Revive or self:GetWave() == 0 then return end
@@ -3784,14 +3777,19 @@ end
 
 
 function GM:PlayerDeath(pl, inflictor, attacker)
-	if pl:IsSkillActive(SKILL_PHOENIX) and pl.RedeemedOnce <= 1 then
+	if pl:IsSkillActive(SKILL_PHOENIX) and pl.RedeemedOnce then
+			timer.Simple(0.5, function()
+		pl.RedeemedOnce = false
+		pl:Redeem()
+		pl:ChangeTeam(TEAM_HUMAN)
+		pl:SetModel(player_manager.TranslatePlayerModel(GAMEMODE.RandomPlayerModels[math.random(#GAMEMODE.RandomPlayerModels)]))
+		pl:SetHealth(300)
+		end)
 
-		
-		pl.RedeemedOnce = pl.RedeemedOnce + 1
-		
-	elseif pl.RedeemedOnce == 1 then 
-		pl.RedeemedOnce = pl.RedeemedOnce + 1
-		return end
+
+	elseif pl.RedeemedOnce then 
+		pl.RedeemedOnce = false
+    end
 end
 
 function GM:PlayerDeathSound()
@@ -3951,6 +3949,7 @@ function GM:ZombieKilledHuman(pl, attacker, inflictor, dmginfo, headshot, suicid
 	pl.ZombieSpawnDeathDistance = math.ceil(math.sqrt(dist))
 
 	attacker:AddBrains(1)
+	attacker:AddTokens(pl:GetMaxHealth() * 1.25)
 	attacker:AddLifeBrainsEaten(1)
 	attacker:AddZSXP(self.InitialVolunteers[attacker:UniqueID()] and xp or math.floor(xp*4))
 
@@ -4309,6 +4308,8 @@ function GM:PlayerSpawn(pl)
 	pl.dpsmeter = 0
 
 	pl.MasteryHollowing = 0
+
+	pl.LetalSave = true
 
 	pl.FireDamage = 0
 
@@ -4828,6 +4829,9 @@ function GM:WaveStateChanged(newstate, pl)
 				end
 				if pl:HasTrinket("vir_pat") then
 					pl.CanBuy = true
+				end
+				if pl:IsSkillActive(SKILL_SECONDCHANCE) and not pl.LetalSave then
+					pl.LetalSave = true
 				end
 
 

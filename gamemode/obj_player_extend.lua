@@ -589,7 +589,7 @@ function meta:ResetSpeed(noset, health)
 	end
 	end
 	if self:IsSkillActive(SKILL_LIGHTWEIGHT) and wep:IsValid() and wep.IsMelee then
-		speed = speed + 6
+		speed = speed * 1.15
 	end
 
 	speed = math.max(1, speed)

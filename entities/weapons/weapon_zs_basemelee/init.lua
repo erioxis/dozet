@@ -3,7 +3,7 @@ INC_SERVER()
 AddCSLuaFile("animations.lua")
 function SWEP:CanPrimaryAttack()
 	if self:GetOwner():IsHolding() or self:GetOwner():GetBarricadeGhosting() then return false end
-if self.Block == 1 then 
+if self.Block then 
 	if self:GetOwner():GetInfo("zs_blockunable") == "0" then
 
 		timer.Create("Weaponblocked",0.3,1, function() 
