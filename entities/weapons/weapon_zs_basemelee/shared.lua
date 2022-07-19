@@ -254,16 +254,7 @@ function SWEP:MeleeSwing()
 		end
 	end
 	
-    --[[if owner:IsSkillActive(SKILL_BLOODLOST) then
-	function OnZombieKilled() then
-			 local reaperstatus1 = owner:GiveStatus("bloodlust", 10)
-			 if reaperstatus1 and reaperstatus1:IsValid() then
-				reaperstatus1:SetDTInt(1, math.min(reaperstatus1:GetDTInt(1) + 1, 10))
-			 end
-		 end
-	end
-end]]
-	
+
 
 
 	local hitent = tr.Entity
@@ -337,6 +328,13 @@ false
 end
 function SWEP:OnZombieKilled()
 	self.zKills = self.zKills + 1
+	owner = self:GetOwner()
+	if owner:IsSkillActive(SKILL_BLOODLOST) then
+		local reaperstatus1 = owner:GiveStatus("reaper", 10)
+		if reaperstatus1 and reaperstatus1:IsValid() then
+			reaperstatus1:SetDTInt(1, math.min(reaperstatus1:GetDTInt(1) + 1, 30))
+		end
+	end
 end
 
 

@@ -280,6 +280,7 @@ GM:AddStartingItem("sawblade",			ITEMCAT_TOOLS,			35,				"comp_sawblade")
 GM:AddStartingItem("cpuparts",			ITEMCAT_TOOLS,			35,				"comp_cpuparts")
 GM:AddStartingItem("electrobattery",	ITEMCAT_TOOLS,			45,				"comp_electrobattery")
 GM:AddStartingItem("singurhamemer",	        ITEMCAT_TOOLS,			120,				"weapon_zs_singurhammer").NoClassicMode = true
+
 GM:AddStartingItem("msgbeacon",			ITEMCAT_DEPLOYABLES,			10,				"weapon_zs_messagebeacon").Countables = "prop_messagebeacon"
 item =
 GM:AddStartingItem("ffemitter",			ITEMCAT_DEPLOYABLES,			45,				"weapon_zs_ffemitter",			nil,							nil,									nil,											function(pl) pl:GiveEmptyWeapon("weapon_zs_ffemitter") pl:GiveAmmo(1, "slam") pl:GiveAmmo(50, "pulse") end)
@@ -489,7 +490,6 @@ GM:AddPointShopItem("pw7",			ITEMCAT_MELEE,			1500,			"weapon_zs_powerfists_t7")
 GM:AddPointShopItem("speed",			ITEMCAT_MELEE,			80600,			"weapon_zs_speed")
 GM:AddPointShopItem("xouryc",			ITEMCAT_MELEE,			3000,			"weapon_zs_loy")
 GM:AddPointShopItem("murasama",			ITEMCAT_MELEE,			3000,			"weapon_zs_murasama")
-GM:AddPointShopItem("bannahuy",			ITEMCAT_MELEE,			80000,			"weapon_zs_banhammer")
 -- Super Trinkets ------------------------------------------------------------------------------------------------------------------------------------------------
 
 --
@@ -587,7 +587,7 @@ GM:AddPointShopItem("stone",			ITEMCAT_TOOLS,			5,			"weapon_zs_stone")
 GM:AddPointShopItem("scrap",				ITEMCAT_TOOLS,			30,				nil,							"Scrap x20",							"Scrap but is have x15.",					"ammo_scrap",						function(pl) pl:GiveAmmo(20, "Scrap", true) end)
 GM:AddPointShopItem("scrap100",				ITEMCAT_TOOLS,			200,				nil,							"Scrap x100",							"Scrap but is have x100.",					"ammo_scrap",						function(pl) pl:GiveAmmo(100, "Scrap", true) end)
 GM:AddPointShopItem("scrap900",				ITEMCAT_TOOLS,			900,				nil,							"Scrap x900",							"Scrap but is have x100.",					"ammo_scrap",						function(pl) pl:GiveAmmo(900, "Scrap", true) end)
-
+GM:AddPointShopItem("bannahuy",			ITEMCAT_TOOLS,			80000,			"weapon_zs_banhammer")
 -- Tier 1
 GM:AddPointShopItem("cutlery",			ITEMCAT_TRINKETS,		10,				"trinket_cutlery").SubCategory =								ITEMSUBCAT_TRINKETS_DEFENSIVE
 GM:AddPointShopItem("boxingtraining",	ITEMCAT_TRINKETS,		10,				"trinket_boxingtraining").SubCategory =							ITEMSUBCAT_TRINKETS_MELEE

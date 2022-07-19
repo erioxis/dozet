@@ -28,11 +28,13 @@ function meta:HealPlayer(pl, amount, pointmul, nobymsg, poisononly)
 
 
 	-- Heal bleed first.
+	if not pl:IsSkillActive(SKILL_DEFENDBLOOD) then
 	if not poisononly and bleed > 0 then
 		rmv = math.min(amount, bleed)
 		pl:AddBleedDamage(-rmv)
 		healed = healed + rmv
 		amount = amount - rmv
+	end
 	end
 
 	-- Heal poison next.

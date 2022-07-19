@@ -38,6 +38,9 @@ SWEP.Secondary.Ammo = "dummy"
 SWEP.WalkSpeed = SPEED_NORMAL
 
 SWEP.HealRange = 36
+SWEP.UltraDa = 1
+
+SWEP.Combo = 0
 
 SWEP.NoMagazine = true
 SWEP.AllowQualityWeapons = true
@@ -95,7 +98,11 @@ function SWEP:PrimaryAttack()
 	local multiplier = self.MedicHealMul or 1
 	local cooldownmultiplier = self.MedicCooldownMul or 1
 
-	    local healed = owner:HealPlayer(ent, math.min(self:GetCombinedPrimaryAmmo(), self.Heal))
+	local healed = owner:HealPlayer(ent, math.min(self:GetCombinedPrimaryAmmo(), self.Heal * math.max(1, self.Combo / 3)))
+		timer.Create("ComboReset", 15, 1, function() 
+			self.Combo = 0
+		end)
+
 
 	local totake = self.FixUsage and 15 or math.ceil(healed / multiplier)
 
@@ -109,11 +116,23 @@ function SWEP:PrimaryAttack()
 			ent:GiveStatus("holly",30)
 			self.UltraCharge = 0
 	    end
+		if owner:IsSkillActive(SKILL_COMBOHEAL) and self.Combo ~= 26 then
+		   self.Combo = self.Combo + 1
+		end
+		
 		
 		if self.BloodHeal == true and SERVER then
 			ent:SetBloodArmor(math.min(ent.MaxBloodArmor + 100, ent:GetBloodArmor() + self.Heal * 3))
 		end
+		if not owner:IsSkillActive(SKILL_DUALHEAL) then
 		self:SetNextCharge(CurTime() + self.Primary.Delay * math.min(1, healed / self.Heal) * cooldownmultiplier)
+		elseif owner:IsSkillActive(SKILL_DUALHEAL) and self.UltraDa ~= 2 then
+		self:SetNextCharge(CurTime() + self.Primary.Delay * math.min(1, healed / self.Heal) * cooldownmultiplier)
+		self.UltraDa = 2
+		elseif owner:IsSkillActive(SKILL_DUALHEAL) and self.UltraDa ~= 1 then
+		self:SetNextCharge(0)
+		self.UltraDa = 1
+		end
 		owner.NextMedKitUse = self:GetNextCharge()
 
 		self:TakeCombinedPrimaryAmmo(totake)
@@ -236,6 +255,10 @@ function SWEP:DrawHUD()
 	draw.SimpleText(self.PrintName, "ZSHUDFontSmall", x, texty, COLOR_GREEN, TEXT_ALIGN_LEFT)
 
 	local charges = self:GetPrimaryAmmoCount()
+	combo = self.Combo
+		if combo > 0 then
+			draw.SimpleText("Combo:"..combo, "ZSHUDFontSmall", x, texty * 0.95, COLOR_GREEN, TEXT_ALIGN_LEFT)
+		end
 	if charges > 0 then
 		draw.SimpleText(charges, "ZSHUDFontSmall", x + wid, texty, COLOR_GREEN, TEXT_ALIGN_RIGHT)
 	else

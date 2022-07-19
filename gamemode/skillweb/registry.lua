@@ -328,6 +328,9 @@ SKILL_MOREDAMAGE = 307
 SKILL_PITCHER2 = 308
 SKILL_SECONDCHANCE = 309
 SKILL_DONATE13 = 310
+SKILL_COMBOHEAL = 311
+SKILL_DUALHEAL = 312
+SKILL_DONATE14 = 313
 
 SKILLMOD_HEALTH = 1
 SKILLMOD_SPEED = 2
@@ -626,6 +629,8 @@ GM:AddSkill(SKILL_MEDICBOOSTER,  translate.Get("skill_boostermed"), BAD.."+33%".
 																-4,			-3,					{SKILL_D_FRAIL}, TREE_SUPPORTTREE)
 GM:AddSkill(SKILL_U_MEDICCLOUD, translate.Get("skill_u_medcloud"), GOOD..translate.Get("skill_u_medcloud_d1"),
 																0,			-2,					{SKILL_DISPERSION}, TREE_SUPPORTTREE)
+GM:AddSkill(SKILL_DUALHEAL, translate.Get("skill_dualheal"), GOOD..translate.Get("skill_dualheal_d1")..BAD..translate.Get("skill_dualheal_d2"),
+																-1,			-3,					{SKILL_U_MEDICCLOUD}, TREE_SUPPORTTREE)
 .AlwaysActive = true
 GM:AddSkill(SKILL_SMARTTARGETING, translate.Get("skill_starget"), GOOD..translate.Get("skill_starget_d1")..BAD..translate.Get("skill_starget_d2")..BAD..translate.Get("skill_starget_d3"),
 																0,			2,					{}, TREE_SUPPORTTREE)
@@ -639,6 +644,8 @@ GM:AddSkill(SKILL_U_ANTITODESHOT, translate.Get("skill_u_antidote"), GOOD..trans
 																4,			-2,					{}, TREE_SUPPORTTREE)
 GM:AddSkill(SKILL_DISPERSION, translate.Get("skill_disp"), GOOD..translate.Get("skill_disp_d1")..BAD..translate.Get("skill_disp_d2"),
 																0,			-4,					{}, TREE_SUPPORTTREE)
+GM:AddSkill(SKILL_COMBOHEAL, translate.Get("skill_comboheal"), GOOD..translate.Get("skill_comboheal_d1")..BAD..translate.Get("skill_comboheal_d2"),
+																0,			-5,					{SKILL_DISPERSION}, TREE_SUPPORTTREE)
 
 -- Defence Tree
 GM:AddSkill(SKILL_HANDY1, translate.Get("skill_handy").."I", GOOD.."+5%"..translate.Get("repair"),
@@ -1415,9 +1422,12 @@ SKILL_DONATE12 = 269
 GM:AddSkill(SKILL_DONATE12, "Donate XII", GOOD.."+15% Bullet damage\n"..GOOD.."Thx TTo3oR!",
 				                                                            	22,			28,					{SKILL_DONATE11}, TREE_DONATETREE)
 GM:AddSkillModifier(SKILL_DONATE12, SKILLMOD_DAMAGE, 0.15)
-GM:AddSkill(SKILL_DONATE13, "Donate XIII", GOOD.."+% Scale model"..GOOD.."Donate",
-				                                                            	23,			29,					{SKILL_DONATE13}, TREE_DONATETREE)
-GM:AddSkillModifier(SKILL_DONATE13, SKILLMOD_SCALEMODEL, 0.15)
+GM:AddSkill(SKILL_DONATE13, "Donate XIII", GOOD.."-35% Scale model\n"..GOOD.."Thx chayok",
+				                                                            	23,			29,					{SKILL_DONATE12}, TREE_DONATETREE)
+GM:AddSkillModifier(SKILL_DONATE13, SKILLMOD_SCALEMODEL, -0.35)
+GM:AddSkill(SKILL_DONATE14, "Donate XIV", GOOD.."+ Speed"..GOOD.."Donate",
+				                                                            	23,			30,					{SKILL_DONATE14}, TREE_DONATETREE)
+GM:AddSkillModifier(SKILL_DONATE14, SKILLMOD_SPEED, 50)
 
 SKILL_CHALLENGER1 = 215
 GM:AddSkill(SKILL_CHALLENGER1, "Challenger I", GOOD.."+20 Health,+1 luck,+5% Sale, help for challenges!\n"..GOOD.."Can use in any challenge",
@@ -1523,6 +1533,8 @@ end)
 GM:SetSkillModifierFunction(SKILLMOD_MEDKIT_EFFECTIVENESS_MUL, function(pl, amount)
 	pl.MedicHealMul = math.Clamp(amount + 1.0, 0.0, 1000.0)
 end)
+GM:AddSkillModifier(SKILL_COMBOHEAL, SKILLMOD_MEDKIT_EFFECTIVENESS_MUL, -0.35)
+GM:AddSkillModifier(SKILL_DUALHEAL, SKILLMOD_MEDKIT_COOLDOWN_MUL, 0.5)
 
 GM:SetSkillModifierFunction(SKILLMOD_MEDKIT_COOLDOWN_MUL, function(pl, amount)
 	pl.MedicCooldownMul = math.Clamp(amount + 1.0, 0.0, 1000.0)
@@ -1923,7 +1935,7 @@ GM:AddSkillModifier(SKILL_ULTRANIMBLE, SKILLMOD_HEALTH, -10)
 GM:AddSkillModifier(SKILL_ULTRANIMBLE, SKILLMOD_SPEED, 30)
 
 GM:AddSkillModifier(SKILL_CQARMOR, SKILLMOD_SCALEMODEL, 0.2)
-GM:AddSkillModifier(SKILL_NANOPEL, SKILLMOD_SCALEMODEL, -0.35)
+GM:AddSkillModifier(SKILL_NANOPEL, SKILLMOD_SCALEMODEL, -0.15)
 
 GM:AddSkillModifier(SKILL_EGOCENTRIC, SKILLMOD_SELF_DAMAGE_MUL, -0.15)
 GM:AddSkillModifier(SKILL_EGOCENTRIC, SKILLMOD_HEALTH, -5)

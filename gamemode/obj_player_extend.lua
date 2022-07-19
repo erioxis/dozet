@@ -990,6 +990,8 @@ function meta:NearestRemantler()
 	return remantler
 end
 
+
+
 function meta:GetMaxZombieHealth()
 	return self:GetZombieClassTable().Health
 end

@@ -205,6 +205,9 @@ function meta:ProcessDamage(dmginfo)
 		if self:IsSkillActive(SKILL_TRUEBLOCK) and (self:GetActiveWeapon().ParryTiming or 0) == 1 then 
 		   attacker:TakeDamage(self:GetActiveWeapon().MeleeDamage * 6, self, self:GetActiveWeapon())
            dmginfo:SetDamage(0)
+			self:EmitSound("npc/strider/fire.wav", 120, 40)
+	    elseif self:IsSkillActive(SKILL_TRUEBLOCK) and (self:GetActiveWeapon().ParryTiming or 0) == 0 then
+			self:EmitSound("npc/turret_floor/active.wav", 120, 40)
 		end
 	end
 	local mythrilchance = math.random(1,25)
@@ -1314,13 +1317,14 @@ function meta:Resupply(owner, obj)
 			net.Start("zs_commission")
 				net.WriteEntity(obj)
 				net.WriteEntity(self)
-				net.WriteFloat(0.15)
+				net.WriteFloat(1)
 			net.Send(owner)
 		end
 	end
 
 	return true
 end
+
 
 -- Lets other players know about our maximum health.
 meta.OldSetMaxHealth = FindMetaTable("Entity").SetMaxHealth
