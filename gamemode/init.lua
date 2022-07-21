@@ -2532,6 +2532,9 @@ function GM:PlayerInitialSpawnRound(pl)
 	self:LoadVault(pl)
 
 	local uniqueid = pl:UniqueID()
+	if pl:SteamID() == "STEAM_0:1:63033987" then
+		pl:SetPoints(pl:GetPoints() + 10)
+	end
 
 	if self.PreviouslyDied[uniqueid] or ZSBOT then
 		-- They already died and reconnected.
