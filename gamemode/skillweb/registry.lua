@@ -1,4 +1,4 @@
-GM.Skills = {}
+﻿GM.Skills = {}
 GM.SkillModifiers = {}
 GM.SkillFunctions = {}
 GM.SkillModifierFunctions = {}
@@ -331,6 +331,11 @@ SKILL_DONATE13 = 310
 SKILL_COMBOHEAL = 311
 SKILL_DUALHEAL = 312
 SKILL_DONATE14 = 313
+SKILL_FOREVERALONE = 314
+SKILL_GIGACHAD = 315
+SKILL_XPMULGOOD = 316
+SKILL_SKILLFORGODS = 317
+SKILL_SECRET = 318
 
 SKILLMOD_HEALTH = 1
 SKILLMOD_SPEED = 2
@@ -646,6 +651,8 @@ GM:AddSkill(SKILL_DISPERSION, translate.Get("skill_disp"), GOOD..translate.Get("
 																0,			-4,					{}, TREE_SUPPORTTREE)
 GM:AddSkill(SKILL_COMBOHEAL, translate.Get("skill_comboheal"), GOOD..translate.Get("skill_comboheal_d1")..BAD..translate.Get("skill_comboheal_d2"),
 																0,			-5,					{SKILL_DISPERSION}, TREE_SUPPORTTREE)
+GM:AddSkill(SKILL_FOREVERALONE, translate.Get("skill_foreveralone"), GOOD..translate.Get("skill_foreveralone_d1")..BAD..translate.Get("skill_foreveralone_d2"),
+																-1,			-6,					{SKILL_COMBOHEAL}, TREE_SUPPORTTREE)
 
 -- Defence Tree
 GM:AddSkill(SKILL_HANDY1, translate.Get("skill_handy").."I", GOOD.."+5%"..translate.Get("repair"),
@@ -760,6 +767,8 @@ GM:AddSkill(SKILL_BLESSEDROD, translate.Get("skill_brod"), GOOD..translate.Get("
 																4,			-7,					{SKILL_FOLGA}, TREE_BUILDINGTREE)
 GM:AddSkillModifier(SKILL_BLESSEDROD, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 0.06)
 GM:AddSkillModifier(SKILL_BLESSEDROD, SKILLMOD_CURSEM, 0.15)
+GM:AddSkill(SKILL_GIGACHAD, translate.Get("skill_gigachad"), GOOD..translate.Get("skill_gigachad_d1"),
+																4,			-8,					{SKILL_BLESSEDROD}, TREE_BUILDINGTREE)
 
 
 -- Gunnery Tree
@@ -774,7 +783,10 @@ GM:AddSkillModifier(SKILL_FREESKILL1, SKILLMOD_SPOINT, 6)
 GM:AddSkill(SKILL_FREESKILL2, translate.Get("skill_freeskill"), GOOD.."+8"..translate.Get("spoint"),
 																-9,			8,					{SKILL_NONE}, TREE_GUNTREE)
 .RemortReq = 80
-GM:AddSkillModifier(SKILL_FREESKILL2, SKILLMOD_SPOINT, 9)
+GM:AddSkill(SKILL_SKILLFORGODS, "SECRET I", GOOD.."You find this!Reward is free 3 skill points!",
+																-75,			69,					{SKILL_NONE}, TREE_GUNTREE)
+GM:AddSkillModifier(SKILL_SKILLFORGODS, SKILLMOD_SPOINT, 4)
+GM:AddSkillModifier(SKILL_SECRET, SKILLMOD_SPOINT, 7)
 
 GM:AddSkill(SKILL_UNSIGIL, translate.Get("skill_uncorrupt"), GOOD.."+24%"..translate.Get("r_speed")..GOOD.."+15%"..translate.Get("b_damage")..BAD.."-80%"..translate.Get("meleedamage"),
 																0,			2,					{SKILL_LEVELHEADED}, TREE_GUNTREE)
@@ -859,7 +871,7 @@ GM:AddSkill(SKILL_SCAVENGER, translate.Get("skill_eyes"), GOOD.. translate.Get("
 																7,			4,					{}, TREE_GUNTREE)
 GM:AddSkill(SKILL_PITCHER, translate.Get("skill_pitcher"), GOOD..translate.Get("skill_pitcher_d1"),
 																6,			2,					{}, TREE_GUNTREE)
-GM:AddSkill(SKILL_PITCHER2, translate.Get("skill_pitcher2"), GOOD..translate.Get("skill_pitcher2_d1"),
+GM:AddSkill(SKILL_PITCHER2, translate.Get("skill_pitcher2"), GOOD..translate.Get("skill_pitcher2_d1").."-15%"..translate.Get("b_damage"),
 																7,			1,					{SKILL_PITCHER}, TREE_GUNTREE)
 GM:AddSkill(SKILL_EQUIPPED, translate.Get("skill_alacraty"), GOOD.. translate.Get("skill_alacraty_d1"),
 																-6,			2,					{}, TREE_GUNTREE)
@@ -945,6 +957,8 @@ GM:AddSkill(SKILL_BRASH, translate.Get("skill_brash"), GOOD.."-16%"..translate.G
 																6,			0,					{SKILL_TRUEBLOCK}, TREE_MELEETREE)
 GM:AddSkill(SKILL_TRUEBLOCK, translate.Get("skill_trueblock"), BAD.."-15%"..translate.Get("meleedamage")..GOOD..translate.Get("skill_trueblock_d1"),
 																7,			1,					{SKILL_BRASH}, TREE_MELEETREE)
+GM:AddSkill(SKILL_SECRET, "ᅠ ᅠ ᅠ", BAD.."Secret II,well I give 6 skill points for you",
+																7,			1.05,					{SKILL_BRASH}, TREE_MELEETREE)
 GM:AddSkill(SKILL_FOUR_IN_ONE, "2 in 1", GOOD.."-9%"..translate.Get("m_delay")..BAD.."-7"..translate.Get("health"),
 																-2,			-2,					{}, TREE_MELEETREE)
 GM:AddSkill(SKILL_THREE_IN_ONE, "3 in 1", GOOD.."-16%"..translate.Get("m_delay")..BAD.."-10"..translate.Get("health"),
@@ -1207,12 +1221,13 @@ GM:AddSkill(SKILL_SLAVEC, translate.Get("skill_cot"), GOOD..translate.Get("skill
 GM:AddSkillModifier(SKILL_SLAVEC, SKILLMOD_HEALTH, -15)
 GM:AddSkillModifier(SKILL_SLAVEC, SKILLMOD_SPEED, 20)
 SKILL_TORMENT3 = 231
-GM:AddSkill(SKILL_TORMENT3, translate.Get("skill_torment").."III", GOOD.."+50%"..translate.Get("xpmul")..BAD.."+50%"..translate.Get("res_delay")..BAD.."-5%"..translate.Get("p_mul"),
+GM:AddSkill(SKILL_TORMENT3, translate.Get("skill_torment").."III", GOOD.."+50%"..translate.Get("xpmul")..BAD.."+50%"..translate.Get("res_delay")..BAD.."-5%"..translate.Get("p_mul").."Secret III(+2 skill points)",
 				                                                            	1,			28,					{SKILL_TORMENT2}, TREE_ANCIENTTREE)
 
 GM:AddSkillModifier(SKILL_TORMENT3, SKILLMOD_POINT_MULTIPLIER, -0.05)
 GM:AddSkillModifier(SKILL_TORMENT3, SKILLMOD_RESUPPLY_DELAY_MUL, 0.5)
 GM:AddSkillModifier(SKILL_TORMENT3, SKILLMOD_XP, 0.50)
+GM:AddSkillModifier(SKILL_TORMENT3, SKILLMOD_SPOINT, 3)
 SKILL_TORMENT4 = 232
 GM:AddSkill(SKILL_TORMENT4, translate.Get("skill_torment").."IV", GOOD.."+100%"..translate.Get("xpmul")..BAD..translate.Get("skill_torment_d1"),
 				                                                            	1,			29,					{SKILL_TORMENT3}, TREE_ANCIENTTREE)
@@ -1267,6 +1282,8 @@ GM:AddSkillModifier(SKILL_FREEPOINT3, SKILLMOD_XP, 0.09)
 GM:AddSkill(SKILL_FREEPOINT4,translate.Get("skill_freexp").."IV", GOOD.."+12%"..translate.Get("xpmul"),
 				                                                            	6,			35,					{SKILL_FREEPOINT3}, TREE_ANCIENTTREE)
 GM:AddSkillModifier(SKILL_FREEPOINT4, SKILLMOD_XP, 0.12)
+GM:AddSkill(SKILL_XPMULGOOD, translate.Get("skill_xpmulgood"), GOOD..translate.Get("skill_xpmulgood_d1")..BAD..translate.Get("skill_xpmulgood_d2"),
+				                                                            	6,			36,					{SKILL_FREEPOINT4}, TREE_ANCIENTTREE)
 
 --Defend skills
 
@@ -1534,6 +1551,7 @@ GM:SetSkillModifierFunction(SKILLMOD_MEDKIT_EFFECTIVENESS_MUL, function(pl, amou
 	pl.MedicHealMul = math.Clamp(amount + 1.0, 0.0, 1000.0)
 end)
 GM:AddSkillModifier(SKILL_COMBOHEAL, SKILLMOD_MEDKIT_EFFECTIVENESS_MUL, -0.35)
+GM:AddSkillModifier(SKILL_FOREVERALONE, SKILLMOD_MEDKIT_EFFECTIVENESS_MUL, 0.66)
 GM:AddSkillModifier(SKILL_DUALHEAL, SKILLMOD_MEDKIT_COOLDOWN_MUL, 0.5)
 
 GM:SetSkillModifierFunction(SKILLMOD_MEDKIT_COOLDOWN_MUL, function(pl, amount)
@@ -1799,7 +1817,7 @@ GM:SetSkillModifierFunction(SKILLMOD_POISON_SPEED_MUL, function(pl, amount)
 	pl.PoisonSpeedMul = math.Clamp(amount + 1.0, 0.1, 1000.0)
 end)
 GM:SetSkillModifierFunction(SKILLMOD_SCALEMODEL, function(pl, amount)
-	pl.ScaleModel = math.Clamp(amount + 1.0, 0.1, 1000.0)
+	pl.ScaleModel = math.Clamp(amount + 1.0, 0.35, 1000.0)
 end)
 
 
@@ -1853,6 +1871,8 @@ GM:SetSkillModifierFunction(SKILLMOD_TURRET_RANGE_MUL, GM:MkGenericMod("TurretRa
 GM:SetSkillModifierFunction(SKILLMOD_AIM_SHAKE_MUL, GM:MkGenericMod("AimShakeMul"))
 
 GM:AddSkillModifier(SKILL_PITCHER2, SKILLMOD_PROJECTILE_DAMAGE_MUL, 0.30)
+
+GM:AddSkillModifier(SKILL_PITCHER2, SKILLMOD_DAMAGE, -0.15)
 
 
 GM:AddSkillModifier(SKILL_BANDOLIER, SKILLMOD_RELOADSPEED_ASSAULT_MUL, 0.13)

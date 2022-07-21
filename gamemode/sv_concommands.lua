@@ -138,7 +138,7 @@ concommand.Add("zs_pointsshopbuy", function(sender, command, arguments)
 			if owner:IsValid() and owner ~= sender then
 				local scrapcom = math.ceil(cost / 6)
 				nearest:SetScraps(nearest:GetScraps() + scrapcom)
-				nearest:GetObjectOwner():CenterNotify(COLOR_GREEN, translate.Format("remantle_used", scrapcom))
+				nearest:GetObjectOwner():CenterNotify(COLOR_GREEN, translate.Format("remantle_used", scrapcom)..sender:Nick())
 			end
 		end
 	else

@@ -18,7 +18,7 @@ SWEP.Secondary.Ammo = "dummy"
 SWEP.Secondary.Automatic = true
 SWEP.BlockTrue = true
 
-SWEP.ParryTiming = 0
+SWEP.ParryTiming = nil
 
 
 SWEP.Block = false
@@ -89,7 +89,10 @@ function SWEP:Think()
 		self.IdleAnimation = nil
 		self:SendWeaponAnim(ACT_VM_IDLE)
 	end
-
+	if not self.Block then
+	            self:SetHoldType(self.HoldType)
+				self:SetWeaponSwingHoldType(self.SwingHoldType)
+	end
 
 	if self:IsSwinging() and self:GetSwingEnd() <= CurTime() then
 		self:StopSwinging()
@@ -107,10 +110,10 @@ function SWEP:SecondaryAttack()
 				self:SetWeaponSwingHoldType("revolver")
 	        end)
 	        timer.Create("trueparry",0.15,1, function() 
-	            self.ParryTiming = 1
+	            self.ParryTiming = true
 	        end)
-	        timer.Create("trueparrydead",0.35,1, function() 
-	            self.ParryTiming = 0
+	        timer.Create("trueparrydead",0.45,1, function() 
+	            self.ParryTiming = false
 	        end)
         elseif self.Block then
 	        timer.Create("unblock",0.1,1, function() 
@@ -119,7 +122,7 @@ function SWEP:SecondaryAttack()
 				self:SetWeaponSwingHoldType(self.SwingHoldType)
 	        end)
 	        timer.Create("trueparrydead1",0.15,1, function() 
-	            self.ParryTiming = 0
+	            self.ParryTiming = false
 	        end)
         end
     end
@@ -128,6 +131,7 @@ end
 
 
 function SWEP:Reload()
+    self.Block = nil
 	return false
 end
 

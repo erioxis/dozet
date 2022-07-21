@@ -80,8 +80,9 @@ end
 function SWEP:PrimaryAttack()
 	if not self:CanPrimaryAttack() then return end
 
-	local owner = self:GetOwner()
 
+	local owner = self:GetOwner()
+	if  owner:IsSkillActive(SKILL_FOREVERALONE) then return end
 	local trtbl = owner:CompensatedPenetratingMeleeTrace(self.HealRange, 2, nil, nil, true)
 	local ent
 	for _, tr in pairs(trtbl) do
@@ -119,7 +120,9 @@ function SWEP:PrimaryAttack()
 		if owner:IsSkillActive(SKILL_COMBOHEAL) and self.Combo ~= 26 then
 		   self.Combo = self.Combo + 1
 		end
-		
+		if owner:HasTrinket("mediiii") and math.random(5) == 5 and SERVER then
+			ent:AddPoisonDamage(math.random(12), owner)
+		end
 		
 		if self.BloodHeal == true and SERVER then
 			ent:SetBloodArmor(math.min(ent.MaxBloodArmor + 100, ent:GetBloodArmor() + self.Heal * 3))

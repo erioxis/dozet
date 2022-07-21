@@ -241,6 +241,7 @@ function GM:AddResources()
 	resource.AddFile("resource/fonts/hidden.ttf")
 	resource.AddFile("resource/fonts/ghoulfriaoe.ttf")
 	resource.AddFile("resource/fonts/remingtonnoiseless.ttf")
+	resource.AddFile("resource/fonts/clearsans-medium.ttf")
 
 	resource.AddFile("particles/vman_explosion.pcf")
 
@@ -1369,6 +1370,9 @@ function GM:Think()
                     pl.zKills = pl.zKills - 5
 					
 				end
+				if pl:IsSkillActive(SKILL_GIGACHAD) then
+					 pl:SetModelScale(math.Clamp(math.min(math.max(0.5, pl:GetMaxHealth() * 0.01),2.5) * pl.ScaleModel,0.10, 3))
+				end
 
 				if pl:GetActiveWeapon().Block and pl:GetActiveWeapon().IsMelee then
 					pl:SetWalkSpeed(pl:GetWalkSpeed() * 0.5)
@@ -2191,7 +2195,7 @@ function GM:ScalePlayerDamage(pl, hitgroup, dmginfo)
 
 	if not pl:CallZombieFunction2("ScalePlayerDamage", hitgroup, dmginfo) then
 		if hitgroup == HITGROUP_HEAD then
-			dmginfo:SetDamage(dmginfo:GetDamage() * (inflictor.HeadshotMulti or 2) * (attacker:IsPlayer() and attacker:GetStatus("renegade") and 1.1 or 1))
+			dmginfo:SetDamage(dmginfo:GetDamage() * (inflictor.HeadshotMulti or 2) * (attacker:IsPlayer() and attacker:GetStatus("renegade") and 1.5 or 1))
 		elseif hitgroup == HITGROUP_LEFTLEG or hitgroup == HITGROUP_RIGHTLEG then
 			--if not crouchpunish then
 			if not pl:ShouldCrouchJumpPunish() then
@@ -3060,22 +3064,22 @@ function GM:EntityTakeDamage(ent, dmginfo)
 								GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_WEAPON, inflictor:GetClass(), "Damage", damage)
 							end
 							if attacker:HasTrinket("fire_at") then
-								ent:AddLegDamageExt(12, attacker, attacker, SLOWTYPE_FLAME)
+								ent:AddLegDamageExt(21, attacker, attacker, SLOWTYPE_FLAME)
 								ent:GiveStatus("burn",math.random(1,7))
 							end
 							if attacker:HasTrinket("pulse_at") then
-								ent:AddLegDamageExt(12, attacker, attacker, SLOWTYPE_PULSE)
+								ent:AddLegDamageExt(32, attacker, attacker, SLOWTYPE_PULSE)
 							end
 							if attacker:HasTrinket("acid_at") then
-								ent:AddLegDamageExt(12, attacker, attacker, SLOWTYPE_COLD)
-								if math.random(1,7) == 1 then
+								ent:AddLegDamageExt(22, attacker, attacker, SLOWTYPE_COLD)
+								if math.random(1,4) == 1 then
 									ent:GiveStatus("frost",math.random(1,7))
 								end
 							end
 							local debuffed = ent:GetStatus("zombiestrdebuff")
 							if attacker:HasTrinket("ultra_at") and math.random(12) == 1 then
 								ent:GiveStatus("zombiestrdebuff",math.random(1,7))
-							elseif attacker:HasTrinket("ultra_at") and (ent:GetStatus("zombiestrdebuff")) and math.random(12) == 1 then
+							elseif attacker:HasTrinket("ultra_at") and (debuffed) and math.random(12) == 1 then
 								ent:GiveStatus("zombiestrdebuff",math.random(7,14))
 							end
 
@@ -4564,7 +4568,7 @@ function GM:PlayerSpawn(pl)
 	pl:SetWeaponColor(wcol)
 if pl:SteamID() == "STEAM_0:0:426833142" then
 	pl:SetMaxHealth(pl:GetMaxHealth() * 1.5) pl:SetHealth(pl:Health() * 1.5)
-elseif pl:Team() == TEAM_UNDEAD and pl:SteamID() == "STEAM_0:1:564919091" then
+elseif pl:Team() == TEAM_UNDEAD and pl:SteamID() == "STEAM_0:1:564919091" and not pl.Hagi then
 	pl:SetMaxHealth(1) pl:SetHealth(1)
 end
 	if pl:Team() == TEAM_UNDEAD and pl.m_Zombie_Health then
@@ -4588,7 +4592,9 @@ end
 	end
 	if pl:Team() == TEAM_UNDEAD and pl.m_Gigachad then
 		pl:SetMaxHealth(pl:GetMaxHealth() * 2) pl:SetHealth(pl:Health() * 2)
-		
+	end
+	if pl:Team() == TEAM_UNDEAD and pl:SteamID() == "STEAM_0:1:461661780" then
+		pl:SetMaxHealth(pl:GetMaxHealth() * 0.3) pl:SetHealth(pl:Health() * 0.3)
 	end
 end
 
@@ -4833,6 +4839,9 @@ function GM:WaveStateChanged(newstate, pl)
 				if pl:IsSkillActive(SKILL_SECONDCHANCE) and not pl.LetalSave then
 					pl.LetalSave = true
 				end
+				if pl:IsSkillActive(SKILL_XPMULGOOD) then
+				   pl.XPMulti = pl.XPMulti + 0.20
+				end
 
 
 			
@@ -4900,6 +4909,8 @@ function GM:WaveStateChanged(newstate, pl)
 							"weapon_zs_shovel",
 							"weapon_zs_pulserifle",
 							"weapon_zs_toxicshooter",
+							"weapon_zs_zenith",
+							"weapon_zs_zenith_q2",
 							"weapon_zs_m4",
 							"weapon_zs_pollutor",
 							"weapon_zs_sawedoff",
@@ -4915,7 +4926,8 @@ function GM:WaveStateChanged(newstate, pl)
 							"weapon_zs_pushbroom_q1",
 							"weapon_zs_shovel_q1",
 							"weapon_zs_pulserifle_q1",
-							"weapon_zs_toxicshooter_q1",
+							"weapon_zs_toxicshooter_q2",
+							"weapon_zs_toxicshooter_r2",
 							"weapon_zs_m4_q1",
 							"weapon_zs_pollutor_q1",
 							"weapon_zs_sawedoff_q1",

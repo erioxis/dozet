@@ -64,7 +64,7 @@ function meta:HealPlayer(pl, amount, pointmul, nobymsg, poisononly)
 end
 
 local healthpropscalar = {
-	["models/props_c17/door01_left.mdl"] = 1
+	["models/props_c17/door01_left.mdl"] = 2
 }
 
 function meta:GetDefaultBarricadeHealth()

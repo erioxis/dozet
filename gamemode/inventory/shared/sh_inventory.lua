@@ -566,6 +566,8 @@ GM:AddSkillModifier(trinket, SKILLMOD_MEDGUN_FIRE_DELAY_MUL, -0.15)
 
 trinket = GM:AddTrinket(""..translate.Get("t_mediii"), "remedy", false, supveles, supweles, 3, ""..translate.Get("t_d_mediii"), nil, nil, "weapon_zs_help_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_MEDKIT_EFFECTIVENESS_MUL, 0.3)
+trinket = GM:AddTrinket(""..translate.Get("t_mediiii"), "mediiii", false, supveles, supweles, 3, ""..translate.Get("t_d_mediiii"), nil, nil, "weapon_zs_help_trinket")
+GM:AddSkillModifier(trinket, SKILLMOD_MEDKIT_EFFECTIVENESS_MUL, 0.2)
 
 trinket = GM:AddTrinket(""..translate.Get("t_deploi"), "mainsuite", false, supveles, supweles, 2, ""..translate.Get("t_d_deploi"), nil, nil, "weapon_zs_help_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_FIELD_RANGE_MUL, 0.1)

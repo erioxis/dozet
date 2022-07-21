@@ -46,6 +46,7 @@ function SWEP:PrimaryAttack()
 	owner:SetGroundEntity(NULL)
 	owner:SetVelocity(-self.Knockback * clip * owner:GetAimVector())
 	owner:GiveStatus("dimvision",5)
+	owner:GiveStatus("rot",3)
 
 
 end

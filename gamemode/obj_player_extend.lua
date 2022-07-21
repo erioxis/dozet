@@ -366,9 +366,8 @@ function meta:AddLegDamageExt(damage, attacker, inflictor, type)
 		end
 	elseif type == SLOWTYPE_FLAME then
 		self:AddLegDamage(damage)
-		self:AddArmDamage(damage)
 		if SERVER and attacker:HasTrinket("fire_ind") then
-			self:FireInduction(attacker, inflictor, damage)
+			self:FireInduction(attacker, inflictor, damage * 3)
 		end
 	end
 end

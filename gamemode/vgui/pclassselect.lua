@@ -309,6 +309,7 @@ function PANEL:CreateDescLabels()
 		end
 	end
 
+
 	table.insert(lines, " ")
 	table.Add(lines, string.Explode("\n", translate.Get(classtable.Description)))
 

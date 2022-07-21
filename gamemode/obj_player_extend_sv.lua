@@ -65,6 +65,7 @@ function meta:ProcessDamage(dmginfo)
 				attacker:SetHealth(math.min(attacker:GetMaxHealth(), attacker:Health() + attacker:GetMaxHealth() * 0.11))
 			end
 			attacker.FireDamage = attacker.FireDamage + 1
+			dmginfo:SetDamage(damage * attacker:GetModelScale())
 		
 			if wep.IsMelee then
 				if attacker:IsSkillActive(SKILL_CHEAPKNUCKLE) and math.abs(self:GetForward():Angle().yaw - attacker:GetForward():Angle().yaw) <= 90 then
@@ -202,11 +203,10 @@ function meta:ProcessDamage(dmginfo)
 			net.Send(self)
 			self:AddZSXP(xpadded)
 		end
-		if self:IsSkillActive(SKILL_TRUEBLOCK) and (self:GetActiveWeapon().ParryTiming or 0) == 1 then 
-		   attacker:TakeDamage(self:GetActiveWeapon().MeleeDamage * 6, self, self:GetActiveWeapon())
+		if self:IsSkillActive(SKILL_TRUEBLOCK) and self:GetActiveWeapon().ParryTiming then 
            dmginfo:SetDamage(0)
 			self:EmitSound("npc/strider/fire.wav", 120, 40)
-	    elseif self:IsSkillActive(SKILL_TRUEBLOCK) and (self:GetActiveWeapon().ParryTiming or 0) == 0 then
+	    elseif self:IsSkillActive(SKILL_TRUEBLOCK) and not self:GetActiveWeapon().ParryTiming then
 			self:EmitSound("npc/turret_floor/active.wav", 120, 40)
 		end
 	end
@@ -235,6 +235,10 @@ function meta:ProcessDamage(dmginfo)
 		self.LetalSave = false
 		self:SetHealth(self:GetMaxHealth())
 	end
+	if self:IsSkillActive(SKILL_XPMULGOOD) and self.XPMulti > 0.20 then
+        self.XPMulti = self.XPMulti - 0.05
+	end
+
 
 
 
@@ -267,6 +271,9 @@ function meta:ProcessDamage(dmginfo)
 				if self.BarbedArmor and self.BarbedArmor > 0 then
 					attacker:TakeSpecialDamage(self.BarbedArmor, DMG_SLASH, self, self)
 					attacker:AddArmDamage(self.BarbedArmor)
+				end
+				if self:IsSkillActive(SKILL_TRUEBLOCK) and self:GetActiveWeapon().ParryTiming then
+			       attacker:TakeDamage(self:GetActiveWeapon().MeleeDamage * 6, self, self:GetActiveWeapon())
 				end
 				if self:IsSkillActive(SKILL_UPLOAD) and not self:GetStatus("hshield") then
 					
@@ -2271,7 +2278,7 @@ function meta:CryogenicInduction(attacker, inflictor, damage)
 	end)
 end
 function meta:FireInduction(attacker, inflictor, damage)
-	if math.random(40 * (self:GetActiveWeapon().Primary.Numshots or 1)) == 1 or self.FireDamage >= (15 * (self:GetActiveWeapon().Primary.Numshots or 1)) or damage > 300 then
+	if math.random(20 * (self:GetActiveWeapon().Primary.Numshots or 1)) == 1 or self.FireDamage >= (15) or damage > 200 then
 		self.FireDamage = 0
 	timer.Create("Fire_inder" .. attacker:UniqueID(), 0.3, 2, function()
 		if not attacker:IsValid() or not self:IsValid() then return end
@@ -2279,10 +2286,10 @@ function meta:FireInduction(attacker, inflictor, damage)
 		local pos = self:WorldSpaceCenter()
 		pos.z = pos.z + 16
 
-		self:TakeSpecialDamage(self:Health() * 0.15, DMG_DIRECT, attacker, inflictor, pos)
+		self:TakeSpecialDamage((self:Health() * 0.15) + damage, DMG_DIRECT, attacker, inflictor, pos)
 
 		if attacker:IsValidLivingHuman() then
-			util.BlastDamagePlayer(inflictor, attacker, pos, 100, (self:Health() * 0.25), DMG_BURN, 0.83)
+			util.BlastDamagePlayer(inflictor, attacker, pos, 100, (self:Health() * 0.25) + damage, DMG_BURN, 0.83)
 			for _, ent in pairs(util.BlastAlloc(inflictor, attacker, pos, 245 * (attacker.ExpDamageRadiusMul or 1))) do
 				if ent:IsValidLivingPlayer() and gamemode.Call("PlayerShouldTakeDamage", ent, attacker) then
 					ent:AddLegDamageExt(55, attacker, inflictor, SLOWTYPE_FLAME)
