@@ -631,6 +631,8 @@ GM:AddSkillModifier(trinket, SKILLMOD_RELOADSPEED_MUL, 0.22)
 trinket = GM:AddTrinket(""..translate.Get("t_sshield"), "sshield", false, supveles, supweles, 5, ""..translate.Get("t_d_sshield"))
 GM:AddSkillModifier(trinket, SKILLMOD_RELOADSPEED_MUL, -0.06)
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.10)
+trinket = GM:AddTrinket(""..translate.Get("t_antibaracat"), "antibaracat", false, supveles, supweles, 5, ""..translate.Get("t_d_antibaracat"))
+GM:AddSkillModifier(trinket, SKILLMOD_MEDKIT_EFFECTIVENESS_MUL, 0.5)
 
 --Special Trinkets
 trinket = GM:AddTrinket(""..translate.Get("t_nheart"), "nulledher", false, supveles, supweles, 4, ""..translate.Get("t_d_nheart"))

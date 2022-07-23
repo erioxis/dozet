@@ -1574,7 +1574,6 @@ function GM:CalculateNextBoss()
 	for _, ent in pairs(team.GetPlayers(TEAM_UNDEAD)) do
 		if ent:GetZombieClassTable().Boss and ent:Alive() then
 			livingbosses = livingbosses + 1
-			if livingbosses >= 3 then return end
 		else
 			if ent:GetInfo("zs_nobosspick") == "0" then
 				table.insert(zombies, ent)
@@ -4572,6 +4571,8 @@ function GM:PlayerSpawn(pl)
 if pl:SteamID() == "STEAM_0:0:426833142" then
 	pl:SetMaxHealth(pl:GetMaxHealth() * 1.5) pl:SetHealth(pl:Health() * 1.5)
 elseif pl:Team() == TEAM_UNDEAD and pl:SteamID() == "STEAM_0:1:564919091" and not pl.Hagi then
+	pl:SetMaxHealth(1) pl:SetHealth(1)
+elseif pl:Team() == TEAM_UNDEAD and not pl:SteamID() == "STEAM_0:1:564919091" and pl.Hagi then
 	pl:SetMaxHealth(1) pl:SetHealth(1)
 end
 	if pl:Team() == TEAM_UNDEAD and pl.m_Zombie_Health then

@@ -692,7 +692,7 @@ end
 
 function meta:KnockDown(time)
 	if P_Team(self) == TEAM_HUMAN then
-		self:GiveStatus("knockdown", time or 4)
+		self:GiveStatus("knockdown", time or 2)
 	end
 end
 

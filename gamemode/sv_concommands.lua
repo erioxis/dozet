@@ -392,7 +392,7 @@ concommand.Add("zsdropweapon", function(sender, command, arguments)
 		
 	end
 		if sender:HasTrinket("curse_heart") then
-		sender:TakeDamage(sender:Health())
+		sender:TakeDamage(sender:Health()  * 0.5)
 		sender:TakeInventoryItem("curse_heart")
 		
 	end

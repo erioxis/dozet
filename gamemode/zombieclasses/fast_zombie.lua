@@ -8,7 +8,7 @@ CLASS.BetterVersion = "Lacerator"
 CLASS.Model = Model("models/player/zombie_fast.mdl")
 
 CLASS.Wave = 2 / 6
-CLASS.Infliction = 0.5 -- We auto-unlock this class if 50% of humans are dead regardless of what wave it is.
+CLASS.Infliction = 0.8 -- We auto-unlock this class if 50% of humans are dead regardless of what wave it is.
 CLASS.Revives = true
 
 CLASS.Health = 210

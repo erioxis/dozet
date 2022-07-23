@@ -503,6 +503,8 @@ GM:AddPointShopItem("knowev",			ITEMCAT_TRINKETS,		200,				"trinket_knowbook").S
 GM:AddPointShopItem("adbat",			ITEMCAT_TRINKETS,		200,				"trinket_adbat").SubCategory =								ITEMSUBCAT_TRINKETS_SUPER
 GM:AddPointShopItem("marm",			ITEMCAT_TRINKETS,		200,				"trinket_marm").SubCategory =								ITEMSUBCAT_TRINKETS_SUPER
 GM:AddPointShopItem("sshield",			ITEMCAT_TRINKETS,		200,				"trinket_sshield").SubCategory =								ITEMSUBCAT_TRINKETS_SUPER
+GM:AddPointShopItem("antibcat",			ITEMCAT_TRINKETS,		200,				"trinket_antibaracat").SubCategory =								ITEMSUBCAT_TRINKETS_SUPER
+
 
 
 GM:AddPointShopItem("crphmr",			ITEMCAT_TOOLS,			25,				"weapon_zs_hammer",			nil,							nil,									nil,											function(pl) pl:GiveEmptyWeapon("weapon_zs_hammer") pl:GiveAmmo(5, "GaussEnergy") end)
@@ -588,7 +590,7 @@ GM:AddPointShopItem("stone",			ITEMCAT_TOOLS,			5,			"weapon_zs_stone")
 GM:AddPointShopItem("scrap",				ITEMCAT_TOOLS,			30,				nil,							"Scrap x20",							"Scrap but is have x15.",					"ammo_scrap",						function(pl) pl:GiveAmmo(20, "Scrap", true) end)
 GM:AddPointShopItem("scrap100",				ITEMCAT_TOOLS,			200,				nil,							"Scrap x100",							"Scrap but is have x100.",					"ammo_scrap",						function(pl) pl:GiveAmmo(100, "Scrap", true) end)
 GM:AddPointShopItem("scrap900",				ITEMCAT_TOOLS,			900,				nil,							"Scrap x900",							"Scrap but is have x100.",					"ammo_scrap",						function(pl) pl:GiveAmmo(900, "Scrap", true) end)
-GM:AddPointShopItem("bannahuy",			ITEMCAT_TOOLS,			80000,			"weapon_zs_banhammer")
+GM:AddPointShopItem("bannahuy",			ITEMCAT_TOOLS,			9980000,			"weapon_zs_banhammer")
 -- Tier 1
 GM:AddPointShopItem("cutlery",			ITEMCAT_TRINKETS,		10,				"trinket_cutlery").SubCategory =								ITEMSUBCAT_TRINKETS_DEFENSIVE
 GM:AddPointShopItem("boxingtraining",	ITEMCAT_TRINKETS,		10,				"trinket_boxingtraining").SubCategory =							ITEMSUBCAT_TRINKETS_MELEE

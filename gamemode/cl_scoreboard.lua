@@ -317,6 +317,7 @@ function PANEL:Init()
 
 	self.m_Mute = vgui.Create("DImageButton", self)
 	self.m_Mute.DoClick = MuteDoClick
+	
 
 	self.m_Friend = vgui.Create("DImageButton", self)
 	self.m_Friend.DoClick = ToggleZSFriend
@@ -386,6 +387,7 @@ function PANEL:PerformLayout()
 	self.m_Mute:MoveLeftOf(self.m_PingMeter, 8)
 	self.m_Mute:CenterVertical()
 
+
 	self.m_Friend:SetSize(16, 16)
 	self.m_Friend:MoveLeftOf(self.m_Mute, 8)
 	self.m_Friend:CenterVertical()
@@ -451,7 +453,7 @@ function PANEL:RefreshPlayer()
 		self.m_Friend:SetImage(GAMEMODE.ZSFriends[pl:SteamID()] and "icon16/heart_delete.png" or "icon16/heart.png")
 	end
 
-	self:SetZPos(-pl:Frags())
+	self:SetZPos(-pl:GetMScore())
 
 	if pl:Team() ~= self._LastTeam then
 		self._LastTeam = pl:Team()

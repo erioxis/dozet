@@ -2,13 +2,13 @@ ENT.Type = "anim"
 
 ENT.MaxHealth = 600
 ENT.HealthRegen = 1
-ENT.RegenDelay = 10
+ENT.RegenDelay = 0.3
 
 ENT.ModelScale = 0.85
 
 ENT.m_NoNailUnfreeze = true
 ENT.NoNails = true
-ENT.IsBarricadeObject = false
+ENT.IsBarricadeObject = true
 ENT.IgnoreBullets = false
 
 
