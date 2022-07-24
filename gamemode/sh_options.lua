@@ -587,9 +587,9 @@ item.SkillRequirement = SKILL_U_ANTITODESHOT
 GM:AddPointShopItem("medrifle",			ITEMCAT_TOOLS,			55,				"weapon_zs_medicrifle")
 GM:AddPointShopItem("healray",			ITEMCAT_TOOLS,			100,			"weapon_zs_healingray")
 GM:AddPointShopItem("stone",			ITEMCAT_TOOLS,			5,			"weapon_zs_stone")
-GM:AddPointShopItem("scrap",				ITEMCAT_TOOLS,			30,				nil,							"Scrap x20",							"Scrap but is have x15.",					"ammo_scrap",						function(pl) pl:GiveAmmo(20, "Scrap", true) end)
-GM:AddPointShopItem("scrap100",				ITEMCAT_TOOLS,			200,				nil,							"Scrap x100",							"Scrap but is have x100.",					"ammo_scrap",						function(pl) pl:GiveAmmo(100, "Scrap", true) end)
-GM:AddPointShopItem("scrap900",				ITEMCAT_TOOLS,			900,				nil,							"Scrap x900",							"Scrap but is have x100.",					"ammo_scrap",						function(pl) pl:GiveAmmo(900, "Scrap", true) end)
+GM:AddPointShopItem("scrap",				ITEMCAT_TOOLS,			40,				nil,							"Scrap x20",							"Scrap but is have x15.",					"ammo_scrap",						function(pl) pl:GiveAmmo(20, "Scrap", true) end)
+GM:AddPointShopItem("scrap100",				ITEMCAT_TOOLS,			150,				nil,							"Scrap x100",							"Scrap but is have x100.",					"ammo_scrap",						function(pl) pl:GiveAmmo(100, "Scrap", true) end)
+GM:AddPointShopItem("scrap900",				ITEMCAT_TOOLS,			600,				nil,							"Scrap x900",							"Scrap but is have x900.",					"ammo_scrap",						function(pl) pl:GiveAmmo(900, "Scrap", true) end)
 GM:AddPointShopItem("bannahuy",			ITEMCAT_TOOLS,			9980000,			"weapon_zs_banhammer")
 -- Tier 1
 GM:AddPointShopItem("cutlery",			ITEMCAT_TRINKETS,		10,				"trinket_cutlery").SubCategory =								ITEMSUBCAT_TRINKETS_DEFENSIVE
@@ -874,7 +874,7 @@ GM.EndGameTime = 15
 GM.SurvivalClips = 4 --2
 
 -- How long do humans have to wait before being able to get more ammo from a resupply box?
-GM.ResupplyBoxCooldown = 70
+GM.ResupplyBoxCooldown = 60
 
 -- Put your unoriginal, 5MB Rob Zombie and Metallica music here.
 GM.LastHumanSound = Sound("zombiesurvival/lasthuman.ogg")
@@ -913,7 +913,7 @@ GM.MaxBleedDamage = 10000
 GM.MaxCurse = 100
 
 -- Give humans this many points when the wave ends.
-GM.EndWavePointsBonus = 7
+GM.EndWavePointsBonus = 21
 
 -- Also give humans this many points when the wave ends, multiplied by (wave - 1)
-GM.EndWavePointsBonusPerWave = 3
+GM.EndWavePointsBonusPerWave = 10
