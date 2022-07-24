@@ -859,7 +859,7 @@ GM:AddSkill(SKILL_BANDOLIER, translate.Get("skill_bandolier"), GOOD..translate.G
 																-6,			-1,					{SKILL_SLEIGHTOFHAND}, TREE_GUNTREE)
 GM:AddSkill(SKILL_U_CRYGASGREN, translate.Get("skill_u_cryogas"), GOOD..translate.Get("skill_u_cryogas_d1"),
 																2,			-3,					{SKILL_EGOCENTRIC}, TREE_GUNTREE)
-GM:AddSkill(SKILL_SOFTDET, translate.Get("skill_sdeton"), GOOD.."-40%"..translate.Get("exp_damage_t")..BAD.."-10%"..translate.Get("exp_damage_t"),
+GM:AddSkill(SKILL_SOFTDET, translate.Get("skill_sdeton"), GOOD.."-40%"..translate.Get("exp_damage_t")..BAD.."-10%"..translate.Get("exp_damage"),
 																0,			-5,					{}, TREE_GUNTREE)
 GM:AddSkill(SKILL_ORPHICFOCUS, translate.Get("skill_orfocus"), GOOD..translate.Get("skill_orfocus_d1")..GOOD.."+2%"..translate.Get("w_ac")..BAD..translate.Get("skill_orfocus_d2")..BAD.."-6%"..translate.Get("r_speed"),
 																5,			-1,					{SKILL_DELIBRATION}, TREE_GUNTREE)
@@ -1446,7 +1446,7 @@ GM:AddSkill(SKILL_DONATE12, "Donate XII", GOOD.."+15% Bullet damage\n"..GOOD.."T
 GM:AddSkillModifier(SKILL_DONATE12, SKILLMOD_DAMAGE, 0.15)
 GM:AddSkill(SKILL_DONATE13, "Donate XIII", GOOD.."-35% Scale model\n"..GOOD.."Thx chayok",
 				                                                            	23,			29,					{SKILL_DONATE12}, TREE_DONATETREE)
-GM:AddSkillModifier(SKILL_DONATE13, SKILLMOD_SCALEMODEL, -0.35)
+GM:AddSkillModifier(SKILL_DONATE13, SKILLMOD_SCALEMODEL, -0.25)
 GM:AddSkill(SKILL_DONATE14, "Donate XIV", GOOD.."+ Speed"..GOOD.."Donate",
 				                                                            	23,			30,					{SKILL_DONATE14}, TREE_DONATETREE)
 GM:AddSkillModifier(SKILL_DONATE14, SKILLMOD_SPEED, 50)
@@ -1542,6 +1542,18 @@ SKILL_USELESS_18 = 517
 GM:AddSkill(SKILL_USELESS_18, "Useless 18", GOOD.."-15% Dimvision effectiveness",
 				                                                            	-3,		    -1,					{SKILL_USELESS_17}, TREE_USELESSTREE)
 GM:AddSkillModifier(SKILL_USELESS_18, SKILLMOD_DIMVISION_EFF_MUL, -0.15)
+SKILL_USELESS_19 = 518
+GM:AddSkill(SKILL_USELESS_19, "Useless 18", GOOD.."+20% Medic Heal Mul",
+				                                                            	-3,		    -0,					{SKILL_USELESS_18}, TREE_USELESSTREE)
+GM:AddSkillModifier(SKILL_USELESS_19, SKILLMOD_MEDKIT_EFFECTIVENESS_MUL, 0.20)
+SKILL_USELESS_20 = 519
+GM:AddSkill(SKILL_USELESS_20, "Useless 19", GOOD.."+5 spoints",
+				                                                            	-4,		    -0,					{SKILL_USELESS_19}, TREE_USELESSTREE)
+GM:AddSkillModifier(SKILL_USELESS_20, SKILLMOD_SPOINT, 5)
+SKILL_USELESS_21 = 520
+GM:AddSkill(SKILL_USELESS_21, "Useless 20", GOOD.."+9% Sale",
+				                                                            	-4,		    1,					{SKILL_USELESS_20}, TREE_USELESSTREE)
+GM:AddSkillModifier(SKILL_USELESS_21, SKILLMOD_ARSENAL_DISCOUNT, -0.09)
 
 
 
@@ -1837,7 +1849,7 @@ GM:SetSkillModifierFunction(SKILLMOD_POISON_SPEED_MUL, function(pl, amount)
 	pl.PoisonSpeedMul = math.Clamp(amount + 1.0, 0.1, 1000.0)
 end)
 GM:SetSkillModifierFunction(SKILLMOD_SCALEMODEL, function(pl, amount)
-	pl.ScaleModel = math.Clamp(amount + 1.0, 0.35, 1000.0)
+	pl.ScaleModel = math.Clamp(amount + 1.0, 0.45, 1000.0)
 end)
 
 

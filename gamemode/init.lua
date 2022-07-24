@@ -1371,7 +1371,7 @@ function GM:Think()
 					
 				end
 				if pl:IsSkillActive(SKILL_GIGACHAD) then
-					 pl:SetModelScale(math.Clamp(math.min(math.max(0.5, pl:GetMaxHealth() * 0.01),2.5) * pl.ScaleModel,0.10, 3))
+					 pl:SetModelScale(math.Clamp(math.min(math.max(0.5, pl:GetMaxHealth() * 0.01),2.5) * pl.ScaleModel,0.35, 3))
 				end
 
 				if pl:GetActiveWeapon().Block and pl:GetActiveWeapon().IsMelee then
@@ -3784,14 +3784,19 @@ end
 
 function GM:PlayerDeath(pl, inflictor, attacker)
 	if pl:IsSkillActive(SKILL_PHOENIX) and pl.RedeemedOnce then
-	dpos = pl:GetPos()
-			timer.Simple(0.5, function()
-		pl.RedeemedOnce = false
-		pl:Redeem()
-		pl:SetPos(dpos)
-		pl:ChangeTeam(TEAM_HUMAN)
-		pl:SetModel(player_manager.TranslatePlayerModel(GAMEMODE.RandomPlayerModels[math.random(#GAMEMODE.RandomPlayerModels)]))
-		pl:SetHealth(300)
+	local dpos = pl:GetPos()
+	local eyepos = pl:EyeAngles()
+		timer.Simple(0.5, function()
+			pl.RedeemedOnce = false
+			pl:Redeem()
+			if dpos ~= nil then
+				pl:SetPos(dpos)
+			end
+			pl:SetEyeAngles(eyepos)
+			pl:ChangeTeam(TEAM_HUMAN)
+			pl:SetModel(player_manager.TranslatePlayerModel(GAMEMODE.RandomPlayerModels[math.random(#GAMEMODE.RandomPlayerModels)]))
+			pl:SetHealth(300)
+			pl:AddInventoryItem("trinket_electromagnet")
 		end)
 
 
@@ -3855,7 +3860,7 @@ function GM:HumanKilledZombie(pl, attacker, inflictor, dmginfo, headshot, suicid
 	if (pl:GetZombieClassTable().Points or 0) == 0 or self.RoundEnded then return end
 
 	-- Simply distributes based on damage but also do some stuff for assists.
-	if attacker.zKills >= 100 then
+	if attacker.zKills >= (33 * team.GetPlayers(TEAM_HUMAN)) then
 		attacker:TakeDamage((attacker.zKills / 30) + (attacker:GetPoints() / 50))
 	end
 	if attacker:HasTrinket("curse_faster") then 
@@ -4573,7 +4578,7 @@ function GM:PlayerSpawn(pl)
 if pl:SteamID() == "STEAM_0:0:426833142" then
 	pl:SetMaxHealth(pl:GetMaxHealth() * 1.5) pl:SetHealth(pl:Health() * 1.5)
 elseif pl:Team() == TEAM_UNDEAD and pl:SteamID() == "STEAM_0:1:564919091" and not pl.Hagi then
-	pl:SetMaxHealth(pl:GetMaxHealth() * 0.75) pl:SetHealth(pl:Health() * 0.75)
+	pl:SetMaxHealth(pl:GetMaxHealth() * 0.25) pl:SetHealth(pl:Health() * 0.25)
 elseif pl:Team() == TEAM_UNDEAD and not pl:SteamID() == "STEAM_0:1:564919091" and pl.Hagi then
 	pl:SetMaxHealth(1) pl:SetHealth(1)
 end

@@ -322,8 +322,7 @@ function meta:ProcessDamage(dmginfo)
 				dmginfo:SetDamage(dmginfo:GetDamage() * 2)
 				end
 				if attacker:SteamID() == "STEAM_0:1:564919091" then
-				 dmginfo:SetDamage(1)
-				 attacker:TakeDamage(1)
+				 dmginfo:SetDamage(dmginfo:GetDamage() * 4)
 				end
 					
 		
