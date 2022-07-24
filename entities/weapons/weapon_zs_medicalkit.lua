@@ -123,6 +123,9 @@ function SWEP:PrimaryAttack()
 		if owner:HasTrinket("mediiii") and math.random(5) == 5 and SERVER then
 			ent:AddPoisonDamage(math.random(12), owner)
 		end
+		if owner:IsSkillActive(SKILL_WYRDREC) and SERVER and math.random(100) < (60 * ((ent.BleedDamageTakenMul or 1) * (ent.BleedSpeedMul or 1))) then
+			ent:AddBleedDamage(math.random(15,30), ent)
+		end
 		
 		if self.BloodHeal == true and SERVER then
 			ent:SetBloodArmor(math.min(ent.MaxBloodArmor + 100, ent:GetBloodArmor() + self.Heal * 3))
@@ -131,10 +134,13 @@ function SWEP:PrimaryAttack()
 		self:SetNextCharge(CurTime() + self.Primary.Delay * math.min(1, healed / self.Heal) * cooldownmultiplier)
 		elseif owner:IsSkillActive(SKILL_DUALHEAL) and self.UltraDa ~= 2 then
 		self:SetNextCharge(CurTime() + self.Primary.Delay * math.min(1, healed / self.Heal) * cooldownmultiplier)
-		self.UltraDa = 2
+			self.UltraDa = 2
 		elseif owner:IsSkillActive(SKILL_DUALHEAL) and self.UltraDa ~= 1 then
-		self:SetNextCharge(0)
-		self.UltraDa = 1
+			self:SetNextCharge(0)
+			self.UltraDa = 1
+		end
+		if owner:IsSkillActive(SKILL_WYRDREC) then
+			timer.Simple( 0.1, function() owner:HealPlayer(ent, math.random(1,13)) end)
 		end
 		owner.NextMedKitUse = self:GetNextCharge()
 

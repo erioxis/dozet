@@ -1528,6 +1528,9 @@ LANGUAGE.skill_gigachad_d1 = "Than higher health than higher model\n"
 LANGUAGE.skill_xpmulgood = "Cheapy"
 LANGUAGE.skill_xpmulgood_d1 = "On endwave +20% xp mul\n"
 LANGUAGE.skill_xpmulgood_d2 = "On damage take -5% xp mul\n"
+LANGUAGE.skill_wyrdrec = "Wyrd Reconstruction"
+LANGUAGE.skill_wyrdrec_d1 = "Give additional heal 0-13 health\n"
+LANGUAGE.skill_wyrdrec_d2 = "Can give bleed on heal(Base 60%)"
 -- WOrthness
 LANGUAGE.worthness = "Worthiness "
 --Skills speed

@@ -336,6 +336,8 @@ SKILL_GIGACHAD = 315
 SKILL_XPMULGOOD = 316
 SKILL_SKILLFORGODS = 317
 SKILL_SECRET = 318
+SKILL_WYRDREC = 319
+SKILL_SECRET2 = 320
 
 SKILLMOD_HEALTH = 1
 SKILLMOD_SPEED = 2
@@ -653,6 +655,8 @@ GM:AddSkill(SKILL_COMBOHEAL, translate.Get("skill_comboheal"), GOOD..translate.G
 																0,			-5,					{SKILL_DISPERSION}, TREE_SUPPORTTREE)
 GM:AddSkill(SKILL_FOREVERALONE, translate.Get("skill_foreveralone"), GOOD..translate.Get("skill_foreveralone_d1")..BAD..translate.Get("skill_foreveralone_d2"),
 																-1,			-6,					{SKILL_COMBOHEAL}, TREE_SUPPORTTREE)
+GM:AddSkill(SKILL_WYRDREC, translate.Get("skill_wyrdrec"), GOOD..translate.Get("skill_wyrdrec_d1")..BAD..translate.Get("skill_wyrdrec_d2"),
+																-2,			-7,					{SKILL_FOREVERALONE}, TREE_SUPPORTTREE)
 
 -- Defence Tree
 GM:AddSkill(SKILL_HANDY1, translate.Get("skill_handy").."I", GOOD.."+5%"..translate.Get("repair"),
@@ -784,9 +788,10 @@ GM:AddSkill(SKILL_FREESKILL2, translate.Get("skill_freeskill"), GOOD.."+8"..tran
 																-9,			8,					{SKILL_NONE}, TREE_GUNTREE)
 .RemortReq = 80
 GM:AddSkill(SKILL_SKILLFORGODS, "SECRET I", GOOD.."You find this!Reward is free 3 skill points!",
-																-75,			69,					{SKILL_NONE}, TREE_GUNTREE)
+																-70,			65,					{SKILL_NONE}, TREE_GUNTREE)
 GM:AddSkillModifier(SKILL_SKILLFORGODS, SKILLMOD_SPOINT, 4)
 GM:AddSkillModifier(SKILL_SECRET, SKILLMOD_SPOINT, 7)
+GM:AddSkillModifier(SKILL_SECRET2, SKILLMOD_SPOINT, 4)
 
 GM:AddSkill(SKILL_UNSIGIL, translate.Get("skill_uncorrupt"), GOOD.."+24%"..translate.Get("r_speed")..GOOD.."+15%"..translate.Get("b_damage")..BAD.."-80%"..translate.Get("meleedamage"),
 																0,			2,					{SKILL_LEVELHEADED}, TREE_GUNTREE)
@@ -1263,8 +1268,8 @@ GM:AddSkillModifier(SKILL_TORMENT7, SKILLMOD_LUCK, -5)
 GM:AddSkillModifier(SKILL_TORMENT7, SKILLMOD_HEALTH, -45)
 GM:AddSkillModifier(SKILL_TORMENT7, SKILLMOD_SPEED, -55)
 GM:AddSkillModifier(SKILL_TORMENT7, SKILLMOD_ARSENAL_DISCOUNT, 0.25)
-GM:AddSkillModifier(SKILL_TORMENT5, SKILLMOD_REPAIRRATE_MUL, -0.50)
-GM:AddSkillModifier(SKILL_TORMENT5, SKILLMOD_MEDKIT_EFFECTIVENESS_MUL, -0.50)
+GM:AddSkillModifier(SKILL_TORMENT7, SKILLMOD_REPAIRRATE_MUL, -0.50)
+GM:AddSkillModifier(SKILL_TORMENT7, SKILLMOD_MEDKIT_EFFECTIVENESS_MUL, -0.50)
 GM:AddSkill(SKILL_TORMENT8,translate.Get("skill_torment").."VIII", GOOD.."+30%"..translate.Get("xpmul")..BAD.."-50"..translate.Get("health"),
 				                                                            	3,			32,					{SKILL_TORMENT7}, TREE_ANCIENTTREE)
 
@@ -1461,6 +1466,9 @@ GM:AddSkill(SKILL_CHALLENGER3, "Challenger III", GOOD.."+100% XP Multiplier\n"..
 				                                                            	25,			20,					{}, TREE_DONATETREE)
 GM:AddSkillModifier(SKILL_CHALLENGER3, SKILLMOD_XP, 1)
 --Skill for high-remort
+GM:AddSkill(SKILL_SECRET2, "Secret V", GOOD.."Good thing, +3 spoints",
+				                                                            	-22,			-53,					{SKILL_NONE}, TREE_USELESSTREE)
+.Hidden = true
 SKILL_USELESS_1 = 500
 GM:AddSkill(SKILL_USELESS_1, "Useless 1", GOOD.."+5% XP MUL",
 				                                                            	0,			0,					{SKILL_NONE}, TREE_USELESSTREE)
@@ -1522,6 +1530,18 @@ SKILL_USELESS_15 = 514
 GM:AddSkill(SKILL_USELESS_15, "Useless 15", GOOD.."+10% Block damage multiplier",
 				                                                            	1,		    -2,					{SKILL_USELESS_14}, TREE_USELESSTREE)
 GM:AddSkillModifier(SKILL_USELESS_15, SKILLMOD_BLOCKMULTIPLIER, -0.10)
+SKILL_USELESS_16 = 515
+GM:AddSkill(SKILL_USELESS_16, "Useless 16", GOOD.."-10% Medkit Cooldown",
+				                                                            	0,		    -2,					{SKILL_USELESS_15}, TREE_USELESSTREE)
+GM:AddSkillModifier(SKILL_USELESS_16, SKILLMOD_MEDKIT_COOLDOWN_MUL, -0.10)
+SKILL_USELESS_17 = 516
+GM:AddSkill(SKILL_USELESS_17, "Useless 17", GOOD.."meh take this,+7 skills points(secret iv?)",
+				                                                            	-2,		    -2,					{SKILL_USELESS_16}, TREE_USELESSTREE)
+GM:AddSkillModifier(SKILL_USELESS_17, SKILLMOD_SPOINT, 8)
+SKILL_USELESS_18 = 517
+GM:AddSkill(SKILL_USELESS_18, "Useless 18", GOOD.."-15% Dimvision effectiveness",
+				                                                            	-3,		    -1,					{SKILL_USELESS_17}, TREE_USELESSTREE)
+GM:AddSkillModifier(SKILL_USELESS_18, SKILLMOD_DIMVISION_EFF_MUL, -0.15)
 
 
 

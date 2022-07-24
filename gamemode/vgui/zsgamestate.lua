@@ -143,13 +143,13 @@ end
 local matGradientLeft = CreateMaterial("gradient-l", "UnlitGeneric", {["$basetexture"] = "vgui/gradient-l", ["$vertexalpha"] = "1", ["$vertexcolor"] = "1", ["$ignorez"] = "1", ["$nomip"] = "1"})
 function PANEL:Paint(w, h)
 	surface.SetDrawColor(0, 0, 0, 180)
-	surface.DrawRect(0, 0, w * 0.4, h * 2)
+	surface.DrawRect(0, 0, w * 0.4, h * 5)
 	surface.SetMaterial(matGradientLeft)
-	surface.DrawTexturedRect(w * 0.4, 0, w * 0.6, h * 2)
+	surface.DrawTexturedRect(w * 0.4, 0, w * 0.6, h * 3)
 	surface.DrawLine(0, h - 1, w, h - 1)
 	surface.SetDrawColor(0, 0, 0, 250)
 	surface.SetMaterial(matGradientLeft)
-	surface.DrawTexturedRect(0, h - 1, w, 1)
+	surface.DrawTexturedRect(0, h - 1, w, 2)
 
 	return true
 end

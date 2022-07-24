@@ -1,4 +1,4 @@
-GM.Name		=	"Dozet The most cursed zs"
+GM.Name		=	""
 GM.Author	=	"Toyka(Real Creator - Jetboom)"
 GM.Email	=	"nope"
 GM.Website	=	"https://github.com/erioxis/dozet"

@@ -1335,6 +1335,9 @@ LANGUAGE.skill_gigachad_d1 = "Чем больше хп,тем вы больше!
 LANGUAGE.skill_xpmulgood = "Ценность"
 LANGUAGE.skill_xpmulgood_d1 = "Если не получать урон волну то будет +20% к опыту\n"
 LANGUAGE.skill_xpmulgood_d2 = "Получение урона отнимает -5% к опыту\n"
+LANGUAGE.skill_wyrdrec = "Реконструкция Вирда"
+LANGUAGE.skill_wyrdrec_d1 = "Дает дополнительно 0-13 здоровья при лечение\n"
+LANGUAGE.skill_wyrdrec_d2 = "Может дать кровоток при лечение(БАЗА 60%)"
 -- WOrthness
 LANGUAGE.worthness = "Обмен "
 --Скиллы скорость

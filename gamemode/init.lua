@@ -3784,9 +3784,11 @@ end
 
 function GM:PlayerDeath(pl, inflictor, attacker)
 	if pl:IsSkillActive(SKILL_PHOENIX) and pl.RedeemedOnce then
+	dpos = pl:GetPos()
 			timer.Simple(0.5, function()
 		pl.RedeemedOnce = false
 		pl:Redeem()
+		pl:SetPos(dpos)
 		pl:ChangeTeam(TEAM_HUMAN)
 		pl:SetModel(player_manager.TranslatePlayerModel(GAMEMODE.RandomPlayerModels[math.random(#GAMEMODE.RandomPlayerModels)]))
 		pl:SetHealth(300)
@@ -4571,7 +4573,7 @@ function GM:PlayerSpawn(pl)
 if pl:SteamID() == "STEAM_0:0:426833142" then
 	pl:SetMaxHealth(pl:GetMaxHealth() * 1.5) pl:SetHealth(pl:Health() * 1.5)
 elseif pl:Team() == TEAM_UNDEAD and pl:SteamID() == "STEAM_0:1:564919091" and not pl.Hagi then
-	pl:SetMaxHealth(1) pl:SetHealth(1)
+	pl:SetMaxHealth(pl:GetMaxHealth() * 0.75) pl:SetHealth(pl:Health() * 0.75)
 elseif pl:Team() == TEAM_UNDEAD and not pl:SteamID() == "STEAM_0:1:564919091" and pl.Hagi then
 	pl:SetMaxHealth(1) pl:SetHealth(1)
 end
@@ -4595,7 +4597,7 @@ end
 	pl:SetMaxHealth(pl:GetMaxHealth() * 0.25) pl:SetHealth(pl:Health() * 0.25)	
 	end
 	if pl:Team() == TEAM_UNDEAD and pl.m_Gigachad then
-		pl:SetMaxHealth(pl:GetMaxHealth() * 2) pl:SetHealth(pl:Health() * 2)
+		pl:SetMaxHealth(pl:GetMaxHealth() * 3) pl:SetHealth(pl:Health() * 3)
 	end
 	if pl:Team() == TEAM_UNDEAD and pl:SteamID() == "STEAM_0:1:461661780" then
 		pl:SetMaxHealth(pl:GetMaxHealth() * 0.3) pl:SetHealth(pl:Health() * 0.3)

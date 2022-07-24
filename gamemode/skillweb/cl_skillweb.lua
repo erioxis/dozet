@@ -519,7 +519,7 @@ function PANEL:Init()
 	button:SetText("Activate")
 	button:SetFont("ZSHUDFontSmall")
 	button:SetDisabled(false)
-	button:SetSize(128 * screenscale, 32 * screenscale)
+	button:SetSize(128 * screenscale, 64 * screenscale)
 	button:AlignTop()
 	button:CenterHorizontal()
 	button.DoClick = function(me)
@@ -1156,7 +1156,7 @@ function PANEL:OnMousePressed(mc)
 		if hoveredskill then
 			local mx, my = gui.MousePos()
 			local can_remort = MySelf:CanSkillsRemort()
-			contextmenu:SetPos(mx - contextmenu:GetWide() / 2, my - contextmenu:GetTall() / 2)
+			contextmenu:SetPos(mx - contextmenu:GetWide() / 2, my - contextmenu:GetTall() / 1.5)
 			if hoveredskill == -1 and can_remort then
 				Derma_Query(
 					"Are you ABSOLUTELY sure you want to remort?\nYou will revert to level 1, lose all skills, but have 2 extra SP.\nThis cannot be undone!",
@@ -1190,7 +1190,13 @@ function PANEL:OnMousePressed(mc)
 			elseif MySelf:SkillCanUnlock(hoveredskill) then
 
 				if MySelf:GetZSSPRemaining() >= 1 then
+				    if GAMEMODE.Skills[hoveredskill].Hidden and math.random(20) == 20 then
 					contextmenu.Button:SetText("Unlock")
+					elseif not GAMEMODE.Skills[hoveredskill].Hidden then
+					contextmenu.Button:SetText("Unlock")
+					else
+					    return
+					end
 				else
 					self:DisplayMessage("You need SP to unlock this skill!", COLOR_RED)
 					surface.PlaySound("buttons/button8.wav")
