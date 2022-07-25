@@ -567,7 +567,7 @@ function GM:OnPlayerHitGround(pl, inwater, hitfloater, speed)
 		if groundent:IsValid() and groundent:IsPlayer() and PTeam(groundent) == TEAM_HUMAN then
 
 			if math.floor(120) > 0 then
-				groundent:TakeSpecialDamage(math.max(((groundent:Health() * 0.2) + 12 + damage) + pl:Health() * 0.05,((groundent:Health() * 0.2) + 12) + pl:Health() * 0.05), DMG_CLUB, pl, pl, pl:GetPos())
+				groundent:TakeSpecialDamage(math.max(((groundent:Health() * 0.2) + 12 + damage) + pl:Health() * 0.01,((groundent:Health() * 0.2) + 12) + pl:Health() * 0.01), DMG_CLUB, pl, pl, pl:GetPos())
 				return true
 			end
 		end
