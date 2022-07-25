@@ -106,6 +106,7 @@ GM.Assemblies["comp_scoper"]						        	= {"trinket_electromagnet",	"trinket_
 GM.Assemblies["weapon_zs_cryman"] 				     			= {"comp_gaussframe",		"weapon_zs_hyena"}
 GM.Assemblies["trinket_invalid"]						        	= {"trinket_classil",	"trinket_analgestic"}
 GM.Assemblies["weapon_zs_m5"]						        	= {"comp_sacred_soul",	"weapon_zs_m4"}
+GM.Assemblies["weapon_zs_m6_alt"]						        	= {"trinket_altcainsoul",	"weapon_zs_m6"}
 GM.Assemblies["trinket_aposoul"]				        	= {"trinket_targetingvisori",	"trinket_blanksoul"}
 GM.Assemblies["trinket_greedsoul"]						        	= {"trinket_superstore",	"trinket_blanksoul"}
 GM.Assemblies["trinket_evesoul"]						        	= {"trinket_bloodpack",	"trinket_blanksoul"}
@@ -646,9 +647,9 @@ GM:AddSkillModifier(trinket, SKILLMOD_POINT_MULTIPLIER, 0.25)
 GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, -15)
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 0.15)
 d = math.random(1,5)
-skill1 =  math.Rand(-0.5,0.5)
+skill1 =  math.Rand(-0.2,0.5)
 skill2 =  math.random(-30,70)
-skill3 = math.Rand(-0.5,0.5)
+skill3 = math.Rand(-0.32,0.5)
 if d == 1 then
 skill1d = "b_damage"
 skill2d = "health"
@@ -1017,7 +1018,7 @@ trinket = GM:AddTrinket("Soul of Alt Tea", "altchayok", false, nil, {
 	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 17.697, y = 17.697 }, color = Color(255, 0, 255, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core_2+"] = { type = "Sprite", sprite = "effects/splashwake1", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 10, y = 10 }, color = Color(10, 23, 35, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 2, 0), angle = Angle(0, 0, 0), size = Vector(0.349, 0.349, 0.349), color = Color(55, 55, 5, 100), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} }
-}, nil, "+10 скорости но под конец волны скорость умножается на кол-во волн\n +10 Speed,on endwave multiple speed on wave count\n Q:1", nil, nil, "weapon_zs_altsoul")
+}, nil, "+10 скорости но под конец волны скорость умножается на кол-во волн\n +10 Speed,on endwave multiple speed on wave count\n Q:1", nil, nil, "weapon_zs_soulalt")
 GM:AddSkillModifier(trinket, SKILLMOD_SPEED, 10)
 
 
