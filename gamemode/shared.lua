@@ -563,6 +563,16 @@ function GM:OnPlayerHitGround(pl, inwater, hitfloater, speed)
 		end
 	end
 	if SERVER then
+		local groundent = pl:GetGroundEntity()
+		if groundent:IsValid() and groundent:IsPlayer() and PTeam(groundent) == TEAM_HUMAN then
+
+			if math.floor(120) > 0 then
+				groundent:TakeSpecialDamage(math.max(((groundent:Health() * 0.2) + 12 + damage) + pl:Health() * 0.05,((groundent:Health() * 0.2) + 12) + pl:Health() * 0.05), DMG_CLUB, pl, pl, pl:GetPos())
+				return true
+			end
+		end
+	end
+	if SERVER then
 	local groundent = pl:GetGroundEntity()
 	if groundent:IsValid() and groundent:IsPlayer() and PTeam(groundent) == TEAM_UNDEAD and pl:IsSkillActive(SKILL_VKID) then
 		if groundent:IsHeadcrab() then
