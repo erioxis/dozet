@@ -19,8 +19,8 @@ SWEP.WorldModel = "models/weapons/w_medkit.mdl"
 SWEP.ViewModel = "models/weapons/c_medkit.mdl"
 SWEP.UseHands = true
 
-SWEP.Heal = 19
-SWEP.Primary.Delay = 7
+SWEP.Heal = 14
+SWEP.Primary.Delay = 6.3
 
 SWEP.Primary.ClipSize = 30
 SWEP.Primary.DefaultClip = 150
@@ -220,6 +220,7 @@ end
 function SWEP:GetNextCharge()
 	return self:GetDTFloat(0)
 end
+
 
 function SWEP:CanPrimaryAttack()
 	local owner = self:GetOwner()

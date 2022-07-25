@@ -338,6 +338,8 @@ SKILL_SKILLFORGODS = 317
 SKILL_SECRET = 318
 SKILL_WYRDREC = 319
 SKILL_SECRET2 = 320
+SKILL_DEBUFF = 321
+SKILL_CHEESE3 = 322
 
 SKILLMOD_HEALTH = 1
 SKILLMOD_SPEED = 2
@@ -498,10 +500,17 @@ GM:AddSkill(SKILL_BLOODBUFF, ""..translate.Get("skill_bbuff"), GOOD..translate.G
 GM:AddSkillModifier(SKILL_BLOODBUFF, SKILLMOD_BLEED_DAMAGE_TAKEN_MUL, -0.25)
 GM:AddSkillModifier(SKILL_BLOODBUFF, SKILLMOD_POISON_DAMAGE_TAKEN_MUL, -0.25)
 GM:AddSkillModifier(SKILL_BLOODBUFF, SKILLMOD_BLOODARMOR, -20)
+GM:AddSkill(SKILL_DEBUFF, translate.Get("skill_dbuff"), BAD..translate.Get("skill_dbuff_d1")..GOOD.."+60"..translate.Get("barmor"),
+																-1.50,			0,					{SKILL_BLOODBUFF}, TREE_HEALTHTREE)
+GM:AddSkillModifier(SKILL_DEBUFF, SKILLMOD_BLEED_DAMAGE_TAKEN_MUL, 0.50)
+GM:AddSkillModifier(SKILL_DEBUFF, SKILLMOD_POISON_DAMAGE_TAKEN_MUL, 0.75)
+GM:AddSkillModifier(SKILL_DEBUFF, SKILLMOD_BLOODARMOR, 60)
 GM:AddSkill(SKILL_CHEESE, ""..translate.Get("skill_cheese_0"), GOOD..translate.Get("skill_cheese_d1"),
 																1,			1,					{SKILL_GOURMET}, TREE_HEALTHTREE)
 GM:AddSkill(SKILL_CHEESE2, translate.Get("skill_cheese_0").." II", GOOD..translate.Get("skill_cheese_d2"),
 																0,			1,					{SKILL_CHEESE}, TREE_HEALTHTREE)
+GM:AddSkill(SKILL_CHEESE3, translate.Get("skill_cheese_0").." III", GOOD..translate.Get("skill_cheese_d3"),
+																0,			3,					{SKILL_CHEESE2}, TREE_HEALTHTREE)
 GM:AddSkill(SKILL_TANKER, ""..translate.Get("skill_tanker_0"), GOOD..""..translate.Get("skill_tanker_d1")..BAD..""..translate.Get("skill_tanker_d2"),
 																-5,			4,					{SKILL_LIVER}, TREE_HEALTHTREE)
 GM:AddSkill(SKILL_LIVER,  ""..translate.Get("skill_curse_0"), BAD..""..translate.Get("skill_curse_d1")..GOOD..""..translate.Get("skill_curse_d2")..GOOD..""..translate.Get("skill_curse_d3")..GOOD.."+30"..translate.Get("worth"),
@@ -1954,6 +1963,9 @@ GM:AddSkillModifier(SKILL_CHEESE, SKILLMOD_HEALTH, 10)
 GM:AddSkillModifier(SKILL_CHEESE, SKILLMOD_SPEED, 10)
 GM:AddSkillModifier(SKILL_CHEESE2, SKILLMOD_HEALTH, 15)
 GM:AddSkillModifier(SKILL_CHEESE2, SKILLMOD_SPEED, 15)
+
+GM:AddSkillModifier(SKILL_CHEESE3, SKILLMOD_HEALTH, 5)
+GM:AddSkillModifier(SKILL_CHEESE3, SKILLMOD_SPEED, 3)
 
 GM:AddSkillModifier(SKILL_BLOODYMAN, SKILLMOD_HEALTH, -100)
 GM:AddSkillModifier(SKILL_BLOODYMAN, SKILLMOD_BLOODARMOR, 130)

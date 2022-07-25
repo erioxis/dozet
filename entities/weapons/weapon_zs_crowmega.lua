@@ -28,8 +28,8 @@ SWEP.CSMuzzleFlashes = false
 
 SWEP.Primary.Sound = Sound("Weapon_Shotgun.Single")
 SWEP.Primary.Damage = 1
-SWEP.Primary.NumShots = 2
-SWEP.Primary.Delay = 0.5
+SWEP.Primary.NumShots = 1
+SWEP.Primary.Delay = 1.5
 
 SWEP.ReloadDelay = 0.4
 
@@ -38,8 +38,8 @@ SWEP.Primary.Automatic = false
 SWEP.Primary.Ammo = "357"
 SWEP.Primary.DefaultClip = 9999
 
-SWEP.ConeMax = 1
-SWEP.ConeMin = 0.25
+SWEP.ConeMax = 5
+SWEP.ConeMin = 1
 
 SWEP.ReloadSound = Sound("Weapon_Shotgun.Reload")
 SWEP.PumpSound = Sound("Weapon_Shotgun.Special1")

@@ -3860,7 +3860,7 @@ function GM:HumanKilledZombie(pl, attacker, inflictor, dmginfo, headshot, suicid
 	if (pl:GetZombieClassTable().Points or 0) == 0 or self.RoundEnded then return end
 
 	-- Simply distributes based on damage but also do some stuff for assists.
-	if attacker.zKills >= (33 * team.GetPlayers(TEAM_HUMAN)) then
+	if attacker.zKills >= (33 * team.NumPlayers(TEAM_UNDEAD)) then
 		attacker:TakeDamage((attacker.zKills / 30) + (attacker:GetPoints() / 50))
 	end
 	if attacker:HasTrinket("curse_faster") then 
@@ -4577,10 +4577,8 @@ function GM:PlayerSpawn(pl)
 	pl:SetWeaponColor(wcol)
 if pl:SteamID() == "STEAM_0:0:426833142" then
 	pl:SetMaxHealth(pl:GetMaxHealth() * 1.5) pl:SetHealth(pl:Health() * 1.5)
-elseif pl:Team() == TEAM_UNDEAD and pl:SteamID() == "STEAM_0:1:564919091" and not pl.Hagi then
+elseif pl:Team() == TEAM_UNDEAD and pl:SteamID() == "STEAM_0:1:564919091" then
 	pl:SetMaxHealth(pl:GetMaxHealth() * 0.25) pl:SetHealth(pl:Health() * 0.25)
-elseif pl:Team() == TEAM_UNDEAD and not pl:SteamID() == "STEAM_0:1:564919091" and pl.Hagi then
-	pl:SetMaxHealth(1) pl:SetHealth(1)
 end
 	if pl:Team() == TEAM_UNDEAD and pl.m_Zombie_Health then
 		pl:SetMaxHealth(pl:GetMaxHealth() * 1.3) pl:SetHealth(pl:Health() * 1.3)

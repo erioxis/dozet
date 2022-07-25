@@ -2,12 +2,12 @@ CLASS.Name = "Crow?"
 CLASS.TranslationName = "class_crow"
 CLASS.Description = "description_crow"
 
-CLASS.Health = 25
-CLASS.Wave = 2 / 12
+CLASS.Health = 0
+CLASS.Wave = 3 / 12
 CLASS.Threshold = 0
 CLASS.SWEP = "weapon_zs_crowmega"
 CLASS.Model = Model("models/crow.mdl")
-CLASS.Speed = 200
+CLASS.Speed = 550
 CLASS.JumpPower = 1200
 
 CLASS.PainSounds = {"NPC_Crow.Pain"}

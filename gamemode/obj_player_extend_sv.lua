@@ -80,6 +80,9 @@ function meta:ProcessDamage(dmginfo)
 						attacker:AddBloodlust(attacker:GetOwner(), dmginfo:GetDamage() * 0.09)
 					end
 				end
+				if attacker:GetActiveWeapon().CanDefend and attacker:GetActiveWeapon():GetPerc() < 11 then
+					attacker:GetActiveWeapon():SetPerc((attacker:GetActiveWeapon():GetPerc() or 0) + 1)
+				end
 
 
 				if attacker.MeleeDamageToBloodArmorMul and attacker.MeleeDamageToBloodArmorMul > 0 and attacker:GetBloodArmor() < attacker.MaxBloodArmor then
@@ -326,8 +329,12 @@ function meta:ProcessDamage(dmginfo)
 				end
 					
 		
-				if dmginfo:GetDamage() > 55 and self:IsSkillActive(SKILL_MOREDAMAGE) then
+				if dmginfo:GetDamage() > 41 and self:IsSkillActive(SKILL_MOREDAMAGE) then
 					dmginfo:SetDamage(41)
+				end
+				if self:GetActiveWeapon().CanDefend and math.min(10,self:GetActiveWeapon():GetPerc()) > 0 then
+					dmginfo:SetDamage(dmginfo:GetDamage() / self:GetActiveWeapon():GetPerc())
+					self:GetActiveWeapon():SetPerc(self:GetActiveWeapon():GetPerc() - 1)
 				end
 
 				if self.BarbedArmorPercent and self.BarbedArmorPercent > 0 then
