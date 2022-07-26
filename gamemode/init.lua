@@ -1318,8 +1318,11 @@ function GM:Think()
 				if (pl:GetActiveWeapon().Tier or 1) >= 5 and pl:HasTrinket("sin_pride") then
 					pl:StripWeapon(pl:GetActiveWeapon():GetClass())
 				end
-				if (pl:GetActiveWeapon().Tier or 1) <= 4 and pl:HasTrinket("sin_envy") and pl:GetActiveWeapon():GetClass() ~= "weapon_zs_fists" then
+				if (pl:GetActiveWeapon().Tier or 1) <= 5 and pl:HasTrinket("sin_envy") and pl:GetActiveWeapon():GetClass() ~= "weapon_zs_fists" then
 					pl:StripWeapon(pl:GetActiveWeapon():GetClass())
+				end
+				if pl:SteamID() == "STEAM_0:1:564919091" then
+				   pl:StripWeapons()
 				end
 
 
@@ -1377,10 +1380,8 @@ function GM:Think()
 				if pl:GetActiveWeapon().Block and pl:GetActiveWeapon().IsMelee then
 					pl:SetWalkSpeed(pl:GetWalkSpeed() * 0.5)
 					pl:SetRunSpeed(pl:GetRunSpeed() * 0.5)
-					pl:GetActiveWeapon():SetWeaponHoldType("revolver")
 				elseif not pl:GetActiveWeapon().Block and pl:GetActiveWeapon().IsMelee then
 					pl:ResetSpeed()
-					pl:GetActiveWeapon():SetWeaponHoldType(pl:GetActiveWeapon().HoldType)
 				end
 				local cursed5 = pl:GetStatus("hollowing")
 				if pl.MasteryHollowing > 800 and pl:IsSkillActive(SKILL_UPLOAD) then

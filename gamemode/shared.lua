@@ -564,10 +564,10 @@ function GM:OnPlayerHitGround(pl, inwater, hitfloater, speed)
 	end
 	if SERVER then
 		local groundent = pl:GetGroundEntity()
-		if groundent:IsValid() and groundent:IsPlayer() and PTeam(groundent) == TEAM_HUMAN then
+		if groundent:IsValid() and groundent:IsPlayer() and PTeam(groundent) == TEAM_HUMAN and groundent:GetModelScale() < 1 then
 
 			if math.floor(120) > 0 then
-				groundent:TakeSpecialDamage(math.max((12 + damage) + pl:Health() / 100,5 + pl:Health() / 100), DMG_CLUB, pl, pl, pl:GetPos())
+				groundent:TakeSpecialDamage(math.max((12 + damage) + pl:Health() / 1000,5 + pl:Health() / 1000), DMG_CLUB, pl, pl, pl:GetPos())
 				return true
 			end
 		end
