@@ -3087,6 +3087,7 @@ function GM:EntityTakeDamage(ent, dmginfo)
 								GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_WEAPON, inflictor:GetClass(), "PointsEarned", points)
 								GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_WEAPON, inflictor:GetClass(), "Damage", damage)
 							end
+							if not (attacker:GetActiveWeapon().Tier or 0) == 7 then
 							if attacker:HasTrinket("fire_at") then
 								ent:AddLegDamageExt(damage * 0.1, attacker, attacker, SLOWTYPE_FLAME)
 								ent:GiveStatus("burn",math.random(1,7))
@@ -3106,6 +3107,7 @@ function GM:EntityTakeDamage(ent, dmginfo)
 							elseif attacker:HasTrinket("ultra_at") and (debuffed) and math.random(12) == 1 then
 								ent:GiveStatus("zombiestrdebuff",math.random(7,14))
 							end
+							end	
 
 							
 
@@ -4911,7 +4913,7 @@ function GM:WaveStateChanged(newstate, pl)
 						net.WriteString("Lottery ticket")
 					net.Send(pl)
 						
-						else end end end
+					end end end
 						local blyat = math.random(1,10)
 						if pl:IsSkillActive(SKILL_DEADINSIDE) and blyat < 3 then
 						pl:TakeDamage(20000)
@@ -4940,7 +4942,7 @@ function GM:WaveStateChanged(newstate, pl)
 						net.WriteString("Mystery ticket")
 					net.Send(pl)
 						
-						else end end end
+					end end end
 						
 					if pl:IsSkillActive(SKILL_ARSVOID)  then 
 						local weapon = {
@@ -4986,7 +4988,7 @@ function GM:WaveStateChanged(newstate, pl)
 
 						pl:Give(drop)
 
-						net.Start("zs_skillarsenalvoid")
+					net.Start("zs_skillarsenalvoid")
 						net.WriteString(drop)
 					net.Send(pl)
 						
@@ -5006,7 +5008,7 @@ function GM:WaveStateChanged(newstate, pl)
 							net.Start("zs_pointsdoubled")
 						net.Send(pl)
 							
-							else end end
+							end end
 							if pl:IsSkillActive(SKILL_POINTD)  then 
 								local luck = 8 - (pl.Luck / 3)
 								local lucky5 = math.random(1,luck)
@@ -5017,7 +5019,7 @@ function GM:WaveStateChanged(newstate, pl)
 								net.Start("zs_pointsdoubled")
 							net.Send(pl)
 								
-								else end end
+							end end
 
 						pl:AddPoints(pointsreward, nil, nil, true)
 						net.Start("zs_luck")
