@@ -96,6 +96,12 @@ function SWEP.BulletCallback(attacker, tr, dmginfo)
 
 	if SERVER and ent and ent:IsValidLivingZombie() then
 		dmginfo:SetDamageForce(attacker:GetUp() * 7000 + attacker:GetForward() * 25000)
+		local explosion = ents.Create( "env_explosion" ) -- The explosion entity
+		explosion:SetPos( tr.HitPos ) -- Put the position of the explosion at the position of the entity
+		explosion:Spawn() -- Spawn the explosion
+		explosion:SetKeyValue( "iMagnitude", dmginfo:GetDamage() * 2) -- the magnitude of the explosion
+		explosion:Fire( "Explode", 0, 0 ) -- explode
+		explosion:SetOwner(attacker)
 	end
 end
 

@@ -12,6 +12,7 @@ function SWEP:ApplyMeleeDamage(ent, trace, damage)
 		ent:SetGroundEntity(NULL)
 		ent:SetVelocity(vel)]]
 		if ent:IsPlayer() then
+		if ent:HasTrinket("antibaracat") then ent:ThrowFromPositionSetZ(trace.StartPos, ent:IsPlayer() and 600 or 1600, nil, noknockdown) 	self.BaseClass.ApplyMeleeDamage(self, ent, trace, damage) return end
 			ent:GiveStatus("rot",3)
 		elseif math.random(1,12) == 1 and not ent:IsPlayer() then
 			ent:Remove()

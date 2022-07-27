@@ -24,13 +24,10 @@ CLASS.Mass = 2
 
 CLASS.NoUse = false
 CLASS.NoGibs = true
-CLASS.NoCollideAll = true
 CLASS.NoFallDamage = true
 CLASS.NoFallSlowdown = true
-CLASS.NeverAlive = false
 CLASS.AllowTeamDamage = true
-CLASS.NoDeaths = true
-CLASS.Points = 5
+
 
 local ACT_RUN = ACT_RUN
 local ACT_IDLE = ACT_IDLE

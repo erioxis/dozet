@@ -27,6 +27,7 @@ INC_CLIENT()
 	end
 
 	function SWEP:DrawHUD()
+
 		local wid, hei = 384, 16
 		local x, y = ScrW() - wid - 32, ScrH() - hei - 72
 		local texty = y - 4 - draw.GetFontHeight("ZSHUDFontSmall")
@@ -34,10 +35,16 @@ INC_CLIENT()
 		defleft = (self:GetPerc() or 0)
 			surface.SetDrawColor(5, 5, 115, 180)
 		surface.DrawRect(x, y, wid, hei)
-	
-			surface.SetDrawColor(250, 55, 0, 180)
-			surface.SetTexture(surface.GetTextureID("VGUI/gradient_down"))
-			surface.DrawTexturedRect(x, y, math.min(defleft * 0.1,1) * wid, hei)
+	if self.GodMode then
+
+		surface.SetDrawColor(math.random(0,255), math.random(0,55), math.random(0,155), 180)
+		surface.SetTexture(surface.GetTextureID("VGUI/gradient_down"))
+		surface.DrawTexturedRect(x, y, math.min(defleft * 0.1,1) * wid, hei)
+	else
+		surface.SetDrawColor(250, 55, 0, 180)
+		surface.SetTexture(surface.GetTextureID("VGUI/gradient_down"))
+		surface.DrawTexturedRect(x, y, math.min(defleft * 0.1,1) * wid, hei)
+	end
 
 			surface.SetDrawColor(50, 155, 50, 180)
 			surface.DrawOutlinedRect(x, y, wid, hei)

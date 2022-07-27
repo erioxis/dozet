@@ -13,7 +13,7 @@ CLASS.BetterVersion = "Baragat"
 CLASS.Wave = 4 / 6
 
 CLASS.KnockbackScale = 0
-
+CLASS.BaraCat = true
 CLASS.FearPerInstance = 1
 
 CLASS.Points = 5

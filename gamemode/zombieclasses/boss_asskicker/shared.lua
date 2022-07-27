@@ -19,6 +19,9 @@ CLASS.Health = 4500
 CLASS.Speed = 340
 CLASS.JumpPower = 340
 
+
+CLASS.BaraCat = true
+
 CLASS.NoFallDamage = true
 CLASS.NoFallSlowdown = true
 

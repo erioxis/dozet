@@ -13,7 +13,7 @@ CLASS.Hidden = false
 CLASS.Health = 200
 CLASS.Speed = 210
 CLASS.JumpPower = 300
-
+CLASS.BaraCat = true
 CLASS.Points = CLASS.Health/GM.TorsoZombiePointRatio
 
 CLASS.Hull = {Vector(-16, -16, 0), Vector(16, 16, 20)}

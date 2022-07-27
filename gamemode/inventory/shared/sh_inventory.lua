@@ -240,7 +240,7 @@ trinket = GM:AddTrinket(""..translate.Get("t_richeye"), "greedeye", false, hpvel
 GM:AddSkillModifier(trinket, SKILLMOD_ENDWAVE_POINTS, 20)
 GM:AddSkillModifier(trinket, SKILLMOD_ARSENAL_DISCOUNT, 0.05)
 
-trinket = GM:AddTrinket(""..translate.Get("t_bara"), "classil", false, hpveles, hpweles, 4, ""..translate.Get("t_d_bara"), nil, nil, "weapon_zs_shot_trinket")
+trinket = GM:AddTrinket(""..translate.Get("t_bara"), "classil", true, hpveles, hpweles, 4, ""..translate.Get("t_d_bara"), nil, nil, "weapon_zs_shot_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, 60)
 GM:AddSkillModifier(trinket, SKILLMOD_BLOODARMOR_DMG_REDUCTION, 0.09)
 GM:AddSkillModifier(trinket, SKILLMOD_HEALING_RECEIVED, -5)
@@ -1012,7 +1012,7 @@ trinket = GM:AddTrinket("Soul of Alt Eden", "soulalteden", false, nil, {
 	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 17.697, y = 17.697 }, color = Color(4, 8, 255, 208), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core_2+"] = { type = "Sprite", sprite = "effects/splashwake1", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 30, y = 30 }, color = Color(165, 39, 39), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 2, 0), angle = Angle(0, 0, 0), size = Vector(0.349, 0.349, 0.349), color = Color(26, 201, 245), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} }
-}, nil, "On kill give random Dkills,can give -20 Dkills\nПри убийстве дает рандомные Dkills они могут уйти в минус\n Q:D20", nil, nil, "weapon_zs_soulalt")
+}, nil, "Chaos never change,give random status every random damage\nХаос никогда не меняется,дает рандомный статус при накоплениее рандомного урона\n Q:D20", nil, nil, "weapon_zs_soulalt")
 
 trinket = GM:AddTrinket("Soul of Alt Tea", "altchayok", false, nil, {
 	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 17.697, y = 17.697 }, color = Color(255, 0, 255, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},

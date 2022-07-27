@@ -31,6 +31,8 @@ SWEP.SwingHoldType = "melee"
 
 SWEP.CanDefend = true
 
+SWEP.GodMode = nil
+
 
 SWEP.HitDecal = "Manhackcut"
 

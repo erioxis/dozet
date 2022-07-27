@@ -16,7 +16,7 @@ CLASS.FearPerInstance = 1
 CLASS.Points = 250
 
 CLASS.SWEP = "weapon_zs_baragat"
-
+CLASS.BaraCat = true
 CLASS.Health = 3000
 CLASS.Speed = 700
 CLASS.JumpPower = 760

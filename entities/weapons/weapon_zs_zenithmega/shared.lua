@@ -41,6 +41,8 @@ SWEP.RequiredClip = 3
 
 SWEP.NumShots = 3
 
+SWEP.AntiInd = true
+
 SWEP.ReloadSpeed = 0.9
 
 SWEP.Recoil = 3

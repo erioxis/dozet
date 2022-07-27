@@ -1,7 +1,7 @@
 SWEP.Base = "weapon_zs_graveshovel"
 SWEP.ZombieOnly = false
 
-SWEP.MeleeDamage = 40
+SWEP.MeleeDamage = 32
 SWEP.MeleeKnockBack = 160
 
 SWEP.Primary.Delay = 0.4
@@ -16,7 +16,7 @@ AccessorFuncDT(SWEP, "HookTime", "Float", 1)
 function SWEP:SecondaryAttack()
 	if CurTime() < self:GetNextPrimaryFire() or CurTime() < self:GetNextSecondaryFire() then return end
 
-	self:SetNextSecondaryFire(CurTime() + 0.25)
+	self:SetNextSecondaryFire(CurTime() + 0.45 + (self.Primary.Delay * 0.5))
 	self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
 
 	self:SetSwingAnimTime(CurTime() + 0.3)
@@ -25,7 +25,7 @@ function SWEP:SecondaryAttack()
 
 	self:EmitSound("npc/headcrab_poison/ph_poisonbite3.wav", 75, 46)
 
-	self:SetHookTime(CurTime() + 0.5)
+	self:SetHookTime(CurTime() + 0.35)
 end
 
 function SWEP:Think()

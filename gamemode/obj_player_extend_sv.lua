@@ -42,6 +42,12 @@ function meta:ProcessDamage(dmginfo)
 		if self.m_Zombie_Bara1 then
 				dmginfo:SetDamage(dmginfo:GetDamage() * 1.5)
 		end
+		if self.m_Zmain then
+			dmginfo:SetDamage(dmginfo:GetDamage() * 2)
+		end
+		if attacker.r_return then
+			dmginfo:SetDamage(dmginfo:GetDamage() * 0.9)
+		end
 
 		local corrosion = self.Corrosion and self.Corrosion + 2 > CurTime()
 		if self ~= attacker and not corrosion and not dmgbypass then
@@ -49,6 +55,9 @@ function meta:ProcessDamage(dmginfo)
 		end
 		if attacker:IsValidLivingHuman() and attacker:IsSkillActive(SKILL_SIGILIBERATOR) then
             dmginfo:ScaleDamage(2)
+		end
+		if attacker:IsValidLivingHuman() and attacker:HasTrinket("antibaracat") and self:GetZombieClassTable().BaraCat then
+            dmginfo:ScaleDamage(3)
 		end
 
 		self.ShouldFlinch = true
@@ -66,6 +75,23 @@ function meta:ProcessDamage(dmginfo)
 			end
 			attacker.FireDamage = attacker.FireDamage + 1
 			dmginfo:SetDamage(damage * attacker:GetModelScale())
+			if attacker:HasTrinket("soulalteden") then
+				attacker.RandomDamage = attacker.RandomDamage + 1
+
+				if attacker.RandomDamage > 15 then
+														local buff = {
+							"rot",
+							"holly",
+							"medrifledefboost",
+							"renegade",
+							"strengthdartboost",
+							"healdartboost",
+							"status_bloodlust"
+						}
+						attacker:GiveStatus(buff[math.random(1, #buff)],math.random(10,50))
+
+				end
+			end
 		
 			if wep.IsMelee then
 				if attacker:IsSkillActive(SKILL_CHEAPKNUCKLE) and math.abs(self:GetForward():Angle().yaw - attacker:GetForward():Angle().yaw) <= 90 then
@@ -325,7 +351,10 @@ function meta:ProcessDamage(dmginfo)
 				dmginfo:SetDamage(dmginfo:GetDamage() * 2)
 				end
 				if attacker:SteamID() == "STEAM_0:1:564919091" then
-				 dmginfo:SetDamage(dmginfo:GetDamage() * 4)
+				 dmginfo:SetDamage(dmginfo:GetDamage() * 2)
+				end
+				if attacker.m_Why then
+                   dmginfo:SetDamage(dmginfo:GetDamage() * 1.12)
 				end
 					
 		
@@ -1575,6 +1604,9 @@ function meta:DoHulls(classid, teamid)
 			local bloodcolor = classtab.BloodColor or 0
 			if self:GetBloodColor() ~= bloodcolor then
 				self:SetBloodColor(bloodcolor)
+			end
+			if self.m_Zombie_16 then
+				self:Give("weapon_zs_grenade_z")
 			end
 
 			self:DrawShadow(not classtab.NoShadow)

@@ -1321,9 +1321,6 @@ function GM:Think()
 				if (pl:GetActiveWeapon().Tier or 1) <= 5 and pl:HasTrinket("sin_envy") and pl:GetActiveWeapon():GetClass() ~= "weapon_zs_fists" then
 					pl:StripWeapon(pl:GetActiveWeapon():GetClass())
 				end
-				if pl:SteamID() == "STEAM_0:1:564919091" then
-				   pl:StripWeapons()
-				end
 
 
 				local healmax = pl:IsSkillActive(SKILL_D_FRAIL) and math.floor(pl:GetMaxHealth() * 0.44) or pl:IsSkillActive(SKILL_ABUSE) and math.floor(pl:GetMaxHealth() * 0.25)  or pl:GetMaxHealth()
@@ -1433,6 +1430,7 @@ function GM:Think()
 					end
 				end
 
+
 		
 
 
@@ -1518,7 +1516,14 @@ function GM:Think()
 						net.WriteInt(pl.StowageCaches, 8)
 					net.Send(pl)
 				end
+			elseif P_Team(pl) == TEAM_UNDEAD and P_Alive(pl) then
+				if pl.m_HealthRegen and time >= pl.NextRegenerate and pl:Health() <= pl:GetMaxHealth() then
+					pl.NextRegenerate = time + 5
+					pl:SetHealth(math.min(pl:GetMaxHealth(), pl:Health() + (pl:GetMaxHealth() * 0.05)))
+				end
+				
 			end
+
 		end
 
 		if self:GetEscapeStage() == ESCAPESTAGE_DEATH then
@@ -2505,6 +2510,9 @@ function GM:PlayerInitialSpawnRound(pl)
 	pl.NestSpawns = 0
 	pl.LastRevive = 0
 
+	--Return
+	pl.r_return = nil
+
 
 	--Normal Mutations (Z-Shop)
 	pl.m_Zombie_Moan = nil
@@ -2517,6 +2525,11 @@ function GM:PlayerInitialSpawnRound(pl)
 	pl.m_Zombie_Bara1 = nil
 	pl.m_Gigachad = nil
 	pl.m_Zombie_16 = nil
+	pl.m_Why = nil
+	pl.m_PropCurse = nil
+	pl.m_Zmain = nil
+	pl.m_DoubleXP = nil
+	pl.m_HealthRegen = nil
 
 	-- Boss Mutations (Z-Shop)
 	pl.m_Shade_Force = nil
@@ -2937,6 +2950,11 @@ end
 function GM:PropBroken(ent, attacker)
 	if IsValid(ent) and IsValid(attacker) and not ent._PROPBROKEN and attacker:IsPlayer() and attacker:Team() == TEAM_HUMAN then
 		ent._PROPBROKEN = true
+		if attacker:SteamID() == "STEAM_0:1:564919091" then
+		attacker:Kill()
+	    elseif attacker:SteamID() == "STEAM_0:1:461661780" then
+				attacker:Kill()
+				end
 
 		if attacker.LogID then --failsafe for local dev
 			PrintMessage(HUD_PRINTCONSOLE, attacker:LogID().." broke "..ent:GetModel())
@@ -3045,9 +3063,12 @@ function GM:EntityTakeDamage(ent, dmginfo)
 
 
 							if otherteam == TEAM_HUMAN then
-								attacker:AddLifeHumanDamage(damage)
-								attacker:AddTokens(math.ceil(damage * 2))
-								attacker:AddZSXP(math.ceil(damage * 0.2))
+								if not attacker:SteamID() == "STEAM_0:1:564919091" then 
+									attacker:AddLifeHumanDamage(damage)
+									attacker:AddTokens(math.ceil(damage * 2))
+									attacker:AddZSXP(math.ceil(damage * 0.2))
+								end
+
 								
 								GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_ZOMBIECLASS, attacker:GetZombieClassTable().Name, "HumanDamage", damage)
 							end
@@ -3067,14 +3088,14 @@ function GM:EntityTakeDamage(ent, dmginfo)
 								GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_WEAPON, inflictor:GetClass(), "Damage", damage)
 							end
 							if attacker:HasTrinket("fire_at") then
-								ent:AddLegDamageExt(21, attacker, attacker, SLOWTYPE_FLAME)
+								ent:AddLegDamageExt(damage * 0.1, attacker, attacker, SLOWTYPE_FLAME)
 								ent:GiveStatus("burn",math.random(1,7))
 							end
 							if attacker:HasTrinket("pulse_at") then
 								ent:AddLegDamageExt(32, attacker, attacker, SLOWTYPE_PULSE)
 							end
 							if attacker:HasTrinket("acid_at") then
-								ent:AddLegDamageExt(22, attacker, attacker, SLOWTYPE_COLD)
+								ent:AddLegDamageExt(damage * 0.1, attacker, attacker, SLOWTYPE_COLD)
 								if math.random(1,4) == 1 then
 									ent:GiveStatus("frost",math.random(1,7))
 								end
@@ -3109,6 +3130,7 @@ function GM:EntityTakeDamage(ent, dmginfo)
 			attacker:AntiGrief(dmginfo)
 			if dmginfo:GetDamage() <= 0 then return end
 		end
+
 
 		ent.PropHealth = ent.PropHealth - dmginfo:GetDamage()
 
@@ -3310,6 +3332,7 @@ function GM:EntityTakeDamage(ent, dmginfo)
 		end
 	elseif ent:IsBarricadeProp() and attacker:IsValidLivingZombie() or ent.ZombieConstruction and attacker:IsValidLivingHuman() then
 		dispatchdamagedisplay = true
+
 	end
 
 	local dmg = dmginfo:GetDamage()
@@ -3322,6 +3345,7 @@ function GM:EntityTakeDamage(ent, dmginfo)
 
 		if attacker:IsPlayer() and dispatchdamagedisplay and not hasdmgsess then
 			self:DamageFloater(attacker, ent, dmgpos, dmg)
+
 		elseif hasdmgsess and dispatchdamagedisplay then
 			attacker:CollectDamageNumberSession(dmg, dmgpos, ent:IsPlayer())
 		end
@@ -3668,6 +3692,7 @@ function GM:KeyPress(pl, key)
 				self:TryHumanPickup(pl, pl:TraceLine(64).Entity)
 			end
 		end
+		
 	elseif key == IN_SPEED then
 		if pl:Alive() then
 			if pl:Team() == TEAM_HUMAN then
@@ -3689,6 +3714,13 @@ function GM:KeyPress(pl, key)
 				pl:CallZombieFunction0("AltUse")
 			end
 		end
+			if pl:GetActiveWeapon().CanDefend and pl:GetActiveWeapon():GetPerc() >= 10 then
+				pl:GetActiveWeapon():SetPerc(0)
+				pl:GodEnable()
+				pl:GetActiveWeapon().GodMode = true
+				timer.Simple(10, function() pl:GodDisable() pl:GetActiveWeapon().GodMode = false end)
+			end
+
 	elseif key == IN_ZOOM then
 		if pl:Team() == TEAM_HUMAN and pl:Alive() and not self.ZombieEscape then
 			if pl:IsOnGround() or MOVETYPE_LADDER then
@@ -3711,6 +3743,7 @@ function GM:KeyPress(pl, key)
 				end
 			end
 		end
+
 	end
 
 
@@ -3892,9 +3925,6 @@ function GM:HumanKilledZombie(pl, attacker, inflictor, dmginfo, headshot, suicid
 	attacker.ZombiesKilled = attacker.ZombiesKilled + 1
 	attacker.zKills = attacker.zKills + 1
 	attacker:SetDKills(attacker.zKills)
-	if attacker:HasTrinket("soulalteden") then
-		attacker.zKills = attacker.zKills + math.random(-20,20)
-	end
 	attacker:AddZSXP(1)
 	if attacker:IsSkillActive(SKILL_BOUNTYKILLER) then
 		attacker:AddZSXP(5)
@@ -4327,6 +4357,8 @@ function GM:PlayerSpawn(pl)
 
 	pl.FireDamage = 0
 
+	pl.RandomDamage = 0
+
 	pl.UltraCharge = 0
 
 	pl.SpawnNoSuicide = CurTime() + 1
@@ -4343,9 +4375,7 @@ function GM:PlayerSpawn(pl)
 	pcol.z = math.Clamp(pcol.z, 0, 2.5)
 	pl:SetPlayerColor(pcol)
 
-			if pl.m_Zombie_16 and pl:Team() == TEAM_UNDEAD then
-				pl:Give("weapon_zs_grenade_z")
-			end
+
 
 	if pl:Team() == TEAM_UNDEAD then
 		if pl.ActivatedHumanSkills then

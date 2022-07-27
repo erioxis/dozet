@@ -15,13 +15,13 @@ function ENT:Think()
 	local owner = self:GetOwner()
 
 
-	local dmg = math.Clamp(self:GetDamage(), 1, 8)
+	local dmg = math.Clamp(owner:GetMaxHealth() / 150, 1, 100)
 
 	owner:TakeSpecialDamage(dmg, DMG_BURN, self.Damager and self.Damager:IsValid() and self.Damager:IsPlayer() and self.Damager:Team() ~= owner:Team() and self.Damager or owner, self)
 	self:AddDamage(-dmg)
-	owner:AddLegDamageExt(1, owner, owner, SLOWTYPE_FLAME)
+	owner:AddLegDamageExt(dmg, owner, owner, SLOWTYPE_FLAME)
 
-	self:NextThink(CurTime() + 0.25)
+	self:NextThink(CurTime() + 0.15)
 	if self.DieTime <= CurTime() then
 		self:Remove()
 	end

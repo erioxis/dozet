@@ -70,6 +70,14 @@ function SWEP:OnMeleeHit(hitent, hitflesh, tr)
 			effectdata:SetOrigin(tr.HitPos)
 			effectdata:SetNormal(tr.HitNormal)
 		util.Effect("explosion", effectdata)
+		if SERVER then
+			local explosion = ents.Create( "env_explosion" ) -- The explosion entity
+	explosion:SetPos( tr.HitPos ) -- Put the position of the explosion at the position of the entity
+	explosion:Spawn() -- Spawn the explosion
+	explosion:SetKeyValue( "iMagnitude", self.MeleeDamage ) -- the magnitude of the explosion
+	explosion:Fire( "Explode", 0, 0 ) -- explode
+	explosion:SetOwner(self:GetOwner())
+	end
 	end
 end
 

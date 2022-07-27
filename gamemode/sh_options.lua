@@ -185,6 +185,8 @@ GM:AddStartingItem("sling",				ITEMCAT_GUNS,			30,				"weapon_zs_slinger")
 GM:AddStartingItem("z9000",				ITEMCAT_GUNS,			30,				"weapon_zs_z9000")
 GM:AddStartingItem("minelayer",			ITEMCAT_GUNS,			30,				"weapon_zs_minelayer")
 
+
+
 GM:AddStartingItem("2pcp",				ITEMCAT_AMMO,			15,				nil,			"28 pistol ammo",				nil,		"ammo_pistol",			function(pl) pl:GiveAmmo(28, "pistol", true) end)
 GM:AddStartingItem("3pcp",				ITEMCAT_AMMO,			20,				nil,			"42 pistol ammo",				nil,		"ammo_pistol",			function(pl) pl:GiveAmmo(42, "pistol", true) end)
 GM:AddStartingItem("2sgcp",				ITEMCAT_AMMO,			15,				nil,			"24 shotgun ammo",				nil,		"ammo_shotgun",			function(pl) pl:GiveAmmo(24, "buckshot", true) end)
@@ -730,12 +732,17 @@ GM:AddMutationItem("m_zombie_moanguard", translate.Get("zshop_zombguard"), trans
 GM:AddMutationItem("m_zombie_bara", translate.Get("zshop_baracurse"), translate.Get("zshop_baracurse_d1"), ITEMCAT_MUTATIONS, 2500, nil, function(pl) pl.m_Zombie_Bara = true end, "models/player/catpants.mdl")
 GM:AddMutationItem("m_zombie_hitter", translate.Get("zshop_hit"), translate.Get("zshop_hit_d1"), ITEMCAT_MUTATIONS, 1200, nil, function(pl) pl.m_Zombie_Bara1 = true end, "models/player/catpants.mdl")
 GM:AddMutationItem("m_zombie_gigachad", translate.Get("zshop_gigachad"), translate.Get("zshop_gigachad_d1"), ITEMCAT_MUTATIONS, 1200, nil, function(pl) pl.m_Gigachad = true end, "models/player/catpants.mdl")
-GM:AddMutationItem("m_zombie_16", translate.Get("zshop_16"), translate.Get("zshop_16_d1"), ITEMCAT_MUTATIONS, 1200, nil, function(pl) pl.m_Zombie_16 = true end, "models/player/catpants.mdl")
+GM:AddMutationItem("m_zombie_16", translate.Get("zshop_16"), translate.Get("zshop_16_d1"), ITEMCAT_MUTATIONS, 500, nil, function(pl) pl.m_Zombie_16 = true end, "models/player/catpants.mdl")
+GM:AddMutationItem("m_why", translate.Get("zshop_why"), translate.Get("zshop_why_d1"), ITEMCAT_MUTATIONS, 600, nil, function(pl) pl.m_Why = true end, "models/player/zombie_classic.mdl")
+GM:AddMutationItem("m_propcurse", translate.Get("zshop_curseofdeath"), translate.Get("zshop_curseofdeath_d1"), ITEMCAT_MUTATIONS, 800, nil, function(pl) pl.m_PropCurse = true end, "models/player/zombie_classic.mdl")
+GM:AddMutationItem("m_dxp", translate.Get("zshop_dxp"), translate.Get("zshop_dxp_d1"), ITEMCAT_MUTATIONS, 800, nil, function(pl) pl.m_DoubleXP = true end, "models/player/zombie_classic.mdl")
+GM:AddMutationItem("m_hreg", translate.Get("zshop_hreg"), translate.Get("zshop_hreg_d1"), ITEMCAT_MUTATIONS, 1900, nil, function(pl) pl.m_HealthRegen = true end, "models/player/zombie_classic.mdl")
 
 -- Boss Mutagen
 GM:AddMutationItem("m_zombie_health2", translate.Get("zshop_godestzomb"), translate.Get("zshop_godestzomb2"), ITEMCAT_MUTATIONS_BOSS, 1000, nil, function(pl) pl.m_Zombie_GodyHealth = true end, "models/items/healthkit.mdl")
 GM:AddMutationItem("m_zombie_healthcursed", translate.Get("zshop_cursed"), translate.Get("zshop_cursed1"), ITEMCAT_MUTATIONS_BOSS, 900, nil, function(pl) pl.m_Zombie_CursedHealth = true end, "models/items/healthkit.mdl")      
 GM:AddMutationItem("m_shade_damage", translate.Get("zshop_bossphysicshazard"), translate.Get("zshop_bossphysicshazard2"), ITEMCAT_MUTATIONS_BOSS, 550, nil, function(pl) pl.m_Shade_Force = true end, "models/player/zombie_classic.mdl")
+GM:AddMutationItem("m_zmain", translate.Get("zshop_zmain"), translate.Get("zshop_zmain_d1"), ITEMCAT_MUTATIONS_BOSS, 850, nil, function(pl) pl.m_Zmain = true end, "models/player/zombie_classic.mdl")
 -- These are the honorable mentions that come at the end of the round.
 -- classes
 
