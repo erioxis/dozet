@@ -340,6 +340,7 @@ SKILL_WYRDREC = 319
 SKILL_SECRET2 = 320
 SKILL_DEBUFF = 321
 SKILL_CHEESE3 = 322
+SKILL_SAMODOS = 323
 
 SKILLMOD_HEALTH = 1
 SKILLMOD_SPEED = 2
@@ -726,6 +727,7 @@ GM:AddSkillModifier(SKILL_JEW, SKILLMOD_POINTS, 50)
 GM:AddSkillModifier(SKILL_JEW, SKILLMOD_ARSENAL_DISCOUNT, -0.10)
 GM:AddSkillModifier(SKILL_JEW, SKILLMOD_SCRAPDISCOUNT, -0.10)
 GM:AddSkillModifier(SKILL_JEW, SKILLMOD_RES_AMMO_MUL, 0.15)
+GM:AddSkillModifier(SKILL_SAMODOS, SKILLMOD_SCRAPDISCOUNT, -0.35)
 GM:AddSkill(SKILL_FIELDAMP, translate.Get("skill_field_amp"), GOOD..translate.Get("skill_field_amp_d1")..BAD..translate.Get("skill_field_amp_d2"),
 																6,			4,					{}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_TECHNICIAN, translate.Get("skill_field_tech"), GOOD..translate.Get("skill_field_tech_d1")..GOOD..translate.Get("skill_field_tech_d2"),
@@ -734,6 +736,8 @@ GM:AddSkill(SKILL_U_ROLLERMINE, translate.Get("skill_u_rmine"), GOOD..translate.
 																3,			-5,					{}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_HAULMODULE, translate.Get("skill_u_hdrone"), GOOD..translate.Get("skill_u_hdrone_d1"),
 																2,			-1,					{SKILL_NANITECLOUD}, TREE_BUILDINGTREE)
+GM:AddSkill(SKILL_SAMODOS, translate.Get("skill_samodos"), GOOD..translate.Get("skill_samodos_d1")..BAD..translate.Get("skill_samodos_d2"),
+																2,			3,					{SKILL_NANITECLOUD}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_LIGHTCONSTRUCT, translate.Get("skill_light_c"), GOOD..translate.Get("skill_light_c_d1")..BAD..translate.Get("skill_light_c_d2"),
 																8,			-1,					{}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_STOCKPILE, translate.Get("skill_stock2"), GOOD..translate.Get("skill_stock2_d1")..BAD..translate.Get("skill_stock2_d2"),

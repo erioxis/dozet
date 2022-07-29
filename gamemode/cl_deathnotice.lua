@@ -366,7 +366,7 @@ killicon.Add("weapon_zs_pushbroom", "zombiesurvival/killicons/weapon_zs_broom")
 killicon.Add("weapon_zs_scythe", "zombiesurvival/killicons/weapon_zs_scythe2")
 killicon.Add("weapon_zs_syx", "zombiesurvival/killicons/weapon_zs_scythe2")
 killicon.Add("weapon_zs_teslorer", "zombiesurvival/killicons/weapon_zs_teslorer")
-
+killicon.Add("weapon_zs_kobaldshield", "zombiesurvival/killicons/weapon_zs_koboldshield")
 
 killicon.Add("weapon_zs_stone", "zombiesurvival/killicons/weapon_zs_stone")
 killicon.Add("projectile_stone", "zombiesurvival/killicons/weapon_zs_stone")

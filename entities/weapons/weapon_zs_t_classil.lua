@@ -47,3 +47,18 @@ owner = self:GetOwner()
 		owner:StripWeapon(self:GetClass())
 	end
 end
+
+function SWEP:SecondaryAttack()
+	if not self:CanPrimaryAttack() then return end
+	self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
+
+	local owner = self:GetOwner()
+
+	if owner:HasTrinket("processor") then
+		owner:EmitSound("weapons/bugbait/bugbait_squeeze1.wav", 65, 150)
+
+		if SERVER then
+           owner:Kill()
+		end
+	end
+end

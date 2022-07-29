@@ -27,10 +27,12 @@ function ENT:Initialize()
 end
 
 function ENT:Use(activator, caller)
+
 	self:GiveToActivator(activator, caller)
 end
 
 function ENT:GiveToActivator(activator, caller)
+	if activator:IsSkillActive(SKILL_SAMODOS) then activator:CenterNotify(COLOR_RED, translate.ClientGet(activator, "samodos")) return end
 	if  not activator:IsPlayer()
 		or not activator:Alive()
 		or activator:Team() ~= TEAM_HUMAN

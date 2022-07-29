@@ -3065,12 +3065,9 @@ function GM:EntityTakeDamage(ent, dmginfo)
 
 
 							if otherteam == TEAM_HUMAN then
-								if not attacker:SteamID() == "STEAM_0:1:564919091" then 
 									attacker:AddLifeHumanDamage(damage)
 									attacker:AddTokens(math.ceil(damage * 2))
 									attacker:AddZSXP(math.ceil(damage * 0.2))
-								end
-
 								
 								GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_ZOMBIECLASS, attacker:GetZombieClassTable().Name, "HumanDamage", damage)
 							end
@@ -3369,6 +3366,7 @@ function GM:DamageFloater(attacker, victim, dmgpos, dmg, definiteply)
 		net.WriteVector(dmgpos)
 	net.Send(attacker)
 end
+
 
 function GM:SetRandomToZombie()
 	local plays = team.GetPlayers(TEAM_HUMAN)
@@ -3726,7 +3724,7 @@ function GM:KeyPress(pl, key)
 
 	elseif key == IN_ZOOM then
 		if pl:Team() == TEAM_HUMAN and pl:Alive() and not self.ZombieEscape then
-			if pl:IsOnGround() or MOVETYPE_LADDER then
+			if pl:IsOnGround() or pl:GetMoveType() == MOVETYPE_LADDER then
 				pl.LastGhostFailureVelocity = nil
 				pl:SetBarricadeGhosting(true)
 			else

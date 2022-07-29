@@ -479,6 +479,7 @@ GM:AddPointShopItem("graveshvl",		ITEMCAT_MELEE,			135,			"weapon_zs_graveshovel
 GM:AddPointShopItem("kongol",			ITEMCAT_MELEE,			135,			"weapon_zs_kongolaxe")
 GM:AddPointShopItem("scythe",			ITEMCAT_MELEE,			135,			"weapon_zs_scythe")
 GM:AddPointShopItem("powerfists",		ITEMCAT_MELEE,			135,			"weapon_zs_powerfists")
+GM:AddPointShopItem("kshield",		ITEMCAT_MELEE,			135,			"weapon_zs_kobaldshield")
 -- Tier 5
 GM:AddPointShopItem("frotchet",			ITEMCAT_MELEE,			500,			"weapon_zs_frotchet")
 GM:AddPointShopItem("luxrockj",			ITEMCAT_MELEE,			135,			"weapon_zs_luxshade")

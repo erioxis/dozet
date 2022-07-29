@@ -53,6 +53,7 @@ net.Receive("zs_dmg", function(length)
 	end
 end)
 
+
 net.Receive("zs_dmg_prop", function(length)
 	local damage = net.ReadUInt(16)
 	local pos = net.ReadVector()

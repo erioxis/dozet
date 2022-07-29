@@ -76,16 +76,16 @@ function meta:ProcessDamage(dmginfo)
 			attacker.FireDamage = attacker.FireDamage + 1
 			dmginfo:SetDamage(damage * attacker:GetModelScale())
 			if attacker:HasTrinket("soulalteden") then
-				attacker.RandomDamage = attacker.RandomDamage + 1
+				attacker.RandomDamage = attacker.RandomDamage + math.random(1,5)
 
-				if attacker.RandomDamage > 15 then
+				if attacker.RandomDamage > math.random(15,45) then
 														local buff = {
 							"holly",
 							"medrifledefboost",
 							"renegade",
 							"strengthdartboost",
 							"healdartboost",
-							"status_bloodlust"
+							"bloodlust"
 						}
 						attacker:GiveStatus(buff[math.random(1, #buff)],math.random(10,50))
 
@@ -123,6 +123,7 @@ function meta:ProcessDamage(dmginfo)
 					attacker:TakeSpecialDamage(damage * 0.05, DMG_SLASH, self, self:GetActiveWeapon())
                     dmginfo:SetDamage(damage * 2)
 				end
+
 
 				if attacker:IsSkillActive(SKILL_BLOODLUST) and attacker:GetPhantomHealth() > 0 and attacker:Health() < attackermaxhp then
 					local toheal = math.min(attacker:GetPhantomHealth(), math.min(self:Health(), damage * 0.65))
@@ -340,11 +341,11 @@ function meta:ProcessDamage(dmginfo)
 				if attacker.m_Zombie_Bara then
 					self:GiveStatus("knockdown",1)
 					local vel = self:GetPos() - self:GetPos()
-		vel.z = 0
-		vel:Normalize()
-		vel = vel * 2800
-		vel.z = 700
-			self:SetVelocity(vel)
+					vel.z = 0
+					vel:Normalize()
+					vel = vel * 2800
+					vel.z = 700
+					self:SetVelocity(vel)
 				end
 				if attacker.m_Zombie_Bara1 then
 				dmginfo:SetDamage(dmginfo:GetDamage() * 2)
@@ -364,6 +365,10 @@ function meta:ProcessDamage(dmginfo)
 					dmginfo:SetDamage(dmginfo:GetDamage() / self:GetActiveWeapon():GetPerc())
 					self:GetActiveWeapon():SetPerc(self:GetActiveWeapon():GetPerc() - 1)
 				end
+				if self:GetActiveWeapon().ResistDamage and math.abs(self:GetForward():Angle().yaw - attacker:GetForward():Angle().yaw) <= 90 then
+					dmginfo:SetDamage((dmginfo:GetDamage() * 0.3) - (self:GetActiveWeapon().MeleeDamage * 0.3))
+			    end
+				
 
 				if self.BarbedArmorPercent and self.BarbedArmorPercent > 0 then
 					attacker:TakeSpecialDamage(damage * self.BarbedArmorPercent, DMG_SLASH, self, self)
@@ -1193,6 +1198,7 @@ function meta:SecondWind(pl)
 end
 
 function meta:DropAll()
+	if self:IsSkillActive(SKILL_SAMODOS) then return end
 	self:DropAllWeapons()
 	self:DropAllAmmo()
 	self:DropAllInventoryItems()
@@ -1252,6 +1258,7 @@ function meta:DropWeaponByType(class)
 end
 
 function meta:DropAllWeapons()
+ 	if self:IsSkillActive(SKILL_SAMODOS) then return end
 	local vPos = self:GetPos()
 	local vVel = self:GetVelocity()
 	local zmax = self:OBBMaxs().z * 0.75
@@ -1299,6 +1306,7 @@ function meta:DropAmmoByType(ammotype, amount)
 end
 
 function meta:DropAllAmmo()
+	if self:IsSkillActive(SKILL_SAMODOS) then return end
 	local vPos = self:GetPos()
 	local vVel = self:GetVelocity()
 	local zmax = self:OBBMaxs().z * 0.75
@@ -2327,29 +2335,24 @@ end
 function meta:FireInduction(attacker, inflictor, damage)
 	if math.random(20 * (self:GetActiveWeapon().Primary.Numshots or 1)) == 1 or self.FireDamage >= (15) or damage > math.random(50,200) then
 		self.FireDamage = 0
-	timer.Create("Fire_inder" .. attacker:UniqueID(), 0.3, 2, function()
-		if not attacker:IsValid() or not self:IsValid() then return end
+		timer.Create("Fire_inder" .. attacker:UniqueID(), 0.1, 2, function()
+			if not attacker:IsValid() or not self:IsValid() then return end
 
-		local pos = self:WorldSpaceCenter()
-		pos.z = pos.z + 16
+			local pos = self:WorldSpaceCenter()
+			pos.z = pos.z + 16
 
-		self:TakeSpecialDamage((self:Health() * 0.15) + damage, DMG_DIRECT, attacker, inflictor, pos)
+			self:TakeSpecialDamage((self:Health() * 0.15) + damage, DMG_DIRECT, attacker, inflictor, pos)
 
-		if attacker:IsValidLivingHuman() then
-			util.BlastDamagePlayer(inflictor, attacker, pos, 100, (self:Health() * 0.25) + damage, DMG_BURN, 0.83)
-			for _, ent in pairs(util.BlastAlloc(inflictor, attacker, pos, 245 * (attacker.ExpDamageRadiusMul or 1))) do
-				if ent:IsValidLivingPlayer() and gamemode.Call("PlayerShouldTakeDamage", ent, attacker) then
-					ent:AddLegDamageExt(55, attacker, inflictor, SLOWTYPE_FLAME)
-				end
+			if attacker:IsValidLivingHuman() then
+				util.BlastDamagePlayer(inflictor, attacker, pos, 100, (self:Health() * 0.11) + damage, DMG_BURN, 0.83)
 			end
-		end
 
-		local effectdata = EffectData()
-			effectdata:SetOrigin(pos)
-			effectdata:SetNormal(attacker:GetShootPos())
-		util.Effect("hit_fire", effectdata)
-	end)
-end
+			local effectdata = EffectData()
+				effectdata:SetOrigin(pos)
+				effectdata:SetNormal(attacker:GetShootPos())
+			util.Effect("hit_fire", effectdata)
+		end)
+	end
 end
 
 function meta:SetPhantomHealth(amount)

@@ -491,8 +491,8 @@ concommand.Add("zsgiveammo", function(sender, command, arguments)
 		local desiredgive = math.min(count, GAMEMODE.AmmoCache[ammotype])
 		if desiredgive >= 1 then
 
-			if ent:IsSkillActive(SKILL_D_FRAIL) then 
-				GAMEMODE:ConCommandErrorMessage(sender, translate.ClientGet(sender, "have_skill_frail")) 
+			if ent:IsSkillActive(SKILL_SAMODOS) then 
+				GAMEMODE:ConCommandErrorMessage(sender, translate.ClientGet(sender, "have_skill_samodos")) 
 				return
 			end
 
@@ -572,8 +572,8 @@ concommand.Add("zsgiveweapon", function(sender, command, arguments)
 	if not invitem and not IsValid(currentwep) then return end
 
 	local ent = GAMEMODE:TryGetLockOnTrace(sender, arguments)
-	if ent:IsSkillActive(SKILL_D_FRAIL) then 
-		GAMEMODE:ConCommandErrorMessage(sender, translate.ClientGet(sender, "have_skill_frail")) 
+	if ent:IsSkillActive(SKILL_SAMODOS) then 
+		GAMEMODE:ConCommandErrorMessage(sender, translate.ClientGet(sender, "have_skill_samodos")) 
 		return
 	end
 	if ent and ent:IsValidLivingHuman() then
@@ -604,8 +604,8 @@ concommand.Add("zsgiveweaponclip", function(sender, command, arguments)
 	local currentwep = sender:GetActiveWeapon()
 	if currentwep and currentwep:IsValid() then
 		local ent = GAMEMODE:TryGetLockOnTrace(sender, arguments)
-		if ent:IsSkillActive(SKILL_D_FRAIL) then 
-			GAMEMODE:ConCommandErrorMessage(sender, translate.ClientGet(sender, "have_skill_frail")) 
+		if ent:IsSkillActive(SKILL_SAMODOS) then 
+			GAMEMODE:ConCommandErrorMessage(sender, translate.ClientGet(sender, "have_skill_samodos")) 
 			return
 		end
 		if ent and ent:IsValidLivingHuman() then
