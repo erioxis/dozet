@@ -1437,9 +1437,9 @@ function meta:AddPoints(points, floatingscoreobject, fmtype, nomul)
 		self:FloatingScore(floatingscoreobject, "floatingscore", wholepoints, fmtype or FM_NONE)
 	end
 
-	local xp = wholepoints
+	local xp = (wholepoints * 2) * self.XPMulti
 	if GAMEMODE.HumanXPMulti and GAMEMODE.HumanXPMulti >= 0 then
-		xp = ((xp * GAMEMODE.HumanXPMulti) * (self.XPMulti or 1) * 2)
+		xp = (xp * GAMEMODE.HumanXPMulti) * (self.XPMulti or 1)
 		local wholexp = math.floor(xp)
 		local xpremainder = xp - wholexp
 		if xpremainder > 0 then
