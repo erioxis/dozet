@@ -188,7 +188,7 @@ function SWEP:MeleeSwing()
 			self:SetPowerCombo(0)
 		end
 	end
-	if SERVER and not owner:IsSkillActive(SKILL_MELEEFAN) or SERVER and not owner:GetName() == "Jetstream Sam" then
+	if SERVER and not owner:IsSkillActive(SKILL_MELEEFAN) or SERVER and not owner:Nick() == "Jetstream Sam" then
 	owner:TakeDamage((owner:Health() * 0.01) + 1)
 	owner:SetHealth(owner:Health() * 0.9)
 	end

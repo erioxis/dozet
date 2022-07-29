@@ -2,7 +2,8 @@ CLASS.Name = "Crow?"
 CLASS.TranslationName = "class_crow"
 CLASS.Description = "description_crow"
 
-CLASS.Health = 0
+CLASS.Health = 1
+CLASS.DynamicHealth = 0
 CLASS.Wave = 3 / 12
 CLASS.Threshold = 0
 CLASS.SWEP = "weapon_zs_crowmega"

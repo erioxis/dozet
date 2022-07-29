@@ -31,14 +31,14 @@ SWEP.Primary.Damage = 1
 SWEP.Primary.NumShots = 1
 SWEP.Primary.Delay = 1.5
 
-SWEP.ReloadDelay = 0.4
+SWEP.ReloadDelay = 0.8
 
 SWEP.Primary.ClipSize = 5
 SWEP.Primary.Automatic = false
 SWEP.Primary.Ammo = "357"
-SWEP.Primary.DefaultClip = 9999
+SWEP.Primary.DefaultClip = 5
 
-SWEP.ConeMax = 5
+SWEP.ConeMax = 1
 SWEP.ConeMin = 1
 
 SWEP.ReloadSound = Sound("Weapon_Shotgun.Reload")

@@ -80,7 +80,6 @@ function meta:ProcessDamage(dmginfo)
 
 				if attacker.RandomDamage > 15 then
 														local buff = {
-							"rot",
 							"holly",
 							"medrifledefboost",
 							"renegade",
@@ -501,6 +500,16 @@ function meta:ProcessDamage(dmginfo)
 					end
 					if (not rot) then 
 						self:AddRot(self:GetOwner(), 1)
+					end
+				end
+				if attacker.m_Rot_Claws then
+					dmginfo:SetDamage(dmginfo:GetDamage() * 0.5)
+					local rot = self:GetStatus("rot")
+					if (rot) then 
+						self:AddRot(self:GetOwner(), rot.DieTime - CurTime() + 2)
+					end
+					if (not rot) then 
+						self:AddRot(self:GetOwner(), 2)
 					end
 				end
 
@@ -1430,7 +1439,7 @@ function meta:AddPoints(points, floatingscoreobject, fmtype, nomul)
 
 	local xp = wholepoints
 	if GAMEMODE.HumanXPMulti and GAMEMODE.HumanXPMulti >= 0 then
-		xp = (xp * GAMEMODE.HumanXPMulti) * (self.XPMulti or 1)
+		xp = ((xp * GAMEMODE.HumanXPMulti) * (self.XPMulti or 1) * 2)
 		local wholexp = math.floor(xp)
 		local xpremainder = xp - wholexp
 		if xpremainder > 0 then
@@ -2316,7 +2325,7 @@ function meta:CryogenicInduction(attacker, inflictor, damage)
 	end)
 end
 function meta:FireInduction(attacker, inflictor, damage)
-	if math.random(20 * (self:GetActiveWeapon().Primary.Numshots or 1)) == 1 or self.FireDamage >= (15) or damage > 200 then
+	if math.random(20 * (self:GetActiveWeapon().Primary.Numshots or 1)) == 1 or self.FireDamage >= (15) or damage > math.random(50,200) then
 		self.FireDamage = 0
 	timer.Create("Fire_inder" .. attacker:UniqueID(), 0.3, 2, function()
 		if not attacker:IsValid() or not self:IsValid() then return end

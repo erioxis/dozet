@@ -2530,6 +2530,8 @@ function GM:PlayerInitialSpawnRound(pl)
 	pl.m_Zmain = nil
 	pl.m_DoubleXP = nil
 	pl.m_HealthRegen = nil
+	pl.m_EasySpeed = nil
+	pl.m_Rot_Claws = nil
 
 	-- Boss Mutations (Z-Shop)
 	pl.m_Shade_Force = nil
@@ -3087,7 +3089,7 @@ function GM:EntityTakeDamage(ent, dmginfo)
 								GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_WEAPON, inflictor:GetClass(), "PointsEarned", points)
 								GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_WEAPON, inflictor:GetClass(), "Damage", damage)
 							end
-							if not (attacker:GetActiveWeapon().Tier or 0) == 7 then
+
 							if attacker:HasTrinket("fire_at") then
 								ent:AddLegDamageExt(damage * 0.1, attacker, attacker, SLOWTYPE_FLAME)
 								ent:GiveStatus("burn",math.random(1,7))
@@ -3107,7 +3109,6 @@ function GM:EntityTakeDamage(ent, dmginfo)
 							elseif attacker:HasTrinket("ultra_at") and (debuffed) and math.random(12) == 1 then
 								ent:GiveStatus("zombiestrdebuff",math.random(7,14))
 							end
-							end	
 
 							
 
@@ -3925,7 +3926,13 @@ function GM:HumanKilledZombie(pl, attacker, inflictor, dmginfo, headshot, suicid
 	end
 
 	attacker.ZombiesKilled = attacker.ZombiesKilled + 1
+	if not attacker:HasTrinket("altisaacsoul") then
 	attacker.zKills = attacker.zKills + 1
+	elseif attacker:HasTrinket("altisaacsoul") and math.random(1,2) == 1 then
+		attacker.zKills = attacker.zKills - 1
+	else
+		attacker.zKills = attacker.zKills + 1
+	end
 	attacker:SetDKills(attacker.zKills)
 	attacker:AddZSXP(1)
 	if attacker:IsSkillActive(SKILL_BOUNTYKILLER) then
@@ -4611,7 +4618,7 @@ function GM:PlayerSpawn(pl)
 if pl:SteamID() == "STEAM_0:0:426833142" then
 	pl:SetMaxHealth(pl:GetMaxHealth() * 1.5) pl:SetHealth(pl:Health() * 1.5)
 elseif pl:Team() == TEAM_UNDEAD and pl:SteamID() == "STEAM_0:1:564919091" then
-	pl:SetMaxHealth(pl:GetMaxHealth() * 0.25) pl:SetHealth(pl:Health() * 0.25)
+	pl:SetMaxHealth(pl:GetMaxHealth() * 0.1) pl:SetHealth(pl:Health() * 0.1)
 end
 	if pl:Team() == TEAM_UNDEAD and pl.m_Zombie_Health then
 		pl:SetMaxHealth(pl:GetMaxHealth() * 1.3) pl:SetHealth(pl:Health() * 1.3)

@@ -1633,11 +1633,17 @@ LANGUAGE.zshop_dxp_d1                               = "Получаете x2 о�
 LANGUAGE.zshop_hreg                             = "Реген"
 LANGUAGE.zshop_hreg_d1                               = "Восстанавливайте 5% здоровья раз в 5 секунд"
 
+LANGUAGE.zshop_rclaw                             = "Гнилые когти"
+LANGUAGE.zshop_rclaw_d1                               = "-50% Урона но вы даете ГНИЛЬ за удар"
+
+
 LANGUAGE.zshop_cursed                               = "Проклятый зомби"
 LANGUAGE.zshop_cursed1                                = "Увеличивает выживаемость на 100%."
 
 LANGUAGE.zshop_zmain                              = "Змейн"
 LANGUAGE.zshop_zmain_d1                               = "+50% Урона против пропов,x2 получаемый урон"
+LANGUAGE.zshop_ezspeed                             = "ЖВКИДА"
+LANGUAGE.zshop_ezspeed_d1                               = "Скорость X1.25"
 -- Чето
 LANGUAGE.worth_worth								= "Ворф: %s"
 LANGUAGE.worth_worth_cost							= "%s Ворфа"
