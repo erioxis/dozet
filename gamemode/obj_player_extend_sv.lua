@@ -367,6 +367,7 @@ function meta:ProcessDamage(dmginfo)
 				end
 				if self:GetActiveWeapon().ResistDamage and math.abs(self:GetForward():Angle().yaw - attacker:GetForward():Angle().yaw) >= 90 then
 					dmginfo:SetDamage((dmginfo:GetDamage() * 0.3) - (self:GetActiveWeapon().MeleeDamage * 0.3))
+					attacker:TakeDamage(self:GetActiveWeapon().MeleeDamage * 5, self, self:GetActiveWeapon())
 			    end
 				
 
@@ -2333,25 +2334,27 @@ function meta:CryogenicInduction(attacker, inflictor, damage)
 	end)
 end
 function meta:FireInduction(attacker, inflictor, damage)
-	if math.random(20 * (self:GetActiveWeapon().Primary.Numshots or 1)) == 1 or self.FireDamage >= (15) or damage > math.random(50,200) then
-		self.FireDamage = 0
-		timer.Create("Fire_inder" .. attacker:UniqueID(), 0.1, 2, function()
-			if not attacker:IsValid() or not self:IsValid() then return end
+	if not self:GetZombieClassTable().Boss then
+		if math.random(20 * (self:GetActiveWeapon().Primary.Numshots or 1)) == 1 or self.FireDamage >= (15) or damage > math.random(50,200) then
+			self.FireDamage = 0
+			timer.Create("Fire_inder" .. attacker:UniqueID(), 0.1, 2, function()
+				if not attacker:IsValid() or not self:IsValid() then return end
 
-			local pos = self:WorldSpaceCenter()
-			pos.z = pos.z + 16
+				local pos = self:WorldSpaceCenter()
+				pos.z = pos.z + 16
 
-			self:TakeSpecialDamage((self:Health() * 0.15) + damage, DMG_DIRECT, attacker, inflictor, pos)
+				self:TakeSpecialDamage((self:Health() * 0.15) + damage, DMG_DIRECT, attacker, inflictor, pos)
 
-			if attacker:IsValidLivingHuman() then
-				util.BlastDamagePlayer(inflictor, attacker, pos, 100, (self:Health() * 0.11) + damage, DMG_BURN, 0.83)
-			end
+				if attacker:IsValidLivingHuman() then
+					util.BlastDamagePlayer(inflictor, attacker, pos, 100, (self:Health() * 0.11) + damage, DMG_BURN, 0.83)
+				end
 
-			local effectdata = EffectData()
-				effectdata:SetOrigin(pos)
-				effectdata:SetNormal(attacker:GetShootPos())
-			util.Effect("hit_fire", effectdata)
-		end)
+				local effectdata = EffectData()
+					effectdata:SetOrigin(pos)
+					effectdata:SetNormal(attacker:GetShootPos())
+				util.Effect("hit_fire", effectdata)
+			end)
+		end
 	end
 end
 

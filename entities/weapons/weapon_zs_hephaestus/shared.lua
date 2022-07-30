@@ -52,11 +52,48 @@ GAMEMODE:AddNewRemantleBranch(SWEP, 1, ""..translate.Get("wep_tau_r1"), ""..tran
 			local hitpos, hitnormal, normal, dmg = tr.HitPos, tr.HitNormal, tr.Normal, dmginfo:GetDamage() * 1.2
 			timer.Simple(0, function() DoRicochet(attacker, hitpos, hitnormal, normal, dmg) end)
 		end
+		return {impact = false}
+	end
+end)
+local branch = GAMEMODE:AddNewRemantleBranch(SWEP, 2, ""..translate.Get("wep_tau_f1"), ""..translate.Get("wep_d_tau_f1"), function(wept)
+	wept.Primary.Delay = wept.Primary.Delay * 2.6
+	wept.Primary.Damage = wept.Primary.Damage * 0.77
+	wept.BulletCallback = function(attacker, tr, dmginfo)
+	wept.Primary.Ammo = "chemical"
+
+			local originaldmg = dmginfo:GetDamage()
+			dmginfo:SetDamage(attacker:GetActiveWeapon().Primary.Damage * 1.2)
+			if tr.Hit and SERVER then
+				local ent = ents.Create("prop_electricfield")
+				if ent:IsValid() then
+					ent:SetPos(tr.HitPos)
+					ent:SetOwner(attacker)
+					ent:Spawn()
+				end
+				for _, ent in pairs(ents.FindInSphere(tr.HitPos, 48)) do
+					if ent and ent:IsValid() then
+						local nearest = ent:NearestPoint(tr.HitPos)
+						if TrueVisibleFilters(tr.HitPos, nearest, dmginfo:GetInflictor(), ent) && ent != attacker then
+							ent:TakeSpecialDamage(originaldmg * 2, DMG_SHOCK, attacker, dmginfo:GetInflictor(), nearest)
+						end
+					end
+				end
+			end
+			local ent = tr.Entity
+			local effectdata = EffectData()
+			effectdata:SetOrigin(tr.HitPos)
+				util.Effect("explosion_lightning", effectdata)
+			effectdata:SetNormal(tr.HitNormal)		
+			effectdata:SetMagnitude(2)
+			effectdata:SetScale(1)
+				util.Effect("cball_explode", effectdata)		
+
 
 		return {impact = false}
 	end
 end)
-
+branch.Colors = {Color(122, 50, 255), Color(233, 161, 255), Color(136, 8, 255), Color(111, 0, 255), Color(42, 4, 102)}
+branch.NewNames = {translate.Get("wep_tau_colorq1"), translate.Get("wep_tau_colorq2"), translate.Get("wep_tau_colorq3"), translate.Get("wep_tau_colorq4"), translate.Get("wep_tau_colorq5")}
 SWEP.WalkSpeed = SPEED_SLOW
 SWEP.FireAnimSpeed = 1
 
