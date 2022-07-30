@@ -12,7 +12,7 @@ function ENT:Initialize()
 	self:PhysicsInit(SOLID_NONE)
 	self:SetUseType(SIMPLE_USE)
 	self:SetColor(Color(155, 208, 255, 255))
-	self:SetModelScale(1.85,1)
+	self:SetModelScale(math.random(0.5,3),math.random(0.3,0.9))
 	if self.DieTime == 0 then
 		self.DieTime = CurTime() + self.LifeTime
 	end
@@ -21,7 +21,7 @@ end
 function ENT:Think()
 	local owner = self:GetOwner()
 	if CurTime() >= self.NextHurt then 
-		for _, pl in pairs(ents.FindInSphere(self:GetPos(), 68 )) do
+		for _, pl in pairs(ents.FindInSphere(self:GetPos(), 68 * self:GetModelScale() )) do
 			if pl:IsPlayer() and owner:IsPlayer() and pl:Team() != owner:Team() and pl:Alive() then
 				pl:TakeSpecialDamage(self.HurtTick, DMG_SHOCK, owner, self, self:GetPos(), self:GetPos())
 				self.TotalHurt = self.TotalHurt - self.HurtTick
@@ -46,7 +46,7 @@ function ENT:Think()
 	
 	local pos = self:GetPos()
 	
-	for _, ent in pairs(ents.FindInSphere(pos, 328)) do
+	for _, ent in pairs(ents.FindInSphere(pos, 328 * self:GetModelScale())) do
 		local class = ent:GetClass()
 		local ownsitem = not ent.NoPickupsOwner or ent.NoPickupsOwner == owner
 		local droppedrecent = not ent.DroppedTime or ent.DroppedTime + 4 < CurTime()
@@ -57,6 +57,15 @@ function ENT:Think()
 			phys:ApplyForceCenter(phys:GetMass() * self.Force * dir)
 			ent:SetPhysicsAttacker(owner, 4)
 
+		end
+		if ent:IsPlayer() and ent:Team() == TEAM_UNDEAD then
+			if not ent:GetZombieClassTable().Boss then
+				if ent:Health() < 4500 then
+					local dir = (pos - ent:NearestPoint(pos)):GetNormalized()
+			  	 	ent:SetVelocity(self.Force * dir * 0.66)
+					ent:SetPhysicsAttacker(owner, 4)
+				end
+			end
 		end
 	end
 	self:NextThink(CurTime() + self.ForceDelay)

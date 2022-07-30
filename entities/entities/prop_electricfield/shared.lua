@@ -1,8 +1,8 @@
 ENT.Type = "anim"
 
-ENT.TotalHurt = 60
-ENT.HurtTick = 0.5
-ENT.LifeTime = 2.5
+ENT.TotalHurt = 200
+ENT.HurtTick = 77
+ENT.LifeTime = 1.1
 ENT.Radius = 700
 if CLIENT then return end
 ENT.Classes = table.ToAssoc(

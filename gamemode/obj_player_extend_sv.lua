@@ -2346,7 +2346,7 @@ function meta:FireInduction(attacker, inflictor, damage)
 				self:TakeSpecialDamage((self:Health() * 0.15) + damage, DMG_DIRECT, attacker, inflictor, pos)
 
 				if attacker:IsValidLivingHuman() then
-					util.BlastDamagePlayer(inflictor, attacker, pos, 100, (self:Health() * 0.11) + damage, DMG_BURN, 0.83)
+					util.BlastDamagePlayer(inflictor, attacker, pos, 100, (self:Health() * 0.07) + damage, DMG_BURN, 0.83)
 				end
 
 				local effectdata = EffectData()

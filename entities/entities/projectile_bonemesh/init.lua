@@ -43,7 +43,7 @@ function ENT:Explode(hitpos, hitnormal, hitent)
 	util.Blood(hitpos, 30, hitnormal, 300, true)
 
 	for i = 1, 4 do
-		for _, pl in pairs(ents.FindInSphere(hitpos, 90)) do
+		for _, pl in pairs(ents.FindInSphere(hitpos, 98)) do
 			if pl:IsValidLivingZombie() and not pl:GetStatus("zombie_regen") then
 				local zombieclasstbl = pl:GetZombieClassTable()
 				local ehp = zombieclasstbl.Boss and pl:GetMaxHealth() * 0.4 or pl:GetMaxHealth() * 1.25
@@ -55,8 +55,16 @@ function ENT:Explode(hitpos, hitnormal, hitent)
 					break
 				end
 			end
+
 		end
 	end
+	for _, pl in pairs(ents.FindInSphere(hitpos, 138)) do
+		if pl:IsValidLivingHuman() then
+			pl:TakeDamage(7, self:GetOwner(), self:GetOwner():GetActiveWeapon())
+			pl:PoisonDamage(4, owner, self)
+		end
+	end
+
 end
 
 function ENT:PhysicsCollide(data, physobj)

@@ -27,6 +27,7 @@ function ENT:DrawTranslucent()
 end
 
 function ENT:Draw()
+	if not MySelf:KeyDown(IN_SPEED) then return end
 	local time = CurTime()
 	local pos = self:GetPos()
 

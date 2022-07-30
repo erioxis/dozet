@@ -62,7 +62,7 @@ local branch = GAMEMODE:AddNewRemantleBranch(SWEP, 2, ""..translate.Get("wep_tau
 	wept.Primary.Ammo = "chemical"
 
 			local originaldmg = dmginfo:GetDamage()
-			dmginfo:SetDamage(attacker:GetActiveWeapon().Primary.Damage * 1.2)
+			dmginfo:SetDamage(attacker:GetActiveWeapon().Primary.Damage * 0.3)
 			if tr.Hit and SERVER then
 				local ent = ents.Create("prop_electricfield")
 				if ent:IsValid() then
