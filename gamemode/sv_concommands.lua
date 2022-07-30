@@ -59,7 +59,7 @@ concommand.Add("zs_pointsshopbuy", function(sender, command, arguments)
 		return
 	end
 
-	cost = usescrap and math.ceil(GAMEMODE:PointsToScrap(cost * (sender.ScrapDiscount or 1))) or math.floor(cost * (sender.ArsenalDiscount or 1))
+	cost = usescrap and math.ceil(GAMEMODE:PointsToScrap(cost * (sender.ScrapDiscount or 1))) or math.ceil(cost * (sender.ArsenalDiscount or 1))
 
 	if points < cost then
 		GAMEMODE:ConCommandErrorMessage(sender, translate.ClientGet(sender, usescrap and "need_to_have_enough_scrap" or "dont_have_enough_points"))
@@ -119,9 +119,9 @@ concommand.Add("zs_pointsshopbuy", function(sender, command, arguments)
 	end
     local scrapd = sender.ScrapDiscount
 	if usescrap then
-		sender:RemoveAmmo(cost * scrapd, "scrap")
+		sender:RemoveAmmo(math.ceil(cost * scrapd), "scrap")
 		sender:SendLua("surface.PlaySound(\"buttons/lever"..math.random(5)..".wav\")")
-		sender:PrintTranslatedMessage(HUD_PRINTTALK, usescrap and "created_x_for_y_scrap" ,itemtab.Name, cost * scrapd)
+		sender:PrintTranslatedMessage(HUD_PRINTTALK, usescrap and "created_x_for_y_scrap" ,itemtab.Name, math.ceil(cost * scrapd))
 	else
 		sender:TakePoints(cost)
 		sender:SendLua("surface.PlaySound(\"ambient/levels/labs/coinslot1.wav\")")
@@ -136,9 +136,11 @@ concommand.Add("zs_pointsshopbuy", function(sender, command, arguments)
 		if nearest then
 			local owner = nearest.GetObjectOwner and nearest:GetObjectOwner() or nearest:GetOwner()
 			if owner:IsValid() and owner ~= sender then
-				local scrapcom = math.ceil(cost / 6)
-				nearest:SetScraps(nearest:GetScraps() + scrapcom)
-				nearest:GetObjectOwner():CenterNotify(COLOR_GREEN, translate.Format("remantle_used", scrapcom)..sender:Nick())
+				if not sender:IsSkillActive(SKILL_SAMODOS) then
+					local scrapcom = math.ceil(cost / 6)
+					nearest:SetScraps(nearest:GetScraps() + scrapcom)
+					nearest:GetObjectOwner():CenterNotify(COLOR_GREEN, translate.Format("remantle_used", scrapcom)..sender:Nick())
+				end
 			end
 		end
 	else

@@ -365,7 +365,7 @@ function meta:ProcessDamage(dmginfo)
 					dmginfo:SetDamage(dmginfo:GetDamage() / self:GetActiveWeapon():GetPerc())
 					self:GetActiveWeapon():SetPerc(self:GetActiveWeapon():GetPerc() - 1)
 				end
-				if self:GetActiveWeapon().ResistDamage and math.abs(self:GetForward():Angle().yaw - attacker:GetForward():Angle().yaw) <= 90 then
+				if self:GetActiveWeapon().ResistDamage and math.abs(self:GetForward():Angle().yaw - attacker:GetForward():Angle().yaw) >= 90 then
 					dmginfo:SetDamage((dmginfo:GetDamage() * 0.3) - (self:GetActiveWeapon().MeleeDamage * 0.3))
 			    end
 				
