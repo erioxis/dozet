@@ -1645,7 +1645,7 @@ end)
 GM:SetSkillModifierFunction(SKILLMOD_BLOODARMOR, function(pl, amount)
 	local oldarmor = pl:GetBloodArmor()
 	local oldcap = pl.MaxBloodArmor or 20
-	local new = 20 + math.Clamp(amount, -20, 1000)
+	local new = 20 + math.Clamp(amount, 0, 1000)
 
 	pl.MaxBloodArmor = new
 

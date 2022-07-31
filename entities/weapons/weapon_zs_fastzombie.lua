@@ -47,6 +47,7 @@ function SWEP:ApplyMeleeDamage(pl, trace, damage)
 			pl:AddHallow(pl:GetOwner(), 12)
 		end
 	end
+	self.BaseClass.ApplyMeleeDamage(self, pl, trace, damage)
 end
 function SWEP:Think()
 	BaseClass.Think(self)

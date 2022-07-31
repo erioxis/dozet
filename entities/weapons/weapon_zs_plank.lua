@@ -74,17 +74,21 @@ end
 GAMEMODE:AddNewRemantleBranch(SWEP, 1, "'Planket'", "Give Bleed when you hit zombie,less damage,", function(wept)
 wept.MeleeDamage = wept.MeleeDamage * 0.8
 wept.BleedDamage = wept.MeleeDamage * 2
-function wept:ApplyMeleeDamage(ent, trace, damage)
-	if ent:IsValidLivingZombie() then
-
-
-		local bleed = ent:GiveStatus("bleed")
-		if bleed and bleed:IsValid() then
-			bleed:AddDamage(12)
-			bleed.Damager = self:GetOwner()
+function wept:PlayerHitUtil(owner, damage, hitent, dmginfo)
+	hitent:MeleeViewPunch(damage*0.1)
+	local bleed = hitent:GetStatus("bleed")
+	if bleed and bleed:IsValid() then
+		bleed:AddDamage(damage)
+		bleed.Damager = owner
+	else
+		local stat = hitent:GiveStatus("bleed")
+		if stat and stat:IsValid() then
+			stat:SetDamage(damage)
+			stat.Damager = owner
 		end
 	end
 end
+
 		wept.OnMeleeHit = function(self, hitent, hitflesh, tr)
 		if self:GetOwner():GetBleedDamage() > 1 then
 			self.MeleeDamage = wept.MeleeDamage * 1.5
