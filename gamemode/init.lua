@@ -3394,7 +3394,7 @@ end
 
 function GM:OnPlayerChangedTeam(pl, oldteam, newteam)
 	if newteam == TEAM_UNDEAD then
-		pl:SetPoints(0)
+		pl:SetPoints(pl:GetPoints() * 0.3)
 
 		--pl.WaveBarricadeDamage = 0
 		--pl.WaveHumanDamage = 0
@@ -4263,7 +4263,6 @@ end
 
 function GM:PlayerCanPickupWeapon(pl, ent)
 	if pl:IsSkillActive(SKILL_JEW) then
-
 		pl:SetPoints(pl:GetPoints() - 5)
 		GAMEMODE:ConCommandErrorMessage(pl, translate.ClientGet(pl, "jewmoment"))
 	end

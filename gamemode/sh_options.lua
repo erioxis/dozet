@@ -466,6 +466,7 @@ GM:AddPointShopItem("butcherknf",		ITEMCAT_MELEE,			55,				"weapon_zs_butcherkni
 GM:AddPointShopItem("keyboard",		    ITEMCAT_MELEE,			25,				"weapon_zs_keyboard")
 GM:AddPointShopItem("dash",		    ITEMCAT_MELEE,			55,				"weapon_zs_f_dash")
 GM:AddPointShopItem("muramasa",		ITEMCAT_MELEE,			55,				"weapon_zs_muramasa")
+GM:AddPointShopItem("esword",		ITEMCAT_MELEE,			55,				"weapon_zs_energysword")
 -- Tier 3
 GM:AddPointShopItem("longsword",		ITEMCAT_MELEE,			90,				"weapon_zs_longsword")
 GM:AddPointShopItem("executioner",		ITEMCAT_MELEE,			90,				"weapon_zs_executioner")
@@ -473,6 +474,7 @@ GM:AddPointShopItem("rebarmace",		ITEMCAT_MELEE,			90,				"weapon_zs_rebarmace")
 GM:AddPointShopItem("meattenderizer",	ITEMCAT_MELEE,			90,				"weapon_zs_meattenderizer")
 GM:AddPointShopItem("iceeluxx",	ITEMCAT_MELEE,			90,				"weapon_zs_icelux")
 GM:AddPointShopItem("lamptube",	ITEMCAT_MELEE,			90,				"weapon_zs_lamptube")
+GM:AddPointShopItem("esword_d",		ITEMCAT_MELEE,			90,				"weapon_zs_energysword_dasher")
 -- Tier 4
 GM:AddPointShopItem("harpoon",			ITEMCAT_MELEE,			135,				"weapon_zs_harpoon")
 GM:AddPointShopItem("graveshvl",		ITEMCAT_MELEE,			135,			"weapon_zs_graveshovel")

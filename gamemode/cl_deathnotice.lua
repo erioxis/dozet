@@ -308,7 +308,8 @@ killicon.AddFont("weapon_zs_smgstick", "zsdeathnoticecs", "x")
 killicon.Add("weapon_zs_toxicshooter", "zombiesurvival/killicons/weapon_zs_seditionist2", Color(0, 63, 25))
 killicon.Add("weapon_zs_megaray", "zombiesurvival/killicons/weapon_zs_healingray.png", Color(70, 130, 180))
 
-
+killicon.Add("weapon_zs_energysword", "zombiesurvival/killicons/weapon_zs_energysword.png")
+killicon.Add("weapon_zs_energysword_dasher", "zombiesurvival/killicons/weapon_zs_energysword.png")
 killicon.Add("weapon_zs_loy", "zombiesurvival/killicons/weapon_zs_axe")
 killicon.Add("weapon_zs_axe", "zombiesurvival/killicons/weapon_zs_axe")
 killicon.Add("weapon_zs_sawhack", "zombiesurvival/killicons/weapon_zs_sawhack.png")
