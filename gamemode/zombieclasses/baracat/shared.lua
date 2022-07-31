@@ -10,7 +10,9 @@ CLASS.BetterVersion = "Baragat"
 
 
 
-CLASS.Wave = 4 / 6
+CLASS.Wave = 3 / 6
+
+CLASS.NoCollideAll = true
 
 CLASS.KnockbackScale = 0
 CLASS.BaraCat = true
@@ -20,12 +22,12 @@ CLASS.Points = 5
 
 CLASS.SWEP = "weapon_zs_baracat"
 
-CLASS.Health = 560
+CLASS.Health = 1270
 CLASS.Speed = 410
 CLASS.JumpPower = 400
 
 
-CLASS.ModelScale = 0.7
+CLASS.ModelScale = 1.1
 CLASS.Hull = {Vector(-16, -16, 0), Vector(16, 16, 32)}
 CLASS.HullDuck = {Vector(-16, -16, 0), Vector(16, 16, 32)}
 CLASS.ViewOffset = Vector(0, 0, 32 * CLASS.ModelScale)
