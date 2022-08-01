@@ -12,7 +12,7 @@ CLASS.BetterVersion = "Baragat"
 
 CLASS.Wave = 3 / 6
 
-CLASS.NoCollideAll = true
+
 
 CLASS.KnockbackScale = 0
 CLASS.BaraCat = true
@@ -27,7 +27,7 @@ CLASS.Speed = 410
 CLASS.JumpPower = 400
 
 
-CLASS.ModelScale = 1.1
+CLASS.ModelScale = 0.7
 CLASS.Hull = {Vector(-16, -16, 0), Vector(16, 16, 32)}
 CLASS.HullDuck = {Vector(-16, -16, 0), Vector(16, 16, 32)}
 CLASS.ViewOffset = Vector(0, 0, 32 * CLASS.ModelScale)
@@ -36,7 +36,7 @@ CLASS.StepSize = 25
 CLASS.CrouchedWalkSpeed = 1
 CLASS.Mass = DEFAULT_MASS * CLASS.ModelScale * 0.5
 
---CLASS.NoCollideAll = true
+CLASS.NoCollideAll = true
 
 CLASS.CantDuck = true
 

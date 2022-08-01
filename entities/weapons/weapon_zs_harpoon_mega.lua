@@ -96,3 +96,30 @@ function SWEP:SecondaryAttack()
 	end
 end
 
+
+
+function SWEP:Think()
+	if self.IdleAnimation and self.IdleAnimation <= CurTime() then
+		self.IdleAnimation = nil
+		self:SendWeaponAnim(ACT_VM_IDLE)
+	end
+
+	if self:IsSwinging() and self:GetSwingEnd() <= CurTime() then
+		self:StopSwinging()
+		self:MeleeSwing()
+	end
+	if SERVER then
+		pos = self:GetOwner():GetPos()
+	for _, ent in pairs(ents.FindInSphere(pos, 200)) do
+		if ent:IsPlayer() and ent:Team() == TEAM_UNDEAD then
+			if not ent:GetZombieClassTable().Boss then
+				if ent:Health() < 4500 then
+					local dir = (pos - ent:NearestPoint(pos)):GetNormalized()
+			  	 	ent:SetVelocity(32 * dir * 0.66)
+				end
+			end
+		end
+	end
+end
+end
+
