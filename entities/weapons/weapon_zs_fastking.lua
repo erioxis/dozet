@@ -32,19 +32,20 @@ SWEP.PounceDelay = 1.25
 SWEP.PounceVelocity = 700
 
 SWEP.RoarTime = 1.1
+SWEP.AutoCheck = false
 
 SWEP.Secondary.Automatic = false
 
 SWEP.NextClimbSound = 0
 SWEP.NextAllowPounce = 0
 function SWEP:ApplyMeleeDamage(pl, trace, damage)
-	if SERVER and pl:IsPlayer() then
+	if SERVER and pl:IsPlayer() and not self.AutoCheck then
 		local cursed = pl:GetStatus("hollowing")
 		if (cursed) then 
-			pl:AddHallow(self:GetOwner(), cursed.DieTime - CurTime() + 5)
+			pl:AddHallow(self:GetOwner(), cursed.DieTime - CurTime() + 25)
 		end
 		if (not cursed) then 
-			pl:AddHallow(pl:GetOwner(), 5)
+			pl:AddHallow(pl:GetOwner(), 25)
 		end
 	end
 	self.BaseClass.ApplyMeleeDamage(self, pl, trace, damage)

@@ -362,6 +362,8 @@ LANGUAGE.press_left_and_right_to_cycle_targets		= "Press STRAFE LEFT and STRAFE 
 --weapon
 --LANGUAGE.wep_		= ""
 --LANGUAGE.wep_d_		= ""
+LANGUAGE.wep_marksman  = "'Marksman' Revolver"
+LANGUAGE.wep_d_marksman = "SECONDARY FIRE Create a coin,shot in coin for splash damage.\nWhen COIN get hit from melee he have x2 damage bonus.\nCOIN Doing x4 damage of your weapon!\nIt costs four coins to fire this weapon... for twelve seconds"
 LANGUAGE.wep_strengthshot = "Strength Gun"
 LANGUAGE.wep_d_strengthshot = "Fires performance enhancing darts which can increase target damage."
 LANGUAGE.wep_waraxe		= "'Waraxe' Better gun"
@@ -585,6 +587,8 @@ LANGUAGE.wep_r_5		= "Doomly"
 LANGUAGE.wep_smorning    = "Solemn mourning"
 LANGUAGE.wep_d_smorning  = "Every 4-5 shots have double damage."
 --Улучшения пушек
+LANGUAGE.wep_marksman_r1  = "'TTTripla' Revolver"
+LANGUAGE.wep_d_marksman_r1 = "-70% Damage.\nX3 Coin damage."
 LANGUAGE.wep_tau_colorq1    = "X-shade"
 LANGUAGE.wep_tau_colorq2    = "Overgalacty"
 LANGUAGE.wep_tau_colorq3    = "Syphyon"

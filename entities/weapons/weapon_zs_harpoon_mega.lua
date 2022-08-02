@@ -120,6 +120,7 @@ function SWEP:Think()
 			end
 		end
 	end
+	
 end
 end
 

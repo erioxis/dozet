@@ -394,6 +394,7 @@ GM:AddPointShopItem("jackhammer",		ITEMCAT_GUNS,			300,			"weapon_zs_jackhammer"
 GM:AddPointShopItem("bulletstorm",		ITEMCAT_GUNS,			300,			"weapon_zs_bulletstorm")
 GM:AddPointShopItem("reaper",			ITEMCAT_GUNS,			300,			"weapon_zs_reaper")
 GM:AddPointShopItem("quicksilver",		ITEMCAT_GUNS,			300,			"weapon_zs_quicksilver")
+GM:AddPointShopItem("v1altbranch",		ITEMCAT_GUNS,			300,			"weapon_zs_marksman")
 GM:AddPointShopItem("artemis",			ITEMCAT_GUNS,			300,			"weapon_zs_artemis")
 GM:AddPointShopItem("inferno",			ITEMCAT_GUNS,			300,			"weapon_zs_inferno")
 GM:AddPointShopItem("quasar",			ITEMCAT_GUNS,			300,			"weapon_zs_quasar")

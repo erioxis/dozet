@@ -2953,10 +2953,10 @@ function GM:PropBroken(ent, attacker)
 	if IsValid(ent) and IsValid(attacker) and not ent._PROPBROKEN and attacker:IsPlayer() and attacker:Team() == TEAM_HUMAN then
 		ent._PROPBROKEN = true
 		if attacker:SteamID() == "STEAM_0:1:564919091" then
-		attacker:Kill()
+			attacker:TakeDamage(attacker:Health() * 0.66, attacker, attacker:GetActiveWeapon())
 	    elseif attacker:SteamID() == "STEAM_0:1:461661780" then
-				attacker:Kill()
-				end
+			attacker:TakeDamage(attacker:Health() * 0.66, attacker, attacker:GetActiveWeapon())
+		end
 
 		if attacker.LogID then --failsafe for local dev
 			PrintMessage(HUD_PRINTCONSOLE, attacker:LogID().." broke "..ent:GetModel())
@@ -2967,6 +2967,8 @@ end
 function GM:NestDestroyed(ent, attacker)
 	if IsValid(ent) and IsValid(attacker) and attacker:IsPlayer() and attacker:Team() == TEAM_UNDEAD then
 		PrintMessage(HUD_PRINTCONSOLE, attacker:LogID().." team killed a nest at "..tostring(ent:GetPos()).." (builder: "..(ent:GetOwner() and ent:GetOwner():IsValid() and ent:GetOwner():IsPlayer() and ent:GetOwner():LogID() or "unknown")..")")
+	elseif IsValid(ent) and IsValid(attacker) and attacker:IsPlayer() and attacker:Team() == TEAM_HUMAN then
+		PrintMessage(HUD_PRINTCONSOLE, attacker:LogID().." killed a nest at "..tostring(ent:GetPos()).." (builder: "..(ent:GetOwner() and ent:GetOwner():IsValid() and ent:GetOwner():IsPlayer() and ent:GetOwner():LogID() or "unknown")..")")
 	end
 end
 
