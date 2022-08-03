@@ -1,7 +1,7 @@
 INC_SERVER()
 
 local function RefreshRepFieldOwners(pl)
-	for _, ent in pairs(ents.FindByClass("prop_repairfield*")) do
+	for _, ent in pairs(ents.FindByClass("prop_medstation*")) do
 		if ent:IsValid() and ent:GetObjectOwner() == pl then
 			ent:ClearObjectOwner()
 		end
@@ -120,7 +120,7 @@ end
 
 function ENT:OnPackedUp(pl)
 	pl:GiveEmptyWeapon(self.SWEP)
-	pl:GiveAmmo(1, self.DeployableAmmo)
+	pl:GiveAmmo(1, "medstation")
 
 	pl:PushPackedItem(self:GetClass(), self:GetObjectHealth())
 	pl:GiveAmmo(self:GetAmmo(), "pulse")
@@ -165,7 +165,7 @@ function ENT:Think()
 	end
 
 	if count > 0 then
-		self:SetNextRepairPulse(CurTime() + 2 * (self:GetObjectOwner().FieldDelayMul or 1))
+		self:SetNextRepairPulse(CurTime() + 0.8 * (self:GetObjectOwner().FieldDelayMul or 1))
 	end
 
 	self:NextThink(self:GetNextRepairPulse())

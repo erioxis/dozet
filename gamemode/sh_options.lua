@@ -255,9 +255,9 @@ item =
 GM:AddStartingItem("zapper",			ITEMCAT_DEPLOYABLES,			50,				"weapon_zs_zapper",				nil,							nil,									nil,											function(pl) pl:GiveEmptyWeapon("weapon_zs_zapper") pl:GiveAmmo(1, "zapper") pl:GiveAmmo(50, "pulse") end)
 item.Countables = "prop_zapper"
 item.NoClassicMode = true
-GM:AddStartingItem("medstation",		ITEMCAT_DEPLOYABLES,			40,				"weapon_zs_medstation",		nil,							nil,									nil,											function(pl) pl:GiveEmptyWeapon("weapon_zs_repairfield") pl:GiveAmmo(1, "repairfield") pl:GiveAmmo(50, "pulse") end)
+item =
+GM:AddStartingItem("medstation1",		ITEMCAT_DEPLOYABLES,			40,				"weapon_zs_medstation",		nil,							nil,									nil,											function(pl) pl:GiveEmptyWeapon("weapon_zs_medstation") pl:GiveAmmo(1, "medstation") pl:GiveAmmo(150, "pulse") end)
 item.Countables = "prop_medstation"
-
 GM:AddStartingItem("manhack",			ITEMCAT_DEPLOYABLES,			50,				"weapon_zs_manhack").Countables = "prop_manhack"
 item =
 GM:AddStartingItem("drone",				ITEMCAT_DEPLOYABLES,			30,				"weapon_zs_drone",				nil,							nil,									nil,											function(pl) pl:GiveEmptyWeapon("weapon_zs_drone") pl:GiveAmmo(1, "drone") pl:GiveAmmo(60, "smg1") end)
@@ -550,7 +550,7 @@ item =
 GM:AddPointShopItem("drone",			ITEMCAT_DEPLOYABLES,			40,				"weapon_zs_drone")
 item.Countables = "prop_drone"
 item =
-GM:AddPointShopItem("medka",			ITEMCAT_DEPLOYABLES,			70,				"weapon_zs_medstation")
+GM:AddPointShopItem("medstation",			ITEMCAT_DEPLOYABLES,			70,				"weapon_zs_medstation")
 item.Countables = "prop_medstation"
 item =
 GM:AddPointShopItem("pulsedrone",		ITEMCAT_DEPLOYABLES,			40,				"weapon_zs_drone_pulse")
