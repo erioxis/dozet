@@ -26,29 +26,41 @@ function ENT:DoRicochet(dmg, ent)
 	ent.DamageMul = ent.DamageMul * 4
 	ent.DieTime = CurTime() + 12
 end
-function ENT:DoRicoShot(ent, pos, melee, dmginfo)
+function ENT:DoBackShot(dmginfo, attacker)
+	owner = self:GetOwner()
+	util.SpriteTrail( self, 0, Color( 252,61,61), false, 15, 1, 4, 1 / ( 15 + 1 ) * 0.5, "trails/plasma" )
+	owner:TakeDamage(dmginfo * 6, attacker, self)
+	pos = owner:GetPos()
+	pos.z = 5
+	self:SetPos(pos)
+end
+function ENT:DoRicoShot(ent, pos, melee, dmginfo, attacker)
 	local owner = self:GetOwner()
 	if ent and ent:IsValid() and ent:IsPlayer() and ent:IsValidLivingZombie() or ent.AllowSelfRicoShot then
 		if not ent.AllowSelfRicoShot then
-			ent:TakeDamage((dmginfo * 4) * self.DamageMul, owner, owner:GetActiveWeapon())
+			ent:TakeDamage(math.min(750 * self.DamageMul,(dmginfo * 2) * self.DamageMul), attacker, attacker:GetActiveWeapon())
 			if (not melee) then
 				timer.Simple(0.95, function() if self:IsValid() then self:Remove() end end)
 				
-				util.SpriteTrail( self, 0, Color( 252,217,61 ), false, 15, 1, 4, 1 / ( 15 + 1 ) * 0.5, "trails/plasma" )
+				util.SpriteTrail( self, 0, Color( 61,252,109), false, 15, 1, 4, 1 / ( 15 + 1 ) * 0.5, "trails/plasma" )
 				timer.Simple(0.05, function() self:SetPos(pos) end)
 			elseif melee then
 				self:SetPos(pos)
+				pos.z = 5
+				timer.Simple(0.05, function()  self:SetPos(pos) end)
 				self.DieTime = CurTime() + 5
 				self.DamageMul = self.DamageMul * 2
+				self:SetVelocity(pos)
 				util.SpriteTrail( self, 0, Color( 252,217,61 ), false, 15, 1, 4, 1 / ( 15 + 1 ) * 0.5, "trails/plasma" )
 			end
 		else
-			ent:DoRicochet((dmginfo * 4) * self.DamageMul, ent)
+			ent:DoRicochet((dmginfo * 2) * self.DamageMul, ent)
 		end
+	elseif ent and ent:IsValid() and ent:IsPlayer() and attacker:IsValidLivingZombie() then
+		self:DoBackShot(dmginfo, attacker)	
 	end
 	self:OnRicoShot()
 end
-
 
 function ENT:Think()
 	if self.Exploded then
@@ -66,14 +78,21 @@ local owner = self:GetOwner()
 	local dmginfotrue = dmginfo:GetDamage()
 
 	if attacker:IsValid() and attacker:IsPlayer() and attacker:Team() == TEAM_HUMAN then
-		for _, ent in pairs(ents.FindInSphere(pos, 928)) do
+		for _, ent in pairs(ents.FindInSphere(pos, 1048)) do
+			if WorldVisible(self:LocalToWorld(Vector(0, 0, 30)), ent:NearestPoint(self:LocalToWorld(Vector(0, 0, 30)))) then
 			if not attacker:GetActiveWeapon().IsMelee then
-				self:DoRicoShot(ent, ent:GetPos(), nil, dmginfotrue)
-			else
-				self:DoRicoShot(ent, ent:GetPos(), true, dmginfotrue)
+				self:DoRicoShot(ent, ent:GetPos(), nil, dmginfotrue, attacker)
+			elseif attacker:GetActiveWeapon().IsMelee then
+				self:DoRicoShot(ent, ent:GetPos(), true, dmginfotrue, attacker)
+			elseif attacker:IsValidLivingZombie() then
+				self:DoBackShot(dmginfotrue, attacker)
 			end
 		end
 	end
+	elseif attacker:IsValidLivingZombie() and attacker:IsValid() and attacker:IsPlayer() then
+		self:DoBackShot(dmginfotrue, attacker)
+	end
+	
 end
 
 function ENT:OnRemove()

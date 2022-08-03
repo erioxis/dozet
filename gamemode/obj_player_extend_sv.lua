@@ -672,6 +672,7 @@ function meta:GetBossZombieIndex()
 		desired = table.Random(bosses)
 	end
 
+
 	local bossindex
 	for _, classindex in pairs(bossclasses) do
 		local classtable = GAMEMODE.ZombieClasses[classindex]

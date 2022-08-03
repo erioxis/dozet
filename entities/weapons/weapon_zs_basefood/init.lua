@@ -34,6 +34,13 @@ function SWEP:Eat()
 			owner:GiveStatus("status_strengthdartboost", 70)
 		end
 	end
+	if owner:IsSkillActive(SKILL_FOODHEALS) then
+		for _, pl in pairs(ents.FindInSphere(owner:GetPos(), 328 * self:GetModelScale())) do
+            if pl:IsValidLivingHuman() then
+				owner:HealPlayer(pl, self.FoodHealth * (owner.FoodRecoveryMul or 1))
+			end
+		end
+	end
 
 	local max = owner:IsSkillActive(SKILL_D_FRAIL) and math.floor(owner:GetMaxHealth() * 0.25) or owner:GetMaxHealth()
 

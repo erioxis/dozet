@@ -452,7 +452,7 @@ function meta:DamageNails(attacker, inflictor, damage, dmginfo)
 	end
 
 	if gamemode.Call("IsEscapeDoorOpen") then
-		local multi = gamemode.Call("GetEscapeStage") * 1.5
+		local multi = gamemode.Call("GetEscapeStage") * 5
 
 		dmginfo:SetDamage(dmginfo:GetDamage() * multi)
 		damage = damage * multi

@@ -341,6 +341,7 @@ SKILL_SECRET2 = 320
 SKILL_DEBUFF = 321
 SKILL_CHEESE3 = 322
 SKILL_SAMODOS = 323
+SKILL_FOODHEALS = 324
 
 SKILLMOD_HEALTH = 1
 SKILLMOD_SPEED = 2
@@ -649,6 +650,8 @@ GM:AddSkill(SKILL_U_MEDICCLOUD, translate.Get("skill_u_medcloud"), GOOD..transla
 GM:AddSkill(SKILL_DUALHEAL, translate.Get("skill_dualheal"), GOOD..translate.Get("skill_dualheal_d1")..BAD..translate.Get("skill_dualheal_d2"),
 																-1,			-3,					{SKILL_U_MEDICCLOUD}, TREE_SUPPORTTREE)
 .AlwaysActive = true
+GM:AddSkill(SKILL_FOODHEALS, translate.Get("skill_fheals"), GOOD..translate.Get("skill_fheals_d1")..BAD..translate.Get("skill_fheals_d2"),
+																-2,			-4,					{SKILL_DUALHEAL}, TREE_SUPPORTTREE)
 GM:AddSkill(SKILL_SMARTTARGETING, translate.Get("skill_starget"), GOOD..translate.Get("skill_starget_d1")..BAD..translate.Get("skill_starget_d2")..BAD..translate.Get("skill_starget_d3"),
 																0,			2,					{}, TREE_SUPPORTTREE)
 GM:AddSkill(SKILL_RECLAIMSOL, translate.Get("skill_rec_sol"), GOOD..translate.Get("skill_rec_sol_d1")..BAD..translate.Get("skill_rec_sol_d2")..BAD..translate.Get("skill_rec_sol_d3")..BAD..translate.Get("skill_rec_sol_d4"),
@@ -2046,6 +2049,9 @@ GM:AddSkillModifier(SKILL_GOURMET, SKILLMOD_FOODEATTIME_MUL, 2.0)
 GM:AddSkillModifier(SKILL_GOURMET, SKILLMOD_FOODRECOVERY_MUL, 4.0)
 
 GM:AddSkillModifier(SKILL_SUGARRUSH, SKILLMOD_FOODRECOVERY_MUL, -0.35)
+
+GM:AddSkillModifier(SKILL_FOODHEALS, SKILLMOD_FOODRECOVERY_MUL, -0.35)
+
 
 GM:AddSkillModifier(SKILL_BATTLER1, SKILLMOD_MELEE_DAMAGE_MUL, 0.03)
 GM:AddSkillModifier(SKILL_BATTLER2, SKILLMOD_MELEE_DAMAGE_MUL, 0.06)
