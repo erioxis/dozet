@@ -287,6 +287,7 @@ killicon.Add("weapon_zs_deathdealers", "zombiesurvival/killicons/weapon_zs_death
 killicon.Add("weapon_zs_galestorm", "zombiesurvival/killicons/weapon_zs_galestorm")
 killicon.Add("weapon_zs_battlerifle", "zombiesurvival/killicons/weapon_zs_battlerifle")
 killicon.Add("weapon_zs_eminence", "zombiesurvival/killicons/weapon_zs_eminence")
+killicon.Add("weapon_zs_bulldog", "zombiesurvival/killicons/weapon_zs_eminence")
 killicon.Add("weapon_zs_gladiator", "zombiesurvival/killicons/weapon_zs_gladiator")
 killicon.Add("weapon_zs_medicrifle", "zombiesurvival/killicons/weapon_zs_convalescence")
 killicon.Add("weapon_zs_ripper", "zombiesurvival/killicons/weapon_zs_ripper")
@@ -307,6 +308,7 @@ killicon.Add("weapon_zs_cryman", "zombiesurvival/killicons/weapon_zs_hyena", Col
 killicon.AddFont("weapon_zs_smgstick", "zsdeathnoticecs", "x")
 killicon.Add("weapon_zs_toxicshooter", "zombiesurvival/killicons/weapon_zs_seditionist2", Color(0, 63, 25))
 killicon.Add("weapon_zs_megaray", "zombiesurvival/killicons/weapon_zs_healingray.png", Color(70, 130, 180))
+killicon.Add("weapon_zs_marksman", "zombiesurvival/killicons/weapon_zs_marksman")
 
 killicon.Add("weapon_zs_energysword", "zombiesurvival/killicons/weapon_zs_energysword.png")
 killicon.Add("weapon_zs_energysword_dasher", "zombiesurvival/killicons/weapon_zs_energysword.png")
@@ -435,6 +437,9 @@ killicon.Add("weapon_zs_help_trinket", "zombiesurvival/sickness.png")
 killicon.Add("weapon_zs_soul", "zombiesurvival/soul.png")
 
 killicon.Add("weapon_zs_soulalt", "zombiesurvival/soul.png", Color(255, 0, 195, 56))
+
+killicon.Add("projectile_money", "zombiesurvival/soul.png")
+killicon.Add("projectile_moneyauto", "zombiesurvival/soul.png")
 
 
 

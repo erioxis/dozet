@@ -121,6 +121,59 @@ GAMEMODE:AddNewRemantleBranch(SWEP, 1, translate.Get("wep_marksman_r1"), transla
 	wept.TripleMoney = true
     wept.Primary.NumShots = 3
 end)
+local branch = GAMEMODE:AddNewRemantleBranch(SWEP, 2, translate.Get("wep_marksman_s1"), translate.Get("wep_d_marksman_s1"), function(wept)
+	wept.ConeMax = wept.ConeMax * 1.7
+	wept.ConeMin = wept.ConeMin * 2.1
+	wept.Primary.Damage = wept.Primary.Damage * 2
+	wept.HeadshotMulti = wept.HeadshotMulti * 2
+	wept.SecondaryAttack = function(self)
+		self:SetNextSecondaryFire(CurTime() + 4)
+		self:SetCharge(0)
+		timer.Simple(4, function() self:SetCharge(2) end)
+		
+		if SERVER then
+	
+		local owner = self:GetOwner()
+		 local ent = ents.Create("projectile_moneyauto")
+		if ent:IsValid() then
+			for i = 1, self.Primary.NumShots do
+			ent:SetPos(owner:GetShootPos())
+			ent:SetAngles(owner:EyeAngles())
+			ent:SetOwner(owner)
+			ent.ProjDamage = self.Primary.Damage * (owner.ProjectileDamageMul or 1)
+			ent.ProjSource = self
+			ent.ShotMarker = i
+			ent.Team = owner:Team()
+			if self.TripleMoney then
+				ent.DamageMul = 3
+			end
+			self:EmitSound("physics/metal/metal_barrel_impact_soft"..math.random(1,4)..".wav")
+	
+			self:EntModify(ent)
+			ent:Spawn()
+	
+			local phys = ent:GetPhysicsObject()
+			if phys:IsValid() then
+				phys:Wake()
+				ent:SetGravity(20000)
+	
+				local angle = owner:GetAimVector():Angle()
+				angle:RotateAroundAxis(angle:Forward(), ssfw or math.random(0,10))
+				angle:RotateAroundAxis(angle:Up(), ssup or math.random(0,10))
+	
+				ent.PreVel = angle:Forward() * 520 * (owner.ProjectileSpeedMul or 1)
+				phys:SetVelocityInstantaneous(ent.PreVel)
+	
+	
+				self:PhysModify(phys)
+			end
+		end
+		end
+		end
+	end
+end)
+branch.Colors = {Color(122, 50, 255), Color(233, 161, 255), Color(136, 8, 255), Color(111, 0, 255), Color(42, 4, 102)}
+branch.NewNames = {translate.Get("wep_mark_colorq1"), translate.Get("wep_mark_colorq2"), translate.Get("wep_mark_colorq3"), translate.Get("wep_mark_colorq4"), translate.Get("wep_mark_colorq5")}
 
 
 function SWEP:EmitFireSound()

@@ -46,7 +46,7 @@ function ENT:Think()
 	
 	local pos = self:GetPos()
 	
-	for _, ent in pairs(ents.FindInSphere(pos, 328 * self:GetModelScale())) do
+	for _, ent in pairs(ents.FindInSphere(pos, 128 * self:GetModelScale())) do
 		local class = ent:GetClass()
 		local ownsitem = not ent.NoPickupsOwner or ent.NoPickupsOwner == owner
 		local droppedrecent = not ent.DroppedTime or ent.DroppedTime + 4 < CurTime()
@@ -60,9 +60,9 @@ function ENT:Think()
 		end
 		if ent:IsPlayer() and ent:Team() == TEAM_UNDEAD then
 			if not ent:GetZombieClassTable().Boss then
-				if ent:Health() < 4500 then
+				if ent:Health() < 2100 then
 					local dir = (pos - ent:NearestPoint(pos)):GetNormalized()
-			  	 	ent:SetVelocity(self.Force * dir * 0.66)
+			  	 	ent:SetVelocity(self.Force * dir * 0.45)
 					ent:SetPhysicsAttacker(owner, 4)
 				end
 			end

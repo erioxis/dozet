@@ -71,6 +71,7 @@ function SWEP:PrimaryAttack()
 			if owner:HasTrinket("mediiii") and math.random(25) == 25 and SERVER then
 				ent:AddPoisonDamage(math.random(25), owner)
 			end
+			if  owner:IsSkillActive(SKILL_FOREVERALONE) then return end
 	self:SetDTEntity(10, ent)
 	self:SetNextPrimaryFire(CurTime() + 1)
 	self:EmitSound("items/medshot4.wav", 75, 80)

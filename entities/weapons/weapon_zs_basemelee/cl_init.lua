@@ -29,19 +29,19 @@ function SWEP:DrawHUD()
 	if self.BlockTrue == true and self:GetOwner():GetInfo("zs_blockposition") == "0" then
 		
 
-	if self.Block then
-		draw.SimpleText(""..translate.Get("blockistrue"), "ZSHUDFontSmall", x + wid, texty, COLOR_GREEN, TEXT_ALIGN_CENTER)
+	if self:GetBlockState() then
+		draw.SimpleText(translate.Get("blockistrue"), "ZSHUDFontSmall", x + wid, texty, COLOR_GREEN, TEXT_ALIGN_CENTER)
 		else
-			draw.SimpleText(""..translate.Get("blockisfalse"), "ZSHUDFontSmall", x + wid, texty, COLOR_RED, TEXT_ALIGN_CENTER)
+			draw.SimpleText(translate.Get("blockisfalse"), "ZSHUDFontSmall", x + wid, texty, COLOR_RED, TEXT_ALIGN_CENTER)
 		end
 	elseif self.BlockTrue == true and self:GetOwner():GetInfo("zs_blockposition") == "1" then
 		local widC, heiC = self:GetOwner():GetInfo("zs_block_func"), self:GetOwner():GetInfo("zs_x_block_func")
 		local xC, yC = ScrW() - widC - self:GetOwner():GetInfo("zs_block_func") , ScrH() - self:GetOwner():GetInfo("zs_x_block_func")
 		local textyC = yC - 8 - draw.GetFontHeight("ZSHUDFontSmall")
-		if self.Block then
-		draw.SimpleText(""..translate.Get("blockistrue"), "ZSHUDFontSmall", xC + widC, textyC, COLOR_GREEN, TEXT_ALIGN_CENTER)
+		if self:GetBlockState() then
+		draw.SimpleText(translate.Get("blockistrue"), "ZSHUDFontSmall", xC + widC, textyC, COLOR_GREEN, TEXT_ALIGN_CENTER)
 		else
-		draw.SimpleText(""..translate.Get("blockisfalse"), "ZSHUDFontSmall", xC + widC, textyC, COLOR_RED, TEXT_ALIGN_CENTER)
+		draw.SimpleText(translate.Get("blockisfalse"), "ZSHUDFontSmall", xC + widC, textyC, COLOR_RED, TEXT_ALIGN_CENTER)
 		end
 		end
 		if self:GetOwner():IsSkillActive(SKILL_TRUEBLOCK) and not self.ParryTiming then
@@ -125,7 +125,7 @@ function SWEP:GetViewModelPosition(pos, ang)
 		ang:RotateAroundAxis(ang:Up(), rot.yaw * power)
 		ang:RotateAroundAxis(ang:Forward(), rot.roll * power)
 	end
-	if self.Block then
+	if self:GetBlockState() then
 		ang:RotateAroundAxis(ang:Right(),13)
 		ang:RotateAroundAxis(ang:Up(),13)
 		ang:RotateAroundAxis(ang:Forward(),13)

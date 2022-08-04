@@ -23,8 +23,8 @@ CLASS.Points = 5
 CLASS.SWEP = "weapon_zs_baracat"
 
 CLASS.Health = 1270
-CLASS.Speed = 410
-CLASS.JumpPower = 400
+CLASS.Speed = 870
+CLASS.JumpPower = 1400
 
 
 CLASS.ModelScale = 0.7

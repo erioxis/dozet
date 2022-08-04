@@ -66,6 +66,12 @@ function SWEP:Initialize()
 		self:Anim_Initialize()
 	end
 end
+function SWEP:SetBlock(bool)
+   self:SetDTBool(31, bool)
+end
+function SWEP:GetBlockState()
+	return self:GetDTBool(31)
+end
 
 function SWEP:SetupDataTables()
 	self:NetworkVar("Int", 0, "PowerCombo")
@@ -91,7 +97,7 @@ function SWEP:Think()
 		self.IdleAnimation = nil
 		self:SendWeaponAnim(ACT_VM_IDLE)
 	end
-	if not self.Block then
+	if not self:GetBlockState() then
 	            self:SetHoldType(self.HoldType)
 				self:SetWeaponSwingHoldType(self.SwingHoldType)
 	end
@@ -105,11 +111,12 @@ end
 
 function SWEP:SecondaryAttack()
 	if self.BlockTrue == true then
-        if not self.Block then
+        if not self:GetBlockState() then
 	        timer.Create("blocked1",0.15,1, function() 
 	            self.Block = true
 	            self:SetHoldType("revolver")
 				self:SetWeaponSwingHoldType("revolver")
+				self:SetBlock(true)
 	        end)
 	        timer.Create("trueparry",0.15,1, function() 
 	            self.ParryTiming = true
@@ -117,11 +124,12 @@ function SWEP:SecondaryAttack()
 	        timer.Create("trueparrydead",0.45,1, function() 
 	            self.ParryTiming = false
 	        end)
-        elseif self.Block then
+        elseif self:GetBlockState() then
 	        timer.Create("unblock",0.1,1, function() 
 	            self.Block = false
 	            self:SetHoldType(self.HoldType)
 				self:SetWeaponSwingHoldType(self.SwingHoldType)
+				self:SetBlock(false)
 	        end)
 	        timer.Create("trueparrydead1",0.15,1, function() 
 	            self.ParryTiming = false
@@ -134,13 +142,14 @@ end
 
 function SWEP:Reload()
     self.Block = nil
+	self:SetBlock(false)
 	return false
 end
 
 function SWEP:CanPrimaryAttack()
 	if self:GetOwner():IsHolding() or self:GetOwner():GetBarricadeGhosting() then return false end
 	
-	if self.Block then 
+	if self:GetBlockState() then 
 
 	return false end	
 		return self:GetNextPrimaryFire() <= CurTime() and not self:IsSwinging()
@@ -164,7 +173,7 @@ end
 function SWEP:PrimaryAttack()
 	if not self:CanPrimaryAttack() then return end
 
-	if self.Block then 
+	if self:GetBlockState() then 
 		return 
 		false
 	end
@@ -203,11 +212,9 @@ end
 
 function SWEP:StartSwinging()
 	local owner = self:GetOwner()
-	if self.Block then 
-	
-
+	if self:GetBlockState() then 
 		return 
-        false  
+		false
 	end
 
 	if self.StartSwingAnimation then

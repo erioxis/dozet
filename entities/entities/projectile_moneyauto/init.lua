@@ -1,7 +1,7 @@
 INC_SERVER()
 
 local vector_origin = vector_origin
-
+ENT.NextThink1 = 2
 function ENT:Initialize()
 	self:SetModel("models/props_trainstation/trainstation_clock001.mdl")
 	self:PhysicsInitSphere(1)
@@ -12,7 +12,7 @@ function ENT:Initialize()
 	self:SetAlpha(60)
 	self:EmitSound("weapons/physcannon/physcannon_pickup.wav", math.random(2,255), math.random(1,50))
 
-	self.DieTime = CurTime() + 12
+	self.DieTime = CurTime() + 4
 	self.LastPhysicsUpdate = UnPredictedCurTime()
 end
 function ENT:OnRicoShot() 
@@ -29,7 +29,7 @@ end
 function ENT:DoBackShot(dmginfo, attacker)
 	owner = self:GetOwner()
 	util.SpriteTrail( self, 0, Color( 252,61,61), false, 15, 1, 4, 1 / ( 15 + 1 ) * 0.5, "trails/plasma" )
-	owner:TakeDamage(dmginfo * 6, attacker, self)
+	owner:TakeDamage(dmginfo * 2, attacker, self)
 	pos = owner:GetPos()
 	pos.z = 5
 	self:SetPos(pos)
@@ -76,6 +76,25 @@ function ENT:Think()
 		self:SetCollisionGroup(COLLISION_GROUP_WORLD)
 	elseif self.DieTime < CurTime() then
 		self:Remove()
+	end
+	if CurTime() >= self.NextThink1 then 
+	for _, ent in pairs(ents.FindInSphere(self:GetPos(), 348)) do
+		target = ent
+		if WorldVisible(self:LocalToWorld(Vector(0, 0, 30)), ent:NearestPoint(self:LocalToWorld(Vector(0, 0, 30)))) then
+			if target:IsValidLivingZombie()  then
+				local targetpos = target:LocalToWorld(target:OBBCenter())
+				local direction = (targetpos - self:GetPos()):GetNormal()
+
+				self:SetAngles(direction:Angle())
+
+				local phys = self:GetPhysicsObject()
+				phys:SetVelocityInstantaneous(direction * 500)
+				target:TakeDamage((self.ProjDamage * self.DamageMul) * 0.35, self:GetOwner(), self)
+				break
+			end
+		end
+	end
+		self.NextThink1 = CurTime() + 0.1
 	end
 
 end
