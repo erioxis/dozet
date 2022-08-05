@@ -589,6 +589,8 @@ LANGUAGE.wep_r_5		= "Doomly"
 LANGUAGE.wep_smorning    = "Solemn mourning"
 LANGUAGE.wep_d_smorning  = "Every 4-5 shots have double damage."
 --Улучшения пушек
+LANGUAGE.wep_bogger = "'Emperor' Stand"
+LANGUAGE.wep_d_bogger = "Shoot a bullet with autoaim.\nNever miss.\nTime give strength."
 LANGUAGE.wep_bulldog = "'Mini-dog' Shit-gun"
 LANGUAGE.wep_d_bulldog = "Shoot a 3 small ball with autoaim but less life time."
 LANGUAGE.wep_marksman_s1  = "'Autoriton' Revolver"

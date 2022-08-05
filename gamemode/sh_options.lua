@@ -376,6 +376,7 @@ GM:AddPointShopItem("popl",		        ITEMCAT_GUNS,			65,				"weapon_zs_popluttar
 GM:AddPointShopItem("relsogun",		        ITEMCAT_GUNS,			65,				"weapon_zs_relsous")
 GM:AddPointShopItem("fracture",		        ITEMCAT_GUNS,			65,				"weapon_zs_fracture")
 -- Tier 3
+GM:AddPointShopItem("emperor",			ITEMCAT_GUNS,			150,				"weapon_zs_bogger")
 GM:AddPointShopItem("deagle",			ITEMCAT_GUNS,			150,				"weapon_zs_deagle")
 GM:AddPointShopItem("tempest",			ITEMCAT_GUNS,			150,				"weapon_zs_tempest")
 GM:AddPointShopItem("ender",			ITEMCAT_GUNS,			150,				"weapon_zs_ender")

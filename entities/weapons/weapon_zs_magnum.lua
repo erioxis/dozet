@@ -3,8 +3,8 @@ DEFINE_BASECLASS("weapon_zs_base")
 
 --SWEP.PrintName = "'Ricochete' Magnum"
 --SWEP.Description = "This gun's bullets will bounce off of walls which will then deal extra damage."
-SWEP.PrintName = ""..translate.Get("wep_magnum")
-SWEP.Description = ""..translate.Get("wep_d_magnum")
+SWEP.PrintName = translate.Get("wep_magnum")
+SWEP.Description = translate.Get("wep_d_magnum")
 SWEP.Slot = 1
 SWEP.SlotPos = 0
 
