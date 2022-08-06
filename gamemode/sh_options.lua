@@ -757,6 +757,7 @@ GM:AddMutationItem("m_shade_damage", translate.Get("zshop_bossphysicshazard"), t
 GM:AddMutationItem("m_zmain", translate.Get("zshop_zmain"), translate.Get("zshop_zmain_d1"), ITEMCAT_MUTATIONS_BOSS, 850, nil, function(pl) pl.m_Zmain = true end, "models/player/zombie_classic.mdl")
 GM:AddMutationItem("m_ezspeed", translate.Get("zshop_ezspeed"), translate.Get("zshop_ezspeed_d1"), ITEMCAT_MUTATIONS_BOSS, 850, nil, function(pl) pl.m_EasySpeed = true end, "models/player/zombie_classic.mdl")
 GM:AddMutationItem("m_rclaw", translate.Get("zshop_rclaw"), translate.Get("zshop_rclaw_d1"), ITEMCAT_MUTATIONS_BOSS, 1125, nil, function(pl) pl.m_Rot_Claws = true end, "models/player/zombie_classic.mdl")
+GM:AddMutationItem("m_evo", translate.Get("zshop_evo"), translate.Get("zshop_evo_d1"), ITEMCAT_MUTATIONS_BOSS, 670, nil, function(pl) pl.m_Evo = true end, "models/player/zombie_classic.mdl")
 -- These are the honorable mentions that come at the end of the round.
 -- classes
 

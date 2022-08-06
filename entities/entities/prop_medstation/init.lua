@@ -149,7 +149,7 @@ function ENT:Think()
 
 		local healed = false
 
-       if hitent:GetMaxHealth() > hitent:Health() then
+       if hitent:GetMaxHealth() > hitent:Health() and hitent:IsPlayer() then
 		hitent:EmitSound("npc/dog/dog_servo"..math.random(7, 8)..".wav", 70, math.random(100, 105))
 		  owner:HealPlayer(hitent, totalheal)
 		  	local effectdata = EffectData()
@@ -159,6 +159,9 @@ function ENT:Think()
 			util.Effect("nailrepaired", effectdata, true, true)
 			self:SetAmmo(self:GetAmmo() - totalheal * 0.2)
 			count = count + 1
+			if hitent:IsValidLivingZombie() then
+				owner:AddPoints(-(totalheal * 0.3))
+			end
 			
 			if count >= 3 or self:GetAmmo() <= 0 then break end
 	   end

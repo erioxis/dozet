@@ -88,7 +88,7 @@ end
 
 function SWEP:ShootBullets(dmg, numbul, cone)
 	local owner = self:GetOwner()
-	local sprd = (self.AttackContext and 2 or 2.75)*cone/6
+	local sprd = (self.AttackContext and 2 or 2.75)*cone/3
 	local recp = self.AttackContext and 2 or 1.25
 
 	self:SendWeaponAnimation()

@@ -1371,7 +1371,7 @@ function GM:Think()
 					
 				end
 				if pl:IsSkillActive(SKILL_GIGACHAD) then
-					 pl:SetModelScale(math.Clamp(math.min(math.max(0.5, pl:GetMaxHealth() * 0.01),2.5) * pl.ScaleModel,0.35, 3))
+					 pl:SetModelScale(math.Clamp(math.min(math.max(0.5, pl:GetMaxHealth() * 0.01),2.5) * pl.ScaleModel,0.2, 5))
 				end
 
 				if pl:GetActiveWeapon().Block and pl:GetActiveWeapon().IsMelee then
@@ -2534,6 +2534,7 @@ function GM:PlayerInitialSpawnRound(pl)
 	pl.m_Rot_Claws = nil
 
 	-- Boss Mutations (Z-Shop)
+	pl.m_Evo = nil
 	pl.m_Shade_Force = nil
 	pl.m_Zombie_CursedHealth = nil
 

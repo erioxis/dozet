@@ -342,6 +342,7 @@ SKILL_DEBUFF = 321
 SKILL_CHEESE3 = 322
 SKILL_SAMODOS = 323
 SKILL_FOODHEALS = 324
+SKILL_SEEAURA = 325
 
 SKILLMOD_HEALTH = 1
 SKILLMOD_SPEED = 2
@@ -726,7 +727,6 @@ SKILL_JEW = 237
 GM:AddSkill(SKILL_JEW, translate.Get("skill_jew"), GOOD..translate.Get("skill_jew_d1")..GOOD..translate.Get("skill_jew_d2")..BAD..translate.Get("skill_jew_d3"),
 																3,			2,					{SKILL_NANITECLOUD}, TREE_BUILDINGTREE)
 																
-GM:AddSkillModifier(SKILL_JEW, SKILLMOD_POINTS, 50)
 GM:AddSkillModifier(SKILL_JEW, SKILLMOD_ARSENAL_DISCOUNT, -0.10)
 GM:AddSkillModifier(SKILL_JEW, SKILLMOD_SCRAPDISCOUNT, -0.10)
 GM:AddSkillModifier(SKILL_JEW, SKILLMOD_RES_AMMO_MUL, 0.15)
@@ -1179,6 +1179,8 @@ GM:AddSkill(SKILL_DEATH, "Morieris", PURPLE.."Better medicine\n" ..BAD.."+20% Me
 GM:AddSkill(SKILL_HELPLIFER, "Chance", PURPLE.."Can save from fatal hit\n33% Chance\nOn upgrade chance is 50%",
 										2,			-7,					{SKILL_EX2}, TREE_ANCIENTTREE,0)
 .CanUpgrade = 2
+GM:AddSkill(SKILL_SEEAURA, "Ancient vision", PURPLE.."You can see zombie aura",
+										2,			-8.5,					{SKILL_HELPLIFER}, TREE_ANCIENTTREE)
 										SKILL_ALLPOWER = 182
 GM:AddSkillModifier(SKILL_ALLPOWER, SKILLMOD_REPAIRRATE_MUL, 0.10)		
 GM:AddSkill(SKILL_ALLPOWER, "Cunctipotens", PURPLE.."Better cades\n" ..PURPLE.."+10% Repair Mul",
@@ -1224,7 +1226,7 @@ GM:AddSkillModifier(SKILL_DEFEND, SKILLMOD_SPEED, -1)
 --Tormented SKill
 SKILL_TORMENT1 = 229
 GM:AddSkill(SKILL_TORMENT1, translate.Get("skill_torment").."I", GOOD.."+15%"..translate.Get("xpmul")..BAD.."-30"..translate.Get("speed")..BAD.."-15%"..translate.Get("b_damage"),
-				                                                            	1,			26,					{SKILL_NONE}, TREE_ANCIENTTREE)
+				                                                            	1,			26,					{SKILL_TORMENT1}, TREE_ANCIENTTREE)
 .RemortReq = 2
 GM:AddSkillModifier(SKILL_TORMENT1, SKILLMOD_DAMAGE, -0.15)
 GM:AddSkillModifier(SKILL_TORMENT1, SKILLMOD_SPEED, -30)
@@ -1559,15 +1561,15 @@ GM:AddSkill(SKILL_USELESS_18, "Useless 18", GOOD.."-15% Dimvision effectiveness"
 				                                                            	-3,		    -1,					{SKILL_USELESS_17}, TREE_USELESSTREE)
 GM:AddSkillModifier(SKILL_USELESS_18, SKILLMOD_DIMVISION_EFF_MUL, -0.15)
 SKILL_USELESS_19 = 518
-GM:AddSkill(SKILL_USELESS_19, "Useless 18", GOOD.."+20% Medic Heal Mul",
+GM:AddSkill(SKILL_USELESS_19, "Useless 19", GOOD.."+20% Medic Heal Mul",
 				                                                            	-3,		    -0,					{SKILL_USELESS_18}, TREE_USELESSTREE)
 GM:AddSkillModifier(SKILL_USELESS_19, SKILLMOD_MEDKIT_EFFECTIVENESS_MUL, 0.20)
 SKILL_USELESS_20 = 519
-GM:AddSkill(SKILL_USELESS_20, "Useless 19", GOOD.."+5 spoints",
+GM:AddSkill(SKILL_USELESS_20, "Useless 20", GOOD.."+5 spoints",
 				                                                            	-4,		    -0,					{SKILL_USELESS_19}, TREE_USELESSTREE)
 GM:AddSkillModifier(SKILL_USELESS_20, SKILLMOD_SPOINT, 5)
 SKILL_USELESS_21 = 520
-GM:AddSkill(SKILL_USELESS_21, "Useless 20", GOOD.."+9% Sale",
+GM:AddSkill(SKILL_USELESS_21, "Useless 21", GOOD.."+9% Sale",
 				                                                            	-4,		    1,					{SKILL_USELESS_20}, TREE_USELESSTREE)
 GM:AddSkillModifier(SKILL_USELESS_21, SKILLMOD_ARSENAL_DISCOUNT, -0.09)
 
@@ -2124,7 +2126,6 @@ GM:AddSkillFunction(SKILL_BACKPEDDLER, function(pl, active)
 end)
 
 GM:AddSkillModifier(SKILL_D_CLUMSY, SKILLMOD_WORTH, 20)
-GM:AddSkillModifier(SKILL_D_CLUMSY, SKILLMOD_POINTS, 10)
 GM:AddSkillFunction(SKILL_D_CLUMSY, function(pl, active)
 	pl.IsClumsy = active
 end)

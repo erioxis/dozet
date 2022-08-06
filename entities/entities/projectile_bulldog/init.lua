@@ -12,6 +12,7 @@ function ENT:Initialize()
 	self:SetAlpha(60)
 	self:EmitSound("weapons/physcannon/physcannon_pickup.wav", math.random(2,255), math.random(1,50))
 	self:SetMaterial("phoenix_storms/plastic")
+	self:GetOwner():TakeDamage(2)
 
 	self.DieTime = CurTime() + (self.Minidogs and 2 or 5)
 	self.LastPhysicsUpdate = UnPredictedCurTime()
@@ -36,7 +37,7 @@ function ENT:Think()
 
 				local phys = self:GetPhysicsObject()
 				phys:SetVelocityInstantaneous(direction * 1500)
-				target:TakeSpecialDamage(self.ProjDamage + (target:GetZombieClassTable().Boss and target:Health() * 0.05 or target:Health() * 0.2),DMG_GENERIC ,self:GetOwner(), self:GetOwner():GetActiveWeapon())
+				target:TakeSpecialDamage(self.ProjDamage + (target:GetZombieClassTable().Boss and target:Health() * 0.03 or target:Health() * 0.07),DMG_GENERIC ,self:GetOwner(), self:GetOwner():GetActiveWeapon())
 				break
 			end
 		end

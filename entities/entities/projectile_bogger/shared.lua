@@ -2,7 +2,7 @@ ENT.Type = "anim"
 
 ENT.DamageMul = 1
 ENT.ProjDamage = 220
-ENT.Minidogs = nil
+ENT.RageMode = nil
 function ENT:ShouldNotCollide(ent)
 	return ent:IsPlayer() and ent:Team() == TEAM_HUMAN
 end

@@ -13,7 +13,7 @@ function ENT:Initialize()
 	self:EmitSound("weapons/physcannon/physcannon_pickup.wav", math.random(2,255), math.random(1,50))
 	self:SetMaterial("phoenix_storms/plastic")
 
-	self.DieTime = CurTime() + 1.5
+	self.DieTime = CurTime() + (self.RageMode and 11 or 1.5)
 	self.LastPhysicsUpdate = UnPredictedCurTime()
 end
 function ENT:PhysicsCollide(data, phys)
@@ -30,6 +30,7 @@ function ENT:Think()
 	elseif self.DieTime < CurTime() then
 		self:Remove()
 	end
+	local owner = self:GetOwner()
 	if CurTime() >= self.NextThink1 then 
 	for _, ent in pairs(ents.FindInSphere(self:GetPos(), 4048)) do
 		target = ent
@@ -42,14 +43,14 @@ function ENT:Think()
 
 				local phys = self:GetPhysicsObject()
 				phys:SetVelocityInstantaneous(direction * 3500)
-				target:TakeSpecialDamage(self.ProjDamage * (math.max(1,GAMEMODE:GetWave() / 4)),DMG_GENERIC ,self:GetOwner(), self:GetOwner():GetActiveWeapon())
+				target:TakeSpecialDamage(self.ProjDamage * (self.RageMode and ((owner:GetActiveWeapon().RageModer + 0.4) or 1) or math.max(2,GAMEMODE:GetWave() / 2)),DMG_ALWAYSGIB , owner, owner:GetActiveWeapon())
 				break
 			end
 		end
 	end
-		self.NextThink1 = CurTime() + 1
+		self.NextThink1 = CurTime() + 1.2
 	end
-	if self.HitData then
+	if self.HitData and not self.RageMode then
 		self:Explode(self.HitData.HitPos, self.HitData.HitNormal)
 		self:Remove()
 	end
@@ -69,7 +70,7 @@ function ENT:Explode(hitpos, hitnormal)
 		local target = self.HitData.HitEntity
 
 		if target:IsValidLivingZombie() and not target:GetZombieClassTable().NeverAlive then
-			target:TakeSpecialDamage((self.ProjDamage * 2)  * (math.max(1,GAMEMODE:GetWave() / 4)), DMG_BULLET, owner, source, hitpos)
+			target:TakeSpecialDamage(self.ProjDamage * (self.RageMode and ((owner:GetActiveWeapon().RageModer + 1) or 1) or math.max(2,GAMEMODE:GetWave() / 4)), DMG_BULLET, owner, source, hitpos)
 		end
 	end
 

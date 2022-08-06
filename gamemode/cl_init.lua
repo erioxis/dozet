@@ -1049,6 +1049,7 @@ function GM:_PostDrawTranslucentRenderables()
 		self:DrawResupplyIndicators()
 		self:DrawRemantlerIndicators()
 		self:DrawHumanIndicators()
+		self:DrawZombieIndicators()
 		self:DrawNestIndicators()
 	end
 end

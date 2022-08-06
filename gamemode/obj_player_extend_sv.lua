@@ -48,6 +48,11 @@ function meta:ProcessDamage(dmginfo)
 		if attacker.r_return then
 			dmginfo:SetDamage(dmginfo:GetDamage() * 0.9)
 		end
+		if self.m_Evo and math.random(3) == 1 then
+			dmginfo:SetDamage(0)
+			net.Start("zs_damageblock")
+			net.Send(self)
+		end
 
 		local corrosion = self.Corrosion and self.Corrosion + 2 > CurTime()
 		if self ~= attacker and not corrosion and not dmgbypass then

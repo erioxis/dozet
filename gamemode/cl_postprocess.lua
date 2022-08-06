@@ -243,6 +243,59 @@ function GM:DrawHumanIndicators()
 		end
 	end
 end
+function GM:DrawZombieIndicators()
+	if MySelf:Team() ~= TEAM_HUMAN or not MySelf:IsSkillActive(SKILL_SEEAURA) or MySelf:KeyDown(IN_SPEED) then return end
+
+	local eyepos = EyePos()
+	local range, dist, healthfrac, pos, size
+	for _, pl in pairs(team_GetPlayers(TEAM_UNDEAD)) do
+		range = pl:GetAuraRangeSqr()
+		dist = pl:GetPos():DistToSqr(eyepos)
+		if pl:Alive() and dist <= range and (not pl:GetDTBool(DT_PLAYER_BOOL_NECRO) or dist >= 27500) then
+			healthfrac = math_max(pl:Health(), 0) / pl:GetMaxHealth()
+			colHealth.r = math_Approach(colHealthEmpty.r, colHealthFull.r, math_abs(colHealthEmpty.r - colHealthFull.r) * healthfrac)
+			colHealth.g = math_Approach(colHealthEmpty.g, colHealthFull.g, math_abs(colHealthEmpty.g - colHealthFull.g) * healthfrac)
+			colHealth.b = math_Approach(colHealthEmpty.b, colHealthFull.b, math_abs(colHealthEmpty.b - colHealthFull.b) * healthfrac)
+
+			pos = pl:WorldSpaceCenter()
+
+		local hcolor = COLOR_WHITE
+		local ang = EyeAngles()
+		ang:RotateAroundAxis(ang:Up(), -90)
+		ang:RotateAroundAxis(ang:Forward(), 90)
+		local nearest = pl:WorldSpaceCenter()
+		local norm = nearest - eyepos
+		norm:Normalize()
+		local dot = EyeVector():Dot(norm)
+		local dotsq = dot * dot
+		local vis = math.Clamp((dotsq * dotsq) - 0.1, 0, 1)
+
+				cam.IgnoreZ(true)
+				cam.Start3D2D(nearest, ang, 0.1)
+					local wid, hei = 150, 6
+					local x, y = wid * -0.5 + 2, 0
+						y = y + hei + 3
+						hei = 8
+						x = wid * -0.5 + 2
+		                if pl:GetZombieClassTable().Boss then
+							draw.SimpleText("BOSS", "ZSHUDFontBig", x + 55, y - 150, COLOR_CYAN, TEXT_ALIGN_CENTER)
+						end
+						draw.SimpleText(pl:Health().."|"..pl:GetMaxHealth(), "ZSHUDFontBig", x + 55, y + 150, COLOR_CYAN, TEXT_ALIGN_CENTER)
+							
+				cam.End3D2D()
+				cam.IgnoreZ(false)
+		
+
+			render_SetMaterial(matGlow)
+			render_DrawSprite(pos, 13, 13, colHealth)
+			size = math_sin(self.HeartBeatTime + pl:EntIndex()) * 50 - 21
+			if size > 0 then
+				render_DrawSprite(pos, size * 1.5, size, colHealth)
+				render_DrawSprite(pos, size, size * 1.5, colHealth)
+			end
+		end
+	end
+end
 
 function GM:ToggleZombieVision(onoff)
 	if onoff == nil then
