@@ -2,8 +2,8 @@ AddCSLuaFile()
 
 --SWEP.PrintName = "'Peashooter' Handgun"
 --SWEP.Description = "У него меньше урон чем у обычного пистолета,но обладая свойством тратить половину патрон он покрывает свой недостаток."
-SWEP.PrintName = ""..translate.Get("wep_pshooter")
-SWEP.Description = ""..translate.Get("wep_d_pshooter")
+SWEP.PrintName = translate.Get("wep_pshooter")
+SWEP.Description = translate.Get("wep_d_pshooter")
 
 SWEP.Slot = 1
 SWEP.SlotPos = 0

@@ -362,6 +362,8 @@ LANGUAGE.press_left_and_right_to_cycle_targets		= "Press STRAFE LEFT and STRAFE 
 --weapon
 --LANGUAGE.wep_		= ""
 --LANGUAGE.wep_d_		= ""
+LANGUAGE.wep_piercer = "'Piercer' Revolver"
+LANGUAGE.wep_d_piercer = "This don't pierce."
 LANGUAGE.wep_bulldog = "'Bulldog' Ball-gun"
 LANGUAGE.wep_d_bulldog = "Shoot a 1 big ball with autoaim."
 LANGUAGE.wep_marksman  = "'Marksman' Revolver"

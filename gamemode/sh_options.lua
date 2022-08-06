@@ -391,6 +391,7 @@ GM:AddPointShopItem("pollutor",			ITEMCAT_GUNS,			150,				"weapon_zs_pollutor")
 GM:AddPointShopItem("smgstick",			ITEMCAT_GUNS,			150,				"weapon_zs_smgstick")
 GM:AddPointShopItem("stalker",			ITEMCAT_GUNS,			150,			"weapon_zs_m4")
 GM:AddPointShopItem("binocle",			ITEMCAT_GUNS,			150,			"weapon_zs_binocle")
+GM:AddPointShopItem("piercer",			ITEMCAT_GUNS,			150,				"weapon_zs_piercer")
 -- Tier 4
 GM:AddPointShopItem("longarm",			ITEMCAT_GUNS,			300,			"weapon_zs_longarm")
 GM:AddPointShopItem("sweeper",			ITEMCAT_GUNS,			300,			"weapon_zs_sweepershotgun")
