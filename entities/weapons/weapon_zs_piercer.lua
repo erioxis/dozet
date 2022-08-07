@@ -29,7 +29,7 @@ SWEP.ShowViewModel = true
 SWEP.ShowWorldModel = true
 SWEP.ReloadSound = Sound("Weapon_AWP.ClipOut")
 SWEP.Primary.Sound = Sound("Weapon_357.Single")
-SWEP.Primary.Damage = 124
+SWEP.Primary.Damage = 81
 SWEP.Primary.NumShots = 1
 SWEP.Primary.Delay = 1.2
 
@@ -43,6 +43,7 @@ SWEP.Recoil = 1.4
 SWEP.Primary.Gesture = ACT_HL2MP_GESTURE_RANGE_ATTACK_CROSSBOW
 SWEP.ReloadGesture = ACT_HL2MP_GESTURE_RELOAD_SHOTGUN
 SWEP.NoScaleToLessPlayers = true
+SWEP.Ricoshot = nil
 
 SWEP.ConeMax = 0.001
 SWEP.ConeMin = 0
@@ -61,6 +62,12 @@ SWEP.LastCharge = 0
 SWEP.LastOverchargeAlarm = 0
 
 SWEP.m_HasDifferingDmgValues = true
+GAMEMODE:AddNewRemantleBranch(SWEP, 1, translate.Get("wep_piercer_r1"), translate.Get("wep_d_piercer_r1"), function(wept)
+	wept.Primary.Delay = 0.71
+	wept.Primary.Damage = wept.Primary.Damage * 0.25
+	wept.Ricoshot = true
+	wept.Primary.ClipSize = 1
+end)
 function SWEP:SetupDataTables()
 	self:NetworkVar("Float", 5, "ChargePerc")
 	self:NetworkVar("Bool", 5, "IsCharging")
@@ -143,6 +150,12 @@ function SWEP.BulletCallback(attacker, tr, dmginfo)
 	if SERVER and ent and ent:IsValidLivingZombie() then
 		dmginfo:SetDamageForce(attacker:GetUp() * 7000 + attacker:GetForward() * 25000)
         ent:TakeSpecialDamage(dmginfo:GetDamage() * 2, DMG_ALWAYSGIB, attacker, attacker:GetActiveWeapon())
+		for _, pl in pairs(ents.FindInSphere(ent:GetPos(), 230)) do
+			if pl:IsValidLivingZombie() and pl ~= ent and attacker:GetActiveWeapon().Ricoshot then
+				pl:TakeSpecialDamage(dmginfo:GetDamage() * 5, DMG_ALWAYSGIB, attacker, attacker:GetActiveWeapon())
+				break
+			end
+		end
 	end
 end
 

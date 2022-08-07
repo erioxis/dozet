@@ -591,6 +591,8 @@ LANGUAGE.wep_r_5		= "Doomly"
 LANGUAGE.wep_smorning    = "Solemn mourning"
 LANGUAGE.wep_d_smorning  = "Every 4-5 shots have double damage."
 --Улучшения пушек
+LANGUAGE.wep_piercer_r1 = "'RicoShot' Revolver"
+LANGUAGE.wep_d_piercer_r1 = "Main hit zombie take less damage and bullet ricochet into other zombie wih x5 damage."
 LANGUAGE.wep_bogger_r1  = "'Hourglass' Revolver"
 LANGUAGE.wep_d_bogger_r1 = "-50% damage but damage more with kills.\nAfter 12 seconds non-killing stack dissapering.\nProjectiles live's more."
 LANGUAGE.wep_bogger = "'Emperor' Stand"

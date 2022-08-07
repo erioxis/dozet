@@ -43,7 +43,7 @@ function ENT:Think()
 
 				local phys = self:GetPhysicsObject()
 				phys:SetVelocityInstantaneous(direction * 3500)
-				target:TakeSpecialDamage(self.ProjDamage * (self.RageMode and ((owner:GetActiveWeapon().RageModer + 0.4) or 1) or math.max(2,GAMEMODE:GetWave() / 2)),DMG_ALWAYSGIB , owner, owner:GetActiveWeapon())
+				target:TakeSpecialDamage(self.ProjDamage * (self.RageMode and (2) or math.max(2,GAMEMODE:GetWave() / 2)),DMG_ALWAYSGIB , owner, owner:GetActiveWeapon())
 				break
 			end
 		end
@@ -70,7 +70,7 @@ function ENT:Explode(hitpos, hitnormal)
 		local target = self.HitData.HitEntity
 
 		if target:IsValidLivingZombie() and not target:GetZombieClassTable().NeverAlive then
-			target:TakeSpecialDamage(self.ProjDamage * (self.RageMode and ((owner:GetActiveWeapon().RageModer + 1) or 1) or math.max(2,GAMEMODE:GetWave() / 4)), DMG_BULLET, owner, source, hitpos)
+			target:TakeSpecialDamage(self.ProjDamage * (self.RageMode and 2 or 1) or math.max(2,GAMEMODE:GetWave() / 4), DMG_ALWAYSGIB, owner, source, hitpos)
 		end
 	end
 
