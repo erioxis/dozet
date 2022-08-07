@@ -13,6 +13,7 @@ SWEP.ViewModelFlip = false
 SWEP.Slot = 4
 SWEP.SlotPos = 0
 
+
 SWEP.VElements = {
 	["whity++"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Crossbow_base", rel = "whity", pos = Vector(0, 0, 0), angle = Angle(0, 0, 0), size = Vector(0.26, 0.26, 0.26), color = Color(255, 255, 255, 26), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} },
 	["whity+++++"] = { type = "Model", model = "models/props_wasteland/coolingtank01.mdl", bone = "ValveBiped.Crossbow_base", rel = "whity", pos = Vector(0, -2.597, 4.699), angle = Angle(8, 90, 180), size = Vector(0.014, 0.019, 0.041), color = Color(105, 128, 135, 255), surpresslightning = false, material = "phoenix_storms/torpedo", skin = 0, bodygroup = {} },

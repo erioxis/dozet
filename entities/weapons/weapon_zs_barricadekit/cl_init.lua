@@ -12,7 +12,7 @@ function SWEP:DrawHUD()
 	local charges = self:GetOwner():GetPoints()
 	local chargesb = self:GetPrimaryAmmoCount()
 	local chargetxt = "(SECONDARY ATTACK)Boards: " .. chargesb
-	local costp = (35 * ((GAMEMODE:GetWave() + GAMEMODE:GetWave() * 0.2) * 2))
+	local costp = (35 * ((GAMEMODE:GetWave() + GAMEMODE:GetWave() * 0.2) * 2) + 35)
 	if charges >= costp then
 		draw.SimpleText("COST "..costp.." POINTS", "ZSHUDFont", x + wid, texty, COLOR_GREEN, TEXT_ALIGN_RIGHT)
 	else

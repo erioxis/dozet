@@ -44,7 +44,7 @@ function SWEP:CanPrimaryAttack()
 
 	if owner:IsHolding() or owner:GetBarricadeGhosting() then return false end
 
-	if owner:GetPoints() <= (35 * ((GAMEMODE:GetWave() + GAMEMODE:GetWave() * 0.2) * 2)) then
+	if owner:GetPoints() <= (35 * ((GAMEMODE:GetWave() + GAMEMODE:GetWave() * 0.2) * 2)) + 35 then
 		self:EmitSound("Weapon_Shotgun.Empty")
 		self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
 		return false

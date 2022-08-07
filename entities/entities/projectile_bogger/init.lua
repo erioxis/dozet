@@ -35,7 +35,7 @@ function ENT:Think()
 	for _, ent in pairs(ents.FindInSphere(self:GetPos(), 4048)) do
 		target = ent
 		if WorldVisible(self:LocalToWorld(Vector(0, 0, 10)), ent:NearestPoint(self:LocalToWorld(Vector(0, 0, 10)))) and target:IsValidLivingZombie() and not target:GetZombieClassTable().NeverAlive then
-			if target:IsValidLivingZombie() then
+			if target:IsValidLivingZombie() or ent.AllowSelfRicoShot then
 				local targetpos = target:LocalToWorld(target:OBBCenter())
 				local direction = (targetpos - self:GetPos()):GetNormal()
 
@@ -46,6 +46,9 @@ function ENT:Think()
 				target:TakeSpecialDamage(self.ProjDamage * (self.RageMode and (2) or math.max(2,GAMEMODE:GetWave() / 2)),DMG_ALWAYSGIB , owner, owner:GetActiveWeapon())
 				break
 			end
+		end
+		if ent.AllowSelfRicoShot then
+			ent:TakeDamage(1500, self:GetOwner(), self)
 		end
 	end
 		self.NextThink1 = CurTime() + 1.2

@@ -20,6 +20,10 @@ CLASS.OverrideModel = false
 CLASS.Skeletal = true
 
 local math_random = math.random
+local math_min = math.min
+local math_max = math.max
+local string_format = string.format
+local bit_band = bit.band
 
 function CLASS:PlayerFootstep(pl, vFootPos, iFoot, strSoundName, fVolume, pFilter)
 	if math_random(2) == 1 then
@@ -32,10 +36,11 @@ function CLASS:PlayerFootstep(pl, vFootPos, iFoot, strSoundName, fVolume, pFilte
 end
 if SERVER then
 	function CLASS:ProcessDamage(pl, dmginfo)
-		if dmginfo:GetInflictor().IsMelee then
-			dmginfo:SetDamage(dmginfo:GetDamage() / 1000)
+		if bit_band(dmginfo:GetDamageType(), DMG_BULLET) ~= 0 then
+			dmginfo:SetDamage(0)
+		elseif bit_band(dmginfo:GetDamageType(), DMG_SLASH) == 0 and bit_band(dmginfo:GetDamageType(), DMG_CLUB) == 0 then
+			dmginfo:SetDamage(0)
 		end
-	end
 	end
 
 if not CLIENT then return end
