@@ -1,6 +1,6 @@
 
-SWEP.PrintName = " "..translate.Get("wep_barricadekit")
-SWEP.Description = " "..translate.Get("wep_d_barricadekit")	
+SWEP.PrintName = translate.Get("wep_barricadekit")
+SWEP.Description = translate.Get("wep_d_barricadekit")	
 SWEP.Slot = 4
 SWEP.SlotPos = 0
 
@@ -44,7 +44,7 @@ function SWEP:CanPrimaryAttack()
 
 	if owner:IsHolding() or owner:GetBarricadeGhosting() then return false end
 
-	if owner:GetPoints() <= 150 then
+	if owner:GetPoints() <= (35 * ((GAMEMODE:GetWave() + GAMEMODE:GetWave() * 0.2) * 2)) then
 		self:EmitSound("Weapon_Shotgun.Empty")
 		self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
 		return false
