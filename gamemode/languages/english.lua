@@ -362,6 +362,8 @@ LANGUAGE.press_left_and_right_to_cycle_targets		= "Press STRAFE LEFT and STRAFE 
 --weapon
 --LANGUAGE.wep_		= ""
 --LANGUAGE.wep_d_		= ""
+LANGUAGE.wep_chemar = "'Chemar' Chem Pistol"
+LANGUAGE.wep_d_chemar = "Don't strong but for tier 1 this good weapon."
 LANGUAGE.wep_piercer = "'Piercer' Revolver"
 LANGUAGE.wep_d_piercer = "This don't pierce."
 LANGUAGE.wep_bulldog = "'Bulldog' Ball-gun"

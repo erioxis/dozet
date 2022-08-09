@@ -42,6 +42,7 @@ if SERVER then
 			dmginfo:SetDamage(0)
 		end
 	end
+end
 
 if not CLIENT then return end
 

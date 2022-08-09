@@ -185,6 +185,7 @@ GM:AddStartingItem("crklr",				ITEMCAT_GUNS,			30,				"weapon_zs_crackler")
 GM:AddStartingItem("sling",				ITEMCAT_GUNS,			30,				"weapon_zs_slinger")
 GM:AddStartingItem("z9000",				ITEMCAT_GUNS,			30,				"weapon_zs_z9000")
 GM:AddStartingItem("minelayer",			ITEMCAT_GUNS,			30,				"weapon_zs_minelayer")
+GM:AddStartingItem("chemar",			ITEMCAT_GUNS,			15,				"weapon_zs_chemar")
 
 
 
@@ -210,6 +211,8 @@ GM:AddStartingItem("60mkit",			ITEMCAT_AMMO,			20,				nil,			"100 medical power"
 GM:AddStartingItem("90mkit",			ITEMCAT_AMMO,			25,				nil,			"120 medical power",				nil,		"ammo_medpower",		function(pl) pl:GiveAmmo(120, "Battery", true) end)
 GM:AddStartingItem("scrap",		    	ITEMCAT_AMMO,			20,				nil,			"Scrap 15",				nil,		"ammo_scrap",		function(pl) pl:GiveAmmo(15, "Scrap", true) end)
 GM:AddStartingItem("scraper",			ITEMCAT_AMMO,			30,				nil,			"Scrap 25",				nil,		"ammo_scrap",		function(pl) pl:GiveAmmo(25, "Scrap", true) end)
+GM:AddStartingItem("chemical55",		    	ITEMCAT_AMMO,			15,				nil,			"Chemical ammo 55",				nil,		"ammo_chemical",		function(pl) pl:GiveAmmo(55, "chemical", true) end)
+GM:AddStartingItem("chemical95",			ITEMCAT_AMMO,			20,				nil,			"Chemical ammo 95",				nil,		"ammo_chemical",		function(pl) pl:GiveAmmo(95, "chemical", true) end)
 
 
 
@@ -361,6 +364,7 @@ GM:AddPointShopItem("crklr",			ITEMCAT_GUNS,			35,				"weapon_zs_crackler", nil,
 GM:AddPointShopItem("sling",			ITEMCAT_GUNS,			35,				"weapon_zs_slinger", nil, nil, nil, function(pl) pl:GiveEmptyWeapon("weapon_zs_slinger") end)
 GM:AddPointShopItem("z9000",			ITEMCAT_GUNS,			35,				"weapon_zs_z9000", nil, nil, nil, function(pl) pl:GiveEmptyWeapon("weapon_zs_z9000") end)
 GM:AddPointShopItem("minelayer",		ITEMCAT_GUNS,			35,				"weapon_zs_minelayer", nil, nil, nil, function(pl) pl:GiveEmptyWeapon("weapon_zs_minelayer") end)
+GM:AddPointShopItem("chemar",		ITEMCAT_GUNS,			25,				"weapon_zs_chemar", nil, nil, nil, function(pl) pl:GiveEmptyWeapon("weapon_zs_chemar") end)
 -- Tier 2
 GM:AddPointShopItem("glock3",			ITEMCAT_GUNS,			65,				"weapon_zs_glock3")
 GM:AddPointShopItem("magnum",			ITEMCAT_GUNS,			65,				"weapon_zs_magnum")

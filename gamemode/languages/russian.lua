@@ -429,6 +429,8 @@ LANGUAGE.wep_d_powerfists7		= "Стоп это реально?"
 LANGUAGE.wep_muramasa		= "Мурамаса"
 LANGUAGE.wep_d_muramasa		= "Мм что?Древнее оружие с СТОП ЧТО,КАКОЕ КАЧЕСТВО?? - "
 --пушки
+LANGUAGE.wep_chemar = "'Химик' Хим пистолет"
+LANGUAGE.wep_d_chemar = "Ослабленная версия хим винтовки,более дешев в производстве поэтому цена меньше."
 LANGUAGE.wep_rlauncher = "'Бумкин' Рокет лаунчер"
 LANGUAGE.wep_d_rlauncher = "ВТОРАЯ атака освобождает большой выброс.\nЧтобы использовать ВТОРУЮ АТАКУ надо убить 5-6 зомби"
 LANGUAGE.wep_m_damage = "'Магиструм' Магия урона"
