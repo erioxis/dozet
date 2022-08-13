@@ -1315,7 +1315,7 @@ function GM:Think()
 					pl:GiveStatus("drown")
 				end
                 pl:SetDKills(pl.zKills)
-				if (pl:GetActiveWeapon().Tier or 1) >= 5 and pl:HasTrinket("sin_pride") then
+				if (pl:GetActiveWeapon().Tier or 1) >= 4 and pl:HasTrinket("sin_pride") then
 					pl:StripWeapon(pl:GetActiveWeapon():GetClass())
 				end
 				if (pl:GetActiveWeapon().Tier or 1) <= 5 and pl:HasTrinket("sin_envy") and pl:GetActiveWeapon():GetClass() ~= "weapon_zs_fists" then
@@ -4266,7 +4266,7 @@ end
 
 function GM:PlayerCanPickupWeapon(pl, ent)
 	if pl:IsSkillActive(SKILL_JEW) then
-		pl:SetPoints(pl:GetPoints() - 5)
+		pl:SetPoints(pl:GetPoints() - (5 * self:GetWave()))
 		GAMEMODE:ConCommandErrorMessage(pl, translate.ClientGet(pl, "jewmoment"))
 	end
 

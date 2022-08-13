@@ -189,6 +189,9 @@ if SERVER then
 	function CLASS:ProcessDamage(pl, dmginfo)
 		if pl.EradiVived then return end
 		dmgblock = math.random(1,5)
+		if dmginfo:GetDamage() > 200 then 
+			dmginfo:SetDamage(100)
+		end
 	
 		if dmgblock == 1 then
 			dmginfo:SetDamage(0)

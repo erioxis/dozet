@@ -6,8 +6,8 @@ end
 
 SWEP.Base = "weapon_zs_zombie"
 
-SWEP.MeleeDamage = 45
-SWEP.MeleeDamageShielded = 66
+SWEP.MeleeDamage = 70
+SWEP.MeleeDamageShielded = 120000
 SWEP.MeleeDelay = 0.74
 SWEP.MeleeDamageVsProps = 15
 

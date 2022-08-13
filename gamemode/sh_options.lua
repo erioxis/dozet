@@ -485,6 +485,7 @@ GM:AddPointShopItem("rebarmace",		ITEMCAT_MELEE,			190,				"weapon_zs_rebarmace"
 GM:AddPointShopItem("meattenderizer",	ITEMCAT_MELEE,			190,				"weapon_zs_meattenderizer")
 GM:AddPointShopItem("iceeluxx",	ITEMCAT_MELEE,			190,				"weapon_zs_icelux")
 GM:AddPointShopItem("lamptube",	ITEMCAT_MELEE,			190,				"weapon_zs_lamptube")
+GM:AddPointShopItem("rapier",	ITEMCAT_MELEE,			190,				"weapon_zs_rapir")
 GM:AddPointShopItem("esword_d",		ITEMCAT_MELEE,			190,				"weapon_zs_energysword_dasher")
 -- Tier 4
 GM:AddPointShopItem("harpoon",			ITEMCAT_MELEE,			435,				"weapon_zs_harpoon")

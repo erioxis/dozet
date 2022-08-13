@@ -3,8 +3,8 @@ DEFINE_BASECLASS("weapon_zs_base")
 
 --SWEP.PrintName = "'Quasar' Pulse Rifle"
 --SWEP.Description = "A scoped pulse rifle that slows targets. Uses 4 pulse per shot."
-SWEP.PrintName = ""..translate.Get("wep_quasar")
-SWEP.Description = ""..translate.Get("wep_d_quasar")
+SWEP.PrintName = translate.Get("wep_quasar")
+SWEP.Description = translate.Get("wep_d_quasar")
 if CLIENT then
 	SWEP.Slot = 3
 	SWEP.SlotPos = 0

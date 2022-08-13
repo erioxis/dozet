@@ -97,6 +97,7 @@ function ENT:DrawTranslucent()
 	render.SuppressEngineLighting(true)
 	render.ModelMaterialOverride(matWhite)
 
+
 	self:DrawModel()
 
 	render.SetColorModulation(1, 1, 1)
@@ -116,3 +117,5 @@ function ENT:DrawTranslucent()
 		render.ModelMaterialOverride(0)
 	end
 end
+local texGradDown = surface.GetTextureID("VGUI/gradient_down")
+

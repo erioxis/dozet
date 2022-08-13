@@ -7,7 +7,7 @@ SWEP.PrintName = "Shade"
 SWEP.ViewModel = Model("models/weapons/v_fza.mdl")
 SWEP.WorldModel = Model("models/weapons/w_crowbar.mdl")
 SWEP.PhysicsForce = 3500
-SWEP.MutationMultiplier = 6000
+SWEP.MutationMultiplier = 9000
 
 if CLIENT then
 	SWEP.ViewModelFOV = 70

@@ -18,7 +18,7 @@ SWEP.ViewModel = "models/weapons/cstrike/c_knife_t.mdl"
 SWEP.WorldModel = "models/weapons/w_knife_t.mdl"
 SWEP.UseHands = true
 
-SWEP.MeleeDamage = 22
+SWEP.MeleeDamage = 12
 SWEP.MeleeRange = 52
 SWEP.MeleeSize = 0.875
 SWEP.BlockMultiplierWeapon = 1.5
@@ -39,7 +39,7 @@ SWEP.NoHitSoundFlesh = true
 
 SWEP.AllowQualityWeapons = true
 
-GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_FIRE_DELAY, -0.077)
+GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_FIRE_DELAY, -0.057)
 
 function SWEP:PlaySwingSound()
 	self:EmitSound("weapons/knife/knife_slash"..math.random(2)..".wav")
