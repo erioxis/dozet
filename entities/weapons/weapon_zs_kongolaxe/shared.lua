@@ -2,8 +2,8 @@ AddCSLuaFile()
 
 --SWEP.PrintName = "Kongol Axe"
 --SWEP.Description = "A very heavy greataxe with no other special properties other than sheer damage output."
-SWEP.PrintName = ""..translate.Get("wep_kaxe")
-SWEP.Description = ""..translate.Get("wep_d_kaxe")
+SWEP.PrintName = translate.Get("wep_kaxe")
+SWEP.Description = translate.Get("wep_d_kaxe")
 
 
 

@@ -50,7 +50,7 @@ SWEP.IronSightsAng = Vector(0, 0, 1)
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_MAX_SPREAD, -0.7, 1)
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_MIN_SPREAD, -0.35, 1)
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_FIRE_DELAY, -0.07, 1)
-GAMEMODE:AddNewRemantleBranch(SWEP, 1, ""..translate.Get("wep_magnum_r1"), ""..translate.Get("wep_d_magnum_r1"), function(wept)
+GAMEMODE:AddNewRemantleBranch(SWEP, 1, translate.Get("wep_magnum_r1"), translate.Get("wep_d_magnum_r1"), function(wept)
 	wept.Primary.Damage = wept.Primary.Damage * 0.85
 	wept.BounceMulti = 1.764
 	wept.GetCone = function(self)

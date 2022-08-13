@@ -3722,7 +3722,7 @@ function GM:KeyPress(pl, key)
 				pl:GetActiveWeapon():SetPerc(0)
 				pl:GodEnable()
 				pl:GetActiveWeapon().GodMode = true
-				timer.Simple(10, function() pl:GodDisable() pl:GetActiveWeapon().GodMode = false end)
+				timer.Simple(35, function() pl:GodDisable() pl:GetActiveWeapon().GodMode = false end)
 			end
 
 	elseif key == IN_ZOOM then

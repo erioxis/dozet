@@ -703,6 +703,7 @@ LANGUAGE.qual_3 = "Tiny "
 LANGUAGE.qual_4 = "Massive "
 LANGUAGE.qual_5 = "Dull "
 LANGUAGE.qual_0 = ""
+--Sin weapon
 --melee
 LANGUAGE.wep_rapir		= "Rapier"
 LANGUAGE.wep_d_rapir		= "An ancient weapon for a duel, accelerates the attack by 2-3 times when you move."
@@ -711,7 +712,7 @@ LANGUAGE.wep_d_shield			= "Can't attack but passivly resist from damage(70%) and
 LANGUAGE.wep_muramasa		= "Muramasa"
 LANGUAGE.wep_d_muramasa		= "Hmm what?Ancient weapon with WTF WITH QUALITY WHY IS "
 LANGUAGE.wep_murasama		= "Murasama"
-LANGUAGE.wep_d_murasama		= "Sam Jetstream murasama,damage you for 10% health,can trace more zombies and x8 backstab damage "
+LANGUAGE.wep_d_murasama		= "Sam Jetstream murasama,damage you for 10% health,can trace more zombies and x8 backstab damage.\nAUTOATTACK Nearest zombies when swinging."
 LANGUAGE.wep_lampt		= "Lamp Tube"
 LANGUAGE.wep_boomer		= "Boom-rang"
 LANGUAGE.wep_d_boomer		= "Damage x2 when throwed"

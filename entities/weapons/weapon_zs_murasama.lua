@@ -80,6 +80,53 @@ end
 function SWEP:PlayHitFleshSound()
 	self:EmitSound("physics/body/body_medium_break"..math.random(2, 4)..".wav")
 end
+function SWEP:SecondaryAttack()
+	damage = self.MeleeDamage * 0.77
+	owner = self:GetOwner()
+	effectdata = EffectData()
+		effectdata:SetOrigin(owner:GetPos())
+		util.Effect("murasama_multiple_hits", effectdata)
+		self:SetNextSecondaryFire(CurTime() + 2)
+		for _, ent in pairs(ents.FindInSphere(self:GetOwner():GetPos(), 215)) do
+			target = ent
+			if WorldVisible(self:GetOwner():LocalToWorld(Vector(0, 0, 30)), ent:NearestPoint(self:LocalToWorld(Vector(0, 0, 30)))) then
+				if target:IsValidLivingZombie() then
+					local targetpos = target:LocalToWorld(target:OBBCenter())
+					target:TakeSpecialDamage(damage + (target:GetZombieClassTable().Boss and target:Health() * 0.1 or target:Health() * 0.12),DMG_GENERIC ,self:GetOwner(), self:GetOwner():GetActiveWeapon())
+					effectdata = EffectData()
+					effectdata:SetOrigin(target:GetPos())
+					util.Effect("murasama_multiple_hits", effectdata)
+				end
+			end
+		end
+		if self.BlockTrue == true then
+			if not self:GetBlockState() then
+				timer.Create("blocked1",0.15,1, function() 
+					self.Block = true
+					self:SetHoldType("revolver")
+					self:SetWeaponSwingHoldType("revolver")
+					self:SetBlock(true)
+				end)
+				timer.Create("trueparry",0.15,1, function() 
+					self.ParryTiming = true
+				end)
+				timer.Create("trueparrydead",0.45,1, function() 
+					self.ParryTiming = false
+				end)
+			elseif self:GetBlockState() then
+				timer.Create("unblock",0.1,1, function() 
+					self.Block = false
+					self:SetHoldType(self.HoldType)
+					self:SetWeaponSwingHoldType(self.SwingHoldType)
+					self:SetBlock(false)
+				end)
+				timer.Create("trueparrydead1",0.15,1, function() 
+					self.ParryTiming = false
+				end)
+			end
+		end
+	return true
+end
 
 
 function SWEP:OnMeleeHit(hitent, hitflesh, tr)
@@ -144,10 +191,21 @@ function SWEP:MeleeSwing()
 	end
 
 
+
 	for _, trace in ipairs(tr) do
 		if not trace.Hit then continue end
 
 		ent = trace.Entity
+		for _, ent in pairs(ents.FindInSphere(self:GetOwner():GetPos(), 215)) do
+			target = ent
+			if WorldVisible(self:GetOwner():LocalToWorld(Vector(0, 0, 30)), ent:NearestPoint(self:LocalToWorld(Vector(0, 0, 30)))) then
+				if target:IsValidLivingZombie() and target ~= trace.Entity then
+					local targetpos = target:LocalToWorld(target:OBBCenter())
+	
+					target:TakeSpecialDamage(damage * 0.2 + (target:GetZombieClassTable().Boss and target:Health() * 0.1 or target:Health() * 0.12),DMG_GENERIC ,self:GetOwner(), self:GetOwner():GetActiveWeapon())
+				end
+			end
+		end
 
 		hit = true
 
@@ -189,8 +247,8 @@ function SWEP:MeleeSwing()
 		end
 	end
 	if SERVER and not owner:IsSkillActive(SKILL_MELEEFAN) or SERVER and not owner:Nick() == "Jetstream Sam" then
-	owner:TakeDamage((owner:Health() * 0.01) + 1)
-	owner:SetHealth(owner:Health() * 0.9)
+		owner:TakeDamage((owner:Health() * 0.01) + 1)
+		owner:SetHealth(owner:Health() * 0.9)
 	end
 end
 

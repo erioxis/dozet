@@ -129,7 +129,7 @@ local branch = GAMEMODE:AddNewRemantleBranch(SWEP, 2, translate.Get("wep_marksma
 	wept.SecondaryAttack = function(self)
 		self:SetNextSecondaryFire(CurTime() + 4)
 		self:SetCharge(0)
-		timer.Simple(4, function() self:SetCharge(2) end)
+		timer.Simple(4, function() if SERVER then self:SetCharge(2) end end)
 		
 		if SERVER then
 	
@@ -194,7 +194,7 @@ end
 function SWEP:SecondaryAttack()
 	self:SetNextSecondaryFire(CurTime() + 4)
 	self:SetCharge(0)
-	timer.Simple(4, function() self:SetCharge(2) end)
+	timer.Simple(4, function() if SERVER then self:SetCharge(2) end end)
 	
 	if SERVER then
 
