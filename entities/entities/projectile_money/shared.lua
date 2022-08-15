@@ -3,7 +3,7 @@ ENT.Type = "anim"
 ENT.AllowSelfRicoShot = true
 ENT.DamageMul = 1
 function ENT:ShouldNotCollide(ent)
-	return ent:IsPlayer() and ent:Team() == TEAM_UNDEAD
+	return ent:IsPlayer() and ent:Team() == TEAM_HUMAN
 end
 
 util.PrecacheModel("models/props_trainstation/trainstation_clock001.mdl")

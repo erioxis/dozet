@@ -1763,7 +1763,7 @@ GM:SetSkillModifierFunction(SKILLMOD_PULSE_WEAPON_SLOW_MUL, function(pl, amount)
 end)
 
 GM:SetSkillModifierFunction(SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, function(pl, amount)
-	pl.MeleeDamageTakenMul = math.Clamp(amount + 1.0, 0.0, 1000.0)
+	pl.MeleeDamageTakenMul = math.Clamp(amount + 1.0, 0.05, 1000.0)
 end)
 
 GM:SetSkillModifierFunction(SKILLMOD_POISON_DAMAGE_TAKEN_MUL, function(pl, amount)

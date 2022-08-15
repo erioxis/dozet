@@ -7,7 +7,7 @@ local function ContentsPaint(self, w, h)
 	local lp = MySelf
 	if lp:IsValid() then
 		local screenscale = BetterScreenScale()
-		local health = math.max(lp:Health(), 0)
+		local health = lp:Health()
 		local healthperc = math.Clamp(health / lp:GetMaxHealthEx(), 0, 1)
 		local wid, hei = 300 * screenscale, 18 * screenscale
  
