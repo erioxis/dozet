@@ -71,6 +71,9 @@ function GM:LoadVault(pl)
 					pl:SkillsReset()
 					pl.SkillsRefunded = true
 				end
+				if contents.UpgradableSkills then
+					pl:SetUpgradeSkills(util.DecompressBitTable(contents.UpgradableSkills), true)
+				end
 
 				pl.SkillVersion = self.SkillTreeVersion
 			end

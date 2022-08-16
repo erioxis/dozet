@@ -106,6 +106,9 @@ function CLASS:ProcessDamage(pl, dmginfo)
 		dmginfo:ScaleDamage(0)
 		dmg = 0
 	end
+	if dmg >= 350 then
+		dmginfo:SetDamage(25)
+	end
 
 
 	local numthreshold = math_Clamp(math_ceil(hp / 100), 1, 9)
@@ -126,7 +129,7 @@ function CLASS:ProcessDamage(pl, dmginfo)
 	if newhp <= dmgthreshold and pl["bloodth"..numthreshold] then
 		pl["bloodth"..numthreshold] = false
 		dmginfo:SetDamage(dmg - nulldmg)
-		pl:GiveStatus("redmarrow", 10)
+		pl:GiveStatus("redmarrow", 15)
 
 		local effectdata = EffectData()
 			effectdata:SetOrigin(pl:WorldSpaceCenter())
