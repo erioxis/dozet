@@ -4627,22 +4627,22 @@ end
 		
 	end
 	if pl:Team() == TEAM_UNDEAD and pl.m_Zombie_GodHealth then
-		pl:SetMaxHealth(pl:GetMaxHealth() * 2) pl:SetHealth(pl:Health() * 2)
+		pl:SetMaxHealth(pl:GetMaxHealth() * 1.2) pl:SetHealth(pl:Health() * 1.2)
 	end
 		
 	if pl:Team() == TEAM_UNDEAD and pl.m_Zombie_GodyHealth then
-		pl:SetMaxHealth(pl:GetMaxHealth() * 2.5) pl:SetHealth(pl:Health() * 2.5)
+		pl:SetMaxHealth(pl:GetMaxHealth() *1.2) pl:SetHealth(pl:Health() * 1.2)
 	
 	end
 	if pl:Team() == TEAM_UNDEAD and pl.m_Zombie_CursedHealth then
-		pl:SetMaxHealth(pl:GetMaxHealth() * 2) pl:SetHealth(pl:Health() * 2)
+		pl:SetMaxHealth(pl:GetMaxHealth() *1.2) pl:SetHealth(pl:Health() *1.2)
 	
 	end
 	if pl:Team() == TEAM_UNDEAD and pl:SteamID() == "STEAM_0:1:585943777" then
 	pl:SetMaxHealth(pl:GetMaxHealth() * 0.25) pl:SetHealth(pl:Health() * 0.25)	
 	end
 	if pl:Team() == TEAM_UNDEAD and pl.m_Gigachad then
-		pl:SetMaxHealth(pl:GetMaxHealth() * 3) pl:SetHealth(pl:Health() * 3)
+		pl:SetMaxHealth(pl:GetMaxHealth() * 1.2) pl:SetHealth(pl:Health() * 1.2)
 	end
 	if pl:Team() == TEAM_UNDEAD and pl:SteamID() == "STEAM_0:1:461661780" then
 		pl:SetMaxHealth(pl:GetMaxHealth() * 0.3) pl:SetHealth(pl:Health() * 0.3)

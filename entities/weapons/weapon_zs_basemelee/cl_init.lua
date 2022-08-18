@@ -101,6 +101,7 @@ function SWEP:DrawWorldModel()
 end
 
 local ghostlerp = 0
+local ghostlerp1 = 0
 function SWEP:GetViewModelPosition(pos, ang)
 	local owner = self:GetOwner()
 	if self:IsSwinging() then
@@ -125,21 +126,26 @@ function SWEP:GetViewModelPosition(pos, ang)
 		ang:RotateAroundAxis(ang:Up(), rot.yaw * power)
 		ang:RotateAroundAxis(ang:Forward(), rot.roll * power)
 	end
-	if self:GetBlockState() then
-		ang:RotateAroundAxis(ang:Right(),13)
-		ang:RotateAroundAxis(ang:Up(),13)
-		ang:RotateAroundAxis(ang:Forward(),13)
-	end
 
 	if owner:GetBarricadeGhosting() then
 		ghostlerp = math.min(1, ghostlerp + FrameTime() * 4)
 	elseif ghostlerp > 0 then
 		ghostlerp = math.max(0, ghostlerp - FrameTime() * 5)
 	end
+	if not self:GetBlockState() then
+		ghostlerp1 = math.max(0, ghostlerp1 - FrameTime() * 3)
+	elseif self:GetBlockState() then
+		ghostlerp1 = math.min(1, ghostlerp1 + FrameTime() * 2)
+	end
 
 	if ghostlerp > 0 then
 		pos = pos + 3.5 * ghostlerp * ang:Up()
 		ang:RotateAroundAxis(ang:Right(), -30 * ghostlerp)
+	end
+	if ghostlerp1 > 0 then
+		pos = pos - 3.5 * ghostlerp1 * ang:Up()
+		ang:RotateAroundAxis(ang:Right(), 20 * ghostlerp1)
+		ang:RotateAroundAxis(ang:Forward(), 20 * ghostlerp1)
 	end
 
 	return pos, ang
