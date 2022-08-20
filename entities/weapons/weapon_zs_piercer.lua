@@ -123,11 +123,14 @@ SWEP.IronSightsPos = Vector(-5, -40, 3)
 SWEP.IronSightsAng = Vector(0, 0, 0)
 
 SWEP.WalkSpeed = SPEED_SLOWEST
+SWEP.Traced = nil
+SWEP.Traced2 = nil
 
 SWEP.TracerName = "tracer_comsniper"
 SWEP.ChargeSound = "items/suitchargeok1.wav"
 SWEP.LastCharge = 0
 SWEP.LastOverchargeAlarm = 0
+SWEP.Pierces = 4
 
 SWEP.m_HasDifferingDmgValues = true
 GAMEMODE:AddNewRemantleBranch(SWEP, 1, translate.Get("wep_piercer_r1"), translate.Get("wep_d_piercer_r1"), function(wept)
@@ -135,7 +138,43 @@ GAMEMODE:AddNewRemantleBranch(SWEP, 1, translate.Get("wep_piercer_r1"), translat
 	wept.Primary.Damage = wept.Primary.Damage * 0.25
 	wept.Ricoshot = true
 	wept.Primary.ClipSize = 1
+	wept.Pierces = 1
 end)
+function SWEP:ShootBullets(dmg, numbul, cone)
+	local owner = self:GetOwner()
+	self:SendWeaponAnimation()
+	owner:DoAttackEvent()
+
+	local dir = owner:GetAimVector()
+	local dirang = dir:Angle()
+	local start = owner:GetShootPos()
+
+	dirang:RotateAroundAxis(dirang:Forward(), util.SharedRandom("bulletrotate1", 0, 360))
+	dirang:RotateAroundAxis(dirang:Up(), util.SharedRandom("bulletangle1", -cone, cone))
+
+	dir = dirang:Forward()
+	local tr = owner:CompensatedPenetratingMeleeTrace(4092, 0.01, start, dir)
+	local ent
+
+	local dmgf = function(i) return dmg * (1 + 0.1 * i) end
+
+	owner:LagCompensation(true)
+	for i, trace in ipairs(tr) do
+		if not trace.Hit then continue end
+		if i > self.Pierces - 1 then break end
+		ent = trace.Entity
+		if trace.Hit and self.Traced then
+			ent:TakeSpecialDamage(self.Primary.Damage * 3, DMG_ALWAYSGIB, self:GetOwner(), self)
+		elseif trace.Hit and self.Traced2 then
+			ent:TakeSpecialDamage(self.Primary.Damage * 2, DMG_ALWAYSGIB, self:GetOwner(), self)
+		end
+
+		if ent and ent:IsValid() then
+			owner:FireBulletsLua(trace.HitPos, dir, 0, numbul, dmgf(i-1), nil, self.Primary.KnockbackScale,  self.TracerName, self.BulletCallback, self.Primary.HullSize, nil, self.Primary.MaxDistance, nil, self)
+		end
+	end
+	owner:LagCompensation(false)
+end
 function SWEP:PrimaryAttack()
 	if not self:CanPrimaryAttack() then return end
 	
@@ -181,6 +220,34 @@ end
 
 function SWEP:Think()
 	local owner = self:GetOwner()
+
+	local dir = owner:GetAimVector()
+	local dirang = dir:Angle()
+	local start = owner:GetShootPos()
+
+	dirang:RotateAroundAxis(dirang:Forward(), util.SharedRandom("bulletrotate1", 0, 360))
+	dirang:RotateAroundAxis(dirang:Up(), util.SharedRandom("bulletangle1", 0, 0))
+
+	dir = dirang:Forward()
+	local tr = owner:CompensatedPenetratingMeleeTrace(4092, 0.01, start, dir)
+	local ent
+	local dmg = self.Primary.Damage
+	local dmgf = function(i) return dmg * (1 + 0.1 * i) end
+	for i, trace in ipairs(tr) do
+		ent = trace.Entity
+		if ent:IsValidLivingZombie() then
+			if i == 1 then
+				self.Traced = true
+			elseif i == 2 then
+				self.Traced2 =  true
+				self.Traced = nil
+			else
+				self.Traced =  nil
+				self.Traced2 =  nil
+			end
+		end
+	end
+
 	if self:GetIsCharging() then
 		if owner:KeyReleased(IN_ATTACK2) or owner:GetBarricadeGhosting() then
 			local nextshotdelay = 0.25
@@ -235,8 +302,8 @@ function SWEP.BulletCallback(attacker, tr, dmginfo)
 	local ent = tr.Entity
     if not attacker:GetActiveWeapon().Knick then
 	if SERVER and ent and ent:IsValidLivingZombie() then
+		
 		dmginfo:SetDamageForce(attacker:GetUp() * 7000 + attacker:GetForward() * 25000)
-        ent:TakeSpecialDamage(dmginfo:GetDamage() * 2, DMG_ALWAYSGIB, attacker, attacker:GetActiveWeapon())
 		for _, pl in pairs(ents.FindInSphere(ent:GetPos(), 230)) do
 			if pl:IsValidLivingZombie() and pl ~= ent and attacker:GetActiveWeapon().Ricoshot then
 				pl:TakeSpecialDamage(dmginfo:GetDamage() * 5, DMG_ALWAYSGIB, attacker, attacker:GetActiveWeapon())

@@ -18,7 +18,7 @@ SWEP.Primary.Automatic = true
 SWEP.Primary.Ammo = "impactmine"
 SWEP.Primary.Delay = 0.7
 SWEP.Primary.DefaultClip = 10
-SWEP.Primary.Damage = 360
+SWEP.Primary.Damage = 120
 SWEP.Primary.NumShots = 1
 
 SWEP.ConeMax = 3
@@ -32,7 +32,7 @@ SWEP.ReloadSpeed = 0.75
 
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_RELOAD_SPEED, 0.075)
 GAMEMODE:AddNewRemantleBranch(SWEP, 1, translate.Get("wep_bulldog_r1"), translate.Get("wep_d_bulldog_r1"), function(wept)
-	wept.Primary.Damage = wept.Primary.Damage * 0.2
+	wept.Primary.Damage = wept.Primary.Damage * 0.33
 	wept.ReloadSpeed = wept.ReloadSpeed * 1.3
 	wept.Primary.Delay = wept.Primary.Delay * 0.5
 	wept.WalkSpeed = SPEED_VERYSLOW

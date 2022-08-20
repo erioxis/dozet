@@ -116,7 +116,7 @@ GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_HEADSHOT_MULTI, 0.07)
 GAMEMODE:AddNewRemantleBranch(SWEP, 1, translate.Get("wep_marksman_r1"), translate.Get("wep_d_marksman_r1"), function(wept)
 	wept.ConeMax = wept.ConeMax * 1.7
 	wept.ConeMin = wept.ConeMin * 2.1
-	wept.Primary.Damage = wept.Primary.Damage * 0.3
+	wept.Primary.Damage = wept.Primary.Damage * 0.2
 	wept.HeadshotMulti = wept.HeadshotMulti * 0.8
 	wept.TripleMoney = true
     wept.Primary.NumShots = 3
@@ -124,7 +124,7 @@ end)
 local branch = GAMEMODE:AddNewRemantleBranch(SWEP, 2, translate.Get("wep_marksman_s1"), translate.Get("wep_d_marksman_s1"), function(wept)
 	wept.ConeMax = wept.ConeMax * 1.7
 	wept.ConeMin = wept.ConeMin * 2.1
-	wept.Primary.Damage = wept.Primary.Damage * 2
+	wept.Primary.Damage = wept.Primary.Damage * 1
 	wept.HeadshotMulti = wept.HeadshotMulti * 2
 	wept.SecondaryAttack = function(self)
 		self:SetNextSecondaryFire(CurTime() + 4)

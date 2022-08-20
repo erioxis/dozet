@@ -4,15 +4,15 @@ local vector_origin = vector_origin
 
 function ENT:Initialize()
 	self:SetModel("models/props_trainstation/trainstation_clock001.mdl")
-	self:PhysicsInitSphere(1)
+	self:PhysicsInitSphere(1.7)
 	self:SetSolid(SOLID_VPHYSICS)
-	self:SetModelScale(0.2, 0)
+	self:SetModelScale(0.15, 0.1)
 	self:SetupGenericProjectile(false)
 	self:SetColor(Color(252,217,61, 120))
 	self:SetAlpha(60)
 	self:EmitSound("weapons/physcannon/physcannon_pickup.wav", math.random(2,255), math.random(1,50))
 
-	self.DieTime = CurTime() + 12
+	self.DieTime = CurTime() + 4
 	self.LastPhysicsUpdate = UnPredictedCurTime()
 end
 function ENT:OnRicoShot() 
@@ -29,7 +29,7 @@ end
 function ENT:DoBackShot(dmginfo, attacker)
 	owner = self:GetOwner()
 	util.SpriteTrail( self, 0, Color( 252,61,61), false, 15, 1, 4, 1 / ( 15 + 1 ) * 0.5, "trails/plasma" )
-	owner:TakeDamage(dmginfo * 6, attacker, self)
+	owner:TakeDamage(dmginfo * 12, attacker, self)
 	pos = owner:GetPos()
 	pos.z = 5
 	self:SetPos(pos)
@@ -38,7 +38,7 @@ function ENT:DoRicoShot(ent, pos, melee, dmginfo, attacker)
 	local owner = self:GetOwner()
 	if ent and ent:IsValid() and ent:IsPlayer() and ent:IsValidLivingZombie() or ent.AllowSelfRicoShot then
 		if not ent.AllowSelfRicoShot then
-			ent:TakeSpecialDamage((dmginfo * 2) * self.DamageMul, DMG_DIRECT, attacker, attacker:GetActiveWeapon())
+			ent:TakeSpecialDamage((dmginfo * 1.5) * self.DamageMul, DMG_BULLET, attacker, attacker:GetActiveWeapon())
 			if (not melee) then
 				timer.Simple(0.95, function() if self:IsValid() then self:Remove() end end)
 				
@@ -82,7 +82,6 @@ end
 function ENT:OnTakeDamage(dmginfo)
 	if dmginfo:GetDamage() <= 0 then return end
 local owner = self:GetOwner()
-    dmginfo:SetDamageType(DMG_DIRECT)
 	local attacker = dmginfo:GetAttacker()
 	local pos = self:GetPos()
 	local dmginfotrue = dmginfo:GetDamage()
@@ -105,8 +104,3 @@ local owner = self:GetOwner()
 	
 end
 
-function ENT:OnRemove()
-	local effectdata = EffectData()
-		effectdata:SetOrigin(self:GetPos())
-	util.Effect("explosion_bonemesh", effectdata)
-end

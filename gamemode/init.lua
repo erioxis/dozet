@@ -1321,6 +1321,11 @@ function GM:Think()
 				if (pl:GetActiveWeapon().Tier or 1) <= 5 and pl:HasTrinket("sin_envy") and pl:GetActiveWeapon():GetClass() ~= "weapon_zs_fists" then
 					pl:StripWeapon(pl:GetActiveWeapon():GetClass())
 				end
+				if not pl:GetStatus("sigildef") and self:GetWave() >= 6 and  time >= pl.NextDamage and self:GetWaveActive() then
+					pl:TakeDamage(33)
+					pl.NextDamage = time + 0.6
+					pl:CenterNotify(COLOR_RED, translate.ClientGet(pl, "danger"))
+				end
 
 
 				local healmax = pl:IsSkillActive(SKILL_D_FRAIL) and math.floor(pl:GetMaxHealth() * 0.44) or pl:IsSkillActive(SKILL_ABUSE) and math.floor(pl:GetMaxHealth() * 0.25)  or pl:GetMaxHealth()
@@ -2464,6 +2469,8 @@ function GM:PlayerInitialSpawnRound(pl)
 	pl.zKills = 0
 	pl.RedeemedOnce = true
 	pl.HolyMantle = 0
+
+	pl.NextDamage = 0
 
 	pl.CanBuy = nil
 
@@ -4617,8 +4624,6 @@ function GM:PlayerSpawn(pl)
 	pl:SetWeaponColor(wcol)
 if pl:SteamID() == "STEAM_0:0:426833142" then
 	pl:SetMaxHealth(pl:GetMaxHealth() * 1.5) pl:SetHealth(pl:Health() * 1.5)
-elseif pl:Team() == TEAM_UNDEAD and pl:SteamID() == "STEAM_0:1:564919091" then
-	pl:SetMaxHealth(pl:GetMaxHealth() * 0.1) pl:SetHealth(pl:Health() * 0.1)
 elseif pl:Team() == TEAM_UNDEAD and pl:SteamID() ==  "STEAM_0:1:217059780" then
 	pl:SetMaxHealth(pl:GetMaxHealth() * 0.5) pl:SetHealth(pl:Health() * 0.5)
 end

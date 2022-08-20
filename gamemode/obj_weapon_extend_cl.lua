@@ -52,6 +52,16 @@ function meta:DrawCrosshairCross()
 	else
 		baserot = math.NormalizeAngle(baserot + vel:Dot(EyeAngles():Right()) * math.min(10, len / 40000))
 	end
+	local texGradDown = surface.GetTextureID("VGUI/gradient_down")
+	local firedelay = MySelf:GetActiveWeapon():GetNextPrimaryFire() - CurTime() 
+		local scrW1 = ScrW()
+		local scrH1 = ScrH()
+		local width1 = 200
+		local height1 = 20
+		local x1, y1 = ScrW() * 0.5 , ScrH() * 0.5
+		
+		ratio = (MySelf:GetActiveWeapon().Primary.Delay or 1) / firedelay
+		surface.DrawCircle(x1, y1, 38 * cone, 5, 35 * ratio * 0.5, 5, 255 * ratio * 0.4)
 
 	local ang = Angle(0, 0, baserot)
 	for i=0, 359, 360 / GAMEMODE.CrosshairLines do
@@ -67,6 +77,9 @@ function meta:DrawCrosshairDot()
 	local thickness = GAMEMODE.CrosshairThickness
 	local size = 4 * thickness
 	local hsize = size/2
+	local firedelay = MySelf:GetActiveWeapon():GetNextPrimaryFire() - CurTime() 
+	ratio = (MySelf:GetActiveWeapon().IsMelee and MySelf:GetActiveWeapon().MeleeDelay or 1) / firedelay
+	surface.DrawCircle(x, y, 10, 5 * ratio * 0.2, 35 * ratio * 0.5, 5, 255 * ratio * 0.4)
 
 	surface.SetDrawColor(GAMEMODE.CrosshairColor2)
 	surface.DrawRect(x - hsize, y - hsize, size, size)

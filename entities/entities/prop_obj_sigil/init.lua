@@ -106,3 +106,12 @@ end
 function ENT:UpdateTransmitState()
 	return TRANSMIT_ALWAYS
 end
+function ENT:Think()
+	for _, ent in pairs(ents.FindInSphere(self:GetPos(), 348)) do
+		if WorldVisible(self:LocalToWorld(Vector(0, 0, 30)), ent:NearestPoint(self:LocalToWorld(Vector(0, 0, 30)))) then
+			if ent ~= self and ent:IsValidLivingHuman() then
+         	    ent:GiveStatus("sigildef", 2)
+			end
+		end
+	end
+end
