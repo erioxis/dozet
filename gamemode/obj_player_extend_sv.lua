@@ -2245,16 +2245,23 @@ end
 function meta:GetRandomStartingItem()
 	local pool = {}
 
-
-	if self:IsSkillActive(SKILL_PREPAREDNESS) and #GAMEMODE.Food > 0 then
-		pool[#pool + 1] = GAMEMODE.Food[math.random(#GAMEMODE.Food)]
-	end
-
 	if self:IsSkillActive(SKILL_EQUIPPED) then
 		pool[#pool + 1] = GAMEMODE.StarterTrinkets[math.random(#GAMEMODE.StarterTrinkets)]
 	end
 
 
+	if #pool > 0 then
+		return pool[math.random(#pool)]
+	end
+
+end
+function meta:GetRandomFood()
+	local pool = {}
+
+
+	if self:IsSkillActive(SKILL_PREPAREDNESS) and #GAMEMODE.Food > 0 then
+		pool[#pool + 1] = GAMEMODE.Food[math.random(#GAMEMODE.Food)]
+	end
 	if #pool > 0 then
 		return pool[math.random(#pool)]
 	end
