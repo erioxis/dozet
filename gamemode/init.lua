@@ -2185,13 +2185,12 @@ function GM:ScalePlayerDamage(pl, hitgroup, dmginfo)
 	
 	local attacker = dmginfo:GetAttacker()
 	local inflictor = dmginfo:GetInflictor()
-	local damagescalebullet = (attacker.BulletMul or 1)
 	GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_WEAPON, inflictor:GetClass(), "Hits", 1)
 	if hitgroup == HITGROUP_HEAD then
 		GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_WEAPON, inflictor:GetClass(), "Headshots", 1)
 	end
 	if dmginfo:IsBulletDamage() then 
-		dmginfo:SetDamage((dmginfo:GetDamage() * damagescalebullet) - attacker.zKills / 7)
+		dmginfo:SetDamage((dmginfo:GetDamage()) - attacker.zKills / 7)
 	end
 
 	if not dmginfo:IsBulletDamage() then return end

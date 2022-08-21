@@ -1467,7 +1467,7 @@ GM:AddSkillModifier(SKILL_DONATE12, SKILLMOD_DAMAGE, 0.15)
 GM:AddSkill(SKILL_DONATE13, "Donate XIII", GOOD.."-35% Scale model\n"..GOOD.."Thx chayok",
 				                                                            	23,			29,					{SKILL_DONATE12}, TREE_DONATETREE)
 GM:AddSkillModifier(SKILL_DONATE13, SKILLMOD_SCALEMODEL, -0.25)
-GM:AddSkill(SKILL_DONATE14, "Donate XIV", GOOD.."+6% Magic Damage and +5% blood armor regen from magic"..GOOD.."Thx for Белый Рыцарь",
+GM:AddSkill(SKILL_DONATE14, "Donate XIV", GOOD.."+6% Magic Damage and +5% blood armor regen from magic\n"..GOOD.."Thx for Белый Рыцарь",
 				                                                            	23,			30,					{SKILL_DONATE13}, TREE_DONATETREE)
 GM:AddSkillModifier(SKILL_DONATE14, SKILLMOD_M_DMG, 0.06)
 GM:AddSkillModifier(SKILL_DONATE14, SKILLMOD_M_REG, 0.05)

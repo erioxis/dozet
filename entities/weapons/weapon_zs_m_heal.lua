@@ -1,8 +1,8 @@
 AddCSLuaFile()
 
 --SWEP.PrintName = "Axe"
-SWEP.PrintName = ""..translate.Get("wep_m_heal")
-SWEP.Description = ""..translate.Get("wep_d_m_heal")
+SWEP.PrintName = translate.Get("wep_m_heal")
+SWEP.Description = translate.Get("wep_d_m_heal")
 
 if CLIENT then
 	SWEP.ViewModelFOV = 55
@@ -50,9 +50,17 @@ SWEP.AllowQualityWeapons = true
 
 function SWEP:PrimaryAttack()
 	local owner = self:GetOwner()
-	if not owner:IsValid() then return end
-
 	if not self:CanPrimaryAttack() then return end
+	if owner:GetBloodArmor() > 0 and self.Primary.ArmorBleed <= owner:GetBloodArmor() then
+		for _, pl in pairs(ents.FindInSphere(owner:GetPos(), 120)) do
+			if pl:IsPlayer() and pl:IsValidLivingHuman() and pl ~= owner then
+				owner:HealPlayer(pl, 30 + owner:GetBloodArmor() - self.Primary.ArmorBleed)
+				if SERVER then
+					owner:SetBloodArmor(math.min(owner:GetBloodArmor() - self.Primary.ArmorBleed))
+				end
+			end
+		end
+	end
 
 end
 function SWEP:SecondaryAttack()
