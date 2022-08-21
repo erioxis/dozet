@@ -186,17 +186,19 @@ local texGradDown = surface.GetTextureID("VGUI/gradient_down")
 function SWEP:DrawHUD()
 	local scrW = ScrW()
 	local scrH = ScrH()
-	local width = 200
-	local height = 30
+	local width = 386
+	local height = 16
 	local x, y = ScrW() - width - 32, ScrH() - height - 72
 	local ratio = math.max(self:GetNextSecondaryFire()-CurTime(),0) / self.Secondary.Delay
 	if ratio > 0 then
 		surface.SetDrawColor(5, 5, 5, 180)
 		surface.DrawRect(x, y, width, height)
+
 		surface.SetDrawColor(255, 0, 0, 180)
 		surface.SetTexture(texGradDown)
 		surface.DrawTexturedRect(x, y, width*ratio, height)
-		surface.SetDrawColor(255, 0, 0, 180)
+
+		surface.SetDrawColor(255, 166, 0, 180)
 		surface.DrawOutlinedRect(x - 1, y - 1, width + 2, height + 2)
 	end
 	if self.BaseClass.DrawHUD then

@@ -48,6 +48,8 @@ SWEP.AllowQualityWeapons = false
 
 
 
+
+
 SWEP.Weight = 4
 
 local MAT_FLESH = MAT_FLESH

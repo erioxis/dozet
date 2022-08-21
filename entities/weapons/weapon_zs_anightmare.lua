@@ -9,6 +9,10 @@ SWEP.SlowDownScale = 0.3
 SWEP.MeleeDamageVsProps = 33
 SWEP.MeleeReach = 32
 
+SWEP.m_IsStealthWeapon = true
+SWEP.StealthMeterTick = 0.05
+SWEP.LastStealthMeterCheck = 0
+
 function SWEP:Reload()
 	self:SecondaryAttack()
 end
@@ -52,13 +56,30 @@ function SWEP:PlayAttackSound()
 	self:EmitSound("npc/barnacle/barnacle_bark"..math.random(2)..".wav", 75, 85)
 end
 
-if not CLIENT then return end
 
-function SWEP:ViewModelDrawn()
-	render.ModelMaterialOverride(0)
+function SWEP:Think()
+	local curTime = CurTime()
+	local moverate = math.Clamp(self:GetOwner():GetVelocity():Length() / self:GetOwner():GetWalkSpeed() * 0.66, 0,1)*-3+1
+	if curTime >= self.LastStealthMeterCheck+self.StealthMeterTick then
+		self:SetStealthMeter(math.Clamp(self:GetStealthMeter()+moverate,0,100))
+		self.LastStealthMeterCheck = curTime
+	end
+	self:SetStealthWepBlend(1-math.Clamp(self:GetStealthMeter()/100,0,1)*0.85)
+	self.BaseClass.Think(self)	
 end
 
-local matSheet = Material("Models/Charple/Charple1_sheet")
+function SWEP:SetupDataTables()
+	self:NetworkVar("Float", 7, "StealthWepBlend")
+	self:NetworkVar("Float", 8, "StealthMeter")
+	if self.BaseClass.SetupDataTables then
+		self.BaseClass.SetupDataTables(self)
+	end
+end
+if not CLIENT then return end
 function SWEP:PreDrawViewModel(vm)
-	render.ModelMaterialOverride(matSheet)
+	self:GetOwner():CallZombieFunction0("PrePlayerDraw")
+end
+
+function SWEP:PostDrawViewModel(vm)
+	self:GetOwner():CallZombieFunction0("PostPlayerDraw")
 end

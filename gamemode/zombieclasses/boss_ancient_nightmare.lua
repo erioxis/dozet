@@ -34,6 +34,14 @@ function CLASS:PlayerFootstep(pl, vFootPos, iFoot, strSoundName, fVolume, pFilte
 
 	return true
 end
+function CLASS:Think()
+	for _, ent in pairs(ents.FindInSphere(pl:GetPos(), 560)) do
+        if ent:IsPlayer() and ent:IsValidLivingHuman() then
+			self.Speed = ent:GetWalkSpeed() * 2.5
+			break
+		end
+	end
+end
 if SERVER then
 	function CLASS:ProcessDamage(pl, dmginfo)
 		if bit_band(dmginfo:GetDamageType(), DMG_BULLET) ~= 0 then
@@ -41,10 +49,32 @@ if SERVER then
 		elseif bit_band(dmginfo:GetDamageType(), DMG_SLASH) == 0 and bit_band(dmginfo:GetDamageType(), DMG_CLUB) == 0 then
 			dmginfo:SetDamage(0)
 		end
+		if dmginfo:GetInflictor().IsMelee then
+			dmginfo:ScaleDamage(0.34)
+		end
 	end
+end
+function CLASS:GetAlpha(pl)
+	local wep = pl:GetActiveWeapon()
+	if not wep.IsAttacking then wep = NULL end
+
+	if wep:IsValid() and wep:IsAttacking() then
+		return 0.7
+	end
+
+	local eyepos = EyePos()
+	local nearest = pl:WorldSpaceCenter()
+	local norm = nearest - eyepos
+	norm:Normalize()
+	local dot = EyeVector():Dot(norm)
+
+	local vis = (dot * 0.4 + pl:GetVelocity():Length() / self.Speed / 2 - eyepos:Distance(nearest) / 400) * dot
+
+	return math_Clamp(vis, MySelf:IsValid() and MySelf:Team() == TEAM_UNDEAD and 0.137 or 0, 0.7)
 end
 
 if not CLIENT then return end
+
 
 CLASS.Icon = "zombiesurvival/killicons/ancient_nightmare"
 

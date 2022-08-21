@@ -1,7 +1,7 @@
 SWEP.Base = "weapon_zs_basemelee"
 
-SWEP.PrintName = ""..translate.Get("wep_hammer")
-SWEP.Description = ""..translate.Get("wep_d_hammer")
+SWEP.PrintName = translate.Get("wep_hammer")
+SWEP.Description = translate.Get("wep_d_hammer")
 
 SWEP.DamageType = DMG_CLUB
 

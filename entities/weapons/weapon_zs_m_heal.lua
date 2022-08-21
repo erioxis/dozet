@@ -64,7 +64,7 @@ function SWEP:SecondaryAttack()
 		self:EmitSound("physics/body/body_medium_break"..math.random(2, 4)..".wav")
 		if SERVER then
 		if owner:GetBloodArmor() < owner.MaxBloodArmor then
-		owner:SetBloodArmor(math.min(owner:GetBloodArmor() + self.ArmorRegen))
+		owner:SetBloodArmor(math.min(owner:GetBloodArmor() + self.ArmorRegen) * (owner.MagicRegen or 1))
 		local cursed = owner:GetStatus("cursed")
 		if (cursed) then 
 			owner:AddCursed(self:GetOwner(), cursed.DieTime - CurTime() - 20)

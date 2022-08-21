@@ -452,6 +452,8 @@ SKILLMOD_RES_AMMO_MUL = 106
 SKILLMOD_HEALTHMUL = 107
 SKILLMOD_SPOINT = 108
 SKILLMOD_SCALEMODEL = 109
+SKILLMOD_M_DMG = 110
+SKILLMOD_M_REG = 111
 
 local GOOD = "^"..COLORID_GREEN
 local BAD = "^"..COLORID_RED
@@ -1465,9 +1467,10 @@ GM:AddSkillModifier(SKILL_DONATE12, SKILLMOD_DAMAGE, 0.15)
 GM:AddSkill(SKILL_DONATE13, "Donate XIII", GOOD.."-35% Scale model\n"..GOOD.."Thx chayok",
 				                                                            	23,			29,					{SKILL_DONATE12}, TREE_DONATETREE)
 GM:AddSkillModifier(SKILL_DONATE13, SKILLMOD_SCALEMODEL, -0.25)
-GM:AddSkill(SKILL_DONATE14, "Donate XIV", GOOD.."+ Speed"..GOOD.."Donate",
-				                                                            	23,			30,					{SKILL_DONATE14}, TREE_DONATETREE)
-GM:AddSkillModifier(SKILL_DONATE14, SKILLMOD_SPEED, 50)
+GM:AddSkill(SKILL_DONATE14, "Donate XIV", GOOD.."+6% Magic Damage and +5% blood armor regen from magic"..GOOD.."Thx for Белый Рыцарь",
+				                                                            	23,			30,					{SKILL_DONATE13}, TREE_DONATETREE)
+GM:AddSkillModifier(SKILL_DONATE14, SKILLMOD_M_DMG, 0.06)
+GM:AddSkillModifier(SKILL_DONATE14, SKILLMOD_M_REG, 0.05)
 
 SKILL_CHALLENGER1 = 215
 GM:AddSkill(SKILL_CHALLENGER1, "Challenger I", GOOD.."+20 Health,+1 luck,+5% Sale, help for challenges!\n"..GOOD.."Can use in any challenge",
@@ -1607,6 +1610,13 @@ GM:AddSkillModifier(SKILL_DUALHEAL, SKILLMOD_MEDKIT_COOLDOWN_MUL, 0.5)
 GM:SetSkillModifierFunction(SKILLMOD_MEDKIT_COOLDOWN_MUL, function(pl, amount)
 	pl.MedicCooldownMul = math.Clamp(amount + 1.0, 0.0, 1000.0)
 end)
+GM:SetSkillModifierFunction(SKILLMOD_M_REG, function(pl, amount)
+	pl.MagicRegen = math.Clamp(amount + 1.0, 0.0, 1000.0)
+end)
+GM:SetSkillModifierFunction(SKILLMOD_M_DMG, function(pl, amount)
+	pl.MagicDamage = math.Clamp(amount + 1.0, 0.0, 1000.0)
+end)
+
 
 
 GM:SetSkillModifierFunction(SKILLMOD_WORTH, function(pl, amount)

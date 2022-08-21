@@ -265,8 +265,8 @@ local texGradDown = surface.GetTextureID("VGUI/gradient_down")
 function SWEP:DrawHUD()
 	local scrW = ScrW()
 	local scrH = ScrH()
-	local width = 200
-	local height = 30
+	local width = 386
+	local height = 16
 	local x, y = ScrW() - width - 32, ScrH() - height - 72
 	local ratio = math.max(self:GetNextSecondaryFire()-CurTime(),0) / self.Secondary.Delay
 	--local ratio = math.Clamp(self:GetChargePerc()/100,0,1)

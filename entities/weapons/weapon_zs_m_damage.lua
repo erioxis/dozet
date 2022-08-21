@@ -81,12 +81,12 @@ function SWEP:SecondaryAttack()
 		if owner:GetBloodArmor() < owner.MaxBloodArmor then
 			self:EmitSound("weapons/iceaxe/iceaxe_swing1.wav", 75, math.random(65, 70))
 			if SERVER then
-		        owner:SetBloodArmor(math.min(owner:GetBloodArmor() + self.ArmorRegen))
+		        owner:SetBloodArmor(math.min(owner:GetBloodArmor() + self.ArmorRegen) * (owner.MagicRegen or 1))
 		    end
 		if owner:GetBloodArmor() > 0 and self.Primary.ArmorBleed <= owner:GetBloodArmor() then
 			owner:GiveStatus("strengthdartboost", 20)
 			if SERVER then
-			    owner:SetBloodArmor(math.min(owner:GetBloodArmor() - self.Primary.ArmorBleed))
+			    owner:SetBloodArmor(math.min(owner:GetBloodArmor() - self.Primary.ArmorBleed) * (owner.MagicRegen or 1))
 			end
 		end
 	end
