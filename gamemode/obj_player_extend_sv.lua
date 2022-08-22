@@ -79,7 +79,7 @@ function meta:ProcessDamage(dmginfo)
 				attacker:SetHealth(math.min(attacker:GetMaxHealth(), attacker:Health() + attacker:GetMaxHealth() * 0.11))
 			end
 			attacker.FireDamage = attacker.FireDamage + 1
-			dmginfo:SetDamage(damage * attacker:GetModelScale())
+			dmginfo:SetDamage(damage * attacker:GetModelScale() * attacker:GetModelScale())
 			if attacker:HasTrinket("soulalteden") then
 				attacker.RandomDamage = attacker.RandomDamage + math.random(1,5)
 
@@ -158,6 +158,7 @@ function meta:ProcessDamage(dmginfo)
 
 		return not dmgbypass and self:CallZombieFunction1("ProcessDamage", dmginfo)
 	end
+	
 
 	if self:IsSkillActive(SKILL_BLESSEDROD) and dmginfo:GetDamage() >= 30 then
 		dmginfo:SetDamage(dmginfo:GetDamage() - 12)
@@ -299,7 +300,9 @@ function meta:ProcessDamage(dmginfo)
 				end
 			end
 
-
+			if self:GetStatus("sigildef") then
+				dmginfo:ScaleDamage(0.66)
+			end
 
 			if bit.band(dmgtype, DMG_SLASH) ~= 0 or inflictor.IsMelee then
 				if self.BarbedArmor and self.BarbedArmor > 0 then
