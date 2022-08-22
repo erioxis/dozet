@@ -165,6 +165,7 @@ GM.AmmoCache["chemical"]					= 60
 GM.AmmoCache["flashbomb"]					= 1
 GM.AmmoCache["turret_buckshot"]				= 1
 GM.AmmoCache["turret_assault"]				= 1
+GM.AmmoCache["sigil_port"]				= 1
 GM.AmmoCache["turret_super"]				= 1
 GM.AmmoCache["scrap"]						= 4
 GM.AmmoCache["molotov"]						= 1
@@ -561,6 +562,9 @@ item =
 GM:AddPointShopItem("medstation",			ITEMCAT_DEPLOYABLES,			70,				"weapon_zs_medstation")
 item.Countables = "prop_medstation"
 item =
+GM:AddPointShopItem("sigil_portable",			ITEMCAT_DEPLOYABLES,			1000,				"weapon_zs_sigil_port")
+item.Countables = "prop_obj_sigil"
+item =
 GM:AddPointShopItem("pulsedrone",		ITEMCAT_DEPLOYABLES,			40,				"weapon_zs_drone_pulse")
 item.Countables = "prop_drone_pulse"
 item.SkillRequirement = SKILL_U_DRONE
@@ -742,14 +746,14 @@ item =
 GM:AddPointShopItem("cursedtrinket",		ITEMCAT_SPECIAL,			120,				"trinket_cursedtrinket")
 item.SkillRequirement = SKILL_CURSEDTRINKETS
 --ZS Mutagens
-GM:AddMutationItem("m_zombie_health", translate.Get("zshop_alphazomb"), translate.Get("zshop_alphazomb2"), ITEMCAT_MUTATIONS, 150, nil, function(pl) pl.m_Zombie_Health = true end, "models/items/healthkit.mdl")
-GM:AddMutationItem("m_zombie_health1", translate.Get("zshop_godzomb"), translate.Get("zshop_godzomb2"), ITEMCAT_MUTATIONS, 500, nil, function(pl) pl.m_Zombie_GodHealth = true end, "models/player/fatty/fatty.mdl")    
+GM:AddMutationItem("m_zombie_health", translate.Get("zshop_alphazomb"), translate.Get("zshop_alphazomb2"), ITEMCAT_MUTATIONS, 150, nil, function(pl) pl.m_HealthMulZS = pl.m_HealthMulZS + 0.2 end, "models/items/healthkit.mdl")
+GM:AddMutationItem("m_zombie_health1", translate.Get("zshop_godzomb"), translate.Get("zshop_godzomb2"), ITEMCAT_MUTATIONS, 500, nil, function(pl) pl.m_HealthMulZS = pl.m_HealthMulZS + 0.3 end, "models/player/fatty/fatty.mdl")    
 GM:AddMutationItem("m_zombie_zdef", translate.Get("zshop_zdef1"), translate.Get("zshop_def"), ITEMCAT_MUTATIONS, 300, nil, function(pl) pl.m_zombiedef = true end, "models/player/fatty/fatty.mdl")      
 GM:AddMutationItem("m_zombie_moan", translate.Get("zshop_zombsprint"), translate.Get("zshop_zombsprint2"), ITEMCAT_MUTATIONS, 400, nil, function(pl) pl.m_Zombie_Moan = true end, "models/player/zombie_classic.mdl")
 GM:AddMutationItem("m_zombie_moanguard", translate.Get("zshop_zombguard"), translate.Get("zshop_zombguard2"), ITEMCAT_MUTATIONS, 200, nil, function(pl) pl.m_Zombie_MoanGuard = true end, "models/player/zombie_classic.mdl")
 GM:AddMutationItem("m_zombie_bara", translate.Get("zshop_baracurse"), translate.Get("zshop_baracurse_d1"), ITEMCAT_MUTATIONS, 2500, nil, function(pl) pl.m_Zombie_Bara = true end, "models/player/catpants.mdl")
 GM:AddMutationItem("m_zombie_hitter", translate.Get("zshop_hit"), translate.Get("zshop_hit_d1"), ITEMCAT_MUTATIONS, 1200, nil, function(pl) pl.m_Zombie_Bara1 = true end, "models/player/catpants.mdl")
-GM:AddMutationItem("m_zombie_gigachad", translate.Get("zshop_gigachad"), translate.Get("zshop_gigachad_d1"), ITEMCAT_MUTATIONS, 1200, nil, function(pl) pl.m_Gigachad = true end, "models/player/catpants.mdl")
+GM:AddMutationItem("m_zombie_gigachad", translate.Get("zshop_gigachad"), translate.Get("zshop_gigachad_d1"), ITEMCAT_MUTATIONS, 1200, nil, function(pl) pl.m_Gigachad = true pl.m_HealthMulZS = pl.m_HealthMulZS + 0.2 end, "models/player/catpants.mdl")
 GM:AddMutationItem("m_zombie_16", translate.Get("zshop_16"), translate.Get("zshop_16_d1"), ITEMCAT_MUTATIONS, 500, nil, function(pl) pl.m_Zombie_16 = true end, "models/player/catpants.mdl")
 GM:AddMutationItem("m_why", translate.Get("zshop_why"), translate.Get("zshop_why_d1"), ITEMCAT_MUTATIONS, 600, nil, function(pl) pl.m_Why = true end, "models/player/zombie_classic.mdl")
 GM:AddMutationItem("m_propcurse", translate.Get("zshop_curseofdeath"), translate.Get("zshop_curseofdeath_d1"), ITEMCAT_MUTATIONS, 800, nil, function(pl) pl.m_PropCurse = true end, "models/player/zombie_classic.mdl")
@@ -757,8 +761,8 @@ GM:AddMutationItem("m_dxp", translate.Get("zshop_dxp"), translate.Get("zshop_dxp
 GM:AddMutationItem("m_hreg", translate.Get("zshop_hreg"), translate.Get("zshop_hreg_d1"), ITEMCAT_MUTATIONS, 1900, nil, function(pl) pl.m_HealthRegen = true end, "models/player/zombie_classic.mdl")
 
 -- Boss Mutagen
-GM:AddMutationItem("m_zombie_health2", translate.Get("zshop_godestzomb"), translate.Get("zshop_godestzomb2"), ITEMCAT_MUTATIONS_BOSS, 1000, nil, function(pl) pl.m_Zombie_GodyHealth = true end, "models/items/healthkit.mdl")
-GM:AddMutationItem("m_zombie_healthcursed", translate.Get("zshop_cursed"), translate.Get("zshop_cursed1"), ITEMCAT_MUTATIONS_BOSS, 900, nil, function(pl) pl.m_Zombie_CursedHealth = true end, "models/items/healthkit.mdl")      
+GM:AddMutationItem("m_zombie_health2", translate.Get("zshop_godestzomb"), translate.Get("zshop_godestzomb2"), ITEMCAT_MUTATIONS_BOSS, 1000, nil, function(pl) pl.m_HealthMulZS = pl.m_HealthMulZS + 0.5 end, "models/items/healthkit.mdl")
+GM:AddMutationItem("m_zombie_healthcursed", translate.Get("zshop_cursed"), translate.Get("zshop_cursed1"), ITEMCAT_MUTATIONS_BOSS, 900, nil, function(pl) pl.m_HealthMulZS = pl.m_HealthMulZS + 0.4 end, "models/items/healthkit.mdl")      
 GM:AddMutationItem("m_shade_damage", translate.Get("zshop_bossphysicshazard"), translate.Get("zshop_bossphysicshazard2"), ITEMCAT_MUTATIONS_BOSS, 550, nil, function(pl) pl.m_Shade_Force = true end, "models/player/zombie_classic.mdl")
 GM:AddMutationItem("m_zmain", translate.Get("zshop_zmain"), translate.Get("zshop_zmain_d1"), ITEMCAT_MUTATIONS_BOSS, 850, nil, function(pl) pl.m_Zmain = true end, "models/player/zombie_classic.mdl")
 GM:AddMutationItem("m_ezspeed", translate.Get("zshop_ezspeed"), translate.Get("zshop_ezspeed_d1"), ITEMCAT_MUTATIONS_BOSS, 850, nil, function(pl) pl.m_EasySpeed = true end, "models/player/zombie_classic.mdl")
@@ -838,6 +842,7 @@ GM:AddDeployableInfo("prop_drone_pulse",		"Pulse Drone",			"weapon_zs_drone_puls
 GM:AddDeployableInfo("prop_drone_hauler",		"Hauler Drone",			"weapon_zs_drone_hauler")
 GM:AddDeployableInfo("prop_rollermine",			"Rollermine",			"weapon_zs_rollermine")
 GM:AddDeployableInfo("prop_tv",                   	 "TV",                    	"weapon_zs_tv")
+GM:AddDeployableInfo("prop_obj_sigil",                   	 "Sigil",                    	"weapon_zs_sigil_port")
 
 GM.MaxSigils = 2
 

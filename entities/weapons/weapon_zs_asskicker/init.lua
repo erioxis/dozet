@@ -17,7 +17,7 @@ function SWEP:ApplyMeleeDamage(ent, trace, damage)
 				ent:Kill()
 			end)
 		end
-		if math.random(60) == 1 and not ent:IsPlayer() then
+		if math.random(60) == 1 and not ent:IsPlayer() and not ent:GetClass() == "prop_obj_sigil" then
 			ent:Remove()
 		end
 		local noknockdown = true

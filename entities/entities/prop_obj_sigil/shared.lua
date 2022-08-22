@@ -11,6 +11,7 @@ ENT.NoNails = true
 ENT.IsBarricadeObject = true
 ENT.IgnoreBullets = false
 
+util.PrecacheModel("models/dav0r/hoverball.mdl")
 
 AccessorFuncDT(ENT, "SigilHealthBase", "Float", 0)
 AccessorFuncDT(ENT, "SigilHealthRegen", "Float", 1)

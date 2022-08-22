@@ -225,6 +225,7 @@ GM.AmmoNames["remantler"] = "Remantlers"
 GM.AmmoNames["turret_buckshot"] = "Blast Turrets"
 GM.AmmoNames["turret_assault"] = "Assault Turrets"
 GM.AmmoNames["turret_super"] = "Super Turret"
+GM.AmmoNames["sigil_port"] = "Sigil Portable"
 GM.AmmoNames["scrap"] = "Scrap"
 
 GM.AmmoTranslations = {}

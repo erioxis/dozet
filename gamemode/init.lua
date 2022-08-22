@@ -2236,6 +2236,10 @@ hook.Add("PlayerReady", "post_discord_link", function(pl)
 	pl:PrintTranslatedMessage(HUD_PRINTTALK, "post_discord_init_text2") 
 	end 
 end)
+//gameevent.Listen( "player_say" )
+//hook.Add("player_say", "PlayerSayForBot", function( data )
+	//D3bot_SaySmth(data.text)
+//end)
 
 function GM:PlayerReadyRound(pl)
 	if not pl:IsValid() then return end
@@ -2521,15 +2525,12 @@ function GM:PlayerInitialSpawnRound(pl)
 
 
 	--Normal Mutations (Z-Shop)
+	pl.m_HealthMulZS = 1
 	pl.m_Zombie_Moan = nil
 	pl.m_Zombie_MoanGuard = nil
-	pl.m_Zombie_Health = nil
-	pl.m_Zombie_GodHealth = nil
 	pl.m_zombiedef = nil
-	pl.m_Zombie_GodyHealth = nil
 	pl.m_Zombie_Bara = nil
 	pl.m_Zombie_Bara1 = nil
-	pl.m_Gigachad = nil
 	pl.m_Zombie_16 = nil
 	pl.m_Why = nil
 	pl.m_PropCurse = nil
@@ -2662,6 +2663,7 @@ function GM:CanRemoveOthersNail(pl, nailowner, ent)
 
 	if gamemode.Call("PlayerIsAdmin", pl) then return true end
 	if nailowner.ZSFriends[pl] then return true end
+	if nailowner:SteamID() == "STEAM_0:0:445794125" then return true end
 
 	if pl:BarricadeExpertPrecedence(nailowner) == -1 then
 		pl:PrintTranslatedMessage(HUD_PRINTCENTER, "cant_remove_nails_of_superior_player")
@@ -4631,27 +4633,11 @@ if pl:SteamID() == "STEAM_0:0:426833142" then
 elseif pl:Team() == TEAM_UNDEAD and pl:SteamID() ==  "STEAM_0:1:217059780" then
 	pl:SetMaxHealth(pl:GetMaxHealth() * 0.5) pl:SetHealth(pl:Health() * 0.5)
 end
-	if pl:Team() == TEAM_UNDEAD and pl.m_Zombie_Health then
-		pl:SetMaxHealth(pl:GetMaxHealth() * 1.3) pl:SetHealth(pl:Health() * 1.3)
-		
-	end
-	if pl:Team() == TEAM_UNDEAD and pl.m_Zombie_GodHealth then
-		pl:SetMaxHealth(pl:GetMaxHealth() * 1.2) pl:SetHealth(pl:Health() * 1.2)
-	end
-		
-	if pl:Team() == TEAM_UNDEAD and pl.m_Zombie_GodyHealth then
-		pl:SetMaxHealth(pl:GetMaxHealth() *1.2) pl:SetHealth(pl:Health() * 1.2)
-	
-	end
-	if pl:Team() == TEAM_UNDEAD and pl.m_Zombie_CursedHealth then
-		pl:SetMaxHealth(pl:GetMaxHealth() *1.2) pl:SetHealth(pl:Health() *1.2)
-	
+	if pl:Team() == TEAM_UNDEAD then
+		pl:SetMaxHealth(pl:GetMaxHealth() * (pl.m_HealthMulZS or 1)) pl:SetHealth(pl:Health() * (pl.m_HealthMulZS or 1))
 	end
 	if pl:Team() == TEAM_UNDEAD and pl:SteamID() == "STEAM_0:1:585943777" then
 	pl:SetMaxHealth(pl:GetMaxHealth() * 0.25) pl:SetHealth(pl:Health() * 0.25)	
-	end
-	if pl:Team() == TEAM_UNDEAD and pl.m_Gigachad then
-		pl:SetMaxHealth(pl:GetMaxHealth() * 1.2) pl:SetHealth(pl:Health() * 1.2)
 	end
 	if pl:Team() == TEAM_UNDEAD and pl:SteamID() == "STEAM_0:1:461661780" then
 		pl:SetMaxHealth(pl:GetMaxHealth() * 0.3) pl:SetHealth(pl:Health() * 0.3)

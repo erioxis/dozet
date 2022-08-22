@@ -41,6 +41,21 @@ function ENT:Initialize()
 		--ent:SetParent(self) -- Prevents collisions
 		self:DeleteOnRemove(ent)
 	end
+	--[[local ent = ents.Create("prop_dynamic")
+	if ent:IsValid() then
+		ent:SetPos(self:GetPos())
+		ent:SetAngles(self:GetAngles())
+		ent:SetModel("models/dav0r/hoverball.mdl")
+		ent:SetCollisionGroup( COLLISION_GROUP_WORLD )
+		ent:PhysicsInit(SOLID_NONE)
+		ent:Spawn()
+		ent:SetModelScale(104)
+		ent:DrawShadow(false)
+		ent:SetRenderFX(kRenderFxDistort)
+		ent:SetOwner(self)
+		--ent:SetParent(self) -- Prevents collisions
+		self:DeleteOnRemove(ent)
+	end]]
 end
 
 function ENT:Use(pl)
@@ -107,10 +122,11 @@ function ENT:UpdateTransmitState()
 	return TRANSMIT_ALWAYS
 end
 function ENT:Think()
-	for _, ent in pairs(ents.FindInSphere(self:GetPos(), 548)) do
-		if WorldVisible(self:LocalToWorld(Vector(0, 0, 30)), ent:NearestPoint(self:LocalToWorld(Vector(0, 0, 30)))) then
-			if ent ~= self and ent:IsValidLivingHuman() then
-         	    ent:GiveStatus("sigildef", 2)
+	for _, ent in pairs(ents.FindInSphere(self:GetPos(), 648)) do
+		if ent ~= self and ent:IsValidLivingHuman() then
+           ent:GiveStatus("sigildef", 2)
+			if (ent:GetStatus("knockdown")) then
+				ent:RemoveStatus("knockdown", nil, true)
 			end
 		end
 	end
