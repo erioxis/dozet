@@ -141,6 +141,12 @@ GAMEMODE:AddNewRemantleBranch(SWEP, 1, translate.Get("wep_piercer_r1"), translat
 	wept.Pierces = 1
 end)
 function SWEP:ShootBullets(dmg, numbul, cone)
+	if self.Ricoshot then 
+		if self.BaseClass.ShootBullets then
+			self.BaseClass.ShootBullets(self, dmg, numbul, cone)
+		end
+		return
+	end
 	local owner = self:GetOwner()
 	self:SendWeaponAnimation()
 	owner:DoAttackEvent()
@@ -164,9 +170,12 @@ function SWEP:ShootBullets(dmg, numbul, cone)
 		if i > self.Pierces - 1 then break end
 		ent = trace.Entity
 		if trace.Hit and self.Traced then
-			ent:TakeSpecialDamage(self.Primary.Damage * 3, DMG_ALWAYSGIB, self:GetOwner(), self)
+			ent:TakeSpecialDamage(self.Primary.Damage, DMG_ALWAYSGIB, self:GetOwner(), self)
+			ent:TakeSpecialDamage(self.Primary.Damage, DMG_ALWAYSGIB, self:GetOwner(), self)
+			ent:TakeSpecialDamage(self.Primary.Damage, DMG_ALWAYSGIB, self:GetOwner(), self)
 		elseif trace.Hit and self.Traced2 then
-			ent:TakeSpecialDamage(self.Primary.Damage * 2, DMG_ALWAYSGIB, self:GetOwner(), self)
+			ent:TakeSpecialDamage(self.Primary.Damage, DMG_ALWAYSGIB, self:GetOwner(), self)
+			ent:TakeSpecialDamage(self.Primary.Damage, DMG_ALWAYSGIB, self:GetOwner(), self)
 		end
 
 		if ent and ent:IsValid() then
@@ -256,7 +265,7 @@ function SWEP:Think()
 				self.TracerName = "tracer_comsniper"
 				self:TakeAmmo()
 				self:EmitFireSound()
-				self:ShootBullets(self.Ricoshot and ((self.Primary.Damage*math.Clamp(self:GetChargePerc(), 0, 1)) * 5) or (self.Primary.Damage*math.Clamp(self:GetChargePerc(), 0, 2) * 3), self.Primary.NumShots, self:GetCone())
+				self:ShootBullets((self.Ricoshot and (self.Primary.Damage*math.Clamp(self:GetChargePerc(), 0, 1)) * 5 or (self.Primary.Damage*math.Clamp(self:GetChargePerc(), 0, 2) * 3)), self.Primary.NumShots, self:GetCone())
 				nextshotdelay = self.Primary.Delay
 			end
 			self:SetChargePerc(0)
@@ -300,17 +309,16 @@ end
 
 function SWEP.BulletCallback(attacker, tr, dmginfo)
 	local ent = tr.Entity
-    if not attacker:GetActiveWeapon().Knick then
 	if SERVER and ent and ent:IsValidLivingZombie() then
-		
 		dmginfo:SetDamageForce(attacker:GetUp() * 7000 + attacker:GetForward() * 25000)
 		for _, pl in pairs(ents.FindInSphere(ent:GetPos(), 230)) do
+			if not attacker:GetActiveWeapon().Knick then
 			if pl:IsValidLivingZombie() and pl ~= ent and attacker:GetActiveWeapon().Ricoshot then
 				pl:TakeSpecialDamage(dmginfo:GetDamage() * 5, DMG_ALWAYSGIB, attacker, attacker:GetActiveWeapon())
 				break
 			end
 		end
-	end
+		end
 	end
 end
 
