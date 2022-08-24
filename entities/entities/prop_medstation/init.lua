@@ -160,7 +160,7 @@ function ENT:Think()
 			self:SetAmmo(self:GetAmmo() - totalheal * 0.2)
 			count = count + 1
 			if hitent:IsValidLivingZombie() then
-				owner:AddPoints(-(totalheal * 0.3))
+				owner:AddPoints(-(totalheal * 2))
 			end
 			
 			if count >= 3 or self:GetAmmo() <= 0 then break end

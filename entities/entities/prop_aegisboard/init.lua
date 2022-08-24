@@ -6,7 +6,6 @@ ENT.StrictNoSkyCade = true
 function ENT:Initialize()
 	self:SetModel("models/props_debris/wood_board05a.mdl")
 	self:PhysicsInit(SOLID_VPHYSICS)
-	
 
 	self:CollisionRulesChanged()
 
@@ -101,4 +100,5 @@ function ENT:Think()
 	if self.Destroyed then
 		self:Remove()
 	end
+
 end

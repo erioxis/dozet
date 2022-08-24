@@ -9,7 +9,7 @@ SWEP.WorldModel = "models/weapons/w_eq_flashbang.mdl"
 SWEP.Primary.Ammo = "flashbomb"
 SWEP.Primary.Sound = Sound("weapons/pinpull.wav")
 
-SWEP.MaxStock = 12
+SWEP.MaxStock = 32
 
 function SWEP:Precache()
 	util.PrecacheSound("weapons/pinpull.wav")

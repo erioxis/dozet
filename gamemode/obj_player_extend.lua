@@ -709,6 +709,7 @@ function meta:ShouldNotCollide(ent)
 	return false
 end
 
+
 meta.OldSetHealth = FindMetaTable("Entity").SetHealth
 function meta:SetHealth(health)
 	self:OldSetHealth(health)

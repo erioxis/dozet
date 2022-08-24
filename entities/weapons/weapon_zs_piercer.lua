@@ -170,7 +170,7 @@ function SWEP:ShootBullets(dmg, numbul, cone)
 		if i > self.Pierces - 1 then break end
 		ent = trace.Entity
 		if trace.Hit and self.Traced then
-			ent:TakeSpecialDamage(self.Primary.Damage, DMG_ALWAYSGIB, self:GetOwner(), self)
+			ent:TakeSpecialDamage(self.Primary.Damage , DMG_ALWAYSGIB, self:GetOwner(), self)
 			ent:TakeSpecialDamage(self.Primary.Damage, DMG_ALWAYSGIB, self:GetOwner(), self)
 			ent:TakeSpecialDamage(self.Primary.Damage, DMG_ALWAYSGIB, self:GetOwner(), self)
 		elseif trace.Hit and self.Traced2 then

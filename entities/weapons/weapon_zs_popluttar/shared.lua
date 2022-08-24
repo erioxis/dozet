@@ -17,7 +17,7 @@ SWEP.Primary.Automatic = true
 SWEP.Primary.Ammo = "chemical"
 SWEP.Primary.Delay = 0.45
 SWEP.Primary.DefaultClip = 30
-SWEP.Primary.Damage = 25
+SWEP.Primary.Damage = 14
 SWEP.Primary.NumShots = 1
 
 SWEP.ConeMax = 3

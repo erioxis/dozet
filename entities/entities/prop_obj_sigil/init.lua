@@ -123,7 +123,7 @@ function ENT:UpdateTransmitState()
 end
 function ENT:Think()
 	for _, ent in pairs(ents.FindInSphere(self:GetPos(), 648)) do
-		if ent ~= self and ent:IsValidLivingHuman() then
+		if ent ~= self and ent:IsValidLivingHuman() and not self:GetSigilCorrupted() then
            ent:GiveStatus("sigildef", 2)
 			if (ent:GetStatus("knockdown")) then
 				ent:RemoveStatus("knockdown", nil, true)
