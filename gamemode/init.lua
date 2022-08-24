@@ -855,21 +855,21 @@ function GM:ReplaceMapAmmo()
 				e:Remove()
 			end
 		end
-		for _, d in pairs(ents.FindByClass("prop_dynamic_*")) do
-			if d:IsValid() then
-				convert = ents.Create("prop_physics")
-				pos = d:GetPos()
-				d:Remove()
-				convert:SetPos(pos)
-				convert:SetAngles(d:GetAngles())
-				convert:SetMaterial(d:GetMaterial())
-				convert:SetModel(d:GetModel())
-				convert:SetSkin(d:GetSkin() or 0)
-				convert:Spawn()
-			end
-		end
 
 		return
+	end
+	for _, d in pairs(ents.FindByClass("prop_dynamic*")) do
+		if d:IsValid() then
+			convert = ents.Create("prop_physics")
+			pos = d:GetPos()
+			convert:SetPos(pos)
+			convert:SetAngles(d:GetAngles())
+			convert:SetMaterial(d:GetMaterial())
+			convert:SetModel(d:GetModel())
+			convert:SetSkin(d:GetSkin() or 0)
+			convert:Spawn()
+			d:Remove()
+		end
 	end
 
 	for classname, ammotype in pairs(ammoreplacements) do
