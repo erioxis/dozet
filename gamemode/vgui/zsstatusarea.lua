@@ -340,7 +340,7 @@ function PANEL:Paint(w, h)
 	)
 
 	local t1 = math.ceil(value)
-	draw.SimpleText(t1, "ZSHUDFontSmall", w / 2, y + h / 2 - boxsize/2 + 5, color_white_alpha230, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+	draw.SimpleText(t1, (t1 >= 10000 and "ZS3D2DFontTiny" or "ZSHUDFontSmall"), w / 2, y + h / 2 - boxsize/2 + 5, color_white_alpha230, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 end
 
 vgui.Register("ZSStatus", PANEL, "Panel")
