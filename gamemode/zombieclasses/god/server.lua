@@ -17,6 +17,10 @@ function CLASS:OnKilled(pl, attacker, inflictor, suicide, headshot, dmginfo)
 			override:Spawn()
 		end]]
 	end
+	if attacker:IsPlayer() then
+		pl:GiveAchievement("godisdead")
+		attacker:GiveAchievement("godisdead")
+	end
 
 	return true
 end

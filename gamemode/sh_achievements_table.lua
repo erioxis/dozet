@@ -75,6 +75,40 @@ GM.Achievements["highvel"] = {
     Desc = translate("challenge_highvelocity_d"),
     Reward = 10000
 }
+GM.Achievements["godisdead"] = {
+    Name = translate("challenge_godisdead"),
+    Desc = translate("challenge_godisdead_d"),
+    Reward = 3000
+}
+GM.Achievements["tanked"] = {
+    Name = translate("challenge_tanked"),
+    Desc = translate("challenge_tanked_d"),
+    Goal = 10000,
+    Reward = 8000
+}
+GM.Achievements["godhelp"] = {
+    Name = translate("challenge_godhelp"),
+    Desc = translate("challenge_godhelp_d"),
+    Goal = 100,
+    Reward = 4500
+}
+GM.Achievements["bruhwtf"] = {
+    Name = translate("challenge_bruhwtf"),
+    Desc = translate("challenge_bruhwtf_d"),
+    Reward = 8500
+}
+GM.Achievements["bossofboss"] = {
+    Name = translate("challenge_bossofboss"),
+    Desc = translate("challenge_bossofboss_d"),
+    Goal = 5,
+    Reward = 1500
+}
+GM.Achievements["waytobest"] = {
+    Name = translate("challenge_waytobest"),
+    Desc = translate("challenge_waytobest_d"),
+    Reward = 350
+}
+
 
 -- Cache count, to not call table.Count again
 GM.AchievementsCount = table.Count(GM.Achievements)

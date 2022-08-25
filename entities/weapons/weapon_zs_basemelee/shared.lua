@@ -115,25 +115,30 @@ function SWEP:SecondaryAttack()
 	if self.BlockTrue == true then
         if not self:GetBlockState() then
 	        timer.Create("blocked1",0.15,1, function() 
+				if !self:GetOwner():IsValid() then return false end
 	            self.Block = true
 	            self:SetHoldType("revolver")
 				self:SetWeaponSwingHoldType("revolver")
 				self:SetBlock(true)
 	        end)
 	        timer.Create("trueparry",0.15,1, function() 
+				if !self:GetOwner():IsValid() then return false end
 	            self.ParryTiming = true
 	        end)
 	        timer.Create("trueparrydead",0.45,1, function() 
+				if !self:GetOwner():IsValid() then return false end
 	            self.ParryTiming = false
 	        end)
         elseif self:GetBlockState() then
 	        timer.Create("unblock",0.1,1, function() 
+				if !self:GetOwner():IsValid() then return false end
 	            self.Block = false
 	            self:SetHoldType(self.HoldType)
 				self:SetWeaponSwingHoldType(self.SwingHoldType)
 				self:SetBlock(false)
 	        end)
 	        timer.Create("trueparrydead1",0.15,1, function() 
+				if !self:GetOwner():IsValid() then return false end
 	            self.ParryTiming = false
 	        end)
         end

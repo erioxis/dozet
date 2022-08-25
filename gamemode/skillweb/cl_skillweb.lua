@@ -30,7 +30,6 @@ end)
 net.Receive("zs_skill_is_unlocked", function(length)
 	local skillid = net.ReadUInt(16)
 	local yesno = net.ReadBool()
-
 	if MySelf:IsValid() then
 		MySelf:SetSkillUnlocked(skillid, yesno)
 	end
@@ -1191,9 +1190,9 @@ function PANEL:OnMousePressed(mc)
 
 				if MySelf:GetZSSPRemaining() >= 1 then
 				    if GAMEMODE.Skills[hoveredskill].Hidden and math.random(20) == 20 then
-					contextmenu.Button:SetText("Unlock")
+						contextmenu.Button:SetText("Unlock")
 					elseif not GAMEMODE.Skills[hoveredskill].Hidden then
-					contextmenu.Button:SetText("Unlock")
+						contextmenu.Button:SetText("Unlock")
 					else
 					    return
 					end

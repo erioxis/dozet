@@ -70,6 +70,7 @@ function ENT:Use(pl)
 			if status:IsValid() then
 				status:SetFromSigil(self)
 				status:SetEndTime(CurTime() + 1 * (pl.SigilTeleportTimeMul or 1))
+				pl:GiveAchievement("waytobest")
 
 				pl.NextSigilTPTry = CurTime() + 2
 			end

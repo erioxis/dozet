@@ -14,6 +14,9 @@ function meta:ProcessDamage(dmginfo)
 	if self.DamageVulnerability and not dmgbypass then
 		dmginfo:SetDamage(dmginfo:GetDamage() * self.DamageVulnerability)
 	end
+	if P_Team(self) == TEAM_HUMAN then
+		self:GiveAchievementProgress("tanked", math.Round((dmginfo:GetDamage() or 1)))
+	end
 
 	if attacker.AttackerForward and attacker.AttackerForward:IsValid() then
 		dmginfo:SetAttacker(attacker.AttackerForward)
@@ -190,12 +193,13 @@ function meta:ProcessDamage(dmginfo)
 		net.Send(self)
 		self.HolyMantle = self.HolyMantle - 1
 		self:GiveStatus("hshield", 3)
-		timer.Simple(0.05,function()
+		timer.Simple(0.005,function()
 			self:GodEnable()
 			end )
 			timer.Simple(3,function()
 				self:GodDisable()
 			end )
+			self:GiveAchievementProgress("godhelp", 1)
 
     end
 

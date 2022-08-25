@@ -1137,6 +1137,7 @@ function GM:SpawnBossZombie(bossplayer, silent, bossindex, triggerboss)
 	bossplayer:UnSpectateAndSpawn()
 	bossplayer.DeathClass = curclass
 	bossplayer.BossHealRemaining = 750
+	bossplayer:GiveAchievementProgress("bossofboss", 1)
 
 	if not silent then
 		net.Start("zs_boss_spawned")
@@ -1260,10 +1261,6 @@ function GM:Think()
 		end
 	end 
 
-
-	
-
-
 	local allplayers = player_GetAll()
 
 	for _, pl in pairs(allplayers) do
@@ -1366,6 +1363,9 @@ function GM:Think()
 					pl:GiveStatus("holly", 1.3)
 					pl:GiveStatus("strengthdartboost", 1.3)
 					pl:GiveStatus("medrifledefboost", 1.3)
+				end
+				if math.random(20000000) == 2000 then
+					pl:GiveAchievement("bruhwtf")
 				end
 				if time >= pl.NextRegenerate and pl.HolyMantle == 0 and pl:IsSkillActive(SKILL_HOLY_MANTLE) then
 					pl.NextRegenerate = time + ((27 - (pl.Luck / 3)) + self.GetWave() * 3)
