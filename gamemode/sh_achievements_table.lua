@@ -41,7 +41,7 @@ GM.Achievements["glassman"] = {
 GM.Achievements["mariotrue"] = {
     Name = translate("challenge_mcmario"),
     Desc = translate("challenge_mcmario_d"),
-    Reward = 1000
+    Reward = 8000
 }
 
 GM.Achievements["loveof6"] = {
@@ -107,6 +107,22 @@ GM.Achievements["waytobest"] = {
     Name = translate("challenge_waytobest"),
     Desc = translate("challenge_waytobest_d"),
     Reward = 350
+}
+GM.Achievements["greatgreed"] = {
+    Name = translate("challenge_greatgreed"),
+    Desc = translate("challenge_greatgreed_d"),
+    Goal = 3000,
+    Reward = 10000
+}
+GM.Achievements["thisisbeeasy"] = {
+    Name = translate("challenge_thisisbeeasy"),
+    Desc = translate("challenge_thisisbeeasy_d"),
+    Reward = 3500
+}
+GM.Achievements["remorting"] = {
+    Name = translate("challenge_remorting"),
+    Desc = translate("challenge_remorting_d"),
+    Reward = 3500
 }
 
 

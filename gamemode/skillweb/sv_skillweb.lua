@@ -66,6 +66,7 @@ end)
 net.Receive("zs_skills_remort", function(length, pl)
 	if pl:CanSkillsRemort() then
 		pl:SkillsRemort()
+		pl:GiveAchievement("remorting")
 	end
 end)
 

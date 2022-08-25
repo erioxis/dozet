@@ -171,7 +171,9 @@ end
 function SWEP:MeleeSwing()
 	local owner = self:GetOwner()
 	local damage = DamageInfo()
-	owner:GiveAchievement("bestman")
+	if SERVER then
+		owner:GiveAchievement("bestman")
+	end
 
 	owner:DoAttackEvent()
 	self:SendWeaponAnim(self.MissAnim)

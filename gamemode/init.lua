@@ -4293,6 +4293,7 @@ function GM:PlayerCanPickupWeapon(pl, ent)
 	if pl:IsSkillActive(SKILL_JEW) then
 		pl:SetPoints(pl:GetPoints() - (5 * self:GetWave()))
 		GAMEMODE:ConCommandErrorMessage(pl, translate.ClientGet(pl, "jewmoment"))
+		pl:GiveAchievementProgress("greatgreed", 5 * self:GetWave())
 	end
 
 
@@ -4901,6 +4902,9 @@ function GM:WaveStateChanged(newstate, pl)
 				end
 				if pl:IsSkillActive(SKILL_SECONDCHANCE) and not pl.LetalSave then
 					pl.LetalSave = true
+				end
+				if pl:IsSkillActive(SKILL_SECONDCHANCE) and pl.LetalSave and self:GetWave() >= 5 then
+					pl:GiveAchievement("thisisbeeasy")
 				end
 				if pl:IsSkillActive(SKILL_XPMULGOOD) then
 				   pl.XPMulti = pl.XPMulti + 0.20
