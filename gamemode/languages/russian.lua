@@ -1,6 +1,31 @@
 -- Translated by Mr. Darkness (http://www.noxiousnet.com/forums/index.php?action=profile;u=6296)
 
 translate.AddLanguage("ru", "Russian")
+--Чаленге
+LANGUAGE.challenge_godzs = "Бог ЗС"
+LANGUAGE.challenge_godzs_d = "Убей 1000 людей"
+LANGUAGE.challenge_everycan = "Защита Дозета"
+LANGUAGE.challenge_everycan_d = "Убей 1000 зомби"
+LANGUAGE.challenge_firstwin = "Впервые?"
+LANGUAGE.challenge_firstwin_d = "Просто выйграй"
+LANGUAGE.challenge_firstblood = "Only thing I know for real"
+LANGUAGE.challenge_firstblood_d = "КУПИ МУРАСАМУ!"
+LANGUAGE.challenge_lastman = "Где все?"
+LANGUAGE.challenge_lastman_d = "Останься один."
+LANGUAGE.challenge_mcmario = "Слишком низок"
+LANGUAGE.challenge_mcmario_d = "Убей микрочела одним прыжком."
+LANGUAGE.challenge_glassman = "Стекляшка"
+LANGUAGE.challenge_glassman_d = "Выйграй  с максимальных хп ниже 35."
+LANGUAGE.challenge_loveof6 = "Любитель 6"
+LANGUAGE.challenge_loveof6_d = "Выйграй  6 раз."
+LANGUAGE.challenge_loveofruin = "Проигрывать весело"
+LANGUAGE.challenge_loveofruin_d = "Проиграй 10 раз!"
+LANGUAGE.challenge_sword = "Магические слова"
+LANGUAGE.challenge_sword_d = "Скажи секрет."
+LANGUAGE.challenge_1to1 = "Достигни совершенства"
+LANGUAGE.challenge_1to1_d = "Получи что-то."
+LANGUAGE.challenge_highvelocity = "Высокая скорость"
+LANGUAGE.challenge_highvelocity_d = "ммм Что??!!!?."
 -- Настройки
 LANGUAGE.op_naildisplay = "Всегда показывать хп гвоздей"
 LANGUAGE.op_knockdown_camera = "Показывать камеру при рагдоле от 3 лица"

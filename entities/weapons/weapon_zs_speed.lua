@@ -78,7 +78,7 @@ function SWEP:PrimaryAttack()
 	if not self:CanPrimaryAttack() then return end
 
 	local owner = self:GetOwner()
-
+    owner:GiveAchievement("1to1")
 
 	owner:ViewPunch( 0.1 * Angle(math.Rand(-0.1, -0.7), math.Rand(-2.1, 0.5), 0))
 

@@ -54,6 +54,8 @@ include("vgui/zsgamestate.lua")
 include("vgui/zshealtharea.lua")
 include("vgui/zsstatusarea.lua")
 include("vgui/mutshop.lua")
+include("vgui/achievements.lua")
+include("sh_achievements_table.lua")
 
 
 include("cl_dermaskin.lua")
@@ -244,7 +246,9 @@ function GM:_InputMouseApply(cmd, x, y, ang)
 		self:InputMouseApplyOTS(cmd, x, y, ang)
 	end
 end
-
+function GM:ZSChallenges()
+    vgui.Create("ZS.Challenges")
+end
 function GM:_GUIMousePressed(mc)
 end
 

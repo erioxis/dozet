@@ -52,6 +52,25 @@ net.Receive("zs_dmg", function(length)
 		util.Effect("damagenumber", effectdata)
 	end
 end)
+net.Receive("HNS.AchievementsProgress", function()
+    GAMEMODE.AchievementsProgress = util.JSONToTable(net.ReadString())
+
+    -- Clamp progress
+    for id, progress in pairs(GAMEMODE.AchievementsProgress) do
+        if isnumber(progress) then
+            GAMEMODE.AchievementsProgress[id] = math.Clamp(progress, 0, GAMEMODE.Achievements[id].Goal)
+        end
+    end
+end)
+net.Receive("HNS.AchievementsGet", function()
+    local ply = net.ReadEntity()
+    local id = net.ReadString()
+    -- Chat
+    chat.AddText(COLOR_WHITE, "[", Color(125, 255, 125), "ZS", COLOR_WHITE, "] ", ply, COLOR_WHITE, " has earned ", Color(125, 255, 125), GAMEMODE.Achievements[id].Name, COLOR_WHITE, ".")
+    -- Sound
+    ply:EmitSound("misc/achievement_earned.wav")
+
+end)
 
 
 net.Receive("zs_dmg_prop", function(length)

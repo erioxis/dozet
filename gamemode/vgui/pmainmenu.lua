@@ -141,6 +141,15 @@ function GM:ShowHelp()
 	but:Dock(TOP)
 	but.DoClick = function() MakepHelp() end
 
+	local challenges = vgui.Create("DButton", menu)
+	challenges:SetFont("ZSHUDFontSmaller")
+	challenges:SetText("Challenges")
+	challenges:SetTall(buttonhei)
+	challenges:DockMargin(0, 0, 0, 12)
+	challenges:DockPadding(0, 12, 0, 12)
+	challenges:Dock(TOP)
+	challenges.DoClick = function() GAMEMODE:ZSChallenges() end
+
 	but = vgui.Create("DButton", menu)
 	but:SetFont("ZSHUDFontSmaller")
 	but:SetText("Player Model")

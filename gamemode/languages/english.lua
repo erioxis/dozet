@@ -17,7 +17,31 @@ RULES FOR TRANSLATORS!!
 ]]
 
 translate.AddLanguage("en", "English")
-
+--Чаленге
+LANGUAGE.challenge_godzs = "God Of ZS"
+LANGUAGE.challenge_godzs_d = "Kill 1000 humans"
+LANGUAGE.challenge_everycan = "Dozet Defend"
+LANGUAGE.challenge_everycan_d = "Kill 1000 zombies"
+LANGUAGE.challenge_firstwin = "First time?"
+LANGUAGE.challenge_firstwin_d = "Just Win"
+LANGUAGE.challenge_firstblood = "Only thing I know for real"
+LANGUAGE.challenge_firstblood_d = "Buy MURASAMA!"
+LANGUAGE.challenge_lastman = "Where all?"
+LANGUAGE.challenge_lastman_d = "Be a last."
+LANGUAGE.challenge_mcmario = "Too Small"
+LANGUAGE.challenge_mcmario_d = "Kill a small man with only 1 jump."
+LANGUAGE.challenge_glassman = "Glass Man"
+LANGUAGE.challenge_glassman_d = "Win with max health lower than 35."
+LANGUAGE.challenge_loveof6 = "Lover of 6"
+LANGUAGE.challenge_loveof6_d = "Win 6 times."
+LANGUAGE.challenge_loveofruin = "Ruining is my job"
+LANGUAGE.challenge_loveofruin_d = "Lose 10 times!"
+LANGUAGE.challenge_sword = "Magic Words"
+LANGUAGE.challenge_sword_d = "Say a secret."
+LANGUAGE.challenge_1to1 = "Become a best"
+LANGUAGE.challenge_1to1_d = "Take something."
+LANGUAGE.challenge_highvelocity = "High Velocity"
+LANGUAGE.challenge_highvelocity_d = "Umm what??!!!?."
 -- Options
 LANGUAGE.op_naildisplay = "Always display nail health"
 LANGUAGE.op_knockdown_camera = "Always third person knockdown camera"

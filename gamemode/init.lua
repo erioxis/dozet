@@ -9,10 +9,10 @@ Further credits displayed by pressing F1 in-game.
 This was my first ever gamemode. A lot of stuff is from years ago and some stuff is very recent.
 
 ]]
-
+include("sh_achievements_table.lua")
 AddCSLuaFile("cl_init.lua")
 AddCSLuaFile("shared.lua")
-
+include("sv_achievements.lua")
 AddCSLuaFile("sh_translate.lua")
 AddCSLuaFile("sh_colors.lua")
 AddCSLuaFile("sh_serialization.lua")
@@ -23,6 +23,7 @@ AddCSLuaFile("sh_zombieclasses.lua")
 AddCSLuaFile("sh_humanclasses.lua")
 AddCSLuaFile("sh_animations.lua")
 AddCSLuaFile("sh_sigils.lua")
+AddCSLuaFile("vgui/achievements.lua")
 AddCSLuaFile("sh_channel.lua")
 AddCSLuaFile("sh_weaponquality.lua")
 AddCSLuaFile("sh_crafts.lua")
@@ -66,9 +67,11 @@ AddCSLuaFile("vgui/dsidemenu.lua")
 AddCSLuaFile("vgui/dspawnmenu.lua")
 AddCSLuaFile("vgui/dmodelkillicon.lua")
 
+
 AddCSLuaFile("vgui/dexroundedpanel.lua")
 AddCSLuaFile("vgui/dexroundedframe.lua")
 AddCSLuaFile("vgui/dexrotatedimage.lua")
+AddCSLuaFile("sh_achievements_table.lua")
 AddCSLuaFile("vgui/dexnotificationslist.lua")
 AddCSLuaFile("vgui/dexchanginglabel.lua")
 
@@ -87,6 +90,7 @@ AddCSLuaFile("vgui/zshealtharea.lua")
 AddCSLuaFile("vgui/zsstatusarea.lua")
 AddCSLuaFile("vgui/zsgamestate.lua")
 AddCSLuaFile("vgui/mutshop.lua")
+
 
 
 include("sh_globals.lua")
@@ -516,6 +520,10 @@ function GM:AddNetworkStrings()
 	util.AddNetworkString("zs_nestspec")
 	util.AddNetworkString("zs_tvcamera")
 
+
+	util.AddNetworkString("HNS.AchievementsProgress")
+	util.AddNetworkString("HNS.AchievementsGet")
+	util.AddNetworkString("HNS.AchievementsMaster")
 	util.AddNetworkString("zs_weaponblocked")
 	util.AddNetworkString("zs_xp_damage")
 
@@ -722,11 +730,24 @@ function GM:InitPostEntity()
 		self.SetWave = self.Think
 		timer.Simple(20, function() RunConsoleCommand("quit") end)
 
-		ErrorNoHalt("You are literally not allowed to host this version. See license.txt")
+		ErrorNoHalt("Lmao why you use dozet")
 	end
 end
 
 function GM:SetupProps()
+	for _, d in pairs(ents.FindByClass("prop_dynamic*")) do
+		if d:IsValid() then
+			convert = ents.Create("prop_physics")
+			pos = d:GetPos()
+			convert:SetPos(pos)
+			convert:SetAngles(d:GetAngles())
+			convert:SetMaterial(d:GetMaterial())
+			convert:SetModel(d:GetModel())
+			convert:SetSkin(d:GetSkin() or 0)
+			convert:Spawn()
+			d:Remove()
+		end
+	end
 	for _, ent in pairs(ents.FindByClass("prop_physics*")) do
 		local mdl = ent:GetModel()
 		if mdl then
@@ -857,19 +878,6 @@ function GM:ReplaceMapAmmo()
 		end
 
 		return
-	end
-	for _, d in pairs(ents.FindByClass("prop_dynamic*")) do
-		if d:IsValid() then
-			convert = ents.Create("prop_physics")
-			pos = d:GetPos()
-			convert:SetPos(pos)
-			convert:SetAngles(d:GetAngles())
-			convert:SetMaterial(d:GetMaterial())
-			convert:SetModel(d:GetModel())
-			convert:SetSkin(d:GetSkin() or 0)
-			convert:Spawn()
-			d:Remove()
-		end
 	end
 
 	for classname, ammotype in pairs(ammoreplacements) do
@@ -1329,7 +1337,9 @@ function GM:Think()
 
 
 				local healmax = pl:IsSkillActive(SKILL_D_FRAIL) and math.floor(pl:GetMaxHealth() * 0.44) or pl:IsSkillActive(SKILL_ABUSE) and math.floor(pl:GetMaxHealth() * 0.25)  or pl:GetMaxHealth()
-
+                if pl:GetVelocity():LengthSqr() >= 2636052 then
+					pl:GiveAchievement("highvel")
+				end
 
 
 				if pl:IsSkillActive(SKILL_REGENERATOR) and time >= pl.NextRegenerate and pl:Health() < math.min(healmax, pl:GetMaxHealth() * 0.6) then
@@ -1706,6 +1716,7 @@ function GM:LastHuman(pl)
 		for _, ent in pairs(ents.FindByClass("logic_infliction")) do
 			ent:Input("onlasthuman", pl, pl, pl and pl:IsValid() and pl:EntIndex() or -1)
 		end
+		pl:GiveAchievement("becomelast")
 
 		LASTHUMAN = true
 	end
@@ -2094,14 +2105,20 @@ local function EndRoundSetupPlayerVisibility(pl)
 end
 
 function GM:OnPlayerWin(pl)
-	local xp = math.Clamp(#player.GetAll() * 40, 300, 800) * (GAMEMODE.WinXPMulti or 1)
+	local xp = math.Clamp(#player.GetAll() * 120, 300, 4000) * (GAMEMODE.WinXPMulti or 1)
 	if self.ZombieEscape then
 		xp = xp / 4
 	end
 	pl:AddZSXP(xp)
+	pl:GiveAchievement("winfirst")
+	pl:GiveAchievementProgress("loveof6", 1)
+	if pl:GetMaxHealth() < 35 then
+		pl:GiveAchievement("glassman")	
+	end
 end
 
 function GM:OnPlayerLose(pl)
+	pl:GiveAchievementProgress("ruinto10", 1)
 end
 
 
@@ -2464,6 +2481,7 @@ function GM:PlayerInitialSpawnRound(pl)
 	-- This is the culprit for shitty player to player collisions when standing on an enemy's head. No idea why.
 	pl:SetNoCollideWithTeammates(false) --pl:SetNoCollideWithTeammates(true)
 	pl:SetCustomCollisionCheck(true)
+	pl:ProcessAchievements()
 
 	pl.ZombiesKilled = 0
 	pl.ZombiesKilledAssists = 0
@@ -3904,7 +3922,6 @@ end
 
 function GM:HumanKilledZombie(pl, attacker, inflictor, dmginfo, headshot, suicide)
 	if (pl:GetZombieClassTable().Points or 0) == 0 or self.RoundEnded then return end
-
 	-- Simply distributes based on damage but also do some stuff for assists.
 	if attacker.zKills >= (33 * team.NumPlayers(TEAM_UNDEAD)) then
 		attacker:TakeDamage((attacker.zKills / 30) + (attacker:GetPoints() / 50))
@@ -3915,6 +3932,7 @@ function GM:HumanKilledZombie(pl, attacker, inflictor, dmginfo, headshot, suicid
 	if attacker:IsSkillActive(SKILL_SIGILIBERATOR) then
 		attacker.zKills = attacker.zKills + 1
 	end
+	attacker:GiveAchievementProgress("everycan", 1)
 
 
 	local totaldamage = 0
@@ -4009,7 +4027,7 @@ function GM:ZombieKilledHuman(pl, attacker, inflictor, dmginfo, headshot, suicid
 		dist = math.min(ent:GetPos():DistToSqr(plpos), dist)
 	end
 	pl.ZombieSpawnDeathDistance = math.ceil(math.sqrt(dist))
-
+    attacker:GiveAchievementProgress("zsfan", 1)
 	attacker:AddBrains(1)
 	attacker:AddTokens(pl:GetMaxHealth() * 1.25)
 	attacker:AddLifeBrainsEaten(1)

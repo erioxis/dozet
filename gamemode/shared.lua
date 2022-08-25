@@ -5,7 +5,7 @@ GM.Website	=	"https://github.com/erioxis/dozet"
 
 -- No, adding a gun doesn't make your name worth being here.
 GM.Credits = {
-	{"Version", "Legendary", "3.0.0"},
+	{"Version", "Legendary", "3.2.1"},
 	{"erioxis", "Phantom coder", "dead"},
 	{"Nullted", "", "RU-ENG Translation"}
 
@@ -570,6 +570,7 @@ function GM:OnPlayerHitGround(pl, inwater, hitfloater, speed)
 
 			if math.floor(120) > 0 then
 				groundent:TakeSpecialDamage(math.max((5 + damage),5), DMG_CLUB, pl, pl, pl:GetPos())
+				pl:GiveAchievement("mariotrue")
 				return true
 			end
 		end
