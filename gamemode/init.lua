@@ -9,10 +9,9 @@ Further credits displayed by pressing F1 in-game.
 This was my first ever gamemode. A lot of stuff is from years ago and some stuff is very recent.
 
 ]]
-include("sh_achievements_table.lua")
 AddCSLuaFile("cl_init.lua")
 AddCSLuaFile("shared.lua")
-include("sv_achievements.lua")
+
 AddCSLuaFile("sh_translate.lua")
 AddCSLuaFile("sh_colors.lua")
 AddCSLuaFile("sh_serialization.lua")
@@ -103,7 +102,7 @@ AddCSLuaFile("loader.lua")
 include("loader.lua")
 
 include("zsbots/init.lua")
-
+include("sv_achievements.lua")
 include("shared.lua")
 include("sv_options.lua")
 include("mapeditor.lua")
@@ -113,7 +112,7 @@ include("sv_sigils.lua")
 include("sv_concommands.lua")
 
 include("itemstocks/sv_stock.lua")
-
+include("sh_achievements_table.lua")
 include("vault/server.lua")
 
 include("skillweb/sv_registry.lua")

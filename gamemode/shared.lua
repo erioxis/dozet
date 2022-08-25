@@ -44,6 +44,7 @@ include("sh_animations.lua")
 include("sh_sigils.lua")
 include("sh_channel.lua")
 include("sh_weaponquality.lua")
+include("sh_achievements_table.lua")
 
 include("noxapi/noxapi.lua")
 
