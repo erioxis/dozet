@@ -60,3 +60,4 @@ function SWEP:Eat()
 		owner:StripWeapon(self:GetClass())
 	end
 end
+

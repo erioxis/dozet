@@ -29,3 +29,5 @@ function SWEP:CalcViewModelView(vm, oldpos, oldang, pos, ang)
 
 	return pos, ang
 end
+
+ 

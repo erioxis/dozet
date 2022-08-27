@@ -1,6 +1,7 @@
 INC_CLIENT()
 
 ENT.Pulsed = true
+local matBeam = Material( "trails/electric" )
 
 function ENT:Initialize()
 	self:SetModelScale(0.5, 0)
@@ -30,7 +31,24 @@ end
 
 function ENT:DrawTranslucent()
 	self:DrawModel()
-
+    if WorldVisible( EyePos(), self:GetPos() ) and  MySelf:KeyDown(IN_SPEED) then
+        local distance = MySelf:GetPos():Distance( self:GetPos() )
+        local alpha = 255
+        local at = self:GetPos():ToScreen()
+        local ang = Angle( 0, 0, 0 )
+        local up = Vector( 0, 0, 1 )
+        local ringpos = self:GetPos()
+        local frametime = FrameTime() * 500
+        local ringsize = self.MaxDistance * (self:GetObjectOwner().FieldRangeMul or 1)
+        render.SetMaterial( matBeam )
+        render.StartBeam( 19 )
+        for i=1, 19 do
+            render.AddBeam( ringpos + ang:Forward() * ringsize, 10, 10, Color( 255, 255, 255, 255 ) )
+            ang:RotateAroundAxis( up, 20 )
+        end
+            
+        render.EndBeam()
+    end
 	local owner = self:GetObjectOwner()
 	local ammo = self:GetAmmo()
 

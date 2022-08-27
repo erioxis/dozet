@@ -1,7 +1,7 @@
 INC_CLIENT()
 
 ENT.RenderGroup = RENDERGROUP_TRANSLUCENT
-
+local matBeam = Material( "trails/electric" )
 function ENT:Initialize()
 	self:DrawShadow(false)
 	self:SetRenderFX(kRenderFxDistort)
@@ -47,7 +47,27 @@ local render_DrawQuadEasy = render.DrawQuadEasy
 local render_DrawSprite = render.DrawSprite
 
 function ENT:DrawTranslucent()
+    if WorldVisible( EyePos(), self:GetPos() ) then
+        local distance = MySelf:GetPos():Distance( self:GetPos() )
+        local alpha = 255
+        local at = self:GetPos():ToScreen()
 
+
+        local ang = Angle( 0, 0, 0 )
+        local up = Vector( 0, 0, 1 )
+        local ringpos = self:GetPos()
+        local frametime = FrameTime() * 500
+        local ringsize = 648
+
+        render.SetMaterial( matBeam )
+        render.StartBeam( 19 )
+        for i=1, 19 do
+            render.AddBeam( ringpos + ang:Forward() * ringsize, 10, 10, Color( 255, 255, 255, 255 ) )
+            ang:RotateAroundAxis( up, 20 )
+        end
+            
+        render.EndBeam()
+    end
 	self:RemoveAllDecals()
 
 	local scale = self.ModelScale
@@ -164,4 +184,6 @@ function ENT:DrawTranslucent()
 	particle:SetCollide(true)
 
 	emitter:Finish() emitter = nil collectgarbage("step", 64)
+	
+
 end

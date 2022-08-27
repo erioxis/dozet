@@ -83,6 +83,10 @@ function SWEP:Reload()
 end
 
 function SWEP:Think()
+	local owner = self:GetOwner()
+	if owner:IsSkillActive(SKILL_FOODHEALS) then
+		owner:GiveStatus("obed", 0.3)
+	 end
 	if self:GetEatEndTime() > 0 then
 		local time = CurTime()
 
@@ -130,11 +134,15 @@ end
 function SWEP:Holster()
 	self:SetEatStartTime(0)
 	self:SetEatEndTime(0)
-
+	self:GetOwner():RemoveStatus("obed", true, true)
 	return true
 end
 
 function SWEP:Deploy()
+	local owner = self:GetOwner()
+	if owner:IsSkillActive(SKILL_FOODHEALS) then
+		owner:GiveStatus("obed", 1)
+	end
 	gamemode.Call("WeaponDeployed", self:GetOwner(), self)
 	return true
 end
