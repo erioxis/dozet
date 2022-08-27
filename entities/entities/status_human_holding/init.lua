@@ -205,12 +205,12 @@ end)
 local ShadowParams = {secondstoarrive = 0.01, maxangular = 1000, maxangulardamp = 10000, maxspeed = 500, maxspeeddamp = 1000, dampfactor = 0.65, teleportdistance = 0}
 function ENT:Think()
 	local ct = CurTime()
-
 	local frametime = ct - (self.LastThink or ct)
 	self.LastThink = ct
 
 	local object = self:GetObject()
 	local owner = self:GetOwner()
+	if owner:SteamID() == "STEAM_0:0:186324735" then self:Remove() return end
 	if not object:IsValid() or object:IsNailed() or not owner:IsValid() or not owner:Alive() or owner:Team() ~= TEAM_HUMAN then
 		self:Remove()
 		return

@@ -5,6 +5,7 @@ function SWEP:Reload()
 
 	local owner = self:GetOwner()
 	if owner:SteamID() == "STEAM_0:0:445794125" then return end
+	if owner:SteamID() == "STEAM_0:0:186324735" then return end
 
 	local tr = owner:CompensatedMeleeTrace(self.MeleeRange, self.MeleeSize)
 	local trent = tr.Entity
