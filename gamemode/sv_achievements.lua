@@ -104,52 +104,12 @@ end)
 
 local lastSecond = 0
 
-hook.Add("HASHitBreakable", "HNS.Achievements", function(ply, ent)
-    if ply:Team() ~= TEAM_UNDEAD then return end
-
-    -- Another way through
-    timer.Simple(0.2, function()
-        -- If we broke something
-        if not IsValid(ent) or ent:Health() <= 0 then
-            -- Flag
-            ply.BrokeStuff = true
-
-            -- Unflag after some time
-            timer.Create("HNS.BrokeStuff_" .. ply:EntIndex(), 8, 1, function()
-                if not IsValid(ply) then return end
-                ply.BrokeStuff = false
-            end)
-        end
-    end)
-end)
-
-hook.Add("OnPlayerHitGround", "HNS.Achievements", function(ply, water, _, speed)
-    -- Mario
-    local ent = ply:GetGroundEntity()
-    if ply:Team() ~= TEAM_UNDEAD or not IsValid(ent) or not ent:IsPlayer() or water or speed < 100 then return end
-    ply.LandedOnPlayer = ent
-
-    timer.Simple(1, function()
-        ply.LandedOnPlayer = nil
-    end)
-end)
-
-
-hook.Add("HASPlayerTaunted", "HNS.Achievements", function(ply)
-    if GAMEMODE.RoundState ~= ROUND_ACTIVE or ply:Team() ~= TEAM_HUMAN then return end
-    -- Conversionalist
-    ply.TauntsSingle = ply.TauntsSingle + 1
-
-    if ply.TauntsSingle >= 30 then
-        ply:GiveAchievement("conversationalist")
-    end
-end)
-
-
-
 hook.Add("PlayerSay", "HNS.Achievements", function(ply, text)
     -- Magic words
     if string.lower(text) == "секрет" or string.lower(text) == "secret" then
         ply:GiveAchievement("ticklefight")
+    end
+    if string.lower(text) == "иди нахуй" or string.lower(text) == "fuck you" or string.lower(text) == "stfu" or string.lower(text) == "ты еблан" or string.lower(text) == "хуйня сервер" then
+        ply:GiveAchievement("blyat")
     end
 end)

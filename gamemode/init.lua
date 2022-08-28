@@ -3928,7 +3928,7 @@ function GM:HumanKilledZombie(pl, attacker, inflictor, dmginfo, headshot, suicid
 		attacker.zKills = attacker.zKills + 1
 	end
 	attacker:GiveAchievementProgress("everycan", 1)
-
+	pl:GiveAchievementProgress("goodtime", 1)
 
 	local totaldamage = 0
 	for otherpl, dmg in pairs(pl.DamagedBy) do
@@ -4899,7 +4899,7 @@ function GM:WaveStateChanged(newstate, pl)
 				if pl:IsSkillActive(SKILL_SECONDCHANCE) and not pl.LetalSave then
 					pl.LetalSave = true
 				end
-				if pl:IsSkillActive(SKILL_SECONDCHANCE) and pl.LetalSave and self:GetWave() >= 5 then
+				if pl:IsSkillActive(SKILL_SECONDCHANCE) and pl.LetalSave and self:GetWave() >= 5 and pl:IsValidLivingHuman() then
 					pl:GiveAchievement("thisisbeeasy")
 				end
 				if pl:IsSkillActive(SKILL_XPMULGOOD) then
@@ -4969,6 +4969,8 @@ function GM:WaveStateChanged(newstate, pl)
 						local weapon = {
 							"weapon_zs_plank",
 							"weapon_zs_pushbroom",
+							"weapon_zs_bulldog",
+							"weapon_zs_bulldog_q1",
 							"weapon_zs_shovel",
 							"weapon_zs_pulserifle",
 							"weapon_zs_toxicshooter",

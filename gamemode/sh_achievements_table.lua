@@ -124,6 +124,22 @@ GM.Achievements["remorting"] = {
     Desc = translate("challenge_remorting_d"),
     Reward = 3500
 }
+GM.Achievements["goodtime"] = {
+    Name = translate("challenge_goodtime"),
+    Desc = translate("challenge_goodtime_d"),
+    Goal = 500,
+    Reward = 6500
+}
+GM.Achievements["blyat"] = {
+    Name = translate("challenge_blyat"),
+    Desc = translate("challenge_blyat_d"),
+    Reward = -1000
+}
+GM.Achievements["bleedmode"] = {
+    Name = translate("challenge_bleedmode"),
+    Desc = translate("challenge_bleedmode_d"),
+    Reward = 1200
+}
 
 
 -- Cache count, to not call table.Count again

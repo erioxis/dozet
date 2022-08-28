@@ -71,12 +71,15 @@ function SWEP:PostOnMeleeMiss(tr)
 	self:SetDTInt(2, 0)
 end
 
-GAMEMODE:AddNewRemantleBranch(SWEP, 1, "'Planket'", "Give Bleed when you hit zombie,less damage,", function(wept)
+GAMEMODE:AddNewRemantleBranch(SWEP, 1, "Plank with nails", "Give Bleed when you hit zombie,less damage,", function(wept)
 wept.MeleeDamage = wept.MeleeDamage * 0.8
 wept.BleedDamage = wept.MeleeDamage * 2
 function wept:PlayerHitUtil(owner, damage, hitent, dmginfo)
 	hitent:MeleeViewPunch(damage*0.1)
 	local bleed = hitent:GetStatus("bleed")
+	if SERVER then
+		hitent:GiveAchievement("bleedmode")
+	end
 	if bleed and bleed:IsValid() then
 		bleed:AddDamage(damage)
 		bleed.Damager = owner

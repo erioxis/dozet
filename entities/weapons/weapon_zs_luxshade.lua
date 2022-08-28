@@ -4,8 +4,8 @@ SWEP.Base = "weapon_zs_basemelee"
 
 --SWEP.PrintName = "Shade Manipulator"
 --SWEP.Description = "Stealed from shade,this high tech machine"
-SWEP.PrintName = ""..translate.Get("wep_luxoids")
-SWEP.Description = ""..translate.Get("wep_d_luxoids")
+SWEP.PrintName = translate.Get("wep_luxoids")
+SWEP.Description = translate.Get("wep_d_luxoids")
 
 SWEP.ViewModel = Model("models/weapons/v_crowbar.mdl")
 SWEP.WorldModel = Model("models/weapons/w_crowbar.mdl")
@@ -24,6 +24,7 @@ SWEP.MeleeRange = 61
 SWEP.MeleeSize = 0.76
 SWEP.PrimaryDelay = 0.47
 SWEP.Tier = 4
+SWEP.BlockTrue = false
 
 
 function SWEP:PrimaryAttack()

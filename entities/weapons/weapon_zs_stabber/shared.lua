@@ -2,7 +2,7 @@ DEFINE_BASECLASS("weapon_zs_base")
 local BaseClassMelee = baseclass.Get("weapon_zs_basemelee")
 
 --SWEP.PrintName = "'Stabber' M1 Garand"
-SWEP.PrintName = ""..translate.Get("wep_stabber")
+SWEP.PrintName = translate.Get("wep_stabber")
 
 
 SWEP.Slot = 3
@@ -15,7 +15,7 @@ SWEP.HoldType = "ar2"
 SWEP.ViewModel = "models/weapons/cstrike/c_snip_g3sg1.mdl"
 SWEP.WorldModel = "models/weapons/w_snip_scout.mdl"
 SWEP.UseHands = true
-
+SWEP.BlockTrue = false
 SWEP.Primary.Damage = 73
 SWEP.Primary.NumShots = 1
 SWEP.Primary.Delay = 0.31
@@ -48,7 +48,7 @@ SWEP.WalkSpeed = SPEED_SLOW
 
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_FIRE_DELAY, -0.03, 1)
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_MAX_SPREAD, -0.5, 1)
-GAMEMODE:AddNewRemantleBranch(SWEP, 1, ""..translate.Get("wep_stabber_r1"), ""..translate.Get("wep_d_stabber_r1"), function(wept)
+GAMEMODE:AddNewRemantleBranch(SWEP, 1, translate.Get("wep_stabber_r1"), translate.Get("wep_d_stabber_r1"), function(wept)
 	wept.Primary.Damage = wept.Primary.Damage * 0.85
 	wept.BulletCallback = function(attacker, tr, dmginfo)
 		local ent = tr.Entity
@@ -66,7 +66,12 @@ SWEP.ReloadSpeed = 1.3
 SWEP.MeleeFlagged = true
 
 SWEP.Tier = 2
-
+function SWEP:SetBlock(bool)
+	self:SetDTBool(31, bool)
+ end
+ function SWEP:GetBlockState()
+	 return self:GetDTBool(31)
+ end
 function SWEP:EmitFireSound()
 	self:EmitSound("weapons/ak47/ak47-1.wav", 75, 76, 0.53)
 	self:EmitSound("weapons/scout/scout_fire-1.wav", 75, 86, 0.67, CHAN_AUTO+20)
