@@ -47,7 +47,6 @@ local render_DrawQuadEasy = render.DrawQuadEasy
 local render_DrawSprite = render.DrawSprite
 
 function ENT:DrawTranslucent()
-    if WorldVisible( EyePos(), self:GetPos() ) then
         local distance = MySelf:GetPos():Distance( self:GetPos() )
         local alpha = 255
         local at = self:GetPos():ToScreen()
@@ -67,7 +66,6 @@ function ENT:DrawTranslucent()
         end
             
         render.EndBeam()
-    end
 	self:RemoveAllDecals()
 
 	local scale = self.ModelScale

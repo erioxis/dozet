@@ -305,7 +305,7 @@ function meta:ProcessDamage(dmginfo)
 			end
 
 			if self:GetStatus("sigildef") then
-				dmginfo:ScaleDamage(0.66)
+				dmginfo:ScaleDamage(0.44)
 			end
 
 			if bit.band(dmgtype, DMG_SLASH) ~= 0 or inflictor.IsMelee then

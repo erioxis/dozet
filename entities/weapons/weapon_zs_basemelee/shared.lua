@@ -17,6 +17,7 @@ SWEP.Secondary.DefaultClip = 1
 SWEP.Secondary.Ammo = "dummy"
 SWEP.Secondary.Automatic = true
 SWEP.BlockTrue = true
+SWEP.IgnoreNiggers = false
 
 SWEP.ParryTiming = nil
 

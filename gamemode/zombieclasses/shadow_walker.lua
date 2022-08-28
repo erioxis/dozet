@@ -146,7 +146,7 @@ function CLASS:AltUse(pl)
 end
 
 function CLASS:ProcessDamage(pl, dmginfo)
-	if dmginfo:GetInflictor().IsMelee then
+	if dmginfo:GetInflictor().IsMelee and not dmginfo:GetInflictor().IgnoreNiggers then
 		dmginfo:SetDamage(0)
 	end
 end

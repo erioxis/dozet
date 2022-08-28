@@ -20,7 +20,7 @@ end
 SWEP.Base = "weapon_zs_basemelee"
 
 SWEP.DamageType = DMG_CLUB
-
+SWEP.IgnoreNiggers = true
 SWEP.ViewModel = "models/weapons/c_crowbar.mdl"
 SWEP.WorldModel = "models/props_debris/wood_chunk03a.mdl"
 SWEP.ModelScale = 0.7
