@@ -45,9 +45,9 @@ end
 if SERVER then
 	function CLASS:ProcessDamage(pl, dmginfo)
 		if bit_band(dmginfo:GetDamageType(), DMG_BULLET) ~= 0 then
-			dmginfo:SetDamage(0)
+			dmginfo:ScaleDamage(0.2)
 		elseif bit_band(dmginfo:GetDamageType(), DMG_SLASH) == 0 and bit_band(dmginfo:GetDamageType(), DMG_CLUB) == 0 then
-			dmginfo:SetDamage(0)
+			dmginfo:ScaleDamage(0.1)
 		end
 		if dmginfo:GetInflictor().IsMelee then
 			dmginfo:ScaleDamage(0.34)
