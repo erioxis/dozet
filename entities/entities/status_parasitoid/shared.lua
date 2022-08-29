@@ -1,15 +1,20 @@
+AddCSLuaFile()
+
 ENT.Type = "anim"
 ENT.Base = "status__base"
-ENT.Damager = nil
+
 ENT.Ephemeral = true
 
+AccessorFuncDT(ENT, "Duration", "Float", 0)
+AccessorFuncDT(ENT, "StartTime", "Float", 4)
+
 function ENT:Initialize()
-	self:DrawShadow(false)
-	if self:GetDTFloat(1) == 0 then
-		self:SetDTFloat(1, CurTime())
-	end
+	self.BaseClass.Initialize(self)
 end
 
+function ENT:PlayerSet()
+	self:SetStartTime(CurTime())
+end
 function ENT:AddDamage(damage, attacker)
 	local owner = self:GetOwner()
 	if damage > 0 and owner:IsValid() and owner.BleedDamageTakenMul then

@@ -343,6 +343,8 @@ SKILL_CHEESE3 = 322
 SKILL_SAMODOS = 323
 SKILL_FOODHEALS = 324
 SKILL_SEEAURA = 325
+SKILL_DONATE15 = 326
+SKILL_PARASITOID = 327
 
 SKILLMOD_HEALTH = 1
 SKILLMOD_SPEED = 2
@@ -494,13 +496,13 @@ GM:AddSkill(SKILL_IRONBLOOD, ""..translate.Get("skill_ironblood_0"), GOOD..trans
 																2,			4,					{SKILL_HAEMOSTASIS, SKILL_CIRCULATION}, TREE_HEALTHTREE)
 GM:AddSkill(SKILL_D_WEAKNESS, ""..translate.Get("skill_d_weakness_0"), GOOD..""..translate.Get("skill_d_weakness_d1")..GOOD..""..translate.Get("skill_d_weakness_d2")..BAD..""..translate.Get("skill_d_weakness_d3")..BAD..""..translate.Get("skill_d_weakness_d4"),
 																1,			-1,					{}, TREE_HEALTHTREE)
-GM:AddSkill(SKILL_VITALITY1, ""..translate.Get("skill_vitalityi_0"), GOOD..translate.Get("skill_vitalityi_d1"),
+GM:AddSkill(SKILL_VITALITY1, translate.Get("skill_vitalityi_0"), GOOD..translate.Get("skill_vitalityi_d1"),
 																0,			-4,					{SKILL_VITALITY2}, TREE_HEALTHTREE)
-GM:AddSkill(SKILL_VITALITY2, ""..translate.Get("skill_vitalityii_0"), GOOD..translate.Get("skill_vitalityii_d1"),
+GM:AddSkill(SKILL_VITALITY2, translate.Get("skill_vitalityii_0"), GOOD..translate.Get("skill_vitalityii_d1"),
 																0,			-2,					{SKILL_VITALITY3}, TREE_HEALTHTREE)
-GM:AddSkill(SKILL_VITALITY3, ""..translate.Get("skill_vitalityiii_0"), GOOD..translate.Get("skill_vitalityiii_d1"),
+GM:AddSkill(SKILL_VITALITY3, translate.Get("skill_vitalityiii_0"), GOOD..translate.Get("skill_vitalityiii_d1"),
 																0,			-0,					{SKILL_D_WEAKNESS}, TREE_HEALTHTREE)
-GM:AddSkill(SKILL_BLOODBUFF, ""..translate.Get("skill_bbuff"), GOOD..translate.Get("skill_bbuff_d1")..BAD.."-20"..translate.Get("barmor"),
+GM:AddSkill(SKILL_BLOODBUFF, translate.Get("skill_bbuff"), GOOD..translate.Get("skill_bbuff_d1")..BAD.."-20"..translate.Get("barmor"),
 																-1,			1,					{SKILL_VITALITY3}, TREE_HEALTHTREE)
 GM:AddSkillModifier(SKILL_BLOODBUFF, SKILLMOD_BLEED_DAMAGE_TAKEN_MUL, -0.25)
 GM:AddSkillModifier(SKILL_BLOODBUFF, SKILLMOD_POISON_DAMAGE_TAKEN_MUL, -0.25)
@@ -964,6 +966,8 @@ GM:AddSkillModifier(SKILL_SOY, SKILLMOD_MELEE_SWING_DELAY_MUL, -0.50)
 																
 GM:AddSkill(SKILL_BLOODLOST, translate.Get("skill_bloodlust"), GOOD..translate.Get("skill_bloodlust_d1")..BAD.."-30"..translate.Get("health"),
 																3,			2,					{}, TREE_MELEETREE)
+GM:AddSkill(SKILL_PARASITOID, translate.Get("skill_parasitoid"), GOOD..translate.Get("skill_parasitoid_d1")..BAD.."-45"..translate.Get("barmor"),
+																4,			2,					{SKILL_BLOODLOST}, TREE_MELEETREE)
 GM:AddSkill(SKILL_LANKY, translate.Get("skill_lanky").."I", GOOD.."+10%"..translate.Get("m_range")..BAD.."-15%"..translate.Get("meleedamage"),
 																-4,			0,					{SKILL_LANKYII}, TREE_MELEETREE)
 GM:AddSkill(SKILL_LANKYII, translate.Get("skill_lanky").."II", GOOD.."+10%"..translate.Get("m_range")..BAD.."-15%"..translate.Get("meleedamage"),
@@ -1471,6 +1475,9 @@ GM:AddSkill(SKILL_DONATE14, "Donate XIV", GOOD.."+6% Magic Damage and +5% blood 
 				                                                            	23,			30,					{SKILL_DONATE13}, TREE_DONATETREE)
 GM:AddSkillModifier(SKILL_DONATE14, SKILLMOD_M_DMG, 0.06)
 GM:AddSkillModifier(SKILL_DONATE14, SKILLMOD_M_REG, 0.05)
+GM:AddSkill(SKILL_DONATE15, "Donate XV", GOOD.."+10 speed\n"..GOOD.."Thx for normal gay",
+				                                                            	21,			28,					{SKILL_DONATE14}, TREE_DONATETREE)
+GM:AddSkillModifier(SKILL_DONATE15, SKILLMOD_SPEED, 10)
 
 SKILL_CHALLENGER1 = 215
 GM:AddSkill(SKILL_CHALLENGER1, "Challenger I", GOOD.."+20 Health,+1 luck,+5% Sale, help for challenges!\n"..GOOD.."Can use in any challenge",

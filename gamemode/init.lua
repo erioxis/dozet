@@ -3418,7 +3418,7 @@ end
 
 function GM:OnPlayerChangedTeam(pl, oldteam, newteam)
 	if newteam == TEAM_UNDEAD then
-		pl:SetPoints(pl:GetPoints() * 0.3)
+		pl:SetPoints(pl:GetPoints() * 0.7)
 
 		--pl.WaveBarricadeDamage = 0
 		--pl.WaveHumanDamage = 0
@@ -3432,7 +3432,7 @@ function GM:OnPlayerChangedTeam(pl, oldteam, newteam)
 		if self.PointSaving > 0 and pl.PointsVault ~= nil and not self.ZombieEscape and not self:IsClassicMode() then
 			pl:SetPoints(math.floor(pl.PointsVault))
 		else
-			pl:SetPoints(0)
+			pl:SetPoints(pl:GetPoints() * 0.5)
 		end
 
 		self:RefreshItemStocks(pl)

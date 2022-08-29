@@ -411,6 +411,8 @@ LANGUAGE.press_left_and_right_to_cycle_targets		= "Press STRAFE LEFT and STRAFE 
 --weapon
 --LANGUAGE.wep_		= ""
 --LANGUAGE.wep_d_		= ""
+LANGUAGE.wep_rray = "'Nerd' Repair ray"
+LANGUAGE.wep_d_rray = "Repair props on big distance, use pulse ammo."
 LANGUAGE.wep_chemar = "'Chemar' Chem Pistol"
 LANGUAGE.wep_d_chemar = "Don't strong but for tier 1 this good weapon."
 LANGUAGE.wep_piercer = "'Piercer' Revolver"
@@ -1418,6 +1420,8 @@ LANGUAGE.skill_laststand_d1 = "Double melee damage when below 25% health\n"
 LANGUAGE.skill_laststand_d2 = "0.85x melee weapon damage at any other time"
 LANGUAGE.skill_brash = "Brash"
 LANGUAGE.skill_brash_d1 = "-15 speed when kill(on 15 secs)\n"
+LANGUAGE.skill_parasitoid = "Parasitoid"
+LANGUAGE.skill_parasitoid_d1 = "Hit zombie for temporary buff for health regen and blood armor regen\n(6% of max health and 12% max bloodarmor)\n"
 --shooter
 LANGUAGE.skill_dinside = "Dead inside"
 LANGUAGE.skill_dinside_d1 = "On endwave have chance to dead\n"

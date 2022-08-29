@@ -497,6 +497,8 @@ LANGUAGE.wep_d_powerfists7		= "Стоп это реально?"
 LANGUAGE.wep_muramasa		= "Мурамаса"
 LANGUAGE.wep_d_muramasa		= "Мм что?Древнее оружие с СТОП ЧТО,КАКОЕ КАЧЕСТВО?? - "
 --пушки
+LANGUAGE.wep_rray = "'Нерд' Ремонтный луч"
+LANGUAGE.wep_d_rray = "Лечит пропы на расстояние используя пульс патроны."
 LANGUAGE.wep_chemar = "'Химик' Хим пистолет"
 LANGUAGE.wep_d_chemar = "Ослабленная версия хим винтовки,более дешев в производстве поэтому цена меньше."
 LANGUAGE.wep_rlauncher = "'Бумкин' Рокет лаунчер"
@@ -1244,6 +1246,8 @@ LANGUAGE.skill_xpdamage_d1 = "Дает опыт при блокирование 
 LANGUAGE.skill_laststand = "Стоять до конца"
 LANGUAGE.skill_laststand_d1 = "x2 мили урон когда хп ниже 25%\n"
 LANGUAGE.skill_laststand_d2 = "x0.85 мили урон в остальное время"
+LANGUAGE.skill_parasitoid = "Паразитойд"
+LANGUAGE.skill_parasitoid_d1 = "Ударь зомби чтобы получить временный бафф на реген\n(6% макс хп и 12% макс кровавой брони)\n"
 -- стрелок
 
 LANGUAGE.skill_dinside = "Мать сдохла"

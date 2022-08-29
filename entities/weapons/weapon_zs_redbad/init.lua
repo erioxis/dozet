@@ -63,9 +63,15 @@ function SWEP:ApplyMeleeDamage(pl, trace, damage)
 		local rot = pl:GetStatus("rot")
 		if (rot) then 
 			pl:AddRot(self:GetOwner(), rot.DieTime - CurTime() + 3)
+			if rot and rot:IsValid() then
+				rot:AddDamage(5, owner)
+			end
 		end
 		if (not rot) then 
 			pl:AddRot(pl:GetOwner(), 3)
+			if rot and rot:IsValid() then
+				rot:AddDamage(5, owner)
+			end
 		end
 	end
 	self.BaseClass.ApplyMeleeDamage(self, pl, trace, damage)

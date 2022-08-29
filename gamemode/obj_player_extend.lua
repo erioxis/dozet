@@ -557,11 +557,11 @@ function meta:ResetSpeed(noset, health)
 	if not self:IsValid() then return end
 
 	if P_Team(self) == TEAM_UNDEAD then
-		local speed = math.max(140, self:GetZombieClassTable().Speed * GAMEMODE.ZombieSpeedMultiplier - (GAMEMODE.ObjectiveMap and 20 or 0))
+		local speed = math.max(50, self:GetZombieClassTable().Speed * GAMEMODE.ZombieSpeedMultiplier - (GAMEMODE.ObjectiveMap and 20 or 0))
     	if self.m_EasySpeed then
-		self:SetSpeed(speed * 1.25)
+			self:SetSpeed(speed * 1.25)
 		else
-		self:SetSpeed(speed)
+			self:SetSpeed(speed)
 		end
 		return speed
 	end

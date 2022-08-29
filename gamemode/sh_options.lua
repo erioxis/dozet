@@ -609,7 +609,8 @@ item =
 GM:AddPointShopItem("antidote",			ITEMCAT_TOOLS,			30,				"weapon_zs_antidoteshot")
 item.SkillRequirement = SKILL_U_ANTITODESHOT
 GM:AddPointShopItem("medrifle",			ITEMCAT_TOOLS,			55,				"weapon_zs_medicrifle")
-GM:AddPointShopItem("healray",			ITEMCAT_TOOLS,			100,			"weapon_zs_healingray")
+GM:AddPointShopItem("healray",			ITEMCAT_TOOLS,			190,			"weapon_zs_healingray")
+GM:AddPointShopItem("repairray",			ITEMCAT_TOOLS,			220,			"weapon_zs_hammerray")
 GM:AddPointShopItem("stone",			ITEMCAT_TOOLS,			5,			"weapon_zs_stone")
 GM:AddPointShopItem("scrap",				ITEMCAT_TOOLS,			40,				nil,							"Scrap x20",							"Scrap but is have x15.",					"ammo_scrap",						function(pl) pl:GiveAmmo(20, "Scrap", true) end)
 GM:AddPointShopItem("scrap100",				ITEMCAT_TOOLS,			150,				nil,							"Scrap x100",							"Scrap but is have x100.",					"ammo_scrap",						function(pl) pl:GiveAmmo(100, "Scrap", true) end)

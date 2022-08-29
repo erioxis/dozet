@@ -326,6 +326,12 @@ function SWEP:PlayerHitUtil(owner, damage, hitent, dmginfo)
 		return 
 false
 	end]]
+	if owner:IsSkillActive(SKILL_PARASITOID) and SERVER then
+		local parasite = hitent:GiveStatus("parasitoid", 2)
+		if parasite and parasite:IsValid() then
+			parasite:AddDamage(6, owner)
+		end
+	end
 	if owner.MeleePowerAttackMul and owner.MeleePowerAttackMul > 1 then
 		self:SetPowerCombo(self:GetPowerCombo() + 1)
 

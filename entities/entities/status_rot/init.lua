@@ -12,8 +12,8 @@ function ENT:SetDie(fTime)
 end
 function ENT:Think()
 	local owner = self:GetOwner()
-	if (owner) then
-		owner:TakeDamage(owner:GetMaxHealth()*0.01, DMG_DIRECT, owner, self)
+	if owner:IsValid() then
+		owner:TakeDamage(owner:GetMaxHealth()*0.01, self.Damager and self.Damager:IsValid() and self.Damager:IsPlayer() and self.Damager or owner, self)
 		if owner:IsSkillActive(SKILL_CQARMOR) then
 			owner:SetHealth(owner:Health() * 0.99)
 		end
