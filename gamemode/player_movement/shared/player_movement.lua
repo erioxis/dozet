@@ -51,6 +51,10 @@ function GM:Move(pl, move)
 				end
 			end
 		end
+			local wep = P_GetActiveWeapon(pl)
+			if wep.Move then
+				wep:Move(move) 
+			end
 	else
 		if pt.SpawnProtection then
 			M_SetMaxSpeed(move, M_GetMaxSpeed(move) * 1.90)

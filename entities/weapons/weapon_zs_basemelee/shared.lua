@@ -18,7 +18,7 @@ SWEP.Secondary.Ammo = "dummy"
 SWEP.Secondary.Automatic = true
 SWEP.BlockTrue = true
 SWEP.IgnoreNiggers = false
-
+SWEP.Move = true
 SWEP.ParryTiming = nil
 
 
@@ -75,6 +75,12 @@ end
 function SWEP:GetBlockState()
 	return self:GetDTBool(31)
 end
+function SWEP:SetChargeBlock(bool)
+	self:SetDTBool(30, bool)
+ end
+ function SWEP:GetChargeBlock()
+	return self:GetDTBool(30)
+ end
 
 function SWEP:SetupDataTables()
 	self:NetworkVar("Int", 0, "PowerCombo")
@@ -100,9 +106,14 @@ function SWEP:Think()
 		self.IdleAnimation = nil
 		self:SendWeaponAnim(ACT_VM_IDLE)
 	end
-	if not self:GetBlockState() then
-	            self:SetHoldType(self.HoldType)
-				self:SetWeaponSwingHoldType(self.SwingHoldType)
+	if self.BlockTrue then
+		if self:GetChargeBlock() and self:GetOwner():KeyReleased(IN_ATTACK2) then
+			self:SetBlock(false)
+			self:SetHoldType(self.HoldType)
+			self:SetWeaponSwingHoldType(self.SwingHoldType)
+			self:SetChargeBlock(false) 
+			self.ParryTiming = false
+		end
 	end
 
 	if self:IsSwinging() and self:GetSwingEnd() <= CurTime() then
@@ -110,40 +121,32 @@ function SWEP:Think()
 		self:MeleeSwing()
 	end
 end
-
-
+function SWEP:Move(mv)
+	if self:GetBlockState() and mv:KeyDown(IN_ATTACK2) and not self:GetOwner():GetBarricadeGhosting() then
+		mv:SetMaxSpeed(self.WalkSpeed*0.45)
+		mv:SetMaxClientSpeed(self.WalkSpeed*0.45)	
+		mv:SetSideSpeed(mv:GetSideSpeed() * 0.45)
+	end
+end
 function SWEP:SecondaryAttack()
-	if self.BlockTrue == true then
-        if not self:GetBlockState() then
-	        timer.Create("blocked1",0.15,1, function() 
-				if !self:GetOwner():IsValid() then return false end
-	            self.Block = true
-	            self:SetHoldType("revolver")
-				self:SetWeaponSwingHoldType("revolver")
-				self:SetBlock(true)
-	        end)
-	        timer.Create("trueparry",0.15,1, function() 
-				if !self:GetOwner():IsValid() then return false end
-	            self.ParryTiming = true
-	        end)
-	        timer.Create("trueparrydead",0.45,1, function() 
-				if !self:GetOwner():IsValid() then return false end
-	            self.ParryTiming = false
-	        end)
-        elseif self:GetBlockState() then
-	        timer.Create("unblock",0.1,1, function() 
-				if !self:GetOwner():IsValid() then return false end
-	            self.Block = false
-	            self:SetHoldType(self.HoldType)
-				self:SetWeaponSwingHoldType(self.SwingHoldType)
-				self:SetBlock(false)
-	        end)
-	        timer.Create("trueparrydead1",0.15,1, function() 
-				if !self:GetOwner():IsValid() then return false end
-	            self.ParryTiming = false
-	        end)
-        end
-    end
+	if self.BlockTrue then
+	if self:GetNextSecondaryFire() <= CurTime() and not self:GetOwner():IsHolding() then
+		self:SetBlock(true)
+		self:SetHoldType("revolver")
+		self:SetWeaponSwingHoldType("revolver")
+		self:SetChargeBlock(true) 
+		self.Block = true
+		timer.Create("trueparrydead1",0.25,1, function() 
+			if !self:GetOwner():IsValid() then return false end
+			self.ParryTiming = false
+		end)
+		timer.Create("trueparry",0.05,1, function() 
+			if !self:GetOwner():IsValid() then return false end
+			self.ParryTiming = true
+		end)
+	end
+
+end
 end
 
 
@@ -156,10 +159,7 @@ end
 
 function SWEP:CanPrimaryAttack()
 	if self:GetOwner():IsHolding() or self:GetOwner():GetBarricadeGhosting() then return false end
-	
-	if self:GetBlockState() then 
-
-	return false end	
+		
 		return self:GetNextPrimaryFire() <= CurTime() and not self:IsSwinging()
 end
 
@@ -181,10 +181,6 @@ end
 function SWEP:PrimaryAttack()
 	if not self:CanPrimaryAttack() then return end
 
-	if self:GetBlockState() then 
-		return 
-		false
-	end
 	self:SetNextAttack()
 	
 
@@ -196,8 +192,6 @@ function SWEP:PrimaryAttack()
 end
 
 function SWEP:SetNextAttack()
-	if self.Block then
-    return false end
 	local owner = self:GetOwner()
 	local armdelay = owner:GetMeleeSpeedMul()
 	self:SetNextPrimaryFire(CurTime() + self.Primary.Delay * armdelay)
@@ -212,7 +206,7 @@ function SWEP:Holster()
 		return true
 	end
 	if self.Block then
-		self.Block = false
+		self:SetBlock(false)
 	end
 	return false
 
@@ -220,10 +214,7 @@ end
 
 function SWEP:StartSwinging()
 	local owner = self:GetOwner()
-	if self:GetBlockState() then 
-		return 
-		false
-	end
+
 
 	if self.StartSwingAnimation then
 		self:SendWeaponAnim(self.StartSwingAnimation)
@@ -241,10 +232,6 @@ end
 
 function SWEP:MeleeSwing()
 	local owner = self:GetOwner()
-	if self.Block then 
-		return 
-        false
-	end
 
 	self:DoMeleeAttackAnim()
 
@@ -274,6 +261,7 @@ function SWEP:MeleeSwing()
 			damagemultiplier = damagemultiplier * 0.85
 		end
 	end
+
 	
 
 
@@ -326,6 +314,7 @@ function SWEP:PlayerHitUtil(owner, damage, hitent, dmginfo)
 		return 
 false
 	end]]
+	local damage = self:GetBlockState() and (damage * 0.4) or damage
 	if owner:IsSkillActive(SKILL_PARASITOID) and SERVER then
 		local parasite = hitent:GiveStatus("parasitoid", 2)
 		if parasite and parasite:IsValid() then
@@ -359,7 +348,7 @@ function SWEP:OnZombieKilled()
 	if owner:IsSkillActive(SKILL_BLOODLOST) then
 		local reaperstatus1 = owner:GiveStatus("reaper", 10)
 		if reaperstatus1 and reaperstatus1:IsValid() then
-			reaperstatus1:SetDTInt(1, math.min(reaperstatus1:GetDTInt(1) + 1, 30))
+			reaperstatus1:SetDTInt(1, math.min(reaperstatus1:GetDTInt(1) + 1, 10))
 		end
 	end
 end
@@ -408,12 +397,6 @@ end
 
 function SWEP:MeleeHitEntity(tr, hitent, damagemultiplier)
 	if not IsFirstTimePredicted() then return end
-	--[[if self.Block == 1 then 
-	
-
-		return 
-false
-	end]]
 
 	if self.MeleeFlagged then self.IsMelee = true end
 
@@ -424,10 +407,8 @@ false
 		owner.GlassWeaponShouldBreak = not owner.GlassWeaponShouldBreak
 
 	end
-
-
-	local damage = ((self.MeleeDamage * damagemultiplier) - ((self.zKills or 1) / 15))
-
+	local damage = (self.MeleeDamage * damagemultiplier)
+	local damage = self:GetBlockState() and (damage * 0.4) or damage 
 	local dmginfo = DamageInfo()
 	dmginfo:SetDamagePosition(tr.HitPos)
 	dmginfo:SetAttacker(owner)

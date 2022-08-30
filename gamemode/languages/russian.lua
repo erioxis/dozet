@@ -428,7 +428,7 @@ LANGUAGE.wep_d_sin_wrath			= "Легендарный артефакт злост
 LANGUAGE.wep_sin_envy		= "Молоточек"
 LANGUAGE.wep_d_sin_envy			= "Мелкий но не завидуй другим,он сильнее." -- Просто сильнее сингулярки
 LANGUAGE.wep_sin_pride		= "Горделивый Писк"
-LANGUAGE.wep_d_sin_pride			= "Гордись им до конца веков,он не силен и не слаб." --Увеличивает удачу
+LANGUAGE.wep_d_sin_pride			= "Гордись им до конца веков,он не силен и не слаб." --Увеличивает удачу и крик как у тирана
 --
 
 LANGUAGE.wep_murasama		= "Мурасама"

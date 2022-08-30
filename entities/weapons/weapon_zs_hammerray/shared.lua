@@ -1,14 +1,13 @@
---SWEP.PrintName = "'Rejuvenator' Healing Ray"
---SWEP.Description = "Locks on to humans and heals them to full, discharging medical ammo along a ray."
+
 SWEP.PrintName = translate.Get("wep_rray")
 SWEP.Description = translate.Get("wep_d_rray")
 
 SWEP.Base = "weapon_zs_base"
 
-SWEP.HoldType = "physgun"
+SWEP.HoldType = "shotgun"
 
-SWEP.ViewModel = "models/weapons/c_physcannon.mdl"
-SWEP.WorldModel = "models/weapons/w_physics.mdl"
+SWEP.ViewModel = "models/weapons/c_shotgun.mdl"
+SWEP.WorldModel = "models/weapons/w_shotgun.mdl"
 SWEP.ShowViewModel = false
 SWEP.ShowWorldModel = false
 SWEP.UseHands = true

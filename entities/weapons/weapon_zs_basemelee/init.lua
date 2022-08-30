@@ -1,22 +1,6 @@
 INC_SERVER()
 
 AddCSLuaFile("animations.lua")
-function SWEP:CanPrimaryAttack()
-	if self:GetOwner():IsHolding() or self:GetOwner():GetBarricadeGhosting() then return false end
-if self.Block then 
-	if self:GetOwner():GetInfo("zs_blockunable") == "0" then
-
-		timer.Create("Weaponblocked",0.3,1, function() 
-			net.Start("zs_weaponblocked")
-			net.Send(self:GetOwner())
-		end)
-	end
-end	
-return self:GetNextPrimaryFire() <= CurTime() and not self:IsSwinging()
-end
-
-
-
 function SWEP:ServerMeleeHitEntity(tr, hitent, damagemultiplier)
 	if not hitent or not hitent:IsValid() then return end
 
@@ -31,7 +15,7 @@ function SWEP:ServerMeleePostHitEntity(tr, hitent, damagemultiplier)
 	local owner = self:GetOwner()
 
 	if owner.GlassWeaponShouldBreak and hitent:IsPlayer() and not self.NoGlassWeapons and owner:IsSkillActive(SKILL_GLASSWEAPONS) and owner.GlassWeaponShouldBreak then
-	    if math.random(1,4) == 3 then
+	    if math.random(1,10) == 5 then
 		local effectdata = EffectData()
 		effectdata:SetOrigin(owner:EyePos())
 		effectdata:SetEntity(owner)

@@ -56,7 +56,7 @@ function ENT:DrawTranslucent()
         local up = Vector( 0, 0, 1 )
         local ringpos = self:GetPos()
         local frametime = FrameTime() * 500
-        local ringsize = 648
+        local ringsize = math.Clamp(648 / (GAMEMODE:GetWave()),300,648)
 
         render.SetMaterial( matBeam )
         render.StartBeam( 19 )

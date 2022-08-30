@@ -239,6 +239,7 @@ function GM:TryHumanPickup(pl, entity)
 	end
 end
 
+
 function GM:AddResources()
 	resource.AddFile("resource/fonts/typenoksidi.ttf")
 	resource.AddFile("resource/fonts/hidden.ttf")
@@ -1386,13 +1387,6 @@ function GM:Think()
 				end
 				if pl:IsSkillActive(SKILL_GIGACHAD) then
 					 pl:SetModelScale(math.Clamp(math.min(math.max(0.5, pl:GetMaxHealth() * 0.01),2.5) * pl.ScaleModel,0.2, 5))
-				end
-
-				if pl:GetActiveWeapon().Block and pl:GetActiveWeapon().IsMelee then
-					pl:SetWalkSpeed(pl:GetWalkSpeed() * 0.5)
-					pl:SetRunSpeed(pl:GetRunSpeed() * 0.5)
-				elseif not pl:GetActiveWeapon().Block and pl:GetActiveWeapon().IsMelee then
-					pl:ResetSpeed()
 				end
 				local cursed5 = pl:GetStatus("hollowing")
 				if pl.MasteryHollowing > 800 and pl:IsSkillActive(SKILL_UPLOAD) then
