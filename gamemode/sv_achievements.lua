@@ -103,13 +103,15 @@ hook.Add("PlayerSpawn", "HNS.Achievements", function(ply)
 end)
 
 local lastSecond = 0
-
 hook.Add("PlayerSay", "HNS.Achievements", function(ply, text)
+    local playerInput = string.Explode( " ", text )
+
     -- Magic words
     if string.lower(text) == "секрет" or string.lower(text) == "secret" then
         ply:GiveAchievement("ticklefight")
     end
-    if string.lower(text) == "иди нахуй" or string.lower(text) == "fuck you" or string.lower(text) == "stfu" or string.lower(text) == "ты еблан" or string.lower(text) == "хуйня сервер" then
+    if string.lower(text) == "fuck you" or string.lower(text) == "stfu" or string.lower(text) == "ты еблан" or string.lower(text) == "хуйня сервер" then
         ply:GiveAchievement("blyat")
     end
+    
 end)

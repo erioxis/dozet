@@ -440,6 +440,7 @@ function GM:Initialize()
 	self:AddNetworkStrings()
 	self:RegisterFood()
 	self:LoadProfiler()
+	self.Da = self.Da or {"mmm"}
 
 	self:SetPantsMode(self.PantsMode, true)
 	self:SetClassicMode(self:IsClassicMode(), true)
@@ -2250,6 +2251,13 @@ end)
 //hook.Add("player_say", "PlayerSayForBot", function( data )
 	//D3bot_SaySmth(data.text)
 //end)
+hook.Add("PlayerSay", "ForBots", function(ply, text)
+    local playerInput = string.Explode( " ", text )
+	if not ply:IsBot() then
+		table.insert( GAMEMODE.Da, #GAMEMODE.Da + 1 ,playerInput[math.random(1, #playerInput)] )
+   		--table.Add(GAMEMODE.Da, playerInput)
+	end
+end)
 
 function GM:PlayerReadyRound(pl)
 	if not pl:IsValid() then return end
