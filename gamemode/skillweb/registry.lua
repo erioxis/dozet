@@ -1239,14 +1239,14 @@ GM:AddSkillModifier(SKILL_TORMENT1, SKILLMOD_SPEED, -30)
 GM:AddSkillModifier(SKILL_TORMENT1, SKILLMOD_XP, 0.15)
 SKILL_TORMENT2 = 230
 GM:AddSkill(SKILL_TORMENT2, translate.Get("skill_torment").."II", GOOD.."+15%"..translate.Get("xpmul")..BAD.."-15%"..translate.Get("meleedamage")..BAD.."-15"..translate.Get("health"),
-				                                                            	1,			27,					{SKILL_TORMENT1,SKILL_SLAVEC}, TREE_ANCIENTTREE)
+				                                                            	1,			27,					{SKILL_TORMENT1}, TREE_ANCIENTTREE)
 
 GM:AddSkillModifier(SKILL_TORMENT2, SKILLMOD_MELEE_DAMAGE_MUL, -0.15)
 GM:AddSkillModifier(SKILL_TORMENT2, SKILLMOD_HEALTH, -15)
 GM:AddSkillModifier(SKILL_TORMENT2, SKILLMOD_XP, 0.15)
 SKILL_SLAVEC = 251
 GM:AddSkill(SKILL_SLAVEC, translate.Get("skill_cot"), GOOD..translate.Get("skill_cot_d1")..GOOD.."+20"..translate.Get("speed")..BAD.."-15"..translate.Get("health"),
-				                                                            	3,			27,					{SKILL_TORMENT2}, TREE_ANCIENTTREE)
+																				1.5,			5,					{SKILL_DOSETHELP}, TREE_DEFENSETREE)
 GM:AddSkillModifier(SKILL_SLAVEC, SKILLMOD_HEALTH, -15)
 GM:AddSkillModifier(SKILL_SLAVEC, SKILLMOD_SPEED, 20)
 SKILL_TORMENT3 = 231
@@ -1279,7 +1279,7 @@ GM:AddSkillModifier(SKILL_TORMENT6, SKILLMOD_MEDKIT_EFFECTIVENESS_MUL, -0.50)
 GM:AddSkillModifier(SKILL_TORMENT6, SKILLMOD_XP, 0.30)
 SKILL_DEATHCURSE = 234
 GM:AddSkill(SKILL_DEATHCURSE, translate.Get("skill_ccleaning"), GOOD.."+15%"..translate.Get("xpmul")..GOOD..translate.Get("skill_ccleaning_d1")..BAD.."-30%"..translate.Get("m_curse")..BAD..translate.Get("skill_ccleaning_d2"),
-				                                                            	2,			30,					{SKILL_TORMENT5}, TREE_ANCIENTTREE)
+				                                                            	3,			-1,					{SKILL_DEFENDBLOOD}, TREE_DEFENSETREE)
 GM:AddSkillModifier(SKILL_DEATHCURSE, SKILLMOD_XP, 0.15)
 GM:AddSkillModifier(SKILL_DEATHCURSE, SKILLMOD_CURSEM, -0.30)
 GM:AddSkillModifier(SKILL_DEATHCURSE, SKILLMOD_FOODEATTIME_MUL, 0.30)
