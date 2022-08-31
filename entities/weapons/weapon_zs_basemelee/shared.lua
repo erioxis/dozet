@@ -123,8 +123,8 @@ function SWEP:Think()
 end
 function SWEP:Move(mv)
 	if self:GetBlockState() and mv:KeyDown(IN_ATTACK2) and not self:GetOwner():GetBarricadeGhosting() then
-		mv:SetMaxSpeed(self.WalkSpeed*0.45)
-		mv:SetMaxClientSpeed(self.WalkSpeed*0.45)	
+		mv:SetMaxSpeed(mv:GetWalkSpeed()*0.45)
+		mv:SetMaxClientSpeed(mv:GetWalkSpeed()*0.45)	
 		mv:SetSideSpeed(mv:GetSideSpeed() * 0.45)
 	end
 end
@@ -136,11 +136,11 @@ function SWEP:SecondaryAttack()
 		self:SetWeaponSwingHoldType("revolver")
 		self:SetChargeBlock(true) 
 		self.Block = true
-		timer.Create("trueparrydead1",0.25,1, function() 
+		timer.Create("trueparrydead1",0.35,1, function() 
 			if !self:GetOwner():IsValid() then return false end
 			self.ParryTiming = false
 		end)
-		timer.Create("trueparry",0.05,1, function() 
+		timer.Create("trueparry",0.25,1, function() 
 			if !self:GetOwner():IsValid() then return false end
 			self.ParryTiming = true
 		end)
@@ -315,7 +315,7 @@ function SWEP:PlayerHitUtil(owner, damage, hitent, dmginfo)
 false
 	end]]
 	local damage = self:GetBlockState() and (damage * 0.4) or damage
-	if owner:IsSkillActive(SKILL_PARASITOID) and SERVER then
+	if owner:IsSkillActive(SKILL_PARASITOID) and SERVER and not self:GetBlockState() then
 		local parasite = hitent:GiveStatus("parasitoid", 2)
 		if parasite and parasite:IsValid() then
 			parasite:AddDamage(6, owner)

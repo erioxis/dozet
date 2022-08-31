@@ -83,7 +83,7 @@ function SWEP:SetNextAttack()
     return false end
 	local owner = self:GetOwner()
 	local armdelay = owner:GetMeleeSpeedMul()
-		self:SetNextPrimaryFire(CurTime() + math.Clamp((self.Primary.Delay * armdelay) - owner:GetVelocity():Length() * 0.001, 0.1,2))
+		self:SetNextPrimaryFire(CurTime() + math.Clamp((self.Primary.Delay * armdelay) - owner:GetVelocity():Length() * 0.00001, 0.25,2))
 
 end
 function SWEP:StartSwinging()
@@ -100,7 +100,7 @@ function SWEP:StartSwinging()
 	self:PlayStartSwingSound()
 
 	local armdelay = owner:GetMeleeSpeedMul()
-		self:SetSwingEnd(CurTime() + math.Clamp((self.SwingTime * (owner.MeleeSwingDelayMul or 1) * armdelay) - owner:GetVelocity():Length() * 0.001, 0.1,2))
+		self:SetSwingEnd(CurTime() + math.Clamp((self.SwingTime * (owner.MeleeSwingDelayMul or 1) * armdelay) - owner:GetVelocity():Length() * 0.00001, 0.25,2))
 
 end
 function SWEP:OnMeleeHit(hitent, hitflesh, tr)

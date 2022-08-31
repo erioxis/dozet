@@ -14,7 +14,7 @@ function meta:ProcessDamage(dmginfo)
 	if self.DamageVulnerability and not dmgbypass then
 		dmginfo:SetDamage(dmginfo:GetDamage() * self.DamageVulnerability)
 	end
-	if P_Team(self) == TEAM_HUMAN then
+	if P_Team(self) == TEAM_HUMAN and attacker:IsValidLivingZombie() then
 		self:GiveAchievementProgress("tanked", math.Round((dmginfo:GetDamage() or 1)))
 	end
 
@@ -80,6 +80,9 @@ function meta:ProcessDamage(dmginfo)
 			attacker:SetDPS(damage/wep.Primary.Delay * (wep.Primary.NumShots or 1))
 			if attacker:IsSkillActive(SKILL_VAMPIRISM) and math.random(1,4 * (wep.Primary.NumShots or 1)) == 1 then
 				attacker:SetHealth(math.min(attacker:GetMaxHealth(), attacker:Health() + attacker:GetMaxHealth() * 0.11))
+			end
+			if damage >= 10000 then
+				attacker:GiveAchievement("opm")
 			end
 			attacker.FireDamage = attacker.FireDamage + 1
 			dmginfo:SetDamage(damage * attacker:GetModelScale() * attacker:GetModelScale())

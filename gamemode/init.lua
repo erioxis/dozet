@@ -2109,6 +2109,9 @@ function GM:OnPlayerWin(pl)
 	if pl:GetMaxHealth() < 35 then
 		pl:GiveAchievement("glassman")	
 	end
+	if pl:IsSkillActive(SKILL_D_FRAIL) then
+		pl:GiveAchievement("frail")	
+	end
 end
 
 function GM:OnPlayerLose(pl)
@@ -2253,7 +2256,7 @@ end)
 //end)
 hook.Add("PlayerSay", "ForBots", function(ply, text)
     local playerInput = string.Explode( " ", text )
-	if not ply:IsBot() then
+	if not ply:IsBot() and string.len(text) <= 45 then
 		table.insert( GAMEMODE.Da, #GAMEMODE.Da + 1 ,playerInput[math.random(1, #playerInput)] )
    		--table.Add(GAMEMODE.Da, playerInput)
 	end
@@ -3931,6 +3934,9 @@ function GM:HumanKilledZombie(pl, attacker, inflictor, dmginfo, headshot, suicid
 	end
 	attacker:GiveAchievementProgress("everycan", 1)
 	pl:GiveAchievementProgress("goodtime", 1)
+	if pl:GetZombieClassTable().BaraCat then
+		attacker:GiveAchievementProgress("antibaracat", 1)		
+	end
 
 	local totaldamage = 0
 	for otherpl, dmg in pairs(pl.DamagedBy) do
@@ -3951,7 +3957,7 @@ function GM:HumanKilledZombie(pl, attacker, inflictor, dmginfo, headshot, suicid
 
 	attacker.ZombiesKilled = attacker.ZombiesKilled + 1
 	if not attacker:HasTrinket("altisaacsoul") then
-	attacker.zKills = attacker.zKills + 1
+		attacker.zKills = attacker.zKills + 1
 	elseif attacker:HasTrinket("altisaacsoul") and math.random(1,2) == 1 then
 		attacker.zKills = attacker.zKills - 1
 	else
@@ -4906,6 +4912,9 @@ function GM:WaveStateChanged(newstate, pl)
 				end
 				if pl:IsSkillActive(SKILL_XPMULGOOD) then
 				   pl.XPMulti = pl.XPMulti + 0.20
+				end
+				if pl:Frags() == 1024 then
+					pl:GiveAchievement("bitbat")
 				end
 
 
