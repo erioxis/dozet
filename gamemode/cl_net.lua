@@ -450,6 +450,12 @@ net.Receive("zs_skillarsenalvoid", function(length)
 
 	GAMEMODE:CenterNotify({killicon = "weapon_zs_plank_q1"}, " ", COLOR_GREEN, translate.Format("arsvoid", drop))
 end)
+net.Receive("zs_medpremium", function(length)
+	local drop = net.ReadString()
+	MySelf:EmitSound("buttons/button3.wav", 75, 50)
+
+	GAMEMODE:CenterNotify({killicon = "weapon_zs_trinket"}, " ", COLOR_GREEN, translate.Format("premiumget", drop))
+end)
 
 
 net.Receive("zs_invitem", function(length)

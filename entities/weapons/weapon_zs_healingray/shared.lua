@@ -118,6 +118,9 @@ function SWEP:CheckHealRay()
 			if owner:HasTrinket("mediiii") and math.random(25) == 25 and SERVER then
 				ent:AddPoisonDamage(math.random(25), owner)
 			end
+			if owner:HasTrinket("pr_barapaw") and math.random(3) == 3 and SERVER then
+				ent:GiveStatus("knockdown", 1.5)
+			end
 			owner:HealPlayer(ent, math.min(self:GetCombinedPrimaryAmmo(), self.Heal))
 			self:TakeAmmo()
 			self:SetDTFloat(10, CurTime() + 0.36)

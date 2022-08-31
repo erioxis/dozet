@@ -50,13 +50,12 @@ GM.Curses = {
 		"trinket_curse_heart"
 
 }
-GM.Sins = {
-	"trinket_sin_greed",
-	"trinket_hurt_curse",
-	"trinket_uncurse",
-	"trinket_curse_faster",
-	"trinket_curse_slow"
-
+GM.MedPremium = {
+	"trinket_pr_gold",
+	"trinket_pr_barapaw",
+	"trinket_pr_chamomile",
+	"trinket_pr_bloodpack",
+	"trinket_soulmedical"
 }
 
 

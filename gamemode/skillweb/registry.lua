@@ -345,6 +345,7 @@ SKILL_FOODHEALS = 324
 SKILL_SEEAURA = 325
 SKILL_DONATE15 = 326
 SKILL_PARASITOID = 327
+SKILL_PREMIUM = 328
 
 SKILLMOD_HEALTH = 1
 SKILLMOD_SPEED = 2
@@ -666,7 +667,9 @@ GM:AddSkill(SKILL_U_STRENGTHSHOT, translate.Get("skill_sshot"), GOOD..translate.
 GM:AddSkill(SKILL_WORTHINESS4, translate.Get("worthness").."IV", GOOD.."+10"..translate.Get("worth")..BAD.."-3"..translate.Get("start_points"),
 																-5,			2,					{}, TREE_SUPPORTTREE)
 GM:AddSkill(SKILL_U_ANTITODESHOT, translate.Get("skill_u_antidote"), GOOD..translate.Get("skill_u_antidote_d1"),
-																4,			-2,					{}, TREE_SUPPORTTREE)
+																4,			-2,					{SKILL_PREMIUM}, TREE_SUPPORTTREE)
+GM:AddSkill(SKILL_PREMIUM, translate.Get("skill_premium"), GOOD..translate.Get("skill_premium_d1")..BAD..translate.Get("skill_premium_d2"),
+																3,			-3,					{}, TREE_SUPPORTTREE)
 GM:AddSkill(SKILL_DISPERSION, translate.Get("skill_disp"), GOOD..translate.Get("skill_disp_d1")..BAD..translate.Get("skill_disp_d2"),
 																0,			-4,					{}, TREE_SUPPORTTREE)
 GM:AddSkill(SKILL_COMBOHEAL, translate.Get("skill_comboheal"), GOOD..translate.Get("skill_comboheal_d1")..BAD..translate.Get("skill_comboheal_d2"),

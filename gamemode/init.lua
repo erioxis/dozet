@@ -525,6 +525,7 @@ function GM:AddNetworkStrings()
 	util.AddNetworkString("HNS.AchievementsProgress")
 	util.AddNetworkString("HNS.AchievementsGet")
 	util.AddNetworkString("HNS.AchievementsMaster")
+	util.AddNetworkString("zs_medpremium")
 	util.AddNetworkString("zs_weaponblocked")
 	util.AddNetworkString("zs_xp_damage")
 
@@ -1723,6 +1724,15 @@ function GM:PlayerHealedTeamMember(pl, other, health, wep, pointmul, nobymsg, fl
 	if self:GetWave() == 0 or health <= 0 or pl == other then return end
 
 	pl.HealedThisRound = pl.HealedThisRound + health
+	pl.NextPremium = pl.NextPremium + health
+	local premium = table.Random(GAMEMODE.MedPremium)
+	if pl:IsSkillActive(SKILL_PREMIUM) and pl.NextPremium >= 1800 and !pl:HasInventoryItem(premium) then
+		pl:AddInventoryItem(premium)
+		net.Start("zs_medpremium")
+			net.WriteString(premium)
+		net.Broadcast()
+		pl.NextPremium = 0
+	end
 
 	if pointmul ~= 0 then
 		local hpperpoint = self.MedkitPointsPerHealth
@@ -1732,7 +1742,6 @@ function GM:PlayerHealedTeamMember(pl, other, health, wep, pointmul, nobymsg, fl
 
 		pl:AddPoints(points)
 	end
-
 	net.Start("zs_healother")
 		net.WriteBool(not floater)
 		net.WriteEntity(other)
@@ -2494,7 +2503,7 @@ function GM:PlayerInitialSpawnRound(pl)
 	pl.zKills = 0
 	pl.RedeemedOnce = true
 	pl.HolyMantle = 0
-
+	pl.NextPremium = 0
 	pl.NextDamage = 0
 
 	pl.CanBuy = nil

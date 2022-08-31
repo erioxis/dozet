@@ -99,7 +99,7 @@ function SWEP:PrimaryAttack()
 	local multiplier = self.MedicHealMul or 1
 	local cooldownmultiplier = self.MedicCooldownMul or 1
 
-	local healed = owner:HealPlayer(ent, math.min(self:GetCombinedPrimaryAmmo(), self.Heal * math.max(1, self.Combo / 3)))
+	local healed = owner:HealPlayer(ent, owner:HasTrinket("pr_bloodpack") and self.Heal * math.max(1, self.Combo / 3) or math.min(self:GetCombinedPrimaryAmmo(), self.Heal * math.max(1, self.Combo / 3)))
 		timer.Create("ComboReset", 15, 1, function() 
 			self.Combo = 0
 		end)
@@ -123,9 +123,13 @@ function SWEP:PrimaryAttack()
 		if owner:HasTrinket("mediiii") and math.random(5) == 5 and SERVER then
 			ent:AddPoisonDamage(math.random(12), owner)
 		end
+		if owner:HasTrinket("pr_barapaw") and math.random(3) == 3 and SERVER then
+			ent:GiveStatus("knockdown", 1.5)
+		end
 		if owner:IsSkillActive(SKILL_WYRDREC) and SERVER and math.random(100) < (60 * ((ent.BleedDamageTakenMul or 1) * (ent.BleedSpeedMul or 1))) then
 			ent:AddBleedDamage(math.random(15,30), ent)
 		end
+	
 		
 		if self.BloodHeal == true and SERVER then
 			ent:SetBloodArmor(math.min(ent.MaxBloodArmor + 100, ent:GetBloodArmor() + self.Heal * 3))
@@ -143,8 +147,13 @@ function SWEP:PrimaryAttack()
 			timer.Simple( 0.1, function() owner:HealPlayer(ent, math.random(1,13)) end)
 		end
 		owner.NextMedKitUse = self:GetNextCharge()
-
-		self:TakeCombinedPrimaryAmmo(totake)
+		if not owner:HasTrinket("pr_bloodpack") or self:GetPrimaryAmmoCount() >= 1 then
+			self:TakeCombinedPrimaryAmmo(totake)
+		elseif self:GetPrimaryAmmoCount() <= 0 and owner:HasTrinket("pr_bloodpack") and SERVER then
+			owner:TakeDamage(totake)
+		elseif self:GetPrimaryAmmoCount() >= 1 and owner:HasTrinket("pr_bloodpack") then
+			self:TakeCombinedPrimaryAmmo(totake)
+		end
 
 		self:EmitSound("items/medshot4.wav")
 
@@ -160,6 +169,7 @@ end
 function SWEP:SecondaryAttack()
 	local owner = self:GetOwner()
 	if not self:CanPrimaryAttack() or not gamemode.Call("PlayerCanBeHealed", owner) then return end
+	if owner:IsSkillActive(SKILL_PREMIUM) then return end
 
 	local multiplier = self.MedicHealMul or 1
 	local cooldownmultiplier = self.MedicCooldownMul or 1
@@ -225,10 +235,11 @@ end
 function SWEP:CanPrimaryAttack()
 	local owner = self:GetOwner()
 	if owner:IsHolding() or owner:GetBarricadeGhosting() then return false end
-
 	if self:GetPrimaryAmmoCount() <= 0 then
+		if owner:HasTrinket("pr_bloodpack") and owner:Health() >= owner:GetMaxHealth() * 0.25 then
+			return self:GetNextCharge() <= CurTime() and (owner.NextMedKitUse or 0) <= CurTime()
+		end
 		self:EmitSound("items/medshotno1.wav")
-
 		self:SetNextCharge(CurTime() + 0.75)
 		owner.NextMedKitUse = self:GetNextCharge()
 		return false

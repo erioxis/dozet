@@ -743,7 +743,7 @@ trinket = GM:AddTrinket("Soul of Erwa", "soulmedical", false, nil, {
 	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 9.697, y = 2.3097 }, color = Color(0, 35, 0, 255), nocull = false, additive = false, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core_2+"] = { type = "Sprite", sprite = "effects/splashwake1", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 10, y = 10 }, color = Color(0, 0, 0, 255), nocull = false, additive = false, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 2, 0), angle = Angle(0, 0, 0), size = Vector(0.949, 0.349, 0.349), color = Color(20, 20, 20, 255), surpresslightning = false, material = "models/shiny", skin = 0, bodygroup = {} }
-}, nil, "+15% к силе аптечки,-15% отката аптечки\n+15% Med Effectiveness,-15% Cooldown medkit.\n Q:3", nil, nil, "weapon_zs_soul")
+}, nil, "+15% к силе аптечки,-15% к кулдауну аптечки\n+15% Med Effectiveness,-15% Cooldown medkit.\n Q:3", nil, nil, "weapon_zs_soul")
 GM:AddSkillModifier(trinket, SKILLMOD_MEDKIT_COOLDOWN_MUL, -0.15)
 GM:AddSkillModifier(trinket, SKILLMOD_MEDKIT_EFFECTIVENESS_MUL, 0.15)
 trinket = GM:AddTrinket("True soul of Erwa", "soulrepairman", false, nil, {
@@ -1195,3 +1195,13 @@ trinket = GM:AddTrinket(""..translate.Get("t_vir_pat"), "vir_pat", false, supvel
 trinket = GM:AddTrinket(""..translate.Get("t_vir_pat"), "vir_pat", false, supveles, supweles, 1, ""..translate.Get("t_d_vir_pat"))
 trinket = GM:AddTrinket(""..translate.Get("t_vir_pat"), "vir_pat", false, supveles, supweles, 1, ""..translate.Get("t_d_vir_pat"))
 trinket = GM:AddTrinket(""..translate.Get("t_vir_pat"), "vir_pat", false, supveles, supweles, 1, ""..translate.Get("t_d_vir_pat"))]]
+
+--Мед премия
+trinket = GM:AddTrinket(translate.Get("t_pr_gold"), "pr_gold", false, supveles, supweles, 4, translate.Get("t_d_pr_gold"))
+GM:AddSkillModifier(trinket, SKILLMOD_MEDKIT_EFFECTIVENESS_MUL, 0.22)
+trinket = GM:AddTrinket(translate.Get("t_pr_barapaw"), "pr_barapaw", false, supveles, supweles, 4, translate.Get("t_d_pr_barapaw"))
+GM:AddSkillModifier(trinket, SKILLMOD_MEDKIT_COOLDOWN_MUL, -0.44)
+trinket = GM:AddTrinket(translate.Get("t_pr_chamomile"), "pr_chamomile", false, supveles, supweles, 4, translate.Get("t_d_pr_chamomile"))
+GM:AddSkillModifier(trinket, SKILLMOD_MEDKIT_EFFECTIVENESS_MUL, 0.55)
+trinket = GM:AddTrinket(translate.Get("t_pr_bloodpack"), "pr_bloodpack", false, supveles, supweles, 4, translate.Get("t_d_pr_bloodpack"))
+GM:AddSkillModifier(trinket, SKILLMOD_MEDKIT_COOLDOWN_MUL, -0.32)
