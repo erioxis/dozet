@@ -1731,6 +1731,7 @@ function GM:PlayerHealedTeamMember(pl, other, health, wep, pointmul, nobymsg, fl
 		net.Start("zs_medpremium")
 			net.WriteString(premium)
 		net.Broadcast()
+		pl:GiveAchievement("premium")
 		pl.NextPremium = 0
 	end
 

@@ -58,6 +58,8 @@ LANGUAGE.challenge_antibaracat = "ЕБУЧИЕ БАРАКОТЫ"
 LANGUAGE.challenge_antibaracat_d = "Убей 1000 баракотов."
 LANGUAGE.challenge_opm = "ОДИН УДААААААААААААААААААААААААР"
 LANGUAGE.challenge_opm_d = "Сделай 10000 урона за один удар."
+LANGUAGE.challenge_premium = "Да, спасибо"
+LANGUAGE.challenge_premium_d = "Получить премию."
 -- Настройки
 LANGUAGE.op_naildisplay = "Всегда показывать хп гвоздей"
 LANGUAGE.op_knockdown_camera = "Показывать камеру при рагдоле от 3 лица"

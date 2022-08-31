@@ -160,6 +160,11 @@ GM.Achievements["opm"] = {
     Desc = translate("challenge_opm_d"),
     Reward = 12500
 }
+GM.Achievements["premium"] = {
+    Name = translate("challenge_premium"),
+    Desc = translate("challenge_premium_d"),
+    Reward = 1200
+}
 
 
 

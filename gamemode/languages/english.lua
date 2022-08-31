@@ -74,6 +74,8 @@ LANGUAGE.challenge_antibaracat = "FUCK BARACATS"
 LANGUAGE.challenge_antibaracat_d = "Kill 1000 baracats."
 LANGUAGE.challenge_opm = "ONE PUUUUUUUUUUUNCH"
 LANGUAGE.challenge_opm_d = "Do 10000 damage per 1 attack."
+LANGUAGE.challenge_premium = "Yes, thanks"
+LANGUAGE.challenge_premium_d = "Get premium from medical premium."
 -- Options
 LANGUAGE.op_naildisplay = "Always display nail health"
 LANGUAGE.op_knockdown_camera = "Always third person knockdown camera"
