@@ -1234,61 +1234,61 @@ GM:AddSkillModifier(SKILL_DEFEND, SKILLMOD_SPEED, -1)
 
 --Tormented SKill
 SKILL_TORMENT1 = 229
-GM:AddSkill(SKILL_TORMENT1, translate.Get("skill_torment").."I", GOOD.."+15%"..translate.Get("xpmul")..BAD.."-30"..translate.Get("speed")..BAD.."-15%"..translate.Get("b_damage"),
-				                                                            	1,			26,					{SKILL_TORMENT1}, TREE_ANCIENTTREE)
+GM:AddSkill(SKILL_TORMENT1, translate.Get("skill_torment").."I", GOOD.."+5%"..translate.Get("xpmul")..BAD.."-30"..translate.Get("speed")..BAD.."-15%"..translate.Get("b_damage"),
+				                                                            	1,			26,					{SKILL_NONE}, TREE_ANCIENTTREE)
 .RemortReq = 2
 GM:AddSkillModifier(SKILL_TORMENT1, SKILLMOD_DAMAGE, -0.15)
 GM:AddSkillModifier(SKILL_TORMENT1, SKILLMOD_SPEED, -30)
-GM:AddSkillModifier(SKILL_TORMENT1, SKILLMOD_XP, 0.15)
+GM:AddSkillModifier(SKILL_TORMENT1, SKILLMOD_XP, 0.05)
 SKILL_TORMENT2 = 230
-GM:AddSkill(SKILL_TORMENT2, translate.Get("skill_torment").."II", GOOD.."+15%"..translate.Get("xpmul")..BAD.."-15%"..translate.Get("meleedamage")..BAD.."-15"..translate.Get("health"),
+GM:AddSkill(SKILL_TORMENT2, translate.Get("skill_torment").."II", GOOD.."+5%"..translate.Get("xpmul")..BAD.."-15%"..translate.Get("meleedamage")..BAD.."-15"..translate.Get("health"),
 				                                                            	1,			27,					{SKILL_TORMENT1}, TREE_ANCIENTTREE)
 
 GM:AddSkillModifier(SKILL_TORMENT2, SKILLMOD_MELEE_DAMAGE_MUL, -0.15)
 GM:AddSkillModifier(SKILL_TORMENT2, SKILLMOD_HEALTH, -15)
-GM:AddSkillModifier(SKILL_TORMENT2, SKILLMOD_XP, 0.15)
+GM:AddSkillModifier(SKILL_TORMENT2, SKILLMOD_XP, 0.05)
 SKILL_SLAVEC = 251
 GM:AddSkill(SKILL_SLAVEC, translate.Get("skill_cot"), GOOD..translate.Get("skill_cot_d1")..GOOD.."+20"..translate.Get("speed")..BAD.."-15"..translate.Get("health"),
 																				1.5,			5,					{SKILL_DOSETHELP}, TREE_DEFENSETREE)
 GM:AddSkillModifier(SKILL_SLAVEC, SKILLMOD_HEALTH, -15)
 GM:AddSkillModifier(SKILL_SLAVEC, SKILLMOD_SPEED, 20)
 SKILL_TORMENT3 = 231
-GM:AddSkill(SKILL_TORMENT3, translate.Get("skill_torment").."III", GOOD.."+50%"..translate.Get("xpmul")..BAD.."+50%"..translate.Get("res_delay")..BAD.."-5%"..translate.Get("p_mul").."Secret III(+2 skill points)",
+GM:AddSkill(SKILL_TORMENT3, translate.Get("skill_torment").."III", GOOD.."+15%"..translate.Get("xpmul")..BAD.."+50%"..translate.Get("res_delay")..BAD.."-5%"..translate.Get("p_mul").."Secret III(+2 skill points)",
 				                                                            	1,			28,					{SKILL_TORMENT2}, TREE_ANCIENTTREE)
 
 GM:AddSkillModifier(SKILL_TORMENT3, SKILLMOD_POINT_MULTIPLIER, -0.05)
 GM:AddSkillModifier(SKILL_TORMENT3, SKILLMOD_RESUPPLY_DELAY_MUL, 0.5)
-GM:AddSkillModifier(SKILL_TORMENT3, SKILLMOD_XP, 0.50)
+GM:AddSkillModifier(SKILL_TORMENT3, SKILLMOD_XP, 0.15)
 GM:AddSkillModifier(SKILL_TORMENT3, SKILLMOD_SPOINT, 3)
 SKILL_TORMENT4 = 232
-GM:AddSkill(SKILL_TORMENT4, translate.Get("skill_torment").."IV", GOOD.."+100%"..translate.Get("xpmul")..BAD..translate.Get("skill_torment_d1"),
+GM:AddSkill(SKILL_TORMENT4, translate.Get("skill_torment").."IV", GOOD.."+35%"..translate.Get("xpmul")..BAD..translate.Get("skill_torment_d1"),
 				                                                            	1,			29,					{SKILL_TORMENT3}, TREE_ANCIENTTREE)
 
 GM:AddSkillModifier(SKILL_TORMENT4, SKILLMOD_DAMAGE, -0.50)
 GM:AddSkillModifier(SKILL_TORMENT4, SKILLMOD_MELEE_DAMAGE_MUL, -0.5)
-GM:AddSkillModifier(SKILL_TORMENT4, SKILLMOD_XP, 1)
+GM:AddSkillModifier(SKILL_TORMENT4, SKILLMOD_XP, 0.35)
 SKILL_TORMENT5 = 233
-GM:AddSkill(SKILL_TORMENT5, translate.Get("skill_torment").."V", GOOD.."+15%"..translate.Get("xpmul")..BAD.."+15%"..translate.Get("meleedamagetaken"),
+GM:AddSkill(SKILL_TORMENT5, translate.Get("skill_torment").."V", GOOD.."+5%"..translate.Get("xpmul")..BAD.."+15%"..translate.Get("meleedamagetaken"),
 				                                                            	2,			28.5,					{SKILL_TORMENT4}, TREE_ANCIENTTREE)
 
 GM:AddSkillModifier(SKILL_TORMENT5, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 0.15)
-GM:AddSkillModifier(SKILL_TORMENT5, SKILLMOD_XP, 0.15)
+GM:AddSkillModifier(SKILL_TORMENT5, SKILLMOD_XP, 0.05)
 SKILL_TORMENT6 = 253
-GM:AddSkill(SKILL_TORMENT6, translate.Get("skill_torment").."VI", GOOD.."+30%"..translate.Get("xpmul")..BAD..translate.Get("skill_torment_d2"),
+GM:AddSkill(SKILL_TORMENT6, translate.Get("skill_torment").."VI", GOOD.."+10%"..translate.Get("xpmul")..BAD..translate.Get("skill_torment_d2"),
 				                                                            	3,			30,					{SKILL_TORMENT5}, TREE_ANCIENTTREE)
 
 GM:AddSkillModifier(SKILL_TORMENT6, SKILLMOD_REPAIRRATE_MUL, -0.50)
 GM:AddSkillModifier(SKILL_TORMENT6, SKILLMOD_MEDKIT_EFFECTIVENESS_MUL, -0.50)
-GM:AddSkillModifier(SKILL_TORMENT6, SKILLMOD_XP, 0.30)
+GM:AddSkillModifier(SKILL_TORMENT6, SKILLMOD_XP, 0.10)
 SKILL_DEATHCURSE = 234
 GM:AddSkill(SKILL_DEATHCURSE, translate.Get("skill_ccleaning"), GOOD.."+15%"..translate.Get("xpmul")..GOOD..translate.Get("skill_ccleaning_d1")..BAD.."-30%"..translate.Get("m_curse")..BAD..translate.Get("skill_ccleaning_d2"),
 				                                                            	3,			-1,					{SKILL_DEFENDBLOOD}, TREE_DEFENSETREE)
 GM:AddSkillModifier(SKILL_DEATHCURSE, SKILLMOD_XP, 0.15)
 GM:AddSkillModifier(SKILL_DEATHCURSE, SKILLMOD_CURSEM, -0.30)
 GM:AddSkillModifier(SKILL_DEATHCURSE, SKILLMOD_FOODEATTIME_MUL, 0.30)
-GM:AddSkill(SKILL_TORMENT7, translate.Get("skill_torment").."VII", GOOD.."+150%"..translate.Get("xpmul")..BAD..translate.Get("skill_torment_d3")..BAD.."-25%"..translate.Get("sale")..BAD..translate.Get("skill_torment_d2"),
+GM:AddSkill(SKILL_TORMENT7, translate.Get("skill_torment").."VII", GOOD.."+35%"..translate.Get("xpmul")..BAD..translate.Get("skill_torment_d3")..BAD.."-25%"..translate.Get("sale")..BAD..translate.Get("skill_torment_d2"),
 				                                                            	2,			31,					{SKILL_TORMENT6,SKILL_TORMENT8}, TREE_ANCIENTTREE)
-GM:AddSkillModifier(SKILL_TORMENT7, SKILLMOD_XP, 1.5)
+GM:AddSkillModifier(SKILL_TORMENT7, SKILLMOD_XP, 0.35)
 GM:AddSkillModifier(SKILL_TORMENT7, SKILLMOD_MELEE_DAMAGE_MUL, -0.30)
 GM:AddSkillModifier(SKILL_TORMENT7, SKILLMOD_DAMAGE, -0.30)
 GM:AddSkillModifier(SKILL_TORMENT7, SKILLMOD_LUCK, -5)
@@ -1297,23 +1297,23 @@ GM:AddSkillModifier(SKILL_TORMENT7, SKILLMOD_SPEED, -55)
 GM:AddSkillModifier(SKILL_TORMENT7, SKILLMOD_ARSENAL_DISCOUNT, 0.25)
 GM:AddSkillModifier(SKILL_TORMENT7, SKILLMOD_REPAIRRATE_MUL, -0.50)
 GM:AddSkillModifier(SKILL_TORMENT7, SKILLMOD_MEDKIT_EFFECTIVENESS_MUL, -0.50)
-GM:AddSkill(SKILL_TORMENT8,translate.Get("skill_torment").."VIII", GOOD.."+30%"..translate.Get("xpmul")..BAD.."-50"..translate.Get("health"),
+GM:AddSkill(SKILL_TORMENT8,translate.Get("skill_torment").."VIII", GOOD.."+15%"..translate.Get("xpmul")..BAD.."-50"..translate.Get("health"),
 				                                                            	3,			32,					{SKILL_TORMENT7}, TREE_ANCIENTTREE)
 
 GM:AddSkillModifier(SKILL_TORMENT8, SKILLMOD_HEALTH, -50)
-GM:AddSkillModifier(SKILL_TORMENT8, SKILLMOD_XP, 0.30)
-GM:AddSkill(SKILL_FREEPOINT1,translate.Get("skill_freexp").."I", GOOD.."+3%"..translate.Get("xpmul"),
+GM:AddSkillModifier(SKILL_TORMENT8, SKILLMOD_XP, 0.15)
+GM:AddSkill(SKILL_FREEPOINT1,translate.Get("skill_freexp").."I", GOOD.."+1%"..translate.Get("xpmul"),
 				                                                            	4,			33,					{SKILL_TORMENT8}, TREE_ANCIENTTREE)
-GM:AddSkillModifier(SKILL_FREEPOINT1, SKILLMOD_XP, 0.03)
-GM:AddSkill(SKILL_FREEPOINT2,translate.Get("skill_freexp").."II", GOOD.."+5%"..translate.Get("xpmul"),
+GM:AddSkillModifier(SKILL_FREEPOINT1, SKILLMOD_XP, 0.01)
+GM:AddSkill(SKILL_FREEPOINT2,translate.Get("skill_freexp").."II", GOOD.."+3%"..translate.Get("xpmul"),
 				                                                            	5,			32,					{SKILL_FREEPOINT1}, TREE_ANCIENTTREE)
-GM:AddSkillModifier(SKILL_FREEPOINT2, SKILLMOD_XP, 0.05)
-GM:AddSkill(SKILL_FREEPOINT3,translate.Get("skill_freexp").."III", GOOD.."+9%"..translate.Get("xpmul"),
+GM:AddSkillModifier(SKILL_FREEPOINT2, SKILLMOD_XP, 0.03)
+GM:AddSkill(SKILL_FREEPOINT3,translate.Get("skill_freexp").."III", GOOD.."+4%"..translate.Get("xpmul"),
 				                                                            	6,			34,					{SKILL_FREEPOINT2}, TREE_ANCIENTTREE)
-GM:AddSkillModifier(SKILL_FREEPOINT3, SKILLMOD_XP, 0.09)
-GM:AddSkill(SKILL_FREEPOINT4,translate.Get("skill_freexp").."IV", GOOD.."+12%"..translate.Get("xpmul"),
+GM:AddSkillModifier(SKILL_FREEPOINT3, SKILLMOD_XP, 0.04)
+GM:AddSkill(SKILL_FREEPOINT4,translate.Get("skill_freexp").."IV", GOOD.."+6%"..translate.Get("xpmul"),
 				                                                            	6,			35,					{SKILL_FREEPOINT3}, TREE_ANCIENTTREE)
-GM:AddSkillModifier(SKILL_FREEPOINT4, SKILLMOD_XP, 0.12)
+GM:AddSkillModifier(SKILL_FREEPOINT4, SKILLMOD_XP, 0.06)
 GM:AddSkill(SKILL_XPMULGOOD, translate.Get("skill_xpmulgood"), GOOD..translate.Get("skill_xpmulgood_d1")..BAD..translate.Get("skill_xpmulgood_d2"),
 				                                                            	6,			36,					{SKILL_FREEPOINT4}, TREE_ANCIENTTREE)
 
