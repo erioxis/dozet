@@ -153,6 +153,7 @@ GM.Achievements["bitbat"] = {
 GM.Achievements["antibaracat"] = {
     Name = translate("challenge_antibaracat"),
     Desc = translate("challenge_antibaracat_d"),
+    Goal = 1000,
     Reward = 12500
 }
 GM.Achievements["opm"] = {

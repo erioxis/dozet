@@ -393,9 +393,14 @@ concommand.Add("zsdropweapon", function(sender, command, arguments)
 		sender:TakeInventoryItem("curse_slow")
 		
 	end
-		if sender:HasTrinket("curse_heart") then
+	if sender:HasTrinket("curse_heart") then
 		sender:TakeDamage(sender:Health()  * 0.5)
 		sender:TakeInventoryItem("curse_heart")
+		
+	end
+	if sender:HasTrinket("curse_fragility") then
+		sender.Luck = sender.Luck - 6
+		sender:TakeInventoryItem("curse_fragiliy")
 		
 	end
 	if GAMEMODE.ZombieEscape then

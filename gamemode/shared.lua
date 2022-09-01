@@ -847,9 +847,9 @@ end
 function GM:GetRagdollEyes(pl)
 	local Ragdoll = pl:GetRagdollEntity()
 	if not Ragdoll then return end
-
+    if pl:GetModel() == "models/player/catpants.mdl" then return end
 	local att = Ragdoll:GetAttachment(Ragdoll:LookupAttachment("eyes"))
-	if att then
+	if att then 
 		att.Pos = att.Pos + att.Ang:Forward() * -2
 		att.Ang = att.Ang
 

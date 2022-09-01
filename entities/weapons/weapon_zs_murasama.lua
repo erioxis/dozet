@@ -96,6 +96,9 @@ function SWEP:SecondaryAttack()
 					effectdata = EffectData()
 					effectdata:SetOrigin(target:GetPos())
 					util.Effect("murasama_multiple_hits", effectdata)
+					if SERVER then
+						owner:TakeDamage(owner:Health() * 0.5)
+					end
 				end
 			end
 		end

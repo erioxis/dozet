@@ -258,11 +258,13 @@ LANGUAGE.t_pr_gold = "Медицинское Золото"
 LANGUAGE.t_pr_barapaw = "Лапа баракота"
 LANGUAGE.t_pr_chamomile = "Ромашка"
 LANGUAGE.t_pr_bloodpack = "Пустой пакет крови"
+LANGUAGE.t_curse_fragility                        = "Проклятье Хрупкости"
 --Добродетели
 LANGUAGE.vir_pat_warning = "Нельзя закупится из-за терпения,подождите конца волны!(не выбрасывать)"
 
 LANGUAGE.t_vir_pat = "Добродетель терпения"
 --описание тринек
+LANGUAGE.t_d_curse_fragility                        = "+50% Получаемый урон.\nПри выкидывание отбирает 6 удачи."
 LANGUAGE.t_d_pr_bloodpack = "-32% К времени откату аптечки\nВы можете использовать свое хп чтобы лечить других(АПТЕЧКА ТОЛЬКО)."
 LANGUAGE.t_d_pr_chamomile = "Чистая эссенция горящего баракота\n+55% К силе лечения."
 LANGUAGE.t_d_pr_barapaw = "Имеется шанс уронить лечимого игрока\n-44% к кулдауну аптечки"

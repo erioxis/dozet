@@ -1729,7 +1729,7 @@ function GM:PlayerHealedTeamMember(pl, other, health, wep, pointmul, nobymsg, fl
 	if pl:IsSkillActive(SKILL_PREMIUM) and pl.NextPremium >= 1800 and !pl:HasInventoryItem(premium) then
 		pl:AddInventoryItem(premium)
 		net.Start("zs_medpremium")
-			net.WriteString(premium)
+			net.WriteString(premium.Name)
 		net.Broadcast()
 		pl:GiveAchievement("premium")
 		pl.NextPremium = 0
@@ -2475,20 +2475,56 @@ function GM:PlayerInitialSpawn(pl)
 	pl.LastSentESW = 0
 	pl.m_LastWaveStartSpawn = 0
 	pl.m_LastGasHeal = 0
-
+	--self:PlayerSaveDataMASTERY(pl)
 	self:InitializeVault(pl)
 
 	gamemode.Call("PlayerInitialSpawnRound", pl)
 
 	self.PeakPopulation = math.max(self.PeakPopulation, #player.GetAll())
 end
-
+--[[function GM:PlayerSaveDataMASTERY(pl)
+	local Data = {}
+	Data["M.Melee"] = pl.MeleeMastery or 1
+	Data["M.Gun"] = pl.GunMastery or 1
+	Data["M.Medic"] = pl.MedicMastery or 1
+	local StringWrite = ""
+	for k, v in pairs(Data) do
+		if (StringWrite == "") then
+			StringWrite = k..";"..v
+		else
+			StringWrite = StringWrite.."\n"..k..";"..v
+		end
+	end
+	print("Mastery of"..pl:Nick().."Saved")
+	file.Write("zombiesurvival/plmastery"..string.lower(string.gsub(pl:SteamID(), ":", "_").."/profile.txt"), StringWrite)
+end
+function GM:PlayerLoadDataMASTERY(pl)
+	if not file.IsDir("zombiesurvival/plmastery"..string.lower(string.gsub(pl:SteamID(), ":", "_")), "DATA") then
+		file.CreateDir("zombiesurvival/plmastery"..string.lower(string.gsub(pl:SteamID(), ":", "_")), "DATA")
+	end
+	if (file.Exists("zombiesurvival/plmastery"..string.lower(string.gsub(pl:SteamID(), ":", "_")).."/profile.txt"), "DATA") then
+		
+	end
+	local Data = {}
+	Data["M.Melee"] = pl.MeleeMastery or 1
+	Data["M.Gun"] = pl.GunMastery or 1
+	Data["M.Medic"] = pl.MedicMastery or 1
+	local StringWrite = ""
+	for k, v in pairs(Data) do
+		if (StringWrite == "") then
+			StringWrite = k..";"..v
+		else
+			StringWrite = StringWrite.."\n"..k..";"..v
+		end
+	end
+	print("Mastery of"..pl:Nick().."Saved")
+	file.Write("zombiesurvival/plmastery"..string.lower(string.gsub(pl:SteamID(), ":", "_").."/profile.txt"), StringWrite)
+end]]
 function GM:PlayerInitialSpawnRound(pl)
 	pl:SprintDisable()
 	if pl:KeyDown(IN_WALK) then
 		pl:ConCommand("-walk")
 	end
-
 	pl:SetCanWalk(false)
 	pl:SetCanZoom(false)
 
@@ -2496,7 +2532,7 @@ function GM:PlayerInitialSpawnRound(pl)
 	pl:SetNoCollideWithTeammates(false) --pl:SetNoCollideWithTeammates(true)
 	pl:SetCustomCollisionCheck(true)
 	pl:ProcessAchievements()
-
+	--self:PlayerLoadDataMASTERY(pl)
 	pl.ZombiesKilled = 0
 	pl.ZombiesKilledAssists = 0
 	pl.Headshots = 0

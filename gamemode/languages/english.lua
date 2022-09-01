@@ -277,10 +277,12 @@ LANGUAGE.t_pr_gold = "Medical gold"
 LANGUAGE.t_pr_barapaw = "Barapaw"
 LANGUAGE.t_pr_chamomile = "Chamomile"
 LANGUAGE.t_pr_bloodpack = "Empty Bloodpack"
+LANGUAGE.t_curse_fragility                        = "Curse of Fragility"
 -- virtues
 LANGUAGE.vir_pat_warning = "You can't buy!Wait a endwave!(don't drop)"
 LANGUAGE.t_vir_pat = "Virtue of patience"
 --trinket Descriptions
+LANGUAGE.t_d_curse_fragility                        = "+50% Melee damage taken.\nOn drop take 6 luck."
 LANGUAGE.t_d_pr_bloodpack = "-32% Medkit cooldown\nYou can use your health for heal others(MEDICAL KIT ONLY)."
 LANGUAGE.t_d_pr_chamomile = "Best WEAPON vs BARAGAYS\n+55% Heal multiplier"
 LANGUAGE.t_d_pr_barapaw = "Have chance to knockdown healed player\n-44% Medkit cooldown"
