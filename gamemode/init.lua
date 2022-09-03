@@ -1481,7 +1481,7 @@ function GM:Think()
 
 				if pl:IsSkillActive(SKILL_D_LATEBUYER) and not pl.LateBuyerMessage then
 					local midwave = self:GetWave() < self:GetNumberOfWaves() / 2 or self:GetWave() == self:GetNumberOfWaves() / 2 and self:GetWaveActive() and time < self:GetWaveEnd() - (self:GetWaveEnd() - self:GetWaveStart()) / 2
-					if not midwave then
+					if not midwave and not self.ObjectiveMap then
 						pl:CenterNotify(COLOR_CYAN, translate.ClientGet(pl, "late_buyer_finished"))
 						pl:SendLua("surface.PlaySound(\"buttons/button5.wav\")")
 						pl.LateBuyerMessage = true
@@ -1730,7 +1730,7 @@ function GM:PlayerHealedTeamMember(pl, other, health, wep, pointmul, nobymsg, fl
 		pl:AddInventoryItem(premium)
 		net.Start("zs_medpremium")
 			net.WriteString(premium.Name)
-		net.Broadcast()
+			net.Send(pl)
 		pl:GiveAchievement("premium")
 		pl.NextPremium = 0
 	end
@@ -2115,11 +2115,13 @@ function GM:OnPlayerWin(pl)
 	end
 	pl:AddZSXP(xp)
 	pl:GiveAchievement("winfirst")
-	pl:GiveAchievementProgress("loveof6", 1)
-	if pl:GetMaxHealth() < 35 then
+	if not self.ObjectiveMap then
+		pl:GiveAchievementProgress("loveof6", 1)
+	end
+	if pl:GetMaxHealth() < 35 and not self.ObjectiveMap then
 		pl:GiveAchievement("glassman")	
 	end
-	if pl:IsSkillActive(SKILL_D_FRAIL) then
+	if pl:IsSkillActive(SKILL_D_FRAIL) and not self.ObjectiveMap then
 		pl:GiveAchievement("frail")	
 	end
 end

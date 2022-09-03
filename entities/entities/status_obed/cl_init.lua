@@ -16,7 +16,7 @@ function ENT:Draw()
         local up = Vector( 0, 0, 1 )
         local ringpos = owner:GetPos() + Vector( 0, 0, 26 )
         local frametime = FrameTime() * 500
-        local ringsize = 328
+        local ringsize = 128
 
         render.SetMaterial( matBeam )
         render.StartBeam( 19 )

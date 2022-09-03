@@ -12,7 +12,6 @@ function ENT:SetDie(fTime)
 end
 
 function ENT:PlayerSet(pPlayer, bExists)
-	if pPlayer:GetStatus("sigildef") then return end
 	self:SetStartTime(CurTime())
 
 	pPlayer.KnockedDown = self

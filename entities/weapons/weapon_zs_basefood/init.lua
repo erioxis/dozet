@@ -35,7 +35,7 @@ function SWEP:Eat()
 		end
 	end
 	if owner:IsSkillActive(SKILL_FOODHEALS) then
-		for _, pl in pairs(ents.FindInSphere(owner:GetPos(), 328 * self:GetModelScale())) do
+		for _, pl in pairs(ents.FindInSphere(owner:GetPos(), 128 * self:GetModelScale())) do
             if pl:IsValidLivingHuman() then
 				owner:HealPlayer(pl, self.FoodHealth * (owner.FoodRecoveryMul or 1))
 			end
