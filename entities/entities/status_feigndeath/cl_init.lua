@@ -16,7 +16,6 @@ function ENT:OnInitialize()
 		owner:CollisionRulesChanged()
 
 		self.CommandYaw = owner:GetAngles().yaw
-
 		owner:CallWeaponFunction("KnockedDown", self, false)
 		owner:CallZombieFunction("KnockedDown", self, false)
 	end

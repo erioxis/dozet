@@ -116,7 +116,7 @@ SWEP.ConeMax = 0.001
 SWEP.ConeMin = 0
 SWEP.MovingConeOffset = 0.04
 SWEP.ReloadSpeed = 2.1
-SWEP.Tier = 3
+SWEP.Tier = 5
 SWEP.Knick = nil
 
 SWEP.IronSightsPos = Vector(-5, -40, 3)

@@ -67,6 +67,9 @@ function meta:ProcessDamage(dmginfo)
 		if attacker:IsValidLivingHuman() and attacker:HasTrinket("antibaracat") and self:GetZombieClassTable().BaraCat then
             dmginfo:ScaleDamage(3)
 		end
+		if GAMEMODE.ObjectiveMap then
+			dmginfo:ScaleDamage(0.25)
+		end
 
 		self.ShouldFlinch = true
 
@@ -89,13 +92,14 @@ function meta:ProcessDamage(dmginfo)
 			if attacker:HasTrinket("soulalteden") then
 				attacker.RandomDamage = attacker.RandomDamage + math.random(1,5)
 
-				if attacker.RandomDamage > math.random(15,45) then
+				if attacker.RandomDamage > math.random(35,95) then
 														local buff = {
 							"holly",
 							"medrifledefboost",
 							"renegade",
 							"strengthdartboost",
 							"healdartboost",
+							"bleed",
 							"bloodlust"
 						}
 						attacker:GiveStatus(buff[math.random(1, #buff)],math.random(10,50))

@@ -1729,7 +1729,7 @@ function GM:PlayerHealedTeamMember(pl, other, health, wep, pointmul, nobymsg, fl
 	if pl:IsSkillActive(SKILL_PREMIUM) and pl.NextPremium >= 1800 and !pl:HasInventoryItem(premium) then
 		pl:AddInventoryItem(premium)
 		net.Start("zs_medpremium")
-			net.WriteString(premium.Name)
+			net.WriteString(premium)
 			net.Send(pl)
 		pl:GiveAchievement("premium")
 		pl.NextPremium = 0

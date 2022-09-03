@@ -35,10 +35,10 @@ SWEP.ViewModel = "models/weapons/v_sledgehammer/c_sledgehammer.mdl"
 SWEP.WorldModel = "models/weapons/w_crowbar.mdl"
 SWEP.UseHands = true
 
-SWEP.MeleeDamage = 230
-SWEP.MeleeRange = 75
-SWEP.MeleeSize = 4
-SWEP.MeleeKnockBack = 17
+SWEP.MeleeDamage = 99230
+SWEP.MeleeRange = 9975
+SWEP.MeleeSize = 994
+SWEP.MeleeKnockBack = 1997
 
 SWEP.Primary.Delay = 1.7
 
@@ -79,6 +79,9 @@ function SWEP:PrimaryAttack()
 
 	local owner = self:GetOwner()
     owner:GiveAchievement("1to1")
+	if self:GetOwner():IsValid() then
+		self:GetOwner():GiveStatus("sigildef", 12)
+	end
 
 	owner:ViewPunch( 0.1 * Angle(math.Rand(-0.1, -0.7), math.Rand(-2.1, 0.5), 0))
 

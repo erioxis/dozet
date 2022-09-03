@@ -1,7 +1,8 @@
 INC_SERVER()
 
 ENT.NextHeal = 0
-
+ENT.Hook = false
+ENT.OldMaterial = ""
 function ENT:OnInitialize()
 	hook.Add("Move", self, self.Move)
 end
@@ -10,6 +11,16 @@ function ENT:PlayerSet(pPlayer, bExists)
 	pPlayer.FeignDeath = self
 	pPlayer:SetCollisionGroup(COLLISION_GROUP_DEBRIS_TRIGGER)
 	pPlayer:AnimResetGestureSlot(GESTURE_SLOT_ATTACK_AND_RELOAD)
+	timer.Simple(1.5, function()
+		pPlayer:CreateRagdoll()
+		self.OldMaterial = pPlayer:GetMaterial()
+		timer.Simple(0.1, function()
+			pPlayer:DrawWorldModel( false )
+			pPlayer:DrawShadow( false )
+			pPlayer:Fire( "alpha", 0, 0 )
+			pPlayer:SetMaterial( "models/effects/vol_light001" )
+		end)
+	end)
 
 	if pPlayer:KeyDown(IN_BACK) then
 		self:SetDirection(DIR_BACK)
@@ -28,10 +39,10 @@ function ENT:Think()
 
 	if owner:IsValid() then
 		if self:GetStateEndTime() <= fCurTime and self:GetState() == 1 or not owner:Alive() or owner:Team() ~= TEAM_UNDEAD or not owner:GetZombieClassTable().CanFeignDeath then
+
 			self:Remove()
 			return
 		end
-
 		if fCurTime >= self.NextHeal then
 			self.NextHeal = fCurTime + 0.25
 
@@ -49,6 +60,11 @@ function ENT:OnRemove()
 	local parent = self:GetOwner()
 	if parent:IsValid() then
 		parent.FeignDeath = nil
+		parent:GetRagdollEntity():Remove()
+		parent:DrawWorldModel(true)
+		parent:DrawShadow(true)
+		parent:Fire( "alpha", 255, 0 )
 		parent:TemporaryNoCollide(true)
+		parent:SetMaterial( self.OldMaterial )
 	end
 end

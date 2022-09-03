@@ -8,7 +8,7 @@ concommand.Add("zs_pointsshopbuy", function(sender, command, arguments)
 	local usescrap = arguments[2]
 
 	local midwave = GAMEMODE:GetWave() < GAMEMODE:GetNumberOfWaves() / 2 or GAMEMODE:GetWave() == GAMEMODE:GetNumberOfWaves() / 2 and GAMEMODE:GetWaveActive() and CurTime() < GAMEMODE:GetWaveEnd() - (GAMEMODE:GetWaveEnd() - GAMEMODE:GetWaveStart()) / 2
-	if sender:IsSkillActive(SKILL_D_LATEBUYER) and not usescrap and midwave and !GAMEMODE.ObjectiveMap then
+	if sender:IsSkillActive(SKILL_D_LATEBUYER) and not usescrap and midwave or GAMEMODE.ObjectiveMap and sender:IsSkillActive(SKILL_D_LATEBUYER) then
 		GAMEMODE:ConCommandErrorMessage(sender, translate.ClientGet(sender, "late_buyer_warning"))
 		return
 	end

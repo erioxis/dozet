@@ -5,7 +5,7 @@ GM.Website	=	"https://github.com/erioxis/dozet"
 
 -- No, adding a gun doesn't make your name worth being here.
 GM.Credits = {
-	{"Version", "Legendary", "3.5.1"},
+	{"Version", "Legendary", "3.6.0"},
 	{"erioxis", "Phantom coder", "dead"},
 	{"Nullted", "", "RU-ENG Translation"}
 
@@ -24,7 +24,23 @@ end
 function GM:GetWaveOneLength()
 	return GetGlobalBool("classicmode") and self.WaveOneLengthClassic or self.WaveOneLength
 end
+function GM:stringRandom( length )
 
+	local length = tonumber( length )
+
+    if length < 1 then return end
+
+    local result = {} -- The empty table we start with
+
+    for i = 1, length do
+
+        result[i] = string.char( math.random(32, 126) )
+
+    end
+
+    return table.concat(result)
+
+end
 include("obj_vector_extend.lua")
 include("obj_entity_extend.lua")
 include("obj_player_extend.lua")

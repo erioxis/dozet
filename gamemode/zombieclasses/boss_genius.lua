@@ -25,7 +25,7 @@ CLASS.Points = 30
 
 CLASS.SWEP = "weapon_zs_hammer_x"
 
-CLASS.Model = Model("models/player/corpse1.mdl")
+CLASS.Model = Model("models/player/kleiner.mdl")
 
 CLASS.VoicePitch = 0.65
 

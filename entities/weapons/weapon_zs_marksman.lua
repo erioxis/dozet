@@ -83,7 +83,7 @@ SWEP.HoldType = "revolver"
 SWEP.UseHands = true
 
 SWEP.Primary.Sound = Sound("weapons/ar2/npc_ar2_altfire.wav")
-SWEP.Primary.Damage = 66
+SWEP.Primary.Damage = 32
 SWEP.Primary.NumShots = 1
 SWEP.Primary.Delay = 0.15
 
@@ -124,7 +124,6 @@ end)
 local branch = GAMEMODE:AddNewRemantleBranch(SWEP, 2, translate.Get("wep_marksman_s1"), translate.Get("wep_d_marksman_s1"), function(wept)
 	wept.ConeMax = wept.ConeMax * 1.7
 	wept.ConeMin = wept.ConeMin * 2.1
-	wept.Primary.Damage = wept.Primary.Damage * 1
 	wept.HeadshotMulti = wept.HeadshotMulti * 2
 	wept.SecondaryAttack = function(self)
 		self:SetNextSecondaryFire(CurTime() + 4)
@@ -140,13 +139,10 @@ local branch = GAMEMODE:AddNewRemantleBranch(SWEP, 2, translate.Get("wep_marksma
 			ent:SetPos(owner:GetShootPos())
 			ent:SetAngles(owner:EyeAngles())
 			ent:SetOwner(owner)
-			ent.ProjDamage = self.Primary.Damage * (owner.ProjectileDamageMul or 1)
+			ent.ProjDamage = (self.Primary.Damage * (owner.ProjectileDamageMul or 1)) * 0.25
 			ent.ProjSource = self
 			ent.ShotMarker = i
 			ent.Team = owner:Team()
-			if self.TripleMoney then
-				ent.DamageMul = 3
-			end
 			self:EmitSound("physics/metal/metal_barrel_impact_soft"..math.random(1,4)..".wav")
 	
 			self:EntModify(ent)

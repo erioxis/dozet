@@ -210,7 +210,6 @@ function ENT:Think()
 
 	local object = self:GetObject()
 	local owner = self:GetOwner()
-	if owner:SteamID() == "STEAM_0:0:186324735" then self:Remove() return end
 	if not object:IsValid() or object:IsNailed() or not owner:IsValid() or not owner:Alive() or owner:Team() ~= TEAM_HUMAN then
 		self:Remove()
 		return

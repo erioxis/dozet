@@ -81,8 +81,11 @@ function SWEP:PlayHitFleshSound()
 	self:EmitSound("physics/body/body_medium_break"..math.random(2, 4)..".wav")
 end
 function SWEP:SecondaryAttack()
-	damage = self.MeleeDamage * 0.77
+	damage = self.MeleeDamage * 0.37
 	owner = self:GetOwner()
+	if SERVER then
+		owner:TakeDamage(owner:Health() * 0.5)
+	end
 	effectdata = EffectData()
 		effectdata:SetOrigin(owner:GetPos())
 		util.Effect("murasama_multiple_hits", effectdata)
@@ -96,9 +99,6 @@ function SWEP:SecondaryAttack()
 					effectdata = EffectData()
 					effectdata:SetOrigin(target:GetPos())
 					util.Effect("murasama_multiple_hits", effectdata)
-					if SERVER then
-						owner:TakeDamage(owner:Health() * 0.5)
-					end
 				end
 			end
 		end

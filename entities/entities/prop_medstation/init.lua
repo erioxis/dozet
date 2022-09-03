@@ -149,7 +149,7 @@ function ENT:Think()
 
 		local healed = false
 
-       if hitent:GetMaxHealth() > hitent:Health() and hitent:IsPlayer() then
+       if hitent:GetMaxHealth() > hitent:Health() and hitent:IsPlayer() and hitent:IsValidLivingHuman()  then
 		hitent:EmitSound("npc/dog/dog_servo"..math.random(7, 8)..".wav", 70, math.random(100, 105))
 		  owner:HealPlayer(hitent, totalheal)
 		  	local effectdata = EffectData()
