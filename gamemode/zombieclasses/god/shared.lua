@@ -15,9 +15,9 @@ CLASS.FearPerInstance = 1
 
 CLASS.Points = 40
 
-CLASS.SWEP = "weapon_zs_god"
+CLASS.SWEP = "weapon_zs_asskicker"
 
-CLASS.Health = 4500
+CLASS.Health = 14500
 CLASS.Speed = 340
 CLASS.JumpPower = 340
 
@@ -35,7 +35,7 @@ CLASS.Mass = DEFAULT_MASS * CLASS.ModelScale * 0.2
 
 --CLASS.NoCollideAll = true
 
-CLASS.CantDuck = true
+CLASS.CantDuck = false
 
 
 CLASS.BloodColor = -1

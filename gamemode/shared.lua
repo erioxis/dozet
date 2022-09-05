@@ -594,7 +594,7 @@ function GM:OnPlayerHitGround(pl, inwater, hitfloater, speed)
 	end
 	if SERVER then
 	local groundent = pl:GetGroundEntity()
-	if groundent:IsValid() and groundent:IsPlayer() and PTeam(groundent) == TEAM_UNDEAD and pl:IsSkillActive(SKILL_VKID) then
+	if groundent:IsValid() and groundent:IsPlayer() and PTeam(groundent) == TEAM_UNDEAD and pl:IsSkillActive(SKILL_VKID) and not groundent:GetZombieClassTable().Skeletal then
 		if groundent:IsHeadcrab() then
 			groundent:TakeSpecialDamage(groundent:Health() + 1000, DMG_DIRECT, pl, pl, pl:GetPos())
 		elseif groundent:IsTorso() then
@@ -606,7 +606,7 @@ function GM:OnPlayerHitGround(pl, inwater, hitfloater, speed)
 			return true
 		end
 	end
-		if groundent:IsValid() and groundent:IsPlayer() and PTeam(groundent) == TEAM_UNDEAD and pl:IsSkillActive(SKILL_VKID2) then
+		if groundent:IsValid() and groundent:IsPlayer() and PTeam(groundent) == TEAM_UNDEAD and pl:IsSkillActive(SKILL_VKID2) and not groundent:GetZombieClassTable().Skeletal then
 
 		if math.floor(120) > 0 then
 			groundent:TakeSpecialDamage((160) * self:GetWave(), DMG_DIRECT, pl, pl, pl:GetPos())

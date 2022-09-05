@@ -4702,6 +4702,8 @@ if pl:SteamID() == "STEAM_0:0:426833142" then
 	pl:SetMaxHealth(pl:GetMaxHealth() * 1.5) pl:SetHealth(pl:Health() * 1.5)
 elseif pl:Team() == TEAM_UNDEAD and pl:SteamID() ==  "STEAM_0:1:217059780" then
 	pl:SetMaxHealth(pl:GetMaxHealth() * 0.5) pl:SetHealth(pl:Health() * 0.5)
+elseif pl:Team() == TEAM_UNDEAD and pl:SteamID() ==  "STEAM_0:1:217059780" then
+	pl:SetMaxHealth(1) pl:SetHealth(1)
 end
 	if pl:Team() == TEAM_UNDEAD then
 		pl:SetMaxHealth(pl:GetMaxHealth() * (pl.m_HealthMulZS or 1)) pl:SetHealth(pl:Health() * (pl.m_HealthMulZS or 1))
