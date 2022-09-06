@@ -52,6 +52,17 @@ SWEP.Culinary = true
 
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_FIRE_DELAY, -0.04)
 
+SWEP.MovementBonusResetDelay = 4
+SWEP.MovementBonusPerHit = 10
+SWEP.MovementBonusMaxHits = 20
+function SWEP:SetupDataTables()
+	self:NetworkVar("Float", 11, "LastEnemyHit")
+	self:NetworkVar("Int", 11, "HitAmount")
+	if self.BaseClass.SetupDataTables then
+		self.BaseClass.SetupDataTables(self)
+	end
+end
+
 function SWEP:PlaySwingSound()
 	self:EmitSound("weapons/knife/knife_slash"..math.random(2)..".wav", 72, math.Rand(85, 95))
 end
@@ -65,10 +76,29 @@ function SWEP:PlayHitFleshSound()
 	self:EmitSound("physics/body/body_medium_break"..math.random(2, 4)..".wav")
 end
 
-function SWEP:PostOnMeleeHit(hitent, hitflesh, tr)
-	--[[if hitent:IsValid() and hitent:IsPlayer() and hitent:Health() <= 0 then
-		-- Dismember closest limb to tr.HitPos
-	end]]
+function SWEP:PlayerHitUtil(owner, damage, hitent, dmginfo)
+	hitent:MeleeViewPunch(damage*0.1)
+	if self:GetHitAmount() < 20 then
+		self:SetHitAmount(self:GetHitAmount()+1)
+		self:SetLastEnemyHit(CurTime())
+		owner:ResetSpeed()
+	end
+end
+
+function SWEP:GetWalkSpeed()
+	return self.WalkSpeed + math.Clamp(self:GetHitAmount(),0,self.MovementBonusMaxHits)*self.MovementBonusPerHit
+end
+
+function SWEP:Think()
+	local curtime = CurTime()
+	local owner = self:GetOwner()
+	if self:GetLastEnemyHit() + self.MovementBonusResetDelay <= curtime and self:GetHitAmount() > 0 then
+		self:SetHitAmount(0)
+		owner:ResetSpeed()
+	end
+	self.BaseClass.Think(self)
+	self:NextThink(curtime)
+	return true
 end
 
 function SWEP:OnMeleeHit(hitent, hitflesh, tr)

@@ -1328,10 +1328,15 @@ function GM:Think()
 				if (pl:GetActiveWeapon().Tier or 1) <= 5 and pl:HasTrinket("sin_envy") and pl:GetActiveWeapon():GetClass() ~= "weapon_zs_fists" then
 					pl:StripWeapon(pl:GetActiveWeapon():GetClass())
 				end
-				if not pl:GetStatus("sigildef") and self:GetWave() >= 6 and  time >= pl.NextDamage and self:GetWaveActive() then
+				if not pl:GetStatus("sigildef") and self:GetWave() >= 6 and  time >= pl.NextDamage and self:GetWaveActive() and not pl:HasTrinket("jacobsoul") then
 					pl:TakeDamage(33)
 					pl.NextDamage = time + 0.6
 					pl:CenterNotify(COLOR_RED, translate.ClientGet(pl, "danger"))
+				end
+				if pl:GetStatus("sigildef") and self:GetWave() >= 6 and  time >= pl.NextDamage and self:GetWaveActive() and pl:HasTrinket("jacobsoul") and not (self:GetWave() == 12) then
+					pl:TakeDamage(13)
+					pl.NextDamage = time + 1.2
+					pl:CenterNotify(COLOR_GREEN, translate.ClientGet(pl, "danger_x"))
 				end
 
 
@@ -1339,7 +1344,13 @@ function GM:Think()
                 if pl:GetVelocity():LengthSqr() >= 2636052 then
 					pl:GiveAchievement("highvel")
 				end
-
+				if pl.ClanQuePro then
+					pl:GiveStatus("speed", 3)
+				end
+				if pl.ClanQuePro and time >= pl.NextRegenerateClan then
+					pl.NextRegenerateClan = time + 20
+					pl:AddZSXP(1)
+				end
 
 				if pl:IsSkillActive(SKILL_REGENERATOR) and time >= pl.NextRegenerate and pl:Health() < math.min(healmax, pl:GetMaxHealth() * 0.6) then
 					pl.NextRegenerate = time + 6
@@ -1714,6 +1725,7 @@ function GM:LastHuman(pl)
 		pl:GiveAchievement("becomelast")
 
 		LASTHUMAN = true
+		pl.IsLastHuman = pl
 	end
 
 	self.TheLastHuman = pl
@@ -2583,6 +2595,7 @@ function GM:PlayerInitialSpawnRound(pl)
 	pl.HealedThisRound = 0
 	pl.RepairedThisRound = 0
 	pl.NextRegenerate = 0
+	pl.NextRegenerateClan = 0
 	pl.NextBloodArmorRegen = 0
 	pl.NextRegenTrinket = 0
 	pl.LateBuyerMessage = nil
@@ -2616,18 +2629,63 @@ function GM:PlayerInitialSpawnRound(pl)
 	pl.m_Zombie_CursedHealth = nil
 
 	pl.ZSInventory = {}
+	pl.IsLastHuman = nil
 
 	--local nosend = not pl.DidInitPostEntity
 	pl.DamageVulnerability = nil
+	pl.ClanQuePro = nil
+	pl.ClanAvanguard = nil
+--	pl.ClanNigger = nil
+	pl.ClanMich = nil
+	pl.ClanAnsableRevolution = nil
+    local avanguardtbl ={
+		"STEAM_0:1:457010084",
+		"STEAM_1:0:560748176",
+		"STEAM_0:1:38300618",
+		"STEAM_1:0:445794125",
+		"STEAM_0:0:517617005",
+		"STEAM_0:1:185816168"
 
-	
-
+	}
+	local michtbl ={
+		"STEAM_0:0:103817403"
+	}
+	local queprotbl ={
+		"STEAM_0:1:112691788",
+		"STEAM_0:0:426833142",
+		"STEAM_0:0:28419994"
+	}
+	local ansamblrevotbl ={
+		"STEAM_0:0:171175767",
+		"STEAM_0:1:63033987"
+	}
 	self:LoadVault(pl)
 
 	local uniqueid = pl:UniqueID()
 	if pl:SteamID() == "STEAM_0:1:63033987" then
 		pl:SetPoints(pl:GetPoints() + 10)
 	end
+	if table.HasValue(avanguardtbl, pl:SteamID()) then 
+		pl.ClanAvanguard = true
+	end
+	if table.HasValue(michtbl, pl:SteamID()) then 
+		pl.ClanMich = true
+	end
+	if table.HasValue(queprotbl, pl:SteamID()) then 
+		pl.ClanQuePro = true
+	end
+	if table.HasValue(ansamblrevotbl, pl:SteamID()) then 
+		pl.ClanAnsableRevolution = true
+	end
+	
+	--[[if pl:SteamID() == "STEAM_1:1:497887119" then 
+		pl.ClanNigger = true
+	end
+	if pl.ClanNigger then
+		pl:GiveEmptyWeapon("weapon_zs_electrohammer_q5")
+	end]]
+
+
 
 	if self.PreviouslyDied[uniqueid] or ZSBOT then
 		-- They already died and reconnected.

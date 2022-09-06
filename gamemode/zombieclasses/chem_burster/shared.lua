@@ -12,7 +12,7 @@ CLASS.Points = CLASS.Health/GM.HumanoidZombiePointRatio
 
 CLASS.CanTaunt = true
 
-CLASS.SWEP = "weapon_zs_burster"
+CLASS.SWEP = "weapon_zs_chemzombie"
 
 CLASS.Model = Model("models/player/zombie_classic.mdl")
 CLASS.OverrideModel = Model("models/Zombie/Poison.mdl")

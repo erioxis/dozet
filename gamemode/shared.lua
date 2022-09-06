@@ -5,7 +5,7 @@ GM.Website	=	"https://github.com/erioxis/dozet"
 
 -- No, adding a gun doesn't make your name worth being here.
 GM.Credits = {
-	{"Version", "Legendary", "3.6.0"},
+	{"Version", "Legendary", "3.7.3"},
 	{"erioxis", "Phantom coder", "dead"},
 	{"Nullted", "", "RU-ENG Translation"}
 
@@ -583,7 +583,7 @@ function GM:OnPlayerHitGround(pl, inwater, hitfloater, speed)
 	end
 	if SERVER then
 		local groundent = pl:GetGroundEntity()
-		if groundent:IsValid() and groundent:IsPlayer() and PTeam(groundent) == TEAM_HUMAN and groundent:GetModelScale() < 1 then
+		if groundent:IsValid() and groundent:IsPlayer() and PTeam(groundent) == TEAM_HUMAN and groundent:GetModelScale() < 0.75 then
 
 			if math.floor(120) > 0 then
 				groundent:TakeSpecialDamage(math.max((5 + damage),5), DMG_CLUB, pl, pl, pl:GetPos())
@@ -594,7 +594,7 @@ function GM:OnPlayerHitGround(pl, inwater, hitfloater, speed)
 	end
 	if SERVER then
 	local groundent = pl:GetGroundEntity()
-	if groundent:IsValid() and groundent:IsPlayer() and PTeam(groundent) == TEAM_UNDEAD and pl:IsSkillActive(SKILL_VKID) and not groundent:GetZombieClassTable().Skeletal then
+	if groundent:IsValid() and groundent:IsPlayer() and PTeam(groundent) == TEAM_UNDEAD and pl:IsSkillActive(SKILL_VKID) then
 		if groundent:IsHeadcrab() then
 			groundent:TakeSpecialDamage(groundent:Health() + 1000, DMG_DIRECT, pl, pl, pl:GetPos())
 		elseif groundent:IsTorso() then
@@ -602,14 +602,14 @@ function GM:OnPlayerHitGround(pl, inwater, hitfloater, speed)
 		end
 
 		if math.floor(120) > 0 then
-			groundent:TakeSpecialDamage((120) * self:GetWave(), DMG_DIRECT, pl, pl, pl:GetPos())
+			groundent:TakeSpecialDamage((groundent:GetZombieClassTable().Skeletal and 10 or 120) * self:GetWave(), DMG_DIRECT, pl, pl, pl:GetPos())
 			return true
 		end
 	end
-		if groundent:IsValid() and groundent:IsPlayer() and PTeam(groundent) == TEAM_UNDEAD and pl:IsSkillActive(SKILL_VKID2) and not groundent:GetZombieClassTable().Skeletal then
+		if groundent:IsValid() and groundent:IsPlayer() and PTeam(groundent) == TEAM_UNDEAD and pl:IsSkillActive(SKILL_VKID2) then
 
 		if math.floor(120) > 0 then
-			groundent:TakeSpecialDamage((160) * self:GetWave(), DMG_DIRECT, pl, pl, pl:GetPos())
+			groundent:TakeSpecialDamage((groundent:GetZombieClassTable().Skeletal and 25 or 160) * self:GetWave(), DMG_DIRECT, pl, pl, pl:GetPos())
 			return true
 		end
 	end

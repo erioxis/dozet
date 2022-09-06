@@ -21,7 +21,9 @@ function SWEP:ApplyMeleeDamage(ent, trace, damage)
 		end
 	end
 end
-
+function SWEP:PrimaryAttack()
+	self.BaseClass.PrimaryAttack(self)
+end
 function SWEP:Reload()
 	self.BaseClass.SecondaryAttack(self)
 end
@@ -32,13 +34,15 @@ end
 SWEP.PlayIdleSound = SWEP.PlayAlertSound
 
 function SWEP:PlayAttackSound()
-	self:EmitSound("npc/fast_zombie/leap1.wav", 74, math.Rand(110, 130))
+	self:EmitSound(string.format("npc/zombie_poison/pz_warn%d.wav", math.random(2)), 75, math.Rand(37, 73))
 end
 function SWEP:MeleeHit(ent, trace, damage, forcescale)
 	if not ent:IsPlayer() and SERVER then
 		for i = 1, math.random(5) do
 			for _, ent in pairs(ents.FindInSphere(trace.HitPos, 98)) do
-				ent:TakeDamage(self.MeleeDamage * i, self:GetOwner(), self)
+				if ent:IsValid() and !ent:IsPlayer() then
+					ent:TakeDamage(self.MeleeDamage * i, self:GetOwner(), self)
+				end
 			end
 		end
 	end

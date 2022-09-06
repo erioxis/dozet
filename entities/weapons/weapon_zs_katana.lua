@@ -32,7 +32,7 @@ SWEP.WorldModel = "models/weapons/w_stunbaton.mdl"
 
 SWEP.HoldType = "melee2"
 SWEP.Tier = 7
-SWEP.MeleeDamage = 456
+SWEP.MeleeDamage = 756
 SWEP.MeleeRange = 156
 SWEP.MeleeSize = 3
 SWEP.MeleeKnockBack = 0

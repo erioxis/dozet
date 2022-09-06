@@ -55,11 +55,11 @@ SWEP.HitSound = Sound( "weapons/zs_power/power4.wav" )
 SWEP.FistKnockback = true
 SWEP.MeleeKnockBack = 0
 
-SWEP.Primary.Delay = 0.85
+SWEP.Primary.Delay = 1.2
 
 SWEP.Tier = 6
 
-GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_FIRE_DELAY, -0.091, 1)
+GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_FIRE_DELAY, 0.11, 1)
 
 function SWEP:OnMeleeHit(hitent, hitflesh, tr)
 	if hitent:IsValid() then

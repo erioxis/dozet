@@ -1042,9 +1042,7 @@ trinket = GM:AddTrinket("Soul of Jacob", "jacobsoul", false, nil, {
 	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 10.697, y = 10.697 }, color = Color(255, 0, 0, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core_2+"] = { type = "Sprite", sprite = "effects/splashwake1", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 30, y = 30 }, color = Color(0, 5, 255, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 2, 0), angle = Angle(0, 0, 0), size = Vector(0.349, 0.349, 0.349), color = Color(255, 0, 255, 255), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} }
-}, nil,"Вы не сможете получать поинты после волны но теперь вы получаете на 20% больше поинтов.\nYou now don't take point's per wave,+20% point multiplier \n Q:5", nil, nil, "weapon_zs_soulalt")
-GM:AddSkillModifier(trinket, SKILLMOD_ENDWAVE_POINTS , -9999)
-GM:AddSkillModifier(trinket, SKILLMOD_POINT_MULTIPLIER, 0.20)
+}, nil,"Брат предал тебя,отходи от сигила он тебя убьет.\nSigil kill you instead defend\n Q:5", nil, nil, "weapon_zs_soulalt")
 
 trinket = GM:AddTrinket("Soul of Alt Isaac", "altisaacsoul", false, nil, {
 	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 10.697, y = 10.697 }, color = Color(34, 120, 255, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
@@ -1059,7 +1057,7 @@ trinket = GM:AddTrinket("Soul of Alt Magdalene", "altmagdalenesoul", false, nil,
 	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 10.697, y = 10.697 }, color = Color(255, 60, 90, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core_2+"] = { type = "Sprite", sprite = "effects/splashwake1", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 30, y = 30 }, color = Color(0, 5, 255, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 2, 0), angle = Angle(0, 0, 0), size = Vector(0.349, 0.349, 0.349), color = Color(255, 0, 0, 255), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} }
-}, nil,"Дает  200 здоровья и 40 кровавой брони,-15% мили урона,медленно умираете\n +200 hp,+40 blood armor,-15% Melee damage,slowly dying \n Q:3", nil, nil, "weapon_zs_soul")
+}, nil,"Дает  200 здоровья и 40 кровавой брони,-15% мили урона,медленно умираете\n +200 hp,+40 blood armor,-15% Melee damage,slowly dying \n Q:3", nil, nil, "weapon_zs_soulalt")
 GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, 200)
 GM:AddSkillModifier(trinket, SKILLMOD_BLOODARMOR, 40)
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_MUL, -0.15)

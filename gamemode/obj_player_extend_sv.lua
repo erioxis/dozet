@@ -64,6 +64,18 @@ function meta:ProcessDamage(dmginfo)
 		if attacker:IsValidLivingHuman() and attacker:IsSkillActive(SKILL_SIGILIBERATOR) then
             dmginfo:ScaleDamage(2)
 		end
+		if attacker:IsValidLivingHuman() and attacker.ClanAvanguard and inflictor.Unarmed then
+            dmginfo:ScaleDamage(1.25)
+			if inflictor.IsMelee then
+				dmginfo:ScaleDamage(1.25)
+			end
+		end
+		if attacker.IsLastHuman and attacker.ClanAnsableRevolution then
+			dmginfo:ScaleDamage(1.30)
+		end
+		if attacker:IsValidLivingHuman() and attacker.ClanMich and not inflictor.IsMelee then
+            dmginfo:ScaleDamage(1.15)
+		end
 		if attacker:IsValidLivingHuman() and attacker:HasTrinket("antibaracat") and self:GetZombieClassTable().BaraCat then
             dmginfo:ScaleDamage(3)
 		end
@@ -290,6 +302,9 @@ function meta:ProcessDamage(dmginfo)
 
 	if attacker:IsValid() and attacker:IsPlayer() and inflictor:IsValid() and attacker:Team() == TEAM_UNDEAD then
 		if inflictor == attacker:GetActiveWeapon() then
+			if self.ClanAnsableRevolution then
+				dmginfo:SetDamage(dmginfo:GetDamage() - 7)
+			end
 			local damage = dmginfo:GetDamage()
 
 			if self:IsBarricadeGhosting() then
@@ -687,9 +702,10 @@ function meta:GetBossZombieIndex()
 	local desired = self:GetInfo("zs_bossclass") or ""
 	if GAMEMODE:IsBabyMode() then
 		desired = "Giga Gore Child"
-	elseif desired == table.Random(bosses) or desired == "" then
+	elseif desired == "" then
 		desired = table.Random(bosses)
 	end
+
 
 
 	local bossindex
@@ -2128,7 +2144,7 @@ local bossdrops2 = {
 	"trinket_altjudassoul",  -- 2
 	"trinket_altsamsonsoul",  -- 3
 	"trinket_altevesoul",  -- 4
-    --"trinket_jacobsoul",  -- 5
+    "trinket_jacobsoul",  -- 5
     "trinket_altisaacsoul",  -- 6
     "trinket_altmagdalenesoul",  -- 7
     "trinket_altlilithsoul",  -- 8

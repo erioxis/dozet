@@ -46,6 +46,6 @@ end
 
 function SWEP:EmitReloadFinishSound()
 	if IsFirstTimePredicted() then
-		self:EmitSound("weapons/ar2/ar2_reload_push.wav", pos, 70, math.Rand(130, 140))
+		self:EmitSound("weapons/ar2/ar2_reload_push.wav", 70, 70, math.Rand(130, 140))
 	end
 end

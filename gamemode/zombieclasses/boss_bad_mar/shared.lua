@@ -107,9 +107,9 @@ function CLASS:ProcessDamage(pl, dmginfo)
 		dmginfo:SetDamage(dmginfo:GetDamage() / 4)
 	end
 	if bit_band(dmginfo:GetDamageType(), DMG_BULLET) ~= 0 then
-		dmginfo:SetDamage(dmginfo:GetDamage() * 0.75)
+		dmginfo:SetDamage(dmginfo:GetDamage() * 0.15)
 	elseif bit_band(dmginfo:GetDamageType(), DMG_SLASH) == 0 and bit_band(dmginfo:GetDamageType(), DMG_CLUB) == 0 then
-		dmginfo:SetDamage(dmginfo:GetDamage() * 0.75)
+		dmginfo:SetDamage(dmginfo:GetDamage() * 0.45)
 	end
 
 
