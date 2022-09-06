@@ -18,10 +18,18 @@ RULES FOR TRANSLATORS!!
 
 translate.AddLanguage("en", "English")
 --Чаленге
+LANGUAGE.challenge_darvinupdate = "Darvin Upgrade"
+LANGUAGE.challenge_darvinupdate_d = "Upgrade 1000 times weapons"
+LANGUAGE.challenge_zmainer = "Zmainer"
+LANGUAGE.challenge_zmainer_d = "Kill 100 humans"
+LANGUAGE.challenge_redeemed = "Wow,this works!"
+LANGUAGE.challenge_redeemed_d = "Redeem player by antivirus"
 LANGUAGE.challenge_godzs = "God Of ZS"
 LANGUAGE.challenge_godzs_d = "Kill 1000 humans"
 LANGUAGE.challenge_everycan = "Dozet Defend"
 LANGUAGE.challenge_everycan_d = "Kill 1000 zombies"
+LANGUAGE.challenge_dzs = "Great Slasher"
+LANGUAGE.challenge_dzs_d = "Kill 10000 zombies"
 LANGUAGE.challenge_firstwin = "First time?"
 LANGUAGE.challenge_firstwin_d = "Just Win"
 LANGUAGE.challenge_firstblood = "Only thing I know for real"

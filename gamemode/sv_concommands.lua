@@ -293,6 +293,7 @@ concommand.Add("zs_upgrade", function(sender, command, arguments)
 
 		net.Start("zs_remantleconf")
 		net.Send(sender)
+		sender:GiveAchievementProgress("darvinupdate", 1)
 
 		GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_WEAPON, upgclass, "Upgrades", 1)
 	end

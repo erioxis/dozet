@@ -2,8 +2,16 @@
 
 translate.AddLanguage("ru", "Russian")
 --Чаленге
+LANGUAGE.challenge_darvinupdate = "Улучшение Дарвина"
+LANGUAGE.challenge_darvinupdate_d = "Улучши 1000 раз оружия"
+LANGUAGE.challenge_dzs = "Великая резня"
+LANGUAGE.challenge_dzs_d = "Убей 10000 зомби"
+LANGUAGE.challenge_redeemed = "Работает!"
+LANGUAGE.challenge_redeemed_d = "Возроди игрока антивирусом"
 LANGUAGE.challenge_godzs = "Бог ЗС"
 LANGUAGE.challenge_godzs_d = "Убей 1000 людей"
+LANGUAGE.challenge_zmainer = "Жалкий змейнер"
+LANGUAGE.challenge_zmainer_d = "Убей 100 людей"
 LANGUAGE.challenge_everycan = "Защита Дозета"
 LANGUAGE.challenge_everycan_d = "Убей 1000 зомби"
 LANGUAGE.challenge_firstwin = "Впервые?"

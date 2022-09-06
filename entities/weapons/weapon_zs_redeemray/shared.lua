@@ -115,6 +115,7 @@ function SWEP:CheckHealRay()
 				ent:Redeem()
 				owner:StripWeapon(self:GetClass())
 			end
+			owner:GiveAchievement("redeemed")
 		end
 
 	elseif ent:IsValid() then

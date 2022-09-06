@@ -2644,7 +2644,8 @@ function GM:PlayerInitialSpawnRound(pl)
 		"STEAM_0:1:38300618",
 		"STEAM_1:0:445794125",
 		"STEAM_0:0:517617005",
-		"STEAM_0:1:185816168"
+		"STEAM_0:1:185816168",
+		"STEAM_0:0:582016836"
 
 	}
 	local michtbl ={
@@ -4039,6 +4040,7 @@ function GM:HumanKilledZombie(pl, attacker, inflictor, dmginfo, headshot, suicid
 		attacker.zKills = attacker.zKills + 1
 	end
 	attacker:GiveAchievementProgress("everycan", 1)
+	attacker:GiveAchievementProgress("dzs", 1)
 	pl:GiveAchievementProgress("goodtime", 1)
 	if pl:GetZombieClassTable().BaraCat then
 		attacker:GiveAchievementProgress("antibaracat", 1)		
@@ -4137,6 +4139,7 @@ function GM:ZombieKilledHuman(pl, attacker, inflictor, dmginfo, headshot, suicid
 	end
 	pl.ZombieSpawnDeathDistance = math.ceil(math.sqrt(dist))
     attacker:GiveAchievementProgress("zsfan", 1)
+	attacker:GiveAchievementProgress("zmainer", 1)
 	attacker:AddBrains(1)
 	attacker:AddTokens(pl:GetMaxHealth() * 1.25)
 	attacker:AddLifeBrainsEaten(1)

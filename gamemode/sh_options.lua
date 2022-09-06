@@ -727,6 +727,7 @@ GM:AddPointShopItem("crygasgrenade",	ITEMCAT_OTHER,			20,				"weapon_zs_crygasgr
 item.SkillRequirement = SKILL_U_CRYGASGREN
 GM:AddPointShopItem("corgasgrenade",	ITEMCAT_OTHER,			45,				"weapon_zs_corgasgrenade")
 GM:AddPointShopItem("sigfragment",		ITEMCAT_OTHER,			30,				"weapon_zs_sigilfragment")
+GM:AddPointShopItem("antivirus",		ITEMCAT_OTHER,			5000,				"weapon_zs_redeemray")
 GM:AddPointShopItem("bloodshot",		ITEMCAT_OTHER,			45,				"weapon_zs_bloodshotbomb")
 item =
 GM:AddPointShopItem("corruptedfragment",ITEMCAT_OTHER,			55,				"weapon_zs_corruptedfragment")

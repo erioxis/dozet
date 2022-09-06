@@ -1,10 +1,10 @@
 GM.WeaponQualityModifiers = {}
 GM.WeaponQualities = {
-	{""..translate.Get("wep_q_1"), 1.12, translate.Get("wep_r_1")},
-	{""..translate.Get("wep_q_2"), 1.21, translate.Get("wep_r_2")},
-	{""..translate.Get("wep_q_3"), 1.54, translate.Get("wep_r_3")},
-	{""..translate.Get("wep_q_4"), 1.85, translate.Get("wep_r_4")},
-	{""..translate.Get("wep_q_5"), 2.10, translate.Get("wep_r_5")}
+	{translate.Get("wep_q_1"), 1.12, translate.Get("wep_r_1")},
+	{translate.Get("wep_q_2"), 1.21, translate.Get("wep_r_2")},
+	{translate.Get("wep_q_3"), 1.54, translate.Get("wep_r_3")},
+	{translate.Get("wep_q_4"), 1.85, translate.Get("wep_r_4")},
+	{translate.Get("wep_q_5"), 2.10, translate.Get("wep_r_5")}
 	
 }
 GM.WeaponQualityColors = {
@@ -281,7 +281,7 @@ function GM:GetDismantleScrap(wtbl, invitem)
 	local qu = (quatier or 0) + 1
 	local basicvalue = baseval * GAMEMODE.DismantleMultipliers[qu] - ((quatier or itier) and 0 or 1)
 
-	return math.floor((basicvalue * (wtbl.IsMelee and 0.75 or 1)) / (wtbl.DismantleDiv or dismantlediv))
+	return math.floor((basicvalue * (wtbl.IsMelee and 0.6 or 1)) / (wtbl.DismantleDiv or dismantlediv))
 end
 
 function GM:GetUpgradeScrap(wtbl, qualitychoice)

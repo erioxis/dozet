@@ -166,6 +166,31 @@ GM.Achievements["premium"] = {
     Desc = translate("challenge_premium_d"),
     Reward = 1200
 }
+GM.Achievements["redeemed"] = {
+    Name = translate("challenge_redeemed"),
+    Desc = translate("challenge_redeemed_d"),
+    Reward = 6000
+}
+GM.Achievements["dzs"] = {
+    Name = translate("challenge_dzs"),
+    Desc = translate("challenge_dzs_d"),
+    Goal = 10000,
+    Reward = 60000
+}
+GM.Achievements["zmainer"] = {
+    Name = translate("challenge_zmainer"),
+    Desc = translate("challenge_zmainer_d"),
+    Goal = 100,
+    Reward = 3000
+}
+GM.Achievements["darvinupdate"] = {
+    Name = translate("challenge_darvinupdate"),
+    Desc = translate("challenge_darvinupdate_d"),
+    Goal = 1000,
+    Reward = 17000
+}
+
+
 
 
 
