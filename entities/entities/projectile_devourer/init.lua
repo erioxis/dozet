@@ -32,6 +32,21 @@ function ENT:Think()
 	elseif self.DieTime < CurTime() then
 		self:Remove()
 	end
+	for _, ent in pairs(ents.FindInSphere(self:GetPos(), 2048)) do
+		target = ent
+		if WorldVisible(self:LocalToWorld(Vector(0, 0, 30)), ent:NearestPoint(self:LocalToWorld(Vector(0, 0, 30)))) then
+			if target:IsValidLivingHuman() then
+				local targetpos = target:LocalToWorld(target:OBBCenter())
+				local direction = (targetpos - self:GetPos()):GetNormal()
+
+				self:SetAngles(direction:Angle())
+
+				local phys = self:GetPhysicsObject()
+				phys:SetVelocityInstantaneous(direction * 1500)
+				break
+			end
+		end
+	end
 end
 
 function ENT:OnRemove()
