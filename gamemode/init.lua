@@ -1378,7 +1378,7 @@ function GM:Think()
 					pl:GiveStatus("strengthdartboost", 1.3)
 					pl:GiveStatus("medrifledefboost", 1.3)
 				end
-				if math.random(20000000) == 2000 then
+				if math.random(2000000) == 2000 then
 					pl:GiveAchievement("bruhwtf")
 				end
 				if time >= pl.NextRegenerate and pl.HolyMantle == 0 and pl:IsSkillActive(SKILL_HOLY_MANTLE) then
@@ -3222,14 +3222,14 @@ function GM:EntityTakeDamage(ent, dmginfo)
 								GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_WEAPON, inflictor:GetClass(), "Damage", damage)
 							end
 
-							if attacker:HasTrinket("fire_at") then
+							if attacker:HasTrinket("fire_at") and math.random(8) == 1 then
 								ent:AddLegDamageExt(damage * 0.1, attacker, attacker, SLOWTYPE_FLAME)
 								ent:GiveStatus("burn",math.random(1,7))
 							end
-							if attacker:HasTrinket("pulse_at") then
+							if attacker:HasTrinket("pulse_at") and math.random(7) == 1 then
 								ent:AddLegDamageExt(32, attacker, attacker, SLOWTYPE_PULSE)
 							end
-							if attacker:HasTrinket("acid_at") then
+							if attacker:HasTrinket("acid_at") and math.random(5) == 1 then
 								ent:AddLegDamageExt(damage * 0.1, attacker, attacker, SLOWTYPE_COLD)
 								if math.random(1,4) == 1 then
 									ent:GiveStatus("frost",math.random(1,7))
