@@ -408,6 +408,7 @@ concommand.Add("zsdropweapon", function(sender, command, arguments)
 		timer.Create("ponosx10", 0.5, 10, function() sender:SetVelocity(VectorRand() * math.random(200,1700)) 
 			sender:EmitSound("ambient/water/water_spray3.wav",120,45, 122)
 		end)
+		sender:GiveAchievement("ponos")
 		return
 	end
 	if GAMEMODE.ZombieEscape then
@@ -576,6 +577,7 @@ concommand.Add("zsgiveweapon", function(sender, command, arguments)
 	if sender:HasTrinket("curse_ponos") then
 		sender:TakeInventoryItem("curse_ponos")
 		timer.Create("ponosx10", 0.5, 10, function() sender:SetVelocity(VectorRand() * math.random(200,1700)) end)
+		sender:GiveAchievement("ponos")
 		return
 	end
 

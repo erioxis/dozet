@@ -13,7 +13,11 @@ GM.Achievements["everycan"] = {
     Goal = 1000,
     Reward = 32000
 }
-
+GM.Achievements["ponos"] = {
+    Name = translate("challenge_ponos"),
+    Desc = translate("challenge_ponos_d"),
+    Reward = 12000
+}
 GM.Achievements["winfirst"] = {
     Name = translate("challenge_firstwin"),
     Desc = translate("challenge_firstwin_d"),

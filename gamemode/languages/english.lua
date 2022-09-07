@@ -18,6 +18,8 @@ RULES FOR TRANSLATORS!!
 
 translate.AddLanguage("en", "English")
 --Чаленге
+LANGUAGE.challenge_ponos = "ULTRAPOOP"
+LANGUAGE.challenge_ponos_d = "Just shit."
 LANGUAGE.challenge_darvinupdate = "Darvin Upgrade"
 LANGUAGE.challenge_darvinupdate_d = "Upgrade 1000 times weapons"
 LANGUAGE.challenge_zmainer = "Zmainer"

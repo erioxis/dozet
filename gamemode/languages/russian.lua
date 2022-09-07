@@ -68,6 +68,8 @@ LANGUAGE.challenge_opm = "ОДИН УДАААААААААААААААААААА�
 LANGUAGE.challenge_opm_d = "Сделай 10000 урона за один удар."
 LANGUAGE.challenge_premium = "Да, спасибо"
 LANGUAGE.challenge_premium_d = "Получить премию."
+LANGUAGE.challenge_ponos = "МЕГАНАСРАЛ"
+LANGUAGE.challenge_ponos_d = "Обосраться."
 -- Настройки
 LANGUAGE.op_naildisplay = "Всегда показывать хп гвоздей"
 LANGUAGE.op_knockdown_camera = "Показывать камеру при рагдоле от 3 лица"

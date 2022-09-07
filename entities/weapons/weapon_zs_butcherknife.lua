@@ -58,9 +58,6 @@ SWEP.MovementBonusMaxHits = 20
 function SWEP:SetupDataTables()
 	self:NetworkVar("Float", 11, "LastEnemyHit")
 	self:NetworkVar("Int", 11, "HitAmount")
-	if self.BaseClass.SetupDataTables then
-		self.BaseClass.SetupDataTables(self)
-	end
 end
 
 function SWEP:PlaySwingSound()
