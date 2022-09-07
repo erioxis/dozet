@@ -766,7 +766,7 @@ GM:AddSkill(SKILL_INSIGHT, translate.Get("skill_vision_ar"), GOOD.."-2%"..transl
 GM:AddSkill(SKILL_U_ZAPPER_ARC, translate.Get("skill_u_arc_z"), GOOD..translate.Get("skill_u_arc_z_d1"),
 																6,			2,					{SKILL_FIELDAMP, SKILL_TECHNICIAN}, TREE_BUILDINGTREE)
 .AlwaysActive = true
-GM:AddSkill(SKILL_D_LATEBUYER, translate.Get("skill_d_lbuyer"), GOOD.."+20"..translate.Get("worth")..GOOD.."-33%"..translate.Get("sale")..BAD..translate.Get("skill_d_lbuyer_d1"),
+GM:AddSkill(SKILL_D_LATEBUYER, translate.Get("skill_d_lbuyer"), GOOD.."+20"..translate.Get("worth")..GOOD.."-20%"..translate.Get("sale")..BAD..translate.Get("skill_d_lbuyer_d1"),
 																8,			1,					{SKILL_HAMMERDOOR}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_HAMMERDOOR, translate.Get("skill_dd_3"), GOOD..translate.Get("skill_dd_3_d1")..BAD.."+10%"..translate.Get("hammerd"),
 																8,			3,					{SKILL_D_LATEBUYER}, TREE_BUILDINGTREE)
@@ -1473,7 +1473,7 @@ GM:AddSkill(SKILL_DONATE12, "Donate XII", GOOD.."+15% Bullet damage\n"..GOOD.."T
 GM:AddSkillModifier(SKILL_DONATE12, SKILLMOD_DAMAGE, 0.15)
 GM:AddSkill(SKILL_DONATE13, "Donate XIII", GOOD.."-35% Scale model\n"..GOOD.."Thx chayok",
 				                                                            	23,			29,					{SKILL_DONATE12}, TREE_DONATETREE)
-GM:AddSkillModifier(SKILL_DONATE13, SKILLMOD_SCALEMODEL, -0.25)
+GM:AddSkillModifier(SKILL_DONATE13, SKILLMOD_SCALEMODEL, -0.35)
 GM:AddSkill(SKILL_DONATE14, "Donate XIV", GOOD.."+6% Magic Damage and +5% blood armor regen from magic\n"..GOOD.."Thx for Белый Рыцарь",
 				                                                            	23,			30,					{SKILL_DONATE13}, TREE_DONATETREE)
 GM:AddSkillModifier(SKILL_DONATE14, SKILLMOD_M_DMG, 0.06)
@@ -2170,7 +2170,7 @@ GM:AddSkillFunction(SKILL_D_HEMOPHILIA, function(pl, active)
 end)
 
 GM:AddSkillModifier(SKILL_D_LATEBUYER, SKILLMOD_WORTH, 30)
-GM:AddSkillModifier(SKILL_D_LATEBUYER, SKILLMOD_ARSENAL_DISCOUNT, -0.33)
+GM:AddSkillModifier(SKILL_D_LATEBUYER, SKILLMOD_ARSENAL_DISCOUNT, -0.2)
 
 GM:AddSkillModifier(SKILL_STOCKPILE, SKILLMOD_RES_AMMO_MUL, 0.50)
 

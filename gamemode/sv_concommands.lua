@@ -401,8 +401,14 @@ concommand.Add("zsdropweapon", function(sender, command, arguments)
 	end
 	if sender:HasTrinket("curse_fragility") then
 		sender.Luck = sender.Luck - 6
-		sender:TakeInventoryItem("curse_fragiliy")
-		
+		sender:TakeInventoryItem("curse_fragility")
+	end
+	if sender:HasTrinket("curse_ponos") then
+		sender:TakeInventoryItem("curse_ponos")
+		timer.Create("ponosx10", 0.5, 10, function() sender:SetVelocity(VectorRand() * math.random(200,1700)) 
+			sender:EmitSound("ambient/water/water_spray3.wav",120,45, 122)
+		end)
+		return
 	end
 	if GAMEMODE.ZombieEscape then
 		local hwep, zwep = sender:GetWeapon("weapon_elite"), sender:GetWeapon("weapon_knife")
@@ -566,6 +572,11 @@ concommand.Add("zsgiveweapon", function(sender, command, arguments)
 		sender:TakeDamage(sender:Health())
 		sender:TakeInventoryItem("curse_heart")
 		
+	end
+	if sender:HasTrinket("curse_ponos") then
+		sender:TakeInventoryItem("curse_ponos")
+		timer.Create("ponosx10", 0.5, 10, function() sender:SetVelocity(VectorRand() * math.random(200,1700)) end)
+		return
 	end
 
 	if not (sender:IsValid() and sender:Alive() and sender:Team() == TEAM_HUMAN) then return end

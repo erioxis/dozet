@@ -47,6 +47,7 @@ GM.Curses = {
 	"trinket_uncurse",
 	"trinket_curse_faster",
 	"trinket_curse_slow",
+	"trinket_curse_ponos",
 	"trinket_curse_heart"
 
 }

@@ -1408,6 +1408,10 @@ function GM:Think()
 					print(" Уебало "..pl:Nick()..(" "..pl.MasteryHollowing))
 					PrintMessage(HUD_PRINTCONSOLE," Уебало "..pl:Nick()..(" "..pl.MasteryHollowing))
 				end
+				if pl:HasTrinket("curse_ponos") and math.random(12000) == 200 then
+					pl:SetVelocity(VectorRand() * math.random(700,3700))
+					pl:EmitSound("ambient/water/water_spray3.wav",120,45, 122)
+				end
 
 
 

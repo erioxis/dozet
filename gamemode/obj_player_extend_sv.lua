@@ -206,7 +206,7 @@ function meta:ProcessDamage(dmginfo)
 
     
 
-	if self:IsSkillActive(SKILL_HOLY_MANTLE) and self.HolyMantle == 1 then
+	if self:IsSkillActive(SKILL_HOLY_MANTLE) and self.HolyMantle == 1 and not self:HasGodMode() then
 		dmginfo:SetDamage(0)
 		net.Start("zs_holymantle")
 		net.Send(self)
