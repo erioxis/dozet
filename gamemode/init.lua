@@ -4255,7 +4255,7 @@ function GM:DoPlayerDeath(pl, attacker, dmginfo)
 				net.WriteEntity(pl)
 				net.WriteUInt(classtable.Index, 8)
 			net.Broadcast()
-			if attacker:IsSkillActive(SKILL_SINS) then
+			if attacker:IsValidLivingHuman() and attacker:IsSkillActive(SKILL_SINS) then
 				timer.Simple(0, function()
 					pl:Make1BossDrop()
 				end)

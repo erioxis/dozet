@@ -30,7 +30,7 @@ SWEP.NoDroppedWorldModel = true
 --[[SWEP.BoxPhysicsMax = Vector(8, 1, 4)
 SWEP.BoxPhysicsMin = Vector(-8, -1, -4)]]
 
-SWEP.MeleeDamage = 34
+SWEP.MeleeDamage = 57
 SWEP.MeleeRange = 44
 SWEP.MeleeSize = 0.566
 SWEP.Primary.Delay = 0.46 
@@ -96,7 +96,6 @@ function SWEP:Think()
 		self:SetHitAmount(0)
 		owner:ResetSpeed()
 	end
-	self.BaseClass.Think(self)
 	self:NextThink(curtime)
 	return true
 end
