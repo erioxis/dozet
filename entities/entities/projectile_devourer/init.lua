@@ -1,7 +1,7 @@
 INC_SERVER()
 
 local vector_origin = vector_origin
-
+ENT.NextHook = 3
 function ENT:Initialize()
 	self:SetModel("models/gibs/HGIBS_rib.mdl")
 	self:PhysicsInitSphere(13)
@@ -34,7 +34,7 @@ function ENT:Think()
 	end
 	for _, ent in pairs(ents.FindInSphere(self:GetPos(), 2048)) do
 		target = ent
-		if WorldVisible(self:LocalToWorld(Vector(0, 0, 30)), ent:NearestPoint(self:LocalToWorld(Vector(0, 0, 30)))) then
+		if WorldVisible(self:LocalToWorld(Vector(0, 0, 30)), ent:NearestPoint(self:LocalToWorld(Vector(0, 0, 30)))) and self.NextHook <= CurTime() then
 			if target:IsValidLivingHuman() then
 				local targetpos = target:LocalToWorld(target:OBBCenter())
 				local direction = (targetpos - self:GetPos()):GetNormal()
@@ -42,7 +42,8 @@ function ENT:Think()
 				self:SetAngles(direction:Angle())
 
 				local phys = self:GetPhysicsObject()
-				phys:SetVelocityInstantaneous(direction * 1500)
+				phys:SetVelocityInstantaneous((direction * 500) * ent:GetModelScale())
+				self.NextHook = CurTime() + 2
 				break
 			end
 		end
