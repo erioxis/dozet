@@ -923,7 +923,7 @@ GM.HumanWinSound = Sound("zombiesurvival/music_win.ogg")
 GM.DeathSound = Sound("zombiesurvival/human_death_stinger.ogg")
 
 -- Fetch map profiles and node profiles from noxiousnet database?
-GM.UseOnlineProfiles = true
+GM.UseOnlineProfiles = false
 
 -- This multiplier of points will save over to the next round. 1 is full saving. 0 is disabled.
 -- Setting this to 0 will not delete saved points and saved points do not "decay" if this is less than 1.
@@ -947,7 +947,7 @@ GM.MaxBleedDamage = 10000
 GM.MaxCurse = 100
 
 -- Give humans this many points when the wave ends.
-GM.EndWavePointsBonus = 21
+GM.EndWavePointsBonus = 2
 
 -- Also give humans this many points when the wave ends, multiplied by (wave - 1)
-GM.EndWavePointsBonusPerWave = 10
+GM.EndWavePointsBonusPerWave = 6
