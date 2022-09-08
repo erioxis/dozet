@@ -75,6 +75,7 @@ local function ItemPanelThink(self)
 			end
 		end
 
+
 		if self.StockLabel then
 			local stocks = GAMEMODE:GetItemStocks(self.ID)
 			if stocks ~= self.m_LastStocks then
@@ -357,11 +358,26 @@ function GM:AddShopItem(list, i, tab, issub, nopointshop)
 	itempan.DoClick = ItemPanelDoClick
 	itempan.DoRightClick = function()
 		local menu = DermaMenu(itempan)
-		menu:AddOption(""..translate.Get("buy"), function() RunConsoleCommand("zs_pointsshopbuy", itempan.ID, itempan.NoPoints and "scrap") end)
+		menu:AddOption(translate.Get("buy"), function() RunConsoleCommand("zs_pointsshopbuy", itempan.ID, itempan.NoPoints and "scrap") end)
+		if tab.Category == ITEMCAT_AMMO and MySelf:IsValid() and MySelf:GetPoints() >= math.floor((tab.Price * (MySelf.ArsenalDiscount or 1)) * 2) then
+			menu:AddOption(translate.Get("buy").." x2", function() timer.Create("x2ammobuy",0, 2, function() RunConsoleCommand("zs_pointsshopbuy", itempan.ID, itempan.NoPoints and "scrap") end) end)
+			if MySelf:GetPoints() >= math.floor((tab.Price * (MySelf.ArsenalDiscount or 1)) * 10) then
+				menu:AddOption(translate.Get("buy").." x10", function()  timer.Create("x10ammobuy",0, 10, function() RunConsoleCommand("zs_pointsshopbuy", itempan.ID, itempan.NoPoints and "scrap") end) end)
+			end
+			--math.floor(MySelf:GetPoints() / (tab.Price * (MySelf.ArsenalDiscount or 1)))
+			local ammo = (MySelf:GetInfo("zs_ammoslider") or 1)
+			if MySelf:GetPoints( )>= (math.floor(MySelf:GetPoints() / (tab.Price * (MySelf.ArsenalDiscount or 1)))) then
+				menu:AddOption(translate.Get("buy").." x"..ammo, function()  timer.Create("ammobuyx"..ammo,0, 1, function() 
+					for i=1, ammo do
+					if (MySelf:GetPoints( )< math.floor(MySelf:GetPoints() / (tab.Price * (MySelf.ArsenalDiscount or 1)))) then return end
+					RunConsoleCommand("zs_pointsshopbuy", itempan.ID, itempan.NoPoints and "scrap") 
+					end end) end)
+			end
+		end
 		menu:Open()
 	end
-	list:AddItem(itempan)
 
+	list:AddItem(itempan)
 	if nottrinkets then
 		local mdlframe = vgui.Create("DPanel", itempan)
 		mdlframe:SetSize(wid/2 * screenscale, 100/2 * screenscale)
@@ -448,6 +464,7 @@ function GM:ConfigureMenuTabs(tabs, tabhei, callback)
 		tab.GetTabHeight = function()
 			return tabhei
 		end
+
 		tab.PerformLayout = function(me)
 			me:ApplySchemeSettings()
 
@@ -541,6 +558,7 @@ function GM:CreateItemViewerGenericElems(viewer)
 	itemdesc:SetText("")
 	itemdesc:MoveBelow(vbg, 8)
 	viewer.m_Desc = itemdesc
+
 
 	local itemstats, itemsbs, itemsvs = {}, {}, {}
 	for i = 1, 6 do
@@ -746,6 +764,19 @@ function GM:OpenArsenalMenu()
 
 				return list
 			end
+			if catid == ITEMCAT_AMMO  then
+				slider = vgui.Create( "DNumSlider", propertysheet)
+				slider:SetDefaultValue(1)
+				slider:SetPos( 35 * screenscale, 450 * screenscale )				-- Set the position
+				slider:SetSize(wid - 660 * screenscale, 120 * screenscale)			-- Set the size
+				slider:SetText( "Ammo per buy" )	-- Set the text above the slider
+				slider:SetMin( 1 )				 	-- Set the minimum number you can slide to
+				slider:SetMax( 1000 )				-- Set the maximum number you can slide to
+				slider:SetDecimals( 0 )				-- Decimal places - zero for whole number
+				slider:SetConVar( ("zs_ammoslider"))
+				itemframe:AddItem(slider)
+			end
+
 
 			local subcats = GAMEMODE.ItemSubCategories
 			if usecats then

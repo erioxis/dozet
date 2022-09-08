@@ -458,6 +458,9 @@ item.CanMakeFromScrap = true
 GM:AddPointShopItem("nailsz",			ITEMCAT_AMMO,			7,				nil,			"8 nails",						nil, 		"ammo_nail", 			function(pl) pl:GiveAmmo(8, "GaussEnergy", true) end)
 
 item.NoClassicMode = true
+item =
+GM:AddPointShopItem("scrap",				ITEMCAT_AMMO,			40,				nil,							"Scrap x20",							"Scrap but is have x15.",					"ammo_scrap",						function(pl) pl:GiveAmmo(20, "Scrap", true) end)
+item.DontScrap = true
 -- Tier 1
 GM:AddPointShopItem("brassknuckles",	ITEMCAT_MELEE,			25,				"weapon_zs_brassknuckles").Model = "models/props_c17/utilityconnecter005.mdl"
 GM:AddPointShopItem("knife",			ITEMCAT_MELEE,			25,				"weapon_zs_swissarmyknife")
@@ -612,9 +615,6 @@ GM:AddPointShopItem("medrifle",			ITEMCAT_TOOLS,			55,				"weapon_zs_medicrifle"
 GM:AddPointShopItem("healray",			ITEMCAT_TOOLS,			190,			"weapon_zs_healingray")
 GM:AddPointShopItem("repairray",			ITEMCAT_TOOLS,			220,			"weapon_zs_hammerray")
 GM:AddPointShopItem("stone",			ITEMCAT_TOOLS,			5,			"weapon_zs_stone")
-GM:AddPointShopItem("scrap",				ITEMCAT_TOOLS,			40,				nil,							"Scrap x20",							"Scrap but is have x15.",					"ammo_scrap",						function(pl) pl:GiveAmmo(20, "Scrap", true) end)
-GM:AddPointShopItem("scrap100",				ITEMCAT_TOOLS,			150,				nil,							"Scrap x100",							"Scrap but is have x100.",					"ammo_scrap",						function(pl) pl:GiveAmmo(100, "Scrap", true) end)
-GM:AddPointShopItem("scrap900",				ITEMCAT_TOOLS,			600,				nil,							"Scrap x900",							"Scrap but is have x900.",					"ammo_scrap",						function(pl) pl:GiveAmmo(900, "Scrap", true) end)
 GM:AddPointShopItem("bannahuy",			ITEMCAT_TOOLS,			9980000,			"weapon_zs_banhammer")
 -- Tier 1
 GM:AddPointShopItem("cutlery",			ITEMCAT_TRINKETS,		10,				"trinket_cutlery").SubCategory =								ITEMSUBCAT_TRINKETS_DEFENSIVE

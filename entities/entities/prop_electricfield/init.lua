@@ -25,8 +25,6 @@ function ENT:Think()
 			if pl:IsPlayer() and owner:IsPlayer() and pl:Team() != owner:Team() and pl:Alive() then
 				pl:TakeSpecialDamage(self.HurtTick, DMG_SHOCK, owner, self, self:GetPos(), self:GetPos())
 				self.TotalHurt = self.TotalHurt - self.HurtTick
-			elseif (pl:GetClass() == "prop_drone" or pl:GetClass() == "prop_manhack" or pl:IsNailed() or pl.IsBarricadeObject) then
-				pl:TakeSpecialDamage(self.HurtTick, DMG_SHOCK, owner, self, self:GetPos(), self:GetPos())
 			end
 		end
 		self:EmitSound("ambient/energy/zap"..math.random(5, 9)..".wav", 75, math.Rand(90, 110))
@@ -60,7 +58,7 @@ function ENT:Think()
 		end
 		if ent:IsPlayer() and ent:Team() == TEAM_UNDEAD then
 			if not ent:GetZombieClassTable().Boss then
-				if ent:Health() < 2100 then
+				if ent:Health() < 1600 then
 					local dir = (pos - ent:NearestPoint(pos)):GetNormalized()
 			  	 	ent:SetVelocity(self.Force * dir * 0.45)
 					ent:SetPhysicsAttacker(owner, 4)

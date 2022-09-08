@@ -409,7 +409,6 @@ concommand.Add("zsdropweapon", function(sender, command, arguments)
 			sender:EmitSound("ambient/water/water_spray3.wav",120,45, 122)
 		end)
 		sender:GiveAchievement("ponos")
-		return
 	end
 	if GAMEMODE.ZombieEscape then
 		local hwep, zwep = sender:GetWeapon("weapon_elite"), sender:GetWeapon("weapon_knife")

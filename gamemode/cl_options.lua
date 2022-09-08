@@ -78,7 +78,7 @@ cvars.AddChangeCallback("zs_crosshair_colr2", function(cvar, oldvalue, newvalue)
 cvars.AddChangeCallback("zs_crosshair_colg2", function(cvar, oldvalue, newvalue) GAMEMODE.CrosshairColor2.g = tonumber(newvalue) or 255 end)
 cvars.AddChangeCallback("zs_crosshair_colb2", function(cvar, oldvalue, newvalue) GAMEMODE.CrosshairColor2.b = tonumber(newvalue) or 255 end)
 cvars.AddChangeCallback("zs_crosshair_cola2", function(cvar, oldvalue, newvalue) GAMEMODE.CrosshairColor2.a = tonumber(newvalue) or 255 end)
-
+cvars.AddChangeCallback("zs_crosshair_colb2", function(cvar, oldvalue, newvalue) GAMEMODE.CrosshairColor2.b = tonumber(newvalue) or 255 end)
 GM.FilmMode = CreateClientConVar("zs_filmmode", "0", true, false):GetBool()
 cvars.AddChangeCallback("zs_filmmode", function(cvar, oldvalue, newvalue)
 	GAMEMODE.FilmMode = tonumber(newvalue) == 1
@@ -95,6 +95,7 @@ CreateClientConVar("zs_nousetodeposit", "0", true, true)
 CreateClientConVar("zs_nopickupprops", "0", true, true)
 CreateClientConVar("zs_nodiscord", "0", true, true)
 CreateClientConVar("zs_nohperc", "0", true, true)
+CreateClientConVar("zs_ammoslider", 0, true, false)
 
 GM.DisableScopes = CreateClientConVar("zs_disablescopes", "0", true, false):GetBool()
 cvars.AddChangeCallback("zs_disablescopes", function(cvar, oldvalue, newvalue)

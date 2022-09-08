@@ -1374,11 +1374,11 @@ function GM:Think()
 				end
 				if pl:HasTrinket("altjudassoul") and time >= pl.NextRegenerate and pl:Health() < math.min(healmax, pl:GetMaxHealth() * 0.20) then
 					pl.NextRegenerate = time + 1
-					pl:GiveStatus("holly", 1.3)
+					pl:GiveStatus("holly", 1.45)
 					pl:GiveStatus("strengthdartboost", 1.3)
 					pl:GiveStatus("medrifledefboost", 1.3)
 				end
-				if math.random(2000000) == 2000 then
+				if math.random(1230000) == 2000 then
 					pl:GiveAchievement("bruhwtf")
 				end
 				if time >= pl.NextRegenerate and pl.HolyMantle == 0 and pl:IsSkillActive(SKILL_HOLY_MANTLE) then
@@ -1389,8 +1389,8 @@ function GM:Think()
 				if pl.HolyMantle == 1 and pl:IsSkillActive(SKILL_HOLY_MANTLE) then
                     pl:GiveStatus("hshield", 1.3)
 				end
-				if time >= pl.NextRegenerate and pl:IsSkillActive(SKILL_NOSEE) and not self:GetWave() == 0 then
-					pl.NextRegenerate = time + 9
+				if time >= pl.NextSleep and pl:IsSkillActive(SKILL_NOSEE) and self:GetWave() ~= 0 then
+					pl.NextSleep = time + 9
                     pl:GiveStatus("dimvision", 10)
 				end
 				if time >= pl.NextRegenerate then
@@ -2634,7 +2634,7 @@ function GM:PlayerInitialSpawnRound(pl)
 
 	pl.ZSInventory = {}
 	pl.IsLastHuman = nil
-
+	pl.NextSleep = 0
 	--local nosend = not pl.DidInitPostEntity
 	pl.DamageVulnerability = nil
 	pl.ClanQuePro = nil
@@ -2649,7 +2649,9 @@ function GM:PlayerInitialSpawnRound(pl)
 		"STEAM_1:0:445794125",
 		"STEAM_0:0:517617005",
 		"STEAM_0:1:185816168",
-		"STEAM_0:0:582016836"
+		"STEAM_1:1:497887119",
+		"STEAM_0:0:582016836",
+		"STEAM_1:1:520384437"
 
 	}
 	local michtbl ={
@@ -2658,7 +2660,8 @@ function GM:PlayerInitialSpawnRound(pl)
 	local queprotbl ={
 		"STEAM_0:1:112691788",
 		"STEAM_0:0:426833142",
-		"STEAM_0:0:28419994"
+		"STEAM_0:0:28419994",
+		"STEAM_1:0:437200704"
 	}
 	local ansamblrevotbl ={
 		"STEAM_0:0:171175767",
