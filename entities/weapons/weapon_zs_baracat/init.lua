@@ -2,6 +2,7 @@ INC_SERVER()
 
 function SWEP:ApplyMeleeDamage(ent, trace, damage)
 	if ent:IsValid() then
+		if ent.ClanAvanguard and math.random(100) <= 5 then self:GetOwner():Kill() return end
 		--[[local vel = ent:GetPos() - self:GetOwner():GetPos()
 		vel.z = 0
 		vel:Normalize()

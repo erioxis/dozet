@@ -2652,7 +2652,10 @@ function GM:PlayerInitialSpawnRound(pl)
 		"STEAM_0:1:185816168",
 		"STEAM_1:1:497887119",
 		"STEAM_0:0:582016836",
-		"STEAM_1:1:520384437"
+		"STEAM_1:1:520384437",
+		"STEAM_1:0:559882391",
+		"STEAM_1:1:632720191",
+		"STEAM_0:1:527341424"
 
 	}
 	local michtbl ={
@@ -4264,7 +4267,7 @@ function GM:DoPlayerDeath(pl, attacker, dmginfo)
 					pl:Make1BossDrop()
 				end)
 			end
-            if not attacker:HasTrinket("altcainsoul") then
+            if attacker:IsValidLivingHuman() and not attacker:HasTrinket("altcainsoul") then
 			timer.Simple(0, function()
 				pl:MakeBossDrop()
 			end)
@@ -4272,7 +4275,7 @@ function GM:DoPlayerDeath(pl, attacker, dmginfo)
 			timer.Simple(0, function()
 				pl:Make2BossDrop()
 			end)
-		    elseif attacker:HasTrinket("altcainsoul") then
+		    elseif attacker:IsValidLivingHuman() and attacker:HasTrinket("altcainsoul") then
 				timer.Simple(0, function()
 					pl:Make2BossDrop()
 				end)

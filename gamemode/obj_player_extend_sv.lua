@@ -777,6 +777,7 @@ function meta:WouldDieFrom(damage, hitpos)
 end
 
 function meta:KnockDown(time)
+	if self.ClanAvanguard and math.random(2) ~= 1 then return end
 	if P_Team(self) == TEAM_HUMAN then
 		self:GiveStatus("knockdown", time or 2)
 	end
@@ -2359,7 +2360,7 @@ function meta:CryogenicInduction(attacker, inflictor, damage)
 		local pos = self:WorldSpaceCenter()
 		pos.z = pos.z + 16
 
-		self:TakeSpecialDamage(self:Health() + 210, DMG_DIRECT, attacker, inflictor, pos)
+		self:TakeSpecialDamage(self:Health() * 0.2 + 210, DMG_DIRECT, attacker, inflictor, pos)
 
 		if attacker:IsValidLivingHuman() then
 			util.BlastDamagePlayer(inflictor, attacker, pos, 100, self:GetMaxHealthEx() * 0.80, DMG_DROWN, 0.83)

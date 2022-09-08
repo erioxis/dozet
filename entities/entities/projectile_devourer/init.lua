@@ -1,7 +1,7 @@
 INC_SERVER()
 
 local vector_origin = vector_origin
-ENT.NextHook = 3
+ENT.NextHook = 1
 function ENT:Initialize()
 	self:SetModel("models/gibs/HGIBS_rib.mdl")
 	self:PhysicsInitSphere(13)
@@ -43,7 +43,7 @@ function ENT:Think()
 
 				local phys = self:GetPhysicsObject()
 				phys:SetVelocityInstantaneous((direction * 500) * ent:GetModelScale())
-				self.NextHook = CurTime() + 2
+				self.NextHook = CurTime() + 0.3
 				break
 			end
 		end

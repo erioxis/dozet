@@ -21,6 +21,8 @@ CLASS.Health = 3000
 CLASS.Speed = 700
 CLASS.JumpPower = 760
 
+CLASS.CanFeignDeath = false
+
 
 CLASS.ModelScale = 0.5
 CLASS.Hull = {Vector(-16, -16, 0), Vector(16, 16, 32)}

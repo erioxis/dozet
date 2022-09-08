@@ -38,6 +38,9 @@ CLASS.Mass = DEFAULT_MASS * CLASS.ModelScale * 0.5
 
 CLASS.NoCollideAll = true
 
+
+CLASS.CanFeignDeath = false
+
 CLASS.CantDuck = true
 
 CLASS.SWEP = "weapon_zs_baracat"
