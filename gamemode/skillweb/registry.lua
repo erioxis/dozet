@@ -346,6 +346,7 @@ SKILL_SEEAURA = 325
 SKILL_DONATE15 = 326
 SKILL_PARASITOID = 327
 SKILL_PREMIUM = 328
+SKILL_CREDIT = 329
 
 SKILLMOD_HEALTH = 1
 SKILLMOD_SPEED = 2
@@ -1104,6 +1105,10 @@ GM:AddSkill(SKILL_LUCKE, translate.Get("skill_badluck"), NEUTRAL.."+2"..translat
 	GM:AddSkillModifier(SKILL_BLUCK, SKILLMOD_POINT_MULTIPLIER, 0.01)
 GM:AddSkill(SKILL_BLUCK, translate.Get("skill_quad"), GOOD..translate.Get("skill_quad_d1") ..BAD.. "-3%"..translate.Get("p_mul"),
 	2,			-2.75,					{SKILL_LUCKE}, TREE_POINTTREE)
+GM:AddSkill(SKILL_CREDIT, translate.Get("skill_credit"), GOOD..translate.Get("skill_credit_d1")..BAD.."-15"..translate.Get("worth")..BAD.."-7%"..translate.Get("sale")..BAD..translate.Get("skill_credit_d2"),
+	3,			-4,					{SKILL_BLUCK}, TREE_POINTTREE)
+GM:AddSkillModifier(SKILL_CREDIT, SKILLMOD_WORTH, -15)
+GM:AddSkillModifier(SKILL_CREDIT, SKILLMOD_ARSENAL_DISCOUNT, 0.07)
 	SKILL_PILLUCK = 164
 	GM:AddSkillModifier(SKILL_PILLUCK, SKILLMOD_LUCK, -5)
 GM:AddSkill(SKILL_PILLUCK, translate.Get("skill_pillluck"), GOOD..translate.Get("skill_pillluck_d1")..BAD.."-5"..translate.Get("luck"),

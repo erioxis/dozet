@@ -375,6 +375,14 @@ net.Receive("zs_ammogive", function(length)
 
 	GAMEMODE:CenterNotify({killicon = ico}, " ", COLOR_GREEN, translate.Format("gave_x_y_ammo_to_z", amount, ammotype, ent:Name()))
 end)
+net.Receive("zs_credit_takepoints", function(length)
+	local amount = math.Round(net.ReadFloat())
+
+	local ico = "weapon_zs_resupplybox"
+
+
+	GAMEMODE:CenterNotify({killicon = ico}, " ", COLOR_GREEN, translate.Format("taken_x_by_credit", amount))
+end)
 
 net.Receive("zs_ammogiven", function(length)
 	local amount = net.ReadUInt(16)

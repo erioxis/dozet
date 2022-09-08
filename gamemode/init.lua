@@ -555,6 +555,7 @@ function GM:AddNetworkStrings()
 	util.AddNetworkString("zs_skills_nextreset")
 	util.AddNetworkString("zs_skills_notify")
 	util.AddNetworkString("zs_skills_refunded")
+	util.AddNetworkString("zs_credit_takepoints")
 
 	util.AddNetworkString("zs_crow_kill_crow")
 	util.AddNetworkString("zs_pl_kill_pl")
@@ -5018,6 +5019,12 @@ function GM:WaveStateChanged(newstate, pl)
 				end
 				if pl:IsSkillActive(SKILL_XPHUNTER) then
 					pl:AddZSXP(5 + self.GetWave() * 10)
+				end
+				if pl:IsSkillActive(SKILL_CREDIT) then
+					net.Start("zs_credit_takepoints")
+						net.WriteFloat(pl:GetPoints() * 0.3)
+					net.Send(pl)
+					pl:SetPoints(pl:GetPoints() * 0.7)
 				end
 				if pl:HasTrinket("vir_pat") then
 					pl.CanBuy = true
