@@ -170,7 +170,7 @@ GM.AmmoCache["turret_super"]				= 1
 GM.AmmoCache["scrap"]						= 4
 GM.AmmoCache["molotov"]						= 1
 
-GM.AmmoResupply = table.ToAssoc({"ar2", "pistol", "smg1", "357", "xbowbolt", "buckshot", "battery", "pulse", "impactmine", "chemical", "gaussenergy", "scrap", "grenade", "molotov"})
+GM.AmmoResupply = table.ToAssoc({"ar2", "pistol", "smg1", "357", "xbowbolt", "buckshot", "battery", "pulse", "impactmine", "chemical", "gaussenergy", "scrap", "grenade", "molotov", "sniperround"})
 
 -----------
 -- Worth --

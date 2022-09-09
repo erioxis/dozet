@@ -137,11 +137,11 @@ function SWEP:SecondaryAttack()
 		self:SetChargeBlock(true) 
 		self.Block = true
 		timer.Create("trueparrydead1",0.35,1, function() 
-			if !self:GetOwner():IsValid() then return false end
+			if !self:IsValid() or !self:GetOwner():IsValid() then return false end
 			self.ParryTiming = false
 		end)
 		timer.Create("trueparry",0.25,1, function() 
-			if !self:GetOwner():IsValid() then return false end
+			if !self:IsValid() or !self:GetOwner():IsValid() then return false end
 			self.ParryTiming = true
 		end)
 	end

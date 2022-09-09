@@ -2642,6 +2642,7 @@ function GM:PlayerInitialSpawnRound(pl)
 	pl.ClanAvanguard = nil
 --	pl.ClanNigger = nil
 	pl.ClanMich = nil
+	pl.ClanShooter = nil
 	pl.ClanAnsableRevolution = nil
     local avanguardtbl ={
 		"STEAM_0:1:457010084",
@@ -2650,13 +2651,15 @@ function GM:PlayerInitialSpawnRound(pl)
 		"STEAM_1:0:445794125",
 		"STEAM_0:0:517617005",
 		"STEAM_0:1:185816168",
-		"STEAM_1:1:497887119",
 		"STEAM_0:0:582016836",
 		"STEAM_1:1:520384437",
 		"STEAM_1:0:559882391",
 		"STEAM_1:1:632720191",
 		"STEAM_0:1:527341424"
 
+	}
+	local shootertbl = {
+		"STEAM_1:1:497887119"
 	}
 	local michtbl ={
 		"STEAM_0:0:103817403"
@@ -2688,6 +2691,9 @@ function GM:PlayerInitialSpawnRound(pl)
 	end
 	if table.HasValue(ansamblrevotbl, pl:SteamID()) then 
 		pl.ClanAnsableRevolution = true
+	end
+	if table.HasValue(shootertbl, pl:SteamID()) then 
+		pl.ClanShooter = true
 	end
 	
 	--[[if pl:SteamID() == "STEAM_1:1:497887119" then 
