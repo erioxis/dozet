@@ -1340,12 +1340,10 @@ function GM:Think()
 					pl.NextDamage = time + 1.2
 					pl:CenterNotify(COLOR_GREEN, translate.ClientGet(pl, "danger_x"))
 				end
-				if !pl:OnGround() and time >= pl.NextStuckThink and not (pl:GetVelocity():LengthSqr() > 4000) then
+				if !pl:OnGround() and not (pl:GetVelocity():LengthSqr() > 4000) then
 					pl.StuckedInProp = true
-					pl.NextStuckThink = time + 1
 				else
 					pl.StuckedInProp = nil
-					pl.NextStuckThink = time + 1
 				end
 
 
