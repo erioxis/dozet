@@ -1335,7 +1335,7 @@ function GM:Think()
 					pl.NextDamage = time + (pl:HasTrinket("jacobsoul") and 3 or 0.6)
 					pl:CenterNotify(COLOR_RED, translate.ClientGet(pl, "danger"))
 				end
-				if pl:GetStatus("sigildef") and self:GetWave() >= 6 and  time >= pl.NextDamage and self:GetWaveActive() and pl:HasTrinket("jacobsoul") and not (self:GetWave() == 12) then
+				if pl:GetStatus("sigildef") and self:GetWave() >= 6 and time >= pl.NextDamage and self:GetWaveActive() and pl:HasTrinket("jacobsoul") and not (self:GetWave() == 12) then
 					pl:TakeDamage(13)
 					pl.NextDamage = time + 1.2
 					pl:CenterNotify(COLOR_GREEN, translate.ClientGet(pl, "danger_x"))
@@ -1344,6 +1344,17 @@ function GM:Think()
 					pl.StuckedInProp = true
 				else
 					pl.StuckedInProp = nil
+				end
+				if pl:OnGround() and pl:IsSkillActive(SKILL_POGO) and time >= pl.NextStuckThink then
+					timer.Create("pogojump", 0.001, 1, function()
+						local vel = pl:GetPos()
+						vel.x = 0
+						vel.y = 0
+						vel:Normalize()
+						vel.z = 650 * pl.JumpPowerMul
+						pl:SetVelocity(vel)
+					end)
+					pl.NextStuckThink = time + 0.002
 				end
 
 

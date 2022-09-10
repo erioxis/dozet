@@ -347,6 +347,7 @@ SKILL_DONATE15 = 326
 SKILL_PARASITOID = 327
 SKILL_PREMIUM = 328
 SKILL_CREDIT = 329
+SKILL_POGO = 330
 
 SKILLMOD_HEALTH = 1
 SKILLMOD_SPEED = 2
@@ -617,8 +618,11 @@ GM:AddSkill(SKILL_D_WIDELOAD, ""..translate.Get("skill_wideroad_0"), GOOD.."+20"
 																1,			1,					{}, TREE_SPEEDTREE)
 GM:AddSkill(SKILL_U_CORRUPTEDFRAGMENT, ""..translate.Get("skill_sigil_corrupt_0"), GOOD..""..translate.Get("skill_sigil_corrupt_d0"),
 																-2,			2,					{}, TREE_SPEEDTREE)
-GM:AddSkill(SKILL_ULTRANIMBLE, ""..translate.Get("skill_salostealer"), GOOD.."+30"..translate.Get("speed")..BAD.."-10"..translate.Get("health"),
+GM:AddSkill(SKILL_ULTRANIMBLE, translate.Get("skill_salostealer"), GOOD.."+30"..translate.Get("speed")..BAD.."-10"..translate.Get("health"),
 																0,			-6,					{}, TREE_SPEEDTREE)
+GM:AddSkill(SKILL_POGO, translate.Get("skill_pogo"), translate.Get("skill_pogo_d1")..GOOD..translate.Get("skill_pogo_d2")..BAD.."-45%"..translate.Get("jump"),
+																0,			-7,					{SKILL_ULTRANIMBLE}, TREE_SPEEDTREE)
+GM:AddSkillModifier(SKILL_POGO, SKILLMOD_JUMPPOWER_MUL, -0.45)
 GM:AddSkill(SKILL_WORTHINESS3, translate.Get("worthness").."III", GOOD.."+10"..translate.Get("worth")..BAD.."-3"..translate.Get("start_points"),
 																6,			2,					{}, TREE_SPEEDTREE)
 GM:AddSkill(SKILL_SURESTEP, ""..translate.Get("skill_step_0"), GOOD..""..translate.Get("skill_step_d0")..BAD.."-4"..translate.Get("speed"),
@@ -1105,7 +1109,7 @@ GM:AddSkill(SKILL_LUCKE, translate.Get("skill_badluck"), NEUTRAL.."+2"..translat
 	GM:AddSkillModifier(SKILL_BLUCK, SKILLMOD_POINT_MULTIPLIER, 0.01)
 GM:AddSkill(SKILL_BLUCK, translate.Get("skill_quad"), GOOD..translate.Get("skill_quad_d1") ..BAD.. "-3%"..translate.Get("p_mul"),
 	2,			-2.75,					{SKILL_LUCKE}, TREE_POINTTREE)
-GM:AddSkill(SKILL_CREDIT, translate.Get("skill_credit"), GOOD..translate.Get("skill_credit_d1")..GOOD.."25"..translate.Get("worth")..BAD.."-7%"..translate.Get("sale")..BAD..translate.Get("skill_credit_d2"),
+GM:AddSkill(SKILL_CREDIT, translate.Get("skill_credit"), GOOD..translate.Get("skill_credit_d1")..GOOD.."+25"..translate.Get("worth")..BAD.."-7%"..translate.Get("sale")..BAD..translate.Get("skill_credit_d2"),
 	3,			-4,					{SKILL_BLUCK}, TREE_POINTTREE)
 GM:AddSkillModifier(SKILL_CREDIT, SKILLMOD_WORTH, 25)
 GM:AddSkillModifier(SKILL_CREDIT, SKILLMOD_ARSENAL_DISCOUNT, 0.07)
@@ -1124,20 +1128,20 @@ GM:AddSkill(SKILL_DUDEE, translate.Get("skill_toyluck"), GOOD.."+2"..translate.G
 		2,			-6,					{SKILL_DUDEE}, TREE_POINTTREE)
 	GM:AddSkill(SKILL_SINS, translate.Get("skill_sins"), GOOD..translate.Get("skill_sins_d1"),
 		1,			-6,					{SKILL_BADTRIP}, TREE_POINTTREE)
-		.RemortReq = 12
-		SKILL_SCAM = 168
-		GM:AddSkillModifier(SKILL_SCAM, SKILLMOD_POINT_MULTIPLIER, 0.10)
-		GM:AddSkill(SKILL_SCAM, "Scam", GOOD.."+10%"..translate.Get("p_mul")..BAD.. "Quality is worse",
+.RemortReq = 6
+SKILL_SCAM = 168
+GM:AddSkillModifier(SKILL_SCAM, SKILLMOD_POINT_MULTIPLIER, 0.10)
+GM:AddSkill(SKILL_SCAM, "Scam", GOOD.."+10%"..translate.Get("p_mul")..BAD.. "Quality is worse",
 			3,			-8,					{SKILL_BADTRIP}, TREE_POINTTREE)
-			SKILL_SOLARUZ = 169
-			GM:AddSkillModifier(SKILL_SOLARUZ, SKILLMOD_POINT_MULTIPLIER, 0.30)
-			GM:AddSkillModifier(SKILL_SOLARUZ, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 0.40)
-			GM:AddSkill(SKILL_SOLARUZ, "Debuff:Deadly Fortuna", PURPLE.."+30% Points Multiplicator \n" ..BAD.. "+40% damage taken melee",
+SKILL_SOLARUZ = 169
+GM:AddSkillModifier(SKILL_SOLARUZ, SKILLMOD_POINT_MULTIPLIER, 0.30)
+GM:AddSkillModifier(SKILL_SOLARUZ, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 0.40)
+GM:AddSkill(SKILL_SOLARUZ, "Debuff:Deadly Fortuna", PURPLE.."+30% Points Multiplicator \n" ..BAD.. "+40% damage taken melee",
 				3,			-9,					{SKILL_SCAM}, TREE_POINTTREE)
 SKILL_ANCK = 170
 GM:AddSkill(SKILL_ANCK, "Ancient knowledge", PURPLE.."Learn The Ancient knowledge \n" ..BAD.. "The cost of knowledge",
 					0,			0,					{SKILL_SOLARUZ}, TREE_ANCIENTTREE)
-.LevelReq = 60
+.LevelReq = 75
 SKILL_ANCK1 = 171
 GM:AddSkill(SKILL_ANCK1, "Ancient Volume 1", PURPLE.."Learn The Ancient knowledge\n You know only 50%",
 					0,			-1,					{SKILL_ANCK}, TREE_ANCIENTTREE)
