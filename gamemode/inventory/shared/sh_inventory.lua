@@ -702,10 +702,18 @@ end
 
 
 --Attachment
-trinket = GM:AddTrinket(""..translate.Get("t_fire_at"), "fire_at", false, supveles, supweles, 1, ""..translate.Get("t_d_fire_at"))
-trinket = GM:AddTrinket(""..translate.Get("t_pulse_at"), "pulse_at", false, supveles, supweles, 1, ""..translate.Get("t_d_pulse_at"))
-trinket = GM:AddTrinket(""..translate.Get("t_acid_at"), "acid_at", false, supveles, supweles, 1, ""..translate.Get("t_d_acid_at"))
-trinket = GM:AddTrinket(""..translate.Get("t_ultra_at"), "ultra_at", false, supveles, supweles, 1, ""..translate.Get("t_d_ultra_at"))
+trinket = GM:AddTrinket(translate.Get("t_fire_at"), "fire_at", false, supveles, supweles, 2, translate.Get("t_d_fire_at"))
+GM:AddSkillModifier(trinket, SKILLMOD_DAMAGE, -0.1)
+GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_MUL, -0.1)
+trinket = GM:AddTrinket(translate.Get("t_pulse_at"), "pulse_at", false, supveles, supweles, 2, translate.Get("t_d_pulse_at"))
+GM:AddSkillModifier(trinket, SKILLMOD_DAMAGE, -0.1)
+GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_MUL, -0.1)
+trinket = GM:AddTrinket(translate.Get("t_acid_at"), "acid_at", false, supveles, supweles, 2, translate.Get("t_d_acid_at"))
+GM:AddSkillModifier(trinket, SKILLMOD_DAMAGE, -0.1)
+GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_MUL, -0.1)
+trinket = GM:AddTrinket(translate.Get("t_ultra_at"), "ultra_at", false, supveles, supweles, 2, translate.Get("t_d_ultra_at"))
+GM:AddSkillModifier(trinket, SKILLMOD_DAMAGE, -0.1)
+GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_MUL, -0.1)
 
 
 
@@ -713,8 +721,8 @@ trinket = GM:AddTrinket(""..translate.Get("t_ultra_at"), "ultra_at", false, supv
 
 
 -- ???
-GM:AddSkillModifier(GM:AddTrinket(""..translate.Get("t_manifesti"), "acqmanifest", false, supveles, supweles, 2, ""..translate.Get("t_d_manifesti"), nil, nil, "weapon_zs_help_trinket"), SKILLMOD_RESUPPLY_DELAY_MUL, -0.06)
-GM:AddSkillModifier(GM:AddTrinket(""..translate.Get("t_manifestii"), "promanifest", false, supveles, supweles, 4, ""..translate.Get("t_d_manifestii"), nil, nil, "weapon_zs_help_trinket"), SKILLMOD_RESUPPLY_DELAY_MUL, -0.15)
+GM:AddSkillModifier(GM:AddTrinket(translate.Get("t_manifesti"), "acqmanifest", false, supveles, supweles, 2, ""..translate.Get("t_d_manifesti"), nil, nil, "weapon_zs_help_trinket"), SKILLMOD_RESUPPLY_DELAY_MUL, -0.06)
+GM:AddSkillModifier(GM:AddTrinket(translate.Get("t_manifestii"), "promanifest", false, supveles, supweles, 4, ""..translate.Get("t_d_manifestii"), nil, nil, "weapon_zs_help_trinket"), SKILLMOD_RESUPPLY_DELAY_MUL, -0.15)
 
 -- Boss Trinkets
 

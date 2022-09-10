@@ -119,9 +119,9 @@ concommand.Add("zs_pointsshopbuy", function(sender, command, arguments)
 	end
     local scrapd = sender.ScrapDiscount
 	if usescrap then
-		sender:RemoveAmmo(math.ceil(cost * scrapd), "scrap")
+		sender:RemoveAmmo(math.ceil(cost), "scrap")
 		sender:SendLua("surface.PlaySound(\"buttons/lever"..math.random(5)..".wav\")")
-		sender:PrintTranslatedMessage(HUD_PRINTTALK, usescrap and "created_x_for_y_scrap" ,itemtab.Name, math.ceil(cost * scrapd))
+		sender:PrintTranslatedMessage(HUD_PRINTTALK, usescrap and "created_x_for_y_scrap" ,itemtab.Name, math.ceil(cost))
 	else
 		sender:TakePoints(cost)
 		sender:SendLua("surface.PlaySound(\"ambient/levels/labs/coinslot1.wav\")")
@@ -199,6 +199,8 @@ concommand.Add("zs_dismantle", function(sender, command, arguments)
 	end
 
 	local scrap = GAMEMODE:GetDismantleScrap(wtbl or GAMEMODE.ZSInventoryItemData[invitem], invitem)
+	local scrapd =  (sender.ScrapDiscount * sender.ScrapDiscount)
+	local scrap = scrap * scrapd
 	net.Start("zs_ammopickup")
 		net.WriteUInt(scrap, 16)
 		net.WriteString("scrap")
