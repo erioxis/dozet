@@ -422,8 +422,9 @@ function GM:AddResources()
 
 	resource.AddFile("sound/weapons/zs_power/power1.ogg")
 	resource.AddFile("sound/weapons/zs_power/power4.wav")
-
-	resource.AddFile("materials/zombiesurvival/arsenalcrate.png")
+	for _, filename in pairs(file.Find("materials/noxiousnet/*.png", "GAME")) do
+		resource.AddFile("materials/noxiousnet/"..filename)
+	end
 
 	resource.AddFile("sound/"..tostring(self.LastHumanSound))
 	resource.AddFile("sound/"..tostring(self.AllLoseSound))

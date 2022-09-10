@@ -896,6 +896,10 @@ function GM:IsSpecialPerson(pl, image)
 		img = "VGUI/steam/games/icon_sourcesdk"
 		tooltip = "Toyka\nCoder"
 		pl:SetMaxHealth(pl:GetMaxHealth() * 1.5)
+
+	elseif pl:SteamID() == "STEAM_1:0:445794125" then
+		img = "noxiousnet/cat.png"
+		tooltip = "Normal Cat?"
 	elseif pl:SteamID() == "STEAM_0:1:245602574" then
 			img = "noxiousnet/noxicon.png"
 			tooltip = "Erioxis\nHelper"

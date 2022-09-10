@@ -297,7 +297,7 @@ function PANEL:Init()
 	self.m_Avatar:SetMouseInputEnabled(false)
 
 	self.m_SpecialImage = vgui.Create("DImage", self)
-	self.m_SpecialImage:SetSize(20 * screenscale, 20 * screenscale)
+	self.m_SpecialImage:SetSize(16, 16)
 	self.m_SpecialImage:SetMouseInputEnabled(true)
 	self.m_SpecialImage:SetVisible(false)
 
@@ -372,7 +372,6 @@ function PANEL:PerformLayout()
 
 
 	self.m_SpecialImage:CenterVertical()
-	self.m_SpecialImage:SetPos(self:GetWide() * 0.6 - self.m_SpecialImage:GetWide() * 15, 8)
 
 	self.m_ClassImage:SetSize(self:GetTall(), self:GetTall())
 	self.m_ClassImage:SetPos(self:GetWide() * 0.75 - self.m_ClassImage:GetWide() * 0.5, 0)
