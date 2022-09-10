@@ -776,12 +776,12 @@ GM:AddMutationItem("m_evo", translate.Get("zshop_evo"), translate.Get("zshop_evo
 
 local function genericcallback(pl, magnitude) return pl:Name(), magnitude end
 GM.HonorableMentions = {}
-GM.HonorableMentions[HM_MOSTZOMBIESKILLED] = {Name = "Crymommy", String = "by %s, with %d killed zombies.", Callback = genericcallback, Color = COLOR_CYAN}
-GM.HonorableMentions[HM_MOSTDAMAGETOUNDEAD] = {Name = "GEnius", String = "goes to %s, with a total of %d damage dealt to the undead.", Callback = genericcallback, Color = COLOR_CYAN}
-GM.HonorableMentions[HM_MOSTHEADSHOTS] = {Name = "AIMer", String = "goes to %s, with a total of %s headshot kills.", Callback = genericcallback, Color = COLOR_CYAN}
-GM.HonorableMentions[HM_PACIFIST] = {Name = "Fucking Pacifist", String = "goes to %s for not killing a single zombie and still surviving!", Callback = genericcallback, Color = COLOR_CYAN}
-GM.HonorableMentions[HM_MOSTHELPFUL] = {Name = "У того у кого стилили", String = "goes to %s for assisting in the disposal of %d zombies.", Callback = genericcallback, Color = COLOR_CYAN}
-GM.HonorableMentions[HM_LASTHUMAN] = {Name = "Last Doset man", String = "goes to %s for being the last person alive.", Callback = genericcallback, Color = COLOR_CYAN}
+GM.HonorableMentions[HM_MOSTZOMBIESKILLED] = {Name = translate.Get("hm_mostkills"), String = translate.Get("hm_mostkills_desc"), Callback = genericcallback, Color = COLOR_CYAN}
+GM.HonorableMentions[HM_MOSTDAMAGETOUNDEAD] = {Name = translate.Get("hm_mostdmg"), String = translate.Get("hm_mostdmg_desc"), Callback = genericcallback, Color = COLOR_CYAN}
+GM.HonorableMentions[HM_MOSTHEADSHOTS] = {Name = translate.Get("hm_headshooter"), String = translate.Get("hm_headshooter_desc"), Callback = genericcallback, Color = COLOR_CYAN}
+GM.HonorableMentions[HM_PACIFIST] = {Name = translate.Get("hm_pacifist"), String = translate.Get("hm_pacifist_desc"), Callback = genericcallback, Color = COLOR_CYAN}
+GM.HonorableMentions[HM_MOSTHELPFUL] = {Name = translate.Get("hm_stealed"), String = translate.Get("hm_stealed_desc"), Callback = genericcallback, Color = COLOR_CYAN}
+GM.HonorableMentions[HM_LASTHUMAN] = {Name = translate.Get("hm_lhuman"), String = translate.Get("hm_lhuman_desc"), Callback = genericcallback, Color = COLOR_CYAN}
 GM.HonorableMentions[HM_OUTLANDER] = {Name = "Adventurer", String = "goes to %s for getting killed %d feet away from a zombie spawn.", Callback = genericcallback, Color = COLOR_CYAN}
 GM.HonorableMentions[HM_GOODDOCTOR] = {Name = "Good Man 2", String = "goes to %s for healing their team for %d points of health.", Callback = genericcallback, Color = COLOR_CYAN}
 GM.HonorableMentions[HM_HANDYMAN] = {Name = "Best Cader", String = "goes to %s for getting %d barricade assistance points.", Callback = genericcallback, Color = COLOR_CYAN}
