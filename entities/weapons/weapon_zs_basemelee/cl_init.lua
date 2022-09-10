@@ -20,52 +20,21 @@ function SWEP:DrawWeaponSelection(x, y, w, h, alpha)
 end
 
 function SWEP:DrawHUD()
-	if GetConVar("crosshair"):GetInt() ~= 1 then return end
-	self:DrawCrosshairDot()
 		
 	local wid, hei = 10, 900
 	local x, y = ScrW() + wid - 960, ScrH() - hei - 72
 	local texty = y - 4 - draw.GetFontHeight("ZSHUDFontSmall")
-	if self.BlockTrue == true and self:GetOwner():GetInfo("zs_blockposition") == "0" then
-		
-
-	if self:GetBlockState() then
-		draw.SimpleText(translate.Get("blockistrue"), "ZSHUDFontSmall", x + wid, texty, COLOR_GREEN, TEXT_ALIGN_CENTER)
-		else
-			draw.SimpleText(translate.Get("blockisfalse"), "ZSHUDFontSmall", x + wid, texty, COLOR_RED, TEXT_ALIGN_CENTER)
-		end
-	elseif self.BlockTrue == true and self:GetOwner():GetInfo("zs_blockposition") == "1" then
-		local widC, heiC = self:GetOwner():GetInfo("zs_block_func"), self:GetOwner():GetInfo("zs_x_block_func")
-		local xC, yC = ScrW() - widC - self:GetOwner():GetInfo("zs_block_func") , ScrH() - self:GetOwner():GetInfo("zs_x_block_func")
-		local textyC = yC - 8 - draw.GetFontHeight("ZSHUDFontSmall")
-		if self:GetBlockState() then
-		draw.SimpleText(translate.Get("blockistrue"), "ZSHUDFontSmall", xC + widC, textyC, COLOR_GREEN, TEXT_ALIGN_CENTER)
-		else
-		draw.SimpleText(translate.Get("blockisfalse"), "ZSHUDFontSmall", xC + widC, textyC, COLOR_RED, TEXT_ALIGN_CENTER)
-		end
-		end
+	if self.BlockTrue == true then
 		if self:GetOwner():IsSkillActive(SKILL_TRUEBLOCK) and not self.ParryTiming then
-		draw.SimpleText("PARRY!", "ZSHUDFontSmall", x + wid, texty - 25, COLOR_RED, TEXT_ALIGN_CENTER)
-	elseif self:GetOwner():IsSkillActive(SKILL_TRUEBLOCK) and self.ParryTiming then
-		draw.SimpleText("PARRY!", "ZSHUDFontSmall", x + wid, texty - 25, COLOR_GREEN, TEXT_ALIGN_CENTER)
+			draw.SimpleText("PARRY!", "ZSHUDFontSmall", x + wid, texty - 25, COLOR_RED, TEXT_ALIGN_CENTER)
+		elseif self:GetOwner():IsSkillActive(SKILL_TRUEBLOCK) and self.ParryTiming then
+			draw.SimpleText("PARRY!", "ZSHUDFontSmall", x + wid, texty - 25, COLOR_GREEN, TEXT_ALIGN_CENTER)
+		end
 	end
-
+	if GetConVar("crosshair"):GetInt() ~= 1 then return end
+	self:DrawCrosshairDot()
 end
 
-
---[[function SWEP:DrawHUD()
-	if GetConVar("crosshair"):GetInt() ~= 1 then return end
-	if self.BlockTrue == true then
-	self:DrawCrosshairDot()
-	local wid, hei = 384, 16
-	local x, y = ScrW() - wid - 32, ScrH() - hei - 72
-	local texty = y - 4 - draw.GetFontHeight("ZSHUDFontSmall")
-	if self.Block == 1 then
-	draw.SimpleText(""..translate.Get("blockistrue"), "ZSHUDFontSmall", x + wid, texty, COLOR_GREEN, TEXT_ALIGN_RIGHT)
-	else
-		draw.SimpleText(""..translate.Get("blockisfalse"), "ZSHUDFontSmall", x + wid, texty, COLOR_RED, TEXT_ALIGN_RIGHT)
-	end
-end]]
 
 
 

@@ -59,7 +59,7 @@ SWEP.Primary.Delay = 0.65
 
 SWEP.Tier = 4
 
-GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_FIRE_DELAY, -0.001, 1)
+GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_FIRE_DELAY, -0.009, 1)
 
 function SWEP:OnMeleeHit(hitent, hitflesh, tr)
 	if hitent:IsValid() then
