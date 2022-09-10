@@ -2681,7 +2681,8 @@ function GM:PlayerInitialSpawnRound(pl)
 		"STEAM_1:1:497887119"
 	}
 	local michtbl ={
-		"STEAM_0:0:103817403"
+		"STEAM_0:0:103817403",
+		"STEAM_0:1:434267757"
 	}
 	local queprotbl ={
 		"STEAM_0:1:112691788",

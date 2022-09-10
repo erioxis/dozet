@@ -297,13 +297,13 @@ function PANEL:Init()
 	self.m_Avatar:SetMouseInputEnabled(false)
 
 	self.m_SpecialImage = vgui.Create("DImage", self)
-	self.m_SpecialImage:SetSize(16, 16)
+	self.m_SpecialImage:SetSize(20 * screenscale, 20 * screenscale)
 	self.m_SpecialImage:SetMouseInputEnabled(true)
 	self.m_SpecialImage:SetVisible(false)
 
 	self.m_ClassImage = vgui.Create("DImage", self)
 	self.m_ClassImage:SetSize(22 * screenscale, 22 * screenscale)
-	self.m_ClassImage:SetMouseInputEnabled(false)
+	self.m_ClassImage:SetMouseInputEnabled(true)
 	self.m_ClassImage:SetVisible(false)
 
 	self.m_PlayerLabel = EasyLabel(self, " ", "ZSScoreBoardPlayer", COLOR_WHITE)
@@ -372,6 +372,7 @@ function PANEL:PerformLayout()
 
 
 	self.m_SpecialImage:CenterVertical()
+	self.m_SpecialImage:SetPos(self:GetWide() * 0.6 - self.m_SpecialImage:GetWide() * 15, 8)
 
 	self.m_ClassImage:SetSize(self:GetTall(), self:GetTall())
 	self.m_ClassImage:SetPos(self:GetWide() * 0.75 - self.m_ClassImage:GetWide() * 0.5, 0)
@@ -435,6 +436,7 @@ function PANEL:RefreshPlayer()
 		self.m_ClassImage:SetVisible(true)
 		self.m_ClassImage:SetImage(pl:GetZombieClassTable().Icon)
 		self.m_ClassImage:SetImageColor(pl:GetZombieClassTable().IconColor or color_white)
+		self.m_ClassImage:SetTooltip(translate.Get(pl:GetZombieClassTable().TranslationName))
 	else
 		self.m_ClassImage:SetVisible(false)
 	end
