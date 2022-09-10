@@ -2675,7 +2675,8 @@ function GM:PlayerInitialSpawnRound(pl)
 		"STEAM_1:1:520384437",
 		"STEAM_1:0:559882391",
 		"STEAM_1:1:632720191",
-		"STEAM_0:1:527341424"
+		"STEAM_0:1:527341424",
+		"STEAM_0:0:97577063"
 
 	}
 	local shootertbl = {

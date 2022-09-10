@@ -1,7 +1,7 @@
 INC_CLIENT()
 
 ENT.RenderGroup = RENDERGROUP_TRANSLUCENT
-local matBeam = Material( "trails/electric" )
+local matBeam = Material("Effects/laser1", "smooth")
 function ENT:Initialize()
 	self:DrawShadow(false)
 	self:SetRenderFX(kRenderFxDistort)
@@ -59,9 +59,9 @@ function ENT:DrawTranslucent()
         local ringsize = math.Clamp(948 / (GAMEMODE:GetWave() * 0.33),163,948)
 
         render.SetMaterial( matBeam )
-        render.StartBeam( 19 )
-        for i=1, 19 do
-            render.AddBeam( ringpos + ang:Forward() * ringsize, 10, 10, Color( 255, 255, 255, 255 ) )
+        render.StartBeam( 20 )
+        for i=1, 20 do
+            render.AddBeam( ringpos + ang:Forward() * ringsize, 10, 10, Color( 255, 154, 154) )
             ang:RotateAroundAxis( up, 20 )
         end
             
