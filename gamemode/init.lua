@@ -356,6 +356,7 @@ function GM:AddResources()
 	end
 
 	resource.AddFile("models/player/fatty/fatty.mdl")
+	resource.AddFile("models/player/catpants.mdl")
 	resource.AddFile("materials/models/player/elis/fty/001.vmt")
 	resource.AddFile("materials/models/player/elis/fty/001.vtf")
 	resource.AddFile("materials/models/player/elis/fty/001_normal.vtf")
@@ -1339,10 +1340,17 @@ function GM:Think()
 					pl.NextDamage = time + 1.2
 					pl:CenterNotify(COLOR_GREEN, translate.ClientGet(pl, "danger_x"))
 				end
+				if !pl:OnGround() and time >= pl.NextStuckThink and not (pl:GetVelocity():LengthSqr() > 4000) then
+					pl.StuckedInProp = true
+					pl.NextStuckThink = time + 1
+				else
+					pl.StuckedInProp = nil
+					pl.NextStuckThink = time + 1
+				end
 
 
 				local healmax = pl:IsSkillActive(SKILL_D_FRAIL) and math.floor(pl:GetMaxHealth() * 0.44) or pl:IsSkillActive(SKILL_ABUSE) and math.floor(pl:GetMaxHealth() * 0.25)  or pl:GetMaxHealth()
-                if pl:GetVelocity():LengthSqr() >= 2636052 then
+                if pl:GetVelocity():LengthSqr() >= 5636052 then
 					pl:GiveAchievement("highvel")
 				end
 				if pl.ClanQuePro then
@@ -2561,6 +2569,8 @@ function GM:PlayerInitialSpawnRound(pl)
 	pl.HolyMantle = 0
 	pl.NextPremium = 0
 	pl.NextDamage = 0
+	pl.NextStuckThink = 0
+	pl.StuckedInProp = nil
 
 	pl.CanBuy = nil
 
@@ -3878,6 +3888,10 @@ function GM:KeyPress(pl, key)
 	elseif key == IN_ZOOM then
 		if pl:Team() == TEAM_HUMAN and pl:Alive() and not self.ZombieEscape then
 			if pl:IsOnGround() or pl:GetMoveType() == MOVETYPE_LADDER then
+				pl.LastGhostFailureVelocity = nil
+				pl:SetBarricadeGhosting(true)
+			elseif pl.StuckedInProp then
+				pl.StuckedInProp = false
 				pl.LastGhostFailureVelocity = nil
 				pl:SetBarricadeGhosting(true)
 			else
