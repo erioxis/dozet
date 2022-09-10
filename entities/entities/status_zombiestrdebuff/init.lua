@@ -5,7 +5,7 @@ function ENT:EntityTakeDamage(ent, dmginfo)
 
 	local attacker = dmginfo:GetAttacker()
 	if attacker:IsValidHuman() then
-		dmginfo:SetDamage(dmginfo:GetDamage() * 1.88)
+		dmginfo:SetDamage(dmginfo:GetDamage() * 2.5)
 	end
 end
 
@@ -18,7 +18,7 @@ function ENT:PlayerHurt(victim, attacker, healthleft, damage)
 		end
 
 		if attributeddamage > 0 then
-			attributeddamage = attributeddamage - (attributeddamage / 1.88)
+			attributeddamage = attributeddamage - (attributeddamage / 2.5)
 
 			applier.DamageDealt[TEAM_HUMAN] = applier.DamageDealt[TEAM_HUMAN] + attributeddamage
 			victim.DamagedBy[applier] = (victim.DamagedBy[applier] or 0) + attributeddamage

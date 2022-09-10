@@ -2,6 +2,7 @@ INC_SERVER()
 AddCSLuaFile("cl_animations.lua")
 
 ENT.CleanupPriority = 1
+ENT.Soul = nil
 
 function ENT:Initialize()
 	self.ObjHealth = 200
@@ -32,7 +33,6 @@ function ENT:Use(activator, caller)
 end
 
 function ENT:GiveToActivator(activator, caller)
-	if activator:IsSkillActive(SKILL_SAMODOS) then activator:CenterNotify(COLOR_RED, translate.ClientGet(activator, "samodos")) return end
 	if  not activator:IsPlayer()
 		or not activator:Alive()
 		or activator:Team() ~= TEAM_HUMAN
@@ -42,6 +42,7 @@ function ENT:GiveToActivator(activator, caller)
 
 		return
 	end
+	if activator:IsSkillActive(SKILL_SAMODOS) then activator:CenterNotify(COLOR_RED, translate.ClientGet(activator, "samodos")) return end
 
 	local itype = self:GetInventoryItemType()
 	if not itype then

@@ -213,19 +213,19 @@ local bookw = {
 	["perf"] = { type = "Model", model = "models/props_lab/binderblue.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(5, 1.5, -2), angle = Angle(0, 0, 0), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
 }
 -- some text
-trinket, trinketwep = GM:AddTrinket(""..translate.Get("t_lticket"), "lotteryticket", false, hpveles, hpweles, 2, ""..translate.Get("t_d_lticket"), nil, nil, "weapon_zs_special_trinket")
+trinket, trinketwep = GM:AddTrinket(translate.Get("t_lticket"), "lotteryticket", false, hpveles, hpweles, 2, translate.Get("t_d_lticket"), nil, nil, "weapon_zs_special_trinket")
 
 trinketwep.PermitDismantle = true
-trinket, trinketwep = GM:AddTrinket(""..translate.Get("t_mticket"), "mysteryticket", false, hpveles, hpweles, 5, ""..translate.Get("t_d_mticket"), nil, nil, "weapon_zs_special_trinket")
+trinket, trinketwep = GM:AddTrinket(translate.Get("t_mticket"), "mysteryticket", false, hpveles, hpweles, 5, translate.Get("t_d_mticket"), nil, nil, "weapon_zs_special_trinket")
 
 trinketwep.PermitDismantle = true
 -- Health Trinkets
-trinket, trinketwep = GM:AddTrinket(""..translate.Get("t_healthpack"), "vitpackagei", false, hpveles, hpweles, 2, ""..translate.Get("t_d_healthpack"), nil, nil, "weapon_zs_defence_trinket_d")
+trinket, trinketwep = GM:AddTrinket(translate.Get("t_healthpack"), "vitpackagei", false, hpveles, hpweles, 2, translate.Get("t_d_healthpack"), nil, nil, "weapon_zs_defence_trinket_d")
 GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, 10)
 GM:AddSkillModifier(trinket, SKILLMOD_HEALING_RECEIVED, 0.09)
 trinketwep.PermitDismantle = true
 
-trinket = GM:AddTrinket(""..translate.Get("t_vbank"), "vitpackageii", false, hpveles, hpweles, 2, ""..translate.Get("t_d_vbank"), nil, nil, "weapon_zs_defence_trinket")
+trinket = GM:AddTrinket(translate.Get("t_vbank"), "vitpackageii", false, hpveles, hpweles, 2, translate.Get("t_d_vbank"), nil, nil, "weapon_zs_defence_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, 20)
 GM:AddSkillModifier(trinket, SKILLMOD_BLOODARMOR_DMG_REDUCTION, -0.03)
 
@@ -236,37 +236,37 @@ GM:AddSkillModifier(trinket, SKILLMOD_HEALING_RECEIVED, 0.11)
 --GM:AddWeaponModifier(trinket, WEAPON_MODIFIER_DAMAGE, 3)
 
 
-trinket = GM:AddTrinket(""..translate.Get("t_richeye"), "greedeye", false, hpveles, hpweles, 3, ""..translate.Get("t_d_richeye"), nil, nil, "weapon_zs_special_trinket")
+trinket = GM:AddTrinket(translate.Get("t_richeye"), "greedeye", false, hpveles, hpweles, 3, translate.Get("t_d_richeye"), nil, nil, "weapon_zs_special_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_ENDWAVE_POINTS, 20)
 GM:AddSkillModifier(trinket, SKILLMOD_ARSENAL_DISCOUNT, 0.05)
 
-trinket = GM:AddTrinket(""..translate.Get("t_bara"), "classil", true, hpveles, hpweles, 4, ""..translate.Get("t_d_bara"), nil, nil, "weapon_zs_shot_trinket")
+trinket = GM:AddTrinket(translate.Get("t_bara"), "classil", true, hpveles, hpweles, 4, translate.Get("t_d_bara"), nil, nil, "weapon_zs_shot_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, 60)
 GM:AddSkillModifier(trinket, SKILLMOD_BLOODARMOR_DMG_REDUCTION, 0.09)
 GM:AddSkillModifier(trinket, SKILLMOD_HEALING_RECEIVED, -5)
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TO_BLOODARMOR_MUL, -0.35)
 
-trinket, trinketwep = GM:AddTrinket(""..translate.Get("t_bloodpack"), "bloodpack", false, hpveles, hpweles, 2, ""..translate.Get("t_d_bloodpack"), nil, 15, "weapon_zs_defence_trinket_d")
+trinket, trinketwep = GM:AddTrinket(translate.Get("t_bloodpack"), "bloodpack", false, hpveles, hpweles, 2, translate.Get("t_d_bloodpack"), nil, 15, "weapon_zs_defence_trinket_d")
 trinketwep.PermitDismantle = true
 
-trinket, trinketwep = GM:AddTrinket(""..translate.Get("t_bloodpacki"), "cardpackagei", false, hpveles, hpweles, 2, ""..translate.Get("t_d_bloodpacki"), nil, nil, "weapon_zs_defence_trinket_d")
+trinket, trinketwep = GM:AddTrinket(translate.Get("t_bloodpacki"), "cardpackagei", false, hpveles, hpweles, 2, translate.Get("t_d_bloodpacki"), nil, nil, "weapon_zs_defence_trinket_d")
 GM:AddSkillModifier(trinket, SKILLMOD_BLOODARMOR, 20)
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TO_BLOODARMOR_MUL, 0.07)
 trinketwep.PermitDismantle = true
 
-trinket = GM:AddTrinket(""..translate.Get("t_bloodpackii"), "cardpackageii", false, hpveles, hpweles, 3, ""..translate.Get("t_d_bloodpackii"), nil, nil, "weapon_zs_defence_trinket")
+trinket = GM:AddTrinket(translate.Get("t_bloodpackii"), "cardpackageii", false, hpveles, hpweles, 3, translate.Get("t_d_bloodpackii"), nil, nil, "weapon_zs_defence_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_BLOODARMOR, 20)
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TO_BLOODARMOR_MUL, 0.12)
 
-GM:AddTrinket(""..translate.Get("t_regimp"), "regenimplant", false, hpveles, hpweles, 3, ""..translate.Get("t_d_regimp"), nil, nil, "weapon_zs_defence_trinket")
-GM:AddTrinket(""..translate.Get("t_longgrip"), "longgrip", false, hpveles, hpweles, 3, ""..translate.Get("t_d_longgrip"), nil, nil, "weapon_zs_melee_trinket")
+GM:AddTrinket(translate.Get("t_regimp"), "regenimplant", false, hpveles, hpweles, 3, translate.Get("t_d_regimp"), nil, nil, "weapon_zs_defence_trinket")
+GM:AddTrinket(translate.Get("t_longgrip"), "longgrip", false, hpveles, hpweles, 3, translate.Get("t_d_longgrip"), nil, nil, "weapon_zs_melee_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_RANGE_MUL, 0.10)
 
-trinket, trinketwep = GM:AddTrinket(""..translate.Get("t_bioclean"), "biocleanser", false, hpveles, hpweles, 2, ""..translate.Get("t_d_bioclean"), nil, nil, "weapon_zs_special_trinket")
+trinket, trinketwep = GM:AddTrinket(translate.Get("t_bioclean"), "biocleanser", false, hpveles, hpweles, 2, translate.Get("t_d_bioclean"), nil, nil, "weapon_zs_special_trinket")
 trinketwep.PermitDismantle = true
 
-GM:AddSkillModifier(GM:AddTrinket(""..translate.Get("t_cutset"), "cutlery", false, hpveles, hpweles, nil, ""..translate.Get("t_d_cutset"), nil, nil, "weapon_zs_defence_trinket"), SKILLMOD_FOODEATTIME_MUL, -0.8)
-trinket, trinketwep = GM:AddTrinket(""..translate.Get("t_killer"), "killer", false, hpveles, hpweles, 2, ""..translate.Get("t_d_killer"), nil, nil, "weapon_zs_melee_trinket_d")
+GM:AddSkillModifier(GM:AddTrinket(translate.Get("t_cutset"), "cutlery", false, hpveles, hpweles, nil, translate.Get("t_d_cutset"), nil, nil, "weapon_zs_defence_trinket"), SKILLMOD_FOODEATTIME_MUL, -0.8)
+trinket, trinketwep = GM:AddTrinket(translate.Get("t_killer"), "killer", false, hpveles, hpweles, 2, translate.Get("t_d_killer"), nil, nil, "weapon_zs_melee_trinket_d")
 GM:AddSkillModifier(trinket, SKILLMOD_BLOODARMOR, 110)
 GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, -50)
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 0.37)
@@ -290,66 +290,66 @@ trinket, trinketwep = GM:AddTrinket("Сало", "salo", false, mveles, mweles, 2
 trinketwep.PermitDismantle = true
 -- Melee Trinkets
 
-description = ""..translate.Get("t_d_box")
-trinket = GM:AddTrinket(""..translate.Get("t_box"), "boxingtraining", false, mveles, mweles, nil, description, nil, nil, "weapon_zs_melee_trinket")
+description = translate.Get("t_d_box")
+trinket = GM:AddTrinket(translate.Get("t_box"), "boxingtraining", false, mveles, mweles, nil, description, nil, nil, "weapon_zs_melee_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_UNARMED_SWING_DELAY_MUL, -0.25)
 GM:AddSkillFunction(trinket, function(pl, active) pl.BoxingTraining = active end)
 
-trinket, trinketwep = GM:AddTrinket(""..translate.Get("t_momentsup"), "momentumsupsysii", false, mveles, mweles, 2, ""..translate.Get("t_d_momentsup"), nil, nil, "weapon_zs_melee_trinket")
+trinket, trinketwep = GM:AddTrinket(translate.Get("t_momentsup"), "momentumsupsysii", false, mveles, mweles, 2, translate.Get("t_d_momentsup"), nil, nil, "weapon_zs_melee_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_SWING_DELAY_MUL, -0.09)
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_KNOCKBACK_MUL, 0.10)
 trinketwep.PermitDismantle = true
 
-trinket = GM:AddTrinket(""..translate.Get("t_momentsupi"), "momentumsupsysiii", false, mveles, mweles, 3, ""..translate.Get("t_d_momentsupi"), nil, nil, "weapon_zs_melee_trinket")
+trinket = GM:AddTrinket(translate.Get("t_momentsupi"), "momentumsupsysiii", false, mveles, mweles, 3, translate.Get("t_d_momentsupi"), nil, nil, "weapon_zs_melee_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_SWING_DELAY_MUL, -0.13)
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_KNOCKBACK_MUL, 0.12)
 
-GM:AddSkillModifier(GM:AddTrinket(""..translate.Get("t_hemoad"), "hemoadrenali", false, mveles, mweles, nil, ""..translate.Get("t_d_hemoad"), nil, nil, "weapon_zs_melee_trinket"), SKILLMOD_MELEE_DAMAGE_TO_BLOODARMOR_MUL, 0.06)
+GM:AddSkillModifier(GM:AddTrinket(translate.Get("t_hemoad"), "hemoadrenali", false, mveles, mweles, nil, translate.Get("t_d_hemoad"), nil, nil, "weapon_zs_melee_trinket"), SKILLMOD_MELEE_DAMAGE_TO_BLOODARMOR_MUL, 0.06)
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 0.02)
 
-trinket = GM:AddTrinket(""..translate.Get("t_hemoadi"), "hemoadrenalii", false, mveles, mweles, 3, ""..translate.Get("t_d_hemoadi"), nil, nil, "weapon_zs_melee_trinket")
+trinket = GM:AddTrinket(translate.Get("t_hemoadi"), "hemoadrenalii", false, mveles, mweles, 3, translate.Get("t_d_hemoadi"), nil, nil, "weapon_zs_melee_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TO_BLOODARMOR_MUL, 0.13)
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_MOVEMENTSPEED_ON_KILL, 44)
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 0.05)
-trinket = GM:AddTrinket(""..translate.Get("t_damager"), "damage222", false, mveles, mweles, 3, ""..translate.Get("t_d_damager"), nil, nil, "weapon_zs_melee_trinket")
+trinket = GM:AddTrinket(translate.Get("t_damager"), "damage222", false, mveles, mweles, 3, translate.Get("t_d_damager"), nil, nil, "weapon_zs_melee_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_DAMAGE, 0.90)
 
-trinket = GM:AddTrinket(""..translate.Get("t_termia"), "flashlo", false, mveles, mweles, 3, ""..translate.Get("t_d_termia"), nil, nil, "weapon_zs_melee_trinket")
+trinket = GM:AddTrinket(translate.Get("t_termia"), "flashlo", false, mveles, mweles, 3, translate.Get("t_d_termia"), nil, nil, "weapon_zs_melee_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TO_BLOODARMOR_MUL, 0.08)
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 0.07)
 GM:AddSkillModifier(trinket, SKILLMOD_SPEED, 55)
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_MOVEMENTSPEED_ON_KILL, 55)
 
-GM:AddSkillModifier(GM:AddTrinket(""..translate.Get("t_hemoadii"), "hemoadrenaliii", false, mveles, mweles, 4, ""..translate.Get("t_d_hemoadii"), nil, nil, "weapon_zs_melee_trinket"), SKILLMOD_MELEE_DAMAGE_TO_BLOODARMOR_MUL, 0.22)
+GM:AddSkillModifier(GM:AddTrinket(translate.Get("t_hemoadii"), "hemoadrenaliii", false, mveles, mweles, 4, translate.Get("t_d_hemoadii"), nil, nil, "weapon_zs_melee_trinket"), SKILLMOD_MELEE_DAMAGE_TO_BLOODARMOR_MUL, 0.22)
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 0.04)
-GM:AddSkillModifier(GM:AddTrinket(""..translate.Get("t_athermia"), "sharpkt", false, mveles, mweles, 4, ""..translate.Get("t_d_athermia"), nil, nil, "weapon_zs_melee_trinket"), SKILLMOD_MELEE_DAMAGE_TO_BLOODARMOR_MUL, -0.09)
+GM:AddSkillModifier(GM:AddTrinket(translate.Get("t_athermia"), "sharpkt", false, mveles, mweles, 4, translate.Get("t_d_athermia"), nil, nil, "weapon_zs_melee_trinket"), SKILLMOD_MELEE_DAMAGE_TO_BLOODARMOR_MUL, -0.09)
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.05)
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TO_BLOODARMOR_MUL, -0.08)
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_MOVEMENTSPEED_ON_KILL, -280)
 
-GM:AddSkillModifier(GM:AddTrinket(""..translate.Get("t_gaunt"), "powergauntlet", false, mveles, mweles, 3, ""..translate.Get("t_d_gaunt"), nil, nil, "weapon_zs_melee_trinket"), SKILLMOD_MELEE_POWERATTACK_MUL, 0.45)
+GM:AddSkillModifier(GM:AddTrinket(translate.Get("t_gaunt"), "powergauntlet", false, mveles, mweles, 3, translate.Get("t_d_gaunt"), nil, nil, "weapon_zs_melee_trinket"), SKILLMOD_MELEE_POWERATTACK_MUL, 0.45)
 
-GM:AddTrinket(""..translate.Get("t_fkit"), "sharpkit", false, mveles, mweles, 2, ""..translate.Get("t_d_fkit"), nil, nil, "weapon_zs_melee_trinket")
+GM:AddTrinket(translate.Get("t_fkit"), "sharpkit", false, mveles, mweles, 2, translate.Get("t_d_fkit"), nil, nil, "weapon_zs_melee_trinket")
 
 
-GM:AddTrinket(""..translate.Get("t_skit"), "sharpstone", false, mveles, mweles, 3, ""..translate.Get("t_d_skit"), nil, nil, "weapon_zs_melee_trinket")
+GM:AddTrinket(translate.Get("t_skit"), "sharpstone", false, mveles, mweles, 3, translate.Get("t_d_skit"), nil, nil, "weapon_zs_melee_trinket")
 local cursesoul = { ["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 10.697, y = 10.697 }, color = Color(139,0,255,150), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core_2+"] = { type = "Sprite", sprite = "effects/splashwake1", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 30, y = 30 }, color = Color(139,0,255, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 2, 0), angle = Angle(0, 0, 0), size = Vector(0.349, 0.349, 0.349), color = Color(139,0,255, 100), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} }}
 --curses
-trinket, trinketwep = GM:AddTrinket(""..translate.Get("t_curse_dropping"), "curse_dropping", false, nil, cursesoul, 3, ""..translate.Get("t_d_curse_dropping"), nil, nil, "weapon_zs_cursed")
+trinket, trinketwep = GM:AddTrinket(translate.Get("t_curse_dropping"), "curse_dropping", false, nil, cursesoul, 3, translate.Get("t_d_curse_dropping"), nil, nil, "weapon_zs_cursed")
 trinketwep.PermitDismantle = true
-trinket, trinketwep = GM:AddTrinket(""..translate.Get("t_hurt_curse"), "hurt_curse", false, nil,cursesoul, 3,""..translate.Get("t_d_hurt_curse"), nil, nil, "weapon_zs_cursed")
+trinket, trinketwep = GM:AddTrinket(translate.Get("t_hurt_curse"), "hurt_curse", false, nil,cursesoul, 3,translate.Get("t_d_hurt_curse"), nil, nil, "weapon_zs_cursed")
 trinketwep.PermitDismantle = true
-trinket, trinketwep = GM:AddTrinket(""..translate.Get("t_uncurse"), "uncurse", false, nil,cursesoul, 3, ""..translate.Get("t_d_uncurse"), nil, nil, "weapon_zs_cursed")
+trinket, trinketwep = GM:AddTrinket(translate.Get("t_uncurse"), "uncurse", false, nil,cursesoul, 3, translate.Get("t_d_uncurse"), nil, nil, "weapon_zs_cursed")
 GM:AddSkillModifier(trinket, SKILLMOD_CURSEM, -0.70)
 trinketwep.PermitDismantle = true
-trinket, trinketwep = GM:AddTrinket(""..translate.Get("t_curse_faster"), "curse_faster", false, nil,cursesoul, 3, ""..translate.Get("t_d_curse_faster"), nil, nil, "weapon_zs_cursed")
+trinket, trinketwep = GM:AddTrinket(translate.Get("t_curse_faster"), "curse_faster", false, nil,cursesoul, 3, translate.Get("t_d_curse_faster"), nil, nil, "weapon_zs_cursed")
 trinketwep.PermitDismantle = true
-trinket, trinketwep = GM:AddTrinket(""..translate.Get("t_curse_slow"), "curse_slow", false, nil, cursesoul, 3, ""..translate.Get("t_d_curse_slow"), nil, nil, "weapon_zs_cursed")
+trinket, trinketwep = GM:AddTrinket(translate.Get("t_curse_slow"), "curse_slow", false, nil, cursesoul, 3, translate.Get("t_d_curse_slow"), nil, nil, "weapon_zs_cursed")
 GM:AddSkillModifier(trinket, SKILLMOD_SPEED, -80)
 trinketwep.PermitDismantle = true
-trinket, trinketwep = GM:AddTrinket(""..translate.Get("t_curse_heart"), "curse_heart", false, nil, cursesoul, 3, ""..translate.Get("t_d_curse_heart"), nil, nil, "weapon_zs_cursed")
+trinket, trinketwep = GM:AddTrinket(translate.Get("t_curse_heart"), "curse_heart", false, nil, cursesoul, 3, translate.Get("t_d_curse_heart"), nil, nil, "weapon_zs_cursed")
 GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, -80)
 trinketwep.PermitDismantle = true
 trinket, trinketwep = GM:AddTrinket(translate.Get("t_curse_fragility"), "curse_fragility", false, nil, cursesoul, 3, translate.Get("t_d_curse_fragility"), nil, nil, "weapon_zs_cursed")
@@ -359,27 +359,27 @@ trinket, trinketwep = GM:AddTrinket(translate.Get("t_curse_ponos"), "curse_ponos
 trinketwep.PermitDismantle = true
 
 --perfomance
-GM:AddSkillModifier(GM:AddTrinket( ""..translate.Get("t_adrenaline"), "adrenaline", false, pveles, pweles, nil, ""..translate.Get("t_d_adrenaline"), nil, nil, "weapon_zs_special_trinket"), SKILLMOD_JUMPPOWER_MUL, 0.01)
-GM:AddSkillModifier(GM:AddTrinket( ""..translate.Get("t_ass"), "ass", false, pveles, pweles, nil,  ""..translate.Get("t_d_ass"), nil, nil, "weapon_zs_special_trinket"), SKILLMOD_HEALTH, 6)
+GM:AddSkillModifier(GM:AddTrinket( translate.Get("t_adrenaline"), "adrenaline", false, pveles, pweles, nil, translate.Get("t_d_adrenaline"), nil, nil, "weapon_zs_special_trinket"), SKILLMOD_JUMPPOWER_MUL, 0.01)
+GM:AddSkillModifier(GM:AddTrinket( translate.Get("t_ass"), "ass", false, pveles, pweles, nil,  translate.Get("t_d_ass"), nil, nil, "weapon_zs_special_trinket"), SKILLMOD_HEALTH, 6)
 GM:AddSkillModifier(trinket, SKILLMOD_AIMSPREAD_MUL, 0.02)
-trinket = GM:AddTrinket(""..translate.Get("t_sarmband"), "supraband", false, pveles, pweles, 1, ""..translate.Get("t_d_sarmband"), nil, nil, "weapon_zs_special_trinket")
+trinket = GM:AddTrinket(translate.Get("t_sarmband"), "supraband", false, pveles, pweles, 1, translate.Get("t_d_sarmband"), nil, nil, "weapon_zs_special_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_JUMPPOWER_MUL, 0.04)
-trinket = GM:AddTrinket("Engineer Gaming", "engineer", false, pveles, pweles, 1, ""..translate.Get("t_d_egaming"), nil, nil, "weapon_zs_special_trinket")
+trinket = GM:AddTrinket("Engineer Gaming", "engineer", false, pveles, pweles, 1, translate.Get("t_d_egaming"), nil, nil, "weapon_zs_special_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_DEPLOYABLE_PACKTIME_MUL, 0.12)
-trinket = GM:AddTrinket("Scout Gaming", "scout", false, pveles, pweles, 2, ""..translate.Get("t_d_sgaming"), nil, nil, "weapon_zs_special_trinket")
+trinket = GM:AddTrinket("Scout Gaming", "scout", false, pveles, pweles, 2, translate.Get("t_d_sgaming"), nil, nil, "weapon_zs_special_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_SPEED, 10)
-trinket = GM:AddTrinket(""..translate.Get("t_bhammer"), "brokenhammer", false, pveles, pweles, 3, ""..translate.Get("t_d_bhammer"), nil, nil, "weapon_zs_special_trinket")
+trinket = GM:AddTrinket(translate.Get("t_bhammer"), "brokenhammer", false, pveles, pweles, 3, translate.Get("t_d_bhammer"), nil, nil, "weapon_zs_special_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_POINT_MULTIPLIER, -0.05)
 GM:AddSkillModifier(trinket, SKILLMOD_REPAIRRATE_MUL,  0.10)
 
 -- Special Trinkets
-GM:AddTrinket(""..translate.Get("t_otank"), "oxygentank", true, nil, {
+GM:AddTrinket(translate.Get("t_otank"), "oxygentank", true, nil, {
 	["base"] = { type = "Model", model = "models/props_c17/canister01a.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 3, -1), angle = Angle(180, 0, 0), size = Vector(0.5, 0.5, 0.5), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
-}, nil, ""..translate.Get("t_d_otank"), "oxygentank", nil, nil, "weapon_zs_special_trinket")
+}, nil, translate.Get("t_d_otank"), "oxygentank", nil, nil, "weapon_zs_special_trinket")
 
-GM:AddSkillModifier(GM:AddTrinket(""..translate.Get("t_aframe"), "acrobatframe", false, pveles, pweles, nil, ""..translate.Get("t_d_aframe"), nil, nil, "weapon_zs_special_trinket"), SKILLMOD_JUMPPOWER_MUL, 0.08)
+GM:AddSkillModifier(GM:AddTrinket(translate.Get("t_aframe"), "acrobatframe", false, pveles, pweles, nil, translate.Get("t_d_aframe"), nil, nil, "weapon_zs_special_trinket"), SKILLMOD_JUMPPOWER_MUL, 0.08)
 
-trinket = GM:AddTrinket(""..translate.Get("t_nightglass"), "nightvision", true, pveles, pweles, 2, ""..translate.Get("t_d_nightglass"), nil, nil, "weapon_zs_special_trinket_d")
+trinket = GM:AddTrinket(translate.Get("t_nightglass"), "nightvision", true, pveles, pweles, 2, translate.Get("t_d_nightglass"), nil, nil, "weapon_zs_special_trinket_d")
 GM:AddSkillModifier(trinket, SKILLMOD_DIMVISION_EFF_MUL, -0.20)
 GM:AddSkillModifier(trinket, SKILLMOD_FRIGHT_DURATION_MUL, -0.20)
 GM:AddSkillModifier(trinket, SKILLMOD_VISION_ALTER_DURATION_MUL, -0.2)
@@ -391,115 +391,115 @@ GM:AddSkillFunction(trinket, function(pl, active)
 end)
 trinketwep.PermitDismantle = true
 
-trinket = GM:AddTrinket(""..translate.Get("t_whole"), "portablehole", false, pveles, pweles, nil, ""..translate.Get("t_d_whole"), nil, nil, "weapon_zs_special_trinket")
+trinket = GM:AddTrinket(translate.Get("t_whole"), "portablehole", false, pveles, pweles, nil, translate.Get("t_d_whole"), nil, nil, "weapon_zs_special_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_DEPLOYSPEED_MUL, 0.15)
 GM:AddSkillModifier(trinket, SKILLMOD_RELOADSPEED_MUL, 0.03)
 GM:AddSkillModifier(trinket, SKILLMOD_ARSENAL_DISCOUNT, -0.01)
 
-trinket = GM:AddTrinket(""..translate.Get("t_agility"), "pathfinder", false, pveles, pweles, 2, ""..translate.Get("t_d_agility"), nil, nil, "weapon_zs_special_trinket")
+trinket = GM:AddTrinket(translate.Get("t_agility"), "pathfinder", false, pveles, pweles, 2, translate.Get("t_d_agility"), nil, nil, "weapon_zs_special_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_BARRICADE_PHASE_SPEED_MUL, 0.55)
 GM:AddSkillModifier(trinket, SKILLMOD_SIGIL_TELEPORT_MUL, -0.45)
 GM:AddSkillModifier(trinket, SKILLMOD_JUMPPOWER_MUL, 0.1)
 
-trinket = GM:AddTrinket(""..translate.Get("t_store"), "store", false, pveles, pweles, 2, ""..translate.Get("t_d_store"), nil, nil, "weapon_zs_special_trinket")
+trinket = GM:AddTrinket(translate.Get("t_store"), "store", false, pveles, pweles, 2, translate.Get("t_d_store"), nil, nil, "weapon_zs_special_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_ARSENAL_DISCOUNT, -0.04)
-trinket = GM:AddTrinket(""..translate.Get("t_ustore"), "superstore", false, pveles, pweles, 2, ""..translate.Get("t_d_ustore"), nil, nil, "weapon_zs_special_trinket")
+trinket = GM:AddTrinket(translate.Get("t_ustore"), "superstore", false, pveles, pweles, 2, translate.Get("t_d_ustore"), nil, nil, "weapon_zs_special_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_ARSENAL_DISCOUNT, -0.05)
-trinket = GM:AddTrinket(""..translate.Get("t_credit"), "store2", false, pveles, pweles, 2, ""..translate.Get("t_d_credit"), nil, nil, "weapon_zs_special_trinket")
+trinket = GM:AddTrinket(translate.Get("t_credit"), "store2", false, pveles, pweles, 2, translate.Get("t_d_credit"), nil, nil, "weapon_zs_special_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_ARSENAL_DISCOUNT, -0.03)
 
-trinket = GM:AddTrinket(""..translate.Get("t_galvanka"), "analgestic", false, pveles, pweles, 3, ""..translate.Get("t_d_galvanka"), nil, nil, "weapon_zs_special_trinket")
+trinket = GM:AddTrinket(translate.Get("t_galvanka"), "analgestic", false, pveles, pweles, 3, translate.Get("t_d_galvanka"), nil, nil, "weapon_zs_special_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_SLOW_EFF_TAKEN_MUL, -0.50)
 GM:AddSkillModifier(trinket, SKILLMOD_LOW_HEALTH_SLOW_MUL, -0.50)
 GM:AddSkillModifier(trinket, SKILLMOD_KNOCKDOWN_RECOVERY_MUL, -0.20)
 GM:AddSkillModifier(trinket, SKILLMOD_DEPLOYSPEED_MUL, 0.25)
-trinket = GM:AddTrinket(""..translate.Get("t_invalid"), "invalid", false, pveles, pweles, 3, ""..translate.Get("t_d_invalid"), nil, nil, "weapon_zs_craftables")
+trinket = GM:AddTrinket(translate.Get("t_invalid"), "invalid", false, pveles, pweles, 3, translate.Get("t_d_invalid"), nil, nil, "weapon_zs_craftables")
 GM:AddSkillModifier(trinket, SKILLMOD_KNOCKDOWN_RECOVERY_MUL, -0.5)
 
-trinket = GM:AddTrinket(""..translate.Get("t_credit2"), "kre", false, pveles, pweles, 3, ""..translate.Get("t_d_credit2"), nil, nil, "weapon_zs_special_trinket")
+trinket = GM:AddTrinket(translate.Get("t_credit2"), "kre", false, pveles, pweles, 3, translate.Get("t_d_credit2"), nil, nil, "weapon_zs_special_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_ARSENAL_DISCOUNT, -0.04)
 
-GM:AddSkillModifier(GM:AddTrinket(""..translate.Get("t_ammovesti"), "ammovestii", false, ammoveles, ammoweles, 2, ""..translate.Get("t_d_ammovesti"), nil, nil, "weapon_zs_shot_trinket"), SKILLMOD_RELOADSPEED_MUL, 0.07)
-GM:AddSkillModifier(GM:AddTrinket(""..translate.Get("t_ammovestii"), "ammovestiii", false, ammoveles, ammoweles, 4, ""..translate.Get("t_d_ammovestii"), nil, nil, "weapon_zs_shot_trinket"), SKILLMOD_RELOADSPEED_MUL, 0.11)
-GM:AddSkillModifier(GM:AddTrinket(""..translate.Get("t_ammovestiiii"), "sammovest", false, ammoveles, ammoweles, 4, ""..translate.Get("t_d_ammovestinf"), nil, nil, "weapon_zs_shot_trinket"), SKILLMOD_RELOADSPEED_MUL, 0.16)
-GM:AddSkillModifier(GM:AddTrinket(""..translate.Get("t_ammovestiii"), "classix", false, book, bookw, 4,""..translate.Get("t_d_ammovestinf"), nil, nil, "weapon_zs_shot_trinket"), SKILLMOD_RELOADSPEED_MUL, 0.16)
+GM:AddSkillModifier(GM:AddTrinket(translate.Get("t_ammovesti"), "ammovestii", false, ammoveles, ammoweles, 2, translate.Get("t_d_ammovesti"), nil, nil, "weapon_zs_shot_trinket"), SKILLMOD_RELOADSPEED_MUL, 0.07)
+GM:AddSkillModifier(GM:AddTrinket(translate.Get("t_ammovestii"), "ammovestiii", false, ammoveles, ammoweles, 4, translate.Get("t_d_ammovestii"), nil, nil, "weapon_zs_shot_trinket"), SKILLMOD_RELOADSPEED_MUL, 0.11)
+GM:AddSkillModifier(GM:AddTrinket(translate.Get("t_ammovestiiii"), "sammovest", false, ammoveles, ammoweles, 4, translate.Get("t_d_ammovestinf"), nil, nil, "weapon_zs_shot_trinket"), SKILLMOD_RELOADSPEED_MUL, 0.16)
+GM:AddSkillModifier(GM:AddTrinket(translate.Get("t_ammovestiii"), "classix", false, book, bookw, 4,translate.Get("t_d_ammovestinf"), nil, nil, "weapon_zs_shot_trinket"), SKILLMOD_RELOADSPEED_MUL, 0.16)
 
-GM:AddTrinket(""..translate.Get("t_autor"), "autoreload", false, ammoveles, ammoweles, 2, ""..translate.Get("t_d_autor"), nil, nil, "weapon_zs_shot_trinket")
+GM:AddTrinket(translate.Get("t_autor"), "autoreload", false, ammoveles, ammoweles, 2, translate.Get("t_d_autor"), nil, nil, "weapon_zs_shot_trinket")
 
 -- Offensive Implants
-GM:AddSkillModifier(GM:AddTrinket(""..translate.Get("t_targeti"), "targetingvisori", false, oveles, oweles, nil, ""..translate.Get("t_d_targeti"), nil, nil, "weapon_zs_shot_trinket"), SKILLMOD_AIMSPREAD_MUL, -0.06)
+GM:AddSkillModifier(GM:AddTrinket(translate.Get("t_targeti"), "targetingvisori", false, oveles, oweles, nil, translate.Get("t_d_targeti"), nil, nil, "weapon_zs_shot_trinket"), SKILLMOD_AIMSPREAD_MUL, -0.06)
 
-GM:AddSkillModifier(GM:AddTrinket(""..translate.Get("t_targetii"), "targetingvisoriii", false, oveles, oweles, 4, ""..translate.Get("t_d_targetii"), nil, nil, "weapon_zs_shot_trinket"), SKILLMOD_AIMSPREAD_MUL, -0.11)
+GM:AddSkillModifier(GM:AddTrinket(translate.Get("t_targetii"), "targetingvisoriii", false, oveles, oweles, 4, translate.Get("t_d_targetii"), nil, nil, "weapon_zs_shot_trinket"), SKILLMOD_AIMSPREAD_MUL, -0.11)
 
-GM:AddTrinket(""..translate.Get("t_targetiii"), "refinedsub", false, oveles, oweles, 4, ""..translate.Get("t_d_targetiii"), nil, nil, "weapon_zs_shot_trinket")
+GM:AddTrinket(translate.Get("t_targetiii"), "refinedsub", false, oveles, oweles, 4, translate.Get("t_d_targetiii"), nil, nil, "weapon_zs_shot_trinket")
 
-trinket = GM:AddTrinket(""..translate.Get("t_targetiiii"), "aimcomp", false, oveles, oweles, 3, ""..translate.Get("t_d_targetiiii"), nil, nil, "weapon_zs_shot_trinket")
+trinket = GM:AddTrinket(translate.Get("t_targetiiii"), "aimcomp", false, oveles, oweles, 3, translate.Get("t_d_targetiiii"), nil, nil, "weapon_zs_shot_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_AIMSPREAD_MUL, -0.11)
 GM:AddSkillModifier(trinket, SKILLMOD_AIM_SHAKE_MUL, -0.52)
 GM:AddSkillFunction(trinket, function(pl, active) pl.TargetLocus = active end)
 
-GM:AddSkillModifier(GM:AddTrinket(""..translate.Get("t_pulsebooster"), "pulseampi", false, oveles, oweles, nil, ""..translate.Get("t_d_pulsebooster"), nil, nil, "weapon_zs_shot_trinket"), SKILLMOD_PULSE_WEAPON_SLOW_MUL, 0.14)
+GM:AddSkillModifier(GM:AddTrinket(translate.Get("t_pulsebooster"), "pulseampi", false, oveles, oweles, nil, translate.Get("t_d_pulsebooster"), nil, nil, "weapon_zs_shot_trinket"), SKILLMOD_PULSE_WEAPON_SLOW_MUL, 0.14)
 
-trinket = GM:AddTrinket(""..translate.Get("t_pulseboosteri"), "pulseampii", false, oveles, oweles, 3, ""..translate.Get("t_d_pulseboosteri"), nil, nil, "weapon_zs_shot_trinket")
+trinket = GM:AddTrinket(translate.Get("t_pulseboosteri"), "pulseampii", false, oveles, oweles, 3, translate.Get("t_d_pulseboosteri"), nil, nil, "weapon_zs_shot_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_PULSE_WEAPON_SLOW_MUL, 0.2)
 GM:AddSkillModifier(trinket, SKILLMOD_EXP_DAMAGE_RADIUS, 0.22)
 
-trinket = GM:AddTrinket(""..translate.Get("t_pboom"), "resonance", false, oveles, oweles, 4, ""..translate.Get("t_d_pboom"), nil, nil, "weapon_zs_shot_trinket")
+trinket = GM:AddTrinket(translate.Get("t_pboom"), "resonance", false, oveles, oweles, 4, translate.Get("t_d_pboom"), nil, nil, "weapon_zs_shot_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_PULSE_WEAPON_SLOW_MUL, -0.11)
 
-trinket = GM:AddTrinket(""..translate.Get("t_cryoinductor"), "cryoindu", false, oveles, oweles, 4, ""..translate.Get("t_d_cryoinductor"), nil, nil, "weapon_zs_shot_trinket")
+trinket = GM:AddTrinket(translate.Get("t_cryoinductor"), "cryoindu", false, oveles, oweles, 4, translate.Get("t_d_cryoinductor"), nil, nil, "weapon_zs_shot_trinket")
 
-trinket = GM:AddTrinket(""..translate.Get("t_extendedmag"), "extendedmag", false, oveles, oweles, 3, ""..translate.Get("t_d_extendedmag"), nil, nil, "weapon_zs_shot_trinket")
+trinket = GM:AddTrinket(translate.Get("t_extendedmag"), "extendedmag", false, oveles, oweles, 3, translate.Get("t_d_extendedmag"), nil, nil, "weapon_zs_shot_trinket")
 
-trinket = GM:AddTrinket(""..translate.Get("t_pulseboosterii"), "pulseimpedance", false, oveles, oweles, 5, ""..translate.Get("t_d_pulseboosterii"), nil, nil, "weapon_zs_shot_trinket")
+trinket = GM:AddTrinket(translate.Get("t_pulseboosterii"), "pulseimpedance", false, oveles, oweles, 5, translate.Get("t_d_pulseboosterii"), nil, nil, "weapon_zs_shot_trinket")
 GM:AddSkillFunction(trinket, function(pl, active) pl.PulseImpedance = active end)
 GM:AddSkillModifier(trinket, SKILLMOD_PULSE_WEAPON_SLOW_MUL, 0.24)
 
-trinket = GM:AddTrinket(""..translate.Get("t_crabstompers"), "curbstompers", false, oveles, oweles, 2, ""..translate.Get("t_d_crabstompers"), nil, nil, "weapon_zs_shot_trinket")
+trinket = GM:AddTrinket(translate.Get("t_crabstompers"), "curbstompers", false, oveles, oweles, 2, translate.Get("t_d_crabstompers"), nil, nil, "weapon_zs_shot_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_FALLDAMAGE_SLOWDOWN_MUL, -0.25)
 
-GM:AddTrinket(""..translate.Get("t_abbiuld"), "supasm", false, oveles, oweles, 5, ""..translate.Get("t_d_abbiuld"), nil, nil, "weapon_zs_shot_trinket")
+GM:AddTrinket(translate.Get("t_abbiuld"), "supasm", false, oveles, oweles, 5, translate.Get("t_d_abbiuld"), nil, nil, "weapon_zs_shot_trinket")
 
-trinket = GM:AddTrinket(""..translate.Get("t_olymp"), "olympianframe", false, oveles, oweles, 2, ""..translate.Get("t_d_olymp"), nil, nil, "weapon_zs_shot_trinket")
+trinket = GM:AddTrinket(translate.Get("t_olymp"), "olympianframe", false, oveles, oweles, 2, translate.Get("t_d_olymp"), nil, nil, "weapon_zs_shot_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_ENDWAVE_POINTS, 3)
 GM:AddSkillModifier(trinket, SKILLMOD_PROP_CARRY_SLOW_MUL, -0.25)
 GM:AddSkillModifier(trinket, SKILLMOD_WEAPON_WEIGHT_SLOW_MUL, -0.35)
 
 
 -- Defensive Trinkets
-trinket, trinketwep = GM:AddTrinket(""..translate.Get("t_defender"), "kevlar", false, develes, deweles, 2, ""..translate.Get("t_d_defender"), nil, nil, "weapon_zs_defence_trinket_d")
+trinket, trinketwep = GM:AddTrinket(translate.Get("t_defender"), "kevlar", false, develes, deweles, 2, translate.Get("t_d_defender"), nil, nil, "weapon_zs_defence_trinket_d")
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.06)
 GM:AddSkillModifier(trinket, SKILLMOD_PROJECTILE_DAMAGE_TAKEN_MUL, -0.11)
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TO_BLOODARMOR_MUL, -0.01)
 trinketwep.PermitDismantle = true
 
-trinket = GM:AddTrinket(""..translate.Get("t_defenderi"), "barbedarmor", false, develes, deweles, 3, ""..translate.Get("t_d_defenderi"), nil, nil, "weapon_zs_defence_trinket")
+trinket = GM:AddTrinket(translate.Get("t_defenderi"), "barbedarmor", false, develes, deweles, 3, translate.Get("t_d_defenderi"), nil, nil, "weapon_zs_defence_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_ATTACKER_DMG_REFLECT, 11)
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_ATTACKER_DMG_REFLECT_PERCENT, 0.5)
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.04)
 GM:AddSkillModifier(trinket, SKILLMOD_ENDWAVE_POINTS, 3)
 
-trinket = GM:AddTrinket(""..translate.Get("t_antitoxin"), "antitoxinpack", false, develes, deweles, 2, ""..translate.Get("t_d_antitoxin"), nil, nil, "weapon_zs_defence_trinket")
+trinket = GM:AddTrinket(translate.Get("t_antitoxin"), "antitoxinpack", false, develes, deweles, 2, translate.Get("t_d_antitoxin"), nil, nil, "weapon_zs_defence_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_POISON_DAMAGE_TAKEN_MUL, -0.17)
 GM:AddSkillModifier(trinket, SKILLMOD_POISON_SPEED_MUL, -0.4)
 
-trinket = GM:AddTrinket(""..translate.Get("t_hemostatis"), "hemostasis", false, develes, deweles, 2, ""..translate.Get("t_d_hemostatis"), nil, nil, "weapon_zs_defence_trinket")
+trinket = GM:AddTrinket(translate.Get("t_hemostatis"), "hemostasis", false, develes, deweles, 2, translate.Get("t_d_hemostatis"), nil, nil, "weapon_zs_defence_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_BLEED_DAMAGE_TAKEN_MUL, -0.3)
 GM:AddSkillModifier(trinket, SKILLMOD_BLEED_SPEED_MUL, -0.6)
 
-trinket = GM:AddTrinket(""..translate.Get("t_defenderii"), "eodvest", false, develes, deweles, 4, ""..translate.Get("t_d_defenderii"), nil, nil, "weapon_zs_defence_trinket")
+trinket = GM:AddTrinket(translate.Get("t_defenderii"), "eodvest", false, develes, deweles, 4, translate.Get("t_d_defenderii"), nil, nil, "weapon_zs_defence_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_EXP_DAMAGE_TAKEN_MUL, -0.35)
 GM:AddSkillModifier(trinket, SKILLMOD_FIRE_DAMAGE_TAKEN_MUL, -0.50)
 GM:AddSkillModifier(trinket, SKILLMOD_SELF_DAMAGE_MUL, -0.13)
 
-trinket = GM:AddTrinket(""..translate.Get("t_ffframe"), "featherfallframe", false, develes, deweles, 3, ""..translate.Get("t_d_ffframe"), nil, nil, "weapon_zs_defence_trinket")
+trinket = GM:AddTrinket(translate.Get("t_ffframe"), "featherfallframe", false, develes, deweles, 3, translate.Get("t_d_ffframe"), nil, nil, "weapon_zs_defence_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_FALLDAMAGE_DAMAGE_MUL, -0.65)
 GM:AddSkillModifier(trinket, SKILLMOD_FALLDAMAGE_THRESHOLD_MUL, 0.30)
 GM:AddSkillModifier(trinket, SKILLMOD_FALLDAMAGE_SLOWDOWN_MUL, -0.75)
 
-trinket = GM:AddTrinket(""..translate.Get("t_supersale"), "stopit", false, develes, deweles, 3, ""..translate.Get("t_d_supersale"), nil, nil, "weapon_zs_special_trinket")
+trinket = GM:AddTrinket(translate.Get("t_supersale"), "stopit", false, develes, deweles, 3, translate.Get("t_d_supersale"), nil, nil, "weapon_zs_special_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_ARSENAL_DISCOUNT, -0.09)
-trinket = GM:AddTrinket(""..translate.Get("t_fire_ind"), "fire_ind", false, develes, deweles, 3, ""..translate.Get("t_d_fire_ind"), nil, nil, "weapon_zs_special_trinket")
+trinket = GM:AddTrinket(translate.Get("t_fire_ind"), "fire_ind", false, develes, deweles, 3, translate.Get("t_d_fire_ind"), nil, nil, "weapon_zs_special_trinket")
 
 
 trinketwep.PermitDismantle = true
@@ -512,83 +512,83 @@ local eicew = {
 	["base"] = { type = "Model", model = "models/gibs/glass_shard04.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3.556, 2.519, -1.468), angle = Angle(0, -5.844, -75.974), size = Vector(0.5, 0.5, 0.5), color = Color(0, 137, 255, 255), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} }
 }
 
-GM:AddTrinket(""..translate.Get("t_iceshield"), "iceburst", false, eicev, eicew, nil, ""..translate.Get("t_d_iceshield"), nil, nil, "weapon_zs_special_trinket")
+GM:AddTrinket(translate.Get("t_iceshield"), "iceburst", false, eicev, eicew, nil, translate.Get("t_d_iceshield"), nil, nil, "weapon_zs_special_trinket")
 
-GM:AddSkillModifier(GM:AddTrinket(""..translate.Get("t_fdfe"), "forcedamp", false, develes, deweles, 2,""..translate.Get("t_d_fdfe"), nil, nil, "weapon_zs_special_trinket"), SKILLMOD_PHYSICS_DAMAGE_TAKEN_MUL, -0.33)
+GM:AddSkillModifier(GM:AddTrinket(translate.Get("t_fdfe"), "forcedamp", false, develes, deweles, 2,translate.Get("t_d_fdfe"), nil, nil, "weapon_zs_special_trinket"), SKILLMOD_PHYSICS_DAMAGE_TAKEN_MUL, -0.33)
 
-GM:AddSkillFunction(GM:AddTrinket(""..translate.Get("t_necro"), "necrosense", false, develes, deweles, 2, ""..translate.Get("t_d_necro"), nil, nil, "weapon_zs_special_trinket"), function(pl, active) pl:SetDTBool(DT_PLAYER_BOOL_NECRO, active) end)
+GM:AddSkillFunction(GM:AddTrinket(translate.Get("t_necro"), "necrosense", false, develes, deweles, 2, translate.Get("t_d_necro"), nil, nil, "weapon_zs_special_trinket"), function(pl, active) pl:SetDTBool(DT_PLAYER_BOOL_NECRO, active) end)
 
-trinket, trinketwep = GM:AddTrinket(""..translate.Get("t_reactf"), "reactiveflasher", false, develes, deweles, 2, ""..translate.Get("t_d_reactf"), nil, nil, "weapon_zs_special_trinket_d")
+trinket, trinketwep = GM:AddTrinket(translate.Get("t_reactf"), "reactiveflasher", false, develes, deweles, 2, translate.Get("t_d_reactf"), nil, nil, "weapon_zs_special_trinket_d")
 trinketwep.PermitDismantle = true
 
-trinket = GM:AddTrinket(""..translate.Get("t_defenderiii"), "composite", false, develes, deweles, 4, ""..translate.Get("t_d_defenderiii"), nil, nil, "weapon_zs_defence_trinket")
+trinket = GM:AddTrinket(translate.Get("t_defenderiii"), "composite", false, develes, deweles, 4, translate.Get("t_d_defenderiii"), nil, nil, "weapon_zs_defence_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.11)
 GM:AddSkillModifier(trinket, SKILLMOD_PROJECTILE_DAMAGE_TAKEN_MUL, -0.16)
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TO_BLOODARMOR_MUL, -0.07)
-trinket = GM:AddTrinket(""..translate.Get("t_ttimes"), "ttimes", false, develes, deweles, 5, ""..translate.Get("t_d_ttimes"), nil, nil, "weapon_zs_defence_trinket")
+trinket = GM:AddTrinket(translate.Get("t_ttimes"), "ttimes", false, develes, deweles, 5, translate.Get("t_d_ttimes"), nil, nil, "weapon_zs_defence_trinket")
 
 
 
-trinket = GM:AddTrinket(""..translate.Get("t_defenderiiii"), "toysite", false, develes, deweles, 4, ""..translate.Get("t_d_defenderiiii"), nil, nil, "weapon_zs_defence_trinket")
+trinket = GM:AddTrinket(translate.Get("t_defenderiiii"), "toysite", false, develes, deweles, 4, translate.Get("t_d_defenderiiii"), nil, nil, "weapon_zs_defence_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.09)
 GM:AddSkillModifier(trinket, SKILLMOD_PROJECTILE_DAMAGE_TAKEN_MUL, -0.21)
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TO_BLOODARMOR_MUL, 0.05)
 
 -- Support Trinkets
-trinket, trinketwep = GM:AddTrinket(""..translate.Get("t_arspack"), "arsenalpack", false, {
+trinket, trinketwep = GM:AddTrinket(translate.Get("t_arspack"), "arsenalpack", false, {
 	["base"] = { type = "Model", model = "models/Items/item_item_crate.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 2, -1), angle = Angle(0, -90, 180), size = Vector(0.35, 0.35, 0.35), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
 }, {
 	["base"] = { type = "Model", model = "models/Items/item_item_crate.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 2, -1), angle = Angle(0, -90, 180), size = Vector(0.35, 0.35, 0.35), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
-}, 4, ""..translate.Get("t_d_arspack"), "arsenalpack", 3)
+}, 4, translate.Get("t_d_arspack"), "arsenalpack", 3)
 trinketwep.PermitDismantle = true
 
-trinket, trinketwep = GM:AddTrinket(""..translate.Get("t_ammopack"), "resupplypack", true, nil, {
+trinket, trinketwep = GM:AddTrinket(translate.Get("t_ammopack"), "resupplypack", true, nil, {
 	["base"] = { type = "Model", model = "models/Items/ammocrate_ar2.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 2, -1), angle = Angle(0, -90, 180), size = Vector(0.35, 0.35, 0.35), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
-}, 4, ""..translate.Get("t_d_ammopack"), "resupplypack", 3)
+}, 4, translate.Get("t_d_ammopack"), "resupplypack", 3)
 trinketwep.PermitDismantle = true
 
-GM:AddTrinket(""..translate.Get("t_magnet"), "magnet", true, supveles, supweles, nil, ""..translate.Get("t_d_magnet"), "magnet")
-GM:AddTrinket(""..translate.Get("t_smagnet"), "electromagnet", true, supveles, supweles, nil, ""..translate.Get("t_d_smagnet"), "magnet_electro")
+GM:AddTrinket(translate.Get("t_magnet"), "magnet", true, supveles, supweles, nil, translate.Get("t_d_magnet"), "magnet")
+GM:AddTrinket(translate.Get("t_smagnet"), "electromagnet", true, supveles, supweles, nil, translate.Get("t_d_smagnet"), "magnet_electro")
 
-trinket, trinketwep = GM:AddTrinket(""..translate.Get("t_exoskelet"), "loadingex", false, supveles, supweles, 2, ""..translate.Get("t_d_exoskelet"), nil, nil, "weapon_zs_help_trinket")
+trinket, trinketwep = GM:AddTrinket(translate.Get("t_exoskelet"), "loadingex", false, supveles, supweles, 2, translate.Get("t_d_exoskelet"), nil, nil, "weapon_zs_help_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_PROP_CARRY_SLOW_MUL, -0.55)
 GM:AddSkillModifier(trinket, SKILLMOD_DEPLOYABLE_PACKTIME_MUL, -0.2)
 GM:AddSkillModifier(trinket, SKILLMOD_ENDWAVE_POINTS, 2)
 trinketwep.PermitDismantle = true
 
-trinket, trinketwep = GM:AddTrinket(""..translate.Get("t_blueprints"), "blueprintsi", false, supveles, supweles, 2, ""..translate.Get("t_d_blueprints"), nil, nil, "weapon_zs_help_trinket")
+trinket, trinketwep = GM:AddTrinket(translate.Get("t_blueprints"), "blueprintsi", false, supveles, supweles, 2, translate.Get("t_d_blueprints"), nil, nil, "weapon_zs_help_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_REPAIRRATE_MUL, 0.10)
 trinketwep.PermitDismantle = true
 
-GM:AddSkillModifier(GM:AddTrinket(""..translate.Get("t_ablueprints"), "blueprintsii", false, supveles, supweles, 4, ""..translate.Get("t_d_ablueprints"), nil, nil, "weapon_zs_help_trinket"), SKILLMOD_REPAIRRATE_MUL, 0.20)
+GM:AddSkillModifier(GM:AddTrinket(translate.Get("t_ablueprints"), "blueprintsii", false, supveles, supweles, 4, translate.Get("t_d_ablueprints"), nil, nil, "weapon_zs_help_trinket"), SKILLMOD_REPAIRRATE_MUL, 0.20)
 
-trinket, trinketwep = GM:AddTrinket(""..translate.Get("t_medi"), "processor", false, supveles, supweles, 2, ""..translate.Get("t_d_medi"), nil, nil, "weapon_zs_help_trinket")
+trinket, trinketwep = GM:AddTrinket(translate.Get("t_medi"), "processor", false, supveles, supweles, 2, translate.Get("t_d_medi"), nil, nil, "weapon_zs_help_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_MEDKIT_COOLDOWN_MUL, -0.10)
 GM:AddSkillModifier(trinket, SKILLMOD_MEDGUN_FIRE_DELAY_MUL, -0.6)
 
-trinket = GM:AddTrinket(""..translate.Get("t_medii"), "curativeii", false, supveles, supweles, 3, ""..translate.Get("t_d_medii"), nil, nil, "weapon_zs_help_trinket")
+trinket = GM:AddTrinket(translate.Get("t_medii"), "curativeii", false, supveles, supweles, 3, translate.Get("t_d_medii"), nil, nil, "weapon_zs_help_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_MEDKIT_COOLDOWN_MUL, -0.20)
 GM:AddSkillModifier(trinket, SKILLMOD_MEDGUN_FIRE_DELAY_MUL, -0.15)
 
-trinket = GM:AddTrinket(""..translate.Get("t_mediii"), "remedy", false, supveles, supweles, 3, ""..translate.Get("t_d_mediii"), nil, nil, "weapon_zs_help_trinket")
+trinket = GM:AddTrinket(translate.Get("t_mediii"), "remedy", false, supveles, supweles, 3, translate.Get("t_d_mediii"), nil, nil, "weapon_zs_help_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_MEDKIT_EFFECTIVENESS_MUL, 0.3)
-trinket = GM:AddTrinket(""..translate.Get("t_mediiii"), "mediiii", false, supveles, supweles, 3, ""..translate.Get("t_d_mediiii"), nil, nil, "weapon_zs_help_trinket")
+trinket = GM:AddTrinket(translate.Get("t_mediiii"), "mediiii", false, supveles, supweles, 3, translate.Get("t_d_mediiii"), nil, nil, "weapon_zs_help_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_MEDKIT_EFFECTIVENESS_MUL, 0.2)
 
-trinket = GM:AddTrinket(""..translate.Get("t_deploi"), "mainsuite", false, supveles, supweles, 2, ""..translate.Get("t_d_deploi"), nil, nil, "weapon_zs_help_trinket")
+trinket = GM:AddTrinket(translate.Get("t_deploi"), "mainsuite", false, supveles, supweles, 2, translate.Get("t_d_deploi"), nil, nil, "weapon_zs_help_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_FIELD_RANGE_MUL, 0.1)
 GM:AddSkillModifier(trinket, SKILLMOD_FIELD_DELAY_MUL, -0.07)
 GM:AddSkillModifier(trinket, SKILLMOD_TURRET_RANGE_MUL, 0.1)
 
-trinket = GM:AddTrinket(""..translate.Get("t_deploii"), "controlplat", false, supveles, supweles, 2, ""..translate.Get("t_d_deploii"), nil, nil, "weapon_zs_help_trinket")
+trinket = GM:AddTrinket(translate.Get("t_deploii"), "controlplat", false, supveles, supweles, 2, translate.Get("t_d_deploii"), nil, nil, "weapon_zs_help_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_CONTROLLABLE_HEALTH_MUL, 0.15)
 GM:AddSkillModifier(trinket, SKILLMOD_CONTROLLABLE_SPEED_MUL, 0.15)
 GM:AddSkillModifier(trinket, SKILLMOD_MANHACK_DAMAGE_MUL, 0.50)
 
-trinket = GM:AddTrinket(""..translate.Get("t_proji"), "projguide", false, supveles, supweles, 2, ""..translate.Get("t_d_proji"), nil, nil, "weapon_zs_shot_trinket")
+trinket = GM:AddTrinket(translate.Get("t_proji"), "projguide", false, supveles, supweles, 2, translate.Get("t_d_proji"), nil, nil, "weapon_zs_shot_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_PROJ_SPEED, 4)
 
-trinket = GM:AddTrinket(""..translate.Get("t_projii"), "projwei", false, supveles, supweles, 2, ""..translate.Get("t_d_projii"), nil, nil, "weapon_zs_shot_trinket")
+trinket = GM:AddTrinket(translate.Get("t_projii"), "projwei", false, supveles, supweles, 2, translate.Get("t_d_projii"), nil, nil, "weapon_zs_shot_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_PROJ_SPEED, -1)
 GM:AddSkillModifier(trinket, SKILLMOD_PROJECTILE_DAMAGE_MUL, 0.6)
 
@@ -602,52 +602,52 @@ local ectow = {
 	["base+"] = { type = "Model", model = "models/props_c17/oildrum001.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "base", pos = Vector(0, 0, 4.07), angle = Angle(180, 12.243, 0), size = Vector(0.123, 0.123, 0.085), color = Color(0, 0, 255, 255), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} }
 }
 
-trinket = GM:AddTrinket(""..translate.Get("t_chemicals"), "reachem", false, ectov, ectow, 3, ""..translate.Get("t_d_chemicals"), nil, nil, "weapon_zs_shot_trinket")
+trinket = GM:AddTrinket(translate.Get("t_chemicals"), "reachem", false, ectov, ectow, 3, translate.Get("t_d_chemicals"), nil, nil, "weapon_zs_shot_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_EXP_DAMAGE_MUL, 0.4)
 GM:AddSkillModifier(trinket, SKILLMOD_EXP_DAMAGE_RADIUS, 0.3)
 
 
-trinket = GM:AddTrinket(""..translate.Get("t_deploiii"), "opsmatrix", false, supveles, supweles, 4, ""..translate.Get("t_d_deploiii"), nil, nil, "weapon_zs_help_trinket")
+trinket = GM:AddTrinket(translate.Get("t_deploiii"), "opsmatrix", false, supveles, supweles, 4, translate.Get("t_d_deploiii"), nil, nil, "weapon_zs_help_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_FIELD_RANGE_MUL, 0.15)
 GM:AddSkillModifier(trinket, SKILLMOD_FIELD_DELAY_MUL, -0.13)
 GM:AddSkillModifier(trinket, SKILLMOD_TURRET_RANGE_MUL, 0.85)
-trinket = GM:AddTrinket(""..translate.Get("t_hateme"), "hateome", false, supveles, supweles, 4, ""..translate.Get("t_d_hateme"), nil, nil, "weapon_zs_help_trinket")
+trinket = GM:AddTrinket(translate.Get("t_hateme"), "hateome", false, supveles, supweles, 4, translate.Get("t_d_hateme"), nil, nil, "weapon_zs_help_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_EXP_DAMAGE_TAKEN_MUL, -0.4)
 GM:AddSkillModifier(trinket, SKILLMOD_EXP_DAMAGE_RADIUS, 1.8)
 -- Super Trinkets
-trinket = GM:AddTrinket(""..translate.Get("t_smanifest"), "sman", false, supveles, supweles, 5, ""..translate.Get("t_d_smanifest"))
+trinket = GM:AddTrinket(translate.Get("t_smanifest"), "sman", false, supveles, supweles, 5, translate.Get("t_d_smanifest"))
 GM:AddSkillModifier(trinket, SKILLMOD_RESUPPLY_DELAY_MUL, -0.19)
-trinket = GM:AddTrinket(""..translate.Get("t_protutor"), "stutor", false, book, bookw, 5, ""..translate.Get("t_d_protutor"))
+trinket = GM:AddTrinket(translate.Get("t_protutor"), "stutor", false, book, bookw, 5, translate.Get("t_d_protutor"))
 GM:AddSkillModifier(trinket, SKILLMOD_POINT_MULTIPLIER, 0.30)
-trinket = GM:AddTrinket(""..translate.Get("t_gstore"), "gstore", false, supveles, supweles, 5, ""..translate.Get("t_d_gstore"))
+trinket = GM:AddTrinket(translate.Get("t_gstore"), "gstore", false, supveles, supweles, 5, translate.Get("t_d_gstore"))
 GM:AddSkillModifier(trinket, SKILLMOD_ARSENAL_DISCOUNT, -0.20)
-trinket = GM:AddTrinket(""..translate.Get("t_fblueprints"), "futureblu", false, supveles, supweles, 5, ""..translate.Get("t_d_fblueprints"))
+trinket = GM:AddTrinket(translate.Get("t_fblueprints"), "futureblu", false, supveles, supweles, 5, translate.Get("t_d_fblueprints"))
 GM:AddSkillModifier(trinket, SKILLMOD_REPAIRRATE_MUL, 0.30)
-trinket = GM:AddTrinket(""..translate.Get("t_kbook"), "knowbook", false, book, bookw, 5, ""..translate.Get("t_d_kbook"))
+trinket = GM:AddTrinket(translate.Get("t_kbook"), "knowbook", false, book, bookw, 5, translate.Get("t_d_kbook"))
 GM:AddSkillModifier(trinket, SKILLMOD_POINT_MULTIPLIER, 0.12)
 GM:AddSkillModifier(trinket, SKILLMOD_RELOADSPEED_MUL, 0.05)
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_MUL, 0.05)
-trinket = GM:AddTrinket(""..translate.Get("t_bloodlust"), "bloodlust", false, book, bookw, 5, ""..translate.Get("t_d_bloodlust"))
+trinket = GM:AddTrinket(translate.Get("t_bloodlust"), "bloodlust", false, book, bookw, 5, translate.Get("t_d_bloodlust"))
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_POWERATTACK_MUL, 0.20)
 GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, -10)
-trinket = GM:AddTrinket(""..translate.Get("t_adbat"), "adbat", false, supveles, supweles, 5, ""..translate.Get("t_d_adbat"))
+trinket = GM:AddTrinket(translate.Get("t_adbat"), "adbat", false, supveles, supweles, 5, translate.Get("t_d_adbat"))
 GM:AddSkillModifier(trinket, SKILLMOD_RELOADSPEED_PULSE_MUL, 0.33)
-trinket = GM:AddTrinket(""..translate.Get("t_mecharm"), "marm", false, supveles, supweles, 5, ""..translate.Get("t_d_mecharm"))
+trinket = GM:AddTrinket(translate.Get("t_mecharm"), "marm", false, supveles, supweles, 5, translate.Get("t_d_mecharm"))
 GM:AddSkillModifier(trinket, SKILLMOD_RELOADSPEED_MUL, 0.22)
-trinket = GM:AddTrinket(""..translate.Get("t_sshield"), "sshield", false, supveles, supweles, 5, ""..translate.Get("t_d_sshield"))
+trinket = GM:AddTrinket(translate.Get("t_sshield"), "sshield", false, supveles, supweles, 5, translate.Get("t_d_sshield"))
 GM:AddSkillModifier(trinket, SKILLMOD_RELOADSPEED_MUL, -0.06)
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.10)
-trinket = GM:AddTrinket(""..translate.Get("t_antibaracat"), "antibaracat", false, supveles, supweles, 5, ""..translate.Get("t_d_antibaracat"))
+trinket = GM:AddTrinket(translate.Get("t_antibaracat"), "antibaracat", false, supveles, supweles, 5, translate.Get("t_d_antibaracat"))
 GM:AddSkillModifier(trinket, SKILLMOD_MEDKIT_EFFECTIVENESS_MUL, 0.5)
 
 --Special Trinkets
-trinket = GM:AddTrinket(""..translate.Get("t_nheart"), "nulledher", false, supveles, supweles, 4, ""..translate.Get("t_d_nheart"))
+trinket = GM:AddTrinket(translate.Get("t_nheart"), "nulledher", false, supveles, supweles, 4, translate.Get("t_d_nheart"))
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_MUL, 0.1)
 GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, 20)
-trinket = GM:AddTrinket(""..translate.Get("t_voidheart"), "voidheart", false, supveles, supweles, 4, ""..translate.Get("t_d_voidheart"))
+trinket = GM:AddTrinket(translate.Get("t_voidheart"), "voidheart", false, supveles, supweles, 4, translate.Get("t_d_voidheart"))
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_MUL, 0.15)
 GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, -20)
-trinket = GM:AddTrinket(""..translate.Get("t_kheart"), "kheart", false, supveles, supweles, 4, ""..translate.Get("t_d_kheart"))
+trinket = GM:AddTrinket(translate.Get("t_kheart"), "kheart", false, supveles, supweles, 4, translate.Get("t_d_kheart"))
 GM:AddSkillModifier(trinket, SKILLMOD_POINT_MULTIPLIER, 0.25)
 GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, -15)
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 0.15)
@@ -721,8 +721,8 @@ GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_MUL, -0.1)
 
 
 -- ???
-GM:AddSkillModifier(GM:AddTrinket(translate.Get("t_manifesti"), "acqmanifest", false, supveles, supweles, 2, ""..translate.Get("t_d_manifesti"), nil, nil, "weapon_zs_help_trinket"), SKILLMOD_RESUPPLY_DELAY_MUL, -0.06)
-GM:AddSkillModifier(GM:AddTrinket(translate.Get("t_manifestii"), "promanifest", false, supveles, supweles, 4, ""..translate.Get("t_d_manifestii"), nil, nil, "weapon_zs_help_trinket"), SKILLMOD_RESUPPLY_DELAY_MUL, -0.15)
+GM:AddSkillModifier(GM:AddTrinket(translate.Get("t_manifesti"), "acqmanifest", false, supveles, supweles, 2, translate.Get("t_d_manifesti"), nil, nil, "weapon_zs_help_trinket"), SKILLMOD_RESUPPLY_DELAY_MUL, -0.06)
+GM:AddSkillModifier(GM:AddTrinket(translate.Get("t_manifestii"), "promanifest", false, supveles, supweles, 4, translate.Get("t_d_manifestii"), nil, nil, "weapon_zs_help_trinket"), SKILLMOD_RESUPPLY_DELAY_MUL, -0.15)
 
 -- Boss Trinkets
 
@@ -1008,7 +1008,7 @@ trinket = GM:AddTrinket("Soul of Alt Darkness", "altdarksoul", false, nil, {
 	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 17.697, y = 17.697 }, color = Color(0, 0, 0, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core_2+"] = { type = "Sprite", sprite = "effects/splashwake1", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 10, y = 10 }, color = Color(0, 255, 00, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 2, 0), angle = Angle(0, 0, 0), size = Vector(0.349, 0.349, 0.349), color = Color(21, 0, 0, 255), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} }
-}, nil, "Бафф к хилу\nBuff to heal\n Q:3", nil, nil, "weapon_zs_altsoul")
+}, nil, "Бафф к хилу\nBuff to heal\n Q:3", nil, nil, "weapon_zs_soulalt")
 GM:AddSkillModifier(trinket, SKILLMOD_MEDKIT_COOLDOWN_MUL, -0.3)
 GM:AddSkillModifier(trinket, SKILLMOD_MEDKIT_EFFECTIVENESS_MUL, 0.3)
 
@@ -1020,6 +1020,7 @@ trinket = GM:AddTrinket("Soul of Alt ???", "altsoul", false, nil, {
 	["black_core"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 2, 0), angle = Angle(0, 0, 0), size = Vector(0.349, 0.349, 0.349), color = Color(255, 255, 255, 255), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} }
 }, nil, "+22% К радиусу взрыва\n+22% Explosion radius.", nil, nil, "weapon_zs_soulalt")
 GM:AddSkillModifier(trinket, SKILLMOD_EXP_DAMAGE_RADIUS, 0.22)
+
 trinket = GM:AddTrinket("Soul of Alt Eden", "soulalteden", false, nil, {
 	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 17.697, y = 17.697 }, color = Color(4, 8, 255, 208), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core_2+"] = { type = "Sprite", sprite = "effects/splashwake1", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 30, y = 30 }, color = Color(165, 39, 39), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
@@ -1041,20 +1042,20 @@ trinket = GM:AddTrinket("Alt Samson Soul", "altsamsonsoul", false, nil, {
 }, nil,"Нанесение или получение урона добавляет вам ярость,мед винтовка понизит вашу ярость.\nDealing or taking damage adds to your rage,Medical rifle removes the RAGE\n Q:3", nil, nil, "weapon_zs_soulalt")
 
 
-trinket = GM:AddTrinket("Soul of Alt Eve", "altevesoul", false, nil, {
+trinket, soul = GM:AddTrinket("Soul of Alt Eve", "altevesoul", false, nil, {
 	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 10.697, y = 10.697 }, color = Color(0, 0, 0, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core_2+"] = { type = "Sprite", sprite = "effects/splashwake1", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 30, y = 30 }, color = Color(0, 0, 0, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 2, 0), angle = Angle(0, 0, 0), size = Vector(0.349, 0.349, 0.349), color = Color(0, 0, 0, 255), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} }
 }, nil,"Скорость атаки огнестрелом быстрее если хп ниже 50.\nFire speed faster if health lower than 50\n Q:2", nil, nil, "weapon_zs_soulalt")
 
 
-trinket = GM:AddTrinket("Soul of Jacob", "jacobsoul", false, nil, {
+trinket, soul = GM:AddTrinket("Soul of Jacob", "jacobsoul", false, nil, {
 	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 10.697, y = 10.697 }, color = Color(255, 0, 0, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core_2+"] = { type = "Sprite", sprite = "effects/splashwake1", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 30, y = 30 }, color = Color(0, 5, 255, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 2, 0), angle = Angle(0, 0, 0), size = Vector(0.349, 0.349, 0.349), color = Color(255, 0, 255, 255), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} }
 }, nil,"Брат предал тебя,отходи от сигила он тебя убьет.\nSigil kill you instead defend\n Q:5", nil, nil, "weapon_zs_soulalt")
 
-trinket = GM:AddTrinket("Soul of Alt Isaac", "altisaacsoul", false, nil, {
+trinket, soul = GM:AddTrinket("Soul of Alt Isaac", "altisaacsoul", false, nil, {
 	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 10.697, y = 10.697 }, color = Color(34, 120, 255, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core_2+"] = { type = "Sprite", sprite = "effects/splashwake1", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 30, y = 30 }, color = Color(0, 5, 255, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 2, 0), angle = Angle(0, 0, 0), size = Vector(0.349, 0.349, 0.349), color = Color(115, 0, 0, 255), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} }
@@ -1063,7 +1064,8 @@ GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, 10)
 GM:AddSkillModifier(trinket, SKILLMOD_RELOADSPEED_MUL, 0.08)
 GM:AddSkillModifier(trinket, SKILLMOD_POINT_MULTIPLIER, 0.1)
 
-trinket = GM:AddTrinket("Soul of Alt Magdalene", "altmagdalenesoul", false, nil, {
+
+trinket, soul = GM:AddTrinket("Soul of Alt Magdalene", "altmagdalenesoul", false, nil, {
 	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 10.697, y = 10.697 }, color = Color(255, 60, 90, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core_2+"] = { type = "Sprite", sprite = "effects/splashwake1", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 30, y = 30 }, color = Color(0, 5, 255, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 2, 0), angle = Angle(0, 0, 0), size = Vector(0.349, 0.349, 0.349), color = Color(255, 0, 0, 255), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} }
@@ -1072,7 +1074,8 @@ GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, 200)
 GM:AddSkillModifier(trinket, SKILLMOD_BLOODARMOR, 40)
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_MUL, -0.15)
 
-trinket = GM:AddTrinket("Soul of Alt Lilith", "altlilithsoul", false, nil, {
+
+trinket, soul = GM:AddTrinket("Soul of Alt Lilith", "altlilithsoul", false, nil, {
 	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 10.697, y = 10.697 }, color = Color(255, 0, 0, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core_2+"] = { type = "Sprite", sprite = "effects/splashwake1", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 30, y = 30 }, color = Color(0, 0, 0, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 2, 0), angle = Angle(0, 0, 0), size = Vector(0.349, 0.349, 0.349), color = Color(87, 4, 28), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} }
@@ -1083,7 +1086,8 @@ GM:AddSkillModifier(trinket, SKILLMOD_MANHACK_HEALTH_MUL, 0.8)
 
 
 
-trinket = GM:AddTrinket("Soul of Alt Azazel", "alteriosoul", false, nil, {
+
+trinket, soul = GM:AddTrinket("Soul of Alt Azazel", "alteriosoul", false, nil, {
 	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 10.697, y = 10.697 }, color = Color(255, 255, 0, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core_2+"] = { type = "Sprite", sprite = "effects/splashwake1", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 30, y = 30 }, color = Color(255, 165, 00, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 2, 0), angle = Angle(0, 0, 0), size = Vector(0.349, 0.349, 0.349), color = Color(255, 255, 0, 255), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} }
@@ -1092,14 +1096,16 @@ GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_MUL, 0.60)
 GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, -20) 
 GM:AddSkillModifier(trinket, SKILLMOD_BLOODARMOR, -10) 
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_RANGE_MUL, -0.6) 
-trinket = GM:AddTrinket("Soul of Alt Appolyon", "altaposoul", false, nil, {
+
+trinket, soul = GM:AddTrinket("Soul of Alt Appolyon", "altaposoul", false, nil, {
 	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 10.697, y = 10.697 }, color = Color(30, 111, 51, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core_2+"] = { type = "Sprite", sprite = "effects/splashwake1", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 30, y = 30 }, color = Color(0, 105, 20, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 2, 0), angle = Angle(0, 0, 0), size = Vector(0.349, 0.349, 0.349), color = Color(255, 30, 255, 255), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} }
 }, nil, "Проджектайлы быстрее.\n Better Projectile Speed\n Q:3", nil, nil, "weapon_zs_soulalt")
 GM:AddSkillModifier(trinket, SKILLMOD_PROJ_SPEED, 2)  
 GM:AddSkillModifier(trinket, SKILLMOD_PROJECTILE_DAMAGE_MUL, 1) 
-trinket = GM:AddTrinket("Soul of Alt Bethany", "altbetsoul", false, nil, {
+
+trinket, soul = GM:AddTrinket("Soul of Alt Bethany", "altbetsoul", false, nil, {
 	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 10.697, y = 10.697 }, color = Color(33, 33, 31, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core_2+"] = { type = "Sprite", sprite = "effects/splashwake1", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 30, y = 30 }, color = Color(120, 200, 255, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 2, 0), angle = Angle(0, 0, 0), size = Vector(0.349, 0.349, 0.349), color = Color(55, 0, 5, 255), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} }
@@ -1108,7 +1114,8 @@ GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, -100)
 GM:AddSkillModifier(trinket, SKILLMOD_BLOODARMOR, 700) 
 GM:AddSkillModifier(trinket, SKILLMOD_HEALING_RECEIVED, 2) 
 GM:AddSkillModifier(trinket, SKILLMOD_BLOODARMOR_DMG_REDUCTION, 0.20) 
-trinket = GM:AddTrinket("Soul of Alt Lost", "altlostsoul", false, nil, {
+
+trinket, soul = GM:AddTrinket("Soul of Alt Lost", "altlostsoul", false, nil, {
 	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 10.697, y = 10.697 }, color = Color(255, 255, 255, 125), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core_2+"] = { type = "Sprite", sprite = "effects/splashwake1", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 30, y = 30 }, color = Color(0, 255, 20, 125), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 2, 0), angle = Angle(0, 0, 0), size = Vector(0.349, 0.349, 0.349), color = Color(255, 30, 255, 95), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} }
@@ -1116,7 +1123,8 @@ trinket = GM:AddTrinket("Soul of Alt Lost", "altlostsoul", false, nil, {
 GM:AddSkillModifier(trinket, SKILLMOD_BARRICADE_PHASE_SPEED_MUL, 100) 
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 10) 
 GM:AddSkillModifier(trinket, SKILLMOD_SPEED, 500)
-trinket = GM:AddTrinket("Soul of Alt Greed", "altgreedsoul", false, nil, {
+
+trinket, soul = GM:AddTrinket("Soul of Alt Greed", "altgreedsoul", false, nil, {
 	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 10.697, y = 10.697 }, color = Color(21, 255, 1, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core_2+"] = { type = "Sprite", sprite = "effects/splashwake1", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 30, y = 30 }, color = Color(120, 0, 255, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 2, 0), angle = Angle(0, 0, 0), size = Vector(0.349, 0.349, 0.349), color = Color(55, 0, 255, 255), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} }
@@ -1125,18 +1133,20 @@ GM:AddSkillModifier(trinket, SKILLMOD_ARSENAL_DISCOUNT, -0.10)
 GM:AddSkillModifier(trinket, SKILLMOD_SCRAPDISCOUNT, -0.10)
 GM:AddSkillModifier(trinket, SKILLMOD_POINT_MULTIPLIER, -0.25)
 GM:AddSkillModifier(trinket, SKILLMOD_LUCK, 2.0)
-trinket = GM:AddTrinket("Soul of Alt Cain", "altcainsoul", false, nil, {
+
+trinket, soul = GM:AddTrinket("Soul of Alt Cain", "altcainsoul", false, nil, {
 	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 10.697, y = 10.697 }, color = Color(9, 155, 9, 55), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core_2+"] = { type = "Sprite", sprite = "effects/splashwake1", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 30, y = 30 }, color = Color(125, 0, 255, 100), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 2, 0), angle = Angle(0, 0, 0), size = Vector(0.349, 0.349, 0.349), color = Color(55, 0, 255, 155), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} }
 }, nil, "Искажает другие души\nCorrupt Souls\n Q:Alt", nil, nil, "weapon_zs_soulalt")
 
-trinket = GM:AddTrinket("Soul of Alt Lazarus", "altlazarussoul", false, nil, {
+trinket, soul = GM:AddTrinket("Soul of Alt Lazarus", "altlazarussoul", false, nil, {
 	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 10.697, y = 10.697 }, color = Color(9, 0, 0, 195), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core_2+"] = { type = "Sprite", sprite = "effects/splashwake1", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 30, y = 30 }, color = Color(125, 0, 255, 0), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 2, 0), angle = Angle(0, 0, 0), size = Vector(0.349, 0.349, 0.349), color = Color(55, 0, 5, 255), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} }
 }, nil, "Спасает вас!\nSave You!\n Q:Alt", nil, nil, "weapon_zs_soulalt")
-trinket = GM:AddTrinket("Soul of Alt Forgotten", "altforsoul", false, nil, {
+
+trinket, soul = GM:AddTrinket("Soul of Alt Forgotten", "altforsoul", false, nil, {
 	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 10.697, y = 10.697 }, color = Color(2, 0, 61), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core_2+"] = { type = "Sprite", sprite = "effects/splashwake1", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 30, y = 30 }, color = Color(0, 0, 255, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 2, 0), angle = Angle(0, 0, 0), size = Vector(0.349, 0.349, 0.349), color = Color(55, 55, 5, 100), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} }
@@ -1186,26 +1196,26 @@ GM:AddSkillModifier(trinket, SKILLMOD_CLOUD_TIME, 1)
 trinketwep.PermitDismantle = true
 
 --Sins
-trinket = GM:AddTrinket(""..translate.Get("t_sin_greed"), "sin_greed", false, supveles, supweles, 1, ""..translate.Get("t_d_sin_greed"))
-trinket = GM:AddTrinket(""..translate.Get("t_sin_sloth"), "sin_sloth", false, supveles, supweles, 1, ""..translate.Get("t_d_sin_sloth"))
+trinket = GM:AddTrinket(translate.Get("t_sin_greed"), "sin_greed", false, supveles, supweles, 1, translate.Get("t_d_sin_greed"))
+trinket = GM:AddTrinket(translate.Get("t_sin_sloth"), "sin_sloth", false, supveles, supweles, 1, translate.Get("t_d_sin_sloth"))
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_MUL, 2)
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL , 4)
-trinket = GM:AddTrinket(""..translate.Get("t_sin_wrath"), "sin_wrath", false, supveles, supweles, 1, ""..translate.Get("t_d_sin_wrath"))
-trinket = GM:AddTrinket(""..translate.Get("t_sin_gluttony"), "sin_gluttony", false, supveles, supweles, 1, ""..translate.Get("t_d_sin_gluttony"))
-trinket = GM:AddTrinket(""..translate.Get("t_sin_pride"), "sin_pride", false, supveles, supweles, 1, ""..translate.Get("t_d_sin_pride"))
+trinket = GM:AddTrinket(translate.Get("t_sin_wrath"), "sin_wrath", false, supveles, supweles, 1, translate.Get("t_d_sin_wrath"))
+trinket = GM:AddTrinket(translate.Get("t_sin_gluttony"), "sin_gluttony", false, supveles, supweles, 1, translate.Get("t_d_sin_gluttony"))
+trinket = GM:AddTrinket(translate.Get("t_sin_pride"), "sin_pride", false, supveles, supweles, 1, translate.Get("t_d_sin_pride"))
 GM:AddSkillModifier(trinket, SKILLMOD_ARSENAL_DISCOUNT, -0.15)
-trinket = GM:AddTrinket(""..translate.Get("t_sin_envy"), "sin_envy", false, supveles, supweles, 1, ""..translate.Get("t_d_sin_envy"))
+trinket = GM:AddTrinket(translate.Get("t_sin_envy"), "sin_envy", false, supveles, supweles, 1, translate.Get("t_d_sin_envy"))
 GM:AddSkillModifier(trinket, SKILLMOD_ARSENAL_DISCOUNT, -0.15)
-trinket = GM:AddTrinket(""..translate.Get("t_sin_lust"), "sin_lust", false, supveles, supweles, 1, ""..translate.Get("t_d_sin_lust"))
+trinket = GM:AddTrinket(translate.Get("t_sin_lust"), "sin_lust", false, supveles, supweles, 1, translate.Get("t_d_sin_lust"))
 
-trinket = GM:AddTrinket(""..translate.Get("t_vir_pat"), "vir_pat", false, supveles, supweles, 1, ""..translate.Get("t_d_vir_pat"))
+trinket = GM:AddTrinket(translate.Get("t_vir_pat"), "vir_pat", false, supveles, supweles, 1, translate.Get("t_d_vir_pat"))
 GM:AddSkillModifier(trinket, SKILLMOD_ARSENAL_DISCOUNT, -0.10)
---[[trinket = GM:AddTrinket(""..translate.Get("t_vir_pat"), "vir_pat", false, supveles, supweles, 1, ""..translate.Get("t_d_vir_pat"))
-trinket = GM:AddTrinket(""..translate.Get("t_vir_pat"), "vir_pat", false, supveles, supweles, 1, ""..translate.Get("t_d_vir_pat"))
-trinket = GM:AddTrinket(""..translate.Get("t_vir_pat"), "vir_pat", false, supveles, supweles, 1, ""..translate.Get("t_d_vir_pat"))
-trinket = GM:AddTrinket(""..translate.Get("t_vir_pat"), "vir_pat", false, supveles, supweles, 1, ""..translate.Get("t_d_vir_pat"))
-trinket = GM:AddTrinket(""..translate.Get("t_vir_pat"), "vir_pat", false, supveles, supweles, 1, ""..translate.Get("t_d_vir_pat"))
-trinket = GM:AddTrinket(""..translate.Get("t_vir_pat"), "vir_pat", false, supveles, supweles, 1, ""..translate.Get("t_d_vir_pat"))]]
+--[[trinket = GM:AddTrinket(translate.Get("t_vir_pat"), "vir_pat", false, supveles, supweles, 1, translate.Get("t_d_vir_pat"))
+trinket = GM:AddTrinket(translate.Get("t_vir_pat"), "vir_pat", false, supveles, supweles, 1, translate.Get("t_d_vir_pat"))
+trinket = GM:AddTrinket(translate.Get("t_vir_pat"), "vir_pat", false, supveles, supweles, 1, translate.Get("t_d_vir_pat"))
+trinket = GM:AddTrinket(translate.Get("t_vir_pat"), "vir_pat", false, supveles, supweles, 1, translate.Get("t_d_vir_pat"))
+trinket = GM:AddTrinket(translate.Get("t_vir_pat"), "vir_pat", false, supveles, supweles, 1, translate.Get("t_d_vir_pat"))
+trinket = GM:AddTrinket(translate.Get("t_vir_pat"), "vir_pat", false, supveles, supweles, 1, translate.Get("t_d_vir_pat"))]]
 
 --Мед премия
 trinket = GM:AddTrinket(translate.Get("t_pr_gold"), "pr_gold", false, supveles, supweles, 4, translate.Get("t_d_pr_gold"))

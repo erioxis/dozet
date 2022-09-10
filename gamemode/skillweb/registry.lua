@@ -467,37 +467,37 @@ local PURPLE = "^"..COLORID_PURPLE
 --
 
 -- Health Tree
-GM:AddSkill(SKILL_STOIC1, ""..translate.Get("skill_stoici_0"), GOOD..""..translate.Get("skill_stoici_d1")..BAD..""..translate.Get("skill_stoici_d2"),
+GM:AddSkill(SKILL_STOIC1, translate.Get("skill_stoici_0"), GOOD..translate.Get("skill_stoici_d1")..BAD..translate.Get("skill_stoici_d2"),
 																-4,			-6,					{SKILL_NONE, SKILL_STOIC2}, TREE_HEALTHTREE)
-GM:AddSkill(SKILL_STOIC2, ""..translate.Get("skill_stoicii_0"), GOOD..""..translate.Get("skill_stoicii_d1")..BAD..""..translate.Get("skill_stoicii_d2"),
+GM:AddSkill(SKILL_STOIC2, translate.Get("skill_stoicii_0"), GOOD..translate.Get("skill_stoicii_d1")..BAD..translate.Get("skill_stoicii_d2"),
 																-4,			-4,					{SKILL_STOIC3, SKILL_VITALITY1, SKILL_REGENERATOR}, TREE_HEALTHTREE)
-GM:AddSkill(SKILL_STOIC3, ""..translate.Get("skill_stoiciii_0"), GOOD..""..translate.Get("skill_stoiciii_d1")..BAD..""..translate.Get("skill_stoiciii_d2"),
+GM:AddSkill(SKILL_STOIC3, translate.Get("skill_stoiciii_0"), GOOD..translate.Get("skill_stoiciii_d1")..BAD..translate.Get("skill_stoiciii_d2"),
 																-3,			-2,					{SKILL_STOIC4}, TREE_HEALTHTREE)
-GM:AddSkill(SKILL_STOIC4, ""..translate.Get("skill_stoiciv_0"), GOOD..""..translate.Get("skill_stoiciv_d1")..BAD..""..translate.Get("skill_stoiciv_d2"),
+GM:AddSkill(SKILL_STOIC4, translate.Get("skill_stoiciv_0"), GOOD..translate.Get("skill_stoiciv_d1")..BAD..translate.Get("skill_stoiciv_d2"),
 																-3,			0,					{SKILL_STOIC5}, TREE_HEALTHTREE)
-GM:AddSkill(SKILL_STOIC5, ""..translate.Get("skill_stoicv_0"), GOOD..""..translate.Get("skill_stoicv_d1")..BAD..""..translate.Get("skill_stoicv_d2"),
+GM:AddSkill(SKILL_STOIC5, translate.Get("skill_stoicv_0"), GOOD..translate.Get("skill_stoicv_d1")..BAD..translate.Get("skill_stoicv_d2"),
 																-3,			2,					{SKILL_BLOODARMOR, SKILL_TANKER}, TREE_HEALTHTREE)
-GM:AddSkill(SKILL_D_HEMOPHILIA, ""..translate.Get("skill_hemoplilia_0"), GOOD..""..translate.Get("skill_hemoplilia_d1")..GOOD..""..translate.Get("skill_hemoplilia_d2")..BAD..""..translate.Get("skill_hemoplilia_d3"),
+GM:AddSkill(SKILL_D_HEMOPHILIA, translate.Get("skill_hemoplilia_0"), GOOD..translate.Get("skill_hemoplilia_d1")..GOOD..translate.Get("skill_hemoplilia_d2")..BAD..translate.Get("skill_hemoplilia_d3"),
 																4,			2,					{}, TREE_HEALTHTREE)
-GM:AddSkill(SKILL_GLUTTON,  ""..translate.Get("skill_glutton_0"), GOOD.. ""..translate.Get("skill_glutton_d1")..GOOD.. ""..translate.Get("skill_glutton_d2")..GOOD.. ""..translate.Get("skill_glutton_d3")..BAD.. ""..translate.Get("skill_glutton_d4"),
+GM:AddSkill(SKILL_GLUTTON,  translate.Get("skill_glutton_0"), GOOD.. translate.Get("skill_glutton_d1")..GOOD.. translate.Get("skill_glutton_d2")..GOOD.. translate.Get("skill_glutton_d3")..BAD.. translate.Get("skill_glutton_d4"),
 																3,			-2,					{SKILL_GOURMET, SKILL_BLOODARMOR}, TREE_HEALTHTREE)
-GM:AddSkill(SKILL_PREPAREDNESS, ""..translate.Get("skill_prepadnes_0"), GOOD..""..translate.Get("skill_prepadnes_d"),
+GM:AddSkill(SKILL_PREPAREDNESS, translate.Get("skill_prepadnes_0"), GOOD..translate.Get("skill_prepadnes_d"),
 																4,			-6,					{SKILL_NONE}, TREE_HEALTHTREE)
-GM:AddSkill(SKILL_GOURMET, ""..translate.Get("skill_gurman_0"), GOOD..""..translate.Get("skill_gurman_d1")..BAD..""..translate.Get("skill_gurman_d2"),
+GM:AddSkill(SKILL_GOURMET, translate.Get("skill_gurman_0"), GOOD..translate.Get("skill_gurman_d1")..BAD..translate.Get("skill_gurman_d2"),
 																4,			-4,					{SKILL_PREPAREDNESS, SKILL_VITALITY1}, TREE_HEALTHTREE)
-GM:AddSkill(SKILL_HAEMOSTASIS, ""..translate.Get("skill_haemostasis_0"), GOOD..""..translate.Get("skill_haemostasis_d1")..BAD..""..translate.Get("skill_haemostasis_d2")..GOOD..""..translate.Get("skill_haemostasis_d3"),
+GM:AddSkill(SKILL_HAEMOSTASIS, translate.Get("skill_haemostasis_0"), GOOD..translate.Get("skill_haemostasis_d1")..BAD..translate.Get("skill_haemostasis_d2")..GOOD..translate.Get("skill_haemostasis_d3"),
 																4,			6,					{}, TREE_HEALTHTREE)
-GM:AddSkill(SKILL_BLOODLETTER, ""..translate.Get("skill_bloodlet_0"), GOOD..""..translate.Get("skill_bloodlet_d1")..BAD..""..translate.Get("skill_bloodlet_d2"),
+GM:AddSkill(SKILL_BLOODLETTER, translate.Get("skill_bloodlet_0"), GOOD..translate.Get("skill_bloodlet_d1")..BAD..translate.Get("skill_bloodlet_d2"),
 																0,			4,					{SKILL_ANTIGEN}, TREE_HEALTHTREE)
-GM:AddSkill(SKILL_REGENERATOR, ""..translate.Get("skill_regen_0"), GOOD..""..translate.Get("skill_regen_d1")..BAD..""..translate.Get("skill_regen_d2"),
+GM:AddSkill(SKILL_REGENERATOR, translate.Get("skill_regen_0"), GOOD..translate.Get("skill_regen_d1")..BAD..translate.Get("skill_regen_d2"),
 																-5,			-2,					{}, TREE_HEALTHTREE)
-GM:AddSkill(SKILL_NULLED, ""..translate.Get("skill_regen1_0"), GOOD..""..translate.Get("skill_regen1_d1"),
+GM:AddSkill(SKILL_NULLED, translate.Get("skill_regen1_0"), GOOD..translate.Get("skill_regen1_d1"),
 			                                                   	-5,			0,					{SKILL_REGENERATOR}, TREE_HEALTHTREE)
-GM:AddSkill(SKILL_BLOODARMOR, ""..translate.Get("skill_bloodarmor_0"), GOOD..translate.Get("skill_bloodarmor_d1") ..BAD..translate.Get("skill_bloodarmor_d2"),
+GM:AddSkill(SKILL_BLOODARMOR, translate.Get("skill_bloodarmor_0"), GOOD..translate.Get("skill_bloodarmor_d1") ..BAD..translate.Get("skill_bloodarmor_d2"),
 																2,			2,					{SKILL_IRONBLOOD, SKILL_BLOODLETTER, SKILL_D_HEMOPHILIA}, TREE_HEALTHTREE)
-GM:AddSkill(SKILL_IRONBLOOD, ""..translate.Get("skill_ironblood_0"), GOOD..translate.Get("skill_ironblood_d1") ..GOOD..translate.Get("skill_ironblood_d2") ..BAD..translate.Get("skill_ironblood_d3"),
+GM:AddSkill(SKILL_IRONBLOOD, translate.Get("skill_ironblood_0"), GOOD..translate.Get("skill_ironblood_d1") ..GOOD..translate.Get("skill_ironblood_d2") ..BAD..translate.Get("skill_ironblood_d3"),
 																2,			4,					{SKILL_HAEMOSTASIS, SKILL_CIRCULATION}, TREE_HEALTHTREE)
-GM:AddSkill(SKILL_D_WEAKNESS, ""..translate.Get("skill_d_weakness_0"), GOOD..""..translate.Get("skill_d_weakness_d1")..GOOD..""..translate.Get("skill_d_weakness_d2")..BAD..""..translate.Get("skill_d_weakness_d3")..BAD..""..translate.Get("skill_d_weakness_d4"),
+GM:AddSkill(SKILL_D_WEAKNESS, translate.Get("skill_d_weakness_0"), GOOD..translate.Get("skill_d_weakness_d1")..GOOD..translate.Get("skill_d_weakness_d2")..BAD..translate.Get("skill_d_weakness_d3")..BAD..translate.Get("skill_d_weakness_d4"),
 																1,			-1,					{}, TREE_HEALTHTREE)
 GM:AddSkill(SKILL_VITALITY1, translate.Get("skill_vitalityi_0"), GOOD..translate.Get("skill_vitalityi_d1"),
 																0,			-4,					{SKILL_VITALITY2}, TREE_HEALTHTREE)
@@ -515,49 +515,49 @@ GM:AddSkill(SKILL_DEBUFF, translate.Get("skill_dbuff"), BAD..translate.Get("skil
 GM:AddSkillModifier(SKILL_DEBUFF, SKILLMOD_BLEED_DAMAGE_TAKEN_MUL, 0.50)
 GM:AddSkillModifier(SKILL_DEBUFF, SKILLMOD_POISON_DAMAGE_TAKEN_MUL, 0.75)
 GM:AddSkillModifier(SKILL_DEBUFF, SKILLMOD_BLOODARMOR, 60)
-GM:AddSkill(SKILL_CHEESE, ""..translate.Get("skill_cheese_0"), GOOD..translate.Get("skill_cheese_d1"),
+GM:AddSkill(SKILL_CHEESE, translate.Get("skill_cheese_0"), GOOD..translate.Get("skill_cheese_d1"),
 																1,			1,					{SKILL_GOURMET}, TREE_HEALTHTREE)
 GM:AddSkill(SKILL_CHEESE2, translate.Get("skill_cheese_0").." II", GOOD..translate.Get("skill_cheese_d2"),
 																0,			1,					{SKILL_CHEESE}, TREE_HEALTHTREE)
 GM:AddSkill(SKILL_CHEESE3, translate.Get("skill_cheese_0").." III", GOOD..translate.Get("skill_cheese_d3"),
 																0,			3,					{SKILL_CHEESE2}, TREE_HEALTHTREE)
-GM:AddSkill(SKILL_TANKER, ""..translate.Get("skill_tanker_0"), GOOD..""..translate.Get("skill_tanker_d1")..BAD..""..translate.Get("skill_tanker_d2"),
+GM:AddSkill(SKILL_TANKER, translate.Get("skill_tanker_0"), GOOD..translate.Get("skill_tanker_d1")..BAD..translate.Get("skill_tanker_d2"),
 																-5,			4,					{SKILL_LIVER}, TREE_HEALTHTREE)
-GM:AddSkill(SKILL_LIVER,  ""..translate.Get("skill_curse_0"), BAD..""..translate.Get("skill_curse_d1")..GOOD..""..translate.Get("skill_curse_d2")..GOOD..""..translate.Get("skill_curse_d3")..GOOD.."+30"..translate.Get("worth"),
+GM:AddSkill(SKILL_LIVER,  translate.Get("skill_curse_0"), BAD..translate.Get("skill_curse_d1")..GOOD..translate.Get("skill_curse_d2")..GOOD..translate.Get("skill_curse_d3")..GOOD.."+30"..translate.Get("worth"),
 																-5,			5,					{SKILL_TANKER}, TREE_HEALTHTREE)
 GM:AddSkillModifier(SKILL_LIVER, SKILLMOD_SPEED, 60)
 GM:AddSkillModifier(SKILL_LIVER, SKILLMOD_HEALTH, 30)
 GM:AddSkillModifier(SKILL_LIVER, SKILLMOD_WORTH, 30)
-GM:AddSkill(SKILL_FORAGER, ""..translate.Get("skill_f_0"), GOOD..""..translate.Get("skill_f_d1")..BAD..""..translate.Get("skill_f_d2"),
+GM:AddSkill(SKILL_FORAGER, translate.Get("skill_f_0"), GOOD..translate.Get("skill_f_d1")..BAD..translate.Get("skill_f_d2"),
 																5,			-2,					{SKILL_GOURMET}, TREE_HEALTHTREE)
-GM:AddSkill(SKILL_JUSTICE, ""..translate.Get("skill_justice"), GOOD.."-8%"..translate.Get("res_delay"),
+GM:AddSkill(SKILL_JUSTICE, translate.Get("skill_justice"), GOOD.."-8%"..translate.Get("res_delay"),
 																6,			-1,					{SKILL_FORAGER}, TREE_HEALTHTREE)
 GM:AddSkillModifier(SKILL_JUSTICE, SKILLMOD_RESUPPLY_DELAY_MUL, -0.08)		
-GM:AddSkill(SKILL_SUGARRUSH, ""..translate.Get("skill_srush_0"), GOOD..""..translate.Get("skill_srush_d1")..BAD..""..translate.Get("skill_srush_d2"),
+GM:AddSkill(SKILL_SUGARRUSH, translate.Get("skill_srush_0"), GOOD..translate.Get("skill_srush_d1")..BAD..translate.Get("skill_srush_d2"),
 																4,			0,					{SKILL_GOURMET}, TREE_HEALTHTREE)
-GM:AddSkill(SKILL_CIRCULATION, ""..translate.Get("skill_cir_0"), GOOD..""..translate.Get("skill_cir_d1"),
+GM:AddSkill(SKILL_CIRCULATION, translate.Get("skill_cir_0"), GOOD..translate.Get("skill_cir_d1"),
 																4,			4,					{SKILL_SANGUINE}, TREE_HEALTHTREE)
-GM:AddSkill(SKILL_SANGUINE, ""..translate.Get("skill_san_0"), GOOD..""..translate.Get("skill_san_d1")..BAD..""..translate.Get("skill_san_d2"),
+GM:AddSkill(SKILL_SANGUINE, translate.Get("skill_san_0"), GOOD..translate.Get("skill_san_d1")..BAD..translate.Get("skill_san_d2"),
 																6,			2,					{}, TREE_HEALTHTREE)
-GM:AddSkill(SKILL_BLOODYMAN, ""..translate.Get("skill_bloodyman"), GOOD.."+130"..translate.Get("barmor")..BAD.."-100"..translate.Get("health"),
+GM:AddSkill(SKILL_BLOODYMAN, translate.Get("skill_bloodyman"), GOOD.."+130"..translate.Get("barmor")..BAD.."-100"..translate.Get("health"),
 																7,			3,					{SKILL_SANGUINE}, TREE_HEALTHTREE)
-GM:AddSkill(SKILL_ANTIGEN, ""..translate.Get("skill_agen_0"), GOOD..""..translate.Get("skill_agen_d1")..BAD..""..translate.Get("skill_agen_d2"),
+GM:AddSkill(SKILL_ANTIGEN, translate.Get("skill_agen_0"), GOOD..translate.Get("skill_agen_d1")..BAD..translate.Get("skill_agen_d2"),
 																-2,			4,					{}, TREE_HEALTHTREE)
-GM:AddSkill(SKILL_DAMAGER, ""..translate.Get("skill_bhealth_0"), GOOD..""..translate.Get("skill_bhealth_d1")..BAD..""..translate.Get("skill_bhealth_d2"),
+GM:AddSkill(SKILL_DAMAGER, translate.Get("skill_bhealth_0"), GOOD..translate.Get("skill_bhealth_d1")..BAD..translate.Get("skill_bhealth_d2"),
 																-2,			5,					{SKILL_ANTIGEN}, TREE_HEALTHTREE)
-GM:AddSkill(SKILL_BLOODLIFE, ""..translate.Get("skill_blife_0"), GOOD.."+50"..translate.Get("barmor")..BAD.."-60"..translate.Get("health")..NEUTRAL..translate.Get("skill_blife_d1"),
+GM:AddSkill(SKILL_BLOODLIFE, translate.Get("skill_blife_0"), GOOD.."+50"..translate.Get("barmor")..BAD.."-60"..translate.Get("health")..NEUTRAL..translate.Get("skill_blife_d1"),
 																-2,			6,					{SKILL_DAMAGER}, TREE_HEALTHTREE)
 GM:AddSkillModifier(SKILL_BLOODLIFE, SKILLMOD_HEALTH, -60)
 GM:AddSkillModifier(SKILL_BLOODLIFE, SKILLMOD_BLOODARMOR, 50)
 GM:AddSkillModifier(SKILL_BLOODLIFE, SKILLMOD_MELEE_DAMAGE_MUL, -0.25)
-GM:AddSkill(SKILL_CAN_EATER, ""..translate.Get("skill_cani_0"), BAD.."-33"..translate.Get("health")..GOOD..translate.Get("skill_cani_d1"),
+GM:AddSkill(SKILL_CAN_EATER, translate.Get("skill_cani_0"), BAD.."-33"..translate.Get("health")..GOOD..translate.Get("skill_cani_d1"),
 																0,			5,					{SKILL_DAMAGER}, TREE_HEALTHTREE)
 GM:AddSkillModifier(SKILL_CAN_EATER, SKILLMOD_HEALTH, -33)
 -- Speed Tree
 GM:AddSkill(SKILL_SPEED1, translate.Get("skill_speed").."I", GOOD.."+5"..translate.Get("speed")..BAD.."-4"..translate.Get("health"),
 																-4,			6,					{SKILL_NONE, SKILL_SPEED2}, TREE_SPEEDTREE)
 SKILL_DODGE = 263
-GM:AddSkill(SKILL_DODGE, ""..translate.Get("skill_dodge"), GOOD..""..translate.Get("skill_dodge_d1")..GOOD..""..translate.Get("skill_dodge_d2")..BAD.."-25"..translate.Get("speed"),
+GM:AddSkill(SKILL_DODGE, translate.Get("skill_dodge"), GOOD..translate.Get("skill_dodge_d1")..GOOD..translate.Get("skill_dodge_d2")..BAD.."-25"..translate.Get("speed"),
 																-3,			1,					{SKILL_SPEED2}, TREE_SPEEDTREE)
 GM:AddSkillModifier(SKILL_DODGE, SKILLMOD_SPEED, -25)
 
@@ -575,48 +575,48 @@ GM:AddSkill(SKILL_AGILEII, translate.Get("skill_agile").."II", GOOD.."+5%"..tran
 																4,			2,					{SKILL_AGILEIII, SKILL_WORTHINESS3}, TREE_SPEEDTREE)
 GM:AddSkill(SKILL_AGILEIII, translate.Get("skill_agile").."III", GOOD.."+6%"..translate.Get("jump")..BAD.."-4"..translate.Get("speed"),
 																4,			-2,					{SKILL_SAFEFALL, SKILL_ULTRANIMBLE, SKILL_SURESTEP, SKILL_INTREPID, SKILL_VKID, SKILL_NOSEE}, TREE_SPEEDTREE)
-GM:AddSkill(SKILL_VKID, ""..translate.Get("skill_vkid"), GOOD.."+30%"..translate.Get("jump")..GOOD.."+60"..translate.Get("speed")..GOOD..""..translate.Get("skill_vkid_d")..BAD.."-50"..translate.Get("health"),
+GM:AddSkill(SKILL_VKID, translate.Get("skill_vkid"), GOOD.."+30%"..translate.Get("jump")..GOOD.."+60"..translate.Get("speed")..GOOD..translate.Get("skill_vkid_d")..BAD.."-50"..translate.Get("health"),
 																4,			-3,					{SKILL_VKID2}, TREE_SPEEDTREE)
-GM:AddSkill(SKILL_VKID2, ""..translate.Get("skill_vkid2"), GOOD.."+30%"..translate.Get("jump")..GOOD.."+15"..translate.Get("speed")..GOOD..translate.Get("skill_vkid_d")..BAD.."-25"..translate.Get("health"),
+GM:AddSkill(SKILL_VKID2, translate.Get("skill_vkid2"), GOOD.."+30%"..translate.Get("jump")..GOOD.."+15"..translate.Get("speed")..GOOD..translate.Get("skill_vkid_d")..BAD.."-25"..translate.Get("health"),
 																4,			-4,					{}, TREE_SPEEDTREE)
-GM:AddSkill(SKILL_D_SLOW, ""..translate.Get("skill_slow"), GOOD..""..translate.Get("skill_slow_d1")..GOOD..""..translate.Get("skill_slow_d2")..BAD..""..translate.Get("skill_slow_d3")..BAD..""..translate.Get("skill_slow_d4"),
+GM:AddSkill(SKILL_D_SLOW, translate.Get("skill_slow"), GOOD..translate.Get("skill_slow_d1")..GOOD..translate.Get("skill_slow_d2")..BAD..translate.Get("skill_slow_d3")..BAD..translate.Get("skill_slow_d4"),
 																0,			-4,					{}, TREE_SPEEDTREE)
-GM:AddSkill(SKILL_NOSEE, ""..translate.Get("skill_cursevision_0"), GOOD..""..translate.Get("skill_cursevision_d1")..GOOD..""..translate.Get("skill_cursevision_d2")..BAD..""..translate.Get("skill_cursevision_d3"),
+GM:AddSkill(SKILL_NOSEE, translate.Get("skill_cursevision_0"), GOOD..translate.Get("skill_cursevision_d1")..GOOD..translate.Get("skill_cursevision_d2")..BAD..translate.Get("skill_cursevision_d3"),
 																6.5,			-2,					{SKILL_AGILEIII}, TREE_SPEEDTREE)
 GM:AddSkillModifier(SKILL_NOSEE, SKILLMOD_SPEED, 50)
 GM:AddSkillModifier(SKILL_NOSEE, SKILLMOD_WORTH, 30)
-GM:AddSkill(SKILL_MOTIONI, ""..translate.Get("skill_motion1"), GOOD..""..translate.Get("skill_motion_d_all"),
+GM:AddSkill(SKILL_MOTIONI, translate.Get("skill_motion1"), GOOD..translate.Get("skill_motion_d_all"),
 																-2,			-2,					{SKILL_MOTIONII}, TREE_SPEEDTREE)
-GM:AddSkill(SKILL_MOTIONII, ""..translate.Get("skill_motion2"), GOOD..""..translate.Get("skill_motion_d_all"),
+GM:AddSkill(SKILL_MOTIONII, translate.Get("skill_motion2"), GOOD..translate.Get("skill_motion_d_all"),
 																-1,			-1,					{SKILL_MOTIONIII}, TREE_SPEEDTREE)
-GM:AddSkill(SKILL_MOTIONIII, ""..translate.Get("skill_motion3"), GOOD..""..translate.Get("skill_motion_d_all"),
+GM:AddSkill(SKILL_MOTIONIII, translate.Get("skill_motion3"), GOOD..translate.Get("skill_motion_d_all"),
 																0,			-2,					{SKILL_D_SLOW}, TREE_SPEEDTREE)
-GM:AddSkill(SKILL_BACKPEDDLER, ""..translate.Get("skill_backpeddler"), GOOD..""..translate.Get("skill_backpeddler_d1")..BAD..""..translate.Get("skill_backpeddler_d2")..BAD..""..translate.Get("skill_backpeddler_d3"),
+GM:AddSkill(SKILL_BACKPEDDLER, translate.Get("skill_backpeddler"), GOOD..translate.Get("skill_backpeddler_d1")..BAD..translate.Get("skill_backpeddler_d2")..BAD..translate.Get("skill_backpeddler_d3"),
 																-6,			0,					{}, TREE_SPEEDTREE)
-GM:AddSkill(SKILL_PHASER, ""..translate.Get("skill_phaser"), GOOD.."+15%"..translate.Get("barricadespeed")..BAD.."+15%"..translate.Get("sigilteleport"),
+GM:AddSkill(SKILL_PHASER, translate.Get("skill_phaser"), GOOD.."+15%"..translate.Get("barricadespeed")..BAD.."+15%"..translate.Get("sigilteleport"),
 																-1,			4,					{SKILL_D_WIDELOAD, SKILL_DRIFT}, TREE_SPEEDTREE)
-GM:AddSkill(SKILL_DRIFT, ""..translate.Get("skill_drifter"), GOOD.."+5%"..translate.Get("barricadespeed"),
+GM:AddSkill(SKILL_DRIFT, translate.Get("skill_drifter"), GOOD.."+5%"..translate.Get("barricadespeed"),
 																1,			3,					{SKILL_WARP}, TREE_SPEEDTREE)
-GM:AddSkill(SKILL_WARP, ""..translate.Get("skill_warp"), GOOD.."-5%"..translate.Get("sigilteleport"),
+GM:AddSkill(SKILL_WARP, translate.Get("skill_warp"), GOOD.."-5%"..translate.Get("sigilteleport"),
 																2,			2,					{}, TREE_SPEEDTREE)
-GM:AddSkill(SKILL_SIGILOL, ""..translate.Get("skill_s_inf"), GOOD.."+300%"..translate.Get("barricadespeed")..BAD.."+100%"..translate.Get("sigilteleport"),
+GM:AddSkill(SKILL_SIGILOL, translate.Get("skill_s_inf"), GOOD.."+300%"..translate.Get("barricadespeed")..BAD.."+100%"..translate.Get("sigilteleport"),
 																2,			4,					{SKILL_WARP}, TREE_SPEEDTREE)
-GM:AddSkill(SKILL_CURSEDTRINKETS, ""..translate.Get("skill_cursedd"), GOOD..""..translate.Get("skill_cursed")..BAD..""..translate.Get("skill_cursed")..GOOD..""..translate.Get("skill_cursed"),
+GM:AddSkill(SKILL_CURSEDTRINKETS, translate.Get("skill_cursedd"), GOOD..translate.Get("skill_cursed")..BAD..translate.Get("skill_cursed")..GOOD..translate.Get("skill_cursed"),
 																2,		    5,					{SKILL_SIGILOL}, TREE_SPEEDTREE)
-GM:AddSkill(SKILL_CURSEDHEALTH, ""..translate.Get("skill_mda"), GOOD..""..translate.Get("skill_mda_d")..BAD.."-25%"..translate.Get("m_curse"),
+GM:AddSkill(SKILL_CURSEDHEALTH, translate.Get("skill_mda"), GOOD..translate.Get("skill_mda_d")..BAD.."-25%"..translate.Get("m_curse"),
 																1,		    4.5,					{SKILL_CURSEDTRINKETS}, TREE_SPEEDTREE)
-GM:AddSkill(SKILL_OMEGA, ""..translate.Get("skill_omega"), BAD..translate.Get("skill_omega_d1")..GOOD.."+50%"..translate.Get("m_curse"),
+GM:AddSkill(SKILL_OMEGA, translate.Get("skill_omega"), BAD..translate.Get("skill_omega_d1")..GOOD.."+50%"..translate.Get("m_curse"),
 																0,		    5,					{SKILL_CURSEDHEALTH}, TREE_SPEEDTREE)
 
 
 
 
 
-GM:AddSkill(SKILL_SAFEFALL, ""..translate.Get("skill_sfall"), GOOD..""..translate.Get("skill_sfall_d1")..GOOD..""..translate.Get("skill_sfall_d2")..BAD..""..translate.Get("skill_sfall_d3"),
+GM:AddSkill(SKILL_SAFEFALL, translate.Get("skill_sfall"), GOOD..translate.Get("skill_sfall_d1")..GOOD..translate.Get("skill_sfall_d2")..BAD..translate.Get("skill_sfall_d3"),
 																0,			0,					{}, TREE_SPEEDTREE)
-GM:AddSkill(SKILL_D_WIDELOAD, ""..translate.Get("skill_wideroad_0"), GOOD.."+20"..translate.Get("worth")..GOOD.."-20%"..translate.Get("res_delay")..BAD..""..translate.Get("skill_wideroad_d1"),
+GM:AddSkill(SKILL_D_WIDELOAD, translate.Get("skill_wideroad_0"), GOOD.."+20"..translate.Get("worth")..GOOD.."-20%"..translate.Get("res_delay")..BAD..translate.Get("skill_wideroad_d1"),
 																1,			1,					{}, TREE_SPEEDTREE)
-GM:AddSkill(SKILL_U_CORRUPTEDFRAGMENT, ""..translate.Get("skill_sigil_corrupt_0"), GOOD..""..translate.Get("skill_sigil_corrupt_d0"),
+GM:AddSkill(SKILL_U_CORRUPTEDFRAGMENT, translate.Get("skill_sigil_corrupt_0"), GOOD..translate.Get("skill_sigil_corrupt_d0"),
 																-2,			2,					{}, TREE_SPEEDTREE)
 GM:AddSkill(SKILL_ULTRANIMBLE, translate.Get("skill_salostealer"), GOOD.."+30"..translate.Get("speed")..BAD.."-10"..translate.Get("health"),
 																0,			-6,					{}, TREE_SPEEDTREE)
@@ -625,15 +625,15 @@ GM:AddSkill(SKILL_POGO, translate.Get("skill_pogo"), translate.Get("skill_pogo_d
 GM:AddSkillModifier(SKILL_POGO, SKILLMOD_JUMPPOWER_MUL, -0.45)
 GM:AddSkill(SKILL_WORTHINESS3, translate.Get("worthness").."III", GOOD.."+10"..translate.Get("worth")..BAD.."-3"..translate.Get("start_points"),
 																6,			2,					{}, TREE_SPEEDTREE)
-GM:AddSkill(SKILL_SURESTEP, ""..translate.Get("skill_step_0"), GOOD..""..translate.Get("skill_step_d0")..BAD.."-4"..translate.Get("speed"),
+GM:AddSkill(SKILL_SURESTEP, translate.Get("skill_step_0"), GOOD..translate.Get("skill_step_d0")..BAD.."-4"..translate.Get("speed"),
 																6,			0,					{}, TREE_SPEEDTREE)
-GM:AddSkill(SKILL_INTREPID, ""..translate.Get("skill_int_0"), GOOD..""..translate.Get("skill_int_d0")..BAD.."-4"..translate.Get("speed"),
+GM:AddSkill(SKILL_INTREPID, translate.Get("skill_int_0"), GOOD..translate.Get("skill_int_d0")..BAD.."-4"..translate.Get("speed"),
 																6,			-4,					{SKILL_ROBUST}, TREE_SPEEDTREE)
-GM:AddSkill(SKILL_ROBUST,  ""..translate.Get("skill_rob_0"), GOOD.. ""..translate.Get("skill_rob_d0"),
+GM:AddSkill(SKILL_ROBUST,  translate.Get("skill_rob_0"), GOOD.. translate.Get("skill_rob_d0"),
 																5,			-5,					{}, TREE_SPEEDTREE)
-GM:AddSkill(SKILL_CARDIOTONIC,""..translate.Get("skill_cardi_0"), GOOD..""..translate.Get("skill_cardi_d0")..BAD.."-12"..translate.Get("speed")..BAD..""..translate.Get("skill_cardi_d1"),
+GM:AddSkill(SKILL_CARDIOTONIC,translate.Get("skill_cardi_0"), GOOD..translate.Get("skill_cardi_d0")..BAD.."-12"..translate.Get("speed")..BAD..translate.Get("skill_cardi_d1"),
 																-6,			-4,					{}, TREE_SPEEDTREE)
-GM:AddSkill(SKILL_UNBOUND,""..translate.Get("skill_unbound_0"), GOOD..""..translate.Get("skill_unbound_d0")..BAD.."-4"..translate.Get("speed"),
+GM:AddSkill(SKILL_UNBOUND,translate.Get("skill_unbound_0"), GOOD..translate.Get("skill_unbound_d0")..BAD.."-4"..translate.Get("speed"),
 																-4,			-4,					{}, TREE_SPEEDTREE)
 -- Medic Tree
 GM:AddSkill(SKILL_SURGEON1, translate.Get("skill_surg").."I", GOOD.."-6%"..translate.Get("med_cool"),
@@ -1400,16 +1400,16 @@ GM:AddSkillModifier(SKILL_TRIP, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.33)
 GM:AddSkillModifier(SKILL_TRIP, SKILLMOD_MELEE_DAMAGE_MUL, -0.12)
 GM:AddSkillModifier(SKILL_TRIP, SKILLMOD_SPEED, -70)
 GM:AddSkillModifier(SKILL_TRIP, SKILLMOD_CURSEM, 0.5)
-GM:AddSkill(SKILL_HOLY_MANTLE, ""..translate.Get("skill_holymantle"), GOOD..""..translate.Get("skill_holymantle_d1"),
+GM:AddSkill(SKILL_HOLY_MANTLE, translate.Get("skill_holymantle"), GOOD..translate.Get("skill_holymantle_d1"),
 				                                                            	-4,			3,					{SKILL_TTIMES}, TREE_DEFENSETREE)
-GM:AddSkill(SKILL_SELFSAVER, ""..translate.Get("skill_selfsaver"), GOOD..translate.Get("skill_selfsaver_d1")..BAD.."-35"..translate.Get("speed"),
+GM:AddSkill(SKILL_SELFSAVER, translate.Get("skill_selfsaver"), GOOD..translate.Get("skill_selfsaver_d1")..BAD.."-35"..translate.Get("speed"),
 				                                                            	-3,			4,					{SKILL_HOLY_MANTLE}, TREE_DEFENSETREE)
-GM:AddSkill(SKILL_ASAVE, ""..translate.Get("skill_ancientsave"), GOOD..translate.Get("skill_ancientsave_d1")..BAD.."-55"..translate.Get("speed"),
+GM:AddSkill(SKILL_ASAVE, translate.Get("skill_ancientsave"), GOOD..translate.Get("skill_ancientsave_d1")..BAD.."-55"..translate.Get("speed"),
 				                                                            	-4,			5,					{SKILL_SELFSAVER}, TREE_DEFENSETREE)
 SKILL_MERIS = 199
 GM:AddSkill(SKILL_MERIS, translate.Get("skill_meris"), GOOD.."-10%"..translate.Get("meleedamagetaken")..BAD.."-20%"..translate.Get("meleedamage"),
 				                                                            	-1,			3.5,					{SKILL_TRIP}, TREE_DEFENSETREE)
-GM:AddSkill(SKILL_UPLOAD, translate.Get("skill_later"), GOOD..""..translate.Get("skill_later_d1")..BAD..""..translate.Get("skill_later_d2"),
+GM:AddSkill(SKILL_UPLOAD, translate.Get("skill_later"), GOOD..translate.Get("skill_later_d1")..BAD..translate.Get("skill_later_d2"),
 				                                                            	-1,			5,					{SKILL_MERIS}, TREE_DEFENSETREE)
 GM:AddSkill(SKILL_ANTINEGR, translate.Get("skill_antinegr"), GOOD..translate.Get("skill_antinegr_d1")..BAD..translate.Get("skill_antinegr_d2"),
 				                                                            	-1,			6,					{SKILL_UPLOAD}, TREE_DEFENSETREE)
