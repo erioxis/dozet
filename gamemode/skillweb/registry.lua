@@ -1658,7 +1658,7 @@ GM:SetSkillModifierFunction(SKILLMOD_SPOINT, function(pl, amount)
 end)
 
 GM:SetSkillModifierFunction(SKILLMOD_JUMPPOWER_MUL, function(pl, amount)
-	pl.JumpPowerMul = math.Clamp(amount + 1.0, 0.0, 10.0)
+	pl.JumpPowerMul = math.Clamp(amount + (pl.ClanShooter and 1.2 or 1.0), 0.0, 10.0)
 
 	if SERVER then
 		pl:ResetJumpPower()

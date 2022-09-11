@@ -2159,7 +2159,8 @@ local bossdrops2 = {
 	"trinket_altforsoul", -- 20
 	"trinket_altsoul",-- 21
 	"trinket_soulalteden", -- 22
-	"trinket_altchayok" -- 23
+	"trinket_altchayok", --23
+	"trinket_altdarksoul" -- 24
 	
 	
 	

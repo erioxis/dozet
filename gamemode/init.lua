@@ -1417,7 +1417,7 @@ function GM:Think()
                     pl.zKills = pl.zKills - 5
 					
 				end
-				if pl:IsSkillActive(SKILL_GIGACHAD) then
+				if pl:IsSkillActive(SKILL_GIGACHAD) and not self.ObjectiveMap then
 					 pl:SetModelScale(math.Clamp(math.min(math.max(0.5, pl:GetMaxHealth() * 0.01),2.5) * pl.ScaleModel,0.2, 5))
 				end
 				local cursed5 = pl:GetStatus("hollowing")
@@ -4728,9 +4728,9 @@ function GM:PlayerSpawn(pl)
 		pl:ResetJumpPower()
 		pl:SetCrouchedWalkSpeed(0.45)
 
-		pl:SetViewOffset(Vector(0, 0, 64 * pl.ScaleModel))
-		pl:SetViewOffsetDucked(Vector(0, 0, 32 * pl.ScaleModel))
-		pl:SetModelScale(1 * pl.ScaleModel)
+		pl:SetViewOffset(Vector(0, 0, 64 * (self.ObjectiveMap and 1 or pl.ScaleModel)))
+		pl:SetViewOffsetDucked(Vector(0, 0, 32 * (self.ObjectiveMap and 1 or pl.ScaleModel)))
+		pl:SetModelScale(1 * (self.ObjectiveMap and 1 or pl.ScaleModel))
 
 
 		if self.ZombieEscape then

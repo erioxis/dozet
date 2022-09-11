@@ -12,7 +12,7 @@ function ENT:Initialize()
 	self:PhysicsInit(SOLID_NONE)
 	self:SetUseType(SIMPLE_USE)
 	self:SetColor(Color(155, 208, 255, 255))
-	self:SetModelScale(math.random(0.5,3),math.random(0.3,0.9))
+	self:SetModelScale(2,math.random(0.3,0.9))
 	if self.DieTime == 0 then
 		self.DieTime = CurTime() + self.LifeTime
 	end
@@ -44,7 +44,7 @@ function ENT:Think()
 	
 	local pos = self:GetPos()
 	
-	for _, ent in pairs(ents.FindInSphere(pos, 128 * self:GetModelScale())) do
+	for _, ent in pairs(ents.FindInSphere(pos, 76 * self:GetModelScale())) do
 		local class = ent:GetClass()
 		local ownsitem = not ent.NoPickupsOwner or ent.NoPickupsOwner == owner
 		local droppedrecent = not ent.DroppedTime or ent.DroppedTime + 4 < CurTime()

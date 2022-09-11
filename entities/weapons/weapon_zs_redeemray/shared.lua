@@ -110,7 +110,7 @@ function SWEP:CheckHealRay()
 	if ent:IsValidLivingZombie() and owner:KeyDown(IN_ATTACK) and
 		ent:WorldSpaceCenter():DistToSqr(owner:WorldSpaceCenter()) <= self.HealRange * self.HealRange and self:GetCombinedPrimaryAmmo() > 0 then
 
-		if CurTime() > self:GetDTFloat(10) then
+		if CurTime() > self:GetDTFloat(10) and not ent:GetZombieClassTable().Boss then
 			if SERVER then
 				ent:Redeem()
 				owner:StripWeapon(self:GetClass())

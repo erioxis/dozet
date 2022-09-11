@@ -1,14 +1,11 @@
 AddCSLuaFile()
-
 --SWEP.PrintName = "Butcher Knife"
 --SWEP.Description = "A very fast swinging butcher knife, capable of mincing zombies very quickly up close."
-SWEP.PrintName = ""..translate.Get("wep_bknife")
-SWEP.Description = ""..translate.Get("wep_d_bknife")
-
+SWEP.PrintName = translate.Get("wep_bknife")
+SWEP.Description = translate.Get("wep_d_bknife")
 if CLIENT then
 	SWEP.ViewModelFOV = 55
 	SWEP.ViewModelFlip = false
-
 	SWEP.ShowViewModel = false
 	SWEP.ShowWorldModel = false
 	SWEP.VElements = {
@@ -18,97 +15,54 @@ if CLIENT then
 		["base"] = { type = "Model", model = "models/props_lab/cleaver.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3, 1, -3.182), angle = Angle(90, 0, 0), size = Vector(0.8, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
 	}
 end
-
 SWEP.Base = "weapon_zs_basemelee"
-
 SWEP.DamageType = DMG_SLASH
-
 SWEP.ViewModel = "models/weapons/c_crowbar.mdl"
 SWEP.WorldModel = "models/weapons/w_crowbar.mdl"
 SWEP.UseHands = true
 SWEP.NoDroppedWorldModel = true
 --[[SWEP.BoxPhysicsMax = Vector(8, 1, 4)
 SWEP.BoxPhysicsMin = Vector(-8, -1, -4)]]
-
-SWEP.MeleeDamage = 57
+SWEP.MeleeDamage = 65
 SWEP.MeleeRange = 44
 SWEP.MeleeSize = 0.566
 SWEP.Primary.Delay = 0.46 
-
 SWEP.WalkSpeed = SPEED_FAST
-
 SWEP.UseMelee1 = true
 
 SWEP.HitGesture = ACT_HL2MP_GESTURE_RANGE_ATTACK_MELEE
 SWEP.MissGesture = SWEP.HitGesture
-
 SWEP.HitDecal = "Manhackcut"
 SWEP.HitAnim = ACT_VM_MISSCENTER
-
 SWEP.Tier = 2
-
 SWEP.AllowQualityWeapons = true
 SWEP.Culinary = true
 
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_FIRE_DELAY, -0.04)
-
-SWEP.MovementBonusResetDelay = 4
-SWEP.MovementBonusPerHit = 10
-SWEP.MovementBonusMaxHits = 20
-function SWEP:SetupDataTables()
-	self:NetworkVar("Float", 11, "LastEnemyHit")
-	self:NetworkVar("Int", 11, "HitAmount")
-end
-
 function SWEP:PlaySwingSound()
 	self:EmitSound("weapons/knife/knife_slash"..math.random(2)..".wav", 72, math.Rand(85, 95))
 end
-
 function SWEP:PlayHitSound()
 	self:EmitSound("weapons/knife/knife_hitwall1.wav", 72, math.Rand(75, 85))
 end
-
 function SWEP:PlayHitFleshSound()
 	self:EmitSound("physics/flesh/flesh_squishy_impact_hard"..math.random(4)..".wav")
 	self:EmitSound("physics/body/body_medium_break"..math.random(2, 4)..".wav")
 end
-
-function SWEP:PlayerHitUtil(owner, damage, hitent, dmginfo)
-	hitent:MeleeViewPunch(damage*0.1)
-	if self:GetHitAmount() < 20 then
-		self:SetHitAmount(self:GetHitAmount()+1)
-		self:SetLastEnemyHit(CurTime())
-		owner:ResetSpeed()
-	end
+function SWEP:PostOnMeleeHit(hitent, hitflesh, tr)
+	--[[if hitent:IsValid() and hitent:IsPlayer() and hitent:Health() <= 0 then
+		-- Dismember closest limb to tr.HitPos
+	end]]
 end
-
-function SWEP:GetWalkSpeed()
-	return self.WalkSpeed + math.Clamp(self:GetHitAmount(),0,self.MovementBonusMaxHits)*self.MovementBonusPerHit
-end
-
-function SWEP:Think()
-	local curtime = CurTime()
-	local owner = self:GetOwner()
-	if self:GetLastEnemyHit() + self.MovementBonusResetDelay <= curtime and self:GetHitAmount() > 0 then
-		self:SetHitAmount(0)
-		owner:ResetSpeed()
-	end
-	self:NextThink(curtime)
-	return true
-end
-
 function SWEP:OnMeleeHit(hitent, hitflesh, tr)
 	if hitent:IsValid() and hitent:IsPlayer() and not self.m_BackStabbing and math.abs(hitent:GetForward():Angle().yaw - self:GetOwner():GetForward():Angle().yaw) <= 90 then
 		self.m_BackStabbing = true
 		self.MeleeDamage = self.MeleeDamage * 3
 	end
 end
-
 function SWEP:PostOnMeleeHit(hitent, hitflesh, tr)
 	if self.m_BackStabbing then
 		self.m_BackStabbing = false
-
 		self.MeleeDamage = self.MeleeDamage / 3
 	end
 end
-
