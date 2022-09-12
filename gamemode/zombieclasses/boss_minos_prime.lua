@@ -17,8 +17,7 @@ CLASS.Points = 40
 
 CLASS.SWEP = "weapon_zs_mprime"
 
-CLASS.Model = Model("models/player/zombie_classic_hbfix.mdl")
-CLASS.OverrideModel = Model("models/player/zombie_lacerator2.mdl")
+CLASS.Model = Model("models/minosprime1/minosprime1.mdl")
 
 
 CLASS.Health = 1300
@@ -26,7 +25,7 @@ CLASS.Speed = 175
 
 CLASS.VoicePitch = 0.65
 
-CLASS.ModelScale = 1.2
+CLASS.ModelScale = 1
 CLASS.Hull = {Vector(-16, -16, 0), Vector(16, 16, 72)}
 CLASS.HullDuck = {Vector(-16, -16, 0), Vector(16, 16, 36)}
 CLASS.ViewOffset = DEFAULT_VIEW_OFFSET * CLASS.ModelScale
@@ -138,13 +137,11 @@ if SERVER then
 		if wep:IsValid() and wep.GetBattlecry and wep:GetBattlecry() > CurTime() then
 			dmginfo:SetDamage(dmginfo:GetDamage() * 0.5)
 		end
+		pl:EmitSound(Sound("zombiesurvival/mp_useless.wav"))
 	end
 
 	function CLASS:OnKilled(pl, attacker, inflictor, suicide, headshot, dmginfo)
 		local fakedeath = pl:FakeDeath(234, self.ModelScale)
-		if fakedeath and fakedeath:IsValid() then
-			fakedeath:SetModel(self.OverrideModel)
-		end
 
 		return true
 	end

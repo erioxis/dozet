@@ -51,7 +51,9 @@ function SWEP:SetupDataTables()
 	self:NetworkVar("Float", 0, "NextMeleeAttack")
 	self:NetworkVar("Float", 1, "NextIdle")
 	self:NetworkVar("Float", 2, "NextIdleHoldType")
+	self:NetworkVar("Float", 3, "NextJudgeMoment")
 	self:NetworkVar("Int", 2, "Combo")
+	self:NetworkVar("Bool", 0, "Judge")
 	--self:NetworkVar("Bool", 0, "HitPrevious")
 	self:NetworkVar("Int", 0, "PowerCombo")
 end
@@ -96,7 +98,7 @@ function SWEP:PrimaryAttack(right, sec)
 
 
 
-	self:SetNextMeleeAttack( time + (sec and hitdelay * 5 or hitdelay)  )
+	self:SetNextMeleeAttack( time + (sec and hitdelay * 5 or hitdelay) + (self:GetJudge() and sec and 4 or 0)  )
 
 	self:SetNextPrimaryFire( time + self.Primary.Delay * armdelay )
 	self:SetNextSecondaryFire( time + (self.Primary.Delay * armdelay) * 3 )
@@ -332,6 +334,16 @@ end
 
 function SWEP:TranslateActivity( act )
 	return self.ActivityTranslate and self.ActivityTranslate[act] or -1
+end
+function SWEP:Reload()
+	local time = CurTime()
+	if time >= self:GetNextJudgeMoment() and self:GetJudge() then
+		self:SetJudge(false)
+		self:SetNextJudgeMoment(time + 1)
+	elseif time >= self:GetNextJudgeMoment() and !self:GetJudge() then
+		self:SetJudge(true)	
+		self:SetNextJudgeMoment(time + 1)
+	end
 end
 
 if not CLIENT then return end
