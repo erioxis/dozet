@@ -73,7 +73,7 @@ function PANEL:Init()
 
 			local ok
 			if bossmode then
-				ok = classtab.Boss
+				ok = classtab.Boss and not classtab.Hidden
 			else
 				ok = not classtab.Boss and
 					(not classtab.Hidden or classtab.CanUse and classtab:CanUse(MySelf)) and
@@ -231,7 +231,7 @@ function PANEL:Think()
 	local enabled
 	if MySelf:GetZombieClass() == self.ClassTable.Index then
 		enabled = 2
-	elseif self.ClassTable.Boss or gamemode.Call("IsClassUnlocked", self.ClassTable.Index) then
+	elseif self.ClassTable.Boss and !self.ClassTable.Hidden or gamemode.Call("IsClassUnlocked", self.ClassTable.Index) then
 		enabled = 1
 	else
 		enabled = 0

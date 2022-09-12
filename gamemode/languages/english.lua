@@ -1167,6 +1167,7 @@ LANGUAGE.class_lacerator							= "Lacerator"
 LANGUAGE.class_lacerator_charging					= "Charger"
 LANGUAGE.class_eradicator							= "Eradicator"
 LANGUAGE.class_howler								= "Howler"
+LANGUAGE.class_mprime								= "Minos Prime"
 LANGUAGE.class_extinctioncrab						= "Extinction Crab"
 LANGUAGE.class_tormented_boss						= "Soul Of Death"
 LANGUAGE.class_shadow_r      						= "Shadow nigger"
@@ -1183,7 +1184,7 @@ LANGUAGE.class_skeleton                 = "Skeleton"
 LANGUAGE.class_god                 = "God of baracats"
 LANGUAGE.class_negr								= "Mr.Nigger"
 -- Class descriptions
-
+LANGUAGE.description_mprime				= "Have small health with very high resist vs all damage.\nKing of Lust Layer.\nUse high-damage attacks vs humans."
 LANGUAGE.description_skeleton				= "Animated skeletons have a lot of health but they take minimal damage from bullets."
 LANGUAGE.description_ipukepus						= "The rotting body of the Ice Puke Pus is comprised entirely of organs used for the generation of poison and ice cubes.\nHe corrupt reality for hide\nIt's capable of vomiting gallons of poison puke at a time making it extremely dangerous."
 
@@ -1306,6 +1307,7 @@ LANGUAGE.controls_lacerator							= "> PRIMARY: Claws\n> SECONDARY: Lunge / Clim
 LANGUAGE.controls_lacerator_charging				= "> PRIMARY: Bleeding Claws\n> ON HIT HUMAN: Bleed\n> SECONDARY: Charge\n> RELOAD: Scream"
 LANGUAGE.controls_eradicator						= "> PRIMARY: Claws\n> SECONDARY: Scream\n> ON FATAL HIT: Revive"
 LANGUAGE.controls_howler							= "> PRIMARY: Claws\n> SECONDARY: Howl\n> RELOAD: Moan"
+LANGUAGE.controls_mprime							= "> PRIMARY: Die!\n> SECONDARY: Judge!\n> RELOAD: Thy end is now!"
 LANGUAGE.controls_extinctioncrab					= "> PRIMARY: Leap Attack\n> SECONDARY: Extinction Spore"
 --Всякая мелоч 
 LANGUAGE.pshop_w = "Weapons"
