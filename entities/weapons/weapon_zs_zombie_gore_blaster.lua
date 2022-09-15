@@ -41,6 +41,9 @@ function SWEP:ApplyMeleeDamage(ent, trace, damage)
 			bleed:AddDamage(damage * self.BleedDamageMul)
 			bleed.Damager = self:GetOwner()
 		end
+		if ent:GetBloodArmor() >= 1 then
+			ent:SetBloodArmor(0)
+		end
 	end
 
 	self.BaseClass.ApplyMeleeDamage(self, ent, trace, damage)

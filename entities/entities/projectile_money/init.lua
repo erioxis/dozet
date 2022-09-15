@@ -38,7 +38,7 @@ function ENT:DoRicoShot(ent, pos, melee, dmginfo, attacker)
 	local owner = self:GetOwner()
 	if ent and ent:IsValid() and ent:IsPlayer() and ent:IsValidLivingZombie() or ent.AllowSelfRicoShot then
 		if not ent.AllowSelfRicoShot then
-			ent:TakeSpecialDamage((dmginfo * 1.5) * self.DamageMul, DMG_BULLET, attacker, attacker:GetActiveWeapon())
+			ent:TakeSpecialDamage((dmginfo * 2) * self.DamageMul, DMG_BULLET, attacker, attacker:GetActiveWeapon())
 			if (not melee) then
 				timer.Simple(0.95, function() if self:IsValid() then self:Remove() end end)
 				

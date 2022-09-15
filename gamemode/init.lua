@@ -539,6 +539,7 @@ function GM:AddNetworkStrings()
 	util.AddNetworkString("zs_inventoryitem")
 	util.AddNetworkString("zs_upgradeitem")
 	util.AddNetworkString("zs_trycraft")
+	util.AddNetworkString("zs_trygetitem")
 	util.AddNetworkString("zs_updatealtselwep")
 	util.AddNetworkString("zs_invitem")
 	util.AddNetworkString("zs_invgiven")
@@ -1255,10 +1256,7 @@ function GM:Think()
 					   timer.Simple(0.5, function()	self:SpawnBossZombie() end)
 					end
 					if self:GetWave() > 10 then
-					   timer.Simple(0.6, function()	self:SpawnBossZombie() end)
-					   timer.Simple(0.7, function()	self:SpawnBossZombie() end)
-					   timer.Simple(0.8, function()	self:SpawnBossZombie() end)
-					   timer.Simple(0.9, function()	self:SpawnBossZombie() end)
+					   timer.Create("bosses"..player.GetAll(),0.05,#player.GetAll(), function()	self:SpawnBossZombie() end)
 					end
 				else
 					self:CalculateNextBoss()
@@ -1332,8 +1330,8 @@ function GM:Think()
 					pl:StripWeapon(pl:GetActiveWeapon():GetClass())
 				end
 				if not pl:GetStatus("sigildef") and self:GetWave() >= 6 and  time >= pl.NextDamage and self:GetWaveActive() then
-					pl:TakeDamage(33)
-					pl.NextDamage = time + (pl:HasTrinket("jacobsoul") and 3 or 0.6)
+					pl:TakeDamage((pl:HasTrinket("jacobsoul") and 13 or 33))
+					pl.NextDamage = time + (pl:HasTrinket("jacobsoul") and 4 or 0.6)
 					pl:CenterNotify(COLOR_RED, translate.ClientGet(pl, "danger"))
 				end
 				if pl:GetStatus("sigildef") and self:GetWave() >= 6 and time >= pl.NextDamage and self:GetWaveActive() and pl:HasTrinket("jacobsoul") and not (self:GetWave() == 12) then
@@ -1362,9 +1360,6 @@ function GM:Think()
 				local healmax = pl:IsSkillActive(SKILL_D_FRAIL) and math.floor(pl:GetMaxHealth() * 0.44) or pl:IsSkillActive(SKILL_ABUSE) and math.floor(pl:GetMaxHealth() * 0.25)  or pl:GetMaxHealth()
                 if pl:GetVelocity():LengthSqr() >= 5636052 then
 					pl:GiveAchievement("highvel")
-				end
-				if pl.ClanQuePro then
-					pl:GiveStatus("speed", 3)
 				end
 				if pl.ClanQuePro and time >= pl.NextRegenerateClan then
 					pl.NextRegenerateClan = time + 20
@@ -2308,6 +2303,9 @@ hook.Add("PlayerSay", "ForBots", function(ply, text)
    		--table.Add(GAMEMODE.Da, playerInput)
 	end
 end)
+hook.Add( "PlayerConnect", "JoinGlobalMessage", function( name, ip )
+	PrintMessage( HUD_PRINTTALK, name.." has joined the game." )
+end )
 
 function GM:PlayerReadyRound(pl)
 	if not pl:IsValid() then return end
@@ -2336,11 +2334,11 @@ function GM:PlayerReadyRound(pl)
 	net.Start("zs_currentround")
 		net.WriteUInt(self.CurrentRound, 6)
 	net.Send(pl)
-
 	if self.RoundEnded then
 		pl:SendLua("gamemode.Call(\"EndRound\", "..tostring(ROUNDWINNER)..", \""..game.GetMapNext().."\")")
 		gamemode.Call("DoHonorableMentions", pl)
 	end
+
 
 	if pl:GetInfo("zs_noredeem") == "1" then
 		pl.NoRedeeming = true
@@ -2512,6 +2510,7 @@ function GM:PlayerInitialSpawn(pl)
 	pl.LastSentESW = 0
 	pl.m_LastWaveStartSpawn = 0
 	pl.m_LastGasHeal = 0
+	pl.OneTime = true
 	--self:PlayerSaveDataMASTERY(pl)
 	self:InitializeVault(pl)
 
@@ -2570,6 +2569,7 @@ function GM:PlayerInitialSpawnRound(pl)
 	pl:SetCustomCollisionCheck(true)
 	pl:ProcessAchievements()
 	--self:PlayerLoadDataMASTERY(pl)
+	pl.HealthMax = 0
 	pl.ZombiesKilled = 0
 	pl.ZombiesKilledAssists = 0
 	pl.Headshots = 0
@@ -2805,6 +2805,7 @@ function GM:PlayerDisconnected(pl)
 
 	gamemode.Call("CalculateInfliction")
 end
+
 
 function GM:CanDamageNail(ent, attacker, inflictor, damage, dmginfo)
 	return not attacker:IsPlayer() or attacker:Team() == TEAM_UNDEAD
@@ -4447,9 +4448,9 @@ end
 
 function GM:PlayerCanPickupWeapon(pl, ent)
 	if pl:IsSkillActive(SKILL_JEW) then
-		pl:SetPoints(pl:GetPoints() - (5 * self:GetWave()))
+		pl:SetPoints(pl:GetPoints() - (self:GetWave() == 0 and 0 or (5 + (self:GetWave() * 2) + self:GetWave()) * 0.32))
 		GAMEMODE:ConCommandErrorMessage(pl, translate.ClientGet(pl, "jewmoment"))
-		pl:GiveAchievementProgress("greatgreed", 5 * self:GetWave())
+		pl:GiveAchievementProgress("greatgreed", (self:GetWave() == 0 and 0 or (5 + (self:GetWave() * 2) + self:GetWave()) * 0.32))
 	end
 
 
@@ -5015,6 +5016,7 @@ function GM:WaveStateChanged(newstate, pl)
 			end
 		else
 			-- If not using sigils then humans all win.
+			
 			gamemode.Call("EndRound", TEAM_HUMAN)
 
 			local curwave = self:GetWave()
@@ -5110,7 +5112,7 @@ function GM:WaveStateChanged(newstate, pl)
 						if pl:IsSkillActive(SKILL_DEADINSIDE) and blyat < 3 then
 						pl:TakeDamage(20000)
 					elseif pl:IsSkillActive(SKILL_DEADINSIDE) and blyat > 3 then
-					pl:AddPoints(120)
+						pl:AddPoints(50)
 					end
 
 					if pl:HasTrinket("mysteryticket")  then 

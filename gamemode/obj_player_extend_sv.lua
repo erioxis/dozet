@@ -187,7 +187,7 @@ function meta:ProcessDamage(dmginfo)
 	end
 
     truedogder = 30 - (self:GetWalkSpeed() / 15)
-	rngdogde = math.max(0,math.random(1,truedogder))
+	rngdogde = math.max(0,math.random(1,math.max(truedogder,2)))
  
 	if self:IsSkillActive(SKILL_DODGE) and rngdogde == 1 then
 		dmginfo:SetDamage(0)
@@ -580,7 +580,7 @@ function meta:ProcessDamage(dmginfo)
 			if self.HasHemophilia and (damage >= 4 and dmgtype == 0 or bit.band(dmgtype, DMG_TAKE_BLEED) ~= 0) then
 				local bleed = self:GiveStatus("bleed")
 				if bleed and bleed:IsValid() then
-					bleed:AddDamage(damage * 0.25)
+					bleed:AddDamage((damage * 0.25) * (self:IsSkillActive(SKILL_LOX) and 2 or 1))
 					if attacker:IsValid() and attacker:IsPlayer() then
 						bleed.Damager = attacker
 					end
@@ -600,7 +600,7 @@ function meta:ProcessDamage(dmginfo)
 			if damage >= self:GetBloodArmor() and self:IsSkillActive(SKILL_BLOODLETTER) then
 				local bleed = self:GiveStatus("bleed")
 				if bleed and bleed:IsValid() then
-					bleed:AddDamage(2)
+					bleed:AddDamage(2 * (self:IsSkillActive(SKILL_LOX) and 2 or 1))
 					bleed.Damager = self
 				end
 			end
@@ -698,7 +698,7 @@ function meta:GetBossZombieIndex()
 		"Puke Pus",
 		"Skeleton"  --16
 	}
-
+	if self:GetInfo("zs_bossclass") == "Minos Prime" and GAMEMODE:GetWave() <= 3 then return bossclasses[1] end
 	local desired = self:GetInfo("zs_bossclass") or ""
 	if GAMEMODE:IsBabyMode() then
 		desired = "Giga Gore Child"
@@ -716,7 +716,6 @@ function meta:GetBossZombieIndex()
 			break
 		end
 	end
-
 	return bossindex or bossclasses[1]
 end
 
@@ -895,12 +894,12 @@ function meta:AddPoisonDamage(damage, attacker)
 	if damage > 0 then
 		local status = self:GiveStatus("poison")
 		if status and status:IsValid() then
-			status:AddDamage(damage, attacker)
+			status:AddDamage(damage * (self:IsSkillActive(SKILL_LOX) and 2 or 1), attacker)
 		end
 	else
 		local status = self:GetStatus("poison")
 		if status and status:IsValid() then
-			status:AddDamage(damage)
+			status:AddDamage(damage * (self:IsSkillActive(SKILL_LOX) and 2 or 1))
 		end
 	end
 end
@@ -932,12 +931,12 @@ function meta:AddBleedDamage(damage, attacker)
 	if damage > 0 then
 		local status = self:GiveStatus("bleed")
 		if status and status:IsValid() then
-			status:AddDamage(damage, attacker)
+			status:AddDamage(damage * (self:IsSkillActive(SKILL_LOX) and 2 or 1), attacker)
 		end
 	else
 		local status = self:GiveStatus("bleed")
 		if status and status:IsValid() then
-			status:AddDamage(damage)
+			status:AddDamage(damage * (self:IsSkillActive(SKILL_LOX) and 2 or 1))
 		end
 	end
 end
@@ -1179,12 +1178,14 @@ end
 
 function meta:GiveStatus(sType, fDie)
 	local resistable = table.HasValue(GAMEMODE.ResistableStatuses, sType)
-
-	if resistable and self:IsSkillActive(SKILL_HAEMOSTASIS) and self:GetBloodArmor() >= 2 then
-		self:SetBloodArmor(self:GetBloodArmor() - 2)
+	local lox = self:IsSkillActive(SKILL_LOX)
+	if lox then
+		fDie = (fDie or 1) * 2
+	end
+	if resistable and self:IsSkillActive(SKILL_HAEMOSTASIS) and self:GetBloodArmor() >= (lox and 5 or 2) then
+		self:SetBloodArmor(self:GetBloodArmor() - (lox and 5 or 2))
 		return
 	end
-
 	if resistable and self:HasTrinket("biocleanser") and (not self.LastBioCleanser or self.LastBioCleanser + 10 < CurTime()) then
 		self.LastBioCleanser = CurTime()
 		self.BioCleanserMessage = nil

@@ -1,7 +1,7 @@
 AddCSLuaFile()
 
 --SWEP.PrintName = "Axe"
-SWEP.PrintName = ""..translate.Get("wep_axe")
+SWEP.PrintName = translate.Get("wep_axe")
 
 if CLIENT then
 	SWEP.ViewModelFOV = 55
@@ -15,6 +15,21 @@ if CLIENT then
 	SWEP.WElements = {
 		["base"] = { type = "Model", model = "models/props/cs_militia/axe.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3, 1.399, -4), angle = Angle(0, 0, 90), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
 	}
+	
+	function SWEP:PostDrawViewModel(vm, pl, wep)
+		if self.HUD3DPos and GAMEMODE:ShouldDraw3DWeaponHUD() then
+			local pos, ang = self:GetHUD3DPos(vm)
+			if pos then
+				self:Draw3DHUD(vm, pos, ang)
+			end
+		end
+		local veles = self.VElements
+	
+		local col1 = self:GetOwner():GetWeaponColor():ToColor()
+		veles["base"].color = col1
+		local weles = self.WElements
+		weles["base"].color = col1
+	end
 end
 
 SWEP.Base = "weapon_zs_basemelee"

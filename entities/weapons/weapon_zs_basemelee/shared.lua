@@ -123,9 +123,9 @@ function SWEP:Think()
 end
 function SWEP:Move(mv)
 	if self:GetBlockState() and mv:KeyDown(IN_ATTACK2) and not self:GetOwner():GetBarricadeGhosting() then
-		mv:SetMaxSpeed(self.WalkSpeed*0.45)
-		mv:SetMaxClientSpeed(self.WalkSpeed*0.45)	
-		mv:SetSideSpeed(mv:GetSideSpeed() * 0.45)
+		mv:SetMaxSpeed(50)
+		mv:SetMaxClientSpeed(50)	
+		mv:SetSideSpeed(50)
 	end
 end
 function SWEP:SecondaryAttack()
@@ -144,6 +144,7 @@ function SWEP:SecondaryAttack()
 			if !self:IsValid() or !self:GetOwner():IsValid() then return false end
 			self.ParryTiming = true
 		end)
+		self:SetNextSecondaryFire(CurTime() + 0.75)
 	end
 
 end
@@ -214,6 +215,9 @@ end
 
 function SWEP:StartSwinging()
 	local owner = self:GetOwner()
+	if self:GetBlockState() then
+		self.ParryTiming = false
+	end
 
 
 	if self.StartSwingAnimation then

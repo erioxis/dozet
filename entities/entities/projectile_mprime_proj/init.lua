@@ -19,7 +19,18 @@ function ENT:Think()
 		self:Remove()
 	end
 end
-
+function ENT:OnTakeDamage(dmginfo)
+	if dmginfo:GetDamage() <= 0 then return end
+	local dmg = dmginfo:GetDamage()
+	local attacker = dmginfo:GetAttacker()
+	local wep = dmginfo:GetInflictor()
+	if wep.IsMelee then
+		attacker:SetHealth(attacker:GetMaxHealth() + 20)
+		self:GetOwner():TakeSpecialDamage(150 + (wep.Unarmed and 200), DMG_DIRECT, attacker, wep)
+	else
+		self:Remove()
+	end
+end
 function ENT:OnRemove()
 	self:Hit(self:GetPos(), Vector(0, 0, 1), NULL)
 end

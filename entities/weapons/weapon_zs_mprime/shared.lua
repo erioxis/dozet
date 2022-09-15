@@ -6,7 +6,11 @@ SWEP.Base = "weapon_zs_basemelee"
 
 SWEP.ViewModel = "models/weapons/c_arms_citizen.mdl"
 SWEP.WorldModel	= ""
-SWEP.UseHands = true
+if CLIENT then
+	SWEP.UseHands = true
+	SWEP.ViewModelFOV = 40
+	SWEP.BobScale = 2
+end
 
 SWEP.HoldType = "fist"
 
@@ -16,14 +20,14 @@ SWEP.OldWalkSpeed = 0
 SWEP.MeleeDamage = 65
 SWEP.DamageType = DMG_CLUB
 SWEP.UppercutDamageMultiplier = 3
-SWEP.HitDistance = 40
+SWEP.HitDistance = 75
 SWEP.MeleeKnockBack = 0
 
 SWEP.ViewModelFOV = 52
 SWEP.Primary.Ammo = "scrap"
 SWEP.Primary.DefaultClip = 5
 SWEP.AutoSwitchFrom = true
-SWEP.HealStrength = 0.09
+
 
 SWEP.GoodAttackPerk = 0
 
@@ -54,6 +58,8 @@ function SWEP:SetupDataTables()
 	self:NetworkVar("Float", 3, "NextJudgeMoment")
 	self:NetworkVar("Int", 2, "Combo")
 	self:NetworkVar("Bool", 0, "Judge")
+	self:NetworkVar("Bool", 1, "DiePower")
+	self:NetworkVar("Bool", 2, "Obed")
 	--self:NetworkVar("Bool", 0, "HitPrevious")
 	self:NetworkVar("Int", 0, "PowerCombo")
 end
@@ -88,7 +94,7 @@ function SWEP:PrimaryAttack(right, sec)
 	vm:SendViewModelMatchingSequence( vm:LookupSequence( anim ) )
 
 	self:EmitSound( self.SwingSound )
-	self:EmitSound( (sec and Sound("zombiesurvival/mp_judgement"..(math.random(1,2) == 2 and 2 or "")..".ogg") or Sound("zombiesurvival/Mp_die"..(math.random(1,2) == 2 and 2 or "")..".ogg")))
+	owner:EmitSound( (sec and Sound("zombiesurvival/mp_judgement"..(math.random(1,2) == 2 and 2 or "")..".ogg") or Sound("zombiesurvival/Mp_die"..(math.random(1,2) == 2 and 2 or "")..".ogg")))
 
 	self:UpdateNextIdle()
 
@@ -195,7 +201,7 @@ function SWEP:DealDamage()
 		if hitent:IsPlayer() then
 
 			self:PlayerHitUtil(owner, damage, hitent, dmginfo)
-			if hitent:WouldDieFrom(dmginfo:GetDamage(), dmginfo:GetDamagePosition()) then
+			if hitent:Health() <= damage then
 				hitent:EmitSound(Sound("zombiesurvival/mp_weak.ogg"))
 				owner:EmitSound(Sound("zombiesurvival/mp_weak.ogg"))
 			else
@@ -337,11 +343,25 @@ function SWEP:TranslateActivity( act )
 end
 function SWEP:Reload()
 	local time = CurTime()
-	if time >= self:GetNextJudgeMoment() and self:GetJudge() then
+	if time >= self:GetNextJudgeMoment() and self:GetJudge() and !self:GetOwner():KeyDown(IN_ATTACK2) then
+		self:SetJudge(false)
+		self:SetDiePower(false)	
+		self:SetNextJudgeMoment(time + 1)
+	elseif time >= self:GetNextJudgeMoment() and !self:GetJudge() and !self:GetOwner():KeyDown(IN_ATTACK2) then
+		self:SetJudge(true)	
+		self:SetDiePower(false)	
+		self:SetNextJudgeMoment(time + 1)
+	elseif time >= self:GetNextJudgeMoment() and self:GetDiePower() and self:GetOwner():KeyDown(IN_ATTACK2) then
+		self:SetDiePower(false)	
 		self:SetJudge(false)
 		self:SetNextJudgeMoment(time + 1)
-	elseif time >= self:GetNextJudgeMoment() and !self:GetJudge() then
-		self:SetJudge(true)	
+	elseif time >= self:GetNextJudgeMoment() and !self:GetDiePower() and self:GetOwner():KeyDown(IN_ATTACK2) then
+		self:SetJudge(false)
+		self:SetDiePower(true)	
+		self:SetNextJudgeMoment(time + 1)
+	end
+	if time >= self:GetNextJudgeMoment() and self:GetOwner():KeyDown(IN_DUCK) and self:GetOwner():KeyDown(IN_ATTACK) then
+		self:SetObed(true)	
 		self:SetNextJudgeMoment(time + 1)
 	end
 end

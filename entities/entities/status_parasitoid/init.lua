@@ -13,11 +13,12 @@ end
 function ENT:Think()
 	local owner = self:GetOwner()
 	local dmger = self.Damager
+	local lox = dmger:IsSkillActive(SKILL_LOX)
 	if (owner) then
-		owner:TakeDamage(owner:Health()*0.01,dmger and dmger:IsValid() and dmger:IsPlayer() and dmger or owner, self)
+		owner:TakeDamage((lox and owner:Health()*0.05 or owner:Health()*0.01),dmger and dmger:IsValid() and dmger:IsPlayer() and dmger or owner, self)
 		if dmger and dmger:IsValid() and dmger:IsPlayer() and self.NextThinker <= CurTime() then
-			dmger:SetHealth(math.min(dmger:Health() + owner:Health()*0.01, dmger:GetMaxHealth() * 1.1))
-			dmger:SetBloodArmor(math.min(dmger:GetBloodArmor() + owner:Health()*0.01, dmger.MaxBloodArmor * 1.2))
+			dmger:SetHealth(math.min(dmger:Health() + (lox and owner:Health()*0.05 or owner:Health()*0.01), dmger:GetMaxHealth() * 1.1))
+			dmger:SetBloodArmor(math.min(dmger:GetBloodArmor() + (lox and owner:Health()*0.05 or owner:Health()*0.01), dmger.MaxBloodArmor * 1.2))
 			self.NextThinker = CurTime() + 0.5
 		end
 	end

@@ -11,7 +11,8 @@ CLASS.FearPerInstance = 1
 
 CLASS.CanTaunt = true
 
-CLASS.Hidden = true
+CLASS.Hidden = false
+CLASS.HealthMax = 750
 
 CLASS.Points = 40
 
@@ -45,6 +46,15 @@ local ACT_HL2MP_IDLE_CROUCH_ZOMBIE = ACT_HL2MP_IDLE_CROUCH_ZOMBIE
 local ACT_HL2MP_WALK_CROUCH_ZOMBIE_01 = ACT_HL2MP_WALK_CROUCH_ZOMBIE_01
 local ACT_HL2MP_RUN_ZOMBIE = ACT_HL2MP_RUN_ZOMBIE
 local ACT_GMOD_GESTURE_TAUNT_ZOMBIE = ACT_GMOD_GESTURE_TAUNT_ZOMBIE
+local DMG_BULLET = DMG_BULLET
+local ACT_HL2MP_ZOMBIE_SLUMP_RISE = ACT_HL2MP_ZOMBIE_SLUMP_RISE
+local ACT_HL2MP_SWIM_PISTOL = ACT_HL2MP_SWIM_PISTOL
+local ACT_HL2MP_RUN_ZOMBIE = ACT_HL2MP_RUN_ZOMBIE
+local ACT_HL2MP_IDLE_CROUCH_ZOMBIE = ACT_HL2MP_IDLE_CROUCH_ZOMBIE
+local ACT_HL2MP_IDLE_ZOMBIE = ACT_HL2MP_IDLE_ZOMBIE
+local ACT_HL2MP_WALK_CROUCH_ZOMBIE_01 = ACT_HL2MP_WALK_CROUCH_ZOMBIE_01
+local ACT_HL2MP_WALK_ZOMBIE_01 = ACT_HL2MP_WALK_ZOMBIE_01
+
 
 function CLASS:ScalePlayerDamage(pl, hitgroup, dmginfo)
 	return true
@@ -52,11 +62,11 @@ end
 if SERVER then
 	function CLASS:OnSpawned(pl)
 		pl:CreateAmbience("minosprime_amb")
+		pl.HealthMax = pl:Health() * 0.5
+		pl.OneTime = true
 	end
 end
-function CLASS:IgnoreLegDamage(pl, dmginfo)
-	return true
-end
+
 
 function CLASS:PlayerStepSoundTime(pl, iType, bWalking)
 	return GAMEMODE.BaseClass.PlayerStepSoundTime(GAMEMODE.BaseClass, pl, iType, bWalking) * 1.8
@@ -93,42 +103,8 @@ function CLASS:PlayerFootstep(pl, vFootPos, iFoot, strSoundName, fVolume, pFilte
 	return true
 end
 
-function CLASS:CalcMainActivity(pl, velocity)
-	if pl:WaterLevel() >= 3 then
-		return ACT_HL2MP_SWIM_PISTOL, -1
-	elseif pl:Crouching() then
-		if velocity:Length2DSqr() <= 1 then
-			return ACT_HL2MP_IDLE_CROUCH_ZOMBIE, -1
-		else
-			return ACT_HL2MP_WALK_CROUCH_ZOMBIE_01 - 1 + math_ceil((CurTime() / 4 + pl:EntIndex()) % 3), -1
-		end
-	else
-		return ACT_HL2MP_RUN_ZOMBIE, -1
-	end
 
-	return true
-end
 
-function CLASS:UpdateAnimation(pl, velocity, maxseqgroundspeed)
-	local len2d = velocity:Length2D()
-	if len2d > 1 then
-		pl:SetPlaybackRate(math_min(len2d / maxseqgroundspeed * 0.5 , 3))
-	else
-		pl:SetPlaybackRate(1 / self.ModelScale)
-	end
-
-	return true
-end
-
-function CLASS:DoAnimationEvent(pl, event, data)
-	if event == PLAYERANIMEVENT_ATTACK_PRIMARY then
-		pl:AnimRestartGesture(GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_GMOD_GESTURE_RANGE_ZOMBIE, true)
-		return ACT_INVALID
-	elseif event == PLAYERANIMEVENT_RELOAD then
-		pl:AnimRestartGesture(GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_GMOD_GESTURE_TAUNT_ZOMBIE, true)
-		return ACT_INVALID
-	end
-end
 
 if SERVER then
 	function CLASS:ProcessDamage(pl, dmginfo)
@@ -136,6 +112,16 @@ if SERVER then
 		dmginfo:SetDamage(dmginfo:GetDamage() / 10)
 		if wep:IsValid() and wep.GetBattlecry and wep:GetBattlecry() > CurTime() then
 			dmginfo:SetDamage(dmginfo:GetDamage() * 0.5)
+		end
+		if pl.HealthMax >= pl:Health() and pl.OneTime then
+			for _, ply  in pairs(player.GetAll()) do
+				if ply:IsValid() and ply:IsPlayer() and ply ~= pl then
+					ply:TakeDamage(ply:Health() * 0.25, pl, wep)
+					ply:EmitSound(Sound("zombiesurvival/mp_weak.ogg"))
+				end
+				pl:EmitSound(Sound("zombiesurvival/mp_weak.ogg"))
+				pl.OneTime = false
+			end
 		end
 		pl:EmitSound(Sound("zombiesurvival/mp_useless.wav"))
 	end

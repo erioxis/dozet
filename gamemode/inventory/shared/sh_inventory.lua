@@ -15,6 +15,7 @@ GM.ZSInventoryPrefix = {
 }
 
 GM.Assemblies = {}
+GM.TakeItem = {}
 GM.Breakdowns = {}
 
 function GM:GetInventoryItemType(item)
@@ -67,7 +68,6 @@ GM:AddWeaponBreakdownRecipe("trinket_jacobjesausoul",							"comp_sacred_soul")
 GM:AddWeaponBreakdownRecipe("weapon_zs_crymam",							"trinket_toysoul")
 
 -- Assemblies (Assembly, Component, Weapon)
-
 
 GM.Assemblies["weapon_zs_waraxe"] 								= {"comp_modbarrel", 		"weapon_zs_glock3"}
 GM.Assemblies["weapon_zs_bust"] 								= {"comp_busthead", 		"weapon_zs_plank"}

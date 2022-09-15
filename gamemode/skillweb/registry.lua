@@ -348,6 +348,7 @@ SKILL_PARASITOID = 327
 SKILL_PREMIUM = 328
 SKILL_CREDIT = 329
 SKILL_POGO = 330
+SKILL_LOX = 331
 
 SKILLMOD_HEALTH = 1
 SKILLMOD_SPEED = 2
@@ -868,6 +869,8 @@ GM:AddSkill(SKILL_BOUNTYKILLER, translate.Get("skill_bounty"), GOOD..translate.G
 GM:AddSkillModifier(SKILL_BOUNTYKILLER, SKILLMOD_DAMAGE, -0.15)
 GM:AddSkill(SKILL_VAMPIRISM, translate.Get("skill_vampirism"), GOOD..translate.Get("skill_vampirism_d1")..BAD.."-35%"..translate.Get("b_damage"),
 																1,		    7,					{SKILL_BOUNTYKILLER}, TREE_GUNTREE)
+GM:AddSkill(SKILL_LOX, translate.Get("skill_lox"), GOOD..translate.Get("skill_lox_d1")..BAD..translate.Get("skill_lox_d2"),
+																2,		    6,					{SKILL_VAMPIRISM}, TREE_GUNTREE)
 GM:AddSkillModifier(SKILL_BOUNTYKILLER, SKILLMOD_DAMAGE, -0.35)
 GM:AddSkill(SKILL_D_CURSEDTRUE, translate.Get("skill_d_truecurse"), BAD.."-100%"..translate.Get("m_curse")..GOOD.."+35"..translate.Get("health")..GOOD.."+40"..translate.Get("speed")..GOOD.."+15%"..translate.Get("r_speed"),
 																2,		    8,					{SKILL_VAMPIRISM}, TREE_GUNTREE)

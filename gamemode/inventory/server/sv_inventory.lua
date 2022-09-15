@@ -71,6 +71,11 @@ net.Receive("zs_trycraft", function(len, pl)
 
 	pl:TryAssembleItem(component, weapon)
 end)
+net.Receive("zs_trygetitem", function(len, pl)
+	local component = net:ReadString()
+
+	pl:TryTakeItem(component)
+end)
 
 function meta:TryAssembleItem(component, heldclass)
 	local heldwep, desiassembly = self:GetWeapon(heldclass)
@@ -135,6 +140,53 @@ function meta:TryAssembleItem(component, heldclass)
 			self:RemoveAmmo(1, heldwep.Primary.Ammo)
 		end
 		self:StripWeapon(heldclass)
+	end
+	self:SendLua("surface.PlaySound(\"buttons/lever"..math.random(5)..".wav\")")
+
+	GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_WEAPON, desiassembly, "Crafts", 1)
+end
+function meta:TryTakeItem(component)
+	local heldwep, desiassembly = self:GetWeapon(heldclass)
+
+	for assembly, reqs in pairs(GAMEMODE.TakeItem) do
+		local reqcomp = reqs[1]
+		if reqcomp == component then
+			desiassembly = assembly
+			break
+		end
+
+	end
+
+	if not desiassembly then
+		self:CenterNotify(COLOR_RED, "You can't make anything with this component and your currently held weapon.")
+		self:SendLua("surface.PlaySound(\"buttons/button10.wav\")")
+		return
+	end
+
+	local invitemresult = GAMEMODE:GetInventoryItemType(desiassembly) ~= -1
+
+	local desitable
+	if invitemresult then
+		if not self:TakeInventoryItem(component) then return end
+
+		self:AddInventoryItem(desiassembly)
+		self:CenterNotify(COLOR_LIMEGREEN, translate.ClientGet(self, "crafting_successful"), color_white, "   ("..GAMEMODE.ZSInventoryItemData[desiassembly].PrintName..")")
+	else
+		desitable = weapons.Get(desiassembly)
+		if (not desitable.AmmoIfHas and self:HasWeapon(desiassembly)) or not self:TakeInventoryItem(component) then return end
+
+		if desitable.AmmoIfHas then
+			self:GiveAmmo(1, desitable.Primary.Ammo)
+		end
+		self:GiveEmptyWeapon(desiassembly)
+		self:SelectWeapon(desiassembly)
+		self:UpdateAltSelectedWeapon()
+
+		self:CenterNotify(COLOR_LIMEGREEN, translate.ClientGet(self, "crafting_successful"), color_white, "   ("..desitable.PrintName..")")
+	end
+
+	if heldwepiitype then
+		self:TakeInventoryItem(heldclass)
 	end
 	self:SendLua("surface.PlaySound(\"buttons/lever"..math.random(5)..".wav\")")
 

@@ -265,6 +265,14 @@ local function ItemPanelDoClick(self)
 	ppurbl:SetPos(purb:GetWide() / 2 - ppurbl:GetWide() / 2, purb:GetTall() * 0.75 - ppurbl:GetTall() * 0.5)
 	ppurbl:SetVisible(true)
 	ppurbl:Refresh()
+	local brkdown = GAMEMODE.Breakdowns
+	if brkdown[sweptable] and brkdown[sweptable].Result then
+		local howto = viewer.m_ItemDSM
+		howto:SetText(brkdown[sweptable].Result.."Da")
+		howto:SizeToContents()
+		howto:SetPos(purb:GetWide() / 2 - ppurbl:GetWide() / 2, purb:GetTall() * 0.75 - ppurbl:GetTall() * 0.5)
+		howto:SetVisible(true)
+	end
 
 	purb = viewer.m_AmmoB
 	if canammo then
@@ -639,6 +647,10 @@ function GM:CreateItemInfoViewer(frame, propertysheet, topspace, bottomspace, me
 	local pricelab = EasyLabel(purchaseb, "", "ZSBodyTextFont", COLOR_WHITE)
 	pricelab:SetVisible(false)
 	viewer.m_PurchasePrice = pricelab
+
+	local itm = EasyLabel(purchaseb, "", "ZSBodyTextFont", COLOR_WHITE)
+	itm:SetVisible(false)
+	viewer.m_ItemDSM = itm
 
 	local ammopb = vgui.Create("DButton", viewer)
 	ammopb:SetText("")
