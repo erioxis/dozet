@@ -6,7 +6,7 @@ CLASS.Description = "description_gravedigger"
 CLASS.Help = "controls_gravedigger"
 
 CLASS.Boss = true
-
+CLASS.DemiBoss = false
 CLASS.Health = 1922
 CLASS.Speed = 220
 

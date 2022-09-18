@@ -2165,6 +2165,7 @@ local demiboss = {
 	"comp_soul_hack",
 	"comp_soul_godlike",
 	"comp_soul_dd",
+	"comp_soul_booms",
 	"comp_soul_dosei"
 
 }

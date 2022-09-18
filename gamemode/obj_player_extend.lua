@@ -1001,6 +1001,10 @@ end
 function meta:GetMaxZombieHealth()
 	return self:GetZombieClassTable().Health
 end
+function meta:SetMaxZombieHealth(add)
+	self:GetZombieClassTable().Health = add
+	self:SetMaxHealth(add)
+end
 
 local oldmaxhealth = FindMetaTable("Entity").GetMaxHealth
 function meta:GetMaxHealth()

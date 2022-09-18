@@ -1015,7 +1015,7 @@ function GM:ZombieHUD()
 
 	if not self:GetWaveActive() and self:GetWave() ~= 0 then
 		local pl = GAMEMODE.NextBossZombie
-		local demipl = (GAMEMODE.NextDemiBossZombies * 0.5 or 0)
+		local demipl = math.floor((GAMEMODE.NextDemiBossZombies * 0.5 or 0))
 		if pl and pl:IsValid() then
 			local x, y = ScrW() / 2, ScrH() * 0.3 + draw_GetFontHeight("ZSHUDFont")
 			if pl == MySelf then
@@ -1024,7 +1024,7 @@ function GM:ZombieHUD()
 				draw_SimpleTextBlur(translate.Format("x_will_be_y_soon", pl:Name(), GAMEMODE.NextBossZombieClass), "ZSHUDFont", x, y, COLOR_GRAY, TEXT_ALIGN_CENTER)
 			end
 			if demipl >= 1 then
-				draw_SimpleTextBlur(translate.Get("demibosses").." "..demipl, "ZSHUDFontSmall", x, y - 10, COLOR_GRAY, TEXT_ALIGN_CENTER)
+				draw_SimpleTextBlur(translate.Get("demibosses").." "..demipl, "ZSHUDFontSmall", x, y - 25, COLOR_YELLOW, TEXT_ALIGN_CENTER)
 			end
 		end
 	end

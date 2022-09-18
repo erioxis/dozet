@@ -4720,11 +4720,16 @@ function GM:PlayerSpawn(pl)
 
 		if classtab.Boss then
 			pl:SetHealth(classtab.Health + (((self:GetWave() * 250)) * team.NumPlayers(TEAM_HUMAN)))
+			pl:SetMaxZombieHealth(classtab.Health + (((self:GetWave() * 250)) * team.NumPlayers(TEAM_HUMAN)))
+		elseif classtab.DemiBoss then
+			pl:SetHealth(classtab.Health + (((self:GetWave() * 80)) * team.NumPlayers(TEAM_HUMAN)))
+			pl:SetMaxZombieHealth(classtab.Health + (((self:GetWave() * 80)) * team.NumPlayers(TEAM_HUMAN)))
 		else
 			local lowundead = team.NumPlayers(TEAM_UNDEAD) < 4
 
 			local healthmulti = (self.ObjectiveMap or self.ZombieEscape) and 1 or lowundead and 1.5 or 1
 			pl:SetHealth((classtab.Health * healthmulti) + ((self:GetWave() * 45) * (classtab.DynamicHealth or 1)) )
+			pl:SetMaxZombieHealth((classtab.Health * healthmulti) + ((self:GetWave() * 45) * (classtab.DynamicHealth or 1)) )
 		end
 
 		if classtab.SWEP then
