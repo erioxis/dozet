@@ -685,7 +685,6 @@ function meta:GetBossZombieIndex()
 		"Miss ASS",  -- 2
 		"Giga Shadow Child",  -- 3
 		"Red Marrow",  -- 4
-		"Shit Slapper",  -- 5
 		"Ancient Nightmare",  -- 6
 		"Bloody Nightmare",  -- 7
 		"Bonemesh",  -- 8
@@ -704,6 +703,32 @@ function meta:GetBossZombieIndex()
 		desired = "Giga Gore Child"
 	elseif desired == "" then
 		desired = table.Random(bosses)
+	end
+
+
+
+	local bossindex
+	for _, classindex in pairs(bossclasses) do
+		local classtable = GAMEMODE.ZombieClasses[classindex]
+		if string.lower(classtable.Name) == string.lower(desired) then
+			bossindex = classindex
+			break
+		end
+	end
+	return bossindex or bossclasses[1]
+end
+function meta:GetDemiBossZombieIndex()
+	local bossclasses = {}
+	for _, classtable in pairs(GAMEMODE.ZombieClasses) do
+		if classtable.DemiBoss then
+			table.insert(bossclasses, classtable.Index)
+		end
+	end
+
+	if #bossclasses == 0 then return -1 end
+	local desired = self:GetInfo("zs_demibossclass") or ""
+	if desired == "" then
+		desired = "Cringe Demi"
 	end
 
 
@@ -2132,6 +2157,17 @@ local bossdrops = {
 	"trinket_soulmedical",  -- 25
 	"trinket_lampsoul"  -- 26
 }
+local demiboss = {
+	"comp_soul_alt_h",
+	"comp_soul_health",
+	"comp_soul_status",
+	"comp_soul_melee", 
+	"comp_soul_hack",
+	"comp_soul_godlike",
+	"comp_soul_dd",
+	"comp_soul_dosei"
+
+}
 local bossdrops1 = {
 	"trinket_sin_greed",
 	"trinket_sin_wrath",
@@ -2166,7 +2202,30 @@ local bossdrops2 = {
 	
 	
 }
+function meta:MakeDemiBossDrop()
+	local drop = table.Random(demiboss)
+	local inv = string.sub(drop, 1, 4) ~= "weap"
 
+	local pos = self:LocalToWorld(self:OBBCenter())
+	local ent = ents.Create(inv and "prop_invitem" or "prop_weapon")
+	if ent:IsValid() then
+		ent:SetPos(pos)
+		ent:SetAngles(AngleRand())
+		if inv then
+			ent:SetInventoryItemType(drop)
+		else
+			ent:SetWeaponType(drop)
+		end
+		ent:Spawn()
+
+		local phys = ent:GetPhysicsObject()
+		if phys:IsValid() then
+			phys:Wake()
+			phys:SetVelocityInstantaneous(VectorRand():GetNormalized() * math.Rand(24, 100))
+			phys:AddAngleVelocity(VectorRand() * 200)
+		end
+	end
+end
 function meta:MakeBossDrop()
 	local drop = table.Random(bossdrops)
 	local inv = string.sub(drop, 1, 4) ~= "weap"

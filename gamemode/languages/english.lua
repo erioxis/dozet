@@ -1201,6 +1201,7 @@ LANGUAGE.class_eraditor							= "Eraditor"
 LANGUAGE.class_megacringe							= "Cringe++"
 LANGUAGE.class_cringe   						= "Cringe+"
 LANGUAGE.class_cringe2   						= "Crif"
+LANGUAGE.class_cringedemi								= "Brat of Cringe"
 LANGUAGE.class_bnightmare   						= "Bloody Nightmare"
 LANGUAGE.class_king_fast   						= "King of Fasts"
 LANGUAGE.class_ipukepus   						= "Icy Puke Pus"
@@ -1236,6 +1237,7 @@ LANGUAGE.description_bloodsucker_headcrab			= "Bloodsuckers are stockier fast he
 LANGUAGE.description_poison_headcrab				= "This Headcrab is full of deadly neurotoxins.\nOne bite is usually enough to kill an adult human.\nIt also has the ability to spit a less potent version of its poisons.\nThe spit is just as deadly if its victim is hit in the face."
 LANGUAGE.description_barbed_headcrab				= "This Headcrab bristles with sharp quills.\nIt can project a bristle at high speed inflicting bleeding upon unlucky humans."
 LANGUAGE.description_the_tickle_monster				= "Said to be the monster that hides in your closet at night to drag you from your bed.\nThe Tickle Monster's almost elastic arms make it extremely hard to outrun and they also make it an ideal barricade destroyer."
+LANGUAGE.description_cringedemi				= "Said to be THE WORLD GLITCH for breaking the world.\nHave small immunity for bullet and ranged arms."
 LANGUAGE.description_nightmare						= "An extremely rare mutation gives the Nightmare its abnormal abilities.\nStronger than the every day zombie in almost every way, the Nightmare is a force to be reckoned with.\nOne swipe of its claws is enough to put down almost any person."
 LANGUAGE.description_ancient_nightmare				= "An elderly Nightmare that has been roaming the land for ages.\nIts body has been tempered by the years, making it cursed and less mobile but still formidable up close."
 LANGUAGE.description_devourer						= "A horrific malformation of bone and flesh, with a throwable rib that pierces into victims to reel them in.\nNot very fast on its own but incredibly dangerous to deal with alone."
@@ -2076,3 +2078,8 @@ LANGUAGE.t_subcat_spr = "Super"
 LANGUAGE.inv_title = "Inventory"
 
 LANGUAGE.nest_destroyed_killicon = "Nest Destroyed by "
+
+
+LANGUAGE.demi_boss_dead = "%s killed as %s "
+
+LANGUAGE.demibosses = "Demi-bosses "

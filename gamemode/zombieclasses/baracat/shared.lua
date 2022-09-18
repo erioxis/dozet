@@ -18,7 +18,7 @@ CLASS.KnockbackScale = 0
 CLASS.BaraCat = true
 CLASS.FearPerInstance = 1
 
-CLASS.Points = 5
+CLASS.Points = 25
 
 CLASS.SWEP = "weapon_zs_baracat"
 
@@ -27,7 +27,7 @@ CLASS.Speed = 870
 CLASS.JumpPower = 1400
 
 
-CLASS.ModelScale = 0.45
+CLASS.ModelScale = 0.65
 CLASS.Hull = {Vector(-16, -16, 0), Vector(16, 16, 32)}
 CLASS.HullDuck = {Vector(-16, -16, 0), Vector(16, 16, 32)}
 CLASS.ViewOffset = Vector(0, 0, 32 * CLASS.ModelScale)

@@ -167,7 +167,7 @@ local colBGH = Color( 200, 200, 200, 5 )
 local blur = Material( "pp/blurscreen" )
 local function TrinketPanelPaint( self, w, h )
 	if categorycolors[ self.Category ] then
-		draw.RoundedBox( 2, 0, 0, w, h, ( self.Depressed or self.On ) and categorycolors[ self.Category ][ 1 ] or categorycolors[ self.Category ][ 2 ] )
+		draw.RoundedBox( 2, 0, 0, w, h, ( self.Depressed or self.On ) and categorycolors[ self.Category ][ 1 ] or categorycolors[ self.Category ][ 2 ]  )
 	end
 	
 	draw.RoundedBox( 2, 2, 2, w - 4, h - 4, colBG )

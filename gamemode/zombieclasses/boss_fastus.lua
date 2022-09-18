@@ -5,10 +5,10 @@ CLASS.Help = "controls_fast_zombie"
 
 CLASS.Model = Model("models/player/zombie_fast.mdl")
 
-CLASS.Boss = true
+CLASS.DemiBoss = true
 CLASS.Revives = true
 
-CLASS.Health = 3200
+CLASS.Health = 1200
 CLASS.Speed = 322
 CLASS.SWEP = "weapon_zs_fastking"
 

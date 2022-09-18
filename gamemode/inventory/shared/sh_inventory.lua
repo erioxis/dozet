@@ -118,6 +118,14 @@ GM.Assemblies["trinket_lotteryticket"] 						= {"comp_ticket",	"trinket_greedeye
 GM.Assemblies["trinket_mysteryticket"] 						= {"comp_ticket",	"trinket_greedsoul"}
 GM.Assemblies["trinket_soulrepairman"] 						= {"trinket_soulmedical",	"weapon_zs_hammer"}
 GM.Assemblies["trinket_soulmedical"] 						= {"trinket_curse_dropping",	"trinket_altisaacsoul"}
+--Собирание душ из осколков
+GM.Assemblies["trinket_soulrepairman"] 						= {"comp_soul_dosei",	"comp_soul_alt_h"}
+GM.Assemblies["trinket_soulmedical"] 						= {"comp_soul_dosei",	"comp_soul_health"}
+GM.Assemblies["trinket_betsoul"] 						= {"comp_soul_health",	"comp_soul_health"}
+GM.Assemblies["trinket_magdalenesoul"] 						= {"comp_soul_health",	"comp_soul_alt_h"}
+GM.Assemblies["trinket_aposoul"] 						= {"comp_soul_hack",	"comp_soul_status"}
+GM.Assemblies["trinket_lilithsoul"] 						= {"comp_soul_status",	"comp_soul_hack"}
+GM.Assemblies["trinket_whysoul"] 						= {"comp_soul_godlike",	"comp_soul_dosei"}
 
 
 GM:AddInventoryItemData("comp_modbarrel",		"Modular Barrel",			"A modular barrel suited for pairing up with another gun barrel.",								"models/props_c17/trappropeller_lever.mdl")
@@ -127,7 +135,7 @@ GM:AddInventoryItemData("comp_busthead",		"Bust Head",				"A bust head that coul
 GM:AddInventoryItemData("comp_sawblade",		"Saw Blade",				"A sharp saw blade ready to be fitted onto fast moving objects.",								"models/props_junk/sawblade001a.mdl")
 GM:AddInventoryItemData("comp_propanecan",		"Propane Canister",			"A propane canister. With the correct setup, has the potential to ignite things.",				"models/props_junk/propane_tank001a.mdl")
 GM:AddInventoryItemData("comp_electrobattery",	"Electrobattery",			"An electrobattery. Could be used to improve repairing motions.",								"models/items/car_battery01.mdl")
---GM:AddInventoryItemData("comp_hungrytether",	"Hungry Tether",			"A hungry tether from a devourer that comes from a devourer rib.",								"models/gibs/HGIBS_rib.mdl")]]
+GM:AddInventoryItemData("comp_hungrytether",	"Hungry Tether",			"A hungry tether from a devourer that comes from a devourer rib.",								"models/gibs/HGIBS_rib.mdl")
 GM:AddInventoryItemData("comp_contaecore",		"Contained Energy Core",	"A contained energy core, that has an internal charging mechanism.",							"models/Items/combine_rifle_cartridge01.mdl")
 GM:AddInventoryItemData("comp_pumpaction",		"Pump Action Mechanism",	"A standard pump action mechanism from a blaster shotgun.",										"models/props_c17/trappropeller_lever.mdl")
 GM:AddInventoryItemData("comp_focusbarrel",		"Focused Barrel",			"A large focused barrel made from the barrels of the waraxe. Suitable for a handcannon.",		"models/props_c17/trappropeller_lever.mdl")
@@ -143,20 +151,34 @@ GM:AddInventoryItemData("comp_shortblade",		"Short Blade",				"A short metal bla
 GM:AddInventoryItemData("comp_multibarrel",		"Multi-Bored Barrel",		"An unusual gun barrel which allows multiple bullets to pass through.",							"models/props_lab/pipesystem03a.mdl")
 GM:AddInventoryItemData("comp_holoscope",		"Holographic Scope",		"A holographic weapon sight with magnification.",												{
 	["base"] = { type = "Model", model = "models/props_c17/utilityconnecter005.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3.273, 1.728, -0.843), angle = Angle(74.583, 180, 0), size = Vector(2.207, 0.105, 0.316), color = Color(50, 50, 66, 255), surpresslightning = false, material = "models/props_pipes/pipeset_metal02", skin = 0, bodygroup = {} },
-	["base+"] = { type = "Model", model = "models/props_c1цombine/tprotato1.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "base", pos = Vector(0.492, -1.03, 0), angle = Angle(0, -78.715, 90), size = Vector(0.03, 0.02, 0.032), color = Color(50, 50, 66, 255), surpresslightning = false, material = "models/props_pipes/pipeset_metal02", skin = 0, bodygroup = {} }
+	["base+"] = { type = "Model", model = "models/props_c1ombine/tprotato1.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "base", pos = Vector(0.492, -1.03, 0), angle = Angle(0, -78.715, 90), size = Vector(0.03, 0.02, 0.032), color = Color(50, 50, 66, 255), surpresslightning = false, material = "models/props_pipes/pipeset_metal02", skin = 0, bodygroup = {} }
 })
 GM:AddInventoryItemData("comp_scoper",		"Scopy",		"Heh for classix.",												{
 	["base"] = { type = "Model", model = "models/props_c17/utilityconnecter005.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3.273, 1.728, -0.843), angle = Angle(74.583, 180, 0), size = Vector(2.207, 0.105, 0.316), color = Color(50, 50, 66, 255), surpresslightning = false, material = "models/props_pipes/pipeset_metal02", skin = 0, bodygroup = {} },
 	["base+"] = { type = "Model", model = "models/props_combine/tprotato1.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "base", pos = Vector(0.492, -1.03, 0), angle = Angle(0, -78.715, 90), size = Vector(0.03, 0.02, 0.032), color = Color(50, 50, 66, 255), surpresslightning = false, material = "models/props_pipes/pipeset_metal02", skin = 0, bodygroup = {} }
 })
+local soulrec = {
+	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 7.697, y = 7.697 }, color = Color(255, 255, 211, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
+	["black_core_2+"] = { type = "Sprite", sprite = "effects/splashwake1", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 10, y = 10 }, color = Color(255, 255, 255, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
+	["black_core"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 2, 0), angle = Angle(0, 0, 0), size = Vector(0.349, 0.349, 0.349), color = Color(255, 210, 255, 255), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} }
+}
 GM:AddInventoryItemData("comp_linearactuator",	"Linear Actuator",			"A linear actuator from a shell holder. Requires a heavy base to mount properly.",				"models/Items/combine_rifle_cartridge01.mdl")
 GM:AddInventoryItemData("comp_pulsespool",		"Pulse Spool",				"Used to inject more pulse power to a system. Could be used to stabilise something.",			"models/Items/combine_rifle_cartridge01.mdl")
 GM:AddInventoryItemData("comp_flak",			"Flak Chamber",				"An internal chamber for projecting heated scrap.",												"models/weapons/w_rocket_launcher.mdl")
 GM:AddInventoryItemData("comp_precision",		"Precision Chassis",		"A suite setup for rewarding precise shots on moving targets.",									"models/Items/combine_rifle_cartridge01.mdl")
 GM:AddInventoryItemData("comp_mommy",		"Mommy",		"Mom from Cryman.",									"models/Items/combine_rifle_cartridge01.mdl")
 GM:AddInventoryItemData("comp_sacred_soul",		"Sacred Soul",		"This sacred cartridge...",									"models/Items/combine_rifle_cartridge01.mdl")
-GM:AddInventoryItemData("comp_bloodhack",		"Bloody Hadck",		"djasnndwhadjajs||daw...",									"models/Items/combine_rifle_cartridge01.mdl")
-GM:AddInventoryItemData("comp_ticket",		"Ticket",		"Blank Ticket for anything",									"models/Items/combine_rifle_cartridge01.mdl")
+GM:AddInventoryItemData("comp_bloodhack",		"Bloody Hack",		"djasnndwhadjajs||daw...",									"models/Items/combine_rifle_cartridge01.mdl")
+GM:AddInventoryItemData("comp_ticket",		"Ticket",		"Blank Ticket for anything",									"models/props_c17/paper01.mdl")
+--Осколки душ
+GM:AddInventoryItemData("comp_soul_hack",		"Piece of soul(HACK)",		"Blank soul of hacks things", soulrec)
+GM:AddInventoryItemData("comp_soul_melee",		"Piece of soul(MELEE)",		"Blank soul of melee things", soulrec)
+GM:AddInventoryItemData("comp_soul_status",		"Piece of soul(STATUS)",		"Blank soul of status things", soulrec)
+GM:AddInventoryItemData("comp_soul_health",		"Piece of soul(HEALTH)",		"Blank soul of health things", soulrec)
+GM:AddInventoryItemData("comp_soul_alt_h",		"Piece of soul(ALTERNATIVE HEALTH)",		"Blank soul of ALT health things", soulrec)
+GM:AddInventoryItemData("comp_soul_godlike",		"Piece of soul(GOD LIKE)",		"Blank soul of GODLIKE! things", soulrec)
+GM:AddInventoryItemData("comp_soul_dosei",		"Piece of soul(DOSEI)",		"Blank soul of dosei things", soulrec)
+GM:AddInventoryItemData("comp_soul_dd",		"Piece of soul(BIG MANS)",		"Blank soul of big mans things", soulrec)
 
 -- Trinkets
 local trinket, description, trinketwep

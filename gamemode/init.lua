@@ -469,6 +469,7 @@ function GM:AddNetworkStrings()
 	util.AddNetworkString("zs_getacurse")
 	util.AddNetworkString("zs_zvols")
 	util.AddNetworkString("zs_nextboss")
+	util.AddNetworkString("zs_deminextboss")
 	util.AddNetworkString("zs_classunlock")
 	util.AddNetworkString("zs_sigilcorrupted")
 	util.AddNetworkString("zs_sigiluncorrupted")
@@ -485,6 +486,8 @@ function GM:AddNetworkStrings()
 	util.AddNetworkString("zs_lifestatsbe")
 	util.AddNetworkString("zs_boss_spawned")
 	util.AddNetworkString("zs_boss_slain")
+	util.AddNetworkString("zs_demiboss_spawned")
+	util.AddNetworkString("zs_demiboss_slain")
 	util.AddNetworkString("zs_damageblock")
 	util.AddNetworkString("zs_holymantle")
 	util.AddNetworkString("zs_commission")
@@ -1113,6 +1116,15 @@ local function BossZombieSort(za, zb)
 
 	return ascore > bscore
 end
+local function DemiBossZombieSort(za, zb)
+	local ascore = za.WaveBarricadeDamage * 0.13 + za.WaveHumanDamage
+	local bscore = zb.WaveBarricadeDamage * 0.13 + zb.WaveHumanDamage
+	if ascore == bscore then
+		return za:Deaths() < zb:Deaths()
+	end
+
+	return ascore > bscore
+end
 
 
 function GM:SpawnBossZombie(bossplayer, silent, bossindex, triggerboss)
@@ -1153,6 +1165,44 @@ function GM:SpawnBossZombie(bossplayer, silent, bossindex, triggerboss)
 		net.Broadcast()
 	end
 end
+function GM:SpawnDemiBossZombie(bossplayer, silent, bossindex, triggerboss)
+
+	if not bossplayer then
+		bossplayer = self:CalculateNextDemiBoss()
+	end
+
+	if not bossplayer then return end
+
+	if not bossindex then
+		bossindex = bossplayer:GetDemiBossZombieIndex()
+	end
+
+	if bossindex == -1 then return end
+
+	if not triggerboss then
+		bossplayer.BossDeathNotification = true
+		GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_ZOMBIECLASS, GAMEMODE.ZombieClasses[bossindex].Name, "BossSpawn", 1)
+	end
+	self.LastDemiBossZombieSpawned = self:GetWave()
+	if !bossplayer:GetZombieClassTable().Boss then 
+		local curclass = bossplayer.DeathClass or bossplayer:GetZombieClass()
+		bossplayer:KillSilent()
+		bossplayer:SetZombieClass(bossindex)
+		bossplayer:DoHulls(bossindex, TEAM_UNDEAD)
+		bossplayer.DeathClass = nil
+		bossplayer:UnSpectateAndSpawn()
+		bossplayer.DeathClass = curclass
+		bossplayer.BossHealRemaining = 750
+
+		if not silent then
+			net.Start("zs_demiboss_spawned")
+				net.WriteEntity(bossplayer)
+				net.WriteUInt(bossindex, 8)
+			net.Broadcast()
+		end
+	end
+end
+
 
 function GM:SendZombieVolunteers(pl, nonemptyonly)
 	if nonemptyonly and #self.ZombieVolunteers == 0 then return end
@@ -1247,19 +1297,22 @@ function GM:Think()
 		elseif self:GetWaveStart() ~= -1 then
 			if self:GetWaveStart() <= time then
 				gamemode.Call("SetWaveActive", true)
+
 			elseif self.BossZombies and not self.PantsMode and not self:IsClassicMode() and not self.ZombieEscape
 			and self.LastBossZombieSpawned ~= wave and wave > 0 and not self.RoundEnded
 			and (self.BossZombiePlayersRequired <= 0 or #player.GetAll() >= self.BossZombiePlayersRequired) then
 				if self:GetWaveStart() - 10 <= time then
 					self:SpawnBossZombie()
+					timer.Create("demibosses"..#player.GetAll(),0.05,math.max(((#team.GetPlayers(TEAM_UNDEAD) * 0.5) - 1),1), function()	self:SpawnDemiBossZombie() end)
 					if self:GetWave() > 5 then
 					   timer.Simple(0.5, function()	self:SpawnBossZombie() end)
 					end
 					if self:GetWave() > 10 then
-					   timer.Create("bosses"..player.GetAll(),0.05,#player.GetAll(), function()	self:SpawnBossZombie() end)
+					   timer.Create("bosses"..#player.GetAll(),0.05,#player.GetAll(), function()	self:SpawnBossZombie() end)
 					end
 				else
 					self:CalculateNextBoss()
+					self:CalculateNextDemiBoss()
 				end
 			end
 		end
@@ -1643,6 +1696,35 @@ function GM:CalculateNextBoss()
 	net.Broadcast()
 	return newboss
 end
+function GM:CalculateNextDemiBoss()
+	local livingbosses = 0
+	local zombies = {}
+	for _, ent in pairs(team.GetPlayers(TEAM_UNDEAD)) do
+		if ent:GetZombieClassTable().DemiBoss and ent:Alive() then
+			livingbosses = livingbosses + 1
+		else
+			table.insert(zombies, ent)
+		end
+	end
+	if #zombies == 0 then
+		for _, ent in pairs(D3bot.GetBots()) do
+			if ent:Team() == TEAM_UNDEAD and not ent:GetZombieClassTable().DemiBoss and not ent:GetZombieClassTable().Boss then
+				table.insert(zombies, ent)
+			end
+		end
+	end
+	table.sort(zombies, DemiBossZombieSort)
+	local newbosses = zombies[1]
+	local newbossclass = ""
+	if newboss and newboss:IsValid() then newbossclass = GAMEMODE.ZombieClasses[newboss:GetDemiBossZombieIndex()].Name end
+	net.Start("zs_deminextboss")
+
+	net.WriteFloat(#zombies)
+	net.WriteEntity(zombies)
+	net.WriteString(newbossclass)
+	net.Broadcast()
+	return zombies[1]
+end
 function GM:LastBite(victim, attacker)
 	LAST_BITE = attacker
 end
@@ -1927,6 +2009,7 @@ function GM:RestartLua()
 	self.CachedHMs = nil
 	self.TheLastHuman = nil
 	self.LastBossZombieSpawned = nil
+	self.LastDemiBossZombieSpawned = nil
 	self.UseSigils = nil
 	--self:SetAllSigilsDestroyed(false)
 
@@ -4288,7 +4371,15 @@ function GM:DoPlayerDeath(pl, attacker, dmginfo)
 		local classtable = pl:GetZombieClassTable()
 
 		pl:PlayZombieDeathSound()
-
+		if classtable.DemiBoss and not self.ObjectiveMap then
+			net.Start("zs_demiboss_slain")
+			net.WriteEntity(pl)
+			net.WriteUInt(classtable.Index, 8)
+		net.Broadcast()
+		timer.Simple(0, function()
+			pl:MakeDemiBossDrop()
+		end)
+		end
 		if classtable.Boss and not self.ObjectiveMap and pl.BossDeathNotification then
 			net.Start("zs_boss_slain")
 				net.WriteEntity(pl)

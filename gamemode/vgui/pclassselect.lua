@@ -1,4 +1,5 @@
 CreateClientConVar("zs_bossclass", "", true, true)
+CreateClientConVar("zs_demibossclass", "", true, true)
 
 local Window
 local HoveredClassWindow
@@ -34,8 +35,15 @@ local PANEL = {}
 PANEL.Rows = 2
 
 local bossmode = false
+local demiboss = false
 local function BossTypeDoClick(self)
 	bossmode = not bossmode
+	demiboss = false
+	GAMEMODE:OpenClassSelect()
+end
+local function DemiBossTypeDoClick(self)
+	demiboss = not demiboss
+	bossmode = false
 	GAMEMODE:OpenClassSelect()
 end
 local function RedeemTrue12(pl)
@@ -45,10 +53,15 @@ end
 function PANEL:Init()
 	self.ClassButtons = {}
 
-	self.ClassTypeButton = EasyButton(nil, bossmode and "Open Normal Class Selection" or "Open Boss Class Selection", 8, 4)
+	self.ClassTypeButton = EasyButton(nil, bossmode and not demiboss and "Open Normal Class Selection" or "Open Boss Class Selection", 8, 4)
 	self.ClassTypeButton:SetFont("ZSHUDFontSmall")
 	self.ClassTypeButton:SizeToContents()
 	self.ClassTypeButton.DoClick = BossTypeDoClick
+
+	self.DemiClassTypeButton = EasyButton(nil, demiboss and "Open Normal Class Selection" or "Open DemiBoss Class Selection", 8, 4)
+	self.DemiClassTypeButton:SetFont("ZSHUDFontSmall")
+	self.DemiClassTypeButton:SizeToContents()
+	self.DemiClassTypeButton.DoClick = DemiBossTypeDoClick
 
 	self.CloseButton = EasyButton(nil, "Close", 8, 4)
 	self.CloseButton:SetFont("ZSHUDFontSmall")
@@ -74,8 +87,11 @@ function PANEL:Init()
 			local ok
 			if bossmode then
 				ok = classtab.Boss and not classtab.Hidden
+			
+			elseif demiboss and not bossmode then
+				ok = classtab.DemiBoss and not classtab.Hidden
 			else
-				ok = not classtab.Boss and
+				ok = not classtab.Boss and not classtab.DemiBoss and
 					(not classtab.Hidden or classtab.CanUse and classtab:CanUse(MySelf)) and
 					(not GAMEMODE.ObjectiveMap or classtab.Unlocked)
 			end
@@ -112,6 +128,10 @@ function PANEL:PerformLayout()
 	self.ClassTypeButton:MoveAbove(self, 16)
 	self.ClassTypeButton:CenterHorizontal()
 
+	self.DemiClassTypeButton:MoveAbove(self, 64)
+	self.DemiClassTypeButton:SetSize(502, 30)
+	self.DemiClassTypeButton:CenterHorizontal()
+
 	self.CloseButton:MoveAbove(self, 16)
 	self.CloseButton:CenterHorizontal(0.9)
 
@@ -123,6 +143,7 @@ end
 function PANEL:OnRemove()
 	self.ClassTypeButton:Remove()
 	self.CloseButton:Remove()
+	self.DemiClassTypeButton:Remove()
 end
 
 local texUpEdge = surface.GetTextureID("gui/gradient_up")
@@ -193,6 +214,10 @@ function PANEL:DoClick()
 		if self.ClassTable.Boss then
 			RunConsoleCommand("zs_bossclass", self.ClassTable.Name)
 			GAMEMODE:CenterNotify(translate.Format("boss_class_select", self.ClassTable.Name))
+		elseif self.ClassTable.DemiBoss then
+				RunConsoleCommand("zs_demibossclass", self.ClassTable.Name)
+				GAMEMODE:CenterNotify(translate.Format("boss_class_select", self.ClassTable.Name))
+
 		else
 			net.Start("zs_changeclass")
 				net.WriteString(self.ClassTable.Name)
@@ -205,6 +230,7 @@ function PANEL:DoClick()
 
 	Window:Remove()
 	bossmode = false
+	demiboss = false
 end
 
 function PANEL:Paint()
@@ -231,7 +257,7 @@ function PANEL:Think()
 	local enabled
 	if MySelf:GetZombieClass() == self.ClassTable.Index then
 		enabled = 2
-	elseif self.ClassTable.Boss and !self.ClassTable.Hidden or gamemode.Call("IsClassUnlocked", self.ClassTable.Index) then
+	elseif self.ClassTable.Boss and !self.ClassTable.Hidden or gamemode.Call("IsClassUnlocked", self.ClassTable.Index) or self.ClassTable.DemiBoss then
 		enabled = 1
 	else
 		enabled = 0

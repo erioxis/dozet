@@ -29,6 +29,12 @@ net.Receive("zs_nextboss", function(length)
 
 	GAMEMODE.NextBossZombieClass = net.ReadString()
 end)
+net.Receive("zs_deminextboss", function(length)
+	GAMEMODE.NextDemiBossZombies = net.ReadFloat()
+	GAMEMODE.NextDemiBossZombie = net.ReadEntity()
+
+	GAMEMODE.NextDemiBossZombieClass = net.ReadString()
+end)
 
 net.Receive("zs_zvols", function(length)
 	local volunteers = {}
@@ -224,6 +230,25 @@ net.Receive("zs_boss_spawned", function(length)
 		MySelf:EmitSound(string.format("npc/zombie_poison/pz_alert%d.wav", math.random(1, 2)), 0, math.random(95, 105))
 	end
 end)
+net.Receive("zs_demiboss_spawned", function(length)
+	local ent = net.ReadEntity()
+	local classindex = net.ReadUInt(8)
+	local classtbl = GAMEMODE.ZombieClasses[classindex]
+	local ki = {killicon = classtbl.SWEP}
+	local kid = {killicon = "default"}
+
+	if ent == MySelf and ent:IsValid() then
+		GAMEMODE:CenterNotify(ki, " ", COLOR_RED, translate.Format("you_are_x", translate.Get(classtbl.TranslationName)), ki)
+	elseif ent:IsValid() and P_Team(MySelf) == TEAM_UNDEAD then
+		GAMEMODE:CenterNotify(ki, " ", COLOR_RED, translate.Format("x_has_risen_as_y", ent:Name(), translate.Get(classtbl.TranslationName)), ki)
+	else
+		GAMEMODE:CenterNotify(kid, " ", COLOR_RED, translate.Get("x_has_risen"), kid)
+	end
+
+	if MySelf:IsValid() then
+		MySelf:EmitSound(string.format("npc/zombie_poison/pz_alert%d.wav", math.random(1, 2)), 0, math.random(95, 105))
+	end
+end)
 net.Receive("zs_boss_slain", function(length)
 	local ent = net.ReadEntity()
 	local classindex = net.ReadUInt(8)
@@ -236,6 +261,16 @@ net.Receive("zs_boss_slain", function(length)
 
 	if MySelf:IsValid() then
 		MySelf:EmitSound("ambient/atmosphere/cave_hit4.wav", 0, 150)
+	end
+end)
+net.Receive("zs_demiboss_slain", function(length)
+	local ent = net.ReadEntity()
+	local classindex = net.ReadUInt(8)
+	local classtbl = GAMEMODE.ZombieClasses[classindex]
+	local ki = {killicon = classtbl.SWEP}
+
+	if ent:IsValid() then
+		GAMEMODE:TopNotify(ki, " ", COLOR_YELLOW, translate.Format("demi_boss_dead", ent:Name(), translate.Get(ent:GetZombieClassTable().TranslationName)), ki)
 	end
 end)
 
