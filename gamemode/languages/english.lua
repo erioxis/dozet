@@ -18,6 +18,8 @@ RULES FOR TRANSLATORS!!
 
 translate.AddLanguage("en", "English")
 --Чаленге
+LANGUAGE.challenge_crowhunter = "Check, I am crow!"
+LANGUAGE.challenge_crowhunter_d = "Take a CROW weapon"
 LANGUAGE.challenge_ponos = "ULTRAPOOP"
 LANGUAGE.challenge_ponos_d = "Just shit."
 LANGUAGE.challenge_darvinupdate = "Darvin Upgrade"
@@ -86,7 +88,20 @@ LANGUAGE.challenge_opm = "ONE PUUUUUUUUUUUNCH"
 LANGUAGE.challenge_opm_d = "Do 10000 damage per 1 attack."
 LANGUAGE.challenge_premium = "Yes, thanks"
 LANGUAGE.challenge_premium_d = "Get premium from medical premium."
--- Options
+
+LANGUAGE.sigil_nm = "Sigil"
+LANGUAGE.sigil_tp = "Press E to teleport"
+LANGUAGE.sigildefend = "Sigil Defend If you near"
+LANGUAGE.sigildanger_6 = "Wave 6 or higher is very danger if you not near sigil"
+-- Options|
+LANGUAGE.op_viewmodels = "Hide view models"
+LANGUAGE.op_indicators = "Enable damage indicators"
+LANGUAGE.op_humanaura = "Enable human health auras"
+LANGUAGE.op_fonteffect = "Enable font effects"
+LANGUAGE.op_painflash = "Enable pain flashes"
+LANGUAGE.op_colormod = "Enable Color Mod"
+LANGUAGE.op_filmgrain = "Enable film grain"
+LANGUAGE.op_postprocc = "Enable post processing"
 LANGUAGE.op_naildisplay = "Always display nail health"
 LANGUAGE.op_knockdown_camera = "Always third person knockdown camera"
 LANGUAGE.op_bezombie = "Always volunteer to start as a zombie"
@@ -125,10 +140,10 @@ LANGUAGE.hm_lhuman  = "Last Human of the world"
 LANGUAGE.hm_lhuman_desc  = "goes to %s for being the last person alive."
 -- Various gamemode stuff
 
-LANGUAGE.lose_endboard  = "You have won!"
-LANGUAGE.win_endboard = "You have lost."
-LANGUAGE.lose_endboard_1  = "The humans have won vs dosei for now."
-LANGUAGE.win_endboard_d1 = "Dosei corrupted this world."
+LANGUAGE.win_endboard  = "You have won!"
+LANGUAGE.lose_endboard = "You have lost."
+LANGUAGE.win_endboard_1  = "The humans have won vs dosei for now."
+LANGUAGE.lose_endboard_d1 = "Dosei corrupted this world."
 LANGUAGE.taken_x_by_credit                                = "You give %s points for credit"
 LANGUAGE.danger						= "YOUR IN DANGER,GO TO NEAREST SIGIL"
 LANGUAGE.danger_x						= "YOUR IN DANGER,GET OUT FROM SIGIL"

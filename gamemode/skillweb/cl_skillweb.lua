@@ -667,7 +667,7 @@ function PANEL:UpdateQuickStats()
 
 	for i=1,3 do
 		local prefix = i == 1 and "Health" or i == 2 and "Speed" or "Worth"
-		local val = i == 2 and SPEED_NORMAL or 135
+		local val = i == 2 and SPEED_NORMAL or i == 1 and 100 or 135
 		self.QuickStats[i]:SetText(prefix .. " : " .. (val + (skillmodifiers[i] or 0)))
 	end
 end

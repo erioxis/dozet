@@ -1,18 +1,18 @@
 INC_SERVER()
 
+
 function ENT:PlayerSet(pPlayer, bExists)
 	pPlayer:SendLua("MySelf:EmitSound(\"buttons/button1.wav\", 50, 35, 0.5)")
 
 	if self:GetStartTime() == 0 then
 		self:SetStartTime(CurTime())
 	end
-
 	hook.Add("EntityTakeDamage", self, self.EntityTakeDamage)
 end
-
 function ENT:Think()
 	local owner = self:GetOwner()
 	local froms = self:GetFromSigil()
+	if !self:GetTargetSigil():IsValid() then return end
 	if CurTime() >= self:GetEndTime() then
 		if froms:IsValid() and self:GetTargetSigil():IsValid() then
 			owner:DoSigilTeleport(self:GetTargetSigil(), froms, self:GetClass() == "status_corruptedteleport")

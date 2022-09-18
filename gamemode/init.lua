@@ -442,7 +442,7 @@ function GM:Initialize()
 	self:AddNetworkStrings()
 	self:RegisterFood()
 	self:LoadProfiler()
-	self.Da = self.Da or {"mmm"}
+	self.Da = self.Da or {"mmm", "what", "yes", "ммм", "да", "что", "obed", "обед", "уютненько", "Я", "I", "you", "ты", "амням", "санбой", "пророк"}
 
 	self:SetPantsMode(self.PantsMode, true)
 	self:SetClassicMode(self:IsClassicMode(), true)
@@ -2660,7 +2660,6 @@ function GM:PlayerInitialSpawnRound(pl)
 	pl.DamageVulnerability = nil
 	pl.ClanQuePro = nil
 	pl.ClanAvanguard = nil
---	pl.ClanNigger = nil
 	pl.ClanMich = nil
 	pl.ClanShooter = nil
 	pl.ClanAnsableRevolution = nil

@@ -3,6 +3,7 @@ INC_SERVER()
 ENT.NextHeal = 0
 ENT.Hook = false
 ENT.OldMaterial = ""
+ENT.OldModel = ""
 function ENT:OnInitialize()
 	hook.Add("Move", self, self.Move)
 end
@@ -11,9 +12,10 @@ function ENT:PlayerSet(pPlayer, bExists)
 	pPlayer.FeignDeath = self
 	pPlayer:SetCollisionGroup(COLLISION_GROUP_DEBRIS_TRIGGER)
 	pPlayer:AnimResetGestureSlot(GESTURE_SLOT_ATTACK_AND_RELOAD)
+	self.OldMaterial = pPlayer:GetMaterial()
+	self.OldModel = pPlayer:GetModel()
 	timer.Simple(1.5, function()
 		pPlayer:CreateRagdoll()
-		self.OldMaterial = pPlayer:GetMaterial()
 		timer.Simple(0.1, function()
 			pPlayer:DrawWorldModel( false )
 			pPlayer:DrawShadow( false )
@@ -60,11 +62,16 @@ function ENT:OnRemove()
 	local parent = self:GetOwner()
 	if parent:IsValid() then
 		parent.FeignDeath = nil
-		parent:GetRagdollEntity():Remove()
-		parent:DrawWorldModel(true)
-		parent:DrawShadow(true)
-		parent:Fire( "alpha", 255, 0 )
-		parent:TemporaryNoCollide(true)
-		parent:SetMaterial( self.OldMaterial )
+		if parent:GetRagdollEntity():IsValid() then
+			parent:GetRagdollEntity():Remove()
+			parent:DrawWorldModel(true)
+			parent:DrawShadow(true)
+			if !parent.BaraCat then
+				parent:SetModel(self.OldModel or parent:GetModel())
+			end
+			parent:Fire( "alpha", 255, 0 )
+			parent:TemporaryNoCollide(true)
+			parent:SetMaterial( self.OldMaterial or parent:GetMaterial())
+		end
 	end
 end

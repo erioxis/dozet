@@ -13,7 +13,7 @@ SWEP.HoldType = "fist"
 SWEP.WalkSpeed = SPEED_NORMAL
 SWEP.OldWalkSpeed = 0
 
-SWEP.MeleeDamage = 15
+SWEP.MeleeDamage = 9
 SWEP.DamageType = DMG_CLUB
 SWEP.UppercutDamageMultiplier = 3
 SWEP.HitDistance = 40
@@ -23,7 +23,7 @@ SWEP.ViewModelFOV = 52
 SWEP.Primary.Ammo = "scrap"
 SWEP.Primary.DefaultClip = 5
 SWEP.AutoSwitchFrom = true
-SWEP.HealStrength = 0.09
+SWEP.HealStrength = 0.05
 
 SWEP.GoodAttackPerk = 0
 
@@ -34,7 +34,7 @@ SWEP.NoPickupNotification = true
 SWEP.NoDismantle = true
 SWEP.NoGlassWeapons = true
 
-SWEP.Primary.Delay = 0.6
+SWEP.Primary.Delay = 0.67
 
 SWEP.Weight = 2 -- This is the second crappiest weapon you could hope for, besides food
 SWEP.SlotPos = 100

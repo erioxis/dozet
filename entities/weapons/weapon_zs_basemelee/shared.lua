@@ -125,7 +125,7 @@ function SWEP:Move(mv)
 	if self:GetBlockState() and mv:KeyDown(IN_ATTACK2) and not self:GetOwner():GetBarricadeGhosting() then
 		mv:SetMaxSpeed(50)
 		mv:SetMaxClientSpeed(50)	
-		mv:SetSideSpeed(50)
+		mv:SetSideSpeed(mv:GetSideSpeed() * 0.5)
 	end
 end
 function SWEP:SecondaryAttack()

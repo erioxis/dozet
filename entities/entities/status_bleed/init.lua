@@ -6,7 +6,7 @@ end
 
 function ENT:Think()
 	local owner = self:GetOwner()
-	local lox = self.Damager:IsSkillActive(SKILL_LOX)
+	local lox = self.Damager and self.Damager:IsPlayer() and self.Damager:IsSkillActive(SKILL_LOX)
 	if self:GetDamage() <= 0 then
 		self:Remove()
 		return

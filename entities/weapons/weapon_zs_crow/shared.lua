@@ -24,6 +24,10 @@ SWEP.SwingHoldType = "grenade"
 
 function SWEP:Initialize()
 	self:HideViewAndWorldModel()
+	local owner = self:GetOwner()
+	if owner:Team() == TEAM_HUMAN then
+		owner:GiveAchievement("crowhunter")
+	end
 end
 
 function SWEP:OnRemove()

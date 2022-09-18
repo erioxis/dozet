@@ -253,9 +253,9 @@ function meta:ProcessDamage(dmginfo)
 		dmginfo:SetDamage(damage)
 	end
 	if attacker:IsValid() and attacker:IsPlayer() and inflictor:IsValid() and self:GetActiveWeapon().Block and self:GetActiveWeapon().IsMelee then
+		local xpadded = math.Clamp(dmginfo:GetDamage() * 0.25,1,100)
 		dmginfo:SetDamage(dmginfo:GetDamage() * ((0.50 * (self.BlockMultiplier or 1)) * ( self:GetActiveWeapon().BlockMultiplierWeapon or 1)))
 		if self:IsSkillActive(SKILL_AVOID_BLOCK) then
-			xpadded = dmginfo:GetDamage() * 0.25
 			net.Start("zs_xp_damage")
 			net.WriteString(xpadded)
 			net.Send(self)
@@ -378,7 +378,7 @@ function meta:ProcessDamage(dmginfo)
 					vel.z = 0
 					vel:Normalize()
 					vel = vel * 2800
-					vel.z = 700
+					vel.z = 1900
 					self:SetVelocity(vel)
 				end
 				if attacker.m_Zombie_Bara1 then
