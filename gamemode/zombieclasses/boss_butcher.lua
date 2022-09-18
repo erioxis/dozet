@@ -3,11 +3,11 @@ CLASS.TranslationName = "class_butcher"
 CLASS.Description = "description_butcher"
 CLASS.Help = "controls_butcher"
 
-CLASS.Boss = true
+CLASS.DemiBoss = true
 
 CLASS.KnockbackScale = 0
 
-CLASS.Health = 1200
+CLASS.Health = 500
 CLASS.Speed = 1200
 
 CLASS.CanTaunt = true
