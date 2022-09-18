@@ -106,8 +106,8 @@ function CLASS:ProcessDamage(pl, dmginfo)
 		dmginfo:ScaleDamage(0)
 		dmg = 0
 	end
-	if dmg >= 350 then
-		dmginfo:SetDamage(25)
+	if dmg >= 120 then
+		dmginfo:SetDamage(50)
 	end
 
 

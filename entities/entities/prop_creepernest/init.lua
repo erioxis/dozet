@@ -3,6 +3,7 @@ INC_SERVER()
 ENT.NextDecay = 0
 ENT.BuildsThisTick = 0
 ENT.ZombieConstruction = true
+ENT.NKiller = NULL
 
 function ENT:Initialize()
 	self:SetModel("models/props_wasteland/antlionhill.mdl")
@@ -62,6 +63,9 @@ function ENT:OnTakeDamage(dmginfo)
 	if self:GetNestHealth() <= 0 or dmginfo:GetDamage() <= 0 then return end
 
 	local attacker = dmginfo:GetAttacker()
+	if attacker:IsPlayer() then
+		self.NKiller = attacker
+	end
 	if attacker:IsValid() and attacker:IsPlayer() and attacker:Team() == TEAM_UNDEAD then
 		local owner = self:GetNestOwner()
 		if attacker:GetZombieClassTable().Name ~= "Flesh Creeper" then
@@ -129,7 +133,9 @@ function ENT:OnRemove()
 		for _, pl in pairs(team.GetPlayers(TEAM_UNDEAD)) do
 			pl:CenterNotify(COLOR_RED, translate.ClientFormat(pl, "nest_destroyed", name))
 		end
-		
+		if self.NKiller:IsValid() and self.NKiller:IsPlayer() then
+			GAMEMODE:TopNotifyAll(COLOR_YELLOW ,{killicon = "nest"},translate.Get("nest_destroyed_killicon"),{killicon = (self.NKiller:GetActiveWeapon():GetClass() or "nest")}, self.NKiller)
+		end
 
 		local pos = self:WorldSpaceCenter()
 		for i=1, 8 do

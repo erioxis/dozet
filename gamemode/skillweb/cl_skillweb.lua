@@ -312,9 +312,9 @@ function PANEL:Init()
 	bottomleftup:SetSize(190 * screenscale, 120 * screenscale)
 
 	local quickstats = {}
-	for i=1,3 do
+	for i=1,4 do
 		local hpstat = vgui.Create("DLabel", bottomleftup)
-		hpstat:SetFont("ZSHUDFontSmaller")
+		hpstat:SetFont("ZSHUDFontTiny")
 		hpstat:SetTextColor(COLOR_WHITE)
 		hpstat:SetContentAlignment(8)
 		hpstat:Dock(TOP)
@@ -665,9 +665,9 @@ function PANEL:UpdateQuickStats()
 		end
 	end
 
-	for i=1,3 do
-		local prefix = i == 1 and "Health" or i == 2 and "Speed" or "Worth"
-		local val = i == 2 and SPEED_NORMAL or i == 1 and 100 or 135
+	for i=1,4 do
+		local prefix = i == 1 and translate.Get("skill_add_health") or i == 2 and translate.Get("skill_add_speed") or i == 4 and translate.Get("skill_add_bloodarmor") or translate.Get("skill_add_worth")
+		local val = i == 2 and SPEED_NORMAL or i == 1 and 100 or i == 4 and 25 or 135
 		self.QuickStats[i]:SetText(prefix .. " : " .. (val + (skillmodifiers[i] or 0)))
 	end
 end

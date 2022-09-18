@@ -332,7 +332,18 @@ function GM:OpenInventory()
 	if frame.btnClose and frame.btnClose:IsValid() then frame.btnClose:SetVisible( false ) end
 	if frame.btnMinim and frame.btnMinim:IsValid() then frame.btnMinim:SetVisible( false ) end
 	if frame.btnMaxim and frame.btnMaxim:IsValid() then frame.btnMaxim:SetVisible( false ) end
-
+	local quickstats = {}
+--[[	for i=1,4 do
+		local hpstat = vgui.Create("DLabel", bottomleftup)
+		hpstat:SetFont("ZSHUDFontTiny")
+		hpstat:SetTextColor(COLOR_WHITE)
+		hpstat:SetContentAlignment(8)
+		hpstat:Dock(TOP)
+		hpstat:SizeToContents()
+		hpstat:SetText("---")
+		table.insert(quickstats, hpstat)
+	end]]
+	self.QuickStats = quickstats
 	local topspace = vgui.Create( "DPanel", frame )
 	topspace:Dock( TOP )
 	topspace:DockMargin( 4 * screenscale, 4 * screenscale, 4 * screenscale, 4 * screenscale )
@@ -347,6 +358,9 @@ function GM:OpenInventory()
 	local title = EasyLabel( topspace, translate.Get( "inv_title" ), "ZSHUDFontSmall", COLOR_WHITE )
 	title:Dock( FILL )
 	title:SetContentAlignment( 5 )
+	
+	--local stats = EasyLabel( frame, "Some", "ZSHUDFontSmall", Color(221,70,70) )
+	--stats:SetContentAlignment( 0 )
 
 	local invprop = vgui.Create( "DPropertySheet", frame )
 	invprop:Dock( FILL )
@@ -401,4 +415,23 @@ function GM:OpenInventory()
 
 	self:CreateItemInfoViewer( frame, invprop, topspace, bottomspace )
 	self:CreateInventoryElements()
+	--self:UpdateQuickStatsInventory()
+end
+function GM:UpdateQuickStatsInventory()
+	local skillmodifiers = {}
+	local gm_modifiers = GAMEMODE.SkillModifiers
+	for skillid in pairs(table.ToAssoc(MySelf:GetInventoryItems())) do
+		local modifiers = gm_modifiers[skillid]
+		if modifiers then
+			for modid, amount in pairs(modifiers) do
+				skillmodifiers[modid] = (skillmodifiers[modid] or 0) + amount
+			end
+		end
+	end
+
+	for i=1,4 do
+		local prefix = i == 1 and translate.Get("skill_add_health") or i == 2 and translate.Get("skill_add_speed") or i == 4 and translate.Get("skill_add_bloodarmor") or translate.Get("skill_add_worth")
+		local val = i == 2 and SPEED_NORMAL or i == 1 and 100 or i == 4 and 25 or 135
+		self.QuickStats[i]:SetText(prefix .. " : " .. (val + (skillmodifiers[i] or 0)))
+	end
 end
