@@ -688,7 +688,6 @@ function meta:GetBossZombieIndex()
 		"Ancient Nightmare",  -- 6
 		"Bloody Nightmare",  -- 7
 		"Bonemesh",  -- 8
-		"The Butcher",  -- 9
 		"God of Shitcade",  --12
 		"Giga Gore Child",  --13
 		"The Grave Darkness",  --14
