@@ -460,6 +460,7 @@ SKILLMOD_SPOINT = 108
 SKILLMOD_SCALEMODEL = 109
 SKILLMOD_M_DMG = 110
 SKILLMOD_M_REG = 111
+SKILLMOD_ADD_STATUS = 112
 
 local GOOD = "^"..COLORID_GREEN
 local BAD = "^"..COLORID_RED
@@ -871,6 +872,7 @@ GM:AddSkill(SKILL_VAMPIRISM, translate.Get("skill_vampirism"), GOOD..translate.G
 																1,		    7,					{SKILL_BOUNTYKILLER}, TREE_GUNTREE)
 GM:AddSkill(SKILL_LOX, translate.Get("skill_lox"), GOOD..translate.Get("skill_lox_d1")..BAD..translate.Get("skill_lox_d2"),
 																2,		    6,					{SKILL_VAMPIRISM}, TREE_GUNTREE)
+GM:AddSkillModifier(SKILL_LOX, SKILLMOD_ADD_STATUS, 1)
 GM:AddSkillModifier(SKILL_BOUNTYKILLER, SKILLMOD_DAMAGE, -0.35)
 GM:AddSkill(SKILL_D_CURSEDTRUE, translate.Get("skill_d_truecurse"), BAD.."-100%"..translate.Get("m_curse")..GOOD.."+35"..translate.Get("health")..GOOD.."+40"..translate.Get("speed")..GOOD.."+15%"..translate.Get("r_speed"),
 																2,		    8,					{SKILL_VAMPIRISM}, TREE_GUNTREE)
@@ -1611,7 +1613,9 @@ GM:AddSkillFunction(SKILL_ABUSE, function(pl, active)
 end)
 
 
-
+GM:SetSkillModifierFunction(SKILLMOD_ADD_STATUS, function(pl, amount)
+	pl.AdditionalStatusTime = math.Clamp(amount + 1.0, 0, 1000.0)
+end)
 
 
 GM:SetSkillModifierFunction(SKILLMOD_SPEED, function(pl, amount)

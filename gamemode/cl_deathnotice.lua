@@ -433,6 +433,7 @@ killicon.Add("weapon_zs_trinket", "zombiesurvival/killicons/weapon_zs_trinket")
 killicon.Add("weapon_zs_craftables", "zombiesurvival/killicons/weapon_zs_craftables")
 killicon.Add("weapon_zs_craftingpack", "zombiesurvival/killicons/weapon_zs_craftables")
 killicon.Add("weapon_zs_camera", "zombiesurvival/killicons/weapon_zs_camera")
+killicon.Add("weapon_zs_f_dash", "zombiesurvival/speed_up.png")
 
 killicon.Add("weapon_zs_defence_trinket", "zombiesurvival/defense.png")
 killicon.Add("weapon_zs_special_trinket", "zombiesurvival/speed_up.png")

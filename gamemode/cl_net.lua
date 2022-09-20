@@ -238,15 +238,11 @@ net.Receive("zs_demiboss_spawned", function(length)
 	local kid = {killicon = "default"}
 
 	if ent == MySelf and ent:IsValid() then
-		GAMEMODE:CenterNotify(ki, " ", COLOR_RED, translate.Format("you_are_x", translate.Get(classtbl.TranslationName)), ki)
+		GAMEMODE:CenterNotify(ki, " ", COLOR_YELLOW, translate.Format("you_are_x", translate.Get(classtbl.TranslationName)), ki)
 	elseif ent:IsValid() and P_Team(MySelf) == TEAM_UNDEAD then
-		GAMEMODE:CenterNotify(ki, " ", COLOR_RED, translate.Format("x_has_risen_as_y", ent:Name(), translate.Get(classtbl.TranslationName)), ki)
+		GAMEMODE:CenterNotify(ki, " ", COLOR_YELLOW, translate.Format("x_has_risen_as_y", ent:Name(), translate.Get(classtbl.TranslationName)), ki)
 	else
-		GAMEMODE:CenterNotify(kid, " ", COLOR_RED, translate.Get("x_has_risen"), kid)
-	end
-
-	if MySelf:IsValid() then
-		MySelf:EmitSound(string.format("npc/zombie_poison/pz_alert%d.wav", math.random(1, 2)), 0, math.random(95, 105))
+		GAMEMODE:CenterNotify(kid, " ", COLOR_YELLOW, translate.Get("x_has_risen_demi"), kid)
 	end
 end)
 net.Receive("zs_boss_slain", function(length)

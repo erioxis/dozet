@@ -1203,9 +1203,7 @@ end
 function meta:GiveStatus(sType, fDie)
 	local resistable = table.HasValue(GAMEMODE.ResistableStatuses, sType)
 	local lox = self:IsSkillActive(SKILL_LOX)
-	if lox then
-		fDie = (fDie or 1) * 2
-	end
+	local fDie = (fDie or 1) * (self.AdditionalStatusTime or 1)
 	if resistable and self:IsSkillActive(SKILL_HAEMOSTASIS) and self:GetBloodArmor() >= (lox and 5 or 2) then
 		self:SetBloodArmor(self:GetBloodArmor() - (lox and 5 or 2))
 		return
@@ -1213,6 +1211,7 @@ function meta:GiveStatus(sType, fDie)
 	if resistable and self:HasTrinket("biocleanser") and (not self.LastBioCleanser or self.LastBioCleanser + 10 < CurTime()) then
 		self.LastBioCleanser = CurTime()
 		self.BioCleanserMessage = nil
+		return
 	end
 
 	local cur = self:GetStatus(sType)

@@ -40,14 +40,14 @@ SWEP.UseHands = true
 
 SWEP.HoldType = "melee2"
 
-SWEP.MeleeDamage = 71
-SWEP.MeleeRange = 71
-SWEP.MeleeSize = 1.71
-SWEP.MeleeKnockBack =  71
+SWEP.MeleeDamage = 53
+SWEP.MeleeRange = 53
+SWEP.MeleeSize = 1.53
+SWEP.MeleeKnockBack =  53
 
 SWEP.WalkSpeed = SPEED_FAST
 
-SWEP.SwingTime = 0.71
+SWEP.SwingTime = 0.53
 SWEP.SwingRotation = Angle(0, -20, -40)
 SWEP.SwingOffset = Vector(10, 0, 0)
 SWEP.SwingHoldType = "melee"

@@ -950,6 +950,7 @@ LANGUAGE.wave_x_is_over_sub							= "Зараженные остановили �
 LANGUAGE.you_are_x									= "Вы %s!"
 LANGUAGE.x_has_risen_as_y							= "%s появился как %s!!"
 LANGUAGE.x_has_risen								= "Босс появился!"
+LANGUAGE.x_has_risen_demi								= "Мини-Босс появился!"
 LANGUAGE.cant_use_worth_anymore						= "Вы больше не можете использовать worth меню!"
 LANGUAGE.class_not_unlocked_will_be_unlocked_x		= "Этот класс ещё не разблокирован. Он будет разблокирован на следующей волне %d."
 LANGUAGE.you_are_already_a_x						= "Вы уже %s."

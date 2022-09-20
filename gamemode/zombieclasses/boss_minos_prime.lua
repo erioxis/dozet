@@ -113,7 +113,7 @@ if SERVER then
 		if wep:IsValid() and wep.GetBattlecry and wep:GetBattlecry() > CurTime() then
 			dmginfo:SetDamage(dmginfo:GetDamage() * 0.5)
 		end
-		if pl.HealthMax >= pl:Health() and pl.OneTime then
+		if pl.HealthMax >= pl:Health() and pl.OneTime and pl:IsValidLivingZombie() then
 			for _, ply  in pairs(player.GetAll()) do
 				if ply:IsValid() and ply:IsPlayer() and ply ~= pl then
 					ply:TakeDamage(ply:Health() * 0.25, pl, wep)

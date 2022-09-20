@@ -114,7 +114,7 @@ local statusdisplays = {
 },
 {
 	Color = Color(255, 255, 255),
-	Name = "Holly!",
+	Name = "HOLLY!",
 	ValFunc = statusValueFunction("holly"),
 	Max = 20,
 	Icon = Material("zombiesurvival/cursed.png")
@@ -163,28 +163,28 @@ local statusdisplays = {
 },
 {
 	Color = Color(100, 100, 100),
-	Name = "CURSED!",
+	Name = "CURSE!",
 	ValFunc = statusValueFunction("cursed"),
 	Max = GM.MaxCurse or 100,
 	Icon = Material("zombiesurvival/cursed.png")
 },
 {
 	Color = Color(255, 150, 150),
-	Name = "ROTTED!",
+	Name = "ROT!",
 	ValFunc = statusValueFunction("rot"),
 	Max = GM.MaxRotDamage or 100,
 	Icon = Material("zombiesurvival/rot.png")
 },
 {
 	Color = Color(100, 100, 100),
-	Name = "HALLOWED!",
+	Name = "HOLLOW!",
 	ValFunc = statusValueFunction("hollowing"),
 	Max = 1000,
 	Icon = Material("zombiesurvival/hallow.png")
 },
 {
 	Color = Color(255, 255, 255),
-	Name = "HOLY MANTLE!",
+	Name = "HOLY MNTL!",
 	ValFunc = statusValueFunction("hshield"),
 	Max = 2999,
 	Icon = Material("zombiesurvival/defense.png")
@@ -256,7 +256,7 @@ function PANEL:GetMemberName() return self.MemberName end
 function PANEL:Init()
 	self:SetColor(Color(255, 255, 255))
 	self:SetTall(BetterScreenScale() * 68)
-	self:SetWide(BetterScreenScale() * 50)
+	self:SetWide(BetterScreenScale() * 120)
 end
 
 function PANEL:StatusThink(lp)
@@ -277,7 +277,7 @@ function PANEL:StatusThink(lp)
 		self:SetWide(0)
 		self:GetParent():InvalidateLayout()
 	elseif self.MemberValue > 0.1 and self:GetWide() == 0 then
-		self:SetWide(BetterScreenScale() * 50)
+		self:SetWide(BetterScreenScale() * 65)
 		self:GetParent():InvalidateLayout()
 	end
 end
@@ -340,7 +340,11 @@ function PANEL:Paint(w, h)
 	)
 
 	local t1 = math.ceil(value)
+	local nm = self:GetMemberName()
 	draw.SimpleText(t1, (t1 >= 10000 and "ZS3D2DFontTiny" or "ZSHUDFontSmall"), w / 2, y + h / 2 - boxsize/2 + 5, color_white_alpha230, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+	if nm then
+		draw.SimpleText((nm or "da"), "ZSHUDFontTiniestStatus", w / 2, y + h / 2.5 - boxsize/2 + 5, color_white_alpha230, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+	end
 end
 
 vgui.Register("ZSStatus", PANEL, "Panel")
