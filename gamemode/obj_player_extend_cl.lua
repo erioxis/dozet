@@ -13,6 +13,7 @@ function meta:FixModelAngles(velocity)
 	self:SetPoseParameter("move_yaw", math.NormalizeAngle(velocity:Angle().yaw - eye.y))
 end
 function meta:GiveAchievement(id)
+	
 end
 
 function meta:RemoveAllStatus(bSilent, bInstant)

@@ -72,6 +72,8 @@ LANGUAGE.challenge_premium = "Да, спасибо"
 LANGUAGE.challenge_premium_d = "Получить премию."
 LANGUAGE.challenge_ponos = "МЕГАНАСРАЛ"
 LANGUAGE.challenge_ponos_d = "Обосраться."
+LANGUAGE.challenge_inwork = "Ммм...В разработке"
+LANGUAGE.challenge_inwork_d = "Мне нужно время!!!"
 --sigil
 LANGUAGE.sigil_nm = "Сигил"
 LANGUAGE.sigil_tp = "Нажми E Чтобы Телепортироваться"

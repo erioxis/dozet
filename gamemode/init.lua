@@ -2706,6 +2706,7 @@ function GM:PlayerInitialSpawnRound(pl)
 	pl.NextRegenerateClan = 0
 	pl.NextBloodArmorRegen = 0
 	pl.NextRegenTrinket = 0
+	pl.NextDash = 0
 	pl.LateBuyerMessage = nil
 	pl.NestsDestroyed = 0
 	pl.NestSpawns = 0
@@ -4008,6 +4009,13 @@ function GM:KeyPress(pl, key)
 		end
 
 	end
+	if pl:KeyPressed(IN_SPEED) and key == IN_SPEED and not pl:IsCarrying() and pl:Team() ~= TEAM_UNDEAD and pl.NextDash <= CurTime() and pl.ClanAvanguard then 
+			local pos = pl:GetPos()
+			local pushvel = pl:GetEyeTrace().Normal * 0 + (pl:GetAngles():Forward()*(pl:OnGround() and 1500 or 500))
+			pl:SetLocalVelocity( pushvel)
+			pl.NextDash = CurTime() + 1.6
+		
+	end 
 
 
 end

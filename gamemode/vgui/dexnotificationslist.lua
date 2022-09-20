@@ -1,5 +1,4 @@
 GM.NotifyFadeTime = 8
-
 local DefaultFont = "ZSHUDFontSmallest"
 local DefaultFontEntity = "ZSHUDFontSmallest"
 
@@ -162,7 +161,6 @@ function PANEL:AddNotification(...)
 	end
 
 	notif:Dock(TOP)
-
 	local args = {...}
 
 	local FadeTime = GAMEMODE.NotifyFadeTime
@@ -173,10 +171,10 @@ function PANEL:AddNotification(...)
 			break
 		end
 	end
-
 	notif:SetAlpha(1)
 	notif:AlphaTo(255, 0.15)
 	notif:AlphaTo(1, 1, FadeTime - 1)
+
 
 	notif.DieTime = CurTime() + FadeTime
 
@@ -185,14 +183,16 @@ end
 
 function PANEL:Think()
 	local time = CurTime()
-
 	for i, pan in pairs(self:GetChildren()) do
 		if pan.DieTime and time >= pan.DieTime then
-			pan:Remove()
-			local dummy = vgui.Create("Panel", self)
-			dummy:SetTall(0)
-			dummy:Dock(TOP)
-			dummy:Remove()
+		--	pan:MoveBy(3311, pan:GetY(), 1, 0.5, 1)
+				if pan:IsValid() then
+					pan:Remove()
+				end
+				local dummy = vgui.Create("Panel", self)
+				dummy:SetTall(0)
+				dummy:Dock(TOP)
+				dummy:Remove()
 		end
 	end
 end
