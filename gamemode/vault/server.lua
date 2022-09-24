@@ -74,6 +74,15 @@ function GM:LoadVault(pl)
 				if contents.UpgradableSkills then
 					pl:SetUpgradeSkills(util.DecompressBitTable(contents.UpgradableSkills), true)
 				end
+				if contents.MeleeMastery then
+					pl.MeleeMastery = contents.MeleeMastery
+				end
+				if contents.GunMastery then
+					pl.GunMastery = contents.GunMastery
+				end
+				if contents.MedicMastery then
+					pl.MedicMastery = contents.MedicMastery
+				end
 
 				pl.SkillVersion = self.SkillTreeVersion
 			end
@@ -123,7 +132,10 @@ function GM:SaveVault(pl)
 		RemortLevel = pl:GetZSRemortLevel(),
 		DesiredActiveSkills = util.CompressBitTable(pl:GetDesiredActiveSkills()),
 		UnlockedSkills = util.CompressBitTable(pl:GetUnlockedSkills()),
-		Version = pl.SkillVersion or self.SkillTreeVersion
+		Version = pl.SkillVersion or self.SkillTreeVersion,
+		MedicMastery = pl.MedicMastery,
+		MeleeMastery = pl.MeleeMastery,
+		GunMastery = pl.GunMastery
 	}
 
 	if pl.NextSkillReset and os.time() < pl.NextSkillReset then
