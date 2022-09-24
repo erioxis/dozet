@@ -16,7 +16,11 @@ GM.Achievements["crowhunter"] = {
     Desc = translate("challenge_crowhunter_d"),
     Reward = 5000
 }
-
+GM.Achievements["infected_dosei"] = {
+    Name = translate("challenge_infected_dosei"),
+    Desc = translate("challenge_infected_dosei_d"),
+    Reward = 25000
+}
 GM.Achievements["everycan"] = {
     Name = translate("challenge_everycan"),
     Desc = translate("challenge_everycan_d"),

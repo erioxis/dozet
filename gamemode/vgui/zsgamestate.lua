@@ -135,7 +135,7 @@ function PANEL:Text3Paint()
 				draw.SimpleText(translate.Format("brains_eaten_x", MySelf:Frags()), self.Font, 0, 0, COLOR_SOFTRED)
 			end
 		else
-			local balance = (GAMEMODE:GetRage() * GAMEMODE:GetWinRate()) * 0.01
+			local balance = GAMEMODE:GetBalance() * 2
 			--draw.SimpleText(translate.Format("points_x", MySelf:GetPoints().." / "..MySelf:Frags()), self.Font, 0, 0, COLOR_DARKRED)
 			draw.SimpleText("Points: "..MySelf:GetPoints().."  Score: "..MySelf:GetMScore().." DPS: "..math.Round(MySelf:GetDPS()), self.Font, 0, -6, COLOR_SOFTRED)
 			draw.SimpleText(((0 < balance) and " DOSEI INFECTION: "..balance.."%" or ""), "ZSHUDFontTiniest", 0, 16, COLOR_SOFTRED)

@@ -1510,7 +1510,7 @@ function meta:AddPoints(points, floatingscoreobject, fmtype, nomul)
 		self:FloatingScore(floatingscoreobject, "floatingscore", wholepoints, fmtype or FM_NONE)
 	end
 
-	local xp = wholepoints * ((self.XPMulti or 1) + math.Clamp(GAMEMODE:GetBalance() * 0.01,0,2))
+	local xp = wholepoints * ((self.XPMulti or 1) + math.Clamp(GAMEMODE:GetBalance() * 0.05,0,3))
 	if GAMEMODE.HumanXPMulti and GAMEMODE.HumanXPMulti >= 0 then
 		xp = (xp * GAMEMODE.HumanXPMulti)
 		local wholexp = math.floor(xp)

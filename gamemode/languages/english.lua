@@ -18,6 +18,8 @@ RULES FOR TRANSLATORS!!
 
 translate.AddLanguage("en", "English")
 --Чаленге
+LANGUAGE.challenge_infected_dosei = "STATUS:INFECTED"
+LANGUAGE.challenge_infected_dosei_d = "Survive on 25%+ Infection"
 LANGUAGE.challenge_crowhunter = "Check, I am crow!"
 LANGUAGE.challenge_crowhunter_d = "Take a CROW weapon"
 LANGUAGE.challenge_ponos = "ULTRAPOOP"

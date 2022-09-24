@@ -1270,7 +1270,7 @@ function GM:Think()
 				if (pl:GetActiveWeapon().Tier or 1) <= 5 and pl:HasTrinket("sin_envy") and pl:GetActiveWeapon():GetClass() ~= "weapon_zs_fists" then
 					pl:StripWeapon(pl:GetActiveWeapon():GetClass())
 				end
-				if not pl:GetStatus("sigildef") and self:GetWave() >= 6 and  time >= pl.NextDamage and self:GetWaveActive() and self:GetBalance() <= 10 or self:GetBalance() >= 50 and not pl:GetStatus("sigildef") then
+				if not pl:GetStatus("sigildef") and self:GetWave() >= 6 and  time >= pl.NextDamage and self:GetWaveActive() and self:GetBalance() <= 10 or self:GetBalance() >= 25 and not pl:GetStatus("sigildef") then
 					pl:TakeDamage((pl:HasTrinket("jacobsoul") and 13 or 33))
 					pl.NextDamage = time + (pl:HasTrinket("jacobsoul") and 4 or 0.6)
 					pl:CenterNotify(COLOR_RED, translate.ClientGet(pl, "danger"))
@@ -2121,6 +2121,9 @@ function GM:OnPlayerWin(pl)
 	pl:GiveAchievement("winfirst")
 	if not self.ObjectiveMap then
 		pl:GiveAchievementProgress("loveof6", 1)
+	end
+	if self:GetBalance() >= 25 then
+		pl:GiveAchievementProgress("infected_dosei", 1)
 	end
 	if pl:GetMaxHealth() < 35 and not self.ObjectiveMap then
 		pl:GiveAchievement("glassman")	

@@ -2,6 +2,8 @@
 
 translate.AddLanguage("ru", "Russian")
 --Чаленге
+LANGUAGE.challenge_infected_dosei = "СТАТУС:ИНФИЦИРОВАН"
+LANGUAGE.challenge_infected_dosei_d = "Выжить при 25%+ Заражения"
 LANGUAGE.challenge_crowhunter = "Смотрите я ворона)"
 LANGUAGE.challenge_crowhunter_d = "Возьми ворону в руки"
 LANGUAGE.challenge_darvinupdate = "Улучшение Дарвина"

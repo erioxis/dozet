@@ -943,7 +943,7 @@ function GM:SetWaveEnd(time)
 	SetGlobalFloat("waveend", time)
 end
 function GM:GetBalance()
-	return (self:GetRage() * self:GetWinRate()) * 0.0005
+	return (self:GetRage() * self:GetWinRate()) * 0.005
 end
 
 function GM:GetRage()
