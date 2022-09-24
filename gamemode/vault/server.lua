@@ -138,3 +138,35 @@ function GM:SaveVault(pl)
 	file.CreateDir(string.GetPathFromFilename(filename))
 	file.Write(filename, Serialize(tosave))
 end
+
+function GM:SaveWinRate()
+	local tosave = {
+		Winrate = math.floor(self:GetWinRate() or 0),
+		ZSRage = math.floor(self:GetRage() or 0)
+	}
+
+
+
+	local filename = self.VaultFolder.."systembalance"..".txt"
+	file.CreateDir(string.GetPathFromFilename(filename))
+	file.Write(filename, Serialize(tosave))
+end
+function GM:LoadWinRate()
+
+	local filename = self.VaultFolder.."systembalance"..".txt"
+	if file.Exists(filename, "DATA") then
+		local contents = file.Read(filename, "DATA")
+		if contents and #contents > 0 then
+			contents = Deserialize(contents)
+			if contents then
+				if contents.Winrate then
+					self:SetWinRate(contents.Winrate)
+				end
+				if contents.ZSRage then
+					self:SetRage(contents.ZSRage)
+				end
+				
+			end
+		end
+	end
+end

@@ -82,6 +82,10 @@ function PANEL:Text1Paint()
 			elseif not GAMEMODE:GetWaveActive() then
 				text = translate.Get("intermission")
 			end
+			if GAMEMODE.RoundLimit > 0 then
+				round = GAMEMODE.CurrentRound
+				text = text .. " - " .. translate.Format("round_x_of_y", round, 3)
+			end
 		end
 	end
 
@@ -131,9 +135,10 @@ function PANEL:Text3Paint()
 				draw.SimpleText(translate.Format("brains_eaten_x", MySelf:Frags()), self.Font, 0, 0, COLOR_SOFTRED)
 			end
 		else
+			local balance = (GAMEMODE:GetRage() * GAMEMODE:GetWinRate()) * 0.01
 			--draw.SimpleText(translate.Format("points_x", MySelf:GetPoints().." / "..MySelf:Frags()), self.Font, 0, 0, COLOR_DARKRED)
-			draw.SimpleText("Points: "..MySelf:GetPoints().."  Score: "..MySelf:GetMScore().." DPS: "..math.Round(MySelf:GetDPS()), self.Font, 0, 0, COLOR_SOFTRED)
-			draw.SimpleText("DKills:"..MySelf:GetDKills(), "ZS3D2DFontTiny", 280, 10, COLOR_SOFTRED)
+			draw.SimpleText("Points: "..MySelf:GetPoints().."  Score: "..MySelf:GetMScore().." DPS: "..math.Round(MySelf:GetDPS()), self.Font, 0, -6, COLOR_SOFTRED)
+			draw.SimpleText(((0 < balance) and " DOSEI INFECTION: "..balance.."%" or ""), "ZSHUDFontTiniest", 0, 16, COLOR_SOFTRED)
 		end
 	end
 

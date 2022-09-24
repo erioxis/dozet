@@ -110,6 +110,8 @@ include("sv_playerspawnentities.lua")
 include("sv_profiling.lua")
 include("sv_sigils.lua")
 include("sv_concommands.lua")
+include("sv_network.lua")
+
 
 include("itemstocks/sv_stock.lua")
 include("sh_achievements_table.lua")
@@ -439,10 +441,18 @@ function GM:Initialize()
 	self:PrecacheResources()
 	self:AddCustomAmmo()
 	self:CreateWeaponQualities()
-	self:AddNetworkStrings()
 	self:RegisterFood()
 	self:LoadProfiler()
+	self:LoadWinRate()
 	self.Da = self.Da or {"mmm", "what", "yes", "ммм", "да", "что", "obed", "обед", "уютненько", "Я", "I", "you", "ты", "амням", "санбой", "пророк"}
+	if self:GetRage() >= 10000 then
+		self:SetRage(0)
+	end
+	if self:GetWinRate() >= 5 then
+		self:SetWinRate(1)
+	end
+
+
 
 	self:SetPantsMode(self.PantsMode, true)
 	self:SetClassicMode(self:IsClassicMode(), true)
@@ -455,128 +465,6 @@ function GM:Initialize()
 	game.ConsoleCommand("mp_flashlight 1\n")
 	game.ConsoleCommand("sv_gravity 600\n")
 end
-
-function GM:AddNetworkStrings()
-	util.AddNetworkString("zs_gamestate")
-	util.AddNetworkString("zs_wavestart")
-	util.AddNetworkString("zs_waveend")
-	util.AddNetworkString("zs_lasthuman")
-	util.AddNetworkString("zs_gamemodecall")
-	util.AddNetworkString("zs_lasthumanpos")
-	util.AddNetworkString("zs_endround")
-	util.AddNetworkString("zs_centernotify")
-	util.AddNetworkString("zs_topnotify")
-	util.AddNetworkString("zs_getacurse")
-	util.AddNetworkString("zs_zvols")
-	util.AddNetworkString("zs_nextboss")
-	util.AddNetworkString("zs_deminextboss")
-	util.AddNetworkString("zs_classunlock")
-	util.AddNetworkString("zs_sigilcorrupted")
-	util.AddNetworkString("zs_sigiluncorrupted")
-	util.AddNetworkString("zs_survivor")
-	util.AddNetworkString("zs_itemstock")
-	util.AddNetworkString("zs_playerredeemed")
-	util.AddNetworkString("zs_dohulls")
-	util.AddNetworkString("zs_penalty")
-	util.AddNetworkString("zs_nextresupplyuse")
-	util.AddNetworkString("zs_stowagecaches")
-	util.AddNetworkString("zs_lifestats")
-	util.AddNetworkString("zs_lifestatsbd")
-	util.AddNetworkString("zs_lifestatshd")
-	util.AddNetworkString("zs_lifestatsbe")
-	util.AddNetworkString("zs_boss_spawned")
-	util.AddNetworkString("zs_boss_slain")
-	util.AddNetworkString("zs_demiboss_spawned")
-	util.AddNetworkString("zs_demiboss_slain")
-	util.AddNetworkString("zs_damageblock")
-	util.AddNetworkString("zs_holymantle")
-	util.AddNetworkString("zs_commission")
-	util.AddNetworkString("zs_healother")
-	util.AddNetworkString("zs_healby")
-	util.AddNetworkString("zs_buffby")
-	util.AddNetworkString("zs_buffwith")
-	util.AddNetworkString("zs_repairobject")
-	util.AddNetworkString("zs_worldhint")
-	util.AddNetworkString("zs_honmention")
-	util.AddNetworkString("zs_floatscore")
-	util.AddNetworkString("zs_floatscore_vec")
-	util.AddNetworkString("zs_zclass")
-	util.AddNetworkString("zs_dmg")
-	util.AddNetworkString("zs_dmg_prop")
-	util.AddNetworkString("zs_legdamage")
-	util.AddNetworkString("zs_armdamage")
-	util.AddNetworkString("zs_extrastartingworth")
-	util.AddNetworkString("zs_ammopickup")
-	util.AddNetworkString("zs_ammogive")
-	util.AddNetworkString("zs_ammogiven")
-	util.AddNetworkString("zs_deployablelost")
-	util.AddNetworkString("zs_deployableclaim")
-	util.AddNetworkString("zs_deployableout")
-	util.AddNetworkString("zs_trinketconsumed")
-	util.AddNetworkString("zs_pointsdoubled")
-	util.AddNetworkString("zs_nailremoved")
-	util.AddNetworkString("zs_remantlercontent")
-	util.AddNetworkString("zs_classunlockstate")
-	util.AddNetworkString("zs_changeclass")
-	util.AddNetworkString("zs_currentround")
-	util.AddNetworkString("zs_zsfriend")
-	util.AddNetworkString("zs_zsfriendadded")
-	util.AddNetworkString("zs_remantleconf")
-	util.AddNetworkString("zs_nestbuilt")
-	util.AddNetworkString("zs_nestspec")
-	util.AddNetworkString("zs_tvcamera")
-
-
-	util.AddNetworkString("HNS.AchievementsProgress")
-	util.AddNetworkString("HNS.AchievementsGet")
-	util.AddNetworkString("HNS.AchievementsMaster")
-	util.AddNetworkString("zs_medpremium")
-	util.AddNetworkString("zs_weaponblocked")
-	util.AddNetworkString("zs_xp_damage")
-
-	util.AddNetworkString("zs_luck")
-	util.AddNetworkString("zs_skillarsenalvoid")
-
-	util.AddNetworkString("zs_mutations_table")
-
-	util.AddNetworkString("zs_inventoryitem")
-	util.AddNetworkString("zs_upgradeitem")
-	util.AddNetworkString("zs_trycraft")
-	util.AddNetworkString("zs_trygetitem")
-	util.AddNetworkString("zs_updatealtselwep")
-	util.AddNetworkString("zs_invitem")
-	util.AddNetworkString("zs_invgiven")
-	util.AddNetworkString("zs_wipeinventory")
-
-	util.AddNetworkString("zs_skills_active")
-	util.AddNetworkString("zs_skills_unlocked")
-	util.AddNetworkString("zs_skills_desired")
-	util.AddNetworkString("zs_skill_is_desired")
-	util.AddNetworkString("zs_skill_is_unlocked")
-	util.AddNetworkString("zs_skills_all_desired")
-	util.AddNetworkString("zs_skill_set_desired")
-	util.AddNetworkString("zs_skills_init")
-	util.AddNetworkString("zs_skills_reset")
-	util.AddNetworkString("zs_skills_remort")
-	util.AddNetworkString("zs_skills_nextreset")
-	util.AddNetworkString("zs_skills_notify")
-	util.AddNetworkString("zs_skills_refunded")
-	util.AddNetworkString("zs_credit_takepoints")
-
-	util.AddNetworkString("zs_crow_kill_crow")
-	util.AddNetworkString("zs_pl_kill_pl")
-	util.AddNetworkString("zs_pls_kill_pl")
-	util.AddNetworkString("zs_pl_kill_self")
-	util.AddNetworkString("zs_death")
-
-	util.AddNetworkString("voice_eyepain")
-	util.AddNetworkString("voice_giveammo")
-	util.AddNetworkString("voice_death")
-	util.AddNetworkString("voice_zombiedeath")
-	util.AddNetworkString("voice_pain")
-	util.AddNetworkString("voice_zombiepain")
-end
-
 
 function GM:IsClassicMode()
 	return self.ClassicMode
@@ -1382,7 +1270,7 @@ function GM:Think()
 				if (pl:GetActiveWeapon().Tier or 1) <= 5 and pl:HasTrinket("sin_envy") and pl:GetActiveWeapon():GetClass() ~= "weapon_zs_fists" then
 					pl:StripWeapon(pl:GetActiveWeapon():GetClass())
 				end
-				if not pl:GetStatus("sigildef") and self:GetWave() >= 6 and  time >= pl.NextDamage and self:GetWaveActive() then
+				if not pl:GetStatus("sigildef") and self:GetWave() >= 6 and  time >= pl.NextDamage and self:GetWaveActive() and self:GetBalance() <= 10 or self:GetBalance() >= 50 and not pl:GetStatus("sigildef") then
 					pl:TakeDamage((pl:HasTrinket("jacobsoul") and 13 or 33))
 					pl.NextDamage = time + (pl:HasTrinket("jacobsoul") and 4 or 0.6)
 					pl:CenterNotify(COLOR_RED, translate.ClientGet(pl, "danger"))
@@ -1929,6 +1817,7 @@ end
 
 function GM:PostEndRound(winner)
 	self:SaveAllVaults()
+	self:SaveWinRate()
 end
 
 -- You can override or hook and return false in case you have your own map change system.
@@ -2226,7 +2115,9 @@ function GM:OnPlayerWin(pl)
 	if self.ZombieEscape then
 		xp = xp / 4
 	end
-	pl:AddZSXP(xp)
+	pl:AddZSXP(xp * (math.max(0.33,self:GetWinRate())))
+	self:SetRage(self:SetRage() - 100)
+	self:SetWinRate(math.max(-1,self:SetWinRate() - 1))
 	pl:GiveAchievement("winfirst")
 	if not self.ObjectiveMap then
 		pl:GiveAchievementProgress("loveof6", 1)
@@ -2277,7 +2168,8 @@ function GM:EndRound(winner)
 
 	if winner == TEAM_HUMAN then
 		self.LastHumanPosition = nil
-
+		self:SetRage(self:SetRage() + 50)
+		self:SetWinRate(self:SetWinRate() + 1)
 		for _, pl in pairs(player.GetAll()) do
 			if pl:Team() == TEAM_HUMAN then
 				if not self:GetUseSigils() then
@@ -2291,7 +2183,6 @@ function GM:EndRound(winner)
 		hook.Add("PlayerShouldTakeDamage", "EndRoundShouldTakeDamage", EndRoundPlayerShouldTakeDamage)
 	elseif winner == TEAM_UNDEAD then
 		hook.Add("PlayerShouldTakeDamage", "EndRoundShouldTakeDamage", EndRoundPlayerCanSuicide)
-
 		for _, pl in pairs(team.GetPlayers(TEAM_UNDEAD)) do
 			gamemode.Call("OnPlayerLose", pl)
 		end
@@ -4059,6 +3950,7 @@ end
 
 function GM:ShutDown()
 	self:SaveAllVaults()
+	self:SaveWinRate()
 end
 
 function GM:PlayerUse(pl, ent)
@@ -4164,15 +4056,6 @@ end
 function GM:HumanKilledZombie(pl, attacker, inflictor, dmginfo, headshot, suicide)
 	if (pl:GetZombieClassTable().Points or 0) == 0 or self.RoundEnded then return end
 	-- Simply distributes based on damage but also do some stuff for assists.
-	if attacker.zKills >= (33 * team.NumPlayers(TEAM_UNDEAD)) then
-		attacker:TakeDamage((attacker.zKills / 30) + (attacker:GetPoints() / 50))
-	end
-	if attacker:HasTrinket("curse_faster") then 
-        attacker.zKills = attacker.zKills + 4
-	end
-	if attacker:IsSkillActive(SKILL_SIGILIBERATOR) then
-		attacker.zKills = attacker.zKills + 1
-	end
 	attacker:GiveAchievementProgress("everycan", 1)
 	attacker:GiveAchievementProgress("dzs", 1)
 	pl:GiveAchievementProgress("goodtime", 1)
@@ -4198,14 +4081,7 @@ function GM:HumanKilledZombie(pl, attacker, inflictor, dmginfo, headshot, suicid
 	end
 
 	attacker.ZombiesKilled = attacker.ZombiesKilled + 1
-	if not attacker:HasTrinket("altisaacsoul") then
-		attacker.zKills = attacker.zKills + 1
-	elseif attacker:HasTrinket("altisaacsoul") and math.random(1,2) == 1 then
-		attacker.zKills = attacker.zKills - 1
-	else
-		attacker.zKills = attacker.zKills + 1
-	end
-	attacker:SetDKills(attacker.zKills)
+	self:SetRage(self:GetRage() + 1 * self:GetWinRate())
 	attacker:AddZSXP(1)
 	if attacker:IsSkillActive(SKILL_BOUNTYKILLER) then
 		attacker:AddZSXP(5)
@@ -4278,7 +4154,7 @@ function GM:ZombieKilledHuman(pl, attacker, inflictor, dmginfo, headshot, suicid
 	attacker:AddTokens(pl:GetMaxHealth() * 1.25)
 	attacker:AddLifeBrainsEaten(1)
 	attacker:AddZSXP(self.InitialVolunteers[attacker:UniqueID()] and xp or math.floor(xp*4))
-
+	self:SetRage(self:GetRage() - 5 / self:GetWinRate())
 	local classtab = attacker:GetZombieClassTable()
 	if classtab and classtab.Name then
 		GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_ZOMBIECLASS, classtab.Name, "BrainsEaten", 1)

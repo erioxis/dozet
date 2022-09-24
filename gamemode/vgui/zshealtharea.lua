@@ -56,7 +56,7 @@ local function ContentsPaint(self, w, h)
 				y = 142 * screenscale
 				wid, hei = 240 * screenscale, 14 * screenscale
 
-				healthperc = math.Clamp(bloodarmor / (lp.MaxBloodArmor or 10), 0, 1)
+				healthperc = math.Clamp(bloodarmor / (lp.MaxBloodArmor or 25), 0, 1)
 				colHealth.r = lp:GetInfo("zs_rblood") + healthperc * 2.5
 				colHealth.g = lp:GetInfo("zs_gblood")
 				colHealth.b = (lp:GetInfo("zs_bblood") - healthperc) * 50

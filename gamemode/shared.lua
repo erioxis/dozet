@@ -942,6 +942,26 @@ end
 function GM:SetWaveEnd(time)
 	SetGlobalFloat("waveend", time)
 end
+function GM:GetBalance()
+	return (self:GetRage() * self:GetWinRate()) * 0.0005
+end
+
+function GM:GetRage()
+	return GetGlobalFloat("rage", 0)
+end
+
+function GM:SetRage(rage)
+	SetGlobalFloat("rage", rage)
+end
+function GM:GetWinRate()
+	return GetGlobalFloat("winrate", 0)
+end
+
+function GM:SetWinRate(winrate)
+	SetGlobalFloat("winrate", winrate)
+end
+
+
 
 function GM:GetWaveStart()
 	return GetGlobalFloat("wavestart", self.WaveZeroLength)

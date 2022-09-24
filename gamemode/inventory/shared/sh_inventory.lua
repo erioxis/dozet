@@ -126,7 +126,7 @@ GM.Assemblies["trinket_magdalenesoul"] 						= {"comp_soul_health",	"comp_soul_a
 GM.Assemblies["trinket_aposoul"] 						= {"comp_soul_hack",	"comp_soul_status"}
 GM.Assemblies["trinket_lilithsoul"] 						= {"comp_soul_status",	"comp_soul_hack"}
 GM.Assemblies["trinket_whysoul"] 						= {"comp_soul_godlike",	"comp_soul_dosei"}
-GM.Assemblies["trinket_darksoul"] 						= {"comp_soul_dd",	"comp_soul_boom"}
+GM.Assemblies["trinket_darksoul"] 						= {"comp_soul_dd",	"comp_soul_booms"}
 
 
 GM:AddInventoryItemData("comp_modbarrel",		"Modular Barrel",			"A modular barrel suited for pairing up with another gun barrel.",								"models/props_c17/trappropeller_lever.mdl")

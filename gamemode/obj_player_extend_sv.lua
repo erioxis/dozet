@@ -38,7 +38,7 @@ function meta:ProcessDamage(dmginfo)
 			dmginfo:SetDamageForce(vector_origin)
 			return
 		end
-		dmginfo:SetDamage(dmginfo:GetDamage() * (1 - (GAMEMODE:GetWave() * 0.04)))
+		dmginfo:SetDamage(dmginfo:GetDamage() * (1 - (math.Clamp(GAMEMODE:GetBalance() * 0.1,-2.5,0.7))))
 		if self.m_zombiedef then
 			dmginfo:SetDamage(dmginfo:GetDamage() * 0.75)
 		end
@@ -302,6 +302,9 @@ function meta:ProcessDamage(dmginfo)
 
 	if attacker:IsValid() and attacker:IsPlayer() and inflictor:IsValid() and attacker:Team() == TEAM_UNDEAD then
 		if inflictor == attacker:GetActiveWeapon() then
+			if (GAMEMODE:GetBalance() * 0.1) >= 0.1 then
+				dmginfo:SetDamage(dmginfo:GetDamage() * (1 + (math.Clamp(GAMEMODE:GetBalance() * 0.1,0.5,1.5))))
+			end
 			if self.ClanAnsableRevolution then
 				dmginfo:SetDamage(dmginfo:GetDamage() - 7)
 			end
