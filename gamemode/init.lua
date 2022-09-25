@@ -87,6 +87,7 @@ AddCSLuaFile("vgui/parsenal.lua")
 AddCSLuaFile("vgui/premantle.lua")
 AddCSLuaFile("vgui/zshealtharea.lua")
 AddCSLuaFile("vgui/zsstatusarea.lua")
+AddCSLuaFile("vgui/pstatus.lua")
 AddCSLuaFile("vgui/zsgamestate.lua")
 AddCSLuaFile("vgui/mutshop.lua")
 

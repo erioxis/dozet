@@ -188,12 +188,12 @@ function GM:ShowHelp()
 
 	but = vgui.Create("DButton", menu)
 	but:SetFont("ZSHUDFontSmaller")
-	but:SetText("IN WORK")
+	but:SetText("Status Database")
 	but:SetTall(buttonhei)
 	but:DockMargin(0, 0, 0, 12)
 	but:DockPadding(0, 12, 0, 12)
 	but:Dock(TOP)
-	but.DoClick = function() MySelf:GiveAchievement("inwork") end
+	but.DoClick = function() MakepStatuss() end
 
 	but = vgui.Create("DButton", menu)
 	but:SetFont("ZSHUDFontSmaller")

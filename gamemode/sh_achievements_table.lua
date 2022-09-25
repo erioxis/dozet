@@ -214,4 +214,201 @@ GM.Achievements["darvinupdate"] = {
 
 -- Cache count, to not call table.Count again
 GM.AchievementsCount = table.Count(GM.Achievements)
--- While we're at it
+-- Lol just, im to lazy for other file
+GM.Statuses = {}
+local function statusValueFunction(statusname)
+	return function(self, lp)
+		local status = lp:GetStatus(statusname)
+		if status and status:IsValid() then
+			return math.max(status:GetStartTime() + status:GetDuration() - CurTime(), 0)
+		end
+
+		return 0
+	end
+end
+GM.Statuses["poison"] = {
+	Color = Color(180, 200, 0),
+	Name = "poison",
+	ValFunc = function(self, lp)
+		return lp:GetPoisonDamage()
+	end,
+	Max = GM.MaxPoisonDamage or 1000,
+	Icon = Material("zombiesurvival/poison.png")
+}
+GM.Statuses["bleed"] = {
+	Color = Color(220, 0, 0),
+	Name = "bleed",
+	ValFunc = function(self, lp)
+		return lp:GetBleedDamage()
+	end,
+	Max = GM.MaxBleedDamage or 50,
+	Icon = Material("zombiesurvival/bleed.png")
+}
+GM.Statuses["enfeeb"] = {
+	Color = Color(255, 50, 50),
+	Name = "enfeeb",
+	ValFunc = statusValueFunction("enfeeble"),
+	Max = 10,
+	Icon = Material("zombiesurvival/infeeble.png")
+}
+GM.Statuses["dim_vision"] = {
+	Color = Color(90, 90, 90),
+	Name = "dim_vision",
+	ValFunc = statusValueFunction("dimvision"),
+	Max = 10,
+	Icon = Material("zombiesurvival/dim_vision.png")
+}
+GM.Statuses["slow"] = {
+	Color = Color(75, 140, 75),
+	Name = "slow",
+	ValFunc = statusValueFunction("slow"),
+	Max = 8,
+	Icon = Material("zombiesurvival/slow.png")
+}
+GM.Statuses["speed"] = {
+	Color = Color(75, 255, 0),
+	Name = "speed",
+	ValFunc = statusValueFunction("speed"),
+	Max = 100,
+	Icon = Material("zombiesurvival/slow.png")
+}
+GM.Statuses["frost"] = {
+	Color = Color(0, 135, 255),
+	Name = "frost",
+	ValFunc = statusValueFunction("frost"),
+	Max = 9,
+	Icon = Material("zombiesurvival/frost.png")
+}
+GM.Statuses["fright"] = {
+	Color = Color(155, 0, 255),
+	Name = "frightened",
+	ValFunc = statusValueFunction("frightened"),
+	Max = 10,
+	Icon = Material("zombiesurvival/tremors.png")
+}
+GM.Statuses["sickness"] = {
+	Color = Color(255, 120, 0),
+	Name = "sickness",
+	ValFunc = statusValueFunction("sickness"),
+	Max = 15,
+	Icon = Material("zombiesurvival/sickness.png")
+}
+GM.Statuses["burned"] =  {
+	Color = Color(255, 120, 0),
+	Name = "burned",
+	ValFunc = statusValueFunction("burn"),
+	Max = 600,
+	Icon = Material("zombiesurvival/burn.png")
+}
+GM.Statuses["knockdown"] =  {
+	Color = Color(157, 75, 20),
+	Name = "knockdown",
+	ValFunc = statusValueFunction("knockdown"),
+	Max = 5,
+	Icon = Material("zombiesurvival/knock_down.png")
+}
+GM.Statuses["strong"] =   {
+	Color = Color(200, 100, 90),
+	Name = "strength",
+	ValFunc = statusValueFunction("strengthdartboost"),
+	Max = 10,
+	Icon = Material("zombiesurvival/strength_shot.png")
+}
+GM.Statuses["adrenaline"] = {
+	Color = Color(170, 200, 120),
+	Name = "adrenaline",
+	ValFunc = statusValueFunction("adrenalineamp"),
+	Max = 10,
+	Icon = Material("zombiesurvival/speed_up.png")
+}
+GM.Statuses["keyboard"] = {
+	Color = Color(170, 0, 120),
+	Name = "keyboard",
+	ValFunc = statusValueFunction("keyboard"),
+	Max = 20,
+	Icon = Material("zombiesurvival/speed_up.png")
+}
+GM.Statuses["holly"] =  {
+	Color = Color(255, 255, 255),
+	Name = "holly",
+	ValFunc = statusValueFunction("holly"),
+	Max = 20,
+	Icon = Material("zombiesurvival/cursed.png")
+}
+GM.Statuses["speed2"] = {
+	Color = Color(130, 220, 110),
+	Name = "speed",
+	ValFunc = statusValueFunction("healdartboost"),
+	Max = 10,
+	Icon = Material("zombiesurvival/speed_up.png")
+}
+GM.Statuses["defence"] =  {
+	Color = Color(90, 120, 220),
+	Name = "defence",
+	ValFunc = statusValueFunction("medrifledefboost"),
+	Max = 10,
+	Icon = Material("zombiesurvival/defense.png")
+}
+GM.Statuses["sigildef"] =  {
+	Color = Color(136, 6, 97),
+	Name = "sigildef",
+	ValFunc = statusValueFunction("sigildef"),
+	Max = 3,
+	Icon = Material("zombiesurvival/defense.png")
+}
+GM.Statuses["reaper"] = {
+	Color = Color(130, 30, 140),
+	Name = "reaper",
+	ValFunc = statusValueFunction("reaper"),
+	Max = 14,
+	Icon = Material("zombiesurvival/reaper.png")
+}
+GM.Statuses["renegade"] = {
+	Color = Color(235, 160, 40),
+	Name = "renegade",
+	ValFunc = statusValueFunction("renegade"),
+	Max = 14,
+	Icon = Material("zombiesurvival/headshot_stacks.png")
+}
+GM.Statuses["bloodlust"] =  {
+	Color = Color(255, 0, 0),
+	Name = "bloodlust",
+	ValFunc = statusValueFunction("bloodlust"),
+	Max = 10,
+	Icon = Material("zombiesurvival/bleed.png")
+}
+GM.Statuses["bloodrage"] =  {
+	Color = Color(120, 0, 0),
+	Name = "bloodrage",
+	ValFunc = statusValueFunction("bloodrage"),
+	Max = 6,
+	Icon = Material("zombiesurvival/bleed.png")
+}
+GM.Statuses["curse"] =  {
+	Color = Color(100, 100, 100),
+	Name = "curse",
+	ValFunc = statusValueFunction("cursed"),
+	Max = GM.MaxCurse or 100,
+	Icon = Material("zombiesurvival/cursed.png")
+}
+GM.Statuses["rot"] = {
+	Color = Color(255, 150, 150),
+	Name = "rot",
+	ValFunc = statusValueFunction("rot"),
+	Max = GM.MaxRotDamage or 100,
+	Icon = Material("zombiesurvival/rot.png")
+}
+GM.Statuses["hollow"] = {
+	Color = Color(100, 100, 100),
+	Name = "hollow",
+	ValFunc = statusValueFunction("hollowing"),
+	Max = 1000,
+	Icon = Material("zombiesurvival/hallow.png")
+}
+GM.Statuses["mantle"] =	{
+	Color = Color(255, 255, 255),
+	Name = "mantle",
+	ValFunc = statusValueFunction("hshield"),
+	Max = 1,
+	Icon = Material("zombiesurvival/defense.png")
+}

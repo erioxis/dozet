@@ -15,10 +15,10 @@ function ENT:Think()
 	local dmg = (lox and math.Clamp(self:GetDamage() * 2, 2, 8) or math.Clamp(self:GetDamage(), 1, 4))
 	if not owner:IsSkillActive(SKILL_DEFENDBLOOD) then
 	owner:TakeDamage(dmg + self:GetDamage() * 0.01, self.Damager and self.Damager:IsValid() and self.Damager:IsPlayer() and self.Damager or owner, self)
-		self:AddDamage(-dmg + self:GetDamage() * 0.01)
+		self:AddDamage(-dmg - self:GetDamage() * 0.01)
 	elseif owner:IsSkillActive(SKILL_DEFENDBLOOD) then
 		owner:SetHealth(owner:Health() + (dmg * 2) + self:GetDamage() * 0.01)
-		self:AddDamage(-dmg + self:GetDamage() * 0.01)
+		self:AddDamage(-dmg - self:GetDamage() * 0.01)
 	end
 
 	local dir = VectorRand()
