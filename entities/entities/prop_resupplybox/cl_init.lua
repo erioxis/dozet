@@ -38,7 +38,7 @@ function ENT:RenderInfo(pos, ang, owner)
 	cam.Start3D2D(pos, ang, 0.075)
 		draw.SimpleText(translate.Get("resupply_box"), "ZS3D2DFont2", 0, -130, (MySelf.NextUse or 0) <= CurTime() and COLOR_GREEN or COLOR_DARKRED, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 
-		local caches = MySelf.Stowage and MySelf.StowageCaches
+		local caches = MySelf.StowageCaches
 
 		local timeremain = math.ceil(math.max(0, (MySelf.NextUse or 0) - CurTime()))
 		if MySelf.NextUse then

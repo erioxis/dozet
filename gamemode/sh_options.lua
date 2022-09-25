@@ -434,7 +434,7 @@ GM:AddPointShopItem("classixg",			ITEMCAT_GUNS,			2000,			"weapon_zs_classic")
 GM:AddPointShopItem("plasmk",			ITEMCAT_GUNS,			2000,			"weapon_zs_plasmatik")
 GM:AddPointShopItem("deathdlrs",		ITEMCAT_GUNS,			2000,			"weapon_zs_deathdealers")
 GM:AddPointShopItem("rlaucnher",		ITEMCAT_GUNS,			2000,			"weapon_zs_rocket_launcher")
---GM:AddPointShopItem("hephaa",		ITEMCAT_GUNS,			2000,			"weapon_zs_hephaestus")
+GM:AddPointShopItem("biotic_grl",		ITEMCAT_GUNS,			2000,			"weapon_zs_biotic_grl")
 GM:AddPointShopItem("smorning",		ITEMCAT_GUNS,			2000,			"weapon_zs_smorning")
 -- Tier 7
 GM:AddPointShopItem("sacredhh",			ITEMCAT_GUNS,			5000,			"weapon_zs_m6")
@@ -896,19 +896,19 @@ GM.NoNewHumansWave = 5
 GM.NoSuicideWave = -1
 
 -- How long 'wave 0' should last in seconds. This is the time you should give for new players to join and get ready.
-GM.WaveZeroLength = 300
+GM.WaveZeroLength = 230
 
 -- Time humans have between waves to do stuff without NEW zombies spawning. Any dead zombies will be in spectator (crow) view and any living ones will still be living.
 GM.WaveIntermissionLength = 90
 
 -- Time in seconds between end round and next map.
-GM.EndGameTime = 15
+GM.EndGameTime = 25
 
 -- How many clips of ammo guns from the Worth menu start with. Some guns such as shotguns and sniper rifles have multipliers on this.
 GM.SurvivalClips = 4 --2
 
 -- How long do humans have to wait before being able to get more ammo from a resupply box?
-GM.ResupplyBoxCooldown = 60
+GM.ResupplyBoxCooldown = 75
 
 -- Put your unoriginal, 5MB Rob Zombie and Metallica music here.
 GM.LastHumanSound = Sound("zombiesurvival/lasthuman.ogg")
@@ -942,12 +942,12 @@ GM.WaveOneLengthClassic = 30
 GM.TimeAddedPerWaveClassic = 15
 
 -- Max amount of damage left to tick on these. Any more pending damage is ignored.
-GM.MaxRotDamage = 2000
+GM.MaxRotDamage = 25
 GM.MaxBleedDamage = 10000
 GM.MaxCurse = 100
 
 -- Give humans this many points when the wave ends.
-GM.EndWavePointsBonus = 2
+GM.EndWavePointsBonus = 9
 
 -- Also give humans this many points when the wave ends, multiplied by (wave - 1)
-GM.EndWavePointsBonusPerWave = 6
+GM.EndWavePointsBonusPerWave = 15

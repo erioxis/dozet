@@ -30,6 +30,7 @@ CLASS.SWEP = "weapon_zs_graveshovelz"
 if SERVER then
 	function CLASS:OnSpawned(pl)
 		pl:CreateAmbience("gravediggerambience")
+		pl:AddZSXP(-500)
 	end
 end
 

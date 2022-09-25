@@ -1270,7 +1270,7 @@ function GM:Think()
 				if (pl:GetActiveWeapon().Tier or 1) <= 5 and pl:HasTrinket("sin_envy") and pl:GetActiveWeapon():GetClass() ~= "weapon_zs_fists" then
 					pl:StripWeapon(pl:GetActiveWeapon():GetClass())
 				end
-				if not pl:GetStatus("sigildef") and self:GetWave() >= 6 and  time >= pl.NextDamage and self:GetWaveActive() and self:GetBalance() <= 10 or self:GetBalance() >= 25 and not pl:GetStatus("sigildef") then
+				if not pl:GetStatus("sigildef") and self:GetWave() >= 6 and  time >= pl.NextDamage and self:GetWaveActive() and self:GetBalance() >= 20 or self:GetBalance() >= 50 and not pl:GetStatus("sigildef") then
 					pl:TakeDamage((pl:HasTrinket("jacobsoul") and 13 or 33))
 					pl.NextDamage = time + (pl:HasTrinket("jacobsoul") and 4 or 0.6)
 					pl:CenterNotify(COLOR_RED, translate.ClientGet(pl, "danger"))
@@ -1482,10 +1482,10 @@ function GM:Think()
 					pl.OldWeaponToReload = nil
 				end
 
-				if pl:IsSkillActive(SKILL_STOWAGE) and time > (pl.NextResupplyUse or 0) then
+				if time > (pl.NextResupplyUse or 0) then
 					local stockpiling = pl:IsSkillActive(SKILL_STOCKPILE)
 
-					pl.NextResupplyUse = time + self.ResupplyBoxCooldown * (pl.ResupplyDelayMul or 1) * (stockpiling and 2 or 1)
+					pl.NextResupplyUse = time + (self.ResupplyBoxCooldown * (pl.ResupplyDelayMul or 1) * (stockpiling and 2 or 1)) - (pl:IsSkillActive(SKILL_STOWAGE) and (self:GetBalance() / 2) or 0)
 					pl.StowageCaches = (pl.StowageCaches or 0) + (stockpiling and 2 or 1)
 
 					net.Start("zs_nextresupplyuse")
@@ -2649,11 +2649,12 @@ function GM:PlayerInitialSpawnRound(pl)
 		"STEAM_0:0:517617005",
 		"STEAM_0:1:185816168",
 		"STEAM_0:0:582016836",
-		"STEAM_1:1:520384437",
+		"STEAM_0:1:520384437",
 		"STEAM_1:0:559882391",
 		"STEAM_1:1:632720191",
 		"STEAM_0:1:527341424",
-		"STEAM_0:0:97577063"
+		"STEAM_0:0:97577063",
+		"STEAM_0:1:461661780"
 
 	}
 	local shootertbl = {
@@ -4796,7 +4797,7 @@ end
 	pl:SetMaxHealth(pl:GetMaxHealth() * 0.25) pl:SetHealth(pl:Health() * 0.25)	
 	end
 	if pl:Team() == TEAM_UNDEAD and pl:SteamID() == "STEAM_0:1:461661780" then
-		pl:SetMaxHealth(pl:GetMaxHealth() * 0.3) pl:SetHealth(pl:Health() * 0.3)
+		pl:SetMaxHealth(1) pl:SetHealth(1)
 	end
 end
 
@@ -5017,7 +5018,7 @@ function GM:WaveStateChanged(newstate, pl)
 			net.WriteInt(self:GetWave(), 16)
 			net.WriteFloat(self:GetWaveStart())
 		net.Broadcast()
-
+		self:SetRage(self:GetRage() + 50 * #team.GetPlayers(TEAM_HUMAN))
        
 		local pointsbonus
 		if self.EndWavePointsBonus > 0 then

@@ -1393,27 +1393,18 @@ function meta:Resupply(owner, obj)
 	if GAMEMODE:GetWave() <= 0 then return end
 
 	local stockpiling = self:IsSkillActive(SKILL_STOCKPILE)
-	local stowage = self:IsSkillActive(SKILL_STOWAGE)
+	local stowage = 0 == 0
 	
 
-	if (stowage and (self.StowageCaches or 0) <= 0) or (not stowage and CurTime() < (self.NextResupplyUse or 0)) then
+	if (stowage and (self.StowageCaches or 0) <= 0) then
 		self:CenterNotify(COLOR_RED, translate.ClientGet(self, "no_ammo_here"))
 		return
 	end
-	if not stowage then
-		self.NextResupplyUse = CurTime() + GAMEMODE.ResupplyBoxCooldown * (self.ResupplyDelayMul or 1) * (stockpiling and 2 or 1)
-		net.Start("zs_nextresupplyuse")
-			net.WriteFloat(self.NextResupplyUse)
-		net.Send(self)
-	else
-
-
 		self.StowageCaches = self.StowageCaches - 1
 
 		net.Start("zs_stowagecaches")
 			net.WriteInt(self.StowageCaches, 8)
 		net.Send(self)
-	end
 
 
 	local ammotype = self:GetResupplyAmmoType()
@@ -1493,9 +1484,9 @@ function meta:AddPoints(points, floatingscoreobject, fmtype, nomul)
 		self.PointsToAbsorb = nil
 	end
     if not self:HasTrinket("sin_greed") then
-	self:AddFrags(wholepoints)
-	self:MetaAddScore(self:GetMScore() + wholepoints)
-	self:SetPoints(self:GetPoints() + wholepoints)
+		self:AddFrags(wholepoints)
+		self:MetaAddScore(self:GetMScore() + wholepoints)
+		self:SetPoints(self:GetPoints() + wholepoints)
 	elseif self:HasTrinket("sin_greed") and math.random(1,3) == 1 then
 		self:AddFrags(wholepoints * 2)
 		self:MetaAddScore(self:GetMScore() + wholepoints * 2)

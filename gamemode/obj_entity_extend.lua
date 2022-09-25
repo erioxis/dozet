@@ -510,7 +510,6 @@ function meta:PoisonDamage(damage, attacker, inflictor, hitpos, noreduction, ins
 	local dmginfo = DamageInfo()
 
 	if self:IsPlayer() then
-		if P_Team(self) ~= TEAM_HUMAN then return end
 
 		--[[if self.BuffResistant then
 			damage = damage / 2

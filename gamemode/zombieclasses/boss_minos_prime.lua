@@ -109,7 +109,7 @@ end
 if SERVER then
 	function CLASS:ProcessDamage(pl, dmginfo)
 		local wep = pl:GetActiveWeapon()
-		dmginfo:SetDamage(dmginfo:GetDamage() / 5)
+		dmginfo:SetDamage(dmginfo:GetDamage() / 2)
 		if wep:IsValid() and wep.GetBattlecry and wep:GetBattlecry() > CurTime() then
 			dmginfo:SetDamage(dmginfo:GetDamage() * 0.5)
 		end

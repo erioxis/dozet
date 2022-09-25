@@ -12,7 +12,7 @@ end
 local statusdisplays = {
 {
 	Color = Color(180, 200, 0),
-	Name = "POISON!",
+	Name = "poison",
 	ValFunc = function(self, lp)
 		return lp:GetPoisonDamage()
 	end,
@@ -21,7 +21,7 @@ local statusdisplays = {
 },
 {
 	Color = Color(220, 0, 0),
-	Name = "BLEED!",
+	Name = "bleed",
 	ValFunc = function(self, lp)
 		return lp:GetBleedDamage()
 	end,
@@ -30,163 +30,170 @@ local statusdisplays = {
 },
 {
 	Color = Color(255, 50, 50),
-	Name = "ENFEEBLE!",
+	Name = "enfeeb",
 	ValFunc = statusValueFunction("enfeeble"),
 	Max = 10,
 	Icon = Material("zombiesurvival/infeeble.png")
 },
 {
 	Color = Color(90, 90, 90),
-	Name = "DIM VISION!",
+	Name = "dim_vision",
 	ValFunc = statusValueFunction("dimvision"),
 	Max = 10,
 	Icon = Material("zombiesurvival/dim_vision.png")
 },
 {
 	Color = Color(75, 140, 75),
-	Name = "SLOW!",
+	Name = "slow",
 	ValFunc = statusValueFunction("slow"),
 	Max = 8,
 	Icon = Material("zombiesurvival/slow.png")
 },
 {
 	Color = Color(75, 255, 0),
-	Name = "SPEED!",
+	Name = "speed",
 	ValFunc = statusValueFunction("speed"),
 	Max = 100,
 	Icon = Material("zombiesurvival/slow.png")
 },
 {
 	Color = Color(0, 135, 255),
-	Name = "FROST!",
+	Name = "frost",
 	ValFunc = statusValueFunction("frost"),
 	Max = 9,
 	Icon = Material("zombiesurvival/frost.png")
 },
 {
 	Color = Color(155, 0, 255),
-	Name = "TREMOR!",
+	Name = "frightened",
 	ValFunc = statusValueFunction("frightened"),
 	Max = 10,
 	Icon = Material("zombiesurvival/tremors.png")
 },
 {
 	Color = Color(255, 120, 0),
-	Name = "SICKNESS!",
+	Name = "sickness",
 	ValFunc = statusValueFunction("sickness"),
 	Max = 15,
 	Icon = Material("zombiesurvival/sickness.png")
 },
 {
 	Color = Color(255, 120, 0),
-	Name = "BURNED!",
+	Name = "burned",
 	ValFunc = statusValueFunction("burn"),
 	Max = 600,
 	Icon = Material("zombiesurvival/burn.png")
 },
 {
 	Color = Color(157, 75, 20),
-	Name = "KNOCK DOWN!",
+	Name = "knockdown",
 	ValFunc = statusValueFunction("knockdown"),
 	Max = 5,
 	Icon = Material("zombiesurvival/knock_down.png")
 },
 {
 	Color = Color(200, 100, 90),
-	Name = "STRENGTH!",
+	Name = "strength",
 	ValFunc = statusValueFunction("strengthdartboost"),
 	Max = 10,
 	Icon = Material("zombiesurvival/strength_shot.png")
 },
 {
 	Color = Color(170, 200, 120),
-	Name = "ADRENALINE!",
+	Name = "adrenaline!",
 	ValFunc = statusValueFunction("adrenalineamp"),
 	Max = 10,
 	Icon = Material("zombiesurvival/speed_up.png")
 },
 {
 	Color = Color(170, 0, 120),
-	Name = "KEYBOARD?!",
+	Name = "keyboard",
 	ValFunc = statusValueFunction("keyboard"),
 	Max = 20,
 	Icon = Material("zombiesurvival/speed_up.png")
 },
 {
 	Color = Color(255, 255, 255),
-	Name = "HOLLY!",
+	Name = "holly",
 	ValFunc = statusValueFunction("holly"),
 	Max = 20,
 	Icon = Material("zombiesurvival/cursed.png")
 },
 {
 	Color = Color(130, 220, 110),
-	Name = "SPEED!",
+	Name = "speed",
 	ValFunc = statusValueFunction("healdartboost"),
 	Max = 10,
 	Icon = Material("zombiesurvival/speed_up.png")
 },
 {
 	Color = Color(90, 120, 220),
-	Name = "DEFENCE!",
+	Name = "defence",
 	ValFunc = statusValueFunction("medrifledefboost"),
 	Max = 10,
 	Icon = Material("zombiesurvival/defense.png")
 },
 {
+	Color = Color(247, 86, 199),
+	Name = "sigildef",
+	ValFunc = statusValueFunction("sigildef"),
+	Max = 3,
+	Icon = Material("zombiesurvival/defense.png")
+},
+{
 	Color = Color(130, 30, 140),
-	Name = "REAPER!",
+	Name = "reaper",
 	ValFunc = statusValueFunction("reaper"),
 	Max = 14,
 	Icon = Material("zombiesurvival/reaper.png")
 },
 {
 	Color = Color(235, 160, 40),
-	Name = "Renegade!",
+	Name = "renegade",
 	ValFunc = statusValueFunction("renegade"),
 	Max = 14,
 	Icon = Material("zombiesurvival/headshot_stacks.png")
 },
 {
 	Color = Color(255, 0, 0),
-	Name = "BLOODLUST!",
+	Name = "bloodlust",
 	ValFunc = statusValueFunction("bloodlust"),
 	Max = 10,
 	Icon = Material("zombiesurvival/bleed.png")
 },
 {
 	Color = Color(120, 0, 0),
-	Name = "BLOOD RAGE!",
+	Name = "bloodrage",
 	ValFunc = statusValueFunction("bloodrage"),
 	Max = 6,
 	Icon = Material("zombiesurvival/bleed.png")
 },
 {
 	Color = Color(100, 100, 100),
-	Name = "CURSE!",
+	Name = "curse",
 	ValFunc = statusValueFunction("cursed"),
 	Max = GM.MaxCurse or 100,
 	Icon = Material("zombiesurvival/cursed.png")
 },
 {
 	Color = Color(255, 150, 150),
-	Name = "ROT!",
+	Name = "rot",
 	ValFunc = statusValueFunction("rot"),
 	Max = GM.MaxRotDamage or 100,
 	Icon = Material("zombiesurvival/rot.png")
 },
 {
 	Color = Color(100, 100, 100),
-	Name = "HOLLOW!",
+	Name = "hollow",
 	ValFunc = statusValueFunction("hollowing"),
 	Max = 1000,
 	Icon = Material("zombiesurvival/hallow.png")
 },
 {
 	Color = Color(255, 255, 255),
-	Name = "HOLY MNTL!",
+	Name = "mantle",
 	ValFunc = statusValueFunction("hshield"),
-	Max = 2999,
+	Max = 1,
 	Icon = Material("zombiesurvival/defense.png")
 }
 }
@@ -205,7 +212,7 @@ function PANEL:Init()
 		status = vgui.Create("ZSStatus", self)
 		status:SetAlpha(240)
 		status:SetColor(statusdisp.Color)
-		status:SetMemberName(statusdisp.Name)
+		status:SetMemberName(translate.Get("s_"..statusdisp.Name))
 		status.GetMemberValue = statusdisp.ValFunc
 		status.MemberMaxValue = statusdisp.Max
 		status.Icon = statusdisp.Icon
