@@ -49,7 +49,12 @@ function ENT:Explode(hitpos, hitnormal, hitent)
 
 	if owner:IsValidLivingHuman() then
 		local source = self:ProjectileDamageSource()
-		util.PoisonBlastDamage(source, owner, hitpos, 201, self.ProjDamage or 21)
+		for _, pl in pairs(ents.FindInSphere(hitpos, 138)) do
+			if pl:IsValidLivingZombie() then
+				pl:TakeDamage(self.ProjDamage or 99, self:GetOwner(), self:GetOwner():GetActiveWeapon())
+				pl:PoisonDamage(4, owner, self)
+			end
+		end
 	end
 
 	self:EmitSound(")weapons/explode5.wav", 80, 130)

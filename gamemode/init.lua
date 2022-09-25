@@ -2117,8 +2117,8 @@ function GM:OnPlayerWin(pl)
 		xp = xp / 4
 	end
 	pl:AddZSXP(xp * (math.max(0.33,self:GetWinRate())))
-	self:SetRage(self:SetRage() - 100)
-	self:SetWinRate(math.max(-1,self:SetWinRate() - 1))
+	self:SetRage(self:GetRage() + 100)
+	self:SetWinRate(math.max(0,self:GetWinRate() + 1))
 	pl:GiveAchievement("winfirst")
 	if not self.ObjectiveMap then
 		pl:GiveAchievementProgress("loveof6", 1)
@@ -2136,6 +2136,8 @@ end
 
 function GM:OnPlayerLose(pl)
 	pl:GiveAchievementProgress("ruinto10", 1)
+	self:SetRage(self:GetRage() - 150)
+	self:SetWinRate(math.max(0,self:GetWinRate() - 1))
 end
 
 

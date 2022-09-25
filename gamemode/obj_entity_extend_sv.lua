@@ -409,7 +409,9 @@ function meta:DamageNails(attacker, inflictor, damage, dmginfo)
 	if attacker.m_Zmain then
 		dmginfo:SetDamage(dmginfo:GetDamage() * 1.50)
 	end
-	attacker:AddTokens(math.ceil((damage or 2) * 0.15))
+	if attacker:IsPlayer() then
+		attacker:AddTokens(math.ceil((damage or 2) * 0.15))
+	end
 	if attacker.m_DoubleXP then
 		attacker:AddZSXP(math.ceil((damage or 2) * 0.05))
 	end

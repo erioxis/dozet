@@ -136,6 +136,7 @@ LANGUAGE.hm_stealed_desc  = "%s Застилил %d зомби."
 LANGUAGE.hm_lhuman  = "Послений человек симуляции"
 LANGUAGE.hm_lhuman_desc  = "%s Стал последним человеком на дозете."
 -- Various gamemode stuff|
+LANGUAGE.round_x_of_y								= "Раунд %d из %d"
 LANGUAGE.win_endboard  = "Вы выйграли!"
 LANGUAGE.lose_endboard = "Вы проиграли."
 LANGUAGE.win_endboard_1  = "Люди смогли победить досеи в этот."
@@ -1913,6 +1914,26 @@ LANGUAGE.demi_boss_dead = "%s Мини-босс умер за %s "
 
 LANGUAGE.demibosses = "Мини-боссов "
 
+LANGUAGE.uleft = " Использований"
+--МЕЕНЮ
+LANGUAGE.models_changed_to = "Твоя модель изменилась на "
+LANGUAGE.mm_player_m_select = "Выбор Модели"
+LANGUAGE.mm_player_color = "Цвет Игрока"
+LANGUAGE.mm_weapon_color = "Цвет Оружия"
+LANGUAGE.mm_color = "Цвета"
+
+LANGUAGE.mm_help = "Помощь"
+LANGUAGE.mm_challenges = "Достижения"
+LANGUAGE.mm_options = "Настройки"
+LANGUAGE.mm_w_base = "Датабаза оружия"
+LANGUAGE.mm_s_base = "Датабаза Статусов"
+LANGUAGE.mm_skills = "Скиллы"
+LANGUAGE.mm_zs_v = "Версия"
+
+LANGUAGE.mm_close = "Закрыть"
+
+
+
 --статуты
 LANGUAGE.s_hollow = "ОПУСТОШЕНИЕ!"
 LANGUAGE.s_mantle = "МАНТИЯ!"
@@ -1965,3 +1986,19 @@ LANGUAGE.s_enfeeb_d = "Получаешь больше урона на 50%."
 LANGUAGE.s_bleed_d = "Медленно наносит урон,быстрее если двигаешься.\nМного кровотока = быстрее умираешь.\nМожно быть вылеченным чтобы снять кровоток."
 LANGUAGE.s_poison_d = "Медленно наносит урон.\nМожно быть вылеченным чтобы снять яд."
 LANGUAGE.s_sigildef_d= "Нельзя умереть если волна 6 или больше.\n-66% Получаемого урона."
+
+--Ammo
+LANGUAGE.ammo_scrap = "Скрап"
+LANGUAGE.ammo_explosives = "Взрывные"
+LANGUAGE.ammo_chemicals = "Химикаты"
+LANGUAGE.ammo_buckshot = "Дробь"
+LANGUAGE.ammo_nails = "Гвозди"
+LANGUAGE.ammo_rifle = "Снайперские"
+LANGUAGE.ammo_assaultrifle = "Штурмовые"
+LANGUAGE.ammo_pulseshots = "Пульсовые"
+LANGUAGE.ammo_bolts = "Болты"
+LANGUAGE.ammo_boards = "Доски"
+LANGUAGE.ammo_grenades = "Гранаты"
+LANGUAGE.ammo_molotovs = "Молотовы"
+LANGUAGE.ammo_medicalsupplies = "Медицинские капсулы"
+LANGUAGE.ammo_pistol = "Пистолетные"

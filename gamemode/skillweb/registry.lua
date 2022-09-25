@@ -1300,9 +1300,9 @@ GM:AddSkill(SKILL_DEATHCURSE, translate.Get("skill_ccleaning"), GOOD.."+15%"..tr
 GM:AddSkillModifier(SKILL_DEATHCURSE, SKILLMOD_XP, 0.15)
 GM:AddSkillModifier(SKILL_DEATHCURSE, SKILLMOD_CURSEM, -0.30)
 GM:AddSkillModifier(SKILL_DEATHCURSE, SKILLMOD_FOODEATTIME_MUL, 0.30)
-GM:AddSkill(SKILL_TORMENT7, translate.Get("skill_torment").."VII", GOOD.."+35%"..translate.Get("xpmul")..BAD..translate.Get("skill_torment_d3")..BAD.."-25%"..translate.Get("sale")..BAD..translate.Get("skill_torment_d2"),
+GM:AddSkill(SKILL_TORMENT7, translate.Get("skill_torment").."VII", GOOD.."+55%"..translate.Get("xpmul")..BAD..translate.Get("skill_torment_d3")..BAD.."-25%"..translate.Get("sale")..BAD..translate.Get("skill_torment_d2"),
 				                                                            	2,			31,					{SKILL_TORMENT6,SKILL_TORMENT8}, TREE_ANCIENTTREE)
-GM:AddSkillModifier(SKILL_TORMENT7, SKILLMOD_XP, 0.35)
+GM:AddSkillModifier(SKILL_TORMENT7, SKILLMOD_XP, 0.55)
 GM:AddSkillModifier(SKILL_TORMENT7, SKILLMOD_MELEE_DAMAGE_MUL, -0.30)
 GM:AddSkillModifier(SKILL_TORMENT7, SKILLMOD_DAMAGE, -0.30)
 GM:AddSkillModifier(SKILL_TORMENT7, SKILLMOD_LUCK, -5)

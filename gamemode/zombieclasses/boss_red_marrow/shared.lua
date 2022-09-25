@@ -51,6 +51,9 @@ function CLASS:PlayPainSound(pl)
 	return true
 end
 
+function CLASS:IgnoreLegDamage(pl, dmginfo)
+	return true
+end
 function CLASS:PlayDeathSound(pl)
 	pl:EmitSound("npc/stalker/go_alert2a.wav", 75, 75, 0.5)
 	pl:EmitSound("npc/stalker/go_alert2a.wav", 75, 85, 0.5)
@@ -112,7 +115,7 @@ function CLASS:ProcessDamage(pl, dmginfo)
 
 
 	local numthreshold = math_Clamp(math_ceil(hp / 100), 1, 9)
-	local dmgthreshold = math_Clamp(numthreshold * 100 - 100, 1, 800)
+	local dmgthreshold = math_Clamp(numthreshold * 100 - 100, 1, 2000)
 
 	local newhp = hp - dmg
 	local nulldmg = dmgthreshold - newhp
@@ -122,7 +125,7 @@ function CLASS:ProcessDamage(pl, dmginfo)
 		attacker:GiveStatus("dimvision", 5)
 
 		pl:EmitSound("ambient/creatures/town_child_scream1.wav", 20, 10)
-		dmginfo:SetDamage(dmginfo:GetDamage() / 1200)
+		dmginfo:SetDamage(0)
 
 	end
 
