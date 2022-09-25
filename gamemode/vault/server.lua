@@ -172,10 +172,10 @@ function GM:LoadWinRate()
 			contents = Deserialize(contents)
 			if contents then
 				if contents.Winrate then
-					self:SetWinRate(contents.Winrate)
+					self:SetWinRate(contents.Winrate or 1)
 				end
 				if contents.ZSRage then
-					self:SetRage(contents.ZSRage)
+					self:SetRage(contents.ZSRage or 1)
 				end
 				
 			end
