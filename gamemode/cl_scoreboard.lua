@@ -362,7 +362,7 @@ function PANEL:PerformLayout()
 	self.m_AvatarButton:CenterVertical()
 
 	self.m_PlayerLabel:SizeToContents()
-	self.m_PlayerLabel:MoveRightOf(self.m_AvatarButton, self:GetPlayer():IsBot() and -48 or 4)
+	self.m_PlayerLabel:MoveRightOf(self.m_AvatarButton, (self:GetPlayer() and self:GetPlayer():IsValid() and self:GetPlayer():IsBot() and -48 or 4))
 	self.m_PlayerLabel:CenterVertical()
 
 	self.m_ScoreLabel:SizeToContents()
