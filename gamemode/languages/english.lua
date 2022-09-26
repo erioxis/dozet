@@ -2008,7 +2008,7 @@ LANGUAGE.help_cont_being_a_zombie					= [[<p>Tips for this section:
 
 LANGUAGE.title_classm                              = "Class Mutations"
 LANGUAGE.title_bossm                              = "Boss Mutations"
-
+LANGUAGE.xp_added                                = "XP Taken Per Round "
 
 
 LANGUAGE.you_dont_have_enough_btokens				= "You don't have enough damage tokens!"

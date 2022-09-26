@@ -170,6 +170,7 @@ end
 
 function meta:AddZSXP(xp)
 	-- TODO: Level change checking. Cache the "XP for next level" in the vault load and compare it here instead of checking every add.
+	self:AddXPPerRound(xp)
 	self:SetZSXP(self:GetZSXP() + xp)
 end
 

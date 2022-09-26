@@ -310,6 +310,15 @@ end
 function meta:SetDKills(zkills)
 	self:SetNWInt('zkills', zkills)	
 end	
+function meta:SetXPPerRound(xp)
+	self:SetNWInt('xpperround', xp)	
+end	
+function meta:GetXPPerRound()
+	return self:GetNWInt('xpperround', xp)	
+end
+function meta:AddXPPerRound(xp)
+	self:SetNWInt('xpperround', self:GetXPPerRound() + xp)	
+end	
 
 
 function meta:SetTokens(pts)
@@ -322,6 +331,9 @@ end
 
 function meta:GetBloodArmor()
 	return self:GetDTInt(DT_PLAYER_INT_BLOODARMOR)
+end
+function meta:GetZArmor()
+	return self:GetDTInt(DT_PLAYER_INT_ZOMBIEARMOR)
 end
 
 function meta:AddLegDamage(damage)

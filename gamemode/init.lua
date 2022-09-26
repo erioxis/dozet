@@ -1264,7 +1264,6 @@ function GM:Think()
 				if pl:WaterLevel() >= 3 and not (pl.status_drown and pl.status_drown:IsValid()) then
 					pl:GiveStatus("drown")
 				end
-                pl:SetDKills(pl.zKills)
 				if (pl:GetActiveWeapon().Tier or 1) >= 4 and pl:HasTrinket("sin_pride") then
 					pl:StripWeapon(pl:GetActiveWeapon():GetClass())
 				end
@@ -1486,7 +1485,7 @@ function GM:Think()
 				if time > (pl.NextResupplyUse or 0) then
 					local stockpiling = pl:IsSkillActive(SKILL_STOCKPILE)
 
-					pl.NextResupplyUse = time + (self.ResupplyBoxCooldown * (pl.ResupplyDelayMul or 1) * (stockpiling and 2 or 1)) - (pl:IsSkillActive(SKILL_STOWAGE) and (self:GetBalance() / 2) or 0)
+					pl.NextResupplyUse = time + (self.ResupplyBoxCooldown * (pl.ResupplyDelayMul or 1) * (stockpiling and 2 or 1)) - (pl:IsSkillActive(SKILL_STOWAGE) and math.max(0,self:GetBalance() / 4) or 0)
 					pl.StowageCaches = (pl.StowageCaches or 0) + (stockpiling and 2 or 1)
 
 					net.Start("zs_nextresupplyuse")
@@ -2136,8 +2135,8 @@ end
 
 function GM:OnPlayerLose(pl)
 	pl:GiveAchievementProgress("ruinto10", 1)
-	self:SetRage(self:GetRage() - 150)
-	self:SetWinRate(math.max(0,self:GetWinRate() - 1))
+	self:SetRage(math.max(0,self:GetRage() - 150))
+	self:SetWinRate(math.max(1,self:GetWinRate() - 1))
 end
 
 
@@ -2174,8 +2173,6 @@ function GM:EndRound(winner)
 
 	if winner == TEAM_HUMAN then
 		self.LastHumanPosition = nil
-		self:SetRage(self:SetRage() + 50)
-		self:SetWinRate(self:SetWinRate() + 1)
 		for _, pl in pairs(player.GetAll()) do
 			if pl:Team() == TEAM_HUMAN then
 				if not self:GetUseSigils() then
@@ -4161,7 +4158,7 @@ function GM:ZombieKilledHuman(pl, attacker, inflictor, dmginfo, headshot, suicid
 	attacker:AddTokens(pl:GetMaxHealth() * 1.25)
 	attacker:AddLifeBrainsEaten(1)
 	attacker:AddZSXP(self.InitialVolunteers[attacker:UniqueID()] and xp or math.floor(xp*4))
-	self:SetRage(self:GetRage() - 5 / self:GetWinRate())
+	self:SetRage(self:GetRage() - 15 / self:GetWinRate())
 	local classtab = attacker:GetZombieClassTable()
 	if classtab and classtab.Name then
 		GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_ZOMBIECLASS, classtab.Name, "BrainsEaten", 1)
@@ -5021,7 +5018,7 @@ function GM:WaveStateChanged(newstate, pl)
 			net.WriteInt(self:GetWave(), 16)
 			net.WriteFloat(self:GetWaveStart())
 		net.Broadcast()
-		self:SetRage(self:GetRage() + 50 * #team.GetPlayers(TEAM_HUMAN))
+		self:SetRage(self:GetRage() + 20 * #team.GetPlayers(TEAM_HUMAN))
        
 		local pointsbonus
 		if self.EndWavePointsBonus > 0 then

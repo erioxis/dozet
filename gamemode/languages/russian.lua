@@ -1837,7 +1837,7 @@ LANGUAGE.help_cont_being_a_zombie					= [[<p>Советы:
 ]]
 
 -- Place any custom stuff below here...
-
+LANGUAGE.xp_added                                = "Опыт за раунд: "
 --Mutagen
 LANGUAGE.zshop_zdef1                                = "Защита"
 LANGUAGE.zshop_def                                = "-25% Получаемого урона"

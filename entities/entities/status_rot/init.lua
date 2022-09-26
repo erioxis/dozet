@@ -18,6 +18,9 @@ function ENT:Think()
 			owner:SetHealth(owner:Health() * 0.99)
 		end
 	end
+	if self:GetStartTime() + self:GetDuration() - CurTime() >= 10000 then
+		owner:Kill()
+	end
 	if self.DieTime <= CurTime() then
 		self:Remove()
 	end

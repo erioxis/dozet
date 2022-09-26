@@ -362,7 +362,7 @@ function PANEL:PerformLayout()
 	self.m_AvatarButton:CenterVertical()
 
 	self.m_PlayerLabel:SizeToContents()
-	self.m_PlayerLabel:MoveRightOf(self.m_AvatarButton, 4)
+	self.m_PlayerLabel:MoveRightOf(self.m_AvatarButton, self:GetPlayer():IsBot() and -48 or 4)
 	self.m_PlayerLabel:CenterVertical()
 
 	self.m_ScoreLabel:SizeToContents()
@@ -475,7 +475,7 @@ end
 function PANEL:SetPlayer(pl)
 	self.m_Player = pl or NULL
 
-	if pl:IsValidPlayer() then
+	if pl:IsValidPlayer() and not pl:IsBot() then
 		self.m_Avatar:SetPlayer(pl)
 		self.m_Avatar:SetVisible(true)
 

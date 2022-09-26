@@ -36,7 +36,16 @@ function SWEP:ApplyMeleeDamage(pl, trace, damage)
 			pl:GiveStatus("dimvision", 12)
 			pl:AddCursed(pl:GetOwner(), 50)
 		end
-		
+		local owner = self:GetOwner()
+		local dcursed = owner:GetStatus("cursed")
+		if (dcursed) then 
+			owner:GiveStatus("dimvision", 6)
+			owner:AddCursed(self:GetOwner(), cursed.DieTime - CurTime() + 50)
+		end
+		if (not dcursed) then 
+			owner:GiveStatus("dimvision", 12)
+			owner:AddCursed(pl:GetOwner(), 50)
+		end
 		return end
 		local killer = self:GetOwner()
 		timer.Simple(0.15, function()

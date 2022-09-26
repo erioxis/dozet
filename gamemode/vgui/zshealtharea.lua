@@ -78,6 +78,35 @@ local function ContentsPaint(self, w, h)
 				surface.SetDrawColor(255, 255, 255, 255)
 				surface.DrawTexturedRect(x + 2 + subwidth - 6, y + 1 - hei/2, 4, hei * 2)
 			end
+		else
+			local bloodarmor = lp:GetZArmor()
+			if bloodarmor > 0 then
+				x = 228 * screenscale
+				y = 142 * screenscale
+				wid, hei = 310 * screenscale, 14 * screenscale
+
+				colHealth.r = 0
+				colHealth.g = 0
+				colHealth.b = 255
+				healthperc = 1
+
+				subwidth = healthperc * wid
+
+				draw.SimpleTextBlurry(bloodarmor, "ZSHUDFontSmall", x + wid + 12 * screenscale, y + 8 * screenscale, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+
+				surface.SetDrawColor(0, 0, 0, 230)
+				surface.DrawRect(x, y, wid, hei)
+
+				surface.SetDrawColor(colHealth.r * 0.6, colHealth.g * 0.6, colHealth.b, 160)
+				surface.SetTexture(texDownEdge)
+				surface.DrawTexturedRect(x + 2, y + 1, subwidth - 4, hei - 2)
+				surface.SetDrawColor(colHealth.r * 0.5, colHealth.g * 0.5, colHealth.b, 30)
+				surface.DrawRect(x + 2, y + 1, subwidth - 4, hei - 2)
+
+				surface.SetMaterial(matGlow)
+				surface.SetDrawColor(255, 255, 255, 255)
+				surface.DrawTexturedRect(x + 2 + subwidth - 6, y + 1 - hei/2, 4, hei * 2)
+			end
 		end
 	end
 end

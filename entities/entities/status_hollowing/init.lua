@@ -25,6 +25,9 @@ function ENT:Think()
 		end
 		
 	end
+	if self:GetStartTime() + self:GetDuration() - CurTime() >= 5000 then
+		owner:Kill()
+	end
 
 
 	self.timer = self.timer + 1

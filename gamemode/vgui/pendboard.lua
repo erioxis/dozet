@@ -46,11 +46,15 @@ function MakepEndBoard(winner)
 	local subheading
 	if localwin then
 		subheading = EasyLabel(frame, translate.Get("win_endboard_1"), "ZSHUDFontSmaller", COLOR_WHITE)
-	else
+	else 
 		subheading = EasyLabel(frame, translate.Get("lose_endboard_d1"), "ZSHUDFontSmaller", COLOR_LIMEGREEN)
 	end
+	xpadded = EasyLabel(frame, translate.Get("xp_added")..MySelf:GetXPPerRound(), "ZSHUDFontTiny", COLOR_RED)
 	subheading:SetPos(wid * 0.5 - subheading:GetWide() * 0.5, y)
 	y = y + subheading:GetTall() + 2
+
+	xpadded:SetPos(wid * 0.5 - xpadded:GetWide() * 0.1, y)
+	y = y + xpadded:GetTall() + 2
 
 	local svpan = EasyLabel(frame, "Honorable Mentions", "ZSHUDFontSmall", COLOR_WHITE)
 	svpan:SetPos(wid * 0.5 - svpan:GetWide() * 0.5, y)

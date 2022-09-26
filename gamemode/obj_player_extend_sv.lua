@@ -118,7 +118,20 @@ function meta:ProcessDamage(dmginfo)
 
 				end
 			end
+			if self:GetZArmor() > 0 then
+				local damage = dmginfo:GetDamage()
+				if damage > 0 then
 		
+					local ratio = 0.9
+					local absorb = math.min(self:GetZArmor(), damage * ratio)
+					dmginfo:SetDamage(damage - absorb)
+					self:SetZArmor(self:GetZArmor() - absorb)
+		
+					if damage > 20 and damage - absorb <= 0 then
+						self:EmitSound("physics/flesh/flesh_strider_impact_bullet3.wav", 55)
+					end
+				end
+			end
 			if wep.IsMelee then
 				if attacker:IsSkillActive(SKILL_CHEAPKNUCKLE) and math.abs(self:GetForward():Angle().yaw - attacker:GetForward():Angle().yaw) <= 90 then
 					self:AddLegDamage(12)
@@ -621,6 +634,7 @@ function meta:ProcessDamage(dmginfo)
 
 				if myteam == TEAM_UNDEAD and otherteam == TEAM_HUMAN then
 					attacker:AddLifeHumanDamage(absorb)
+					attacker:AddTokens(absorb)
 				end
 			end
 
@@ -629,6 +643,7 @@ function meta:ProcessDamage(dmginfo)
 			end
 		end
 	end
+
 
 	if self:IsSkillActive(SKILL_BLOODLUST) and attacker:IsValid() and attacker:IsPlayer() and inflictor:IsValid() and attacker:Team() == TEAM_UNDEAD then
 		self:SetPhantomHealth(math.min(self:GetPhantomHealth() + dmginfo:GetDamage() / 2, self:GetMaxHealth()))
@@ -796,6 +811,9 @@ end
 
 function meta:SetBloodArmor(armor)
 	self:SetDTInt(DT_PLAYER_INT_BLOODARMOR, armor)
+end
+function meta:SetZArmor(armor)
+	self:SetDTInt(DT_PLAYER_INT_ZOMBIEARMOR, armor)
 end
 
 function meta:WouldDieFrom(damage, hitpos)

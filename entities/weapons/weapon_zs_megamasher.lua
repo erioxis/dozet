@@ -65,19 +65,18 @@ function SWEP:PlayHitFleshSound()
 end
 
 function SWEP:OnMeleeHit(hitent, hitflesh, tr)
+	local ent = hitent
 	if IsFirstTimePredicted() then
-		local effectdata = EffectData()
-			effectdata:SetOrigin(tr.HitPos)
-			effectdata:SetNormal(tr.HitNormal)
-		util.Effect("explosion", effectdata)
-		if SERVER then
-			local explosion = ents.Create( "env_explosion" ) -- The explosion entity
-	explosion:SetPos( tr.HitPos ) -- Put the position of the explosion at the position of the entity
-	explosion:Spawn() -- Spawn the explosion
-	explosion:SetKeyValue( "iMagnitude", self.MeleeDamage ) -- the magnitude of the explosion
-	explosion:Fire( "Explode", 0, 0 ) -- explode
-	explosion:SetOwner(self:GetOwner())
-	end
+		if ent:IsPlayer() and SERVER then
+			for i = 1, math.random(3) do
+				for _, ent in pairs(ents.FindInSphere(tr.HitPos, 28)) do
+					if ent:IsValid() and ent:IsPlayer() and ent ~= self:GetOwner() and ent:IsValidLivingZombie() then
+						ent:TakeDamage((self.MeleeDamage * i) * 0.55, self:GetOwner(), self)
+						break
+					end
+				end
+			end
+		end
 	end
 end
 

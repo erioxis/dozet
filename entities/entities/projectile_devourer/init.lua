@@ -70,7 +70,8 @@ function ENT:Hit(vHitPos, vHitNormal, ent)
 			if ent:IsValidLivingHuman() then
 				self.Exploded = true
 
-				ent:TakeSpecialDamage(23, DMG_GENERIC, owner, self)
+
+				ent:TakeSpecialDamage((math.random(12) == 12 and 69 or 23), DMG_DIRECT, owner, self)
 				ent:KnockDown()
 
 				local status = ent:GiveStatus("devourer")
