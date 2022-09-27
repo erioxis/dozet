@@ -3917,6 +3917,10 @@ function GM:KeyPress(pl, key)
 	if pl:KeyPressed(IN_SPEED) and key == IN_SPEED and pl:Team() == TEAM_UNDEAD and pl.CanMerge then 
 		self:Merge(pl, ent)
 	end
+	
+end 
+
+
 end
 
 function GM:GetNearestSpawn(pos, teamid)
