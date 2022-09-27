@@ -1270,7 +1270,7 @@ function GM:Think()
 				if (pl:GetActiveWeapon().Tier or 1) <= 5 and pl:HasTrinket("sin_envy") and pl:GetActiveWeapon():GetClass() ~= "weapon_zs_fists" then
 					pl:StripWeapon(pl:GetActiveWeapon():GetClass())
 				end
-				if not pl:GetStatus("sigildef") and self:GetWave() >= 6 and  time >= pl.NextDamage and self:GetWaveActive() and self:GetBalance() >= 20 or self:GetBalance() >= 50 and not pl:GetStatus("sigildef") then
+				if not pl:GetStatus("sigildef") and self:GetWave() >= 6 and  time >= pl.NextDamage and self:GetWaveActive() and self:GetBalance() < 20 or self:GetBalance() > 20 and not pl:GetStatus("sigildef") and  time >= pl.NextDamage then
 					pl:TakeDamage((pl:HasTrinket("jacobsoul") and 13 or 33))
 					pl.NextDamage = time + (pl:HasTrinket("jacobsoul") and 4 or 0.6)
 					pl:CenterNotify(COLOR_RED, translate.ClientGet(pl, "danger"))
@@ -1280,7 +1280,7 @@ function GM:Think()
 					pl.NextDamage = time + 1.2
 					pl:CenterNotify(COLOR_GREEN, translate.ClientGet(pl, "danger_x"))
 				end
-				if !pl:OnGround() and not (pl:GetVelocity():LengthSqr() > 4000) then
+				if !pl:OnGround() and not (pl:GetVelocity():LengthSqr() > 7600) then
 					pl.StuckedInProp = true
 				else
 					pl.StuckedInProp = nil
@@ -2231,6 +2231,9 @@ function GM:ScalePlayerDamage(pl, hitgroup, dmginfo)
 
 	if hitgroup == HITGROUP_HEAD and dmginfo:IsBulletDamage() then
 		pl.m_LastHeadShot = CurTime()
+	end
+	if hitgroup == HITGROUP_HEAD and pl:IsValidLivingZombie() then
+		dmginfo:SetDamage(dmginfo:GetDamage() * 2)
 	end
 
 	--local crouchpunish = pl:ShouldCrouchJumpPunish()
@@ -3911,6 +3914,11 @@ function GM:KeyPress(pl, key)
 			pl.NextDash = CurTime() + 1.6
 		
 	end 
+	if pl:KeyPressed(IN_SPEED) and key == IN_SPEED and pl:Team() == TEAM_UNDEAD and pl.CanMerge then 
+		self:Merge(pl, ent)
+	end
+	
+end 
 
 
 end

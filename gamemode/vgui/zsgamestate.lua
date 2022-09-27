@@ -84,7 +84,9 @@ function PANEL:Text1Paint()
 			end
 			if GAMEMODE.RoundLimit > 0 then
 				round = GAMEMODE.CurrentRound
-				text = text .. " - " .. translate.Format("round_x_of_y", round, 3)
+				if text then
+					text = text .. " - " .. translate.Format("round_x_of_y", round, 3)
+				end
 			end
 		end
 	end
