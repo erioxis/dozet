@@ -270,6 +270,8 @@ GM.AmmoModels["remantler"] = "models/props_lab/powerbox01a.mdl"
 GM.AmmoModels["scrap"] = "models/props_junk/vent001_chunk5.mdl"
 GM.AmmoModels["sniperround"] = "models/props_debris/wood_board02a.mdl"
 GM.AmmoModels["camera"] = "models/props_combine/combine_mine01.mdl"
+GM.AmmoModels["sigil_port"] = "models/props_lab/lab_flourescentlight002b.mdl"
+GM.AmmoModels["medstation"] = "models/props/de_nuke/smokestack01.mdl"
 
 GM.AmmoIcons = {}
 GM.AmmoIcons["pistol"] = "ammo_pistol"
