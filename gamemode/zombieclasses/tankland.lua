@@ -3,7 +3,7 @@ CLASS.TranslationName = "class_tank"
 CLASS.Description = "description_eradicator"
 CLASS.Help = "controls_eradicator"
 
-CLASS.Wave = 5 / 12
+CLASS.Wave = 5 / 10
 
 CLASS.Health = 3000
 CLASS.Speed = 88

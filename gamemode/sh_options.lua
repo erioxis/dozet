@@ -884,19 +884,19 @@ end)
 -- Static values that don't need convars...
 
 -- Initial length for wave 1.
-GM.WaveOneLength = 60
+GM.WaveOneLength = 120
 
 -- Add this many seconds for each additional wave.
-GM.TimeAddedPerWave = 30
+GM.TimeAddedPerWave = 45
 
 -- New players are put on the zombie team if the current wave is this or higher. Do not put it lower than 1 or you'll break the game.
-GM.NoNewHumansWave = 5
+GM.NoNewHumansWave = 4
 
 -- Humans can not commit suicide if the current wave is this or lower.
 GM.NoSuicideWave = -1
 
 -- How long 'wave 0' should last in seconds. This is the time you should give for new players to join and get ready.
-GM.WaveZeroLength = 230
+GM.WaveZeroLength = 300
 
 -- Time humans have between waves to do stuff without NEW zombies spawning. Any dead zombies will be in spectator (crow) view and any living ones will still be living.
 GM.WaveIntermissionLength = 90
@@ -947,7 +947,7 @@ GM.MaxBleedDamage = 10000
 GM.MaxCurse = 100
 
 -- Give humans this many points when the wave ends.
-GM.EndWavePointsBonus = 9
+GM.EndWavePointsBonus = 0
 
 -- Also give humans this many points when the wave ends, multiplied by (wave - 1)
-GM.EndWavePointsBonusPerWave = 15
+GM.EndWavePointsBonusPerWave = 2
