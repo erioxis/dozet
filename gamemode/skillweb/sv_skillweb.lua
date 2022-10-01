@@ -49,7 +49,7 @@ net.Receive("zs_skill_is_unlocked", function(length, pl)
 	local activate = net.ReadBool()
 	local skill = GAMEMODE.Skills[skillid]
 
-	if skill and not pl:IsSkillUnlocked(skillid) and pl:GetZSSPRemaining() >= 1 and pl:SkillCanUnlock(skillid) and not skill.Disabled then
+	if skill and not pl:IsSkillUnlocked(skillid) and (pl:GetZSSPRemaining() >= 1 or GAMEMODE.Skills[skillid].Amulet) and pl:SkillCanUnlock(skillid) and not skill.Disabled then
 		pl:SetSkillUnlocked(skillid, true)
 
 		local msg = translate.Get("skill_discover")..skill.Name

@@ -19,6 +19,9 @@ CLASS.Health = 1200
 CLASS.Speed = 225
 CLASS.JumpPower = 200
 
+CLASS.MergePiece1 = true 
+CLASS.CanMerge = false
+
 CLASS.ModelScale = 0.7
 CLASS.Hull = {Vector(-16, -16, 0), Vector(16, 16, 64)}
 CLASS.HullDuck = {Vector(-16, -16, 0), Vector(16, 16, 35)}

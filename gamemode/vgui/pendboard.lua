@@ -31,6 +31,15 @@ function MakepEndBoard(winner)
 	pEndBoard = frame
 
 	local y = 8
+	--[[local buttonhei = 32 * screenscale
+	local but = vgui.Create("DButton", frame)
+	but:SetFont("ZSHUDFontSmaller")
+	but:SetText(translate.Get("pe_another"))
+	but:SetTall(buttonhei)
+	but:DockMargin(0, 0, 0, 2)
+	but:DockPadding(0, 12, 0, 12)
+	but:Dock(TOP)
+	but.DoClick = function()	MakepEndBoardStats() end]]
 
 	local heading
 	if localwin then
@@ -49,7 +58,7 @@ function MakepEndBoard(winner)
 	else 
 		subheading = EasyLabel(frame, translate.Get("lose_endboard_d1"), "ZSHUDFontSmaller", COLOR_LIMEGREEN)
 	end
-	xpadded = EasyLabel(frame, translate.Get("xp_added")..MySelf:GetXPPerRound(), "ZSHUDFontTiny", COLOR_RED)
+	xpadded = EasyLabel(frame, translate.Get("xp_added")..math.Round(MySelf:GetXPPerRound()), "ZSHUDFontTiny", COLOR_RED)
 	subheading:SetPos(wid * 0.5 - subheading:GetWide() * 0.5, y)
 	y = y + subheading:GetTall() + 2
 
@@ -77,7 +86,75 @@ function MakepEndBoard(winner)
 
 	return frame
 end
+function MakepEndBoardStats(winner)
+	if pEndBoard and pEndBoard:IsValid() then
+		pEndBoard:Remove()
+		pEndBoard = nil
+	end
+	local y = 8
+	local localwin = winner == TEAM_HUMAN and MySelf:IsValid() and MySelf:Team() == winner
 
+	local screenscale = BetterScreenScale()
+	local wid = math.min(ScrW(), 650) * screenscale
+
+	local frame = vgui.Create("DFrame")
+	frame:SetWide(wid)
+	frame:SetKeyboardInputEnabled(false)
+	frame:SetDeleteOnClose(false)
+	frame:SetCursor("pointer")
+	frame:SetTitle(" ")
+	pEndBoard = frame
+
+	local heading
+	if localwin then
+		surface.PlaySound("beams/beamstart5.wav")
+		heading = EasyLabel(frame, translate.Get("win_endboard"), "ZSHUDFontBig", COLOR_CYAN)
+	else
+		surface.PlaySound("ambient/levels/citadel/strange_talk"..math.random(3, 11)..".wav")
+		heading = EasyLabel(frame, translate.Get("lose_endboard"), "ZSHUDFontBig", COLOR_RED)
+	end
+	
+	heading:SetPos(wid * 0.5 - heading:GetWide() * 0.5, y)
+	y = y + heading:GetTall() + 16
+
+	heading:SetPos(wid * 0.5 - heading:GetWide() * 0.5, y)
+	y = y + heading:GetTall() + 16
+
+	local subheading
+	if localwin then
+		subheading = EasyLabel(frame, translate.Get("win_endboard_1"), "ZSHUDFontSmaller", COLOR_WHITE)
+	else 
+		subheading = EasyLabel(frame, translate.Get("lose_endboard_d1"), "ZSHUDFontSmaller", COLOR_LIMEGREEN)
+	end
+	xpadded = EasyLabel(frame, translate.Get("xp_added")..math.Round(MySelf:GetXPPerRound()), "ZSHUDFontTiny", COLOR_RED)
+	subheading:SetPos(wid * 0.5 - subheading:GetWide() * 0.5, y)
+	y = y + subheading:GetTall() + 2
+
+	xpadded:SetPos(wid * 0.5 - xpadded:GetWide() * 0.1, y)
+	y = y + xpadded:GetTall() + 2
+
+	local svpan = EasyLabel(frame, "Honorable Mentions", "ZSHUDFontSmall", COLOR_WHITE)
+	svpan:SetPos(wid * 0.5 - svpan:GetWide() * 0.5, y)
+	y = y + svpan:GetTall() + 2
+
+	local list = vgui.Create("DPanelList", frame)
+	list:SetSize(wid - 16, 600 * screenscale)
+	list:SetPos(8, y)
+	list:SetPadding(2)
+	list:SetSpacing(2)
+	list:EnableVerticalScrollbar()
+	y = y + list:GetTall() + 8
+
+	frame.List = list
+
+
+	frame:SetTall(y)
+	frame:Center()
+
+	frame:MakePopup()
+
+	return frame
+end
 local PANEL = {}
 function PANEL:OnMousePressed(mc)
 	if mc == MOUSE_LEFT then

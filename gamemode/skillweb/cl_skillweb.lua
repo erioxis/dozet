@@ -312,9 +312,9 @@ function PANEL:Init()
 	bottomleftup:SetSize(190 * screenscale, 120 * screenscale)
 
 	local quickstats = {}
-	for i=1,4 do
+	for i=1,5 do
 		local hpstat = vgui.Create("DLabel", bottomleftup)
-		hpstat:SetFont("ZSHUDFontTiny")
+		hpstat:SetFont("ZSHUDFontTiniestStatus")
 		hpstat:SetTextColor(COLOR_WHITE)
 		hpstat:SetContentAlignment(8)
 		hpstat:Dock(TOP)
@@ -490,7 +490,7 @@ function PANEL:Init()
 
 	local spremaining = vgui.Create("DEXChangingLabel", bottom)
 	spremaining:SetChangeFunction(function()
-		return "Unused skill points: "..MySelf:GetZSSPRemaining()
+		return translate.Get("hud_uu_sp")..MySelf:GetZSSPRemaining()
 	end, true)
 	spremaining:SetChangedFunction(function()
 		if MySelf:GetZSSPRemaining() >= 1 then
@@ -530,21 +530,21 @@ function PANEL:Init()
 				net.WriteBool(false)
 			net.SendToServer()
 
-			self:DisplayMessage(name.." deactivated.")
+			self:DisplayMessage(name..translate.Get("s_deact"))
 		elseif MySelf:IsSkillUnlocked(skillid) then
 			net.Start("zs_skill_is_desired")
 				net.WriteUInt(skillid, 16)
 				net.WriteBool(true)
 			net.SendToServer()
 
-			self:DisplayMessage(name.." activated.", COLOR_DARKGREEN)
+			self:DisplayMessage(name..translate.Get("s_act"), COLOR_DARKGREEN)
 		else
 			net.Start("zs_skill_is_unlocked")
 				net.WriteUInt(skillid, 16)
 				net.WriteBool(true)
 			net.SendToServer()
 
-			self:DisplayMessage(name.." unlocked and activated!", COLOR_GREEN)
+			self:DisplayMessage(name..translate.Get("s_unl_act"), COLOR_GREEN)
 		end
 
 		contextmenu:SetVisible(false)
@@ -665,9 +665,9 @@ function PANEL:UpdateQuickStats()
 		end
 	end
 
-	for i=1,4 do
-		local prefix = i == 1 and translate.Get("skill_add_health") or i == 2 and translate.Get("skill_add_speed") or i == 4 and translate.Get("skill_add_bloodarmor") or translate.Get("skill_add_worth")
-		local val = i == 2 and SPEED_NORMAL or i == 1 and 100 or i == 4 and 25 or 135
+	for i=1,5 do
+		local prefix = i == 1 and translate.Get("skill_add_health") or i == 2 and translate.Get("skill_add_speed") or i == 4 and translate.Get("skill_add_bloodarmor") or i == 5 and translate.Get("skill_add_amulet") or translate.Get("skill_add_worth")
+		local val = i == 2 and SPEED_NORMAL or i == 1 and 100 or i == 4 and 25 or i == 5 and ((0 + MySelf:GetZSRemortLevel() / 4) or 0) or 135
 		self.QuickStats[i]:SetText(prefix .. " : " .. (val + (skillmodifiers[i] or 0)))
 	end
 end
@@ -1060,7 +1060,20 @@ function PANEL:Paint(w, h)
 			if self.DesiredZoom < 9500 then
 				local colo = skill.Disabled and COLOR_DARKGRAY or selected and color_white or notunlockable and COLOR_MIDGRAY or COLOR_GRAY
 
-				draw_SimpleText(skill.Name, skillid <= -1 and "ZS3D2DFont2Big" or "ZS3D2DFont2", 0, 0, colo, TEXT_ALIGN_CENTER)
+				draw_SimpleText(skill.Name, skillid <= -1 and "ZS3D2DFont2Big" or "ZS3D2DFont2", 0, 0, skill.AlwaysActive and not selected and  Color(255,202,202) or colo, TEXT_ALIGN_CENTER)
+				local xskill = 58
+				if skill.AlwaysActive then
+					draw_SimpleText(translate.Get("s_alw_act"),"ZS3D2DFontSmall", 0, xskill, colo, TEXT_ALIGN_CENTER)
+					xskill = 58 + 8
+				end
+				if skill.RemortReq then
+					draw_SimpleText(translate.Get("s_need_r")..skill.RemortReq,"ZS3D2DFontSmall", 0, xskill, colo, TEXT_ALIGN_CENTER)
+					xskill = 58 + 8
+				end
+				if skill.LevelReq then
+					draw_SimpleText(translate.Get("s_need_l")..skill.LevelReq,"ZS3D2DFontSmall", 0, xskill, colo, TEXT_ALIGN_CENTER)
+					xskill = 58 + 8
+				end
 			end
 
 			DisableClipping(false)
@@ -1172,10 +1185,7 @@ function PANEL:OnMousePressed(mc)
 				surface.PlaySound("buttons/button8.wav")
 
 				return
-			end
-				if (GAMEMODE.Skills[hoveredskill].LevelReq or 1) < MySelf:GetZSLevel() then
-				if (GAMEMODE.Skills[hoveredskill].RemortReq or 0) < MySelf:GetZSRemortLevel() then
-			if MySelf:IsSkillDesired(hoveredskill) then
+			elseif MySelf:IsSkillDesired(hoveredskill) then
 				if GAMEMODE.Skills[hoveredskill].AlwaysActive then
 					self:DisplayMessage("You can't deactivate this skill!", COLOR_RED)
 					surface.PlaySound("buttons/button8.wav")
@@ -1187,12 +1197,30 @@ function PANEL:OnMousePressed(mc)
 			elseif MySelf:IsSkillUnlocked(hoveredskill) then
 				contextmenu.Button:SetText("Activate")
 			elseif MySelf:SkillCanUnlock(hoveredskill) then
-
-				if MySelf:GetZSSPRemaining() >= 1 then
+				if (GAMEMODE.Skills[hoveredskill].RemortReq or 0) > MySelf:GetZSRemortLevel() then
+					surface.PlaySound("buttons/button8.wav")
+	
+					return
+				end
+				if (GAMEMODE.Skills[hoveredskill].QuePro and !MySelf.ClanQuePro) then
+					self:DisplayMessage("FOR QUE PRO!!!!!!!", COLOR_RED)
+					surface.PlaySound("buttons/button8.wav")
+					return
+				end
+				if (GAMEMODE.Skills[hoveredskill].LevelReq or 1) > MySelf:GetZSLevel() then
+					surface.PlaySound("buttons/button8.wav")
+	
+					return
+				end
+				if MySelf:GetZSSPRemaining() >= 1 or GAMEMODE.Skills[hoveredskill].Amulet then
 				    if GAMEMODE.Skills[hoveredskill].Hidden and math.random(20) == 20 then
 						contextmenu.Button:SetText("Unlock")
 					elseif not GAMEMODE.Skills[hoveredskill].Hidden then
 						contextmenu.Button:SetText("Unlock")
+					if GAMEMODE.Skills[hoveredskill].Amulet and (MySelf:GetZSRemortLevel() / 4 > MySelf.AmuletPiece or MySelf:GetZSRemortLevel() == 0) then
+						self:DisplayMessage("You take x2 damage if don't have enought amulet cells!", COLOR_RED)
+							surface.PlaySound("buttons/button8.wav")
+						end
 					else
 					    return
 					end
@@ -1208,19 +1236,6 @@ function PANEL:OnMousePressed(mc)
 
 				return
 			end
-				elseif (GAMEMODE.Skills[hoveredskill].RemortReq or 0) > MySelf:GetZSRemortLevel() then
-					self:DisplayMessage("You need to have remort "..GAMEMODE.Skills[hoveredskill].RemortReq.." to unlock", COLOR_RED)
-					surface.PlaySound("buttons/button8.wav")
-
-					return
-				end
-				elseif (GAMEMODE.Skills[hoveredskill].LevelReq or 1) > MySelf:GetZSLevel() then
-					self:DisplayMessage("You need have to level - "..GAMEMODE.Skills[hoveredskill].LevelReq, COLOR_RED)
-					surface.PlaySound("buttons/button8.wav")
-
-					return
-				end
-		
 			contextmenu.SkillID = hoveredskill
 
 			contextmenu:SetVisible(true)
@@ -1271,7 +1286,7 @@ function GM:DrawXPBar(x, y, w, h, xpw, barwm, hm, level)
 	local rlevel = MySelf:GetZSRemortLevel()
 	local append = ""
 	if rlevel > 0 then
-		append = " // R.Level "..rlevel
+		append = rlevel
 	end
 
 	surface.SetDrawColor(0, 0, 0, 220)
@@ -1283,7 +1298,7 @@ function GM:DrawXPBar(x, y, w, h, xpw, barwm, hm, level)
 	surface.DrawRect(x, y + 2, barw * progress, 2)
 
 	if level == GAMEMODE.MaxLevel then
-		draw_SimpleText("Level MAX"..append, "ZSXPBar", xpw / 2, h / 2 + y, COLOR_GREEN, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+		draw_SimpleText(translate.Get("hud_lvl_max")..append, "ZSXPBar", xpw / 2, h / 2 + y, COLOR_GREEN, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 	else
 		if progress > 0 then
 			local lx = x + barw * progress - 1
@@ -1295,8 +1310,8 @@ function GM:DrawXPBar(x, y, w, h, xpw, barwm, hm, level)
 			surface.DrawLine(lx, y - 1, lx, y + 5)
 		end
 
-		draw_SimpleText("Level "..level..append, "ZSXPBar", x, h / 2 + y, COLOR_WHITE, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-		draw_SimpleText(string.CommaSeparate(xp).." / "..string.CommaSeparate(GAMEMODE:XPForLevel(level + 1)).." XP", "ZSXPBar", x + barw, h / 2 + y, COLOR_WHITE, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
+		draw_SimpleText(translate.Format("hud_r_lvl", level)..(rlevel >= 1 and translate.Get("hud_remort") or "")..append, "ZSXPBar", x, h / 2 + y, COLOR_WHITE, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+		draw_SimpleText(string.CommaSeparate(xp).." / "..string.CommaSeparate(GAMEMODE:XPForLevel(level + 1))..translate.Get("hud_xp"), "ZSXPBar", x + barw, h / 2 + y, COLOR_WHITE, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
 	end
 end
 
@@ -1352,7 +1367,7 @@ function PANEL:Paint(w, h)
 	local sp = MySelf:GetZSSPRemaining()
 	if sp > 0 then
 		colFlash.a = 90 + math.abs(math.sin(RealTime() * 2)) * 160
-		draw_SimpleText(sp.." SP", "ZSHUDFontSmallest", w - 2, h / 2, colFlash, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
+		draw_SimpleText(sp..translate.Get("hud_sp"), "ZSHUDFontSmallest", w - 2, h / 2, colFlash, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
 	end
 end
 

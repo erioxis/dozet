@@ -3,11 +3,12 @@ INC_SERVER()
 ENT.Damage = 11
 
 function ENT:Initialize()
-	self.DeathTime = CurTime() + 30
+	self.DeathTime = CurTime() + 1.2
 
 	self:DrawShadow(false)
 	self:PhysicsInitSphere(1)
 	self:SetSolid(SOLID_VPHYSICS)
+	self:SetModelScale(0.1, 3)
 
 end
 
@@ -34,23 +35,17 @@ function ENT:Explode(vHitPos, vHitNormal, eHitEntity)
 	vHitNormal = vHitNormal or Vector(0, 0, 1)
 
 	if eHitEntity:IsValidLivingPlayer() and gamemode.Call("PlayerShouldTakeDamage", eHitEntity, owner) then
-		eHitEntity:GiveStatus("slow", 22)
+		local rot = eHitEntity:GetStatus("burn")
 		eHitEntity:AddLegDamage(5)
-	end
-	if eHitEntity:IsValidLivingPlayer() and gamemode.Call("PlayerShouldTakeDamage", eHitEntity, owner) then
-		eHitEntity:GiveStatus("rot", 22)
-		eHitEntity:AddLegDamage(11)
-	end
-	if eHitEntity:IsValid() then
-		eHitEntity:PoisonDamage(self.Damage, owner, self)
+		eHitEntity:TakeSpecialDamage((self.ProjDamage or 3) / (eHitEntity:WaterLevel() == 0 and 1 or eHitEntity:WaterLevel()),DMG_BURN, owner, owner:GetActiveWeapon(), vHitPos)
+		if (rot) then 
+			eHitEntity:AddBurn(self:GetOwner(), rot.DieTime - CurTime() + 1)
+		end
+		if (not rot) then 
+			eHitEntity:AddBurn(self:GetOwner(), 1)
+		end
 	end
 
-
-
-	local effectdata = EffectData()
-		effectdata:SetOrigin(vHitPos)
-		effectdata:SetNormal(vHitNormal)
-	util.Effect("hit_flesh", effectdata)
 end
 
 

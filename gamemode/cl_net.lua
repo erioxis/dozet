@@ -230,6 +230,26 @@ net.Receive("zs_boss_spawned", function(length)
 		MySelf:EmitSound(string.format("npc/zombie_poison/pz_alert%d.wav", math.random(1, 2)), 0, math.random(95, 105))
 	end
 end)
+net.Receive("zs_boss_spawned_merge", function(length)
+	local ent = net.ReadEntity()
+	local classindex = net.ReadUInt(8)
+	local ent2 = net.ReadEntity()
+	local classtbl = GAMEMODE.ZombieClasses[classindex]
+	local ki = {killicon = classtbl.SWEP}
+	local kid = {killicon = "default"}
+
+	if ent == MySelf and ent:IsValid() then
+		GAMEMODE:CenterNotify(ki, " ", COLOR_RED, translate.Format("you_are_x", translate.Get(classtbl.TranslationName)), ki)
+	elseif ent:IsValid() and P_Team(MySelf) == TEAM_UNDEAD then
+		GAMEMODE:CenterNotify(ki, " ", COLOR_RED, translate.Format("x_has_transed_as_y", ent:Name(), ent2:Name(),translate.Get(classtbl.TranslationName)), ki)
+	else
+		GAMEMODE:CenterNotify(kid, " ", COLOR_RED, translate.Get("x_has_transed"), kid)
+	end
+
+	if MySelf:IsValid() then
+		MySelf:EmitSound(string.format("npc/zombie_poison/pz_alert%d.wav", math.random(1, 2)), 0, math.random(95, 105))
+	end
+end)
 net.Receive("zs_demiboss_spawned", function(length)
 	local ent = net.ReadEntity()
 	local classindex = net.ReadUInt(8)

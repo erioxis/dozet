@@ -10,7 +10,7 @@ function ENT:Initialize()
 	self:SetModelScale(0.3, 0)
 	self:SetupGenericProjectile(self.Gravity)
 
-	self:Fire("kill", "", 30)
+	self:Fire("kill", "", 3)
 
 	if self:GetSeeked():IsValidLivingHuman() and self:GetOwner():IsValidLivingHuman() then
 		local owner = self:GetOwner()
@@ -61,6 +61,21 @@ function ENT:DoRefund(owner)
 end
 
 function ENT:AttachToPlayer(vHitPos, eHitEntity)
+	local owner = self:GetOwner()
+	if owner:IsValid() and owner:IsSkillActive(SKILL_PHIK) then
+		self:Remove()
+		local source = self:ProjectileDamageSource()
+		for _, pl in pairs(ents.FindInSphere(self:GetPos(), 77)) do
+			if WorldVisible(self:LocalToWorld(Vector(0, 0, 30)), pl:NearestPoint(self:LocalToWorld(Vector(0, 0, 30)))) then
+				if pl:IsValidLivingZombie() then
+					pl:TakeSpecialDamage(self.Heal * 6, DMG_DIRECT,owner, self:GetOwner():GetActiveWeapon())
+					pl:PoisonDamage(33, owner, self)
+				elseif	pl:IsValidLivingHuman() then
+					owner:HealPlayer(pl, self.Heal * 0.3)
+				end
+			end
+		end
+	end
 	self:AddEFlags(EFL_SETTING_UP_BONES)
 
 	local followed = false
@@ -84,7 +99,7 @@ function ENT:Hit(vHitPos, vHitNormal, eHitEntity, vOldVelocity)
 
 	self:SetHitTime(CurTime())
 
-	self:Fire("kill", "", 10)
+	self:Fire("kill", "", 3)
 
 	local owner = self:GetOwner()
 	if not owner:IsValid() then owner = self end
@@ -103,13 +118,13 @@ function ENT:Hit(vHitPos, vHitNormal, eHitEntity, vOldVelocity)
 		if eHitEntity:IsPlayer() and eHitEntity:Team() ~= TEAM_UNDEAD then
 			local ehithp, ehitmaxhp = eHitEntity:Health(), eHitEntity:GetMaxHealth()
 
-			if eHitEntity:IsSkillActive(SKILL_D_FRAIL) or eHitEntity:IsSkillActive(SKILL_ABUSE) and ehithp >= ehitmaxhp * 0.25 then
+			if eHitEntity:IsSkillActive(SKILL_D_FRAIL) and ehithp >= ehitmaxhp * 0.33 or eHitEntity:IsSkillActive(SKILL_ABUSE) and ehithp >= ehitmaxhp * 0.25 then
 				owner:CenterNotify(COLOR_RED, translate.Format("frail_healdart_warning", eHitEntity:GetName()))
 				self:EmitSound("buttons/button8.wav", 70, math.random(115,128))
 				self:DoRefund(owner)
 			elseif not (owner:IsSkillActive(SKILL_RECLAIMSOL) and ehithp >= ehitmaxhp) then
 				eHitEntity:GiveStatus("healdartboost", self.BuffDuration or 10)
-				owner:HealPlayer(eHitEntity, self.Heal)
+				owner:HealPlayer(eHitEntity, self.Heal * (owner:IsSkillActive(SKILL_PHIK) and 0.5 or 1))
 			else
 				self:DoRefund(owner)
 			end
@@ -121,7 +136,6 @@ function ENT:Hit(vHitPos, vHitNormal, eHitEntity, vOldVelocity)
 	end
 
 	self:SetAngles(vOldVelocity:Angle())
-
 	local effectdata = EffectData()
 		effectdata:SetOrigin(vHitPos)
 		effectdata:SetNormal(vHitNormal)
@@ -139,4 +153,9 @@ function ENT:PhysicsCollide(data, phys)
 	end
 
 	self:NextThink(CurTime())
+end
+function ENT:OnRemove()
+	local owner = self:GetOwner()
+	if !owner then owner = self end
+
 end

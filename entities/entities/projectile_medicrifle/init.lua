@@ -6,10 +6,41 @@ ENT.Gravity = false
 
 function ENT:Hit(vHitPos, vHitNormal, eHitEntity, vOldVelocity)
 	if self:GetHitTime() ~= 0 then return end
+	local owner = self:GetOwner()
+	if owner:IsValid() and owner:IsSkillActive(SKILL_PHIK) then
+		self:Remove()
+		local source = self:ProjectileDamageSource()
+		for _, pl in pairs(ents.FindInSphere(self:GetPos(), 77)) do
+			if WorldVisible(self:LocalToWorld(Vector(0, 0, 30)), pl:NearestPoint(self:LocalToWorld(Vector(0, 0, 30)))) then
+				if pl:IsValidLivingZombie() then
+					local alt = self:GetDTBool(0)
+					pl:TakeSpecialDamage(self.Heal * 12, DMG_DIRECT,owner, self:GetOwner():GetActiveWeapon())
+					pl:PoisonDamage(12, owner, self)
+					local status = pl:GiveStatus(alt and "zombiestrdebuff" or "zombiedartdebuff")
+					status.DieTime = CurTime() + (self.BuffDuration or 10)
+					status.Applier = owner
+				elseif	pl:IsValidLivingHuman() then
+					local alt = self:GetDTBool(0)
+					local strstatus = pl:GiveStatus(alt and "strengthdartboost" or "medrifledefboost", (alt and 1 or 2) * (self.BuffDuration or 10))
+					strstatus.Applier = owner
+					owner:HealPlayer(pl, self.Heal * 0.3)
+					local txt = alt and translate.Get("buff_srifle") or translate.Get("buff_mrifle")
+						net.Start("zs_buffby")
+						net.WriteEntity(owner)
+						net.WriteString(txt)
+					net.Send(pl)
 
+					net.Start("zs_buffwith")
+						net.WriteEntity(pl)
+						net.WriteString(txt)
+					net.Send(owner)
+				end
+			end
+		end
+	end
 	self:SetHitTime(CurTime())
 
-	self:Fire("kill", "", 10)
+	self:Fire("kill", "", 3)
 
 	local owner = self:GetOwner()
 	if not owner:IsValid() then owner = self end
@@ -54,7 +85,7 @@ function ENT:Hit(vHitPos, vHitNormal, eHitEntity, vOldVelocity)
 
 					owner:HealPlayer(eHitEntity, self.Heal)
 
-					local txt = alt and "Strength Rifle" or "Medical Rifle"
+					local txt = alt and translate.Get("buff_srifle") or translate.Get("buff_mrifle")
 
 					net.Start("zs_buffby")
 						net.WriteEntity(owner)

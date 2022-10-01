@@ -1991,7 +1991,7 @@ function GM:_PrePlayerDraw(pl)
 
 	if self.m_ZombieVision and myteam == TEAM_UNDEAD and theirteam == TEAM_HUMAN then
 		local dist = pl:GetPos():DistToSqr(EyePos())
-		if dist <= pl:GetAuraRangeSqr() and (not pl:GetDTBool(DT_PLAYER_BOOL_NECRO) or dist >= 27500) then
+		if dist <= pl:GetAuraRangeSqr() and (not pl:GetDTBool(DT_PLAYER_BOOL_NECRO) or dist >= 27500) and not pl:IsSkillActive(SKILL_INVISIBLE_MAN) then
 			undo = true
 			local healthfrac = pl:Health() / pl:GetMaxHealth()
 

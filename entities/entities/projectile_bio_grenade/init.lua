@@ -50,9 +50,11 @@ function ENT:Explode(hitpos, hitnormal, hitent)
 	if owner:IsValidLivingHuman() then
 		local source = self:ProjectileDamageSource()
 		for _, pl in pairs(ents.FindInSphere(hitpos, 138)) do
-			if pl:IsValidLivingZombie() then
-				pl:TakeDamage(self.ProjDamage or 99, self:GetOwner(), self:GetOwner():GetActiveWeapon())
-				pl:PoisonDamage(4, owner, self)
+			if WorldVisible(self:LocalToWorld(Vector(0, 0, 30)), pl:NearestPoint(self:LocalToWorld(Vector(0, 0, 30)))) then
+				if pl:IsValidLivingZombie() then
+					pl:TakeDamage(self.ProjDamage or 99, self:GetOwner(), self:GetOwner():GetActiveWeapon())
+					pl:PoisonDamage(4, owner, self)
+				end
 			end
 		end
 	end

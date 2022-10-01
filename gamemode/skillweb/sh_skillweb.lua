@@ -43,7 +43,17 @@ end
 function GM:SkillCanUnlock(pl, skillid, skilllist)
 	local skill = self.Skills[skillid]
 	if skill then
+		if skill.Amulet then
+			return true
+		end
 		if skill.RemortLevel and pl:GetZSRemortLevel() < skill.RemortLevel then
+			return false
+		end
+
+		if skill.LevelReq and pl:GetZSLevel() < skill.LevelReq then
+			return false
+		end
+		if skill.RemortReq and pl:GetZSRemortLevel() < skill.RemortReq then
 			return false
 		end
 
@@ -247,7 +257,7 @@ function meta:GetZSXP()
 end
 
 function meta:GetZSSPUsed()
-	return #self:GetUnlockedSkills() + (#self:UpgradesSkill() or 0)
+	return #self:GetUnlockedSkills() + (#self:UpgradesSkill() or 0) 
 end
 
 function meta:GetZSSPRemaining()
@@ -255,7 +265,17 @@ function meta:GetZSSPRemaining()
 end
 
 function meta:GetZSSPTotal()
-	return self:GetZSLevel() + self:GetZSRemortLevel() + (self.SkillPoints or 0)
+	local skillmodifiers = {}
+	local gm_modifiers = GAMEMODE.SkillModifiers
+	for skillid in pairs(table.ToAssoc(self:GetDesiredActiveSkills())) do
+		local modifiers = gm_modifiers[skillid]
+		if modifiers then
+			for modid, amount in pairs(modifiers) do
+				skillmodifiers[modid] = (skillmodifiers[modid] or 0) + amount
+			end
+		end
+	end
+	return self:GetZSLevel() + self:GetZSRemortLevel() + (skillmodifiers[108] or 0)
 end
 
 function meta:GetDesiredActiveSkills()

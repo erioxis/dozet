@@ -96,6 +96,12 @@ function meta:ProcessDamage(dmginfo)
 			if attacker:IsSkillActive(SKILL_VAMPIRISM) and math.random(1,4 * (wep.Primary.NumShots or 1)) == 1 then
 				attacker:SetHealth(math.min(attacker:GetMaxHealth(), attacker:Health() + attacker:GetMaxHealth() * 0.11))
 			end
+			if attacker:IsSkillActive(SKILL_INF_POWER) then
+				dmginfo:ScaleDamage(0.5 + #attacker:GetUnlockedSkills() * 0.05)
+			end
+			if attacker:IsSkillActive(SKILL_AMULET_2) and ( 16>attacker:Health() or attacker:Health() <= attacker:GetMaxHealth() * 0.1 )then
+				dmginfo:ScaleDamage(2)
+			end
 			if damage >= 10000 then
 				attacker:GiveAchievement("opm")
 			end
@@ -122,7 +128,7 @@ function meta:ProcessDamage(dmginfo)
 				local damage = dmginfo:GetDamage()
 				if damage > 0 then
 		
-					local ratio = 0.9
+					local ratio = 0.25
 					local absorb = math.min(self:GetZArmor(), damage * ratio)
 					dmginfo:SetDamage(damage - absorb)
 					self:SetZArmor(self:GetZArmor() - absorb)
@@ -198,6 +204,9 @@ function meta:ProcessDamage(dmginfo)
 	if self:IsSkillActive(SKILL_BLESSEDROD) and dmginfo:GetDamage() >= 30 then
 		dmginfo:SetDamage(dmginfo:GetDamage() - 12)
 	end
+	if (((self:GetZSRemortLevel() / 4) or 0) + self.AmuletPiece) < 0 then
+		dmginfo:ScaleDamage(2 + ((self:GetZSRemortLevel() / 4) - self.AmuletPiece))
+	end
 
     truedogder = 30 - (self:GetWalkSpeed() / 15)
 	rngdogde = math.max(0,math.random(1,math.max(truedogder,2)))
@@ -225,11 +234,11 @@ function meta:ProcessDamage(dmginfo)
 		net.Send(self)
 		self.HolyMantle = self.HolyMantle - 1
 		self:GiveStatus("hshield", 3)
-		timer.Simple(0.005,function()
+		timer.Simple(0,function()
 			self:GodEnable()
 			end )
 			timer.Simple(3,function()
-				self:GodDisable()
+				if self:IsValid() then self:GodDisable() end
 			end )
 			self:GiveAchievementProgress("godhelp", 1)
 
@@ -341,7 +350,15 @@ function meta:ProcessDamage(dmginfo)
 					end
 				end
 			end
-
+			local amuletrng = math.random(0, math.max(1,10 / (self.CarefullMelody_DMG *0.5)))
+			if self:IsSkillActive(SKILL_AMULET_1) and amuletrng == 1 then
+				dmginfo:SetDamage(0)
+				net.Start("zs_damageblock")
+				net.Send(self)
+				self.CarefullMelody_DMG = 0
+			elseif self:IsSkillActive(SKILL_AMULET_1) and amuletrng ~= 1 then
+				self.CarefullMelody_DMG = self.CarefullMelody_DMG + 1
+			end
 			if self:GetStatus("sigildef") then
 				dmginfo:ScaleDamage(0.44)
 			end
@@ -519,13 +536,16 @@ function meta:ProcessDamage(dmginfo)
 					self.LastBleakSoul = CurTime()
 					self.BleakSoulMessage = nil
 				end
-				if self:HasTrinket("adrenaline") and (not self.LastBleakSoul or self.LastBleakSoul + 60 < CurTime()) then
+				if self:HasTrinket("adrenaline") then
 					local boost = self:GiveStatus("adrenalineamp", 3)
 					self:GiveStatus("strengthdartboost", 3)
-					self:GiveStatus("speed", 3)
+					local boost2 = self:GiveStatus("speed", 3)
 					
 					if boost and boost:IsValid() then
 						boost:SetSpeed(55)
+					end
+					if boost2 and boost2:IsValid() then
+						boost2:SetSpeed(95)
 					end
 				end
 				if self:IsSkillActive(SKILL_BLOODLOST) then
@@ -634,7 +654,7 @@ function meta:ProcessDamage(dmginfo)
 
 				if myteam == TEAM_UNDEAD and otherteam == TEAM_HUMAN then
 					attacker:AddLifeHumanDamage(absorb)
-					attacker:AddTokens(absorb)
+					attacker:AddTokens(math.Round(absorb))
 				end
 			end
 
@@ -961,6 +981,7 @@ end
 
 function meta:AddRot(attacker, count)
 	local status = self:GiveStatus("rot", count)
+	status.Damager = attacker
 end
 function meta:AddBloodlust(attacker, count)
 	local status = self:GiveStatus("strengthdartboost", count)
@@ -968,6 +989,7 @@ end
 function meta:AddBurn(attacker, count)
 
 	local status = self:GiveStatus("burn", count)
+	status.Damager = attacker
 end
 
 function meta:AddBleedDamage(damage, attacker)
@@ -1706,6 +1728,9 @@ function meta:DoHulls(classid, teamid)
 			self.NoCollideAll = classtab.NoCollideAll or (classtab.ModelScale or 1) ~= DEFAULT_MODELSCALE
 			--self.NoCollideInside = classtab.NoCollideInside or (classtab.ModelScale or 1) ~= DEFAULT_MODELSCALE
 			self.AllowTeamDamage = classtab.AllowTeamDamage
+			self.CanMerge = classtab.CanMerge
+			self.BaraCat = classtab.BaraCat
+			self.MergePiece1 = classtab.MergePiece1
 			self.NeverAlive = classtab.NeverAlive
 			self.KnockbackScale = classtab.KnockbackScale
 			local phys = self:GetPhysicsObject()
@@ -1796,8 +1821,8 @@ function meta:Redeem(silent, noequip)
 			net.WriteEntity(self)
 		net.Broadcast()
 	end
-	timer.Simple(0.3,function() self:GodEnable() end )
-	timer.Simple(15,function() self:GodDisable() end )
+	timer.Simple(0.05,function() self:GodEnable() end )
+	timer.Simple(15,function() 	if self:IsValid() then self:GodDisable() end end )
 
 	gamemode.Call("PostPlayerRedeemed", self)
 end

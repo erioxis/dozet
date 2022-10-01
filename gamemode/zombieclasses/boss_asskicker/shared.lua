@@ -19,11 +19,14 @@ CLASS.Health = 1560
 CLASS.Speed = 340
 CLASS.JumpPower = 910
 
+CLASS.CanMerge = true 
 
 CLASS.BaraCat = true
 
 CLASS.NoFallDamage = true
 CLASS.NoFallSlowdown = true
+
+CLASS.CanFeignDeath = false
 
 CLASS.ModelScale = 1.32
 CLASS.Hull = {Vector(-16, -16, 0), Vector(16, 16, 32)}

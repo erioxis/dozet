@@ -101,6 +101,7 @@ LANGUAGE.sigildanger_6 = "Wave 6 or higher is very danger if you not near sigil"
 LANGUAGE.skill_add_bloodarmor = "Blood Armor"
 LANGUAGE.skill_add_worth = "Worth"
 LANGUAGE.skill_add_health = "Health"
+LANGUAGE.skill_add_amulet = "Amulet Cells"
 LANGUAGE.skill_add_speed = "Speed"
 -- Options|||
 LANGUAGE.op_movroll = "Enable movement view roll"
@@ -972,6 +973,13 @@ LANGUAGE.scrap_for_surviving						= "You've gained %d scrap for surviving."
 LANGUAGE.you_are_x									= "You are %s!"
 LANGUAGE.x_has_risen_as_y							= "%s has risen as %s!!"
 LANGUAGE.x_has_risen								= "A boss zombie has risen!"
+
+LANGUAGE.ach_trans							= "[ZS] Player %s (%s) earned achievement %s (%s)"
+
+
+LANGUAGE.x_has_transed_as_y							= "%s and %s has merged as %s!!"
+LANGUAGE.x_has_transed								= "A boss zombie has merged!"
+
 LANGUAGE.x_has_risen_demi								= "Demi-boss zombie has risen!"
 LANGUAGE.x_has_been_slain_as_y						= "%s has been slain as %s!"
 LANGUAGE.cant_use_worth_anymore						= "You can't use the Worth menu any more!"
@@ -1397,6 +1405,15 @@ LANGUAGE.luck = " luck\n"
 LANGUAGE.xpmul = " XP multiplier\n"
 LANGUAGE.knockdown_r = " Knockdown speed recovery multiplier\n"
 LANGUAGE.spoint = " Skill points!\n"
+--Амулет
+LANGUAGE.skill_amulet_1 = "AMULET:Carefree Melody"
+LANGUAGE.skill_amulet_1_d1 = "Have chance to block damage,on every damage taken chance increase\nCOST 3 AMULET CELLS"
+LANGUAGE.skill_amulet_2 = "AMULET:Fury of the Fallen"
+LANGUAGE.skill_amulet_2_d1 = "x2 damage if hp lower 15 or lower 10% Max Health\nCOST 4 AMULET CELLS"
+LANGUAGE.skill_amulet_3 = "AMULET:Worth Trade"
+LANGUAGE.skill_amulet_3_d1 = "Take 3 skill points\nGIVE 3 AMULET CELLS"
+LANGUAGE.skill_amulet_4 = "AMULET:Focus"
+LANGUAGE.skill_amulet_4_d1 = "Press E For Heal 10% health(Cost 33% Of blood armor)\nCOST 3 AMULET CELLS"
 --free skill
 LANGUAGE.skill_freeskill = "Free SP"
 --torment
@@ -1691,6 +1708,9 @@ LANGUAGE.skill_later_d2 = "If HOLLOW more than 800 you take 500 damage\nImmune t
 LANGUAGE.skill_holymantle = "Holy mantle"
 LANGUAGE.skill_holymantle_d1 = "Absorb damage every 30 seconds\nThan higher luck - faster reloading\nWith each wave,the Holy Mantle recharge rate slows down"
 --SKILLS ON MEDICAL
+LANGUAGE.skill_phik = "Boom-darts"
+LANGUAGE.skill_phik_d1 = "On hit, darts explose with splash heal and damage\n"
+LANGUAGE.skill_phik_d2 = "-50% Dart effectivness\n"
 LANGUAGE.skill_premium = "Medical Premium"
 LANGUAGE.skill_premium_d1 = "You take special trinket for every 1800 healed hp\n"
 LANGUAGE.skill_premium_d2 = "You can't heal yourself with medical kit"
@@ -2096,6 +2116,8 @@ LANGUAGE.demibosses = "Demi-bosses "
 
 LANGUAGE.uleft = " Uses Left"
 --MAINMENU
+LANGUAGE.pe_another = "Stats"
+
 LANGUAGE.models_changed_to = "You've changed your desired player model to "
 LANGUAGE.mm_player_m_select = "Player model selection"
 LANGUAGE.mm_player_color = "Player Color"
@@ -2180,3 +2202,50 @@ LANGUAGE.ammo_grenades = "Grenades"
 LANGUAGE.ammo_molotovs = "Molotovs"
 LANGUAGE.ammo_medicalsupplies = "Medical Supplies"
 LANGUAGE.ammo_pistol = "Pistol"
+
+LANGUAGE.buff_mrifle = "Medical Rifle"
+LANGUAGE.buff_srifle = "Strength Rifle"
+
+LANGUAGE.buff_mdart = "Defence Shot Gun"
+LANGUAGE.buff_bdart = "Strength Shot Gun"
+
+LANGUAGE.s_deact = " deactivated."
+LANGUAGE.s_act = " activated."
+LANGUAGE.s_unl_act = " unlocked and activated!"
+
+LANGUAGE.s_need_l = "Need Level: "
+LANGUAGE.s_need_r = "Need Remort: "
+LANGUAGE.s_alw_act = "Always Active"
+
+LANGUAGE.skill_quepro = "Que Pro"
+
+LANGUAGE.trg_bdarmor = "BLOOD ARMOR: "
+LANGUAGE.trg_frail = "(FRAIL)"
+LANGUAGE.trg_lastabuse = "(LAST ABUSE)"
+LANGUAGE.trg_poison = "(POISON - "
+LANGUAGE.trg_bleed = "(BLEED - "
+LANGUAGE.trg_bloodlust = "(BLOODLUST)"
+LANGUAGE.trg_rot = "(ROTTEN)"
+LANGUAGE.trg_zarmor = "ZOMBIE ARMOR: "
+
+LANGUAGE.trg_r_lvl = "LVL %d R.LVL %d"
+LANGUAGE.trg_lvl = "LVL "
+
+LANGUAGE.trg_car = "Carrying [%s]"
+
+LANGUAGE.hud_remort = " Remort "
+
+LANGUAGE.hud_xp = " XP"
+
+LANGUAGE.hud_sp = " SP"
+
+LANGUAGE.hud_uu_sp = "Unused skill points: "
+
+LANGUAGE.hud_r_lvl = "Level %d "
+LANGUAGE.hud_lvl_max = "Level MAX"
+
+LANGUAGE.dosei_inf = "DOSEI INFECTION: "
+
+LANGUAGE.sboard_points_x_score_x_dps_x = "Points: %d Score: %d DPS: %d "
+
+LANGUAGE.on_dismantle_give = "\nOn dismantle give: "

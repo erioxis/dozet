@@ -1354,7 +1354,9 @@ function GM:Think()
 					
 				end
 				if pl:IsSkillActive(SKILL_GIGACHAD) and not self.ObjectiveMap then
-					 pl:SetModelScale(math.Clamp(math.min(math.max(0.5, pl:GetMaxHealth() * 0.01),2.5) * pl.ScaleModel,0.2, 5))
+					pl:SetModelScale(math.Clamp(math.min(math.max(0.5, pl:GetMaxHealth() * 0.01),2.5) * pl.ScaleModel,0.2, 5))
+					pl:SetViewOffset(Vector(0, 0, 64 * pl:GetModelScale()))
+					pl:SetViewOffsetDucked(Vector(0, 0, 32 * pl:GetModelScale()))
 				end
 				local cursed5 = pl:GetStatus("hollowing")
 				if pl.MasteryHollowing > 800 and pl:IsSkillActive(SKILL_UPLOAD) then
@@ -2560,6 +2562,9 @@ function GM:PlayerInitialSpawnRound(pl)
 	pl.NextPremium = 0
 	pl.NextDamage = 0
 	pl.NextStuckThink = 0
+
+	pl.CarefullMelody_DMG = 0
+	
 	pl.StuckedInProp = nil
 
 	pl.CanBuy = nil
@@ -2580,6 +2585,8 @@ function GM:PlayerInitialSpawnRound(pl)
 
 	pl.LegDamage = 0
 	pl.ArmDamage = 0
+
+	pl.NextTransThink = 0
 
 	pl.DamageDealt = {}
 	pl.DamageDealt[TEAM_UNDEAD] = 0
@@ -2628,6 +2635,7 @@ function GM:PlayerInitialSpawnRound(pl)
 	pl.m_HealthRegen = nil
 	pl.m_EasySpeed = nil
 	pl.m_Rot_Claws = nil
+	pl.LastHealedFocus = 0
 
 	-- Boss Mutations (Z-Shop)
 	pl.m_Evo = nil
@@ -2645,57 +2653,58 @@ function GM:PlayerInitialSpawnRound(pl)
 	pl.ClanShooter = nil
 	pl.ClanAnsableRevolution = nil
     local avanguardtbl ={
-		"STEAM_0:1:457010084",
-		"STEAM_1:0:560748176",
-		"STEAM_0:1:38300618",
-		"STEAM_1:0:445794125",
-		"STEAM_0:0:517617005",
-		"STEAM_0:1:185816168",
-		"STEAM_0:0:582016836",
-		"STEAM_0:1:520384437",
-		"STEAM_1:0:559882391",
-		"STEAM_1:1:632720191",
-		"STEAM_0:1:527341424",
-		"STEAM_0:0:97577063",
-		"STEAM_0:1:461661780"
+		"76561198874285897",
+		"76561199081762080",
+		"76561198036866965",
+		"76561198851853978",
+		"76561198995499738",
+		"76561198331898065",
+		"76561199124299400",
+		"76561199001034603",
+		"76561199080030510",
+		"76561199225706111",
+		"76561199014948577",
+		"76561198155419854",
+		"76561198883589289",
+		"76561198956039967"
 
 	}
 	local shootertbl = {
-		"STEAM_1:1:497887119"
+		"76561198956039967"
 	}
 	local michtbl ={
 		"STEAM_0:0:103817403",
 		"STEAM_0:1:434267757"
 	}
 	local queprotbl ={
-		"STEAM_0:1:112691788",
-		"STEAM_0:0:426833142",
-		"STEAM_0:0:28419994",
-		"STEAM_1:0:437200704"
+		"76561198185649305",
+		"76561198813932012",
+		"76561198017105716",
+		"76561198834667136"
 	}
 	local ansamblrevotbl ={
-		"STEAM_0:0:171175767",
-		"STEAM_0:1:63033987"
+		"76561198302617262",
+		"76561198086333703"
 	}
 	self:LoadVault(pl)
 
 	local uniqueid = pl:UniqueID()
-	if pl:SteamID() == "STEAM_0:1:63033987" then
+	if pl:SteamID64() == "76561198086333703" then
 		pl:SetPoints(pl:GetPoints() + 10)
 	end
-	if table.HasValue(avanguardtbl, pl:SteamID()) then 
+	if table.HasValue(avanguardtbl, pl:SteamID64()) then 
 		pl.ClanAvanguard = true
 	end
-	if table.HasValue(michtbl, pl:SteamID()) then 
+	--[[if table.HasValue(michtbl, pl:SteamID64()) then 
 		pl.ClanMich = true
-	end
-	if table.HasValue(queprotbl, pl:SteamID()) then 
+	end]]
+	if table.HasValue(queprotbl, pl:SteamID64()) then 
 		pl.ClanQuePro = true
 	end
-	if table.HasValue(ansamblrevotbl, pl:SteamID()) then 
+	if table.HasValue(ansamblrevotbl, pl:SteamID64()) then 
 		pl.ClanAnsableRevolution = true
 	end
-	if table.HasValue(shootertbl, pl:SteamID()) then 
+	if table.HasValue(shootertbl, pl:SteamID64()) then 
 		pl.ClanShooter = true
 	end
 	
@@ -3839,7 +3848,31 @@ function GM:WeaponDeployed(pl, wep)
 		timer.Create(timername, (0.333 / (pl.DeploySpeedMultiplier or 1)) * unbound, 1, function() if pl:IsValid() then pl:SetHumanSpeed(speed) end end)
 	end
 end
+function GM:Merge(bossplayer, entmerge)
 
+	local curclass = bossplayer.DeathClass or bossplayer:GetZombieClass()
+	bossplayer:GiveAchievement("gurrenlagann")
+	entmerge:GiveAchievement("gurrenlagann")
+	entmerge:KillSilent()
+	entmerge:SetZombieClass(1)
+	entmerge:DoHulls(1)
+	entmerge.DeathClass = nil
+	entmerge:UnSpectateAndSpawn()
+	bossplayer:KillSilent()
+	bossplayer:SetZombieClass(12)
+	bossplayer:DoHulls(12, TEAM_UNDEAD)
+	bossplayer.DeathClass = nil
+	bossplayer:UnSpectateAndSpawn()
+	bossplayer.DeathClass = curclass
+	bossplayer.BossHealRemaining = 750
+	if not silent then
+		net.Start("zs_boss_spawned_merge")
+			net.WriteEntity(bossplayer)
+			net.WriteUInt(12, 8)
+			net.WriteEntity(entmerge)
+		net.Broadcast()
+	end
+end
 function GM:KeyPress(pl, key)
 	if key == IN_USE then
 		if pl:Team() == TEAM_HUMAN and pl:Alive() then
@@ -3848,6 +3881,17 @@ function GM:KeyPress(pl, key)
 				pl.status_human_holding:RemoveNextFrame()
 			else
 				self:TryHumanPickup(pl, pl:TraceLine(64).Entity)
+			end
+			if !pl:IsCarrying() and pl:IsSkillActive(SKILL_AMULET_4) and pl.LastHealedFocus <= CurTime() and pl.MaxBloodArmor * 0.3 <= pl:GetBloodArmor() then
+				pl:SetBloodArmor(math.min((pl.MaxBloodArmor * 0.3) + pl:GetBloodArmor() * 0.3, pl:GetBloodArmor() * 0.3))
+				pl:EmitSound("items/smallmedkit1.wav", 50)
+				pl:SetHealth(math.min(pl:GetMaxHealth() * 0.1 + pl:Health(), pl:GetMaxHealth()))
+				pl.LastHealedFocus = CurTime() + 1
+				for _, pl3 in pairs(ents.FindInSphere(owner:GetPos(), 128 * self:GetModelScale())) do
+					if pl3:IsValidLivingHuman() then
+						pl:HealPlayer(pl3, pl:Health() * 0.1)
+					end
+				end
 			end
 		end
 		
@@ -3907,15 +3951,25 @@ function GM:KeyPress(pl, key)
 		end
 
 	end
-	if pl:KeyPressed(IN_SPEED) and key == IN_SPEED and not pl:IsCarrying() and pl:Team() ~= TEAM_UNDEAD and pl.NextDash <= CurTime() and pl.ClanAvanguard then 
+	if pl:KeyPressed(IN_SPEED) and key == IN_SPEED and not pl:IsCarrying() and pl:Team() ~= TEAM_UNDEAD and pl.NextDash <= CurTime() and pl.ClanAvanguard and !pl.ClanShooter then 
 			local pos = pl:GetPos()
-			local pushvel = pl:GetEyeTrace().Normal * 0 + (pl:GetAngles():Forward()*(pl:OnGround() and 1500 or 500))
+			local pushvel = pl:GetEyeTrace().Normal * 0 + (pl:GetAngles():Forward()*(pl:OnGround() and 800 or 200))
 			pl:SetLocalVelocity( pushvel)
-			pl.NextDash = CurTime() + 1.6
+			pl.NextDash = CurTime() + 4
 		
 	end 
-	if pl:KeyPressed(IN_SPEED) and key == IN_SPEED and pl:Team() == TEAM_UNDEAD and pl.CanMerge then 
-		self:Merge(pl, ent)
+	if key == IN_SPEED and pl:Team() == TEAM_UNDEAD and pl.CanMerge then 
+		local ent1 = NULL
+		for _, ent in pairs(ents.FindInSphere(pl:GetPos(), 256)) do
+			if ent:IsValidLivingZombie() and ent.MergePiece1 and !ent.CanMerge and ent ~= pl then
+				ent1 = ent
+				break
+			end
+		end
+		if ent1:IsValid() and pl.NextTransThink <= CurTime() and ent1:KeyDown(IN_USE) and ent1:KeyDown(IN_USE) then
+			self:Merge(ent1, pl)
+			pl.NextTransThink = CurTime() + 2
+		end
 	end
 end
 
@@ -5265,7 +5319,7 @@ net.Receive("zs_changeclass", function(len, sender)
 	local classname = GAMEMODE:GetBestAvailableZombieClass(net.ReadString())
 	local suicide = net.ReadBool()
 	local classtab = GAMEMODE.ZombieClasses[classname]
-	if not classtab or classtab.Boss or classtab.Disabled or classtab.Hidden and not (classtab.CanUse and classtab:CanUse(sender)) then return end
+	if not classtab or classtab.Boss or classtab.DemiBoss or classtab.Disabled or classtab.Hidden and not (classtab.CanUse and classtab:CanUse(sender)) then return end
 
 	if not gamemode.Call("IsClassUnlocked", classname) then
 		sender:CenterNotify(COLOR_RED, translate.ClientFormat(sender, "class_not_unlocked_will_be_unlocked_x", classtab.Wave))

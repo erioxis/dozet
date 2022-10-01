@@ -349,12 +349,20 @@ SKILL_PREMIUM = 328
 SKILL_CREDIT = 329
 SKILL_POGO = 330
 SKILL_LOX = 331
+SKILL_AMULET_1 = 332
+SKILL_INVISIBLE_MAN = 333
+SKILL_INF_POWER = 334
+SKILL_AMULET_2 = 335
+SKILL_AMULET_3 = 336
+SKILL_PHIK = 337
+SKILL_AMULET_4 = 338
+SKILL_QUE_PRO = 339
 
 SKILLMOD_HEALTH = 1
 SKILLMOD_SPEED = 2
 SKILLMOD_WORTH = 3
 SKILLMOD_BLOODARMOR = 4
-SKILLMOD_FALLDAMAGE_RECOVERY_MUL = 5
+SKILLMOD_PIECE_OF_AMULET = 5
 SKILLMOD_FALLDAMAGE_SLOWDOWN_MUL = 6
 SKILLMOD_FOODRECOVERY_MUL = 7
 SKILLMOD_FOODEATTIME_MUL = 8
@@ -461,6 +469,8 @@ SKILLMOD_SCALEMODEL = 109
 SKILLMOD_M_DMG = 110
 SKILLMOD_M_REG = 111
 SKILLMOD_ADD_STATUS = 112
+SKILLMOD_FALLDAMAGE_RECOVERY_MUL = 113
+SKILLMOD_FIRE_DELAY = 114
 
 local GOOD = "^"..COLORID_GREEN
 local BAD = "^"..COLORID_RED
@@ -660,9 +670,9 @@ GM:AddSkill(SKILL_MEDICBOOSTER,  translate.Get("skill_boostermed"), BAD.."+33%".
 																-4,			-3,					{SKILL_D_FRAIL}, TREE_SUPPORTTREE)
 GM:AddSkill(SKILL_U_MEDICCLOUD, translate.Get("skill_u_medcloud"), GOOD..translate.Get("skill_u_medcloud_d1"),
 																0,			-2,					{SKILL_DISPERSION}, TREE_SUPPORTTREE)
+.AlwaysActive = true
 GM:AddSkill(SKILL_DUALHEAL, translate.Get("skill_dualheal"), GOOD..translate.Get("skill_dualheal_d1")..BAD..translate.Get("skill_dualheal_d2"),
 																-1,			-3,					{SKILL_U_MEDICCLOUD}, TREE_SUPPORTTREE)
-.AlwaysActive = true
 GM:AddSkill(SKILL_FOODHEALS, translate.Get("skill_fheals"), GOOD..translate.Get("skill_fheals_d1")..BAD..translate.Get("skill_fheals_d2"),
 																-2,			-4,					{SKILL_DUALHEAL}, TREE_SUPPORTTREE)
 GM:AddSkill(SKILL_SMARTTARGETING, translate.Get("skill_starget"), GOOD..translate.Get("skill_starget_d1")..BAD..translate.Get("skill_starget_d2")..BAD..translate.Get("skill_starget_d3"),
@@ -681,6 +691,8 @@ GM:AddSkill(SKILL_DISPERSION, translate.Get("skill_disp"), GOOD..translate.Get("
 																0,			-4,					{}, TREE_SUPPORTTREE)
 GM:AddSkill(SKILL_COMBOHEAL, translate.Get("skill_comboheal"), GOOD..translate.Get("skill_comboheal_d1")..BAD..translate.Get("skill_comboheal_d2"),
 																0,			-5,					{SKILL_DISPERSION}, TREE_SUPPORTTREE)
+GM:AddSkill(SKILL_PHIK, translate.Get("skill_phik"), GOOD..translate.Get("skill_phik_d1")..BAD..translate.Get("skill_phik_d2"),
+																-2,			-5,					{SKILL_COMBOHEAL}, TREE_SUPPORTTREE)
 GM:AddSkill(SKILL_FOREVERALONE, translate.Get("skill_foreveralone"), GOOD..translate.Get("skill_foreveralone_d1")..BAD..translate.Get("skill_foreveralone_d2"),
 																-1,			-6,					{SKILL_COMBOHEAL}, TREE_SUPPORTTREE)
 GM:AddSkill(SKILL_WYRDREC, translate.Get("skill_wyrdrec"), GOOD..translate.Get("skill_wyrdrec_d1")..BAD..translate.Get("skill_wyrdrec_d2"),
@@ -822,6 +834,34 @@ GM:AddSkill(SKILL_SKILLFORGODS, "SECRET I", GOOD.."You find this!Reward is free 
 GM:AddSkillModifier(SKILL_SKILLFORGODS, SKILLMOD_SPOINT, 4)
 GM:AddSkillModifier(SKILL_SECRET, SKILLMOD_SPOINT, 7)
 GM:AddSkillModifier(SKILL_SECRET2, SKILLMOD_SPOINT, 4)
+
+GM:AddSkill(SKILL_AMULET_1, translate.Get("skill_amulet_1"), GOOD.. translate.Get("skill_amulet_1_d1"),
+																-20,			-9,					{SKILL_NONE}, TREE_GUNTREE)
+.Amulet = true														
+GM:AddSkillModifier(SKILL_AMULET_1, SKILLMOD_SPOINT, 1)
+GM:AddSkillModifier(SKILL_AMULET_1, SKILLMOD_PIECE_OF_AMULET, -3)
+GM:AddSkill(SKILL_AMULET_2, translate.Get("skill_amulet_2"), GOOD.. translate.Get("skill_amulet_2_d1"),
+																-20,			-8,					{SKILL_NONE}, TREE_GUNTREE)
+.Amulet = true														
+GM:AddSkillModifier(SKILL_AMULET_2, SKILLMOD_SPOINT, 1)
+GM:AddSkillModifier(SKILL_AMULET_2, SKILLMOD_PIECE_OF_AMULET, -4)
+GM:AddSkill(SKILL_AMULET_3, translate.Get("skill_amulet_3"), BAD.. translate.Get("skill_amulet_3_d1"),
+																-20,			-10,					{SKILL_NONE}, TREE_GUNTREE)
+.Amulet = true														
+GM:AddSkillModifier(SKILL_AMULET_3, SKILLMOD_SPOINT, -3)
+GM:AddSkillModifier(SKILL_AMULET_3, SKILLMOD_PIECE_OF_AMULET, 3)
+GM:AddSkill(SKILL_AMULET_4, translate.Get("skill_amulet_4"), GOOD.. translate.Get("skill_amulet_4_d1"),
+																-20,			-12,					{SKILL_NONE}, TREE_GUNTREE)
+.Amulet = true														
+GM:AddSkillModifier(SKILL_AMULET_4, SKILLMOD_SPOINT, 1)
+GM:AddSkillModifier(SKILL_AMULET_4, SKILLMOD_PIECE_OF_AMULET, -3)
+
+
+
+GM:AddSkill(SKILL_QUE_PRO, translate.Get("skill_quepro"), GOOD.."-100%"..translate.Get("xpmul"),
+																-40,			-10,					{SKILL_NONE}, TREE_GUNTREE)
+.QuePro = true														
+
 
 GM:AddSkill(SKILL_UNSIGIL, translate.Get("skill_uncorrupt"), GOOD.."+24%"..translate.Get("r_speed")..GOOD.."+15%"..translate.Get("b_damage")..BAD.."-80%"..translate.Get("meleedamage"),
 																0,			2,					{SKILL_LEVELHEADED}, TREE_GUNTREE)
@@ -1202,8 +1242,12 @@ GM:AddSkill(SKILL_DEATH, "Morieris", PURPLE.."Better medicine\n" ..BAD.."+20% Me
 GM:AddSkill(SKILL_HELPLIFER, "Chance", PURPLE.."Can save from fatal hit\n33% Chance\nOn upgrade chance is 50%",
 										2,			-7,					{SKILL_EX2}, TREE_ANCIENTTREE,0)
 .CanUpgrade = 2
+GM:AddSkill(SKILL_INF_POWER, "Dozei Core", PURPLE.."-50% Damage.\nExtra-damage for every skills you unlocked",
+										4,			-5,					{SKILL_HELPLIFER}, TREE_ANCIENTTREE)
 GM:AddSkill(SKILL_SEEAURA, "Ancient vision", PURPLE.."You can see zombie aura",
 										2,			-8.5,					{SKILL_HELPLIFER}, TREE_ANCIENTTREE)
+GM:AddSkill(SKILL_INVISIBLE_MAN, "Anti-Vision", PURPLE.."Zombie can't see you aura",
+										2,			-9.5,					{SKILL_SEEAURA}, TREE_ANCIENTTREE)
 										SKILL_ALLPOWER = 182
 GM:AddSkillModifier(SKILL_ALLPOWER, SKILLMOD_REPAIRRATE_MUL, 0.10)		
 GM:AddSkill(SKILL_ALLPOWER, "Cunctipotens", PURPLE.."Better cades\n" ..PURPLE.."+10% Repair Mul",
@@ -1665,7 +1709,7 @@ GM:SetSkillModifierFunction(SKILLMOD_SPOINT, function(pl, amount)
 end)
 
 GM:SetSkillModifierFunction(SKILLMOD_JUMPPOWER_MUL, function(pl, amount)
-	pl.JumpPowerMul = math.Clamp(amount + (pl.ClanShooter and 1.2 or 1.0), 0.0, 10.0)
+	pl.JumpPowerMul = math.Clamp(amount + 1.0, 0.0, 10.0)
 
 	if SERVER then
 		pl:ResetJumpPower()
@@ -1879,8 +1923,14 @@ GM:SetSkillModifierFunction(SKILLMOD_PROP_CARRY_SLOW_MUL, function(pl, amount)
 	pl.PropCarrySlowMul = math.Clamp(amount + 1.0, 0.0, 1000.0)
 end)
 
+GM:SetSkillModifierFunction(SKILLMOD_PIECE_OF_AMULET, function(pl, amount)
+	pl.AmuletPiece = math.Clamp(amount, -999, 1000.0)
+end)
 GM:SetSkillModifierFunction(SKILLMOD_BLEED_SPEED_MUL, function(pl, amount)
 	pl.BleedSpeedMul = math.Clamp(amount + 1.0, 0.1, 1000.0)
+end)
+GM:SetSkillModifierFunction(SKILLMOD_FIRE_DELAY, function(pl, amount)
+	pl.M_FireDelay = math.Clamp(amount + 1.0, 0.1, 1000.0)
 end)
 
 GM:SetSkillModifierFunction(SKILLMOD_MELEE_LEG_DAMAGE_ADD, function(pl, amount)

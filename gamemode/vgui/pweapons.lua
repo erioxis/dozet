@@ -42,6 +42,9 @@ local function SetWeaponViewerSWEP(self, swep, category, comps)
 	if sweptable.NoDismantle then
 		desctext = desctext .. "\nCannot be dismantled for scrap."
 	end
+	if GAMEMODE.Breakdowns[swep] then
+		desctext = desctext ..translate.Get("on_dismantle_give")..GAMEMODE.ZSInventoryItemData[GAMEMODE.Breakdowns[swep].Result].PrintName
+	end
 
 	viewer.m_Desc:MoveBelow(viewer.m_VBG, 8)
 	viewer.m_Desc:SetFont("ZSBodyTextFont")

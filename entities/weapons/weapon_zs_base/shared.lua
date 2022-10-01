@@ -69,14 +69,8 @@ end
 
 function SWEP:PrimaryAttack()
 	if not self:CanPrimaryAttack() then return end
-	
-	if not self:GetOwner():HasTrinket("altevesoul") then
-	self:SetNextPrimaryFire(CurTime() + self:GetFireDelay())
-elseif self:GetOwner():HasTrinket("altevesoul") and self:GetOwner():Health() < 50 then
-	self:SetNextPrimaryFire(CurTime() + self:GetFireDelay() * 0.33)
-else
-	self:SetNextPrimaryFire(CurTime() + self:GetFireDelay())
-end
+	local owner = self:GetOwner()
+	self:SetNextPrimaryFire(CurTime() + self:GetFireDelay() * ( owner:HasTrinket("altevesoul") and owner:Health() < 50 and (0.33 * owner.M_FireDelay) or (1 * owner.M_FireDelay) ))
 
 	self:EmitFireSound()
 	self:TakeAmmo()
@@ -171,7 +165,7 @@ function SWEP:GetCone()
 
 	local orphic = not owner.Orphic and 1 or self:GetIronsights() and 0.9 or 1.1
 	local tiervalid = (self.Tier or 1) <= 3
-	local spreadmul = (owner.ClanShooter and self.Primary.Ammo == "pistol" and 0.15 or owner.ClanShooter and self.Primary.Ammo == "ar2" and 0.2 or ((owner.AimSpreadMul or 1) - ((tiervalid and owner:HasTrinket("refinedsub")) and 0.27 or 0)))
+	local spreadmul = ((owner.AimSpreadMul or 1) - ((tiervalid and owner:HasTrinket("refinedsub")) and 0.27 or 0))
 
 	if owner.TrueWooism then
 		return (basecone + conedelta * 0.5 ^ self.ConeRamp) * spreadmul * orphic

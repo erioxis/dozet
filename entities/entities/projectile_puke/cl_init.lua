@@ -9,7 +9,7 @@ function ENT:Initialize()
 end
 
 local colFlesh = Color(255, 255, 255, 255)
-local matFlesh = Material("decals/Yblood1")
+local matFlesh = Material("effects/fire_cloud2")
 function ENT:Draw()
 	local size = self.Size
 
@@ -23,16 +23,17 @@ function ENT:Draw()
 	local emitter = ParticleEmitter(pos)
 	emitter:SetNearClip(36, 44)
 
-	local particle = emitter:Add("decals/Yblood"..math.random(6), pos + VectorRand():GetNormalized() * math.Rand(1, 4))
+	local particle = emitter:Add("effects/fire_embers"..math.random(1,3), pos + VectorRand():GetNormalized() * math.Rand(1, 4))
 	particle:SetVelocity(VectorRand():GetNormalized() * math.Rand(1, 4))
 	particle:SetDieTime(math.Rand(0.6, 0.9))
 	particle:SetStartAlpha(255)
 	particle:SetEndAlpha(255)
-	particle:SetStartSize(size * math.Rand(0.1, 0.22))
+	particle:SetStartSize((size * math.Rand(0.1, 0.42)) * self:GetModelScale())
 	particle:SetEndSize(0)
 	particle:SetRoll(math.Rand(0, 360))
 	particle:SetRollDelta(math.Rand(-4, 4))
 	particle:SetLighting(true)
+	particle:SetColor(Color(245, 78, 49))
 
 	emitter:Finish() emitter = nil collectgarbage("step", 64)
 end

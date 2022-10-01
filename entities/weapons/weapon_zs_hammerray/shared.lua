@@ -68,20 +68,40 @@ function SWEP:PrimaryAttack()
 	if not hitent or self:GetDTEntity(10):IsValid() then return end
 	
 	if hitent:IsNailed() and SERVER then
-	local healstrength = self.HealStrength * (owner.RepairRateMul or 1)
-	local oldhealth = hitent:GetBarricadeHealth()
-	if oldhealth <= 0 or oldhealth >= hitent:GetMaxBarricadeHealth() or hitent:GetBarricadeRepairs() <= 0.01 then return end
+		local healstrength = self.HealStrength * (owner.RepairRateMul or 1)
+		local oldhealth = hitent:GetBarricadeHealth()
+		if oldhealth <= 0 or oldhealth >= hitent:GetMaxBarricadeHealth() or hitent:GetBarricadeRepairs() <= 0.01 then return end
 
-	hitent:SetBarricadeHealth(math.min(hitent:GetMaxBarricadeHealth(), hitent:GetBarricadeHealth() + math.min(hitent:GetBarricadeRepairs(), healstrength)))
-	local healed = hitent:GetBarricadeHealth() - oldhealth
-	hitent:SetBarricadeRepairs(math.max(hitent:GetBarricadeRepairs() - healed, 0))
-	self:SetDTEntity(10, hitent)
-	self:SetNextPrimaryFire(CurTime() + 1)
-gamemode.Call("PlayerRepairedObject", owner, hitent, healed, self)
+		hitent:SetBarricadeHealth(math.min(hitent:GetMaxBarricadeHealth(), hitent:GetBarricadeHealth() + math.min(hitent:GetBarricadeRepairs(), healstrength)))
+		local healed = hitent:GetBarricadeHealth() - oldhealth
+		hitent:SetBarricadeRepairs(math.max(hitent:GetBarricadeRepairs() - healed, 0))
+		self:SetDTEntity(10, hitent)
+		self:SetNextPrimaryFire(CurTime() + 1)
+		gamemode.Call("PlayerRepairedObject", owner, hitent, healed, self)
 	elseif hitent:IsNailed() and CLIENT  then
 		local healstrength = self.HealStrength * (owner.RepairRateMul or 1)
 		local oldhealth = hitent:GetBarricadeHealth()
 		if oldhealth <= 0 or oldhealth >= hitent:GetMaxBarricadeHealth() or hitent:GetBarricadeRepairs() <= 0.01 then return end
+	elseif hitent.GetObjectHealth and SERVER then
+		-- Taking the nil tr parameter for granted for now
+
+		local oldhealth = hitent:GetObjectHealth()
+		if oldhealth <= 0 or oldhealth >= hitent:GetMaxObjectHealth() or hitent.m_LastDamaged and CurTime() < hitent.m_LastDamaged + 4 then
+		else return
+		end
+
+		hitent:SetObjectHealth(math.min(hitent:GetMaxObjectHealth(), hitent:GetObjectHealth() + totalheal/2))
+		healed = hitent:GetObjectHealth() - oldhealth
+		self:SetDTEntity(10, hitent)
+		self:SetNextPrimaryFire(CurTime() + 1)
+		gamemode.Call("PlayerRepairedObject", owner, hitent, healed, self)
+		hitent:EmitSound("npc/dog/dog_servo"..math.random(7, 8)..".wav", 70, math.random(100, 105))
+
+		local effectdata = EffectData()
+			effectdata:SetOrigin(hitent:GetPos())
+			effectdata:SetNormal((self:GetPos() - hitent:GetPos()):GetNormalized())
+			effectdata:SetMagnitude(1)
+		util.Effect("nailrepaired", effectdata, true, true)
 	end
 end
 
@@ -148,7 +168,36 @@ function SWEP:CheckHealRay()
 				self:SetDTEntity(10, hitent)
 				self:SetNextPrimaryFire(CurTime() + 1)
 			gamemode.Call("PlayerRepairedObject", owner, hitent, healed, self)
-				end
+		elseif hitent.GetObjectHealth and SERVER then
+			-- Taking the nil tr parameter for granted for now
+
+	
+			local oldhealth = hitent:GetObjectHealth()
+			if !(oldhealth <= 0 or oldhealth >= hitent:GetMaxObjectHealth() or hitent.m_LastDamaged and CurTime() < hitent.m_LastDamaged + 4) then
+				return
+			end
+	
+			hitent:SetObjectHealth(math.min(hitent:GetMaxObjectHealth(), hitent:GetObjectHealth() + totalheal/2))
+			healed = hitent:GetObjectHealth() - oldhealth
+			self:SetDTEntity(10, hitent)
+			self:SetNextPrimaryFire(CurTime() + 1)
+			gamemode.Call("PlayerRepairedObject", owner, hitent, healed, self)
+			hitent:EmitSound("npc/dog/dog_servo"..math.random(7, 8)..".wav", 70, math.random(100, 105))
+			local effectdata = EffectData()
+			effectdata:SetOrigin(ent:WorldSpaceCenter())
+			effectdata:SetFlags(3)
+			effectdata:SetEntity(self)
+			effectdata:SetAttachment(1)
+		util.Effect("tracer_hammerray", effectdata)
+			local effectdata = EffectData()
+				effectdata:SetOrigin(hitent:GetPos())
+				effectdata:SetNormal((self:GetPos() - hitent:GetPos()):GetNormalized())
+				effectdata:SetMagnitude(1)
+			util.Effect("nailrepaired", effectdata, true, true)
+			self:TakeAmmo()
+			self:SetDTFloat(10, CurTime() + 0.36)
+			self:SendWeaponAnim(ACT_VM_PRIMARYATTACK)
+		end
 		end
 
 		self.ChargeSound:PlayEx(1, 70)

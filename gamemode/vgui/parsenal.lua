@@ -184,6 +184,7 @@ function GM:SupplyItemViewerDetail(viewer, sweptable, shoptbl)
 	viewer.m_Title:PerformLayout()
 
 	local desctext = sweptable.Description or ""
+	local bruh = ""
 	if not self.ZSInventoryItemData[shoptbl.SWEP] then
 		viewer.ModelPanel:SetModel(sweptable.WorldModel)
 		local mins, maxs = viewer.ModelPanel.Entity:GetRenderBounds()
@@ -192,9 +193,13 @@ function GM:SupplyItemViewerDetail(viewer, sweptable, shoptbl)
 		viewer.m_VBG:SetVisible(true)
 
 		if sweptable.NoDismantle then
-			desctext = desctext .. ""..translate.Get("nodismantled")
+			desctext = desctext ..translate.Get("nodismantled")
 		end
-
+		if GAMEMODE.Breakdowns[shoptbl.SWEP] then
+			bruh = bruh ..translate.Get("on_dismantle_give")..GAMEMODE.ZSInventoryItemData[GAMEMODE.Breakdowns[shoptbl.SWEP].Result].PrintName
+		end
+		viewer.m_Bruh:MoveBelow(viewer.m_VBG, 328)
+		viewer.m_Bruh:SetFont("ZSBodyTextFontBig")
 		viewer.m_Desc:MoveBelow(viewer.m_VBG, 8)
 		viewer.m_Desc:SetFont("ZSBodyTextFont")
 	else
@@ -203,8 +208,11 @@ function GM:SupplyItemViewerDetail(viewer, sweptable, shoptbl)
 
 		viewer.m_Desc:MoveBelow(viewer.m_Title, 20)
 		viewer.m_Desc:SetFont("ZSBodyTextFontBig")
+		viewer.m_Bruh:MoveBelow(viewer.m_Title, 20)
+		viewer.m_Bruh:SetFont("ZSBodyTextFontBig")
 	end
 	viewer.m_Desc:SetText(desctext)
+	viewer.m_Bruh:SetText(bruh)
 
 	self:ViewerStatBarUpdate(viewer, shoptbl.Category ~= ITEMCAT_GUNS and shoptbl.Category ~= ITEMCAT_MELEE, sweptable)
 
@@ -523,12 +531,12 @@ function GM:CreateItemViewerGenericElems(viewer)
 
 	local vtitle = EasyLabel(viewer, "", "ZSHUDFontSmaller", COLOR_GRAY)
 	vtitle:SetContentAlignment(8)
-	vtitle:SetSize(viewer:GetWide(), 24 * screenscale)
+	vtitle:SetSize(viewer:GetWide(), 54 * screenscale)
 	viewer.m_Title = vtitle
 
 	local vammot = EasyLabel(viewer, "", "ZSBodyTextFontBig", COLOR_GRAY)
 	vammot:SetContentAlignment(8)
-	vammot:SetSize(viewer:GetWide(), 16 * screenscale)
+	vammot:SetSize(viewer:GetWide(), 26 * screenscale)
 	vammot:MoveBelow(vtitle, 20)
 	vammot:CenterHorizontal(0.35)
 	viewer.m_AmmoType = vammot
@@ -566,6 +574,19 @@ function GM:CreateItemViewerGenericElems(viewer)
 	itemdesc:SetText("")
 	itemdesc:MoveBelow(vbg, 8)
 	viewer.m_Desc = itemdesc
+
+
+	local itemdesc2 = vgui.Create("DLabel", viewer)
+	itemdesc2:SetFont("ZSBodyTextFontBig")
+	itemdesc2:SetTextColor(COLOR_PURPLE)
+	itemdesc2:SetMultiline(true)
+	itemdesc2:SetWrap(true)
+	itemdesc2:SetAutoStretchVertical(true)
+	itemdesc2:SetWide(viewer:GetWide() - 16)
+	itemdesc2:CenterHorizontal()
+	itemdesc2:SetText("")
+	itemdesc2:MoveBelow(vbg, -16)
+	viewer.m_Bruh = itemdesc2
 
 
 	local itemstats, itemsbs, itemsvs = {}, {}, {}
@@ -658,7 +679,7 @@ function GM:CreateItemInfoViewer(frame, propertysheet, topspace, bottomspace, me
 	ammopb:SetVisible(false)
 	viewer.m_AmmoB = ammopb
 
-	namelab = EasyLabel(ammopb, ""..translate.Get("ammo"), "ZSBodyTextFontBig", COLOR_WHITE)
+	namelab = EasyLabel(ammopb, translate.Get("ammo"), "ZSBodyTextFontBig", COLOR_WHITE)
 	namelab:SetVisible(false)
 	viewer.m_AmmoL = namelab
 

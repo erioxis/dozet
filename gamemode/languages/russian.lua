@@ -85,6 +85,7 @@ LANGUAGE.sigildanger_6 = "На 6 волне или выше вы начнете 
 LANGUAGE.skill_add_bloodarmor = "Кровавая Броня"
 LANGUAGE.skill_add_worth = "Ворф"
 LANGUAGE.skill_add_health = "Здоровья"
+LANGUAGE.skill_add_amulet = "Ячеек Амулета"
 LANGUAGE.skill_add_speed = "Скорости"
 -- Настройки||
 LANGUAGE.op_movroll = "Включить движение экрана при ходьбе"
@@ -918,7 +919,9 @@ LANGUAGE.wep_r_3		= "Переделаный"
 LANGUAGE.wep_r_4		= "Смертельный"
 LANGUAGE.wep_r_5		= "Великий"
 
-
+LANGUAGE.ach_trans							= "[ZS] Игрок %s (%s) выполнил достижение %s (%s)"
+LANGUAGE.x_has_transed_as_y							= "%s и %s слились в %s!!"
+LANGUAGE.x_has_transed								= "Зомби босс слился!!"
 LANGUAGE.press_rmb_to_cycle_targets					= "Нажмите ПКМ для того чтобы сменить цель"
 LANGUAGE.press_lmb_to_spawn_on_them					= "Нажмите ЛКМ, чтобы появиться на цели"
 LANGUAGE.press_lmb_to_spawn							= "Нажмите ЛКМ чтобы появиться"
@@ -1225,7 +1228,7 @@ LANGUAGE.fist_damage = " к урону кулачным оружием\n"
 LANGUAGE.luck = " удачи\n"
 LANGUAGE.xpmul = " К получаемому опыту\n"
 LANGUAGE.knockdown_r = " к скорости вставания после падения\n"
-LANGUAGE.spoint = " Скилл поинтов\n"
+LANGUAGE.spoint = " Поинтов для прокачки\n"
 
 --free Skill
 LANGUAGE.skill_freeskill = "Бесплатные очки"
@@ -1293,6 +1296,15 @@ LANGUAGE.skill_point = "Поинт "
 LANGUAGE.skill_luck = "Удачник "
 LANGUAGE.skill_dtrouble = "Двойная проблема"
 LANGUAGE.skill_ultraluck = "Ультра удачник"
+--амулет
+LANGUAGE.skill_amulet_1 = "АМУЛЕТ:Беспечная песнь"
+LANGUAGE.skill_amulet_1_d1 = "Имеется шанс заблокировать урон,шанс повышается при получение урона\nСТОИТ 3 ЯЧЕЙКИ"
+LANGUAGE.skill_amulet_2 = "АМУЛЕТ: Ярость павшего"
+LANGUAGE.skill_amulet_2_d1 = "x2 Урон если хп ниже 15 или ниже 10% здоровья\nСТОИТ 4 ЯЧЕЙКИ"
+LANGUAGE.skill_amulet_3 = "АМУЛЕТ:Ценный обмен"
+LANGUAGE.skill_amulet_3_d1 = "Отнимает 3 поинта для прокачки\nДАЕТ 3 ЯЧЕЙКИ"
+LANGUAGE.skill_amulet_4 = "АМУЛЕТ:Фокус"
+LANGUAGE.skill_amulet_4_d1 = "Зажмите E для лечение 10% здоровья(Стоит 33% Кровавой брони)\nСТОИТ 3 ЯЧЕЙКИ"
 --Всякая мелоч 
 LANGUAGE.pshop_w = "Оружие"
 LANGUAGE.pshop_melee = "Ближний Бой"
@@ -1530,6 +1542,9 @@ LANGUAGE.skill_later = "Может потом"
 LANGUAGE.skill_later_d1 = "Ты получишь урон потом\n+50% урона на потом\n"
 LANGUAGE.skill_later_d2 = "Если ОПУСТОШЕННИЕ выше чем 600 ты умрешь\nИммунен к проклятью"
 --SKILLS ON MEDICAL
+LANGUAGE.skill_phik = "Пшык"
+LANGUAGE.skill_phik_d1 = "Когда дротик попадает в цель он хилит всех кто рядом(наносит урон зомби)\n"
+LANGUAGE.skill_phik_d2 = "-50% Эффективность дротиков\n"
 LANGUAGE.skill_disp_d2 = "-10% к времени бомбы"
 LANGUAGE.skill_disp_d1 = "+15% к радиусу бомбы\n"
 LANGUAGE.skill_disp = "Распространение"
@@ -1916,6 +1931,8 @@ LANGUAGE.demibosses = "Мини-боссов "
 
 LANGUAGE.uleft = " Использований"
 --МЕЕНЮ
+LANGUAGE.pe_another = "Статистика"
+
 LANGUAGE.models_changed_to = "Твоя модель изменилась на "
 LANGUAGE.mm_player_m_select = "Выбор Модели"
 LANGUAGE.mm_player_color = "Цвет Игрока"
@@ -2002,3 +2019,46 @@ LANGUAGE.ammo_grenades = "Гранаты"
 LANGUAGE.ammo_molotovs = "Молотовы"
 LANGUAGE.ammo_medicalsupplies = "Медицинские капсулы"
 LANGUAGE.ammo_pistol = "Пистолетные"
+
+LANGUAGE.buff_mrifle = "Медицинская винтовка"
+LANGUAGE.buff_srifle = "Усиляющая Винтовка"
+
+LANGUAGE.buff_mdart = "Защитный Усилитель"
+LANGUAGE.buff_bdart = "Силовой Усилитель"
+
+LANGUAGE.s_deact = " деактивирован."
+LANGUAGE.s_act = " активирован."
+LANGUAGE.s_unl_act = " разблокирован и активирован!"
+
+LANGUAGE.s_need_l = "Нужен уровень: "
+LANGUAGE.s_need_r = "Нужен реморт: "
+LANGUAGE.s_alw_act = "Всегда активен"
+
+LANGUAGE.trg_bdarmor = "КРОВАВОЙ БРОНИ: "
+LANGUAGE.trg_frail = "(САМОУЧКА)"
+LANGUAGE.trg_lastabuse = "(ПОСЛЕДНИЙ АБУЗ)"
+LANGUAGE.trg_poison = "(ЯДА - "
+LANGUAGE.trg_bleed = "(КРОВОТЕЧЕНИЯ - "
+LANGUAGE.trg_bloodlust = "(ФАНТОМНОЕ ЗДОРОВЬЕ)"
+LANGUAGE.trg_rot = "(ГНИЛЕЦ)"
+LANGUAGE.trg_zarmor = "ЗОМБИ БРОНИ: "
+
+LANGUAGE.trg_r_lvl = "УР %d Р.УР %d"
+LANGUAGE.trg_lvl = "УР "
+LANGUAGE.trg_car = "Несет [%s]"
+
+LANGUAGE.hud_remort = " // Реморт "
+
+LANGUAGE.hud_xp = " ОПЫТ"
+
+LANGUAGE.hud_sp = " СП"
+
+LANGUAGE.hud_uu_sp = "Неиспользованных Скилл Поинтов: "
+
+LANGUAGE.hud_lvl_max = "Уровень МАКСИМАЛЬНЫЙ"
+LANGUAGE.hud_r_lvl = "Уровень %d "
+
+LANGUAGE.dosei_inf = "ЗАРАЖЕНИЕ ДОСЕЕМ: "
+
+LANGUAGE.sboard_points_x_score_x_dps_x = "Поинты: %d Счёт: %d УВС: %d "
+LANGUAGE.on_dismantle_give = "\nПри разборке дает: "

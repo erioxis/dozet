@@ -24,7 +24,7 @@ SWEP.CSMuzzleFlashes = false
 SWEP.ReloadDelay = 1.3
 
 SWEP.Primary.Sound = Sound("Weapon_MP5Navy.Single")
-SWEP.Primary.Damage = 8
+SWEP.Primary.Damage = 22
 SWEP.Primary.NumShots = 2
 SWEP.Primary.Delay = 0.43
 
@@ -68,9 +68,8 @@ function SWEP:PrimaryAttack()
 
 	self:ShootBullets(self.Primary.Damage, self.Primary.NumShots * 2, self:GetCone())
 
-	owner:SetHealth(owner:Health() - 2)
+	owner:SetHealth(owner:Health() - 1)
 	
-	owner:TakeSpecialDamage(1, DMG_DIRECT, owner, self)
 	owner:ViewPunch( 0.5 * self.Recoil * Angle(math.Rand(-0.1, -0.1), math.Rand(-0.1, 0.1), 0))
 
 	owner:SetGroundEntity(NULL)
