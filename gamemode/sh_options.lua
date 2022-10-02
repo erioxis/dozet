@@ -755,12 +755,14 @@ GM:AddMutationItem("m_zombie_moan", translate.Get("zshop_zombsprint"), translate
 GM:AddMutationItem("m_zombie_moanguard", translate.Get("zshop_zombguard"), translate.Get("zshop_zombguard2"), ITEMCAT_MUTATIONS, 200, nil, function(pl) pl.m_Zombie_MoanGuard = true end, "models/player/zombie_classic.mdl")
 GM:AddMutationItem("m_zombie_bara", translate.Get("zshop_baracurse"), translate.Get("zshop_baracurse_d1"), ITEMCAT_MUTATIONS, 2500, nil, function(pl) pl.m_Zombie_Bara = true end, "models/player/catpants.mdl")
 GM:AddMutationItem("m_zombie_hitter", translate.Get("zshop_hit"), translate.Get("zshop_hit_d1"), ITEMCAT_MUTATIONS, 1200, nil, function(pl) pl.m_Zombie_Bara1 = true end, "models/player/catpants.mdl")
-GM:AddMutationItem("m_zombie_gigachad", translate.Get("zshop_gigachad"), translate.Get("zshop_gigachad_d1"), ITEMCAT_MUTATIONS, 1200, nil, function(pl) pl.m_Gigachad = true pl.m_HealthMulZS = pl.m_HealthMulZS + 0.2 end, "models/player/catpants.mdl")
+GM:AddMutationItem("m_zombie_gigachad", translate.Get("zshop_gigachad"), translate.Get("zshop_gigachad_d1"), ITEMCAT_MUTATIONS, 700, nil, function(pl) pl.m_Gigachad = true pl.m_HealthMulZS = pl.m_HealthMulZS + 0.2 end, "models/player/catpants.mdl")
 GM:AddMutationItem("m_zombie_16", translate.Get("zshop_16"), translate.Get("zshop_16_d1"), ITEMCAT_MUTATIONS, 500, nil, function(pl) pl.m_Zombie_16 = true end, "models/player/catpants.mdl")
 GM:AddMutationItem("m_why", translate.Get("zshop_why"), translate.Get("zshop_why_d1"), ITEMCAT_MUTATIONS, 600, nil, function(pl) pl.m_Why = true end, "models/player/zombie_classic.mdl")
 GM:AddMutationItem("m_propcurse", translate.Get("zshop_curseofdeath"), translate.Get("zshop_curseofdeath_d1"), ITEMCAT_MUTATIONS, 800, nil, function(pl) pl.m_PropCurse = true end, "models/player/zombie_classic.mdl")
 GM:AddMutationItem("m_dxp", translate.Get("zshop_dxp"), translate.Get("zshop_dxp_d1"), ITEMCAT_MUTATIONS, 800, nil, function(pl) pl.m_DoubleXP = true end, "models/player/zombie_classic.mdl")
-GM:AddMutationItem("m_hreg", translate.Get("zshop_hreg"), translate.Get("zshop_hreg_d1"), ITEMCAT_MUTATIONS, 1900, nil, function(pl) pl.m_HealthRegen = true end, "models/player/zombie_classic.mdl")
+GM:AddMutationItem("m_hreg", translate.Get("zshop_hreg"), translate.Get("zshop_hreg_d1"), ITEMCAT_MUTATIONS, 700, nil, function(pl) pl.m_HealthRegen = true end, "models/player/zombie_classic.mdl")
+GM:AddMutationItem("m_dclaws", translate.Get("zshop_dclaws"), translate.Get("zshop_dclaws_d1"), ITEMCAT_MUTATIONS, 950, nil, function(pl) pl.m_DeathClaws = true end, "models/player/zombie_classic.mdl")
+GM:AddMutationItem("m_zarmor3", translate.Get("zshop_zarmor3"), translate.Get("zshop_zarmor3_d1"), ITEMCAT_MUTATIONS, 500, nil, function(pl) pl.m_ZArmor2 = true end, "models/player/zombie_classic.mdl")
 
 -- Boss Mutagen
 GM:AddMutationItem("m_zombie_health2", translate.Get("zshop_godestzomb"), translate.Get("zshop_godestzomb2"), ITEMCAT_MUTATIONS_BOSS, 1000, nil, function(pl) pl.m_HealthMulZS = pl.m_HealthMulZS + 0.5 end, "models/items/healthkit.mdl")
@@ -770,6 +772,8 @@ GM:AddMutationItem("m_zmain", translate.Get("zshop_zmain"), translate.Get("zshop
 GM:AddMutationItem("m_ezspeed", translate.Get("zshop_ezspeed"), translate.Get("zshop_ezspeed_d1"), ITEMCAT_MUTATIONS_BOSS, 850, nil, function(pl) pl.m_EasySpeed = true end, "models/player/zombie_classic.mdl")
 GM:AddMutationItem("m_rclaw", translate.Get("zshop_rclaw"), translate.Get("zshop_rclaw_d1"), ITEMCAT_MUTATIONS_BOSS, 1125, nil, function(pl) pl.m_Rot_Claws = true end, "models/player/zombie_classic.mdl")
 GM:AddMutationItem("m_evo", translate.Get("zshop_evo"), translate.Get("zshop_evo_d1"), ITEMCAT_MUTATIONS_BOSS, 670, nil, function(pl) pl.m_Evo = true end, "models/player/zombie_classic.mdl")
+GM:AddMutationItem("m_zarmor", translate.Get("zshop_zarmor"), translate.Get("zshop_zarmor_d1"), ITEMCAT_MUTATIONS_BOSS, 1210, nil, function(pl) pl.m_ZArmor = true end, "models/player/zombie_classic.mdl")
+GM:AddMutationItem("m_zarmor2", translate.Get("zshop_zarmor2"), translate.Get("zshop_zarmor2_d1"), ITEMCAT_MUTATIONS_BOSS, 900, nil, function(pl) pl.m_ZArmor2 = true end, "models/player/zombie_classic.mdl")
 -- These are the honorable mentions that come at the end of the round.
 -- classes
 

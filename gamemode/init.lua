@@ -2635,6 +2635,10 @@ function GM:PlayerInitialSpawnRound(pl)
 	pl.m_HealthRegen = nil
 	pl.m_EasySpeed = nil
 	pl.m_Rot_Claws = nil
+	pl.m_DeathClaws = nil
+	pl.m_ZArmor = nil
+	pl.m_ZArmor2 = nil
+	pl.m_ZArmor3 = nil
 	pl.LastHealedFocus = 0
 
 	-- Boss Mutations (Z-Shop)
@@ -4856,6 +4860,9 @@ end
 	end
 	if pl:Team() == TEAM_UNDEAD and pl:SteamID() == "STEAM_0:1:461661780" then
 		pl:SetMaxHealth(1) pl:SetHealth(1)
+	end
+	if pl:Team() == TEAM_UNDEAD and pl.m_ZArmor then
+		pl:SetZArmor(pl:Health() * 0.33)
 	end
 end
 

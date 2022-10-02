@@ -71,7 +71,7 @@ function meta:ProcessDamage(dmginfo)
 			end
 		end
 		if attacker.IsLastHuman and attacker.ClanAnsableRevolution then
-			dmginfo:ScaleDamage(1.30)
+			dmginfo:ScaleDamage(1.70)
 		end
 		if attacker:IsValidLivingHuman() and attacker.ClanMich and not inflictor.IsMelee then
             dmginfo:ScaleDamage(1.15)
@@ -128,7 +128,7 @@ function meta:ProcessDamage(dmginfo)
 				local damage = dmginfo:GetDamage()
 				if damage > 0 then
 		
-					local ratio = 0.25
+					local ratio = (self.m_ZArmor3 and 1 or 0.7)
 					local absorb = math.min(self:GetZArmor(), damage * ratio)
 					dmginfo:SetDamage(damage - absorb)
 					self:SetZArmor(self:GetZArmor() - absorb)
@@ -415,16 +415,18 @@ function meta:ProcessDamage(dmginfo)
 					self:SetVelocity(vel)
 				end
 				if attacker.m_Zombie_Bara1 then
-				dmginfo:SetDamage(dmginfo:GetDamage() * 2)
-				end
-				if attacker:SteamID() == "STEAM_0:1:564919091" then
-				 	dmginfo:SetDamage(dmginfo:GetDamage() * 2)
+					dmginfo:SetDamage(dmginfo:GetDamage() * 2)
 				end
 				if attacker.m_Why then
                    dmginfo:SetDamage(dmginfo:GetDamage() * 1.12)
 				end
 					
 		
+				if attacker:IsBot() and self:GetZSRemortLevel() >= 2 then
+					dmginfo:ScaleDamage(1.25)
+				elseif attacker:IsBot() and self:GetZSRemortLevel() < 2 then
+					dmginfo:ScaleDamage(0.75)
+				end
 				if dmginfo:GetDamage() > 41 and self:IsSkillActive(SKILL_MOREDAMAGE) then
 					dmginfo:SetDamage(41)
 				end
@@ -589,7 +591,9 @@ function meta:ProcessDamage(dmginfo)
 					end
 				end
 
-				
+				if attacker.m_ZArmor2 then
+					attacker:SetZArmor(math.min(attacker:Health() * 0.5, attacker:GetZArmor() + math.min(damage, self:Health() ) * 0.09))
+				end
 				
 
 				if self:HasTrinket("iceburst") and (not self.LastIceBurst or self.LastIceBurst + 40 < CurTime()) then
@@ -621,6 +625,18 @@ function meta:ProcessDamage(dmginfo)
 						bleed.Damager = attacker
 					end
 				end
+			end
+			
+			if attacker:IsPlayer() and attacker.m_DeathClaws and !self:IsSkillActive(SKILL_DEFENDBLOOD) then
+				local bleed = self:GiveStatus("bleed")
+				if bleed and bleed:IsValid() then
+					bleed:AddDamage((damage * 0.25) * (self:IsSkillActive(SKILL_LOX) and 2 or 1))
+					if attacker:IsValid() and attacker:IsPlayer() then
+						bleed.Damager = attacker
+					end
+				end
+			elseif  attacker:IsPlayer() and attacker.m_DeathClaws and self:IsSkillActive(SKILL_DEFENDBLOOD) then
+				dmginfo:ScaleDamage(2)
 			end
 		elseif inflictor:IsProjectile() then
 			if self.ProjDamageTakenMul and not dmgbypass then
