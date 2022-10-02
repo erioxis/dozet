@@ -159,13 +159,13 @@ function GM:SaveWinRate()
 
 
 
-	local filename = self.VaultFolder.."systembalance"..".txt"
+	local filename = "system_balance"..".txt"
 	file.CreateDir(string.GetPathFromFilename(filename))
 	file.Write(filename, Serialize(tosave))
 end
 function GM:LoadWinRate()
 
-	local filename = self.VaultFolder.."systembalance"..".txt"
+	local filename = "system_balance"..".txt"
 	if file.Exists(filename, "DATA") then
 		local contents = file.Read(filename, "DATA")
 		if contents and #contents > 0 then

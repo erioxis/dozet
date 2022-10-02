@@ -80,6 +80,7 @@ end
 
 function ENT:OnTakeDamage(dmginfo)
 	if self:GetSigilHealth() <= 0 or dmginfo:GetDamage() <= 0 then return end
+	if attacker:IsPlayer() and attacker.BaraCat then dmginfo:ScaleDamage(0.1) end
 
 	local attacker = dmginfo:GetAttacker()
 	if attacker:IsValid() and attacker:IsPlayer() and dmginfo:GetDamage() > 2 and CurTime() >= self.HealthLock then
@@ -102,19 +103,21 @@ function ENT:OnTakeDamage(dmginfo)
 				if self:GetSigilCorrupted() then
 					gamemode.Call("PreOnSigilUncorrupted", self, dmginfo)
 					self:SetSigilCorrupted(false)
+					self.MaxHealth = 260
 					self:SetSigilHealthBase(self.MaxHealth)
 					self:SetSigilLastDamaged(0)
 					gamemode.Call("OnSigilUncorrupted", self, dmginfo)
 				else
 					gamemode.Call("PreOnSigilCorrupted", self, dmginfo)
 					self:SetSigilCorrupted(true)
+					self.MaxHealth = 5000
 					self:SetSigilHealthBase(self.MaxHealth)
 					self:SetSigilLastDamaged(0)
 					gamemode.Call("OnSigilCorrupted", self, dmginfo)
 				end
 			end
 		elseif attacker:Team() == TEAM_UNDEAD then
-			self.HealthLock = CurTime() + 1
+			self.HealthLock = CurTime() + 2.1
 		end
 	end
 end

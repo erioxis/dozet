@@ -3886,7 +3886,7 @@ function GM:KeyPress(pl, key)
 			else
 				self:TryHumanPickup(pl, pl:TraceLine(64).Entity)
 			end
-			if !pl:IsCarrying() and pl:IsSkillActive(SKILL_AMULET_4) and pl.LastHealedFocus <= CurTime() and pl.MaxBloodArmor * 0.3 <= pl:GetBloodArmor() then
+			if !pl:IsCarrying() and pl:IsSkillActive(SKILL_AMULET_4) and pl.LastHealedFocus <= CurTime() and pl.MaxBloodArmor * 0.3 <= pl:GetBloodArmor() and pl:GetBloodArmor() >= 12 then
 				pl:SetBloodArmor(math.min((pl.MaxBloodArmor * 0.3) + pl:GetBloodArmor() * 0.3, pl:GetBloodArmor() * 0.3))
 				pl:EmitSound("items/smallmedkit1.wav", 50)
 				pl:SetHealth(math.min(pl:GetMaxHealth() * 0.1 + pl:Health(), pl:GetMaxHealth()))
@@ -4049,7 +4049,7 @@ function GM:PlayerDeath(pl, inflictor, attacker)
 	if pl:IsSkillActive(SKILL_PHOENIX) and pl.RedeemedOnce then
 	local dpos = pl:GetPos()
 	local eyepos = pl:EyeAngles()
-		timer.Simple(0.5, function()
+		timer.Simple(0.01, function()
 			pl.RedeemedOnce = false
 			pl:Redeem()
 			if dpos ~= nil then
@@ -4066,6 +4066,10 @@ function GM:PlayerDeath(pl, inflictor, attacker)
 	elseif pl.RedeemedOnce then 
 		pl.RedeemedOnce = false
     end
+	if !pl.RedeemedOnce and pl:IsSkillActive(SKILL_AMULET_5) and math.random(1,4) == 2 then
+		pl:Redeem()
+		pl:AddInventoryItem("trinket_electromagnet")
+	end
 end
 
 function GM:PlayerDeathSound()
@@ -4127,6 +4131,21 @@ function GM:HumanKilledZombie(pl, attacker, inflictor, dmginfo, headshot, suicid
 	pl:GiveAchievementProgress("goodtime", 1)
 	if pl:GetZombieClassTable().BaraCat then
 		attacker:GiveAchievementProgress("antibaracat", 1)		
+	end
+	if attacker:IsSkillActive(SKILL_NFINGERS) and inflictor == attacker:GetActiveWeapon() and !inflictor.IsMelee then
+		attacker:GiveAmmo(1, inflictor.Primary.Ammo)
+	elseif attacker:IsSkillActive(SKILL_NFINGERS) and inflictor == attacker:GetActiveWeapon() and inflictor.IsMelee and math.random(1,10) == 1 then
+		attacker:GiveAmmo(1, inflictor.Primary.Ammo)
+	end
+	if attacker:IsSkillActive(SKILL_SFINGERS) and inflictor == attacker:GetActiveWeapon() and !inflictor.IsMelee then
+		local inflictor2 = inflictor
+		timer.Simple(0, function() inflictor2.Eater = true end)
+		timer.Simple(1.9, function() inflictor2.Eater = nil end)
+	end
+	if attacker:IsSkillActive(SKILL_SFINGERS) and inflictor == attacker:GetActiveWeapon() and inflictor.HaloAmmo then
+		local inflictor2 = inflictor
+		timer.Simple(0, function() inflictor2.Eater = true end)
+		timer.Simple(0.9, function() inflictor2.Eater = nil end)
 	end
 
 	local totaldamage = 0

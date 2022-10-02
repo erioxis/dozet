@@ -441,6 +441,7 @@ GM:AddPointShopItem("sacredhh",			ITEMCAT_GUNS,			5000,			"weapon_zs_m6")
 GM:AddPointShopItem("gaysseagle",   	ITEMCAT_GUNS,			5000,			"weapon_zs_gaeagle")
 GM:AddPointShopItem("doomstick",   	ITEMCAT_GUNS,			5000,			"weapon_zs_doomstick")
 GM:AddPointShopItem("zenith2",		ITEMCAT_GUNS,			5000,			"weapon_zs_zenithmega")
+GM:AddPointShopItem("flamethrower",		ITEMCAT_GUNS,			5000,			"weapon_zs_flamethrower")
 
 
 GM:AddPointShopItem("pistolammo",		ITEMCAT_AMMO,			9,				nil,							"24 pistol ammo",				nil,									"ammo_pistol",						function(pl) pl:GiveAmmo(25, "pistol", true) end)

@@ -63,7 +63,7 @@ function GM:DrawTargetID(ent, fade)
 			local rot = ent:GetStatus("rot")
 			if poison >= 1 then
 				util.ColorCopy(COLOR_LIMEGREEN, colTemp)
-				draw.SimpleTextBlur(translate.Get("trg_ooison").. math.floor(poison) ..")", "ZSHUDFontSmaller", x, y, colTemp, TEXT_ALIGN_CENTER)
+				draw.SimpleTextBlur(translate.Get("trg_poison").. math.floor(poison) ..")", "ZSHUDFontSmaller", x, y, colTemp, TEXT_ALIGN_CENTER)
 				y = y + draw.GetFontHeight("ZSHUDFontSmaller") + 2
 			end
 			if bleed >= 1 then
@@ -95,7 +95,7 @@ function GM:DrawTargetID(ent, fade)
 		local zarmor = ent:GetZArmor() 
 		if zarmor > 0 then
 			util.ColorCopy(COLOR_LBLUE, colTemp)
-			draw.SimpleTextBlur(translate.Get("trg_zarmor")..math.floor(zarmor), "ZSHUDFontSmaller", x, y, colTemp, TEXT_ALIGN_CENTER)
+			draw.SimpleTextBlur(translate.Get("trg_zarmor")..math.floor(zarmor), "ZSHUDFontSmaller", x, y + 16, colTemp, TEXT_ALIGN_CENTER)
 			y = y + draw.GetFontHeight("ZSHUDFontSmaller") + 2
 		end
 	else

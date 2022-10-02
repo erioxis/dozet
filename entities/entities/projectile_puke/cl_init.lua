@@ -11,6 +11,7 @@ end
 local colFlesh = Color(255, 255, 255, 255)
 local matFlesh = Material("effects/fire_cloud2")
 function ENT:Draw()
+	--if self:GetOwner() ~= MySelf then return end
 	local size = self.Size
 
 	render.SetMaterial(matFlesh)
@@ -18,7 +19,7 @@ function ENT:Draw()
 	render.DrawSprite(pos, size, size, colFlesh)
 
 	if CurTime() < self.NextEmit then return end
-	self.NextEmit = CurTime() + 0.05
+	self.NextEmit = CurTime() + 4
 
 	local emitter = ParticleEmitter(pos)
 	emitter:SetNearClip(36, 44)

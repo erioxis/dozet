@@ -35,11 +35,16 @@ SWEP.MeleeDamage = 133
 SWEP.MeleeRange = 88
 SWEP.MeleeSize = 2
 SWEP.Tier = 2
+SWEP.Primary.Ammo = "pulse"
 SWEP.Secondary.Ammo = "pulse"
 
 SWEP.AllowQualityWeapons = true
 
 SWEP.WalkSpeed = SPEED_NORMAL
+
+SWEP.Eater = nil
+SWEP.HaloAmmo = true
+SWEP.AmmoUse = 1
 
 SWEP.Primary.Delay = 0.5
 SWEP.Secondary.Delay = 10
@@ -58,9 +63,25 @@ function SWEP:CanPrimaryAttack()
 	if self:GetOwner():GetAmmoCount("pulse") < 3 then return false end
 	return self:GetNextPrimaryFire() <= CurTime() and not self:IsSwinging()
 end
+SWEP.AU = 0
+function SWEP:TakeAmmo()
+	if self.Eater then return end
+	for i=1, (self:GetOwner():IsSkillActive(SKILL_D_FINGERS) and 2 or 1) do
+		if self.AmmoUse then
+			self.AU = self.AU + self.AmmoUse
+			if self.AU >= 1 then
+				local use = math.floor(self.AU)
+				self:TakePrimaryAmmo(use)
+				self.AU = self.AU - use
+			end
+		end
+	end
+end
 function SWEP:PrimaryAttack()
 	if not self:CanPrimaryAttack() then return end
-    self:TakeSecondaryAmmo(3)
+	for i=1,3 do 
+		self:TakeAmmo()
+	end
 	self:SetNextAttack()
 	
 

@@ -1,6 +1,6 @@
 ENT.Type = "anim"
 
-ENT.MaxHealth = 600
+ENT.MaxHealth = 260
 ENT.HealthRegen = 1
 ENT.RegenDelay = 0.3
 

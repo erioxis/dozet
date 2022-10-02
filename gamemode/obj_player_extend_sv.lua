@@ -97,7 +97,7 @@ function meta:ProcessDamage(dmginfo)
 				attacker:SetHealth(math.min(attacker:GetMaxHealth(), attacker:Health() + attacker:GetMaxHealth() * 0.11))
 			end
 			if attacker:IsSkillActive(SKILL_INF_POWER) then
-				dmginfo:ScaleDamage(0.5 + #attacker:GetUnlockedSkills() * 0.05)
+				dmginfo:ScaleDamage(0.5 + #attacker:GetUnlockedSkills() * 0.02)
 			end
 			if attacker:IsSkillActive(SKILL_AMULET_2) and ( 16>attacker:Health() or attacker:Health() <= attacker:GetMaxHealth() * 0.1 )then
 				dmginfo:ScaleDamage(2)

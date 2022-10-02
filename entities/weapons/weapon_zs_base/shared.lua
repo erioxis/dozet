@@ -238,16 +238,20 @@ function SWEP:Holster()
 end
 
 SWEP.AU = 0
+SWEP.Eater = nil
 function SWEP:TakeAmmo()
-	if self.AmmoUse then
-		self.AU = self.AU + self.AmmoUse
-		if self.AU >= 1 then
-			local use = math.floor(self.AU)
-			self:TakePrimaryAmmo(use)
-			self.AU = self.AU - use
+	if self.Eater then return  end
+	for i=1, (self:GetOwner():IsSkillActive(SKILL_D_FINGERS) and 2 or 1) do
+		if self.AmmoUse then
+			self.AU = self.AU + self.AmmoUse
+			if self.AU >= 1 then
+				local use = math.floor(self.AU)
+				self:TakePrimaryAmmo(use)
+				self.AU = self.AU - use
+			end
+		else
+			self:TakePrimaryAmmo(self.RequiredClip)
 		end
-	else
-		self:TakePrimaryAmmo(self.RequiredClip)
 	end
 end
 

@@ -357,6 +357,13 @@ SKILL_AMULET_3 = 336
 SKILL_PHIK = 337
 SKILL_AMULET_4 = 338
 SKILL_QUE_PRO = 339
+SKILL_NFINGERS = 340
+SKILL_SFINGERS = 341
+SKILL_D_FINGERS = 342
+SKILL_AMULET_5 = 343
+SKILL_SEX_IS_REAL = 344
+SKILL_SECRET_VI = 345
+SKILL_SECRET_VII = 346
 
 SKILLMOD_HEALTH = 1
 SKILLMOD_SPEED = 2
@@ -505,6 +512,7 @@ GM:AddSkill(SKILL_REGENERATOR, translate.Get("skill_regen_0"), GOOD..translate.G
 																-5,			-2,					{}, TREE_HEALTHTREE)
 GM:AddSkill(SKILL_NULLED, translate.Get("skill_regen1_0"), GOOD..translate.Get("skill_regen1_d1"),
 			                                                   	-5,			0,					{SKILL_REGENERATOR}, TREE_HEALTHTREE)
+.Hidden = true
 GM:AddSkill(SKILL_BLOODARMOR, translate.Get("skill_bloodarmor_0"), GOOD..translate.Get("skill_bloodarmor_d1") ..BAD..translate.Get("skill_bloodarmor_d2"),
 																2,			2,					{SKILL_IRONBLOOD, SKILL_BLOODLETTER, SKILL_D_HEMOPHILIA}, TREE_HEALTHTREE)
 GM:AddSkill(SKILL_IRONBLOOD, translate.Get("skill_ironblood_0"), GOOD..translate.Get("skill_ironblood_d1") ..GOOD..translate.Get("skill_ironblood_d2") ..BAD..translate.Get("skill_ironblood_d3"),
@@ -855,6 +863,11 @@ GM:AddSkill(SKILL_AMULET_4, translate.Get("skill_amulet_4"), GOOD.. translate.Ge
 .Amulet = true														
 GM:AddSkillModifier(SKILL_AMULET_4, SKILLMOD_SPOINT, 1)
 GM:AddSkillModifier(SKILL_AMULET_4, SKILLMOD_PIECE_OF_AMULET, -3)
+GM:AddSkill(SKILL_AMULET_5, translate.Get("skill_amulet_5"), GOOD.. translate.Get("skill_amulet_5_d1"),
+																-20,			-13,					{SKILL_NONE}, TREE_GUNTREE)
+.Amulet = true														
+GM:AddSkillModifier(SKILL_AMULET_5, SKILLMOD_SPOINT, 1)
+GM:AddSkillModifier(SKILL_AMULET_5, SKILLMOD_PIECE_OF_AMULET, -2)
 
 
 
@@ -869,6 +882,16 @@ GM:AddSkillModifier(SKILL_UNSIGIL, SKILLMOD_DAMAGE, 0.15)
 SKILL_PHOENIX = 260
 GM:AddSkill(SKILL_PHOENIX, translate.Get("skill_phoenix"), GOOD..translate.Get("skill_phoenix_d1"),
 																0,			6,					{SKILL_GUNSLINGER}, TREE_GUNTREE)
+local d = GM:AddSkill(SKILL_SECRET_VI, "Secret VI", GOOD.."+5 Skill Points",
+																-2,			3,					{SKILL_NULLED}, TREE_GUNTREE)
+d.Hidden = true	
+d.Hidden1 = true	
+local d = GM:AddSkill(SKILL_SECRET_VII, "ᅠ ᅠ ᅠ", GOOD.."+5 Skill Points\nSecret VII",
+				                                                            	25,			20.1,					{SKILL_DEATHCURSE}, TREE_DONATETREE)
+d.Hidden = true	
+d.Hidden1 = true																
+GM:AddSkillModifier(SKILL_SECRET_VI, SKILLMOD_SPOINT, 5)
+GM:AddSkillModifier(SKILL_SECRET_VII, SKILLMOD_SPOINT, 5)
 GM:AddSkill(SKILL_TRIGGER_DISCIPLINE1, translate.Get("skill_t_d").."I", GOOD.."+2%"..translate.Get("r_speed")..GOOD.."+3%"..translate.Get("b_damage")..GOOD.."+2%"..translate.Get("w_draw")..BAD.."-9%"..translate.Get("meleedamage"),
 																-5,			6,					{SKILL_TRIGGER_DISCIPLINE2, SKILL_NONE}, TREE_GUNTREE)
 GM:AddSkill(SKILL_TRIGGER_DISCIPLINE2, translate.Get("skill_t_d").."II", GOOD.."+3%"..translate.Get("r_speed")..GOOD.."+5%"..translate.Get("b_damage")..GOOD.."+3%"..translate.Get("w_draw")..BAD.."-13%"..translate.Get("meleedamage"),
@@ -965,6 +988,15 @@ GM:AddSkill(SKILL_TRUEWOOISM, translate.Get("skill_wooism"), GOOD..translate.Get
 																7,			0,					{}, TREE_GUNTREE)
 GM:AddSkill(SKILL_DEADINSIDE, translate.Get("skill_dinside"), BAD..translate.Get("skill_dinside_d1")..GOOD..translate.Get("skill_dinside_d2"),
 																7,			-2,					{SKILL_TRUEWOOISM}, TREE_GUNTREE)
+GM:AddSkill(SKILL_NFINGERS, translate.Get("skill_nfingers"), GOOD..translate.Get("skill_nfingers_d1")..BAD.."-10%"..translate.Get("res_ammo"),
+																8,			-4,					{SKILL_DEADINSIDE}, TREE_GUNTREE)
+GM:AddSkill(SKILL_SFINGERS, translate.Get("skill_sfingers"), GOOD..translate.Get("skill_sfingers_d1")..BAD.."-25%"..translate.Get("res_ammo"),
+																8,			-5,					{SKILL_NFINGERS}, TREE_GUNTREE)
+GM:AddSkillModifier(SKILL_NFINGERS, SKILLMOD_RES_AMMO_MUL, -0.10)
+GM:AddSkillModifier(SKILL_SFINGERS, SKILLMOD_RES_AMMO_MUL, -0.25)
+GM:AddSkill(SKILL_D_FINGERS, translate.Get("skill_dfingers"), BAD..translate.Get("skill_dfingers_d1"),
+																9,			-6,					{SKILL_SFINGERS}, TREE_GUNTREE)
+GM:AddSkillModifier(SKILL_D_FINGERS, SKILLMOD_DAMAGE, 1)
 
 -- Melee Tree
 GM:AddSkill(SKILL_WORTHINESS2, translate.Get("worthness").."II", GOOD.."+10"..translate.Get("worth")..BAD.."-3"..translate.Get("start_points"),
@@ -1219,6 +1251,10 @@ GM:AddSkill(SKILL_EX, "Exsecrandus", PURPLE.."USELESS!",
 SKILL_EX2 = 178					
 GM:AddSkill(SKILL_EX2, "Scientia", PURPLE.."Science!",
 					0,			-7,					{SKILL_EX}, TREE_ANCIENTTREE)
+GM:AddSkill(SKILL_SEX_IS_REAL, "Reality", PURPLE.."Sex is real\n"..PURPLE.."+5 Sex Points",
+					0,			-8,					{SKILL_EX2}, TREE_ANCIENTTREE)
+.RemortReq = 32
+GM:AddSkillModifier(SKILL_SEX_IS_REAL, SKILLMOD_SPOINT, 5)	
 					SKILL_ANIMA = 179		
 GM:AddSkillModifier(SKILL_ANIMA, SKILLMOD_MELEE_DAMAGE_MUL, 0.15)
 GM:AddSkillModifier(SKILL_ANIMA, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 0.10)			
@@ -1340,7 +1376,7 @@ GM:AddSkillModifier(SKILL_TORMENT6, SKILLMOD_MEDKIT_EFFECTIVENESS_MUL, -0.50)
 GM:AddSkillModifier(SKILL_TORMENT6, SKILLMOD_XP, 0.10)
 SKILL_DEATHCURSE = 234
 GM:AddSkill(SKILL_DEATHCURSE, translate.Get("skill_ccleaning"), GOOD.."+15%"..translate.Get("xpmul")..GOOD..translate.Get("skill_ccleaning_d1")..BAD.."-30%"..translate.Get("m_curse")..BAD..translate.Get("skill_ccleaning_d2"),
-				                                                            	3,			-1,					{SKILL_DEFENDBLOOD}, TREE_DEFENSETREE)
+				                                                            	3,			-1,					{SKILL_DEFENDBLOOD}, TREE_DEFENSETREE)		
 GM:AddSkillModifier(SKILL_DEATHCURSE, SKILLMOD_XP, 0.15)
 GM:AddSkillModifier(SKILL_DEATHCURSE, SKILLMOD_CURSEM, -0.30)
 GM:AddSkillModifier(SKILL_DEATHCURSE, SKILLMOD_FOODEATTIME_MUL, 0.30)
@@ -1390,7 +1426,7 @@ GM:AddSkill(SKILL_DEFEND2,translate.Get("skill_sdefender").."III", GOOD.."-3%"..
 GM:AddSkillModifier(SKILL_DEFEND2, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.03)
 GM:AddSkillModifier(SKILL_DEFEND2, SKILLMOD_SPEED, -4)
 GM:AddSkill(SKILL_DEFENDBLOOD,translate.Get("skill_blooddefender"), GOOD..translate.Get("skill_blooddefender_d1")..BAD..translate.Get("skill_blooddefender_d2"),
-				                                                            	3,			0,					{SKILL_DEFEND2}, TREE_DEFENSETREE)
+				                                                            	3,			0,					{SKILL_DEFEND2, SKILL_DEATHCURSE}, TREE_DEFENSETREE)
 SKILL_DEFEND3 = 193
 GM:AddSkill(SKILL_DEFEND3, translate.Get("skill_sdefender").." IV", GOOD.."-4%"..translate.Get("meleedamagetaken")..BAD.."-6"..translate.Get("speed"),
 				                                                            	1.5,			2,					{SKILL_DEFEND2}, TREE_DEFENSETREE)

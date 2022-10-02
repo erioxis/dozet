@@ -9,7 +9,7 @@ GM.Achievements["zsfan"] = {
 GM.Achievements["gurrenlagann"] = {
     Name = translate("challenge_inwork"),
     Desc = translate("challenge_inwork_d"),
-    Reward = 3500
+    Reward = 23500
 }
 GM.Achievements["crowhunter"] = {
     Name = translate("challenge_crowhunter"),

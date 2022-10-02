@@ -47,8 +47,8 @@ SWEP.Knockback = 121
 
 
 GAMEMODE:SetPrimaryWeaponModifier(SWEP, WEAPON_MODIFIER_RELOAD_SPEED, 0.04)
-GAMEMODE:AddNewRemantleBranch(SWEP, 1, ""..translate.Get("wep_smgstick_r1"), ""..translate.Get("wep_d_smgstick_r1"), function(wept)
-	wept.Primary.Damage = wept.Primary.Damage * 0.3
+GAMEMODE:AddNewRemantleBranch(SWEP, 1, translate.Get("wep_smgstick_r1"), translate.Get("wep_d_smgstick_r1"), function(wept)
+	wept.Primary.Damage = wept.Primary.Damage * 0.5
 	wept.ReloadSpeed = wept.ReloadSpeed * 2
 	wept.Primary.Delay = wept.Primary.Delay * 0.6
 	wept.Knockback = 177
@@ -66,7 +66,7 @@ function SWEP:PrimaryAttack()
 
 	local clip = self:Clip1()
 
-	self:ShootBullets(self.Primary.Damage, self.Primary.NumShots * 2, self:GetCone())
+	self:ShootBullets((owner:IsSkillActive(SKILL_SFINGERS) and self.Eater and self.Primary.Damage *2 or self.Primary.Damage), self.Primary.NumShots, self:GetCone())
 
 	owner:SetHealth(owner:Health() - 1)
 	

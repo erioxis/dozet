@@ -921,7 +921,7 @@ function PANEL:Paint(w, h)
 
 	render.SetMaterial(matBeam)
 	for id, node in pairs(skillnodes) do
-		if IsValid(node) then
+		if IsValid(node) and !node.Skill.Hidden then
 			nodepos = node:GetPos()
 
 			if (nodepos - campost):LengthSqr() > camheightadj then
@@ -929,7 +929,6 @@ function PANEL:Paint(w, h)
 			end
 
 			skill = node.Skill
-
 			if skill.Disabled then
 				continue
 			end
@@ -1049,8 +1048,9 @@ function PANEL:Paint(w, h)
 
 			render_ModelMaterialOverride(matWhite)
 			render_SetBlend(0.95)
-
-			node:DrawModel()
+			if !skill.Hidden1 then
+				node:DrawModel()
+			end
 
 			render_SetBlend(1)
 			render_ModelMaterialOverride()
@@ -1059,8 +1059,9 @@ function PANEL:Paint(w, h)
 
 			if self.DesiredZoom < 9500 then
 				local colo = skill.Disabled and COLOR_DARKGRAY or selected and color_white or notunlockable and COLOR_MIDGRAY or COLOR_GRAY
-
-				draw_SimpleText(skill.Name, skillid <= -1 and "ZS3D2DFont2Big" or "ZS3D2DFont2", 0, 0, skill.AlwaysActive and not selected and  Color(255,202,202) or colo, TEXT_ALIGN_CENTER)
+				if !skill.Hidden1 then
+					draw_SimpleText(skill.Name, skillid <= -1 and "ZS3D2DFont2Big" or "ZS3D2DFont2", 0, 0, skill.AlwaysActive and not selected and  Color(255,202,202) or colo, TEXT_ALIGN_CENTER)
+				end
 				local xskill = 58
 				if skill.AlwaysActive then
 					draw_SimpleText(translate.Get("s_alw_act"),"ZS3D2DFontSmall", 0, xskill, colo, TEXT_ALIGN_CENTER)
@@ -1085,7 +1086,7 @@ function PANEL:Paint(w, h)
 				if can_remort then
 					render.DrawQuadEasy(nodepos, to_camera, 32, 32, color_white, angle)
 				end
-			elseif not skill.Disabled then
+			elseif not skill.Disabled and !skill.Hidden1 then
 				colGlow.r = sat * 255 colGlow.g = sat * 255 colGlow.b = sat * 255
 				if MySelf:IsSkillDesired(skillid) then
 					colGlow.r = colGlow.r / 4

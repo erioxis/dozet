@@ -3,7 +3,7 @@ INC_SERVER()
 ENT.Damage = 11
 
 function ENT:Initialize()
-	self.DeathTime = CurTime() + 1.2
+	self.DeathTime = CurTime() + (self.Sas and 8 or 1.2)
 
 	self:DrawShadow(false)
 	self:PhysicsInitSphere(1)
@@ -48,7 +48,12 @@ function ENT:Explode(vHitPos, vHitNormal, eHitEntity)
 
 end
 
-
+function ENT:OnRemove()
+	local effectdata = EffectData()
+	effectdata:SetEntity(self:GetOwner())
+		effectdata:SetOrigin(self:GetPos())
+	util.Effect("hit_fire_small", effectdata)
+end
 function ENT:PhysicsCollide(data, phys)
 	if not self:HitFence(data, phys) then
 		self.PhysicsData = data
