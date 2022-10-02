@@ -4067,8 +4067,10 @@ function GM:PlayerDeath(pl, inflictor, attacker)
 		pl.RedeemedOnce = false
     end
 	if !pl.RedeemedOnce and pl:IsSkillActive(SKILL_AMULET_5) and math.random(1,4) == 2 then
-		pl:Redeem()
-		pl:AddInventoryItem("trinket_electromagnet")
+		timer.Simple(0.01, function()
+			pl:Redeem()
+			pl:AddInventoryItem("trinket_electromagnet")
+		end)
 	end
 end
 
