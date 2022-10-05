@@ -114,13 +114,13 @@ if SERVER then
 			dmginfo:SetDamage(dmginfo:GetDamage() * 0.5)
 		end
 		if pl.HealthMax >= pl:Health() and pl.OneTime and pl:IsValidLivingZombie() then
+			pl.OneTime = false
 			for _, ply  in pairs(player.GetAll()) do
-				if ply:IsValid() and ply:IsPlayer() and ply ~= pl then
+				if ply:IsValid() and ply:IsPlayer() and ply ~= pl and ply:IsValidLivingHuman() then
 					ply:TakeDamage(ply:Health() * 0.25, pl, wep)
 					ply:EmitSound(Sound("zombiesurvival/mp_weak.ogg"))
 				end
 				pl:EmitSound(Sound("zombiesurvival/mp_weak.ogg"))
-				pl.OneTime = false
 			end
 		end
 		pl:EmitSound(Sound("zombiesurvival/mp_useless.wav"))

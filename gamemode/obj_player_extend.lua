@@ -1011,7 +1011,9 @@ end
 
 
 function meta:GetMaxZombieHealth()
-	return self:GetZombieClassTable().Health
+	local lowundead = team.NumPlayers(TEAM_UNDEAD) < 4
+	local healthmulti = (GAMEMODE.ObjectiveMap or GAMEMODE.ZombieEscape) and 1 or lowundead and 1.5 or 1
+	return (self:GetZombieClassTable().Health * healthmulti) + ((GAMEMODE:GetWave() * 45) * (self:GetZombieClassTable().DynamicHealth or 1))
 end
 function meta:SetMaxZombieHealth(add)
 	self:GetZombieClassTable().Health = add

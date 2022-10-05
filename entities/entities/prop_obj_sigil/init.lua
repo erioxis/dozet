@@ -80,7 +80,6 @@ end
 
 function ENT:OnTakeDamage(dmginfo)
 	if self:GetSigilHealth() <= 0 or dmginfo:GetDamage() <= 0 then return end
-	if attacker:IsPlayer() and attacker.BaraCat then dmginfo:ScaleDamage(0.1) end
 
 	local attacker = dmginfo:GetAttacker()
 	if attacker:IsValid() and attacker:IsPlayer() and dmginfo:GetDamage() > 2 and CurTime() >= self.HealthLock then

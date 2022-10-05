@@ -49,12 +49,14 @@ end)
 net.Receive("zs_dmg", function(length)
 	local damage = net.ReadUInt(16)
 	local pos = net.ReadVector()
+	local e	= net.ReadEntity()
 
 	if DamageFloaters then
 		local effectdata = EffectData()
 			effectdata:SetOrigin(pos)
 			effectdata:SetMagnitude(damage)
 			effectdata:SetScale(0)
+			effectdata:SetEntity(e)
 		util.Effect("damagenumber", effectdata)
 	end
 end)
@@ -411,7 +413,7 @@ net.Receive("zs_ammopickup", function(length)
 
 	ammotype = GAMEMODE.AmmoNames[ammotype] or ammotype
 
-	GAMEMODE:CenterNotify({killicon = ico}, " ", COLOR_GREEN, translate.Format("obtained_x_y_ammo", amount, ammotype))
+	GAMEMODE:CenterNotify({killicon = ico}, " ", COLOR_GREEN, translate.Format("obtained_x_y_ammo", amount, translate.Get(string.lower(string.Implode("",string.Explode(" ","ammo_"..ammotype))))))
 end)
 
 net.Receive("zs_ammogive", function(length)
@@ -445,7 +447,7 @@ net.Receive("zs_ammogiven", function(length)
 
 	ammotype = GAMEMODE.AmmoNames[ammotype] or ammotype
 
-	GAMEMODE:CenterNotify({killicon = ico}, " ", COLOR_GREEN, translate.Format("obtained_x_y_ammo_from_z", amount, ammotype, ent:Name()))
+	GAMEMODE:CenterNotify({killicon = ico}, " ", COLOR_GREEN, translate.Format("obtained_x_y_ammo_from_z", amount, translate.Get(string.lower(string.Implode("",string.Explode(" ","ammo_"..ammotype)))), ent:Name()))
 end)
 
 net.Receive("zs_deployablelost", function(length)

@@ -200,7 +200,7 @@ end
 
 local hoveredskill
 
-local REMORT_SKILL = {Name = "Remort", Description = "Go even further beyond.\nLose all skills, experience, skill points, and levels.\nStart at level 1 but with 2 remorts(1 remort = 1 skill point)\nCan remort multiple times for multiple extra skill points."}
+local REMORT_SKILL = {Name =	translate.Get("s_remort"), Description = translate.Get("s_remort_d")}
 
 
 local PANEL = {}
@@ -231,7 +231,19 @@ local offsets = {
 	[TREE_DONATETREE] = {0, 0},
 	[TREE_USELESSTREE] = {0, 26}
 }
-
+local nodemodel_beta = {
+	[TREE_HEALTHTREE] = "models/Gibs/HGIBS.mdl",
+	[TREE_SPEEDTREE] = "models/props_junk/Shoe001a.mdl",
+	[TREE_SUPPORTTREE] = "models/Items/HealthKit.mdl",
+	[TREE_BUILDINGTREE] = "models/weapons/w_hammer.mdl",
+	[TREE_MELEETREE] = "models/weapons/w_knife_ct.mdl",
+	[TREE_GUNTREE] = "models/weapons/w_pist_elite_single.mdl",
+	[TREE_POINTTREE] = "models/props_c17/FurnitureTable001a.mdl",
+	[TREE_ANCIENTTREE] = "models/props_c17/gravestone002a.mdl",
+	[TREE_DEFENSETREE] = "models/props_wasteland/controlroom_chair001a.mdl",
+	[TREE_DONATETREE] = "models/props_c17/lampShade001a.mdl",
+	[TREE_USELESSTREE] = "models/props_junk/gascan001a.mdl"
+}
 function PANEL:Init()
 	local allskills = GAMEMODE.Skills
 	local node
@@ -266,6 +278,7 @@ function PANEL:Init()
 				node.SkillID = id
 				self.SkillNodes[id] = node
 			end
+
 		end
 	end
 
@@ -280,6 +293,7 @@ function PANEL:Init()
 		node.SkillID = -1
 		self.SkillNodes[-1] = node
 	end
+
 
 	local top = vgui.Create("Panel", self)
 	top:SetSize(ScrW(), 256)
@@ -330,7 +344,7 @@ function PANEL:Init()
 
 	local delbtn = vgui.Create("DButton", bottomleft)
 	delbtn:SetFont("ZSHUDFontSmallest")
-	delbtn:SetText("Delete")
+	delbtn:SetText(translate.Get("s_del"))
 	delbtn:SizeToContents()
 	delbtn:SetTall(bottomleft:GetTall() / 5)
 	delbtn:Dock(BOTTOM)
@@ -356,7 +370,7 @@ function PANEL:Init()
 
 	local savebtn = vgui.Create("DButton", bottomleft)
 	savebtn:SetFont("ZSHUDFontSmallest")
-	savebtn:SetText("Save")
+	savebtn:SetText(translate.Get("s_save"))
 	savebtn:SizeToContents()
 	savebtn:SetTall(bottomleft:GetTall() / 5)
 	savebtn:Dock(BOTTOM)
@@ -368,7 +382,7 @@ function PANEL:Init()
 			SaveSkillLoadout(strTextOut)
 			UpdateDropDown(dropdown)
 
-			self:DisplayMessage("Skill loadout '" .. strTextOut .."' saved!", COLOR_GREEN)
+			self:DisplayMessage(translate.Format("s_loadout_s",strTextOut), COLOR_GREEN)
 		end,
 		function(strTextOut) end,
 		"OK", "Cancel")
@@ -380,7 +394,7 @@ function PANEL:Init()
 
 	local loadbtn = vgui.Create("DButton", bottomleft)
 	loadbtn:SetFont("ZSHUDFontSmallest")
-	loadbtn:SetText("Load")
+	loadbtn:SetText(translate.Get("s_load"))
 	loadbtn:SizeToContents()
 	loadbtn:SetTall(bottomleft:GetTall() / 5)
 	loadbtn:Dock(BOTTOM)
@@ -402,7 +416,7 @@ function PANEL:Init()
 			net.WriteTable(newloadout)
 		net.SendToServer()
 
-		self:DisplayMessage("Skill loadout '" .. nlname .."' loaded!", COLOR_GREEN)
+		self:DisplayMessage(translate.Format("s_loadout",nlname), COLOR_GREEN)
 	end
 
 	local bottomlefttop = vgui.Create("DEXRoundedPanel", self)
@@ -410,8 +424,8 @@ function PANEL:Init()
 	bottomlefttop:SetSize(160 * screenscale, 130 * screenscale)
 
 	local activateall = vgui.Create("DButton", bottomlefttop)
-	activateall:SetFont("ZSHUDFontSmallest")
-	activateall:SetText("Activate All")
+	activateall:SetFont(translate.Get("s_act_font") or "ZSHUDFontTiny")
+	activateall:SetText(translate.Get("s_act_all"))
 	activateall:SizeToContents()
 	activateall:SetTall(activateall:GetTall())
 	activateall:Dock(TOP)
@@ -419,9 +433,9 @@ function PANEL:Init()
 		surface.PlaySound("zombiesurvival/ui/misc1.ogg")
 
 		if #MySelf:GetUnlockedSkills() == 0 then
-			self:DisplayMessage("You have no skills to activate!", COLOR_RED)
+			self:DisplayMessage(translate.Get("s_no_act"), COLOR_RED)
 		else
-			self:DisplayMessage("All unlocked skills activated.", COLOR_GREEN)
+			self:DisplayMessage(translate.Get("s_yes_act"), COLOR_GREEN)
 		end
 
 		net.Start("zs_skills_all_desired")
@@ -431,7 +445,7 @@ function PANEL:Init()
 
 	local deactivateall = vgui.Create("DButton", bottomlefttop)
 	deactivateall:SetFont("ZSHUDFontSmallest")
-	deactivateall:SetText("Deactivate All")
+	deactivateall:SetText(translate.Get("s_dact_all"))
 	deactivateall:SizeToContents()
 	deactivateall:SetTall(deactivateall:GetTall())
 	deactivateall:DockMargin(0, 5, 0, 0)
@@ -440,9 +454,9 @@ function PANEL:Init()
 		surface.PlaySound("zombiesurvival/ui/misc1.ogg")
 
 		if #MySelf:GetUnlockedSkills() == 0 then
-			self:DisplayMessage("You have no skills to deactivate!", COLOR_RED)
+			self:DisplayMessage(translate.Get("s_no_dact"), COLOR_RED)
 		else
-			self:DisplayMessage("All unlocked skills deactivated.", COLOR_RED)
+			self:DisplayMessage(translate.Get("s_yes_dact"), COLOR_GREEN)
 		end
 
 		net.Start("zs_skills_all_desired")
@@ -455,7 +469,7 @@ function PANEL:Init()
 
 	local reset = vgui.Create("DButton", bottomlefttop)
 	reset:SetFont("ZSHUDFontSmaller")
-	reset:SetText(resettime <= 0 and "Reset" or (days .. " days left"))
+	reset:SetText(resettime <= 0 and translate.Get("s_reset") or (days .. " days left"))
 	reset:SetDisabled(resettime > 0)
 	reset:SizeToContents()
 	reset:SetTall(reset:GetTall())
@@ -463,11 +477,11 @@ function PANEL:Init()
 	reset:Dock(TOP)
 	reset.DoClick = function(me)
 		Derma_Query(
-			"Reset all skills and refund SP?\nYou can only do this once per week.",
-			"Warning",
+			translate.Get("s_reset1"),
+			translate.Get("s_reset2"),
 			"OK",
 			function() net.Start("zs_skills_reset") net.SendToServer() end,
-			"Cancel",
+			translate.Get("cancel"),
 			function() end
 		)
 	end
@@ -477,7 +491,7 @@ function PANEL:Init()
 	topright:DockPadding(10, 10, 10, 10)
 
 	local quit = vgui.Create("DButton", topright)
-	quit:SetText("Quit")
+	quit:SetText(translate.Get("quit"))
 	quit:SetFont("ZSHUDFont")
 	quit:Dock(FILL)
 	quit.DoClick = function()
@@ -515,8 +529,8 @@ function PANEL:Init()
 	contextmenu:SetVisible(false)
 
 	local button = vgui.Create("DButton", contextmenu)
-	button:SetText("Activate")
-	button:SetFont("ZSHUDFontSmall")
+	button:SetText(translate.Get("s_activate"))
+	button:SetFont(translate.Get("s_act_font") or "ZSHUDFontTiny")
 	button:SetDisabled(false)
 	button:SetSize(128 * screenscale, 64 * screenscale)
 	button:AlignTop()
@@ -604,7 +618,7 @@ function PANEL:Init()
 	local warningtext = vgui.Create("DLabel", self)
 	warningtext:SetTextColor(COLOR_RED)
 	warningtext:SetFont("ZSHUDFontSmall")
-	warningtext:SetText("Changes applied on respawn!")
+	warningtext:SetText(translate.Get("s_c_apl_resp"))
 	warningtext:SizeToContents()
 	warningtext:SetKeyboardInputEnabled(false)
 	warningtext:SetMouseInputEnabled(false)
@@ -724,7 +738,7 @@ function PANEL:GenerateParticles()
 		particle[2] = math.Rand(0, 360)
 		particle[3] = math.Rand(-1, 5)
 		particle[4] = math.Rand(6002, 4002)
-		particle[5] = math.Rand(30, 90)
+		particle[5] = math.Rand(GAMEMODE.Alpha_B,GAMEMODE.Alpha_P)
 		particles[i] = particle
 	end
 
@@ -853,6 +867,7 @@ local nodecolors = {
 	[TREE_USELESSTREE] = {2.3, 3, 9}
 }
 
+
 local matBeam = Material("effects/laser1")
 local matGlow = Material("sprites/glow04_noz")
 local matSmoke = Material("particles/smokey")
@@ -879,7 +894,7 @@ function PANEL:Paint(w, h)
 	campos.x = math.Approach(campos.x, self.DesiredZoom, dt * 13500)
 	self:SetCamPos(campos)
 
-	surface.SetDrawColor(0, 0, 0, 252)
+	surface.SetDrawColor( GAMEMODE.BG_R,  GAMEMODE.BG_G, GAMEMODE.BG_B, GAMEMODE.BG_AL)
 	surface.DrawRect(0, 0, w, h)
 
 	ang = self.aLookAngle
@@ -1065,15 +1080,15 @@ function PANEL:Paint(w, h)
 				local xskill = 58
 				if skill.AlwaysActive then
 					draw_SimpleText(translate.Get("s_alw_act"),"ZS3D2DFontSmall", 0, xskill, colo, TEXT_ALIGN_CENTER)
-					xskill = 58 + 8
+					xskill = xskill + 32
 				end
 				if skill.RemortReq then
 					draw_SimpleText(translate.Get("s_need_r")..skill.RemortReq,"ZS3D2DFontSmall", 0, xskill, colo, TEXT_ALIGN_CENTER)
-					xskill = 58 + 8
+					xskill = xskill + 32
 				end
 				if skill.LevelReq then
 					draw_SimpleText(translate.Get("s_need_l")..skill.LevelReq,"ZS3D2DFontSmall", 0, xskill, colo, TEXT_ALIGN_CENTER)
-					xskill = 58 + 8
+					xskill = xskill + 32
 				end
 			end
 

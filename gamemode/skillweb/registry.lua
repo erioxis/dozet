@@ -364,6 +364,7 @@ SKILL_AMULET_5 = 343
 SKILL_SEX_IS_REAL = 344
 SKILL_SECRET_VI = 345
 SKILL_SECRET_VII = 346
+SKILL_GOD_HEART = 347
 
 SKILLMOD_HEALTH = 1
 SKILLMOD_SPEED = 2
@@ -889,7 +890,14 @@ d.Hidden1 = true
 local d = GM:AddSkill(SKILL_SECRET_VII, "ᅠ ᅠ ᅠ", GOOD.."+5 Skill Points\nSecret VII",
 				                                                            	25,			20.1,					{SKILL_DEATHCURSE}, TREE_DONATETREE)
 d.Hidden = true	
-d.Hidden1 = true																
+d.Hidden1 = true	
+
+local d = GM:AddSkill(SKILL_GOD_HEART, translate.Get("skill_godheart"), GOOD..translate.Get("skill_godheart_d1"),
+				                                                            	-14,			16,					{SKILL_LOX}, TREE_DONATETREE)
+d.RemortReq = 512
+d.LevelReq = 99
+d.AlwaysActive = true
+d.Hidden = true	
 GM:AddSkillModifier(SKILL_SECRET_VI, SKILLMOD_SPOINT, 5)
 GM:AddSkillModifier(SKILL_SECRET_VII, SKILLMOD_SPOINT, 5)
 GM:AddSkill(SKILL_TRIGGER_DISCIPLINE1, translate.Get("skill_t_d").."I", GOOD.."+2%"..translate.Get("r_speed")..GOOD.."+3%"..translate.Get("b_damage")..GOOD.."+2%"..translate.Get("w_draw")..BAD.."-9%"..translate.Get("meleedamage"),
@@ -932,9 +940,10 @@ GM:AddSkill(SKILL_BOUNTYKILLER, translate.Get("skill_bounty"), GOOD..translate.G
 																1,			6,					{SKILL_GUNSLINGER, SKILL_VAMPIRISM}, TREE_GUNTREE)
 GM:AddSkillModifier(SKILL_BOUNTYKILLER, SKILLMOD_DAMAGE, -0.15)
 GM:AddSkill(SKILL_VAMPIRISM, translate.Get("skill_vampirism"), GOOD..translate.Get("skill_vampirism_d1")..BAD.."-35%"..translate.Get("b_damage"),
-																1,		    7,					{SKILL_BOUNTYKILLER}, TREE_GUNTREE)
+																1,		    7,					{SKILL_BOUNTYKILLER, SKILL_LOX}, TREE_GUNTREE)
 GM:AddSkill(SKILL_LOX, translate.Get("skill_lox"), GOOD..translate.Get("skill_lox_d1")..BAD..translate.Get("skill_lox_d2"),
 																2,		    6,					{SKILL_VAMPIRISM}, TREE_GUNTREE)
+.Hidden = true	
 GM:AddSkillModifier(SKILL_LOX, SKILLMOD_ADD_STATUS, 1)
 GM:AddSkillModifier(SKILL_BOUNTYKILLER, SKILLMOD_DAMAGE, -0.35)
 GM:AddSkill(SKILL_D_CURSEDTRUE, translate.Get("skill_d_truecurse"), BAD.."-100%"..translate.Get("m_curse")..GOOD.."+35"..translate.Get("health")..GOOD.."+40"..translate.Get("speed")..GOOD.."+15%"..translate.Get("r_speed"),

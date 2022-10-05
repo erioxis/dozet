@@ -88,6 +88,7 @@ LANGUAGE.skill_add_health = "Здоровья"
 LANGUAGE.skill_add_amulet = "Ячеек Амулета"
 LANGUAGE.skill_add_speed = "Скорости"
 -- Настройки||
+LANGUAGE.op_show_dmgp = "Показывать урон в %"
 LANGUAGE.op_movroll = "Включить движение экрана при ходьбе"
 LANGUAGE.op_beaconind = "Включить текст маячков"
 LANGUAGE.op_dmgindicator_wall = "Показывать индикаторы урона сквозь стены"
@@ -137,6 +138,20 @@ LANGUAGE.hm_stealed_desc  = "%s Застилил %d зомби."
 LANGUAGE.hm_lhuman  = "Послений человек симуляции"
 LANGUAGE.hm_lhuman_desc  = "%s Стал последним человеком на дозете."
 -- Various gamemode stuff|
+LANGUAGE.w_tier					= "Тир "
+LANGUAGE.you_ascended_to_level_x					= "Ты достиг %d уровня!"
+LANGUAGE.sigil_corrupted							= "Сигил бы захвачен. Армия досея становится сильнее."
+LANGUAGE.sigil_corrupted_last						= "Последний сигил захвачен! Армия досея очень сильна!"
+LANGUAGE.sigil_uncorrupted							= "Сигил был починен, Досеи ослабел!"
+LANGUAGE.buffed_x_with_y							= "%s Бафнул тебя с помощью %s"
+LANGUAGE.buffed_x_with_a_y							= "Бафнул %s с помощью %s"
+LANGUAGE.removed_your_nail							= "%s Убрал один из твоих гвоздей"
+LANGUAGE.obtained_inv_item_from_z					= "Взятое %s с помощью %s добавлено в инвентарь"
+LANGUAGE.obtained_a_inv								= "%s добавлено в инвентарь"
+LANGUAGE.obtained_x_y_ammo_from_z					= "Взято %d %s патрон с %s"
+LANGUAGE.obtained_x_y_ammo							= "Взято %d %s патрон"
+LANGUAGE.you_have_remorted_now_rl_x					= "Ты ремортнулся и достиг %d реморта!"
+LANGUAGE.you_have_reset_all							= "Все твои скиллы, ОПЫТ,и поинты прокачки были перезагружены."
 LANGUAGE.round_x_of_y								= "Раунд %d из %d"
 LANGUAGE.win_endboard  = "Вы выйграли!"
 LANGUAGE.lose_endboard = "Вы проиграли."
@@ -2076,6 +2091,7 @@ LANGUAGE.ammo_grenades = "Гранаты"
 LANGUAGE.ammo_molotovs = "Молотовы"
 LANGUAGE.ammo_medicalsupplies = "Медицинские капсулы"
 LANGUAGE.ammo_pistol = "Пистолетные"
+LANGUAGE.ammo_smg = "СМГ"
 
 LANGUAGE.buff_mrifle = "Медицинская винтовка"
 LANGUAGE.buff_srifle = "Усиляющая Винтовка"
@@ -2087,9 +2103,34 @@ LANGUAGE.s_deact = " деактивирован."
 LANGUAGE.s_act = " активирован."
 LANGUAGE.s_unl_act = " разблокирован и активирован!"
 
+LANGUAGE.s_activate = "Активировать"
+
 LANGUAGE.s_need_l = "Нужен уровень: "
 LANGUAGE.s_need_r = "Нужен реморт: "
 LANGUAGE.s_alw_act = "Всегда активен"
+LANGUAGE.s_act_all = "Активировать Все"
+LANGUAGE.s_no_act = "Бро тебе надо качаться чтобы активировать скиллы!"
+LANGUAGE.s_yes_act = "Все скиллы активированы."
+LANGUAGE.s_no_dact = "Бро тебе надо качаться чтобы отключить скиллы!"
+LANGUAGE.s_yes_dact = "Все скиллы отключены."
+LANGUAGE.s_dact_all = "Отключить Все"
+LANGUAGE.s_reset = "Сбросить"
+LANGUAGE.s_act_font = "ZSHUDFontTiny"
+
+LANGUAGE.s_del = "Удалить"
+LANGUAGE.s_save = "Сохранить"
+LANGUAGE.s_load = "Загрузить"
+
+LANGUAGE.s_loadout = "Ваша сборка '%s' загружена!"
+LANGUAGE.s_loadout_s = "Ваша сборка '%s' сохранена!"
+LANGUAGE.s_c_apl_resp = "Изменения будут только при респавне!"
+LANGUAGE.s_remort = "Ремонт"
+LANGUAGE.s_remort_d = "Стань дальше от бога.\nПотеряй весь опыт и скиллы.\nСтартни с 1 уровня и  2 ремортами(1 реморт = 1 очко прокачки)\nМожно делать реморт и получать еще больше СП."
+
+LANGUAGE.s_reset1 = "Сбросить все скиллы и вернуть СП?"
+LANGUAGE.s_reset2 = "ПРЕДУПРЕЖДЕНИЕ"
+LANGUAGE.cancel = "Отмена"
+LANGUAGE.quit = "Выйти"
 
 LANGUAGE.trg_bdarmor = "КРОВАВОЙ БРОНИ: "
 LANGUAGE.trg_frail = "(САМОУЧКА)"
@@ -2112,10 +2153,64 @@ LANGUAGE.hud_sp = " СП"
 
 LANGUAGE.hud_uu_sp = "Неиспользованных Скилл Поинтов: "
 
-LANGUAGE.hud_lvl_max = "Уровень МАКСИМАЛЬНЫЙ"
+LANGUAGE.hud_lvl_max = "Уровень МАКСИМАЛЬНЫЙ // Реморт"
 LANGUAGE.hud_r_lvl = "Уровень %d "
 
 LANGUAGE.dosei_inf = "ЗАРАЖЕНИЕ ДОСЕЕМ: "
 
 LANGUAGE.sboard_points_x_score_x_dps_x = "Поинты: %d Счёт: %d УВС: %d "
 LANGUAGE.on_dismantle_give = "\nПри разборке дает: "
+
+LANGUAGE.skill_godheart = "Божье Сердце"
+LANGUAGE.skill_godheart_d1  = "Дает силу богов - НЕУЯЗВИМОСТЬ"
+
+
+LANGUAGE.p_speed1 = "Нормальная"
+LANGUAGE.p_speed2 = "Очень медленная"
+LANGUAGE.p_speed3 = "Довольно медленная"
+LANGUAGE.p_speed4 = "Медленная"
+LANGUAGE.p_speed5 = "Быстрая"
+LANGUAGE.p_speed6 = "Довольно быстрая"
+LANGUAGE.p_speed7 = "Очень быстраяя"
+LANGUAGE.p_speed8 = "ЧЕЕЕЕЕЕЕЕЕЕЕЕл"
+LANGUAGE.p_speed9 = "Ультра-медленная"
+
+LANGUAGE.p_dmg = "Урон"
+LANGUAGE.p_rng = "Дальность"
+LANGUAGE.p_sze = "Размер"
+
+LANGUAGE.p_atd = "Скорость Атаки"
+LANGUAGE.p_cze = "Размер Боезапаса"
+
+LANGUAGE.p_min_spr = "Мин Разброс"
+LANGUAGE.p_max_spr = "Макс Разброс"
+LANGUAGE.p_msp = "Скорость Ходьбы"
+
+LANGUAGE.skill_lul = "Скилл"
+LANGUAGE.pshop_mut = "Мутаген"
+LANGUAGE.pshop_b_mut = "Мутаген Босса"
+
+
+LANGUAGE.rem_standart = "Стандарт"
+LANGUAGE.weapon_remantler							= "Мастерская"
+LANGUAGE.rem_cost = "Стоимость в скрапе: "
+
+LANGUAGE.rem_cost_i_u = "Скрапа для использования: "
+
+LANGUAGE.rem_nodism = "Нельзя разобрать"
+
+LANGUAGE.rem_dis_for =  "Разобрать на %d скрапа"
+LANGUAGE.rem_enough_scr =  "Тебе надо иметь достаточно скрапа для улучшения!"
+
+LANGUAGE.rem_q_first =  "Ты должен сначало прокачать оружие до нужного качества!"
+
+LANGUAGE.rem_title_d =  "Разбирай оружие в скрап и используй этот скрап для улучшений!"
+
+
+LANGUAGE.rep_dis_we =  "Разборка оружия только в один конец!"
+
+LANGUAGE.rem_t_remling =  "Прокачка"
+LANGUAGE.rem_t_trink =  "Тринкеты"
+LANGUAGE.rem_t_ammo =  "Патроны"
+
+LANGUAGE.rem_dismantle =  "Разобрать"

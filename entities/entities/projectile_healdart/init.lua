@@ -68,7 +68,7 @@ function ENT:AttachToPlayer(vHitPos, eHitEntity)
 		for _, pl in pairs(ents.FindInSphere(self:GetPos(), 77)) do
 			if WorldVisible(self:LocalToWorld(Vector(0, 0, 30)), pl:NearestPoint(self:LocalToWorld(Vector(0, 0, 30)))) then
 				if pl:IsValidLivingZombie() then
-					pl:TakeSpecialDamage(self.Heal * 6, DMG_DIRECT,owner, self:GetOwner():GetActiveWeapon())
+					pl:TakeSpecialDamage(self.Heal * 0.5, DMG_DIRECT,owner, self:GetOwner():GetActiveWeapon())
 					pl:PoisonDamage(33, owner, self)
 				elseif	pl:IsValidLivingHuman() then
 					owner:HealPlayer(pl, self.Heal * 0.3)

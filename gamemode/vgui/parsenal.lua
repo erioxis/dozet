@@ -817,8 +817,8 @@ function GM:OpenArsenalMenu()
 				for i = ind, (trinkets and #subcats or 7) do
 					local ispacer = trinkets and ((i-1) % 4)+1 or i
 					local start = i == (catid == ITEMCAT_GUNS and 2 or ind)
-
-					tbn = EasyButton(tabpane, trinkets and subcats[i] or ("Tier " .. i), 1, 8)
+					local trs = translate.Get
+					tbn = EasyButton(tabpane, trinkets and subcats[i] or (trs("w_tier") .. i), 1, 8)
 					tbn:SetFont(trinkets and "ZSHUDFontSmallest" or "ZSHUDFontSmall")
 					tbn:SetAlpha(start and 255 or 70)
 					tbn:AlignRight((trinkets and -35 or -15) * screenscale -

@@ -29,9 +29,9 @@ SWEP.CSMuzzleFlashes = false
 
 SWEP.ReloadSound = Sound("Weapon_SMG1.Reload")
 SWEP.Primary.Sound = Sound("Weapon_AR2.NPC_Single")
-SWEP.Primary.Damage = 16.5
+SWEP.Primary.Damage = 9
 SWEP.Primary.NumShots = 1
-SWEP.Primary.Delay = 0.33
+SWEP.Primary.Delay = 0.091
 
 SWEP.Primary.ClipSize = 24
 SWEP.Primary.Automatic = true
@@ -49,7 +49,7 @@ SWEP.ConeMin = 2.5
 
 SWEP.IronSightsPos = Vector(-6.425, 5, 1.02)
 
-GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_FIRE_DELAY, -0.015)
+GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_FIRE_DELAY, -0.0045)
 GAMEMODE:AddNewRemantleBranch(SWEP, 1, "'Thrower' Burst SMG", "Increased damage but makes the tosser burst fire", function(wept)
 	wept.Primary.Damage = wept.Primary.Damage * 0.5
 	wept.Primary.Delay = wept.Primary.Delay * 1.25

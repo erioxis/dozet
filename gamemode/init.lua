@@ -3534,6 +3534,7 @@ function GM:DamageFloater(attacker, victim, dmgpos, dmg, definiteply)
 			net.WriteUInt(math.ceil(dmg), 16)
 		end
 		net.WriteVector(dmgpos)
+		net.WriteEntity(victim)
 	net.Send(attacker)
 end
 
@@ -3891,7 +3892,7 @@ function GM:KeyPress(pl, key)
 				pl:EmitSound("items/smallmedkit1.wav", 50)
 				pl:SetHealth(math.min(pl:GetMaxHealth() * 0.1 + pl:Health(), pl:GetMaxHealth()))
 				pl.LastHealedFocus = CurTime() + 1
-				for _, pl3 in pairs(ents.FindInSphere(owner:GetPos(), 128 * self:GetModelScale())) do
+				for _, pl3 in pairs(ents.FindInSphere(pl:GetPos(), 128 * pl:GetModelScale())) do
 					if pl3:IsValidLivingHuman() then
 						pl:HealPlayer(pl3, pl:Health() * 0.1)
 					end

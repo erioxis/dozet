@@ -8,8 +8,8 @@ GM.ItemCategoryIcons = {
 	[ITEMCAT_TOOLS] = "icon16/wrench.png",
 	[ITEMCAT_DEPLOYABLES] = "icon16/package.png",
 	[ITEMCAT_OTHER] = "icon16/world.png",
-	[ITEMCAT_TRINKETS] = "icon16/ruby.png", --[[,
-	[ITEMCAT_RETURNS] = "icon16/user_delete.png"]]
+	[ITEMCAT_TRINKETS] = "icon16/ruby.png", 
+	[ITEMCAT_SPECIAL] = "icon16/user_delete.png",
 	[ITEMCAT_MAGIC] = "icon16/user_delete.png"
 }
 
@@ -24,17 +24,17 @@ GM.RemortColors = {
 	[2] = COLOR_RORANGE,
 	[1] = COLOR_RED
 }
-
+local trs = translate.Get
 GM.SpeedToText = {
-	[SPEED_NORMAL] = "Normal",
-	[SPEED_SLOWEST] = "Very Slow",
-	[SPEED_SLOWER] = "Quite Slow",
-	[SPEED_SLOW] = "Slow",
-	[SPEED_FAST] = "Fast",
-	[SPEED_FASTER] = "Quite Fast",
-	[SPEED_FASTEST] = "Very Fast",
-	[SPEED_VKID] = "Dudeeee",
-	[-1] = "Ultra Slow",
+	[SPEED_NORMAL] = trs("p_speed1"),
+	[SPEED_SLOWEST] = trs("p_speed2"),
+	[SPEED_SLOWER] = trs("p_speed3"),
+	[SPEED_SLOW] = trs("p_speed4"),
+	[SPEED_FAST] = trs("p_speed5"),
+	[SPEED_FASTER] = trs("p_speed6"),
+	[SPEED_FASTEST] = trs("p_speed7"),
+	[SPEED_VKID] = trs("p_speed8"),
+	[-1] = trs("p_speed9"),
 }
 
 GM.AmmoToPurchaseNames = {
@@ -50,17 +50,17 @@ GM.AmmoToPurchaseNames = {
 }
 
 GM.WeaponStatBarVals = {
-	{"MeleeDamage", "Damage", 2, 140, false},
-	{"MeleeRange", "Range", 30, 100, false},
-	{"MeleeSize", "Size", 0.2, 3, false},
+	{"MeleeDamage", trs("p_dmg"), 2, 640, false},
+	{"MeleeRange",  trs("p_rng"), 30, 100, false},
+	{"MeleeSize", trs("p_sze"), 0.2, 3, false},
 
-	{"Damage", "Damage", 1, 506, false, "Primary"},
-	{"Delay", "Attack Delay", 0.05, 3, true, "Primary"},
-	{"ClipSize", "Clip Size", 1, 35, false, "Primary"},
+	{"Damage", trs("p_dmg"), 1, 506, false, "Primary"},
+	{"Delay", trs("p_atd"), 0.05, 3, true, "Primary"},
+	{"ClipSize", trs("p_cze"), 1, 35, false, "Primary"},
 
-	{"ConeMin", "Min Spread", 0, 5, true},
-	{"ConeMax", "Max Spread", 1, 7, true},
-	{"WalkSpeed", "Move Speed", 200, 350, false}
+	{"ConeMin",  trs("p_min_spr"), 0, 5, true},
+	{"ConeMax",  trs("p_max_spr"), 1, 7, true},
+	{"WalkSpeed", trs("p_msp"), 200, 350, false}
 }
 
 GM.LifeStatsLifeTime = 5
@@ -102,9 +102,42 @@ cvars.AddChangeCallback("zs_disablescopes", function(cvar, oldvalue, newvalue)
 	GAMEMODE.DisableScopes = tonumber(newvalue) == 1
 end)
 
+
+GM.ShowPercDmg = CreateClientConVar("zs_show_dmg_in_perc", "0", true, false):GetBool()
+cvars.AddChangeCallback("zs_show_dmg_in_perc", function(cvar, oldvalue, newvalue)
+	GAMEMODE.ShowPercDmg = tonumber(newvalue) == 1
+end)
+
 GM.IronsightZoomScale = math.Clamp(CreateClientConVar("zs_ironsightzoom", 1, true, false):GetFloat(), 0, 1)
 cvars.AddChangeCallback("zs_ironsightzoom", function(cvar, oldvalue, newvalue)
 	GAMEMODE.IronsightZoomScale = math.Clamp(tonumber(newvalue) or 1, 0, 1)
+end)
+
+GM.Alpha_P = math.Clamp(CreateClientConVar("zs_alpha_p", 90, true, false):GetFloat(), 0, 1)
+cvars.AddChangeCallback("zs_alpha_p", function(cvar, oldvalue, newvalue)
+	GAMEMODE.Alpha_P = math.Clamp(tonumber(newvalue) or 1, 0, 1)
+end)
+
+GM.Alpha_B = math.Clamp(CreateClientConVar("zs_alpha_b", 30, true, false):GetFloat(), 0, 255)
+cvars.AddChangeCallback("zs_alpha_b", function(cvar, oldvalue, newvalue)
+	GAMEMODE.Alpha_B = math.Clamp(tonumber(newvalue) or 1, 0, 255)
+end)
+
+GM.BG_AL = math.Clamp(CreateClientConVar("zs_bg_alpha", 252, true, false):GetFloat(), 0, 255)
+cvars.AddChangeCallback("zs_bg_alpha", function(cvar, oldvalue, newvalue)
+	GAMEMODE.BG_AL = math.Clamp(tonumber(newvalue) or 252, 0, 255)
+end)
+GM.BG_R = math.Clamp(CreateClientConVar("zs_bg_col_r", 0, true, false):GetFloat(), 0, 255)
+cvars.AddChangeCallback("zs_bg_col_r", function(cvar, oldvalue, newvalue)
+	GAMEMODE.BG_R = math.Clamp(tonumber(newvalue) or 0, 0, 255)
+end)
+GM.BG_G = math.Clamp(CreateClientConVar("zs_bg_col_g", 0, true, false):GetFloat(), 0, 255)
+cvars.AddChangeCallback("zs_bg_col_g", function(cvar, oldvalue, newvalue)
+	GAMEMODE.BG_G = math.Clamp(tonumber(newvalue) or 0, 0, 255)
+end)
+GM.BG_B = math.Clamp(CreateClientConVar("zs_bg_col_b", 0, true, false):GetFloat(), 0, 255)
+cvars.AddChangeCallback("zs_bg_col_b", function(cvar, oldvalue, newvalue)
+	GAMEMODE.BG_b = math.Clamp(tonumber(newvalue) or 0, 0, 255)
 end)
 
 GM.ThirdPersonKnockdown = CreateClientConVar("zs_thirdpersonknockdown", "1", true, false):GetBool()

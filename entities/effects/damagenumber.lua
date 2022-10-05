@@ -11,7 +11,6 @@ local col = Color(220, 0, 0)
 local colprop = Color(220, 220, 0)
 hook.Add("PostDrawTranslucentRenderables", "DrawDamage", function()
 	if #Particles == 0 then return end
-
 	local done = true
 	local curtime = CurTime()
 
@@ -30,9 +29,9 @@ hook.Add("PostDrawTranslucentRenderables", "DrawDamage", function()
 			done = false
 
 			c.a = math.Clamp(particle.DieTime - curtime, 0, 1) * 220
-
+			local victim = particle.Entity
 			cam.Start3D2D(particle:GetPos(), ang, 0.1 * GAMEMODE.DamageNumberScale)
-				draw.SimpleText(particle.Amount, "ZS3D2DFont2", 0, 0, c, TEXT_ALIGN_CENTER, TEXT_ALIGN_BOTTOM)
+				draw.SimpleText(particle.Amount..(victim:IsPlayer() and GAMEMODE.ShowPercDmg and " ("..math.Round((particle.Amount/(victim:GetMaxZombieHealth() or 0) * 100)).."%)" or ""), "ZS3D2DFont2", 0, 0, c, TEXT_ALIGN_CENTER, TEXT_ALIGN_BOTTOM)
 			cam.End3D2D()
 		end
 	end
@@ -51,6 +50,7 @@ function EFFECT:Init(data)
 	local pos = data:GetOrigin()
 	local amount = data:GetMagnitude()
 	local Type = data:GetScale()
+	local victim = data:GetEntity()
 	local velscal = GAMEMODE.DamageNumberSpeed
 
 	local vel = VectorRand()
@@ -71,6 +71,7 @@ function EFFECT:Init(data)
 	particle:SetVelocity(math.Clamp(amount, 5, 50) * 4 * vel * velscal)
 
 	particle.Amount = amount
+	particle.Entity = victim
 	particle.DieTime = CurTime() + 2 * GAMEMODE.DamageNumberLifetime
 	particle.Type = Type
 

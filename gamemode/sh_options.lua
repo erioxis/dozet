@@ -61,14 +61,14 @@ GM.ItemCategories = {
 	[ITEMCAT_DEPLOYABLES] = translate.Get("pshop_dep"),
 	[ITEMCAT_TRINKETS] = translate.Get("pshop_trinkets"),
 	[ITEMCAT_OTHER] = translate.Get("pshop_other"),
-	[ITEMCAT_SPECIAL] = "Skill",
+	[ITEMCAT_SPECIAL] = translate.Get("skill_lul"),
 	[ITEMCAT_MAGIC]	= translate.Get("pshop_magic")
 
 
 }
 GM.MutItemCategories = {
-	[ITEMCAT_MUTATIONS]	 = "Mutagen",
-	[ITEMCAT_MUTATIONS_BOSS]	= "Boss Mutagen"
+	[ITEMCAT_MUTATIONS]	 = translate.Get("pshop_mut"),
+	[ITEMCAT_MUTATIONS_BOSS]	= translate.Get("pshop_b_mut")
 }
 
 GM.ItemSubCategories = {

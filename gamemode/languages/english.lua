@@ -104,6 +104,7 @@ LANGUAGE.skill_add_health = "Health"
 LANGUAGE.skill_add_amulet = "Amulet Cells"
 LANGUAGE.skill_add_speed = "Speed"
 -- Options|||
+LANGUAGE.op_show_dmgp = "Show DMG in %"
 LANGUAGE.op_movroll = "Enable movement view roll"
 LANGUAGE.op_beaconind = "Enable message beacon visibility"
 LANGUAGE.op_dmgindicator_wall = "Show damage indicators through walls"
@@ -1126,6 +1127,8 @@ LANGUAGE.pointsdoubled							= "End wave points had been doubled"
 LANGUAGE.ran_out_of_ammo						 	= "Your %s has run out of ammo."
 LANGUAGE.trinket_recharged							= "Your %s has recharged and is ready to use again."
 LANGUAGE.evolves_in_to_x_on_wave_y					= "Evolves in to %s on wave %d."
+
+LANGUAGE.w_tier					= "Tier "
 
 -- Sigils point objectives
 LANGUAGE.sigil										= "Sigil"
@@ -2261,6 +2264,7 @@ LANGUAGE.ammo_grenades = "Grenades"
 LANGUAGE.ammo_molotovs = "Molotovs"
 LANGUAGE.ammo_medicalsupplies = "Medical Supplies"
 LANGUAGE.ammo_pistol = "Pistol"
+LANGUAGE.ammo_smg = "SMG"
 
 LANGUAGE.buff_mrifle = "Medical Rifle"
 LANGUAGE.buff_srifle = "Strength Rifle"
@@ -2275,6 +2279,32 @@ LANGUAGE.s_unl_act = " unlocked and activated!"
 LANGUAGE.s_need_l = "Need Level: "
 LANGUAGE.s_need_r = "Need Remort: "
 LANGUAGE.s_alw_act = "Always Active"
+LANGUAGE.s_act_all = "Activate all"
+LANGUAGE.s_act_font = "ZSHUDFontSmallest"
+LANGUAGE.s_no_act = "You have no skills to activate!"
+LANGUAGE.s_yes_act = "All unlocked skills activated."
+LANGUAGE.s_no_dact = "You have no skills to Deactivate!"
+LANGUAGE.s_yes_dact = "All unlocked skills Deactivated."
+LANGUAGE.s_dact_all = "Deactivate all"
+LANGUAGE.s_reset = "Reset"
+
+LANGUAGE.s_reset1 = "Reset all skills and refund SP?"
+LANGUAGE.s_reset2 = "Warning"
+LANGUAGE.cancel = "Cancel"
+LANGUAGE.quit = "Quit"
+LANGUAGE.s_loadout = "Skill loadout '%s' loaded!"
+LANGUAGE.s_loadout_s = "Skill loadout '%s' saved!"
+LANGUAGE.s_remort = "Remort"
+LANGUAGE.s_remort_d = "Go even further beyond.\nLose all skills, experience, skill points, and levels.\nStart at level 1 but with 2 remorts(1 remort = 1 skill point)\nCan remort multiple times for multiple extra skill points."
+
+LANGUAGE.s_del = "Delete"
+LANGUAGE.s_save = "Save"
+LANGUAGE.s_load = "Load"
+
+LANGUAGE.s_activate = "Activate"
+LANGUAGE.s_c_apl_resp = "Changes applied on respawn!"
+
+
 
 LANGUAGE.skill_quepro = "Que Pro"
 
@@ -2292,6 +2322,9 @@ LANGUAGE.trg_lvl = "LVL "
 
 LANGUAGE.trg_car = "Carrying [%s]"
 
+
+
+
 LANGUAGE.hud_remort = " Remort "
 
 LANGUAGE.hud_xp = " XP"
@@ -2301,10 +2334,64 @@ LANGUAGE.hud_sp = " SP"
 LANGUAGE.hud_uu_sp = "Unused skill points: "
 
 LANGUAGE.hud_r_lvl = "Level %d "
-LANGUAGE.hud_lvl_max = "Level MAX"
+LANGUAGE.hud_lvl_max = "Level MAX // Remort"
 
 LANGUAGE.dosei_inf = "DOSEI INFECTION: "
 
 LANGUAGE.sboard_points_x_score_x_dps_x = "Points: %d Score: %d DPS: %d "
 
 LANGUAGE.on_dismantle_give = "\nOn dismantle give: "
+
+LANGUAGE.skill_godheart = "God Heart"
+LANGUAGE.skill_godheart_d1  = "Give Power Of gods - INVICIBILITY"
+
+
+LANGUAGE.p_dmg = "Damage"
+LANGUAGE.p_rng = "Range"
+LANGUAGE.p_sze = "Size"
+
+LANGUAGE.p_atd = "Attack Delay"
+LANGUAGE.p_cze = "Clip Size"
+
+LANGUAGE.p_min_spr = "Min Spread"
+LANGUAGE.p_max_spr = "Max Spread"
+LANGUAGE.p_msp = "Move Speed"
+
+
+LANGUAGE.p_speed1 = "Normal"
+LANGUAGE.p_speed2 = "Very Slow"
+LANGUAGE.p_speed3 = "Quite Slow"
+LANGUAGE.p_speed4 = "Slow"
+LANGUAGE.p_speed5 = "Fast"
+LANGUAGE.p_speed6 = "Quite Fast"
+LANGUAGE.p_speed7 = "Very Fast"
+LANGUAGE.p_speed8 = "Dudeeee"
+LANGUAGE.p_speed9 = "Ultra Slow"
+
+LANGUAGE.skill_lul = "Skill"
+
+LANGUAGE.pshop_mut = "Mutagen"
+LANGUAGE.pshop_b_mut = "Boss Mutagen"
+
+LANGUAGE.rem_standart = "Standart"
+LANGUAGE.rem_cost = "Scrap Cost: "
+
+LANGUAGE.rem_cost_i_u = "Scrap for usage: "
+
+LANGUAGE.rem_nodism = "Cannot Dismantle"
+
+LANGUAGE.rem_dis_for =  "Dismantle for %d Scrap"
+LANGUAGE.rem_enough_scr =  "You need enough scrap to upgrade this weapon!"
+
+LANGUAGE.rem_q_first =  "You must upgrade your weapon to the correct quality first!"
+
+LANGUAGE.rem_title_d =  "Dismantle weapons into scrap and use scrap to upgrade weapons!"
+
+LANGUAGE.rep_dis_we =  "Disassembling your weapons cannot be reversed!"
+
+
+LANGUAGE.rem_t_remling =  "Remantling"
+LANGUAGE.rem_t_trink =  "Trinkets"
+LANGUAGE.rem_t_ammo =  "Ammunition"
+
+LANGUAGE.rem_dismantle =  "Dismantle Weapon"

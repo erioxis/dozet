@@ -546,9 +546,6 @@ function meta:ProcessDamage(dmginfo)
 					if boost and boost:IsValid() then
 						boost:SetSpeed(55)
 					end
-					if boost2 and boost2:IsValid() then
-						boost2:SetSpeed(95)
-					end
 				end
 				if self:IsSkillActive(SKILL_BLOODLOST) then
 					self:GiveStatus("bloodrage", 6)
