@@ -144,10 +144,17 @@ if SERVER then
 function CLASS:AltUse(pl)
 	pl:StartFeignDeath()
 end
+function CLASS:OnKilled(pl, attacker, inflictor, suicide, headshot, dmginfo)
+	if attacker:IsPlayer() and dmginfo:GetDamage() < 100 and inflictor.IsMelee and attacker ~= pl then
+		attacker:GiveAchievement("niggerbruh")
+	end
+
+	return true
+end
 
 function CLASS:ProcessDamage(pl, dmginfo)
 	if dmginfo:GetInflictor().IsMelee and not dmginfo:GetInflictor().IgnoreNiggers then
-		dmginfo:SetDamage(0)
+		dmginfo:SetDamage(5)
 	end
 end
 end

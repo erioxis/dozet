@@ -73,6 +73,11 @@ function meta:ProcessDamage(dmginfo)
 		if attacker.IsLastHuman and attacker.ClanAnsableRevolution then
 			dmginfo:ScaleDamage(1.70)
 		end
+		if attacker.IsLastHuman and attacker:IsSkillActive(SKILL_LAST_MAN) then
+			dmginfo:ScaleDamage(1.15)
+		elseif !attacker.IsLastHuman and attacker:IsSkillActive(SKILL_LAST_MAN) then
+			dmginfo:ScaleDamage(0.85)
+		end
 		if attacker:IsValidLivingHuman() and attacker.ClanMich and not inflictor.IsMelee then
             dmginfo:ScaleDamage(1.15)
 		end
@@ -164,6 +169,12 @@ function meta:ProcessDamage(dmginfo)
 				if attacker:IsSkillActive(SKILL_HEAVYSTRIKES) and not self:GetZombieClassTable().Boss and (wep.IsFistWeapon and attacker:IsSkillActive(SKILL_CRITICALKNUCKLE) or wep.MeleeKnockBack > 0) then
 					attacker:TakeSpecialDamage(damage * (wep.Unarmed and 1 or 0.08), DMG_SLASH, self, self:GetActiveWeapon())
 				end
+				if attacker:IsSkillActive(SKILL_BLOODYFISTS) and wep.Unarmed then
+					self:AddBleedDamage(damage * 0.1, attacker)
+					if  attacker:IsSkillActive(SKILL_DEFENDBLOOD) then
+						attacker:AddBleedDamage(damage * 0.05, self)
+					end
+				end
 				
 				if attacker:HasTrinket("sin_lust") and math.abs(self:GetForward():Angle().yaw - attacker:GetForward():Angle().yaw) <= 90 then
 					attacker:TakeSpecialDamage(damage * 0.05, DMG_SLASH, self, self:GetActiveWeapon())
@@ -222,7 +233,9 @@ function meta:ProcessDamage(dmginfo)
 		if self:IsSkillActive(SKILL_SKYHELP) then
 		self:SetVelocity(VectorRand() * math.random(200,1700))
     end
-
+	if self:IsSkillActive(SKILL_BARA_CURSED) then
+		dmginfo:ScaleDamage(3)
+    end
 
 
 
@@ -319,7 +332,9 @@ function meta:ProcessDamage(dmginfo)
         self.XPMulti = self.XPMulti - 0.05
 	end
 
-
+	if attacker:IsPlayer() and attacker:Team() == TEAM_UNDEAD and dmginfo:GetDamage() >= 1000 and !self:HasGodMode() then
+		timer.Simple(2, function() if self:Team() == TEAM_HUMAN then self:GiveAchievement("onepieceisreal") end end)
+	end
 
 
 	if attacker:IsValid() and attacker:IsPlayer() and inflictor:IsValid() and attacker:Team() == TEAM_UNDEAD then
@@ -375,20 +390,20 @@ function meta:ProcessDamage(dmginfo)
 					
 					local cursed5 = self:GetStatus("hollowing")
 					if (cursed5) then 
-						self:AddHallow(self:GetOwner(),cursed5.DieTime - CurTime() + (dmginfo:GetDamage() * 1.5))
+						self:AddHallow(attacker,cursed5.DieTime - CurTime() + (dmginfo:GetDamage() * 1.5))
 						self.MasteryHollowing = self.MasteryHollowing + dmginfo:GetDamage()
 					end
 					if (not cursed5) then 
-						self:AddHallow(self:GetOwner(),dmginfo:GetDamage() * 1.5)
+						self:AddHallow(attacker,dmginfo:GetDamage() * 1.5)
 						self.MasteryHollowing = self.MasteryHollowing + dmginfo:GetDamage()
 					end
 					dmginfo:SetDamage(0)
 				end
 				--[[if self:IsSkillActive(SKILL_UPLOAD) then
 					timer.Simple(5, function()
-						self:TakeSpecialDamage(dmginfo:GetDamage() * 0.5, DMG_DIRECT, attacker, self)
+						self:TakeSpecialDamage(dmginfo:GetDamage() * 0.5, DMG_ACID, attacker, self)
 					end)
-					dmginfo:SetDamage(0.1)
+					dmginfo:SetDamage(0)
 				end]]
 				if self:HasTrinket("ttimes") then
 					dmginfo:SetDamage(dmginfo:GetDamage() - 6)
@@ -399,13 +414,13 @@ function meta:ProcessDamage(dmginfo)
 				if self:HasTrinket("altsamsonsoul")  then
 					local rot = self:GetStatus("strengthdartboost")
 					if (rot) then 
-						self:AddBloodlust(self:GetOwner(), rot.DieTime - CurTime() + dmginfo:GetDamage() * 0.1)
+						self:AddBloodlust(attacker, rot.DieTime - CurTime() + dmginfo:GetDamage() * 0.1)
 					end
 					if (not rot) then 
-						self:AddBloodlust(self:GetOwner(), dmginfo:GetDamage() * 0.3)
+						self:AddBloodlust(attacker, dmginfo:GetDamage() * 0.3)
 					end
 				end
-				if attacker.m_Zombie_Bara then
+				if attacker.m_Zombie_Bara and not self:IsSkillActive(SKILL_BARA_CURSED) then
 					self:GiveStatus("knockdown",1)
 					local vel = self:GetPos() - self:GetPos()
 					vel.z = 0
@@ -427,7 +442,7 @@ function meta:ProcessDamage(dmginfo)
 				elseif attacker:IsBot() and self:GetZSRemortLevel() < 2 then
 					dmginfo:ScaleDamage(0.75)
 				end
-				if dmginfo:GetDamage() > 41 and self:IsSkillActive(SKILL_MOREDAMAGE) then
+				if dmginfo:GetDamage() >= 41 and self:IsSkillActive(SKILL_MOREDAMAGE) then
 					dmginfo:SetDamage(41)
 				end
 				if self:GetActiveWeapon().CanDefend and math.min(10,self:GetActiveWeapon():GetPerc()) > 0 then
@@ -553,38 +568,38 @@ function meta:ProcessDamage(dmginfo)
 				if self:HasTrinket("cursedtrinket")  then
 					local cursed = self:GetStatus("cursed")
 					if (cursed) then 
-						self:AddCursed(self:GetOwner(), cursed.DieTime - CurTime() + 5)
+						self:AddCursed(attacker, cursed.DieTime - CurTime() + 5)
 					end
 				end
 				if self:HasTrinket("betsoul")  then
 					local cursed = self:GetStatus("cursed")
 					if (cursed) then 
-						self:AddCursed(self:GetOwner(), cursed.DieTime - CurTime() - 10)
+						self:AddCursed(self, cursed.DieTime - CurTime() - 10)
 					end
 				end
 				if self:IsSkillActive(SKILL_CURSECURE)  then
 					local cursed = self:GetStatus("cursed")
 					if (cursed) then 
-						self:AddCursed(self:GetOwner(), cursed.DieTime - CurTime() - 15)
+						self:AddCursed(self, cursed.DieTime - CurTime() - 15)
 					end
 				end
 				if self:IsSkillActive(SKILL_CURSECURE)  then
 					local rot = self:GetStatus("rot")
 					if (rot) then 
-						self:AddRot(self:GetOwner(), rot.DieTime - CurTime() + 1)
+						self:AddRot(attacker, rot.DieTime - CurTime() + 1)
 					end
 					if (not rot) then 
-						self:AddRot(self:GetOwner(), 1)
+						self:AddRot(attacker, 1)
 					end
 				end
 				if attacker.m_Rot_Claws then
 					dmginfo:SetDamage(dmginfo:GetDamage() * 0.5)
 					local rot = self:GetStatus("rot")
 					if (rot) then 
-						self:AddRot(self:GetOwner(), rot.DieTime - CurTime() + 2)
+						self:AddRot(attacker, rot.DieTime - CurTime() + 2)
 					end
 					if (not rot) then 
-						self:AddRot(self:GetOwner(), 2)
+						self:AddRot(attacker, 2)
 					end
 				end
 
@@ -984,12 +999,11 @@ end
 
 function meta:AddCursed(attacker, count)
 	--damage = math.ceil(damage)
-	local status = self:GiveStatus("cursed", count)
+	self:GiveStatus("cursed", count)
 end
 
 function meta:AddHallow(attacker, count)
-
-	local status = self:GiveStatus("hollowing", count)
+	self:GiveStatus("hollowing", count)
 end
 
 function meta:AddRot(attacker, count)
@@ -997,7 +1011,7 @@ function meta:AddRot(attacker, count)
 	status.Damager = attacker
 end
 function meta:AddBloodlust(attacker, count)
-	local status = self:GiveStatus("strengthdartboost", count)
+	self:GiveStatus("strengthdartboost", count)
 end
 function meta:AddBurn(attacker, count)
 

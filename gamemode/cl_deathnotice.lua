@@ -381,6 +381,7 @@ killicon.Add("projectile_stone", "zombiesurvival/killicons/weapon_zs_stone")
 killicon.Add("projectile_shaderock", "zombiesurvival/killicons/weapon_zs_stone")
 killicon.Add("weapon_zs_medicalkit", "zombiesurvival/killicons/weapon_zs_medkit")
 killicon.Add("weapon_zs_medicgun", "zombiesurvival/killicons/weapon_zs_medicgun2")
+killicon.Add("projectile_healdart", "zombiesurvival/killicons/weapon_zs_medicgun2")
 killicon.Add("weapon_zs_strengthshot", "zombiesurvival/killicons/weapon_zs_medicgun2", Color(255, 50, 50))
 killicon.Add("weapon_zs_arsenalcrate", "zombiesurvival/killicons/weapon_zs_arsenalcrate")
 killicon.Add("weapon_zs_remantler", "zombiesurvival/killicons/weapon_zs_remantler2.png")
@@ -532,7 +533,7 @@ net.Receive("zs_pl_kill_pl", function(length)
 
 		victim:CallZombieFunction5("OnKilled", attacker, attacker, attacker == victim, headshot, DamageInfo())
 
-		MsgC(team.GetColor(attackerteam), attackername, color_white, " killed ", team.GetColor(victimteam), victimname, color_white, " with ", COLOR_YELLOW, inflictor, "\n")
+		MsgC(team.GetColor(attackerteam), attackername, color_white,translate.Get("dn_killed"), team.GetColor(victimteam), victimname, color_white, translate.Get("killed_by_with"), COLOR_YELLOW, inflictor, "\n")
 
 		GAMEMODE:TopNotify(attacker, " ", {killicon = inflictor, headshot = headshot}, " ", victim)
 	end
@@ -561,7 +562,7 @@ net.Receive("zs_pls_kill_pl", function(length)
 
 		victim:CallZombieFunction5("OnKilled", attacker, attacker, attacker == victim, headshot, DamageInfo())
 
-		MsgC(team.GetColor(attackerteam), attackername, " and ", team.GetColor(attackerteam), assistername, color_white, " killed ", team.GetColor(victimteam), victimname, color_white, " with ", COLOR_YELLOW, inflictor, "\n")
+		MsgC(team.GetColor(attackerteam), attackername, " and ", team.GetColor(attackerteam), assistername, color_white,translate.Get("dn_killed"), team.GetColor(victimteam), victimname, color_white, translate.Get("killed_by_with"), COLOR_YELLOW, inflictor, "\n")
 
 		GAMEMODE:TopNotify(attacker, " and ", assister, " ", {killicon = inflictor, headshot = headshot}, " ", victim)
 	end
@@ -580,7 +581,7 @@ net.Receive("zs_pl_kill_self", function(length)
 
 		local victimname = victim:Name()
 
-		MsgC(team.GetColor(victimteam), victimname, color_white, " killed themself", "\n")
+		MsgC(team.GetColor(victimteam), victimname, color_white, translate.Get("killed_by_suicide"), "\n")
 
 		GAMEMODE:TopNotify({killicon = "suicide"}, " ", victim)
 	end
@@ -616,7 +617,7 @@ net.Receive("zs_death", function(length)
 
 		local victimname = victim:Name()
 
-		MsgC(team.GetColor(victimteam), victimname, color_white, " killed by ", COLOR_YELLOW, attacker, color_white, " with ", COLOR_YELLOW, inflictor, "\n")
+		MsgC(team.GetColor(victimteam), victimname, color_white, translate.Get("killed_by"), COLOR_YELLOW, attacker, color_white, translate.Get("killed_by_with"), COLOR_YELLOW, inflictor, "\n")
 
 		GAMEMODE:TopNotify(COLOR_RED, attacker, " ", {deathicon = inflictor}, " ", victim)
 	end

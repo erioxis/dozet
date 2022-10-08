@@ -15,7 +15,7 @@ function ENT:Initialize()
 		cmodel:SetAngles(self:LocalToWorldAngles(Angle(0, 0, 0)))
 		cmodel:SetSolid(SOLID_NONE)
 		cmodel:SetMoveType(MOVETYPE_NONE)
-		cmodel:SetColor(Color(255, 150, 150))
+		cmodel:SetColor(Color(81, 238, 34))
 		cmodel:SetParent(self)
 		cmodel:SetOwner(self)
 

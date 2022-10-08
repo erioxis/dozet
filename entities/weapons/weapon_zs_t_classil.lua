@@ -22,30 +22,28 @@ SWEP.Primary.Ammo = "foodtakeout"
 SWEP.FoodHealth = 234342
 SWEP.FoodEatTime = 1
 function SWEP:Eat()
-owner = self:GetOwner()
+	owner = self:GetOwner()
+	if !owner:IsSkillActive(SKILL_BARA_CURSED) then 
+			timer.Simple(15, function() 
+				lastpos = owner:GetPos()
+						owner:Kill()
+					timer.Simple(0.05, function() 
+								owner:KillSilent()
+								owner:SetZombieClass(GAMEMODE.ZombieClasses["Baracat"].Index)
+								timer.Simple(0.1, function() 
+								owner:SetPos(lastpos)
+								owner:Respawn()
+								owner:DoHulls(GAMEMODE.ZombieClasses["Baracat"].Index, TEAM_UNDEAD)
 
-   timer.Simple(15, function() 
-      lastpos = owner:GetPos()
-      owner:Kill()
-	     timer.Simple(0.05, function() 
-					owner:KillSilent()
-					owner:SetZombieClass(GAMEMODE.ZombieClasses["Baracat"].Index)
-					   timer.Simple(0.1, function() 
-					   owner:SetPos(lastpos)
-					   owner:Respawn()
-					   owner:DoHulls(GAMEMODE.ZombieClasses["Baracat"].Index, TEAM_UNDEAD)
-					      timer.Simple(25, function() 
-								owner:DoHulls(GAMEMODE.ZombieClasses["Crow?"].Index, TEAM_UNDEAD)
-								  owner:Kill()
-						  end)
-
-					   end)
-       end)
-   end)
-   	self:TakePrimaryAmmo(1)
+								end)
+				end)
+			end)
+		end
+				self:TakePrimaryAmmo(1)
 	if self:GetPrimaryAmmoCount() <= 0 then
 		owner:StripWeapon(self:GetClass())
 	end
+	owner:SetHealth(owner:GetMaxHealth())
 end
 
 function SWEP:SecondaryAttack()

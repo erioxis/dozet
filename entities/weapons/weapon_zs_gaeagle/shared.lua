@@ -3,8 +3,8 @@ DEFINE_BASECLASS("weapon_zs_base")
 
 --SWEP.PrintName = "'Gauss Eagle'"
 --SWEP.Description = "Big damage for first shoot,less damage for last shot.(More clip = more damage!!!)" --SWEP.Description = "This high-powered handgun has the ability to pierce through multiple zombies. The bullet's power decreases by half which each zombie it hits."
-SWEP.PrintName = " "..translate.Get("wep_gaeagle")
-SWEP.Description = " "..translate.Get("wep_d_gaeagle")
+SWEP.PrintName = translate.Get("wep_gaeagle")
+SWEP.Description = translate.Get("wep_d_gaeagle")
 SWEP.Slot = 1
 SWEP.SlotPos = 0
 

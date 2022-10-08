@@ -16,6 +16,7 @@ end
 function ENT:EntityTakeDamage(ent, dmginfo)
 	local attacker = dmginfo:GetAttacker()
 	if ent ~= self:GetOwner() then return end
+	if not self.Applier then self.Applier = self end
 
 	if attacker:IsValidZombie() then
 		local protect = 0.66

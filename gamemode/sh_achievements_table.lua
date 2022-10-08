@@ -11,6 +11,16 @@ GM.Achievements["gurrenlagann"] = {
     Desc = translate("challenge_inwork_d"),
     Reward = 23500
 }
+GM.Achievements["onepieceisreal"] = {
+    Name = translate("challenge_theonepiece"),
+    Desc = translate("challenge_theonepiece_d"),
+    Reward = 2500
+}
+GM.Achievements["niggerbruh"] = {
+    Name = translate("challenge_niggerbruh"),
+    Desc = translate("challenge_niggerbruh_d"),
+    Reward = 6000
+}
 GM.Achievements["crowhunter"] = {
     Name = translate("challenge_crowhunter"),
     Desc = translate("challenge_crowhunter_d"),

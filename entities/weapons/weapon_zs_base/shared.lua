@@ -74,7 +74,7 @@ function SWEP:PrimaryAttack()
 
 	self:EmitFireSound()
 	self:TakeAmmo()
-	self:ShootBullets(self.Primary.Damage, self.Primary.NumShots, self:GetCone())
+	self:ShootBullets(self.Primary.Damage * (self:GetPrimaryClipSize() >= 12 and owner:IsSkillActive(SKILL_LAST_AMMO) and 0.75 or self:GetPrimaryClipSize() <= 11 and owner:IsSkillActive(SKILL_LAST_AMMO) and 1.5 + ((self:GetPrimaryClipSize()) * 0.01) or 1), self.Primary.NumShots, self:GetCone())
 	self.IdleAnimation = CurTime() + self:SequenceDuration()
 end
 

@@ -108,10 +108,13 @@ end
 
 if SERVER then
 	function CLASS:ProcessDamage(pl, dmginfo)
+		if dmginfo:GetDamage() >= 100 and dmginfo:GetAttacker():IsPlayer() then
+			pl:EmitSound(Sound("zombiesurvival/mp_useless.wav"))
+		end
 		local wep = pl:GetActiveWeapon()
-		dmginfo:SetDamage(dmginfo:GetDamage() / 2)
+		dmginfo:SetDamage(dmginfo:GetDamage() / 5)
 		if wep:IsValid() and wep.GetBattlecry and wep:GetBattlecry() > CurTime() then
-			dmginfo:SetDamage(dmginfo:GetDamage() * 0.5)
+			dmginfo:SetDamage(dmginfo:GetDamage() * 0.25)
 		end
 		if pl.HealthMax >= pl:Health() and pl.OneTime and pl:IsValidLivingZombie() then
 			pl.OneTime = false
@@ -123,7 +126,6 @@ if SERVER then
 				pl:EmitSound(Sound("zombiesurvival/mp_weak.ogg"))
 			end
 		end
-		pl:EmitSound(Sound("zombiesurvival/mp_useless.wav"))
 	end
 
 	function CLASS:OnKilled(pl, attacker, inflictor, suicide, headshot, dmginfo)

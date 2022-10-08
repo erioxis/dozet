@@ -3,7 +3,7 @@ local function pointslabelThink(self)
 	if self.m_LastPoints ~= points then
 		self.m_LastPoints = points
 
-		self:SetText(""..translate.Get("spendpoints")..points)
+		self:SetText(translate.Get("spendpoints")..points)
 		self:SizeToContents()
 	end
 end
@@ -219,7 +219,7 @@ function GM:SupplyItemViewerDetail(viewer, sweptable, shoptbl)
 	if self:HasPurchaseableAmmo(sweptable) and self.AmmoNames[string.lower(sweptable.Primary.Ammo)] then
 		local lower = string.lower(sweptable.Primary.Ammo)
 
-		viewer.m_AmmoType:SetText(self.AmmoNames[lower])
+		viewer.m_AmmoType:SetText(translate.Get(string.lower(string.Implode("",string.Explode(" ","ammo_"..GAMEMODE.AmmoNames[lower])))))
 		viewer.m_AmmoType:PerformLayout()
 
 		local ki = killicon.Get(self.AmmoIcons[lower])

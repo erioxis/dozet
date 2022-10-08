@@ -1267,18 +1267,75 @@ function GM:Think()
 				if (pl:GetActiveWeapon().Tier or 1) >= 4 and pl:HasTrinket("sin_pride") then
 					pl:StripWeapon(pl:GetActiveWeapon():GetClass())
 				end
-				if (pl:GetActiveWeapon().Tier or 1) <= 5 and pl:HasTrinket("sin_envy") and pl:GetActiveWeapon():GetClass() ~= "weapon_zs_fists" then
+				local bossdrops2 = {
+					"altjudassoul",  -- 2
+					"altsamsonsoul",  -- 3
+					"altevesoul",  -- 4
+					"jacobsoul",  -- 5
+					"altisaacsoul",  -- 6
+					"altmagdalenesoul",  -- 7
+					"altlilithsoul",  -- 8
+					"alteriosoul", -- 10 
+					"altaposoul",  --14
+					"altbetsoul",  --15
+					"altlostsoul",  --16
+					"altgreedsoul",  --17
+					"altcainsoul",   --18
+					"altlazarussoul",	-- 19
+					"altforsoul", -- 20
+					"altsoul",-- 21
+					"soulalteden", -- 22
+					"altchayok", --23
+					"altdarksoul", -- 24
+					"bleaksoul",  -- 1
+					"spiritess",  -- 2
+					"samsonsoul",  -- 3
+					"evesoul",  -- 4
+					"jacobjesausoul",  -- 5
+					"isaacsoul",  -- 6
+					"magdalenesoul",  -- 7
+					"lilithsoul",  -- 8
+					"whysoul",  -- 9
+					"blanksoul", -- 10
+					"classixsoul",  -- 11
+					"darksoul",  --12
+					"eriosoul",  --13
+					"aposoul",  --14
+					"betsoul",  --15
+					"lostsoul",  --16
+					"greedsoul",  --17
+					"cainsoul",   --18
+					"lazarussoul",	-- 19
+					"forsoul",  -- 20
+					"starsoul",  -- 21
+					"teasoul",  -- 22
+					"sugersoul",  -- 23
+					"nulledsoul",  -- 24
+					"soulmedical",  -- 25
+					"lampsoul"  -- 26
+				}
+				local d = table.Random(bossdrops2)
+				if pl:HasTrinket(d) and pl:IsSkillActive(SKILL_SOUL_TRADE) and not pl:HasTrinket("toysoul") then
+					pl:Kill()
+				end
+				if (pl:GetActiveWeapon().Tier or 1) <= 4 and pl:HasTrinket("sin_envy") and pl:GetActiveWeapon():GetClass() ~= "weapon_zs_fists" then
 					pl:StripWeapon(pl:GetActiveWeapon():GetClass())
 				end
-				if not pl:GetStatus("sigildef") and self:GetWave() >= 6 and  time >= pl.NextDamage and self:GetWaveActive() and self:GetBalance() < 20 or self:GetBalance() > 20 and not pl:GetStatus("sigildef") and  time >= pl.NextDamage then
-					pl:TakeDamage((pl:HasTrinket("jacobsoul") and 13 or 33))
-					pl.NextDamage = time + (pl:HasTrinket("jacobsoul") and 4 or 0.6)
-					pl:CenterNotify(COLOR_RED, translate.ClientGet(pl, "danger"))
-				end
-				if pl:GetStatus("sigildef") and self:GetWave() >= 6 and time >= pl.NextDamage and self:GetWaveActive() and pl:HasTrinket("jacobsoul") and not (self:GetWave() == 12) then
-					pl:TakeDamage(13)
-					pl.NextDamage = time + 1.2
-					pl:CenterNotify(COLOR_GREEN, translate.ClientGet(pl, "danger_x"))
+				if !pl:IsSkillActive(SKILL_BARA_CURSED) then
+					if not pl:GetStatus("sigildef") and self:GetWave() >= 6 and  time >= pl.NextDamage and self:GetWaveActive() and self:GetBalance() < 20 or self:GetBalance() > 20 and not pl:GetStatus("sigildef") and  time >= pl.NextDamage then
+						pl:TakeDamage((pl:HasTrinket("jacobsoul") and 13 or 33))
+						pl.NextDamage = time + (pl:HasTrinket("jacobsoul") and 4 or 0.6)
+						pl:CenterNotify(COLOR_RED, translate.ClientGet(pl, "danger"))
+					end
+					if pl:GetStatus("sigildef") and self:GetWave() >= 6 and time >= pl.NextDamage and self:GetWaveActive() and pl:HasTrinket("jacobsoul") and not (self:GetWave() == 12) then
+						pl:TakeDamage(13)
+						pl.NextDamage = time + 1.2
+						pl:CenterNotify(COLOR_GREEN, translate.ClientGet(pl, "danger_x"))
+					end
+				else
+					if pl:HasTrinket("antibaracat") then
+						pl:Kill()
+					end
 				end
 				if !pl:OnGround() and not (pl:GetVelocity():LengthSqr() > 7600) then
 					pl.StuckedInProp = true
@@ -1517,7 +1574,68 @@ function GM:Think()
 		end
 	end
 end
-
+local function DoDropStart(pl)	
+	if !pl:IsValid() then return end
+	if pl:IsSkillActive(SKILL_MOBILIZED) then
+		local weapon = {
+			"weapon_zs_pushbroom",
+			"weapon_zs_shovel",
+			"weapon_zs_pulserifle",
+			"weapon_zs_toxicshooter",
+			"weapon_zs_zenith",
+			"weapon_zs_zenith_q2",
+			"weapon_zs_m4",
+			"weapon_zs_pollutor",
+			"weapon_zs_sawedoff",
+			"weapon_zs_minelayer",
+			"weapon_zs_relsous",
+			"weapon_zs_quasar",
+			"weapon_zs_inferno",
+			"weapon_zs_binocle",
+			"weapon_zs_keyboard",
+			"weapon_zs_icelux",
+			"weapon_zs_scythe",
+			"weapon_zs_plank_q1",
+			"weapon_zs_pushbroom_q1",
+			"weapon_zs_shovel_q1",
+			"weapon_zs_pulserifle_q1",
+			"weapon_zs_toxicshooter_q2",
+			"weapon_zs_toxicshooter_r2",
+			"weapon_zs_m4_q1",
+			"weapon_zs_pollutor_q1",
+			"weapon_zs_sawedoff_q1",
+			"weapon_zs_minelayer_q1",
+			"weapon_zs_relsous_q1",
+			"weapon_zs_quasar_q1",
+			"weapon_zs_inferno_q1",
+			"weapon_zs_binocle_q1",
+			"weapon_zs_keyboard_q1",
+			"weapon_zs_scythe_q1"
+		}
+		local drop = table.Random(weapon)
+		pl:Give(drop)
+	end
+	local start = pl:GetRandomStartingItem()
+	if start then
+		local func = GAMEMODE:GetInventoryItemType(start) == INVCAT_TRINKETS and pl.AddInventoryItem or pl.Give
+		func(pl, start)
+	end
+	local start1 = pl:GetRandomStartingItem1()
+	if start1 then
+		local func1 = GAMEMODE:GetInventoryItemType(start1) == INVCAT_TRINKETS and pl.AddInventoryItem or pl.Give
+		func1(pl, start1)
+	end
+	local start21 = pl:GetRandomStartingItem2()
+	if start21 then
+		local func21 = GAMEMODE:GetInventoryItemType(start21) == INVCAT_TRINKETS and pl.AddInventoryItem or pl.Give
+		func21(pl, start21)
+	end
+	local freefood = pl:GetRandomFood()
+	if freefood then
+		local food = GAMEMODE:GetInventoryItemType(freefood) == INVCAT_TRINKETS and pl.AddInventoryItem or pl.Give
+		food(pl, freefood)
+	end
+end
 
 function GM:PlayerSwitchWeapon(pl, old, new)
 	if pl:HasTrinket("autoreload") then
@@ -2320,7 +2438,7 @@ function GM:PlayerReadyRound(pl)
 		pl:SendLua("gamemode.Call(\"EndRound\", "..tostring(ROUNDWINNER)..", \""..game.GetMapNext().."\")")
 		gamemode.Call("DoHonorableMentions", pl)
 	end
-
+	DoDropStart(pl)
 
 	if pl:GetInfo("zs_noredeem") == "1" then
 		pl.NoRedeeming = true
@@ -2982,7 +3100,7 @@ function GM:GiveDefaultOrRandomEquipment(pl)
 		else
 			pl:SendLua("GAMEMODE:RequestedDefaultCart()")
 			if self.StartingWorth > 0 then
-				timer.Simple(4, function() TimedOut(pl) end)
+				timer.Simple(20, function() TimedOut(pl) end)
 			end
 		end
 	end
@@ -4050,7 +4168,7 @@ function GM:PlayerDeath(pl, inflictor, attacker)
 	if pl:IsSkillActive(SKILL_PHOENIX) and pl.RedeemedOnce then
 	local dpos = pl:GetPos()
 	local eyepos = pl:EyeAngles()
-		timer.Simple(0.01, function()
+		timer.Simple(0.005, function()
 			pl.RedeemedOnce = false
 			pl:Redeem()
 			if dpos ~= nil then
@@ -4068,7 +4186,7 @@ function GM:PlayerDeath(pl, inflictor, attacker)
 		pl.RedeemedOnce = false
     end
 	if !pl.RedeemedOnce and pl:IsSkillActive(SKILL_AMULET_5) and math.random(1,4) == 2 then
-		timer.Simple(0.01, function()
+		timer.Simple(0.005, function()
 			pl:Redeem()
 			pl:AddInventoryItem("trinket_electromagnet")
 		end)
@@ -4584,6 +4702,7 @@ VoiceSetTranslate["models/loyalists/mmd/flandre/flandre_mp_pm.mdl"] = VOICESET_F
 VoiceSetTranslate["models/jazzmcfly/kantai/yuudachi/yuudachi.mdl"] = VOICESET_FEMALE
 VoiceSetTranslate["models/player/dewobedil/vocaloid/haku/bikini_p.mdl"] = VOICESET_FEMALE
 VoiceSetTranslate["models/player/dewobedil/touhou/junko/default_p.mdl"] = VOICESET_FEMALE
+
 function GM:PlayerSpawn(pl)
 	pl:StripWeapons()
 	pl:WipePlayerInventory()
@@ -4804,32 +4923,13 @@ function GM:PlayerSpawn(pl)
 			pl:Give(table.Random(self.ZombieEscapeWeaponsPrimary))
 			pl:Give(table.Random(self.ZombieEscapeWeaponsSecondary))
 		else
-			local start = pl:GetRandomStartingItem()
-			if start then
-				local func = self:GetInventoryItemType(start) == INVCAT_TRINKETS and pl.AddInventoryItem or pl.Give
-				func(pl, start)
-			end
-			local start1 = pl:GetRandomStartingItem1()
-			if start1 then
-				local func1 = self:GetInventoryItemType(start1) == INVCAT_TRINKETS and pl.AddInventoryItem or pl.Give
-				func1(pl, start1)
-			end
-			local start21 = pl:GetRandomStartingItem2()
-			if start21 then
-				local func21 = self:GetInventoryItemType(start21) == INVCAT_TRINKETS and pl.AddInventoryItem or pl.Give
-				func21(pl, start21)
-			end
-			local freefood = pl:GetRandomFood()
-			if freefood then
-				local food = self:GetInventoryItemType(freefood) == INVCAT_TRINKETS and pl.AddInventoryItem or pl.Give
-				food(pl, freefood)
-			end
 
 			pl:Give("weapon_zs_fists")
 
 			if self.StartingLoadout then
 				self:GiveStartingLoadout(pl)
 			elseif pl.m_PreRedeem then
+				DoDropStart(pl)
 				if self.RedeemLoadout then
 					for _, class in pairs(self.RedeemLoadout) do
 						pl:Give(class)

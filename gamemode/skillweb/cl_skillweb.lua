@@ -1090,6 +1090,10 @@ function PANEL:Paint(w, h)
 					draw_SimpleText(translate.Get("s_need_l")..skill.LevelReq,"ZS3D2DFontSmall", 0, xskill, colo, TEXT_ALIGN_CENTER)
 					xskill = xskill + 32
 				end
+				if skill.AmuletCost then
+					draw_SimpleText(( 0 < skill.AmuletCost and translate.Get("s_need_am") or translate.Get("s_give_am"))..( 0 < skill.AmuletCost and skill.AmuletCost or -skill.AmuletCost),"ZS3D2DFontSmall", 0, xskill, colo, TEXT_ALIGN_CENTER)
+					xskill = xskill + 32
+				end
 			end
 
 			DisableClipping(false)
@@ -1229,7 +1233,7 @@ function PANEL:OnMousePressed(mc)
 					return
 				end
 				if MySelf:GetZSSPRemaining() >= 1 or GAMEMODE.Skills[hoveredskill].Amulet then
-				    if GAMEMODE.Skills[hoveredskill].Hidden and math.random(20) == 20 then
+				    if GAMEMODE.Skills[hoveredskill].HiddenU and math.random(20) == 20 then
 						contextmenu.Button:SetText("Unlock")
 					elseif not GAMEMODE.Skills[hoveredskill].Hidden then
 						contextmenu.Button:SetText("Unlock")

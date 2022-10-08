@@ -10,7 +10,7 @@ function ENT:Hit(vHitPos, vHitNormal, eHitEntity, vOldVelocity)
 			if WorldVisible(self:LocalToWorld(Vector(0, 0, 30)), pl:NearestPoint(self:LocalToWorld(Vector(0, 0, 30)))) then
 				if pl:IsValidLivingZombie() and pl ~= owner then
 					local alt = self:GetDTBool(0)
-					pl:TakeSpecialDamage(self.Heal * 2.1, DMG_DIRECT,owner, self:GetOwner():GetActiveWeapon())
+					pl:TakeSpecialDamage(self.Heal * 4.2, DMG_DIRECT,owner, self:GetOwner():GetActiveWeapon())
 					pl:PoisonDamage(12, owner, self)
 					local status = pl:GiveStatus(alt and "zombiestrdebuff" or "zombiedartdebuff")
 					status.DieTime = CurTime() + (self.BuffDuration or 10)

@@ -42,7 +42,7 @@ function ENT:GiveToActivator(activator, caller)
 
 		return
 	end
-	if activator:IsSkillActive(SKILL_SAMODOS) then activator:CenterNotify(COLOR_RED, translate.ClientGet(activator, "samodos")) return end
+	if activator:IsSkillActive(SKILL_SAMODOS) and not activator:HasTrinket("toysoul") then activator:CenterNotify(COLOR_RED, translate.ClientGet(activator, "samodos")) return end
 
 	local itype = self:GetInventoryItemType()
 	if not itype then

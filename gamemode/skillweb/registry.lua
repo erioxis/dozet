@@ -255,6 +255,7 @@ SKILL_ROBUST = 145
 SKILL_STOWAGE = 146
 SKILL_TRUEWOOISM = 147
 SKILL_UNBOUND = 148
+--Custom?
 SKILL_FOUR_IN_ONE = 149
 SKILL_CHEESE = 150
 SKILL_CARRIER = 151
@@ -365,6 +366,15 @@ SKILL_SEX_IS_REAL = 344
 SKILL_SECRET_VI = 345
 SKILL_SECRET_VII = 346
 SKILL_GOD_HEART = 347
+SKILL_JUSTICE_2 = 348
+SKILL_BLOODYFISTS = 349
+SKILL_AMULET_6 = 350
+SKILL_MOBILIZED = 351
+SKILL_LAST_MAN = 352
+SKILL_BATTLER6 = 353
+SKILL_BARA_CURSED = 354
+SKILL_SOUL_TRADE = 355
+SKILL_LAST_AMMO = 356
 
 SKILLMOD_HEALTH = 1
 SKILLMOD_SPEED = 2
@@ -553,7 +563,11 @@ GM:AddSkill(SKILL_FORAGER, translate.Get("skill_f_0"), GOOD..translate.Get("skil
 																5,			-2,					{SKILL_GOURMET}, TREE_HEALTHTREE)
 GM:AddSkill(SKILL_JUSTICE, translate.Get("skill_justice"), GOOD.."-8%"..translate.Get("res_delay"),
 																6,			-1,					{SKILL_FORAGER}, TREE_HEALTHTREE)
-GM:AddSkillModifier(SKILL_JUSTICE, SKILLMOD_RESUPPLY_DELAY_MUL, -0.08)		
+GM:AddSkillModifier(SKILL_JUSTICE, SKILLMOD_RESUPPLY_DELAY_MUL, -0.08)
+GM:AddSkill(SKILL_JUSTICE_2, translate.Get("skill_justice2"), GOOD.."+9%"..translate.Get("res_ammo")..BAD.."+10%"..translate.Get("res_delay"),
+																6,			0,					{SKILL_JUSTICE}, TREE_HEALTHTREE)
+GM:AddSkillModifier(SKILL_JUSTICE_2, SKILLMOD_RESUPPLY_DELAY_MUL, 0.1)	
+GM:AddSkillModifier(SKILL_JUSTICE_2, SKILLMOD_RES_AMMO_MUL, 0.09)			
 GM:AddSkill(SKILL_SUGARRUSH, translate.Get("skill_srush_0"), GOOD..translate.Get("skill_srush_d1")..BAD..translate.Get("skill_srush_d2"),
 																4,			0,					{SKILL_GOURMET}, TREE_HEALTHTREE)
 GM:AddSkill(SKILL_CIRCULATION, translate.Get("skill_cir_0"), GOOD..translate.Get("skill_cir_d1"),
@@ -616,6 +630,8 @@ GM:AddSkill(SKILL_BACKPEDDLER, translate.Get("skill_backpeddler"), GOOD..transla
 																-6,			0,					{}, TREE_SPEEDTREE)
 GM:AddSkill(SKILL_PHASER, translate.Get("skill_phaser"), GOOD.."+15%"..translate.Get("barricadespeed")..BAD.."+15%"..translate.Get("sigilteleport"),
 																-1,			4,					{SKILL_D_WIDELOAD, SKILL_DRIFT}, TREE_SPEEDTREE)
+GM:AddSkill(SKILL_LAST_MAN, translate.Get("skill_last_man"), GOOD..translate.Get("skill_last_man_d1")..BAD..translate.Get("skill_last_man_d2"),
+																-2,			5,					{SKILL_PHASER}, TREE_SPEEDTREE)
 GM:AddSkill(SKILL_DRIFT, translate.Get("skill_drifter"), GOOD.."+5%"..translate.Get("barricadespeed"),
 																1,			3,					{SKILL_WARP}, TREE_SPEEDTREE)
 GM:AddSkill(SKILL_WARP, translate.Get("skill_warp"), GOOD.."-5%"..translate.Get("sigilteleport"),
@@ -734,6 +750,8 @@ GM:AddSkill(SKILL_LOADEDHULL, translate.Get("skill_l_hull"), GOOD..translate.Get
 																-2,			-4,					{SKILL_REINFORCEDHULL, SKILL_REINFORCEDBLADES, SKILL_AVIATOR}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_REINFORCEDHULL, translate.Get("skill_r_hull"), GOOD..translate.Get("skill_r_hull_d1")..BAD..translate.Get("skill_r_hull_d2")..BAD..translate.Get("skill_r_hull_d3"),
 																-2,			-2,					{SKILL_STABLEHULL}, TREE_BUILDINGTREE)
+GM:AddSkill(SKILL_BARA_CURSED, translate.Get("skill_baracurse"), GOOD..translate.Get("skill_baracurse_d1")..BAD..translate.Get("skill_baracurse_d2"),
+																-2,			-0.5,					{SKILL_REINFORCEDHULL}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_STABLEHULL, translate.Get("skill_s_hull"), GOOD..translate.Get("skill_s_hull_d1")..BAD..translate.Get("skill_r_hull_d3"),
 																0,			-3,					{SKILL_U_DRONE}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_REINFORCEDBLADES, translate.Get("skill_r_blade"), GOOD..translate.Get("skill_r_blade_d1")..BAD..translate.Get("skill_r_blade_d2"),
@@ -806,7 +824,7 @@ GM:AddSkill(SKILL_U_CRAFTINGPACK, translate.Get("skill_u_craftpack"), GOOD..tran
 .AlwaysActive = true
 GM:AddSkill(SKILL_TAUT, translate.Get("skill_taut"), GOOD.. translate.Get("skill_taut_d1")..BAD.. translate.Get("skill_taut_d2"),
 																-5,			3,					{}, TREE_BUILDINGTREE)
-GM:AddSkill(SKILL_D_NOODLEARMS, translate.Get("skill_noodle"), GOOD.."+5"..translate.Get("worth")..GOOD..translate.Get("skill_noodle_d1")..BAD..translate.Get("skill_noodle_d2"),
+GM:AddSkill(SKILL_D_NOODLEARMS, translate.Get("skill_noodle"), GOOD.."+10"..translate.Get("worth")..GOOD..translate.Get("skill_noodle_d1")..BAD..translate.Get("skill_noodle_d2"),
 																-7,			2,					{}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_INSTRUMENTS, translate.Get("skill_instruments"), GOOD..translate.Get("skill_instruments_d1"),
 																-10,		-3,					{}, TREE_BUILDINGTREE)
@@ -844,31 +862,43 @@ GM:AddSkillModifier(SKILL_SKILLFORGODS, SKILLMOD_SPOINT, 4)
 GM:AddSkillModifier(SKILL_SECRET, SKILLMOD_SPOINT, 7)
 GM:AddSkillModifier(SKILL_SECRET2, SKILLMOD_SPOINT, 4)
 
-GM:AddSkill(SKILL_AMULET_1, translate.Get("skill_amulet_1"), GOOD.. translate.Get("skill_amulet_1_d1"),
+local d = GM:AddSkill(SKILL_AMULET_1, translate.Get("skill_amulet_1"), GOOD.. translate.Get("skill_amulet_1_d1"),
 																-20,			-9,					{SKILL_NONE}, TREE_GUNTREE)
-.Amulet = true														
+d.Amulet = true		
+d.AmuletCost = 3												
 GM:AddSkillModifier(SKILL_AMULET_1, SKILLMOD_SPOINT, 1)
 GM:AddSkillModifier(SKILL_AMULET_1, SKILLMOD_PIECE_OF_AMULET, -3)
-GM:AddSkill(SKILL_AMULET_2, translate.Get("skill_amulet_2"), GOOD.. translate.Get("skill_amulet_2_d1"),
+local d = GM:AddSkill(SKILL_AMULET_2, translate.Get("skill_amulet_2"), GOOD.. translate.Get("skill_amulet_2_d1"),
 																-20,			-8,					{SKILL_NONE}, TREE_GUNTREE)
-.Amulet = true														
+d.Amulet = true		
+d.AmuletCost = 4													
 GM:AddSkillModifier(SKILL_AMULET_2, SKILLMOD_SPOINT, 1)
 GM:AddSkillModifier(SKILL_AMULET_2, SKILLMOD_PIECE_OF_AMULET, -4)
-GM:AddSkill(SKILL_AMULET_3, translate.Get("skill_amulet_3"), BAD.. translate.Get("skill_amulet_3_d1"),
+local d = GM:AddSkill(SKILL_AMULET_3, translate.Get("skill_amulet_3"), BAD.. translate.Get("skill_amulet_3_d1"),
 																-20,			-10,					{SKILL_NONE}, TREE_GUNTREE)
-.Amulet = true														
+d.Amulet = true		
+d.AmuletCost = -3													
 GM:AddSkillModifier(SKILL_AMULET_3, SKILLMOD_SPOINT, -3)
 GM:AddSkillModifier(SKILL_AMULET_3, SKILLMOD_PIECE_OF_AMULET, 3)
-GM:AddSkill(SKILL_AMULET_4, translate.Get("skill_amulet_4"), GOOD.. translate.Get("skill_amulet_4_d1"),
+local d = GM:AddSkill(SKILL_AMULET_4, translate.Get("skill_amulet_4"), GOOD.. translate.Get("skill_amulet_4_d1"),
 																-20,			-12,					{SKILL_NONE}, TREE_GUNTREE)
-.Amulet = true														
+d.Amulet = true		
+d.AmuletCost = 3													
 GM:AddSkillModifier(SKILL_AMULET_4, SKILLMOD_SPOINT, 1)
 GM:AddSkillModifier(SKILL_AMULET_4, SKILLMOD_PIECE_OF_AMULET, -3)
-GM:AddSkill(SKILL_AMULET_5, translate.Get("skill_amulet_5"), GOOD.. translate.Get("skill_amulet_5_d1"),
+local d = GM:AddSkill(SKILL_AMULET_5, translate.Get("skill_amulet_5"), GOOD.. translate.Get("skill_amulet_5_d1"),
 																-20,			-13,					{SKILL_NONE}, TREE_GUNTREE)
-.Amulet = true														
+d.Amulet = true			
+d.AmuletCost = 2												
 GM:AddSkillModifier(SKILL_AMULET_5, SKILLMOD_SPOINT, 1)
 GM:AddSkillModifier(SKILL_AMULET_5, SKILLMOD_PIECE_OF_AMULET, -2)
+local d = GM:AddSkill(SKILL_AMULET_6, translate.Get("skill_amulet_6"), GOOD.. translate.Get("skill_amulet_6_d1"),
+																-20,			-14,					{SKILL_NONE}, TREE_GUNTREE)
+d.Amulet = true				
+d.AmuletCost = 1											
+GM:AddSkillModifier(SKILL_AMULET_6, SKILLMOD_SPOINT, 1)
+GM:AddSkillModifier(SKILL_AMULET_6, SKILLMOD_LUCK, 2.5)
+GM:AddSkillModifier(SKILL_AMULET_6, SKILLMOD_PIECE_OF_AMULET, -1)
 
 
 
@@ -894,7 +924,7 @@ d.Hidden1 = true
 
 local d = GM:AddSkill(SKILL_GOD_HEART, translate.Get("skill_godheart"), GOOD..translate.Get("skill_godheart_d1"),
 				                                                            	-14,			16,					{SKILL_LOX}, TREE_DONATETREE)
-d.RemortReq = 512
+d.RemortReq = 128
 d.LevelReq = 99
 d.AlwaysActive = true
 d.Hidden = true	
@@ -985,6 +1015,9 @@ GM:AddSkill(SKILL_PITCHER2, translate.Get("skill_pitcher2"), GOOD..translate.Get
 																7,			1,					{SKILL_PITCHER}, TREE_GUNTREE)
 GM:AddSkill(SKILL_EQUIPPED, translate.Get("skill_alacraty"), GOOD.. translate.Get("skill_alacraty_d1"),
 																-6,			2,					{}, TREE_GUNTREE)
+GM:AddSkill(SKILL_MOBILIZED, translate.Get("skill_mobile"), GOOD.. translate.Get("skill_mobile_d1")..BAD..translate.Get("skill_mobile_d2"),
+																-7,			1,					{SKILL_EQUIPPED}, TREE_GUNTREE)
+GM:AddSkillModifier(SKILL_MOBILIZED, SKILLMOD_LUCK, -5)
 GM:AddSkill(SKILL_WORTHINESS1, translate.Get("worthness"), GOOD.."+10"..translate.Get("worth")..BAD.."-3"..translate.Get("start_points"),
 																-4,			-3,					{}, TREE_GUNTREE)
 GM:AddSkill(SKILL_CANNONBALL, translate.Get("skill_cannonball"), translate.Get("skill_cannonball_d1")..GOOD..translate.Get("skill_cannonball_d2"),
@@ -993,6 +1026,8 @@ GM:AddSkill(SKILL_SCOURER, translate.Get("skill_scourer"), GOOD..translate.Get("
 																4,			-3,					{}, TREE_GUNTREE)
 GM:AddSkill(SKILL_CONEFFECT, translate.Get("skill_concetrate"), GOOD..translate.Get("skill_concetrate_d1")..BAD.."-20%"..translate.Get("exp_r"),
 																2,			-5,					{}, TREE_GUNTREE)
+GM:AddSkill(SKILL_LAST_AMMO, translate.Get("skill_last_ammo"), GOOD..translate.Get("skill_last_ammo_d1")..BAD..translate.Get("skill_last_ammo_d2"),
+																2,			-6,					{SKILL_CONEFFECT}, TREE_GUNTREE)
 GM:AddSkill(SKILL_TRUEWOOISM, translate.Get("skill_wooism"), GOOD..translate.Get("skill_wooism_d1")..BAD..translate.Get("skill_wooism_d2"),
 																7,			0,					{}, TREE_GUNTREE)
 GM:AddSkill(SKILL_DEADINSIDE, translate.Get("skill_dinside"), BAD..translate.Get("skill_dinside_d1")..GOOD..translate.Get("skill_dinside_d2"),
@@ -1024,6 +1059,8 @@ GM:AddSkill(SKILL_BATTLER4, translate.Get("skill_battler").."IV", GOOD.."+9%"..t
 																-2,			0,					{SKILL_BATTLER5, SKILL_MASTERCHEF, SKILL_D_CLUMSY}, TREE_MELEETREE)
 GM:AddSkill(SKILL_BATTLER5, translate.Get("skill_battler").."V", GOOD.."+13%"..translate.Get("meleedamage")..BAD.."-16%"..translate.Get("r_speed"),
 																0,			2,					{SKILL_GLASSWEAPONS, SKILL_BLOODLUST}, TREE_MELEETREE)
+GM:AddSkill(SKILL_BATTLER6, translate.Get("skill_battler").."VI", GOOD.."+16%"..translate.Get("meleedamage")..BAD.."-33%"..translate.Get("r_speed"),
+																0,			0,					{SKILL_BATTLER5}, TREE_MELEETREE)
 GM:AddSkill(SKILL_LASTSTAND, translate.Get("skill_laststand"), GOOD..translate.Get("skill_laststand_d1")..BAD..translate.Get("skill_laststand_d2"),
 																0,			6,					{SKILL_ABUSE}, TREE_MELEETREE)
 .RemortReq = 4
@@ -1289,6 +1326,8 @@ GM:AddSkill(SKILL_HELPLIFER, "Chance", PURPLE.."Can save from fatal hit\n33% Cha
 .CanUpgrade = 2
 GM:AddSkill(SKILL_INF_POWER, "Dozei Core", PURPLE.."-50% Damage.\nExtra-damage for every skills you unlocked",
 										4,			-5,					{SKILL_HELPLIFER}, TREE_ANCIENTTREE)
+GM:AddSkill(SKILL_SOUL_TRADE, "[TRADE]Soul", PURPLE.."Sell Your Soul For Toy.\n"..PURPLE.."+50% Point Mul",
+										4,			-7,					{SKILL_HELPLIFER}, TREE_ANCIENTTREE)
 GM:AddSkill(SKILL_SEEAURA, "Ancient vision", PURPLE.."You can see zombie aura",
 										2,			-8.5,					{SKILL_HELPLIFER}, TREE_ANCIENTTREE)
 GM:AddSkill(SKILL_INVISIBLE_MAN, "Anti-Vision", PURPLE.."Zombie can't see you aura",
@@ -1498,6 +1537,9 @@ GM:AddSkill(SKILL_HOLY_MANTLE, translate.Get("skill_holymantle"), GOOD..translat
 				                                                            	-4,			3,					{SKILL_TTIMES}, TREE_DEFENSETREE)
 GM:AddSkill(SKILL_SELFSAVER, translate.Get("skill_selfsaver"), GOOD..translate.Get("skill_selfsaver_d1")..BAD.."-35"..translate.Get("speed"),
 				                                                            	-3,			4,					{SKILL_HOLY_MANTLE}, TREE_DEFENSETREE)
+GM:AddSkill(SKILL_BLOODYFISTS, translate.Get("skill_bloodyfists"), GOOD..translate.Get("skill_bloodyfists_d1")..BAD..translate.Get("skill_bloodyfists_d2"),
+				                                                            	-5,			4,					{SKILL_SELFSAVER}, TREE_DEFENSETREE)
+GM:AddSkillModifier(SKILL_BLOODYFISTS, SKILLMOD_UNARMED_DAMAGE_MUL, -0.20)
 GM:AddSkill(SKILL_ASAVE, translate.Get("skill_ancientsave"), GOOD..translate.Get("skill_ancientsave_d1")..BAD.."-55"..translate.Get("speed"),
 				                                                            	-4,			5,					{SKILL_SELFSAVER}, TREE_DEFENSETREE)
 SKILL_MERIS = 199
@@ -1602,7 +1644,7 @@ GM:AddSkillModifier(SKILL_CHALLENGER3, SKILLMOD_XP, 1)
 --Skill for high-remort
 GM:AddSkill(SKILL_SECRET2, "Secret V", GOOD.."Good thing, +3 spoints",
 				                                                            	-22,			-53,					{SKILL_NONE}, TREE_USELESSTREE)
-.Hidden = true
+.HiddenU = true
 SKILL_USELESS_1 = 500
 GM:AddSkill(SKILL_USELESS_1, "Useless 1", GOOD.."+5% XP MUL",
 				                                                            	0,			0,					{SKILL_NONE}, TREE_USELESSTREE)
@@ -2192,6 +2234,7 @@ GM:AddSkillModifier(SKILL_BATTLER2, SKILLMOD_MELEE_DAMAGE_MUL, 0.06)
 GM:AddSkillModifier(SKILL_BATTLER3, SKILLMOD_MELEE_DAMAGE_MUL, 0.08)
 GM:AddSkillModifier(SKILL_BATTLER4, SKILLMOD_MELEE_DAMAGE_MUL, 0.09)
 GM:AddSkillModifier(SKILL_BATTLER5, SKILLMOD_MELEE_DAMAGE_MUL, 0.13)
+GM:AddSkillModifier(SKILL_BATTLER6, SKILLMOD_MELEE_DAMAGE_MUL, 0.16)
 GM:AddSkillModifier(SKILL_SOULNET, SKILLMOD_MELEE_DAMAGE_MUL, -0.10)
 
 GM:AddSkillModifier(SKILL_BATTLER1, SKILLMOD_RELOADSPEED_MUL, -0.02)
@@ -2199,6 +2242,7 @@ GM:AddSkillModifier(SKILL_BATTLER2, SKILLMOD_RELOADSPEED_MUL, -0.04)
 GM:AddSkillModifier(SKILL_BATTLER3, SKILLMOD_RELOADSPEED_MUL, -0.09)
 GM:AddSkillModifier(SKILL_BATTLER4, SKILLMOD_RELOADSPEED_MUL, -0.13)
 GM:AddSkillModifier(SKILL_BATTLER5, SKILLMOD_RELOADSPEED_MUL, -0.16)
+GM:AddSkillModifier(SKILL_BATTLER6, SKILLMOD_RELOADSPEED_MUL, -0.33)
 
 GM:AddSkillModifier(SKILL_GLASSMAN, SKILLMOD_MELEE_DAMAGE_MUL, 2.3)
 GM:AddSkillModifier(SKILL_GLASSMAN, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 2)
@@ -2367,6 +2411,8 @@ GM:AddSkillModifier(SKILL_AGILEII, SKILLMOD_SPEED, -3)
 
 GM:AddSkillModifier(SKILL_AGILEIII, SKILLMOD_JUMPPOWER_MUL, 0.06)
 GM:AddSkillModifier(SKILL_AGILEIII, SKILLMOD_SPEED, -4)
+
+GM:AddSkillModifier(SKILL_SOUL_TRADE, SKILLMOD_POINT_MULTIPLIER, 0.5)
 
 GM:AddSkillModifier(SKILL_SOFTDET, SKILLMOD_EXP_DAMAGE_RADIUS, 0.10)
 GM:AddSkillModifier(SKILL_SOFTDET, SKILLMOD_EXP_DAMAGE_TAKEN_MUL, -0.6)

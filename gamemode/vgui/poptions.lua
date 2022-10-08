@@ -275,19 +275,19 @@ function MakepOptions()
 	list:AddItem(EasyLabel(Window, "Prop rotation snap angle", "DefaultFontSmall", color_white))
 	dropdown = vgui.Create("DComboBox", Window)
 	dropdown:SetMouseInputEnabled(true)
-	dropdown:AddChoice("No snap")
-	dropdown:AddChoice("15 degrees")
-	dropdown:AddChoice("30 degrees")
-	dropdown:AddChoice("45 degrees")
-	dropdown:AddChoice("90 degrees")
+	dropdown:AddChoice(translate.Get("op_deg_no"))
+	dropdown:AddChoice("15"..translate.Get("op_deg"))
+	dropdown:AddChoice("30"..translate.Get("op_deg"))
+	dropdown:AddChoice("45"..translate.Get("op_deg"))
+	dropdown:AddChoice("90"..translate.Get("op_deg"))
 	dropdown.OnSelect = function(me, index, value, data)
-		RunConsoleCommand("zs_proprotationsnap", value == "15 degrees" and 15 or value == "30 degrees" and 30 or value == "45 degrees" and 45 or value == "90" and 90 or value)
+		RunConsoleCommand("zs_proprotationsnap", value == "15"..translate.Get("op_deg") and 15 or value == "30"..translate.Get("op_deg") and 30 or value == "45"..translate.Get("op_deg") and 45 or value == "90" and 90 or value)
 	end
-	dropdown:SetText(GAMEMODE.PropRotationSnap == 15 and "15 degrees"
-		or GAMEMODE.PropRotationSnap == 30 and "30 degrees"
-		or GAMEMODE.PropRotationSnap == 45 and "45 degrees"
-		or GAMEMODE.PropRotationSnap == 90 and "90 degrees"
-		or "No snap")
+	dropdown:SetText(GAMEMODE.PropRotationSnap == 15 and "15"..translate.Get("op_deg")
+		or GAMEMODE.PropRotationSnap == 30 and "30"..translate.Get("op_deg")
+		or GAMEMODE.PropRotationSnap == 45 and "45"..translate.Get("op_deg")
+		or GAMEMODE.PropRotationSnap == 90 and "90"..translate.Get("op_deg")
+		or translate.Get("op_deg_no"))
 	dropdown:SetTextColor(color_black)
 	list:AddItem(dropdown)
 

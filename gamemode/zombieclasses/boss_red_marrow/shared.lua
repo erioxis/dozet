@@ -121,7 +121,7 @@ function CLASS:ProcessDamage(pl, dmginfo)
 	local nulldmg = dmgthreshold - newhp
 
 	local slavec = math.random(1,3)
-	if slavec == 1 then
+	if slavec == 1 and attacker:IsPlayer() then
 		attacker:GiveStatus("dimvision", 5)
 
 		pl:EmitSound("ambient/creatures/town_child_scream1.wav", 20, 10)

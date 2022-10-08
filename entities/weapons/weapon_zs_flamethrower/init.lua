@@ -12,7 +12,7 @@ function SWEP:Think()
 		--	pl:EmitSound("ambient/fire/gascan_ignite1.wav")
 		--	pl:EmitSound("ambient/fire/ignite.wav")
 			pl:EmitSound("ambient/fire/mtov_flame2.wav", 126)
-			self.NextPuke = CurTime() + 0.7
+			self.NextPuke = CurTime() + 0.34
 		end
 		local ent = ents.Create(self.PukeLeft % 6 == 1 and "projectile_puke" or "projectile_puke")
 		if ent:IsValid() and self:GetOwner():WaterLevel() < 2 then
