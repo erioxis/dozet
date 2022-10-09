@@ -681,7 +681,7 @@ function PANEL:UpdateQuickStats()
 
 	for i=1,5 do
 		local prefix = i == 1 and translate.Get("skill_add_health") or i == 2 and translate.Get("skill_add_speed") or i == 4 and translate.Get("skill_add_bloodarmor") or i == 5 and translate.Get("skill_add_amulet") or translate.Get("skill_add_worth")
-		local val = i == 2 and SPEED_NORMAL or i == 1 and 100 or i == 4 and 25 or i == 5 and ((0 + MySelf:GetZSRemortLevel() / 4) or 0) or 135
+		local val = i == 2 and SPEED_NORMAL or i == 1 and 100 or i == 4 and 25 or i == 5 and ((0 + MySelf:GetZSRemortLevel() / 4) or 0) or GAMEMODE.StartingWorth
 		self.QuickStats[i]:SetText(prefix .. " : " .. (val + (skillmodifiers[i] or 0)))
 	end
 end
@@ -1222,7 +1222,7 @@ function PANEL:OnMousePressed(mc)
 	
 					return
 				end
-				if (GAMEMODE.Skills[hoveredskill].QuePro and !MySelf.ClanQuePro) then
+				if GAMEMODE.Skills[hoveredskill].QuePro and not MySelf.ClanQuePro then
 					self:DisplayMessage("FOR QUE PRO!!!!!!!", COLOR_RED)
 					surface.PlaySound("buttons/button8.wav")
 					return
@@ -1235,7 +1235,7 @@ function PANEL:OnMousePressed(mc)
 				if MySelf:GetZSSPRemaining() >= 1 or GAMEMODE.Skills[hoveredskill].Amulet then
 				    if GAMEMODE.Skills[hoveredskill].HiddenU and math.random(20) == 20 then
 						contextmenu.Button:SetText("Unlock")
-					elseif not GAMEMODE.Skills[hoveredskill].Hidden then
+					elseif not GAMEMODE.Skills[hoveredskill].HiddenU then
 						contextmenu.Button:SetText("Unlock")
 					if GAMEMODE.Skills[hoveredskill].Amulet and (MySelf:GetZSRemortLevel() / 4 > MySelf.AmuletPiece or MySelf:GetZSRemortLevel() == 0) then
 						self:DisplayMessage("You take x2 damage if don't have enought amulet cells!", COLOR_RED)

@@ -375,6 +375,11 @@ SKILL_BATTLER6 = 353
 SKILL_BARA_CURSED = 354
 SKILL_SOUL_TRADE = 355
 SKILL_LAST_AMMO = 356
+SKILL_AMULET_7 = 357
+SKILL_AMULET_8 = 358
+SKILL_AMULET_9 = 359
+SKILL_AMULET_10 = 360
+SKILL_AMULET_11 = 361
 
 SKILLMOD_HEALTH = 1
 SKILLMOD_SPEED = 2
@@ -523,7 +528,7 @@ GM:AddSkill(SKILL_REGENERATOR, translate.Get("skill_regen_0"), GOOD..translate.G
 																-5,			-2,					{}, TREE_HEALTHTREE)
 GM:AddSkill(SKILL_NULLED, translate.Get("skill_regen1_0"), GOOD..translate.Get("skill_regen1_d1"),
 			                                                   	-5,			0,					{SKILL_REGENERATOR}, TREE_HEALTHTREE)
-.Hidden = true
+.Hidden = true	
 GM:AddSkill(SKILL_BLOODARMOR, translate.Get("skill_bloodarmor_0"), GOOD..translate.Get("skill_bloodarmor_d1") ..BAD..translate.Get("skill_bloodarmor_d2"),
 																2,			2,					{SKILL_IRONBLOOD, SKILL_BLOODLETTER, SKILL_D_HEMOPHILIA}, TREE_HEALTHTREE)
 GM:AddSkill(SKILL_IRONBLOOD, translate.Get("skill_ironblood_0"), GOOD..translate.Get("skill_ironblood_d1") ..GOOD..translate.Get("skill_ironblood_d2") ..BAD..translate.Get("skill_ironblood_d3"),
@@ -899,7 +904,39 @@ d.AmuletCost = 1
 GM:AddSkillModifier(SKILL_AMULET_6, SKILLMOD_SPOINT, 1)
 GM:AddSkillModifier(SKILL_AMULET_6, SKILLMOD_LUCK, 2.5)
 GM:AddSkillModifier(SKILL_AMULET_6, SKILLMOD_PIECE_OF_AMULET, -1)
-
+local d = GM:AddSkill(SKILL_AMULET_7, translate.Get("skill_amulet_7"), GOOD.. translate.Get("skill_amulet_7_d1"),
+																-23,			-7,					{SKILL_NONE}, TREE_GUNTREE)
+d.Amulet = true				
+d.AmuletCost = 3											
+GM:AddSkillModifier(SKILL_AMULET_7, SKILLMOD_SPOINT, 1)
+GM:AddSkillModifier(SKILL_AMULET_7, SKILLMOD_MELEE_DAMAGE_MUL, 0.5)
+GM:AddSkillModifier(SKILL_AMULET_7, SKILLMOD_PIECE_OF_AMULET, -3)
+local d = GM:AddSkill(SKILL_AMULET_8, translate.Get("skill_amulet_8"), GOOD.. translate.Get("skill_amulet_8_d1"),
+																-23,			-8,					{SKILL_NONE}, TREE_GUNTREE)
+d.Amulet = true				
+d.AmuletCost = 2											
+GM:AddSkillModifier(SKILL_AMULET_8, SKILLMOD_SPOINT, 1)
+GM:AddSkillModifier(SKILL_AMULET_8, SKILLMOD_HEALTH, 20)
+GM:AddSkillModifier(SKILL_AMULET_8, SKILLMOD_PIECE_OF_AMULET, -2)
+local d = GM:AddSkill(SKILL_AMULET_9, translate.Get("skill_amulet_9"), GOOD.. translate.Get("skill_amulet_9_d1"),
+																-23,			-9,					{SKILL_NONE}, TREE_GUNTREE)
+d.Amulet = true				
+d.AmuletCost = 2											
+GM:AddSkillModifier(SKILL_AMULET_9, SKILLMOD_SPOINT, 1)
+GM:AddSkillModifier(SKILL_AMULET_9, SKILLMOD_BLOODARMOR, 35)
+GM:AddSkillModifier(SKILL_AMULET_9, SKILLMOD_PIECE_OF_AMULET, -2)
+local d = GM:AddSkill(SKILL_AMULET_10, translate.Get("skill_amulet_10"), BAD.. translate.Get("skill_amulet_10_d1"),
+																-23,			-10,					{SKILL_NONE}, TREE_GUNTREE)
+d.Amulet = true				
+d.AmuletCost = -5											
+GM:AddSkillModifier(SKILL_AMULET_10, SKILLMOD_SPOINT, -7)
+GM:AddSkillModifier(SKILL_AMULET_10, SKILLMOD_PIECE_OF_AMULET, 5)
+local d = GM:AddSkill(SKILL_AMULET_11, translate.Get("skill_amulet_11"), GOOD.. translate.Get("skill_amulet_11_d1"),
+																-23,			-11,					{SKILL_NONE}, TREE_GUNTREE)
+d.Amulet = true				
+d.AmuletCost = 5											
+GM:AddSkillModifier(SKILL_AMULET_11, SKILLMOD_SPOINT, 1)
+GM:AddSkillModifier(SKILL_AMULET_11, SKILLMOD_PIECE_OF_AMULET, -5)
 
 
 GM:AddSkill(SKILL_QUE_PRO, translate.Get("skill_quepro"), GOOD.."-100%"..translate.Get("xpmul"),
@@ -973,7 +1010,7 @@ GM:AddSkill(SKILL_VAMPIRISM, translate.Get("skill_vampirism"), GOOD..translate.G
 																1,		    7,					{SKILL_BOUNTYKILLER, SKILL_LOX}, TREE_GUNTREE)
 GM:AddSkill(SKILL_LOX, translate.Get("skill_lox"), GOOD..translate.Get("skill_lox_d1")..BAD..translate.Get("skill_lox_d2"),
 																2,		    6,					{SKILL_VAMPIRISM}, TREE_GUNTREE)
-.Hidden = true	
+.Hidden = true
 GM:AddSkillModifier(SKILL_LOX, SKILLMOD_ADD_STATUS, 1)
 GM:AddSkillModifier(SKILL_BOUNTYKILLER, SKILLMOD_DAMAGE, -0.35)
 GM:AddSkill(SKILL_D_CURSEDTRUE, translate.Get("skill_d_truecurse"), BAD.."-100%"..translate.Get("m_curse")..GOOD.."+35"..translate.Get("health")..GOOD.."+40"..translate.Get("speed")..GOOD.."+15%"..translate.Get("r_speed"),
@@ -1314,7 +1351,7 @@ GM:AddSkill(SKILL_ANIMA, "Fines de anima", PURPLE.."+15% melee damage\n" ..BAD..
 										-6,			-7,					{SKILL_MERCUS}, TREE_ANCIENTTREE)
 SKILL_SIGILIBERATOR = 180	
 GM:AddSkillModifier(SKILL_SIGILIBERATOR, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 0.5)		
-GM:AddSkill(SKILL_SIGILIBERATOR, "Liberator", PURPLE.."x2 damage\n" ..BAD.."+50% damage taken\nWeapons break faster",
+GM:AddSkill(SKILL_SIGILIBERATOR, "Liberator", PURPLE.."x2 damage\n" ..BAD.."+50% damage taken",
 										-3,			-9,					{SKILL_EX2}, TREE_ANCIENTTREE)
 										SKILL_DEATH = 181	
 GM:AddSkillModifier(SKILL_DEATH, SKILLMOD_MEDKIT_COOLDOWN_MUL, 0.2)

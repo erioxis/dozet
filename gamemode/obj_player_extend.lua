@@ -605,6 +605,9 @@ function meta:ResetSpeed(noset, health)
 	if self.ClanQuePro and P_Team(self) == TEAM_HUMAN then 
 		speed = speed + 35
 	end
+	if self.ClanAvanguard and P_Team(self) == TEAM_HUMAN then 
+		speed = speed + 25
+	end
 	if self:IsSkillActive(SKILL_LIGHTWEIGHT) and wep:IsValid() and wep.IsMelee then
 		speed = speed * 1.15
 	end
@@ -1013,7 +1016,17 @@ end
 function meta:GetMaxZombieHealth()
 	local lowundead = team.NumPlayers(TEAM_UNDEAD) < 4
 	local healthmulti = (GAMEMODE.ObjectiveMap or GAMEMODE.ZombieEscape) and 1 or lowundead and 1.5 or 1
-	return (self:GetZombieClassTable().Health * healthmulti) + ((GAMEMODE:GetWave() * 45) * (self:GetZombieClassTable().DynamicHealth or 1))
+	local classtab = self:GetZombieClassTable()
+	local health = 0
+	if classtab.Boss then
+		health = classtab.Health + (((GAMEMODE:GetWave() * 250)) * team.NumPlayers(TEAM_HUMAN))
+	elseif classtab.DemiBoss then
+		health = classtab.Health + (((GAMEMODE:GetWave() * 80)) * team.NumPlayers(TEAM_HUMAN))
+	else
+		health = (classtab.Health * healthmulti) + ((GAMEMODE:GetWave() * 45) * (classtab.DynamicHealth or 1)) 
+	end
+	local health  = health * (self.m_HealthMulZS or 1)
+	return health
 end
 function meta:SetMaxZombieHealth(add)
 	self:GetZombieClassTable().Health = add

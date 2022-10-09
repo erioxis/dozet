@@ -70,7 +70,8 @@ end
 function SWEP:PrimaryAttack()
 	if not self:CanPrimaryAttack() then return end
 	local owner = self:GetOwner()
-	self:SetNextPrimaryFire(CurTime() + self:GetFireDelay() * ( owner:HasTrinket("altevesoul") and owner:Health() < 50 and (0.33 * owner.M_FireDelay) or (1 * owner.M_FireDelay) ))
+	local owm = (owner.M_FireDelay or 1)
+	self:SetNextPrimaryFire(CurTime() + self:GetFireDelay() * ( owner:HasTrinket("altevesoul") and owner:Health() < 50 and (0.33 * owm) or (1 * owm) ))
 
 	self:EmitFireSound()
 	self:TakeAmmo()

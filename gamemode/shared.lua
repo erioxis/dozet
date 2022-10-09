@@ -5,7 +5,7 @@ GM.Website	=	"https://github.com/erioxis/dozet"
 
 -- No, adding a gun doesn't make your name worth being here.
 GM.Credits = {
-	{"Version", "", "4.8.6"},
+	{"Version", "", "5.0.0"},
 	{"erioxis", "Phantom coder", "dead"},
 	{"Nullted", "", "RU-ENG Translation"},
 	{"Dozet", "EX", "Or no?"}
@@ -864,7 +864,7 @@ end
 function GM:GetRagdollEyes(pl)
 	local Ragdoll = pl:GetRagdollEntity()
 	if not Ragdoll then return end
-    if pl:GetModel() == "models/player/catpants.mdl" then return end
+    if pl:GetModel() == ("models/player/catpants.mdl" or "models/player/leet.mdl") then return end
 	local att = Ragdoll:GetAttachment(Ragdoll:LookupAttachment("eyes"))
 	if att then 
 		att.Pos = att.Pos + att.Ang:Forward() * -2

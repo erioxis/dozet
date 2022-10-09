@@ -24,6 +24,8 @@ CLASS.CrouchedWalkSpeed = 1
 CLASS.StepSize = 8
 CLASS.Mass = 2
 
+CLASS.CrowDa = true
+
 CLASS.NoUse = false
 CLASS.NoGibs = true
 CLASS.NoCollideAll = true

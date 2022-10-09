@@ -80,6 +80,7 @@ end
 
 function ENT:OnTakeDamage(dmginfo)
 	if self:GetSigilHealth() <= 0 or dmginfo:GetDamage() <= 0 then return end
+	if dmginfo:GetAttacker():GetZombieClassTable().BaraCat then return end
 
 	local attacker = dmginfo:GetAttacker()
 	if attacker:IsValid() and attacker:IsPlayer() and dmginfo:GetDamage() > 2 and CurTime() >= self.HealthLock then
@@ -87,7 +88,7 @@ function ENT:OnTakeDamage(dmginfo)
 			if attacker:Team() == TEAM_HUMAN then
 				local dmgtype = dmginfo:GetDamageType()
 				if bit.band(dmgtype, DMG_SLASH) ~= 0 or bit.band(dmgtype, DMG_CLUB) ~= 0 then
-					dmginfo:SetDamage(dmginfo:GetDamage() * 1.6)
+					dmginfo:SetDamage(dmginfo:GetDamage() * 0.1)
 				else
 					dmginfo:SetDamage(0)
 					return
@@ -109,7 +110,7 @@ function ENT:OnTakeDamage(dmginfo)
 				else
 					gamemode.Call("PreOnSigilCorrupted", self, dmginfo)
 					self:SetSigilCorrupted(true)
-					self.MaxHealth = 5000
+					self.MaxHealth = 1200
 					self:SetSigilHealthBase(self.MaxHealth)
 					self:SetSigilLastDamaged(0)
 					gamemode.Call("OnSigilCorrupted", self, dmginfo)

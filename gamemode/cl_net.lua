@@ -413,7 +413,7 @@ net.Receive("zs_ammopickup", function(length)
 
 	ammotype = GAMEMODE.AmmoNames[ammotype] or ammotype
 
-	GAMEMODE:CenterNotify({killicon = ico}, " ", COLOR_GREEN, translate.Format("obtained_x_y_ammo", amount, translate.Get(string.lower(string.Implode("",string.Explode(" ","ammo_"..ammotype))))))
+	GAMEMODE:CenterNotify({killicon = ico}, " ", COLOR_GREEN, translate.Format("obtained_x_y_ammo", amount, (translate.Get(string.lower(string.Implode("",string.Explode(" ","ammo_"..ammotype)) or ammotype)))))
 end)
 
 net.Receive("zs_ammogive", function(length)

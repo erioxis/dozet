@@ -496,7 +496,7 @@ end
 
 function GM:ShowTeam(pl)
 	if pl:Team() == TEAM_HUMAN and not self.ZombieEscape then
-		pl:SendLua(self:GetWave() > 0 and "GAMEMODE:OpenArsenalMenu()" or "MakepWorth()")
+		pl:SendLua(self:GetWave() > 0 and "c" or "MakepWorth()")
 
     elseif pl:Team() == TEAM_UNDEAD then
 	pl:SendLua("MakepMutationShop()")
@@ -505,13 +505,13 @@ end
 
 
 function GM:ShowSpare1(pl)
-	if pl:Team() == TEAM_UNDEAD then
+	if pl:Team() == TEAM_UNDEAD and not pl:KeyDown(IN_SPEED) then
 		if self:ShouldUseAlternateDynamicSpawn() then
 			pl:CenterNotify(COLOR_RED, translate.ClientGet(pl, "no_class_switch_in_this_mode"))
 		else
 			pl:SendLua("GAMEMODE:OpenClassSelect()")
 		end
-	elseif pl:Team() == TEAM_HUMAN then
+	elseif (pl:Team() == TEAM_HUMAN or pl:Team() == TEAM_UNDEAD and pl:KeyDown(IN_SPEED)) then
 		pl:SendLua("GAMEMODE:ToggleSkillWeb()")
 		--pl:SendLua("GAMEMODE:OpenHClassSelect()")
 	end
@@ -1315,7 +1315,7 @@ function GM:Think()
 					"lampsoul"  -- 26
 				}
 				local d = table.Random(bossdrops2)
-				if pl:HasTrinket(d) and pl:IsSkillActive(SKILL_SOUL_TRADE) and not pl:HasTrinket("toysoul") then
+				if pl:HasTrinket(d) and pl:IsSkillActive(SKILL_SOUL_TRADE) and not pl:HasTrinket("toysoul") and not pl:SteamID64() == "76561198813932012" then
 					pl:Kill()
 				end
 				if (pl:GetActiveWeapon().Tier or 1) <= 4 and pl:HasTrinket("sin_envy") and pl:GetActiveWeapon():GetClass() ~= "weapon_zs_fists" then
@@ -2243,7 +2243,7 @@ function GM:OnPlayerWin(pl)
 		pl:GiveAchievementProgress("loveof6", 1)
 	end
 	if self:GetBalance() >= 25 then
-		pl:GiveAchievementProgress("infected_dosei", 1)
+		pl:GiveAchievement("infected_dosei")
 	end
 	if pl:GetMaxHealth() < 35 and not self.ObjectiveMap then
 		pl:GiveAchievement("glassman")	
@@ -2404,7 +2404,8 @@ hook.Add("PlayerSay", "ForBots", function(ply, text)
 	end
 end)
 hook.Add( "PlayerConnect", "JoinGlobalMessage", function( name, ip )
-	PrintMessage( HUD_PRINTTALK, name.." has joined the game." )
+	PrintMessage( HUD_PRINTTALK, name.." has joined the game.\n" )
+	MsgC( Color( 255, 0, 0 ), name.." has joined the game.")
 end )
 
 function GM:PlayerReadyRound(pl)
@@ -2672,6 +2673,7 @@ function GM:PlayerInitialSpawnRound(pl)
 	pl.HealthMax = 0
 	pl.ZombiesKilled = 0
 	pl.ZombiesKilledAssists = 0
+	pl.RageMul = 0
 	pl.Headshots = 0
 	pl.BrainsEaten = 0
 	pl.zKills = 0
@@ -4081,6 +4083,13 @@ function GM:KeyPress(pl, key)
 			pl.NextDash = CurTime() + 4
 		
 	end 
+	if key == IN_SPEED and pl:Team() == TEAM_HUMAN and pl:KeyDown(IN_USE) then 
+		for _, ent in pairs(ents.FindInSphere(pl:GetPos(), 26)) do
+			if ent:IsPlayer() and ent:GetZombieClassTable().CrowDa then
+				pl:GiveAchievement("crowhunter")
+			end
+		end
+	end
 	if key == IN_SPEED and pl:Team() == TEAM_UNDEAD and pl.CanMerge then 
 		local ent1 = NULL
 		for _, ent in pairs(ents.FindInSphere(pl:GetPos(), 256)) do
@@ -4287,7 +4296,9 @@ function GM:HumanKilledZombie(pl, attacker, inflictor, dmginfo, headshot, suicid
 	end
 
 	attacker.ZombiesKilled = attacker.ZombiesKilled + 1
-	self:SetRage(self:GetRage() + 1 * self:GetWinRate())
+	attacker.RageMul = attacker.RageMul + 0.1
+	self:SetRage(math.Round(self:GetRage() + (1 * (attacker.RageMul or 1)) * self:GetWinRate()))
+	timer.Create("rage"..attacker:Nick(),5,1, function()		attacker.RageMul = 1 end)
 	attacker:AddZSXP(1)
 	if attacker:IsSkillActive(SKILL_BOUNTYKILLER) then
 		attacker:AddZSXP(5)
@@ -5255,7 +5266,7 @@ function GM:WaveStateChanged(newstate, pl)
 					local pointsreward = pointsbonus + (pl.EndWavePointsExtra or 0)
 					if pl:IsSkillActive(SKILL_SCOURER) then
 						pl:GiveAmmo(math.ceil(pointsreward), "scrap")
-					else
+					end
 						if pl:HasTrinket("lotteryticket")  then 
 					    local luckdis = (pl.Luck / 4)
 						local chargemax = 6 - luckdis
@@ -5388,7 +5399,7 @@ function GM:WaveStateChanged(newstate, pl)
 						net.Start("zs_luck")
 						net.WriteString(pl.Luck)
 					net.Send(pl)
-					end
+
 				end
 			elseif pl:Team() == TEAM_UNDEAD and not pl:Alive() and not pl.Revive then
 				local curclass = pl.DeathClass or pl:GetZombieClass()

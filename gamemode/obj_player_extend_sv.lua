@@ -70,16 +70,25 @@ function meta:ProcessDamage(dmginfo)
 				dmginfo:ScaleDamage(1.25)
 			end
 		end
+		--[[if attacker:IsValidLivingHuman() and inflictor == attacker:GetActiveWeapon() and inflictor.Tier <= 4 then
+            dmginfo:ScaleDamage(0.65)
+			if dmginfo:GetDamage() > self:Health() * 1.2 then
+				attacker:TakeDamage(dmginfo:GetDamage() * 0.05)
+			end
+		end]]
 		if attacker.IsLastHuman and attacker.ClanAnsableRevolution then
 			dmginfo:ScaleDamage(1.70)
 		end
-		if attacker.IsLastHuman and attacker:IsSkillActive(SKILL_LAST_MAN) then
+		if attacker:IsPlayer() and attacker.IsLastHuman and attacker:IsSkillActive(SKILL_LAST_MAN) then
 			dmginfo:ScaleDamage(1.15)
-		elseif !attacker.IsLastHuman and attacker:IsSkillActive(SKILL_LAST_MAN) then
+		elseif	attacker:IsPlayer() and !attacker.IsLastHuman and attacker:IsSkillActive(SKILL_LAST_MAN) then
 			dmginfo:ScaleDamage(0.85)
 		end
 		if attacker:IsValidLivingHuman() and attacker.ClanMich and not inflictor.IsMelee then
             dmginfo:ScaleDamage(1.15)
+		end
+		if attacker:IsValidLivingHuman() and attacker:IsSkillActive(SKILL_AMULET_11) and attacker:Health() >= attacker:GetMaxHealth() then
+            dmginfo:ScaleDamage(1.45)
 		end
 		if attacker:IsValidLivingHuman() and attacker:HasTrinket("antibaracat") and self:GetZombieClassTable().BaraCat then
             dmginfo:ScaleDamage(3)
@@ -1007,14 +1016,15 @@ function meta:AddHallow(attacker, count)
 end
 
 function meta:AddRot(attacker, count)
+	local attackers = (attacker or self)
 	local status = self:GiveStatus("rot", count)
-	status.Damager = attacker
+	status.Damager = attackers
 end
 function meta:AddBloodlust(attacker, count)
 	self:GiveStatus("strengthdartboost", count)
 end
 function meta:AddBurn(attacker, count)
-
+	local attackers = (attacker or self)
 	local status = self:GiveStatus("burn", count)
 	status.Damager = attacker
 end
