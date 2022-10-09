@@ -496,7 +496,7 @@ end
 
 function GM:ShowTeam(pl)
 	if pl:Team() == TEAM_HUMAN and not self.ZombieEscape then
-		pl:SendLua(self:GetWave() > 0 and "c" or "MakepWorth()")
+		pl:SendLua(self:GetWave() > 0 and "GAMEMODE:OpenArsenalMenu(" or "MakepWorth()")
 
     elseif pl:Team() == TEAM_UNDEAD then
 	pl:SendLua("MakepMutationShop()")
