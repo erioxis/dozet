@@ -95,6 +95,6 @@ local branch = GAMEMODE:AddNewRemantleBranch(SWEP, 2, ""..translate.Get("wep_glo
 		return 512
 	end
 end)
-branch.Colors = {Color(170, 170, 170), Color(120, 120, 120), Color(70, 70, 70), Color(250, 250, 250)}
+branch.Colors = {Color(170, 170, 170), Color(120, 120, 120), Color(70, 70, 70), Color(250, 250, 250), Color(0, 0, 0)}
 branch.NewNames = {"Cloaked", "Covert", "Silent", "Darkness", "Void"}
 branch.Killicon = "weapon_zs_shroud"

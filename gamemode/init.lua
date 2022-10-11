@@ -496,7 +496,7 @@ end
 
 function GM:ShowTeam(pl)
 	if pl:Team() == TEAM_HUMAN and not self.ZombieEscape then
-		pl:SendLua(self:GetWave() > 0 and "GAMEMODE:OpenArsenalMenu(" or "MakepWorth()")
+		pl:SendLua(self:GetWave() > 0 and "GAMEMODE:OpenArsenalMenu()" or "MakepWorth()")
 
     elseif pl:Team() == TEAM_UNDEAD then
 	pl:SendLua("MakepMutationShop()")
@@ -1373,7 +1373,7 @@ function GM:Think()
 					pl:SetHealth(math.min(healmax, pl:Health() + 3))
 				end
 				if pl:HasTrinket("lazarussoul") and time >= pl.NextRegenerate and pl:Health() < math.min(healmax, pl:GetMaxHealth() * 0.10) then
-					pl.NextRegenerate = time + 60
+					pl.NextRegenerate = time + 160
 					pl:SetHealth(math.min(healmax, pl:Health() + 500))
 				end
 				if pl:HasTrinket("hurt_curse") and time >= pl.NextRegenerate then
@@ -3929,13 +3929,6 @@ function GM:PlayerHurt(victim, attacker, healthremaining, damage)
 			net.Start("zs_trinketconsumed")
 				net.WriteString("Blood Transfusion Pack")
 			net.Send(victim)
-		end
-		if healthremaining < victim:GetMaxHealth() * 0.12 and victim:GetBloodArmor() < victim.MaxBloodArmor + 60 and victim:HasTrinket("hemostasis") then
-			victim:SetBloodArmor(math.min(victim:GetBloodArmor() + (200 * victim.BloodarmorGainMul), victim.MaxBloodArmor + (70 * victim.MaxBloodArmorMul)))
-			victim:TakeInventoryItem("trinket_lazarussoul")
-			net.Start("zs_trinketconsumed")
-			net.WriteString("Lazarus Soul")
-		net.Send(victim)
 		end
 		if healthremaining < victim:GetMaxHealth() * 0.12 and victim:GetBloodArmor() < victim.MaxBloodArmor + 60 and victim:HasTrinket("damage222") then
 			victim:AddPoints(45)

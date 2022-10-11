@@ -8,6 +8,7 @@ function ENT:Hit(vHitPos, vHitNormal, eHitEntity, vOldVelocity)
 		local source = self:ProjectileDamageSource()
 		for _, pl in pairs(ents.FindInSphere(self:GetPos(), 77)) do
 			if WorldVisible(self:LocalToWorld(Vector(0, 0, 30)), pl:NearestPoint(self:LocalToWorld(Vector(0, 0, 30)))) then
+				if pl:IsPlayer() and (pl:GetStatus("rot")) then return end
 				if pl:IsValidLivingZombie() and pl ~= owner then
 					local alt = self:GetDTBool(0)
 					pl:TakeSpecialDamage(self.Heal * 4.2, DMG_DIRECT,owner, self:GetOwner():GetActiveWeapon())

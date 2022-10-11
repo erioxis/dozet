@@ -11,7 +11,7 @@ function ENT:Hit(vHitPos, vHitNormal, eHitEntity)
 	vHitPos = vHitPos or self:GetPos()
 	vHitNormal = vHitNormal or Vector(0, 0, 1)
 
-	if eHitEntity:IsValidLivingPlayer() and gamemode.Call("PlayerShouldTakeDamage", eHitEntity, owner) then
+	if eHitEntity:IsValidLivingPlayer() then
 		eHitEntity:GiveStatus("frost", 5)
 		local rot = eHitEntity:GetStatus("rot")
 		if (rot) then 
@@ -22,6 +22,9 @@ function ENT:Hit(vHitPos, vHitNormal, eHitEntity)
 		end
 		if (not rot) then 
 			eHitEntity:AddRot(eHitEntity:GetOwner(), 1)
+			if rot and rot:IsValid() then
+				rot:AddDamage(5, owner)
+			end
 		end
 		eHitEntity:AddArmDamage(11)
 	end

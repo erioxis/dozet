@@ -107,7 +107,10 @@ function PANEL:SetNotification(...)
 			end
 			avatar:SetAlpha(220)
 			avatar:Dock(LEFT)
-			avatar:DockMargin(0, (self:GetTall() - avatar:GetTall()) / 2, 0, 0)
+			avatar:DockMargin(0, (self:GetTall() - avatar:GetTall()) / 2, 0, 0)		
+			if  v:IsValid() and v:IsPlayer() and v:IsBot() then
+				avatar:Remove()
+			end
 
 			if v:IsValid() then
 				self:AddLabel(" "..v:Name(), team.GetColor(v:Team()), DefaultFontEntity)

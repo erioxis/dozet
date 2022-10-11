@@ -1346,18 +1346,18 @@ GM:AddSkill(SKILL_ANIMA, "Fines de anima", PURPLE.."+15% melee damage\n" ..BAD..
 	SKILL_MERCUS = 184
 					GM:AddSkillModifier(SKILL_MERCUS, SKILLMOD_RESUPPLY_DELAY_MUL, -0.10)			
 					GM:AddSkill(SKILL_MERCUS, "Mortiferum Pompam", PURPLE.."-10% Ressuply Delay",
-										-4,			-7,					{SKILL_ANIMA}, TREE_ANCIENTTREE)
+										-4,			-6,					{SKILL_ANIMA}, TREE_ANCIENTTREE)
 					GM:AddSkill(SKILL_NANOPEL, "Napoleon", PURPLE.."-35% Model scale",
 										-6,			-7,					{SKILL_MERCUS}, TREE_ANCIENTTREE)
 SKILL_SIGILIBERATOR = 180	
 GM:AddSkillModifier(SKILL_SIGILIBERATOR, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 0.5)		
 GM:AddSkill(SKILL_SIGILIBERATOR, "Liberator", PURPLE.."x2 damage\n" ..BAD.."+50% damage taken",
-										-3,			-9,					{SKILL_EX2}, TREE_ANCIENTTREE)
+										-3,			-8.3,					{SKILL_EX2}, TREE_ANCIENTTREE)
 										SKILL_DEATH = 181	
 GM:AddSkillModifier(SKILL_DEATH, SKILLMOD_MEDKIT_COOLDOWN_MUL, 0.2)
 GM:AddSkillModifier(SKILL_DEATH, SKILLMOD_MEDKIT_EFFECTIVENESS_MUL, 0.2)		
 GM:AddSkill(SKILL_DEATH, "Morieris", PURPLE.."Better medicine\n" ..BAD.."+20% Medkit Cooldown\n"..PURPLE.."+20% Medkit effectiveness",
-										-3,			-8,					{SKILL_EX2}, TREE_ANCIENTTREE)
+										-3,			-7.5,					{SKILL_EX2}, TREE_ANCIENTTREE)
 GM:AddSkill(SKILL_HELPLIFER, "Chance", PURPLE.."Can save from fatal hit\n33% Chance\nOn upgrade chance is 50%",
 										2,			-7,					{SKILL_EX2}, TREE_ANCIENTTREE,0)
 .CanUpgrade = 2
@@ -1372,25 +1372,25 @@ GM:AddSkill(SKILL_INVISIBLE_MAN, "Anti-Vision", PURPLE.."Zombie can't see you au
 										SKILL_ALLPOWER = 182
 GM:AddSkillModifier(SKILL_ALLPOWER, SKILLMOD_REPAIRRATE_MUL, 0.10)		
 GM:AddSkill(SKILL_ALLPOWER, "Cunctipotens", PURPLE.."Better cades\n" ..PURPLE.."+10% Repair Mul",
-					-4,			-8,					{SKILL_DEATH}, TREE_ANCIENTTREE)
+					-4,			-7.3,					{SKILL_DEATH}, TREE_ANCIENTTREE)
 SKILL_ANCIENT = 183
 GM:AddSkillModifier(SKILL_ANCIENT, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 0.10)
 GM:AddSkillModifier(SKILL_ANCIENT, SKILLMOD_MELEE_DAMAGE_MUL, 0.2)		
 GM:AddSkill(SKILL_ANCIENT, "Adventum Antiqua", PURPLE.."+20% Damage melee\n" ..BAD.."+10% Damage taken mul",
-					-4,			-9,					{SKILL_SIGILIBERATOR}, TREE_ANCIENTTREE)
+					-4,			-9.5,					{SKILL_SIGILIBERATOR}, TREE_ANCIENTTREE)
 					SKILL_CLASSIX1 = 185	
 GM:AddSkill(SKILL_CLASSIX1, "Classical scientia mundi", PURPLE.."Random bloodarmor",
-					-5,			-8,					{SKILL_ALLPOWER}, TREE_ANCIENTTREE)
+					-5,			-8.5,					{SKILL_ALLPOWER}, TREE_ANCIENTTREE)
 SKILL_MAGIC = 255
 GM:AddSkill(SKILL_MAGIC, "Magic", PURPLE.."Open a usage of magic\n",
 					-6,			-8,					{SKILL_CLASSIX1}, TREE_ANCIENTTREE)
 				
 SKILL_BLOODMARY = 186
 GM:AddSkill(SKILL_BLOODMARY, "Sanguinum Messis", PURPLE.."Regenerate blood armor",
-										-5,			-9,					{SKILL_ANCIENT}, TREE_ANCIENTTREE)
+										-3,			-9,					{SKILL_ANCIENT}, TREE_ANCIENTTREE)
 										SKILL_TRUEPOWER = 187
 GM:AddSkill(SKILL_TRUEPOWER, "Future Knowledge Vol.3", PURPLE.."Cost Of Knowledge",
-																				-5,			-10,					{SKILL_BLOODMARY}, TREE_ANCIENTTREE)
+																				-4,			-10,					{SKILL_BLOODMARY}, TREE_ANCIENTTREE)
 																														SKILL_HEARTS = 202
 GM:AddSkill(SKILL_HEARTS, "Ancient Hearts", PURPLE.."Unlock Heart Trinkets",
 																				-5,			-11,					{SKILL_TRUEPOWER,SKILL_NANOMACHINES}, TREE_ANCIENTTREE)

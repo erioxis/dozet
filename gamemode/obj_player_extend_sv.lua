@@ -113,7 +113,7 @@ function meta:ProcessDamage(dmginfo)
 			if attacker:IsSkillActive(SKILL_INF_POWER) then
 				dmginfo:ScaleDamage(0.5 + #attacker:GetUnlockedSkills() * 0.02)
 			end
-			if attacker:IsSkillActive(SKILL_AMULET_2) and ( 16>attacker:Health() or attacker:Health() <= attacker:GetMaxHealth() * 0.1 )then
+			if attacker:IsSkillActive(SKILL_AMULET_2) and (15 >= attacker:Health() or attacker:Health() <= attacker:GetMaxHealth() * 0.1 )then
 				dmginfo:ScaleDamage(2)
 			end
 			if damage >= 10000 then
@@ -395,19 +395,7 @@ function meta:ProcessDamage(dmginfo)
 				if self:IsSkillActive(SKILL_TRUEBLOCK) and self:GetActiveWeapon().ParryTiming then
 			       attacker:TakeDamage(self:GetActiveWeapon().MeleeDamage * 6, self, self:GetActiveWeapon())
 				end
-				if self:IsSkillActive(SKILL_UPLOAD) and not self:GetStatus("hshield") then
-					
-					local cursed5 = self:GetStatus("hollowing")
-					if (cursed5) then 
-						self:AddHallow(attacker,cursed5.DieTime - CurTime() + (dmginfo:GetDamage() * 1.5))
-						self.MasteryHollowing = self.MasteryHollowing + dmginfo:GetDamage()
-					end
-					if (not cursed5) then 
-						self:AddHallow(attacker,dmginfo:GetDamage() * 1.5)
-						self.MasteryHollowing = self.MasteryHollowing + dmginfo:GetDamage()
-					end
-					dmginfo:SetDamage(0)
-				end
+
 				--[[if self:IsSkillActive(SKILL_UPLOAD) then
 					timer.Simple(5, function()
 						self:TakeSpecialDamage(dmginfo:GetDamage() * 0.5, DMG_ACID, attacker, self)
@@ -451,9 +439,7 @@ function meta:ProcessDamage(dmginfo)
 				elseif attacker:IsBot() and self:GetZSRemortLevel() < 2 then
 					dmginfo:ScaleDamage(0.75)
 				end
-				if dmginfo:GetDamage() >= 41 and self:IsSkillActive(SKILL_MOREDAMAGE) then
-					dmginfo:SetDamage(41)
-				end
+
 				if self:GetActiveWeapon().CanDefend and math.min(10,self:GetActiveWeapon():GetPerc()) > 0 then
 					dmginfo:SetDamage(dmginfo:GetDamage() / self:GetActiveWeapon():GetPerc())
 					self:GetActiveWeapon():SetPerc(self:GetActiveWeapon():GetPerc() - 1)
@@ -638,9 +624,26 @@ function meta:ProcessDamage(dmginfo)
 				end
 			end
 
+			if self:IsSkillActive(SKILL_UPLOAD) and not self:GetStatus("hshield") then
+					
+				local cursed5 = self:GetStatus("hollowing")
+				if (cursed5) then 
+					self:AddHallow(attacker,cursed5.DieTime - CurTime() + (dmginfo:GetDamage() * 1.5))
+					self.MasteryHollowing = self.MasteryHollowing + dmginfo:GetDamage()
+				end
+				if (not cursed5) then 
+					self:AddHallow(attacker,dmginfo:GetDamage() * 1.5)
+					self.MasteryHollowing = self.MasteryHollowing + dmginfo:GetDamage()
+				end
+				dmginfo:SetDamage(0)
+			end
+			if dmginfo:GetDamage() >= 41 and self:IsSkillActive(SKILL_MOREDAMAGE) then
+				dmginfo:SetDamage(41)
+			end
 			if self.HasHemophilia and (damage >= 4 and dmgtype == 0 or bit.band(dmgtype, DMG_TAKE_BLEED) ~= 0) then
 				local bleed = self:GiveStatus("bleed")
 				if bleed and bleed:IsValid() then
+					local damage = damage * (self:IsSkillActive(SKILL_DEFENDBLOOD) and 0.1 or 1)
 					bleed:AddDamage((damage * 0.25) * (self:IsSkillActive(SKILL_LOX) and 2 or 1))
 					if attacker:IsValid() and attacker:IsPlayer() then
 						bleed.Damager = attacker
@@ -1018,7 +1021,7 @@ end
 function meta:AddRot(attacker, count)
 	local attackers = (attacker or self)
 	local status = self:GiveStatus("rot", count)
-	status.Damager = attackers
+	status:AddDamage(attackers, count)
 end
 function meta:AddBloodlust(attacker, count)
 	self:GiveStatus("strengthdartboost", count)

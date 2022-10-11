@@ -2262,7 +2262,7 @@ LANGUAGE.s_sigildef = "SIGIL DEFENDS!"
 
 LANGUAGE.s_hollow_d = "On end your take damage equal of maximum peek time of status."
 LANGUAGE.s_mantle_d = "Mantle Give immunity for Ancient Nightmare ONESHOT and and lets you know if there is a mantle."
-LANGUAGE.s_rot_d = "You take damage equal of you 1% max health."
+LANGUAGE.s_rot_d = "You take damage equal of you 0.5% max health.\nRot stop heal from parasitoid!"
 LANGUAGE.s_curse_d = "If time equal 100 * max curse you die.\nHolly defend from auto-death."
 LANGUAGE.s_bloodrage_d = "+12% Damage."
 LANGUAGE.s_bloodlust_d = "+5% Damage per stack."

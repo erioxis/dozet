@@ -154,6 +154,7 @@ end
 
 function CLASS:ProcessDamage(pl, dmginfo)
 	if dmginfo:GetInflictor().IsMelee and not dmginfo:GetInflictor().IgnoreNiggers then
+		dmginfo:GetAttacker():TakeSpecialDamage(dmginfo:GetDamage() * 0.05, DMG_DIRECT, pl, pl:GetActiveWeapon())
 		dmginfo:SetDamage(5)
 	end
 end

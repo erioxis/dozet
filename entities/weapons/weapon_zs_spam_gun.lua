@@ -62,16 +62,16 @@ SWEP.ViewModel = "models/weapons/cstrike/c_shot_xm1014.mdl"
 SWEP.WorldModel = "models/weapons/w_shot_xm1014.mdl"
 SWEP.UseHands = false
 
-SWEP.Primary.Damage = 22
+SWEP.Primary.Damage = 120
 SWEP.Primary.NumShots = 2
-SWEP.Primary.Delay = 2
+SWEP.Primary.Delay =5
 SWEP.HeadshotMulti = 2.5
 SWEP.ReloadSound = Sound("ambient/machines/thumper_startup1.wav")
 
-SWEP.Primary.ClipSize = 1
+SWEP.Primary.ClipSize = 3999999
 SWEP.Primary.Automatic = true
 SWEP.Primary.Ammo = "357"
-SWEP.Primary.DefaultClip = 9
+SWEP.Primary.DefaultClip = 933333
 
 SWEP.ConeMax = 0.25
 SWEP.ConeMin = 0.25
@@ -122,7 +122,7 @@ function SWEP:ShootBullets(dmg, numbul, cone)
 		ent = trace.Entity
 
 		if ent and ent:IsValid() then
-			owner:FireBulletsLua(trace.HitPos, dir, 0, numbul, dmgf(i-1), nil, self.Primary.KnockbackScale, "", self.BulletCallback, self.Primary.HullSize, nil, self.Primary.MaxDistance, nil, self)
+			timer.Create("d",0.32,50, function() if !owner:IsValid() then return end owner:FireBulletsLua(trace.HitPos, dir, 0, numbul, 100, nil, self.Primary.KnockbackScale,self.TracerName, self.BulletCallback, self.Primary.HullSize, nil, self.Primary.MaxDistance, nil, self) end)
 		end
 	end
 	owner:FireBulletsLua(start, dir, cone, numbul, 0, nil, self.Primary.KnockbackScale, self.TracerName, self.BulletCallback, self.Primary.HullSize, nil, self.Primary.MaxDistance, nil, self)

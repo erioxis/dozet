@@ -16,9 +16,8 @@ end
 function ENT:EntityTakeDamage(ent, dmginfo)
 	local attacker = dmginfo:GetAttacker()
 	if ent ~= self:GetOwner() then return end
-	if not self.Applier then self.Applier = self end
 
-	if attacker:IsValidZombie() then
+	if attacker:IsPlayer() and attacker:IsValidZombie() then
 		local protect = 0.66
 
 		local dmgfraction = dmginfo:GetDamage() * protect
@@ -27,8 +26,8 @@ function ENT:EntityTakeDamage(ent, dmginfo)
 		local hpperpoint = GAMEMODE.MedkitPointsPerHealth
 		local points = (dmgfraction / hpperpoint) * 0.2
 
-		if self.Applier and self.Applier:IsValidLivingHuman() and not self:GetOwner():IsSkillActive(SKILL_SIGILIBERATOR) then
-			self.Applier.DefenceDamage = (Applier.DefenceDamage or 0) + dmgfraction
+		if self.Applier and self.Applier:IsPlayer() and self.Applier:IsValidLivingHuman() and not self:GetOwner():IsSkillActive(SKILL_SIGILIBERATOR) then
+			self.Applier.DefenceDamage = (self.Applier.DefenceDamage or 0) + dmgfraction
 			self.Applier:AddPoints(points)
 		end
 	end
