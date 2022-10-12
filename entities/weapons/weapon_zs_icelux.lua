@@ -24,6 +24,7 @@ SWEP.MeleeRange = 61
 SWEP.MeleeSize = 0.76
 SWEP.PrimaryDelay = 0.47
 SWEP.Tier = 3
+SWEP.Thinkdada = 0
 
 
 function SWEP:PrimaryAttack()
@@ -52,9 +53,11 @@ function SWEP:PrimaryAttack()
 					obj:EmitSound(")weapons/physcannon/superphys_launch"..math.random(4)..".wav")
 					obj.LastShadeLaunch = CurTime()
 				end
+				if ent:IsValid() and self.Thinkdada <= CurTime() then
+					ent:Remove()
+					self.Thinkdada = CurTime() + 0.2
+				end 
 			end
-
-			ent:Remove()
 		end
 	end
 end

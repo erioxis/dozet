@@ -139,7 +139,7 @@ concommand.Add("zs_pointsshopbuy", function(sender, command, arguments)
 				if not sender:IsSkillActive(SKILL_SAMODOS) then
 					local scrapcom = math.ceil(cost / 6)
 					nearest:SetScraps(nearest:GetScraps() + scrapcom)
-					nearest:GetObjectOwner():CenterNotify(COLOR_GREEN, translate.ClientFormat("remantle_used", scrapcom)..sender:Nick())
+					nearest:GetObjectOwner():CenterNotify(COLOR_GREEN, translate.Format("remantle_used", scrapcom)..sender:Nick())
 				end
 			end
 		end

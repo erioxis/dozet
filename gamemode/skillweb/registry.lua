@@ -2077,7 +2077,7 @@ GM:SetSkillModifierFunction(SKILLMOD_POISON_SPEED_MUL, function(pl, amount)
 	pl.PoisonSpeedMul = math.Clamp(amount + 1.0, 0.1, 1000.0)
 end)
 GM:SetSkillModifierFunction(SKILLMOD_SCALEMODEL, function(pl, amount)
-	pl.ScaleModel = math.Clamp(amount + 1.0, 0.45, 1000.0)
+	pl.ScaleModel = math.Clamp(amount + 1.0 - (pl.ClanMich and 0.25 or 0), 0.15, 1000.0)
 end)
 
 

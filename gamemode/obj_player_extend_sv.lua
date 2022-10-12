@@ -96,7 +96,7 @@ function meta:ProcessDamage(dmginfo)
 		if GAMEMODE.ObjectiveMap then
 			dmginfo:ScaleDamage(0.25)
 		end
-		if attacker:IsSkillActive(SKILL_AMULET_2) and (15 >= attacker:Health() or attacker:Health() <= (attacker:GetMaxHealth() * 0.1) )then
+		if attacker:IsPlayer() and attacker:IsSkillActive(SKILL_AMULET_2) and (15 >= attacker:Health() or attacker:Health() <= (attacker:GetMaxHealth() * 0.1) )then
 			dmginfo:ScaleDamage(2)
 		end
 
@@ -1021,7 +1021,7 @@ end
 function meta:AddRot(attacker, count)
 	local attackers = (attacker or self)
 	local status = self:GiveStatus("rot", count)
-	status:AddDamage(attackers, count)
+	status:AddDamage(count,	attackers)
 end
 function meta:AddBloodlust(attacker, count)
 	self:GiveStatus("strengthdartboost", count)
@@ -1700,7 +1700,7 @@ function meta:DoHulls(classid, teamid)
 	classid = classid or self:GetZombieClass()
 
 	if teamid == TEAM_UNDEAD then
-		local classtab = GAMEMODE.ZombieClasses[classid]
+		local classtab = (self.Zban and GAMEMODE.ZombieClasses["Crow"] or GAMEMODE.ZombieClasses[classid])
 		if classtab then
 			if self:Alive() then
 				self:SetMoveType(classtab.MoveType or MOVETYPE_WALK)

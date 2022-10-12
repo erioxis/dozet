@@ -2819,9 +2819,9 @@ function GM:PlayerInitialSpawnRound(pl)
 	if table.HasValue(avanguardtbl, pl:SteamID64()) then 
 		pl.ClanAvanguard = true
 	end
-	--[[if table.HasValue(michtbl, pl:SteamID64()) then 
+	if table.HasValue(michtbl, pl:SteamID()) then 
 		pl.ClanMich = true
-	end]]
+	end
 	if table.HasValue(queprotbl, pl:SteamID64()) then 
 		pl.ClanQuePro = true
 	end

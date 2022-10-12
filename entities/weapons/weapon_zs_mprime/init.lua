@@ -10,7 +10,7 @@ end
 function SWEP:ToDie(damage, numshots, cone)
 	local owner = self:GetOwner()
 	owner:DoAttackEvent()
-
+	owner.LastRangedAttack = CurTime()
 
 	local ssfw, ssup
 	if self.SameSpread then
