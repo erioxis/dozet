@@ -96,6 +96,9 @@ function meta:ProcessDamage(dmginfo)
 		if GAMEMODE.ObjectiveMap then
 			dmginfo:ScaleDamage(0.25)
 		end
+		if attacker:IsSkillActive(SKILL_AMULET_2) and (15 >= attacker:Health() or attacker:Health() <= (attacker:GetMaxHealth() * 0.1) )then
+			dmginfo:ScaleDamage(2)
+		end
 
 		self.ShouldFlinch = true
 
@@ -112,9 +115,6 @@ function meta:ProcessDamage(dmginfo)
 			end
 			if attacker:IsSkillActive(SKILL_INF_POWER) then
 				dmginfo:ScaleDamage(0.5 + #attacker:GetUnlockedSkills() * 0.02)
-			end
-			if attacker:IsSkillActive(SKILL_AMULET_2) and (15 >= attacker:Health() or attacker:Health() <= attacker:GetMaxHealth() * 0.1 )then
-				dmginfo:ScaleDamage(2)
 			end
 			if damage >= 10000 then
 				attacker:GiveAchievement("opm")
