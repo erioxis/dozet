@@ -110,7 +110,7 @@ function ENT:OnTakeDamage(dmginfo)
 				else
 					gamemode.Call("PreOnSigilCorrupted", self, dmginfo)
 					self:SetSigilCorrupted(true)
-					self.MaxHealth = 1200
+					self.MaxHealth = 260
 					self:SetSigilHealthBase(self.MaxHealth)
 					self:SetSigilLastDamaged(0)
 					gamemode.Call("OnSigilCorrupted", self, dmginfo)

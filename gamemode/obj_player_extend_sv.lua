@@ -110,11 +110,11 @@ function meta:ProcessDamage(dmginfo)
 
 			attacker.dpsmeter = damage/wep.Primary.Delay * (wep.Primary.NumShots or 1)
 			attacker:SetDPS(damage/wep.Primary.Delay * (wep.Primary.NumShots or 1))
-			if attacker:IsSkillActive(SKILL_VAMPIRISM) and math.random(1,4 * (wep.Primary.NumShots or 1)) == 1 then
+			if attacker:IsSkillActive(SKILL_VAMPIRISM) and math.random(1,4 * (wep.Primary.NumShots or 1)) == 1 and damage >= 120 then
 				attacker:SetHealth(math.min(attacker:GetMaxHealth(), attacker:Health() + attacker:GetMaxHealth() * 0.11))
 			end
 			if attacker:IsSkillActive(SKILL_INF_POWER) then
-				dmginfo:ScaleDamage(0.5 + #attacker:GetUnlockedSkills() * 0.02)
+				dmginfo:ScaleDamage(0.5 + #attacker:GetUnlockedSkills() * 0.015)
 			end
 			if damage >= 10000 then
 				attacker:GiveAchievement("opm")
@@ -682,7 +682,7 @@ function meta:ProcessDamage(dmginfo)
 			end
 
 
-			local ratio = 0.5 + self.BloodArmorDamageReductionAdd + (self:IsSkillActive(SKILL_IRONBLOOD) and self:Health() <= self:GetMaxHealth() * 0.5 and 0.25 or 0)
+			local ratio = math.max(0.5 + self.BloodArmorDamageReductionAdd + (self:IsSkillActive(SKILL_IRONBLOOD) and self:Health() <= self:GetMaxHealth() * 0.5 and 0.25 or 0),0.05)
 			local absorb = math.min(self:GetBloodArmor(), damage * ratio)
 			dmginfo:SetDamage(damage - absorb)
 			self:SetBloodArmor(self:GetBloodArmor() - absorb)
@@ -774,7 +774,7 @@ function meta:GetBossZombieIndex()
 		"Puke Pus",
 		"Skeleton"  --16
 	}
-	if self:GetInfo("zs_bossclass") == "Minos Prime" and GAMEMODE:GetWave() <= 3 then return bossclasses[1] end
+	if (self:GetInfo("zs_bossclass") == ("Minos Prime" or "Devourer")) and GAMEMODE:GetWave() <= 3 then return bossclasses[3] end
 	local desired = self:GetInfo("zs_bossclass") or ""
 	if GAMEMODE:IsBabyMode() then
 		desired = "Giga Gore Child"
@@ -2230,7 +2230,8 @@ local bossdrops = {
 	"trinket_sugersoul",  -- 23
 	"trinket_nulledsoul",  -- 24
 	"trinket_soulmedical",  -- 25
-	"trinket_lampsoul"  -- 26
+	"trinket_lampsoul",  -- 26
+	"trinket_lehasoul"  -- 27
 }
 local demiboss = {
 	"comp_soul_alt_h",

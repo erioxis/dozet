@@ -17,7 +17,7 @@ function ENT:Think()
 	owner:TakeDamage(dmg + self:GetDamage() * 0.01, self.Damager and self.Damager:IsValid() and self.Damager:IsPlayer() and self.Damager or owner, self)
 		self:AddDamage(-dmg - self:GetDamage() * 0.01)
 	elseif owner:IsSkillActive(SKILL_DEFENDBLOOD) then
-		owner:SetHealth(owner:Health() + (dmg * 2) + self:GetDamage() * 0.01)
+		owner:SetHealth(math.min(owner:Health() + (dmg * 2) + self:GetDamage() * 0.01,600))
 		self:AddDamage(-dmg - self:GetDamage() * 0.01)
 	end
 

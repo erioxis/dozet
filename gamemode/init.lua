@@ -1312,7 +1312,8 @@ function GM:Think()
 					"sugersoul",  -- 23
 					"nulledsoul",  -- 24
 					"soulmedical",  -- 25
-					"lampsoul"  -- 26
+					"lampsoul",  -- 26
+					"lehasoul"  -- 26
 				}
 				local d = table.Random(bossdrops2)
 				if pl:HasTrinket(d) and pl:IsSkillActive(SKILL_SOUL_TRADE) and not pl:HasTrinket("toysoul") and not pl:SteamID64() == "76561198813932012" then
@@ -1323,14 +1324,18 @@ function GM:Think()
 				end
 				if !pl:IsSkillActive(SKILL_BARA_CURSED) then
 					if not pl:GetStatus("sigildef") and self:GetWave() >= 6 and  time >= pl.NextDamage and self:GetWaveActive() and self:GetBalance() < 20 or self:GetBalance() > 20 and not pl:GetStatus("sigildef") and  time >= pl.NextDamage then
-						pl:TakeDamage((pl:HasTrinket("jacobsoul") and 13 or 33))
+						pl:TakeSpecialDamage((pl:HasTrinket("jacobsoul") and 2 or 5) * (pl.TickBuff or 0), DMG_DIRECT)
 						pl.NextDamage = time + (pl:HasTrinket("jacobsoul") and 4 or 0.6)
 						pl:CenterNotify(COLOR_RED, translate.ClientGet(pl, "danger"))
+						pl.TickBuff = pl.TickBuff + (pl.TickBuff * 0.2) + 1
 					end
 					if pl:GetStatus("sigildef") and self:GetWave() >= 6 and time >= pl.NextDamage and self:GetWaveActive() and pl:HasTrinket("jacobsoul") and not (self:GetWave() == 12) then
 						pl:TakeDamage(13)
-						pl.NextDamage = time + 1.2
+						pl.NextDamage = time + 3
 						pl:CenterNotify(COLOR_GREEN, translate.ClientGet(pl, "danger_x"))
+					end
+					if time >= (pl.NextDamage + 4) then
+						pl.TickBuff = pl.TickBuff - pl.TickBuff
 					end
 				else
 					if pl:HasTrinket("antibaracat") then
@@ -2681,6 +2686,7 @@ function GM:PlayerInitialSpawnRound(pl)
 	pl.HolyMantle = 0
 	pl.NextPremium = 0
 	pl.NextDamage = 0
+	pl.TickBuff = 0
 	pl.NextStuckThink = 0
 
 	pl.CarefullMelody_DMG = 0
@@ -2780,7 +2786,6 @@ function GM:PlayerInitialSpawnRound(pl)
 		"76561198874285897",
 		"76561199081762080",
 		"76561198036866965",
-		"76561198851853978",
 		"76561198995499738",
 		"76561198331898065",
 		"76561199124299400",
@@ -5218,7 +5223,7 @@ function GM:WaveStateChanged(newstate, pl)
 
 		for _, pl in pairs(player.GetAll()) do
 			if pl:Team() == TEAM_HUMAN and pl:Alive() then
-				if self.EndWaveHealthBonus > 0 then
+				if self.EndWaveHealthBonus > 0 and !pl:HasTrinket("lehasoul") then
 					pl:SetHealth(math.min(pl:GetMaxHealth(), pl:Health() + self.EndWaveHealthBonus))
 				end
 				if pl:IsSkillActive(SKILL_LUCKY_UNLIVER) then
@@ -5237,11 +5242,11 @@ function GM:WaveStateChanged(newstate, pl)
 				if pl:HasTrinket("vir_pat") then
 					pl.CanBuy = true
 				end
-				if pl:IsSkillActive(SKILL_SECONDCHANCE) and not pl.LetalSave then
-					pl.LetalSave = true
-				end
 				if pl:IsSkillActive(SKILL_SECONDCHANCE) and pl.LetalSave and self:GetWave() >= 5 and pl:IsValidLivingHuman() then
 					pl:GiveAchievement("thisisbeeasy")
+				end
+				if pl:IsSkillActive(SKILL_SECONDCHANCE) and not pl.LetalSave then
+					pl.LetalSave = true
 				end
 				if pl:IsSkillActive(SKILL_XPMULGOOD) then
 				   pl.XPMulti = pl.XPMulti + 0.20

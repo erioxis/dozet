@@ -112,7 +112,7 @@ if SERVER then
 			pl:EmitSound(Sound("zombiesurvival/mp_useless.wav"))
 		end
 		local wep = pl:GetActiveWeapon()
-		dmginfo:SetDamage(dmginfo:GetDamage() / 5)
+		dmginfo:SetDamage(dmginfo:GetDamage() / 2.5)
 		if wep:IsValid() and wep.GetBattlecry and wep:GetBattlecry() > CurTime() then
 			dmginfo:SetDamage(dmginfo:GetDamage() * 0.25)
 		end
@@ -120,7 +120,7 @@ if SERVER then
 			pl.OneTime = false
 			for _, ply  in pairs(player.GetAll()) do
 				if ply:IsValid() and ply:IsPlayer() and ply ~= pl and ply:IsValidLivingHuman() then
-					ply:TakeDamage(ply:Health() * 0.25, pl, wep)
+					ply:TakeDamage(ply:Health() * 0.45, pl, wep)
 					ply:EmitSound(Sound("zombiesurvival/mp_weak.ogg"))
 				end
 				pl:EmitSound(Sound("zombiesurvival/mp_weak.ogg"))

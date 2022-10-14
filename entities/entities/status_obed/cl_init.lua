@@ -3,7 +3,7 @@ INC_CLIENT()
 ENT.NextEmit = 0.02
 local matBeam = Material( "trails/electric" )
 function ENT:Draw()
-   if MySelf:KeyDown(IN_SPEED) then return end
+   if MySelf:KeyDown(IN_SPEED) or MySelf ~= owner then return end
    local owner = self:GetOwner()
     render.SetColorModulation(0.45, 0.46, 0.01)
 
