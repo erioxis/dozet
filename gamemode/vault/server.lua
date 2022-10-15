@@ -83,6 +83,9 @@ function GM:LoadVault(pl)
 				if contents.MedicMastery then
 					pl.MedicMastery = contents.MedicMastery
 				end
+				if contents.Zban then
+					pl.Zban = contents.Zban
+				end
 
 				pl.SkillVersion = self.SkillTreeVersion
 			end
@@ -135,7 +138,8 @@ function GM:SaveVault(pl)
 		Version = pl.SkillVersion or self.SkillTreeVersion,
 		MedicMastery = pl.MedicMastery,
 		MeleeMastery = pl.MeleeMastery,
-		GunMastery = pl.GunMastery
+		GunMastery = pl.GunMastery,
+		Zban = (pl.Zban or false)
 	}
 
 	if pl.NextSkillReset and os.time() < pl.NextSkillReset then

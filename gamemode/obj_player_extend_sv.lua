@@ -64,6 +64,9 @@ function meta:ProcessDamage(dmginfo)
 		if attacker:IsValidLivingHuman() and attacker:IsSkillActive(SKILL_SIGILIBERATOR) then
             dmginfo:ScaleDamage(2)
 		end
+		if attacker:IsValidLivingHuman() and attacker:IsSkillActive(SKILL_AMULET_12) then
+            dmginfo:ScaleDamage(0)
+		end
 		if attacker:IsValidLivingHuman() and attacker.ClanAvanguard and inflictor.Unarmed then
             dmginfo:ScaleDamage(1.25)
 			if inflictor.IsMelee then

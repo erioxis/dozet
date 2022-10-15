@@ -90,7 +90,7 @@ function meta:DoHulls(classid, teamid)
 	if teamid == TEAM_UNDEAD then
 		self:SetIK(false)
 
-		local classtab = GAMEMODE.ZombieClasses[classid]
+		local classtab = (self.Zban and GAMEMODE.ZombieClasses["Crow"] or GAMEMODE.ZombieClasses[classid])
 		if classtab then
 			if classtab.ModelScale then
 				self:SetModelScale(classtab.ModelScale, 0)

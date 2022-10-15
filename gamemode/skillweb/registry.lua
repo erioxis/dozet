@@ -380,6 +380,7 @@ SKILL_AMULET_8 = 358
 SKILL_AMULET_9 = 359
 SKILL_AMULET_10 = 360
 SKILL_AMULET_11 = 361
+SKILL_AMULET_12 = 362
 
 SKILLMOD_HEALTH = 1
 SKILLMOD_SPEED = 2
@@ -723,6 +724,7 @@ GM:AddSkill(SKILL_COMBOHEAL, translate.Get("skill_comboheal"), GOOD..translate.G
 																0,			-5,					{SKILL_DISPERSION}, TREE_SUPPORTTREE)
 GM:AddSkill(SKILL_PHIK, translate.Get("skill_phik"), GOOD..translate.Get("skill_phik_d1")..BAD..translate.Get("skill_phik_d2"),
 																-2,			-5,					{SKILL_COMBOHEAL}, TREE_SUPPORTTREE)
+.Disabled = true
 GM:AddSkill(SKILL_FOREVERALONE, translate.Get("skill_foreveralone"), GOOD..translate.Get("skill_foreveralone_d1")..BAD..translate.Get("skill_foreveralone_d2"),
 																-1,			-6,					{SKILL_COMBOHEAL}, TREE_SUPPORTTREE)
 GM:AddSkill(SKILL_WYRDREC, translate.Get("skill_wyrdrec"), GOOD..translate.Get("skill_wyrdrec_d1")..BAD..translate.Get("skill_wyrdrec_d2"),
@@ -937,6 +939,15 @@ d.Amulet = true
 d.AmuletCost = 5											
 GM:AddSkillModifier(SKILL_AMULET_11, SKILLMOD_SPOINT, 1)
 GM:AddSkillModifier(SKILL_AMULET_11, SKILLMOD_PIECE_OF_AMULET, -5)
+local d = GM:AddSkill(SKILL_AMULET_12, translate.Get("skill_amulet_12"), GOOD..translate.Get("skill_amulet_12_d2") ..BAD..translate.Get("skill_amulet_12_d1"),
+																-23,			-12,					{SKILL_NONE}, TREE_GUNTREE)
+d.Amulet = true				
+d.AmuletCost = -5		
+GM:AddSkillModifier(SKILL_AMULET_12, SKILLMOD_MEDKIT_EFFECTIVENESS_MUL, 0.5)
+GM:AddSkillModifier(SKILL_AMULET_12, SKILLMOD_REPAIRRATE_MUL, 0.33)									
+GM:AddSkillModifier(SKILL_AMULET_12, SKILLMOD_SPOINT, 5)
+GM:AddSkillModifier(SKILL_AMULET_12, SKILLMOD_PIECE_OF_AMULET, 5)
+
 
 
 GM:AddSkill(SKILL_QUE_PRO, translate.Get("skill_quepro"), GOOD.."-100%"..translate.Get("xpmul"),

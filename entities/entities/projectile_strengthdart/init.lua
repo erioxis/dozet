@@ -3,6 +3,8 @@ ENT.Heal = 10
 function ENT:Hit(vHitPos, vHitNormal, eHitEntity, vOldVelocity)
 	if self:GetHitTime() ~= 0 then return end
 	local owner = self:GetOwner()
+	self:SetDTEntity(5,self:GetOwner())
+	local oldowner = self:GetDTEntity(5)
 	if owner:IsValid() and owner:IsSkillActive(SKILL_PHIK) and eHitEntity:IsPlayer() then
 		self:Remove()
 		local source = self:ProjectileDamageSource()
@@ -89,4 +91,7 @@ function ENT:Hit(vHitPos, vHitNormal, eHitEntity, vOldVelocity)
 			effectdata:SetEntity(NULL)
 		end
 	util.Effect(alt and "hit_healdart2" or "hit_strengthdart", effectdata)
+	if oldowner:IsSkillActive(SKILL_PHIK) then
+		self:Remove()
+	end
 end

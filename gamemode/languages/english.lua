@@ -1482,6 +1482,9 @@ LANGUAGE.skill_amulet_10 = "AMULET:Bad Trade"
 LANGUAGE.skill_amulet_10_d1 = "Take 7 skill points"
 LANGUAGE.skill_amulet_11 = "AMULET:Believe in Health"
 LANGUAGE.skill_amulet_11_d1 = "x1.45 damage if full health"
+LANGUAGE.skill_amulet_12 = "AMULET:The burden of pacifism"
+LANGUAGE.skill_amulet_12_d2 = "+50% heal effectivness and +33% repair rate.\n"
+LANGUAGE.skill_amulet_12_d1 = "You deal 0 damage.\n+3 skill points and +5 cells."
 --free skill
 LANGUAGE.skill_freeskill = "Free SP"
 --torment
