@@ -38,6 +38,7 @@ local colNail = Color(0, 0, 5, 220)
 local colText = Color(240, 240, 240, 105)
 local colDead = Color(230, 80, 80, 95)
 function ENT:Draw()
+	if MySelf:GetInfo("zs_nopickuploot") == "1" then return end
 	local drawinfo
 	local myteam
 	local pos

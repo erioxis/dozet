@@ -335,7 +335,7 @@ function meta:ProcessDamage(dmginfo)
 		if self:IsSkillActive(SKILL_DOSETHELP) then
 		dmginfo:SetDamage(dmginfo:GetDamage() * (1 - GAMEMODE:GetWave() * 0.02))
 	end
-		if self:IsSkillActive(SKILL_SECONDCHANCE) and self.LetalSave and dmginfo:GetDamage() >= self:Health() then
+	if self:IsSkillActive(SKILL_SECONDCHANCE) and self.LetalSave and dmginfo:GetDamage() >= self:Health() then
 		dmginfo:SetDamage(0)
 		self.LetalSave = false
 		self:SetHealth(self:GetMaxHealth())
@@ -350,6 +350,9 @@ function meta:ProcessDamage(dmginfo)
 
 
 	if attacker:IsValid() and attacker:IsPlayer() and inflictor:IsValid() and attacker:Team() == TEAM_UNDEAD then
+		if attacker.Zban then
+			dmginfo:SetDamage(0)
+		end
 		if inflictor == attacker:GetActiveWeapon() then
 			if (GAMEMODE:GetBalance() * 0.1) >= 0.1 then
 				dmginfo:SetDamage(dmginfo:GetDamage() * (1 + (math.Clamp(GAMEMODE:GetBalance() * 0.1,0.5,1.5))))
@@ -685,7 +688,7 @@ function meta:ProcessDamage(dmginfo)
 			end
 
 
-			local ratio = math.max(0.5 + self.BloodArmorDamageReductionAdd + (self:IsSkillActive(SKILL_IRONBLOOD) and self:Health() <= self:GetMaxHealth() * 0.5 and 0.25 or 0),0.05)
+			local ratio = math.max(0.5 + self.BloodArmorDamageReductionAdd + (self:IsSkillActive(SKILL_IRONBLOOD) and self:Health() <= self:GetMaxHealth() * 0.5 and 0.25 or 0),(attacker:IsPlayer() and -1 or 0.05))
 			local absorb = math.min(self:GetBloodArmor(), damage * ratio)
 			dmginfo:SetDamage(damage - absorb)
 			self:SetBloodArmor(self:GetBloodArmor() - absorb)
@@ -1683,7 +1686,7 @@ function meta:SetZombieClass(cl, onlyupdate, filter)
 	if classtab then
 		self.Class = cl
 		if P_Team(self) == TEAM_UNDEAD then
-			self:DoHulls(cl)
+			self:DoHulls((cl))
 		end
 		self:CallZombieFunction0("SwitchedTo")
 
@@ -1703,7 +1706,7 @@ function meta:DoHulls(classid, teamid)
 	classid = classid or self:GetZombieClass()
 
 	if teamid == TEAM_UNDEAD then
-		local classtab = (self.Zban and GAMEMODE.ZombieClasses["Crow"] or GAMEMODE.ZombieClasses[classid])
+		local classtab =  GAMEMODE.ZombieClasses[classid]
 		if classtab then
 			if self:Alive() then
 				self:SetMoveType(classtab.MoveType or MOVETYPE_WALK)

@@ -403,19 +403,6 @@ function meta:DamageNails(attacker, inflictor, damage, dmginfo)
 
 		return true
 	end
-	if attacker.m_PropCurse then
-		dmginfo:SetDamage(dmginfo:GetDamage() * 1.35)
-	end
-	if attacker.m_Zmain then
-		dmginfo:SetDamage(dmginfo:GetDamage() * 1.50)
-	end
-	if attacker:IsPlayer() then
-		attacker:AddTokens(math.ceil((damage or 2) * 0.15))
-		attacker:AddZSXP(math.ceil((damage or 2) * 0.05))
-	end
-	if attacker.m_DoubleXP then
-		attacker:AddZSXP(math.ceil((damage or 2) * 0.05))
-	end
 
 	if self.ReinforceEnd and CurTime() < self.ReinforceEnd and self.ReinforceApplier and self.ReinforceApplier:IsValidLivingHuman() then
 		local applier = self.ReinforceApplier
@@ -470,6 +457,20 @@ function meta:DamageNails(attacker, inflictor, damage, dmginfo)
 			damage = damage * 5
 			dmginfo:SetDamage(damage)
 			self:AddUselessDamage(damage)
+		end
+		if attacker.Zban then
+			dmginfo:SetDamage(0)
+		end
+		if attacker.m_PropCurse then
+			dmginfo:SetDamage(dmginfo:GetDamage() * 1.35)
+		end
+		if attacker.m_Zmain then
+			dmginfo:SetDamage(dmginfo:GetDamage() * 1.50)
+		end
+		attacker:AddTokens(math.ceil((damage or 2) * 0.15))
+		attacker:AddZSXP(math.ceil((damage or 2) * 0.05))
+		if attacker.m_DoubleXP then
+			attacker:AddZSXP(math.ceil((damage or 2) * 0.05))
 		end
 
 		GAMEMODE:DamageFloater(attacker, self, dmginfo:GetDamagePosition(), dmginfo:GetDamage())

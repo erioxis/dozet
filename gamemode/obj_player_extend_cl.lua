@@ -90,7 +90,7 @@ function meta:DoHulls(classid, teamid)
 	if teamid == TEAM_UNDEAD then
 		self:SetIK(false)
 
-		local classtab = (self.Zban and GAMEMODE.ZombieClasses["Crow"] or GAMEMODE.ZombieClasses[classid])
+		local classtab = GAMEMODE.ZombieClasses[classid]
 		if classtab then
 			if classtab.ModelScale then
 				self:SetModelScale(classtab.ModelScale, 0)
@@ -183,9 +183,9 @@ end
 function meta:SetZombieClass(cl)
 	self:CallZombieFunction0("SwitchedAway")
 
-	local classtab = GAMEMODE.ZombieClasses[cl]
+	local classtab =  GAMEMODE.ZombieClasses[cl]
 	if classtab then
-		self.Class = classtab.Index or cl
+		self.Class = (classtab.Index or cl)
 		self:CallZombieFunction0("SwitchedTo")
 	end
 end

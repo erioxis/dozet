@@ -282,7 +282,7 @@ end
 
 function SWEP:CanPrimaryAttack()
 	if self:GetOwner():IsHolding() or self:GetOwner():GetBarricadeGhosting() or self:GetReloadFinish() > 0 then return false end
-	if self:Clip1() < self.RequiredClip then
+	if self:Clip1() < self.RequiredClip and not self:GetOwner():HasTrinket("ultra_mag") or  self:GetOwner():HasTrinket("ultra_mag") and self:GetOwner():GetAmmoCount(self.Primary.Ammo) < self.RequiredClip then
 		self:EmitSound(self.DryFireSound)
 		self:SetNextPrimaryFire(CurTime() + math.max(0.25, self.Primary.Delay))
 		return false

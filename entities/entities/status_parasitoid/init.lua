@@ -26,3 +26,13 @@ function ENT:Think()
 		self:Remove()
 	end
 end
+
+function ENT:EntityTakeDamage(ent, dmginfo)
+	local attacker = dmginfo:GetAttacker()
+	if attacker ~= self:GetOwner() then return end
+
+	if attacker:IsValid() and attacker:IsPlayer() and attacker:Team() == TEAM_UNDEAD then
+		local dmg = dmginfo:GetDamage()
+		dmginfo:SetDamage(dmg * 3)
+	end
+end

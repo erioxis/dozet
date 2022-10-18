@@ -2879,7 +2879,11 @@ function GM:PlayerInitialSpawnRound(pl)
 		pl:SetZombieClassName("Crow")
 		pl.DeathClass = self.DefaultZombieClass
 	else
-		pl:SetZombieClass(self.DefaultZombieClass)
+		if pl.Zban then
+			pl:SetZombieClass(4)
+		else
+			pl:SetZombieClass(self.DefaultZombieClass)
+		end
 	end
 
 	if pl:Team() == TEAM_UNDEAD and self.StoredUndeadFrags[uniqueid] then

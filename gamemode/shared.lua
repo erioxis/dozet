@@ -5,7 +5,7 @@ GM.Website	=	"https://github.com/erioxis/dozet"
 
 -- No, adding a gun doesn't make your name worth being here.
 GM.Credits = {
-	{"Version", "", "5.0.0"},
+	{"Version", "", "5.0.7"},
 	{"erioxis", "Phantom coder", "dead"},
 	{"Nullted", "", "RU-ENG Translation"},
 	{"Dozet", "EX", "Or no?"}
@@ -603,14 +603,14 @@ function GM:OnPlayerHitGround(pl, inwater, hitfloater, speed)
 		end
 
 		if math.floor(120) > 0 then
-			groundent:TakeSpecialDamage((groundent:GetZombieClassTable().Skeletal and 10 or 120) * self:GetWave(), DMG_DIRECT, pl, pl, pl:GetPos())
+			groundent:TakeSpecialDamage((groundent:GetZombieClassTable().Skeletal and 10 or 120) * self:GetWave(), DMG_FALL, pl, pl, pl:GetPos())
 			return true
 		end
 	end
 		if groundent:IsValid() and groundent:IsPlayer() and PTeam(groundent) == TEAM_UNDEAD and pl:IsSkillActive(SKILL_VKID2) then
 
 		if math.floor(120) > 0 then
-			groundent:TakeSpecialDamage((groundent:GetZombieClassTable().Skeletal and 25 or 160) * self:GetWave(), DMG_DIRECT, pl, pl, pl:GetPos())
+			groundent:TakeSpecialDamage((groundent:GetZombieClassTable().Skeletal and 25 or 160) * self:GetWave(), DMG_FALL, pl, pl, pl:GetPos())
 			return true
 		end
 	end

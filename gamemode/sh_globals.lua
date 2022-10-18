@@ -122,12 +122,12 @@ GM.NumberOfWaves = 12
 GM.PulsePointsMultiplier = 1.5
 
 -- The amount of damage you need to inflict to a zombie type to get a point
-GM.HumanoidZombiePointRatio = 190
-GM.PoisonZombiePointRatio = 220 -- Has an enormous head hitbox
-GM.HeadcrabZombiePointRatio = 122
-GM.NoHeadboxZombiePointRatio = 127
-GM.TorsoZombiePointRatio = 199
-GM.LegsZombiePointRatio = 136
+GM.HumanoidZombiePointRatio = 155
+GM.PoisonZombiePointRatio = 190 -- Has an enormous head hitbox
+GM.HeadcrabZombiePointRatio = 112
+GM.NoHeadboxZombiePointRatio = 97
+GM.TorsoZombiePointRatio = 149
+GM.LegsZombiePointRatio = 122
 GM.SkeletonPointRatio = GM.HumanoidZombiePointRatio/2
 
 SPEED_NORMAL = 245

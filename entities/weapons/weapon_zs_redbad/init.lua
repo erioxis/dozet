@@ -68,7 +68,7 @@ function SWEP:ApplyMeleeDamage(pl, trace, damage)
 			end
 		end
 		if (not rot) then 
-			pl:AddRot(pl:GetOwner(), 3)
+			pl:AddRot(self:GetOwner(), 3)
 			if rot and rot:IsValid() then
 				rot:AddDamage(5, owner)
 			end

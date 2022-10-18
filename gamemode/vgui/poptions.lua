@@ -91,8 +91,14 @@ function MakepOptions()
 	list:AddItem(check)
 
 	check = vgui.Create("DCheckBoxLabel", Window)
-	check:SetText(""..translate.Get("op_noproppickup"))
+	check:SetText(translate.Get("op_noproppickup"))
 	check:SetConVar("zs_nopickupprops")
+	check:SizeToContents()
+	list:AddItem(check)
+	
+	check = vgui.Create("DCheckBoxLabel", Window)
+	check:SetText(translate.Get("op_nolootpickup"))
+	check:SetConVar("zs_nopickuploot")
 	check:SizeToContents()
 	list:AddItem(check)
 
