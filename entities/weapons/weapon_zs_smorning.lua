@@ -122,7 +122,7 @@ SWEP.Souleater = 1
 SWEP.Tier = 6
 
 SWEP.Primary.Sound = Sound("Weapon_ELITE.Single")
-SWEP.Primary.Damage = 173
+SWEP.Primary.Damage = 47
 SWEP.Primary.NumShots = 1
 SWEP.Primary.Delay = 0.15
 
@@ -137,7 +137,7 @@ SWEP.MultiplierOfShots = 0
 
 
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_RELOAD_SPEED, 0.1)
-GAMEMODE:AddNewRemantleBranch(SWEP, 1, ""..translate.Get("wep_smorning_r1"), ""..translate.Get("wep_d_smorning_r1"), function(wept)
+GAMEMODE:AddNewRemantleBranch(SWEP, 1, translate.Get("wep_smorning_r1"), translate.Get("wep_d_smorning_r1"), function(wept)
 	wept.Primary.Damage = wept.Primary.Damage * 0.50
 
 	wept.BulletCallback = function(attacker, tr, dmginfo)
@@ -174,9 +174,9 @@ function SWEP:PrimaryAttack()
 	self:EmitFireSound()
 	self.IdleAnimation = CurTime() + self:SequenceDuration()
 	if SERVER then
-	self:TakeAmmo()
-	self:ShootBullets(self.Primary.Damage + (self.Primary.Damage * self.MultiplierOfShots / 4), self.Primary.NumShots, self:GetCone())
-	self.MultiplierOfShots = self.MultiplierOfShots + 1
+		self:TakeAmmo()
+		self:ShootBullets(self.Primary.Damage + (self.Primary.Damage * self.MultiplierOfShots / 4), self.Primary.NumShots, self:GetCone())
+		self.MultiplierOfShots = self.MultiplierOfShots + 1
 	end
 	if self.MultiplierOfShots >= 5 then
 		self.MultiplierOfShots = self.MultiplierOfShots - 4

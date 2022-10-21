@@ -431,6 +431,8 @@ concommand.Add("zsdropweapon", function(sender, command, arguments)
 		invitem = arguments[1]
 	end
 	if invitem and not sender:HasInventoryItem(invitem) then return end
+	if invitem == "trinket_a_flower" then sender:TakeInventoryItem("trinket_a_flower")  return end
+	if invitem == "trinket_flower" then 	sender:TakeInventoryItem("trinket_flower") return end
 
 	if invitem or (currentwep and currentwep:IsValid()) then
 		local ent = invitem and sender:DropInventoryItemByType(invitem) or sender:DropWeaponByType(currentwep:GetClass())
@@ -588,7 +590,10 @@ concommand.Add("zsgiveweapon", function(sender, command, arguments)
 	if #arguments > 0 then
 		invitem = arguments[2]
 	end
+	
 	if invitem and not sender:HasInventoryItem(invitem) then return end
+	if invitem == "trinket_a_flower" then sender:TakeInventoryItem("trinket_a_flower")  return end
+	if invitem == "trinket_flower" then sender:TakeInventoryItem("trinket_flower")  return end
 
 	local currentwep = sender:GetActiveWeapon()
 	if not invitem and not IsValid(currentwep) then return end

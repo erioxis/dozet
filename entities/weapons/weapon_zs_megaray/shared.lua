@@ -112,6 +112,10 @@ function SWEP:CheckHealRay()
 
 		if CurTime() > self:GetDTFloat(10) then
 			owner:HealPlayer(ent, math.min(self:GetCombinedPrimaryAmmo(), self.Heal))
+			if owner:IsSkillActive(SKILL_COOL_MED) then
+				ent:GiveStatus("sigildef",3)
+			end
+
 			self:TakeAmmo()
 			self:SetDTFloat(10, CurTime() + 0.36)
 			self:SendWeaponAnim(ACT_VM_PRIMARYATTACK)

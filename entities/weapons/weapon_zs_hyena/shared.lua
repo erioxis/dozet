@@ -12,6 +12,8 @@ SWEP.UseHands = true
 
 SWEP.CSMuzzleFlashes = false
 
+
+SWEP.Fix = 0.2
 SWEP.Primary.Delay = 0.2
 SWEP.Primary.ClipSize = 3
 SWEP.Primary.Automatic = true
@@ -41,19 +43,26 @@ GAMEMODE:AddNewRemantleBranch(SWEP, 1, "'Lynx' Cryo Sticky Launcher", "Fires cry
 		wept.VElements.clipbase.color = Color(30, 95, 150)
 	end
 end)
-
+function SWEP:Reload()
+	if self.Fix <= CurTime() then
+		self.BaseClass.Reload(self)
+	end
+end
 function SWEP:CanPrimaryAttack()
 	if self.BaseClass.CanPrimaryAttack(self) then
-		local c = 0
-		for _, ent in pairs(ents.FindByClass("projectile_bomb_sticky")) do
-			if ent:GetOwner() == self:GetOwner() then
-				c = c + 1
+		if self.Fix <= CurTime() then 
+			self.Fix = CurTime() + 0.2
+			local c = 0
+			for _, ent in pairs(ents.FindByClass("projectile_bomb_sticky")) do
+				if ent:GetOwner() == self:GetOwner() then
+					c = c + 1
+				end
 			end
+
+			if c >= self.MaxBombs then return false end
+
+			return true
 		end
-
-		if c >= self.MaxBombs then return false end
-
-		return true
 	end
 
 	return false

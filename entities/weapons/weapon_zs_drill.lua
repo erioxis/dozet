@@ -64,7 +64,7 @@ SWEP.UseHands = false
 
 SWEP.Primary.Damage = 120
 SWEP.Primary.NumShots = 2
-SWEP.Primary.Delay =5
+SWEP.Primary.Delay = 0.3
 SWEP.HeadshotMulti = 2.5
 SWEP.ReloadSound = Sound("ambient/machines/thumper_startup1.wav")
 
@@ -85,7 +85,7 @@ SWEP.WalkSpeed = SPEED_SLOWER
 
 SWEP.FireAnimSpeed = 0.4
 
-SWEP.TracerName = "tracer_colossus"
+SWEP.TracerName = "tracer_drill"
 SWEP.ChargeSound = "items/suitchargeok1.wav"
 
 SWEP.ReloadSpeed = 1.6
@@ -177,12 +177,7 @@ function SWEP:Deploy()
 end
 
 
-function SWEP.BulletCallback(attacker, tr, dmginfo)
-	local effectdata = EffectData()
-		effectdata:SetOrigin(tr.HitPos)
-		effectdata:SetNormal(tr.HitNormal)
-	util.Effect("hit_hunter", effectdata)
-end
+
 
 function SWEP:EmitReloadSound()
 end

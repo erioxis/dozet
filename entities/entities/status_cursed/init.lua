@@ -16,7 +16,7 @@ function ENT:Think()
 	local holly = self:GetOwner():GetStatus("holly")
 	local owner = self:GetOwner()
 
-    if not (holly) then
+    if not (holly) or !owner:HasTrinket("a_flower") then
 	if (cursed) and not owner:IsSkillActive(SKILL_UPLOAD) then
 		if (cursed.DieTime >= CurTime() + 100 * (owner.CurseMultiplier or 1)) and not owner:IsSkillActive(SKILL_CURSEDHEALTH) then
 			if not owner:IsSkillActive(SKILL_UPLOAD) then

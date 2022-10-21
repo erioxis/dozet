@@ -56,6 +56,7 @@ function ENT:Hit(vHitPos, vHitNormal, ent)
 
 				ent:TakeSpecialDamage(3, DMG_GENERIC, owner, self)
 				ent:GiveStatus("knockdown",1.3)
+				owner:TakeDamage(120)
 
 				local status = ent:GiveStatus("devourer")
 				if status and status:IsValid() then

@@ -42,8 +42,8 @@ function ENT:Think()
 				self:SetAngles(direction:Angle())
 
 				local phys = self:GetPhysicsObject()
-				phys:SetVelocityInstantaneous((direction * 250) * ent:GetModelScale())
-				self.NextHook = CurTime() + 0.3
+				phys:SetVelocityInstantaneous((direction * 390) * ent:GetModelScale())
+				self.NextHook = CurTime() + 0.15
 				break
 			end
 		end

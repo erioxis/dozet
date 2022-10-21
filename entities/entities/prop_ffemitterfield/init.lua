@@ -27,7 +27,7 @@ function ENT:OnTakeDamage(dmginfo)
 			self:SetLastDamaged(CurTime())
 			self:EmitSound("ambient/energy/weld2.wav", 65, 255, 0.6)
 
-			local ammousage = (dmginfo:GetDamage() / 10) + (emitter.CarryOver or 0)
+			local ammousage = (dmginfo:GetDamage() / 5) + (emitter.CarryOver or 0)
 			local floor = math.floor(ammousage)
 			local owner = emitter:GetObjectOwner()
 
@@ -35,7 +35,7 @@ function ENT:OnTakeDamage(dmginfo)
 			emitter:SetAmmo(math.max(emitter:GetAmmo() - floor, 0))
 
 			if owner:IsValidLivingHuman() then
-				owner:AddPoints(dmginfo:GetDamage() * 0.02)
+				owner:AddPoints(dmginfo:GetDamage() * 0.01)
 
 				if emitter:GetAmmo() == 0 then
 					owner:SendDeployableOutOfAmmoMessage(emitter)

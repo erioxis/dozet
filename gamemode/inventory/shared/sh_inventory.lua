@@ -258,7 +258,11 @@ GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, 10)
 GM:AddSkillModifier(trinket, SKILLMOD_HEALING_RECEIVED, 0.11)
 --trinket = GM:AddTrinket("Damage", "damage222", false, hpveles, hpweles, 4, "+10% damage melee ")
 --GM:AddWeaponModifier(trinket, WEAPON_MODIFIER_DAMAGE, 3)
-
+for i=1,99 do 
+	trinket = GM:AddTrinket(trs("t_d_rageflower")..i, "rageflower"..i, false, hpveles, hpweles, 1, trs("t_d_rageflower")..(i / 5), nil, 15, "weapon_zs_melee_trinket")
+GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, i / 5)
+end
+trinket = GM:AddTrinket(trs("t_a_flower"), "a_flower", false, hpveles, hpweles, 5, trs("t_d_a_flower"), nil, 15, "weapon_zs_melee_trinket")
 
 trinket = GM:AddTrinket(trs("t_richeye"), "greedeye", false, hpveles, hpweles, 3, trs("t_d_richeye"), nil, nil, "weapon_zs_special_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_ENDWAVE_POINTS, 20)
@@ -395,6 +399,11 @@ GM:AddSkillModifier(trinket, SKILLMOD_SPEED, 10)
 trinket = GM:AddTrinket(trs("t_bhammer"), "brokenhammer", false, pveles, pweles, 3, trs("t_d_bhammer"), nil, nil, "weapon_zs_special_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_POINT_MULTIPLIER, -0.05)
 GM:AddSkillModifier(trinket, SKILLMOD_REPAIRRATE_MUL,  0.10)
+
+trinket = GM:AddTrinket(trs("t_flower"), "flower", false, pveles, pweles, 3, trs("t_d_flower"), nil, nil, "weapon_zs_special_trinket")
+GM:AddSkillModifier(trinket, SKILLMOD_POINT_MULTIPLIER, 0.75)
+GM:AddSkillModifier(trinket, SKILLMOD_MEDKIT_COOLDOWN_MUL, -0.5)
+GM:AddSkillModifier(trinket, SKILLMOD_MEDKIT_EFFECTIVENESS_MUL, 0.5)
 
 -- Special Trinkets
 GM:AddTrinket(trs("t_otank"), "oxygentank", true, nil, {

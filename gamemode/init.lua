@@ -1549,7 +1549,7 @@ function GM:Think()
 				if time > (pl.NextResupplyUse or 0) then
 					local stockpiling = pl:IsSkillActive(SKILL_STOCKPILE)
 
-					pl.NextResupplyUse = time + (self.ResupplyBoxCooldown * (pl.ResupplyDelayMul or 1) * (stockpiling and 2 or 1)) - (pl:IsSkillActive(SKILL_STOWAGE) and math.max(0,self:GetBalance() / 4) or 0)
+					pl.NextResupplyUse = time + math.max(15,self.ResupplyBoxCooldown * (pl.ResupplyDelayMul or 1) * (stockpiling and 2 or 1)) - (pl:IsSkillActive(SKILL_STOWAGE) and math.max(0,self:GetBalance() / 4) or 0)
 					pl.StowageCaches = (pl.StowageCaches or 0) + (stockpiling and 2 or 1)
 
 					net.Start("zs_nextresupplyuse")
@@ -1561,7 +1561,7 @@ function GM:Think()
 					net.Send(pl)
 				end
 			elseif P_Team(pl) == TEAM_UNDEAD and P_Alive(pl) then
-				if pl.m_HealthRegen and time >= pl.NextRegenerate and pl:Health() <= pl:GetMaxHealth() then
+				if pl.m_HealthRegen and time >= pl.NextRegenerate and pl:Health() <= pl:GetMaxHealth() and !pl:GetZombieClassTable().Boss then
 					pl.NextRegenerate = time + 5
 					pl:SetHealth(math.min(pl:GetMaxHealth(), pl:Health() + (pl:GetMaxHealth() * 0.05)))
 				end
@@ -1639,6 +1639,13 @@ local function DoDropStart(pl)
 	if freefood then
 		local food = GAMEMODE:GetInventoryItemType(freefood) == INVCAT_TRINKETS and pl.AddInventoryItem or pl.Give
 		food(pl, freefood)
+	end
+	if pl:IsSkillActive(SKILL_FLOWER) then
+		if not pl:IsSkillActive(SKILL_ABYSSFLOWER) then
+			pl:AddInventoryItem("trinket_flower")
+		elseif pl:IsSkillActive(SKILL_ABYSSFLOWER) then
+			pl:AddInventoryItem("trinket_a_flower")	
+		end
 	end
 end
 
@@ -4641,9 +4648,9 @@ end
 
 function GM:PlayerCanPickupWeapon(pl, ent)
 	if pl:IsSkillActive(SKILL_JEW) then
-		pl:SetPoints(pl:GetPoints() - (self:GetWave() == 0 and 0 or (5 + (self:GetWave() * 2) + self:GetWave()) * 0.32))
+		pl:SetPoints(pl:GetPoints() - (self:GetWave() == 0 and 0 or (3 + (self:GetWave() * 2) + self:GetWave()) * 0.12))
 		GAMEMODE:ConCommandErrorMessage(pl, translate.ClientGet(pl, "jewmoment"))
-		pl:GiveAchievementProgress("greatgreed", (self:GetWave() == 0 and 0 or (5 + (self:GetWave() * 2) + self:GetWave()) * 0.32))
+		pl:GiveAchievementProgress("greatgreed", (self:GetWave() == 0 and 0 or (3 + (self:GetWave() * 2) + self:GetWave()) * 0.12))
 	end
 
 

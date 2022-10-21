@@ -64,6 +64,9 @@ function meta:ProcessDamage(dmginfo)
 		if attacker:IsValidLivingHuman() and attacker:IsSkillActive(SKILL_SIGILIBERATOR) then
             dmginfo:ScaleDamage(2)
 		end
+		if attacker:IsValidLivingHuman() and attacker:HasTrinket("a_flower") and (attacker:GetStatus("cursed")) then
+            dmginfo:ScaleDamage(0.1)
+		end
 		if attacker:IsValidLivingHuman() and attacker:IsSkillActive(SKILL_AMULET_12) then
             dmginfo:ScaleDamage(0)
 		end
@@ -104,15 +107,20 @@ function meta:ProcessDamage(dmginfo)
 		end
 
 		self.ShouldFlinch = true
-
+		if attacker:IsValidLivingHuman() then
+			local damage = dmginfo:GetDamage()
+			local wep = attacker:GetActiveWeapon()
+			local damage1 = damage
+			attacker:SetDPS(attacker:GetDPS() + damage)
+			timer.Create("DPS"..damage..attacker:Nick()..math.Rand(1,5)..damage*0.5, 1, 1, function() attacker:SetDPS(attacker:GetDPS() - damage1) end)
+		end
 		if attacker:IsValidLivingHuman() and inflictor:IsValid() and inflictor == attacker:GetActiveWeapon() then
 			local damage = dmginfo:GetDamage()
 			local wep = attacker:GetActiveWeapon()
 			local attackermaxhp = math.floor(attacker:GetMaxHealth() * (attacker:IsSkillActive(SKILL_D_FRAIL) and 0.44 or 1))
 			local attackermaxhp = math.floor(attacker:GetMaxHealth() * (attacker:IsSkillActive(SKILL_ABUSE) and 0.25 or 1))
 
-			attacker.dpsmeter = damage/wep.Primary.Delay * (wep.Primary.NumShots or 1)
-			attacker:SetDPS(damage/wep.Primary.Delay * (wep.Primary.NumShots or 1))
+			--attacker.dpsmeter = damage
 			if attacker:IsSkillActive(SKILL_VAMPIRISM) and math.random(1,4 * (wep.Primary.NumShots or 1)) == 1 and damage >= 120 then
 				attacker:SetHealth(math.min(attacker:GetMaxHealth(), attacker:Health() + attacker:GetMaxHealth() * 0.11))
 			end
@@ -123,7 +131,7 @@ function meta:ProcessDamage(dmginfo)
 				attacker:GiveAchievement("opm")
 			end
 			attacker.FireDamage = attacker.FireDamage + 1
-			dmginfo:SetDamage(damage * attacker:GetModelScale() * attacker:GetModelScale())
+			dmginfo:SetDamage(damage * math.min(2,attacker:GetModelScale() * attacker:GetModelScale()))
 			if attacker:HasTrinket("soulalteden") then
 				attacker.RandomDamage = attacker.RandomDamage + math.random(1,5)
 
@@ -353,6 +361,7 @@ function meta:ProcessDamage(dmginfo)
 		if attacker.Zban then
 			dmginfo:SetDamage(0)
 		end
+
 		if inflictor == attacker:GetActiveWeapon() then
 			if (GAMEMODE:GetBalance() * 0.1) >= 0.1 then
 				dmginfo:SetDamage(dmginfo:GetDamage() * (1 + (math.Clamp(GAMEMODE:GetBalance() * 0.1,0.5,1.5))))
@@ -607,7 +616,13 @@ function meta:ProcessDamage(dmginfo)
 				if attacker.m_ZArmor2 then
 					attacker:SetZArmor(math.min(attacker:Health() * 0.5, attacker:GetZArmor() + math.min(damage, self:Health() ) * 0.09))
 				end
-				
+				if self:HasTrinket("flower") and dmginfo:GetDamage() >= 13 then
+					dmginfo:SetDamage(0)
+					self:TakeInventoryItem("trinket_flower")
+					net.Start("zs_trinketconsumed")
+					net.WriteString("Flower")
+				net.Send(self)
+				end
 
 				if self:HasTrinket("iceburst") and (not self.LastIceBurst or self.LastIceBurst + 40 < CurTime()) then
 					attacker:AddLegDamageExt(41, attacker, attacker, SLOWTYPE_COLD)

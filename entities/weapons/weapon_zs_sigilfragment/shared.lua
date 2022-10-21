@@ -114,7 +114,7 @@ function SWEP:Holster()
 end
 
 function SWEP:Think()
-	if self:GetOwner():IsValid() then
+	if self:GetOwner():IsValid() and !self:GetOwner().IsLastHuman then
 		self:GetOwner():GiveStatus("sigildef", 1)
 	end
 	if self.Teleport and CurTime() >= self.Teleport then

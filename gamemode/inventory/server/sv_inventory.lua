@@ -215,6 +215,9 @@ function meta:DropAllInventoryItems()
 	local vVel = self:GetVelocity()
 	local zmax = self:OBBMaxs().z * 0.75
 	for invitem, count in pairs(self:GetInventoryItems()) do
+		if self:HasTrinket("flower") then
+			self:TakeInventoryItem("trinket_flower")
+		end
 		for i = 1, count do
 			local ent = self:DropInventoryItemByType(invitem)
 			if ent and ent:IsValid() then

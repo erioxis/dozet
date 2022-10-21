@@ -1,7 +1,7 @@
 INC_SERVER()
 
 local vector_origin = vector_origin
-ENT.NextThink1 = 0.1
+ENT.NextThink1 = 0.5
 function ENT:Initialize()
 	self:SetModel("models/hunter/misc/sphere075x075.mdl")
 	self:PhysicsInitSphere(1)
@@ -12,8 +12,9 @@ function ENT:Initialize()
 	self:SetAlpha(60)
 	self:EmitSound("weapons/physcannon/physcannon_pickup.wav", math.random(2,255), math.random(1,50))
 	self:SetMaterial("phoenix_storms/plastic")
+	self:GetOwner():SetBloodArmor(self:GetOwner():GetBloodArmor() - 15)
 
-	self.DieTime = CurTime() + (self.RageMode and 11 or 1.5)
+	self.DieTime = CurTime() + (self.RageMode and 3 or 1.5)
 	self.LastPhysicsUpdate = UnPredictedCurTime()
 end
 function ENT:PhysicsCollide(data, phys)
@@ -32,7 +33,7 @@ function ENT:Think()
 	end
 	local owner = self:GetOwner()
 	if CurTime() >= self.NextThink1 then 
-	for _, ent in pairs(ents.FindInSphere(self:GetPos(), 4048)) do
+	for _, ent in pairs(ents.FindInSphere(self:GetPos(), 500)) do
 		target = ent
 		if WorldVisible(self:LocalToWorld(Vector(0, 0, 10)), ent:NearestPoint(self:LocalToWorld(Vector(0, 0, 10)))) and target:IsValidLivingZombie() and not target:GetZombieClassTable().NeverAlive then
 			if target:IsValidLivingZombie() or ent.AllowSelfRicoShot then
@@ -42,8 +43,8 @@ function ENT:Think()
 				self:SetAngles(direction:Angle())
 
 				local phys = self:GetPhysicsObject()
-				phys:SetVelocityInstantaneous(direction * 3500)
-				target:TakeSpecialDamage(self.ProjDamage * (self.RageMode and (2) or math.max(1,GAMEMODE:GetWave() / 3)),DMG_ALWAYSGIB , owner, owner:GetActiveWeapon())
+				phys:SetVelocityInstantaneous(direction * 1500)
+				target:TakeSpecialDamage((self.ProjDamage * (self.RageMode and (0.5) or math.max(0.5,GAMEMODE:GetWave() / 5))),DMG_BULLET , owner, owner:GetActiveWeapon())
 				break
 			end
 		end
@@ -51,7 +52,7 @@ function ENT:Think()
 			ent:TakeDamage(1500, self:GetOwner(), self)
 		end
 	end
-		self.NextThink1 = CurTime() + 1.2
+		self.NextThink1 = CurTime() + 2
 	end
 	if self.HitData and not self.RageMode then
 		self:Explode(self.HitData.HitPos, self.HitData.HitNormal)
@@ -73,7 +74,7 @@ function ENT:Explode(hitpos, hitnormal)
 		local target = self.HitData.HitEntity
 
 		if target:IsValidLivingZombie() and not target:GetZombieClassTable().NeverAlive then
-			target:TakeSpecialDamage(self.ProjDamage * (self.RageMode and 2 or 1) or math.max(1,GAMEMODE:GetWave() / 4), DMG_ALWAYSGIB, owner, source, hitpos)
+			target:TakeSpecialDamage((self.ProjDamage * (self.RageMode and 0.5 or 1) or math.max(0.5,GAMEMODE:GetWave() / 6)), DMG_BULLET, owner, source, hitpos)
 		end
 	end
 

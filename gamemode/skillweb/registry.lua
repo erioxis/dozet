@@ -381,6 +381,10 @@ SKILL_AMULET_9 = 359
 SKILL_AMULET_10 = 360
 SKILL_AMULET_11 = 361
 SKILL_AMULET_12 = 362
+SKILL_COOL_MED = 363
+SKILL_FLOWER = 364
+SKILL_ABYSSFLOWER = 365
+SKILL_BUG_GET = 366
 
 SKILLMOD_HEALTH = 1
 SKILLMOD_SPEED = 2
@@ -683,6 +687,14 @@ GM:AddSkill(SKILL_SURGEON1, translate.Get("skill_surg").."I", GOOD.."-6%"..trans
 																-4,			6,					{SKILL_NONE, SKILL_SURGEON2}, TREE_SUPPORTTREE)
 GM:AddSkill(SKILL_SURGEON2, translate.Get("skill_surg").."II", GOOD.."-9%"..translate.Get("med_cool"),
 																-3,			3,					{SKILL_WORTHINESS4, SKILL_SURGEON3}, TREE_SUPPORTTREE)
+GM:AddSkill(SKILL_COOL_MED, translate.Get("skill_cool_med"), GOOD..translate.Get("skill_cool_med_d1")..BAD.."-25%"..translate.Get("med_effect"),
+																-1,			3,					{SKILL_SURGEON2}, TREE_SUPPORTTREE)
+GM:AddSkill(SKILL_FLOWER, translate.Get("skill_flower"), GOOD..translate.Get("skill_flower_d1")..BAD..translate.Get("skill_flower_d2"),
+																-1,			1,					{SKILL_COOL_MED}, TREE_SUPPORTTREE)
+GM:AddSkillModifier(SKILL_FLOWER, SKILLMOD_POINT_MULTIPLIER, -0.25)
+GM:AddSkill(SKILL_ABYSSFLOWER, translate.Get("skill_aflower"), GOOD..translate.Get("skill_aflower_d1")..BAD..translate.Get("skill_aflower_d2"),
+																-1,			0.5,					{SKILL_FLOWER}, TREE_SUPPORTTREE)
+.RemortReq = 16
 GM:AddSkill(SKILL_SURGEON3, translate.Get("skill_surg").."III", GOOD.."-11%"..translate.Get("med_cool"),
 																-2,			0,					{SKILL_U_MEDICCLOUD, SKILL_D_FRAIL, SKILL_SURGEONIV}, TREE_SUPPORTTREE)
 GM:AddSkill(SKILL_SURGEONIV, translate.Get("skill_surg").."IV", GOOD.."-21%"..translate.Get("med_cool"),
@@ -863,6 +875,7 @@ GM:AddSkillModifier(SKILL_FREESKILL1, SKILLMOD_SPOINT, 6)
 GM:AddSkill(SKILL_FREESKILL2, translate.Get("skill_freeskill"), GOOD.."+8"..translate.Get("spoint"),
 																-9,			8,					{SKILL_NONE}, TREE_GUNTREE)
 .RemortReq = 80
+GM:AddSkillModifier(SKILL_FREESKILL2, SKILLMOD_SPOINT, 8)
 GM:AddSkill(SKILL_SKILLFORGODS, "SECRET I", GOOD.."You find this!Reward is free 3 skill points!",
 																-70,			65,					{SKILL_NONE}, TREE_GUNTREE)
 GM:AddSkillModifier(SKILL_SKILLFORGODS, SKILLMOD_SPOINT, 4)
@@ -2253,6 +2266,8 @@ GM:AddSkillModifier(SKILL_BIOLOGYI, SKILLMOD_MEDKIT_EFFECTIVENESS_MUL, 0.08)
 GM:AddSkillModifier(SKILL_BIOLOGYII, SKILLMOD_MEDKIT_EFFECTIVENESS_MUL, 0.13)
 GM:AddSkillModifier(SKILL_BIOLOGYIII, SKILLMOD_MEDKIT_EFFECTIVENESS_MUL, 0.18)
 GM:AddSkillModifier(SKILL_BIOLOGYIV, SKILLMOD_MEDKIT_EFFECTIVENESS_MUL, 0.21)
+
+GM:AddSkillModifier(SKILL_COOL_MED, SKILLMOD_MEDKIT_EFFECTIVENESS_MUL, -0.25)
 
 GM:AddSkillModifier(SKILL_HANDY1, SKILLMOD_REPAIRRATE_MUL, 0.05)
 GM:AddSkillModifier(SKILL_HANDY2, SKILLMOD_REPAIRRATE_MUL, 0.06)

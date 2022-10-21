@@ -84,13 +84,13 @@ function SWEP:PrimaryAttack()
 		if oldhealth <= 0 or oldhealth >= hitent:GetMaxBarricadeHealth() or hitent:GetBarricadeRepairs() <= 0.01 then return end
 	elseif hitent.GetObjectHealth and SERVER then
 		-- Taking the nil tr parameter for granted for now
-
+		local healstrength = self.HealStrength * (owner.RepairRateMul or 1)
 		local oldhealth = hitent:GetObjectHealth()
 		if oldhealth <= 0 or oldhealth >= hitent:GetMaxObjectHealth() or hitent.m_LastDamaged and CurTime() < hitent.m_LastDamaged + 4 then
 		else return
 		end
 
-		hitent:SetObjectHealth(math.min(hitent:GetMaxObjectHealth(), hitent:GetObjectHealth() + totalheal/2))
+		hitent:SetObjectHealth(math.min(hitent:GetMaxObjectHealth(), hitent:GetObjectHealth() + healstrength/2))
 		healed = hitent:GetObjectHealth() - oldhealth
 		self:SetDTEntity(10, hitent)
 		self:SetNextPrimaryFire(CurTime() + 1)
@@ -170,14 +170,14 @@ function SWEP:CheckHealRay()
 			gamemode.Call("PlayerRepairedObject", owner, hitent, healed, self)
 		elseif hitent.GetObjectHealth and SERVER then
 			-- Taking the nil tr parameter for granted for now
-
+			local healstrength = self.HealStrength * (owner.RepairRateMul or 1)
 	
 			local oldhealth = hitent:GetObjectHealth()
 			if !(oldhealth <= 0 or oldhealth >= hitent:GetMaxObjectHealth() or hitent.m_LastDamaged and CurTime() < hitent.m_LastDamaged + 4) then
 				return
 			end
 	
-			hitent:SetObjectHealth(math.min(hitent:GetMaxObjectHealth(), hitent:GetObjectHealth() + totalheal/2))
+			hitent:SetObjectHealth(math.min(hitent:GetMaxObjectHealth(), hitent:GetObjectHealth() + healstrength/2))
 			healed = hitent:GetObjectHealth() - oldhealth
 			self:SetDTEntity(10, hitent)
 			self:SetNextPrimaryFire(CurTime() + 1)

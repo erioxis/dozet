@@ -53,11 +53,12 @@ GAMEMODE:AddNewRemantleBranch(SWEP, 1, ""..translate.Get("wep_toxicshooter_r1"),
 	
 		wept.OnZombieKilled = function(self, zombie, total, dmginfo)
 		local killer = self:GetOwner()
-		local minushp = -zombie:Health()
+		local minushp = (-zombie:Health() or -20)
 		if killer:IsValid() and minushp > -20 then
 			local pos = zombie:GetPos()
 
 			timer.Simple(0.15, function()
+				
 				util.BlastDamagePlayer(killer:GetActiveWeapon(), killer, pos, 72, minushp, DMG_ALWAYSGIB, 1)
 			end)
 

@@ -125,7 +125,9 @@ function SWEP:CheckHealRay()
 			self:TakeAmmo()
 			self:SetDTFloat(10, CurTime() + 0.36)
 			self:SendWeaponAnim(ACT_VM_PRIMARYATTACK)
-
+			if owner:IsSkillActive(SKILL_COOL_MED) then
+				ent:GiveStatus("sigildef",3)
+			end
 			local effectdata = EffectData()
 				effectdata:SetOrigin(ent:WorldSpaceCenter())
 				effectdata:SetFlags(3)
