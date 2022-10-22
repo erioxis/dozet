@@ -8,6 +8,7 @@ local cam = cam
 local Particles = {}
 
 local col = Color(220, 0, 0)
+local col1 = Color(33, 65, 209)
 local colprop = Color(220, 220, 0)
 hook.Add("PostDrawTranslucentRenderables", "DrawDamage", function()
 	if #Particles == 0 then return end
@@ -24,14 +25,14 @@ hook.Add("PostDrawTranslucentRenderables", "DrawDamage", function()
 
 	for _, particle in pairs(Particles) do
 		if particle and curtime < particle.DieTime then
-			local c = particle.Type == 1 and colprop or col
+			local c = particle.Type == 1 and colprop or not particle.Bool and col or col1
 
 			done = false
 
 			c.a = math.Clamp(particle.DieTime - curtime, 0, 1) * 220
 			local victim = particle.Entity
 			cam.Start3D2D(particle:GetPos(), ang, 0.1 * GAMEMODE.DamageNumberScale)
-				draw.SimpleText(particle.Amount..(victim:IsPlayer() and GAMEMODE.ShowPercDmg and " ("..math.Round((particle.Amount/(victim:GetMaxZombieHealth() or 0) * 100)).."%)" or ""), "ZS3D2DFont2", 0, 0, c, TEXT_ALIGN_CENTER, TEXT_ALIGN_BOTTOM)
+				draw.SimpleText(particle.Amount..(victim:IsPlayer() and GAMEMODE.ShowPercDmg and !particle.Bool and " ("..math.Round((particle.Amount/(victim:GetMaxZombieHealth() or 0) * 100)).."%)" or ""), "ZS3D2DFont2", 0, 0, c, TEXT_ALIGN_CENTER, TEXT_ALIGN_BOTTOM)
 			cam.End3D2D()
 		end
 	end
@@ -48,6 +49,7 @@ end)
 local gravity = Vector(0, 0, -500)
 function EFFECT:Init(data)
 	local pos = data:GetOrigin()
+	local bool = data:GetAttachment()
 	local amount = data:GetMagnitude()
 	local Type = data:GetScale()
 	local victim = data:GetEntity()
@@ -72,6 +74,7 @@ function EFFECT:Init(data)
 
 	particle.Amount = amount
 	particle.Entity = victim
+	particle.Bool = bool == 1
 	particle.DieTime = CurTime() + 2 * GAMEMODE.DamageNumberLifetime
 	particle.Type = Type
 

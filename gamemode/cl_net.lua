@@ -48,12 +48,14 @@ end)
 
 net.Receive("zs_dmg", function(length)
 	local damage = net.ReadUInt(16)
+	local bool = net.ReadBool()
 	local pos = net.ReadVector()
 	local e	= net.ReadEntity()
 
 	if DamageFloaters then
 		local effectdata = EffectData()
 			effectdata:SetOrigin(pos)
+			effectdata:SetAttachment((bool and 1 or 2))
 			effectdata:SetMagnitude(damage)
 			effectdata:SetScale(0)
 			effectdata:SetEntity(e)
@@ -83,12 +85,14 @@ end)
 
 net.Receive("zs_dmg_prop", function(length)
 	local damage = net.ReadUInt(16)
+	local bool = net.ReadBool()
 	local pos = net.ReadVector()
 
 	if DamageFloaters then
 		local effectdata = EffectData()
 			effectdata:SetOrigin(pos)
 			effectdata:SetMagnitude(damage)
+			effectdata:SetAttachment((bool and 2 or 1))
 			effectdata:SetScale(1)
 		util.Effect("damagenumber", effectdata)
 	end

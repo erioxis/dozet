@@ -190,7 +190,7 @@ function meta:FireBulletsLua(src, dir, spread, num, damage, attacker, force_mul,
 			local dmg, dmgpos, haspl = attacker:PopDamageNumberSession()
 
 			if dmg > 0 and dmgpos then
-				GAMEMODE:DamageFloater(attacker, ent, dmgpos, dmg, haspl)
+				GAMEMODE:DamageFloater(attacker, ent, dmgpos, dmg, nil, haspl)
 			end
 		end
 

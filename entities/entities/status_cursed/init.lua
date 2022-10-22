@@ -15,23 +15,24 @@ function ENT:Think()
 	local cursed = self:GetOwner():GetStatus("cursed")
 	local holly = self:GetOwner():GetStatus("holly")
 	local owner = self:GetOwner()
+	if not owner:HasTrinket("a_flower") then
+		if not (holly) then
+			if (cursed) and not owner:IsSkillActive(SKILL_UPLOAD) then
+				if (cursed.DieTime >= CurTime() + 100 * (owner.CurseMultiplier or 1)) and not owner:IsSkillActive(SKILL_CURSEDHEALTH) then
+					if not owner:IsSkillActive(SKILL_UPLOAD) then
+					cursed:GetOwner():Kill()
+					cursed:Remove()
+					end
+				elseif (cursed.DieTime >= CurTime() + (owner:GetMaxHealth() * 2) * (owner.CurseMultiplier or 1)) and owner:IsSkillActive(SKILL_CURSEDHEALTH) and not owner:IsSkillActive(SKILL_UPLOAD) then
+					if not (owner:IsSkillActive(SKILL_UPLOAD) or owner:HasTrinket("a_flower")) then
 
-    if not (holly) or !owner:HasTrinket("a_flower") then
-	if (cursed) and not owner:IsSkillActive(SKILL_UPLOAD) then
-		if (cursed.DieTime >= CurTime() + 100 * (owner.CurseMultiplier or 1)) and not owner:IsSkillActive(SKILL_CURSEDHEALTH) then
-			if not owner:IsSkillActive(SKILL_UPLOAD) then
-			cursed:GetOwner():Kill()
-			cursed:Remove()
-			end
-		elseif (cursed.DieTime >= CurTime() + (owner:GetMaxHealth() * 2) * (owner.CurseMultiplier or 1)) and owner:IsSkillActive(SKILL_CURSEDHEALTH) and not owner:IsSkillActive(SKILL_UPLOAD) then
-			if not owner:IsSkillActive(SKILL_UPLOAD) then
-
-			cursed:GetOwner():Kill()
-			cursed:Remove()
+					cursed:GetOwner():Kill()
+					cursed:Remove()
+					end
+				end
 			end
 		end
 	end
-    end
 
 	if self.DieTime <= CurTime() then
 		self:Remove()

@@ -2354,9 +2354,6 @@ function GM:ScalePlayerDamage(pl, hitgroup, dmginfo)
 	if hitgroup == HITGROUP_HEAD then
 		GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_WEAPON, inflictor:GetClass(), "Headshots", 1)
 	end
-	if dmginfo:IsBulletDamage() then 
-		dmginfo:SetDamage((dmginfo:GetDamage()) - attacker.zKills / 7)
-	end
 
 	if not dmginfo:IsBulletDamage() then return end
 
@@ -2695,6 +2692,8 @@ function GM:PlayerInitialSpawnRound(pl)
 	pl.NextDamage = 0
 	pl.TickBuff = 0
 	pl.NextStuckThink = 0
+
+	pl.BloodDead = 0
 
 	pl.CarefullMelody_DMG = 0
 	
@@ -3642,7 +3641,7 @@ function GM:EntityTakeDamage(ent, dmginfo)
 	end
 
 	local dmg = dmginfo:GetDamage()
-	if dmg > 0 then
+	if dmg > 0 then --or attacker:IsPlayer() and ent:IsPlayer() and ((ent:Team() == TEAM_HUMAN) and ent:GetBloodArmor() or ent:GetZArmor()) >0 then
 		local holder, status = ent:GetHolder()
 		if holder and not holder.BuffTaut then status:Remove() end
 
@@ -3650,7 +3649,7 @@ function GM:EntityTakeDamage(ent, dmginfo)
 		local hasdmgsess = attacker:IsPlayer() and attacker:HasDamageNumberSession()
 
 		if attacker:IsPlayer() and dispatchdamagedisplay and not hasdmgsess then
-			self:DamageFloater(attacker, ent, dmgpos, dmg)
+			self:DamageFloater(attacker, ent, dmgpos, dmg)--, (ent:IsPlayer() and ((ent:Team() == TEAM_HUMAN) and ent:GetBloodArmor() or ent:GetZArmor()) > 0))
 
 		elseif hasdmgsess and dispatchdamagedisplay then
 			attacker:CollectDamageNumberSession(dmg, dmgpos, ent:IsPlayer())
@@ -3658,7 +3657,7 @@ function GM:EntityTakeDamage(ent, dmginfo)
 	end
 end
 
-function GM:DamageFloater(attacker, victim, dmgpos, dmg, definiteply)
+function GM:DamageFloater(attacker, victim, dmgpos, dmg, bool, definiteply, bool2)
 	if attacker == victim then return end
 	if dmgpos == vector_origin then dmgpos = victim:NearestPoint(attacker:EyePos()) end
 
@@ -3667,7 +3666,8 @@ function GM:DamageFloater(attacker, victim, dmgpos, dmg, definiteply)
 			INFDAMAGEFLOATER = nil
 			net.WriteUInt(9999, 16)
 		else
-			net.WriteUInt(math.ceil(dmg), 16)
+			net.WriteUInt((math.ceil(dmg) ~= 0 and math.ceil(dmg) or victim:IsPlayer() and math.ceil(victim.BloodDead)), 16)
+			net.WriteBool(bool)
 		end
 		net.WriteVector(dmgpos)
 		net.WriteEntity(victim)

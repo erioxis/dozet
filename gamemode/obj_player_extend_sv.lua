@@ -131,7 +131,7 @@ function meta:ProcessDamage(dmginfo)
 				attacker:GiveAchievement("opm")
 			end
 			attacker.FireDamage = attacker.FireDamage + 1
-			dmginfo:SetDamage(damage * math.min(2,attacker:GetModelScale() * attacker:GetModelScale()))
+			dmginfo:SetDamage(damage * math.min(3,attacker:GetModelScale() * attacker:GetModelScale()))
 			if attacker:HasTrinket("soulalteden") then
 				attacker.RandomDamage = attacker.RandomDamage + math.random(1,5)
 
@@ -153,11 +153,12 @@ function meta:ProcessDamage(dmginfo)
 				local damage = dmginfo:GetDamage()
 				if damage > 0 then
 		
-					local ratio = (self.m_ZArmor3 and 1 or 0.7)
+					local ratio = 1
 					local absorb = math.min(self:GetZArmor(), damage * ratio)
 					dmginfo:SetDamage(damage - absorb)
 					self:SetZArmor(self:GetZArmor() - absorb)
-		
+					self.BloodDead = absorb
+					GAMEMODE:DamageFloater(attacker, self, dmginfo:GetDamagePosition(), absorb, true)
 					if damage > 20 and damage - absorb <= 0 then
 						self:EmitSound("physics/flesh/flesh_strider_impact_bullet3.wav", 55)
 					end
@@ -707,6 +708,8 @@ function meta:ProcessDamage(dmginfo)
 			local absorb = math.min(self:GetBloodArmor(), damage * ratio)
 			dmginfo:SetDamage(damage - absorb)
 			self:SetBloodArmor(self:GetBloodArmor() - absorb)
+			self.BloodDead = absorb
+			GAMEMODE:DamageFloater(attacker, self, dmginfo:GetDamagePosition(), absorb, true, nil, true)
 
 			if attacker:IsValid() and attacker:IsPlayer() then
 				local myteam = attacker:Team()

@@ -1101,7 +1101,7 @@ GM:AddSkillModifier(SKILL_NFINGERS, SKILLMOD_RES_AMMO_MUL, -0.10)
 GM:AddSkillModifier(SKILL_SFINGERS, SKILLMOD_RES_AMMO_MUL, -0.25)
 GM:AddSkill(SKILL_D_FINGERS, translate.Get("skill_dfingers"), BAD..translate.Get("skill_dfingers_d1"),
 																9,			-6,					{SKILL_SFINGERS}, TREE_GUNTREE)
-GM:AddSkillModifier(SKILL_D_FINGERS, SKILLMOD_DAMAGE, 1)
+GM:AddSkillModifier(SKILL_D_FINGERS, SKILLMOD_DAMAGE, 0.45)
 
 -- Melee Tree
 GM:AddSkill(SKILL_WORTHINESS2, translate.Get("worthness").."II", GOOD.."+10"..translate.Get("worth")..BAD.."-3"..translate.Get("start_points"),
