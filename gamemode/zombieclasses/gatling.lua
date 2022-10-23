@@ -2,7 +2,7 @@ CLASS.Name = "Gatling Crow"
 CLASS.TranslationName = "class_crow_gatling"
 CLASS.Description = "description_crow"
 
-CLASS.Health = 700
+CLASS.Health = 320
 CLASS.DynamicHealth = 0
 CLASS.Boss = true
 CLASS.Hidden = true

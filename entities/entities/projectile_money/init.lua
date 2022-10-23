@@ -1,7 +1,7 @@
 INC_SERVER()
 
 local vector_origin = vector_origin
-
+ENT.CanRicoChet = true
 function ENT:Initialize()
 	self:SetModel("models/props_trainstation/trainstation_clock001.mdl")
 	self:PhysicsInitSphere(1.7)

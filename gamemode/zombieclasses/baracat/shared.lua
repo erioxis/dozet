@@ -10,7 +10,7 @@ CLASS.BetterVersion = "Baragat"
 
 
 
-CLASS.Wave = 3 / 6
+CLASS.Wave = 4 / 6
 
 
 

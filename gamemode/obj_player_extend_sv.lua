@@ -158,7 +158,9 @@ function meta:ProcessDamage(dmginfo)
 					dmginfo:SetDamage(damage - absorb)
 					self:SetZArmor(self:GetZArmor() - absorb)
 					self.BloodDead = absorb
-					GAMEMODE:DamageFloater(attacker, self, dmginfo:GetDamagePosition(), absorb, true)
+					if attacker:IsPlayer() then
+						GAMEMODE:DamageFloater(attacker, self, dmginfo:GetDamagePosition(), absorb, true)
+					end
 					if damage > 20 and damage - absorb <= 0 then
 						self:EmitSound("physics/flesh/flesh_strider_impact_bullet3.wav", 55)
 					end
@@ -709,7 +711,9 @@ function meta:ProcessDamage(dmginfo)
 			dmginfo:SetDamage(damage - absorb)
 			self:SetBloodArmor(self:GetBloodArmor() - absorb)
 			self.BloodDead = absorb
-			GAMEMODE:DamageFloater(attacker, self, dmginfo:GetDamagePosition(), absorb, true, nil, true)
+			if attacker:IsPlayer() then
+				GAMEMODE:DamageFloater(attacker, self, dmginfo:GetDamagePosition(), absorb, true, nil, true)
+			end
 
 			if attacker:IsValid() and attacker:IsPlayer() then
 				local myteam = attacker:Team()

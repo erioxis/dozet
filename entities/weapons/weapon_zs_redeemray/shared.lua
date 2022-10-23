@@ -114,9 +114,7 @@ function SWEP:CheckHealRay()
 			if SERVER then
 				ent:Redeem()
 				owner:StripWeapon(self:GetClass())
-				if owner:GetModelScale() == ent:GetModelScale() then
-					ent:SetPos(owner:GetPos())
-				end
+				ent:SetPos(owner:GetPos())
 			end
 			owner:GiveAchievement("redeemed")
 		end
