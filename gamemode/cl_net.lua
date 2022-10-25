@@ -519,7 +519,7 @@ net.Receive("zs_medpremium", function(length)
 	local drop = net.ReadString()
 	MySelf:EmitSound("buttons/button3.wav", 75, 50)
 
-	GAMEMODE:CenterNotify({killicon = "weapon_zs_trinket"}, " ", COLOR_GREEN, translate.Format("premiumget", drop))
+	GAMEMODE:CenterNotify({killicon = "weapon_zs_trinket"}, " ", COLOR_GREEN, translate.Format("premiumget", GAMEMODE.ZSInventoryItemData[drop].PrintName))
 end)
 
 

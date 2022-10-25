@@ -187,9 +187,12 @@ if SERVER then
 		if pl.EradiVived then return end
 
 		if bit_band(dmginfo:GetDamageType(), DMG_BULLET) ~= 0 then
-			dmginfo:SetDamage(dmginfo:GetDamage() * 0.05)
+			dmginfo:SetDamage(dmginfo:GetDamage() * 1.5)
 		elseif bit_band(dmginfo:GetDamageType(), DMG_SLASH) == 0 and bit_band(dmginfo:GetDamageType(), DMG_CLUB) == 0 then
-			dmginfo:SetDamage(dmginfo:GetDamage() * 0.05)
+			dmginfo:SetDamage(dmginfo:GetDamage() * 1.5)
+		end
+		if dmginfo:GetInflictor().IsMelee then
+			dmginfo:SetDamage(dmginfo:GetDamage() * 0.1)
 		end
 
 

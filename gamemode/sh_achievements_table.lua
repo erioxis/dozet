@@ -219,12 +219,9 @@ GM.Achievements["darvinupdate"] = {
 }
 
 
-
-
-
 -- Cache count, to not call table.Count again
 GM.AchievementsCount = table.Count(GM.Achievements)
--- Lol just, im to lazy for other file
+-- Lol just, im too lazy for other file
 GM.Statuses = {}
 local function statusValueFunction(statusname)
 	return function(self, lp)

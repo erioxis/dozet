@@ -35,6 +35,8 @@ SWEP.Primary.Automatic = true
 SWEP.Primary.Ammo = "smg1"
 GAMEMODE:SetupDefaultClip(SWEP.Primary)
 
+SWEP.IgnoreResist2 = false
+
 SWEP.Primary.Gesture = ACT_HL2MP_GESTURE_RANGE_ATTACK_SHOTGUN
 SWEP.ReloadGesture = ACT_HL2MP_GESTURE_RELOAD_SMG1
 
@@ -52,6 +54,7 @@ GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_RELOAD_SPEED, 0.1)
 GAMEMODE:AddNewRemantleBranch(SWEP, 1, "'Smasher' SMG", "Additional damage to skeletal enemies, inflicts force, but fires and reloads slower", function(wept)
 	wept.Primary.Delay = 0.15
 	wept.ReloadSpeed = 0.9
+	wept.IgnoreResist2 = true
 
 	wept.BulletCallback = function(attacker, tr, dmginfo)
 		local trent = tr.Entity

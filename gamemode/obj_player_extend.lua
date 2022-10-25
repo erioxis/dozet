@@ -224,7 +224,7 @@ function meta:DispatchAltUse()
 end
 
 function meta:MeleeViewPunch(damage)
-	local maxpunch = (damage + 25) * 0.5
+	local maxpunch = (damage + 25) * 0.01
 	local minpunch = -maxpunch
 	self:ViewPunch(Angle(math.Rand(minpunch, maxpunch), math.Rand(minpunch, maxpunch), math.Rand(minpunch, maxpunch)))
 end

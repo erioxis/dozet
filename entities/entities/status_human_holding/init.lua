@@ -223,6 +223,26 @@ function ENT:Think()
 		self:Remove()
 		return
 	end
+	local ent = NULL 
+	for _, ent1 in pairs(ents.FindInSphere(objectphys:GetPos(), object:GetModelScale() * 45)) do
+		if ent1:IsValid() and ent1:IsPlayer() and ent1:Team() == TEAM_UNDEAD then
+			ent = ent1
+			break
+		end
+	end
+	if ent:IsValid() and ent:IsPlayer() and ent:Team() == TEAM_UNDEAD then
+		object:SetCollisionGroup(COLLISION_GROUP_NONE)
+		object:CollisionRulesChanged()
+		local vel = -owner:GetPos() * 2 + -ent:EyePos()
+		vel.z = vel.z - vel.z * 0.99
+		vel.x = math.Clamp(vel.x,-150,150)
+		vel.y = math.Clamp(vel.y,-150,150)
+		ent:SetVelocity(vel)
+		
+	else
+		object:SetCollisionGroup(COLLISION_GROUP_WEAPON)
+		object:CollisionRulesChanged()
+	end
 
 	if self:GetIsHeavy() then
 		if self:GetHingePos():DistToSqr(self:GetPullPos()) >= 4096 then
@@ -245,7 +265,7 @@ function ENT:Think()
 	elseif self:GetIsHeavy() then
 		local pullpos = self:GetPullPos()
 		local hingepos = self:GetHingePos()
-		objectphys:ApplyForceOffset(objectphys:GetMass() * frametime * 450 * (pullpos - hingepos):GetNormalized(), hingepos)
+		objectphys:ApplyForceOffset(objectphys:GetMass() * frametime * 950 * (pullpos - hingepos):GetNormalized(), hingepos)
 	elseif owner:KeyDown(IN_ATTACK2) and not owner:GetActiveWeapon().NoPropThrowing then
 		owner:ConCommand("-attack2")
 		objectphys:ApplyForceCenter(objectphys:GetMass() * math.Clamp(1.25 - math.min(1, (object:OBBMins():Length() + object:OBBMaxs():Length()) / CARRY_DRAG_VOLUME), 0.25, 1) * 500 * owner:GetAimVector() * (owner.ObjectThrowStrengthMul or 1))
@@ -271,8 +291,8 @@ function ENT:Think()
 		if owner:KeyDown(IN_WALK) then
 			local xdiff = math.NormalizeAngle(self.StartX - (owner.InputMouseX or 0))
 			local ydiff = math.NormalizeAngle(self.StartY - (owner.InputMouseY or 0))
-			local sxdiff = xdiff * FrameTime() * 12
-			local sydiff = ydiff * FrameTime() * 12
+			local sxdiff = xdiff * FrameTime() * 16
+			local sydiff = ydiff * FrameTime() * 16
 
 			self.ObjectAngles:RotateAroundAxis(owner:GetUp(), sxdiff)
 			self.ObjectAngles:RotateAroundAxis(owner:GetRight(), sydiff)

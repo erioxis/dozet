@@ -104,7 +104,7 @@ function CLASS:ProcessDamage(pl, dmginfo)
 	local dmg = dmginfo:GetDamage()
 	local hp = pl:Health()
 
-	if pl:GetStatus("redmarrow") and attacker:IsPlayer() and attacker:Team() == TEAM_HUMAN then
+	if pl:GetStatus("redmarrow") and attacker:IsPlayer() and attacker:Team() == TEAM_HUMAN or pl:GetStatus("redmarrow") then
 		dmginfo:SetDamage(0)
 		dmginfo:ScaleDamage(0)
 		dmg = 0

@@ -1324,14 +1324,14 @@ function GM:Think()
 				end
 				if !pl:IsSkillActive(SKILL_BARA_CURSED) then
 					if not pl:GetStatus("sigildef") and self:GetWave() >= 6 and  time >= pl.NextDamage and self:GetWaveActive() and self:GetBalance() < 20 or self:GetBalance() > 20 and not pl:GetStatus("sigildef") and  time >= pl.NextDamage then
-						pl:TakeSpecialDamage((pl:HasTrinket("jacobsoul") and 2 or 5) * (pl.TickBuff or 0), DMG_DIRECT)
-						pl.NextDamage = time + (pl:HasTrinket("jacobsoul") and 4 or 0.6)
+						pl:TakeSpecialDamage((pl:HasTrinket("jacobsoul") and 1 or 8) * (pl.TickBuff or 0), DMG_DIRECT)
+						pl.NextDamage = time + (pl:HasTrinket("jacobsoul") and 4 or 2.4)
 						pl:CenterNotify(COLOR_RED, translate.ClientGet(pl, "danger"))
 						pl.TickBuff = pl.TickBuff + (pl.TickBuff * 0.2) + 1
 					end
 					if pl:GetStatus("sigildef") and self:GetWave() >= 6 and time >= pl.NextDamage and self:GetWaveActive() and pl:HasTrinket("jacobsoul") and not (self:GetWave() == 12) then
 						pl:TakeDamage(13)
-						pl.NextDamage = time + 3
+						pl.NextDamage = time + 7
 						pl:CenterNotify(COLOR_GREEN, translate.ClientGet(pl, "danger_x"))
 					end
 					if time >= (pl.NextDamage + 4) then
@@ -1404,11 +1404,11 @@ function GM:Think()
 					
 				end
 				if pl.HolyMantle == 1 and pl:IsSkillActive(SKILL_HOLY_MANTLE) then
-                    pl:GiveStatus("hshield", 1.3)
+                    pl:GiveStatus("hshield", 1.3, true)
 				end
 				if time >= pl.NextSleep and pl:IsSkillActive(SKILL_NOSEE) and self:GetWave() ~= 0 then
 					pl.NextSleep = time + 9
-                    pl:GiveStatus("dimvision", 10)
+                    pl:GiveStatus("dimvision", 10, true)
 				end
 				if time >= pl.NextRegenerate then
 					pl.NextRegenerate = time + 60

@@ -2158,7 +2158,8 @@ end
 function GM:KeyPress(pl, key)
 	if key == self.MenuKey then
 		local team = P_Team(pl)
-		if team == TEAM_HUMAN and pl:Alive() and not pl:IsHolding() then
+		local d = pl:GetStatus("sigilteleport")
+		if team == TEAM_HUMAN and pl:Alive() and not pl:IsHolding() and (not d) then
 			gamemode.Call("HumanMenu")
 		elseif team == TEAM_ZOMBIE and not pl:Alive() then
 			gamemode.Call("ZombieSpawnMenu")

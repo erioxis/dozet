@@ -1,5 +1,5 @@
 INC_SERVER()
-
+ENT.DieBruh = 12
 function ENT:Initialize()
 	self:SetModel("models/props_wasteland/rockcliff01g.mdl")
 	self:SetModelScale(0.6, 0)
@@ -9,7 +9,6 @@ function ENT:Initialize()
 	self:SetSolid(SOLID_VPHYSICS)
 	self:SetCollisionGroup(COLLISION_GROUP_PROJECTILE)
 	self:SetCustomCollisionCheck(true)
-	self.DieBruh = 12
 
 	local phys = self:GetPhysicsObject()
 	if phys:IsValid() then

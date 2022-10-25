@@ -16,8 +16,8 @@ SWEP.Primary.ClipSize = 15
 SWEP.Primary.Automatic = true
 SWEP.Primary.Ammo = "chemical"
 SWEP.Primary.Delay = 0.45
-SWEP.Primary.DefaultClip = 30
-SWEP.Primary.Damage = 14
+SWEP.Primary.DefaultClip = 15
+SWEP.Primary.Damage = 23
 SWEP.Primary.NumShots = 1
 
 SWEP.ConeMax = 3
@@ -29,7 +29,7 @@ SWEP.Tier = 2
 
 SWEP.FireAnimSpeed = 0.4
 
-GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_FIRE_DELAY, -0.15)
+GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_FIRE_DELAY, -0.05)
 
 local branch = GAMEMODE:AddNewRemantleBranch(SWEP, 1, "'Poplaer' Napalm Rifle", "Chance to ignite instead of corrode", function(wept)
 	wept.Primary.Damage = wept.Primary.Damage * 0.8

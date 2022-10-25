@@ -18,6 +18,8 @@ CLASS.KnockbackScale = 0
 CLASS.BaraCat = true
 CLASS.FearPerInstance = 1
 
+CLASS.Hidden = true
+
 CLASS.Points = 25
 
 CLASS.SWEP = "weapon_zs_baracat"

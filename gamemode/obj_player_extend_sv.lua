@@ -215,7 +215,7 @@ function meta:ProcessDamage(dmginfo)
 					dmginfo:SetDamage(dmginfo:GetDamage() * (1 + self:GetFlatLegDamage()/75))
 				end
 				if attacker:IsSkillActive(SKILL_BLOODLIFE) then
-					dmginfo:SetDamage(dmginfo:GetDamage() + (attacker:GetBloodArmor() * 0.25))
+					dmginfo:SetDamage(dmginfo:GetDamage() + (attacker:GetBloodArmor() * 0.05))
 				end
 
 				if attacker:IsSkillActive(SKILL_PILLUCK) then
@@ -269,7 +269,7 @@ function meta:ProcessDamage(dmginfo)
 		net.Start("zs_holymantle")
 		net.Send(self)
 		self.HolyMantle = self.HolyMantle - 1
-		self:GiveStatus("hshield", 3)
+		self:GiveStatus("hshield", 3, true)
 		timer.Simple(0,function()
 			self:GodEnable()
 			end )
@@ -1311,10 +1311,10 @@ function meta:GetStatus(sType)
 	if ent and ent:IsValid() and ent:GetOwner() == self then return ent end
 end
 
-function meta:GiveStatus(sType, fDie)
+function meta:GiveStatus(sType, fDie, ignoredouble)
 	local resistable = table.HasValue(GAMEMODE.ResistableStatuses, sType)
-	local lox = self:IsSkillActive(SKILL_LOX)
-	local fDie = (fDie or 1) * (self.AdditionalStatusTime or 1)
+	local lox = (self:IsSkillActive(SKILL_LOX) and not ignoredouble)
+	local fDie = (fDie or 1) * (ignoredouble and 1 or self.AdditionalStatusTime or 1)
 	if resistable and self:IsSkillActive(SKILL_HAEMOSTASIS) and self:GetBloodArmor() >= (lox and 5 or 2) then
 		self:SetBloodArmor(self:GetBloodArmor() - (lox and 5 or 2))
 		return

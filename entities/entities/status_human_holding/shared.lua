@@ -80,5 +80,6 @@ function ENT:GetHingePos()
 end
 
 function ENT:ShouldNotCollide(ent)
+	local object = self:GetObject()
 	return object:IsPlayer() and object:Team() == TEAM_HUMAN or object:IsProjectile()
 end

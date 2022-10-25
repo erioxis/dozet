@@ -190,8 +190,8 @@ if SERVER then
 	function CLASS:ProcessDamage(pl, dmginfo)
 		if pl.EradiVived then return end
 		dmgblock = math.random(1,5)
-		if dmginfo:GetDamage() > 500 then 
-			dmginfo:SetDamage(500)
+		if dmginfo:GetDamage() > 300 then 
+			dmginfo:SetDamage(300)
 		end
 	
 		if dmgblock == 1 then
@@ -217,7 +217,7 @@ if SERVER then
 
 
 		dmginfo:SetDamage(0)
-		pl:SetHealth(10)
+		pl:SetHealth(1200)
 
 
 		if dmginfo:GetInflictor().IsMelee then

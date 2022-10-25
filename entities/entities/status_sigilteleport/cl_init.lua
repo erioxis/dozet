@@ -3,7 +3,17 @@ INC_CLIENT()
 ENT.Sound1 = Sound("ambient/levels/labs/teleport_preblast_suckin1.wav")
 ENT.Sound2 = Sound("ambient/levels/labs/teleport_mechanism_windup3.wav")
 ENT.ParticleMaterial = "sprites/glow04_noz"
+local w, h = 320, 256
+local x, y = -w / 2, -h / 2
+local rt = GetRenderTarget("prop_obj_sigil", w * 2, h * 2)
+local matRT = Material("prop_obj_sigil")
+local CamPos = Vector(6, -2, 0)
+local LightPos = Vector(7.4, 8, 3)
+local LightPos2 = Vector(7.4, 8, 1)
+local CamAng = Angle(0, 90, 90)
+local CamScale = 0.05
 
+local matGlow = Material("sprites/glow04_noz")
 function ENT:Initialize()
 	self:DrawShadow(false)
 	self:SetRenderBounds(Vector(-40, -40, -18), Vector(40, 40, 80))
@@ -30,6 +40,7 @@ function ENT:OnRemove()
 end
 
 function ENT:Think()
+
 	local owner = self:GetOwner()
 	if owner ~= LocalPlayer() then return end
 
@@ -69,6 +80,47 @@ end
 function ENT:SetParticleColor(particle)
 	particle:SetColor(38, 102, 255)
 end
+local CamData = {x = 0, y = 0, w = h * 2, h = h * 2, drawhud = false, drawmonitors = false, drawviewmodel = false, aspectratio = w / h}
+--[[function ENT:Draw()
+	--if !MySelf:KeyDown(IN_DUCK) then return end
+	local camera = self:GetTargetSigil()
+	if not camera:IsValid() then return end
 
-function ENT:Draw()
-end
+
+	local camangs = camera:GetAngles()
+	camangs:RotateAroundAxis(camera:GetRight(), 90)
+	camangs:RotateAroundAxis(camera:GetUp(), -180)
+	camangs:RotateAroundAxis(camera:GetForward(), 180)
+	local owner = self:GetOwner()
+	CamData.origin = camera:GetPos()
+	CamData.angles = camangs --self:GetTargetSigil():GetAngles()
+	local originalRT = render.GetRenderTarget()
+	render.SetRenderTarget(rt)
+	render.RenderView(CamData)
+	--render.DrawTextureToScreen(render.GetRenderTarget())
+	render.SetRenderTarget(originalRT)
+	
+end]]
+--[[function ENT:Draw()
+	if !MySelf:KeyDown(IN_DUCK) then return end
+	local dist = EyePos():DistToSqr(self:GetPos())
+	if dist < 9000 then
+		local bpos, bang = self:LocalToWorld(CamPos), self:LocalToWorldAngles(CamAng)
+
+		cam.Start3D2D(bpos, bang, CamScale)
+		cam.IgnoreZ(true)
+		surface.SetDrawColor(255, 255, 255, 255)
+
+		local camera =  self:GetTargetSigil()
+		if camera:IsValid() then
+			matRT:SetTexture("$basetexture", rt)
+			render.DrawTextureToScreen( rt )
+		end
+
+		cam.End3D2D()
+	end
+
+	render.SetMaterial(matGlow)
+	render.DrawSprite(self:LocalToWorld(LightPos), 3, 3, COLOR_DARKBLUE)
+	render.DrawSprite(self:LocalToWorld(LightPos2), 2, 2, COLOR_HURT)
+end]]

@@ -169,8 +169,8 @@ function ENT:DrawTranslucent()
 				surface.SetDrawColor(0, 0, 0, 210 * vis)
 				surface.DrawRect(x - 1, y, mrps/5 + mrps/50 + 1, hei)
 
-				for i = 0, repairs, 200 do
-					local val = math.Clamp(repairs - i, 0, 200)
+				for i = 0, repairs, 100 do
+					local val = math.Clamp(repairs - i, 0, 100)
 
 					surface.SetDrawColor(100, 170, 215, 240 * vis)
 					surface.DrawRect(x + 1 + i/5 + i/50, y + 1, val/5, hei - 2)
