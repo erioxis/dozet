@@ -217,6 +217,11 @@ GM.Achievements["darvinupdate"] = {
     Goal = 1000,
     Reward = 17000
 }
+GM.Achievements["flower"] = {
+    Name = translate("challenge_flower"),
+    Desc = translate("challenge_flower_d"),
+    Reward = 17000
+}
 
 
 -- Cache count, to not call table.Count again
@@ -225,6 +230,7 @@ GM.AchievementsCount = table.Count(GM.Achievements)
 GM.Statuses = {}
 local function statusValueFunction(statusname)
 	return function(self, lp)
+		if !lp:IsValid() then return end
 		local status = lp:GetStatus(statusname)
 		if status and status:IsValid() then
 			return math.max(status:GetStartTime() + status:GetDuration() - CurTime(), 0)

@@ -87,7 +87,7 @@ function SWEP:ShootBullets(dmg, numbul, cone)
 	if SERVER and (self:Clip1() % 10 == 1 or zeroclip) then
 		for i = 1, zeroclip and 8 or 1 do
 			local ent = ents.Create("projectile_juggernaut")
-			if ent:IsValid() then
+			if ent:IsValid() and math.random(1,(owner:HasTrinket("ultra_mag") and 7 or 1)) == 1 then
 				ent:SetPos(owner:GetShootPos())
 
 				local angle = owner:GetAimVector():Angle()

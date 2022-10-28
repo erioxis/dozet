@@ -99,7 +99,7 @@ function ENT:Use(activator, caller)
 		if self:GetObjectOwner():IsValid() then
 			if activator:GetInfo("zs_nousetodeposit") == "0" then
 				local curammo = self:GetAmmo()
-				local togive = math.min(math.min(25, activator:GetAmmoCount("pulse")), self.MaxAmmo - curammo)
+				local togive = math.min(math.min(55, activator:GetAmmoCount("pulse")), self.MaxAmmo - curammo)
 				if togive > 0 then
 					self:SetAmmo(curammo + togive)
 					activator:RemoveAmmo(togive, "pulse")
@@ -142,7 +142,7 @@ function ENT:Think()
 	local totalheal = self.HealValue * (self:GetObjectOwner().MedicHealMul or 1)
 	local owner = self:GetObjectOwner()
 
-	for _, hitent in pairs(ents.FindInSphere(pos, self.MaxDistance * (self:GetObjectOwner().FieldRangeMul or 1))) do
+	for _, hitent in pairs(ents.FindInSphere(pos, self.MaxDistance)) do
 		if not hitent:IsValid() or hitent == self or not WorldVisible(pos, hitent:NearestPoint(pos)) then
 			continue
 		end
@@ -168,7 +168,7 @@ function ENT:Think()
 	end
 
 	if count > 0 then
-		self:SetNextRepairPulse(CurTime() + 0.8 * (self:GetObjectOwner().FieldDelayMul or 1))
+		self:SetNextRepairPulse(CurTime() + 0.8)
 	end
 
 	self:NextThink(self:GetNextRepairPulse())

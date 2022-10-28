@@ -15,7 +15,7 @@ function ENT:Think()
 	local owner = self:GetOwner()
 	local lox = owner:IsSkillActive(SKILL_LOX)
 
-	local dmg = (lox and math.Clamp((owner:GetMaxHealth() / 150) * 2, 2, 200) or math.Clamp(owner:GetMaxHealth() / 150, 1, 100))
+	local dmg = (lox and math.Clamp((owner:GetMaxHealth() / 150) * 2, 2, 50) or math.Clamp(owner:GetMaxHealth() / 150, 1, 50))
 
 	owner:TakeSpecialDamage(dmg, DMG_BURN, self.Damager and self.Damager:IsValid() and self.Damager:IsPlayer() and self.Damager:Team() ~= owner:Team() and self.Damager or owner, self)
 	self:AddDamage(-dmg)

@@ -39,7 +39,7 @@ function ENT:DrawTranslucent()
         local up = Vector( 0, 0, 1 )
         local ringpos = self:GetPos()
         local frametime = FrameTime() * 500
-        local ringsize = self.MaxDistance * (self:GetObjectOwner().FieldRangeMul or 1)
+        local ringsize = self.MaxDistance
         render.SetMaterial( matBeam )
         render.StartBeam( 19 )
         for i=1, 19 do

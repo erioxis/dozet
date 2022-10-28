@@ -15,7 +15,7 @@ function SWEP:ApplyMeleeDamage(ent, trace, damage)
 		local noknockdown = true
 		if CurTime() >= (ent.NextKnockdown or 0) then
 			noknockdown = false
-			ent.NextKnockdown = CurTime() + 0.3
+			ent.NextKnockdown = CurTime() + 3.7
 		end
 		ent:ThrowFromPositionSetZ(trace.StartPos, ent:IsPlayer() and 2200 or 6000, nil, noknockdown)
 	end

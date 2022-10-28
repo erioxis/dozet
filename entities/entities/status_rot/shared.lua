@@ -17,9 +17,6 @@ function ENT:PlayerSet()
 end
 function ENT:AddDamage(damage, attacker)
 	local owner = self:GetOwner()
-	if damage > 0 and owner:IsValid() and owner.BleedDamageTakenMul then
-		damage = damage * owner.BleedDamageTakenMul
-	end
 	self:SetDamage(self:GetDamage() + damage)
 	if attacker then
 		self.Damager = attacker

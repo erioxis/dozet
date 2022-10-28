@@ -2,8 +2,8 @@ AddCSLuaFile()
 
 --SWEP.PrintName = "'Crackler' Assault Rifle"
 --SWEP.Description = "An unsophisticated assault rifle which has good damage and accuracy."
-SWEP.PrintName = ""..translate.Get("wep_cracker")
-SWEP.Description = ""..translate.Get("wep_d_cracker")
+SWEP.PrintName = translate.Get("wep_cracker")
+SWEP.Description = translate.Get("wep_d_cracker")
 SWEP.Slot = 2
 SWEP.SlotPos = 0
 
@@ -24,7 +24,7 @@ SWEP.ViewModel = "models/weapons/cstrike/c_rif_famas.mdl"
 SWEP.WorldModel = "models/weapons/w_rif_famas.mdl"
 SWEP.UseHands = true
 
-local a = math.random(12,35)
+local a = math.random(12,25)
 
 SWEP.ReloadSound = Sound("Weapon_FAMAS.Clipout")
 SWEP.Primary.Sound = Sound("Weapon_FAMAS.Single")

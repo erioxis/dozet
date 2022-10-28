@@ -66,7 +66,7 @@ function ENT:Initialize()
 			object._OriginalMass = objectphys:GetMass()
 
 			objectphys:EnableGravity(false)
-			objectphys:SetMass(3)
+			objectphys:SetMass(120)
 			
 
 			object:SetOwner(owner)
@@ -223,22 +223,27 @@ function ENT:Think()
 		self:Remove()
 		return
 	end
-	local ent = NULL 
-	for _, ent1 in pairs(ents.FindInSphere(objectphys:GetPos(), object:GetModelScale() * 45)) do
-		if ent1:IsValid() and ent1:IsPlayer() and ent1:Team() == TEAM_UNDEAD then
-			ent = ent1
+	local ent = {}
+	local ent2 = NULL
+
+	for _, ent1 in pairs(ents.FindInSphere((objectphys:GetPos() or self:GetPos()), object:GetModelScale() * 35)) do
+		if ent1:IsValid() and ent1:IsPlayer() and ent1:Team() == TEAM_UNDEAD or ent1:GetClass() == "prop_ragdoll"then
+			table.insert(ent,#ent + 1,ent1)
+			ent2 = ent1
+
 			break
 		end
 	end
-	if ent:IsValid() and ent:IsPlayer() and ent:Team() == TEAM_UNDEAD then
+	for k, v in pairs(ent) do 
+		local vel = owner:GetEyeTrace().Normal * 0 + (owner:GetAngles():Forward()*4500)
+		vel.z = 0
+		vel.x = math.Clamp(vel.x,-90,90)
+		vel.y = math.Clamp(vel.y,-90,90)
+		v:SetVelocity(vel)
+	end
+	if ent2:IsValid() and ent2:IsPlayer() and ent2:Team() == TEAM_UNDEAD then
 		object:SetCollisionGroup(COLLISION_GROUP_NONE)
 		object:CollisionRulesChanged()
-		local vel = -owner:GetPos() * 2 + -ent:EyePos()
-		vel.z = vel.z - vel.z * 0.99
-		vel.x = math.Clamp(vel.x,-150,150)
-		vel.y = math.Clamp(vel.y,-150,150)
-		ent:SetVelocity(vel)
-		
 	else
 		object:SetCollisionGroup(COLLISION_GROUP_WEAPON)
 		object:CollisionRulesChanged()

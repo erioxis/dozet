@@ -30,7 +30,7 @@ function SWEP:Reload()
 	local nailowner = ent:GetOwner()
 	if nailowner:IsValid() and nailowner:IsPlayer() and nailowner ~= owner and nailowner:Team() == TEAM_HUMAN and not gamemode.Call("CanRemoveOthersNail", owner, nailowner, ent) then return end
 
-	self:SetNextPrimaryFire(CurTime() + (#trent.Nails > 2 and 0.5 or 1))
+	self:SetNextPrimaryFire(CurTime() + (#trent.Nails > 2 and 4 or 11))
 
 	ent.m_PryingOut = true -- Prevents infinite loops
 

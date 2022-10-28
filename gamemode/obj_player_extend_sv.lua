@@ -159,7 +159,7 @@ function meta:ProcessDamage(dmginfo)
 					self:SetZArmor(self:GetZArmor() - absorb)
 					self.BloodDead = absorb
 					if attacker:IsPlayer() then
-						GAMEMODE:DamageFloater(attacker, self, dmginfo:GetDamagePosition(), absorb, true)
+						GAMEMODE:DamageFloater(attacker, self, dmginfo:GetDamagePosition() - Vector(0,0,-5), absorb, true)
 					end
 					if damage > 20 and damage - absorb <= 0 then
 						self:EmitSound("physics/flesh/flesh_strider_impact_bullet3.wav", 55)
@@ -711,9 +711,6 @@ function meta:ProcessDamage(dmginfo)
 			dmginfo:SetDamage(damage - absorb)
 			self:SetBloodArmor(self:GetBloodArmor() - absorb)
 			self.BloodDead = absorb
-			if attacker:IsPlayer() then
-				GAMEMODE:DamageFloater(attacker, self, dmginfo:GetDamagePosition(), absorb, true, nil, true)
-			end
 
 			if attacker:IsValid() and attacker:IsPlayer() then
 				local myteam = attacker:Team()
@@ -723,6 +720,7 @@ function meta:ProcessDamage(dmginfo)
 				if myteam == TEAM_UNDEAD and otherteam == TEAM_HUMAN then
 					attacker:AddLifeHumanDamage(absorb)
 					attacker:AddTokens(math.Round(absorb))
+					GAMEMODE:DamageFloater(attacker, self, dmginfo:GetDamagePosition()  - Vector(0,0,-12), (absorb or 1), true, nil, true)
 				end
 			end
 
@@ -1047,9 +1045,8 @@ function meta:AddHallow(attacker, count)
 end
 
 function meta:AddRot(attacker, count)
-	local attackers = (attacker or self)
 	local status = self:GiveStatus("rot", count)
-	status:AddDamage(count,	attackers)
+	status:AddDamage(count,	attacker)
 end
 function meta:AddBloodlust(attacker, count)
 	self:GiveStatus("strengthdartboost", count)

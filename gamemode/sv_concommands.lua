@@ -600,7 +600,7 @@ concommand.Add("zsgiveweapon", function(sender, command, arguments)
 	if not invitem and not IsValid(currentwep) then return end
 
 	local ent = GAMEMODE:TryGetLockOnTrace(sender, arguments)
-	if ent:IsSkillActive(SKILL_SAMODOS) then 
+	if ent and ent:IsValidLivingHuman() and ent:IsSkillActive(SKILL_SAMODOS) then 
 		GAMEMODE:ConCommandErrorMessage(sender, translate.ClientGet(sender, "have_skill_samodos")) 
 		return
 	end

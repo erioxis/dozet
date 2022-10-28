@@ -27,13 +27,13 @@ SWEP.ViewModel = "models/weapons/c_crowbar.mdl"
 SWEP.WorldModel = "models/weapons/w_crowbar.mdl"
 SWEP.UseHands = true
 
-
-SWEP.MeleeDamage = 20
+SWEP.NoParasits = true
+SWEP.MeleeDamage = 6
 SWEP.MeleeRange = 2021
 SWEP.MeleeSize = 1.15
-SWEP.Knockback = 120
+SWEP.Knockback = 0
 
-SWEP.Primary.Delay = 0.78
+SWEP.Primary.Delay = 0.99
 
 SWEP.UseMelee1 = true
 
@@ -41,13 +41,12 @@ SWEP.HitGesture = ACT_HL2MP_GESTURE_RANGE_ATTACK_MELEE
 SWEP.MissGesture = SWEP.HitGesture
 
 SWEP.SwingRotation = Angle(30, -30, -30)
-SWEP.SwingTime = 0.9
+SWEP.SwingTime = 1.2
 SWEP.SwingHoldType = "grenade"
 
 SWEP.AllowQualityWeapons = true
 SWEP.Culinary = true
 
-GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_MELEE_RANGE, 4)
 
 function SWEP:PlayHitSound()
 	self:EmitSound("weapons/melee/frying_pan/pan_hit-0"..math.random(4)..".ogg", 75, 140)

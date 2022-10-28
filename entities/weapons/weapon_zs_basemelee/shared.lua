@@ -319,7 +319,7 @@ function SWEP:PlayerHitUtil(owner, damage, hitent, dmginfo)
 false
 	end]]
 	local damage = self:GetBlockState() and (damage * 0.4) or damage
-	if owner:IsSkillActive(SKILL_PARASITOID) and SERVER and not self:GetBlockState() then
+	if owner:IsSkillActive(SKILL_PARASITOID) and SERVER and not self:GetBlockState() and not self.NoParasits then
 		local parasite = hitent:GiveStatus("parasitoid", 2)
 		if parasite and parasite:IsValid() then
 			parasite:AddDamage(6, owner)

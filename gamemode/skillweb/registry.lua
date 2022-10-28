@@ -1069,7 +1069,11 @@ GM:AddSkill(SKILL_BLASTPROOF, translate.Get("skill_bproof"), GOOD.."-40%"..trans
 GM:AddSkill(SKILL_WOOISM, translate.Get("skill_ziga"), GOOD..translate.Get("skill_ziga_d1")..BAD..translate.Get("skill_ziga_d2"),
 																5,			1,					{SKILL_TRUEWOOISM}, TREE_GUNTREE)
 GM:AddSkill(SKILL_SCAVENGER, translate.Get("skill_eyes"), GOOD.. translate.Get("skill_eyes_d1"),
-																7,			4,					{}, TREE_GUNTREE)
+																7,			4,					{SKILL_BUG_GET}, TREE_GUNTREE)
+GM:AddSkill(SKILL_BUG_GET, translate.Get("skill_shooter_fast"), GOOD.. translate.Get("skill_shooter_fast_d1")..BAD.."-5%"..translate.Get("b_damage"),
+																7,			3,					{}, TREE_GUNTREE)
+GM:AddSkillModifier(SKILL_BUG_GET, SKILLMOD_FIRE_DELAY, -0.15)
+GM:AddSkillModifier(SKILL_BUG_GET, SKILLMOD_DAMAGE, -0.05)
 GM:AddSkill(SKILL_PITCHER, translate.Get("skill_pitcher"), GOOD..translate.Get("skill_pitcher_d1"),
 																6,			2,					{}, TREE_GUNTREE)
 GM:AddSkill(SKILL_PITCHER2, translate.Get("skill_pitcher2"), GOOD..translate.Get("skill_pitcher2_d1").."-15%"..translate.Get("b_damage"),

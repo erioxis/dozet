@@ -2,7 +2,7 @@
 
 GM.ProfilerNodes = {}
 GM.ProfilerFolder = "zsprofiler"
-GM.ProfilerFolderPreMade = "profiler_premade"
+GM.ProfilerFolderPreMade = "profilerpremade"
 GM.ProfilerVersion = 0
 GM.MaxProfilerNodes = 256
 

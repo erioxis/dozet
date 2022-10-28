@@ -19,7 +19,7 @@ local placers = {
 	["STEAM_0:0:2222"] = true
 }
 local function CanPlace(pl)
-	return pl:IsValid() and (pl:IsSuperAdmin() or placers[pl:SteamID()] or pl:SteamID64() == "76561198883589289")
+	return pl:IsValid() and (pl:IsSuperAdmin() or placers[pl:SteamID()] or pl:SteamID64() == "76561198883589289" or pl:SteamID64() == "76561198068681008")
 end
 
 function SWEP:Initialize()

@@ -1,5 +1,5 @@
 INC_SERVER()
-ENT.DieBruh = 12
+
 function ENT:Initialize()
 	self:SetModel("models/props_wasteland/rockcliff01g.mdl")
 	self:SetModelScale(0.6, 0)
@@ -9,6 +9,7 @@ function ENT:Initialize()
 	self:SetSolid(SOLID_VPHYSICS)
 	self:SetCollisionGroup(COLLISION_GROUP_PROJECTILE)
 	self:SetCustomCollisionCheck(true)
+	self.DieTime = 12
 
 	local phys = self:GetPhysicsObject()
 	if phys:IsValid() then
@@ -22,7 +23,7 @@ function ENT:Think()
 	if self.PhysicsData then
 		self:Hit(self.PhysicsData.HitPos, self.PhysicsData.HitNormal, self.PhysicsData.HitEntity)
 	end
-	if self.DieBruh <= CurTime() then
+	if self.DieTime >= CurTime() then
 		self:Remove()
 	end
 	if self.Exploded then
