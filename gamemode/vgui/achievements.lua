@@ -66,7 +66,7 @@ function PANEL:Init()
             end
 
             -- Texts
-            self:ShadowedText(ach.Name:upper(), "ZSHUDFontTiny", 8, 7, self:GetTheme(3), TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP)
+            self:ShadowedText(ach.Name:upper().." -"..translate.Get("xp")..(ach.Reward or 0), "ZSHUDFontTiny", 8, 7, self:GetTheme(3), TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP)
             self:ShadowedText(ach.Desc, "ZSHUDFontTiniest", 8, 25, self:GetTheme(3), TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP)
 
             -- Bars
@@ -82,6 +82,9 @@ function PANEL:Init()
                 surface.SetDrawColor(self:GetTheme(3))
                 surface.DrawLine(0, h - 1, w, h - 1)
             end
+            if this.Reward then
+                self:ShadowedText(this.Reward, "ZSHUDFontTiny", w / 2, 10, self:GetTheme(3), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+            end
         end
 
         i = i + 1
@@ -93,7 +96,7 @@ function PANEL:Paint(w, h)
     surface.DrawRect(0, 0, w, h)
     surface.SetDrawColor(self:GetTint())
     surface.DrawRect(0, 0, w, 24)
-    self:ShadowedText("ACHIEVEMENTS", "ZSHUDFontSmall", 8, 12, Color(255, 255, 255), TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+    self:ShadowedText(translate.Get("mm_challenges"), "ZSHUDFontSmall", 8, 12, Color(255, 255, 255), TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 end
 
 -- Should return HiderColor, SeekerColor or Specator color

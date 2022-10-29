@@ -82,6 +82,9 @@ LANGUAGE.challenge_inwork = "БЕСКОНЕЧНОЕ СЛИЯНИЕ - БАРАБ�
 LANGUAGE.challenge_inwork_d = "Превратиться в барабога"
 LANGUAGE.challenge_flower = "Доставка нежных цветков"
 LANGUAGE.challenge_flower_d = "Выживи с нежным цветком"
+LANGUAGE.challenge_best_medicine = "Немецкая медицина ЛУЧШАЯ В МИРЕ!"
+LANGUAGE.challenge_best_medicine_d = "Вылечи 50к здоровья."
+LANGUAGE.xp= " ОПЫТА "
 --sigil
 LANGUAGE.sigil_nm = "Сигил"
 LANGUAGE.sigil_tp = "Нажми E Чтобы Телепортироваться"

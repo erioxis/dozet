@@ -238,8 +238,8 @@ function meta:ProcessDamage(dmginfo)
 	if self:IsSkillActive(SKILL_BLESSEDROD) and dmginfo:GetDamage() >= 30 then
 		dmginfo:SetDamage(dmginfo:GetDamage() - 12)
 	end
-	if (((self:GetZSRemortLevel() / 4) or 0) + self.AmuletPiece) < 0 then
-		dmginfo:ScaleDamage(2 + ((self:GetZSRemortLevel() / 4) - self.AmuletPiece))
+	if (((self:GetZSRemortLevel() / 4) or 0) + (self.AmuletPiece or 0)) < 0 then
+		dmginfo:ScaleDamage(2 + ((self:GetZSRemortLevel() / 4) - (self.AmuletPiece or 0)))
 	end
 
     truedogder = 30 - (self:GetWalkSpeed() / 15)

@@ -29,12 +29,12 @@ function meta:HealPlayer(pl, amount, pointmul, nobymsg, poisononly)
 
 	-- Heal bleed first.
 	if not pl:IsSkillActive(SKILL_DEFENDBLOOD) then
-	if not poisononly and bleed > 0 then
-		rmv = math.min(amount, bleed)
-		pl:AddBleedDamage(-rmv)
-		healed = healed + rmv
-		amount = amount - rmv
-	end
+		if not poisononly and bleed > 0 then
+			rmv = math.min(amount, bleed)
+			pl:AddBleedDamage(-rmv)
+			healed = healed + rmv
+			amount = amount - rmv
+		end
 	end
 
 	-- Heal poison next.
@@ -51,6 +51,9 @@ function meta:HealPlayer(pl, amount, pointmul, nobymsg, poisononly)
 		pl:SetHealth(health + rmv)
 		healed = healed + rmv
 		amount = amount - rmv
+	end
+	if self:IsPlayer() then
+		self:GiveAchievementProgress("best_medicine", (healed or 1))
 	end
 
 	pointmul = (pointmul or 1) / (math.max(healed, regamount) / regamount)
