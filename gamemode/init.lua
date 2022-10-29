@@ -4941,6 +4941,9 @@ function GM:PlayerSpawn(pl)
 		pl:SetViewOffsetDucked(Vector(0, 0, 32 * (self.ObjectiveMap and 1 or pl.ScaleModel)))
 		pl:SetModelScale(1 * (self.ObjectiveMap and 1 or pl.ScaleModel))
 
+		
+		pl:Give("weapon_zs_fists")
+
 
 		if self.ZombieEscape then
 			pl:Give("weapon_zs_zeknife")
@@ -4949,7 +4952,6 @@ function GM:PlayerSpawn(pl)
 			pl:Give(table.Random(self.ZombieEscapeWeaponsSecondary))
 		else
 
-			pl:Give("weapon_zs_fists")
 
 			if self.StartingLoadout then
 				self:GiveStartingLoadout(pl)
@@ -5088,29 +5090,6 @@ function GM:WaveStateChanged(newstate, pl)
 			end
 
 			-- We should spawn a crate in a random spawn point if no one has any.
-			if not self.ZombieEscape and #ents.FindByClass("prop_arsenalcrate") == 0 then
-				local have = false
-				for _, pl in pairs(humans) do
-					if pl:HasWeapon("weapon_zs_fists") then
-						have = true
-						break
-					end
-				end
-
-				if not have and #humans >= 1 then
-					local spawn = self:PlayerSelectSpawn(humans[math.random(#humans)])
-					if spawn and spawn:IsValid() then
-						local ent = ents.Create("prop_arsenalcrate")
-						if ent:IsValid() then
-							ent:SetPos(spawn:GetPos() + Vector(0, 0, 8))
-							ent:Spawn()
-							ent:DropToFloor()
-							ent:SetCollisionGroup(COLLISION_GROUP_DEBRIS_TRIGGER) -- Just so no one gets stuck in it.
-							ent.NoTakeOwnership = true
-						end
-					end
-				end
-			end
 		end
 
 		local prevwave = self:GetWave()

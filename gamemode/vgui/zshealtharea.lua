@@ -48,7 +48,7 @@ local function ContentsPaint(self, w, h)
 		surface.DrawTexturedRect(x + 2 + subwidth - 4, y + 1, phantomwidth, hei - 2)
 		surface.SetDrawColor(colHealth.r, colHealth.g, colHealth.b, 30)
 		surface.DrawRect(x + 2 + subwidth - 4, y + 1, phantomwidth, hei - 2)
-		if (((lp:GetZSRemortLevel() / 4) or 0) + lp.AmuletPiece) < 0 and lp:Team() == TEAM_HUMAN then
+		if (((lp:GetZSRemortLevel() / 4) or 0) + (lp.AmuletPiece or 0)) < 0 and lp:Team() == TEAM_HUMAN then
 			surface.SetDrawColor(255, 31, 206, 50)
 			surface.SetTexture(texDownEdge)
 			surface.DrawTexturedRect(x, y, wid, hei * 2)
