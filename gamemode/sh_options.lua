@@ -521,7 +521,7 @@ GM:AddPointShopItem("sman",			ITEMCAT_TRINKETS,		500,				"trinket_sman").SubCate
 GM:AddPointShopItem("stutor",			ITEMCAT_TRINKETS,		500,				"trinket_stutor").SubCategory =								ITEMSUBCAT_TRINKETS_SUPER
 GM:AddPointShopItem("gstore",			ITEMCAT_TRINKETS,		500,				"trinket_gstore").SubCategory =								ITEMSUBCAT_TRINKETS_SUPER
 GM:AddPointShopItem("bloodlu",			ITEMCAT_TRINKETS,		500,				"trinket_bloodlust").SubCategory =								ITEMSUBCAT_TRINKETS_SUPER
-GM:AddPointShopItem("bloodlu",			ITEMCAT_TRINKETS,		500,				"trinket_ultra_mag").SubCategory =								ITEMSUBCAT_TRINKETS_SUPER
+GM:AddPointShopItem("bclip",			ITEMCAT_TRINKETS,		500,				"trinket_ultra_mag").SubCategory =								ITEMSUBCAT_TRINKETS_SUPER
 GM:AddPointShopItem("knowev",			ITEMCAT_TRINKETS,		500,				"trinket_knowbook").SubCategory =								ITEMSUBCAT_TRINKETS_SUPER
 GM:AddPointShopItem("adbat",			ITEMCAT_TRINKETS,		500,				"trinket_adbat").SubCategory =								ITEMSUBCAT_TRINKETS_SUPER
 GM:AddPointShopItem("marm",			ITEMCAT_TRINKETS,		500,				"trinket_marm").SubCategory =								ITEMSUBCAT_TRINKETS_SUPER

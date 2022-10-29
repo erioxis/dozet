@@ -2249,22 +2249,24 @@ function GM:OnPlayerWin(pl)
 	end
 	pl:AddZSXP(xp * (math.max(0.33,self:GetWinRate())))
 	self:SetRage(self:GetRage() + 100)
-	self:SetWinRate(math.max(0,self:GetWinRate() + 1))
+	self:SetWinRate(math.max(0,self:GetWinRate() + 1 / #team.GetPlayers(TEAM_HUMAN)))
 	pl:GiveAchievement("winfirst")
 	if not self.ObjectiveMap then
 		pl:GiveAchievementProgress("loveof6", 1)
 	end
-	if self:GetBalance() >= 25 then
-		pl:GiveAchievement("infected_dosei")
-	end
-	if pl:GetMaxHealth() < 35 and not self.ObjectiveMap then
-		pl:GiveAchievement("glassman")	
-	end
-	if pl:IsSkillActive(SKILL_D_FRAIL) and not self.ObjectiveMap then
-		pl:GiveAchievement("frail")	
-	end
-	if pl:HasTrinket("flower") and not self.ObjectiveMap then
-		pl:GiveAchievement("flower")	
+	if self:GetNumberOfWaves() == 12 then
+		if self:GetBalance() >= 25 then
+			pl:GiveAchievement("infected_dosei")
+		end
+		if pl:GetMaxHealth() < 35 and not self.ObjectiveMap then
+			pl:GiveAchievement("glassman")	
+		end
+		if pl:IsSkillActive(SKILL_D_FRAIL) and not self.ObjectiveMap then
+			pl:GiveAchievement("frail")	
+		end
+		if pl:HasTrinket("flower") and not self.ObjectiveMap then
+			pl:GiveAchievement("flower")	
+		end
 	end
 end
 
