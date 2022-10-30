@@ -226,7 +226,7 @@ function ENT:Think()
 	local ent = {}
 	local ent2 = NULL
 
-	for _, ent1 in pairs(ents.FindInSphere((objectphys:GetPos() or self:GetPos()), object:GetModelScale() * 35)) do
+	for _, ent1 in pairs(ents.FindInSphere((objectphys:GetPos() or self:GetPos()), (object:GetModelScale() or 1) * 35)) do
 		if ent1:IsValid() and ent1:IsPlayer() and ent1:Team() == TEAM_UNDEAD or ent1:GetClass() == "prop_ragdoll"then
 			table.insert(ent,#ent + 1,ent1)
 			ent2 = ent1
