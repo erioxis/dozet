@@ -15,13 +15,13 @@ function ENT:Hit(vHitPos, vHitNormal, eHitEntity)
 		eHitEntity:GiveStatus("frost", 5)
 		local rot = eHitEntity:GetStatus("rot")
 		if (rot) then 
-			eHitEntity:AddRot(self:GetOwner(), rot.DieTime - CurTime() + 1)
+			eHitEntity:GiveStatus("rot", rot.DieTime - CurTime() + 1)
 			if rot and rot:IsValid() then
 				rot:AddDamage(5, owner)
 			end
 		end
 		if (not rot) then 
-			eHitEntity:AddRot(eHitEntity:GetOwner(), 1)
+			eHitEntity:GiveStatus("rot", 1)
 			if rot and rot:IsValid() then
 				rot:AddDamage(5, owner)
 			end

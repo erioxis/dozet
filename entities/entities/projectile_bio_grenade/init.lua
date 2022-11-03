@@ -46,14 +46,18 @@ function ENT:Explode(hitpos, hitnormal, hitent)
 	self.Exploded = true
 
 	local owner = self:GetOwner()
-
+	local mul = 1
+	if self:GetOwner():HasTrinket("ultra_mag") then
+		mul = 0.2
+	end
 	if owner:IsValidLivingHuman() then
 		local source = self:ProjectileDamageSource()
 		for _, pl in pairs(ents.FindInSphere(hitpos, 138)) do
 			if WorldVisible(self:LocalToWorld(Vector(0, 0, 30)), pl:NearestPoint(self:LocalToWorld(Vector(0, 0, 30)))) then
 				if pl:IsValidLivingZombie() then
-					pl:TakeDamage(self.ProjDamage or 99, self:GetOwner(), self:GetOwner():GetActiveWeapon())
+					pl:TakeSpecialDamage(self.ProjDamage or 99, DMG_ACID,self:GetOwner(), self:GetOwner():GetActiveWeapon(), nil, 0)
 					pl:PoisonDamage(4, owner, self)
+					pl:SetVelocity(Vector(0,0,0))
 				end
 			end
 		end

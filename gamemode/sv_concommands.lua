@@ -117,7 +117,7 @@ concommand.Add("zs_pointsshopbuy", function(sender, command, arguments)
 	else
 		return
 	end
-    local scrapd = sender.ScrapDiscount
+    local scrapd = sender.ScrapDiscount or 1
 	local buy = "Buyed a "
 	if usescrap then
 		sender:RemoveAmmo(math.ceil(cost), "scrap")
@@ -200,7 +200,7 @@ concommand.Add("zs_dismantle", function(sender, command, arguments)
 	end
 
 	local scrap = GAMEMODE:GetDismantleScrap(wtbl or GAMEMODE.ZSInventoryItemData[invitem], invitem)
-	local scrapd =  (sender.ScrapDiscount * sender.ScrapDiscount)
+	local scrapd =  (sender.ScrapDiscount and (sender.ScrapDiscount * sender.ScrapDiscount) or 1)
 	local scrap = scrap * scrapd
 	net.Start("zs_ammopickup")
 		net.WriteUInt(scrap, 16)

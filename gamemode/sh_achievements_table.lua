@@ -431,3 +431,10 @@ GM.Statuses["mantle"] =	{
 	Max = 1,
 	Icon = Material("zombiesurvival/defense.png")
 }
+GM.Statuses["target"] =	{
+	Color = Color(209, 40, 40),
+	Name = "target",
+	ValFunc = statusValueFunction("target"),
+	Max = 10,
+	Icon = Material("zombiesurvival/headshot_stacks.png")
+}

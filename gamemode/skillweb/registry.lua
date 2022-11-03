@@ -385,6 +385,7 @@ SKILL_COOL_MED = 363
 SKILL_FLOWER = 364
 SKILL_ABYSSFLOWER = 365
 SKILL_BUG_GET = 366
+SKILL_HELPER = 367
 
 SKILLMOD_HEALTH = 1
 SKILLMOD_SPEED = 2
@@ -1176,6 +1177,8 @@ GM:AddSkill(SKILL_LIGHTWEIGHT, translate.Get("skill_lweight"), GOOD..translate.G
 																-6,			-2,					{}, TREE_MELEETREE)
 GM:AddSkill(SKILL_BLOODLUST,  translate.Get("skill_phantomhealth"), translate.Get("skill_phantomhealth_d1")..GOOD..translate.Get("skill_phantomhealth_d2"),
 																-2,			4,					{SKILL_LASTSTAND}, TREE_MELEETREE)
+GM:AddSkill(SKILL_HELPER,  translate.Get("skill_helper"), GOOD..translate.Get("skill_helper_d1")..BAD..translate.Get("skill_helper_d2"),
+																-3,			5,					{SKILL_BLOODLUST}, TREE_MELEETREE)
 GM:AddSkill(SKILL_BRASH, translate.Get("skill_brash"), GOOD.."-16%"..translate.Get("m_delay")..BAD..translate.Get("skill_brash_d1"),
 																6,			0,					{SKILL_TRUEBLOCK}, TREE_MELEETREE)
 GM:AddSkill(SKILL_TRUEBLOCK, translate.Get("skill_trueblock"), BAD.."-15%"..translate.Get("meleedamage")..GOOD..translate.Get("skill_trueblock_d1"),

@@ -32,7 +32,7 @@ function SWEP:ServerHitFleshEffects(hitent, tr, damagemultiplier)
 
 	if hitent:IsValid() and hitent:IsPlayer() and hitent:Team() == owner:Team() then return end
 
-	util.Blood(tr.HitPos, math.Rand(damage * 0.25, damage * 0.6), (tr.HitPos - owner:GetShootPos()):GetNormalized(), math.min(400, math.Rand(damage * 6, damage * 12)), true)
+	util.Blood(tr.HitPos, math.Rand(damage * 0.15, damage * 0.1), (tr.HitPos - owner:GetShootPos()):GetNormalized(), math.min(400, math.Rand(damage * 6, damage * 12)), true)
 end
 
 

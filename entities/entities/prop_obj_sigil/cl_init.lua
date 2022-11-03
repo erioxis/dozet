@@ -183,5 +183,4 @@ function ENT:DrawTranslucent()
 
 	emitter:Finish() emitter = nil collectgarbage("step", 64)
 	
-
 end

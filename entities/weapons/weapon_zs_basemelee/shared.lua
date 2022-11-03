@@ -320,10 +320,13 @@ false
 	end]]
 	local damage = self:GetBlockState() and (damage * 0.4) or damage
 	if owner:IsSkillActive(SKILL_PARASITOID) and SERVER and not self:GetBlockState() and not self.NoParasits then
-		local parasite = hitent:GiveStatus("parasitoid", 2)
+		local parasite = hitent:GiveStatus("parasitoid", 1)
 		if parasite and parasite:IsValid() then
 			parasite:AddDamage(6, owner)
 		end
+	end
+	if owner:IsSkillActive(SKILL_HELPER) and SERVER and self:GetBlockState() and owner.BulletMul <= 1 then
+		hitent:GiveStatus("target", 10)
 	end
 	if owner.MeleePowerAttackMul and owner.MeleePowerAttackMul > 1 then
 		self:SetPowerCombo(self:GetPowerCombo() + 1)
@@ -347,7 +350,6 @@ false
 	end
 end
 function SWEP:OnZombieKilled()
-	self.zKills = self.zKills + 1
 	owner = self:GetOwner()
 	if owner:IsSkillActive(SKILL_BLOODLOST) then
 		local reaperstatus1 = owner:GiveStatus("reaper", 10)

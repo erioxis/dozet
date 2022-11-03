@@ -1495,7 +1495,6 @@ function meta:DropAllAmmo()
 end
 
 function meta:Resupply(owner, obj)
-	if GAMEMODE:GetWave() <= 0 then return end
 
 	local stockpiling = self:IsSkillActive(SKILL_STOCKPILE)
 	local stowage = 0 == 0

@@ -1322,26 +1322,24 @@ function GM:Think()
 				if (pl:GetActiveWeapon().Tier or 1) <= 4 and pl:HasTrinket("sin_envy") and pl:GetActiveWeapon():GetClass() ~= "weapon_zs_fists" then
 					pl:StripWeapon(pl:GetActiveWeapon():GetClass())
 				end
-				if !pl:IsSkillActive(SKILL_BARA_CURSED) then
+				local barac = pl:IsSkillActive(SKILL_BARA_CURSED)
 					if not pl:GetStatus("sigildef") and self:GetWave() >= 6 and  time >= pl.NextDamage and self:GetWaveActive() and self:GetBalance() < 20 or self:GetBalance() > 20 and not pl:GetStatus("sigildef") and  time >= pl.NextDamage then
-						pl:TakeSpecialDamage((pl:HasTrinket("jacobsoul") and 1 or 8) * (pl.TickBuff or 0), DMG_DIRECT)
+						pl:TakeSpecialDamage(((pl:HasTrinket("jacobsoul") and 1 or 8 ) * (pl.TickBuff or 0)) /(barac and 200 or 1), DMG_DIRECT)
 						pl.NextDamage = time + (pl:HasTrinket("jacobsoul") and 4 or 2.4)
 						pl:CenterNotify(COLOR_RED, translate.ClientGet(pl, "danger"))
 						pl.TickBuff = pl.TickBuff + (pl.TickBuff * 0.2) + 1
 					end
 					if pl:GetStatus("sigildef") and self:GetWave() >= 6 and time >= pl.NextDamage and self:GetWaveActive() and pl:HasTrinket("jacobsoul") and not (self:GetWave() == 12) then
-						pl:TakeDamage(13)
+						pl:TakeSpecialDamage(13, DMG_DIRECT)
 						pl.NextDamage = time + 7
 						pl:CenterNotify(COLOR_GREEN, translate.ClientGet(pl, "danger_x"))
 					end
 					if time >= (pl.NextDamage + 4) then
 						pl.TickBuff = pl.TickBuff - pl.TickBuff
 					end
-				else
-					if pl:HasTrinket("antibaracat") then
+					if pl:HasTrinket("antibaracat") and barac then
 						pl:Kill()
 					end
-				end
 				if !pl:OnGround() and not (pl:GetVelocity():LengthSqr() > 7600) then
 					pl.StuckedInProp = true
 				else
@@ -5218,12 +5216,13 @@ function GM:WaveStateChanged(newstate, pl)
 
 		for _, pl in pairs(player.GetAll()) do
 			if pl:Team() == TEAM_HUMAN and pl:Alive() then
+				local lucktrue  = pl.Luck or 1
 				if self.EndWaveHealthBonus > 0 and !pl:HasTrinket("lehasoul") then
 					pl:SetHealth(math.min(pl:GetMaxHealth(), pl:Health() + self.EndWaveHealthBonus))
 				end
 				if pl:IsSkillActive(SKILL_LUCKY_UNLIVER) then
 					pl:SetMaxHealth(pl:GetMaxHealth() * 0.9) pl:SetHealth(pl:Health() * 0.5)
-					pl.Luck = pl.Luck + 1
+					pl.Luck = lucktrue + 1
 				end
 				if pl:IsSkillActive(SKILL_XPHUNTER) then
 					pl:AddZSXP(5 + self.GetWave() * 10)
@@ -5244,7 +5243,7 @@ function GM:WaveStateChanged(newstate, pl)
 					pl.LetalSave = true
 				end
 				if pl:IsSkillActive(SKILL_XPMULGOOD) then
-				   pl.XPMulti = pl.XPMulti + 0.20
+				   pl.XPMulti = (pl.XPMulti or 1) + 0.20
 				end
 				if pl:Frags() == 1024 then
 					pl:GiveAchievement("bitbat")
@@ -5261,9 +5260,9 @@ function GM:WaveStateChanged(newstate, pl)
 						pl:GiveAmmo(math.ceil(pointsreward), "scrap")
 					end
 						if pl:HasTrinket("lotteryticket")  then 
-					    local luckdis = (pl.Luck / 4)
+					    local luckdis = (lucktrue  / 4)
 						local chargemax = 6 - luckdis
-						local luck = 20 - pl.Luck 
+						local luck = 20 - lucktrue 
 						local lucky1 = math.random(1,luck)
 						local charge = math.random(1,chargemax)
 
@@ -5287,9 +5286,9 @@ function GM:WaveStateChanged(newstate, pl)
 					end
 
 					if pl:HasTrinket("mysteryticket")  then 
-						local luckdis = (pl.Luck / 4)
+						local luckdis = (lucktrue  / 4)
 						local chargemax = 6 - luckdis
-						local luck = 40 - pl.Luck 
+						local luck = 40 - lucktrue 
 						local lucky2 = math.random(1,luck)
 					
 						
@@ -5349,7 +5348,7 @@ function GM:WaveStateChanged(newstate, pl)
 							"weapon_zs_scythe_q1"
 						}
 						local drop = table.Random(weapon)
-						local luck = 9 - (pl.Luck / 4)
+						local luck = 9 - (lucktrue  / 4)
 						local lucky2 = math.random(1,luck)
 						if lucky2 == 1 then 
 
@@ -5368,7 +5367,7 @@ function GM:WaveStateChanged(newstate, pl)
 							
 						end
 						if pl:IsSkillActive(SKILL_ABUSE)  then 
-							local luck = 8 - (pl.Luck / 3)
+							local luck = 8 - (lucktrue  / 3)
 							local lucky5 = math.random(1,luck)
 							if lucky5 == 1 then 
 							pl:AddPoints(pointsreward, nil, nil, true)
@@ -5377,7 +5376,7 @@ function GM:WaveStateChanged(newstate, pl)
 							
 							end end
 							if pl:IsSkillActive(SKILL_POINTD)  then 
-								local luck = 8 - (pl.Luck / 3)
+								local luck = 8 - (lucktrue  / 3)
 								local lucky5 = math.random(1,luck)
 								if lucky5 == 1 then 
 		
@@ -5390,7 +5389,7 @@ function GM:WaveStateChanged(newstate, pl)
 
 						pl:AddPoints(pointsreward, nil, nil, true)
 						net.Start("zs_luck")
-						net.WriteString(pl.Luck)
+						net.WriteString(lucktrue )
 					net.Send(pl)
 
 				end

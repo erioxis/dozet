@@ -1,11 +1,12 @@
 SWEP.Base = "weapon_zs_baseproj"
 
+
 SWEP.PrintName = translate.Get("wep_flamethrower")
 SWEP.Description = translate.Get("wep_d_flamethrower")
 
 SWEP.Primary.Delay = 0.1
 
-SWEP.ViewModel = "models/weapons/v_crowbar.mdl"
+SWEP.ViewModel = "models/weapons/c_shotgun.mdl"
 SWEP.WorldModel = "models/weapons/w_crowbar.mdl"
 
 SWEP.MaxStock = 1

@@ -8,7 +8,7 @@ SWEP.SlowDownScale = 2
 SWEP.MeleeDamageType = DMG_SLASH
 SWEP.MeleeAnimationDelay = 0.11
 
-SWEP.Primary.Delay = 0.37
+SWEP.Primary.Delay = 0.87
 
 SWEP.ViewModel = Model("models/weapons/v_pza.mdl")
 SWEP.WorldModel = "models/weapons/w_crowbar.mdl"

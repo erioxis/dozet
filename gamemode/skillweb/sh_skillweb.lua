@@ -129,8 +129,6 @@ end
 -- These are done on human spawn.
 function meta:ApplySkills(override)
 	if GAMEMODE.ZombieEscape or GAMEMODE.ClassicMode then return end -- Skills not used on these modes
-	local event = true
-	if event then return end
 
 	local allskills = GAMEMODE.Skills
 	local desired = override or self:Alive() and self:Team() == TEAM_HUMAN and self:GetDesiredActiveSkills() or {}

@@ -87,10 +87,6 @@ end
 function GM:LoadProfiler()
 	if not self:ProfilerEnabled() or self.ProfilerIsPreMade then return end
 
-	if self.UseOnlineProfiles and not NDB then
-		http.Fetch("http://www.noxiousnet.com/zs_nodes/"..mapname..".txt", FetchNodes)
-	end
-
 	local filename = self:GetProfilerFile()
 	if file.Exists(filename, "DATA") then
 		local data = Deserialize(file.Read(filename, "DATA"))

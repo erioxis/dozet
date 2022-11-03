@@ -15,7 +15,7 @@ function ENT:Think()
 	local dmger = self.Damager
 	local lox = dmger:IsSkillActive(SKILL_LOX)
 	if (owner) and not (dmger:GetStatus("rot")) and !owner:GetZombieClassTable().Skeletal then
-		owner:TakeDamage((lox and owner:Health()*0.05 or owner:Health()*0.01),dmger and dmger:IsValid() and dmger:IsPlayer() and dmger or owner, self)
+		owner:TakeSpecialDamage((lox and owner:Health()*0.05 or owner:Health()*0.01),DMG_ACID,dmger and dmger:IsValid() and dmger:IsPlayer() and dmger or owner, self, nil, 0)
 		if dmger and dmger:IsValid() and dmger:IsPlayer() and self.NextThinker <= CurTime() then
 			dmger:SetHealth(math.min(dmger:Health() + (lox and owner:Health()*0.05 or owner:Health()*0.01), dmger:GetMaxHealth() * 1.1))
 			dmger:SetBloodArmor(math.min(dmger:GetBloodArmor() + (lox and owner:Health()*0.05 or owner:Health()*0.01), dmger.MaxBloodArmor * 1.2))

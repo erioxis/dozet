@@ -32,3 +32,35 @@ end
 function ENT:OnRemove()
 	self:RemoveModels()
 end
+--[[function ENT:Draw()
+
+	self:DrawModel()
+	
+	local ent = self
+	
+	local mins = ent:OBBMins()
+	local maxs = ent:OBBMaxs()
+	local startpos = ent:GetPos()
+	local dir = ent:GetUp()
+	local len = 42
+
+	local tr = util.TraceHull( {
+		start = startpos,
+		endpos = startpos + dir * len,
+		maxs = maxs,
+		mins = mins,
+		filter = ent
+	} )
+	
+	render.DrawLine( tr.HitPos, startpos + dir * len, color_white, true )
+	render.DrawLine( startpos, tr.HitPos, Color( 0, 0, 255 ), true )
+	
+	local clr = color_white
+	if ( tr.Hit ) then
+		clr = Color( 255, 0, 0 )
+	end
+
+	render.DrawWireframeBox( startpos, Angle( 0, 0, 0 ), mins, maxs, Color( 255, 255, 255 ), true )
+	render.DrawWireframeBox( tr.HitPos, Angle( 0, 0, 0 ), mins, maxs, clr, true )
+
+end]]

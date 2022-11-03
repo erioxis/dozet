@@ -17,7 +17,7 @@ function SWEP:Think()
 		local ent = ents.Create(self.PukeLeft % 6 == 1 and "projectile_puke" or "projectile_puke")
 		if ent:IsValid() and self:GetOwner():WaterLevel() < 2 then
 			local pos = pl:EyePos()
-			pos.z = pl:GetShootPos().z -18
+			pos.z = pl:GetShootPos().z 
 			pos.x = pl:GetShootPos().x - 2
 			pos.y = pl:GetShootPos().y - 2
 			ent:SetPos(pos)
