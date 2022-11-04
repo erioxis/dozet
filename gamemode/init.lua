@@ -4187,19 +4187,21 @@ end
 
 function GM:PlayerDeath(pl, inflictor, attacker)
 	if pl:IsSkillActive(SKILL_PHOENIX) and pl.RedeemedOnce then
-	local dpos = pl:GetPos()
-	local eyepos = pl:EyeAngles()
+		local dpos = pl:GetPos()
+		local eyepos = pl:EyeAngles()
 		timer.Simple(0.005, function()
-			pl.RedeemedOnce = false
-			pl:Redeem()
-			if dpos ~= nil then
-				pl:SetPos(dpos)
+			if pl:IsValid() then
+				pl.RedeemedOnce = false
+				pl:Redeem()
+				if dpos ~= nil then
+					pl:SetPos(dpos)
+				end
+				pl:SetEyeAngles(eyepos)
+				pl:ChangeTeam(TEAM_HUMAN)
+				pl:SetModel(player_manager.TranslatePlayerModel(GAMEMODE.RandomPlayerModels[math.random(#GAMEMODE.RandomPlayerModels)]))
+				pl:SetHealth(300)
+				pl:AddInventoryItem("trinket_electromagnet")
 			end
-			pl:SetEyeAngles(eyepos)
-			pl:ChangeTeam(TEAM_HUMAN)
-			pl:SetModel(player_manager.TranslatePlayerModel(GAMEMODE.RandomPlayerModels[math.random(#GAMEMODE.RandomPlayerModels)]))
-			pl:SetHealth(300)
-			pl:AddInventoryItem("trinket_electromagnet")
 		end)
 
 
@@ -4208,8 +4210,10 @@ function GM:PlayerDeath(pl, inflictor, attacker)
     end
 	if !pl.RedeemedOnce and pl:IsSkillActive(SKILL_AMULET_5) and math.random(1,4) == 2 then
 		timer.Simple(0.005, function()
-			pl:Redeem()
-			pl:AddInventoryItem("trinket_electromagnet")
+			if pl:IsValid() then
+				pl:Redeem()
+				pl:AddInventoryItem("trinket_electromagnet")
+			end
 		end)
 	end
 end

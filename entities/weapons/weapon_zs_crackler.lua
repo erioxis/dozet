@@ -24,7 +24,7 @@ SWEP.ViewModel = "models/weapons/cstrike/c_rif_famas.mdl"
 SWEP.WorldModel = "models/weapons/w_rif_famas.mdl"
 SWEP.UseHands = true
 
-local a = math.random(12,25)
+local a = math.Round(util.SharedRandom("Cracker_Rand",12,25,math.random(12,25)))
 
 SWEP.ReloadSound = Sound("Weapon_FAMAS.Clipout")
 SWEP.Primary.Sound = Sound("Weapon_FAMAS.Single")

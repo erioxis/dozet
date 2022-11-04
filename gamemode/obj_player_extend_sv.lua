@@ -356,7 +356,7 @@ function meta:ProcessDamage(dmginfo)
 	end
 
 	if attacker:IsPlayer() and attacker:Team() == TEAM_UNDEAD and dmginfo:GetDamage() >= 1000 and !self:HasGodMode() then
-		timer.Simple(2, function() if self:Team() == TEAM_HUMAN then self:GiveAchievement("onepieceisreal") end end)
+		timer.Simple(2, function() if self:IsValid() and self:Team() == TEAM_HUMAN then self:GiveAchievement("onepieceisreal") end end)
 	end
 
 
@@ -1312,8 +1312,9 @@ function meta:GiveStatus(sType, fDie, ignoredouble)
 	local resistable = table.HasValue(GAMEMODE.ResistableStatuses, sType)
 	local lox = (self:IsSkillActive(SKILL_LOX) and not ignoredouble)
 	local fDie = (fDie or 1) * (ignoredouble and 1 or self.AdditionalStatusTime or 1)
-	if resistable and self:IsSkillActive(SKILL_HAEMOSTASIS) and self:GetBloodArmor() >= (lox and 5 or 2) then
-		self:SetBloodArmor(self:GetBloodArmor() - (lox and 5 or 2))
+	local fDie2 = fDie / math.max(1 + (self.BloodArmorDamageReductionAdd or 1),1)
+	if resistable and self:IsSkillActive(SKILL_HAEMOSTASIS) and self:GetBloodArmor() >= 2 * fDie2 then
+		self:SetBloodArmor(self:GetBloodArmor() - 2 * fDie2)
 		return
 	end
 	if resistable and self:HasTrinket("biocleanser") and (not self.LastBioCleanser or self.LastBioCleanser + 10 < CurTime()) then

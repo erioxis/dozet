@@ -156,9 +156,13 @@ function GM:SaveVault(pl)
 end
 
 function GM:SaveWinRate()
+	local DaData = self.Da
 	local tosave = {
 		Winrate = math.floor(self:GetWinRate() or 0),
-		ZSRage = math.floor(self:GetRage() or 0)
+		ZSRage = math.floor(self:GetRage() or 0),
+		Da = (#DaData <= 300 and DaData or {"mmm"})
+
+		
 	}
 
 
@@ -180,6 +184,9 @@ function GM:LoadWinRate()
 				end
 				if contents.ZSRage then
 					self:SetRage(contents.ZSRage or 1)
+				end
+				if contents.Da then
+					self.Da = contents.Da or {"mmm"}
 				end
 				
 			end
