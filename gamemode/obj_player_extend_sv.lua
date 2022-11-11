@@ -1045,8 +1045,8 @@ function meta:AddHallow(attacker, count)
 end
 
 function meta:AddRot(attacker, count)
-	local status = self:GiveStatus("rot", count)
-	status:AddDamage(count,	attacker)
+	local s = self:GiveStatus("rot", count)
+	s:AddDamage(count,	attacker)
 end
 function meta:AddBloodlust(attacker, count)
 	self:GiveStatus("strengthdartboost", count)

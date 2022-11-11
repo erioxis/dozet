@@ -742,6 +742,7 @@ GM:AddSkill(SKILL_FOREVERALONE, translate.Get("skill_foreveralone"), GOOD..trans
 																-1,			-6,					{SKILL_COMBOHEAL}, TREE_SUPPORTTREE)
 GM:AddSkill(SKILL_WYRDREC, translate.Get("skill_wyrdrec"), GOOD..translate.Get("skill_wyrdrec_d1")..BAD..translate.Get("skill_wyrdrec_d2"),
 																-2,			-7,					{SKILL_FOREVERALONE}, TREE_SUPPORTTREE)
+--.DontUnlock = SKILL_HANDY1
 
 -- Defence Tree
 GM:AddSkill(SKILL_HANDY1, translate.Get("skill_handy").."I", GOOD.."+5%"..translate.Get("repair"),
@@ -1230,19 +1231,19 @@ GM:AddSkillModifier(SKILL_POINTI, SKILLMOD_LUCK, 0.15)
 GM:AddSkill(SKILL_POINTI, translate.Get("skill_point").."I", GOOD.."+0.15"..translate.Get("luck")..GOOD.."+2%"..translate.Get("p_mul"),
 																0,			0,					{SKILL_NONE}, TREE_POINTTREE)
 SKILL_POINTII = 158
-GM:AddSkillModifier(SKILL_POINTII, SKILLMOD_POINT_MULTIPLIER, 0.03)
+GM:AddSkillModifier(SKILL_POINTII, SKILLMOD_POINT_MULTIPLIER, 0.02)
 GM:AddSkillModifier(SKILL_POINTII, SKILLMOD_LUCK, 0.15)
-GM:AddSkill(SKILL_POINTII, translate.Get("skill_point").."II", GOOD.."+0.15"..translate.Get("luck")..GOOD.."+3%"..translate.Get("p_mul"),
+GM:AddSkill(SKILL_POINTII, translate.Get("skill_point").."II", GOOD.."+0.15"..translate.Get("luck")..GOOD.."+2%"..translate.Get("p_mul"),
 																-0.5,			-1,					{SKILL_POINTI}, TREE_POINTTREE)
 SKILL_POINTIII = 159
-GM:AddSkillModifier(SKILL_POINTIII, SKILLMOD_POINT_MULTIPLIER, 0.05)
+GM:AddSkillModifier(SKILL_POINTIII, SKILLMOD_POINT_MULTIPLIER, 0.03)
 GM:AddSkillModifier(SKILL_POINTIII, SKILLMOD_LUCK, 0.15)
-GM:AddSkill(SKILL_POINTIII, translate.Get("skill_point").."III", NEUTRAL.."+0.15"..translate.Get("luck")..GOOD.."+5%"..translate.Get("p_mul"),
+GM:AddSkill(SKILL_POINTIII, translate.Get("skill_point").."III", NEUTRAL.."+0.15"..translate.Get("luck")..GOOD.."+3%"..translate.Get("p_mul"),
 																-1,			-2,					{SKILL_POINTII}, TREE_POINTTREE)
 SKILL_POINTIIII = 160
-	GM:AddSkillModifier(SKILL_POINTIIII, SKILLMOD_POINT_MULTIPLIER, 0.07)
+	GM:AddSkillModifier(SKILL_POINTIIII, SKILLMOD_POINT_MULTIPLIER, 0.04)
 	GM:AddSkillModifier(SKILL_POINTIIII, SKILLMOD_LUCK, 0.40)
-GM:AddSkill(SKILL_POINTIIII, translate.Get("skill_point").."IV", NEUTRAL.."+0.40"..translate.Get("luck")..GOOD.."+7%"..translate.Get("p_mul") ..GOOD.. "+5"..translate.Get("start_points"),
+GM:AddSkill(SKILL_POINTIIII, translate.Get("skill_point").."IV", NEUTRAL.."+0.40"..translate.Get("luck")..GOOD.."+4%"..translate.Get("p_mul") ..GOOD.. "+5"..translate.Get("start_points"),
 																-2,			-3,					{SKILL_POINTIII}, TREE_POINTTREE)
 SKILL_POINTD = 248
 GM:AddSkillModifier(SKILL_POINTD, SKILLMOD_POINT_MULTIPLIER, -0.10)
@@ -1325,9 +1326,9 @@ GM:AddSkillModifier(SKILL_SCAM, SKILLMOD_POINT_MULTIPLIER, 0.10)
 GM:AddSkill(SKILL_SCAM, "Scam", GOOD.."+10%"..translate.Get("p_mul")..BAD.. "Quality is worse",
 			3,			-8,					{SKILL_BADTRIP}, TREE_POINTTREE)
 SKILL_SOLARUZ = 169
-GM:AddSkillModifier(SKILL_SOLARUZ, SKILLMOD_POINT_MULTIPLIER, 0.30)
+GM:AddSkillModifier(SKILL_SOLARUZ, SKILLMOD_POINT_MULTIPLIER, 0.20)
 GM:AddSkillModifier(SKILL_SOLARUZ, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 0.40)
-GM:AddSkill(SKILL_SOLARUZ, "Debuff:Deadly Fortuna", PURPLE.."+30% Points Multiplicator \n" ..BAD.. "+40% damage taken melee",
+GM:AddSkill(SKILL_SOLARUZ, "Debuff:Deadly Fortuna", PURPLE.."+20% Points Multiplicator \n" ..BAD.. "+40% damage taken melee",
 				3,			-9,					{SKILL_SCAM}, TREE_POINTTREE)
 SKILL_ANCK = 170
 GM:AddSkill(SKILL_ANCK, "Ancient knowledge", PURPLE.."Learn The Ancient knowledge \n" ..BAD.. "The cost of knowledge",

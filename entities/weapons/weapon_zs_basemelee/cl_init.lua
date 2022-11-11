@@ -24,7 +24,7 @@ function SWEP:DrawHUD()
 	local wid, hei = 10, 900
 	local x, y = ScrW() + wid - 960, ScrH() - hei - 72
 	local texty = y - 4 - draw.GetFontHeight("ZSHUDFontSmall")
-	if self.BlockTrue == true then
+	if self.BlockTrue then
 		if self:GetOwner():IsSkillActive(SKILL_TRUEBLOCK) and not self.ParryTiming then
 			draw.SimpleText("PARRY!", "ZSHUDFontSmall", x + wid, texty - 25, COLOR_RED, TEXT_ALIGN_CENTER)
 		elseif self:GetOwner():IsSkillActive(SKILL_TRUEBLOCK) and self.ParryTiming then

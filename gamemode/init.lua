@@ -3651,7 +3651,7 @@ function GM:EntityTakeDamage(ent, dmginfo)
 		local dmgpos = dmginfo:GetDamagePosition()
 		local hasdmgsess = attacker:IsPlayer() and attacker:HasDamageNumberSession()
 
-		if attacker:IsPlayer() and dispatchdamagedisplay and not hasdmgsess then
+		if attacker:IsPlayer() and dispatchdamagedisplay and not hasdmgsess and ent:IsPlayer() then
 			self:DamageFloater(attacker, ent, dmgpos, dmg)--, (ent:IsPlayer() and ((ent:Team() == TEAM_HUMAN) and ent:GetBloodArmor() or ent:GetZArmor()) > 0))
 
 		elseif hasdmgsess and dispatchdamagedisplay then
@@ -3669,7 +3669,7 @@ function GM:DamageFloater(attacker, victim, dmgpos, dmg, bool, definiteply, bool
 			INFDAMAGEFLOATER = nil
 			net.WriteUInt(9999, 16)
 		else
-			net.WriteUInt((math.ceil(dmg) ~= 0 and math.ceil(dmg) or victim:IsPlayer() and math.ceil(victim.BloodDead)), 16)
+			net.WriteUInt((math.ceil(dmg) ~= 0 and math.ceil(dmg) or  math.ceil(victim.BloodDead)), 16)
 			net.WriteBool(bool)
 		end
 		net.WriteVector(dmgpos)

@@ -96,9 +96,6 @@ function SWEP:SecondaryAttack()
 				if target:IsValidLivingZombie() then
 					local targetpos = target:LocalToWorld(target:OBBCenter())
 					target:TakeSpecialDamage(damage + (target:GetZombieClassTable().Boss and target:Health() * 0.1 or target:Health() * 0.12),DMG_GENERIC ,self:GetOwner(), self:GetOwner():GetActiveWeapon())
-					effectdata = EffectData()
-					effectdata:SetOrigin(target:GetPos())
-					util.Effect("murasama_multiple_hits", effectdata)
 				end
 			end
 		end

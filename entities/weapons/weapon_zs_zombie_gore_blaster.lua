@@ -42,10 +42,10 @@ function SWEP:ApplyMeleeDamage(ent, trace, damage)
 			bleed.Damager = self:GetOwner()
 		end
 		if ent:GetBloodArmor() >= 1 then
-			timer.Create("Antigay", 0.1, 75, function() if ent:IsValid() then ent:SetBloodArmor(0) end end)
+			ent:SetBloodArmor(ent:GetBloodArmor() * 0.5)
 			self:GetOwner():SetHealth(self:GetOwner():Health() + ent:GetBloodArmor())
-			self:GetOwner():SetZArmor(ent:GetBloodArmor() + self:GetOwner():GetZArmor())
-			self.MeleeDamage = self.MeleeDamage + ent:GetBloodArmor() *0.05
+			self:GetOwner():SetZArmor(ent:GetBloodArmor() * 0.5 + self:GetOwner():GetZArmor())
+			self.MeleeDamage = self.MeleeDamage + ent:GetBloodArmor() *0.2
 		end
 	end
 	local damage = damage + (self:GetOwner():GetZArmor() * 0.05)

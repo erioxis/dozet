@@ -9,7 +9,7 @@ function ENT:Initialize()
 	self:SetSolid(SOLID_VPHYSICS)
 	self:SetCollisionGroup(COLLISION_GROUP_PROJECTILE)
 	self:SetCustomCollisionCheck(true)
-	self.DieTime = 12
+	self.DieTime = CurTime() + 7
 
 	local phys = self:GetPhysicsObject()
 	if phys:IsValid() then
@@ -23,7 +23,7 @@ function ENT:Think()
 	if self.PhysicsData then
 		self:Hit(self.PhysicsData.HitPos, self.PhysicsData.HitNormal, self.PhysicsData.HitEntity)
 	end
-	if self.DieTime >= CurTime() then
+	if self.DieTime <= CurTime() then
 		self:Remove()
 	end
 	if self.Exploded then

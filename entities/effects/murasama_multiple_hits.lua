@@ -1,4 +1,5 @@
 function EFFECT:Init(data)
+	if MySelf:KeyDown(IN_SPEED) then return end
 	local pos = data:GetOrigin()
 	local normal = data:GetNormal() * -1
 

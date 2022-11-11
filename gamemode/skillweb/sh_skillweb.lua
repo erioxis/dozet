@@ -49,6 +49,9 @@ function GM:SkillCanUnlock(pl, skillid, skilllist)
 		if skill.RemortLevel and pl:GetZSRemortLevel() < skill.RemortLevel then
 			return false
 		end
+		if skill.DontUnlock and pl:IsSkillUnlocked(skill.DontUnlock) then
+			return false
+		end
 
 		if skill.LevelReq and pl:GetZSLevel() < skill.LevelReq then
 			return false
@@ -267,7 +270,7 @@ end
 function meta:GetZSSPTotal()
 	local skillmodifiers = {}
 	local gm_modifiers = GAMEMODE.SkillModifiers
-	for skillid in pairs(table.ToAssoc(self:GetDesiredActiveSkills())) do
+	for skillid in pairs(table.ToAssoc(self:GetUnlockedSkills())) do
 		local modifiers = gm_modifiers[skillid]
 		if modifiers then
 			for modid, amount in pairs(modifiers) do
