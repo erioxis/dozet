@@ -332,6 +332,15 @@ end
 function meta:GetBloodArmor()
 	return self:GetDTInt(DT_PLAYER_INT_BLOODARMOR)
 end
+function meta:GetDCoins()
+	return self:GetDTInt(DT_PLAYER_FLOAT_DOSET_COINS)
+end
+function meta:SetDCoins(c)
+	self:SetDTInt(DT_PLAYER_FLOAT_DOSET_COINS, c)
+end
+function meta:AddDCoins(c)
+	self:SetDCoins(self:GetDCoins() + c)
+end
 function meta:GetZArmor()
 	return self:GetDTInt(DT_PLAYER_INT_ZOMBIEARMOR)
 end

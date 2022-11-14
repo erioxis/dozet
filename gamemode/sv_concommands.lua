@@ -470,6 +470,23 @@ concommand.Add("zsemptyclip", function(sender, command, arguments)
 		end
 	end
 end)
+concommand.Add("zs_d_focusing", function(sender, command, arguments)
+	if GAMEMODE.ZombieEscape then return end
+
+	if not (sender:IsValid() and sender:Alive() and sender:Team() == TEAM_HUMAN and sender:IsSkillActive(SKILL_AMULET_4)) then return end
+	local pl = sender
+	if !pl:IsCarrying() and pl.LastHealedFocus <= CurTime() and pl.MaxBloodArmor * 0.3 <= pl:GetBloodArmor() and pl:GetBloodArmor() >= 12 then
+		pl:SetBloodArmor(math.min((pl.MaxBloodArmor * 0.3) + pl:GetBloodArmor() * 0.3, pl:GetBloodArmor() * 0.3))
+		pl:EmitSound("items/smallmedkit1.wav", 50)
+		pl:SetHealth(math.min(pl:GetMaxHealth() * 0.1 + pl:Health(), pl:GetMaxHealth()))
+		pl.LastHealedFocus = CurTime() + 1
+		for _, pl3 in pairs(ents.FindInSphere(pl:GetPos(), 128 * pl:GetModelScale())) do
+			if pl3:IsValidLivingHuman() and pl:IsSkillActive(SKILL_FOODHEALS) then
+				pl:HealPlayer(pl3, pl:Health() * 0.1)
+			end
+		end
+	end
+end)
 
 
 function GM:TryGetLockOnTrace(sender, arguments)

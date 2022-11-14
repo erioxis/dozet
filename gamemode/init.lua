@@ -1325,7 +1325,7 @@ function GM:Think()
 				local barac = pl:IsSkillActive(SKILL_BARA_CURSED)
 					if not pl:GetStatus("sigildef") and self:GetWave() >= 6 and  time >= pl.NextDamage and self:GetWaveActive() and self:GetBalance() < 20 or self:GetBalance() > 20 and not pl:GetStatus("sigildef") and  time >= pl.NextDamage then
 						pl:TakeSpecialDamage(((pl:HasTrinket("jacobsoul") and 1 or 8 ) * (pl.TickBuff or 0)) /(barac and 200 or 1), DMG_DIRECT)
-						pl.NextDamage = time + (pl:HasTrinket("jacobsoul") and 4 or 2.4)
+						pl.NextDamage = time + (pl:HasTrinket("jacobsoul") and 4 or 2.4) * (barac and 3 or 1)
 						pl:CenterNotify(COLOR_RED, translate.ClientGet(pl, "danger"))
 						pl.TickBuff = pl.TickBuff + (pl.TickBuff * 0.2) + 1
 					end
@@ -1408,11 +1408,7 @@ function GM:Think()
 					pl.NextSleep = time + 9
                     pl:GiveStatus("dimvision", 10, true)
 				end
-				if time >= pl.NextRegenerate then
-					pl.NextRegenerate = time + 60
-                    pl.zKills = pl.zKills - 5
-					
-				end
+
 				if pl:IsSkillActive(SKILL_GIGACHAD) and not self.ObjectiveMap then
 					pl:SetModelScale(math.Clamp(math.min(math.max(0.5, pl:GetMaxHealth() * 0.01),2.5) * pl.ScaleModel,0.2, 5))
 					pl:SetViewOffset(Vector(0, 0, 64 * pl:GetModelScale()))
@@ -3394,28 +3390,41 @@ function GM:EntityTakeDamage(ent, dmginfo)
 								GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_WEAPON, inflictor:GetClass(), "PointsEarned", points)
 								GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_WEAPON, inflictor:GetClass(), "Damage", damage)
 							end
+							local fireatt = 8
+							local iceatt = 5
+							local pulseatt = 7
+							local debuffatt = 12
+							if attacker:IsSkillActive(SKILL_ELEMENTAL_BUFF) then
+								damage = damage * 1.1
+								fireatt = 7
+								iceatt = 4
+								pulseatt = 6
+								debuffatt = 11
+							end
 
-							if attacker:HasTrinket("fire_at") and math.random(8) == 1 then
+							if attacker:HasTrinket("fire_at") and math.random(fireatt) == 1 then
 								ent:AddLegDamageExt(damage * 0.1, attacker, attacker, SLOWTYPE_FLAME)
 								ent:GiveStatus("burn",math.random(1,7))
 							end
-							if attacker:HasTrinket("pulse_at") and math.random(7) == 1 then
+							if attacker:HasTrinket("pulse_at") and math.random(pulseatt) == 1 then
 								ent:AddLegDamageExt(32, attacker, attacker, SLOWTYPE_PULSE)
 							end
-							if attacker:HasTrinket("acid_at") and math.random(5) == 1 then
+							if attacker:HasTrinket("acid_at") and math.random(iceatt) == 1 then
 								ent:AddLegDamageExt(damage * 0.1, attacker, attacker, SLOWTYPE_COLD)
 								if math.random(1,4) == 1 then
 									ent:GiveStatus("frost",math.random(1,7))
 								end
 							end
 							local debuffed = ent:GetStatus("zombiestrdebuff")
-							if attacker:HasTrinket("ultra_at") and math.random(12) == 1 then
+							if attacker:HasTrinket("ultra_at") and math.random(debuffatt) == 1 then
 								ent:GiveStatus("zombiestrdebuff",math.random(1,7))
-							elseif attacker:HasTrinket("ultra_at") and (debuffed) and math.random(12) == 1 then
+							elseif attacker:HasTrinket("ultra_at") and (debuffed) and math.random(debuffatt) == 1 then
 								ent:GiveStatus("zombiestrdebuff",math.random(7,14))
 							end
 
-							
+							if attacker:IsSkillActive(SKILL_ELEMENTAL_BUFF) then
+								damage = damage * 0.9
+							end
 
 							local pos = ent:GetPos()
 							pos.z = pos.z + 32
@@ -3669,7 +3678,7 @@ function GM:DamageFloater(attacker, victim, dmgpos, dmg, bool, definiteply, bool
 			INFDAMAGEFLOATER = nil
 			net.WriteUInt(9999, 16)
 		else
-			net.WriteUInt((math.ceil(dmg) ~= 0 and math.ceil(dmg) or  math.ceil(victim.BloodDead)), 16)
+			net.WriteUInt(math.ceil(dmg), 16)
 			net.WriteBool(bool)
 		end
 		net.WriteVector(dmgpos)
@@ -4018,17 +4027,6 @@ function GM:KeyPress(pl, key)
 				pl.status_human_holding:RemoveNextFrame()
 			else
 				self:TryHumanPickup(pl, pl:TraceLine(64).Entity)
-			end
-			if !pl:IsCarrying() and pl:IsSkillActive(SKILL_AMULET_4) and pl.LastHealedFocus <= CurTime() and pl.MaxBloodArmor * 0.3 <= pl:GetBloodArmor() and pl:GetBloodArmor() >= 12 then
-				pl:SetBloodArmor(math.min((pl.MaxBloodArmor * 0.3) + pl:GetBloodArmor() * 0.3, pl:GetBloodArmor() * 0.3))
-				pl:EmitSound("items/smallmedkit1.wav", 50)
-				pl:SetHealth(math.min(pl:GetMaxHealth() * 0.1 + pl:Health(), pl:GetMaxHealth()))
-				pl.LastHealedFocus = CurTime() + 1
-				for _, pl3 in pairs(ents.FindInSphere(pl:GetPos(), 128 * pl:GetModelScale())) do
-					if pl3:IsValidLivingHuman() then
-						pl:HealPlayer(pl3, pl:Health() * 0.1)
-					end
-				end
 			end
 		end
 		
@@ -4837,7 +4835,7 @@ function GM:PlayerSpawn(pl)
 		end
 
 		if classtab.Boss then
-			pl:SetHealth(classtab.Health + (((self:GetWave() * 250)) * team.NumPlayers(TEAM_HUMAN))* (classtab.DynamicHealth or 1))
+			pl:SetHealth(classtab.Health + (((self:GetWave() * 250)) * (team.NumPlayers(TEAM_HUMAN)/2 - (team.NumPlayers(TEAM_UNDEAD)/3)))* (classtab.DynamicHealth or 1))
 		elseif classtab.DemiBoss then
 			pl:SetHealth(classtab.Health + (((self:GetWave() * 80)) * team.NumPlayers(TEAM_HUMAN)) * (classtab.DynamicHealth or 1))
 		else
@@ -5226,7 +5224,7 @@ function GM:WaveStateChanged(newstate, pl)
 				end
 				if pl:IsSkillActive(SKILL_LUCKY_UNLIVER) then
 					pl:SetMaxHealth(pl:GetMaxHealth() * 0.9) pl:SetHealth(pl:Health() * 0.5)
-					pl.Luck = lucktrue + 1
+					pl.Luck = pl.Luck + 1
 				end
 				if pl:IsSkillActive(SKILL_XPHUNTER) then
 					pl:AddZSXP(5 + self.GetWave() * 10)

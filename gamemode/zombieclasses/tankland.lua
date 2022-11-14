@@ -212,7 +212,7 @@ if SERVER then
 		if bit_band(dmgtype, DMG_ALWAYSGIB) ~= 0 or bit_band(dmgtype, DMG_BURN) ~= 0 or bit_band(dmgtype, DMG_CRUSH) ~= 0 then return end
 
 		if CurTime() < (pl.NextZombieRevive or 0) then return end
-		pl.NextZombieRevive = CurTime() + 4.25
+		pl.NextZombieRevive = CurTime() + 44.25
 
 
 

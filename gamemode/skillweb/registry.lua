@@ -386,6 +386,9 @@ SKILL_FLOWER = 364
 SKILL_ABYSSFLOWER = 365
 SKILL_BUG_GET = 366
 SKILL_HELPER = 367
+SKILL_THE_CADER = 368
+SKILL_DONATE16 = 369
+SKILL_ELEMENTAL_BUFF = 370
 
 SKILLMOD_HEALTH = 1
 SKILLMOD_SPEED = 2
@@ -853,8 +856,11 @@ GM:AddSkill(SKILL_STOWAGE, 	translate.Get("skill_stowage"), GOOD..translate.Get(
 																4,			-3,					{SKILL_NANITES}, TREE_BUILDINGTREE)
 SKILL_NANITES = 241
 GM:AddSkill(SKILL_NANITES, 	translate.Get("skill_nanite_r"), GOOD..translate.Get("skill_nanite_buff")..BAD.."-10%"..translate.Get("repair"),
-																4,			-4,					{SKILL_STOWAGE}, TREE_BUILDINGTREE)
+																4,			-4,					{SKILL_STOWAGE,SKILL_THE_CADER }, TREE_BUILDINGTREE)
+GM:AddSkill(SKILL_THE_CADER, 	translate.Get("skill_cader_r"), BAD..translate.Get("skill_cader_buff")..GOOD.."+50%"..translate.Get("repair"),
+																4,			-4.5,					{SKILL_STOWAGE}, TREE_BUILDINGTREE)
 GM:AddSkillModifier(SKILL_NANITES, SKILLMOD_REPAIRRATE_MUL, -0.10)
+GM:AddSkillModifier(SKILL_THE_CADER, SKILLMOD_REPAIRRATE_MUL, 0.50)
 GM:AddSkill(SKILL_FOLGA, translate.Get("skill_foil"), GOOD..translate.Get("skill_foil_d1"),
 																4,			-5.5,					{SKILL_U_ROLLERMINE}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_BLESSEDROD, translate.Get("skill_brod"), GOOD..translate.Get("skill_brod_d1")..GOOD.."+15%"..translate.Get("m_curse")..BAD.."+6%"..translate.Get("meleedamagetaken"),
@@ -1058,7 +1064,9 @@ GM:AddSkill(SKILL_BANDOLIER, translate.Get("skill_bandolier"), GOOD..translate.G
 GM:AddSkill(SKILL_U_CRYGASGREN, translate.Get("skill_u_cryogas"), GOOD..translate.Get("skill_u_cryogas_d1"),
 																2,			-3,					{SKILL_EGOCENTRIC}, TREE_GUNTREE)
 GM:AddSkill(SKILL_SOFTDET, translate.Get("skill_sdeton"), GOOD.."-40%"..translate.Get("exp_damage_t")..BAD.."-10%"..translate.Get("exp_damage"),
-																0,			-5,					{}, TREE_GUNTREE)
+																0,			-5,					{SKILL_ELEMENTAL_BUFF}, TREE_GUNTREE)
+GM:AddSkill(SKILL_ELEMENTAL_BUFF, translate.Get("skill_ell_buff"), BAD.."+20%"..translate.Get("exp_damage_t")..GOOD..translate.Get("skill_ell_buff_d1"),
+																0,			-6,					{}, TREE_GUNTREE)
 GM:AddSkill(SKILL_ORPHICFOCUS, translate.Get("skill_orfocus"), GOOD..translate.Get("skill_orfocus_d1")..GOOD.."+2%"..translate.Get("w_ac")..BAD..translate.Get("skill_orfocus_d2")..BAD.."-6%"..translate.Get("r_speed"),
 																5,			-1,					{SKILL_DELIBRATION}, TREE_GUNTREE)
 GM:AddSkill(SKILL_DELIBRATION, translate.Get("skill_deli"), GOOD.."+3%"..translate.Get("w_ac")..GOOD.."+1%"..translate.Get("b_damage"),
@@ -1695,6 +1703,10 @@ GM:AddSkillModifier(SKILL_DONATE14, SKILLMOD_M_REG, 0.05)
 GM:AddSkill(SKILL_DONATE15, "Donate XV", GOOD.."+10 speed\n"..GOOD.."Thx for normal gay",
 				                                                            	21,			28,					{SKILL_DONATE14}, TREE_DONATETREE)
 GM:AddSkillModifier(SKILL_DONATE15, SKILLMOD_SPEED, 10)
+GM:AddSkill(SKILL_DONATE16, "Donate XVI", GOOD.."+10% Bullet Damage\n"..GOOD.."Thx for MarioL",
+				                                                            	20,			26,					{SKILL_DONATE15}, TREE_DONATETREE)
+GM:AddSkillModifier(SKILL_DONATE16, SKILLMOD_DAMAGE, 0.10)
+
 
 SKILL_CHALLENGER1 = 215
 GM:AddSkill(SKILL_CHALLENGER1, "Challenger I", GOOD.."+20 Health,+1 luck,+5% Sale, help for challenges!\n"..GOOD.."Can use in any challenge",
@@ -2109,7 +2121,7 @@ GM:SetSkillModifierFunction(SKILLMOD_POISON_SPEED_MUL, function(pl, amount)
 	pl.PoisonSpeedMul = math.Clamp(amount + 1.0, 0.1, 1000.0)
 end)
 GM:SetSkillModifierFunction(SKILLMOD_SCALEMODEL, function(pl, amount)
-	pl.ScaleModel = math.Clamp(amount + 1.0 - (pl.ClanMich and 0.25 or 0), 0.15, 1000.0)
+	pl.ScaleModel = math.Clamp(amount + 1.0 - (pl.ClanMich and 0.25 or 0), 0.06, 1000.0)
 end)
 
 
@@ -2486,7 +2498,9 @@ GM:AddSkillModifier(SKILL_AGILEIII, SKILLMOD_SPEED, -4)
 GM:AddSkillModifier(SKILL_SOUL_TRADE, SKILLMOD_POINT_MULTIPLIER, 0.5)
 
 GM:AddSkillModifier(SKILL_SOFTDET, SKILLMOD_EXP_DAMAGE_RADIUS, 0.10)
-GM:AddSkillModifier(SKILL_SOFTDET, SKILLMOD_EXP_DAMAGE_TAKEN_MUL, -0.6)
+GM:AddSkillModifier(SKILL_SOFTDET, SKILLMOD_EXP_DAMAGE_TAKEN_MUL, -0.4)
+
+GM:AddSkillModifier(SKILL_ELEMENTAL_BUFF, SKILLMOD_EXP_DAMAGE_TAKEN_MUL,0.2)
 
 GM:AddSkillModifier(SKILL_IRONBLOOD, SKILLMOD_BLOODARMOR_DMG_REDUCTION, 0.65)
 GM:AddSkillModifier(SKILL_IRONBLOOD, SKILLMOD_BLOODARMOR_MUL, -0.3)

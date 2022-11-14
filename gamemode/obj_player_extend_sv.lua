@@ -596,7 +596,7 @@ function meta:ProcessDamage(dmginfo)
 						self:AddCursed(self, cursed.DieTime - CurTime() - 15)
 					end
 				end
-				if self:IsSkillActive(SKILL_CURSECURE)  then
+				if self:IsSkillActive(SKILL_CURSECURE) and attacker:IsValid() and attacker:IsPlayer() then
 					local rot = self:GetStatus("rot")
 					if (rot) then 
 						self:AddRot(attacker, rot.DieTime - CurTime() + 1)
@@ -661,9 +661,7 @@ function meta:ProcessDamage(dmginfo)
 				end
 				dmginfo:SetDamage(0)
 			end
-			if dmginfo:GetDamage() >= 41 and self:IsSkillActive(SKILL_MOREDAMAGE) then
-				dmginfo:SetDamage(41)
-			end
+
 			if self.HasHemophilia and (damage >= 4 and dmgtype == 0 or bit.band(dmgtype, DMG_TAKE_BLEED) ~= 0) then
 				local bleed = self:GiveStatus("bleed")
 				if bleed and bleed:IsValid() then
@@ -692,7 +690,9 @@ function meta:ProcessDamage(dmginfo)
 			end
 		end
 	end
-
+	if dmginfo:GetDamage() >= 41 and self:IsSkillActive(SKILL_MOREDAMAGE) then
+		dmginfo:SetDamage(41)
+	end
 	self.NextBloodArmorRegen = CurTime() + 3
 	if self:GetBloodArmor() > 0 then
 		local damage = dmginfo:GetDamage()
@@ -740,6 +740,7 @@ function meta:ProcessDamage(dmginfo)
 
 		self.ShouldFlinch = true
 	end
+
 
 
 end

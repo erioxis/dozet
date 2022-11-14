@@ -442,6 +442,11 @@ function meta:DamageNails(attacker, inflictor, damage, dmginfo)
 		applier.PropDef = (applier.PropDef or 0) + dmgbefore
 
 	end
+	if self.CaderEnd and CurTime() < self.CaderEnd and self.CaderApplier and self.CaderApplier:IsValidLivingHuman() then
+		local applier = self.CaderApplier
+		local multi = 2.5
+		dmginfo:SetDamage(dmginfo:GetDamage() * multi)
+	end
 
 	if gamemode.Call("IsEscapeDoorOpen") then
 		local multi = gamemode.Call("GetEscapeStage") * 5
