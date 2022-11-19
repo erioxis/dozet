@@ -668,15 +668,16 @@ concommand.Add("zs_stuck", function(sender, command, arguments)
 	if GAMEMODE.ZombieEscape then return end
 	if not sender:IsValid() or not sender:Alive() or sender:Team() ~= TEAM_HUMAN or CurTime() < (sender.NextStuckMoment or 0) or sender:GetVelocity():LengthSqr() >= 20 then return end
 	local ent = NULL
-	sender.NextStuckMoment = CurTime() + 120
+	sender.NextStuckMoment = CurTime() + 520
 	for _, ent1 in pairs(team.GetPlayers(TEAM_HUMAN)) do
 		if ent1:IsValid() and ent1:IsPlayer() and ent1 ~= sender and (ent1.CheckedForStuck or 0) <= CurTime() then
 			ent = ent1
-			ent.CheckedForStuck = CurTime() + 240
+			ent.CheckedForStuck = CurTime() + 1040
 			break
 		end
 	end
 	if ent:IsValid() then
+		sender.NextStuckMoment = CurTime() + 120
 		sender:SetPos(ent:GetPos())
 	end
 end)

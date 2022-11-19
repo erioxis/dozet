@@ -598,10 +598,10 @@ function meta:ProcessDamage(dmginfo)
 				end
 				if self:IsSkillActive(SKILL_CURSECURE) and attacker:IsValid() and attacker:IsPlayer() then
 					local rot = self:GetStatus("rot")
-					if (rot) then 
+					if (rot) and attacker:IsPlayer() and inflictor == attacker:GetActiveWeapon()  then 
 						self:AddRot(attacker, rot.DieTime - CurTime() + 1)
 					end
-					if (not rot) then 
+					if (not rot) and attacker:IsPlayer() and inflictor == attacker:GetActiveWeapon() then 
 						self:AddRot(attacker, 1)
 					end
 				end
@@ -1046,8 +1046,7 @@ function meta:AddHallow(attacker, count)
 end
 
 function meta:AddRot(attacker, count)
-	local s = self:GiveStatus("rot", count)
-	s:AddDamage(count,	attacker)
+	self:GiveStatus("rot", (count or 1))
 end
 function meta:AddBloodlust(attacker, count)
 	self:GiveStatus("strengthdartboost", count)

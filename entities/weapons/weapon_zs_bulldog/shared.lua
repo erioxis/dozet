@@ -16,9 +16,9 @@ SWEP.CSMuzzleFlashes = false
 SWEP.Primary.ClipSize = 3
 SWEP.Primary.Automatic = true
 SWEP.Primary.Ammo = "impactmine"
-SWEP.Primary.Delay = 0.7
-SWEP.Primary.DefaultClip = 10
-SWEP.Primary.Damage = 120
+SWEP.Primary.Delay = 0.9
+SWEP.Primary.DefaultClip = 3
+SWEP.Primary.Damage = 199
 SWEP.Primary.NumShots = 1
 
 SWEP.ConeMax = 3

@@ -3,15 +3,15 @@ CLASS.TranslationName = "class_tank"
 CLASS.Description = "description_eradicator"
 CLASS.Help = "controls_eradicator"
 
-CLASS.Wave = 5 / 12
+CLASS.Wave = 6 / 12
 
-CLASS.Health = 3000
-CLASS.Speed = 88
+CLASS.Health = 9000
+CLASS.Speed = 182
 CLASS.KnockbackScale = 0
 
 CLASS.CanTaunt = true
 
-CLASS.Points = CLASS.Health/GM.HumanoidZombiePointRatio
+CLASS.Points = 10
 
 CLASS.DynamicHealth = 3
 
@@ -191,7 +191,7 @@ if SERVER then
 		if pl.EradiVived then return end
 		dmgblock = math.random(1,5)
 		if dmginfo:GetDamage() > 300 then 
-			dmginfo:SetDamage(300)
+			dmginfo:SetDamage(100)
 		end
 	
 		if dmgblock == 1 then

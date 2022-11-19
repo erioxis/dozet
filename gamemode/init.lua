@@ -1323,7 +1323,7 @@ function GM:Think()
 					pl:StripWeapon(pl:GetActiveWeapon():GetClass())
 				end
 				local barac = pl:IsSkillActive(SKILL_BARA_CURSED)
-					if not pl:GetStatus("sigildef") and self:GetWave() >= 6 and  time >= pl.NextDamage and self:GetWaveActive() and self:GetBalance() < 20 or self:GetBalance() > 20 and not pl:GetStatus("sigildef") and  time >= pl.NextDamage then
+					if not pl:GetStatus("sigildef") and self:GetWave() >= 6 and  time >= pl.NextDamage and self:GetWaveActive() and self:GetBalance() < 40 or self:GetBalance() > 40 and not pl:GetStatus("sigildef") and  time >= pl.NextDamage then
 						pl:TakeSpecialDamage(((pl:HasTrinket("jacobsoul") and 1 or 8 ) * (pl.TickBuff or 0)) /(barac and 200 or 1), DMG_DIRECT)
 						pl.NextDamage = time + (pl:HasTrinket("jacobsoul") and 4 or 2.4) * (barac and 3 or 1)
 						pl:CenterNotify(COLOR_RED, translate.ClientGet(pl, "danger"))
@@ -1344,6 +1344,12 @@ function GM:Think()
 					pl.StuckedInProp = true
 				else
 					pl.StuckedInProp = nil
+				end
+				if !pl:OnGround() then
+					pl.Stuckedtrue = true
+				else
+					pl.Stuckedtrue = nil
+					pl.Stuckedtrue_C = CurTime() - 3
 				end
 				if pl:OnGround() and pl:IsSkillActive(SKILL_POGO) and time >= pl.NextStuckThink then
 					timer.Create("pogojump", 0.001, 1, function()
@@ -1426,7 +1432,11 @@ function GM:Think()
 					pl:EmitSound("ambient/water/water_spray3.wav",120,45, 122)
 				end
 
-
+				if pl:GetModel() == "models/player/catpants.mdl" then
+					pl:Kill()
+					print("BARACAT!!!")
+					PrintMessage(HUD_PRINTCONSOLE,"Ты еблан? "..pl:Nick())
+				end
 
 
 				if pl:HasTrinket("adrenaline") and time >= pl.NextRegenerate and pl:Health() < math.min(healmax, pl:GetMaxHealth() * 0.85) then
@@ -2249,7 +2259,7 @@ function GM:OnPlayerWin(pl)
 		pl:GiveAchievementProgress("loveof6", 1)
 	end
 	if self:GetNumberOfWaves() == 12 then
-		if self:GetBalance() >= 25 then
+		if self:GetBalance() >= 50 then
 			pl:GiveAchievement("infected_dosei")
 		end
 		if pl:GetMaxHealth() < 35 and not self.ObjectiveMap then
@@ -2697,6 +2707,8 @@ function GM:PlayerInitialSpawnRound(pl)
 	pl.CarefullMelody_DMG = 0
 	
 	pl.StuckedInProp = nil
+	pl.Stuckedtrue = nil
+	pl.Stuckedtrue_C = 0
 
 	pl.CanBuy = nil
 
@@ -4835,7 +4847,7 @@ function GM:PlayerSpawn(pl)
 		end
 
 		if classtab.Boss then
-			pl:SetHealth(classtab.Health + (((self:GetWave() * 250)) * (team.NumPlayers(TEAM_HUMAN)/2 - (team.NumPlayers(TEAM_UNDEAD)/3)))* (classtab.DynamicHealth or 1))
+			pl:SetHealth(classtab.Health + (((self:GetWave() * 250)) * math.max(1,team.NumPlayers(TEAM_HUMAN)/2 - (team.NumPlayers(TEAM_UNDEAD)/3)))* (classtab.DynamicHealth or 1))
 		elseif classtab.DemiBoss then
 			pl:SetHealth(classtab.Health + (((self:GetWave() * 80)) * team.NumPlayers(TEAM_HUMAN)) * (classtab.DynamicHealth or 1))
 		else

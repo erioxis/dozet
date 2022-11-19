@@ -1440,7 +1440,7 @@ GM:AddSkill(SKILL_NANOMACHINES, "Anci-tech", PURPLE.."+10% Bullet damage\n"..PUR
 GM:AddSkillModifier(SKILL_NANOMACHINES, SKILLMOD_DAMAGE, 0.10)
 GM:AddSkillModifier(SKILL_NANOMACHINES, SKILLMOD_MELEE_ATTACKER_DMG_REFLECT_PERCENT, 0.5)
 SKILL_MYTHRIL = 274
-GM:AddSkill(SKILL_MYTHRIL, "Mythril armor", PURPLE.."+30% Xp multiplier\n"..PURPLE.."+25% Ammo from ressuply\n"..PURPLE.."+4% Chance to take XP Instead of damage",
+GM:AddSkill(SKILL_MYTHRIL, "Mythril armor", PURPLE.."+30% Xp multiplier\n"..PURPLE.."+4% Chance to take XP Instead of damage",
 																				-7,			-13,					{SKILL_NANOMACHINES}, TREE_ANCIENTTREE)
 GM:AddSkillModifier(SKILL_MYTHRIL, SKILLMOD_XP, 0.30)
 GM:AddSkillModifier(SKILL_MYTHRIL, SKILLMOD_MELEE_ATTACKER_DMG_REFLECT_PERCENT, 0.5)

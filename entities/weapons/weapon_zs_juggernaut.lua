@@ -56,7 +56,7 @@ GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_RELOAD_SPEED, 0.1)
 function SWEP:PrimaryAttack()
 	if not self:CanPrimaryAttack() then return end
 
-	self:SetNextPrimaryFire(CurTime() + self:GetFireDelay() * (self:Clip1() == 2 and 5 or 1))
+	self:SetNextPrimaryFire(CurTime() + (self:GetFireDelay() * (self:Clip1() == 2 and 5 or 1)) * (self:GetOwner():HasTrinket("ultra_mag") and 9 or 1))
 
 	self:EmitFireSound()
 	self:TakeAmmo()
@@ -77,9 +77,10 @@ function SWEP:ShootBullets(dmg, numbul, cone)
 	local zeroclip = self:Clip1() == 0
 
 	self:SendWeaponAnimation()
+	local rand = math.random(1,(owner:HasTrinket("ultra_mag") and 7 or 1))
 	owner:DoAttackEvent()
 	if self.Recoil > 0 then
-		local r2 = zeroclip and 1 or 0
+		local r2 = zeroclip and (rand == 1 and 1 or 0) or 0
 		local r = math.Rand(0.8, 1) * r2
 		owner:ViewPunch(Angle(r * -self.Recoil, r * (math.random(2) == 1 and -1 or 1) * self.Recoil, (r2 - r) * (math.random(2) == 1 and -1 or 1) * self.Recoil))
 	end
@@ -87,7 +88,7 @@ function SWEP:ShootBullets(dmg, numbul, cone)
 	if SERVER and (self:Clip1() % 10 == 1 or zeroclip) then
 		for i = 1, zeroclip and 8 or 1 do
 			local ent = ents.Create("projectile_juggernaut")
-			if ent:IsValid() and math.random(1,(owner:HasTrinket("ultra_mag") and 7 or 1)) == 1 then
+			if ent:IsValid() and rand == 1 then
 				ent:SetPos(owner:GetShootPos())
 
 				local angle = owner:GetAimVector():Angle()

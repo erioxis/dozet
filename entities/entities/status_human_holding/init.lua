@@ -66,7 +66,7 @@ function ENT:Initialize()
 			object._OriginalMass = objectphys:GetMass()
 
 			objectphys:EnableGravity(false)
-			objectphys:SetMass(120)
+			objectphys:SetMass(50)
 			
 
 			object:SetOwner(owner)
