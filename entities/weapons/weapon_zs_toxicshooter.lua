@@ -31,11 +31,11 @@ SWEP.WorldModel = "models/weapons/w_pist_p228.mdl"
 SWEP.UseHands = true
 --models/weapons/w_pist_p228.mdl
 SWEP.Primary.Sound = Sound("Weapon_P228.Single")
-SWEP.Primary.Damage = 36
+SWEP.Primary.Damage = 12
 SWEP.Primary.NumShots = 2
 SWEP.Primary.Delay = 0.33
 SWEP.Tier = 4
-SWEP.Primary.ClipSize = 13
+SWEP.Primary.ClipSize = 12
 SWEP.Primary.Automatic = false
 SWEP.Primary.Ammo = "chemical"
 SWEP.Primary.ClipMultiplier = 12 * 2 -- Battleaxe/Owens have 12 clip size, but this has half ammo usage
@@ -44,10 +44,10 @@ SWEP.ConeMax = 4
 SWEP.ConeMin = 0.75
 
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_CLIP_SIZE, 1)
-GAMEMODE:AddNewRemantleBranch(SWEP, 1, ""..translate.Get("wep_toxicshooter_r1"), ""..translate.Get("wep_d_toxicshooter_r1"), function(wept)
+GAMEMODE:AddNewRemantleBranch(SWEP, 1, translate.Get("wep_toxicshooter_r1"), translate.Get("wep_d_toxicshooter_r1"), function(wept)
 	wept.Primary.Delay = 0.243
 	wept.Primary.Automatic = true
-	wept.Primary.ClipSize = math.floor(wept.Primary.ClipSize * 1.25)
+	wept.Primary.ClipSize = math.floor(wept.Primary.ClipSize * 0.5)
 
 	wept.ConeMin = 2
 	

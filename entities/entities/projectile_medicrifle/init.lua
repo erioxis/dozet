@@ -41,7 +41,7 @@ function ENT:Hit(vHitPos, vHitNormal, eHitEntity, vOldVelocity)
 	end
 	self:SetHitTime(CurTime())
 
-	self:Fire("kill", "", 3)
+	self:Fire("kill", "", 0.04)
 
 	local owner = self:GetOwner()
 	if not owner:IsValid() then owner = self end

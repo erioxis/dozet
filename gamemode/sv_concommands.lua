@@ -71,13 +71,7 @@ concommand.Add("zs_pointsshopbuy", function(sender, command, arguments)
 	elseif itemtab.SWEP then
 		if string.sub(itemtab.SWEP, 1, 6) ~= "weapon" then
 			if GAMEMODE:GetInventoryItemType(itemtab.SWEP) == INVCAT_TRINKETS and sender:HasInventoryItem(itemtab.SWEP) then
-				local wep = ents.Create("prop_invitem")
-				if wep:IsValid() then
-					wep:SetPos(sender:GetShootPos())
-					wep:SetAngles(sender:GetAngles())
-					wep:SetInventoryItemType(itemtab.SWEP)
-					wep:Spawn()
-				end
+				return
 			else
 				sender:AddInventoryItem(itemtab.SWEP)
 			end

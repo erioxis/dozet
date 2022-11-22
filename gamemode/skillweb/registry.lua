@@ -983,11 +983,11 @@ SKILL_PHOENIX = 260
 GM:AddSkill(SKILL_PHOENIX, translate.Get("skill_phoenix"), GOOD..translate.Get("skill_phoenix_d1"),
 																0,			6,					{SKILL_GUNSLINGER}, TREE_GUNTREE)
 local d = GM:AddSkill(SKILL_SECRET_VI, "Secret VI", GOOD.."+5 Skill Points",
-																-2,			3,					{SKILL_NULLED}, TREE_GUNTREE)
+																-2,			3,					{}, TREE_GUNTREE)
 d.Hidden = true	
 d.Hidden1 = true	
 local d = GM:AddSkill(SKILL_SECRET_VII, "ᅠ ᅠ ᅠ", GOOD.."+5 Skill Points\nSecret VII",
-				                                                            	25,			20.1,					{SKILL_DEATHCURSE}, TREE_DONATETREE)
+				                                                            	25,			20.1,					{}, TREE_DONATETREE)
 d.Hidden = true	
 d.Hidden1 = true	
 

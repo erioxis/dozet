@@ -311,7 +311,7 @@ function meta:ProcessDamage(dmginfo)
 		dmginfo:SetDamage(damage)
 	end
 	if attacker:IsValid() and attacker:IsPlayer() and inflictor:IsValid() and self:GetActiveWeapon().Block and self:GetActiveWeapon().IsMelee then
-		local xpadded = math.Clamp(dmginfo:GetDamage() * 0.25,1,100)
+		local xpadded = math.Clamp(dmginfo:GetDamage() * 0.25,0.05,10)
 		dmginfo:SetDamage(dmginfo:GetDamage() * ((0.50 * (self.BlockMultiplier or 1)) * ( self:GetActiveWeapon().BlockMultiplierWeapon or 1)))
 		if self:IsSkillActive(SKILL_AVOID_BLOCK) then
 			net.Start("zs_xp_damage")
@@ -402,7 +402,7 @@ function meta:ProcessDamage(dmginfo)
 				self.CarefullMelody_DMG = self.CarefullMelody_DMG + 1
 			end
 			if self:GetStatus("sigildef") then
-				dmginfo:ScaleDamage(0.44)
+				dmginfo:ScaleDamage(0.86)
 			end
 
 			if bit.band(dmgtype, DMG_SLASH) ~= 0 or inflictor.IsMelee then
@@ -1351,8 +1351,8 @@ end
 function meta:SecondWind(pl)
 	if self.Gibbed or self:Alive() or P_Team(self) ~= TEAM_UNDEAD then return end
 
-	local pos = self:GetPos()
-	local angles = self:EyeAngles()
+	local pos = (self:GetPos() or Vector(0,0,0))
+	local angles = (self:EyeAngles() or Vector(0,0,0))
 	local lastattacker = self:GetLastAttacker()
 	local dclass = self.DeathClass
 	self.DeathClass = nil

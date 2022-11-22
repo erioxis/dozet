@@ -12,7 +12,7 @@ end
 function ENT:Think()
 	local owner = self:GetOwner()
 	local froms = self:GetFromSigil()
-	if !self:GetTargetSigil():IsValid() then return end
+
 	if CurTime() >= self:GetEndTime() then
 		if froms:IsValid() and self:GetTargetSigil():IsValid() then
 			owner:DoSigilTeleport(self:GetTargetSigil(), froms, self:GetClass() == "status_corruptedteleport")

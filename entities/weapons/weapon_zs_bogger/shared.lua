@@ -26,6 +26,8 @@ SWEP.ConeMax = 0.6
 SWEP.ConeMin = 0.1
 SWEP.RageModer = 0
 
+SWEP.MaxStock = 2
+
 SWEP.WalkSpeed = SPEED_SLOW
 
 SWEP.Tier = 3

@@ -10,7 +10,7 @@ CLASS.Health = 1290
 CLASS.Speed = 255
 CLASS.Revives = false
 CLASS.DemiBoss = true
-CLASS.Points = CLASS.Health/GM.HumanoidZombiePointRatio
+CLASS.Points = 12
 
 CLASS.SWEP = "weapon_zs_zombie_gore_blaster"
 

@@ -34,9 +34,6 @@ function ENT:Think()
 	end
 
 	local parent = self:GetParent()
-	if parent:IsValid() and parent:IsPlayer() and not parent:Alive() then
-		self:Remove()
-	end
 
 	if self:GetSeeked():IsValidLivingHuman() then
 		local target = self:GetSeeked()
@@ -99,7 +96,7 @@ function ENT:Hit(vHitPos, vHitNormal, eHitEntity, vOldVelocity)
 
 	self:SetHitTime(CurTime())
 
-	self:Fire("kill", "", 3)
+	self:Fire("kill", "", 0.04)
 
 	local owner = self:GetOwner()
 	if not owner:IsValid() then owner = self end

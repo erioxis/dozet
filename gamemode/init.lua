@@ -1405,9 +1405,8 @@ function GM:Think()
 				if time >= pl.NextRegenerate and pl.HolyMantle == 0 and pl:IsSkillActive(SKILL_HOLY_MANTLE) then
 					pl.NextRegenerate = time + ((27 - (pl.Luck / 3)) + self.GetWave() * 3)
 					pl.HolyMantle = pl.HolyMantle + 1
-					
 				end
-				if pl.HolyMantle == 1 and pl:IsSkillActive(SKILL_HOLY_MANTLE) then
+				if pl.HolyMantle == 1 and pl:IsSkillActive(SKILL_HOLY_MANTLE) and pl:IsValid() and pl.MantleFix <= CurTime() then
                     pl:GiveStatus("hshield", 1.3, true)
 				end
 				if time >= pl.NextSleep and pl:IsSkillActive(SKILL_NOSEE) and self:GetWave() ~= 0 then
@@ -2003,7 +2002,8 @@ function GM:PreRestartRound()
 		pl:StripWeapons()
 		pl:Spectate(OBS_MODE_ROAMING)
 		pl:GodDisable()
-	end
+	end 
+	timer.Simple(0.25, function() util.RemoveAll("prop_weapon") end)
 end
 
 GM.CurrentRound = 1
@@ -2697,6 +2697,7 @@ function GM:PlayerInitialSpawnRound(pl)
 	pl.zKills = 0
 	pl.RedeemedOnce = true
 	pl.HolyMantle = 0
+	pl.MantleFix = CurTime() + 10
 	pl.NextPremium = 0
 	pl.NextDamage = 0
 	pl.TickBuff = 0

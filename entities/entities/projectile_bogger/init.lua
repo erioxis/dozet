@@ -4,7 +4,7 @@ local vector_origin = vector_origin
 ENT.NextThink1 = 0.5
 function ENT:Initialize()
 	self:SetModel("models/hunter/misc/sphere075x075.mdl")
-	self:PhysicsInitSphere(1)
+	self:PhysicsInitSphere(4.5)
 	self:SetSolid(SOLID_VPHYSICS)
 	self:SetModelScale(0.1, 0)
 	self:SetupGenericProjectile(false)
@@ -18,7 +18,6 @@ function ENT:Initialize()
 	self.LastPhysicsUpdate = UnPredictedCurTime()
 end
 function ENT:PhysicsCollide(data, phys)
-	if self.HitData then return end
 	if self.HitData then return end
 	self.HitData = data
 	self:NextThink(CurTime())
@@ -48,9 +47,9 @@ function ENT:Think()
 				break
 			end
 		end
-		if ent.AllowSelfRicoShot then
+		--[[		if ent.AllowSelfRicoShot then
 			ent:TakeDamage(1500, self:GetOwner(), self)
-		end
+		end]]
 	end
 		self.NextThink1 = CurTime() + 2
 	end
