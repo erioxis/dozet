@@ -477,9 +477,8 @@ function meta:DamageNails(attacker, inflictor, damage, dmginfo)
 		end
 		if self:GetOwner() ~= attacker then
 			attacker:AddTokens(math.ceil((damage or 2) * 0.15))
-			attacker:AddZSXP(math.ceil((damage or 2) * 0.05))
 			if attacker.m_DoubleXP then
-				attacker:AddZSXP(math.ceil((damage or 2) * 0.05))
+				attacker:AddTokens(math.ceil((damage or 2) * 0.15))
 			end
 		end
 		damage = dmginfo:GetDamage()

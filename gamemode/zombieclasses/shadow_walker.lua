@@ -153,9 +153,10 @@ function CLASS:OnKilled(pl, attacker, inflictor, suicide, headshot, dmginfo)
 end
 
 function CLASS:ProcessDamage(pl, dmginfo)
-	if dmginfo:GetInflictor().IsMelee and not dmginfo:GetInflictor().IgnoreNiggers then
+	local attacker = dmginfo:GetAttacker()
+	if dmginfo:GetAttacker() and dmginfo:GetAttacker() ~= pl and dmginfo:GetInflictor() and dmginfo:GetInflictor().IsMelee and not dmginfo:GetInflictor().IgnoreNiggers then
 		dmginfo:GetAttacker():TakeSpecialDamage(dmginfo:GetDamage() * 0.05, DMG_DIRECT, pl, pl:GetActiveWeapon())
-		dmginfo:SetDamage(5)
+		dmginfo:SetDamage((attacker:IsValidLivingHuman() and attacker:IsSkillActive(SKILL_AMULET_12) and 0 or 5))
 	end
 end
 end

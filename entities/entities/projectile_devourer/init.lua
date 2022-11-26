@@ -35,7 +35,23 @@ function ENT:Think()
 	for _, ent in pairs(ents.FindInSphere(self:GetPos(), 2048)) do
 		target = ent
 		if WorldVisible(self:LocalToWorld(Vector(0, 0, 30)), ent:NearestPoint(self:LocalToWorld(Vector(0, 0, 30)))) and self.NextHook <= CurTime() and GAMEMODE:GetWave() >= 4 then
-			if target:IsValidLivingHuman() and not target:GetStatus("sigildef") then
+			if target:IsValidLivingHuman() then
+				local targetpos = target:LocalToWorld(target:OBBCenter())
+				local direction = (targetpos - self:GetPos()):GetNormal()
+
+				self:SetAngles(direction:Angle())
+
+				local phys = self:GetPhysicsObject()
+				phys:SetVelocityInstantaneous(((direction * 1390) * ent:GetModelScale()) + phys:GetVelocity() * 5)
+				self.NextHook = CurTime() + 0.04
+				break
+			end
+		end
+	end
+	for _, ent in pairs(ents.FindInSphere(self:GetPos(), 2048)) do
+		target = ent
+		if WorldVisible(self:LocalToWorld(Vector(0, 0, 30)), ent:NearestPoint(self:LocalToWorld(Vector(0, 0, 30)))) and self.NextHook <= CurTime() and GAMEMODE:GetWave() >= 4 then
+			if target:IsValidLivingHuman() then
 				local targetpos = target:LocalToWorld(target:OBBCenter())
 				local direction = (targetpos - self:GetPos()):GetNormal()
 

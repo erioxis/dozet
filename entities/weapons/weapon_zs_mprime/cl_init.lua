@@ -16,7 +16,7 @@ function SWEP:DrawHUD()
 		draw.SimpleText("Die Mode", "ZSHUDFontSmall", x + wid, texty - 45, COLOR_GREEN, TEXT_ALIGN_CENTER)
 	end
 	if self:GetObed() then
-		draw.SimpleText("Obed Mode", "ZSHUDFontSmall", x + wid, texty - 65, COLOR_GREEN, TEXT_ALIGN_CENTER)
+		draw.SimpleText("Obed Mode", "ZSHUDFontSmall", x + wid, texty - 5, COLOR_GREEN, TEXT_ALIGN_CENTER)
 	end
 
 	if GetConVar("crosshair"):GetInt() ~= 1 then return end

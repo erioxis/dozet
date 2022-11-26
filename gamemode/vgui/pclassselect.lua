@@ -343,7 +343,11 @@ function PANEL:CreateDescLabels()
 		table.insert(lines, " ")
 		table.Add(lines, string.Explode("\n", translate.Get(classtable.Help)))
 	end
-
+	
+	if classtable.SWEP then
+		table.insert(lines, " ")
+		table.Add(lines, string.Explode("\n", translate.Get("p_dmg")..":"..(weapons.Get(classtable.SWEP).MeleeDamage or 1)))
+	end
 	for i, line in ipairs(lines) do
 		local label = vgui.Create("DLabel", self)
 		local notwaveone = classtable.Wave and classtable.Wave > 0
@@ -354,6 +358,7 @@ function PANEL:CreateDescLabels()
 		end
 		label:SetFont(i == 1 and notwaveone and "ZSBodyTextFontBig" or "ZSBodyTextFont")
 		label:SizeToContents()
+
 		table.insert(self.DescLabels, label)
 	end
 end

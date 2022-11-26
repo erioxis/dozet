@@ -65,15 +65,13 @@ function ENT:OnRemove()
 	if parent:IsValid() then
 		parent.FeignDeath = nil
 		if parent:GetRagdollEntity():IsValid() then
-			if !parent.BaraCat then
-				parent:GetRagdollEntity():Remove()
-				parent:DrawWorldModel(true)
-				parent:DrawShadow(true)
-				parent:SetModel(self.OldModel or parent:GetModel())
-				parent:Fire( "alpha", 255, 0 )
-				parent:TemporaryNoCollide(true)
-				parent:SetMaterial( self.OldMaterial or parent:GetMaterial())
-			end
+			parent:GetRagdollEntity():Remove()
 		end
+		parent:DrawWorldModel(true)
+		parent:DrawShadow(true)
+		parent:SetModel(self.OldModel or parent:GetModel())
+		parent:Fire( "alpha", 255, 0 )
+		parent:TemporaryNoCollide(true)
+		parent:SetMaterial( self.OldMaterial or parent:GetMaterial())
 	end
 end

@@ -12,6 +12,10 @@ end
 
 
 function ENT:Think()
+	if self.DieTime >= CurTime() then
+		self:Remove()
+		return
+	end
 	local owner = self:GetOwner()
 	local lox = owner:IsSkillActive(SKILL_LOX)
 

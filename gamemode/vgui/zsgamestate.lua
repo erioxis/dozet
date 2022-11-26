@@ -132,15 +132,48 @@ function PANEL:Text3Paint()
 		if MySelf:Team() == TEAM_UNDEAD then
 			local toredeem = GAMEMODE:GetRedeemBrains()
 			if toredeem > 0 then
-				draw.SimpleText(translate.Format("brains_eaten_x", MySelf:Frags().." / "..toredeem), self.Font, 0, 0, COLOR_SOFTRED)
+				draw.SimpleText(translate.Format("brains_eaten_x", MySelf:Frags().." / "..toredeem), self.Font, 0, -6, COLOR_SOFTRED)
 			else
-				draw.SimpleText(translate.Format("brains_eaten_x", MySelf:Frags()), self.Font, 0, 0, COLOR_SOFTRED)
+				draw.SimpleText(translate.Format("brains_eaten_x", MySelf:Frags()), self.Font, 0, -6, COLOR_SOFTRED)
+			end
+			local balance = GAMEMODE:GetBalance() * 2
+			local god = false
+			local d = NULL
+			for _, pl in pairs(player.GetAll()) do
+				if pl:GetZombieClassTable().GodTRUE then
+					god = true
+					d = pl
+				end
+			end
+			if god and d then
+				powergod = d:Health()/500000000 * 100
+			end
+			if !god then
+				draw.SimpleText(((0 < balance) and translate.Get("dosei_inf")..balance.."%" or ""), "ZSHUDFontTiniest", 0, 16, COLOR_SOFTRED)
+			else
+				draw.SimpleText(translate.Get("power_god")..powergod.."%", "ZSHUDFontTiniest", 0, 16, COLOR_SOFTRED)
 			end
 		else
 			local balance = GAMEMODE:GetBalance() * 2
 			--draw.SimpleText(translate.Format("points_x", MySelf:GetPoints().." / "..MySelf:Frags()), self.Font, 0, 0, COLOR_DARKRED)
 			draw.SimpleText(translate.Format("sboard_points_x_score_x_dps_x", MySelf:GetPoints(), MySelf:GetMScore(),	math.Round(MySelf:GetDPS())), self.Font, 0, -6, COLOR_SOFTRED)
-			draw.SimpleText(((0 < balance) and translate.Get("dosei_inf")..balance.."%" or ""), "ZSHUDFontTiniest", 0, 16, COLOR_SOFTRED)
+			local god = false
+			local d = NULL
+			for _, pl in pairs(player.GetAll()) do
+				if pl:GetZombieClassTable().GodTRUE then
+					god = true
+					d = pl
+				end
+			end
+			if god and d then
+				powergod = d:Health()/500000000 * 100
+			end
+			
+			if !god then
+				draw.SimpleText(((0 < balance) and translate.Get("dosei_inf")..balance.."%" or ""), "ZSHUDFontTiniest", 0, 16, COLOR_SOFTRED)
+			else
+				draw.SimpleText(translate.Get("power_god")..powergod.."%", "ZSHUDFontTiniest", 0, 16, COLOR_SOFTRED)
+			end
 		end
 	end
 

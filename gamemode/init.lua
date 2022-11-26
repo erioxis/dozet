@@ -482,6 +482,7 @@ function GM:CenterNotifyAll(...)
 	net.Broadcast()
 end
 GM.CenterNotify = GM.CenterNotifyAll
+GM.NoBaracursed = true
 
 function GM:TopNotifyAll(...)
 	net.Start("zs_topnotify")
@@ -1264,7 +1265,7 @@ function GM:Think()
 				if pl:WaterLevel() >= 3 and not (pl.status_drown and pl.status_drown:IsValid()) then
 					pl:GiveStatus("drown")
 				end
-				if (pl:GetActiveWeapon().Tier or 1) >= 4 and pl:HasTrinket("sin_pride") then
+				if (pl:GetActiveWeapon().Tier or 1) >= 4 and pl:HasTrinket("sin_pride") and pl:GetActiveWeapon() then
 					pl:StripWeapon(pl:GetActiveWeapon():GetClass())
 				end
 				local bossdrops2 = {
@@ -1319,10 +1320,11 @@ function GM:Think()
 				if pl:HasTrinket(d) and pl:IsSkillActive(SKILL_SOUL_TRADE) and not pl:HasTrinket("toysoul") and not pl:SteamID64() == "76561198813932012" then
 					pl:Kill()
 				end
-				if (pl:GetActiveWeapon().Tier or 1) <= 4 and pl:HasTrinket("sin_envy") and pl:GetActiveWeapon():GetClass() ~= "weapon_zs_fists" then
+				if (pl:GetActiveWeapon().Tier or 1) <= 4 and pl:HasTrinket("sin_envy") and pl:GetActiveWeapon():GetClass() ~= "weapon_zs_fists" and pl:GetActiveWeapon() then
 					pl:StripWeapon(pl:GetActiveWeapon():GetClass())
 				end
 				local barac = pl:IsSkillActive(SKILL_BARA_CURSED)
+				if self.MaxSigils >= 1 then
 					if not pl:GetStatus("sigildef") and self:GetWave() >= 6 and  time >= pl.NextDamage and self:GetWaveActive() and self:GetBalance() < 40 or self:GetBalance() > 40 and not pl:GetStatus("sigildef") and  time >= pl.NextDamage then
 						pl:TakeSpecialDamage(((pl:HasTrinket("jacobsoul") and 1 or 8 ) * (pl.TickBuff or 0)) /(barac and 200 or 1), DMG_DIRECT)
 						pl.NextDamage = time + (pl:HasTrinket("jacobsoul") and 4 or 2.4) * (barac and 3 or 1)
@@ -1340,6 +1342,7 @@ function GM:Think()
 					if pl:HasTrinket("antibaracat") and barac then
 						pl:Kill()
 					end
+				end
 				if !pl:OnGround() and not (pl:GetVelocity():LengthSqr() > 7600) then
 					pl.StuckedInProp = true
 				else
@@ -1431,7 +1434,7 @@ function GM:Think()
 					pl:EmitSound("ambient/water/water_spray3.wav",120,45, 122)
 				end
 
-				if pl:GetModel() == "models/player/catpants.mdl" then
+				if pl:GetModel() == "models/player/catpants.mdl" and self.NoBaracursed then
 					pl:Kill()
 					print("BARACAT!!!")
 					PrintMessage(HUD_PRINTCONSOLE,"Ты еблан? "..pl:Nick())
@@ -1552,7 +1555,7 @@ function GM:Think()
 				if time > (pl.NextResupplyUse or 0) then
 					local stockpiling = pl:IsSkillActive(SKILL_STOCKPILE)
 
-					pl.NextResupplyUse = time + math.max(15,self.ResupplyBoxCooldown * (pl.ResupplyDelayMul or 1) * (stockpiling and 2 or 1)) - (pl:IsSkillActive(SKILL_STOWAGE) and math.max(0,self:GetBalance() / 4) or 0)
+					pl.NextResupplyUse = time + math.max(15,self.ResupplyBoxCooldown * (pl.ResupplyDelayMul or 1) * (stockpiling and 2 or 1)) - (pl:IsSkillActive(SKILL_STOWAGE) and math.max(0,self:GetBalance() / 4) or 0) * 0.7
 					pl.StowageCaches = (pl.StowageCaches or 0) + (stockpiling and 2 or 1)
 
 					net.Start("zs_nextresupplyuse")
@@ -4853,14 +4856,17 @@ function GM:PlayerSpawn(pl)
 			pl:SetHealth(classtab.Health + (((self:GetWave() * 80)) * team.NumPlayers(TEAM_HUMAN)) * (classtab.DynamicHealth or 1))
 		else
 			local lowundead = team.NumPlayers(TEAM_UNDEAD) < 4
-
 			local healthmulti = (self.ObjectiveMap or self.ZombieEscape) and 1 or lowundead and 1.5 or 1
 			pl:SetHealth((classtab.Health * healthmulti) + ((self:GetWave() * 45) * (classtab.DynamicHealth or 1)) )
 		end
 
 		if classtab.SWEP then
+			if pl.m_Zombie_16  then
+				pl:Give("weapon_zs_grenade_z")
+			end
 			pl:Give(classtab.SWEP)
 		end
+
 
 		pl:SetNoTarget(true)
 		pl:SetMaxHealth(1)

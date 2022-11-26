@@ -740,7 +740,6 @@ GM:AddSkill(SKILL_COMBOHEAL, translate.Get("skill_comboheal"), GOOD..translate.G
 																0,			-5,					{SKILL_DISPERSION}, TREE_SUPPORTTREE)
 GM:AddSkill(SKILL_PHIK, translate.Get("skill_phik"), GOOD..translate.Get("skill_phik_d1")..BAD..translate.Get("skill_phik_d2"),
 																-2,			-5,					{SKILL_COMBOHEAL}, TREE_SUPPORTTREE)
-.Disabled = true
 GM:AddSkill(SKILL_FOREVERALONE, translate.Get("skill_foreveralone"), GOOD..translate.Get("skill_foreveralone_d1")..BAD..translate.Get("skill_foreveralone_d2"),
 																-1,			-6,					{SKILL_COMBOHEAL}, TREE_SUPPORTTREE)
 GM:AddSkill(SKILL_WYRDREC, translate.Get("skill_wyrdrec"), GOOD..translate.Get("skill_wyrdrec_d1")..BAD..translate.Get("skill_wyrdrec_d2"),
@@ -983,11 +982,11 @@ SKILL_PHOENIX = 260
 GM:AddSkill(SKILL_PHOENIX, translate.Get("skill_phoenix"), GOOD..translate.Get("skill_phoenix_d1"),
 																0,			6,					{SKILL_GUNSLINGER}, TREE_GUNTREE)
 local d = GM:AddSkill(SKILL_SECRET_VI, "Secret VI", GOOD.."+5 Skill Points",
-																-2,			3,					{}, TREE_GUNTREE)
+																-2,			3,					{SKILL_NONE}, TREE_GUNTREE)
 d.Hidden = true	
 d.Hidden1 = true	
 local d = GM:AddSkill(SKILL_SECRET_VII, "ᅠ ᅠ ᅠ", GOOD.."+5 Skill Points\nSecret VII",
-				                                                            	25,			20.1,					{}, TREE_DONATETREE)
+				                                                            	25,			20.1,					{SKILL_NONE}, TREE_DONATETREE)
 d.Hidden = true	
 d.Hidden1 = true	
 
