@@ -49,7 +49,8 @@ function ENT:Use(activator, caller)
 end
 
 function ENT:GiveToActivator(activator, caller)
-	if activator:IsSkillActive(SKILL_SAMODOS) then activator:CenterNotify(COLOR_RED, translate.ClientGet(activator, "samodos")) return end
+	if activator:IsSkillActive(SKILL_SAMODOS) and self:GetOwner() ~= activator then activator:CenterNotify(COLOR_RED, translate.ClientGet(activator, "samodos")) return end
+	if self:GetOwner():IsSkillActive(SKILL_SAMODOS) and self:GetOwner() ~= activator then activator:CenterNotify(COLOR_RED, translate.ClientGet(activator, "samodos")) return end
 	if activator:IsPlayer() and activator:Alive() and not activator:KeyDown(GAMEMODE.UtilityKey) and activator:Team() == TEAM_HUMAN and not self.Removing and not (self.NoPickupsTime and CurTime() < self.NoPickupsTime and self.NoPickupsOwner ~= activator) then
 		if self.IgnorePickupCount or (not self.PlacedInMap or not GAMEMODE.MaxAmmoPickups or (activator.AmmoPickups or 0) < GAMEMODE.MaxAmmoPickups or team.NumPlayers(TEAM_HUMAN) <= 1) then
 			if self.PlacedInMap and GAMEMODE.WeaponRequiredForAmmo and team.NumPlayers(TEAM_HUMAN) > 1 then

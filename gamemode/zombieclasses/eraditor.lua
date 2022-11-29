@@ -7,8 +7,8 @@ CLASS.BetterVersion = "Eradicator"
 
 CLASS.Wave = 1 / 2
 
-CLASS.Health = 1299
-CLASS.Speed = 177
+CLASS.Health = 1500
+CLASS.Speed = 220
 
 CLASS.CanTaunt = true
 

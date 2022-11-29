@@ -132,6 +132,17 @@ local tColorModNightVision = {
 	["$pp_colour_addg"] = 0,
 	["$pp_colour_addb"] = 0
 }
+local tColorModBers = {
+	["$pp_colour_colour"] = 0.99,
+	["$pp_colour_brightness"] = 0,
+	["$pp_colour_contrast"] = 1.5,
+	["$pp_colour_mulr"] = 1.5,
+	["$pp_colour_mulg"] = 0,
+	["$pp_colour_mulb"] = 0,
+	["$pp_colour_addr"] = 0,
+	["$pp_colour_addg"] = 0,
+	["$pp_colour_addb"] = 0.2
+}
 
 local redview = 0
 local fear = 0
@@ -141,12 +152,17 @@ function GM:_RenderScreenspaceEffects()
 	end
 
 	fear = math_Approach(fear, self:CachedFearPower(), FrameTime())
-
+	if MySelf:GetTimerBERS() >= CurTime() and MySelf:IsSkillActive(SKILL_BERSERK) then
+		tColorModBers["$pp_colour_addr"] = (0.015 + math_abs(math_sin(CurTime() * 2)) * 0.09) * ((MySelf:GetTimerBERS() - CurTime())/10)
+		tColorModBers["$pp_colour_brightness"] = math.min(((MySelf:GetTimerBERS() - CurTime())/10) - 0.3,0.32)
+		DrawColorModify(tColorModBers)
+	end
 	if not self.PostProcessingEnabled then return end
 
 	if self.DrawPainFlash and self.HurtEffect > 0 then
 		DrawSharpen(1, math_min(6, self.HurtEffect * 3))
 	end
+
 
 	if self.ColorModEnabled then
 		if not MySelf:Alive() and MySelf:GetObserverMode() ~= OBS_MODE_CHASE then

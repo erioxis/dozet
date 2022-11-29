@@ -435,6 +435,7 @@ GM:AddPointShopItem("deathdlrs",		ITEMCAT_GUNS,			2000,			"weapon_zs_deathdealer
 GM:AddPointShopItem("rlaucnher",		ITEMCAT_GUNS,			2000,			"weapon_zs_rocket_launcher")
 GM:AddPointShopItem("biotic_grl",		ITEMCAT_GUNS,			2000,			"weapon_zs_biotic_grl")
 GM:AddPointShopItem("smorning",		ITEMCAT_GUNS,			2000,			"weapon_zs_smorning")
+GM:AddPointShopItem("drill",		ITEMCAT_GUNS,			2000,			"weapon_zs_drill")
 -- Tier 7
 GM:AddPointShopItem("sacredhh",			ITEMCAT_GUNS,			5000,			"weapon_zs_m6")
 GM:AddPointShopItem("gaysseagle",   	ITEMCAT_GUNS,			5000,			"weapon_zs_gaeagle")
@@ -504,6 +505,7 @@ GM:AddPointShopItem("luxrockj",			ITEMCAT_MELEE,			435,			"weapon_zs_luxshade")
 GM:AddPointShopItem("luxoid",			ITEMCAT_MELEE,			1500,			"weapon_zs_luxoid")
 GM:AddPointShopItem("boomerang",		ITEMCAT_MELEE,			1500,			"weapon_zs_boomerang")
 GM:AddPointShopItem("pipemega",		ITEMCAT_MELEE,			1500,			"weapon_zs_pipemega")
+GM:AddPointShopItem("baragay",			ITEMCAT_MELEE,			1500,			"weapon_zs_baramelee")
 -- Tier 6
 GM:AddPointShopItem("megahook",			ITEMCAT_MELEE,			6500,			"weapon_zs_harpoon_mega")
 GM:AddPointShopItem("teslar",			ITEMCAT_MELEE,			6500,			"weapon_zs_teslorer")

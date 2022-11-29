@@ -89,7 +89,7 @@ SWEP.TracerName = "tracer_drill"
 SWEP.ChargeSound = "items/suitchargeok1.wav"
 
 SWEP.ReloadSpeed = 1.6
-SWEP.Tier = 2
+SWEP.Tier = 6
 
 SWEP.Pierces = 6
 
@@ -122,7 +122,7 @@ function SWEP:ShootBullets(dmg, numbul, cone)
 		ent = trace.Entity
 
 		if ent and ent:IsValid() then
-			timer.Create("d",0.32,50, function() if !owner:IsValid() or !self:IsValid() then return end owner:FireBulletsLua(trace.HitPos, dir, 0, numbul, self.Primary.Damage, nil, self.Primary.KnockbackScale,self.TracerName, self.BulletCallback, self.Primary.HullSize, nil, self.Primary.MaxDistance, nil, self) end)
+			timer.Create("d",0.12,50, function() if !owner:IsValid() or !self:IsValid() then return end owner:FireBulletsLua(trace.HitPos, dir, 0, numbul, self.Primary.Damage, nil, self.Primary.KnockbackScale,self.TracerName, self.BulletCallback, self.Primary.HullSize, nil, self.Primary.MaxDistance, nil, self) end)
 		end
 	end
 	owner:FireBulletsLua(start, dir, cone, numbul, 0, nil, self.Primary.KnockbackScale, self.TracerName, self.BulletCallback, self.Primary.HullSize, nil, self.Primary.MaxDistance, nil, self)

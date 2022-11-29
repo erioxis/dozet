@@ -328,6 +328,13 @@ end
 function meta:GetTokens()
 	return self:GetNWInt('btokens', pts)
 end
+function meta:GetTimerBERS()
+	return self:GetNWInt('b_timer', pts)	
+end	
+
+function meta:SetTimerBERS(pts)
+	self:SetNWInt('b_timer', pts + 15)
+end
 
 function meta:GetBloodArmor()
 	return self:GetDTInt(DT_PLAYER_INT_BLOODARMOR)

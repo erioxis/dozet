@@ -11,8 +11,8 @@ SWEP.ViewModel = "models/weapons/v_stunstick.mdl"
 SWEP.WorldModel = "models/weapons/w_stunbaton.mdl"
 SWEP.UseHands = true
 
-SWEP.MeleeDamage = 2009
-SWEP.MeleeRange = 222
+SWEP.MeleeDamage = 99
+SWEP.MeleeRange = 90
 SWEP.MeleeSize = 3.5
 SWEP.MeleeKnockBack = 122
 
@@ -30,12 +30,12 @@ SWEP.MeleeDamageSecondaryMul = 6
 SWEP.MeleeKnockBackSecondaryMul = 3
 SWEP.SwingTimeSecondary = 0.99
 
-SWEP.Tier = 7
-SWEP.MaxStock = 1
+SWEP.Tier = 5
+SWEP.MaxStock = 3
 SWEP.PointsMultiplier = 0.5
 SWEP.AllowQualityWeapons = true
 
-GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_FIRE_DELAY, -0.12)
+GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_FIRE_DELAY, -0.09)
 
 function SWEP:PlaySwingSound()
 	self:EmitSound("weapons/iceaxe/iceaxe_swing1.wav", 75, math.random(55, 65))

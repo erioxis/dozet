@@ -17,7 +17,7 @@ CLASS.VoicePitch = 0.65
 
 CLASS.SWEP = "weapon_zs_redmarrow"
 
-CLASS.Health = 4500
+CLASS.Health = 2200
 CLASS.Speed = 165
 
 CLASS.Skeletal = true
@@ -133,6 +133,11 @@ function CLASS:ProcessDamage(pl, dmginfo)
 		pl["bloodth"..numthreshold] = false
 		dmginfo:SetDamage(dmg - nulldmg)
 		pl:GiveStatus("redmarrow", 7)
+		for _, ent in pairs(ents.FindInSphere(pl:GetPos(), 238)) do
+			if ent:IsValidLivingZombie() and pl ~= ent then
+				ent:SetZArmor(ent:GetZArmor() + pl:Health() * (GAMEMODE:GetWave() /4))
+			end
+		end
 
 		local effectdata = EffectData()
 			effectdata:SetOrigin(pl:WorldSpaceCenter())

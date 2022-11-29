@@ -7,8 +7,9 @@ CLASS.Help = "controls_skeletal_walker"
 
 CLASS.Boss = true
 
-CLASS.Health = 6000
+CLASS.Health = 2500
 CLASS.Speed = 150
+CLASS.Points = 60
 
 CLASS.CanTaunt = true
 

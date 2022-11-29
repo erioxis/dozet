@@ -201,6 +201,7 @@ function meta:DropInventoryItemByType(itype)
 	if ent:IsValid() then
 		ent:SetInventoryItemType(itype)
 		ent:Spawn()
+		ent:SetOwner(self)
 		ent.DroppedTime = CurTime()
 
 		self:TakeInventoryItem(itype)

@@ -182,6 +182,9 @@ function meta:ProcessDamage(dmginfo)
 				if attacker:GetActiveWeapon().CanDefend and attacker:GetActiveWeapon():GetPerc() < 11 then
 					attacker:GetActiveWeapon():SetPerc((attacker:GetActiveWeapon():GetPerc() or 0) + 1)
 				end
+				if attacker:GetTimerBERS() >= CurTime() and attacker:IsSkillActive(SKILL_BERSERK) then
+					dmginfo:ScaleDamage(5)
+				end
 
 
 				if attacker.MeleeDamageToBloodArmorMul and attacker.MeleeDamageToBloodArmorMul > 0 and attacker:GetBloodArmor() < attacker.MaxBloodArmor then
@@ -351,6 +354,14 @@ function meta:ProcessDamage(dmginfo)
 		self.LetalSave = false
 		self:SetHealth(self:GetMaxHealth())
 	end
+	if self:IsSkillActive(SKILL_BERSERK) and self.BerserkerCharge and dmginfo:GetDamage() >= self:Health() then
+		dmginfo:SetDamage(0)
+		self:SetTimerBERS(CurTime())
+		self.BerserkerCharge = false
+	end
+	if self:GetTimerBERS() >= CurTime() and self:IsSkillActive(SKILL_BERSERK) then
+		dmginfo:SetDamage(0)
+	end
 	if self:IsSkillActive(SKILL_XPMULGOOD) and self.XPMulti > 0.20 then
         self.XPMulti = self.XPMulti - 0.05
 	end
@@ -401,8 +412,8 @@ function meta:ProcessDamage(dmginfo)
 			elseif self:IsSkillActive(SKILL_AMULET_1) and amuletrng ~= 1 then
 				self.CarefullMelody_DMG = self.CarefullMelody_DMG + 1
 			end
-			if self:GetStatus("sigildef") then
-				dmginfo:ScaleDamage(0.86)
+			if self:GetStatus("sigildef") and !self:IsSkillActive(SKILL_BERSERK) then
+				dmginfo:ScaleDamage(0.76)
 			end
 
 			if bit.band(dmgtype, DMG_SLASH) ~= 0 or inflictor.IsMelee then
@@ -435,8 +446,9 @@ function meta:ProcessDamage(dmginfo)
 						self:AddBloodlust(attacker, dmginfo:GetDamage() * 0.3)
 					end
 				end
-				if attacker.m_Zombie_Bara and not self:IsSkillActive(SKILL_BARA_CURSED) then
+				if attacker.m_Zombie_Bara and not self:IsSkillActive(SKILL_BARA_CURSED) and CurTime() >= (self.NextKnockdown or 0) then
 					self:GiveStatus("knockdown",1)
+					self.NextKnockdown = CurTime() + 1
 					local vel = self:GetPos() - self:GetPos()
 					vel.z = 0
 					vel:Normalize()
@@ -1369,7 +1381,6 @@ function meta:SecondWind(pl)
 end
 
 function meta:DropAll()
-	if self:IsSkillActive(SKILL_SAMODOS) then return end
 	self:DropAllWeapons()
 	self:DropAllAmmo()
 	self:DropAllInventoryItems()
@@ -1407,6 +1418,7 @@ function meta:DropWeaponByType(class)
 		if ent:IsValid() then
 			ent:SetWeaponType(class)
 			ent:Spawn()
+			ent:SetOwner(self)
 
 			if wep.AmmoIfHas then
 				local ammocount = wep:GetPrimaryAmmoCount()
@@ -1429,7 +1441,7 @@ function meta:DropWeaponByType(class)
 end
 
 function meta:DropAllWeapons()
- 	if self:IsSkillActive(SKILL_SAMODOS) then return end
+
 	local vPos = self:GetPos()
 	local vVel = self:GetVelocity()
 	local zmax = self:OBBMaxs().z * 0.75
@@ -1468,6 +1480,7 @@ function meta:DropAmmoByType(ammotype, amount)
 		ent:SetAmmoType(ammotype)
 		ent:SetAmmo(amount)
 		ent:Spawn()
+		ent:SetOwner(self)
 		ent.DroppedTime = CurTime()
 
 		self:RemoveAmmo(amount, ammotype)
@@ -1477,7 +1490,6 @@ function meta:DropAmmoByType(ammotype, amount)
 end
 
 function meta:DropAllAmmo()
-	if self:IsSkillActive(SKILL_SAMODOS) then return end
 	local vPos = self:GetPos()
 	local vVel = self:GetVelocity()
 	local zmax = self:OBBMaxs().z * 0.75

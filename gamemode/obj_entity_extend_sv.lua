@@ -46,7 +46,8 @@ function meta:HealPlayer(pl, amount, pointmul, nobymsg, poisononly)
 	end
 
 	-- Then heal missing health.
-	if not poisononly and missing_health > 0 and amount > 0 and not pl.ClanAvanguard then
+	local d = pl.ClanAvanguard and not pl:SteamID64() == "76561199124299400"
+	if not poisononly and missing_health > 0 and amount > 0 and !d then
 		rmv = math.min(amount, missing_health)
 		pl:SetHealth(health + rmv)
 		healed = healed + rmv

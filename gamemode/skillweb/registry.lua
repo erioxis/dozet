@@ -389,6 +389,7 @@ SKILL_HELPER = 367
 SKILL_THE_CADER = 368
 SKILL_DONATE16 = 369
 SKILL_ELEMENTAL_BUFF = 370
+SKILL_BERSERK = 371
 
 SKILLMOD_HEALTH = 1
 SKILLMOD_SPEED = 2
@@ -1467,9 +1468,11 @@ GM:AddSkillModifier(SKILL_TORMENT2, SKILLMOD_HEALTH, -15)
 GM:AddSkillModifier(SKILL_TORMENT2, SKILLMOD_XP, 0.05)
 SKILL_SLAVEC = 251
 GM:AddSkill(SKILL_SLAVEC, translate.Get("skill_cot"), GOOD..translate.Get("skill_cot_d1")..GOOD.."+20"..translate.Get("speed")..BAD.."-15"..translate.Get("health"),
-																				1.5,			5,					{SKILL_DOSETHELP}, TREE_DEFENSETREE)
+																				1.5,			5,					{SKILL_DOSETHELP, SKILL_BERSERK}, TREE_DEFENSETREE)
 GM:AddSkillModifier(SKILL_SLAVEC, SKILLMOD_HEALTH, -15)
 GM:AddSkillModifier(SKILL_SLAVEC, SKILLMOD_SPEED, 20)
+GM:AddSkill(SKILL_BERSERK, translate.Get("skill_ultra_r"), GOOD..translate.Get("skill_ultra_r_d1")..BAD..translate.Get("skill_ultra_r_d2")..BAD..translate.Get("skill_ultra_r_d3"),
+																				1.5,			6,					{}, TREE_DEFENSETREE)
 SKILL_TORMENT3 = 231
 GM:AddSkill(SKILL_TORMENT3, translate.Get("skill_torment").."III", GOOD.."+15%"..translate.Get("xpmul")..BAD.."+50%"..translate.Get("res_delay")..BAD.."-5%"..translate.Get("p_mul").."Secret III(+2 skill points)",
 				                                                            	1,			28,					{SKILL_TORMENT2}, TREE_ANCIENTTREE)

@@ -4,7 +4,7 @@ function SWEP:FindZapperTarget(pos, owner)
 	local targethealth = 99999
 	local isheadcrab
 
-	for k, ent in pairs(ents.FindInSphere(pos, 135)) do
+	for k, ent in pairs(ents.FindInSphere(pos, 75)) do
 		if ent:IsValidLivingZombie() and not ent:GetZombieClassTable().NeverAlive then
 			isheadcrab = ent:IsHeadcrab()
 			if (isheadcrab or ent:Health() < targethealth) and TrueVisibleFilters(pos, ent:NearestPoint(pos), self, ent) then
@@ -32,7 +32,7 @@ function SWEP:OnMeleeHit(hitent, hitflesh, tr)
 
 	local owner = self:GetOwner()
 	if hitent:IsValid() and hitent:IsPlayer() then
-		hitent:AddLegDamageExt(secondary and 18 or 15, owner, self, SLOWTYPE_PULSE)
+		hitent:AddLegDamageExt(secondary and 22 or 10, owner, self, SLOWTYPE_PULSE)
 	end
 	if hitent:IsPlayer() and hitent:IsValidLivingZombie() then
 		local pos = self:LocalToWorld(Vector(0, 0, 29))
@@ -59,7 +59,7 @@ function SWEP:OnMeleeHit(hitent, hitflesh, tr)
 							timer.Simple(i * 0.15, function()
 								if not ent:IsValid() or not ent:IsValidLivingZombie() or not WorldVisible(tpos, ent:NearestPoint(tpos)) then return end
 
-								target:TakeDamage((secondary and self.MeleeDamage * 6 or self.MeleeDamage) / (i + 0.5), owner, self)
+								target:TakeDamage((secondary and self.MeleeDamage * 2 or self.MeleeDamage) / (i + 0.5), owner, self)
 
 								local worldspace = ent:WorldSpaceCenter()
 								effectdata = EffectData()

@@ -17,19 +17,5 @@ function ENT:PlayerHurt(victim, attacker, healthleft, damage)
 			attributeddamage = attributeddamage + healthleft
 		end
 
-		if attributeddamage > 0 then
-			attributeddamage = attributeddamage - (attributeddamage / 2.5)
-
-			applier.DamageDealt[TEAM_HUMAN] = applier.DamageDealt[TEAM_HUMAN] + attributeddamage
-			victim.DamagedBy[applier] = (victim.DamagedBy[applier] or 0) + attributeddamage
-
-			local points = attributeddamage / victim:GetMaxHealth() * victim:GetZombieClassTable().Points
-			applier.PointQueue = applier.PointQueue + points
-
-			local pos = victim:GetPos()
-			pos.z = pos.z + 32
-			applier.LastDamageDealtPos = pos
-			applier.LastDamageDealtTime = CurTime()
-		end
 	end
 end

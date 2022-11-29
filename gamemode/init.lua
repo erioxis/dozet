@@ -1354,6 +1354,9 @@ function GM:Think()
 					pl.Stuckedtrue = nil
 					pl.Stuckedtrue_C = CurTime() - 3
 				end
+				if pl:IsSkillActive(SKILL_BERSERK) and !pl.BerserkerCharge and pl:GetTimerBERS() <= CurTime() and pl:Health() < pl:GetMaxHealth() * 0.1 then
+					pl:Kill()
+				end
 				if pl:OnGround() and pl:IsSkillActive(SKILL_POGO) and time >= pl.NextStuckThink then
 					timer.Create("pogojump", 0.001, 1, function()
 						local vel = pl:GetPos()
@@ -1555,7 +1558,7 @@ function GM:Think()
 				if time > (pl.NextResupplyUse or 0) then
 					local stockpiling = pl:IsSkillActive(SKILL_STOCKPILE)
 
-					pl.NextResupplyUse = time + math.max(15,self.ResupplyBoxCooldown * (pl.ResupplyDelayMul or 1) * (stockpiling and 2 or 1)) - (pl:IsSkillActive(SKILL_STOWAGE) and math.max(0,self:GetBalance() / 4) or 0) * 0.7
+					pl.NextResupplyUse = time + math.max(15,self.ResupplyBoxCooldown * (pl.ResupplyDelayMul or 1) * (stockpiling and 2 or 1)) - (pl:IsSkillActive(SKILL_STOWAGE) and math.max(0,self:GetBalance() / 4) or 0)
 					pl.StowageCaches = (pl.StowageCaches or 0) + (stockpiling and 2 or 1)
 
 					net.Start("zs_nextresupplyuse")
@@ -1870,6 +1873,7 @@ function GM:PlayerHealedTeamMember(pl, other, health, wep, pointmul, nobymsg, fl
 			net.WriteString(premium)
 			net.Send(pl)
 		pl:GiveAchievement("premium")
+		pl:AddPoints(150)
 		pl.NextPremium = 0
 	end
 
@@ -2700,6 +2704,7 @@ function GM:PlayerInitialSpawnRound(pl)
 	pl.zKills = 0
 	pl.RedeemedOnce = true
 	pl.HolyMantle = 0
+	pl.BerserkerCharge = true
 	pl.MantleFix = CurTime() + 10
 	pl.NextPremium = 0
 	pl.NextDamage = 0
@@ -2800,9 +2805,15 @@ function GM:PlayerInitialSpawnRound(pl)
 	pl.DamageVulnerability = nil
 	pl.ClanQuePro = nil
 	pl.ClanAvanguard = nil
+	pl.ClanLoxov = nil
 	pl.ClanMich = nil
 	pl.ClanShooter = nil
 	pl.ClanAnsableRevolution = nil
+	local loxclan ={
+		"76561198394385289",
+		"76561198976953638",
+		"76561199132153283",
+	}
     local avanguardtbl ={
 		"76561198874285897",
 		"76561199081762080",
@@ -2837,7 +2848,9 @@ function GM:PlayerInitialSpawnRound(pl)
 		"76561198086333703"
 	}
 	self:LoadVault(pl)
-
+	if table.HasValue(loxclan, pl:SteamID64()) then 
+		pl.ClanLoxov = true
+	end
 	local uniqueid = pl:UniqueID()
 	if pl:SteamID64() == "76561198086333703" then
 		pl:SetPoints(pl:GetPoints() + 10)
@@ -5248,6 +5261,9 @@ function GM:WaveStateChanged(newstate, pl)
 				if pl:IsSkillActive(SKILL_XPHUNTER) then
 					pl:AddZSXP(5 + self.GetWave() * 10)
 				end
+				if pl:IsSkillActive(SKILL_BERSERK) then
+					pl.BerserkerCharge = true
+				end
 				if pl:IsSkillActive(SKILL_CREDIT) then
 					net.Start("zs_credit_takepoints")
 						net.WriteFloat(pl:GetPoints() * 0.3)
@@ -5279,6 +5295,7 @@ function GM:WaveStateChanged(newstate, pl)
 					local pointsreward = pointsbonus + (pl.EndWavePointsExtra or 0)
 					if pl:IsSkillActive(SKILL_SCOURER) then
 						pl:GiveAmmo(math.ceil(pointsreward), "scrap")
+						pointsreward = 0
 					end
 						if pl:HasTrinket("lotteryticket")  then 
 					    local luckdis = (lucktrue  / 4)

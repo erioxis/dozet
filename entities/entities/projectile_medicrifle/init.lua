@@ -1,7 +1,7 @@
 INC_SERVER()
 
 ENT.Heal = 10
-ENT.PointsMultiplier = 1.25
+ENT.PointsMultiplier = 0.2
 ENT.Gravity = false
 
 function ENT:Hit(vHitPos, vHitNormal, eHitEntity, vOldVelocity)
@@ -22,7 +22,7 @@ function ENT:Hit(vHitPos, vHitNormal, eHitEntity, vOldVelocity)
 					status.Applier = owner
 				elseif	pl:IsValidLivingHuman() and pl ~= owner then
 					local alt = self:GetDTBool(0)
-					local strstatus = pl:GiveStatus(alt and "strengthdartboost" or "medrifledefboost", (alt and 0.1 or 0.2) * (self.BuffDuration or 2))
+					local strstatus = pl:GiveStatus(alt and "strengthdartboost" or "medrifledefboost", (alt and 0.1 or 0.2) * (self.BuffDuration or 1))
 					strstatus.Applier = owner
 					owner:HealPlayer(pl, self.Heal * 0.3)
 					local txt = alt and translate.Get("buff_srifle") or translate.Get("buff_mrifle")
