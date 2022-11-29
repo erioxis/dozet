@@ -3714,6 +3714,16 @@ function GM:DamageFloater(attacker, victim, dmgpos, dmg, bool, definiteply, bool
 		net.WriteEntity(victim)
 	net.Send(attacker)
 end
+function GM:BlockFloater(attacker, victim, dmgpos, bool)
+	if attacker == victim then return end
+	if dmgpos == vector_origin then dmgpos = victim:NearestPoint(attacker:EyePos()) end
+
+	timer.Simple(0.1, function() net.Start("zs_block_number")
+		net.WriteBool(bool)
+		net.WriteVector(dmgpos)
+	net.Send(attacker)
+	end)
+end
 
 
 function GM:SetRandomToZombie()

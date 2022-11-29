@@ -77,6 +77,7 @@
 	util.AddNetworkString("zs_weaponblocked")
 	util.AddNetworkString("zs_xp_damage")
 
+	util.AddNetworkString("zs_block_number")
 	util.AddNetworkString("zs_luck")
 	util.AddNetworkString("zs_skillarsenalvoid")
 

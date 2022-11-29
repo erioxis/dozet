@@ -52,6 +52,9 @@ function meta:ProcessDamage(dmginfo)
 			dmginfo:SetDamage(dmginfo:GetDamage() * 0.9)
 		end
 		if self.m_Evo and math.random(3) == 1 then
+			if attacker:IsPlayer() then
+				GAMEMODE:BlockFloater(attacker, self, dmginfo:GetDamagePosition())
+			end
 			dmginfo:SetDamage(0)
 			net.Start("zs_damageblock")
 			net.Send(self)
@@ -249,12 +252,18 @@ function meta:ProcessDamage(dmginfo)
 	rngdogde = math.max(0,math.random(1,math.max(truedogder,2)))
  
 	if self:IsSkillActive(SKILL_DODGE) and rngdogde == 1 then
+		if attacker:IsPlayer() then
+			GAMEMODE:BlockFloater(attacker, self, dmginfo:GetDamagePosition())
+		end
 		dmginfo:SetDamage(0)
 		net.Start("zs_damageblock")
 		net.Send(self)
     end
 	if self:IsSkillActive(SKILL_HELPLIFER) and math.random(1,3) == 1 and dmginfo:GetDamage() >= self:Health() then
 		dmginfo:SetDamage(0)
+		if attacker:IsPlayer() then
+			GAMEMODE:BlockFloater(attacker, self, dmginfo:GetDamagePosition())
+		end
     end
 		if self:IsSkillActive(SKILL_SKYHELP) then
 		self:SetVelocity(VectorRand() * math.random(200,1700))
@@ -280,6 +289,9 @@ function meta:ProcessDamage(dmginfo)
 				if self:IsValid() then self:GodDisable() end
 			end )
 			self:GiveAchievementProgress("godhelp", 1)
+			if attacker:IsPlayer() then
+				GAMEMODE:BlockFloater(attacker, self, dmginfo:GetDamagePosition())
+			end
 
     end
 
@@ -328,6 +340,9 @@ function meta:ProcessDamage(dmginfo)
 	    elseif self:IsSkillActive(SKILL_TRUEBLOCK) and not self:GetActiveWeapon().ParryTiming then
 			self:EmitSound("npc/turret_floor/active.wav", 120, 40)
 		end
+		if attacker:IsPlayer() then
+			GAMEMODE:BlockFloater(attacker, self, dmginfo:GetDamagePosition())
+		end
 	end
 	local mythrilchance = math.random(1,25)
 	if self:IsSkillActive(SKILL_MYTHRIL) and mythrilchance == 1 and not self:GetStatus("hshield") and dmginfo:GetDamage() < 200 then
@@ -341,23 +356,32 @@ function meta:ProcessDamage(dmginfo)
 		self:EmitSound("ambient/creatures/town_child_scream1.wav", 120, 40)
 		self:AddZSXP(xpadded)
 		dmginfo:SetDamage(0)
+		if attacker:IsPlayer() then
+			GAMEMODE:BlockFloater(attacker, self, dmginfo:GetDamagePosition())
+		end
 	end
 
 	if self:IsSkillActive(SKILL_CQARMOR) then
 		dmginfo:SetDamage(dmginfo:GetDamage() * 0.75)
 	end
-		if self:IsSkillActive(SKILL_DOSETHELP) then
+	if self:IsSkillActive(SKILL_DOSETHELP) then
 		dmginfo:SetDamage(dmginfo:GetDamage() * (1 - GAMEMODE:GetWave() * 0.02))
 	end
 	if self:IsSkillActive(SKILL_SECONDCHANCE) and self.LetalSave and dmginfo:GetDamage() >= self:Health() then
 		dmginfo:SetDamage(0)
 		self.LetalSave = false
 		self:SetHealth(self:GetMaxHealth())
+		if attacker:IsPlayer() then
+			GAMEMODE:BlockFloater(attacker, self, dmginfo:GetDamagePosition())
+		end
 	end
 	if self:IsSkillActive(SKILL_BERSERK) and self.BerserkerCharge and dmginfo:GetDamage() >= self:Health() then
 		dmginfo:SetDamage(0)
 		self:SetTimerBERS(CurTime())
 		self.BerserkerCharge = false
+		if attacker:IsPlayer() then
+			GAMEMODE:BlockFloater(attacker, self, dmginfo:GetDamagePosition())
+		end
 	end
 	if self:GetTimerBERS() >= CurTime() and self:IsSkillActive(SKILL_BERSERK) then
 		dmginfo:SetDamage(0)
@@ -409,6 +433,9 @@ function meta:ProcessDamage(dmginfo)
 				net.Start("zs_damageblock")
 				net.Send(self)
 				self.CarefullMelody_DMG = 0
+				if attacker:IsPlayer() then
+					GAMEMODE:BlockFloater(attacker, self, dmginfo:GetDamagePosition())
+				end
 			elseif self:IsSkillActive(SKILL_AMULET_1) and amuletrng ~= 1 then
 				self.CarefullMelody_DMG = self.CarefullMelody_DMG + 1
 			end
@@ -544,7 +571,10 @@ function meta:ProcessDamage(dmginfo)
 					net.Send(self)
 
 					self:EmitSound("ambient/creatures/town_child_scream1.wav", 120, 40)
-					dmginfo:SetDamage(dmginfo:GetDamage() / 1200)
+					dmginfo:SetDamage(0)
+					if attacker:IsPlayer() then
+						GAMEMODE:BlockFloater(attacker, self, dmginfo:GetDamagePosition())
+					end
 
 				end
 
@@ -556,7 +586,10 @@ function meta:ProcessDamage(dmginfo)
 					net.Send(self)
 
 					self:EmitSound("ambient/creatures/town_child_scream1.wav", 120, 60)
-					dmginfo:SetDamage(dmginfo:GetDamage() / 1200)
+					dmginfo:SetDamage(0)
+					if attacker:IsPlayer() then
+						GAMEMODE:BlockFloater(attacker, self, dmginfo:GetDamagePosition())
+					end
 
 				end
 				local slavec = math.random(1,10)
@@ -635,8 +668,11 @@ function meta:ProcessDamage(dmginfo)
 					dmginfo:SetDamage(0)
 					self:TakeInventoryItem("trinket_flower")
 					net.Start("zs_trinketconsumed")
-					net.WriteString("Flower")
-				net.Send(self)
+						net.WriteString("Flower")
+					net.Send(self)
+					if attacker:IsPlayer() then
+						GAMEMODE:BlockFloater(attacker, self, dmginfo:GetDamagePosition())
+					end
 				end
 
 				if self:HasTrinket("iceburst") and (not self.LastIceBurst or self.LastIceBurst + 40 < CurTime()) then
@@ -671,6 +707,7 @@ function meta:ProcessDamage(dmginfo)
 					self:AddHallow(attacker,dmginfo:GetDamage() * 1.5)
 					self.MasteryHollowing = self.MasteryHollowing + dmginfo:GetDamage()
 				end
+				GAMEMODE:DamageFloater(attacker, self, dmginfo:GetPos(), dmginfo:GetDamage(), true)
 				dmginfo:SetDamage(0)
 			end
 

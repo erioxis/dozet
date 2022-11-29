@@ -62,6 +62,18 @@ net.Receive("zs_dmg", function(length)
 		util.Effect("damagenumber", effectdata)
 	end
 end)
+net.Receive("zs_block_number", function(length)
+	local bool = net.ReadBool()
+	local pos = net.ReadVector()
+
+	if DamageFloaters then
+		local effectdata = EffectData()
+			effectdata:SetOrigin(pos)
+			effectdata:SetAttachment((bool and 1 or 2))
+			effectdata:SetScale(0)
+		util.Effect("blocknumber", effectdata)
+	end
+end)
 net.Receive("HNS.AchievementsProgress", function()
     GAMEMODE.AchievementsProgress = util.JSONToTable(net.ReadString())
 
