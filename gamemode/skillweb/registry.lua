@@ -390,6 +390,7 @@ SKILL_THE_CADER = 368
 SKILL_DONATE16 = 369
 SKILL_ELEMENTAL_BUFF = 370
 SKILL_BERSERK = 371
+SKILL_SECRET_VIII = 372
 
 SKILLMOD_HEALTH = 1
 SKILLMOD_SPEED = 2
@@ -830,9 +831,8 @@ GM:AddSkill(SKILL_VISION, translate.Get("skill_vision_r"), GOOD..translate.Get("
 																6,			-6,					{SKILL_NONE, SKILL_ACUITY}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_U_ROCKETTURRET, translate.Get("skill_u_rturret"), GOOD..translate.Get("skill_u_rturret_d1"),
 																-8,			-0,					{SKILL_TURRETOVERLOAD}, TREE_BUILDINGTREE)
-GM:AddSkill(SKILL_INSIGHT, translate.Get("skill_vision_ar"), GOOD.."-2%"..translate.Get("sale")..GOOD..translate.Get("skill_vision_ar_d1"),
+GM:AddSkill(SKILL_INSIGHT, translate.Get("skill_vision_ar"), BAD.."+2%"..translate.Get("sale")..GOOD..translate.Get("skill_vision_ar_d1"),
 																6,			-0,					{SKILL_NANITECLOUD, SKILL_U_ZAPPER_ARC, SKILL_LIGHTCONSTRUCT, SKILL_D_LATEBUYER}, TREE_BUILDINGTREE)
-.AlwaysActive = true
 GM:AddSkill(SKILL_U_ZAPPER_ARC, translate.Get("skill_u_arc_z"), GOOD..translate.Get("skill_u_arc_z_d1"),
 																6,			2,					{SKILL_FIELDAMP, SKILL_TECHNICIAN}, TREE_BUILDINGTREE)
 .AlwaysActive = true
@@ -986,6 +986,11 @@ local d = GM:AddSkill(SKILL_SECRET_VI, "Secret VI", GOOD.."+5 Skill Points",
 																-2,			3,					{SKILL_NONE}, TREE_GUNTREE)
 d.Hidden = true	
 d.Hidden1 = true	
+local d = GM:AddSkill(SKILL_SECRET_VIII, "Secret VIII", GOOD.."+10 Skill Points\nYou can!",
+																-2,			32,					{SKILL_NONE}, TREE_GUNTREE)
+GM:AddSkillModifier(SKILL_SECRET_VIII, SKILLMOD_SPOINT, 11)
+d.Hidden = true	
+d.Hidden1 = true
 local d = GM:AddSkill(SKILL_SECRET_VII, "ᅠ ᅠ ᅠ", GOOD.."+5 Skill Points\nSecret VII",
 				                                                            	25,			20.1,					{SKILL_NONE}, TREE_DONATETREE)
 d.Hidden = true	
@@ -2584,7 +2589,8 @@ GM:AddSkillModifier(SKILL_MECHANIC, SKILLMOD_ARSENAL_DISCOUNT, 0.15)
 
 GM:AddSkillModifier(SKILL_CURSECURE, SKILLMOD_CURSEM, -0.20)
 
-GM:AddSkillModifier(SKILL_INSIGHT, SKILLMOD_ARSENAL_DISCOUNT, -0.02)
+GM:AddSkillModifier(SKILL_INSIGHT, SKILLMOD_ARSENAL_DISCOUNT, 0.02)
+GM:AddSkillModifier(SKILL_ACUITY, SKILLMOD_ARSENAL_DISCOUNT, -0.03)
 
 GM:AddSkillModifier(SKILL_VKID, SKILLMOD_JUMPPOWER_MUL, 0.30)
 GM:AddSkillModifier(SKILL_VKID, SKILLMOD_SPEED, 60)

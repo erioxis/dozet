@@ -22,7 +22,7 @@ GAMEMODE:SetupDefaultClip(SWEP.Primary)
 SWEP.ConeMax = 0
 SWEP.ConeMin = 0
 
-SWEP.MaxStock = 2
+SWEP.MaxStock = 3
 
 SWEP.HealRange = 1200
 SWEP.Heal = 20
@@ -111,10 +111,13 @@ function SWEP:CheckHealRay()
 		ent:WorldSpaceCenter():DistToSqr(owner:WorldSpaceCenter()) <= self.HealRange * self.HealRange and self:GetCombinedPrimaryAmmo() > 0 then
 
 		if CurTime() > self:GetDTFloat(10) and not ent:GetZombieClassTable().Boss then
+			self:SetDTFloat(10, CurTime() + 1)
 			if SERVER then
-				ent:Redeem()
+				ent:Redeem(true)
 				owner:StripWeapon(self:GetClass())
 				ent:SetPos(owner:GetPos())
+			else
+				GAMEMODE:TopNotify(translate.Format("x_redeemed_y",ent:Name(),owner:Name()), " ", {killicon = "redeem"})
 			end
 			owner:GiveAchievement("redeemed")
 		end

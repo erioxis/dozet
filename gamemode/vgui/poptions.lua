@@ -244,11 +244,19 @@ function MakepOptions()
 	check:SetConVar("mat_colorcorrection")
 	check:SizeToContents()
 	list:AddItem(check)
+
 	check = vgui.Create("DCheckBoxLabel", Window)
 	check:SetText(translate.Get("op_mcore"))
 	check:SetConVar("gmod_mcore_test")
 	check:SizeToContents()
 	list:AddItem(check)
+
+	check = vgui.Create("DCheckBoxLabel", Window)
+	check:SetText(translate.Get("op_1click"))
+	check:SetConVar("zs_blockunable")
+	check:SizeToContents()
+	list:AddItem(check)
+
 
 
 

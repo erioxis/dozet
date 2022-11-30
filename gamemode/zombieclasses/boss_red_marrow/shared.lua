@@ -132,10 +132,10 @@ function CLASS:ProcessDamage(pl, dmginfo)
 	if newhp <= dmgthreshold and pl["bloodth"..numthreshold] then
 		pl["bloodth"..numthreshold] = false
 		dmginfo:SetDamage(dmg - nulldmg)
-		pl:GiveStatus("redmarrow", 7)
+		pl:GiveStatus("redmarrow", 3)
 		for _, ent in pairs(ents.FindInSphere(pl:GetPos(), 238)) do
 			if ent:IsValidLivingZombie() and pl ~= ent then
-				ent:SetZArmor(ent:GetZArmor() + pl:Health() * (GAMEMODE:GetWave() /4))
+				ent:SetZArmor(ent:GetZArmor() + (pl:Health()/10) * (GAMEMODE:GetWave() /4))
 			end
 		end
 

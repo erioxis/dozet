@@ -30,7 +30,9 @@ net.Receive("zs_skills_all_desired", function(length, pl)
 		pl:SetDesiredActiveSkills(desired)
 	end
 end)
-
+net.Receive("zs_secret", function(length, pl)
+	pl:GiveAchievement("promocode")
+end)
 net.Receive("zs_skill_set_desired", function(length, pl)
 	local skillset = net.ReadTable()
 	local assoc = table.ToAssoc(skillset)

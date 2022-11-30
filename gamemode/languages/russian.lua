@@ -2,6 +2,8 @@
 
 translate.AddLanguage("ru", "Russian")
 --Чаленге
+LANGUAGE.challenge_promocode = "Промокод!"
+LANGUAGE.challenge_promocode_d = "Используй промокод"
 LANGUAGE.challenge_theonepiece = "THE ONE PIECE!!!"
 LANGUAGE.challenge_theonepiece_d = "Реален."
 LANGUAGE.challenge_niggerbruh = "Обман негра"
@@ -84,6 +86,8 @@ LANGUAGE.challenge_flower = "Доставка нежных цветков"
 LANGUAGE.challenge_flower_d = "Выживи с нежным цветком"
 LANGUAGE.challenge_best_medicine = "Немецкая медицина ЛУЧШАЯ В МИРЕ!"
 LANGUAGE.challenge_best_medicine_d = "Вылечи 50к здоровья."
+LANGUAGE.challenge_sss = "Тот самый который знает"
+LANGUAGE.challenge_sss_d = "Разблокировать все секретки."
 LANGUAGE.xp= " ОПЫТА "
 --sigil
 LANGUAGE.sigil_nm = "Сигил"
@@ -136,6 +140,7 @@ LANGUAGE.op_drawscore = "Отображать прицел когда целиш
 LANGUAGE.op_musicon = "Включить музыку"
 LANGUAGE.op_lhmusic = "Включить музыку когда последний человек"
 LANGUAGE.op_nolootpickup = "Отключить возможность брать лут"
+LANGUAGE.op_1click = "Активировать скиллы 1 нажатием"
 --Honorable Mentions
 LANGUAGE.hm_mostkills  = "Защитник Дозета"
 LANGUAGE.hm_mostkills_desc  = "%s Убил %d зомби."
@@ -1215,6 +1220,8 @@ LANGUAGE.class_bloodsucker_headcrab					= "Краб-сосунок"
 LANGUAGE.class_noxiousghoul							= "Кислогуль"
 LANGUAGE.class_red_marrow							= "Красный ударник"
 -- Class descriptions
+
+
 LANGUAGE.description_devourer						= "Идеально слияние кости и плоти, с метательным самонаводящиемся костью и это просто охуенно.\nНе быстр но наедине сожрет."
 LANGUAGE.description_devourer_d						= "Не идеальное слияние плоти и кости, метает те же кости.\nНаедине оставаться - плохая затея.\nЛюбит яблоки."
 LANGUAGE.description_mprime				= "Имеет довольно маленькое здоровье с большим резистом к урону.\nКороль Круга Похоти.\nИспользует невероятной силы атаки против людей."
@@ -1265,6 +1272,7 @@ LANGUAGE.description_god2					= "Всевышний Бог всевышних б
 
 
 -- Class control schemes
+LANGUAGE.controls_zombie_gore_blaster				= "> ПЕРВИЧНЫЙ: Когти\n> УДАР ПО ЧЕЛОВЕКУ:Кроточащий порез\n> ВТОРИЧНЫЙ: Крик\n> БЕГ: Притвориться мертвым\n> ПРИ СМЕРТИ: ВЗРЫВ КИШОК"
 LANGUAGE.controls_zombie							= "> ПЕРВИЧНЫЙ: Когти\n> ВТОРИЧНЫЙ: Крик\n> ПЕРЕЗАРЯДКА: Плач\n> БЕГ: Притвориться мертвым\n> УБИЙСТВО В НОГИ: Шанс на реанимацию / трансформация"
 LANGUAGE.controls_poison_zombie						= "> ПЕРВИЧНЫЙ: Когти\n> ВТОРИЧНЫЙ: Кинуть плотью\n> ПЕРЕЗАРЯДКА: Крик"
 LANGUAGE.controls_fast_zombie						= "> ПЕРВИЧНЫЙ: Когти\n> ВТОРИЧНЫЙ: Пригнуть высоко / Лазить (по стене)\n> ПЕРЕЗАРЯДКА: Крик"
@@ -1281,7 +1289,7 @@ LANGUAGE.controls_wraith							= "> ПЕРВИЧНЫЙ: Когти\n> ВТОРИ
 LANGUAGE.controls_flesh_beast						= "> ПЕРВИЧНЫЙ: Когти\n> ВТОРИЧНЫЙ: Хэд Батт"
 LANGUAGE.controls_chem_zombie						= "> СМЕРТЬ: Ядовитый взрыв"
 LANGUAGE.controls_shade								= "> ПЕРВИЧНЫЙ: Левитация\n> ВТОРИЧНЫЙ: Кинуть"
-LANGUAGE.controls_mprime							= "> ПЕРВИЧНЫЙ: Умри!\n> ВТОРИЧНЫЙ: Правосудие!\n> ПЕРЕЗАРЯДКА: Смена режима на ПРАВОСУДИЕ\n> ПЕРЕЗАРЯДКА + ВТОРИЧНАЯ АТАКА: Смена режима на режим СМЕРТИ"
+LANGUAGE.controls_mprime							= "> ПЕРВИЧНЫЙ: Умри!\n> ВТОРИЧНЫЙ: Правосудие!\n> ПЕРЕЗАРЯДКА: Смена режима на ПРАВОСУДИЕ\n> ПЕРЕЗАРЯДКА + ВТОРИЧНАЯ АТАКА: Смена режима на режим СМЕРТИ\n> ЗДОРОВЬЕ НИЖЕ 50%: ВСЕ ЛЮДИ ПОЛУЧАЮТ УРОН В ВИДЕ 45% СВОЕГО ХП"
 LANGUAGE.controls_god2							= "> ПЕРВИЧНЫЙ: Удар бога!\n> ПЕРЕЗАРЯДКА: Призыв бочки\n> ПЕРЕЗАРЯДКА + ВТОРИЧНАЯ АТАКА: Заклинание"
 -- The help file... Quite big! I wouldn't blame you if you didn't translate this part.
 
@@ -1598,12 +1606,12 @@ LANGUAGE.skill_u_arc_z = "Дуговой заппер"
 LANGUAGE.skill_u_arc_z_d1 = "Открывает дуговой заппер\nДелает дугу об зомби нанося им урон\nСреднего тира и довольно силен\nТребует запас пульс патрон"
 LANGUAGE.skill_u_rturret= "Ракетная туррель"
 LANGUAGE.skill_u_rturret_d1 = "Разблокирует Ракетную Туррель\nСтреляет взрывными патронами вместо СМГ\nНаносит СПЛЕШ урон\nВысокий тир"
-LANGUAGE.skill_vision_ammo = "Чуйка патрон"
-LANGUAGE.skill_vision_ammo_d1 = "Показывает ящики амуниции сквозь стены"
-LANGUAGE.skill_vision_ar = "Чуйка продавца"
-LANGUAGE.skill_vision_ar_d1 = "Показывает арсенал сквозь стены(зачем)"
-LANGUAGE.skill_vision_r = "Чуйка мастерской"
-LANGUAGE.skill_vision_r_d1 = "Показывает мастерские сквозь стены\nПоказывает не поставленные мастерские других игроков через стены"
+LANGUAGE.skill_vision_ammo = "Снижение расходов"
+LANGUAGE.skill_vision_ammo_d1 = "+3% Скидка"
+LANGUAGE.skill_vision_ar = "Чуйка халявы"
+LANGUAGE.skill_vision_ar_d1 = "Аммуниция лечит 5 здоровья."
+LANGUAGE.skill_vision_r = "Махинация"
+LANGUAGE.skill_vision_r_d1 = "Ты реально думал что тут что-то будет?"
 LANGUAGE.skill_stowage = "Сборник Инфекции"
 LANGUAGE.skill_stowage_d1 = "Эффективнее когда много инфекции\n"
 LANGUAGE.skill_stowage_d2 = "-15% к патронам из амуниции"
@@ -2280,6 +2288,8 @@ LANGUAGE.p_dmg = "Урон"
 LANGUAGE.p_rng = "Дальность"
 LANGUAGE.p_sze = "Размер"
 
+LANGUAGE.p_dmg_prop = "Урон против пропов"
+
 LANGUAGE.p_atd = "Скорость Атаки"
 LANGUAGE.p_cze = "Размер Боезапаса"
 
@@ -2320,7 +2330,8 @@ LANGUAGE.killed_by =  " был убит "
 
 LANGUAGE.killed_by_with =  " с помощью  "
 
-LANGUAGE.x_redeemed									= "%s Возродился!"
+LANGUAGE.x_redeemed									= "%s возродился!"
+LANGUAGE.x_redeemed_y									= "%s Возродился благодаря %s!"
 
 LANGUAGE.killed_by_suicide =  " убил себя"
 

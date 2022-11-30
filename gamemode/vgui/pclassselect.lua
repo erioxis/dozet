@@ -313,7 +313,20 @@ function PANEL:RemoveDescLabels()
 
 	self.DescLabels = {}
 end
-
+local function GetMaxZombieHealth(class)
+	local lowundead = team.NumPlayers(TEAM_UNDEAD) < 4
+	local healthmulti = (GAMEMODE.ObjectiveMap or GAMEMODE.ZombieEscape) and 1 or lowundead and 1.5 or 1
+	local classtab = class
+	local health = 0
+	if classtab.Boss then
+		health = classtab.Health +  (((GAMEMODE:GetWave() * 250)) * math.max(1,team.NumPlayers(TEAM_HUMAN)/2 - (team.NumPlayers(TEAM_UNDEAD)/3)))* (classtab.DynamicHealth or 1)
+	elseif classtab.DemiBoss then
+		health = classtab.Health + (((GAMEMODE:GetWave() * 80)) * team.NumPlayers(TEAM_HUMAN)) * (classtab.DynamicHealth or 1)
+	else
+		health = (classtab.Health * healthmulti) + ((GAMEMODE:GetWave() * 45) * (classtab.DynamicHealth or 1)) 
+	end
+	return health
+end
 function PANEL:CreateDescLabels()
 	self:RemoveDescLabels()
 
@@ -347,6 +360,11 @@ function PANEL:CreateDescLabels()
 	if classtable.SWEP then
 		table.insert(lines, " ")
 		table.Add(lines, string.Explode("\n", translate.Get("p_dmg")..":"..(weapons.Get(classtable.SWEP).MeleeDamage or 1)))
+		table.Add(lines, string.Explode("\n", translate.Get("skill_add_health")..":"..GetMaxZombieHealth(classtable)))
+		table.Add(lines, string.Explode("\n", translate.Get("skill_add_speed")..":"..classtable.Speed))
+		if weapons.Get(classtable.SWEP).MeleeDamageVsProps then
+			table.Add(lines, string.Explode("\n", translate.Get("p_dmg_prop")..":"..(weapons.Get(classtable.SWEP).MeleeDamageVsProps or 1)))
+		end
 	end
 	for i, line in ipairs(lines) do
 		local label = vgui.Create("DLabel", self)

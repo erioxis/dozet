@@ -32,7 +32,7 @@ function ENT:Think()
 	end
 	local owner = self:GetOwner()
 	if CurTime() >= self.NextThink1 then 
-	for _, ent in pairs(ents.FindInSphere(self:GetPos(), 500)) do
+	for _, ent in pairs(ents.FindInSphere(self:GetPos(), 256)) do
 		target = ent
 		if WorldVisible(self:LocalToWorld(Vector(0, 0, 10)), ent:NearestPoint(self:LocalToWorld(Vector(0, 0, 10)))) and (target:IsValidLivingZombie() and not target:GetZombieClassTable().NeverAlive or target.CanRicoChet) then
 			if target:IsValidLivingZombie() or ent.AllowSelfRicoShot then

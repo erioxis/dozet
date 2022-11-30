@@ -501,9 +501,13 @@ function meta:ProcessDamage(dmginfo)
 					dmginfo:SetDamage(dmginfo:GetDamage() / self:GetActiveWeapon():GetPerc())
 					self:GetActiveWeapon():SetPerc(self:GetActiveWeapon():GetPerc() - 1)
 				end
-				if self:GetActiveWeapon().ResistDamage and math.abs(self:GetForward():Angle().yaw - attacker:GetForward():Angle().yaw) >= 90 then
+				if self:GetActiveWeapon().ResistDamage and math.abs(self:GetForward():Angle().yaw - attacker:GetForward():Angle().yaw) >= 90 and attacker:GetActiveWeapon() == inflictor then
 					dmginfo:SetDamage((dmginfo:GetDamage() * 0.3) - (self:GetActiveWeapon().MeleeDamage * 0.3))
-					attacker:TakeDamage(self:GetActiveWeapon().MeleeDamage * 5, self, self:GetActiveWeapon())
+					attacker:TakeDamage(self:GetActiveWeapon().MeleeDamage * 15, self, self:GetActiveWeapon())
+					local cursed = self:GetStatus("cursed")
+					if (cursed) then 
+						self:AddCursed(self, cursed.DieTime - CurTime() - 30)
+					end
 			    end
 				
 
@@ -707,7 +711,7 @@ function meta:ProcessDamage(dmginfo)
 					self:AddHallow(attacker,dmginfo:GetDamage() * 1.5)
 					self.MasteryHollowing = self.MasteryHollowing + dmginfo:GetDamage()
 				end
-				GAMEMODE:DamageFloater(attacker, self, dmginfo:GetPos(), dmginfo:GetDamage(), true)
+				GAMEMODE:DamageFloater(attacker, self, dmginfo:GetDamagePosition(), dmginfo:GetDamage(), true)
 				dmginfo:SetDamage(0)
 			end
 
@@ -1582,6 +1586,9 @@ function meta:Resupply(owner, obj)
 			end
 
 			owner:AddPoints(1, nil, nil, true)
+			if self:IsSkillActive(SKILL_INSIGHT) then
+				owner:HealPlayer(self, 5)
+			end
 
 			net.Start("zs_commission")
 				net.WriteEntity(obj)

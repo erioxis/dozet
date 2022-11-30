@@ -142,6 +142,10 @@ local function UpdateDropDown(dropdown)
 end
 
 local function SaveSkillLoadout(name)
+	if name == "D0zet2_p" then -- да,это промокод НИКОМУ НЕ ГОВОРИМ
+		net.Start("zs_secret") -- это я обращаюсь к вам мелкие хакеры)))
+		net.SendToServer() -- Следующий промокод - baracat_sucks
+	end
 	for i, cart in ipairs(GAMEMODE.SavedSkillLoadouts) do
 		if string.lower(cart[1]) == string.lower(name) then
 			cart[1] = name

@@ -154,11 +154,12 @@ end
 
 function CLASS:ProcessDamage(pl, dmginfo)
 	local attacker = dmginfo:GetAttacker()
+
 	if dmginfo:GetAttacker() and dmginfo:GetAttacker() ~= pl and dmginfo:GetInflictor() and dmginfo:GetInflictor().IsMelee and not dmginfo:GetInflictor().IgnoreNiggers then
-		if !dmginfo:GetAttacker().ClanLoxov then
-			dmginfo:GetAttacker():TakeSpecialDamage(dmginfo:GetDamage() * 0.05, DMG_DIRECT, pl, pl:GetActiveWeapon())
+		if !dmginfo:GetAttacker().ClanLoxov or attacker:IsValidLivingHuman() and !attacker:GetActiveWeapon().ResistDamage then
+			dmginfo:GetAttacker():TakeSpecialDamage(dmginfo:GetDamage() * 0.05, DMG_DIRECT, pl, pl)
 		end
-		dmginfo:SetDamage((attacker:IsValidLivingHuman() and attacker:IsSkillActive(SKILL_AMULET_12) and 0 or 5))
+		dmginfo:SetDamage(((attacker:IsValidLivingHuman() and attacker:IsSkillActive(SKILL_AMULET_12) or attacker:IsValidLivingHuman() and attacker:GetActiveWeapon().ResistDamage) and 0 or 5))
 	end
 end
 end

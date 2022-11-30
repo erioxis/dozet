@@ -5295,6 +5295,9 @@ function GM:WaveStateChanged(newstate, pl)
 				if pl:Frags() == 1024 then
 					pl:GiveAchievement("bitbat")
 				end
+				if pl:IsSkillUnlocked(SKILL_SECRET) and pl:IsSkillUnlocked(SKILL_SECRET2) and pl:IsSkillUnlocked(SKILL_TORMENT3) and pl:IsSkillUnlocked(SKILL_SECRET_VII) and pl:IsSkillUnlocked(SKILL_SECRET_VI) and pl:IsSkillUnlocked(SKILL_SKILLFORGODS) then
+					pl:GiveAchievement("ancient_secret")
+				end
 
 
 			

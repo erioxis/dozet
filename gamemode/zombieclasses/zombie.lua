@@ -11,7 +11,7 @@ CLASS.IsDefault = true
 CLASS.Order = 0
 
 CLASS.Health = 320
-CLASS.Speed = 175
+CLASS.Speed = 195
 CLASS.Revives = true
 
 CLASS.DynamicHealth = 1
