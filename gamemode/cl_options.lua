@@ -14,6 +14,7 @@ GM.ItemCategoryIcons = {
 }
 
 GM.RemortColors = {
+	[10] = COLOR_BLUE,
 	[9] = COLOR_TAN,
 	[8] = COLOR_BROWN,
 	[7] = COLOR_RPINK,

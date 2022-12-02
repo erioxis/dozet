@@ -986,8 +986,9 @@ local d = GM:AddSkill(SKILL_SECRET_VI, "Secret VI", GOOD.."+5 Skill Points",
 																-2,			3,					{SKILL_NONE}, TREE_GUNTREE)
 d.Hidden = true	
 d.Hidden1 = true	
+local rand = math.random(2,50)
 local d = GM:AddSkill(SKILL_SECRET_VIII, "Secret VIII", GOOD.."+10 Skill Points\nYou can!",
-																-2,			32,					{SKILL_NONE}, TREE_GUNTREE)
+																-2,			rand,					{SKILL_NONE}, TREE_GUNTREE)
 GM:AddSkillModifier(SKILL_SECRET_VIII, SKILLMOD_SPOINT, 11)
 d.Hidden = true	
 d.Hidden1 = true
@@ -1841,7 +1842,7 @@ GM:SetSkillModifierFunction(SKILLMOD_SPEED, function(pl, amount)
 	pl.SkillSpeedAdd = amount
 end)
 GM:SetSkillModifierFunction(SKILLMOD_LUCK, function(pl, amount)
-	pl.Luck = amount
+	pl.Luck = ((pl:IsSkillActive(SKILL_LUCKY_UNLIVER) and GAMEMODE:GetWave() or 0) * 2) + amount
 end)
 
 

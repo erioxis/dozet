@@ -577,17 +577,22 @@ function GM:DrawFearMeter(power, screenscale)
 			draw_SimpleTextBlurry(translate.Format("resist_x", math.ceil(self:GetDamageResistance(currentpower) * 100)), "ZSDamageResistance", w * 0.5, my + size * 0.75, Color(currentpower * 200, 200 - currentpower * 200, 0, 255), TEXT_ALIGN_CENTER)
 		end
 	end
-
-	if self:GetUseSigils() and self.MaxSigils > 0 then
+	local sigilsc = 0
+	for _, ent in pairs(ents.GetAll()) do 
+		if ent:GetClass() == "prop_obj_sigil" then
+			sigilsc = sigilsc + 1
+		end
+	end
+	if  sigilsc > 0 then
 		local sigwid, sighei = screenscale * 18, screenscale * 36
 		local extrude = size * 0.25 + sighei / 2
 		local angle_current = -180
-		local angle_step = 180 / (self.MaxSigils - 1)
+		local angle_step = 180 / (sigilsc - 1)
 		local rad, sigil, health, maxhealth, corrupt, damageflash, sigx, sigy, healthfrac
 
 		local sigils = GAMEMODE.CachedSigils
 		local corruptsigils = 0
-		for i=1, self.MaxSigils do
+		for i=1, sigilsc do
 			sigil = sigils[i]
 			health = 0
 			maxhealth = 0
@@ -841,7 +846,7 @@ function GM:DrawSigilTeleportBar(x, y, fraction, target, screenscale)
 	local letter = "?"
 	for i, sigil in pairs(ents.FindByClass("prop_obj_sigil")) do
 		if target == sigil then
-			letter = string.char(64 + i)
+			letter = string.char(65 + i)
 			break
 		end
 	end
@@ -928,9 +933,7 @@ function GM:_HUDPaint()
 
 	self:HUDDrawTargetID(myteam, screenscale)
 
-	if self:GetWave() > 0 then
-		self:DrawFearMeter(self:CachedFearPower(), screenscale)
-	end
+	self:DrawFearMeter(self:CachedFearPower(), screenscale)
 
 	if myteam == TEAM_UNDEAD then
 		self:ZombieHUD()
@@ -979,6 +982,9 @@ end
 
 local colLifeStats = Color(255, 50, 50, 255)
 function GM:ZombieHUD()
+	if sigiltp and sigiltp:IsValid() then
+		self:DrawSigilTeleportBar(w * 0.5, h * 0.55, 1 - sigiltp:GetTimeRemaining() / sigiltp:GetMaxTime(), sigiltp:GetTargetSigil(), screenscale)
+	end
 	if self.LifeStatsEndTime and CurTime() < self.LifeStatsEndTime and (self.LifeStatsBarricadeDamage > 0 or self.LifeStatsHumanDamage > 0 or self.LifeStatsBrainsEaten > 0) then
 		colLifeStats.a = math.Clamp((self.LifeStatsEndTime - CurTime()) / (self.LifeStatsLifeTime * 0.33), 0, 1) * 255
 
@@ -1260,7 +1266,7 @@ function GM:DrawSigilIndicators()
 				surface_DrawTexturedRectUV(-64, -128, 128, 256 * missinghealthfrac, 0, 0, 1, missinghealthfrac)
 			end
 
-			draw_SimpleTextBlurry(string.char(64 + i), "ZS3D2DFont2Big", 0, 128, COLOR_GRAY, TEXT_ALIGN_CENTER)
+			draw_SimpleTextBlurry(string.char(65 + i), "ZS3D2DFont2Big", 0, 128, COLOR_GRAY, TEXT_ALIGN_CENTER)
 
 			render_FogMode(oldfogmode)
 			cam_End3D2D()

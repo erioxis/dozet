@@ -2240,7 +2240,7 @@ function meta:DoSigilTeleport(target, from, corrupted)
 		return
 	end
 
-	if self:IsValidLivingHuman() and target:IsValid() and corrupted == target:GetSigilCorrupted() then
+	if (self:IsValidLivingHuman() or self:IsValidLivingZombie()) and target:IsValid() and corrupted == target:GetSigilCorrupted() then
 		if CurTime() >= (self._NextSigilTeleportEffect or 0) then
 			self._NextSigilTeleportEffect = CurTime() + 0.25
 

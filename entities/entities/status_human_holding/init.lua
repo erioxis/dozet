@@ -225,9 +225,9 @@ function ENT:Think()
 	end
 	local ent = {}
 	local ent2 = NULL
-
+	local anti = {"prop_invitem", "prop_weapon", "prop_ammo"}
 	for _, ent1 in pairs(ents.FindInSphere((objectphys:GetPos() or self:GetPos()), (object:GetModelScale() or 1) * 35)) do
-		if ent1:IsValid() and ent1:IsPlayer() and ent1:Team() == TEAM_UNDEAD or ent1:GetClass() == "prop_ragdoll"then
+		if (ent1:IsValid() and ent1:IsPlayer() and ent1:Team() == TEAM_UNDEAD or ent1:GetClass() == "prop_ragdoll") and !table.HasValue(anti,object:GetClass()) then
 			table.insert(ent,#ent + 1,ent1)
 			ent2 = ent1
 

@@ -32,7 +32,8 @@ hook.Add("PostDrawTranslucentRenderables", "DrawDamage", function()
 			c.a = math.Clamp(particle.DieTime - curtime, 0, 1) * 220
 			local victim = particle.Entity
 			cam.Start3D2D(particle:GetPos(), ang, 0.1 * GAMEMODE.DamageNumberScale)
-				draw.SimpleText(particle.Amount..(victim:IsPlayer() and GAMEMODE.ShowPercDmg and !particle.Bool and " ("..math.Round((particle.Amount/(victim:GetMaxZombieHealth() or 0) * 100)).."%)" or ""), "ZS3D2DFont2", 0, 0, c, TEXT_ALIGN_CENTER, TEXT_ALIGN_BOTTOM)
+			draw.SimpleText(particle.Amount..(victim:IsPlayer() and GAMEMODE.ShowPercDmg and !particle.Bool and " ("..math.Round((particle.Amount/(victim:GetMaxZombieHealth() or 0) * 100)).."%)" or ""), "ZS3D2DFont2", 0, 0, c, TEXT_ALIGN_CENTER, TEXT_ALIGN_BOTTOM)
+			cam.End3D2D()
 			cam.End3D2D()
 		end
 	end
@@ -49,7 +50,7 @@ end)
 local gravity = Vector(0, 0, -500)
 function EFFECT:Init(data)
 	local pos = data:GetOrigin()
-	local bool = data:GetAttachment()
+	local bool = (data:GetAttachment() or -1)
 	local amount = data:GetMagnitude()
 	local Type = data:GetScale()
 	local victim = data:GetEntity()

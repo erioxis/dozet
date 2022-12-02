@@ -88,6 +88,8 @@ LANGUAGE.challenge_best_medicine = "Немецкая медицина ЛУЧША
 LANGUAGE.challenge_best_medicine_d = "Вылечи 50к здоровья."
 LANGUAGE.challenge_sss = "Тот самый который знает"
 LANGUAGE.challenge_sss_d = "Разблокировать все секретки."
+LANGUAGE.challenge_happy = "Шестой сигил."
+LANGUAGE.challenge_happy_d = "ТЕБЕ НУЖЕН 6 СИГИЛ!"
 LANGUAGE.xp= " ОПЫТА "
 --sigil
 LANGUAGE.sigil_nm = "Сигил"

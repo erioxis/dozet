@@ -1320,7 +1320,7 @@ function GM:Think()
 				if pl:HasTrinket(d) and pl:IsSkillActive(SKILL_SOUL_TRADE) and not pl:HasTrinket("toysoul") and not pl:SteamID64() == "76561198813932012" then
 					pl:Kill()
 				end
-				if (pl:GetActiveWeapon().Tier or 1) <= 4 and pl:HasTrinket("sin_envy") and pl:GetActiveWeapon():GetClass() ~= "weapon_zs_fists" and pl:GetActiveWeapon() then
+				if pl:GetActiveWeapon() and (pl:GetActiveWeapon().Tier or 1) <= 4 and pl:HasTrinket("sin_envy") and pl:GetActiveWeapon():GetClass() ~= "weapon_zs_fists" then
 					pl:StripWeapon(pl:GetActiveWeapon():GetClass())
 				end
 				local barac = pl:IsSkillActive(SKILL_BARA_CURSED)
@@ -1348,11 +1348,11 @@ function GM:Think()
 				else
 					pl.StuckedInProp = nil
 				end
-				if !pl:OnGround() then
+				if !pl:OnGround() and pl:GetVelocity():LengthSqr() < 7600 or pl:GetVelocity():LengthSqr() < 7600 then
 					pl.Stuckedtrue = true
 				else
 					pl.Stuckedtrue = nil
-					pl.Stuckedtrue_C = CurTime() - 3
+					pl.Stuckedtrue_C = CurTime() + 3
 				end
 				if pl:IsSkillActive(SKILL_BERSERK) and !pl.BerserkerCharge and pl:GetTimerBERS() <= CurTime() and pl:Health() < pl:GetMaxHealth() * 0.1 then
 					pl:Kill()
@@ -5260,13 +5260,12 @@ function GM:WaveStateChanged(newstate, pl)
 
 		for _, pl in pairs(player.GetAll()) do
 			if pl:Team() == TEAM_HUMAN and pl:Alive() then
-				local lucktrue  = pl.Luck or 1
+				local lucktrue  = (pl.Luck or 1) + ((pl:IsSkillActive(SKILL_LUCKY_UNLIVER) and self:GetWave() or 0) * 2)
 				if self.EndWaveHealthBonus > 0 and !pl:HasTrinket("lehasoul") then
 					pl:SetHealth(math.min(pl:GetMaxHealth(), pl:Health() + self.EndWaveHealthBonus))
 				end
 				if pl:IsSkillActive(SKILL_LUCKY_UNLIVER) then
 					pl:SetMaxHealth(pl:GetMaxHealth() * 0.9) pl:SetHealth(pl:Health() * 0.5)
-					pl.Luck = pl.Luck + 1
 				end
 				if pl:IsSkillActive(SKILL_XPHUNTER) then
 					pl:AddZSXP(5 + self.GetWave() * 10)
@@ -5295,7 +5294,7 @@ function GM:WaveStateChanged(newstate, pl)
 				if pl:Frags() == 1024 then
 					pl:GiveAchievement("bitbat")
 				end
-				if pl:IsSkillUnlocked(SKILL_SECRET) and pl:IsSkillUnlocked(SKILL_SECRET2) and pl:IsSkillUnlocked(SKILL_TORMENT3) and pl:IsSkillUnlocked(SKILL_SECRET_VII) and pl:IsSkillUnlocked(SKILL_SECRET_VI) and pl:IsSkillUnlocked(SKILL_SKILLFORGODS) then
+				if pl:IsSkillUnlocked(SKILL_SECRET) and pl:IsSkillUnlocked(SKILL_SECRET2) and pl:IsSkillUnlocked(SKILL_TORMENT3) and pl:IsSkillUnlocked(SKILL_SECRET_VII) and pl:IsSkillUnlocked(SKILL_SECRET_VI) and pl:IsSkillUnlocked(SKILL_SKILLFORGODS) and pl:IsSkillUnlocked(SKILL_SECRET_VIII) then
 					pl:GiveAchievement("ancient_secret")
 				end
 

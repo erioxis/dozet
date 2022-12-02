@@ -258,6 +258,7 @@ local function ItemPanelDoClick(self)
 
 	local purb = viewer.m_PurchaseB
 	purb.ID = self.ID
+
 	purb.DoClick = function() RunConsoleCommand("zs_pointsshopbuy", self.ID, self.NoPoints and "scrap") end
 	purb:SetPos(canammo and viewer:GetWide() / 4 - viewer:GetWide() / 8 - 20 or viewer:GetWide() / 4, viewer:GetTall() - 64 * screenscale)
 	purb:SetVisible(true)

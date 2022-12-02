@@ -21,7 +21,7 @@ function ENT:Think()
 		self:Remove()
 	end
 
-	if froms and froms:IsValid() and not froms:IsWeapon() and (froms:GetSigilCorrupted() or owner:GetPos():DistToSqr(froms:GetPos()) > 16384) then
+	if froms and froms:IsValid() and not froms:IsWeapon() and (froms:GetSigilCorrupted() or owner:GetPos():DistToSqr(froms:GetPos()) > 16384) and !owner:IsValidLivingZombie() then
 		self:Remove()
 	end
 

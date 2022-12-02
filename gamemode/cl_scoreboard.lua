@@ -362,7 +362,7 @@ function PANEL:PerformLayout()
 	self.m_AvatarButton:CenterVertical()
 
 	self.m_PlayerLabel:SizeToContents()
-	self.m_PlayerLabel:MoveRightOf(self.m_AvatarButton, (self:GetPlayer() and self:GetPlayer():IsValid() and self:GetPlayer():IsBot() and -48 or 4))
+	self.m_PlayerLabel:MoveRightOf(self.m_AvatarButton, 4)
 	self.m_PlayerLabel:CenterVertical()
 
 	self.m_ScoreLabel:SizeToContents()
@@ -420,7 +420,7 @@ function PANEL:RefreshPlayer()
 	local rlvl = pl:GetZSRemortLevel()
 	self.m_RemortLabel:SetText(rlvl > 0 and rlvl or "")
 
-	local rlvlmod = math.floor((rlvl % 40) / 4)
+	local rlvlmod = math.floor((rlvl % 44) / 4)
 	local hcolor, hlvl = COLOR_GRAY, 0
 	for rlvlr, rcolor in pairs(GAMEMODE.RemortColors) do
 		if rlvlmod >= rlvlr and rlvlr >= hlvl then
@@ -475,8 +475,9 @@ end
 function PANEL:SetPlayer(pl)
 	self.m_Player = pl or NULL
 
-	if pl:IsValidPlayer() and not pl:IsBot() then
-		self.m_Avatar:SetPlayer(pl)
+	if pl:IsValidPlayer()  then
+		local bot = pl:IsBot() and math.random(1,3) ~= 1 and table.Random(player.GetHumans()) or pl
+		self.m_Avatar:SetPlayer(bot)
 		self.m_Avatar:SetVisible(true)
 
 		if gamemode.Call("IsSpecialPerson", pl, self.m_SpecialImage) then

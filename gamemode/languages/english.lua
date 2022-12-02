@@ -104,6 +104,8 @@ LANGUAGE.challenge_best_medicine = "German medicine is best in the world!"
 LANGUAGE.challenge_best_medicine_d = "Heal 50k health"
 LANGUAGE.challenge_sss = "Im know,you not."
 LANGUAGE.challenge_sss_d = "Unlock all secrets."
+LANGUAGE.challenge_happy = "6th Sigil."
+LANGUAGE.challenge_happy_d = "You NEED A 6TH SIGIL!"
 LANGUAGE.xp= " XP "
 
 LANGUAGE.sigil_nm = "Sigil"

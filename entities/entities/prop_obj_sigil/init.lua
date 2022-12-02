@@ -60,12 +60,20 @@ end
 
 function ENT:Use(pl)
 	if pl.NextSigilTPTry and pl.NextSigilTPTry >= CurTime() then return end
-
-	if pl:Team() == TEAM_HUMAN and pl:Alive() and not self:GetSigilCorrupted() then
+	local sigilsc = 0
+	for _, ent in pairs(ents.GetAll()) do 
+		if ent:GetClass() == "prop_obj_sigil" then
+			sigilsc = sigilsc + 1
+		end
+	end
+	if  sigilsc > 5 then 
+		pl:GiveAchievement("happy")
+	end
+	if pl:Team() == TEAM_HUMAN and pl:Alive() and not self:GetSigilCorrupted() or pl:Team() == TEAM_UNDEAD and pl:Alive() and self:GetSigilCorrupted() then
 		local tpexist = pl:GetStatus("sigilteleport")
 		if tpexist and tpexist:IsValid() then return end
 
-		if GAMEMODE:NumUncorruptedSigils() >= 2 then
+		if GAMEMODE:NumUncorruptedSigils() >= 2 or pl:Team() == TEAM_UNDEAD and GAMEMODE:NumCorruptedSigils() >= 2 then
 			local status = pl:GiveStatus("sigilteleport")
 			if status:IsValid() then
 				status:SetFromSigil(self)
