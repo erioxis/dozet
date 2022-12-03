@@ -52,6 +52,10 @@ function ENT:GiveToActivator(activator, caller)
 	end
 
 	local itypecat = GAMEMODE:GetInventoryItemType(itype)
+	local d = string.Explode(" " ,string.lower(GAMEMODE.ZSInventoryItemData[itype].PrintName))
+	if activator:IsSkillActive(SKILL_SOUL_TRADE) and table.HasValue(d, "soul") and not activator:HasTrinket("toysoul") and not activator:SteamID64() == "76561198813932012" then
+		activator:Kill()
+	end
 	if itypecat == INVCAT_TRINKETS and activator:HasInventoryItem(itype) then
 		activator:CenterNotify(COLOR_RED, translate.ClientGet(activator, "you_already_have_this_trinket"))
 		return

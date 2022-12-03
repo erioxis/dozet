@@ -95,13 +95,6 @@ function PLAYER:GiveAchievementProgress(id, count)
     self:ProcessAchievements()
 end
 
--- HERE COMES THE LOGIC!... I took it from a previous recoding attempt, back when I separated a function from its perenthesis
-hook.Add("PlayerSpawn", "HNS.Achievements", function(ply)
-    -- Setup
-    ply.HWTime = 0
-    ply.TauntsSingle = 0
-end)
-
 local lastSecond = 0
 hook.Add("PlayerSay", "HNS.Achievements", function(ply, text)
     local playerInput = string.Explode( " ", text )

@@ -479,6 +479,7 @@ function PANEL:SetPlayer(pl)
 		local bot = pl:IsBot() and math.random(1,3) ~= 1 and table.Random(player.GetHumans()) or pl
 		self.m_Avatar:SetPlayer(bot)
 		self.m_Avatar:SetVisible(true)
+		--print(bot:Nick()) 
 
 		if gamemode.Call("IsSpecialPerson", pl, self.m_SpecialImage) then
 			self.m_SpecialImage:SetVisible(true)

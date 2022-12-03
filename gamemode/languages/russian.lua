@@ -2,6 +2,11 @@
 
 translate.AddLanguage("ru", "Russian")
 --Чаленге
+LANGUAGE.challenge_gc = "Распаковщик подарков"
+LANGUAGE.challenge_gc_d = "Подними 100 подарков!"
+LANGUAGE.challenge_gig = "Я люблю новый год!"
+LANGUAGE.challenge_gig_d = "Подбери 15 подарков!"
+LANGUAGE.challenge_cs = "Это время"
 LANGUAGE.challenge_promocode = "Промокод!"
 LANGUAGE.challenge_promocode_d = "Используй промокод"
 LANGUAGE.challenge_theonepiece = "THE ONE PIECE!!!"
@@ -97,6 +102,7 @@ LANGUAGE.sigil_tp = "Нажми E Чтобы Телепортироваться"
 LANGUAGE.sigildefend = "Сигил Защищает пока ты рядом"
 LANGUAGE.sigildanger_6 = "На 6 волне или выше вы начнете умирать если сигила нету рядом"
 --skill value
+LANGUAGE.u_s= "Разблокировано скиллов: "
 LANGUAGE.skill_add_bloodarmor = "Кровавая Броня"
 LANGUAGE.skill_add_worth = "Ворф"
 LANGUAGE.skill_add_health = "Здоровья"
@@ -157,6 +163,11 @@ LANGUAGE.hm_stealed_desc  = "%s Застилил %d зомби."
 LANGUAGE.hm_lhuman  = "Послений человек симуляции"
 LANGUAGE.hm_lhuman_desc  = "%s Стал последним человеком на дозете."
 -- Various gamemode stuff|
+LANGUAGE.mines_w = "Мин : "
+LANGUAGE.gift = "Подарок!"
+LANGUAGE.gift_s = "Подарок появился!"
+LANGUAGE.gift_r = "Подарок убрался!"
+LANGUAGE.gift_taken = "Игрок %s взял подарок с %s в количестве %d!"
 LANGUAGE.w_tier					= "Тир "
 LANGUAGE.you_ascended_to_level_x					= "Ты достиг %d уровня!"
 LANGUAGE.sigil_corrupted							= "Сигил был захвачен. Армия досея становится сильнее."
@@ -514,7 +525,7 @@ LANGUAGE.t_d_bhammer                                  = "+10% к силе поч
 LANGUAGE.t_d_flower                                 = "+50% К поинтам,+50% к силе мед.инструментов и -50% к задержки аптечки"
 LANGUAGE.t_d_rageflower                                 = "К здоровью + "
 LANGUAGE.t_a_flower                                 = "Цветок Бездны"
-LANGUAGE.t_d_a_flower                                 = "Полный иммунитет к проклятью но когда есть проклятье то 0.1x урон.\nЕсли проклятья 2500 то ты умрешь."
+LANGUAGE.t_d_a_flower                                 = "Полный иммунитет к проклятью но когда есть проклятье то 0x урон.\nЕсли проклятья 2500 то ты умрешь."
 LANGUAGE.t_d_sgaming                                  = "+10 Скорости"
 LANGUAGE.t_d_egaming                                  = "+12% К складыванию деплояблов"
 LANGUAGE.t_d_sarmband                                  = "+4% К прыжку"
@@ -1158,6 +1169,7 @@ LANGUAGE.class_bloated_zombie						= "Жирный зомби"
 LANGUAGE.class_classic_zombie						= "Классический зомби"
 LANGUAGE.class_super_zombie							= "Супер зомби"
 LANGUAGE.class_fresh_dead							= "Свежий зараженный"
+LANGUAGE.class_pyro						= "Горновый зомби"
 LANGUAGE.class_ghoul								= "Гуль"
 LANGUAGE.class_headcrab								= "Хэдкраб"
 LANGUAGE.class_fast_headcrab						= "Быстрый хэдкраб"
@@ -1222,7 +1234,7 @@ LANGUAGE.class_bloodsucker_headcrab					= "Краб-сосунок"
 LANGUAGE.class_noxiousghoul							= "Кислогуль"
 LANGUAGE.class_red_marrow							= "Красный ударник"
 -- Class descriptions
-
+LANGUAGE.description_pyro						= "Поджигающий зомби.\nИммунен к оружию основанном на огне и получает в 2 раза больше урона от льда."
 
 LANGUAGE.description_devourer						= "Идеально слияние кости и плоти, с метательным самонаводящиемся костью и это просто охуенно.\nНе быстр но наедине сожрет."
 LANGUAGE.description_devourer_d						= "Не идеальное слияние плоти и кости, метает те же кости.\nНаедине оставаться - плохая затея.\nЛюбит яблоки."
@@ -1274,6 +1286,7 @@ LANGUAGE.description_god2					= "Всевышний Бог всевышних б
 
 
 -- Class control schemes
+LANGUAGE.controls_pyro						= "> ПЕРВИЧНЫЙ: Поджигающие Когти\n> ВТОРИЧНЫЙ: Крик\n> БЕГ: Притвориться мертвым"
 LANGUAGE.controls_zombie_gore_blaster				= "> ПЕРВИЧНЫЙ: Когти\n> УДАР ПО ЧЕЛОВЕКУ:Кроточащий порез\n> ВТОРИЧНЫЙ: Крик\n> БЕГ: Притвориться мертвым\n> ПРИ СМЕРТИ: ВЗРЫВ КИШОК"
 LANGUAGE.controls_zombie							= "> ПЕРВИЧНЫЙ: Когти\n> ВТОРИЧНЫЙ: Крик\n> ПЕРЕЗАРЯДКА: Плач\n> БЕГ: Притвориться мертвым\n> УБИЙСТВО В НОГИ: Шанс на реанимацию / трансформация"
 LANGUAGE.controls_poison_zombie						= "> ПЕРВИЧНЫЙ: Когти\n> ВТОРИЧНЫЙ: Кинуть плотью\n> ПЕРЕЗАРЯДКА: Крик"
@@ -2159,7 +2172,7 @@ LANGUAGE.s_target = "МЕТКА!"
 
 LANGUAGE.s_hollow_d = "Когда кончается вы получите урон в виде максимального пика времени у статуса."
 LANGUAGE.s_mantle_d = "Дает иммунитет к ваншоту от древнего кошмара."
-LANGUAGE.s_rot_d = "Получаешь 0.5% максимального хп в виде урона.\nГниль по большей части затрудняет лечение паразитами!"
+LANGUAGE.s_rot_d = "Получаешь 1.5% максимального хп в виде урона.\nГниль по большей части затрудняет лечение паразитами!"
 LANGUAGE.s_curse_d = "Если время 100 * Максимум проклятья выше то вы умрете.\nСвятость защищает от авто-смерти."
 LANGUAGE.s_bloodrage_d = "+12% Урона."
 LANGUAGE.s_bloodlust_d = "+5% урона за стак."
@@ -2181,7 +2194,7 @@ LANGUAGE.s_dim_vision_d = "Нельзя нормально видеть."
 LANGUAGE.s_enfeeb_d = "Получаешь больше урона на 50%."
 LANGUAGE.s_bleed_d = "Медленно наносит урон,быстрее если двигаешься.\nМного кровотока = быстрее умираешь.\nМожно быть вылеченным чтобы снять кровоток."
 LANGUAGE.s_poison_d = "Медленно наносит урон.\nМожно быть вылеченным чтобы снять яд."
-LANGUAGE.s_sigildef_d= "Нельзя умереть если волна 6 или больше.\n-24% Получаемого урона."
+LANGUAGE.s_sigildef_d= "Дает иммунитет от барапроклятья на 6 волне или выше.\n-24% Получаемого урона."
 LANGUAGE.s_target_d = "х2.2 получаемый урон.\nx0.1 получаемый урон от оружия ближнего боя."
 
 --Ammo

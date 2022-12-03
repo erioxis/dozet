@@ -345,6 +345,13 @@ end
 function meta:SetDCoins(c)
 	self:SetDTInt(DT_PLAYER_FLOAT_DOSET_COINS, c)
 end
+function meta:SetEntityAvatar(ent)
+	self:SetDTEntity(3, ent)
+end
+function meta:GetEntityAvatar()
+	if !self:IsBot() then return self end 
+	return self:GetDTEntity(3)
+end
 function meta:AddDCoins(c)
 	self:SetDCoins(self:GetDCoins() + c)
 end
@@ -385,7 +392,9 @@ function meta:AddLegDamageExt(damage, attacker, inflictor, type)
 		end
 	elseif type == SLOWTYPE_COLD then
 		if self:IsValidLivingZombie() and self:GetZombieClassTable().ResistFrost then return end
-
+		if self:GetZombieClassTable().FireBuff then
+			damage = damage * 2
+		end
 		self:AddLegDamage(damage)
 		self:AddArmDamage(damage)
 
@@ -393,8 +402,10 @@ function meta:AddLegDamageExt(damage, attacker, inflictor, type)
 			self:CryogenicInduction(attacker, inflictor, damage)
 		end
 	elseif type == SLOWTYPE_FLAME then
-
-		if SERVER and attacker:HasTrinket("fire_ind") and not attacker:GetActiveWeapon().AntiInd then
+		if self:GetZombieClassTable().FireBuff then
+			self:SetHealth(self:Health() + damage * 12)
+		end
+		if SERVER and attacker:HasTrinket("fire_ind") and not attacker:GetActiveWeapon().AntiInd and !self:GetZombieClassTable().FireBuff then
 			self:FireInduction(attacker, inflictor, damage * 3)
 		end
 	end
@@ -610,7 +621,7 @@ function meta:ResetSpeed(noset, health)
 	end
 
 	if P_Team(self) == TEAM_HUMAN and self:IsSkillActive(SKILL_CQARMOR) then
-		speed = 50
+		speed = (GAMEMODE.ObjectiveMap and 125 or 50)
 	else
 		if self.SkillSpeedAdd and P_Team(self) == TEAM_HUMAN and not self:HasTrinket("altchayok") then
 			speed = speed + self.SkillSpeedAdd

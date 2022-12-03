@@ -483,6 +483,7 @@ function GM:CenterNotifyAll(...)
 end
 GM.CenterNotify = GM.CenterNotifyAll
 GM.NoBaracursed = true
+GM.DamageLock = false
 
 function GM:TopNotifyAll(...)
 	net.Start("zs_topnotify")
@@ -1329,10 +1330,10 @@ function GM:Think()
 						pl:TakeSpecialDamage(((pl:HasTrinket("jacobsoul") and 1 or 8 ) * (pl.TickBuff or 0)) /(barac and 200 or 1), DMG_DIRECT)
 						pl.NextDamage = time + (pl:HasTrinket("jacobsoul") and 4 or 2.4) * (barac and 3 or 1)
 						pl:CenterNotify(COLOR_RED, translate.ClientGet(pl, "danger"))
-						pl.TickBuff = pl.TickBuff + (pl.TickBuff * 0.2) + 1
+						pl.TickBuff = pl.TickBuff + (pl.TickBuff * 0.2) + 1 * (pl.IsLastHuman and 20 or 1)
 					end
 					if pl:GetStatus("sigildef") and self:GetWave() >= 6 and time >= pl.NextDamage and self:GetWaveActive() and pl:HasTrinket("jacobsoul") and not (self:GetWave() == 12) then
-						pl:TakeSpecialDamage(13, DMG_DIRECT)
+						pl:TakeSpecialDamage(13 * (pl.IsLastHuman and 5 or 1), DMG_DIRECT)
 						pl.NextDamage = time + 7
 						pl:CenterNotify(COLOR_GREEN, translate.ClientGet(pl, "danger_x"))
 					end
@@ -1635,6 +1636,10 @@ local function DoDropStart(pl)
 		func(pl, start)
 	end
 	local start1 = pl:GetRandomStartingItem1()
+	--local d = string.Explode(" " ,string.lower(self.ZSInventoryItemData[start1].PrintName))
+--[[	if pl:IsSkillActive(SKILL_SOUL_TRADE) and table.HasValue(d, "soul") and not pl:HasTrinket("toysoul") and not pl:SteamID64() == "76561198813932012" then
+		pl:Kill()
+	end]]
 	if start1 then
 		local func1 = GAMEMODE:GetInventoryItemType(start1) == INVCAT_TRINKETS and pl.AddInventoryItem or pl.Give
 		func1(pl, start1)
@@ -4329,6 +4334,16 @@ function GM:HumanKilledZombie(pl, attacker, inflictor, dmginfo, headshot, suicid
 		local inflictor2 = inflictor
 		timer.Simple(0, function() inflictor2.Eater = true end)
 		timer.Simple(0.9, function() inflictor2.Eater = nil end)
+	end
+	if math.random(100-math.min(50,(attacker.Luck or 1))) == 50 or pl:GetZombieClassTable().Boss or pl:GetZombieClassTable().DemiBoss then
+		for i=1,(pl:GetZombieClassTable().Boss and 2 or 1) do
+			local d = ents.Create("prop_gift")
+			if d:IsValid() then
+				d:SetPos(pl:GetPos() + Vector(0,0,15))
+				d:SetAngles(pl:GetAngles())
+				d:Spawn()
+			end
+		end
 	end
 
 	local totaldamage = 0

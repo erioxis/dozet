@@ -505,6 +505,14 @@ function PANEL:Init()
 	local bottom = vgui.Create("DEXRoundedPanel", self)
 	bottom:SetSize(600 * screenscale, math.Clamp(84 * screenscale, 70, 125))
 	bottom:DockPadding(10, 10, 10, 10)
+	if MySelf:IsSkillUnlocked(SKILL_INF_POWER) then
+		local bottom1 = vgui.Create("DLabel", self)
+		bottom1:SetSize(1200 * screenscale, math.Clamp(84 * screenscale, 40, 125))
+		bottom1:SetPos(0 * screenscale, -24 * screenscale)
+		bottom1:SetFont("ZSHUDFontSmall")
+		bottom1:SetText(translate.Get("u_s")..#MySelf:GetUnlockedSkills().."(+"..(#MySelf:GetUnlockedSkills()*1.5).."% dmg)")
+		bottom1:DockPadding(0, 10, 0, 0)
+	end
 
 	local spremaining = vgui.Create("DEXChangingLabel", bottom)
 	spremaining:SetChangeFunction(function()

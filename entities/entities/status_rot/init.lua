@@ -13,7 +13,7 @@ end
 function ENT:Think()
 	local owner = self:GetOwner()
 	if owner:IsValid() then
-		owner:TakeDamage(owner:GetMaxHealth()*0.005, self.Damager and self.Damager:IsValid() and self.Damager:IsPlayer() and self.Damager or owner, self)
+		owner:TakeDamage(owner:GetMaxHealth()*0.015, self.Damager and self.Damager:IsValid() and self.Damager:IsPlayer() and self.Damager or owner, self)
 		if owner:IsSkillActive(SKILL_CQARMOR) then
 			owner:SetHealth(owner:Health() * 0.99)
 		end

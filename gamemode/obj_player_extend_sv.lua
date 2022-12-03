@@ -68,7 +68,7 @@ function meta:ProcessDamage(dmginfo)
             dmginfo:ScaleDamage(2)
 		end
 		if attacker:IsValidLivingHuman() and attacker:HasTrinket("a_flower") and (attacker:GetStatus("cursed")) then
-            dmginfo:ScaleDamage(0.1)
+            dmginfo:ScaleDamage(0)
 		end
 		if attacker:IsValidLivingHuman() and attacker:IsSkillActive(SKILL_AMULET_12) then
             dmginfo:ScaleDamage(0)
@@ -110,13 +110,7 @@ function meta:ProcessDamage(dmginfo)
 		end
 
 		self.ShouldFlinch = true
-		if attacker:IsValidLivingHuman() then
-			local damage = dmginfo:GetDamage()
-			local wep = attacker:GetActiveWeapon()
-			local damage1 = damage
-			attacker:SetDPS(attacker:GetDPS() + damage)
-			timer.Create("DPS"..damage..attacker:Nick()..math.Rand(1,5)..damage*0.5, 1, 1, function() attacker:SetDPS(attacker:GetDPS() - damage1) end)
-		end
+
 		if attacker:IsValidLivingHuman() and inflictor:IsValid() and inflictor == attacker:GetActiveWeapon() then
 			local damage = dmginfo:GetDamage()
 			local wep = attacker:GetActiveWeapon()
@@ -128,7 +122,7 @@ function meta:ProcessDamage(dmginfo)
 				attacker:SetHealth(math.min(attacker:GetMaxHealth(), attacker:Health() + attacker:GetMaxHealth() * 0.11))
 			end
 			if attacker:IsSkillActive(SKILL_INF_POWER) then
-				dmginfo:ScaleDamage(0.5 + #attacker:GetUnlockedSkills() * 0.015)
+				dmginfo:ScaleDamage(0.25 + #attacker:GetUnlockedSkills() * 0.015)
 			end
 			if damage >= 10000 then
 				attacker:GiveAchievement("opm")
@@ -152,7 +146,7 @@ function meta:ProcessDamage(dmginfo)
 
 				end
 			end
-			if self:GetZArmor() > 0 then
+			if self:GetZArmor() > 0 and (!attacker:GetStatus("renegade"))then
 				local damage = dmginfo:GetDamage()
 				if damage > 0 then
 		
@@ -236,7 +230,16 @@ function meta:ProcessDamage(dmginfo)
 				end
 			end
 		end
-
+		if attacker:IsValidLivingHuman() then
+			local damage = dmginfo:GetDamage()
+			local wep = attacker:GetActiveWeapon()
+			if wep and (wep.Tier or 1) <= 4 and damage >= ((wep.IsMelee and wep.MeleeDamage or wep.Primary.Damage or 1) * (wep.Tier or 1)) and GAMEMODE.DamageLock then
+				dmginfo:SetDamage(((wep.IsMelee and wep.MeleeDamage or wep.Primary.Damage or 1) * (wep.Tier or 1)))
+			end
+			local damage1 = damage
+			attacker:SetDPS(attacker:GetDPS() + damage)
+			timer.Create("DPS"..damage..attacker:Nick()..math.Rand(1,5)..damage*0.5, 1, 1, function() attacker:SetDPS(attacker:GetDPS() - damage1) end)
+		end
 		return not dmgbypass and self:CallZombieFunction1("ProcessDamage", dmginfo)
 	end
 	
@@ -876,8 +879,11 @@ function meta:GetBossZombieIndex()
 end
 function meta:GetDemiBossZombieIndex()
 	local bossclasses = {}
+	local bossnames = {}
 	for _, classtable in pairs(GAMEMODE.ZombieClasses) do
 		if classtable.DemiBoss then
+			--print(classtable.Name)
+			table.insert(bossnames, classtable.Name)
 			table.insert(bossclasses, classtable.Index)
 		end
 	end
@@ -885,7 +891,7 @@ function meta:GetDemiBossZombieIndex()
 	if #bossclasses == 0 then return -1 end
 	local desired = self:GetInfo("zs_demibossclass") or ""
 	if desired == "" then
-		desired = "Cringe Demi"
+		desired = table.Random(bossnames)
 	end
 
 
@@ -2240,7 +2246,7 @@ function meta:DoSigilTeleport(target, from, corrupted)
 		return
 	end
 
-	if (self:IsValidLivingHuman() or self:IsValidLivingZombie()) and target:IsValid() and corrupted == target:GetSigilCorrupted() then
+	if (self:IsValidLivingHuman() or self:IsValidLivingZombie()) and target:IsValid() and (self:IsValidLivingHuman() and corrupted == target:GetSigilCorrupted() or self:IsValidLivingZombie()) then
 		if CurTime() >= (self._NextSigilTeleportEffect or 0) then
 			self._NextSigilTeleportEffect = CurTime() + 0.25
 

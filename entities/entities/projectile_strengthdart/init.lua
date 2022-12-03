@@ -13,7 +13,7 @@ function ENT:Hit(vHitPos, vHitNormal, eHitEntity, vOldVelocity)
 				if pl:IsPlayer() and (pl:GetStatus("rot")) then return end
 				if pl:IsValidLivingZombie() and pl ~= owner then
 					local alt = self:GetDTBool(0)
-					pl:TakeSpecialDamage(self.Heal * 4.2, DMG_ACID,owner, self:GetOwner():GetActiveWeapon())
+					pl:TakeSpecialDamage(self.Heal * 2.2, DMG_ACID,owner, self:GetOwner():GetActiveWeapon())
 					pl:PoisonDamage(12, owner, self)
 					local status = pl:GiveStatus(alt and "zombiestrdebuff" or "zombiedartdebuff")
 					status.DieTime = CurTime() + (self.BuffDuration or 10)

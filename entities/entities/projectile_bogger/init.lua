@@ -14,7 +14,7 @@ function ENT:Initialize()
 	self:SetMaterial("phoenix_storms/plastic")
 	self:GetOwner():SetBloodArmor(self:GetOwner():GetBloodArmor() - 15)
 
-	self.DieTime = CurTime() + (self.RageMode and 3 or 1.5)
+	self.DieTime = CurTime() + (self.RageMode and 3 or 0.8)
 	self.LastPhysicsUpdate = UnPredictedCurTime()
 end
 function ENT:PhysicsCollide(data, phys)
@@ -25,8 +25,8 @@ end
 
 
 function ENT:Think()
-	if self.Exploded then
-		self:SetCollisionGroup(COLLISION_GROUP_WORLD)
+	if self.Exploded and !self.RageMode  then
+		self:Remove()
 	elseif self.DieTime < CurTime() then
 		self:Remove()
 	end
@@ -38,12 +38,11 @@ function ENT:Think()
 			if target:IsValidLivingZombie() or ent.AllowSelfRicoShot then
 				local targetpos = target:LocalToWorld(target:OBBCenter())
 				local direction = (targetpos - self:GetPos()):GetNormal()
-
 				self:SetAngles(direction:Angle())
 
 				local phys = self:GetPhysicsObject()
 				phys:SetVelocityInstantaneous(direction * 1500)
-				target:TakeSpecialDamage((self.ProjDamage * (self.RageMode and (0.5) or math.max(0.5,GAMEMODE:GetWave() / 5))),DMG_BULLET , owner, owner:GetActiveWeapon())
+				target:TakeSpecialDamage((self.ProjDamage * 0.3 * (self.RageMode and (0.5) or math.max(0.5,GAMEMODE:GetWave() / 12))),DMG_BULLET , owner, owner:GetActiveWeapon())
 				break
 			end
 		end
@@ -73,7 +72,7 @@ function ENT:Explode(hitpos, hitnormal)
 		local target = self.HitData.HitEntity
 
 		if target:IsValidLivingZombie() and not target:GetZombieClassTable().NeverAlive then
-			target:TakeSpecialDamage((self.ProjDamage * (self.RageMode and 0.5 or 1) or math.max(0.5,GAMEMODE:GetWave() / 6)), DMG_BULLET, owner, source, hitpos)
+			target:TakeSpecialDamage((self.ProjDamage * 0.3 * (self.RageMode and 0.5 or 1) or math.max(0.5,GAMEMODE:GetWave() / 6)), DMG_BULLET, owner, source, hitpos)
 		end
 	end
 

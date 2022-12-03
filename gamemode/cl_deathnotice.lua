@@ -536,7 +536,7 @@ net.Receive("zs_pl_kill_pl", function(length)
 
 		MsgC(team.GetColor(attackerteam), attackername, (attacker:GetZombieClassTable().Boss and COLOR_RED or color_white),translate.Get("dn_killed"), team.GetColor(victimteam), victimname, color_white, translate.Get("killed_by_with"), COLOR_YELLOW, inflictor, "\n")
 
-		GAMEMODE:TopNotify((attacker:GetZombieClassTable().Boss and attacker:GetActiveWeapon() and {killicon = (attacker:GetActiveWeapon() and attacker:GetActiveWeapon():GetClass() or "weapon_zs_crow" )} or ""),(attacker:GetZombieClassTable().Boss and COLOR_RED or color_white),(attacker:GetZombieClassTable().Boss and attacker:Name() or attacker), " ", color_white,{killicon = inflictor, headshot = headshot}, " ", victim)
+		GAMEMODE:TopNotify((attacker:Alive() and attacker:GetZombieClassTable().Boss and attacker:GetActiveWeapon() and {killicon = (attacker:GetActiveWeapon() and attacker:GetActiveWeapon():GetClass() or "weapon_zs_crow" )} or ""),(attacker:GetZombieClassTable().Boss and COLOR_RED or color_white),(attacker:GetZombieClassTable().Boss and attacker:Name() or attacker), " ", color_white,{killicon = inflictor, headshot = headshot}, " ", victim)
 	end
 end)
 

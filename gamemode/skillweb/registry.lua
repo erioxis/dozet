@@ -1407,7 +1407,7 @@ GM:AddSkill(SKILL_DEATH, "Morieris", PURPLE.."Better medicine\n" ..BAD.."+20% Me
 GM:AddSkill(SKILL_HELPLIFER, "Chance", PURPLE.."Can save from fatal hit\n33% Chance\nOn upgrade chance is 50%",
 										2,			-7,					{SKILL_EX2}, TREE_ANCIENTTREE,0)
 .CanUpgrade = 2
-GM:AddSkill(SKILL_INF_POWER, "Dozei Core", PURPLE.."-50% Damage.\nExtra-damage for every skills you unlocked",
+GM:AddSkill(SKILL_INF_POWER, "Dozei Core", PURPLE.."-75% Damage.\nExtra-damage for every skills you unlocked",
 										4,			-5,					{SKILL_HELPLIFER}, TREE_ANCIENTTREE)
 GM:AddSkill(SKILL_SOUL_TRADE, "[TRADE]Soul", PURPLE.."Sell Your Soul For Toy.\n"..PURPLE.."+50% Point Mul",
 										4,			-7,					{SKILL_HELPLIFER}, TREE_ANCIENTTREE)
@@ -1842,7 +1842,7 @@ GM:SetSkillModifierFunction(SKILLMOD_SPEED, function(pl, amount)
 	pl.SkillSpeedAdd = amount
 end)
 GM:SetSkillModifierFunction(SKILLMOD_LUCK, function(pl, amount)
-	pl.Luck = ((pl:IsSkillActive(SKILL_LUCKY_UNLIVER) and GAMEMODE:GetWave() or 0) * 2) + amount
+	pl.Luck = amount
 end)
 
 

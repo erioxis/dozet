@@ -28,7 +28,7 @@ function ENT:EntityTakeDamage(ent, dmginfo)
 
 		if self.Applier and self.Applier:IsPlayer() and self.Applier:IsValidLivingHuman() and not self:GetOwner():IsSkillActive(SKILL_SIGILIBERATOR) then
 			self.Applier.DefenceDamage = (self.Applier.DefenceDamage or 0) + dmgfraction
-			self.Applier:AddPoints(points)
+			self.Applier:AddPoints(math.min(10,points))
 		end
 	end
 end

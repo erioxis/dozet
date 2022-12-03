@@ -86,9 +86,6 @@ function SWEP:SecondaryAttack()
 	if SERVER then
 		owner:TakeDamage(owner:Health() * 0.5)
 	end
-	effectdata = EffectData()
-		effectdata:SetOrigin(owner:GetPos())
-		util.Effect("murasama_multiple_hits", effectdata)
 		self:SetNextSecondaryFire(CurTime() + 2)
 		for _, ent in pairs(ents.FindInSphere(self:GetOwner():GetPos(), 215)) do
 			target = ent

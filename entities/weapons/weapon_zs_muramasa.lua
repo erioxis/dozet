@@ -124,7 +124,7 @@ function SWEP:MeleeSwing()
 		return 
         false
 	end
-	owner:GiveStatus("muramasa",2)
+	--owner:GiveStatus("muramasa",2)
 
 	self:DoMeleeAttackAnim()
 

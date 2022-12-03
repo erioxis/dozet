@@ -58,7 +58,7 @@ function ENT:Think()
 		end
 		if ent:IsPlayer() and ent:Team() == TEAM_UNDEAD then
 			if not ent:GetZombieClassTable().Boss then
-				if ent:Health() < 1600 then
+				if ent:Health() < 120 * GAMEMODE:GetWave() then
 					local dir = (pos - ent:NearestPoint(pos)):GetNormalized()
 			  	 	ent:SetVelocity(self.Force * dir * 0.45)
 					ent:SetPhysicsAttacker(owner, 4)

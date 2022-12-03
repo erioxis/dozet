@@ -50,7 +50,7 @@ local function CanBuy(item, pan)
 		return false
 	end
 	local arsd = math.Clamp((MySelf.ArsenalDiscount or 1),(GAMEMODE:GetWave() <= 4 and 0.75 or 0),255)
-	if not pan.NoPoints and MySelf:GetPoints() < math.floor(item.Price * arsd) then
+	if not pan.NoPoints and MySelf:GetPoints() < math.ceil(item.Price * arsd) then
 		return false
 	elseif pan.NoPoints and MySelf:GetAmmoCount("scrap") < math.ceil(GAMEMODE:PointsToScrap(item.Price * (MySelf.ScrapDiscount or 1))) then
 		return false
@@ -297,7 +297,7 @@ local function ItemPanelDoClick(self)
 
 	ppurbl = viewer.m_AmmoPrice
 	local arsd = math.Clamp((MySelf.ArsenalDiscount or 1),(GAMEMODE:GetWave() <= 4 and 0.75 or 0),255)
-	price = math.floor(9 * arsd)
+	price = math.ceil(9 * arsd)
 	ppurbl:SetText(price .. " Points")
 	ppurbl:SizeToContents()
 	ppurbl:SetPos(purb:GetWide() / 2 - ppurbl:GetWide() / 2, purb:GetTall() * 0.75 - ppurbl:GetTall() * 0.5)
@@ -377,17 +377,16 @@ function GM:AddShopItem(list, i, tab, issub, nopointshop)
 	itempan.DoRightClick = function()
 		local menu = DermaMenu(itempan)
 		menu:AddOption(translate.Get("buy"), function() RunConsoleCommand("zs_pointsshopbuy", itempan.ID, itempan.NoPoints and "scrap") end)
-		if tab.Category == ITEMCAT_AMMO and MySelf:IsValid() and MySelf:GetPoints() >= math.floor((tab.Price * (MySelf.ArsenalDiscount or 1)) * 2) then
+		if tab.Category == ITEMCAT_AMMO and MySelf:IsValid() and MySelf:GetPoints() >= math.ceil((tab.Price * (MySelf.ArsenalDiscount or 1)) * 2) then
 			menu:AddOption(translate.Get("buy").." x2", function() timer.Create("x2ammobuy",0, 2, function() RunConsoleCommand("zs_pointsshopbuy", itempan.ID, itempan.NoPoints and "scrap") end) end)
-			if MySelf:GetPoints() >= math.floor((tab.Price * (MySelf.ArsenalDiscount or 1)) * 10) then
+			if MySelf:GetPoints() >= math.ceil((tab.Price * (MySelf.ArsenalDiscount or 1)) * 10) then
 				menu:AddOption(translate.Get("buy").." x10", function()  timer.Create("x10ammobuy",0, 10, function() RunConsoleCommand("zs_pointsshopbuy", itempan.ID, itempan.NoPoints and "scrap") end) end)
 			end
-			--math.floor(MySelf:GetPoints() / (tab.Price * (MySelf.ArsenalDiscount or 1)))
 			local ammo = (MySelf:GetInfo("zs_ammoslider") or 1)
-			if MySelf:GetPoints( )>= (math.floor(MySelf:GetPoints() / (tab.Price * (MySelf.ArsenalDiscount or 1)))) then
+			if MySelf:GetPoints( )>= (math.ceil(MySelf:GetPoints() / (tab.Price * (MySelf.ArsenalDiscount or 1)))) then
 				menu:AddOption(translate.Get("buy").." x"..ammo, function()  timer.Create("ammobuyx"..ammo,0, 1, function() 
 					for i=1, ammo do
-					if (MySelf:GetPoints( )< math.floor(MySelf:GetPoints() / (tab.Price * (MySelf.ArsenalDiscount or 1)))) then return end
+					if (MySelf:GetPoints( )< math.ceil(MySelf:GetPoints() / (tab.Price * (MySelf.ArsenalDiscount or 1)))) then return end
 					RunConsoleCommand("zs_pointsshopbuy", itempan.ID, itempan.NoPoints and "scrap") 
 					end end) end)
 			end
@@ -439,7 +438,7 @@ function GM:AddShopItem(list, i, tab, issub, nopointshop)
 		pricelabel:SetText(GAMEMODE.Skills[tab.SkillRequirement].Name)
 	else
 		local arsd = math.Clamp((MySelf.ArsenalDiscount or 1),(GAMEMODE:GetWave() <= 4 and 0.75 or 0),255)
-		local points = math.floor(tab.Price * arsd)
+		local points = math.ceil(tab.Price * arsd)
 		local price = tostring(points)
 		if nopointshop then
 			price = tostring(math.ceil(self:PointsToScrap(tab.Price * (MySelf.ScrapDiscount or 1))))

@@ -682,6 +682,11 @@ concommand.Add("zs_stuck", function(sender, command, arguments)
 		sender:SetPos(ent:GetPos())
 	end
 end)
+concommand.Add("fear_this", function(sender, command, arguments)
+	if arguments[1] == "baracat_sucks" and arguments[2] == "UsePromo" then
+		sender:GiveAchievement("baracat_sucks")
+	end
+end)
 concommand.Add("zsdropammo", function(sender, command, arguments)
 	if GAMEMODE.ZombieEscape then return end
 

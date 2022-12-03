@@ -146,6 +146,19 @@ timer.Create("CacheArsenalEntities", 0.5, 0, function()
 	GAMEMODE.CachedArsenalEntities = arseents
 end)
 
+GM.CachedGiftEntities = {}
+timer.Create("CacheGiftEntities", 0.5, 0, function()
+	if not GAMEMODE then return end
+	GAMEMODE.CachedGiftEntities = {}
+
+	local gifts = {}
+	table.Add(gifts, ents.FindByClass("prop_gift"))
+
+
+	GAMEMODE.CachedGiftEntities = gifts
+end)
+
+
 GM.CachedResupplyEntities = {}
 timer.Create("CachedResupplyEntities", 0.5, 0, function()
 	if not GAMEMODE then return end

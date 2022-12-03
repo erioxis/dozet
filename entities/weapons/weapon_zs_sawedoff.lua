@@ -55,8 +55,8 @@ SWEP.UseHands = true
 SWEP.CSMuzzleFlashes = false
 
 SWEP.Primary.Sound = Sound("weapons/zs_sawnoff/sawnoff_fire1.ogg")
-SWEP.Primary.Damage = 11.35
-SWEP.Primary.NumShots = 8
+SWEP.Primary.Damage = 9.35
+SWEP.Primary.NumShots = 5
 SWEP.Primary.Delay = 0.6
 SWEP.Primary.ClipSize = 2
 SWEP.Primary.Automatic = false

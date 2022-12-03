@@ -285,6 +285,9 @@ function meta:TakeSpecialDamage(damage, damagetype, attacker, inflictor, hitpos,
 	if not inflictor or not E_IsValid(inflictor) then inflictor = attacker end
 
 	local dmginfo = DamageInfo()
+	if damagetype == DMG_BURN and self:IsPlayer() and self:GetZombieClassTable().FireBuff then
+		damage = 0
+	end
 	dmginfo:SetDamage(damage)
 	if attacker then
 		dmginfo:SetAttacker(attacker)

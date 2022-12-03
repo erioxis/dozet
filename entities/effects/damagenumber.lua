@@ -34,7 +34,6 @@ hook.Add("PostDrawTranslucentRenderables", "DrawDamage", function()
 			cam.Start3D2D(particle:GetPos(), ang, 0.1 * GAMEMODE.DamageNumberScale)
 			draw.SimpleText(particle.Amount..(victim:IsPlayer() and GAMEMODE.ShowPercDmg and !particle.Bool and " ("..math.Round((particle.Amount/(victim:GetMaxZombieHealth() or 0) * 100)).."%)" or ""), "ZS3D2DFont2", 0, 0, c, TEXT_ALIGN_CENTER, TEXT_ALIGN_BOTTOM)
 			cam.End3D2D()
-			cam.End3D2D()
 		end
 	end
 
