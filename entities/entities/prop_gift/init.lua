@@ -118,6 +118,10 @@ function ENT:StartTouch(ent)
 			ent:GiveAmmo(random, (ent:GetActiveWeapon() and !ent:GetActiveWeapon().IsMelee and ent:GetActiveWeapon().Primary.Ammo or "scrap"), true)
 			local ammotype = (GAMEMODE.AmmoNames[ent:GetActiveWeapon().Primary.Ammo] or !ent:GetActiveWeapon().IsMelee and ent:GetActiveWeapon().Primary.Ammo or ent:GetActiveWeapon().IsMelee and "scrap")
 			gift = (translate.ClientGet(ent,string.lower(string.Implode("",string.Explode(" ","ammo_"..ammotype)) or ammotype)))
+			net.Start("zs_ammopickup")
+				net.WriteUInt(random, 16)
+				net.WriteString(ammotype)
+			net.Send(ent)
 		else
 			local weapon = {
 				"weapon_zs_plank",
