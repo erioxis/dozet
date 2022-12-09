@@ -16,7 +16,7 @@ SWEP.Primary.ClipSize = 68
 SWEP.Primary.Automatic = true
 SWEP.Primary.Ammo = "chemical"
 SWEP.Primary.DefaultClip = 8
-SWEP.Primary.Damage = 45
+SWEP.Primary.Damage = 66
 
 SWEP.ConeMin = 0.5
 SWEP.ConeMax = 0.9

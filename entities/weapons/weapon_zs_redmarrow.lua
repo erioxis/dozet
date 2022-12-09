@@ -13,7 +13,7 @@ SWEP.MeleeDamageVsProps = 15
 
 function SWEP:MeleeHit(ent, trace, damage, forcescale)
 	local owner = self:GetOwner()
-	if owner:GetStatus("redmarrow") and (not pl:GetStatus("hshield")) then
+	if ent:IsPlayer() and (not ent:GetStatus("hshield")) and ent:GetTimerBERS() < CurTime() and ent:HasTrinket("antibaracat") then
 		ent:Kill()
 	end
 	if not ent:IsPlayer() then

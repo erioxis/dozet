@@ -40,7 +40,7 @@ SWEP.MeleeDamage = 86
 SWEP.LegDamage = 17
 SWEP.HitDistance = 66
 
-SWEP.Unarmed = false
+SWEP.Unarmed = true
 
 SWEP.Undroppable = false
 SWEP.NoPickupNotification = false

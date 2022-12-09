@@ -15,6 +15,7 @@ if CLIENT then
 	SWEP.HUD3DBone = "Python"
 	SWEP.HUD3DPos = Vector(0.85, 0, -2.5)
 	SWEP.HUD3DScale = 0.015
+
 end
 
 SWEP.Base = "weapon_zs_base"
@@ -91,3 +92,23 @@ function SWEP.BulletCallback(attacker, tr, dmginfo)
 		end
 	end
 end
+--[[function SWEP:Think()
+	local owner = self:GetOwner()
+	if MySelf == owner then
+				local matBeam = Material( "trails/electric" )
+				--if  MySelf:KeyDown(IN_SPEED) then
+					local tr = owner:CompensatedMeleeTrace(20222,1)
+					
+					local at = tr.HitPos
+					local pos = owner:GetShootPos()
+					local frametime = FrameTime() * 500
+					--render.SetMaterial( matBeam )
+				--	render.StartBeam( 1 )
+					render.DrawBeam( pos, at, 120, 3, 3, Color(255,255,255))
+						
+					--render.EndBeam()
+				--end
+	end
+	--self.BaseClass(self:Think())
+	return true
+end]]

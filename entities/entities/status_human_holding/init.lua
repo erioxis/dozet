@@ -294,14 +294,16 @@ function ENT:Think()
 			self.ObjectAngles = object:GetAngles()
 		end
 		if owner:KeyDown(IN_WALK) then
-			local xdiff = math.NormalizeAngle(self.StartX - (owner.InputMouseX or 0))
+			local xdiff = math.NormalizeAngle(self.StartX - (owner.InputMouseX or 0)) 
 			local ydiff = math.NormalizeAngle(self.StartY - (owner.InputMouseY or 0))
-			local sxdiff = xdiff * FrameTime() * 16
-			local sydiff = ydiff * FrameTime() * 16
-
+			local sxdiff = owner:KeyDown(IN_ATTACK2) and math.Round(math.Round(xdiff/30) * 30) * FrameTime() * 12 or xdiff * FrameTime() * 12
+			local sydiff = owner:KeyDown(IN_ATTACK2) and math.Round(math.Round(ydiff/30) * 30) * FrameTime() * 12 or ydiff * FrameTime() * 12
 			self.ObjectAngles:RotateAroundAxis(owner:GetUp(), sxdiff)
 			self.ObjectAngles:RotateAroundAxis(owner:GetRight(), sydiff)
-
+			if owner:KeyDown(IN_RELOAD) and (self.NextX or 0) <= ct then
+				self.ObjectAngles = Angle(0,60,180) 
+				self.NextX = ct + 2
+			end
 			self.StartX = math.NormalizeAngle(self.StartX - (sxdiff))
 			self.StartY = math.NormalizeAngle(self.StartY - (sydiff))
 		end

@@ -57,7 +57,7 @@ function PLAYER:GiveAchievement(id)
     self:ProcessAchievements()
     -- Log
     print(string.format("[ZS] Player %s (%s) earned achievement %s (%s)", self:Name(), self:SteamID(), GAMEMODE.Achievements[id].Name, id))
-    self:AddZSXP(GAMEMODE.Achievements[id].Reward or 200)
+    self:AddZSXP(GAMEMODE.Achievements[id].Reward or 200, true)
     PrintMessage(HUD_PRINTTALK, translate.Format("ach_trans", self:Name(), self:SteamID(), GAMEMODE.Achievements[id].Name, id))
     -- Call hook
     hook.Run("HASAchievementEarned", self, id)
@@ -85,7 +85,7 @@ function PLAYER:GiveAchievementProgress(id, count)
     -- If we earned the achievement
     if self.Achs[id] >= GAMEMODE.Achievements[id].Goal then
         GAMEMODE:PlayerNotifyAchievement(self, id)
-        self:AddZSXP(GAMEMODE.Achievements[id].Reward or 200)
+        self:AddZSXP(GAMEMODE.Achievements[id].Reward or 200, true)
         PrintMessage(HUD_PRINTTALK, translate.Format("ach_trans", self:Name(), self:SteamID(), GAMEMODE.Achievements[id].Name, id))
         -- Run hook
         hook.Run("HASAchievementEarned", self, id)

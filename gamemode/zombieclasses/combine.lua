@@ -1,6 +1,6 @@
 CLASS.Name = "Prushor Luminos"
 CLASS.TranslationName = "class_zombienie"
-CLASS.Description = "description_zombie"
+CLASS.Description = "description_zombienie"
 CLASS.Help = "controls_zombie"
 
 CLASS.Model = Model("models/player/combine_super_soldier.mdl")
@@ -13,9 +13,28 @@ CLASS.SWEP = "weapon_zs_zombinie"
 
 if SERVER then
 function CLASS:ProcessDamage(pl, dmginfo)
-	if dmginfo:GetInflictor().IsMelee then
-		dmginfo:SetDamage(dmginfo:GetDamage() / 5)
+	local d = math.random(1,2)
+	local attacker = dmginfo:GetAttacker()
+	if dmginfo:GetInflictor().IsMelee and d == 1 then
+		dmginfo:SetDamage(0)
+		if attacker:IsPlayer() then
+			GAMEMODE:BlockFloater(attacker, pl, dmginfo:GetDamagePosition())
+		end
+	elseif !dmginfo:GetInflictor().IsMelee and d == 2 then
+		dmginfo:SetDamage(0)
+		if attacker:IsPlayer() then
+			GAMEMODE:BlockFloater(attacker, pl, dmginfo:GetDamagePosition())
+		end
 	end
+end
+function CLASS:OnKilled(pl, attacker, inflictor, suicide, headshot, dmginfo)
+	if math.random(1,5) == 5  then
+		local d = pl:GetPos()
+		timer.Simple(5, function() pl:SetPos((d or Vector(0,0,0))) end)
+			
+	end
+
+	return true
 end
 end
 

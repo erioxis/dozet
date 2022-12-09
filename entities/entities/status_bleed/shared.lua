@@ -8,6 +8,9 @@ function ENT:Initialize()
 	if self:GetDTFloat(1) == 0 then
 		self:SetDTFloat(1, CurTime())
 	end
+	
+	hook.Add("Move", self, self.Move)
+
 end
 
 function ENT:AddDamage(damage, attacker)
@@ -24,6 +27,14 @@ end
 
 function ENT:SetDamage(damage)
 	self:SetDTFloat(0, math.min(GAMEMODE.MaxBleedDamage or 1000, damage))
+end
+function ENT:Move(pl, move)
+	if pl ~= self:GetOwner() and self:GetOwner():GetStatus("redmarrow") then return end
+
+	local speedffect = 220
+
+	move:SetMaxSpeed(move:GetMaxSpeed() + speedffect)
+	move:SetMaxClientSpeed(move:GetMaxClientSpeed() + speedffect)
 end
 
 function ENT:GetDamage()

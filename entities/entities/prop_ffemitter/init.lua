@@ -90,7 +90,7 @@ function ENT:Use(activator, caller)
 	if self.Destroyed or not activator:IsPlayer() or activator:Team() ~= TEAM_HUMAN or self:GetMaterial() ~= "" then return end
 
 	if self:GetObjectOwner():IsValid() then
-		if activator:GetInfo("zs_nousetodeposit") == "0" then
+		if activator:GetInfo("zs_nousetodeposit") == "0" or activator == self:GetObjectOwner() then
 			local curammo = self:GetAmmo()
 			local togive = math.min(math.min(15, activator:GetAmmoCount("pulse")), self.MaxAmmo - curammo)
 			if togive > 0 then

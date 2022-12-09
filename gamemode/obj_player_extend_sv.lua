@@ -68,7 +68,7 @@ function meta:ProcessDamage(dmginfo)
             dmginfo:ScaleDamage(2)
 		end
 		if attacker:IsValidLivingHuman() and attacker:HasTrinket("a_flower") and (attacker:GetStatus("cursed")) then
-            dmginfo:ScaleDamage(0)
+            dmginfo:ScaleDamage(0.1)
 		end
 		if attacker:IsValidLivingHuman() and attacker:IsSkillActive(SKILL_AMULET_12) then
             dmginfo:ScaleDamage(0)
@@ -122,7 +122,7 @@ function meta:ProcessDamage(dmginfo)
 				attacker:SetHealth(math.min(attacker:GetMaxHealth(), attacker:Health() + attacker:GetMaxHealth() * 0.11))
 			end
 			if attacker:IsSkillActive(SKILL_INF_POWER) then
-				dmginfo:ScaleDamage(0.25 + #attacker:GetUnlockedSkills() * 0.015)
+				dmginfo:ScaleDamage(0.25 + #attacker:GetUnlockedSkills() * 0.01)
 			end
 			if damage >= 10000 then
 				attacker:GiveAchievement("opm")
@@ -233,9 +233,10 @@ function meta:ProcessDamage(dmginfo)
 		if attacker:IsValidLivingHuman() then
 			local damage = dmginfo:GetDamage()
 			local wep = attacker:GetActiveWeapon()
-			if wep and (wep.Tier or 1) <= 4 and damage >= ((wep.IsMelee and wep.MeleeDamage or wep.Primary.Damage or 1) * (wep.Tier or 1)) and GAMEMODE.DamageLock then
-				dmginfo:SetDamage(((wep.IsMelee and wep.MeleeDamage or wep.Primary.Damage or 1) * (wep.Tier or 1)))
-			end
+			local midwave = GAMEMODE:GetWave() < GAMEMODE:GetNumberOfWaves() / 2 or GAMEMODE:GetWave() == GAMEMODE:GetNumberOfWaves() / 2 and GAMEMODE:GetWaveActive() and CurTime() < GAMEMODE:GetWaveEnd() - (GAMEMODE:GetWaveEnd() - GAMEMODE:GetWaveStart()) / 2
+			--if wep and (wep.Tier or 1) < 4 and damage >= ((wep.IsMelee and wep.MeleeDamage or wep.Primary.Damage or 1) * (wep.Tier or 1)) and (GAMEMODE.DamageLock or GAMEMODE:GetWave() >= 5) then
+			--	dmginfo:SetDamage(((wep.IsMelee and wep.MeleeDamage or wep.Primary.Damage or 1) * (wep.Tier or 1))/(!GAMEMODE.DamageLock and GAMEMODE:GetWave() * 0.5 or 1))
+			--end
 			local damage1 = damage
 			attacker:SetDPS(attacker:GetDPS() + damage)
 			timer.Create("DPS"..damage..attacker:Nick()..math.Rand(1,5)..damage*0.5, 1, 1, function() attacker:SetDPS(attacker:GetDPS() - damage1) end)
@@ -504,14 +505,18 @@ function meta:ProcessDamage(dmginfo)
 					dmginfo:SetDamage(dmginfo:GetDamage() / self:GetActiveWeapon():GetPerc())
 					self:GetActiveWeapon():SetPerc(self:GetActiveWeapon():GetPerc() - 1)
 				end
-				if self:GetActiveWeapon().ResistDamage and math.abs(self:GetForward():Angle().yaw - attacker:GetForward():Angle().yaw) >= 90 and attacker:GetActiveWeapon() == inflictor then
-					dmginfo:SetDamage((dmginfo:GetDamage() * 0.3) - (self:GetActiveWeapon().MeleeDamage * 0.3))
-					attacker:TakeDamage(self:GetActiveWeapon().MeleeDamage * 15, self, self:GetActiveWeapon())
-					local cursed = self:GetStatus("cursed")
-					if (cursed) then 
-						self:AddCursed(self, cursed.DieTime - CurTime() - 30)
+				if self:GetActiveWeapon().ResistDamage then
+					if math.abs(self:GetForward():Angle().yaw - attacker:GetForward():Angle().yaw) >= 90 and attacker:GetActiveWeapon() == inflictor then
+						dmginfo:SetDamage((dmginfo:GetDamage() * 0.3) - (self:GetActiveWeapon().MeleeDamage * 0.3))
+						attacker:TakeDamage(self:GetActiveWeapon().MeleeDamage * 15, self, self:GetActiveWeapon())
+						local cursed = self:GetStatus("cursed")
+						if (cursed) then 
+							self:AddCursed(self, cursed.DieTime - CurTime() - 30)
+						end
+					else
+						dmginfo:ScaleDamage(3)
 					end
-			    end
+				end
 				
 
 				if self.BarbedArmorPercent and self.BarbedArmorPercent > 0 then
@@ -2604,7 +2609,7 @@ function meta:CryogenicInduction(attacker, inflictor, damage)
 end
 function meta:FireInduction(attacker, inflictor, damage)
 	if not self:GetZombieClassTable().Boss then
-		if math.random(20 * (self:GetActiveWeapon().Primary.Numshots or 1)) == 1 or self.FireDamage >= (15) or damage > math.random(50,200) then
+		if math.random(20 * (self:GetActiveWeapon().Tier or 1) * (self:GetActiveWeapon().Primary.Numshots or 1) ) == 1 or self.FireDamage >= (15 * (self:GetActiveWeapon().Tier or 1)) then
 			self.FireDamage = 0
 			timer.Create("Fire_inder" .. attacker:UniqueID(), 0.1, 2, function()
 				if not attacker:IsValid() or not self:IsValid() then return end

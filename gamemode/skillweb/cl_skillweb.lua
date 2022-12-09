@@ -510,9 +510,40 @@ function PANEL:Init()
 		bottom1:SetSize(1200 * screenscale, math.Clamp(84 * screenscale, 40, 125))
 		bottom1:SetPos(0 * screenscale, -24 * screenscale)
 		bottom1:SetFont("ZSHUDFontSmall")
-		bottom1:SetText(translate.Get("u_s")..#MySelf:GetUnlockedSkills().."(+"..(#MySelf:GetUnlockedSkills()*1.5).."% dmg)")
+		bottom1:SetText(translate.Get("u_s")..#MySelf:GetUnlockedSkills().."(+"..(#MySelf:GetUnlockedSkills()).."% dmg)")
 		bottom1:DockPadding(0, 10, 0, 0)
 	end
+	--[[local bottom1 = vgui.Create("DLabel", self)
+	bottom1:SetSize(1200 * screenscale, math.Clamp(84 * screenscale, 40, 125))
+	bottom1:SetPos(0 * screenscale, 44 * screenscale)
+	bottom1:SetFont("ZSHUDFontSmall")
+	bottom1:SetText(MySelf:GetDCoins().." XP From Achievements.(BETA)")
+	bottom1:DockPadding(0, 10, 0, 0)
+
+	local savebtn = vgui.Create("DButton", self)
+	savebtn:SetFont("ZSHUDFontSmallest")
+	savebtn:SetText("ADD XP")
+	savebtn:SizeToContents()
+	savebtn:SetPos(0 * screenscale, 44 * screenscale)
+	savebtn:SetSize(300 * screenscale, math.Clamp(84 * screenscale, 40, 125))
+	savebtn:Dock(BOTTOM)
+	savebtn.DoClick = function(me)
+		surface.PlaySound("zombiesurvival/ui/misc1.ogg")
+
+		local frame = Derma_StringRequest("Add XP", "Here XP!.", "XP",
+		function(xp)
+			if MySelf:GetDCoins() <= 0 	then self:DisplayMessage("no ach xp", COLOR_GREEN)  return end 
+			MySelf:AddZSXP(xp)
+			self:DisplayMessage("added xp", COLOR_GREEN)
+		end,
+		function(xp) end,
+		"OK", "Cancel")
+
+		frame:GetChildren()[5]:GetChildren()[2]:SetTextColor(Color(30, 30, 30))
+	end]]
+
+
+
 
 	local spremaining = vgui.Create("DEXChangingLabel", bottom)
 	spremaining:SetChangeFunction(function()

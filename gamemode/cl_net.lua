@@ -424,12 +424,13 @@ end)
 
 net.Receive("zs_ammopickup", function(length)
 	local amount = net.ReadUInt(16)
-	local ammotype = net.ReadString()
-	local ico = GAMEMODE.AmmoIcons[ammotype] or "weapon_zs_resupplybox"
+	local ammotype2 = net.ReadString()
+	local ico = GAMEMODE.AmmoIcons[ammotype2] or "weapon_zs_resupplybox"
 
-	ammotype = GAMEMODE.AmmoNames[ammotype] or ammotype
+	local ammotype = GAMEMODE.AmmoNames[ammotype2] or ammotype2
+	--ammotype = translate.Get(string.lower(string.Implode("",string.Explode(" ","ammo_"..ammotype)) or ammotype))
 
-	GAMEMODE:CenterNotify({killicon = ico}, " ", COLOR_GREEN, translate.Format("obtained_x_y_ammo", amount, (translate.Get(string.lower(string.Implode("",string.Explode(" ","ammo_"..ammotype)) or ammotype)))))
+	GAMEMODE:CenterNotify({killicon = ico},"","",{ammotype = (GAMEMODE.AmmoNames[ammotype2] or ammotype2),amount = amount})
 end)
 
 net.Receive("zs_ammogive", function(length)
@@ -509,14 +510,15 @@ net.Receive("zs_luck", function(length)
 	local luck = net.ReadString()
 	MySelf:EmitSound("buttons/button3.wav", 75, 50)
 
-	GAMEMODE:CenterNotify({killicon = "weapon_zs_trinket"}, " ", COLOR_RED, translate.Format("yluck", luck))
+	GAMEMODE:CenterNotify({killicon = "weapon_zs_trinket", Tag = "luck"..luck}, " ", COLOR_RED, translate.Format("yluck", luck))
 end)
+
 net.Receive("zs_damageblock", function(length)
-	GAMEMODE:CenterNotify(" ", COLOR_GREEN, translate.Format("damageblock"))
+	GAMEMODE:CenterNotify({block = true})
 end)
 net.Receive("zs_xp_damage", function(length)
 	local xpadd = net.ReadString()
-	GAMEMODE:CenterNotify("",COLOR_GREEN, translate.Format("xp_damage", xpadd))
+	GAMEMODE:CenterNotify(COLOR_GREEN, translate.Format("xp_damage", xpadd))
 end)
 net.Receive("zs_holymantle", function(length)
 	GAMEMODE:CenterNotify(" ", COLOR_GREEN, translate.Format("holymantle"))
@@ -561,7 +563,7 @@ net.Receive("zs_healby", function(length)
 
 	if not ent:IsValidPlayer() then return end
 
-	GAMEMODE:CenterNotify({killicon = "weapon_zs_medicalkit"}, " ", COLOR_GREEN, translate.Format("healed_x_by_y", ent:Name(), amount))
+	GAMEMODE:CenterNotify({killicon = "weapon_zs_medicalkit"},"","",{pl_h = ent,amount = amount})
 end)
 
 net.Receive("zs_buffby", function(length)

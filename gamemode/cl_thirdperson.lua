@@ -48,10 +48,13 @@ function GM:CreateMoveOTS(cmd)
 
 		ang.pitch = math.NormalizeAngle(ang.pitch + staggerdir.z * rate)
 		ang.yaw = math.NormalizeAngle(ang.yaw + staggerdir.x * rate)
+
+
 		otscameraangles = ang
 	end
 
 	local offsetyaw = otscameraangles.yaw - cmd:GetViewAngles().yaw --ply:EyeAngles( ).y
+
 
 	local corrected = Vector(cmd:GetForwardMove(), cmd:GetSideMove(), 0)
 	local sign = cmd:GetForwardMove() < 0
@@ -93,6 +96,9 @@ function GM:CalcViewOTS(pl, origin, angles, fov, znear, zfar)
 	desired_angles.yaw = math.ApproachAngle(otscameraangles.yaw, desired_angles.yaw, maxdiff)
 
 	pl:SetEyeAngles(desired_angles)
+	if pl:IsSkillActive(SKILL_MADNESS) then
+		otscameraangles = otscameraangles * 2
+	end
 
 	origin:Set(camPos)
 	angles:Set(otscameraangles)

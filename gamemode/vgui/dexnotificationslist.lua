@@ -1,22 +1,30 @@
-GM.NotifyFadeTime = 8
-local DefaultFont = "ZSHUDFontSmallest"
-local DefaultFontEntity = "ZSHUDFontSmallest"
+
+
+local function GetFont()
+	return MySelf and MySelf:IsValid() and ( MySelf:Team() == TEAM_ZOMBIE and "ZSHUDFontSmallest" or "ZSHUDFontSmallest" ) or "ZSHUDFontSmallest"
+end
 
 local PANEL  = {}
-
 function PANEL:Init()
-	self:DockPadding(8, 2, 8, 2)
+	self.Align = self:GetParent():GetAlign()
+	self:DockPadding( 8, 2, 8, 2 )
 
 	self:SetKeyboardInputEnabled(false)
 	self:SetMouseInputEnabled(false)
 end
 
-local matGrad = Material("VGUI/gradient-r")
-function PANEL:Paint()
-	surface.SetMaterial(matGrad)
-	surface.SetDrawColor(0, 0, 0, 180)
+local matGrad = Material( "VGUI/gradient-r" )
+local surface_SetMaterial = surface.SetMaterial
+local surface_SetDrawColor = surface.SetDrawColor
+local surface_DrawTexturedRect = surface.DrawTexturedRect
+local surface_DrawTexturedRectRotated = surface.DrawTexturedRectRotated
 
-	local align = self:GetParent():GetAlign()
+function PANEL:Paint( w, h )
+	surface_SetMaterial( matGrad )
+	surface_SetDrawColor( 0, 0, 0, 155 )
+
+	local a, b, c, d = self:GetDockPadding()
+	local align = self.Align
 	if align == RIGHT then
 		surface.DrawTexturedRect(self:GetWide() * 0.25, 0, self:GetWide(), self:GetTall())
 	elseif align == CENTER then
@@ -27,56 +35,102 @@ function PANEL:Paint()
 	end
 end
 
-function PANEL:AddLabel(text, col, font, extramargin)
-	local label = vgui.Create("DLabel", self)
-	label:SetText(text)
-	label:SetFont(font or DefaultFont)
-	label:SetTextColor(col or color_white)
-	label:SizeToContents()
+function PANEL:AddLabel( text, col, font, extramargin )
+	self.Label = vgui.Create( "DLabel", self )
+	self.Label:SetText( text )
+	self.Label:SetFont( font or GetFont() )
+	self.Label:SetTextColor( col or color_white )
+	self.Label:SizeToContents()
 	if extramargin then
-		label:SetContentAlignment(7)
-		label:DockMargin(0, label:GetTall() * 0.2, 0, 0)
+		self.Label:SetContentAlignment( 7 )
+		self.Label:DockMargin( 0, self.Label:GetTall() * 0.2, 0, 0 )
 	else
-		label:SetContentAlignment(4)
+		self.Label:SetContentAlignment( 4 )
 	end
-	label:Dock(LEFT)
+	self.Label:Dock( LEFT )
 end
 
-function PANEL:AddImage(mat, col)
-	local img = vgui.Create("DImage", self)
-	img:SetImage(mat)
+function PANEL:AddImage( mat, col )
+	self.Image = vgui.Create( "DImage", self )
+	self.Image:SetImage( mat )
 	if col then
-		img:SetImageColor(col)
+		self.Image:SetImageColor( col )
 	end
-	img:SizeToContents()
-	local height = img:GetTall()
+	self.Image:SizeToContents()
+	local height = self.Image:GetTall()
 	if height > self:GetTall() then
-		img:SetSize(self:GetTall() / height * img:GetWide(), self:GetTall())
+		self.Image:SetSize( self:GetTall() / height * self.Image:GetWide(), self:GetTall() )
 	end
-	img:DockMargin(0, (self:GetTall() - img:GetTall()) / 2, 0, 0)
-	img:Dock(LEFT)
+	self.Image:DockMargin( 0, ( self:GetTall() - self.Image:GetTall()) / 2, 0, 0 )
+	self.Image:Dock( LEFT )
 end
 
-function PANEL:AddKillIcon(class)
-	local icondata = killicon.GetIcon(class)
+function PANEL:AddAmmo( amount, ammotype )
+	local ammotype2 = translate.Get(string.lower(string.Implode("",string.Explode(" ","ammo_"..ammotype)) or ammotype))
+	if self.AmmoNotif and self.AmmoNotif.ammotype == ammotype then
+		self:AddLabel( translate.Format( "obtained_x_y_ammo",amount + self.AmmoNotif.amount, ammotype2), COLOR_GREEN, "ZSHUDFontSmallest" )
+		self.AmmoNotif = { amount = amount + self.AmmoNotif.amount, ammotype = ammotype }
+	else
+		self:AddLabel( translate.Format( "obtained_x_y_ammo",amount, ammotype2), COLOR_GREEN, "ZSHUDFontSmallest" )
+	end
+end
+function PANEL:AddHeal( amount, pl_h )
+	if self.HealNotif and self.HealNotif.pl_h == pl_h then
+		self:AddLabel( translate.Format( "healed_x_by_y", pl_h:Nick(),amount + self.HealNotif.amount), COLOR_GREEN, "ZSHUDFontSmallest" )
+		self.HealNotif = { amount = amount + self.HealNotif.amount, pl_h = pl_h }
+	else
+		self:AddLabel( translate.Format( "healed_x_by_y",pl_h:Nick(), amount), COLOR_GREEN, "ZSHUDFontSmallest" )
+	end
+end
+function PANEL:UpdateBlock( amount )
+	if self.BNotif then
+		self:AddLabel( translate.Format( "damageblock_x", amount + self.BNotif.amount), COLOR_GREEN, "ZSHUDFontSmallest" )
+		self.BNotif = { block = true,amount = amount + self.BNotif.amount}
+	else
+		self:AddLabel( translate.Get( "damageblock"), COLOR_GREEN, "ZSHUDFontSmallest" )
+	end
+end
+
+function PANEL:AddKillIcon( class )
+	local icondata = killicon.GetIcon( class )
 
 	if icondata then
 		self:AddImage(icondata[1], icondata[2])
 	else
-		local fontdata = killicon.GetFont(class) or killicon.GetFont("default")
+		local fontdata = killicon.GetFont( class ) or killicon.GetFont( "default" )
 		if fontdata then
-			self:AddLabel(fontdata[2], fontdata[3], fontdata[1], true)
+			self:AddLabel(fontdata[2], fontdata[3], fontdata[1], true )
 		end
 	end
 end
 
-function PANEL:SetNotification(...)
-	local args = {...}
+function PANEL:ResetNotification( fade )
+	self.Resets = ( self.Resets or 0 ) + 1
+	for i, child in pairs( self:GetChildren() ) do
+		if child and child:IsValid() then
+			child:Remove()
+			child = nil
+		end
+	end
+
+	local FadeTime = fade
+	self.DieTime = CurTime() + FadeTime
+
+	self:Stop()
+	self:SetAlpha( 190 )
+	self:AlphaTo( 255, 0.15 )
+	self:AlphaTo( 200, 1, FadeTime - 1 )
+	--self:MoveBy(self:GetX() + 10, self:GetY(), 2, FadeTime - 0.6, 0.5)
+end
+
+function PANEL:SetNotification( ... )
+	local args = { ... }
+	local screenscale = BetterScreenScale()
 
 	local defaultcol = color_white
 	local defaultfont
-	for k, v in ipairs(args) do
-		local vtype = type(v)
+	for k, v in ipairs( args ) do
+		local vtype = type( v )
 
 		if vtype == "table" then
 			if v.r and v.g and v.b then
@@ -85,58 +139,85 @@ function PANEL:SetNotification(...)
 				if v.font == "" then
 					defaultfont = nil
 				else
-					local th = draw.GetFontHeight(v.font)
+					local th = draw.GetFontHeight( v.font )
 					if th then
 						defaultfont = v.font
 					end
 				end
 			elseif v.killicon then
-				self:AddKillIcon(v.killicon)
+				self:AddKillIcon( v.killicon )
 				if v.headshot then
-					self:AddKillIcon("headshot")
+					self:AddKillIcon( "headshot" )
 				end
 			elseif v.image then
-				self:AddImage(v.image, v.color)
+				self:AddImage( v.image, v.color )
+			elseif v.ammotype then
+				self:AddAmmo( v.amount, v.ammotype )
+				if !self.AmmoNotif then
+					self.AmmoNotif = {amount = v.amount, ammotype = v.ammotype}
+				end
+
+			elseif v.pl_h then
+				self:AddHeal( v.amount, v.pl_h )
+				if !self.HealNotif then
+					self.HealNotif = {amount = v.amount, pl_h = v.pl_h}
+				end
+
+
+			elseif v.block then
+				self:UpdateBlock(1)
+				if !self.BNotif then
+					self.BNotif = {block = true,amount = 1}
+				end
 			end
 		elseif vtype == "Player" then
-			local avatar = vgui.Create("AvatarImage", self)
+			local avatar = vgui.Create( "AvatarImage", self )
 			local size = self:GetTall() >= 32 and 32 or 16
-			avatar:SetSize(size, size)
+			avatar:SetSize( size, size )
 			if v:IsValid() then
-				avatar:SetPlayer(v, size)
+				avatar:SetPlayer( v, size )
 			end
-			avatar:SetAlpha(220)
-			avatar:Dock(LEFT)
-			avatar:DockMargin(0, (self:GetTall() - avatar:GetTall()) / 2, 0, 0)		
+			avatar:SetAlpha( 220 )
+			avatar:Dock( LEFT )
+			avatar:DockMargin( 2 * screenscale, 2 * screenscale, 2 * screenscale, 2 * screenscale )
 			if  v:IsValid() and v:IsPlayer() and v:IsBot() then
 				avatar:Remove()
 			end
 
 			if v:IsValid() then
-				self:AddLabel(" "..v:Name(), team.GetColor(v:Team()), DefaultFontEntity)
+				local color = team.GetColor( v:Team() )
+				if v:GetZombieClassTable().DemiBoss then 
+					color = Color(255,233,31)
+				elseif v:GetZombieClassTable().Boss then 
+					color = Color(216,0,0) 
+				end
+
+				self:AddLabel( " " .. v:Name(), color, GetFont() )
 			else
-				self:AddLabel(" ?", team.GetColor(TEAM_UNASSIGNED), DefaultFontEntity)
+				self:AddLabel( " ?", team.GetColor( TEAM_UNASSIGNED ), GetFont() )
 			end
 		elseif vtype == "Entity" then
-			self:AddLabel("["..(v:IsValid() and v:GetClass() or "?").."]", COLOR_RED, DefaultFontEntity)
+			self:AddLabel( "[" .. ( v:IsValid() and v:GetClass() or "?" ) .. "]", COLOR_RED, GetFont() )
 		else
-			local text = tostring(v)
+			local text = tostring( v )
 
-			self:AddLabel(text, defaultcol, defaultfont)
+			self:AddLabel( text, defaultcol, defaultfont )
 		end
 	end
 end
 
-vgui.Register("DEXNotification", PANEL, "Panel")
+vgui.Register( "DEXNotification", PANEL, "Panel" )
 
 local PANEL  = {}
+PANEL.NotifyFadeTime = 4
+PANEL.Notifications = {}
 
-AccessorFunc(PANEL, "m_Align", "Align", FORCE_NUMBER)
-AccessorFunc(PANEL, "m_MessageHeight", "MessageHeight", FORCE_NUMBER)
+AccessorFunc( PANEL, "m_Align", "Align", FORCE_NUMBER )
+AccessorFunc( PANEL, "m_MessageHeight", "MessageHeight", FORCE_NUMBER )
 
 function PANEL:Init()
-	self:SetAlign(LEFT)
-	self:SetMessageHeight(32)
+	self:SetAlign( LEFT )
+	self:SetMessageHeight( 32 )
 	self:ParentToHUD()
 	self:InvalidateLayout()
 end
@@ -147,57 +228,143 @@ end
 function PANEL:Paint()
 end
 
-function PANEL:AddNotification(...)
-	local notif = vgui.Create("DEXNotification", self)
-	notif:SetTall(BetterScreenScale() * self:GetMessageHeight())
-	notif:SetNotification(...)
-	local w = 0
-	for _, p in pairs(notif:GetChildren()) do
-		w = w + p:GetWide()
+function PANEL:AddNotification( ... )
+	local args = { ... }
+
+	local nocreate, notifi = false
+
+	for i, notif in pairs( self:GetChildren() ) do
+		--[[if notif and notif:IsValid() and not notif.AmmoNotif and notif.Args then
+			local next, tablecyl = nil, false
+			for i, arg in pairs( args ) do
+				if istable( arg ) and istable( notif.Args[ i ] ) then
+					for ii, iarg in pairs( arg ) do
+						if iarg == notif.Args[ i ][ ii ] then
+							next = true
+						else
+							next = false
+						end
+					end
+				end	
+			end
+
+			tablecyl = next
+
+			for i, arg in pairs( args ) do
+				if not istable( arg ) and not istable( notif.Args[ i ] ) and arg == notif.Args[ i ] then
+					next = true
+				elseif not istable( arg ) and not istable( notif.Args[ i ] ) then
+					next = false
+				elseif not tablecyl then
+					next = false
+				end
+			end
+
+			if next then
+				nocreate = true
+				notifi = notif
+			end
+		end--]]
+
+		if notif and notif.AmmoNotif and args[ 4 ] and istable( args[ 4 ] ) then
+			if notif.AmmoNotif.ammotype and args[ 4 ].ammotype and notif.AmmoNotif.ammotype == args[ 4 ].ammotype then
+				nocreate = true
+				notifi = notif
+			end
+		end
+		if notif and notif.HealNotif and args[ 4 ] and istable( args[ 4 ] ) then
+			if notif.HealNotif.pl_h and args[ 4 ].pl_h and notif.HealNotif.pl_h == args[ 4 ].pl_h then
+				nocreate = true
+				notifi = notif
+			end
+		end
+		if notif and notif.BNotif and notif.BNotif.block and args[ 1 ] and istable( args[ 1  ] )then
+			if notif.BNotif.block and args[ 1 ].block then
+				nocreate = true
+				notifi = notif
+			end
+		end
+
+		if notif.Args and notif.Args[ 1 ].AlwaysRefresh and args[ 1 ] and args[ 1 ].AlwaysRefresh then
+			nocreate = true
+			notifi = notif
+		end
 	end
-	if self:GetAlign() == RIGHT then
-		notif:DockPadding(self:GetWide() - w - 32, 0, 8, 0)
-	elseif self:GetAlign() == CENTER then
-		notif:DockPadding((self:GetWide() - w) / 2, 0, 0, 0)
+
+	if not nocreate then
+		notifi = vgui.Create( "DEXNotification", self )
+		notifi.Args = {}
+		for k, v in pairs( args ) do
+			table.insert( notifi.Args, v )
+		end
 	else
-		notif:DockPadding(8, 0, 8, 0)
+		notifi:ResetNotification( self.NotifyFadeTime )
 	end
 
-	notif:Dock(TOP)
-	local args = {...}
+	notifi:SetTall( BetterScreenScale() * self:GetMessageHeight() )
+	notifi:SetNotification(...)
+	local w = 0
+	for _, p in pairs( notifi:GetChildren() ) do
+		if nocreate then
+			w = w + p:GetWide() / 2
+		else
+			w = w + p:GetWide()
+		end
+	end
 
-	local FadeTime = GAMEMODE.NotifyFadeTime
+	notifi.Wide = w + 40
 
-	for k, v in pairs(args) do
-		if type(v) == "table" and v.CustomTime and type(v.CustomTime == "number") then
+	if self:GetAlign() == RIGHT then
+		notifi:DockPadding( self:GetWide() - w - ( 32 * BetterScreenScale() ), 0, 8, 0 )
+	elseif self:GetAlign() == CENTER then
+		notifi:DockPadding( ( self:GetWide() - w ) / 2, 0, 0, 0 )
+	else
+		notifi:DockPadding( 8, 0, 8, 0 )
+	end
+
+	notifi:Dock( TOP )
+
+	local args = { ... }
+
+	local FadeTime = self.NotifyFadeTime
+
+	for k, v in pairs( args ) do
+		if type( v ) == "table" and v.CustomTime and type( v.CustomTime == "number" ) then
 			FadeTime = v.CustomTime
 			break
 		end
 	end
-	notif:SetAlpha(1)
-	notif:AlphaTo(255, 0.15)
-	notif:AlphaTo(1, 1, FadeTime - 1)
 
+	notifi:SetAlpha( 1 )
+	notifi:AlphaTo( 255, 0.15 )
+	notifi:AlphaTo( 1, 1, FadeTime - 1 )
+--	notifi:MoveBy(notifi:GetX() + 10, notifi:GetY(), 2, FadeTime - 0.6, 0.5)
 
-	notif.DieTime = CurTime() + FadeTime
+	notifi.DieTime = CurTime() + FadeTime
 
-	return notif
+	self.Notifications[ #self.Notifications + 1 ] = notifi
+
+	return notifi
 end
 
 function PANEL:Think()
 	local time = CurTime()
-	for i, pan in pairs(self:GetChildren()) do
-		if pan.DieTime and time >= pan.DieTime then
-		--	pan:MoveBy(3311, pan:GetY(), 1, 0.5, 1)
-				if pan:IsValid() then
-					pan:Remove()
-				end
-				local dummy = vgui.Create("Panel", self)
-				dummy:SetTall(0)
-				dummy:Dock(TOP)
+
+	for i, pan in pairs( self.Notifications ) do
+		if pan.DieTime then
+			--[[if time >= pan.DieTime - 2 and !pan.NoMove then
+				pan.NoMove = true
+				pan:MoveBy(2000, pan:GetY(), 2, 0, 0.2)
+			end]]
+			if time >= pan.DieTime then
+				pan:Remove()
+				local dummy = vgui.Create( "Panel", self )
+				dummy:SetTall( 0 )
+				dummy:Dock( TOP )
 				dummy:Remove()
+			end
 		end
 	end
 end
 
-vgui.Register("DEXNotificationsList", PANEL, "Panel")
+vgui.Register( "DEXNotificationsList", PANEL, "Panel" )

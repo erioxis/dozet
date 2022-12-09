@@ -3,8 +3,8 @@ DEFINE_BASECLASS("weapon_zs_base")
 
 --SWEP.PrintName = "'Binocle' Hand AWP"
 --SWEP.Description = "How."
-SWEP.PrintName = ""..translate.Get("wep_binocle")
-SWEP.Description = ""..translate.Get("wep_d_binocle")
+SWEP.PrintName = translate.Get("wep_binocle")
+SWEP.Description = translate.Get("wep_d_binocle")
 SWEP.Slot = 1
 SWEP.SlotPos = 0
 
@@ -26,7 +26,7 @@ SWEP.WorldModel = "models/weapons/w_pist_glock18.mdl"
 SWEP.UseHands = true
 
 SWEP.Primary.Sound = Sound("Weapon_Glock.Single")
-SWEP.Primary.Damage = 70
+SWEP.Primary.Damage = 45
 SWEP.Primary.NumShots = 1
 SWEP.Primary.Delay = 0.5
 

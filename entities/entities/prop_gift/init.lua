@@ -113,7 +113,7 @@ function ENT:StartTouch(ent)
 			local food = GAMEMODE.Food[math.random(#GAMEMODE.Food)]
 			ent:Give(food)
 			gift = weapons.Get(food).PrintName
-		elseif gift == 6 then
+		elseif gift == 6 and ent:GetActiveWeapon():GetClass() ~= "weapon_zs_sigil_port" and (ent:GetActiveWeapon().FoodHealth or 0) < 1 then
 			random = random/6
 			ent:GiveAmmo(random, (ent:GetActiveWeapon() and !ent:GetActiveWeapon().IsMelee and ent:GetActiveWeapon().Primary.Ammo or "scrap"), true)
 			local ammotype = (GAMEMODE.AmmoNames[ent:GetActiveWeapon().Primary.Ammo] or !ent:GetActiveWeapon().IsMelee and ent:GetActiveWeapon().Primary.Ammo or ent:GetActiveWeapon().IsMelee and "scrap")
@@ -171,9 +171,13 @@ function ENT:StartTouch(ent)
 		if gift <= 75 then
 			ent:AddZSXP(random)
 			gift = "XP"
-		elseif gift > 95 then
+		elseif gift >= 85 and gift <= 95 then
 			gamemode.Call( "SpawnBossZombie", ent)
 			gift = "BOSS"
+			random = 1
+		elseif gift > 95 and random > 450 and !(ent:GetZombieClassTable().Boss or ent:GetZombieClassTable().DemiBoss) then
+			ent:Redeem()
+			gift = "REDEEM"
 			random = 1
 		else
 			gamemode.Call( "SpawnDemiBossZombie", ent)

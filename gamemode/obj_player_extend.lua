@@ -398,14 +398,14 @@ function meta:AddLegDamageExt(damage, attacker, inflictor, type)
 		self:AddLegDamage(damage)
 		self:AddArmDamage(damage)
 
-		if SERVER and attacker:HasTrinket("cryoindu") and not attacker:GetActiveWeapon().AntiInd then
+		if SERVER and attacker:HasTrinket("cryoindu") and not attacker:GetActiveWeapon().AntiInd and not (attacker:GetActiveWeapon().Tier or 1) == 7 then
 			self:CryogenicInduction(attacker, inflictor, damage)
 		end
 	elseif type == SLOWTYPE_FLAME then
 		if self:GetZombieClassTable().FireBuff then
 			self:SetHealth(self:Health() + damage * 12)
 		end
-		if SERVER and attacker:HasTrinket("fire_ind") and not attacker:GetActiveWeapon().AntiInd and !self:GetZombieClassTable().FireBuff then
+		if SERVER and attacker:HasTrinket("fire_ind") and not attacker:GetActiveWeapon().AntiInd and !self:GetZombieClassTable().FireBuff and not (attacker:GetActiveWeapon().Tier or 1) == 7 then
 			self:FireInduction(attacker, inflictor, damage * 3)
 		end
 	end

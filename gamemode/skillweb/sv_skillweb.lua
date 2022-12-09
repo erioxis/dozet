@@ -4,6 +4,10 @@ net.Receive("zs_skill_is_desired", function(length, pl)
 
 	pl:SetSkillDesired(skillid, desired)
 end)
+net.Receive("zs_repeat", function(length, pl)
+	local args = net.ReadTable()
+	pl:CenterNotify(args)
+end)
 
 net.Receive("zs_skills_desired", function(length, pl)
 	local desired = {}
@@ -170,10 +174,14 @@ function meta:SetZSXP(xp)
 	self:SetDTInt(DT_PLAYER_INT_XP, math.Clamp(xp, 0, GAMEMODE.MaxXP))
 end
 
-function meta:AddZSXP(xp)
+function meta:AddZSXP(xp, ach)
 	-- TODO: Level change checking. Cache the "XP for next level" in the vault load and compare it here instead of checking every add.
-	self:AddXPPerRound(xp)
-	self:SetZSXP(self:GetZSXP() + xp)
+--	if ach then
+		--self:AddDCoins(xp)
+	--else
+		self:AddXPPerRound(xp)
+		self:SetZSXP(self:GetZSXP() + xp)
+	--end
 end
 
 -- Done on team switch to anything except human.

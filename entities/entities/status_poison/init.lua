@@ -47,6 +47,6 @@ function ENT:Think()
 
 	owner:TakeSpecialDamage(damage, DMG_ACID, attacker, self)
 
-	self:NextThink(CurTime() + 2 / (owner.PoisonSpeedMul or 1))
+	self:NextThink(CurTime() + 2 / (owner:IsValidLivingZombie() and 4 or owner.PoisonSpeedMul or 1))
 	return true
 end

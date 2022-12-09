@@ -52,6 +52,7 @@ function PANEL:Init()
 	self.m_TitleLabel:SetText(GAMEMODE.Name)
 	self.m_TitleLabel:SetTextColor(COLOR_GRAY)
 	self.m_TitleLabel:SizeToContents()
+	
 	self.m_TitleLabel:NoClipping(true)
 	self.m_TitleLabel.Paint = BlurPaint
 
@@ -66,6 +67,7 @@ function PANEL:Init()
 
 	self.m_AuthorLabel = EasyLabel(self, "by "..GAMEMODE.Author.." ("..GAMEMODE.Email..")", "ZSScoreBoardPing", COLOR_GRAY)
 	self.m_ContactLabel = EasyLabel(self, GAMEMODE.Website, "ZSScoreBoardPing", COLOR_GRAY)
+	self.m_MapLabel = EasyLabel(self, translate.Get("map_sb")..game.GetMap(), "ZSScoreBoardPlayer", COLOR_GRAY)
 
 	self.m_HumanHeading = vgui.Create("DTeamHeading", self)
 	self.m_HumanHeading:SetTeam(TEAM_HUMAN)
@@ -94,6 +96,8 @@ function PANEL:PerformLayout()
 
 	self.m_AuthorLabel:MoveBelow(self.m_TitleLabel)
 	self.m_ContactLabel:MoveBelow(self.m_AuthorLabel)
+	self.m_MapLabel:MoveBelow(self.m_ServerNameLabel)
+	self.m_MapLabel:SetPos(422 * screenscale,2* screenscale)
 
 	self.m_ServerNameLabel:SetPos(math.min(self:GetWide() - self.m_ServerNameLabel:GetWide(), self:GetWide() * 0.75 - self.m_ServerNameLabel:GetWide() * 0.5), 32 - self.m_ServerNameLabel:GetTall() / 2)
 

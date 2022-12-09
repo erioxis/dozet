@@ -86,6 +86,9 @@ function GM:LoadVault(pl)
 				if contents.Zban then
 					pl.Zban = contents.Zban
 				end
+				if contents.AchXP then
+					pl:SetDCoins(contents.AchXP)
+				end
 
 				pl.SkillVersion = self.SkillTreeVersion
 			end
@@ -139,7 +142,8 @@ function GM:SaveVault(pl)
 		MedicMastery = pl.MedicMastery,
 		MeleeMastery = pl.MeleeMastery,
 		GunMastery = pl.GunMastery,
-		Zban = (pl.Zban or false)
+		Zban = (pl.Zban or false),
+		AchXP = pl:GetDCoins()
 	}
 
 	if pl.NextSkillReset and os.time() < pl.NextSkillReset then

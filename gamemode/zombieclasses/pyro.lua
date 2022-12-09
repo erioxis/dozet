@@ -7,7 +7,7 @@ CLASS.Help = "controls_pyro"
 
 CLASS.Wave = 3 / 12
 
-CLASS.Health = 225
+CLASS.Health = 325
 CLASS.Points = CLASS.Health/GM.HumanoidZombiePointRatio
 
 CLASS.UsePlayerModel = true
@@ -24,9 +24,9 @@ if SERVER then
 
 	function CLASS:ProcessDamage(pl, dmginfo)
 		if dmginfo:GetAttacker():IsPlayer() then
-			if bit_band(dmginfo:GetDamageType(), DMG_BURN) == 0 then
+			if bit.band(dmginfo:GetDamageType(), DMG_BURN) ~= 0 then
 				dmginfo:SetDamage(0)
-			elseif bit_band(dmginfo:GetDamageType(), DMG_DROWN) == 0 then
+			elseif bit.band(dmginfo:GetDamageType(), DMG_DROWN) ~= 0 then
 				dmginfo:ScaleDamage(2)
 			end
 		end

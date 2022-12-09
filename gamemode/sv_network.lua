@@ -80,6 +80,7 @@
 
 	util.AddNetworkString("zs_block_number")
 	util.AddNetworkString("zs_luck")
+	util.AddNetworkString("zs_repeat")
 	util.AddNetworkString("zs_skillarsenalvoid")
 
 	util.AddNetworkString("zs_mutations_table")

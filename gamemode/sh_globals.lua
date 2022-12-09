@@ -295,7 +295,6 @@ GM.ResistableStatuses = {
 	"slow",
 	"frightened",
 	"frost",
-	"burn",
 	"rot",
 	"poison"
 }

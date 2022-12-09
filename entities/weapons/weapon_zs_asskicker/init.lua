@@ -11,7 +11,7 @@ function SWEP:ApplyMeleeDamage(ent, trace, damage)
 		ent:KnockDown()
 		ent:SetGroundEntity(NULL)
 		ent:SetVelocity(vel)]]
-		if math.random(15) == 1 and ent:IsPlayer() then
+		if math.random(9) == 1 and ent:IsPlayer() then
 		if ent:HasTrinket("antibaracat") then ent:ThrowFromPositionSetZ(trace.StartPos, ent:IsPlayer() and 600 or 1600, nil, noknockdown) 	self.BaseClass.ApplyMeleeDamage(self, ent, trace, damage) return end
 			timer.Simple(3, function()
 				ent:Kill()
@@ -21,11 +21,12 @@ function SWEP:ApplyMeleeDamage(ent, trace, damage)
 			ent:Remove()
 		end
 		local noknockdown = true
-		if CurTime() >= (ent.NextKnockdown or 0) then
+		if CurTime() >= (ent.NextKnockdown or 0) and ent:IsPlayer() then
 			noknockdown = false
 			ent.NextKnockdown = CurTime() + 12
+			ent:GiveStatus("knockdown",30)
 		end
-		ent:ThrowFromPositionSetZ(trace.StartPos, ent:IsPlayer() and 1200 or 3200, nil, noknockdown)
+		ent:ThrowFromPositionSetZ(trace.StartPos, ent:IsPlayer() and 1200 or 3200, nil)
 	end
 
 	self.BaseClass.ApplyMeleeDamage(self, ent, trace, damage)

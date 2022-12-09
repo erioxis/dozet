@@ -45,6 +45,7 @@ include("vgui/phumanclass.lua")
 include("vgui/pweapons.lua")
 include("vgui/pendboard.lua")
 include("vgui/pworth.lua")
+
 include("vgui/parsenal.lua")
 include("vgui/premantle.lua")
 include("vgui/dpingmeter.lua")
@@ -1869,6 +1870,9 @@ local roll = 0
 function GM:_CalcView(pl, origin, angles, fov, znear, zfar)
 	if pl.Confusion and pl.Confusion:IsValid() then
 		pl.Confusion:CalcView(pl, origin, angles, fov, znear, zfar)
+	end
+	if pl:IsSkillActive(SKILL_MADNESS) then
+		angles = angles * 2
 	end
 
 	if pl.Revive and pl.Revive:IsValid() and pl.Revive.GetRagdollEyes then

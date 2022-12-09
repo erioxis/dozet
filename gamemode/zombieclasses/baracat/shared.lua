@@ -19,11 +19,11 @@ CLASS.BaraCat = true
 CLASS.FearPerInstance = 1
 
 
-CLASS.Points = 25
+CLASS.Points = 3
 
 CLASS.SWEP = "weapon_zs_baracat"
 
-CLASS.Health = 320
+CLASS.Health = 120
 CLASS.Speed = 870
 CLASS.JumpPower = 1400
 

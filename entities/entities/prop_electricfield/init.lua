@@ -22,7 +22,7 @@ function ENT:Think()
 	local owner = self:GetOwner()
 	if CurTime() >= self.NextHurt then 
 		for _, pl in pairs(ents.FindInSphere(self:GetPos(), 68 * self:GetModelScale() )) do
-			if pl:IsPlayer() and owner:IsPlayer() and pl:Team() != owner:Team() and pl:Alive() then
+			if pl:IsPlayer() and owner:IsPlayer() and pl:Team() != owner:Team() and pl:Alive() or pl == owner then
 				pl:TakeSpecialDamage(self.HurtTick, DMG_SHOCK, owner, self, self:GetPos(), self:GetPos())
 				self.TotalHurt = self.TotalHurt - self.HurtTick
 			end

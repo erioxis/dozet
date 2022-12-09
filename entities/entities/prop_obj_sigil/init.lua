@@ -1,6 +1,7 @@
 INC_SERVER()
 
 ENT.HealthLock = 0
+ENT.Immune = false
 
 function ENT:Initialize()
 	self:DrawShadow(false)
@@ -19,6 +20,9 @@ function ENT:Initialize()
 		if phys:IsValid() then
 			phys:EnableMotion(false)
 		end
+	if GAMEMODE:GetWave() <= 3 then
+		self.Immune = true
+	end
 
 	self:CollisionRulesChanged()
 
@@ -116,6 +120,7 @@ function ENT:OnTakeDamage(dmginfo)
 					self:SetSigilLastDamaged(0)
 					gamemode.Call("OnSigilUncorrupted", self, dmginfo)
 				else
+					if !self.Immune then self:Remove() return end
 					gamemode.Call("PreOnSigilCorrupted", self, dmginfo)
 					self:SetSigilCorrupted(true)
 					self.MaxHealth = 260

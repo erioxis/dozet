@@ -1,11 +1,11 @@
-GM.Name		=	""
+GM.Name		=	"Dozet ZS"
 GM.Author	=	"Toyka(Real Creator - Jetboom)"
 GM.Email	=	"nope"
 GM.Website	=	"https://github.com/erioxis/dozet"
 
 -- No, adding a gun doesn't make your name worth being here.
 GM.Credits = {
-	{"Version", "", "5.7.5"},
+	{"Version", "", "5.9.2"},
 	{"erioxis", "Phantom coder", "dead"},
 	{"Nullted", "", "RU-ENG Translation"},
 	{"Bro 3", "", "Some models"}

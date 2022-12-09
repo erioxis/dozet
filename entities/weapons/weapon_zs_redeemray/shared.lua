@@ -111,15 +111,15 @@ function SWEP:CheckHealRay()
 		ent:WorldSpaceCenter():DistToSqr(owner:WorldSpaceCenter()) <= self.HealRange * self.HealRange and self:GetCombinedPrimaryAmmo() > 0 then
 
 		if CurTime() > self:GetDTFloat(10) and not ent:GetZombieClassTable().Boss then
-			self:SetDTFloat(10, CurTime() + 1)
+			self:SetDTFloat(10, CurTime() + 2)
 			if SERVER then
 				ent:Redeem(true)
+				owner:GiveAchievement("redeemed")
 				owner:StripWeapon(self:GetClass())
 				ent:SetPos(owner:GetPos())
 			else
 				GAMEMODE:TopNotify(translate.Format("x_redeemed_y",ent:Name(),owner:Name()), " ", {killicon = "redeem"})
 			end
-			owner:GiveAchievement("redeemed")
 		end
 
 	elseif ent:IsValid() then
