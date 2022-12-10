@@ -3695,7 +3695,7 @@ function GM:EntityTakeDamage(ent, dmginfo)
 		local dmgpos = dmginfo:GetDamagePosition()
 		local hasdmgsess = attacker:IsPlayer() and attacker:HasDamageNumberSession()
 
-		if attacker:IsPlayer() and dispatchdamagedisplay and not hasdmgsess and ent:IsPlayer() then
+		if attacker:IsPlayer() and dispatchdamagedisplay and not hasdmgsess then
 			self:DamageFloater(attacker, ent, dmgpos, dmg)--, (ent:IsPlayer() and ((ent:Team() == TEAM_HUMAN) and ent:GetBloodArmor() or ent:GetZArmor()) > 0))
 
 		elseif hasdmgsess and dispatchdamagedisplay then
