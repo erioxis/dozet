@@ -159,7 +159,36 @@ local function SaveSkillLoadout(name)
 	GAMEMODE.SavedSkillLoadouts[#GAMEMODE.SavedSkillLoadouts + 1] = {name, MySelf:GetDesiredActiveSkills()}
 	file.Write(GAMEMODE.SkillLoadoutsFile, Serialize(GAMEMODE.SavedSkillLoadouts))
 end
+local function ActivateSkill(self, skill) 
+	local name = GAMEMODE.Skills[skill].Name
+		net.Start("zs_skill_is_desired")
+		net.WriteUInt(skill, 16)
+		net.WriteBool(true)
+	net.SendToServer()
 
+	self:DisplayMessage(name..translate.Get("s_act"))
+
+end
+local function DeactivateSkill(self, skill) 
+	local name = GAMEMODE.Skills[skill].Name
+		net.Start("zs_skill_is_desired")
+		net.WriteUInt(skill, 16)
+		net.WriteBool(false)
+	net.SendToServer()
+
+	self:DisplayMessage(name..translate.Get("s_deact"))
+
+end
+local function UnlockSkill(self, skill) 
+	local name = GAMEMODE.Skills[skill].Name
+	net.Start("zs_skill_is_unlocked")
+	net.WriteUInt(skill, 16)
+	net.WriteBool(true)
+	net.SendToServer()
+	
+	self:DisplayMessage(name..translate.Get("s_unl_act"), COLOR_GREEN)
+
+end
 -- For getting the positions of skill webs. See skillwebgrid.png
 -- The file is not used in the gamemode so feel free to edit it.
 function GM:GenerateFromSkillWebGrid()
@@ -582,26 +611,11 @@ function PANEL:Init()
 		local skillid = contextmenu.SkillID
 		local name = allskills[skillid].Name
 		if MySelf:IsSkillDesired(skillid) then
-			net.Start("zs_skill_is_desired")
-				net.WriteUInt(skillid, 16)
-				net.WriteBool(false)
-			net.SendToServer()
-
-			self:DisplayMessage(name..translate.Get("s_deact"))
+			DeactivateSkill(self, skillid)
 		elseif MySelf:IsSkillUnlocked(skillid) then
-			net.Start("zs_skill_is_desired")
-				net.WriteUInt(skillid, 16)
-				net.WriteBool(true)
-			net.SendToServer()
-
-			self:DisplayMessage(name..translate.Get("s_act"), COLOR_DARKGREEN)
+			ActivateSkill(self, skillid)
 		else
-			net.Start("zs_skill_is_unlocked")
-				net.WriteUInt(skillid, 16)
-				net.WriteBool(true)
-			net.SendToServer()
-
-			self:DisplayMessage(name..translate.Get("s_unl_act"), COLOR_GREEN)
+			UnlockSkill(self, skillid)
 		end
 
 		contextmenu:SetVisible(false)
@@ -1255,9 +1269,10 @@ function PANEL:OnMousePressed(mc)
 
 					return
 				end
-
+				if GAMEMODE.OneClickSkill then DeactivateSkill(self, hoveredskill) return end
 				contextmenu.Button:SetText("Deactivate")
 			elseif MySelf:IsSkillUnlocked(hoveredskill) then
+				if GAMEMODE.OneClickSkill then ActivateSkill(self, hoveredskill) return end
 				contextmenu.Button:SetText("Activate")
 			elseif MySelf:SkillCanUnlock(hoveredskill) then
 				if (GAMEMODE.Skills[hoveredskill].RemortReq or 0) > MySelf:GetZSRemortLevel() then
@@ -1277,8 +1292,10 @@ function PANEL:OnMousePressed(mc)
 				end
 				if MySelf:GetZSSPRemaining() >= 1 or GAMEMODE.Skills[hoveredskill].Amulet then
 				    if GAMEMODE.Skills[hoveredskill].HiddenU and math.random(20) == 20 then
+						if GAMEMODE.OneClickSkill then UnlockSkill(self, hoveredskill) return end
 						contextmenu.Button:SetText("Unlock")
 					elseif not GAMEMODE.Skills[hoveredskill].HiddenU then
+						if GAMEMODE.OneClickSkill then UnlockSkill(self, hoveredskill) return end
 						contextmenu.Button:SetText("Unlock")
 					if GAMEMODE.Skills[hoveredskill].Amulet and (MySelf:GetZSRemortLevel() / 4 > MySelf.AmuletPiece or MySelf:GetZSRemortLevel() == 0) then
 						self:DisplayMessage("You take x2 damage if don't have enought amulet cells!", COLOR_RED)
@@ -1299,6 +1316,7 @@ function PANEL:OnMousePressed(mc)
 
 				return
 			end
+			
 			contextmenu.SkillID = hoveredskill
 
 			contextmenu:SetVisible(true)

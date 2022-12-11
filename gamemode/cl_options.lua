@@ -103,6 +103,10 @@ GM.DisableScopes = CreateClientConVar("zs_disablescopes", "0", true, false):GetB
 cvars.AddChangeCallback("zs_disablescopes", function(cvar, oldvalue, newvalue)
 	GAMEMODE.DisableScopes = tonumber(newvalue) == 1
 end)
+GM.OneClickSkill = CreateClientConVar("zs_blockunable", "0", true, false):GetBool()
+cvars.AddChangeCallback("zs_blockunable", function(cvar, oldvalue, newvalue)
+	GAMEMODE.OneClickSkill = tonumber(newvalue) == 1
+end)
 
 
 GM.ShowPercDmg = CreateClientConVar("zs_show_dmg_in_perc", "0", true, false):GetBool()

@@ -215,7 +215,7 @@ function SWEP:Think()
 						if curtgt:Health() >= curtgt:GetMaxHealth() then
 							magnitude = 0
 						end
-						curtgt:HealHealth(magnitude,owner,self)
+						curtgt:HealPlayer(magnitude,owner,self)
 					else
 						local invuln = curtgt:GetStatus("spawnbuff")
 						if not (invuln and invuln:IsValid()) then

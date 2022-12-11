@@ -2367,6 +2367,7 @@ bossdrops2["trinket_altchayok"] = {Luck = 7}
 bossdrops2["trinket_altdarksoul"] = {Luck = 3}
 
 function meta:MakeDemiBossDrop(killer)
+	local drop = table.Random(demiboss)
 	local inv = string.sub(drop, 1, 4) ~= "weap"
 
 
@@ -2401,18 +2402,14 @@ function meta:MakeBossDrop(killer)
 	local drop = table.Random(truedrop)
 	
 	--PrintTable(truedrop)
-	local inv = string.sub(drop, 1, 4) ~= "weap"
+	--local inv = string.sub(drop, 1, 4) ~= "weap"
 
 	local pos = self:LocalToWorld(self:OBBCenter())
-	local ent = ents.Create(inv and "prop_invitem" or "prop_weapon")
+	local ent = ents.Create("prop_invitem")
 	if ent:IsValid() then
 		ent:SetPos(pos)
 		ent:SetAngles(AngleRand())
-		if inv then
-			ent:SetInventoryItemType(drop)
-		else
-			ent:SetWeaponType(drop)
-		end
+		ent:SetInventoryItemType(drop)
 		ent:Spawn()
 
 		local phys = ent:GetPhysicsObject()
