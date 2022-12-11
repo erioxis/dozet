@@ -1101,7 +1101,7 @@ GM:AddSkill(SKILL_EQUIPPED, translate.Get("skill_alacraty"), GOOD.. translate.Ge
 																-6,			2,					{}, TREE_GUNTREE)
 GM:AddSkill(SKILL_MOBILIZED, translate.Get("skill_mobile"), GOOD.. translate.Get("skill_mobile_d1")..BAD..translate.Get("skill_mobile_d2"),
 																-7,			1,					{SKILL_EQUIPPED}, TREE_GUNTREE)
-GM:AddSkillModifier(SKILL_MOBILIZED, SKILLMOD_LUCK, -5)
+GM:AddSkillModifier(SKILL_MOBILIZED, SKILLMOD_LUCK, -1)
 GM:AddSkill(SKILL_WORTHINESS1, translate.Get("worthness"), GOOD.."+10"..translate.Get("worth")..BAD.."-3"..translate.Get("start_points"),
 																-4,			-3,					{}, TREE_GUNTREE)
 GM:AddSkill(SKILL_CANNONBALL, translate.Get("skill_cannonball"), translate.Get("skill_cannonball_d1")..GOOD..translate.Get("skill_cannonball_d2"),

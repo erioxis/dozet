@@ -374,7 +374,7 @@ function meta:ProcessDamage(dmginfo)
 	if self:IsSkillActive(SKILL_SECONDCHANCE) and self.LetalSave and dmginfo:GetDamage() >= self:Health() then
 		dmginfo:SetDamage(0)
 		self.LetalSave = false
-		self:SetHealth(self:GetMaxHealth())
+		self:SetHealth(self:GetMaxHealth()/2)
 		if attacker:IsPlayer() then
 			GAMEMODE:BlockFloater(attacker, self, dmginfo:GetDamagePosition())
 		end
@@ -2296,35 +2296,34 @@ function meta:DoSigilTeleport(target, from, corrupted)
 	end
 end
 
-local bossdrops = {
-	"trinket_bleaksoul",  -- 1
-	"trinket_spiritess",  -- 2
-	"trinket_samsonsoul",  -- 3
-	"trinket_evesoul",  -- 4
-    "trinket_jacobjesausoul",  -- 5
-    "trinket_isaacsoul",  -- 6
-    "trinket_magdalenesoul",  -- 7
-    "trinket_lilithsoul",  -- 8
-    "trinket_whysoul",  -- 9
-    "trinket_blanksoul", -- 10
-    "trinket_classixsoul",  -- 11
-	"trinket_darksoul",  --12
-	"trinket_eriosoul",  --13
-	"trinket_aposoul",  --14
-	"trinket_betsoul",  --15
-	"trinket_lostsoul",  --16
-	"trinket_greedsoul",  --17
-	"trinket_cainsoul",   --18
-	"trinket_lazarussoul",	-- 19
-	"trinket_forsoul",  -- 20
-	"trinket_starsoul",  -- 21
-	"trinket_teasoul",  -- 22
-	"trinket_sugersoul",  -- 23
-	"trinket_nulledsoul",  -- 24
-	"trinket_soulmedical",  -- 25
-	"trinket_lampsoul",  -- 26
-	"trinket_lehasoul"  -- 27
-}
+local bossdrops = {}
+bossdrops["trinket_bleaksoul"] = {Luck = 2}
+bossdrops["trinket_samsonsoul"] = {Luck = 3}
+bossdrops["trinket_evesoul"] = {Luck = 2}
+bossdrops["trinket_jacobjesausoul"] = {Luck = 5}
+bossdrops["trinket_isaacsoul"] = {Luck = 2}
+bossdrops["trinket_magdalenesoul"] = {Luck = 3}
+bossdrops["trinket_lilithsoul"] = {Luck = 4}
+bossdrops["trinket_eriosoul"] = {Luck = 2}
+bossdrops["trinket_aposoul"] = {Luck = 3}
+bossdrops["trinket_betsoul"] = {Luck = 4}
+bossdrops["trinket_lostsoul"] = {Luck = -1}
+bossdrops["trinket_greedsoul"] = {Luck = 5}
+bossdrops["trinket_cainsoul"] = {Luck = 2}
+bossdrops["trinket_lazarussoul"] = {Luck = -1}
+bossdrops["trinket_forsoul"] = {Luck = -1}
+bossdrops["trinket_spiritess"] = {Luck = -2}
+bossdrops["trinket_whysoul"] = {Luck = 7}
+bossdrops["trinket_teasoul"] = {Luck = 1}
+bossdrops["trinket_darksoul"] = {Luck = 3}
+bossdrops["trinket_blanksoul"] = {Luck = 0}
+bossdrops["trinket_classixsoul"] = {Luck = 0}
+bossdrops["trinket_starsoul"] = {Luck = -3}
+bossdrops["trinket_sugersoul"] = {Luck = 2}
+bossdrops["trinket_nulledsoul"] = {Luck = 5}
+bossdrops["trinket_soulmedical"] = {Luck = 3}
+bossdrops["trinket_lampsoul"] = {Luck = 7}
+bossdrops["trinket_lehasoul"] = {Luck = -6}
 local demiboss = {
 	"comp_soul_alt_h",
 	"comp_soul_health",
@@ -2346,33 +2345,62 @@ local bossdrops1 = {
 	"trinket_sin_pride",
     "trinket_sin_lust"
 }
-local bossdrops2 = {
-	--"weapon_zs_plank_q5",  -- 1
-	"trinket_altjudassoul",  -- 2
-	"trinket_altsamsonsoul",  -- 3
-	"trinket_altevesoul",  -- 4
-    "trinket_jacobsoul",  -- 5
-    "trinket_altisaacsoul",  -- 6
-    "trinket_altmagdalenesoul",  -- 7
-    "trinket_altlilithsoul",  -- 8
-    "trinket_alteriosoul", -- 10 
-	"trinket_altaposoul",  --14
-	"trinket_altbetsoul",  --15
-	"trinket_altlostsoul",  --16
-	"trinket_altgreedsoul",  --17
-	"trinket_altcainsoul",   --18
-	"trinket_altlazarussoul",	-- 19
-	"trinket_altforsoul", -- 20
-	"trinket_altsoul",-- 21
-	"trinket_soulalteden", -- 22
-	"trinket_altchayok", --23
-	"trinket_altdarksoul" -- 24
+local bossdrops2 = {}
+bossdrops2["trinket_altjudassoul"] = {Luck = 2}
+bossdrops2["trinket_altsamsonsoul"] = {Luck = 3}
+bossdrops2["trinket_altevesoul"] = {Luck = 5}
+bossdrops2["trinket_jacobsoul"] = {Luck = 5}
+bossdrops2["trinket_altisaacsoul"] = {Luck = 2}
+bossdrops2["trinket_altmagdalenesoul"] = {Luck = 3}
+bossdrops2["trinket_altlilithsoul"] = {Luck = 4}
+bossdrops2["trinket_alteriosoul"] = {Luck = -1}
+bossdrops2["trinket_altaposoul"] = {Luck = 3}
+bossdrops2["trinket_altbetsoul"] = {Luck = 4}
+bossdrops2["trinket_altlostsoul"] = {Luck = -1}
+bossdrops2["trinket_altgreedsoul"] = {Luck = 5}
+bossdrops2["trinket_altcainsoul"] = {Luck = -1}
+bossdrops2["trinket_altlazarussoul"] = {Luck = -1}
+bossdrops2["trinket_altforsoul"] = {Luck = -1}
+bossdrops2["trinket_altsoul"] = {Luck = -2}
+bossdrops2["trinket_soulalteden"] = {Luck = 7}
+bossdrops2["trinket_altchayok"] = {Luck = 7}
+bossdrops2["trinket_altdarksoul"] = {Luck = 3}
+
+function meta:MakeDemiBossDrop(killer)
+	local inv = string.sub(drop, 1, 4) ~= "weap"
+
+
+	local pos = self:LocalToWorld(self:OBBCenter())
+	local ent = ents.Create(inv and "prop_invitem" or "prop_weapon")
+	if ent:IsValid() then
+		ent:SetPos(pos)
+		ent:SetAngles(AngleRand())
+		if inv then
+			ent:SetInventoryItemType(drop)
+		else
+			ent:SetWeaponType(drop)
+		end
+		ent:Spawn()
+
+		local phys = ent:GetPhysicsObject()
+		if phys:IsValid() then
+			phys:Wake()
+			phys:SetVelocityInstantaneous(VectorRand():GetNormalized() * math.Rand(24, 100))
+			phys:AddAngleVelocity(VectorRand() * 200)
+		end
+	end
+end
+function meta:MakeBossDrop(killer)
+	local truedrop = {"comp_soul_alt_h"}
+	for k, v in pairs(bossdrops2) do
+		if (killer and killer.Luck or 0) > (v.Luck or 0)+5 then continue  end
+		if (killer and killer.Luck or 3) >= (v.Luck or 0) then
+			table.insert(truedrop, k)
+		end 
+	end
+	local drop = table.Random(truedrop)
 	
-	
-	
-}
-function meta:MakeDemiBossDrop()
-	local drop = table.Random(demiboss)
+	--PrintTable(truedrop)
 	local inv = string.sub(drop, 1, 4) ~= "weap"
 
 	local pos = self:LocalToWorld(self:OBBCenter())
@@ -2395,31 +2423,7 @@ function meta:MakeDemiBossDrop()
 		end
 	end
 end
-function meta:MakeBossDrop()
-	local drop = table.Random(bossdrops)
-	local inv = string.sub(drop, 1, 4) ~= "weap"
-
-	local pos = self:LocalToWorld(self:OBBCenter())
-	local ent = ents.Create(inv and "prop_invitem" or "prop_weapon")
-	if ent:IsValid() then
-		ent:SetPos(pos)
-		ent:SetAngles(AngleRand())
-		if inv then
-			ent:SetInventoryItemType(drop)
-		else
-			ent:SetWeaponType(drop)
-		end
-		ent:Spawn()
-
-		local phys = ent:GetPhysicsObject()
-		if phys:IsValid() then
-			phys:Wake()
-			phys:SetVelocityInstantaneous(VectorRand():GetNormalized() * math.Rand(24, 100))
-			phys:AddAngleVelocity(VectorRand() * 200)
-		end
-	end
-end
-function meta:Make1BossDrop()
+function meta:Make1BossDrop(killer)
 	local drop = table.Random(bossdrops1)
 	local inv = string.sub(drop, 1, 4) ~= "weap"
 
@@ -2443,20 +2447,24 @@ function meta:Make1BossDrop()
 		end
 	end
 end
-function meta:Make2BossDrop()
-	local drop = table.Random(bossdrops2)
-	local inv = string.sub(drop, 1, 4) ~= "weap"
+function meta:Make2BossDrop(killer)
+	local truedrop = {"comp_soul_alt_h"}
+	for k, v in pairs(bossdrops2) do
+		if (killer and killer.Luck or 0) > (v.Luck or 0)+5 then continue  end
+		if (killer and killer.Luck or 3) >= (v.Luck or 0) then
+			table.insert(truedrop, k)
+		end 
+	end
+	local drop = table.Random(truedrop)
+
+	--local inv = string.sub(drop, 1, 4) ~= "weap"
 
 	local pos = self:LocalToWorld(self:OBBCenter())
-	local ent = ents.Create(inv and "prop_invitem" or "prop_weapon")
+	local ent = ents.Create("prop_invitem")
 	if ent:IsValid() then
 		ent:SetPos(pos)
 		ent:SetAngles(AngleRand())
-		if inv then
-			ent:SetInventoryItemType(drop)
-		else
-			ent:SetWeaponType(drop)
-		end
+		ent:SetInventoryItemType(drop)
 		ent:Spawn()
 
 		local phys = ent:GetPhysicsObject()

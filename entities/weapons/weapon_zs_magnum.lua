@@ -15,7 +15,6 @@ if CLIENT then
 	SWEP.HUD3DBone = "Python"
 	SWEP.HUD3DPos = Vector(0.85, 0, -2.5)
 	SWEP.HUD3DScale = 0.015
-
 end
 
 SWEP.Base = "weapon_zs_base"
@@ -30,7 +29,7 @@ SWEP.CSMuzzleFlashes = false
 
 SWEP.Primary.Sound = Sound("Weapon_357.Single")
 SWEP.Primary.Delay = 0.92
-SWEP.Primary.Damage = 59
+SWEP.Primary.Damage = 44
 SWEP.Primary.NumShots = 1
 
 SWEP.Primary.ClipSize = 6
@@ -41,19 +40,62 @@ GAMEMODE:SetupDefaultClip(SWEP.Primary)
 
 SWEP.Tier = 2
 
-SWEP.ConeMax = 3.75
-SWEP.ConeMin = 2
-SWEP.BounceMulti = 1.5
+SWEP.ConeMax = 0
+SWEP.ConeMin = 0
+SWEP.BounceMulti = 2
 
 SWEP.IronSightsPos = Vector(-4.65, 4, 0.25)
 SWEP.IronSightsAng = Vector(0, 0, 1)
+if CLIENT then
+	local matBeam = Material("effects/laser1")
+	local matGlow = Material("sprites/glow04_noz")
+	local colBeam = Color(80, 80, 255, 255)
+	local COLOR_WHITE = color_white	
+	local temp_angle = Angle(0, 0, 0)
+	function SWEP:PostDrawViewModel(vm, pl, wep)
+		if self.HUD3DPos and GAMEMODE:ShouldDraw3DWeaponHUD() then
+			local pos, ang = self:GetHUD3DPos(vm)
+			if pos then
+				self:Draw3DHUD(vm, pos, ang)
+			end
+		end
+		local owner = self:GetOwner()
+		if not MySelf:KeyDown(IN_SPEED) then return end
+		 local beamcol = colBeam
+		 local trace = owner:CompensatedMeleeTrace(20000,1)
+		 local normal = trace.Normal
+		 local hitnormal = trace.HitNormal
+		 local hitpos = trace.HitPos
+		-- render.SetMaterial(matBeam)
+		-- render.DrawBeam(pos, hitpos, 0.2, 0, 1, beamcol)
+		 render.SetMaterial(matBeam)
+			 local dir = 0.85*hitnormal * hitnormal:Dot(normal * -1) + normal
+			temp_angle:Set(dir:Angle())
+			temp_angle:RotateAroundAxis(
+				temp_angle:Forward(),
+				math.Rand(0, 360)
+			)
+			temp_angle:RotateAroundAxis(
+				temp_angle:Up(),
+				math.Rand(0,0)
+			)
+			
 
+			 dir = temp_angle:Forward()
+			 local endpos = hitpos + dir * 2000
+		 render.DrawBeam(hitpos, endpos, 4, 0, 2, COLOR_WHITE)
+		 render.DrawBeam(hitpos, endpos, 6, 0, 2, beamcol)
+		 render.SetMaterial(matGlow)
+		 render.DrawSprite(hitpos, 12, 12, Color(115, 255, 80))
+		 render.DrawSprite(endpos, 158, 158, beamcol)
+	end
+end
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_MAX_SPREAD, -0.7, 1)
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_MIN_SPREAD, -0.35, 1)
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_FIRE_DELAY, -0.07, 1)
 GAMEMODE:AddNewRemantleBranch(SWEP, 1, translate.Get("wep_magnum_r1"), translate.Get("wep_d_magnum_r1"), function(wept)
 	wept.Primary.Damage = wept.Primary.Damage * 0.85
-	wept.BounceMulti = 1.764
+	wept.BounceMulti = 3
 	wept.GetCone = function(self)
 		return BaseClass.GetCone(self) * (1 - self:GetDTInt(9)/13)
 	end
@@ -74,7 +116,7 @@ local function DoRicochet(attacker, hitpos, hitnormal, normal, damage)
 
 	attacker.RicochetBullet = true
 	if attacker:IsValid() then
-		attacker:FireBulletsLua(hitpos, 2 * hitnormal * hitnormal:Dot(normal * -1) + normal, 0, 1, damage, nil, nil, "tracer_rico", RicoCallback, nil, nil, nil, nil, attacker:GetActiveWeapon())
+		attacker:FireBulletsLua(hitpos, 2 *hitnormal * hitnormal:Dot(normal * -1) + normal, 0, 1, damage, nil, nil, "tracer_rico", RicoCallback, nil, nil, nil, nil, attacker:GetActiveWeapon())
 	end
 	attacker.RicochetBullet = nil
 end
@@ -92,23 +134,7 @@ function SWEP.BulletCallback(attacker, tr, dmginfo)
 		end
 	end
 end
---[[function SWEP:Think()
-	local owner = self:GetOwner()
-	if MySelf == owner then
-				local matBeam = Material( "trails/electric" )
-				--if  MySelf:KeyDown(IN_SPEED) then
-					local tr = owner:CompensatedMeleeTrace(20222,1)
-					
-					local at = tr.HitPos
-					local pos = owner:GetShootPos()
-					local frametime = FrameTime() * 500
-					--render.SetMaterial( matBeam )
-				--	render.StartBeam( 1 )
-					render.DrawBeam( pos, at, 120, 3, 3, Color(255,255,255))
-						
-					--render.EndBeam()
-				--end
-	end
-	--self.BaseClass(self:Think())
-	return true
-end]]
+
+
+
+

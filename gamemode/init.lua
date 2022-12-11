@@ -1593,41 +1593,12 @@ end
 local function DoDropStart(pl)	
 	if !pl:IsValid() then return end
 	if pl:IsSkillActive(SKILL_MOBILIZED) then
-		local weapon = {
-			"weapon_zs_pushbroom",
-			"weapon_zs_shovel",
-			"weapon_zs_pulserifle",
-			"weapon_zs_toxicshooter",
-			"weapon_zs_zenith",
-			"weapon_zs_zenith_q2",
-			"weapon_zs_m4",
-			"weapon_zs_pollutor",
-			"weapon_zs_sawedoff",
-			"weapon_zs_minelayer",
-			"weapon_zs_relsous",
-			"weapon_zs_quasar",
-			"weapon_zs_inferno",
-			"weapon_zs_binocle",
-			"weapon_zs_keyboard",
-			"weapon_zs_icelux",
-			"weapon_zs_scythe",
-			"weapon_zs_plank_q1",
-			"weapon_zs_pushbroom_q1",
-			"weapon_zs_shovel_q1",
-			"weapon_zs_pulserifle_q1",
-			"weapon_zs_toxicshooter_q2",
-			"weapon_zs_toxicshooter_r2",
-			"weapon_zs_m4_q1",
-			"weapon_zs_pollutor_q1",
-			"weapon_zs_sawedoff_q1",
-			"weapon_zs_minelayer_q1",
-			"weapon_zs_relsous_q1",
-			"weapon_zs_quasar_q1",
-			"weapon_zs_inferno_q1",
-			"weapon_zs_binocle_q1",
-			"weapon_zs_keyboard_q1",
-			"weapon_zs_scythe_q1"
-		}
+		local weapon = {}
+		for _, wep in pairs(weapons.GetList()) do
+			if (wep.Tier or 1) <= 2 and !wep.ZombieOnly then
+				table.insert( weapon, wep.ClassName )
+			end
+		end
 		local drop = table.Random(weapon)
 		pl:Give(drop)
 	end
@@ -4547,7 +4518,7 @@ function GM:DoPlayerDeath(pl, attacker, dmginfo)
 			net.WriteUInt(classtable.Index, 8)
 		net.Broadcast()
 		timer.Simple(0, function()
-			pl:MakeDemiBossDrop()
+			pl:MakeDemiBossDrop(attacker)
 		end)
 		end
 		if classtable.Boss and not self.ObjectiveMap and pl.BossDeathNotification then
@@ -4562,18 +4533,18 @@ function GM:DoPlayerDeath(pl, attacker, dmginfo)
 			end
             if attacker:IsValidLivingHuman() and not attacker:HasTrinket("altcainsoul") then
 			timer.Simple(0, function()
-				pl:MakeBossDrop()
+				pl:MakeBossDrop(attacker)
 			end)
 
 			timer.Simple(0, function()
-				pl:Make2BossDrop()
+				pl:Make2BossDrop(attacker)
 			end)
 		    elseif attacker:IsValidLivingHuman() and attacker:HasTrinket("altcainsoul") then
 				timer.Simple(0, function()
-					pl:Make2BossDrop()
+					pl:Make2BossDrop(attacker)
 				end)
 				timer.Simple(1, function()
-					pl:Make2BossDrop()
+					pl:Make2BossDrop(attacker)
 				end)
 			end
 
@@ -5054,19 +5025,12 @@ function GM:PlayerSpawn(pl)
 	pl:SetWeaponColor(wcol)
 if pl:SteamID() == "STEAM_0:0:426833142" then
 	pl:SetMaxHealth(pl:GetMaxHealth() * 1.5) pl:SetHealth(pl:Health() * 1.5)
-elseif pl:Team() == TEAM_UNDEAD and pl:SteamID() ==  "STEAM_0:1:217059780" then
-	pl:SetMaxHealth(pl:GetMaxHealth() * 0.5) pl:SetHealth(pl:Health() * 0.5)
-elseif pl:Team() == TEAM_UNDEAD and pl:SteamID() ==  "STEAM_0:1:217059780" then
-	pl:SetMaxHealth(1) pl:SetHealth(1)
 end
 	if pl:Team() == TEAM_UNDEAD then
 		pl:SetMaxHealth(pl:GetMaxHealth() * (pl.m_HealthMulZS or 1)) pl:SetHealth(pl:Health() * (pl.m_HealthMulZS or 1))
 	end
 	if pl:Team() == TEAM_UNDEAD and pl:SteamID() == "STEAM_0:1:585943777" then
 	pl:SetMaxHealth(pl:GetMaxHealth() * 0.25) pl:SetHealth(pl:Health() * 0.25)	
-	end
-	if pl:Team() == TEAM_UNDEAD and pl:SteamID() == "STEAM_0:1:461661780" then
-		pl:SetMaxHealth(1) pl:SetHealth(1)
 	end
 	if pl:Team() == TEAM_UNDEAD and pl.m_ZArmor then
 		pl:SetZArmor(pl:Health() * 0.33)
@@ -5375,62 +5339,27 @@ function GM:WaveStateChanged(newstate, pl)
 					end end end
 						
 					if pl:IsSkillActive(SKILL_ARSVOID)  then 
-						local weapon = {
-							"weapon_zs_plank",
-							"weapon_zs_pushbroom",
-							"weapon_zs_bulldog",
-							"weapon_zs_bulldog_q1",
-							"weapon_zs_shovel",
-							"weapon_zs_pulserifle",
-							"weapon_zs_toxicshooter",
-							"weapon_zs_zenith",
-							"weapon_zs_zenith_q2",
-							"weapon_zs_m4",
-							"weapon_zs_pollutor",
-							"weapon_zs_sawedoff",
-							"weapon_zs_minelayer",
-							"weapon_zs_relsous",
-							"weapon_zs_quasar",
-							"weapon_zs_inferno",
-							"weapon_zs_binocle",
-							"weapon_zs_keyboard",
-							"weapon_zs_icelux",
-							"weapon_zs_scythe",
-							"weapon_zs_plank_q1",
-							"weapon_zs_pushbroom_q1",
-							"weapon_zs_shovel_q1",
-							"weapon_zs_pulserifle_q1",
-							"weapon_zs_toxicshooter_q2",
-							"weapon_zs_toxicshooter_r2",
-							"weapon_zs_m4_q1",
-							"weapon_zs_pollutor_q1",
-							"weapon_zs_sawedoff_q1",
-							"weapon_zs_minelayer_q1",
-							"weapon_zs_relsous_q1",
-							"weapon_zs_quasar_q1",
-							"weapon_zs_inferno_q1",
-							"weapon_zs_binocle_q1",
-							"weapon_zs_keyboard_q1",
-							"weapon_zs_scythe_q1"
-						}
+						local weapon = {}
+						for _, wep in pairs(weapons.GetList()) do
+							if (wep.Tier or 1) <= 5 and !wep.ZombieOnly then
+								table.insert( weapon, wep.ClassName )
+							end
+						end
 						local drop = table.Random(weapon)
 						local luck = 9 - (lucktrue  / 4)
 						local lucky2 = math.random(1,luck)
 						if lucky2 == 1 then 
+							pl:Give(drop)
 
-						pl:Give(drop)
-
-					net.Start("zs_skillarsenalvoid")
-						net.WriteString(drop)
-					net.Send(pl)
-						
-						else end end
+							net.Start("zs_skillarsenalvoid")
+								net.WriteString(drop)
+							net.Send(pl)	
+						end 
+					end
 						if pl:IsSkillActive(SKILL_LIVER)  then 
-							pl:AddInventoryItem(GAMEMODE.Curses[math.random(#GAMEMODE.Curses)])
-	
-							net.Start("zs_getacurse")
-						net.Send(pl)
-							
+								pl:AddInventoryItem(GAMEMODE.Curses[math.random(#GAMEMODE.Curses)])
+								net.Start("zs_getacurse")
+							net.Send(pl)
 						end
 						if pl:IsSkillActive(SKILL_ABUSE)  then 
 							local luck = 8 - (lucktrue  / 3)

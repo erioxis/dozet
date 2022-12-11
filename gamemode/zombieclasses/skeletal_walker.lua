@@ -158,6 +158,12 @@ if SERVER then
 			elseif bit_band(dmginfo:GetDamageType(), DMG_SLASH) == 0 and bit_band(dmginfo:GetDamageType(), DMG_CLUB) == 0 then
 				dmginfo:SetDamage((dmginfo:GetInflictor().IgnoreResist2 and 20 or 0))
 			end
+		elseif dmginfo:GetAttacker():IsPlayer() and dmginfo:GetAttacker():HasTrinket("flower") then
+			if bit_band(dmginfo:GetDamageType(), DMG_BULLET) ~= 0 then
+				dmginfo:ScaleDamage(0.1)
+			elseif bit_band(dmginfo:GetDamageType(), DMG_SLASH) == 0 and bit_band(dmginfo:GetDamageType(), DMG_CLUB) == 0 then
+				dmginfo:ScaleDamage(0.1)
+			end
 		end
 	end
 end

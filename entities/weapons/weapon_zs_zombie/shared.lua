@@ -1,4 +1,4 @@
-SWEP.ZombieOnly = false
+SWEP.ZombieOnly = true
 SWEP.IsMelee = true
 
 SWEP.PrintName = "Zombie"

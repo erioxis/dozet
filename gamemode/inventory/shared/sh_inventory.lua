@@ -1060,7 +1060,7 @@ trinket = GM:AddTrinket("Soul of Alt ???", "altsoul", false, nil, {
 	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 10.697, y = 10.697 }, color = Color(255, 255, 255, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core_2+"] = { type = "Sprite", sprite = "effects/splashwake1", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 30, y = 30 }, color = Color(255, 255, 255, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 2, 0), angle = Angle(0, 0, 0), size = Vector(0.349, 0.349, 0.349), color = Color(255, 255, 255, 255), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} }
-}, nil, "+22% К радиусу взрыва\n+22% Explosion radius.", nil, nil, "weapon_zs_soulalt")
+}, nil, "+22% К радиусу взрыва\n+22% Explosion radius.\n Q:-2", nil, nil, "weapon_zs_soulalt")
 GM:AddSkillModifier(trinket, SKILLMOD_EXP_DAMAGE_RADIUS, 0.22)
 
 trinket = GM:AddTrinket("Soul of Alt Eden", "soulalteden", false, nil, {
@@ -1088,7 +1088,7 @@ trinket, soul = GM:AddTrinket("Soul of Alt Eve", "altevesoul", false, nil, {
 	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 10.697, y = 10.697 }, color = Color(0, 0, 0, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core_2+"] = { type = "Sprite", sprite = "effects/splashwake1", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 30, y = 30 }, color = Color(0, 0, 0, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 2, 0), angle = Angle(0, 0, 0), size = Vector(0.349, 0.349, 0.349), color = Color(0, 0, 0, 255), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} }
-}, nil,"Скорость атаки огнестрелом быстрее если хп ниже 50.\nFire speed faster if health lower than 50\n Q:2", nil, nil, "weapon_zs_soulalt")
+}, nil,"Скорость атаки огнестрелом быстрее если хп ниже 50.\nFire speed faster if health lower than 50\n Q:5", nil, nil, "weapon_zs_soulalt")
 
 
 trinket, soul = GM:AddTrinket("Soul of Jacob", "jacobsoul", false, nil, {
@@ -1133,7 +1133,7 @@ trinket, soul = GM:AddTrinket("Soul of Alt Azazel", "alteriosoul", false, nil, {
 	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 10.697, y = 10.697 }, color = Color(255, 255, 0, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core_2+"] = { type = "Sprite", sprite = "effects/splashwake1", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 30, y = 30 }, color = Color(255, 165, 00, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 2, 0), angle = Angle(0, 0, 0), size = Vector(0.349, 0.349, 0.349), color = Color(255, 255, 0, 255), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} }
-}, nil, "На 60% больше урон от мили!-20 хп и -10 кровавой брони,-60% мили ренжа.\n Melee damage multiplier 1.60x! -20 hp -10 blood armor,-60% Melee range\n Q:3", nil, nil, "weapon_zs_soulalt")
+}, nil, "На 60% больше урон от мили!-20 хп и -10 кровавой брони,-60% мили ренжа.\n Melee damage multiplier 1.60x! -20 hp -10 blood armor,-60% Melee range\n Q:-1", nil, nil, "weapon_zs_soulalt")
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_MUL, 0.60)
 GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, -20) 
 GM:AddSkillModifier(trinket, SKILLMOD_BLOODARMOR, -10) 

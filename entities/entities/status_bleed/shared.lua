@@ -29,12 +29,13 @@ function ENT:SetDamage(damage)
 	self:SetDTFloat(0, math.min(GAMEMODE.MaxBleedDamage or 1000, damage))
 end
 function ENT:Move(pl, move)
-	if pl ~= self:GetOwner() and self:GetOwner():GetStatus("redmarrow") then return end
+	if pl == self:GetOwner() and self:GetOwner():GetStatus("redmarrow") then 
 
-	local speedffect = 220
+		local speedffect = 220
 
-	move:SetMaxSpeed(move:GetMaxSpeed() + speedffect)
-	move:SetMaxClientSpeed(move:GetMaxClientSpeed() + speedffect)
+		move:SetMaxSpeed(move:GetMaxSpeed() + speedffect)
+		move:SetMaxClientSpeed(move:GetMaxClientSpeed() + speedffect)
+	end
 end
 
 function ENT:GetDamage()
