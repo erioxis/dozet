@@ -2333,6 +2333,8 @@ LANGUAGE.rem_standart = "Стандарт"
 LANGUAGE.weapon_remantler							= "Мастерская"
 LANGUAGE.rem_cost = "Стоимость в скрапе: "
 
+LANGUAGE.w_cost = "Ворф: "
+
 LANGUAGE.rem_cost_i_u = "Скрапа для использования: "
 
 LANGUAGE.rem_nodism = "Нельзя разобрать"

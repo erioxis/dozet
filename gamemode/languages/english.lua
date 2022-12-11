@@ -2499,6 +2499,8 @@ LANGUAGE.pshop_b_mut = "Boss Mutagen"
 LANGUAGE.rem_standart = "Standart"
 LANGUAGE.rem_cost = "Scrap Cost: "
 
+LANGUAGE.w_cost = "Ворф: "
+
 LANGUAGE.rem_cost_i_u = "Scrap for usage: "
 
 LANGUAGE.rem_nodism = "Cannot Dismantle"
