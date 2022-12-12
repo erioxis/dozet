@@ -861,6 +861,7 @@ function GM:DrawSigilTeleportBar(x, y, fraction, target, screenscale)
 	draw_SimpleText(translate.Format("teleporting_to_sigil", letter), "ZSHUDFontSmall", x, y - draw_GetFontHeight("ZSHUDFontSmall") - 2, colSigilTeleport, TEXT_ALIGN_CENTER)
 	draw_SimpleText(translate.Get("press_shift_to_cancel"), "ZSHUDFontSmaller", x, y + draw_GetFontHeight("ZSHUDFontSmaller") - 16, colSigilTeleport, TEXT_ALIGN_CENTER)
 	draw_SimpleText(translate.Get("point_at_a_sigil_to_choose_destination"), "ZSHUDFontSmaller", x, y + draw_GetFontHeight("ZSHUDFontSmaller") * 2 - 16, colSigilTeleport, TEXT_ALIGN_CENTER)
+	draw_SimpleText(translate.Get("duck_for_remove"), "ZSHUDFontSmaller", x, y + draw_GetFontHeight("ZSHUDFontSmaller") + 48, colSigilTeleport, TEXT_ALIGN_CENTER)
 end
 
 function GM:HumanHUD(screenscale)

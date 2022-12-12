@@ -363,10 +363,12 @@ net.Receive("zs_endround", function(length)
 end)
 
 net.Receive("zs_healother", function(length)
+	local ent = net.ReadEntity()
+	local amount = net.ReadFloat()
 	if net.ReadBool() then
-		gamemode.Call("HealedOtherPlayer", net.ReadEntity(), net.ReadFloat())
+		gamemode.Call("HealedOtherPlayer", ent, amount)
 	else
-		GAMEMODE:CenterNotify({killicon = "weapon_zs_medicalkit"}, " ", COLOR_GREEN, translate.Format("healed_x_for_y", net.ReadEntity():Name(), net.ReadFloat()))
+		GAMEMODE:CenterNotify({killicon = "weapon_zs_medicalkit"},"","",{pl_h = ent,amount = amount, other = true})
 	end
 end)
 
@@ -572,7 +574,7 @@ net.Receive("zs_buffby", function(length)
 
 	if not ent:IsValidPlayer() then return end
 
-	GAMEMODE:CenterNotify({killicon = "weapon_zs_medicgun"}, " ", COLOR_GREEN, translate.Format("buffed_x_with_y", ent:Name(), buff))
+	GAMEMODE:CenterNotify({killicon = "weapon_zs_medicgun"}, "","",{pl = ent,weapon = buff, me = true})
 end)
 
 net.Receive("zs_buffwith", function(length)

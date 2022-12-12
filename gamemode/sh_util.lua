@@ -23,11 +23,13 @@ function player.GetAllSpectators()
 end
 
 function FindStartingItem(id)
+	if not id then return false end
 	local item = FindItem(id)
 	if item and item.WorthShop then return item end
 end
 
 function FindItem(id)
+	if not id then return false end
 	return GAMEMODE.Items[id]
 end
 

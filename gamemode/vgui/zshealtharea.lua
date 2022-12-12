@@ -63,14 +63,14 @@ local function ContentsPaint(self, w, h)
 				y = 142 * screenscale
 				wid, hei = 240 * screenscale, 14 * screenscale
 
-				healthperc = math.Clamp(bloodarmor / (lp.MaxBloodArmor or 25), 0, 1)
+				healthperc = math.Clamp(bloodarmor / (math.Round(lp.MaxBloodArmor) or 25), 0, 1)
 				colHealth.r = lp:GetInfo("zs_rblood") + healthperc * 2.5
 				colHealth.g = lp:GetInfo("zs_gblood")
 				colHealth.b = (lp:GetInfo("zs_bblood") - healthperc) * 50
 
 				subwidth = healthperc * wid
 
-				draw.SimpleTextBlurry(bloodarmor.."/"..lp.MaxBloodArmor, "ZSHUDFontSmall", x + wid + 12 * screenscale, y + 8 * screenscale, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+				draw.SimpleTextBlurry(bloodarmor.."/"..math.Round(lp.MaxBloodArmor), "ZSHUDFontSmall", x + wid + 12 * screenscale, y + 8 * screenscale, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 
 				surface.SetDrawColor(0, 0, 0, 230)
 				surface.DrawRect(x, y, wid, hei)

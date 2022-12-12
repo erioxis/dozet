@@ -1,6 +1,5 @@
-SWEP.PrintName = "Resupply Box"
-SWEP.Description = "Allows survivors to get ammunition for their current weapon. Each person can only use the box once every so often.\nPress PRIMARY ATTACK to deploy the box.\nPress SECONDARY ATTACK and RELOAD to rotate the box."
-
+SWEP.PrintName = translate.Get("resupply_box")
+SWEP.Description = translate.Get("resupply_box_d")
 SWEP.ViewModel = "models/weapons/v_pistol.mdl"
 SWEP.WorldModel = Model("models/Items/ammocrate_ar2.mdl")
 

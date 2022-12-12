@@ -1332,6 +1332,10 @@ function GM:Think()
 						pl.NextDamage = time + (pl:HasTrinket("jacobsoul") and 4 or 2.4) * (barac and 3 or 1)
 						pl:CenterNotify(COLOR_RED, translate.ClientGet(pl, "danger"))
 						pl.TickBuff = pl.TickBuff + (pl.TickBuff * 0.2) + 1 * (pl.IsLastHuman and 20 or 1)
+
+					end
+					if !pl:GetStatus("sigildef") and pl.IsLastHuman and !barac and self:GetWave() >= 6 and table.Count(player.GetHumans()) >= 4  then
+						pl:TakeSpecialDamage(((pl:HasTrinket("jacobsoul") and 1 or 8 ) * (pl.TickBuff or 0)) /(barac and 200 or 1), DMG_DIRECT)
 					end
 					if pl:GetStatus("sigildef") and self:GetWave() >= 6 and time >= pl.NextDamage and self:GetWaveActive() and pl:HasTrinket("jacobsoul") and not (self:GetWave() == 12) then
 						pl:TakeSpecialDamage(13 * (pl.IsLastHuman and 5 or 1), DMG_DIRECT)
@@ -1344,6 +1348,7 @@ function GM:Think()
 					if pl:HasTrinket("antibaracat") and barac then
 						pl:Kill()
 					end
+					
 				end
 				if !pl:OnGround() and not (pl:GetVelocity():LengthSqr() > 7600) then
 					pl.StuckedInProp = true
@@ -2390,8 +2395,9 @@ function GM:PlayerReady(pl)
 end
 hook.Add("PlayerReady", "post_discord_link", function(pl)
 	if pl:GetInfo("zs_nodiscord") ~= "1" then
-	pl:PrintTranslatedMessage(HUD_PRINTTALK, "post_discord_init_text")
-	pl:PrintTranslatedMessage(HUD_PRINTTALK, "post_discord_init_text2") 
+		pl:PrintTranslatedMessage(HUD_PRINTTALK, "post_discord_init_text")
+		pl:PrintTranslatedMessage(HUD_PRINTTALK, "post_discord_init_text2") 
+		--PrintMessage( HUD_PRINTTALK, pl:Nick().." fully joined!.\n" )
 	end 
 end)
 //gameevent.Listen( "player_say" )
@@ -2408,6 +2414,7 @@ end)
 hook.Add( "PlayerConnect", "JoinGlobalMessage", function( name, ip )
 	PrintMessage( HUD_PRINTTALK, name.." has joined the game.\n" )
 	MsgC( Color( 255, 0, 0 ), name.." has joined the game.")
+	--print(ip)
 end )
 
 function GM:PlayerReadyRound(pl)

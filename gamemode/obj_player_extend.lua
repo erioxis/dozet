@@ -193,10 +193,13 @@ function meta:SigilTeleportDestination(not_from_sigil, corrupted)
 	end
 
 	dist = -1
+
 	for i, sigil in pairs(sigils) do
 		if i == icurrent then continue end
+		
+	
 
-		spos = sigil:GetPos() - mypos
+		spos = sigil:GetPos()- mypos 
 		spos:Normalize()
 		d = spos:Dot(eyevector)
 		if d > dist then

@@ -283,8 +283,8 @@ function MakepWorth()
 		for k, v in ipairs(savetab) do
 			if type(v) == "table" then
 				for _, name in pairs(v) do
-					priceall = (FindStartingItem(name).Worth or 0) + priceall
-					names = (FindStartingItem(name).Name or weapons.Get(FindStartingItem(name)).PrintName or "")..","..names
+					priceall = (FindStartingItem(name) and FindStartingItem(name).Worth or 0) + priceall
+					names = (FindStartingItem(name) and (FindStartingItem(name).Name or weapons.Get(FindStartingItem(name)).PrintName) or "?")..","..names
 
 				end
 			end

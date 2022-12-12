@@ -22,7 +22,7 @@ GM.ZombieEscapeWeaponsSecondary = {
 
 -- Change this if you plan to alter the cost of items or you severely change how Worth works.
 -- Having separate cart files allows people to have separate loadouts for different servers.
-GM.CartFile = "zscarts.txt"
+GM.CartFile = "zscarts_dozet.txt"
 GM.SkillLoadoutsFile = "zsskloadouts.txt"
 
 

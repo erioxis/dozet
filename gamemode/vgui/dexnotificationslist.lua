@@ -74,12 +74,12 @@ function PANEL:AddAmmo( amount, ammotype )
 		self:AddLabel( translate.Format( "obtained_x_y_ammo",amount, ammotype2), COLOR_GREEN, "ZSHUDFontSmallest" )
 	end
 end
-function PANEL:AddHeal( amount, pl_h )
+function PANEL:AddHeal( amount, pl_h, other )
 	if self.HealNotif and self.HealNotif.pl_h == pl_h then
-		self:AddLabel( translate.Format( "healed_x_by_y", pl_h:Nick(),amount + self.HealNotif.amount), COLOR_GREEN, "ZSHUDFontSmallest" )
-		self.HealNotif = { amount = amount + self.HealNotif.amount, pl_h = pl_h }
+		self:AddLabel((other and translate.Format("healed_x_for_y",pl_h:Name(), amount + self.HealNotif.amount) or translate.Format( "healed_x_by_y", pl_h:Nick(),amount + self.HealNotif.amount)), COLOR_GREEN, "ZSHUDFontSmallest" )
+		self.HealNotif = { amount = amount + self.HealNotif.amount, pl_h = pl_h, other = other }
 	else
-		self:AddLabel( translate.Format( "healed_x_by_y",pl_h:Nick(), amount), COLOR_GREEN, "ZSHUDFontSmallest" )
+		self:AddLabel( (other and translate.Format("healed_x_for_y",(pl_h:Name() or "I"), amount) or translate.Format( "healed_x_by_y",(pl_h:Nick()  or "I"), amount)), COLOR_GREEN, "ZSHUDFontSmallest" )
 	end
 end
 function PANEL:UpdateBlock( amount )
@@ -88,6 +88,14 @@ function PANEL:UpdateBlock( amount )
 		self.BNotif = { block = true,amount = amount + self.BNotif.amount}
 	else
 		self:AddLabel( translate.Get( "damageblock"), COLOR_GREEN, "ZSHUDFontSmallest" )
+	end
+end
+function PANEL:UpdateBuff(pl,weapon, me)
+	if self.BuffNotif then
+		self:AddLabel( me and translate.Format( "buffed_x_with_y", pl:Nick(), weapon) or translate.Format( "buffed_x_with_a_y", pl:Nick(), weapon), COLOR_GREEN, "ZSHUDFontSmallest" )
+		self.BuffNotif = {pl = pl,weapon = weapon, me = me}
+	else
+		self:AddLabel( me and translate.Format( "buffed_x_with_y", pl:Nick(), weapon) or translate.Format( "buffed_x_with_a_y", pl:Nick(), weapon), COLOR_GREEN, "ZSHUDFontSmallest" )
 	end
 end
 
@@ -158,9 +166,9 @@ function PANEL:SetNotification( ... )
 				end
 
 			elseif v.pl_h then
-				self:AddHeal( v.amount, v.pl_h )
+				self:AddHeal( v.amount, v.pl_h, v.other )
 				if !self.HealNotif then
-					self.HealNotif = {amount = v.amount, pl_h = v.pl_h}
+					self.HealNotif = {amount = v.amount, pl_h = v.pl_h, other = (v.other or false)}
 				end
 
 
@@ -168,6 +176,11 @@ function PANEL:SetNotification( ... )
 				self:UpdateBlock(1)
 				if !self.BNotif then
 					self.BNotif = {block = true,amount = 1}
+				end
+			elseif v.weapon then
+				self:UpdateBuff(v.pl,v.weapon, v.me)
+				if !self.BuffNotif then
+					self.BuffNotif = {v.pl,v.weapon, v.me}
 				end
 			end
 		elseif vtype == "Player" then
@@ -280,6 +293,12 @@ function PANEL:AddNotification( ... )
 		end
 		if notif and notif.BNotif and notif.BNotif.block and args[ 1 ] and istable( args[ 1  ] )then
 			if notif.BNotif.block and args[ 1 ].block then
+				nocreate = true
+				notifi = notif
+			end
+		end
+		if notif and notif.BuffNotif and notif.BuffNotif.pl and args[ 4 ] and istable( args[ 4  ] )then
+			if notif.BuffNotif.pl and args[ 4 ].pl and notif.BuffNotif.pl == args[ 4 ].pl  then
 				nocreate = true
 				notifi = notif
 			end
