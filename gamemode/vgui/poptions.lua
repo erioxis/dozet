@@ -286,6 +286,19 @@ function MakepOptions()
 	dropdown:SetTextColor(color_black)
 	list:AddItem(dropdown)
 
+
+	list:AddItem(EasyLabel(Window, "Font", "DefaultFontSmall", color_white))
+	dropdown = vgui.Create("DComboBox", Window)
+	dropdown:SetMouseInputEnabled(true)
+	dropdown:AddChoice("Open Sans Condensed")
+	dropdown:AddChoice("Ghoulish Fright")
+	dropdown.OnSelect = function(me, index, value, data)
+		RunConsoleCommand("zs_font", value == "Open Sans Condensed" and "Open Sans Condensed" or value == "Ghoulish Fright" and "Ghoulish Fright" or "Open Sans Condensed")
+	end
+	dropdown:SetText(GAMEMODE.FontPL or "")
+	dropdown:SetTextColor(color_black)
+	list:AddItem(dropdown)
+
 	list:AddItem(EasyLabel(Window, "Prop rotation snap angle", "DefaultFontSmall", color_white))
 	dropdown = vgui.Create("DComboBox", Window)
 	dropdown:SetMouseInputEnabled(true)

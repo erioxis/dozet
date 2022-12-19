@@ -1355,11 +1355,12 @@ function surface.CreateLegacyFont(font, size, weight, antialias, additive, name,
 	surface.CreateFont(name, {font = font, size = size, weight = weight, antialias = antialias, additive = additive, shadow = shadow, outline = outline, blursize = blursize, extended = extended})
 end
 
-local fontfamily = "Open Sans Condensed"
-local fontfamilysm = "Open Sans Condensed"
-local fontfamily3d = "Open Sans Condensed"
 local fontsizeadd = 8
 local fontweight = 0
+local standard = (GM.FontPL == "" and "Open Sans Condensed" or GM.FontPL == "Open Sans Condensed" and "Open Sans Condensed" or GM.FontPL == "Ghoulish Fright" and "Ghoulish Fright AOE Regular" or "Open Sans Condensed")
+local fontfamily = standard
+local fontfamilysm = standard
+local fontfamily3d = standard
 
 function GM:Create3DFonts()
 	local fontsizeadd3D = 0

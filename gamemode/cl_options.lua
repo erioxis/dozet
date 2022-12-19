@@ -97,6 +97,7 @@ CreateClientConVar("zs_nopickupprops", "1", true, true)
 CreateClientConVar("zs_nopickuploot", "0", true, true)
 CreateClientConVar("zs_nodiscord", "0", true, true)
 CreateClientConVar("zs_nohperc", "0", true, true)
+
 CreateClientConVar("zs_ammoslider", 0, true, false)
 
 GM.DisableScopes = CreateClientConVar("zs_disablescopes", "0", true, false):GetBool()
@@ -106,6 +107,12 @@ end)
 GM.OneClickSkill = CreateClientConVar("zs_blockunable", "0", true, false):GetBool()
 cvars.AddChangeCallback("zs_blockunable", function(cvar, oldvalue, newvalue)
 	GAMEMODE.OneClickSkill = tonumber(newvalue) == 1
+end)
+
+GM.FontPL = CreateClientConVar("zs_font", "", true, false):GetString()
+cvars.AddChangeCallback("zs_font", function(cvar, oldvalue, newvalue)
+	GAMEMODE.FontPL = newvalue
+	gamemode.Call("CreateFonts")
 end)
 
 
