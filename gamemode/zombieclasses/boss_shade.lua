@@ -125,6 +125,9 @@ if SERVER then
 	function CLASS:ProcessDamage(pl, dmginfo)
 		if SERVER then
 			local inflictor = dmginfo:GetInflictor()
+			if inflictor and inflictor.IsMelee then
+				dmginfo:ScaleDamage(0.1)
+			end
 			if inflictor:IsValid() and (inflictor:IsPhysicsModel() or inflictor.IsPhysbox) then
 				return
 			end

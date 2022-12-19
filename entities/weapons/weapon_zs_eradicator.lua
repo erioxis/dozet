@@ -21,7 +21,18 @@ SWEP.PlayIdleSound = SWEP.PlayAlertSound
 function SWEP:PlayAttackSound()
 	self:EmitSound("npc/antlion_guard/angry"..math.random(3)..".wav", 75, math.random(75,80))
 end
-
+function SWEP:ApplyMeleeDamage(pl, trace, damage)
+	if SERVER and pl:IsPlayer() and pl:GetActiveWeapon()and pl:GetActiveWeapon().IsMelee then
+		local cursed = pl:GetStatus("hollowing")
+		if (cursed) then 
+			pl:AddHallow(self:GetOwner(), cursed.DieTime - CurTime() + 65)
+		end
+		if (not cursed) then 
+			pl:AddHallow(pl:GetOwner(), 65)
+		end
+	end
+	self.BaseClass.ApplyMeleeDamage(self, pl, trace, damage)
+end
 if not CLIENT then return end
 
 function SWEP:ViewModelDrawn()

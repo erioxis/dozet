@@ -113,7 +113,23 @@ function meta:ProcessDamage(dmginfo)
 		end
 
 		self.ShouldFlinch = true
-
+		if self:GetZArmor() > 0 and (!attacker:GetStatus("renegade")) then
+			local damage = dmginfo:GetDamage()
+			if damage > 0 then
+	
+				local ratio = 1
+				local absorb = math.min(self:GetZArmor(), damage * ratio)
+				dmginfo:SetDamage(damage - absorb)
+				self:SetZArmor(self:GetZArmor() - absorb)
+				self.BloodDead = absorb
+				if attacker:IsPlayer() then
+					GAMEMODE:DamageFloater(attacker, self, dmginfo:GetDamagePosition() - Vector(0,0,-5), absorb, true)
+				end
+				if damage > 20 and damage - absorb <= 0 then
+					self:EmitSound("physics/flesh/flesh_strider_impact_bullet3.wav", 55)
+				end
+			end
+		end
 		if attacker:IsValidLivingHuman() and inflictor:IsValid() and inflictor == attacker:GetActiveWeapon() then
 			local damage = dmginfo:GetDamage()
 			local wep = attacker:GetActiveWeapon()
@@ -159,23 +175,7 @@ function meta:ProcessDamage(dmginfo)
 
 				end
 			end
-			if self:GetZArmor() > 0 and (!attacker:GetStatus("renegade"))then
-				local damage = dmginfo:GetDamage()
-				if damage > 0 then
-		
-					local ratio = 1
-					local absorb = math.min(self:GetZArmor(), damage * ratio)
-					dmginfo:SetDamage(damage - absorb)
-					self:SetZArmor(self:GetZArmor() - absorb)
-					self.BloodDead = absorb
-					if attacker:IsPlayer() then
-						GAMEMODE:DamageFloater(attacker, self, dmginfo:GetDamagePosition() - Vector(0,0,-5), absorb, true)
-					end
-					if damage > 20 and damage - absorb <= 0 then
-						self:EmitSound("physics/flesh/flesh_strider_impact_bullet3.wav", 55)
-					end
-				end
-			end
+
 			if wep.IsMelee then
 				if attacker:IsSkillActive(SKILL_CHEAPKNUCKLE) and math.abs(self:GetForward():Angle().yaw - attacker:GetForward():Angle().yaw) <= 90 then
 					self:AddLegDamage(12)
@@ -655,12 +655,6 @@ function meta:ProcessDamage(dmginfo)
 					local cursed = self:GetStatus("cursed")
 					if (cursed) then 
 						self:AddCursed(attacker, cursed.DieTime - CurTime() + 5)
-					end
-				end
-				if self:HasTrinket("betsoul")  then
-					local cursed = self:GetStatus("cursed")
-					if (cursed) then 
-						self:AddCursed(self, cursed.DieTime - CurTime() - 10)
 					end
 				end
 				if attacker.m_Rot_Claws then

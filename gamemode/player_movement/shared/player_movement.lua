@@ -15,6 +15,7 @@ local E_GetDTFloat = M_Entity.GetDTFloat
 local E_GetDTBool = M_Entity.GetDTBool
 local P_Team = M_Player.Team
 local P_CallZombieFunction1 = M_Player.CallZombieFunction1
+local P_GetZombieClassTable = M_Player.GetZombieClassTable
 local P_GetLegDamage = M_Player.GetLegDamage
 local P_GetBarricadeGhosting = M_Player.GetBarricadeGhosting
 local P_GetActiveWeapon = M_Player.GetActiveWeapon
@@ -65,7 +66,7 @@ function GM:Move(pl, move)
 	end
 
 	legdmg = P_GetLegDamage(pl)
-	if legdmg > 0 and !(pt:GetZombieClassTable().NoSlowdown or pt.m_Zombie_MoanGuard) then
+	if legdmg > 0 and !(P_GetZombieClassTable(pl).NoSlowdown or pt.m_Zombie_MoanGuard) then
 		M_SetMaxClientSpeed(move, M_GetMaxClientSpeed(move) * (1 - math_min(1, legdmg / GM_MaxLegDamage)))
 	end
 end

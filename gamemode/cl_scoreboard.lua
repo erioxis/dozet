@@ -439,7 +439,7 @@ function PANEL:RefreshPlayer()
 		self.m_ClassImage:SetVisible(true)
 		self.m_ClassImage:SetImage(pl:GetZombieClassTable().Icon)
 		self.m_ClassImage:SetImageColor(pl:GetZombieClassTable().IconColor or color_white)
-		self.m_ClassImage:SetTooltip(translate.Get(pl:GetZombieClassTable().TranslationName))
+		self.m_ClassImage:SetTooltip(translate.Get(pl:GetZombieClassTable().TranslationName).."\n"..pl:Health()..(pl:GetZArmor()>=1 and "\n"..pl:GetZArmor() or ""))
 	else
 		self.m_ClassImage:SetVisible(false)
 	end
