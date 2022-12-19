@@ -34,7 +34,7 @@ end
 function PANEL:RefreshContents()
 	local teamid = self:GetTeam()
 
-	self.m_TeamNameLabel:SetText(team.GetName(teamid))
+	self.m_TeamNameLabel:SetText(translate.Get(string.lower(team.GetName(teamid))))
 	self.m_TeamNameLabel:SizeToContents()
 
 	self.m_TeamCountLabel:SetText(team.NumPlayers(teamid))

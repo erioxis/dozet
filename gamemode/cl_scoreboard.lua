@@ -97,7 +97,7 @@ function PANEL:PerformLayout()
 	self.m_AuthorLabel:MoveBelow(self.m_TitleLabel)
 	self.m_ContactLabel:MoveBelow(self.m_AuthorLabel)
 	self.m_MapLabel:MoveBelow(self.m_ServerNameLabel)
-	self.m_MapLabel:SetPos(422 * screenscale,2* screenscale)
+	self.m_MapLabel:SetPos(752 * screenscale,900* screenscale)
 
 	self.m_ServerNameLabel:SetPos(math.min(self:GetWide() - self.m_ServerNameLabel:GetWide(), self:GetWide() * 0.75 - self.m_ServerNameLabel:GetWide() * 0.5), 32 - self.m_ServerNameLabel:GetTall() / 2)
 
@@ -439,7 +439,7 @@ function PANEL:RefreshPlayer()
 		self.m_ClassImage:SetVisible(true)
 		self.m_ClassImage:SetImage(pl:GetZombieClassTable().Icon)
 		self.m_ClassImage:SetImageColor(pl:GetZombieClassTable().IconColor or color_white)
-		self.m_ClassImage:SetTooltip(translate.Get(pl:GetZombieClassTable().TranslationName).."\n"..pl:Health()..(pl:GetZArmor()>=1 and "\n"..pl:GetZArmor() or ""))
+		self.m_ClassImage:SetTooltip(translate.Get(pl:GetZombieClassTable().TranslationName).."\n"..translate.Get("skill_add_health")..":"..pl:Health()..(pl:GetZArmor()>=1 and "\n"..pl:GetZArmor() or ""))
 	else
 		self.m_ClassImage:SetVisible(false)
 	end

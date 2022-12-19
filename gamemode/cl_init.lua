@@ -1745,7 +1745,7 @@ function GM:HumanMenu()
 
 	local hei = draw_GetFontHeight("ZSHUDFontSmall")
 
-	local selecteditemtitle = EasyLabel(panel, "Selected Item", "ZSHUDFontSmall", color_white)
+	local selecteditemtitle = EasyLabel(panel, translate.Get("si_hud"), "ZSHUDFontSmall", color_white)
 	selecteditemtitle:SetContentAlignment(5)
 	panel:AddItem(selecteditemtitle)
 
@@ -1756,7 +1756,7 @@ function GM:HumanMenu()
 
 	local gwbtn = vgui.Create("DButton")
 	gwbtn:SetFont("ZSHUDFontSmaller")
-	gwbtn:SetText("Give Item")
+	gwbtn:SetText(translate.Get("gi_hud"))
 	gwbtn:SetSize(panel:GetWide() - 8 * screenscale, hei - 4 * screenscale)
 	gwbtn:CenterHorizontal()
 	gwbtn.DoClick = GiveWeapon
@@ -1764,7 +1764,7 @@ function GM:HumanMenu()
 
 	gwbtn = vgui.Create("DButton")
 	gwbtn:SetFont("ZSHUDFontSmaller")
-	gwbtn:SetText("Give Item and 5 clips")
+	gwbtn:SetText(translate.Get("gi_5_hud"))
 	gwbtn:SetSize(panel:GetWide() - 8 * screenscale, hei - 4 * screenscale)
 	gwbtn:CenterHorizontal()
 	gwbtn.DoClick = GiveWeaponClip
@@ -1772,7 +1772,7 @@ function GM:HumanMenu()
 
 	gwbtn = vgui.Create("DButton")
 	gwbtn:SetFont("ZSHUDFontSmaller")
-	gwbtn:SetText("Drop Item")
+	gwbtn:SetText(translate.Get("ditem_hud"))
 	gwbtn:SetSize(panel:GetWide() - 8 * screenscale, hei - 4 * screenscale)
 	gwbtn:CenterHorizontal()
 	gwbtn.DoClick = DropWeapon
@@ -1780,7 +1780,7 @@ function GM:HumanMenu()
 
 	gwbtn = vgui.Create("DButton")
 	gwbtn:SetFont("ZSHUDFontSmaller")
-	gwbtn:SetText("Empty Weapon Clip")
+	gwbtn:SetText(translate.Get("ewc_hud"))
 	gwbtn:SetSize(panel:GetWide() - 8 * screenscale, hei - 4 * screenscale)
 	gwbtn:CenterHorizontal()
 	gwbtn.DoClick = EmptyClip

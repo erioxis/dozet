@@ -356,6 +356,24 @@ function meta:SetFireIndTime(pts)
 	self:SetNWFloat('fire_ind_time', pts+3.2)
 end
 
+function meta:GetMedTime()
+	return self:GetNWFloat('med_time', pts)	
+end	
+
+function meta:SetMedTime(pts)
+	self:SetNWFloat('med_time', pts+3.2)
+end
+function meta:SetMedProgress(pts)
+	self:SetMedTime(CurTime())
+	self:SetNWFloat('med_progress', pts)
+end
+function meta:GetMedProgress()
+	return self:GetNWFloat('med_progress', pts)	
+end	
+function meta:GetFireIndTime()
+	return self:GetNWFloat('fire_ind_time', pts)	
+end	
+
 function meta:GetBloodArmor()
 	return self:GetDTInt(DT_PLAYER_INT_BLOODARMOR)
 end

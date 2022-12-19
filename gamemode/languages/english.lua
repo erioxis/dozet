@@ -18,6 +18,8 @@ RULES FOR TRANSLATORS!!
 
 translate.AddLanguage("en", "English")
 --Чаленге
+LANGUAGE.survivor = "Survirvor"
+LANGUAGE.undead = "Undead"
 LANGUAGE.challenge_gc = "Gift collector"
 LANGUAGE.challenge_gc_d = "Pick up 100 gifts!"
 LANGUAGE.challenge_gig = "I love new year!"
@@ -2553,5 +2555,13 @@ LANGUAGE.dn_killed =  " killed "
 
 LANGUAGE.fi_hud = "Fire Inductor: "
 
+LANGUAGE.mg_hud = "Medical Premium: "
+
 LANGUAGE.di_hud = "Dismantle Item"
+LANGUAGE.ditem_hud = "Drop Item"
+LANGUAGE.gi_5_hud = "Give Item and 5 clips"
+LANGUAGE.gi_hud = "Give Item"
+LANGUAGE.ewc_hud = "Empty Weapon Clip"
+
+LANGUAGE.si_hud = "Selected Item"
 

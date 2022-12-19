@@ -2,6 +2,9 @@
 
 translate.AddLanguage("ru", "Russian")
 --Чаленге
+LANGUAGE.survivor = "Выживший"
+LANGUAGE.undead = "Зомби"
+
 LANGUAGE.challenge_gc = "Распаковщик подарков"
 LANGUAGE.challenge_gc_d = "Подними 100 подарков!"
 LANGUAGE.challenge_gig = "Я люблю новый год!"
@@ -2402,4 +2405,12 @@ LANGUAGE.duck_for_remove = "Присядь чтобы войти в режим �
 
 LANGUAGE.fi_hud = "Огненный Индуктор: "
 
+LANGUAGE.mg_hud = "Мед.Премия: "
+
 LANGUAGE.di_hud = "Разобрать"
+LANGUAGE.ditem_hud = "Выбросить Предмет"
+LANGUAGE.gi_5_hud = "Дать предмет и 5x патрон"
+LANGUAGE.gi_hud = "Дать предмет"
+LANGUAGE.ewc_hud = "Опустошить боезапас"
+
+LANGUAGE.si_hud = "Выбранный Предмет"

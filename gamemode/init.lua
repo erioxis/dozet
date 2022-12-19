@@ -1851,9 +1851,9 @@ function GM:PlayerHealedTeamMember(pl, other, health, wep, pointmul, nobymsg, fl
 	if self:GetWave() == 0 or health <= 0 or pl == other then return end
 
 	pl.HealedThisRound = pl.HealedThisRound + health
-	pl.NextPremium = pl.NextPremium + health
+	pl:SetMedProgress(math.Round(pl:GetMedProgress()+health))
 	local premium = table.Random(GAMEMODE.MedPremium)
-	if pl:IsSkillActive(SKILL_PREMIUM) and pl.NextPremium >= 1800 and !pl:HasInventoryItem(premium) then
+	if pl:IsSkillActive(SKILL_PREMIUM) and pl:GetMedProgress() >= 1800 and !pl:HasInventoryItem(premium) then
 		pl:AddInventoryItem(premium)
 		net.Start("zs_medpremium")
 			net.WriteString(premium)

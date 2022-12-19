@@ -357,9 +357,10 @@ function PANEL:AddNotification( ... )
 	notifi:SetAlpha( 1 )
 	notifi:AlphaTo( 255, 0.15 )
 	notifi:AlphaTo( 1, 1, FadeTime - 1 )
---	notifi:MoveBy(notifi:GetX() + 10, notifi:GetY(), 2, FadeTime - 0.6, 0.5)
+	notifi:MoveBy(notifi:GetX() - 650, notifi:GetY(), 2.2, FadeTime - 0.45, 0.5)
 
 	notifi.DieTime = CurTime() + FadeTime
+
 
 	self.Notifications[ #self.Notifications + 1 ] = notifi
 
@@ -375,7 +376,7 @@ function PANEL:Think()
 				pan.NoMove = true
 				pan:MoveBy(2000, pan:GetY(), 2, 0, 0.2)
 			end]]
-			if time >= pan.DieTime then
+			if time >= pan.DieTime  then
 				pan:Remove()
 				local dummy = vgui.Create( "Panel", self )
 				dummy:SetTall( 0 )
