@@ -7,7 +7,8 @@ CLASS.Wave = 5 / 6
 
 CLASS.Health = 346
 CLASS.Speed = 155
-
+CLASS.Original = false
+CLASS.Variations = {}
 CLASS.CanTaunt = true
 
 CLASS.Points = CLASS.Health/GM.SkeletonPointRatio

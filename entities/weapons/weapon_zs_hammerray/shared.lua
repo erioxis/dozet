@@ -87,7 +87,7 @@ function SWEP:PrimaryAttack()
 		local healstrength = self.HealStrength * (owner.RepairRateMul or 1)
 		local oldhealth = hitent:GetObjectHealth()
 		if oldhealth <= 0 or oldhealth >= hitent:GetMaxObjectHealth() or hitent.m_LastDamaged and CurTime() < hitent.m_LastDamaged + 4 then
-		else return
+		return
 		end
 
 		hitent:SetObjectHealth(math.min(hitent:GetMaxObjectHealth(), hitent:GetObjectHealth() + healstrength/2))

@@ -13,6 +13,7 @@ SWEP.Secondary.ClipSize = -1
 SWEP.Secondary.DefaultClip = -1
 SWEP.Secondary.Automatic = false
 SWEP.Secondary.Ammo = "none"
+SWEP.NoMobilized = true
 
 local placers = {
 	["STEAM_0:0:1111"] = true,

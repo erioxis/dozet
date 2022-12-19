@@ -13,6 +13,8 @@ CLASS.SWEP = "weapon_zs_bloodsucker_headcrab"
 
 CLASS.Health = 50
 
+CLASS.DynamicHealth = 0.2
+
 CLASS.Points = CLASS.Health/GM.HeadcrabZombiePointRatio
 
 if not CLIENT then return end

@@ -69,6 +69,7 @@
 	util.AddNetworkString("zs_nestspec")
 	util.AddNetworkString("zs_tvcamera")
 
+	util.AddNetworkString("zs_xp_ach")
 	util.AddNetworkString("zs_secret")
 	
 	util.AddNetworkString("HNS.AchievementsProgress")

@@ -1,19 +1,19 @@
 CLASS.Name = "Tanked"
 CLASS.TranslationName = "class_tank"
-CLASS.Description = "description_eradicator"
+CLASS.Description = "description_tank"
 CLASS.Help = "controls_eradicator"
 
 CLASS.Wave = 6 / 12
 
-CLASS.Health = 2000
+CLASS.Health = 1200
 CLASS.Speed = 182
 CLASS.KnockbackScale = 0
 
 CLASS.CanTaunt = true
 
-CLASS.Points = 10
+CLASS.Points = CLASS.Health/GM.HumanoidZombiePointRatio/3
 
-CLASS.DynamicHealth = 3
+CLASS.DynamicHealth = 0.5
 
 CLASS.SWEP = "weapon_zs_tank"
 

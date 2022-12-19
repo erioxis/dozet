@@ -3,6 +3,9 @@ CLASS.TranslationName = "class_chem_burster"
 CLASS.Description = "description_chem_burster"
 CLASS.Help = "controls_chem_burster"
 
+
+CLASS.Original = false
+CLASS.Variations = "Zombie"
 CLASS.Wave = 5 / 6
 
 CLASS.Health = 125

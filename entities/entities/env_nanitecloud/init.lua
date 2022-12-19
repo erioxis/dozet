@@ -38,7 +38,7 @@ function ENT:AcceptInput(name, activator, caller, arg)
 
 			hitent:SetBarricadeHealth(math.min(hitent:GetMaxBarricadeHealth(), hitent:GetBarricadeHealth() + math.min(hitent:GetBarricadeRepairs(), totalheal)))
 			healed = hitent:GetBarricadeHealth() - oldhealth
-			hitent:SetBarricadeRepairs(math.max(hitent:GetBarricadeRepairs() - healed, 0))
+			hitent:SetBarricadeRepairs(math.max(hitent:GetBarricadeRepairs() + healed/5, 0))
 
 		elseif hitent.GetObjectHealth then
 			-- Taking the nil tr parameter for granted for now

@@ -88,9 +88,9 @@ local function ContentsPaint(self, w, h)
 		else
 			local bloodarmor = lp:GetZArmor()
 			if bloodarmor > 0 then
-				x = 228 * screenscale
+				x = 78 * screenscale
 				y = 142 * screenscale
-				wid, hei = 310 * screenscale, 14 * screenscale
+				wid, hei = 240 * screenscale, 14 * screenscale
 
 				colHealth.r = 0
 				colHealth.g = 0

@@ -310,7 +310,30 @@ function SWEP:MeleeSwing()
 		self:ServerMeleePostHitEntity(tr, hitent, damagemultiplier)
 	end
 end
-
+function SWEP:OnMeleeHit(hitent, hitflesh, tr)
+	local ent = hitent
+	if IsFirstTimePredicted() then
+		if ent:IsPlayer() and SERVER and self:GetOwner():IsSkillActive(SKILL_CURSECURE) then
+			local count = 1
+			for _, ent in pairs(ents.FindInSphere(tr.HitPos, 158)) do
+				if ent:IsValid() and ent:IsPlayer() and ent ~= self:GetOwner() and ent:IsValidLivingZombie() then
+					count = count + 1
+				end
+			end
+			for i = 1, math.random(3) do
+				for _, ent in pairs(ents.FindInSphere(tr.HitPos, 158)) do
+					if ent:IsValid() and ent:IsPlayer() and ent ~= self:GetOwner() and ent:IsValidLivingZombie() then
+						ent:TakeSpecialDamage((self.MeleeDamage*0.35)/count,DMG_BULLET, self:GetOwner(), self)
+					end
+				end
+			end
+			local pos = tr.HitPos
+			local effectdata = EffectData()
+				effectdata:SetOrigin(pos)
+			util.Effect("Explosion", effectdata, true, true)
+		end
+	end
+end
 function SWEP:PlayerHitUtil(owner, damage, hitent, dmginfo)
 	--[[if self.Block == 1 then 
 	

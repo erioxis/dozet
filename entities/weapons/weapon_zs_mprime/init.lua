@@ -35,7 +35,6 @@ function SWEP:ToDie(damage, numshots, cone)
 				effectdata:SetOrigin(owner:GetPos())
 				effectdata:SetNormal(self:GetUp() * -1)
 			util.Effect("decal_scorch", effectdata)
-			owner:TakeDamage(1160, owner, self)
 				--self:GetOwner():SetMoveType(MOVETYPE_NONE)
 				--self:GetOwner():SetLocalVelocity(Vector(0,0,0))
 				for i=1, 2 do

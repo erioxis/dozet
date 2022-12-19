@@ -7,7 +7,7 @@ end
 function ENT:Think()
 	local owner = self:GetOwner()
 	local lox = self.Damager and self.Damager:IsPlayer() and self.Damager:IsSkillActive(SKILL_LOX)
-	if self:GetDamage() <= 0 then
+	if self:GetDamage() <= 0 or owner:GetZombieClassTable().Skeletal then
 		self:Remove()
 		return
 	end

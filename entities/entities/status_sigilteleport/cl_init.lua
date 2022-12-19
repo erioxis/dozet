@@ -127,7 +127,7 @@ end]]
 end]]
 function ENT:ShouldDrawLocalPlayer(pl)
 	if self:GetOwner() ~= LocalPlayer() then return end
-	if self:GetOwner():KeyDown(IN_DUCK) then return end
+	if !self:GetOwner():KeyDown(IN_DUCK) then return end
 	return true
 end
 local ViewHullMins = Vector(-4, -4, -4)
@@ -135,11 +135,11 @@ local ViewHullMaxs = Vector(4, 4, 4)
 function ENT:CalcView(pl, origin, angles, fov, znear, zfar)
 	if self:GetOwner() ~= pl then return end
 
-	if self:GetOwner():KeyDown(IN_DUCK) then return end
+	if !self:GetOwner():KeyDown(IN_DUCK) then return end
 
 	local filter = player.GetAll()
 	filter[#filter + 1] = self
-	local tr = util.TraceHull({start = self:GetTargetSigil():GetPos() + Vector(0,0,164), endpos = self:GetTargetSigil():GetPos(), mask = MASK_SHOT, filter = filter, mins = ViewHullMins, maxs = ViewHullMaxs})
+	local tr = util.TraceHull({start = self:GetTargetSigil():GetPos() + Vector(0,0,64), endpos = self:GetTargetSigil():GetPos(), mask = MASK_SHOT, filter = filter, mins = ViewHullMins, maxs = ViewHullMaxs})
 
 	return {origin = tr.HitPos + tr.HitNormal * 3}
 end

@@ -142,7 +142,7 @@ function ENT:UpdateTransmitState()
 end
 function ENT:Think()
 	for _, ent in pairs(ents.FindInSphere(self:GetPos(), math.Clamp(948 / (GAMEMODE:GetWave() * 0.33),163,948))) do
-		if ent ~= self and ent:IsValidLivingHuman() and not self:GetSigilCorrupted() and ent.PlayerReady then
+		if ent ~= self and ent:IsValidLivingHuman() and not self:GetSigilCorrupted() then
            ent:GiveStatus("sigildef", 2)
 		elseif ent ~= self and ent:IsValidLivingZombie() and self:GetSigilCorrupted() then
 			ent:GiveStatus("corruptsigildef", 2)

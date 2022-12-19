@@ -36,13 +36,16 @@ end
 
 function SWEP:ApplyMeleeDamage(ent, trace, damage)
 	if SERVER and ent:IsPlayer() then
-		local bleed = ent:GiveStatus("burn", 3)
+		local bleed = ent:GiveStatus("burn", 1)
 		if bleed and bleed:IsValid() then
 			bleed:AddDamage(damage * self.BurnDamageMul)
 			bleed.Damager = self:GetOwner()
 		end
+		if ent:GetZombieClassTable().FireBuff then
+			ent:Kill()
+		end
 	end
-	if SERVER and !ent:IsPlayer() then
+	if SERVER and !ent:IsPlayer() and math.random(1,9) == 3 then
 		ent:Ignite(10)
 		local attacker = self:GetOwner()
 		for __, fire in pairs(ents.FindByClass("entityflame")) do

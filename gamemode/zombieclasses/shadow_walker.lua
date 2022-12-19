@@ -3,13 +3,13 @@ CLASS.TranslationName = "class_shadow_walker"
 CLASS.Description = "description_shadow_walker"
 CLASS.Help = "controls_shadow_lurker"
 
-CLASS.BetterVersion = "Frigid Revenant"
 
 CLASS.Model = Model("models/player/corpse1.mdl")
 CLASS.OverrideModel = Model("models/player/skeleton.mdl")
 
 CLASS.CanTaunt = true
-
+CLASS.Original = false
+CLASS.Variations = {}
 CLASS.SWEP = "weapon_zs_shadowwalker"
 
 CLASS.Wave = 2 / 6

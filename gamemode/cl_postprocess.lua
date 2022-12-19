@@ -228,7 +228,47 @@ hook.Add("PreDrawTranslucentRenderables", "ZFullBright", GM.FullBrightOff)
 hook.Add("PostDrawTranslucentRenderables", "ZFullBright", GM.FullBrightOn)
 hook.Add("PreDrawViewModel", "ZFullBright", GM.FullBrightOff)
 hook.Add("RenderScreenspaceEffects", "ZFullBright", GM.FullBrightOff)
+function GM:DrawInductorIndicators()
+	local x = ScrW() * 0.45
+	local y = ScrH() * 0.07
 
+	local lp = MySelf
+	local form = 15 * ((lp:GetActiveWeapon() and (lp:GetActiveWeapon().Tier or 1))+1)
+
+	if lp:GetFireInd() > 0 and lp:HasTrinket("fire_ind") and lp:GetFireIndTime() >= CurTime() then
+		if lp:IsValid() then
+			local matGlow = Material("sprites/glow04_noz")
+			local texDownEdge = surface.GetTextureID("gui/gradient_down")
+			local colHealth = Color(226,62,33)
+			local screenscale = BetterScreenScale()
+			local health = math.max(lp:GetFireInd(), 0)
+			local healthperc = math.Clamp(health / form, 0.01, 1)
+			local wid, hei = 150 * screenscale, 20 * screenscale
+	 
+			
+	
+			local subwidth = healthperc * wid
+	
+			surface.SetDrawColor(0, 0, 0, 230)
+			surface.DrawRect(x, y, wid, hei)
+
+			
+	
+			surface.SetDrawColor(colHealth.r * 1, colHealth.g * 0.2, colHealth.b, 40)
+			surface.SetTexture(texDownEdge)
+			surface.DrawTexturedRect(x + 2, y + 1, subwidth - 4, hei - 2)
+			surface.SetDrawColor(colHealth.r * 0.6, colHealth.g * 0.6, colHealth.b, 30)
+			surface.DrawRect(x + 2, y + 1, subwidth - 4, hei - 2)
+	
+			surface.SetMaterial(matGlow)
+			surface.SetDrawColor(255, 255, 255, 255)
+			surface.DrawTexturedRect(x + 2 + subwidth - 6, y + 1 - hei/2, 4, hei * 2)
+			local phantomwidth = (health == form  and 0 or wid)
+			draw.SimpleTextBlurry(translate.Get("fi_hud")..math.Round(lp:GetFireInd()) , "ZSHUDFontTiny", x, y - 12, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM)
+
+		end
+	end
+end
 local matGlow = Material("Sprites/light_glow02_add_noz")
 local colHealthEmpty = GM.AuraColorEmpty
 local colHealthFull = GM.AuraColorFull
@@ -265,9 +305,9 @@ function GM:DrawZombieIndicators()
 	local eyepos = EyePos()
 	local range, dist, healthfrac, pos, size
 	for _, pl in pairs(team_GetPlayers(TEAM_UNDEAD)) do
-		range = pl:GetAuraRangeSqr()
+		range = pl:GetAuraRangeSqr()/4
 		dist = pl:GetPos():DistToSqr(eyepos)
-		if pl:Alive() and dist <= range and (not pl:GetDTBool(DT_PLAYER_BOOL_NECRO) or dist >= 27500) then
+		if pl:Alive() and dist <= range then
 			healthfrac = math_max(pl:Health(), 0) / pl:GetMaxHealth()
 			colHealth.r = math_Approach(colHealthEmpty.r, colHealthFull.r, math_abs(colHealthEmpty.r - colHealthFull.r) * healthfrac)
 			colHealth.g = math_Approach(colHealthEmpty.g, colHealthFull.g, math_abs(colHealthEmpty.g - colHealthFull.g) * healthfrac)

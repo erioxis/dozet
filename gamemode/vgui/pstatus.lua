@@ -90,7 +90,7 @@ function MakepStatuss(silent)
 
 	local y = 8
 
-	local title = EasyLabel(frame, "Status Database", "ZSHUDFont", color_white)
+	local title = EasyLabel(frame, translate.Get("mm_s_base"), "ZSHUDFont", color_white)
 	title:SetPos(wid * 0.5 - title:GetWide() * 0.5, y)
 	y = y + title:GetTall() + 8
 

@@ -288,6 +288,9 @@ function meta:TakeSpecialDamage(damage, damagetype, attacker, inflictor, hitpos,
 	if damagetype == DMG_BURN and self:IsPlayer() and self:GetZombieClassTable().FireBuff then
 		damage = 0
 	end
+	if damagetype == DMG_DROWN and self:IsPlayer() and self:GetZombieClassTable().ResistFrost then
+		damage = 0
+	end
 	dmginfo:SetDamage(damage)
 	if attacker then
 		dmginfo:SetAttacker(attacker)

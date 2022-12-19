@@ -3,8 +3,6 @@ CLASS.TranslationName = "class_zombie"
 CLASS.Description = "description_zombie"
 CLASS.Help = "controls_zombie"
 
-CLASS.BetterVersion = "Eraditor"
-
 CLASS.Wave = 0
 CLASS.Unlocked = true
 CLASS.IsDefault = true
@@ -13,6 +11,8 @@ CLASS.Order = 0
 CLASS.Health = 320
 CLASS.Speed = 195
 CLASS.Revives = true
+CLASS.Variations = {"Pyro", "Gore Blaster Zombie", "Chem Burster", "Eraditor", "Eradicator", "Zombie Legs"}
+CLASS.Original = true
 
 CLASS.DynamicHealth = 1
 

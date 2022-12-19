@@ -7,10 +7,10 @@ CLASS.Wave = 6 / 6
 
 CLASS.Health = 12000
 CLASS.Speed = 177
-
+CLASS.Variations = {}
 CLASS.CanTaunt = true
 
-CLASS.Points = CLASS.Health/GM.HumanoidZombiePointRatio
+CLASS.Points = CLASS.Health/GM.HumanoidZombiePointRatio/21
 
 CLASS.SWEP = "weapon_zs_eradicator"
 

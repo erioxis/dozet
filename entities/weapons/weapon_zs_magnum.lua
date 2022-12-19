@@ -59,6 +59,7 @@ if CLIENT then
 				self:Draw3DHUD(vm, pos, ang)
 			end
 		end
+		
 		local owner = self:GetOwner()
 		if not MySelf:KeyDown(IN_SPEED) then return end
 		 local beamcol = colBeam
@@ -69,7 +70,7 @@ if CLIENT then
 		-- render.SetMaterial(matBeam)
 		-- render.DrawBeam(pos, hitpos, 0.2, 0, 1, beamcol)
 		 render.SetMaterial(matBeam)
-			 local dir = 0.85*hitnormal * hitnormal:Dot(normal * -1) + normal
+			 local dir = 2*hitnormal * hitnormal:Dot(normal * -1) + normal
 			temp_angle:Set(dir:Angle())
 			temp_angle:RotateAroundAxis(
 				temp_angle:Forward(),
@@ -77,17 +78,18 @@ if CLIENT then
 			)
 			temp_angle:RotateAroundAxis(
 				temp_angle:Up(),
-				math.Rand(0,0)
+				math.Rand(-0, 0)
 			)
 			
 
 			 dir = temp_angle:Forward()
-			 local endpos = hitpos + dir * 2000
+			 local endpos = hitpos + dir * 20000
+			 if !WorldVisible(endpos,hitpos) then endpos = WorldVisiblePos(hitpos,endpos) end
 		 render.DrawBeam(hitpos, endpos, 4, 0, 2, COLOR_WHITE)
 		 render.DrawBeam(hitpos, endpos, 6, 0, 2, beamcol)
 		 render.SetMaterial(matGlow)
 		 render.DrawSprite(hitpos, 12, 12, Color(115, 255, 80))
-		 render.DrawSprite(endpos, 158, 158, beamcol)
+		 render.DrawSprite(endpos, 18, 18, beamcol)
 	end
 end
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_MAX_SPREAD, -0.7, 1)
@@ -116,7 +118,7 @@ local function DoRicochet(attacker, hitpos, hitnormal, normal, damage)
 
 	attacker.RicochetBullet = true
 	if attacker:IsValid() then
-		attacker:FireBulletsLua(hitpos, 2 *hitnormal * hitnormal:Dot(normal * -1) + normal, 0, 1, damage, nil, nil, "tracer_rico", RicoCallback, nil, nil, nil, nil, attacker:GetActiveWeapon())
+		attacker:FireBulletsLua(hitpos, 2*hitnormal * hitnormal:Dot(normal * -1) + normal, 0, 1, damage, nil, nil, "tracer_rico", RicoCallback, nil, nil, nil, nil, attacker:GetActiveWeapon())
 	end
 	attacker.RicochetBullet = nil
 end

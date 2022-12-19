@@ -24,6 +24,7 @@ net.Receive("zs_armdamage", function(length)
 	MySelf.ArmDamage = net.ReadFloat()
 end)
 
+
 net.Receive("zs_nextboss", function(length)
 	GAMEMODE.NextBossZombie = net.ReadEntity()
 
@@ -363,9 +364,10 @@ net.Receive("zs_endround", function(length)
 end)
 
 net.Receive("zs_healother", function(length)
+	local bool = net.ReadBool()
 	local ent = net.ReadEntity()
 	local amount = net.ReadFloat()
-	if net.ReadBool() then
+	if bool then
 		gamemode.Call("HealedOtherPlayer", ent, amount)
 	else
 		GAMEMODE:CenterNotify({killicon = "weapon_zs_medicalkit"},"","",{pl_h = ent,amount = amount, other = true})
@@ -565,7 +567,7 @@ net.Receive("zs_healby", function(length)
 
 	if not ent:IsValidPlayer() then return end
 
-	GAMEMODE:CenterNotify({killicon = "weapon_zs_medicalkit"},"","",{pl_h = ent,amount = amount})
+	GAMEMODE:CenterNotify({killicon = "weapon_zs_medicalkit"},"","",{pl_h = ent,amount = amount, other = false})
 end)
 
 net.Receive("zs_buffby", function(length)

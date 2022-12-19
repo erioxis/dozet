@@ -538,38 +538,53 @@ function PANEL:Init()
 		local bottom1 = vgui.Create("DLabel", self)
 		bottom1:SetSize(1200 * screenscale, math.Clamp(84 * screenscale, 40, 125))
 		bottom1:SetPos(0 * screenscale, -24 * screenscale)
+		local d = (#MySelf:GetUnlockedSkills()*0.6-50)
+		local txt = translate.Get("u_s")..#MySelf:GetUnlockedSkills()..": "..(d < 0 and "" or "+")..d.."% dmg"
 		bottom1:SetFont("ZSHUDFontSmall")
-		bottom1:SetText(translate.Get("u_s")..#MySelf:GetUnlockedSkills().."(+"..(#MySelf:GetUnlockedSkills()).."% dmg)")
+		bottom1:SetText(txt)
 		bottom1:DockPadding(0, 10, 0, 0)
 	end
-	--[[local bottom1 = vgui.Create("DLabel", self)
+	local bottom1 = vgui.Create("DLabel", self)
 	bottom1:SetSize(1200 * screenscale, math.Clamp(84 * screenscale, 40, 125))
 	bottom1:SetPos(0 * screenscale, 44 * screenscale)
 	bottom1:SetFont("ZSHUDFontSmall")
-	bottom1:SetText(MySelf:GetDCoins().." XP From Achievements.(BETA)")
+	bottom1:SetText(MySelf:GetDCoins()..translate.ClientGet(MySelf ,"xp_from_ach"))
 	bottom1:DockPadding(0, 10, 0, 0)
 
-	local savebtn = vgui.Create("DButton", self)
+	local button0 = vgui.Create("DEXRoundedPanel", self)
+	button0:SetSize(160 * screenscale, 64 * screenscale)
+	button0:SetPos(0 * screenscale, 104 * screenscale)
+	button0:DockPadding(10, 10, 10, 10)
+
+	local savebtn = vgui.Create("DButton", button0)
 	savebtn:SetFont("ZSHUDFontSmallest")
-	savebtn:SetText("ADD XP")
+	savebtn:SetText(translate.ClientGet(MySelf ,"add_xp"))
 	savebtn:SizeToContents()
-	savebtn:SetPos(0 * screenscale, 44 * screenscale)
-	savebtn:SetSize(300 * screenscale, math.Clamp(84 * screenscale, 40, 125))
-	savebtn:Dock(BOTTOM)
+	savebtn:SetPos(0 * screenscale, 54 * screenscale)
+	savebtn:SetSize(50 * screenscale, math.Clamp(54 * screenscale, 40, 65))
+	savebtn:Dock(TOP)
+	savebtn:SetTall(savebtn:GetTall())
 	savebtn.DoClick = function(me)
 		surface.PlaySound("zombiesurvival/ui/misc1.ogg")
 
-		local frame = Derma_StringRequest("Add XP", "Here XP!.", "XP",
+		local frame = Derma_StringRequest(translate.ClientGet(MySelf ,"add_xp"), "Here XP!.", "XP",
 		function(xp)
-			if MySelf:GetDCoins() <= 0 	then self:DisplayMessage("no ach xp", COLOR_GREEN)  return end 
-			MySelf:AddZSXP(xp)
-			self:DisplayMessage("added xp", COLOR_GREEN)
+
+			xp = tonumber(xp)
+			if xp <= 0 then
+				xp = 1
+			end
+			if MySelf:GetDCoins() - xp + 1 <= 0 	then self:DisplayMessage(translate.ClientGet(MySelf ,"no_ach_xp"), COLOR_GREEN)  return end 
+				net.Start("zs_xp_ach")
+				net.WriteFloat(xp)
+				net.SendToServer() 
+			self:DisplayMessage(translate.ClientGet(MySelf ,"added_ach_xp"), COLOR_GREEN)
 		end,
 		function(xp) end,
 		"OK", "Cancel")
 
 		frame:GetChildren()[5]:GetChildren()[2]:SetTextColor(Color(30, 30, 30))
-	end]]
+	end
 
 
 
@@ -1248,7 +1263,7 @@ function PANEL:OnMousePressed(mc)
 			contextmenu:SetPos(mx - contextmenu:GetWide() / 2, my - contextmenu:GetTall() / 1.5)
 			if hoveredskill == -1 and can_remort then
 				Derma_Query(
-					"Are you ABSOLUTELY sure you want to remort?\nYou will revert to level 1, lose all skills, but have 2 extra SP.\nThis cannot be undone!",
+					"Are you ABSOLUTELY sure you want to remort?\nYou will revert to level 1, lose all skills, but have 1 extra SP.\nThis cannot be undone!",
 					"Warning",
 					"OK",
 					function() net.Start("zs_skills_remort") net.SendToServer() end,

@@ -8,7 +8,7 @@ CLASS.Model = Model("models/player/catpants.mdl")
 CLASS.OverrideModel = Model("models/player/catpants.mdl")
 
 CLASS.Wave = 6 / 6
-
+CLASS.Variations = false
 CLASS.KnockbackScale = 0
 
 CLASS.FearPerInstance = 1

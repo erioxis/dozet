@@ -55,9 +55,7 @@ SWEP.Tier = 7
 SWEP.MaxStock = 1
 function SWEP:OnZombieKilled()
 	self.Primary.Damage = self.Primary.Damage + 2
-	if self.Primary.Damage > 300 then
-	   self:GetOwner():TakeDamage(self.Primary.Damage * 0.3, self, self)
-	end
+
 end
 
 

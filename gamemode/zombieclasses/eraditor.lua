@@ -3,16 +3,15 @@ CLASS.TranslationName = "class_eraditor"
 CLASS.Description = "description_eradicator"
 CLASS.Help = "controls_eradicator"
 
-CLASS.BetterVersion = "Eradicator"
 
 CLASS.Wave = 1 / 2
 
-CLASS.Health = 1500
+CLASS.Health = 900
 CLASS.Speed = 220
-
+CLASS.Variations = {}
 CLASS.CanTaunt = true
 
-CLASS.Points = CLASS.Health/GM.HumanoidZombiePointRatio
+CLASS.Points = CLASS.Health/GM.HumanoidZombiePointRatio/1.6
 
 CLASS.SWEP = "weapon_zs_eradicator"
 

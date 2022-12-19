@@ -11,7 +11,8 @@ CLASS.Speed = 255
 CLASS.Revives = false
 CLASS.DemiBoss = true
 CLASS.Points = 12
-
+CLASS.Original = false
+CLASS.Variations = false
 CLASS.SWEP = "weapon_zs_zombie_gore_blaster"
 
 function CLASS:PlayPainSound(pl)

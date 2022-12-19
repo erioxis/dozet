@@ -132,6 +132,11 @@ function WorldVisible(posa, posb)
 	WorldVisibleTrace.endpos = posb
 	return not util.TraceLine(WorldVisibleTrace).Hit
 end
+function WorldVisiblePos(posa, posb)
+	WorldVisibleTrace.start = posa
+	WorldVisibleTrace.endpos = posb
+	return util.TraceLine(WorldVisibleTrace).HitPos
+end
 
 function CosineInterpolation(y1, y2, mu)
 	local mu2 = (1 - math.cos(mu * math.pi)) / 2

@@ -69,6 +69,7 @@ killicon.Add("redeem", "killicon/redeem_v2")
 
 
 killicon.Add("weapon_zs_baramelee", "zombiesurvival/killicons/weapon_zs_baramelee")
+killicon.Add("weapon_zs_baramelee_xmas", "zombiesurvival/killicons/weapon_zs_baramelee")
 killicon.Add("weapon_zs_baracat", "zombiesurvival/killicons/fast_legs", Color(34, 0, 34))
 killicon.Add("weapon_zs_redbad", "zombiesurvival/killicons/skeletal_walker", Color(34, 139, 34))
 killicon.Add("weapon_zs_zombie", "zombiesurvival/killicons/zombie")

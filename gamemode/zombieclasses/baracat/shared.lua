@@ -7,7 +7,7 @@ CLASS.Help = "controls_asskicker"
 CLASS.Model = Model("models/player/catpants.mdl")
 CLASS.OverrideModel = Model("models/player/catpants.mdl")
 CLASS.BetterVersion = "Baragat"
-
+CLASS.Variations = false
 
 
 CLASS.Wave = 3 / 6

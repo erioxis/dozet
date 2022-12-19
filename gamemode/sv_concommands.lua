@@ -16,6 +16,17 @@ concommand.Add("zs_pointsshopbuy", function(sender, command, arguments)
 		GAMEMODE:ConCommandErrorMessage(sender, translate.ClientGet(sender, "vir_pat_warning"))
 		return
 	end
+	local id = arguments[1]
+	id = tonumber(id) or id
+	local itemtab = FindItem(id)
+	if sender:HasTrinket("sin_envy") and weapons.Get(itemtab).Tier <= 4 then
+		GAMEMODE:ConCommandErrorMessage(sender, translate.ClientGet(sender, "envy_taken"))
+		return
+	end
+	if sender:HasTrinket("sin_pride") and weapons.Get(itemtab).Tier <= 4 then
+		GAMEMODE:ConCommandErrorMessage(sender, translate.ClientGet(sender, "envy_pride"))
+		return
+	end
 
 
 	if not (usescrap or gamemode.Call("PlayerCanPurchase", sender)) then
@@ -23,9 +34,6 @@ concommand.Add("zs_pointsshopbuy", function(sender, command, arguments)
 		return
 	end
 
-	local id = arguments[1]
-	id = tonumber(id) or id
-	local itemtab = FindItem(id)
 
 	if not itemtab or not itemtab.PointShop then return end
 	local itemcat = itemtab.Category
@@ -134,7 +142,7 @@ concommand.Add("zs_pointsshopbuy", function(sender, command, arguments)
 				if not sender:IsSkillActive(SKILL_SAMODOS) then
 					local scrapcom = math.ceil(cost / 6)
 					nearest:SetScraps(nearest:GetScraps() + scrapcom)
-					nearest:GetObjectOwner():CenterNotify(COLOR_GREEN, translate.Format("remantle_used", scrapcom)..sender:Nick())
+					nearest:GetObjectOwner():CenterNotify(COLOR_GREEN, translate.ClientFormat(owner,"remantle_used", scrapcom)..sender:Nick())
 				end
 			end
 		end
@@ -157,7 +165,175 @@ concommand.Add("zs_pointsshopbuy", function(sender, command, arguments)
 		end
 	end
 end)
+concommand.Add("zs_anti_pointsshopbuy", function(sender, command, arguments)
+	if not (sender:IsValid() and sender:IsConnected() and sender:IsValidLivingHuman()) or #arguments == 0 then return end
+	local usescrap = arguments[2]
+	local sigiled = false
+	for _, sigil in pairs(ents.FindInSphere(sender:GetPos(), 200)) do
+		if sigil:IsValid() and sigil.AntiSigil then
+			sigiled = true
+		end
+	end
+	if !sigiled then GAMEMODE:ConCommandErrorMessage(sender, translate.ClientGet(sender, "no_anti_sigil")) return end
+	local midwave = GAMEMODE:GetWave() < GAMEMODE:GetNumberOfWaves() / 2 or GAMEMODE:GetWave() == GAMEMODE:GetNumberOfWaves() / 2 and GAMEMODE:GetWaveActive() and CurTime() < GAMEMODE:GetWaveEnd() - (GAMEMODE:GetWaveEnd() - GAMEMODE:GetWaveStart()) / 2
+	if sender:IsSkillActive(SKILL_D_LATEBUYER) and not usescrap and midwave or GAMEMODE.ObjectiveMap and sender:IsSkillActive(SKILL_D_LATEBUYER) and not usescrap then
+		GAMEMODE:ConCommandErrorMessage(sender, translate.ClientGet(sender, "late_buyer_warning"))
+		return
+	end
+	if not sender.CanBuy and sender:HasTrinket("vir_pat") and not usescrap then
+		GAMEMODE:ConCommandErrorMessage(sender, translate.ClientGet(sender, "vir_pat_warning"))
+		return
+	end
+	local id = arguments[1]
+	id = tonumber(id) or id
+	local itemtab = FindItem(id)
+	
+	if sender:HasTrinket("sin_envy") and weapons.Get(itemtab).Tier <= 4 then
+		GAMEMODE:ConCommandErrorMessage(sender, translate.ClientGet(sender, "envy_taken"))
+		return
+	end
+	if sender:HasTrinket("sin_pride") and weapons.Get(itemtab).Tier <= 4 then
+		GAMEMODE:ConCommandErrorMessage(sender, translate.ClientGet(sender, "envy_pride"))
+		return
+	end
 
+
+	if not (usescrap or gamemode.Call("PlayerCanPurchase", sender)) then
+		GAMEMODE:ConCommandErrorMessage(sender, translate.ClientGet(sender, "cant_purchase_right_now"))
+		return
+	end
+
+
+	if not itemtab or not itemtab.PointShop then return end
+	local itemcat = itemtab.Category
+	if usescrap and not (itemcat == ITEMCAT_TRINKETS or itemcat == ITEMCAT_AMMO) and not itemtab.CanMakeFromScrap then return end
+
+	local points = usescrap and sender:GetAmmoCount("scrap") or sender:GetPoints()
+	local cost = itemtab.Price
+
+	if GAMEMODE:IsClassicMode() and itemtab.NoClassicMode then
+		GAMEMODE:ConCommandErrorMessage(sender, translate.ClientFormat(sender, "cant_use_x_in_classic", itemtab.Name))
+		return
+	end
+
+	if GAMEMODE.ZombieEscape and itemtab.NoZombieEscape then
+		GAMEMODE:ConCommandErrorMessage(sender, translate.ClientFormat(sender, "cant_use_x_in_zombie_escape", itemtab.Name))
+		return
+	end
+
+	if itemtab.SkillRequirement and not sender:IsSkillActive(itemtab.SkillRequirement) then
+		GAMEMODE:ConCommandErrorMessage(sender, translate.ClientFormat(sender, "x_requires_a_skill_you_dont_have", itemtab.Name))
+		return
+	end
+
+	if itemtab.Tier and GAMEMODE.LockItemTiers and not GAMEMODE.ObjectiveMap and not GAMEMODE.ZombieEscape and not GAMEMODE:IsClassicMode() and GAMEMODE:GetNumberOfWaves() == GAMEMODE.NumberOfWaves and GAMEMODE:GetWave() + (GAMEMODE:GetWaveActive() and 0 or 1) < itemtab.Tier then
+		GAMEMODE:ConCommandErrorMessage(sender, translate.ClientFormat(sender, "tier_x_items_unlock_at_wave_y", itemtab.Tier, itemtab.Tier))
+		return
+	end
+
+	if not GAMEMODE:HasItemStocks(id) then
+		GAMEMODE:ConCommandErrorMessage(sender, translate.ClientGet(sender, "out_of_stock"))
+		return
+	end
+	local arsd = math.Clamp((sender.ArsenalDiscount or 1),(GAMEMODE:GetWave() <= 4 and 0.75 or 0),255)
+	cost = usescrap and math.ceil(GAMEMODE:PointsToScrap(cost * (sender.ScrapDiscount or 1))) or math.ceil(cost * arsd)
+
+	if points < cost then
+		timer.Create("buy"..itemtab.Name.."WARNING", 0.01,1, function()GAMEMODE:ConCommandErrorMessage(sender, translate.ClientGet(sender, usescrap and "need_to_have_enough_scrap" or "dont_have_enough_points")) end)
+		return
+	end
+
+	if itemtab.Callback then
+		itemtab.Callback(sender)
+	elseif itemtab.SWEP then
+		if string.sub(itemtab.SWEP, 1, 6) ~= "weapon" then
+			if GAMEMODE:GetInventoryItemType(itemtab.SWEP) == INVCAT_TRINKETS and sender:HasInventoryItem(itemtab.SWEP) then
+				return
+			else
+				sender:AddInventoryItem(itemtab.SWEP)
+			end
+		elseif sender:HasWeapon(itemtab.SWEP) then
+			local stored = weapons.Get(itemtab.SWEP)
+			if stored and stored.AmmoIfHas then
+				sender:GiveAmmo(stored.Primary.DefaultClip, stored.Primary.Ammo)
+			else
+				local wep = ents.Create("prop_weapon")
+				if wep:IsValid() then
+					wep:SetPos(sender:GetShootPos())
+					wep:SetAngles(sender:GetAngles())
+					wep:SetWeaponType(itemtab.SWEP)
+					wep:SetShouldRemoveAmmo(true)
+					wep:Spawn()
+				end
+			end
+		else
+			local wep = sender:Give(itemtab.SWEP)
+			if wep and wep:IsValid() and wep.EmptyWhenPurchased and wep:GetOwner():IsValid() then
+				if wep.Primary then
+					local primary = wep:ValidPrimaryAmmo()
+					if primary then
+						sender:RemoveAmmo(math.max(0, wep.Primary.DefaultClip - wep.Primary.ClipSize), primary)
+					end
+				end
+				if wep.Secondary then
+					local secondary = wep:ValidSecondaryAmmo()
+					if secondary then
+						sender:RemoveAmmo(math.max(0, wep.Secondary.DefaultClip - wep.Secondary.ClipSize), secondary)
+					end
+				end
+			end
+		end
+
+		GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_WEAPON, itemtab.SWEP, "Purchases", 1)
+	else
+		return
+	end
+    local scrapd = sender.ScrapDiscount or 1
+	local buy = "Buyed a "
+	if usescrap then
+		sender:RemoveAmmo(math.ceil(cost), "scrap")
+		sender:SendLua("surface.PlaySound(\"buttons/lever"..math.random(5)..".wav\")")
+		timer.Create(buy..itemtab.Name, 0.01,1, function() sender:PrintTranslatedMessage(HUD_PRINTTALK, usescrap and "created_x_for_y_scrap" ,itemtab.Name, math.ceil(cost)) end)
+	else
+		sender:TakePoints(cost)
+		sender:SendLua("surface.PlaySound(\"ambient/levels/labs/coinslot1.wav\")")
+		timer.Create(buy..itemtab.Name, 0.01,1, function() sender:PrintTranslatedMessage(HUD_PRINTTALK, "purchased_x_for_y_points", itemtab.Name, cost) end)
+	end
+
+
+	GAMEMODE:AddItemStocks(id, -1)
+
+	if usescrap then
+		local nearest = sender:NearestRemantler()
+		if nearest then
+			local owner = nearest.GetObjectOwner and nearest:GetObjectOwner() or nearest:GetOwner()
+			if owner:IsValid() and owner ~= sender then
+				if not sender:IsSkillActive(SKILL_SAMODOS) then
+					local scrapcom = math.ceil(cost / 6)
+					nearest:SetScraps(nearest:GetScraps() + scrapcom)
+					nearest:GetObjectOwner():CenterNotify(COLOR_GREEN, translate.ClientFormat(owner ,"remantle_used", scrapcom)..sender:Nick())
+				end
+			end
+		end
+	else
+		local nearest = sender:NearestArsenalCrateOwnedByOther()
+		if nearest then
+			local owner = nearest.GetObjectOwner and nearest:GetObjectOwner() or nearest:GetOwner()
+			if owner:IsValid() then
+				local commission = cost * GAMEMODE.ArsenalCrateCommission
+				if commission > 0 then
+					owner:AddPoints(commission, nil, nil, true)
+
+					net.Start("zs_commission")
+						net.WriteEntity(nearest)
+						net.WriteEntity(sender)
+						net.WriteFloat(commission)
+					net.Send(owner)
+				end
+			end
+		end
+	end
+end)
 concommand.Add("zs_dismantle", function(sender, command, arguments)
 	if not (sender:IsValid() and sender:IsConnected() and sender:IsValidLivingHuman()) then return end
 
@@ -299,7 +475,7 @@ concommand.Add("zs_upgrade", function(sender, command, arguments)
 	if owner:IsValid() and owner ~= sender then
 		local scrapcom = math.ceil(scrapcost * 0.13)
 		nearest:SetScraps(nearest:GetScraps() + scrapcom)
-		nearest:GetObjectOwner():CenterNotify(COLOR_GREEN, translate.Format("remantle_used", scrapcom)..sender:Nick())
+		nearest:GetObjectOwner():CenterNotify(COLOR_GREEN, translate.ClientFormat(owner,"remantle_used", scrapcom)..sender:Nick())
 	end
 end)
 

@@ -7,6 +7,8 @@ CLASS.Wave = 2 / 6
 
 CLASS.Health = 260
 CLASS.Speed = 150
+CLASS.Variations = {"Skeletal Walker", "Shadow Walker",  "Skeletal Shambler", "Skeletal Crawler", "Shadow Lurker", "Frigid Revenant"}
+CLASS.Original = true
 
 CLASS.CanTaunt = true
 
@@ -14,7 +16,6 @@ CLASS.Points = CLASS.Health/GM.SkeletonPointRatio
 
 CLASS.SWEP = "weapon_zs_skeleton"
 
-CLASS.BetterVersion = "Skeletal Shambler"
 
 CLASS.Model = Model("models/player/skeleton.mdl")
 

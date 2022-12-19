@@ -74,12 +74,12 @@ function PANEL:AddAmmo( amount, ammotype )
 		self:AddLabel( translate.Format( "obtained_x_y_ammo",amount, ammotype2), COLOR_GREEN, "ZSHUDFontSmallest" )
 	end
 end
-function PANEL:AddHeal( amount, pl_h, other )
+function PANEL:AddHeal(pl_h, amount, other)
 	if self.HealNotif and self.HealNotif.pl_h == pl_h then
-		self:AddLabel((other and translate.Format("healed_x_for_y",pl_h:Name(), amount + self.HealNotif.amount) or translate.Format( "healed_x_by_y", pl_h:Nick(),amount + self.HealNotif.amount)), COLOR_GREEN, "ZSHUDFontSmallest" )
-		self.HealNotif = { amount = amount + self.HealNotif.amount, pl_h = pl_h, other = other }
+		self:AddLabel((other and translate.Format("healed_x_for_y",pl_h:IsValid() and  pl_h:Name(), amount + self.HealNotif.amount) or translate.Format( "healed_x_by_y", pl_h:IsValid() and  pl_h:Nick(),amount + self.HealNotif.amount)), COLOR_GREEN, "ZSHUDFontSmallest" )
+		self.HealNotif = { pl_h = pl_h,amount = amount + self.HealNotif.amount, other = other }
 	else
-		self:AddLabel( (other and translate.Format("healed_x_for_y",(pl_h:Name() or "I"), amount) or translate.Format( "healed_x_by_y",(pl_h:Nick()  or "I"), amount)), COLOR_GREEN, "ZSHUDFontSmallest" )
+		self:AddLabel((other and translate.Format("healed_x_for_y",(pl_h:IsValid() and pl_h:Name() or "I"), amount) or translate.Format( "healed_x_by_y",(pl_h:IsValid() and pl_h:Nick()  or "I"), amount)), COLOR_GREEN, "ZSHUDFontSmallest" )
 	end
 end
 function PANEL:UpdateBlock( amount )
@@ -166,9 +166,9 @@ function PANEL:SetNotification( ... )
 				end
 
 			elseif v.pl_h then
-				self:AddHeal( v.amount, v.pl_h, v.other )
+				self:AddHeal( v.pl_h, v.amount, v.other )
 				if !self.HealNotif then
-					self.HealNotif = {amount = v.amount, pl_h = v.pl_h, other = (v.other or false)}
+					self.HealNotif = {pl_h = v.pl_h,amount = v.amount, other = v.other}
 				end
 
 

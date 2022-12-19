@@ -158,6 +158,7 @@ function ENT:StartTouch(ent)
 				"weapon_zs_inferno_q1",
 				"weapon_zs_binocle_q1",
 				"weapon_zs_keyboard_q1",
+				"weapon_zs_baramelee_xmas",
 				"weapon_zs_scythe_q1"
 			}
 			local drop = table.Random(weapon)

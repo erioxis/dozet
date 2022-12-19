@@ -4,9 +4,9 @@ SWEP.PrintName = "Tank"
 
 SWEP.Base = "weapon_zs_zombie"
 
-SWEP.MeleeDamage = 30
+SWEP.MeleeDamage = 65
 SWEP.SlowDownScale = 0
-SWEP.MeleeDamageVsProps = 70
+SWEP.MeleeDamageVsProps = 34
 
 SWEP.AlertDelay = 1
 
@@ -31,13 +31,13 @@ function SWEP:MeleeHit(ent, trace, damage, forcescale)
 	self.BaseClass.MeleeHit(self, ent, trace, damage, forcescale)
 end
 function SWEP:ApplyMeleeDamage(pl, trace, damage)
-	if SERVER and pl:IsPlayer() then
+	if SERVER and pl:IsPlayer() and pl:GetActiveWeapon()and pl:GetActiveWeapon().IsMelee then
 		local cursed = pl:GetStatus("hollowing")
 		if (cursed) then 
-			pl:AddHallow(self:GetOwner(), cursed.DieTime - CurTime() + 5)
+			pl:AddHallow(self:GetOwner(), cursed.DieTime - CurTime() + 65)
 		end
 		if (not cursed) then 
-			pl:AddHallow(pl:GetOwner(), 5)
+			pl:AddHallow(pl:GetOwner(), 65)
 		end
 	end
 	self.BaseClass.ApplyMeleeDamage(self, pl, trace, damage)

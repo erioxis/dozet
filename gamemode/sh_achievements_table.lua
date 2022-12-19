@@ -3,7 +3,7 @@ local translate = translate.Get
 GM.Achievements["zsfan"] = {
     Name = translate("challenge_godzs"),
     Desc = translate("challenge_godzs_d"),
-    Goal = 1000,
+    Goal = 250,
     Reward = 120000
 }
 GM.Achievements["gurrenlagann"] = {
@@ -259,6 +259,12 @@ GM.Achievements["gift_collector"] = {
     Desc = translate("challenge_gc_d"),
     Goal = 100,
     Reward = 12000
+}
+GM.Achievements["cleaner"] = {
+    Name = translate("challenge_cleaner"),
+    Desc = translate("challenge_cleaner_d"),
+    Goal = 150,
+    Reward = 5000
 }
 
 

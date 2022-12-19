@@ -339,14 +339,31 @@ function meta:SetTimerBERS(pts)
 	self:SetNWInt('b_timer', pts + 15)
 end
 
+function meta:GetFireInd()
+	return self:GetNWFloat('fire_ind', pts)	
+end	
+
+function meta:SetFireInd(pts)
+	self:SetFireIndTime(CurTime())
+	self:SetNWFloat('fire_ind', pts)
+end
+
+function meta:GetFireIndTime()
+	return self:GetNWFloat('fire_ind_time', pts)	
+end	
+
+function meta:SetFireIndTime(pts)
+	self:SetNWFloat('fire_ind_time', pts+3.2)
+end
+
 function meta:GetBloodArmor()
 	return self:GetDTInt(DT_PLAYER_INT_BLOODARMOR)
 end
 function meta:GetDCoins()
-	return self:GetDTInt(DT_PLAYER_FLOAT_DOSET_COINS)
+	return self:GetDTFloat(DT_PLAYER_FLOAT_DOSET_COINS)
 end
 function meta:SetDCoins(c)
-	self:SetDTInt(DT_PLAYER_FLOAT_DOSET_COINS, c)
+	self:SetDTFloat(DT_PLAYER_FLOAT_DOSET_COINS, c)
 end
 function meta:SetEntityAvatar(ent)
 	self:SetDTEntity(3, ent)
@@ -394,21 +411,25 @@ function meta:AddLegDamageExt(damage, attacker, inflictor, type)
 			end
 		end
 	elseif type == SLOWTYPE_COLD then
-		if self:IsValidLivingZombie() and self:GetZombieClassTable().ResistFrost then return end
+		if self:IsValidLivingZombie() and self:GetZombieClassTable().ResistFrost then self:SetHealth(self:Health() + damage*12) return end
 		if self:GetZombieClassTable().FireBuff then
 			damage = damage * 2
 		end
 		self:AddLegDamage(damage)
 		self:AddArmDamage(damage)
 
-		if SERVER and attacker:HasTrinket("cryoindu") and not attacker:GetActiveWeapon().AntiInd and not (attacker:GetActiveWeapon().Tier or 1) == 7 then
+		if SERVER and attacker:HasTrinket("cryoindu") and not attacker:GetActiveWeapon().AntiInd and not (attacker:GetActiveWeapon().Tier or 1) == 7  then
 			self:CryogenicInduction(attacker, inflictor, damage)
 		end
 	elseif type == SLOWTYPE_FLAME then
+		if self:IsValidLivingZombie() and self:GetZombieClassTable().ResistFrost then
+			damage = damage * 2
+		end
 		if self:GetZombieClassTable().FireBuff then
 			self:SetHealth(self:Health() + damage * 12)
+			damage = 0
 		end
-		if SERVER and attacker:HasTrinket("fire_ind") and not attacker:GetActiveWeapon().AntiInd and !self:GetZombieClassTable().FireBuff and not (attacker:GetActiveWeapon().Tier or 1) == 7 then
+		if SERVER and attacker:HasTrinket("fire_ind") and not attacker:GetActiveWeapon().AntiInd and !self:GetZombieClassTable().FireBuff and (attacker:GetActiveWeapon().Tier or 1) ~= 7 then
 			self:FireInduction(attacker, inflictor, damage * 3)
 		end
 	end
@@ -601,10 +622,13 @@ function meta:ResetSpeed(noset, health)
 	if P_Team(self) == TEAM_UNDEAD then
 		local speed = math.max(50, self:GetZombieClassTable().Speed * GAMEMODE.ZombieSpeedMultiplier - (GAMEMODE.ObjectiveMap and 20 or 0))
     	if self.m_EasySpeed then
-			self:SetSpeed(speed * 1.25)
-		else
-			self:SetSpeed(speed)
+			speed = speed * 1.25
 		end
+		if self:GetZombieClassTable().SpeedUp and self.GetSpeedUpTimer and self.GetSpeedUpTimer >= CurTime() then
+			speed = speed * (self.GetSpeedUpTimer/CurTime())
+			speed = speed * 1.2
+		end
+		self:SetSpeed(speed)
 		return speed
 	end
 
@@ -624,7 +648,7 @@ function meta:ResetSpeed(noset, health)
 	end
 
 	if P_Team(self) == TEAM_HUMAN and self:IsSkillActive(SKILL_CQARMOR) then
-		speed = (GAMEMODE.ObjectiveMap and 125 or 50)
+		speed = (GAMEMODE.ObjectiveMap and 125 or 50) + (self:IsSkillActive(SKILL_CQBOOTS) and 35 or 0)
 	else
 		if self.SkillSpeedAdd and P_Team(self) == TEAM_HUMAN and not self:HasTrinket("altchayok") then
 			speed = speed + self.SkillSpeedAdd

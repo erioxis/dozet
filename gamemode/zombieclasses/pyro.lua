@@ -13,6 +13,8 @@ CLASS.Points = CLASS.Health/GM.HumanoidZombiePointRatio
 CLASS.UsePlayerModel = true
 CLASS.SWEP = "weapon_zs_zombie_pyro"
 CLASS.FireBuff = true
+CLASS.Original = false
+CLASS.Variations = {"Zombie"}
 
 if SERVER then
 	function CLASS:OnKilled() end

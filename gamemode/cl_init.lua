@@ -915,13 +915,12 @@ function GM:HumanHUD(screenscale)
 			draw_SimpleTextBlurry(translate.Get("breath").." ", "ZSHUDFontSmall", w * 0.4, h * 0.35 + 6, COLOR_LBLUE, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
 		end
 	end
-
+	self:DrawInductorIndicators()
 	local lockon = self.HumanMenuLockOn
 	if lockon and self:ValidMenuLockOnTarget(MySelf, lockon) then
 		local txth = draw_GetFontHeight("ZSHUDFontSmall")
 		draw_SimpleTextBlurry(translate.Format("giving_items_to", lockon:Name()), "ZSHUDFontSmall", w * 0.5, h * 0.55 + txth, COLOR_GRAY, TEXT_ALIGN_CENTER)
 	end
-
 	if gamemode.Call("PlayerCanPurchase", MySelf) then
 		draw_SimpleTextBlurry(translate.Get("press_f2_for_the_points_shop"), "ZSHUDFontSmall", w * 0.5, screenscale * 135, COLOR_GRAY, TEXT_ALIGN_CENTER)
 	end
@@ -1070,6 +1069,7 @@ function GM:_PostDrawTranslucentRenderables()
 		self:DrawHumanIndicators()
 		self:DrawZombieIndicators()
 		self:DrawNestIndicators()
+
 	end
 end
 
@@ -1788,7 +1788,7 @@ function GM:HumanMenu()
 
 	gwbtn = vgui.Create("DButton")
 	gwbtn:SetFont("ZSHUDFontSmaller")
-	gwbtn:SetText("Dismantle Item")
+	gwbtn:SetText(translate.Get("di_hud"))
 	gwbtn:SetSize(panel:GetWide() - 8 * screenscale, hei - 4 * screenscale)
 	gwbtn:CenterHorizontal()
 	gwbtn.DoClick = DismantleWeapon

@@ -1,5 +1,7 @@
 GM.VaultFolder = "zombiesurvival_vault"
 GM.SkillTreeVersion = 1
+GM.DozetSeason = 2
+GM.OldSeason = 1
 
 function GM:ShouldSaveVault(pl)
 	-- Always push accumulated points in to the vault if we have any.
@@ -24,10 +26,14 @@ end
 	return not self.ZombieEscape and not self:IsClassicMode()
 end]]
 
-function GM:GetVaultFile(pl)
+function GM:GetVaultFile(pl, xp)
 	local steamid = pl:SteamID64() or "invalid"
+	local d = ""
+	if xp then
+		d = "_ACH_XP"
+	end
 
-	return self.VaultFolder.."/"..steamid:sub(-2).."/"..steamid..".txt"
+	return self.VaultFolder..d.."/"..steamid:sub(-2).."/"..steamid..d..".txt"
 end
 
 function GM:SaveAllVaults()
@@ -51,9 +57,9 @@ function GM:LoadVault(pl)
 			contents = Deserialize(contents)
 			if contents then
 				pl.PointsVault = contents.Points
-
+				local remort = contents.RemortLevel
 				if contents.RemortLevel then
-					pl:SetZSRemortLevel(contents.RemortLevel)
+					pl:SetZSRemortLevel(remort)
 				end
 				if contents.XP then
 					pl:SetZSXP(contents.XP)
@@ -89,7 +95,21 @@ function GM:LoadVault(pl)
 				if contents.AchXP then
 					pl:SetDCoins(contents.AchXP)
 				end
+				pl.Season = (contents.Season or 1)
 
+				pl.SkillVersion = self.SkillTreeVersion
+			end
+		end
+	end
+	local filename = self:GetVaultFile(pl, true)
+	if file.Exists(filename, "DATA") then
+		local contents = file.Read(filename, "DATA")
+		if contents and #contents > 0 then
+			contents = Deserialize(contents)
+			if contents then
+				if contents.AchXP then
+					pl:SetDCoins(contents.AchXP)
+				end
 				pl.SkillVersion = self.SkillTreeVersion
 			end
 		end
@@ -131,11 +151,17 @@ end
 
 function GM:SaveVault(pl)
 	if not self:ShouldSaveVault(pl) then return end
-
+	local remort =pl:GetZSRemortLevel()
+	if self.DozetSeason ~= (pl.Season or 1) then
+		remort = remort/4
+		if remort <= 2 then
+			remort = 0
+		end
+	end
 	local tosave = {
 		Points = math.floor(pl.PointsVault),
 		XP = pl:GetZSXP(),
-		RemortLevel = pl:GetZSRemortLevel(),
+		RemortLevel = remort,
 		DesiredActiveSkills = util.CompressBitTable(pl:GetDesiredActiveSkills()),
 		UnlockedSkills = util.CompressBitTable(pl:GetUnlockedSkills()),
 		Version = pl.SkillVersion or self.SkillTreeVersion,
@@ -143,6 +169,10 @@ function GM:SaveVault(pl)
 		MeleeMastery = pl.MeleeMastery,
 		GunMastery = pl.GunMastery,
 		Zban = (pl.Zban or false),
+		AchXP = pl:GetDCoins(),
+		Season = self.DozetSeason
+	}
+	local tosavexp = {
 		AchXP = pl:GetDCoins()
 	}
 
@@ -155,8 +185,12 @@ function GM:SaveVault(pl)
 	end
 
 	local filename = self:GetVaultFile(pl)
+	local filenamexp = self:GetVaultFile(pl,true)
 	file.CreateDir(string.GetPathFromFilename(filename))
 	file.Write(filename, Serialize(tosave))
+
+	file.CreateDir(string.GetPathFromFilename(filenamexp))
+	file.Write(filenamexp, Serialize(tosavexp))
 end
 
 function GM:SaveWinRate()

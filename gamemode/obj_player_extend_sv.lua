@@ -38,7 +38,10 @@ function meta:ProcessDamage(dmginfo)
 			dmginfo:SetDamageForce(vector_origin)
 			return
 		end
-		dmginfo:SetDamage(dmginfo:GetDamage() * (1 - (math.Clamp(GAMEMODE:GetBalance() * 0.01,-2.5,0.7))))
+		if attacker:IsPlayer()and attacker.RedeemedOnce and attacker:IsSkillActive(SKILL_PHOENIX) then
+			dmginfo:SetDamage(dmginfo:GetDamage() * 0.7)
+		end
+		dmginfo:SetDamage(dmginfo:GetDamage() * (1 - (math.Clamp(GAMEMODE:GetBalance() * 0.005,-2.5,0.7))))
 		if self.m_zombiedef then
 			dmginfo:SetDamage(dmginfo:GetDamage() * 0.75)
 		end
@@ -65,7 +68,7 @@ function meta:ProcessDamage(dmginfo)
 			dmginfo:SetDamage(dmginfo:GetDamage() * GAMEMODE:GetZombieDamageScale(dmginfo:GetDamagePosition(), self))
 		end
 		if attacker:IsValidLivingHuman() and attacker:IsSkillActive(SKILL_SIGILIBERATOR) then
-            dmginfo:ScaleDamage(2)
+            dmginfo:ScaleDamage(1.45)
 		end
 		if attacker:IsValidLivingHuman() and attacker:HasTrinket("a_flower") and (attacker:GetStatus("cursed")) then
             dmginfo:ScaleDamage(0.1)
@@ -122,12 +125,22 @@ function meta:ProcessDamage(dmginfo)
 				attacker:SetHealth(math.min(attacker:GetMaxHealth(), attacker:Health() + attacker:GetMaxHealth() * 0.11))
 			end
 			if attacker:IsSkillActive(SKILL_INF_POWER) then
-				dmginfo:ScaleDamage(0.25 + #attacker:GetUnlockedSkills() * 0.01)
+				dmginfo:ScaleDamage(0.25 + #attacker:GetUnlockedSkills() * 0.006)
 			end
 			if damage >= 10000 then
 				attacker:GiveAchievement("opm")
 			end
-			attacker.FireDamage = attacker.FireDamage + 1
+			if self:GetZombieClassTable().FireBuff and attacker:HasTrinket("fire_at") then
+				dmginfo:SetDamage(0)
+				GAMEMODE:BlockFloater(attacker, self, dmginfo:GetDamagePosition())
+			end
+			if self:GetZombieClassTable().ResistFrost and attacker:HasTrinket("acid_at") then
+				dmginfo:SetDamage(0)
+				GAMEMODE:BlockFloater(attacker, self, dmginfo:GetDamagePosition())
+			end
+			if attacker:HasTrinket("fire_at") then
+				attacker:SetFireInd(attacker:GetFireInd()+1)
+			end
 			dmginfo:SetDamage(damage * math.min(3,attacker:GetModelScale() * attacker:GetModelScale()))
 			if attacker:HasTrinket("soulalteden") then
 				attacker.RandomDamage = attacker.RandomDamage + math.random(1,5)
@@ -298,6 +311,9 @@ function meta:ProcessDamage(dmginfo)
 			end
 
     end
+	if self:IsSkillActive(SKILL_AMULET_14) then
+		dmginfo:ScaleDamage(math.Clamp(self:Health()/self:GetMaxHealth(),2,0.55))
+	end
 
 	-- Opted for multiplicative.
 
@@ -366,7 +382,7 @@ function meta:ProcessDamage(dmginfo)
 	end
 
 	if self:IsSkillActive(SKILL_CQARMOR) then
-		dmginfo:SetDamage(dmginfo:GetDamage() * 0.75)
+		dmginfo:SetDamage(dmginfo:GetDamage() * 0.75 + (self:IsSkillActive(SKILL_CQBOOTS) and 0.1 or 0))
 	end
 	if self:IsSkillActive(SKILL_DOSETHELP) then
 		dmginfo:SetDamage(dmginfo:GetDamage() * (1 - GAMEMODE:GetWave() * 0.02))
@@ -405,8 +421,8 @@ function meta:ProcessDamage(dmginfo)
 		end
 
 		if inflictor == attacker:GetActiveWeapon() then
-			if (GAMEMODE:GetBalance() * 0.1) >= 0.1 then
-				dmginfo:SetDamage(dmginfo:GetDamage() * (1 + (math.Clamp(GAMEMODE:GetBalance() * 0.1,0.5,1.5))))
+			if (GAMEMODE:GetBalance() * 0.05) >= 0.1 then
+				dmginfo:SetDamage(dmginfo:GetDamage() * (1 + (math.Clamp(GAMEMODE:GetBalance() * 0.05,0.5,1.5))))
 			end
 			if self.ClanAnsableRevolution then
 				dmginfo:SetDamage(dmginfo:GetDamage() - 7)
@@ -645,21 +661,6 @@ function meta:ProcessDamage(dmginfo)
 					local cursed = self:GetStatus("cursed")
 					if (cursed) then 
 						self:AddCursed(self, cursed.DieTime - CurTime() - 10)
-					end
-				end
-				if self:IsSkillActive(SKILL_CURSECURE)  then
-					local cursed = self:GetStatus("cursed")
-					if (cursed) then 
-						self:AddCursed(self, cursed.DieTime - CurTime() - 15)
-					end
-				end
-				if self:IsSkillActive(SKILL_CURSECURE) and attacker:IsValid() and attacker:IsPlayer() then
-					local rot = self:GetStatus("rot")
-					if (rot) and attacker:IsPlayer() and inflictor == attacker:GetActiveWeapon()  then 
-						self:AddRot(attacker, rot.DieTime - CurTime() + 1)
-					end
-					if (not rot) and attacker:IsPlayer() and inflictor == attacker:GetActiveWeapon() then 
-						self:AddRot(attacker, 1)
 					end
 				end
 				if attacker.m_Rot_Claws then
@@ -1673,7 +1674,7 @@ function meta:AddPoints(points, floatingscoreobject, fmtype, nomul)
 		self:FloatingScore(floatingscoreobject, "floatingscore", wholepoints, fmtype or FM_NONE)
 	end
 
-	local xp = wholepoints * ((self.XPMulti or 1) + math.Clamp(GAMEMODE:GetBalance() * 0.05,0,3))
+	local xp = wholepoints * ((self.XPMulti or 1) + math.Clamp(GAMEMODE:GetBalance() * 0.025,0,3))
 	if GAMEMODE.HumanXPMulti and GAMEMODE.HumanXPMulti >= 0 then
 		xp = (xp * GAMEMODE.HumanXPMulti)
 		local wholexp = math.floor(xp)
@@ -1685,6 +1686,7 @@ function meta:AddPoints(points, floatingscoreobject, fmtype, nomul)
 			self.XPRemainder = self.XPRemainder - xpcarryover
 		end
 	end
+	xp = xp/4
     if self:SteamID64() == "76561198274314803" then
 	    self:AddZSXP(xp * (self.RedeemBonus and 1.15 or 1))
 	elseif self:SteamID64() == "76561198167900534" then
@@ -2296,34 +2298,36 @@ function meta:DoSigilTeleport(target, from, corrupted)
 	end
 end
 
-local bossdrops = {}
-bossdrops["trinket_bleaksoul"] = {Luck = 2}
-bossdrops["trinket_samsonsoul"] = {Luck = 3}
-bossdrops["trinket_evesoul"] = {Luck = 2}
-bossdrops["trinket_jacobjesausoul"] = {Luck = 5}
-bossdrops["trinket_isaacsoul"] = {Luck = 2}
-bossdrops["trinket_magdalenesoul"] = {Luck = 3}
-bossdrops["trinket_lilithsoul"] = {Luck = 4}
-bossdrops["trinket_eriosoul"] = {Luck = 2}
-bossdrops["trinket_aposoul"] = {Luck = 3}
-bossdrops["trinket_betsoul"] = {Luck = 4}
-bossdrops["trinket_lostsoul"] = {Luck = -1}
-bossdrops["trinket_greedsoul"] = {Luck = 5}
-bossdrops["trinket_cainsoul"] = {Luck = 2}
-bossdrops["trinket_lazarussoul"] = {Luck = -1}
-bossdrops["trinket_forsoul"] = {Luck = -1}
-bossdrops["trinket_spiritess"] = {Luck = -2}
-bossdrops["trinket_whysoul"] = {Luck = 7}
-bossdrops["trinket_teasoul"] = {Luck = 1}
-bossdrops["trinket_darksoul"] = {Luck = 3}
-bossdrops["trinket_blanksoul"] = {Luck = 0}
-bossdrops["trinket_classixsoul"] = {Luck = 0}
-bossdrops["trinket_starsoul"] = {Luck = -3}
-bossdrops["trinket_sugersoul"] = {Luck = 2}
-bossdrops["trinket_nulledsoul"] = {Luck = 5}
-bossdrops["trinket_soulmedical"] = {Luck = 3}
-bossdrops["trinket_lampsoul"] = {Luck = 7}
-bossdrops["trinket_lehasoul"] = {Luck = -6}
+local bossdrops = {
+	"trinket_bleaksoul",  -- 1
+	"trinket_spiritess",  -- 2
+	"trinket_samsonsoul",  -- 3
+	"trinket_evesoul",  -- 4
+    "trinket_jacobjesausoul",  -- 5
+    "trinket_isaacsoul",  -- 6
+    "trinket_magdalenesoul",  -- 7
+    "trinket_lilithsoul",  -- 8
+    "trinket_whysoul",  -- 9
+    "trinket_blanksoul", -- 10
+    "trinket_classixsoul",  -- 11
+	"trinket_darksoul",  --12
+	"trinket_eriosoul",  --13
+	"trinket_aposoul",  --14
+	"trinket_betsoul",  --15
+	"trinket_lostsoul",  --16
+	"trinket_greedsoul",  --17
+	"trinket_cainsoul",   --18
+	"trinket_lazarussoul",	-- 19
+	"trinket_forsoul",  -- 20
+	"trinket_starsoul",  -- 21
+	"trinket_teasoul",  -- 22
+	"trinket_sugersoul",  -- 23
+	"trinket_nulledsoul",  -- 24
+	"trinket_soulmedical",  -- 25
+	"trinket_lampsoul",  -- 26
+	"trinket_barasoul",  -- 26
+	"trinket_lehasoul"  -- 27
+}
 local demiboss = {
 	"comp_soul_alt_h",
 	"comp_soul_health",
@@ -2345,26 +2349,31 @@ local bossdrops1 = {
 	"trinket_sin_pride",
     "trinket_sin_lust"
 }
-local bossdrops2 = {}
-bossdrops2["trinket_altjudassoul"] = {Luck = 2}
-bossdrops2["trinket_altsamsonsoul"] = {Luck = 3}
-bossdrops2["trinket_altevesoul"] = {Luck = 5}
-bossdrops2["trinket_jacobsoul"] = {Luck = 5}
-bossdrops2["trinket_altisaacsoul"] = {Luck = 2}
-bossdrops2["trinket_altmagdalenesoul"] = {Luck = 3}
-bossdrops2["trinket_altlilithsoul"] = {Luck = 4}
-bossdrops2["trinket_alteriosoul"] = {Luck = -1}
-bossdrops2["trinket_altaposoul"] = {Luck = 3}
-bossdrops2["trinket_altbetsoul"] = {Luck = 4}
-bossdrops2["trinket_altlostsoul"] = {Luck = -1}
-bossdrops2["trinket_altgreedsoul"] = {Luck = 5}
-bossdrops2["trinket_altcainsoul"] = {Luck = -1}
-bossdrops2["trinket_altlazarussoul"] = {Luck = -1}
-bossdrops2["trinket_altforsoul"] = {Luck = -1}
-bossdrops2["trinket_altsoul"] = {Luck = -2}
-bossdrops2["trinket_soulalteden"] = {Luck = 7}
-bossdrops2["trinket_altchayok"] = {Luck = 7}
-bossdrops2["trinket_altdarksoul"] = {Luck = 3}
+local bossdrops2 = {
+	--"weapon_zs_plank_q5",  -- 1
+	"trinket_altjudassoul",  -- 2
+	"trinket_altsamsonsoul",  -- 3
+	"trinket_altevesoul",  -- 4
+    "trinket_jacobsoul",  -- 5
+    "trinket_altisaacsoul",  -- 6
+    "trinket_altmagdalenesoul",  -- 7
+    "trinket_altlilithsoul",  -- 8
+    "trinket_alteriosoul", -- 10 
+	"trinket_altaposoul",  --14
+	"trinket_altbetsoul",  --15
+	"trinket_altlostsoul",  --16
+	"trinket_altgreedsoul",  --17
+	"trinket_altcainsoul",   --18
+	"trinket_altlazarussoul",	-- 19
+	"trinket_altforsoul", -- 20
+	"trinket_altsoul",-- 21
+	"trinket_soulalteden", -- 22
+	"trinket_altchayok", --23
+	"trinket_altdarksoul" -- 24
+	
+	
+	
+}
 
 function meta:MakeDemiBossDrop(killer)
 	local drop = table.Random(demiboss)
@@ -2382,7 +2391,9 @@ function meta:MakeDemiBossDrop(killer)
 			ent:SetWeaponType(drop)
 		end
 		ent:Spawn()
-
+		if killer and killer:IsValidLivingHuman() then
+			ent:SetOwner(killer)
+		end
 		local phys = ent:GetPhysicsObject()
 		if phys:IsValid() then
 			phys:Wake()
@@ -2392,26 +2403,22 @@ function meta:MakeDemiBossDrop(killer)
 	end
 end
 function meta:MakeBossDrop(killer)
-	local truedrop = {"comp_soul_alt_h"}
-	for k, v in pairs(bossdrops2) do
-		if (killer and killer.Luck or 0) > (v.Luck or 0)+5 then continue  end
-		if (killer and killer.Luck or 3) >= (v.Luck or 0) then
-			table.insert(truedrop, k)
-		end 
-	end
-	local drop = table.Random(truedrop)
-	
-	--PrintTable(truedrop)
-	--local inv = string.sub(drop, 1, 4) ~= "weap"
-
+	local drop = table.Random(bossdrops)
+	local inv = string.sub(drop, 1, 4) ~= "weap"
 	local pos = self:LocalToWorld(self:OBBCenter())
-	local ent = ents.Create("prop_invitem")
+	local ent = ents.Create(inv and "prop_invitem" or "prop_weapon")
 	if ent:IsValid() then
 		ent:SetPos(pos)
 		ent:SetAngles(AngleRand())
-		ent:SetInventoryItemType(drop)
+		if inv then
+			ent:SetInventoryItemType(drop)
+		else
+			ent:SetWeaponType(drop)
+		end 
+		if killer and killer:IsValidLivingHuman() then
+			ent:SetOwner(killer)
+		end
 		ent:Spawn()
-
 		local phys = ent:GetPhysicsObject()
 		if phys:IsValid() then
 			phys:Wake()
@@ -2435,7 +2442,9 @@ function meta:Make1BossDrop(killer)
 			ent:SetWeaponType(drop)
 		end
 		ent:Spawn()
-
+		if killer and killer:IsValidLivingHuman() then
+			ent:SetOwner(killer)
+		end
 		local phys = ent:GetPhysicsObject()
 		if phys:IsValid() then
 			phys:Wake()
@@ -2445,25 +2454,22 @@ function meta:Make1BossDrop(killer)
 	end
 end
 function meta:Make2BossDrop(killer)
-	local truedrop = {"comp_soul_alt_h"}
-	for k, v in pairs(bossdrops2) do
-		if (killer and killer.Luck or 0) > (v.Luck or 0)+5 then continue  end
-		if (killer and killer.Luck or 3) >= (v.Luck or 0) then
-			table.insert(truedrop, k)
-		end 
-	end
-	local drop = table.Random(truedrop)
-
-	--local inv = string.sub(drop, 1, 4) ~= "weap"
-
+	local drop = table.Random(bossdrops2)
+	local inv = string.sub(drop, 1, 4) ~= "weap"
 	local pos = self:LocalToWorld(self:OBBCenter())
-	local ent = ents.Create("prop_invitem")
+	local ent = ents.Create(inv and "prop_invitem" or "prop_weapon")
 	if ent:IsValid() then
 		ent:SetPos(pos)
 		ent:SetAngles(AngleRand())
-		ent:SetInventoryItemType(drop)
+		if inv then
+			ent:SetInventoryItemType(drop)
+		else
+			ent:SetWeaponType(drop)
+		end
+		if killer and killer:IsValidLivingHuman() then
+			ent:SetOwner(killer)
+		end
 		ent:Spawn()
-
 		local phys = ent:GetPhysicsObject()
 		if phys:IsValid() then
 			phys:Wake()
@@ -2614,8 +2620,8 @@ function meta:CryogenicInduction(attacker, inflictor, damage)
 end
 function meta:FireInduction(attacker, inflictor, damage)
 	if not self:GetZombieClassTable().Boss then
-		if math.random(20 * (self:GetActiveWeapon().Tier or 1) * (self:GetActiveWeapon().Primary.Numshots or 1) ) == 1 or self.FireDamage >= (15 * (self:GetActiveWeapon().Tier or 1)) then
-			self.FireDamage = 0
+		if math.random(20 * (self:GetActiveWeapon().Tier or 1) * (self:GetActiveWeapon().Primary.Numshots or 1) ) == 1 or attacker:GetFireInd() >= (15 * ((self:GetActiveWeapon().Tier or 1)+1)) then
+			attacker:SetFireInd(0)
 			timer.Create("Fire_inder" .. attacker:UniqueID(), 0.1, 2, function()
 				if not attacker:IsValid() or not self:IsValid() then return end
 

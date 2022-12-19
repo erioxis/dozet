@@ -5,14 +5,13 @@ CLASS.TranslationName = "class_zombie_gore_blaster"
 CLASS.Description = "description_zombie_gore_blaster"
 CLASS.Help = "controls_zombie_gore_blaster"
 
-CLASS.BetterVersion = "Chem Burster"
-
 CLASS.Wave = 0
 CLASS.Unlocked = true
 
 CLASS.Health = 280
 CLASS.Speed = 180
 CLASS.Revives = false
+CLASS.Original = false
 
 CLASS.Points = CLASS.Health/GM.HumanoidZombiePointRatio
 
