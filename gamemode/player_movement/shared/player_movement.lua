@@ -65,7 +65,7 @@ function GM:Move(pl, move)
 	end
 
 	legdmg = P_GetLegDamage(pl)
-	if legdmg > 0 then
+	if legdmg > 0 and !(pt:GetZombieClassTable().NoSlowdown or pt.m_Zombie_MoanGuard) then
 		M_SetMaxClientSpeed(move, M_GetMaxClientSpeed(move) * (1 - math_min(1, legdmg / GM_MaxLegDamage)))
 	end
 end

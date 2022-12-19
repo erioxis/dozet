@@ -19,6 +19,8 @@ CLASS.Health = 1560
 CLASS.Speed = 340
 CLASS.JumpPower = 910
 
+CLASS.NoSlowdown = true
+
 CLASS.CanMerge = true 
 
 CLASS.BaraCat = true
