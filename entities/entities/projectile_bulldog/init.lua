@@ -12,8 +12,8 @@ function ENT:Initialize()
 	self:SetAlpha(60)
 	self:EmitSound("weapons/physcannon/physcannon_pickup.wav", math.random(2,255), math.random(1,50))
 	self:SetMaterial("phoenix_storms/plastic")
-	self:GetOwner():TakeDamage(2)
-	self:GetOwner():AddPoints(-1)
+	--self:GetOwner():TakeDamage(2)
+	--self:GetOwner():AddPoints(-1)
 
 	self.DieTime = CurTime() + (self.Minidogs and 2 or 5)
 	self.LastPhysicsUpdate = UnPredictedCurTime()
@@ -63,7 +63,7 @@ function ENT:Hit(vHitPos, vHitNormal, ent)
 		if owner:IsPlayer() then
 			if ent:IsValidLivingZombie() then
 				self.Exploded = true
-				ent:TakeSpecialDamage(self.ProjDamage *0.3,DMG_GENERIC ,self:GetOwner(), self:GetOwner():GetActiveWeapon())
+				ent:TakeSpecialDamage(self.ProjDamage,DMG_GENERIC ,self:GetOwner(), self:GetOwner():GetActiveWeapon())
 			end
 		end
 	end

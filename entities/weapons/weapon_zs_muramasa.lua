@@ -21,35 +21,35 @@ if qual == 2 then
     dada = "qual_1"
 	SWEP.Primary.Delay = 0.28
 	SWEP.SwingTime = 0.07
-	SWEP.MeleeDamage = 55
+	SWEP.MeleeDamage = 66
 	SWEP.MeleeRange = 89
 elseif qual == 3 then
 dada = "qual_2"
 SWEP.Primary.Delay = 0.40
-SWEP.MeleeDamage = 48
+SWEP.MeleeDamage = 52
 SWEP.SwingTime = 0.16
 SWEP.MeleeRange = 77
 elseif qual == 4 then
 dada = "qual_3"
 SWEP.MeleeRange = 56
-SWEP.MeleeDamage = 32
+SWEP.MeleeDamage = 44
 SWEP.SwingTime = 0.07
 SWEP.Primary.Delay = 0.33
 elseif qual == 5 then
 dada = "qual_4"
 SWEP.MeleeRange = 101
-SWEP.MeleeDamage = 55
+SWEP.MeleeDamage = 66
 SWEP.Primary.Delay = 0.39
 SWEP.SwingTime = 0.12
 elseif qual == 6 then
 	dada = "qual_5"
-	SWEP.MeleeDamage = 32
+	SWEP.MeleeDamage = 44
 	SWEP.SwingTime = 0.09
 	SWEP.MeleeRange = 77
 	SWEP.Primary.Delay = 0.35
 else
 	dada = "qual_0"
-	SWEP.MeleeDamage = 42
+	SWEP.MeleeDamage = 76
     SWEP.MeleeRange = 77
 	SWEP.Primary.Delay = 0.35
 	SWEP.SwingTime = 0.09

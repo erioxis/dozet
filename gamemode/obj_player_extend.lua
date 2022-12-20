@@ -339,56 +339,20 @@ function meta:SetTimerBERS(pts)
 	self:SetNWInt('b_timer', pts + 15)
 end
 
-function meta:GetFireInd()
-	return self:GetNWFloat('fire_ind', pts)	
+function meta:GetProgress(progress)
+	return self:GetNWFloat(progress, pts)	
+end	
+function meta:SetProgress(pts, progress)
+	self:SetPTime(CurTime(), progress)
+	self:SetNWFloat(progress, pts)
+end	
+function meta:GetPTime(ptime)
+	return self:GetNWFloat(ptime.."time", pts)	
 end	
 
-function meta:SetFireInd(pts)
-	self:SetFireIndTime(CurTime())
-	self:SetNWFloat('fire_ind', pts)
+function meta:SetPTime(pts, ptime)
+	self:SetNWFloat(ptime.."time", pts+3.2)
 end
-
-function meta:GetFireIndTime()
-	return self:GetNWFloat('fire_ind_time', pts)	
-end	
-
-function meta:SetFireIndTime(pts)
-	self:SetNWFloat('fire_ind_time', pts+3.2)
-end
-
-function meta:GetMedTime()
-	return self:GetNWFloat('med_time', pts)	
-end	
-
-function meta:SetMedTime(pts)
-	self:SetNWFloat('med_time', pts+3.2)
-end
-function meta:SetMedProgress(pts)
-	self:SetMedTime(CurTime())
-	self:SetNWFloat('med_progress', pts)
-end
-function meta:GetMedProgress()
-	return self:GetNWFloat('med_progress', pts)	
-end	
-function meta:GetFireIndTime()
-	return self:GetNWFloat('fire_ind_time', pts)	
-end	
-
---Потом как нибудь сокращу
-function meta:GetPulseTime()
-	return self:GetNWFloat('pulse_time', pts)	
-end	
-
-function meta:SetPulseTime(pts)
-	self:SetNWFloat('pulse_time', pts+3.2)
-end
-function meta:SetPulseCascade(pts)
-	self:SetPulseTime(CurTime())
-	self:SetNWFloat('cascade_resonance', pts)
-end
-function meta:GetPulseCascade()
-	return self:GetNWFloat('cascade_resonance', pts)	
-end	
 
 function meta:GetBloodArmor()
 	return self:GetDTInt(DT_PLAYER_INT_BLOODARMOR)
@@ -438,9 +402,9 @@ function meta:AddLegDamageExt(damage, attacker, inflictor, type)
 		end
 
 		if SERVER and attacker:HasTrinket("resonance") then
-			attacker:SetPulseCascade(attacker:GetPulseCascade() + (self:GetFlatLegDamage() - startleg))
+			attacker:SetProgress(attacker:GetProgress('pprog') + (self:GetFlatLegDamage() - startleg), 'pprog')
 
-			if attacker:GetPulseCascade() > 80 then
+			if attacker:GetProgress('pprog') > 80 then
 				self:PulseResonance(attacker, inflictor)
 			end
 		end

@@ -233,15 +233,22 @@ function GM:DrawInductorIndicators()
 	local y = ScrH() * 0.05
 
 	local lp = MySelf
+	local medp = lp:GetProgress('mprog')
+	local fired =lp:GetProgress('fprog')
+	local pulsed =lp:GetProgress('pprog')
 
-	if lp:GetFireInd() > 0 and lp:HasTrinket("fire_ind") and lp:GetFireIndTime() >= CurTime() then
+	local medt = lp:GetPTime('mprog')
+	local firet =lp:GetPTime('fprog')
+	local pulset =lp:GetPTime('pprog')
+
+	if fired > 0 and lp:HasTrinket("fire_ind") and firet >= CurTime() then
 		if lp:IsValid() then
 
 			local matGlow = Material("sprites/glow04_noz")
 			local texDownEdge = surface.GetTextureID("gui/gradient_down")
 			local colHealth = Color(226,62,33)
 			local screenscale = BetterScreenScale()
-			local health = lp:GetFireInd()
+			local health = fired
 			local formula = 15 * ((lp:GetActiveWeapon() and (lp:GetActiveWeapon().Tier or 1))+1)
 			local healthperc = math.Clamp(health / formula, 0.01, 1)
 			local wid, hei = 150 * screenscale, 20 * screenscale
@@ -249,7 +256,7 @@ function GM:DrawInductorIndicators()
 			
 	
 			local subwidth = healthperc * wid
-			local fraction = (lp:GetFireIndTime()-CurTime())/2
+			local fraction = (firet-CurTime())/2
 			local form = math.Clamp( fraction, 0, 1 )
 			colHealth.a = form *255
 			surface.SetDrawColor(0, 0, 0, colHealth.a)
@@ -266,25 +273,24 @@ function GM:DrawInductorIndicators()
 			surface.SetDrawColor(255, 255, 255, colHealth.a)
 			surface.DrawTexturedRect(x + 2 + subwidth - 6, y + 1 - hei/2, 4, hei * 2)
 			local phantomwidth = (health == form  and 0 or wid)
-			draw.SimpleTextBlurry(translate.Get("fi_hud")..math.Round(lp:GetFireInd()).."/"..formula , "ZSHUDFontTiny", x, y - 12, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM)
+			draw.SimpleTextBlurry(translate.Get("fi_hud")..math.Round(fired).."/"..formula , "ZSHUDFontTiny", x, y - 12, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM)
 			y = y + ScrH() * 0.07
 		end
 	end
-	if lp:GetMedProgress() > 0 and lp:IsSkillActive(SKILL_PREMIUM) and lp:GetMedTime() >= CurTime() then
+	if lp:GetProgress('mprog') > 0 and lp:IsSkillActive(SKILL_PREMIUM) and lp:GetMedTime() >= CurTime() then
 		if lp:IsValid() then
 			local matGlow = Material("sprites/glow04_noz")
 			local texDownEdge = surface.GetTextureID("gui/gradient_down")
 			local colHealth = Color(33,226,43)
 			local screenscale = BetterScreenScale()
-			local health = lp:GetMedProgress()
 			local medprogress = 1800
-			local healthperc = math.Clamp(health / medprogress, 0.01, 1)
+			local healthperc = math.Clamp(medp / medprogress, 0.01, 1)
 			local wid, hei = 150 * screenscale, 20 * screenscale
 	 
 			
 	
 			local subwidth = healthperc * wid
-			local fraction = (lp:GetMedTime()-CurTime())/2
+			local fraction = (medt-CurTime())/2
 			local form = math.Clamp( fraction, 0, 1 )
 			colHealth.a = form *255
 			surface.SetDrawColor(0, 0, 0, colHealth.a)
@@ -300,18 +306,18 @@ function GM:DrawInductorIndicators()
 			surface.SetMaterial(matGlow)
 			surface.SetDrawColor(255, 255, 255, colHealth.a)
 			surface.DrawTexturedRect(x + 2 + subwidth - 6, y + 1 - hei/2, 4, hei * 2)
-			local phantomwidth = (health == form  and 0 or wid)
-			draw.SimpleTextBlurry(translate.Get("mg_hud")..math.Round(lp:GetMedProgress()).."/"..medprogress , "ZSHUDFontTiny", x, y - 12, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM)
+			local phantomwidth = (medp == form  and 0 or wid)
+			draw.SimpleTextBlurry(translate.Get("mg_hud")..math.Round(medp).."/"..medprogress , "ZSHUDFontTiny", x, y - 12, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM)
 			y = y + ScrH() * 0.07
 		end
 	end
-	if lp:GetPulseCascade() > 0 and lp:HasTrinket("resonance") and lp:GetPulseTime() >= CurTime() then
+	if pulsed > 0 and lp:HasTrinket("resonance") and pulset >= CurTime() then
 		if lp:IsValid() then
 			local matGlow = Material("sprites/glow04_noz")
 			local texDownEdge = surface.GetTextureID("gui/gradient_down")
 			local colHealth = Color(61,5,192)
 			local screenscale = BetterScreenScale()
-			local health = lp:GetPulseCascade()
+			local health = pulsed
 			local progress = 80
 			local healthperc = math.Clamp(health / progress, 0.01, 1)
 			local wid, hei = 150 * screenscale, 20 * screenscale
@@ -319,7 +325,7 @@ function GM:DrawInductorIndicators()
 			
 	
 			local subwidth = healthperc * wid
-			local fraction = (lp:GetPulseTime()-CurTime())/2
+			local fraction = (pulset-CurTime())/2
 			local form = math.Clamp( fraction, 0, 1 )
 			colHealth.a = form *255
 			surface.SetDrawColor(0, 0, 0, colHealth.a)
@@ -336,7 +342,7 @@ function GM:DrawInductorIndicators()
 			surface.SetDrawColor(255, 255, 255, colHealth.a)
 			surface.DrawTexturedRect(x + 2 + subwidth - 6, y + 1 - hei/2, 4, hei * 2)
 			local phantomwidth = (health == form  and 0 or wid)
-			draw.SimpleTextBlurry(translate.Get("pc_hud")..math.Round(lp:GetPulseCascade()).."/"..progress , "ZSHUDFontTiny", x, y - 12, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM)
+			draw.SimpleTextBlurry(translate.Get("pc_hud")..math.Round(pulsed).."/"..progress , "ZSHUDFontTiny", x, y - 12, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM)
 			y = y + ScrH() * 0.07
 		end
 	end

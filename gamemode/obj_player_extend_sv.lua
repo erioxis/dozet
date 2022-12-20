@@ -155,7 +155,7 @@ function meta:ProcessDamage(dmginfo)
 				GAMEMODE:BlockFloater(attacker, self, dmginfo:GetDamagePosition())
 			end
 			if attacker:HasTrinket("fire_at") and math.random(6) == 5 then
-				attacker:SetFireInd(attacker:GetFireInd()+damage* 0.1)
+				attacker:SetProgress(attacker:GetProgress('fprog')+damage* 0.1, 'fprog')
 			end
 			dmginfo:SetDamage(damage * math.min(3,attacker:GetModelScale() * attacker:GetModelScale()))
 			if attacker:HasTrinket("soulalteden") then
@@ -2565,7 +2565,7 @@ function meta:PulseResonance(attacker, inflictor)
 	timer.Create("PulseResonance" .. attacker:UniqueID(), 0.06, 1, function()
 		if not attacker:IsValid() or not self:IsValid() then return end
 
-		attacker:SetPulseCascade(0)
+		attacker:SetProgress('pprog',0)
 
 		local pos = self:WorldSpaceCenter()
 		pos.z = pos.z + 16
@@ -2614,8 +2614,8 @@ function meta:CryogenicInduction(attacker, inflictor, damage)
 end
 function meta:FireInduction(attacker, inflictor, damage)
 	if not self:GetZombieClassTable().Boss then
-		if math.random(20 * (self:GetActiveWeapon().Tier or 1) * (self:GetActiveWeapon().Primary.Numshots or 1) ) == 1 or attacker:GetFireInd() >= (15 * ((self:GetActiveWeapon().Tier or 1)+1)) then
-			attacker:SetFireInd(0)
+		if math.random(20 * (self:GetActiveWeapon().Tier or 1) * (self:GetActiveWeapon().Primary.Numshots or 1) ) == 1 or attacker:GetProgress('fprog') >= (15 * ((self:GetActiveWeapon().Tier or 1)+1)) then
+			attacker:SetProgress('fprog', 0)
 			timer.Create("Fire_inder" .. attacker:UniqueID(), 0.1, 2, function()
 				if not attacker:IsValid() or not self:IsValid() then return end
 

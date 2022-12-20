@@ -1851,9 +1851,9 @@ function GM:PlayerHealedTeamMember(pl, other, health, wep, pointmul, nobymsg, fl
 	if self:GetWave() == 0 or health <= 0 or pl == other then return end
 
 	pl.HealedThisRound = pl.HealedThisRound + health
-	pl:SetMedProgress(math.Round(pl:GetMedProgress()+health))
+	pl:SetProgress(math.Round(pl:GetProgress('mprog')+health), 'mprog')
 	local premium = table.Random(GAMEMODE.MedPremium)
-	if pl:IsSkillActive(SKILL_PREMIUM) and pl:GetMedProgress() >= 1800 and !pl:HasInventoryItem(premium) then
+	if pl:IsSkillActive(SKILL_PREMIUM) and pl:GetProgress('mprog') >= 1800 and !pl:HasInventoryItem(premium) then
 		pl:AddInventoryItem(premium)
 		net.Start("zs_medpremium")
 			net.WriteString(premium)
@@ -3429,7 +3429,7 @@ function GM:EntityTakeDamage(ent, dmginfo)
 								debuffatt = 11
 							end
 
-							if attacker:HasTrinket("fire_at") and math.random(fireatt) == 1 or attacker:GetFireInd() >= 15*((attacker:GetActiveWeapon() and (attacker:GetActiveWeapon().Tier or 1))+1) then
+							if attacker:HasTrinket("fire_at") and math.random(fireatt) == 1 or attacker:GetProgress('fprog') >= 15*((attacker:GetActiveWeapon() and (attacker:GetActiveWeapon().Tier or 1))+1) then
 								ent:AddLegDamageExt(damage * 0.5, attacker, attacker, SLOWTYPE_FLAME)
 								if ent:GetZombieClassTable().Name ~= "Shade" then
 									local d =ent:GiveStatus("burn",math.random(1,7))

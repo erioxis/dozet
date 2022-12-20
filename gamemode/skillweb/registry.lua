@@ -856,7 +856,7 @@ GM:AddSkill(SKILL_U_CRAFTINGPACK, translate.Get("skill_u_craftpack"), GOOD..tran
 .AlwaysActive = true
 GM:AddSkill(SKILL_TAUT, translate.Get("skill_taut"), GOOD.. translate.Get("skill_taut_d1")..BAD.. translate.Get("skill_taut_d2"),
 																-5,			3,					{}, TREE_BUILDINGTREE)
-GM:AddSkill(SKILL_D_NOODLEARMS, translate.Get("skill_noodle"), GOOD.."+10"..translate.Get("worth")..GOOD..translate.Get("skill_noodle_d1")..BAD..translate.Get("skill_noodle_d2"),
+GM:AddSkill(SKILL_D_NOODLEARMS, translate.Get("skill_noodle"), GOOD.."+10"..translate.Get("worth")..GOOD..translate.Get("skill_noodle_d1")..GOOD.."+35%"..translate.Get("repair")..BAD..translate.Get("skill_noodle_d2"),
 																-7,			2,					{}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_INSTRUMENTS, translate.Get("skill_instruments"), GOOD..translate.Get("skill_instruments_d1"),
 																-10,		-3,					{}, TREE_BUILDINGTREE)
@@ -2425,8 +2425,9 @@ GM:AddSkillFunction(SKILL_D_CLUMSY, function(pl, active)
 	pl.IsClumsy = active
 end)
 
+GM:AddSkillModifier(SKILL_D_NOODLEARMS, SKILLMOD_REPAIRRATE_MUL, 0.35)
 GM:AddSkillModifier(SKILL_D_NOODLEARMS, SKILLMOD_WORTH, 10)
-GM:AddSkillModifier(SKILL_D_NOODLEARMS, SKILLMOD_SCRAP_START, 10)
+GM:AddSkillModifier(SKILL_D_NOODLEARMS, SKILLMOD_SCRAP_START, 25)
 GM:AddSkillFunction(SKILL_D_NOODLEARMS, function(pl, active)
 	pl.NoObjectPickup = active
 end)
@@ -2556,7 +2557,7 @@ GM:AddSkillModifier(SKILL_CHEAPKNUCKLE, SKILLMOD_MELEE_RANGE_MUL, -0.1)
 GM:AddSkillModifier(SKILL_HEAVYSTRIKES, SKILLMOD_MELEE_KNOCKBACK_MUL, 1)
 
 GM:AddSkillModifier(SKILL_CANNONBALL, SKILLMOD_PROJ_SPEED, -0.25)
-GM:AddSkillModifier(SKILL_CANNONBALL, SKILLMOD_PROJECTILE_DAMAGE_MUL, 0.03)
+GM:AddSkillModifier(SKILL_CANNONBALL, SKILLMOD_PROJECTILE_DAMAGE_MUL, 0.35)
 
 GM:AddSkillModifier(SKILL_CONEFFECT, SKILLMOD_EXP_DAMAGE_RADIUS, -0.2)
 GM:AddSkillModifier(SKILL_CONEFFECT, SKILLMOD_EXP_DAMAGE_MUL, 0.05)

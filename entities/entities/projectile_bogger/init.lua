@@ -12,9 +12,8 @@ function ENT:Initialize()
 	self:SetAlpha(60)
 	self:EmitSound("weapons/physcannon/physcannon_pickup.wav", math.random(2,255), math.random(1,50))
 	self:SetMaterial("phoenix_storms/plastic")
-	self:GetOwner():SetBloodArmor(self:GetOwner():GetBloodArmor() - 15)
 
-	self.DieTime = CurTime() + (self.RageMode and 3 or 0.8)
+	self.DieTime = CurTime() + (self.RageMode and 6 or 0.8)
 	self.LastPhysicsUpdate = UnPredictedCurTime()
 end
 function ENT:PhysicsCollide(data, phys)
@@ -50,7 +49,7 @@ function ENT:Think()
 			ent:TakeDamage(1500, self:GetOwner(), self)
 		end]]
 	end
-		self.NextThink1 = CurTime() + 2
+		self.NextThink1 = CurTime() + 0.9
 	end
 	if self.HitData and not self.RageMode then
 		self:Explode(self.HitData.HitPos, self.HitData.HitNormal)
