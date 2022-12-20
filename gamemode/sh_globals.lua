@@ -129,7 +129,7 @@ GM.HeadcrabZombiePointRatio = 72
 GM.NoHeadboxZombiePointRatio = 57
 GM.TorsoZombiePointRatio = 79
 GM.LegsZombiePointRatio = 89
-GM.SkeletonPointRatio = GM.HumanoidZombiePointRatio/4
+GM.SkeletonPointRatio = GM.HumanoidZombiePointRatio*2
 
 SPEED_NORMAL = 245
 SPEED_SLOWEST = SPEED_NORMAL * 0.5

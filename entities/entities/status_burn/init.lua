@@ -12,7 +12,7 @@ end
 
 
 function ENT:Think()
-
+	if self:GetOwner():GetZombieClassTable().FireBuff then return end
 	local owner = self:GetOwner()
 	local lox = owner:IsSkillActive(SKILL_LOX)
 

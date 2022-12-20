@@ -70,12 +70,12 @@ if SERVER then
 		local dmg = dmginfo:GetDamage()
 		local hp = pl:Health()
 		if dmginfo:GetInflictor().IsMelee then
-			dmginfo:SetDamage(dmginfo:GetDamage() / 2)
+			dmginfo:SetDamage(dmginfo:GetDamage() / 4)
 		end
 		if bit_band(dmginfo:GetDamageType(), DMG_BULLET) ~= 0 then
-			dmginfo:SetDamage(dmginfo:GetDamage() * 0.01)
+			dmginfo:SetDamage(dmginfo:GetDamage() * 0.2)
 		elseif bit_band(dmginfo:GetDamageType(), DMG_SLASH) == 0 and bit_band(dmginfo:GetDamageType(), DMG_CLUB) == 0 then
-			dmginfo:SetDamage(dmginfo:GetDamage() * 0.01)
+			dmginfo:SetDamage(dmginfo:GetDamage() * 0.2)
 		end
 
 

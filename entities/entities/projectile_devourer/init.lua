@@ -88,8 +88,8 @@ function ENT:Hit(vHitPos, vHitNormal, ent)
 
 
 				ent:TakeSpecialDamage((math.random(12) == 12 and 69 or 23), DMG_DIRECT, owner, self)
-				owner:TakeDamage(200, self, self)
 				ent:KnockDown()
+				ent:SetVelocity(Vector(0,0,350))
 
 				local status = ent:GiveStatus("devourer")
 				if status and status:IsValid() then

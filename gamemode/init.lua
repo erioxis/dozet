@@ -1327,22 +1327,22 @@ function GM:Think()
 				end
 				local barac = pl:IsSkillActive(SKILL_BARA_CURSED)
 				if self.MaxSigils >= 1 then
-				--[[		if not pl:GetStatus("sigildef") and self:GetWave() >= 6 and  time >= pl.NextDamage and self:GetWaveActive() and self:GetBalance() < 40 or self:GetBalance() > 40 and not pl:GetStatus("sigildef") and  time >= pl.NextDamage then
+					if not pl:GetStatus("sigildef") and self:GetWave() >= 6 and  time >= pl.NextDamage and self:GetWaveActive() and self:GetBalance() < 40 or self:GetBalance() > 40 and not pl:GetStatus("sigildef") and  time >= pl.NextDamage then
 						pl:TakeSpecialDamage(((pl:HasTrinket("jacobsoul") and 1 or 8 ) * (pl.TickBuff or 0)) /(barac and 200 or 1), DMG_DIRECT)
 						pl.NextDamage = time + (pl:HasTrinket("jacobsoul") and 4 or 2.4) * (barac and 3 or 1)
 						pl:CenterNotify(COLOR_RED, translate.ClientGet(pl, "danger"))
 						pl.TickBuff = pl.TickBuff + (pl.TickBuff * 0.2) + 1 * (pl.IsLastHuman and 20 or 1)
 
-					end]]
+					end
 					if !pl:GetStatus("sigildef") and pl.IsLastHuman and !barac and self:GetWave() >= 6 and table.Count(player.GetHumans()) >= 4  then
 						pl:TakeSpecialDamage(((pl:HasTrinket("jacobsoul") and 1 or 8 ) * (pl.TickBuff or 0)) /(barac and 200 or 1), DMG_DIRECT)
 						pl.TickBuff = pl.TickBuff + (pl.TickBuff * 0.2) + 10
 					end
---[[					if pl:GetStatus("sigildef") and self:GetWave() >= 6 and time >= pl.NextDamage and self:GetWaveActive() and pl:HasTrinket("jacobsoul") and not (self:GetWave() == 12) then
+					if pl:GetStatus("sigildef") and self:GetWave() >= 6 and time >= pl.NextDamage and self:GetWaveActive() and pl:HasTrinket("jacobsoul") and not (self:GetWave() == 12) then
 						pl:TakeSpecialDamage(13 * (pl.IsLastHuman and 5 or 1), DMG_DIRECT)
 						pl.NextDamage = time + 7
 						pl:CenterNotify(COLOR_GREEN, translate.ClientGet(pl, "danger_x"))
-					end]]
+					end
 					if time >= (pl.NextDamage + 4) then
 						pl.TickBuff = pl.TickBuff - pl.TickBuff
 					end

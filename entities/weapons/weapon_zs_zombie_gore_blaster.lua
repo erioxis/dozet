@@ -48,7 +48,6 @@ function SWEP:ApplyMeleeDamage(ent, trace, damage)
 			self.MeleeDamage = self.MeleeDamage + ent:GetBloodArmor() *0.2
 		end
 	end
-	local damage = damage + (self:GetOwner():GetZArmor() * 0.05)
 	self.BaseClass.ApplyMeleeDamage(self, ent, trace, damage)
 end
 

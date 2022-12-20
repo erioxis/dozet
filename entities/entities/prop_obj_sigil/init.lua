@@ -142,10 +142,6 @@ function ENT:UpdateTransmitState()
 end
 function ENT:Think()
 	for _, ent in pairs(ents.FindInSphere(self:GetPos(), math.Clamp(948 / (GAMEMODE:GetWave() * 0.33),163,948))) do
-		if IsValid(ent) and type(ent) ~= "Weapon" and ent:GetModel() ~= "models/player/catpants.mdl" and (ent.Tier and ent.Tier == 8 or !ent.Tier) and (!ent.Baracated or ent:IsValidLivingZombie()) then
-			ent.Baracated = true
-			ent:SetModel("models/player/catpants.mdl")
-		end
 		if ent ~= self and ent:IsValidLivingHuman() and not self:GetSigilCorrupted() and ent.PlayerReady then
            ent:GiveStatus("sigildef", 2)
 		elseif ent ~= self and ent:IsValidLivingZombie() and self:GetSigilCorrupted() then
