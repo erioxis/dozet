@@ -158,6 +158,12 @@ function CLASS:ProcessDamage(pl, dmginfo)
 	if dmginfo:GetAttacker() and dmginfo:GetAttacker() ~= pl and dmginfo:GetInflictor() and dmginfo:GetInflictor().IsMelee and not dmginfo:GetInflictor().IgnoreNiggers then
 		if !dmginfo:GetAttacker().ClanLoxov or attacker:IsValidLivingHuman() and !attacker:GetActiveWeapon().ResistDamage then
 			dmginfo:GetAttacker():TakeSpecialDamage(dmginfo:GetDamage() * 0.05, DMG_DIRECT, pl, pl)
+			local cursed = dmginfo:GetAttacker():GetStatus("cursed")
+			if (cursed) then 
+				dmginfo:GetAttacker():AddCursed(pl, cursed.DieTime - CurTime() + 5)
+			else
+				dmginfo:GetAttacker():AddCursed(pl, 5)
+			end
 		end
 		dmginfo:SetDamage(((attacker:IsValidLivingHuman() and attacker:IsSkillActive(SKILL_AMULET_12) or attacker:IsValidLivingHuman() and attacker:GetActiveWeapon().ResistDamage) and 0 or 5))
 	end

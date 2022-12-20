@@ -92,7 +92,7 @@ function SWEP:SecondaryAttack()
 			if WorldVisible(self:GetOwner():LocalToWorld(Vector(0, 0, 30)), ent:NearestPoint(self:LocalToWorld(Vector(0, 0, 30)))) then
 				if target:IsValidLivingZombie() then
 					local targetpos = target:LocalToWorld(target:OBBCenter())
-					target:TakeSpecialDamage(damage + (target:GetZombieClassTable().Boss and target:Health() * 0.1 or target:Health() * 0.12),DMG_GENERIC ,self:GetOwner(), self:GetOwner():GetActiveWeapon())
+					target:TakeSpecialDamage(damage,DMG_GENERIC ,self:GetOwner(), self:GetOwner():GetActiveWeapon())
 				end
 			end
 		end
@@ -202,7 +202,7 @@ function SWEP:MeleeSwing()
 				if target:IsValidLivingZombie() and target ~= trace.Entity then
 					local targetpos = target:LocalToWorld(target:OBBCenter())
 	
-					target:TakeSpecialDamage(damage * 0.2 + (target:GetZombieClassTable().Boss and target:Health() * 0.1 or target:Health() * 0.12),DMG_GENERIC ,self:GetOwner(), self:GetOwner():GetActiveWeapon())
+					target:TakeSpecialDamage(damage * 0.2,DMG_GENERIC ,self:GetOwner(), self:GetOwner():GetActiveWeapon())
 				end
 			end
 		end

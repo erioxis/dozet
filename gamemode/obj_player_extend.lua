@@ -690,7 +690,7 @@ function meta:ResetSpeed(noset, health)
 		if self.SkillSpeedAdd and P_Team(self) == TEAM_HUMAN and not self:HasTrinket("altchayok") then
 			speed = speed + self.SkillSpeedAdd
 		elseif self.SkillSpeedAdd and P_Team(self) == TEAM_HUMAN and self:HasTrinket("altchayok") then
-			speed = speed + self.SkillSpeedAdd * math.max(1, GAMEMODE:GetWave() * 0.6 or 1)
+			speed = speed + self.SkillSpeedAdd * math.max(1, GAMEMODE:GetWave() * 0.33 or 1)
 		end
 	end
 	if self.ClanQuePro and P_Team(self) == TEAM_HUMAN then 

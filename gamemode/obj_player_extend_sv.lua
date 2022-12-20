@@ -527,7 +527,7 @@ function meta:ProcessDamage(dmginfo)
 						attacker:TakeDamage(self:GetActiveWeapon().MeleeDamage * 15, self, self:GetActiveWeapon())
 						local cursed = self:GetStatus("cursed")
 						if (cursed) then 
-							self:AddCursed(self, cursed.DieTime - CurTime() - 30)
+							self:AddCursed(self, cursed.DieTime - CurTime() - 5)
 						end
 					else
 						dmginfo:ScaleDamage(3)
