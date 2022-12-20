@@ -45,6 +45,7 @@
 	util.AddNetworkString("zs_floatscore_vec")
 	util.AddNetworkString("zs_zclass")
 	util.AddNetworkString("zs_dmg")
+	util.AddNetworkString("zs_at_dmg")
 	util.AddNetworkString("zs_dmg_prop")
 	util.AddNetworkString("zs_legdamage")
 	util.AddNetworkString("zs_armdamage")

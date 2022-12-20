@@ -63,6 +63,19 @@ net.Receive("zs_dmg", function(length)
 		util.Effect("damagenumber", effectdata)
 	end
 end)
+net.Receive("zs_at_dmg", function(length)
+	local typed = net.ReadUInt(4)
+	local damage = net.ReadUInt(16)
+	local pos = net.ReadVector()
+
+	if DamageFloaters then
+		local effectdata = EffectData()
+			effectdata:SetOrigin(pos)
+			effectdata:SetMagnitude(damage)
+			effectdata:SetScale(typed)
+		util.Effect("damage_at_number", effectdata)
+	end
+end)
 net.Receive("zs_block_number", function(length)
 	local bool = net.ReadBool()
 	local pos = net.ReadVector()

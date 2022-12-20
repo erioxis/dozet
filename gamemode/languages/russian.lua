@@ -2404,13 +2404,16 @@ LANGUAGE.dn_killed =  " убил "
 LANGUAGE.duck_for_remove = "Присядь чтобы войти в режим камеры"
 
 LANGUAGE.fi_hud = "Огненный Индуктор: "
+LANGUAGE.pc_hud = "Каскадный Резонанс: "
 
 LANGUAGE.mg_hud = "Мед.Премия: "
 
 LANGUAGE.di_hud = "Разобрать"
 LANGUAGE.ditem_hud = "Выбросить Предмет"
-LANGUAGE.gi_5_hud = "Дать предмет и 5x патрон"
+LANGUAGE.gi_5_hud = "Дать предмет и 5 обойм"
 LANGUAGE.gi_hud = "Дать предмет"
 LANGUAGE.ewc_hud = "Опустошить боезапас"
 
 LANGUAGE.si_hud = "Выбранный Предмет"
+
+LANGUAGE.ba_chat = "Купил "

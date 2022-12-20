@@ -233,7 +233,6 @@ function GM:DrawInductorIndicators()
 	local y = ScrH() * 0.05
 
 	local lp = MySelf
-	local form = 15 * ((lp:GetActiveWeapon() and (lp:GetActiveWeapon().Tier or 1))+1)
 
 	if lp:GetFireInd() > 0 and lp:HasTrinket("fire_ind") and lp:GetFireIndTime() >= CurTime() then
 		if lp:IsValid() then
@@ -243,7 +242,8 @@ function GM:DrawInductorIndicators()
 			local colHealth = Color(226,62,33)
 			local screenscale = BetterScreenScale()
 			local health = lp:GetFireInd()
-			local healthperc = math.Clamp(health / form, 0.01, 1)
+			local formula = 15 * ((lp:GetActiveWeapon() and (lp:GetActiveWeapon().Tier or 1))+1)
+			local healthperc = math.Clamp(health / formula, 0.01, 1)
 			local wid, hei = 150 * screenscale, 20 * screenscale
 	 
 			
@@ -266,7 +266,7 @@ function GM:DrawInductorIndicators()
 			surface.SetDrawColor(255, 255, 255, colHealth.a)
 			surface.DrawTexturedRect(x + 2 + subwidth - 6, y + 1 - hei/2, 4, hei * 2)
 			local phantomwidth = (health == form  and 0 or wid)
-			draw.SimpleTextBlurry(translate.Get("fi_hud")..math.Round(lp:GetFireInd()) , "ZSHUDFontTiny", x, y - 12, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM)
+			draw.SimpleTextBlurry(translate.Get("fi_hud")..math.Round(lp:GetFireInd()).."/"..formula , "ZSHUDFontTiny", x, y - 12, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM)
 			y = y + ScrH() * 0.07
 		end
 	end
@@ -302,6 +302,41 @@ function GM:DrawInductorIndicators()
 			surface.DrawTexturedRect(x + 2 + subwidth - 6, y + 1 - hei/2, 4, hei * 2)
 			local phantomwidth = (health == form  and 0 or wid)
 			draw.SimpleTextBlurry(translate.Get("mg_hud")..math.Round(lp:GetMedProgress()).."/"..medprogress , "ZSHUDFontTiny", x, y - 12, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM)
+			y = y + ScrH() * 0.07
+		end
+	end
+	if lp:GetPulseCascade() > 0 and lp:HasTrinket("resonance") and lp:GetPulseTime() >= CurTime() then
+		if lp:IsValid() then
+			local matGlow = Material("sprites/glow04_noz")
+			local texDownEdge = surface.GetTextureID("gui/gradient_down")
+			local colHealth = Color(61,5,192)
+			local screenscale = BetterScreenScale()
+			local health = lp:GetPulseCascade()
+			local progress = 80
+			local healthperc = math.Clamp(health / progress, 0.01, 1)
+			local wid, hei = 150 * screenscale, 20 * screenscale
+	 
+			
+	
+			local subwidth = healthperc * wid
+			local fraction = (lp:GetPulseTime()-CurTime())/2
+			local form = math.Clamp( fraction, 0, 1 )
+			colHealth.a = form *255
+			surface.SetDrawColor(0, 0, 0, colHealth.a)
+			surface.DrawRect(x, y, wid, hei)
+
+			
+			surface.SetDrawColor(colHealth.r * 1, colHealth.g * 0.2, colHealth.b, 40)
+			surface.SetTexture(texDownEdge)
+			surface.DrawTexturedRect(x + 2, y + 1, subwidth - 4, hei - 2)
+			surface.SetDrawColor(colHealth.r * 0.6, colHealth.g * 0.6, colHealth.b, 30)
+			surface.DrawRect(x + 2, y + 1, subwidth - 4, hei - 2)
+	
+			surface.SetMaterial(matGlow)
+			surface.SetDrawColor(255, 255, 255, colHealth.a)
+			surface.DrawTexturedRect(x + 2 + subwidth - 6, y + 1 - hei/2, 4, hei * 2)
+			local phantomwidth = (health == form  and 0 or wid)
+			draw.SimpleTextBlurry(translate.Get("pc_hud")..math.Round(lp:GetPulseCascade()).."/"..progress , "ZSHUDFontTiny", x, y - 12, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM)
 			y = y + ScrH() * 0.07
 		end
 	end

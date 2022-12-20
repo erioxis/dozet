@@ -154,8 +154,8 @@ function meta:ProcessDamage(dmginfo)
 				dmginfo:SetDamage(0)
 				GAMEMODE:BlockFloater(attacker, self, dmginfo:GetDamagePosition())
 			end
-			if attacker:HasTrinket("fire_at") then
-				attacker:SetFireInd(attacker:GetFireInd()+1)
+			if attacker:HasTrinket("fire_at") and math.random(6) == 5 then
+				attacker:SetFireInd(attacker:GetFireInd()+damage* 0.1)
 			end
 			dmginfo:SetDamage(damage * math.min(3,attacker:GetModelScale() * attacker:GetModelScale()))
 			if attacker:HasTrinket("soulalteden") then
@@ -2565,7 +2565,7 @@ function meta:PulseResonance(attacker, inflictor)
 	timer.Create("PulseResonance" .. attacker:UniqueID(), 0.06, 1, function()
 		if not attacker:IsValid() or not self:IsValid() then return end
 
-		attacker.AccuPulse = 0
+		attacker:SetPulseCascade(0)
 
 		local pos = self:WorldSpaceCenter()
 		pos.z = pos.z + 16

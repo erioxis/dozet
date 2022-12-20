@@ -120,7 +120,7 @@ concommand.Add("zs_pointsshopbuy", function(sender, command, arguments)
 		return
 	end
     local scrapd = sender.ScrapDiscount or 1
-	local buy = "Buyed a "
+	local buy = translate.Get("ba_chat")
 	if usescrap then
 		sender:RemoveAmmo(math.ceil(cost), "scrap")
 		sender:SendLua("surface.PlaySound(\"buttons/lever"..math.random(5)..".wav\")")

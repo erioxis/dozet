@@ -2555,6 +2555,8 @@ LANGUAGE.dn_killed =  " killed "
 
 LANGUAGE.fi_hud = "Fire Inductor: "
 
+LANGUAGE.pc_hud = "Cascade Resonance: "
+
 LANGUAGE.mg_hud = "Medical Premium: "
 
 LANGUAGE.di_hud = "Dismantle Item"
@@ -2565,3 +2567,4 @@ LANGUAGE.ewc_hud = "Empty Weapon Clip"
 
 LANGUAGE.si_hud = "Selected Item"
 
+LANGUAGE.ba_chat = "Buyed a "

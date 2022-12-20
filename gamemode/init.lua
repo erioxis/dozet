@@ -3430,17 +3430,17 @@ function GM:EntityTakeDamage(ent, dmginfo)
 							end
 
 							if attacker:HasTrinket("fire_at") and math.random(fireatt) == 1 or attacker:GetFireInd() >= 15*((attacker:GetActiveWeapon() and (attacker:GetActiveWeapon().Tier or 1))+1) then
-								ent:AddLegDamageExt(damage * 0.1, attacker, attacker, SLOWTYPE_FLAME)
+								ent:AddLegDamageExt(damage * 0.5, attacker, attacker, SLOWTYPE_FLAME)
 								if ent:GetZombieClassTable().Name ~= "Shade" then
 									local d =ent:GiveStatus("burn",math.random(1,7))
 									d.Damager = attacker
 								end
 							end
 							if attacker:HasTrinket("pulse_at") and math.random(pulseatt) == 1 then
-								ent:AddLegDamageExt(32, attacker, attacker, SLOWTYPE_PULSE)
+								ent:AddLegDamageExt(damage * 0.7, attacker, attacker, SLOWTYPE_PULSE)
 							end
 							if attacker:HasTrinket("acid_at") and math.random(iceatt) == 1 then
-								ent:AddLegDamageExt(damage * 0.1, attacker, attacker, SLOWTYPE_COLD)
+								ent:AddLegDamageExt(damage * 0.5, attacker, attacker, SLOWTYPE_COLD)
 								if math.random(1,4) == 1 then
 									ent:GiveStatus("frost",math.random(1,7))
 								end
@@ -3715,15 +3715,24 @@ function GM:DamageFloater(attacker, victim, dmgpos, dmg, bool, definiteply, bool
 		net.WriteEntity(victim)
 	net.Send(attacker)
 end
+function GM:DamageAtFloater(attacker, victim, dmgpos, dmg, typeid)
+	if attacker == victim then return end
+	if dmgpos == vector_origin then dmgpos = victim:NearestPoint(attacker:EyePos()) end
+	dmgpos = dmgpos + Vector(0,0,math.random(1,20))
+	 net.Start("zs_at_dmg")
+		net.WriteUInt(typeid, 4)
+		net.WriteUInt(math.ceil(dmg), 16)
+		net.WriteVector(dmgpos)
+	net.Send(attacker)
+end
 function GM:BlockFloater(attacker, victim, dmgpos, bool)
 	if attacker == victim then return end
 	if dmgpos == vector_origin then dmgpos = victim:NearestPoint(attacker:EyePos()) end
 
-	timer.Simple(0.1, function() net.Start("zs_block_number")
+	net.Start("zs_block_number")
 		net.WriteBool(bool)
 		net.WriteVector(dmgpos)
 	net.Send(attacker)
-	end)
 end
 
 

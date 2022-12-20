@@ -374,6 +374,22 @@ function meta:GetFireIndTime()
 	return self:GetNWFloat('fire_ind_time', pts)	
 end	
 
+--Потом как нибудь сокращу
+function meta:GetPulseTime()
+	return self:GetNWFloat('pulse_time', pts)	
+end	
+
+function meta:SetPulseTime(pts)
+	self:SetNWFloat('pulse_time', pts+3.2)
+end
+function meta:SetPulseCascade(pts)
+	self:SetPulseTime(CurTime())
+	self:SetNWFloat('cascade_resonance', pts)
+end
+function meta:GetPulseCascade()
+	return self:GetNWFloat('cascade_resonance', pts)	
+end	
+
 function meta:GetBloodArmor()
 	return self:GetDTInt(DT_PLAYER_INT_BLOODARMOR)
 end
@@ -415,19 +431,20 @@ function meta:AddLegDamageExt(damage, attacker, inflictor, type)
 	if type == SLOWTYPE_PULSE then
 		local legdmg = damage * (attacker.PulseWeaponSlowMul or 1)
 		local startleg = self:GetFlatLegDamage()
-
+		
 		self:AddLegDamage(legdmg)
 		if attacker.PulseImpedance then
 			self:AddArmDamage(legdmg)
 		end
 
 		if SERVER and attacker:HasTrinket("resonance") then
-			attacker.AccuPulse = (attacker.AccuPulse or 0) + (self:GetFlatLegDamage() - startleg)
+			attacker:SetPulseCascade(attacker:GetPulseCascade() + (self:GetFlatLegDamage() - startleg))
 
-			if attacker.AccuPulse > 80 then
+			if attacker:GetPulseCascade() > 80 then
 				self:PulseResonance(attacker, inflictor)
 			end
 		end
+		GAMEMODE:DamageAtFloater(attacker, self, self:NearestPoint(attacker:EyePos()), legdmg,type)
 	elseif type == SLOWTYPE_COLD then
 		if self:IsValidLivingZombie() and self:GetZombieClassTable().ResistFrost then self:SetHealth(self:Health() + damage*12) return end
 		if self:GetZombieClassTable().FireBuff then
@@ -439,6 +456,7 @@ function meta:AddLegDamageExt(damage, attacker, inflictor, type)
 		if SERVER and attacker:HasTrinket("cryoindu") and not attacker:GetActiveWeapon().AntiInd and not (attacker:GetActiveWeapon().Tier or 1) == 7  then
 			self:CryogenicInduction(attacker, inflictor, damage)
 		end
+		GAMEMODE:DamageAtFloater(attacker, self, self:NearestPoint(attacker:EyePos()), damage, type)
 	elseif type == SLOWTYPE_FLAME then
 		if self:IsValidLivingZombie() and self:GetZombieClassTable().ResistFrost then
 			damage = damage * 2
@@ -450,6 +468,7 @@ function meta:AddLegDamageExt(damage, attacker, inflictor, type)
 		if SERVER and attacker:HasTrinket("fire_ind") and not attacker:GetActiveWeapon().AntiInd and !self:GetZombieClassTable().FireBuff and (attacker:GetActiveWeapon().Tier or 1) ~= 7 then
 			self:FireInduction(attacker, inflictor, damage * 3)
 		end
+		GAMEMODE:DamageAtFloater(attacker, self, self:NearestPoint(attacker:EyePos()), damage, type)
 	end
 end
 
