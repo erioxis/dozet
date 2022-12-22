@@ -1996,6 +1996,8 @@ function GM:PreRestartRound()
 		pl:StripWeapons()
 		pl:Spectate(OBS_MODE_ROAMING)
 		pl:GodDisable()
+		pl:SetProgress(0,'bprog')
+		pl:SetProgress(0,'mprog')
 	end 
 	timer.Simple(0.25, function() util.RemoveAll("prop_weapon") end)
 end
