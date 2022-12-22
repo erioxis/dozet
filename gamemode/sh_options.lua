@@ -753,6 +753,9 @@ item.SkillRequirement = SKILL_HEARTS
 item =
 GM:AddPointShopItem("cursedtrinket",		ITEMCAT_SPECIAL,			120,				"trinket_cursedtrinket")
 item.SkillRequirement = SKILL_CURSEDTRINKETS
+item =
+GM:AddPointShopItem("medicalcloud",			ITEMCAT_OTHER,			35,				"weapon_zs_mediccloudbomb")
+item.SkillRequirement = SKILL_U_MEDICCLOUD
 --ZS Mutagens
 GM:AddMutationItem("m_zombie_health", translate.Get("zshop_alphazomb"), translate.Get("zshop_alphazomb2"), ITEMCAT_MUTATIONS, 150, nil, function(pl) pl.m_HealthMulZS = pl.m_HealthMulZS + 0.2 end, "models/items/healthkit.mdl")
 GM:AddMutationItem("m_zombie_health1", translate.Get("zshop_godzomb"), translate.Get("zshop_godzomb2"), ITEMCAT_MUTATIONS, 500, nil, function(pl) pl.m_HealthMulZS = pl.m_HealthMulZS + 0.3 end, "models/player/fatty/fatty.mdl")    

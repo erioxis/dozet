@@ -157,7 +157,7 @@ function meta:ProcessDamage(dmginfo)
 			if attacker:HasTrinket("fire_at") and math.random(6) == 5 then
 				attacker:SetProgress(attacker:GetProgress('fprog')+damage* 0.1, 'fprog')
 			end
-			if attacker:IsSkillActive(SKILL_BOUNTYKILLER) or self:GetZombieClassTable().Boss or self:GetZombieClassTable().DemiBoss then
+			if (attacker:IsSkillActive(SKILL_BOUNTYKILLER) or self:GetZombieClassTable().Boss or self:GetZombieClassTable().DemiBoss) and !self:GetZombieClassTable().CrowDa and !self:GetZombieClassTable().Skeletal then
 				local mul = ((attacker:IsSkillActive(SKILL_BOUNTYKILLER) and 0.15 or 0) + (self:GetZombieClassTable().DemiBoss and 0.05 or self:GetZombieClassTable().Boss and 0.1 or 0))
 				attacker:SetProgress(attacker:GetProgress('bprog')+damage*mul, 'bprog')
 				if attacker:GetProgress('bprog') >= 2500 then
@@ -2580,7 +2580,7 @@ function meta:PulseResonance(attacker, inflictor)
 		pos.z = pos.z + 16
 
 		if attacker:IsValidLivingHuman() then
-			util.BlastDamagePlayer(inflictor, attacker, pos, 100, 75, DMG_ALWAYSGIB, 0.7)
+			util.BlastDamagePlayer(inflictor, attacker, pos, 100 * (attacker.ExpDamageRadiusMul or 1), 75, DMG_ALWAYSGIB, 0.7)
 			for _, ent in pairs(util.BlastAlloc(inflictor, attacker, pos, 100 * (attacker.ExpDamageRadiusMul or 1))) do
 				if ent:IsValidLivingPlayer() and gamemode.Call("PlayerShouldTakeDamage", ent, attacker) then
 					ent:AddLegDamageExt(5, attacker, inflictor, SLOWTYPE_PULSE)
@@ -2607,7 +2607,7 @@ function meta:CryogenicInduction(attacker, inflictor, damage)
 		self:TakeSpecialDamage(self:Health() * 0.2 + 210, DMG_DIRECT, attacker, inflictor, pos)
 
 		if attacker:IsValidLivingHuman() then
-			util.BlastDamagePlayer(inflictor, attacker, pos, 100, self:GetMaxHealthEx() * 0.80, DMG_DROWN, 0.83)
+			util.BlastDamagePlayer(inflictor, attacker, pos, 100 * (attacker.ExpDamageRadiusMul or 1), self:GetMaxHealthEx() * 0.80, DMG_DROWN, 0.83, true)
 			for _, ent in pairs(util.BlastAlloc(inflictor, attacker, pos, 100 * (attacker.ExpDamageRadiusMul or 1))) do
 				if ent:IsValidLivingPlayer() and gamemode.Call("PlayerShouldTakeDamage", ent, attacker) then
 					ent:AddLegDamageExt(6, attacker, inflictor, SLOWTYPE_COLD)
@@ -2634,7 +2634,7 @@ function meta:FireInduction(attacker, inflictor, damage)
 				self:TakeSpecialDamage((self:Health() * 0.15) + damage, DMG_DIRECT, attacker, inflictor, pos)
 
 				if attacker:IsValidLivingHuman() then
-					util.BlastDamagePlayer(inflictor, attacker, pos, 100, (self:Health() * 0.07) + damage, DMG_BURN, 0.83)
+					util.BlastDamagePlayer(inflictor, attacker, pos, 100 * (attacker.ExpDamageRadiusMul or 1), (self:Health() * 0.07) + damage, DMG_BURN, 0.83, true)
 				end
 
 				local effectdata = EffectData()

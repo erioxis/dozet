@@ -398,6 +398,8 @@ SKILL_AMULET_14 = 376
 SKILL_INDUCTOR_ISSUE = 377
 SKILL_ATTACHMENT_CURSE = 378
 SKILL_HEHE = 379
+SKILL_CONISSUE = 380
+SKILL_N_FRIEND = 381
 
 SKILLMOD_HEALTH = 1
 SKILLMOD_SPEED = 2
@@ -513,7 +515,8 @@ SKILLMOD_ADD_STATUS = 112
 SKILLMOD_FALLDAMAGE_RECOVERY_MUL = 113
 SKILLMOD_FIRE_DELAY = 114
 SKILLMOD_ELEMENTAL_MUL = 115
-SKILLMOD_ATT_CHANCE = 115
+SKILLMOD_ATT_CHANCE = 116
+SKILLMOD_IND_DMG_TAKEN = 117
 
 local GOOD = "^"..COLORID_GREEN
 local BAD = "^"..COLORID_RED
@@ -987,12 +990,14 @@ d.Amulet = true
 d.AmuletCost = 2
 GM:AddSkillModifier(SKILL_AMULET_13, SKILLMOD_POISON_DAMAGE_TAKEN_MUL, -0.33)									
 GM:AddSkillModifier(SKILL_AMULET_13, SKILLMOD_PIECE_OF_AMULET, -2)
+GM:AddSkillModifier(SKILL_AMULET_13, SKILLMOD_SPOINT, 1)
 local d = GM:AddSkill(SKILL_AMULET_14, translate.Get("skill_amulet_14"),  GOOD..translate.Get("skill_amulet_14_d1"),
 																-23,			-14,					{SKILL_NONE}, TREE_GUNTREE)
 d.Amulet = true				
 d.AmuletCost = 5
 GM:AddSkillModifier(SKILL_AMULET_14, SKILLMOD_POISON_DAMAGE_TAKEN_MUL, -0.33)									
 GM:AddSkillModifier(SKILL_AMULET_14, SKILLMOD_PIECE_OF_AMULET, -5)
+GM:AddSkillModifier(SKILL_AMULET_14, SKILLMOD_SPOINT, 1)
 
 
 
@@ -1103,7 +1108,11 @@ GM:AddSkill(SKILL_ELEMENTAL_BUFF, translate.Get("skill_ell_buff"), BAD.."+20%"..
 GM:AddSkill(SKILL_INDUCTOR_ISSUE, translate.Get("skill_ind_issue"), BAD..translate.Get("skill_ind_issue_d1")..GOOD..translate.Get("skill_ind_issue_d2"),
 																0,			-7,					{}, TREE_GUNTREE)
 GM:AddSkill(SKILL_ATTACHMENT_CURSE, translate.Get("skill_at_curse"), BAD..translate.Get("skill_at_curse_d1")..GOOD..translate.Get("skill_at_curse_d2"),
-																-2.5,			-6,					{SKILL_HEHE}, TREE_GUNTREE)
+																-2.5,			-6,					{SKILL_HEHE, SKILL_CONISSUE}, TREE_GUNTREE)
+GM:AddSkill(SKILL_CONISSUE, translate.Get("skill_conissue"), GOOD..translate.Get("skill_conissue_d1")..BAD..translate.Get("skill_conissue_d2"),
+																-2.5,			-7,					{SKILL_N_FRIEND}, TREE_GUNTREE)
+GM:AddSkill(SKILL_N_FRIEND, translate.Get("skill_nature_fs"), GOOD..translate.Get("skill_nature_fs_d1")..BAD..translate.Get("skill_nature_fs_d2"),
+																-1.5,			-8,					{}, TREE_GUNTREE)
 GM:AddSkill(SKILL_HEHE, translate.Get("skill_just_buff"), GOOD..translate.Get("skill_just_buff_d1"),
 																-2.5,			-5,					{}, TREE_GUNTREE)
 GM:AddSkill(SKILL_ORPHICFOCUS, translate.Get("skill_orfocus"), GOOD..translate.Get("skill_orfocus_d1")..GOOD.."+2%"..translate.Get("w_ac")..BAD..translate.Get("skill_orfocus_d2")..BAD.."-6%"..translate.Get("r_speed"),
@@ -1873,6 +1882,9 @@ end)
 GM:SetSkillModifierFunction(SKILLMOD_ATT_CHANCE, function(pl, amount)
 	pl.AttChance = math.Clamp(amount + 1.0, 0, 1000.0)
 end)
+GM:SetSkillModifierFunction(SKILLMOD_IND_DMG_TAKEN, function(pl, amount)
+	pl.IndDamageTaken = math.Clamp(amount + 1.0, 0, 1000.0)
+end)
 GM:SetSkillModifierFunction(SKILLMOD_ADD_STATUS, function(pl, amount)
 	pl.AdditionalStatusTime = math.Clamp(amount + 1.0, 0, 1000.0)
 end)
@@ -2557,12 +2569,18 @@ GM:AddSkillModifier(SKILL_ELEMENTAL_BUFF, SKILLMOD_EXP_DAMAGE_TAKEN_MUL,0.2)
 GM:AddSkillModifier(SKILL_ELEMENTAL_BUFF, SKILLMOD_ELEMENTAL_MUL,0.1)
 GM:AddSkillModifier(SKILL_ELEMENTAL_BUFF, SKILLMOD_ATT_CHANCE,0.1)
 
+GM:AddSkillModifier(SKILL_CONISSUE, SKILLMOD_ELEMENTAL_MUL,0.45)
+GM:AddSkillModifier(SKILL_CONISSUE, SKILLMOD_ATT_CHANCE,-0.5)
+
 GM:AddSkillModifier(SKILL_ATTACHMENT_CURSE, SKILLMOD_ELEMENTAL_MUL,0.10)
 
 GM:AddSkillModifier(SKILL_HEHE, SKILLMOD_ELEMENTAL_MUL,0.03)
 
 GM:AddSkillModifier(SKILL_INDUCTOR_ISSUE, SKILLMOD_ELEMENTAL_MUL,-0.25)
 GM:AddSkillModifier(SKILL_INDUCTOR_ISSUE, SKILLMOD_ATT_CHANCE,0.15)
+
+GM:AddSkillModifier(SKILL_N_FRIEND, SKILLMOD_ELEMENTAL_MUL,-0.25)
+GM:AddSkillModifier(SKILL_N_FRIEND, SKILLMOD_IND_DMG_TAKEN,-0.33)
 
 GM:AddSkillModifier(SKILL_IRONBLOOD, SKILLMOD_BLOODARMOR_DMG_REDUCTION, 0.65)
 GM:AddSkillModifier(SKILL_IRONBLOOD, SKILLMOD_BLOODARMOR_MUL, -0.3)

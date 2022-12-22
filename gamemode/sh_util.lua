@@ -208,14 +208,14 @@ function util.Blood(pos, amount, dir, force, noprediction)
 	util.Effect("bloodstream", effectdata, nil, noprediction)
 end
 
-function util.BlastDamagePlayer(inf, att, center, radius, damage, damagetype, taperfactor)
+function util.BlastDamagePlayer(inf, att, center, radius, damage, damagetype, taperfactor, doinddamage)
 	if not att:IsValidPlayer() then ErrorNoHalt("[BlastDamagePlayer] Tried to use a nonplayer") end
 
-	util.BlastDamageEx(inf, att, center, radius * (att.ExpDamageRadiusMul or 1), damage * (att.ExplosiveDamageMul or 1), damagetype, taperfactor)
+	util.BlastDamageEx(inf, att, center, radius * (att.ExpDamageRadiusMul or 1), damage * (att.ExplosiveDamageMul or 1), damagetype, taperfactor, doinddamage)
 end
 
 -- I had to make this since the default function checks visibility vs. the entitiy's center and not the nearest position.
-function util.BlastDamageEx(inflictor, attacker, epicenter, radius, damage, damagetype, taperfactor)
+function util.BlastDamageEx(inflictor, attacker, epicenter, radius, damage, damagetype, taperfactor, bool)
 	local basedmg = damage
 
 	for _, ent in pairs(ents.FindInSphere(epicenter, radius)) do
@@ -225,7 +225,7 @@ function util.BlastDamageEx(inflictor, attacker, epicenter, radius, damage, dama
 				or TrueVisibleFilters(epicenter, ent:EyePos(), inflictor, attacker, ent)
 				or TrueVisibleFilters(epicenter, ent:WorldSpaceCenter(), inflictor, attacker, ent) then
 
-				ent:TakeSpecialDamage((((radius - nearest:Distance(epicenter)) / radius) * basedmg) * (ent:IsValidLivingZombie() and ent:GetZombieClassTable().Skeletal and 0.1 or	ent:IsValidLivingHuman() and ent.ClanAvanguard and 0.44 or 1), damagetype, attacker, inflictor, nearest)
+				ent:TakeSpecialDamage((((radius - nearest:Distance(epicenter)) / radius) * basedmg) * (ent:IsValidLivingZombie() and ent:GetZombieClassTable().Skeletal and 0.1 or	ent:IsValidLivingHuman() and ent.ClanAvanguard and 0.44 or ent == attacker and bool and (ent.IndDamageTaken or 1) or 1), damagetype, attacker, inflictor, nearest)
 
 				if taperfactor and ent:IsPlayer() then
 					basedmg = basedmg * taperfactor

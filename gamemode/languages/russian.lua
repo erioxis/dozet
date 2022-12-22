@@ -1642,6 +1642,12 @@ LANGUAGE.skill_at_curse_d1 = "Каждое срабатывание модифи
 LANGUAGE.skill_at_curse_d2 = "+15% Элементального урона.\n"
 LANGUAGE.skill_just_buff = "Хехе"
 LANGUAGE.skill_just_buff_d1 = "+3% Элементального урона.\nВы благославлены хехе!"
+LANGUAGE.skill_conissue = "Проблема концентрата"
+LANGUAGE.skill_conissue_d1 = "+45% Элементального урона.\n"
+LANGUAGE.skill_conissue_d2 = "-50% Шанс срабатывания модификаторов.\n"
+LANGUAGE.skill_nature_fs = "Связь с природой"
+LANGUAGE.skill_nature_fs_d1 = "-33% Получаемого урона от индукторов\n"
+LANGUAGE.skill_nature_fs_d2 = "-25% Элементального урона.\n"
 --Skill repairsman
 LANGUAGE.skill_skyhelp = "Райская помощь"
 LANGUAGE.skill_skyhelp_d1 = "Вы улетаете при ударе\n"

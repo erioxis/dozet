@@ -3305,10 +3305,10 @@ local function CurseAttach(pl)
 	if pl:IsValidLivingHuman() and pl:IsSkillActive(SKILL_ATTACHMENT_CURSE) then
 		local cursed = pl:GetStatus("cursed")
 		if (cursed) then 
-			pl:AddCursed(self:GetOwner(), cursed.DieTime - CurTime() + 1)
+			pl:AddCursed(pl, cursed.DieTime - CurTime() + 1)
 		end
 		if (not cursed) then 
-			pl:AddCursed(pl:GetOwner(), 1)
+			pl:AddCursed(pl, 1)
 		end
 	end
 end
@@ -3377,7 +3377,7 @@ function GM:EntityTakeDamage(ent, dmginfo)
 	local dispatchdamagedisplay = false
 	local entclass = ent:GetClass()
 	if !ent:IsPlayer() and attacker and attacker:IsPlayer() then
-		if self:GetOwner() ~= attacker then
+		if ent:GetOwner() ~= attacker then
 			local damage = math.min(dmginfo:GetDamage(), ent:Health())
 			attacker:AddTokens(math.ceil((damage or 2) * 0.25))
 			if attacker.m_DoubleXP then
