@@ -157,6 +157,14 @@ function meta:ProcessDamage(dmginfo)
 			if attacker:HasTrinket("fire_at") and math.random(6) == 5 then
 				attacker:SetProgress(attacker:GetProgress('fprog')+damage* 0.1, 'fprog')
 			end
+			if attacker:IsSkillActive(SKILL_BOUNTYKILLER) or self:GetZombieClassTable().Boss or self:GetZombieClassTable().DemiBoss then
+				local mul = ((attacker:IsSkillActive(SKILL_BOUNTYKILLER) and 0.15 or 0) + (self:GetZombieClassTable().DemiBoss and 0.05 or self:GetZombieClassTable().Boss and 0.1 or 0))
+				attacker:SetProgress(attacker:GetProgress('bprog')+damage*mul, 'bprog')
+				if attacker:GetProgress('bprog') >= 2500 then
+					attacker:SetProgress(0, 'bprog')
+					attacker:SetPoints(attacker:GetPoints() + 150)
+				end
+			end
 			dmginfo:SetDamage(damage * math.min(3,attacker:GetModelScale() * attacker:GetModelScale()))
 			if attacker:HasTrinket("soulalteden") then
 				attacker.RandomDamage = attacker.RandomDamage + math.random(1,5)
@@ -203,7 +211,8 @@ function meta:ProcessDamage(dmginfo)
 
 
 				if attacker:IsSkillActive(SKILL_HEAVYSTRIKES) and not self:GetZombieClassTable().Boss and (wep.IsFistWeapon and attacker:IsSkillActive(SKILL_CRITICALKNUCKLE) or wep.MeleeKnockBack > 0) then
-					attacker:TakeSpecialDamage(damage * (wep.Unarmed and 1 or 0.08), DMG_SLASH, self, self:GetActiveWeapon())
+					self.FallDamageHS = damage*0.45
+					self.FallAttacker = attacker
 				end
 				if attacker:IsSkillActive(SKILL_BLOODYFISTS) and wep.Unarmed then
 					self:AddBleedDamage(damage * 0.1, attacker)
@@ -2565,7 +2574,7 @@ function meta:PulseResonance(attacker, inflictor)
 	timer.Create("PulseResonance" .. attacker:UniqueID(), 0.06, 1, function()
 		if not attacker:IsValid() or not self:IsValid() then return end
 
-		attacker:SetProgress('pprog',0)
+		attacker:SetProgress(0,'pprog')
 
 		local pos = self:WorldSpaceCenter()
 		pos.z = pos.z + 16
@@ -2615,7 +2624,7 @@ end
 function meta:FireInduction(attacker, inflictor, damage)
 	if not self:GetZombieClassTable().Boss then
 		if math.random(20 * (self:GetActiveWeapon().Tier or 1) * (self:GetActiveWeapon().Primary.Numshots or 1) ) == 1 or attacker:GetProgress('fprog') >= (15 * ((self:GetActiveWeapon().Tier or 1)+1)) then
-			attacker:SetProgress('fprog', 0)
+			attacker:SetProgress(attacker:GetProgress("fprog")-(15 * ((self:GetActiveWeapon().Tier or 1)+1)),'fprog')
 			timer.Create("Fire_inder" .. attacker:UniqueID(), 0.1, 2, function()
 				if not attacker:IsValid() or not self:IsValid() then return end
 

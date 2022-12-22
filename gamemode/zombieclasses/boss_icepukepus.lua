@@ -9,6 +9,8 @@ CLASS.KnockbackScale = 0
 
 CLASS.FearPerInstance = 1
 
+CLASS.ResistFrost = true
+
 CLASS.Health = 2120
 CLASS.SWEP = "weapon_zs_icepukepus"
 

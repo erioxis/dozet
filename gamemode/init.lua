@@ -484,7 +484,8 @@ function GM:CenterNotifyAll(...)
 end
 GM.CenterNotify = GM.CenterNotifyAll
 GM.NoBaracursed = true
-GM.DamageLock = false
+GM.DamageLock = false 
+GM.NewYear = true
 
 function GM:TopNotifyAll(...)
 	net.Start("zs_topnotify")
@@ -1604,7 +1605,7 @@ local function DoDropStart(pl)
 	if pl:IsSkillActive(SKILL_MOBILIZED) then
 		local weapon = {}
 		for _, wep in pairs(weapons.GetList()) do
-			if (wep.Tier or 1) <= 2 and !wep.ZombieOnly and !wep.NoMobilized then
+			if (wep.Tier or 1) <= 2 and !wep.ZombieOnly and !wep.NoMobilized and wep.Primary.DefaultClip and wep.Primary.DefaultClip < 9999 then
 				table.insert( weapon, wep.ClassName )
 			end
 		end
@@ -1614,7 +1615,7 @@ local function DoDropStart(pl)
 	local start = pl:GetRandomStartingItem()
 	if start then
 		local func = GAMEMODE:GetInventoryItemType(start) == INVCAT_TRINKETS and pl.AddInventoryItem or pl.Give
-		func(pl, start)
+		timer.Simple(0, function() func(pl, start) end)
 	end
 	local start1 = pl:GetRandomStartingItem1()
 	--local d = string.Explode(" " ,string.lower(self.ZSInventoryItemData[start1].PrintName))
@@ -1623,12 +1624,12 @@ local function DoDropStart(pl)
 	end]]
 	if start1 then
 		local func1 = GAMEMODE:GetInventoryItemType(start1) == INVCAT_TRINKETS and pl.AddInventoryItem or pl.Give
-		func1(pl, start1)
+		timer.Simple(0, function() func1(pl, start1) end)
 	end
 	local start21 = pl:GetRandomStartingItem2()
 	if start21 then
 		local func21 = GAMEMODE:GetInventoryItemType(start21) == INVCAT_TRINKETS and pl.AddInventoryItem or pl.Give
-		func21(pl, start21)
+		timer.Simple(0, function() func21(pl, start21) end)
 	end
 	local freefood = pl:GetRandomFood()
 	if freefood then
@@ -1859,8 +1860,8 @@ function GM:PlayerHealedTeamMember(pl, other, health, wep, pointmul, nobymsg, fl
 			net.WriteString(premium)
 			net.Send(pl)
 		pl:GiveAchievement("premium")
-		pl:AddPoints(150)
-		pl.NextPremium = 0
+		pl:AddPoints(50)
+		pl:SetProgress(math.Round(pl:GetProgress('mprog')-1800), 'mprog')
 	end
 
 	if pointmul ~= 0 then
@@ -3300,7 +3301,17 @@ function GM:NestDestroyed(ent, attacker)
 		PrintMessage(HUD_PRINTCONSOLE, attacker:LogID().." killed a nest at "..tostring(ent:GetPos()).." (builder: "..(ent:GetOwner() and ent:GetOwner():IsValid() and ent:GetOwner():IsPlayer() and ent:GetOwner():LogID() or "unknown")..")")
 	end
 end
-
+local function CurseAttach(pl)
+	if pl:IsValidLivingHuman() and pl:IsSkillActive(SKILL_ATTACHMENT_CURSE) then
+		local cursed = pl:GetStatus("cursed")
+		if (cursed) then 
+			pl:AddCursed(self:GetOwner(), cursed.DieTime - CurTime() + 1)
+		end
+		if (not cursed) then 
+			pl:AddCursed(pl:GetOwner(), 1)
+		end
+	end
+end
 function GM:EntityTakeDamage(ent, dmginfo)
 	local attacker, inflictor = dmginfo:GetAttacker(), dmginfo:GetInflictor()
 
@@ -3365,7 +3376,15 @@ function GM:EntityTakeDamage(ent, dmginfo)
 
 	local dispatchdamagedisplay = false
 	local entclass = ent:GetClass()
-
+	if !ent:IsPlayer() and attacker and attacker:IsPlayer() then
+		if self:GetOwner() ~= attacker then
+			local damage = math.min(dmginfo:GetDamage(), ent:Health())
+			attacker:AddTokens(math.ceil((damage or 2) * 0.25))
+			if attacker.m_DoubleXP then
+				attacker:AddTokens(math.ceil((damage or 2) * 0.25))
+			end
+		end
+	end
 
 	if ent:IsPlayer() then
 		dispatchdamagedisplay = true
@@ -3417,44 +3436,42 @@ function GM:EntityTakeDamage(ent, dmginfo)
 								GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_WEAPON, inflictor:GetClass(), "PointsEarned", points)
 								GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_WEAPON, inflictor:GetClass(), "Damage", damage)
 							end
-							local fireatt = 8
-							local iceatt = 5
-							local pulseatt = 7
-							local debuffatt = 12
-							if attacker:IsSkillActive(SKILL_ELEMENTAL_BUFF) then
-								damage = damage * 1.1
-								fireatt = 7
-								iceatt = 4
-								pulseatt = 6
-								debuffatt = 11
-							end
+							local chnc = (attacker.AttChance or 1)
+							local fireatt = 8 * chnc
+							local iceatt = 5* chnc
+							local pulseatt = 7* chnc
+							local debuffatt = 12* chnc
+							local damage2 = (damage * (attacker.ElementalMul or 1)) * (ent:GetZombieClassTable().ElementalDebuff or 1)
+							
 
-							if attacker:HasTrinket("fire_at") and math.random(fireatt) == 1 or attacker:GetProgress('fprog') >= 15*((attacker:GetActiveWeapon() and (attacker:GetActiveWeapon().Tier or 1))+1) then
-								ent:AddLegDamageExt(damage * 0.5, attacker, attacker, SLOWTYPE_FLAME)
+							if attacker:HasTrinket("fire_at") and math.max(math.random(fireatt),1) == 1 or attacker:GetProgress('fprog') >= 15*((attacker:GetActiveWeapon() and (attacker:GetActiveWeapon().Tier or 1))+1) then
+								ent:AddLegDamageExt(damage2 * 0.5, attacker, attacker, SLOWTYPE_FLAME)
 								if ent:GetZombieClassTable().Name ~= "Shade" then
 									local d =ent:GiveStatus("burn",math.random(1,7))
 									d.Damager = attacker
 								end
+								CurseAttach(attacker)
 							end
-							if attacker:HasTrinket("pulse_at") and math.random(pulseatt) == 1 then
-								ent:AddLegDamageExt(damage * 0.7, attacker, attacker, SLOWTYPE_PULSE)
+							if attacker:HasTrinket("pulse_at") and math.max(math.random(pulseatt),1) == 1 then
+								ent:AddLegDamageExt(damage2 * 0.7, attacker, attacker, SLOWTYPE_PULSE)
+								CurseAttach(attacker)
 							end
-							if attacker:HasTrinket("acid_at") and math.random(iceatt) == 1 then
-								ent:AddLegDamageExt(damage * 0.5, attacker, attacker, SLOWTYPE_COLD)
+							if attacker:HasTrinket("acid_at") and math.max(math.random(iceatt),1) == 1 then
+								ent:AddLegDamageExt(damage2 * 0.5, attacker, attacker, SLOWTYPE_COLD)
 								if math.random(1,4) == 1 then
 									ent:GiveStatus("frost",math.random(1,7))
 								end
+								CurseAttach(attacker)
 							end
 							local debuffed = ent:GetStatus("zombiestrdebuff")
-							if attacker:HasTrinket("ultra_at") and math.random(debuffatt) == 1 then
+							if attacker:HasTrinket("ultra_at") and math.max(1,math.random(debuffatt)) == 1 then
 								ent:GiveStatus("zombiestrdebuff",math.random(1,7))
+								CurseAttach(attacker)
 							elseif attacker:HasTrinket("ultra_at") and (debuffed) and math.random(debuffatt) == 1 then
 								ent:GiveStatus("zombiestrdebuff",math.random(7,14))
+								CurseAttach(attacker)
 							end
 
-							if attacker:IsSkillActive(SKILL_ELEMENTAL_BUFF) then
-								damage = damage * 0.9
-							end
 
 							local pos = ent:GetPos()
 							pos.z = pos.z + 32
@@ -4135,7 +4152,7 @@ function GM:KeyPress(pl, key)
 		end
 
 	end
-	if pl:KeyPressed(IN_SPEED) and key == IN_SPEED and not pl:IsCarrying() and pl:Team() ~= TEAM_UNDEAD and pl.NextDash <= CurTime() and pl.ClanAvanguard and !pl.ClanShooter then 
+	if pl:KeyPressed(IN_SPEED) and key == IN_SPEED and not pl:IsCarrying() and pl:Team() ~= TEAM_UNDEAD and pl.NextDash <= CurTime() and pl.ClanAvanguard and !pl.ClanShooter and !pl:GetBarricadeGhosting() then 
 			local pos = pl:GetPos()
 			local pushvel = pl:GetEyeTrace().Normal * 0 + (pl:GetAngles():Forward()*(pl:OnGround() and 800 or 200))
 			pl:SetLocalVelocity( pushvel)
@@ -4340,7 +4357,7 @@ function GM:HumanKilledZombie(pl, attacker, inflictor, dmginfo, headshot, suicid
 		timer.Simple(0, function() inflictor2.Eater = true end)
 		timer.Simple(0.9, function() inflictor2.Eater = nil end)
 	end
-	if math.random(100-math.min(50,(attacker.Luck or 1))) == 50 or pl:GetZombieClassTable().Boss or pl:GetZombieClassTable().DemiBoss then
+	if self.NewYear and (math.random(100-math.min(50,(attacker.Luck or 1))) == 50 or pl:GetZombieClassTable().Boss or pl:GetZombieClassTable().DemiBoss) then
 		for i=1,(pl:GetZombieClassTable().Boss and 2 or 1) do
 			local d = ents.Create("prop_gift")
 			if d:IsValid() then
@@ -4373,9 +4390,7 @@ function GM:HumanKilledZombie(pl, attacker, inflictor, dmginfo, headshot, suicid
 	self:SetRage(math.Round(self:GetRage() + (1 * (attacker.RageMul or 1)) * self:GetWinRate()))
 	timer.Create("rage"..attacker:Nick(),5,1, function() if attacker:IsValid() then		attacker.RageMul = 1 end end)
 	attacker:AddZSXP(1)
-	if attacker:IsSkillActive(SKILL_BOUNTYKILLER) then
-		attacker:AddZSXP(5)
-	end
+
 	
 
  

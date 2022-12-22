@@ -255,7 +255,7 @@ SKILL_ROBUST = 145
 SKILL_STOWAGE = 146
 SKILL_TRUEWOOISM = 147
 SKILL_UNBOUND = 148
---Custom?
+--Custom
 SKILL_FOUR_IN_ONE = 149
 SKILL_CHEESE = 150
 SKILL_CARRIER = 151
@@ -395,6 +395,9 @@ SKILL_MADNESS = 373
 SKILL_CQBOOTS = 374
 SKILL_AMULET_13 = 375
 SKILL_AMULET_14 = 376
+SKILL_INDUCTOR_ISSUE = 377
+SKILL_ATTACHMENT_CURSE = 378
+SKILL_HEHE = 379
 
 SKILLMOD_HEALTH = 1
 SKILLMOD_SPEED = 2
@@ -509,6 +512,8 @@ SKILLMOD_M_REG = 111
 SKILLMOD_ADD_STATUS = 112
 SKILLMOD_FALLDAMAGE_RECOVERY_MUL = 113
 SKILLMOD_FIRE_DELAY = 114
+SKILLMOD_ELEMENTAL_MUL = 115
+SKILLMOD_ATT_CHANCE = 115
 
 local GOOD = "^"..COLORID_GREEN
 local BAD = "^"..COLORID_RED
@@ -1094,7 +1099,13 @@ GM:AddSkill(SKILL_U_CRYGASGREN, translate.Get("skill_u_cryogas"), GOOD..translat
 GM:AddSkill(SKILL_SOFTDET, translate.Get("skill_sdeton"), GOOD.."-40%"..translate.Get("exp_damage_t")..BAD.."-10%"..translate.Get("exp_damage"),
 																0,			-5,					{SKILL_ELEMENTAL_BUFF}, TREE_GUNTREE)
 GM:AddSkill(SKILL_ELEMENTAL_BUFF, translate.Get("skill_ell_buff"), BAD.."+20%"..translate.Get("exp_damage_t")..GOOD..translate.Get("skill_ell_buff_d1"),
-																0,			-6,					{}, TREE_GUNTREE)
+																0,			-6,					{SKILL_INDUCTOR_ISSUE,SKILL_ATTACHMENT_CURSE}, TREE_GUNTREE)
+GM:AddSkill(SKILL_INDUCTOR_ISSUE, translate.Get("skill_ind_issue"), BAD..translate.Get("skill_ind_issue_d1")..GOOD..translate.Get("skill_ind_issue_d2"),
+																0,			-7,					{}, TREE_GUNTREE)
+GM:AddSkill(SKILL_ATTACHMENT_CURSE, translate.Get("skill_at_curse"), BAD..translate.Get("skill_at_curse_d1")..GOOD..translate.Get("skill_at_curse_d2"),
+																-2.5,			-6,					{SKILL_HEHE}, TREE_GUNTREE)
+GM:AddSkill(SKILL_HEHE, translate.Get("skill_just_buff"), GOOD..translate.Get("skill_just_buff_d1"),
+																-2.5,			-5,					{}, TREE_GUNTREE)
 GM:AddSkill(SKILL_ORPHICFOCUS, translate.Get("skill_orfocus"), GOOD..translate.Get("skill_orfocus_d1")..GOOD.."+2%"..translate.Get("w_ac")..BAD..translate.Get("skill_orfocus_d2")..BAD.."-6%"..translate.Get("r_speed"),
 																5,			-1,					{SKILL_DELIBRATION}, TREE_GUNTREE)
 GM:AddSkill(SKILL_DELIBRATION, translate.Get("skill_deli"), GOOD.."+3%"..translate.Get("w_ac")..GOOD.."+1%"..translate.Get("b_damage"),
@@ -1188,7 +1199,7 @@ GM:AddSkill(SKILL_KNUCKLEMASTER, translate.Get("skill_knuckmaster"), GOOD.."+75%
 																6,			-6,					{SKILL_NONE, SKILL_COMBOKNUCKLE}, TREE_MELEETREE)
 GM:AddSkill(SKILL_COMBOKNUCKLE, translate.Get("skill_combohits"), GOOD..translate.Get("skill_combohits_d1")..BAD..translate.Get("skill_combohits_d2"),
 																6,			-4,					{SKILL_CHEAPKNUCKLE, SKILL_CRITICALKNUCKLE}, TREE_MELEETREE)
-GM:AddSkill(SKILL_HEAVYSTRIKES, translate.Get("skill_hknucke"), GOOD.."+100%"..translate.Get("melee_knock")..BAD..translate.Get("skill_hknucke_d1")..BAD..translate.Get("skill_hknucke_d2"),
+GM:AddSkill(SKILL_HEAVYSTRIKES, translate.Get("skill_hknucke"), GOOD.."+90%"..translate.Get("melee_knock")..GOOD..translate.Get("skill_hknucke_d1")..BAD.."-50%"..translate.Get("meleedamage"),
 																2,			0,					{SKILL_BATTLER5, SKILL_JOUSTER}, TREE_MELEETREE)
 GM:AddSkill(SKILL_JOUSTER, translate.Get("skill_jouster"), GOOD.."+15%"..translate.Get("meleedamage")..BAD.."-90%"..translate.Get("melee_knock")..BAD.."-50%"..translate.Get("b_damage"),
 																2,			2,					{SKILL_BLOODLOST,SKILL_SOY}, TREE_MELEETREE)
@@ -1856,7 +1867,12 @@ GM:AddSkillFunction(SKILL_ABUSE, function(pl, active)
 	pl:SetDTBool(DT_PLAYER_BOOL_LABUSE, active)
 end)
 
-
+GM:SetSkillModifierFunction(SKILLMOD_ELEMENTAL_MUL, function(pl, amount)
+	pl.ElementalMul = math.Clamp(amount + 1.0, 0, 1000.0)
+end)
+GM:SetSkillModifierFunction(SKILLMOD_ATT_CHANCE, function(pl, amount)
+	pl.AttChance = math.Clamp(amount + 1.0, 0, 1000.0)
+end)
 GM:SetSkillModifierFunction(SKILLMOD_ADD_STATUS, function(pl, amount)
 	pl.AdditionalStatusTime = math.Clamp(amount + 1.0, 0, 1000.0)
 end)
@@ -2538,6 +2554,15 @@ GM:AddSkillModifier(SKILL_SOFTDET, SKILLMOD_EXP_DAMAGE_RADIUS, 0.10)
 GM:AddSkillModifier(SKILL_SOFTDET, SKILLMOD_EXP_DAMAGE_TAKEN_MUL, -0.4)
 
 GM:AddSkillModifier(SKILL_ELEMENTAL_BUFF, SKILLMOD_EXP_DAMAGE_TAKEN_MUL,0.2)
+GM:AddSkillModifier(SKILL_ELEMENTAL_BUFF, SKILLMOD_ELEMENTAL_MUL,0.1)
+GM:AddSkillModifier(SKILL_ELEMENTAL_BUFF, SKILLMOD_ATT_CHANCE,0.1)
+
+GM:AddSkillModifier(SKILL_ATTACHMENT_CURSE, SKILLMOD_ELEMENTAL_MUL,0.10)
+
+GM:AddSkillModifier(SKILL_HEHE, SKILLMOD_ELEMENTAL_MUL,0.03)
+
+GM:AddSkillModifier(SKILL_INDUCTOR_ISSUE, SKILLMOD_ELEMENTAL_MUL,-0.25)
+GM:AddSkillModifier(SKILL_INDUCTOR_ISSUE, SKILLMOD_ATT_CHANCE,0.15)
 
 GM:AddSkillModifier(SKILL_IRONBLOOD, SKILLMOD_BLOODARMOR_DMG_REDUCTION, 0.65)
 GM:AddSkillModifier(SKILL_IRONBLOOD, SKILLMOD_BLOODARMOR_MUL, -0.3)
@@ -2554,7 +2579,7 @@ GM:AddSkillModifier(SKILL_UNBOUND, SKILLMOD_SPEED, -4)
 
 GM:AddSkillModifier(SKILL_CHEAPKNUCKLE, SKILLMOD_MELEE_RANGE_MUL, -0.1)
 
-GM:AddSkillModifier(SKILL_HEAVYSTRIKES, SKILLMOD_MELEE_KNOCKBACK_MUL, 1)
+GM:AddSkillModifier(SKILL_HEAVYSTRIKES, SKILLMOD_MELEE_KNOCKBACK_MUL, 0.9)
 
 GM:AddSkillModifier(SKILL_CANNONBALL, SKILLMOD_PROJ_SPEED, -0.25)
 GM:AddSkillModifier(SKILL_CANNONBALL, SKILLMOD_PROJECTILE_DAMAGE_MUL, 0.35)

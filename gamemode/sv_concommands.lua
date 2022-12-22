@@ -19,11 +19,11 @@ concommand.Add("zs_pointsshopbuy", function(sender, command, arguments)
 	local id = arguments[1]
 	id = tonumber(id) or id
 	local itemtab = FindItem(id)
-	if sender:HasTrinket("sin_envy") and ((weapons.Get(itemtab).Tier and weapons.Get(itemtab).Tier or 0) <= 4) then
+	if sender:HasTrinket("sin_envy") and ((weapons.Get(itemtab) and weapons.Get(itemtab).Tier and weapons.Get(itemtab).Tier or 0) <= 4) then
 		GAMEMODE:ConCommandErrorMessage(sender, translate.ClientGet(sender, "envy_taken"))
 		return
 	end
-	if sender:HasTrinket("sin_pride") and ((weapons.Get(itemtab).Tier and weapons.Get(itemtab).Tier or 0) >= 4) then
+	if sender:HasTrinket("sin_pride") and ((weapons.Get(itemtab) and weapons.Get(itemtab).Tier and weapons.Get(itemtab).Tier or 0) >= 4) then
 		GAMEMODE:ConCommandErrorMessage(sender, translate.ClientGet(sender, "envy_pride"))
 		return
 	end

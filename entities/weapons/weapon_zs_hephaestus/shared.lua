@@ -1,7 +1,7 @@
 --SWEP.PrintName = "'Hephaestus' Tau Cannon"
 --SWEP.Description = "Also known as the Gauss Gun. Launches tau projectiles at incredibly high speeds."
-SWEP.PrintName = ""..translate.Get("wep_tau")
-SWEP.Description = ""..translate.Get("wep_d_tau")
+SWEP.PrintName = translate.Get("wep_tau")
+SWEP.Description = translate.Get("wep_d_tau")
 
 SWEP.Base = "weapon_zs_base"
 
@@ -14,7 +14,7 @@ SWEP.ShowWorldModel = false
 SWEP.UseHands = true
 
 SWEP.Primary.Sound = Sound("weapons/gauss/fire1.wav")
-SWEP.Primary.Damage = 26.5
+SWEP.Primary.Damage = 45.85
 SWEP.Primary.NumShots = 1
 SWEP.Primary.Delay = 0.2
 

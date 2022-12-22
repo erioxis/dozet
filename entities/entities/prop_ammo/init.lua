@@ -26,23 +26,6 @@ function ENT:Initialize()
 	self:ItemCreated()
 end
 
-function ENT:SetAmmoType(ammotype)
-	self:SetModel(GAMEMODE.AmmoModels[string.lower(ammotype)] or "models/Items/BoxMRounds.mdl")
-	self.m_AmmoType = ammotype
-end
-
-function ENT:GetAmmoType()
-	return self.m_AmmoType or "pistol"
-end
-
-function ENT:SetAmmo(ammo)
-	self.m_Ammo = tonumber(ammo) or self:GetAmmo()
-end
-
-function ENT:GetAmmo()
-	return self.m_Ammo or 0
-end
-
 function ENT:Use(activator, caller)
 	if self.IgnoreUse then return end
 	self:GiveToActivator(activator, caller)

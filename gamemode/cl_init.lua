@@ -1460,7 +1460,7 @@ function GM:CreateScalingFonts()
 
 	surface.CreateLegacyFont(fontfamilysm, screenscale * 13, fontweight, fontaa, false, "ZSBodyTextFontSmall", fontshadow)
 
-	surface.CreateLegacyFont(fontfamilysm, screenscale * 15, fontweight, fontaa, false, "ZSBodyTextFont", fontshadow, fontoutline)
+	surface.CreateLegacyFont(fontfamilysm, screenscale * 15 * (standard == "Ghoulish Fright AOE Regular" and 1.2 or 1), fontweight, fontaa, false, "ZSBodyTextFont", fontshadow, fontoutline)
 	surface.CreateLegacyFont(fontfamilysm, screenscale * 26, fontweight, fontaa, false, "ZSBodyTextFontBig", fontshadow, fontoutline)
 
 	surface.CreateLegacyFont(fontfamily, screenscale * (20 + fontsizeadd), 0, true, false, "ZSDamageResistance", false, true)

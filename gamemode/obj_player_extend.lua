@@ -351,7 +351,7 @@ function meta:GetPTime(ptime)
 end	
 
 function meta:SetPTime(pts, ptime)
-	self:SetNWFloat(ptime.."time", pts+3.2)
+	self:SetNWFloat(ptime.."time", pts+5.2)
 end
 
 function meta:GetBloodArmor()

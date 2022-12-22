@@ -228,6 +228,9 @@ hook.Add("PreDrawTranslucentRenderables", "ZFullBright", GM.FullBrightOff)
 hook.Add("PostDrawTranslucentRenderables", "ZFullBright", GM.FullBrightOn)
 hook.Add("PreDrawViewModel", "ZFullBright", GM.FullBrightOff)
 hook.Add("RenderScreenspaceEffects", "ZFullBright", GM.FullBrightOff)
+--[[local function DoProgressBar(lp, progress, ptype)
+	return 
+end]]
 function GM:DrawInductorIndicators()
 	local x = ScrW() * 0.45
 	local y = ScrH() * 0.05
@@ -236,10 +239,12 @@ function GM:DrawInductorIndicators()
 	local medp = lp:GetProgress('mprog')
 	local fired =lp:GetProgress('fprog')
 	local pulsed =lp:GetProgress('pprog')
+	local bountyd =lp:GetProgress('bprog')
 
 	local medt = lp:GetPTime('mprog')
 	local firet =lp:GetPTime('fprog')
 	local pulset =lp:GetPTime('pprog')
+	local bountyt =lp:GetPTime('bprog')
 
 	if fired > 0 and lp:HasTrinket("fire_ind") and firet >= CurTime() then
 		if lp:IsValid() then
@@ -277,7 +282,7 @@ function GM:DrawInductorIndicators()
 			y = y + ScrH() * 0.07
 		end
 	end
-	if lp:GetProgress('mprog') > 0 and lp:IsSkillActive(SKILL_PREMIUM) and lp:GetMedTime() >= CurTime() then
+	if lp:GetProgress('mprog') > 0 and lp:IsSkillActive(SKILL_PREMIUM) and medt >= CurTime() then
 		if lp:IsValid() then
 			local matGlow = Material("sprites/glow04_noz")
 			local texDownEdge = surface.GetTextureID("gui/gradient_down")
@@ -343,6 +348,41 @@ function GM:DrawInductorIndicators()
 			surface.DrawTexturedRect(x + 2 + subwidth - 6, y + 1 - hei/2, 4, hei * 2)
 			local phantomwidth = (health == form  and 0 or wid)
 			draw.SimpleTextBlurry(translate.Get("pc_hud")..math.Round(pulsed).."/"..progress , "ZSHUDFontTiny", x, y - 12, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM)
+			y = y + ScrH() * 0.07
+		end
+	end
+	if bountyd > 0 and bountyt >= CurTime() then
+		if lp:IsValid() then
+			local matGlow = Material("sprites/glow04_noz")
+			local texDownEdge = surface.GetTextureID("gui/gradient_down")
+			local colHealth = Color(97,255,24)
+			local screenscale = BetterScreenScale()
+			local health = bountyd
+			local progress = 2500
+			local healthperc = math.Clamp(health / progress, 0.01, 1)
+			local wid, hei = 150 * screenscale, 20 * screenscale
+	 
+			
+	
+			local subwidth = healthperc * wid
+			local fraction = (bountyt-CurTime())/2
+			local form = math.Clamp( fraction, 0, 1 )
+			colHealth.a = form *255
+			surface.SetDrawColor(0, 0, 0, colHealth.a)
+			surface.DrawRect(x, y, wid, hei)
+
+			
+			surface.SetDrawColor(colHealth.r * 1, colHealth.g * 0.2, colHealth.b, 40)
+			surface.SetTexture(texDownEdge)
+			surface.DrawTexturedRect(x + 2, y + 1, subwidth - 4, hei - 2)
+			surface.SetDrawColor(colHealth.r * 0.6, colHealth.g * 0.6, colHealth.b, 30)
+			surface.DrawRect(x + 2, y + 1, subwidth - 4, hei - 2)
+	
+			surface.SetMaterial(matGlow)
+			surface.SetDrawColor(255, 255, 255, colHealth.a)
+			surface.DrawTexturedRect(x + 2 + subwidth - 6, y + 1 - hei/2, 4, hei * 2)
+			local phantomwidth = (health == form  and 0 or wid)
+			draw.SimpleTextBlurry(translate.Get("bp_hud")..math.Round(bountyd).."/"..progress , "ZSHUDFontTiny", x, y - 12, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM)
 			y = y + ScrH() * 0.07
 		end
 	end

@@ -512,7 +512,7 @@ GM:AddPointShopItem("megahook",			ITEMCAT_MELEE,			2500,			"weapon_zs_harpoon_me
 GM:AddPointShopItem("teslar",			ITEMCAT_MELEE,			2500,			"weapon_zs_teslorer")
 GM:AddPointShopItem("pw7",			ITEMCAT_MELEE,			2500,			"weapon_zs_powerfists_t7")
 -- Tier 7
-GM:AddPointShopItem("speed",			ITEMCAT_MELEE,			80600,			"weapon_zs_speed")
+GM:AddPointShopItem("speed",			ITEMCAT_MELEE,			180600,			"weapon_zs_speed")
 GM:AddPointShopItem("xouryc",			ITEMCAT_MELEE,			4500,			"weapon_zs_loy")
 GM:AddPointShopItem("murasama",			ITEMCAT_MELEE,			4500,			"weapon_zs_murasama")
 -- Super Trinkets ------------------------------------------------------------------------------------------------------------------------------------------------

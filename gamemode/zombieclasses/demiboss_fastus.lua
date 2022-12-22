@@ -13,7 +13,8 @@ CLASS.Speed = 322
 CLASS.SWEP = "weapon_zs_fastking"
 
 CLASS.Points = CLASS.Health/GM.NoHeadboxZombiePointRatio
-
+CLASS.Variations = false
+CLASS.Original = true
 
 
 CLASS.CanTaunt = true

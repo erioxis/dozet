@@ -5,7 +5,7 @@ GM.Website	=	"https://github.com/erioxis/dozet"
 
 -- No, adding a gun doesn't make your name worth being here.
 GM.Credits = {
-	{"Version", "", "6.0.0"},
+	{"Version", "", "6.0.5"},
 	{"erioxis", "Phantom coder", "dead"},
 	{"Nullted", "", "RU-ENG Translation"},
 	{"Bro 3", "", "Some models"}
@@ -524,6 +524,12 @@ end
 function GM:OnPlayerHitGround(pl, inwater, hitfloater, speed)
 	if inwater then return true end
 
+	if SERVER then
+		if pl.FallDamageHS and pl.FallDamageHS >= 1 then
+			pl:TakeDamage(pl.FallDamageHS, pl.FallAttacker and pl.FallAttacker:IsValid() and pl.FallAttacker or pl,pl.FallAttacker and  pl.FallAttacker:IsValid() and pl.FallAttacker:GetActiveWeapon() or pl)
+			pl.FallDamageHS = 0
+		end
+	end
 	if speed > 64 then
 		pl.LandSlow = true
 	end
@@ -549,6 +555,7 @@ function GM:OnPlayerHitGround(pl, inwater, hitfloater, speed)
 		recovery_mul = pl.FallDamageRecoveryMul or 1
 		damage_mul = pl.FallDamageDamageMul or 1
 	end
+
 
 	local damage = (0.1 * (speed - 525 * threshold_mul)) ^ 1.45
 	if hitfloater then damage = damage / 2 end
