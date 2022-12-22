@@ -13,7 +13,8 @@ CLASS.KnockbackScale = 0
 
 CLASS.FearPerInstance = 1
 
-CLASS.Points = 250
+CLASS.Points = 50
+CLASS.NoSlowdown = true
 
 CLASS.SWEP = "weapon_zs_baragat"
 CLASS.BaraCat = true

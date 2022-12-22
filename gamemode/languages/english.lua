@@ -938,6 +938,8 @@ LANGUAGE.qual_5 = "Dull "
 LANGUAGE.qual_0 = ""
 --Sin weapon
 --melee
+LANGUAGE.wep_ice_nail		= "'Dice' Cold Nail"
+LANGUAGE.wep_d_ice_nail		= "Slow enemy.\nDeal a ice damage."
 LANGUAGE.wep_lowers		= "'Lowers' Knife"
 LANGUAGE.wep_d_lowers		= "Bleed on hit and restore some health.\nCan throwe a scabbard."
 LANGUAGE.wep_rapir		= "Rapier"
@@ -2569,6 +2571,8 @@ LANGUAGE.dn_killed =  " killed "
 LANGUAGE.fi_hud = "Fire Inductor: "
 
 LANGUAGE.pc_hud = "Cascade Resonance: "
+
+LANGUAGE.ii_hud = "Ice Inductor: "
 
 
 LANGUAGE.bp_hud = "Bounty: "

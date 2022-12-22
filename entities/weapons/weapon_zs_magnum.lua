@@ -63,7 +63,8 @@ if CLIENT then
 		local owner = self:GetOwner()
 		if not MySelf:KeyDown(IN_SPEED) then return end
 		 local beamcol = colBeam
-		 local trace = owner:CompensatedMeleeTrace(20000,1)
+		 local trace = MySelf:GetEyeTraceNoCursor()
+		if trace.Entity:IsValid() then return end
 		 local normal = trace.Normal
 		 local hitnormal = trace.HitNormal
 		 local hitpos = trace.HitPos
@@ -82,8 +83,8 @@ if CLIENT then
 			)
 			
 
-			 dir = temp_angle:Forward()
-			 local endpos = hitpos + dir * 20000
+			 dir = temp_angle:Forward() * 20000
+			 local endpos = hitpos + dir
 			 if !WorldVisible(endpos,hitpos) then endpos = WorldVisiblePos(hitpos,endpos) end
 		 render.DrawBeam(hitpos, endpos, 4, 0, 2, COLOR_WHITE)
 		 render.DrawBeam(hitpos, endpos, 6, 0, 2, beamcol)

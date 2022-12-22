@@ -6,6 +6,7 @@ CLASS.Help = "controls_skeletal_walker"
 
 
 CLASS.Boss = true
+CLASS.NoSlowdown = true
 
 CLASS.Health = 2500
 CLASS.Speed = 150

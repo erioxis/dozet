@@ -5,7 +5,7 @@ CLASS.Help = "controls_bonemesh"
 
 CLASS.Boss = true
 
-CLASS.KnockbackScale = 0
+CLASS.KnockbackScale = 1
 
 CLASS.CanTaunt = true
 

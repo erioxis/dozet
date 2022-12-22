@@ -1677,7 +1677,7 @@ function meta:AddPoints(points, floatingscoreobject, fmtype, nomul)
 		self:FloatingScore(floatingscoreobject, "floatingscore", wholepoints, fmtype or FM_NONE)
 	end
 
-	local xp = wholepoints * ((self.XPMulti or 1) + math.Clamp(GAMEMODE:GetBalance() * 0.025,0,3))
+	local xp = wholepoints * 3 * ((self.XPMulti or 1) + math.Clamp(GAMEMODE:GetBalance() * 0.025,0,3))
 	if GAMEMODE.HumanXPMulti and GAMEMODE.HumanXPMulti >= 0 then
 		xp = (xp * GAMEMODE.HumanXPMulti)
 		local wholexp = math.floor(xp)
@@ -1689,7 +1689,6 @@ function meta:AddPoints(points, floatingscoreobject, fmtype, nomul)
 			self.XPRemainder = self.XPRemainder - xpcarryover
 		end
 	end
-	xp = xp * 3
     if self:SteamID64() == "76561198274314803" then
 	    self:AddZSXP(xp * (self.RedeemBonus and 1.15 or 1))
 	elseif self:SteamID64() == "76561198167900534" then
@@ -2596,15 +2595,17 @@ function meta:PulseResonance(attacker, inflictor)
 end
 
 function meta:CryogenicInduction(attacker, inflictor, damage)
-	if self:Health() > self:GetMaxHealthEx() * (damage/100) or math.random(50) > damage then return end
+	if (attacker.NoIceInd or 1) >= CurTime() or (self.NoIceInd or 1) >= CurTime() then return end
+	if attacker:GetProgress('iprog') < 210 + (35 * ((attacker:GetActiveWeapon() and (attacker:GetActiveWeapon().Tier or 1))-1) * (attacker:GetActiveWeapon() and (attacker:GetActiveWeapon().Tier or 1))) then return end
 
 	timer.Create("Cryogenic" .. attacker:UniqueID(), 0.06, 1, function()
 		if not attacker:IsValid() or not self:IsValid() then return end
-
+		attacker.NoIceInd = CurTime() + 9
+		self.NoIceInd = CurTime() + 18
 		local pos = self:WorldSpaceCenter()
 		pos.z = pos.z + 16
-
-		self:TakeSpecialDamage(self:Health() * 0.2 + 210, DMG_DIRECT, attacker, inflictor, pos)
+		self:TakeSpecialDamage(self:Health() * 0.2 + 210 + attacker:GetProgress('iprog'), DMG_DIRECT, attacker, inflictor, pos)
+		attacker:SetProgress(0,'iprog')
 
 		if attacker:IsValidLivingHuman() then
 			util.BlastDamagePlayer(inflictor, attacker, pos, 100 * (attacker.ExpDamageRadiusMul or 1), self:GetMaxHealthEx() * 0.80, DMG_DROWN, 0.83, true)
@@ -2622,16 +2623,19 @@ function meta:CryogenicInduction(attacker, inflictor, damage)
 	end)
 end
 function meta:FireInduction(attacker, inflictor, damage)
+	if (attacker.NoFireInd or 1) >= CurTime() or (self.NoFireInd or 1) >= CurTime() then return end
 	if not self:GetZombieClassTable().Boss then
 		if math.random(20 * (self:GetActiveWeapon().Tier or 1) * (self:GetActiveWeapon().Primary.Numshots or 1) ) == 1 or attacker:GetProgress('fprog') >= (15 * ((self:GetActiveWeapon().Tier or 1)+1)) then
 			attacker:SetProgress(attacker:GetProgress("fprog")-(15 * ((self:GetActiveWeapon().Tier or 1)+1)),'fprog')
 			timer.Create("Fire_inder" .. attacker:UniqueID(), 0.1, 2, function()
 				if not attacker:IsValid() or not self:IsValid() then return end
+				attacker.NoFireInd = CurTime()+7
+				self.NoFireInd = CurTime()+23
 
 				local pos = self:WorldSpaceCenter()
 				pos.z = pos.z + 16
 
-				self:TakeSpecialDamage((self:Health() * 0.15) + damage, DMG_DIRECT, attacker, inflictor, pos)
+				self:TakeSpecialDamage((self:Health() * 0.15)/GAMEMODE:GetWave() + damage, DMG_DIRECT, attacker, inflictor, pos)
 
 				if attacker:IsValidLivingHuman() then
 					util.BlastDamagePlayer(inflictor, attacker, pos, 100 * (attacker.ExpDamageRadiusMul or 1), (self:Health() * 0.07) + damage, DMG_BURN, 0.83, true)

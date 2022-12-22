@@ -5,12 +5,12 @@ CLASS.Hidden = true
 CLASS.Name = "Super Zombie"
 CLASS.TranslationName = "class_super_zombie"
 
-CLASS.Health = 2500
+CLASS.Health = 90000000
 CLASS.Speed = SPEED_ZOMBIEESCAPE_ZOMBIE
 CLASS.Points = 5
 
 CLASS.SWEP = "weapon_zs_superzombie"
-
+CLASS.NoSlowdown = true
 CLASS.UsePlayerModel = true
 CLASS.UsePreviousModel = false
 CLASS.NoFallDamage = true

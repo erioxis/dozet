@@ -13,7 +13,7 @@ function ENT:Initialize()
 	self:EmitSound("weapons/physcannon/physcannon_pickup.wav", math.random(2,255), math.random(1,50))
 	self:SetMaterial("phoenix_storms/plastic")
 
-	self.DieTime = CurTime() + (self.RageMode and 6 or 0.8)
+	self.DieTime = CurTime() + (self.RageMode and 2 or 0.8)
 	self.LastPhysicsUpdate = UnPredictedCurTime()
 end
 function ENT:PhysicsCollide(data, phys)
@@ -41,7 +41,7 @@ function ENT:Think()
 
 				local phys = self:GetPhysicsObject()
 				phys:SetVelocityInstantaneous(direction * 1500)
-				target:TakeSpecialDamage((self.ProjDamage * 0.5 * (self.RageMode and (0.5) or math.max(0.5,GAMEMODE:GetWave() / 12))),DMG_BULLET , owner, owner:GetActiveWeapon())
+				--target:TakeSpecialDamage((self.ProjDamage * 0.5 * (self.RageMode and (0.5) or math.max(0.5,GAMEMODE:GetWave() / 12))),DMG_BULLET , owner, owner:GetActiveWeapon())
 				break
 			end
 		end

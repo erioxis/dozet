@@ -8,8 +8,9 @@ CLASS.Original = false
 CLASS.Variations = "Zombie"
 CLASS.Wave = 5 / 6
 
-CLASS.Health = 125
-CLASS.Speed = 170
+CLASS.Health = 650
+CLASS.NoSlowdown = true
+CLASS.Speed = 210
 
 CLASS.Points = CLASS.Health/GM.HumanoidZombiePointRatio
 

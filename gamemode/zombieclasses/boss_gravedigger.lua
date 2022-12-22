@@ -4,7 +4,7 @@ CLASS.Name = "The Grave Darkness"
 CLASS.TranslationName = "class_gravedigger"
 CLASS.Description = "description_gravedigger"
 CLASS.Help = "controls_gravedigger"
-
+CLASS.KnockbackScale = 1
 CLASS.Boss = true
 CLASS.DemiBoss = false
 CLASS.Health = 1922

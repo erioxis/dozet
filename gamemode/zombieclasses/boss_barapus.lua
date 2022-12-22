@@ -5,7 +5,7 @@ CLASS.Boss = true
 
 CLASS.Hidden = true
 
-CLASS.KnockbackScale = 0
+CLASS.KnockbackScale = 1
 
 CLASS.FearPerInstance = 1
 

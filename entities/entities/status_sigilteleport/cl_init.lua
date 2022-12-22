@@ -139,7 +139,7 @@ function ENT:CalcView(pl, origin, angles, fov, znear, zfar)
 
 	local filter = player.GetAll()
 	filter[#filter + 1] = self
-	local tr = util.TraceHull({start = self:GetTargetSigil():GetPos() + Vector(0,0,64), endpos = self:GetTargetSigil():GetPos(), mask = MASK_SHOT, filter = filter, mins = ViewHullMins, maxs = ViewHullMaxs})
+	local tr = util.TraceHull({start = self:GetTargetSigil():GetPos() + Vector(0,0,94), endpos = self:GetTargetSigil():GetPos(), mask = MASK_SHOT, filter = filter, mins = ViewHullMins, maxs = ViewHullMaxs})
 
 	return {origin = tr.HitPos + tr.HitNormal * 3}
 end

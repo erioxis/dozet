@@ -12,6 +12,7 @@ CLASS.Speed = 120
 CLASS.Hidden = false
 
 CLASS.FearPerInstance = 1
+CLASS.NoSlowdown = true
 
 CLASS.CanTaunt = true
 

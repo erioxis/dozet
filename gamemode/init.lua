@@ -3447,7 +3447,7 @@ function GM:EntityTakeDamage(ent, dmginfo)
 							
 
 							if attacker:HasTrinket("fire_at") and math.max(math.random(fireatt),1) == 1 or attacker:GetProgress('fprog') >= 15*((attacker:GetActiveWeapon() and (attacker:GetActiveWeapon().Tier or 1))+1) then
-								ent:AddLegDamageExt(damage2 * 0.5, attacker, attacker, SLOWTYPE_FLAME)
+								ent:AttachmentDamage(damage2 * 0.5, attacker, attacker, SLOWTYPE_FLAME)
 								if ent:GetZombieClassTable().Name ~= "Shade" then
 									local d =ent:GiveStatus("burn",math.random(1,7))
 									d.Damager = attacker
@@ -3455,11 +3455,11 @@ function GM:EntityTakeDamage(ent, dmginfo)
 								CurseAttach(attacker)
 							end
 							if attacker:HasTrinket("pulse_at") and math.max(math.random(pulseatt),1) == 1 then
-								ent:AddLegDamageExt(damage2 * 0.7, attacker, attacker, SLOWTYPE_PULSE)
+								ent:AttachmentDamage(damage2 * 0.7, attacker, attacker, SLOWTYPE_PULSE)
 								CurseAttach(attacker)
 							end
 							if attacker:HasTrinket("acid_at") and math.max(math.random(iceatt),1) == 1 then
-								ent:AddLegDamageExt(damage2 * 0.5, attacker, attacker, SLOWTYPE_COLD)
+								ent:AttachmentDamage(damage2 * 0.5, attacker, attacker, SLOWTYPE_COLD)
 								if math.random(1,4) == 1 then
 									ent:GiveStatus("frost",math.random(1,7))
 								end
