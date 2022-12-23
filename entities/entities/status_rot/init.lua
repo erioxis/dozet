@@ -17,6 +17,7 @@ function ENT:Think()
 		if owner:IsSkillActive(SKILL_CQARMOR) then
 			owner:SetHealth(owner:Health() * 0.99)
 		end
+		owner:AddUselessDamage(owner:GetMaxHealth()*0.015)
 	end
 	if self:GetStartTime() + self:GetDuration() - CurTime() >= 10000 then
 		owner:Kill()

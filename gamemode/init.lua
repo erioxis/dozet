@@ -1463,6 +1463,7 @@ function GM:Think()
 				end
 				if pl:IsSkillActive(SKILL_OMEGA) and (pl:GetVelocity():Length() <= 0) and pl:Health() > pl:GetMaxHealth() * 0.35 then
 					pl:TakeDamage(pl:GetMaxHealth() * 0.05)
+					pl:AddUselessDamage(pl:GetMaxHealth() * 0.05)
 				end
 
 				if pl:HasTrinket("regenimplant") and time >= pl.NextRegenTrinket and pl:Health() < healmax then
