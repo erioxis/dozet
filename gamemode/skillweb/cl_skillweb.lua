@@ -262,7 +262,8 @@ local offsets = {
 	[TREE_ANCIENTTREE] = {-17, -10},
 	[TREE_DEFENSETREE] = {0, -1},
 	[TREE_DONATETREE] = {0, 0},
-	[TREE_USELESSTREE] = {0, 26}
+	[TREE_USELESSTREE] = {0, 26},
+	[TREE_BRANCH_ELEMENTS] = {13, -7}
 }
 local nodemodel_beta = {
 	[TREE_HEALTHTREE] = "models/Gibs/HGIBS.mdl",
@@ -936,7 +937,8 @@ local nodecolors = {
 	[TREE_ANCIENTTREE] = {2, 2, 2.5},
 	[TREE_DEFENSETREE] = {4, 4, 4.6},
 	[TREE_DONATETREE] = {2, 0, 5},
-	[TREE_USELESSTREE] = {2.3, 3, 9}
+	[TREE_USELESSTREE] = {2.3, 3, 9},
+	[TREE_BRANCH_ELEMENTS] = {212.3, 2, 4}
 }
 
 

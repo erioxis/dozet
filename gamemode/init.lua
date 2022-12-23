@@ -5330,6 +5330,10 @@ function GM:WaveStateChanged(newstate, pl)
 				if pl:IsSkillUnlocked(SKILL_SECRET) and pl:IsSkillUnlocked(SKILL_SECRET2) and pl:IsSkillUnlocked(SKILL_TORMENT3) and pl:IsSkillUnlocked(SKILL_SECRET_VII) and pl:IsSkillUnlocked(SKILL_SECRET_VI) and pl:IsSkillUnlocked(SKILL_SKILLFORGODS) and pl:IsSkillUnlocked(SKILL_SECRET_VIII) then
 					pl:GiveAchievement("ancient_secret")
 				end
+				if pl:IsSkillUnlocked(SKILL_HAHA) and pl:IsSkillUnlocked(SKILL_HIHI) and pl:IsSkillUnlocked(SKILL_HEHE) and pl:IsSkillUnlocked(SKILL_SOUL_TRADE) and pl:IsSkillUnlocked(SKILL_CHEESE) and pl:IsSkillUnlocked(SKILL_CHEESE2) and pl:IsSkillUnlocked(SKILL_SKYHELP) and pl:IsSkillUnlocked(SKILL_NULLED)
+				and pl:IsSkillUnlocked(SKILL_CHEESE3) then
+					pl:GiveAchievement("hehiha")
+				end
 
 
 			
@@ -5338,10 +5342,7 @@ function GM:WaveStateChanged(newstate, pl)
 				
 				if pointsbonus then
 					local pointsreward = pointsbonus + (pl.EndWavePointsExtra or 0)
-					if pl:IsSkillActive(SKILL_SCOURER) then
-						pl:GiveAmmo(math.ceil(pointsreward), "scrap")
-						pointsreward = 0
-					end
+
 						if pl:HasTrinket("lotteryticket")  then 
 					    local luckdis = (lucktrue  / 4)
 						local chargemax = 6 - luckdis
@@ -5463,7 +5464,10 @@ function GM:WaveStateChanged(newstate, pl)
 							net.Send(pl)
 								
 							end end
-
+							if pl:IsSkillActive(SKILL_SCOURER) then
+								pl:GiveAmmo(math.ceil(pointsreward), "scrap")
+								pointsreward = 0
+							end
 						pl:AddPoints(pointsreward, nil, nil, true)
 						net.Start("zs_luck")
 						net.WriteString(lucktrue )

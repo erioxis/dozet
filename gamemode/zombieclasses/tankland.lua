@@ -8,6 +8,7 @@ CLASS.Wave = 6 / 12
 CLASS.Health = 1200
 CLASS.Speed = 182
 CLASS.KnockbackScale = 0
+CLASS.NoSlowdown = true
 
 CLASS.CanTaunt = true
 

@@ -266,6 +266,11 @@ GM.Achievements["cleaner"] = {
     Goal = 150,
     Reward = 5000
 }
+GM.Achievements["hehiha"] = {
+    Name = translate("challenge_hehiha"),
+    Desc = translate("challenge_hehiha_d"),
+    Reward = 5000
+}
 
 
 -- Cache count, to not call table.Count again

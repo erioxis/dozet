@@ -90,6 +90,7 @@ TREE_ANCIENTTREE = 8
 TREE_DEFENSETREE = 9
 TREE_DONATETREE = 10
 TREE_USELESSTREE = 11
+TREE_BRANCH_ELEMENTS = 12
 
 -- Dummy skill used for "connecting" to their trees.
 SKILL_NONE = 0
@@ -400,6 +401,15 @@ SKILL_ATTACHMENT_CURSE = 378
 SKILL_HEHE = 379
 SKILL_CONISSUE = 380
 SKILL_N_FRIEND = 381
+SKILL_HAHA = 382
+SKILL_HIHI = 383
+SKILL_DOUBLE_ISSUE = 384
+
+
+
+
+
+
 
 SKILLMOD_HEALTH = 1
 SKILLMOD_SPEED = 2
@@ -1104,17 +1114,26 @@ GM:AddSkill(SKILL_U_CRYGASGREN, translate.Get("skill_u_cryogas"), GOOD..translat
 GM:AddSkill(SKILL_SOFTDET, translate.Get("skill_sdeton"), GOOD.."-40%"..translate.Get("exp_damage_t")..BAD.."-10%"..translate.Get("exp_damage"),
 																0,			-5,					{SKILL_ELEMENTAL_BUFF}, TREE_GUNTREE)
 GM:AddSkill(SKILL_ELEMENTAL_BUFF, translate.Get("skill_ell_buff"), BAD.."+20%"..translate.Get("exp_damage_t")..GOOD..translate.Get("skill_ell_buff_d1"),
-																0,			-6,					{SKILL_INDUCTOR_ISSUE,SKILL_ATTACHMENT_CURSE}, TREE_GUNTREE)
+																0,			-6,					{SKILL_INDUCTOR_ISSUE,SKILL_ATTACHMENT_CURSE}, TREE_BRANCH_ELEMENTS)
 GM:AddSkill(SKILL_INDUCTOR_ISSUE, translate.Get("skill_ind_issue"), BAD..translate.Get("skill_ind_issue_d1")..GOOD..translate.Get("skill_ind_issue_d2"),
-																0,			-7,					{}, TREE_GUNTREE)
+																0,			-7,					{SKILL_DOUBLE_ISSUE}, TREE_BRANCH_ELEMENTS)
+GM:AddSkill(SKILL_DOUBLE_ISSUE, translate.Get("skill_d_issue"), GOOD..translate.Get("skill_d_issue_d1")..BAD..translate.Get("skill_d_issue_d2"),
+																1,			-8,					{}, TREE_BRANCH_ELEMENTS)
 GM:AddSkill(SKILL_ATTACHMENT_CURSE, translate.Get("skill_at_curse"), BAD..translate.Get("skill_at_curse_d1")..GOOD..translate.Get("skill_at_curse_d2"),
-																-2.5,			-6,					{SKILL_HEHE, SKILL_CONISSUE}, TREE_GUNTREE)
+																-2.5,			-6,					{SKILL_HEHE, SKILL_CONISSUE}, TREE_BRANCH_ELEMENTS)
 GM:AddSkill(SKILL_CONISSUE, translate.Get("skill_conissue"), GOOD..translate.Get("skill_conissue_d1")..BAD..translate.Get("skill_conissue_d2"),
-																-2.5,			-7,					{SKILL_N_FRIEND}, TREE_GUNTREE)
+																-2.5,			-7,					{SKILL_N_FRIEND}, TREE_BRANCH_ELEMENTS)
 GM:AddSkill(SKILL_N_FRIEND, translate.Get("skill_nature_fs"), GOOD..translate.Get("skill_nature_fs_d1")..BAD..translate.Get("skill_nature_fs_d2"),
-																-1.5,			-8,					{}, TREE_GUNTREE)
+																-1.5,			-8,					{}, TREE_BRANCH_ELEMENTS)
 GM:AddSkill(SKILL_HEHE, translate.Get("skill_just_buff"), GOOD..translate.Get("skill_just_buff_d1"),
-																-2.5,			-5,					{}, TREE_GUNTREE)
+																-2.5,			-5,					{SKILL_HAHA}, TREE_BRANCH_ELEMENTS)
+GM:AddSkill(SKILL_HAHA, translate.Get("skill_haha"), GOOD..translate.Get("skill_haha_d1"),
+																-3.5,			-4,					{SKILL_HIHI}, TREE_BRANCH_ELEMENTS)
+GM:AddSkill(SKILL_HIHI, translate.Get("skill_hihi"), GOOD..translate.Get("skill_hihi_d1"),
+																-2,			-4.2,					{SKILL_NONE}, TREE_BRANCH_ELEMENTS)
+
+
+
 GM:AddSkill(SKILL_ORPHICFOCUS, translate.Get("skill_orfocus"), GOOD..translate.Get("skill_orfocus_d1")..GOOD.."+2%"..translate.Get("w_ac")..BAD..translate.Get("skill_orfocus_d2")..BAD.."-6%"..translate.Get("r_speed"),
 																5,			-1,					{SKILL_DELIBRATION}, TREE_GUNTREE)
 GM:AddSkill(SKILL_DELIBRATION, translate.Get("skill_deli"), GOOD.."+3%"..translate.Get("w_ac")..GOOD.."+1%"..translate.Get("b_damage"),
@@ -2575,9 +2594,12 @@ GM:AddSkillModifier(SKILL_CONISSUE, SKILLMOD_ATT_CHANCE,0.5)
 GM:AddSkillModifier(SKILL_ATTACHMENT_CURSE, SKILLMOD_ELEMENTAL_MUL,0.10)
 
 GM:AddSkillModifier(SKILL_HEHE, SKILLMOD_ELEMENTAL_MUL,0.03)
+GM:AddSkillModifier(SKILL_HAHA, SKILLMOD_ATT_CHANCE,-0.03)
+GM:AddSkillModifier(SKILL_HIHI, SKILLMOD_IND_DMG_TAKEN,-0.06)
 
 GM:AddSkillModifier(SKILL_INDUCTOR_ISSUE, SKILLMOD_ELEMENTAL_MUL,-0.25)
 GM:AddSkillModifier(SKILL_INDUCTOR_ISSUE, SKILLMOD_ATT_CHANCE,-0.25)
+GM:AddSkillModifier(SKILL_DOUBLE_ISSUE, SKILLMOD_ATT_CHANCE,0.4)
 
 GM:AddSkillModifier(SKILL_N_FRIEND, SKILLMOD_ELEMENTAL_MUL,-0.25)
 GM:AddSkillModifier(SKILL_N_FRIEND, SKILLMOD_IND_DMG_TAKEN,-0.33)
