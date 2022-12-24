@@ -354,7 +354,7 @@ function meta:ProcessDamage(dmginfo)
 
 		dmginfo:SetDamage(damage)
 	end
-	if attacker:IsValid() and attacker:IsPlayer() and inflictor:IsValid() and self:GetActiveWeapon().Block and self:GetActiveWeapon().IsMelee then
+	if attacker:IsValid() and attacker:IsPlayer() and inflictor:IsValid() and self:GetActiveWeapon().IsMelee and self:GetActiveWeapon().Block then
 		local xpadded = math.Clamp(dmginfo:GetDamage() * 0.25,0.05,10)
 		dmginfo:SetDamage(dmginfo:GetDamage() * ((0.50 * (self.BlockMultiplier or 1)) * ( self:GetActiveWeapon().BlockMultiplierWeapon or 1)))
 		if self:IsSkillActive(SKILL_AVOID_BLOCK) then
@@ -2573,7 +2573,7 @@ function meta:PulseResonance(attacker, inflictor)
 	timer.Create("PulseResonance" .. attacker:UniqueID(), 0.06, 1, function()
 		if not attacker:IsValid() or not self:IsValid() then return end
 
-		attacker:SetProgress(0,'pprog')
+		attacker:SetProgress(attacker:GetProgress('pprog')-80 * (attacker:GetIndChance() or 1),'pprog')
 
 		local pos = self:WorldSpaceCenter()
 		pos.z = pos.z + 16
@@ -2596,7 +2596,8 @@ end
 
 function meta:CryogenicInduction(attacker, inflictor, damage)
 	if (attacker.NoIceInd or 1) >= CurTime() or (self.NoIceInd or 1) >= CurTime() then return end
-	if attacker:GetProgress('iprog') < 210 + (35 * ((attacker:GetActiveWeapon() and (attacker:GetActiveWeapon().Tier or 1))-1) * (attacker:GetActiveWeapon() and (attacker:GetActiveWeapon().Tier or 1))) then return end
+	local formula = (165 + (35 * ((attacker:GetActiveWeapon() and (attacker:GetActiveWeapon().Tier or 1))-1) * (attacker:GetActiveWeapon() and (attacker:GetActiveWeapon().Tier or 1)))) * (attacker:GetIndChance() or 1)
+	if attacker:GetProgress('iprog') < formula then return end
 
 	timer.Create("Cryogenic" .. attacker:UniqueID(), 0.06, 1, function()
 		if not attacker:IsValid() or not self:IsValid() then return end
@@ -2604,8 +2605,8 @@ function meta:CryogenicInduction(attacker, inflictor, damage)
 		self.NoIceInd = CurTime() + 18
 		local pos = self:WorldSpaceCenter()
 		pos.z = pos.z + 16
-		self:TakeSpecialDamage(self:Health() * 0.2 + 210 + attacker:GetProgress('iprog'), DMG_DIRECT, attacker, inflictor, pos)
-		attacker:SetProgress(0,'iprog')
+		self:TakeSpecialDamage(self:Health() * 0.2 + 165 + attacker:GetProgress('iprog'), DMG_DIRECT, attacker, inflictor, pos)
+		attacker:SetProgress(attacker:GetProgress('iprog') -formula,'iprog')
 
 		if attacker:IsValidLivingHuman() then
 			util.BlastDamagePlayer(inflictor, attacker, pos, 100 * (attacker.ExpDamageRadiusMul or 1), self:GetMaxHealthEx() * 0.80, DMG_DROWN, 0.83, true)
@@ -2625,7 +2626,7 @@ end
 function meta:FireInduction(attacker, inflictor, damage)
 	if (attacker.NoFireInd or 1) >= CurTime() or (self.NoFireInd or 1) >= CurTime() then return end
 	if not self:GetZombieClassTable().Boss then
-		if math.random(20 * (self:GetActiveWeapon().Tier or 1) * (self:GetActiveWeapon().Primary.Numshots or 1) ) == 1 or attacker:GetProgress('fprog') >= (15 * ((self:GetActiveWeapon().Tier or 1)+1)) then
+		if math.random(20 * (attacker:GetActiveWeapon().Tier or 1) * (attacker:GetActiveWeapon().Primary.Numshots or 1) ) == 2 or attacker:GetProgress('fprog') >= ((15 * ((attacker:GetActiveWeapon().Tier or 1)+1))) * (attacker:GetIndChance() or 1) then
 			attacker:SetProgress(attacker:GetProgress("fprog")-(15 * ((self:GetActiveWeapon().Tier or 1)+1)),'fprog')
 			timer.Create("Fire_inder" .. attacker:UniqueID(), 0.1, 2, function()
 				if not attacker:IsValid() or not self:IsValid() then return end
@@ -2635,7 +2636,7 @@ function meta:FireInduction(attacker, inflictor, damage)
 				local pos = self:WorldSpaceCenter()
 				pos.z = pos.z + 16
 
-				self:TakeSpecialDamage((self:Health() * 0.15)/GAMEMODE:GetWave() + damage, DMG_DIRECT, attacker, inflictor, pos)
+				self:TakeSpecialDamage((self:Health() * 0.5)/math.max(1,GAMEMODE:GetWave()-3) + damage + attacker:GetProgress("fprog"), DMG_DIRECT, attacker, inflictor, pos)
 
 				if attacker:IsValidLivingHuman() then
 					util.BlastDamagePlayer(inflictor, attacker, pos, 100 * (attacker.ExpDamageRadiusMul or 1), (self:Health() * 0.07) + damage, DMG_BURN, 0.83, true)

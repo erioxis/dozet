@@ -1043,8 +1043,9 @@ function PANEL:Paint(w, h)
 								colBeam.g = 40
 								colBeam.b = 40
 
-								beamsize = 2
+								beamsize = 3
 							end
+							
 
 							if hoveredskill == node.SkillID or hoveredskill == connectid then
 								add = math.abs(math.sin(realtime * math.pi)) * 120

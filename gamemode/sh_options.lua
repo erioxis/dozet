@@ -324,6 +324,7 @@ GM:AddStartingItem("resupplypack",		ITEMCAT_TRINKETS,		25,				"trinket_resupplyp
 
 GM:AddStartingItem("stone",				ITEMCAT_OTHER,			5,				"weapon_zs_stone")
 GM:AddStartingItem("grenade",			ITEMCAT_OTHER,			20,				"weapon_zs_grenade")
+GM:AddStartingItem("h_o_l_y_grenade",			ITEMCAT_OTHER,			45,				"weapon_zs_holy_grenade")
 GM:AddStartingItem("flashbomb",			ITEMCAT_OTHER,			15,				"weapon_zs_flashbomb")
 GM:AddStartingItem("betty",				ITEMCAT_OTHER,			10,				"weapon_zs_proxymine")
 GM:AddStartingItem("corgasgrenade",		ITEMCAT_OTHER,			40,				"weapon_zs_corgasgrenade")
@@ -519,17 +520,17 @@ GM:AddPointShopItem("murasama",			ITEMCAT_MELEE,			4500,			"weapon_zs_murasama")
 -- Super Trinkets ------------------------------------------------------------------------------------------------------------------------------------------------
 
 --
-GM:AddPointShopItem("futureblu",			ITEMCAT_TRINKETS,		500,				"trinket_futureblu").SubCategory =								ITEMSUBCAT_TRINKETS_SUPER
-GM:AddPointShopItem("sman",			ITEMCAT_TRINKETS,		500,				"trinket_sman").SubCategory =								ITEMSUBCAT_TRINKETS_SUPER
-GM:AddPointShopItem("stutor",			ITEMCAT_TRINKETS,		500,				"trinket_stutor").SubCategory =								ITEMSUBCAT_TRINKETS_SUPER
-GM:AddPointShopItem("gstore",			ITEMCAT_TRINKETS,		500,				"trinket_gstore").SubCategory =								ITEMSUBCAT_TRINKETS_SUPER
-GM:AddPointShopItem("bloodlu",			ITEMCAT_TRINKETS,		500,				"trinket_bloodlust").SubCategory =								ITEMSUBCAT_TRINKETS_SUPER
-GM:AddPointShopItem("bclip",			ITEMCAT_TRINKETS,		500,				"trinket_ultra_mag").SubCategory =								ITEMSUBCAT_TRINKETS_SUPER
+GM:AddPointShopItem("futureblu",			ITEMCAT_TRINKETS,		250,				"trinket_futureblu").SubCategory =								ITEMSUBCAT_TRINKETS_SUPER
+GM:AddPointShopItem("sman",			ITEMCAT_TRINKETS,		450,				"trinket_sman").SubCategory =								ITEMSUBCAT_TRINKETS_SUPER
+GM:AddPointShopItem("stutor",			ITEMCAT_TRINKETS,		400,				"trinket_stutor").SubCategory =								ITEMSUBCAT_TRINKETS_SUPER
+GM:AddPointShopItem("gstore",			ITEMCAT_TRINKETS,		340,				"trinket_gstore").SubCategory =								ITEMSUBCAT_TRINKETS_SUPER
+GM:AddPointShopItem("bloodlu",			ITEMCAT_TRINKETS,		300,				"trinket_bloodlust").SubCategory =								ITEMSUBCAT_TRINKETS_SUPER
+GM:AddPointShopItem("bclip",			ITEMCAT_TRINKETS,		1000,				"trinket_ultra_mag").SubCategory =								ITEMSUBCAT_TRINKETS_SUPER
 GM:AddPointShopItem("knowev",			ITEMCAT_TRINKETS,		500,				"trinket_knowbook").SubCategory =								ITEMSUBCAT_TRINKETS_SUPER
-GM:AddPointShopItem("adbat",			ITEMCAT_TRINKETS,		500,				"trinket_adbat").SubCategory =								ITEMSUBCAT_TRINKETS_SUPER
-GM:AddPointShopItem("marm",			ITEMCAT_TRINKETS,		500,				"trinket_marm").SubCategory =								ITEMSUBCAT_TRINKETS_SUPER
-GM:AddPointShopItem("sshield",			ITEMCAT_TRINKETS,		500,				"trinket_sshield").SubCategory =								ITEMSUBCAT_TRINKETS_SUPER
-GM:AddPointShopItem("antibcat",			ITEMCAT_TRINKETS,		500,				"trinket_antibaracat").SubCategory =								ITEMSUBCAT_TRINKETS_SUPER
+GM:AddPointShopItem("adbat",			ITEMCAT_TRINKETS,		300,				"trinket_adbat").SubCategory =								ITEMSUBCAT_TRINKETS_SUPER
+GM:AddPointShopItem("marm",			ITEMCAT_TRINKETS,		350,				"trinket_marm").SubCategory =								ITEMSUBCAT_TRINKETS_SUPER
+GM:AddPointShopItem("sshield",			ITEMCAT_TRINKETS,		350,				"trinket_sshield").SubCategory =								ITEMSUBCAT_TRINKETS_SUPER
+GM:AddPointShopItem("antibcat",			ITEMCAT_TRINKETS,		350,				"trinket_antibaracat").SubCategory =								ITEMSUBCAT_TRINKETS_SUPER
 
 
 
@@ -727,6 +728,7 @@ GM:AddPointShopItem("ttimes",	        ITEMCAT_TRINKETS,		70,				"trinket_ttimes"
   
 GM:AddPointShopItem("flashbomb",		ITEMCAT_OTHER,			25,				"weapon_zs_flashbomb")
 GM:AddPointShopItem("grenade",			ITEMCAT_OTHER,			35,				"weapon_zs_grenade")
+GM:AddPointShopItem("holy_grenade",			ITEMCAT_OTHER,			65,				"weapon_zs_holy_grenade")
 GM:AddPointShopItem("betty",			ITEMCAT_OTHER,			35,				"weapon_zs_proxymine")
 GM:AddPointShopItem("detpck",			ITEMCAT_OTHER,			40,				"weapon_zs_detpack")
 item =

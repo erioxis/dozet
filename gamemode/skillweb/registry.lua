@@ -404,7 +404,9 @@ SKILL_N_FRIEND = 381
 SKILL_HAHA = 382
 SKILL_HIHI = 383
 SKILL_DOUBLE_ISSUE = 384
-
+SKILL_DOUBLE_EXPLOSIVE = 385
+SKILL_DOUBLE_EXPLOSIVE_ALT = 386
+SKILL_CURSED_ALT = 387
 
 
 
@@ -527,6 +529,7 @@ SKILLMOD_FIRE_DELAY = 114
 SKILLMOD_ELEMENTAL_MUL = 115
 SKILLMOD_ATT_CHANCE = 116
 SKILLMOD_IND_DMG_TAKEN = 117
+SKILLMOD_IND_CHANCE = 118
 
 local GOOD = "^"..COLORID_GREEN
 local BAD = "^"..COLORID_RED
@@ -1118,7 +1121,13 @@ GM:AddSkill(SKILL_ELEMENTAL_BUFF, translate.Get("skill_ell_buff"), BAD.."+20%"..
 GM:AddSkill(SKILL_INDUCTOR_ISSUE, translate.Get("skill_ind_issue"), BAD..translate.Get("skill_ind_issue_d1")..GOOD..translate.Get("skill_ind_issue_d2"),
 																0,			-7,					{SKILL_DOUBLE_ISSUE}, TREE_BRANCH_ELEMENTS)
 GM:AddSkill(SKILL_DOUBLE_ISSUE, translate.Get("skill_d_issue"), GOOD..translate.Get("skill_d_issue_d1")..BAD..translate.Get("skill_d_issue_d2"),
-																1,			-8,					{}, TREE_BRANCH_ELEMENTS)
+																1,			-8,					{SKILL_DOUBLE_EXPLOSIVE}, TREE_BRANCH_ELEMENTS)
+GM:AddSkill(SKILL_DOUBLE_EXPLOSIVE, translate.Get("skill_d_exp"), GOOD..translate.Get("skill_d_exp_d1")..BAD..translate.Get("skill_d_exp_d2"),
+																1,			-9,					{SKILL_DOUBLE_EXPLOSIVE_ALT, SKILL_CURSED_ALT}, TREE_BRANCH_ELEMENTS)
+GM:AddSkill(SKILL_DOUBLE_EXPLOSIVE_ALT, translate.Get("skill_d_exp2"), GOOD..translate.Get("skill_d_exp2_d1")..BAD..translate.Get("skill_d_exp2_d2"),
+																0,			-10,					{}, TREE_BRANCH_ELEMENTS)
+GM:AddSkill(SKILL_CURSED_ALT, translate.Get("skill_at_curse2"), GOOD..translate.Get("skill_at_curse2_d1")..BAD..translate.Get("skill_at_curse2_d2"),
+																2,			-10.5,					{}, TREE_BRANCH_ELEMENTS)
 GM:AddSkill(SKILL_ATTACHMENT_CURSE, translate.Get("skill_at_curse"), BAD..translate.Get("skill_at_curse_d1")..GOOD..translate.Get("skill_at_curse_d2"),
 																-2.5,			-6,					{SKILL_HEHE, SKILL_CONISSUE}, TREE_BRANCH_ELEMENTS)
 GM:AddSkill(SKILL_CONISSUE, translate.Get("skill_conissue"), GOOD..translate.Get("skill_conissue_d1")..BAD..translate.Get("skill_conissue_d2"),
@@ -1901,6 +1910,9 @@ end)
 GM:SetSkillModifierFunction(SKILLMOD_ATT_CHANCE, function(pl, amount)
 	pl.AttChance = math.Clamp(amount + 1.0, 0, 1000.0)
 end)
+GM:SetSkillModifierFunction(SKILLMOD_IND_CHANCE, function(pl, amount)
+	pl:SetNW2Float(12,math.Clamp(amount + 1.0, 0, 1000.0))
+end)
 GM:SetSkillModifierFunction(SKILLMOD_IND_DMG_TAKEN, function(pl, amount)
 	pl.IndDamageTaken = math.Clamp(amount + 1.0, 0, 1000.0)
 end)
@@ -2600,6 +2612,12 @@ GM:AddSkillModifier(SKILL_HIHI, SKILLMOD_IND_DMG_TAKEN,-0.06)
 GM:AddSkillModifier(SKILL_INDUCTOR_ISSUE, SKILLMOD_ELEMENTAL_MUL,-0.25)
 GM:AddSkillModifier(SKILL_INDUCTOR_ISSUE, SKILLMOD_ATT_CHANCE,-0.25)
 GM:AddSkillModifier(SKILL_DOUBLE_ISSUE, SKILLMOD_ATT_CHANCE,0.4)
+
+GM:AddSkillModifier(SKILL_DOUBLE_EXPLOSIVE, SKILLMOD_IND_CHANCE,1)
+GM:AddSkillModifier(SKILL_DOUBLE_EXPLOSIVE, SKILLMOD_ELEMENTAL_MUL,0.7)
+
+GM:AddSkillModifier(SKILL_DOUBLE_EXPLOSIVE_ALT, SKILLMOD_IND_CHANCE,-0.8)
+GM:AddSkillModifier(SKILL_DOUBLE_EXPLOSIVE_ALT, SKILLMOD_ELEMENTAL_MUL,-0.9)
 
 GM:AddSkillModifier(SKILL_N_FRIEND, SKILLMOD_ELEMENTAL_MUL,-0.25)
 GM:AddSkillModifier(SKILL_N_FRIEND, SKILLMOD_IND_DMG_TAKEN,-0.33)

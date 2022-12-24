@@ -213,6 +213,33 @@ function util.BlastDamagePlayer(inf, att, center, radius, damage, damagetype, ta
 
 	util.BlastDamageEx(inf, att, center, radius * (att.ExpDamageRadiusMul or 1), damage * (att.ExplosiveDamageMul or 1), damagetype, taperfactor, doinddamage)
 end
+function util.BlastDamageElemental(inflictor, attacker, epicenter, radius, damage, element, taperfactor, bool)
+	local basedmg = damage
+
+	for _, ent in pairs(ents.FindInSphere(epicenter, radius)) do
+		if ent:IsValid() and ent:IsPlayer() then
+			local nearest = ent:NearestPoint(epicenter)
+			if TrueVisibleFilters(epicenter, nearest, inflictor, attacker, ent)
+				or TrueVisibleFilters(epicenter, ent:EyePos(), inflictor, attacker, ent)
+				or TrueVisibleFilters(epicenter, ent:WorldSpaceCenter(), inflictor, attacker, ent) then
+				if ent:IsValidLivingHuman() and bool then
+					ent:GiveStatus("holly", 50)
+				end
+				if !bool then
+					ent:AttachmentDamage((((radius - nearest:Distance(epicenter)) / radius) * basedmg), attacker, inflictor,element)
+				else
+					for i=1,3 do
+						ent:AttachmentDamage((((radius - nearest:Distance(epicenter)) / radius) * basedmg), attacker, inflictor,i)
+					end
+				end
+
+				if taperfactor and ent:IsPlayer() then
+					basedmg = basedmg * taperfactor
+				end
+			end
+		end
+	end
+end
 
 -- I had to make this since the default function checks visibility vs. the entitiy's center and not the nearest position.
 function util.BlastDamageEx(inflictor, attacker, epicenter, radius, damage, damagetype, taperfactor, bool)

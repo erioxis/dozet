@@ -258,7 +258,9 @@ function GM:DrawInductorIndicators()
 			local screenscale = BetterScreenScale()
 			local health = fired
 			local formula = 15 * ((lp:GetActiveWeapon() and (lp:GetActiveWeapon().Tier or 1))+1)
+			local formula = formula * (lp:GetIndChance() or 1)
 			local healthperc = math.Clamp(health / formula, 0.01, 1)
+
 			local wid, hei = 150 * screenscale, 20 * screenscale
 	 
 			
@@ -325,6 +327,7 @@ function GM:DrawInductorIndicators()
 			local screenscale = BetterScreenScale()
 			local health = icep
 			local progress = 210 + (35 * ((lp:GetActiveWeapon() and (lp:GetActiveWeapon().Tier or 1))-1) * (lp:GetActiveWeapon() and (lp:GetActiveWeapon().Tier or 1)))
+			local progress = progress * (lp:GetIndChance() or 1)
 			local healthperc = math.Clamp(health / progress, 0.01, 1)
 			local wid, hei = 150 * screenscale, 20 * screenscale
 	 
@@ -358,7 +361,7 @@ function GM:DrawInductorIndicators()
 			local colHealth = Color(61,5,192)
 			local screenscale = BetterScreenScale()
 			local health = pulsed
-			local progress = 80
+			local progress = 80 * (lp:GetIndChance() or 1)
 			local healthperc = math.Clamp(health / progress, 0.01, 1)
 			local wid, hei = 150 * screenscale, 20 * screenscale
 	 

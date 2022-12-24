@@ -34,6 +34,7 @@ function ENT:Think()
 	end
 	local targets = {}
 	for _, ent in pairs(ents.FindInSphere(self:GetPos(), 2048)) do
+		if !ent:IsValid() then break end
 		target = ent
 		if WorldVisible(self:LocalToWorld(Vector(0, 0, 30)), ent:NearestPoint(self:LocalToWorld(Vector(0, 0, 30))))  then
 			if target:IsValidLivingHuman() then 
@@ -50,7 +51,7 @@ function ENT:Think()
 				self:SetAngles(direction:Angle())
 
 				local phys = self:GetPhysicsObject()
-				phys:SetVelocityInstantaneous(((direction * 1390) * ent:GetModelScale()) + phys:GetVelocity() * 5)
+				phys:SetVelocityInstantaneous(((direction * 13900) * ent:GetModelScale()) + phys:GetVelocity() * 5050)
 				self.NextHook = CurTime() + 0.04
 				break
 			end

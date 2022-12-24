@@ -3314,6 +3314,12 @@ local function CurseAttach(pl)
 			pl:AddCursed(pl, 1)
 		end
 	end
+	if pl:IsValidLivingHuman() and pl:IsSkillActive(SKILL_CURSED_ALT) then
+		local cursed = pl:GetStatus("cursed")
+		if (cursed) then 
+			pl:AddCursed(pl, cursed.DieTime - CurTime() - 1)
+		end
+	end
 end
 function GM:EntityTakeDamage(ent, dmginfo)
 	local attacker, inflictor = dmginfo:GetAttacker(), dmginfo:GetInflictor()
@@ -3448,19 +3454,21 @@ function GM:EntityTakeDamage(ent, dmginfo)
 							
 
 							if attacker:HasTrinket("fire_at") and math.max(math.random(fireatt),1) == 1 or attacker:GetProgress('fprog') >= 15*((attacker:GetActiveWeapon() and (attacker:GetActiveWeapon().Tier or 1))+1) then
-								ent:AttachmentDamage(damage2 * 0.5, attacker, attacker, SLOWTYPE_FLAME)
-								if ent:GetZombieClassTable().Name ~= "Shade" then
-									local d =ent:GiveStatus("burn",math.random(1,7))
+								ent:AttachmentDamage(damage2, attacker, attacker, SLOWTYPE_FLAME)
+								if ent:GetZombieClassTable().Name ~= "Shade" and (ent.NoFireTime or 1) < CurTime() then
+									local c = math.random(1,7)
+									local d =ent:GiveStatus("burn",c)
 									d.Damager = attacker
+									ent.NoFireTime = CurTime() + c + 1
 								end
 								CurseAttach(attacker)
 							end
 							if attacker:HasTrinket("pulse_at") and math.max(math.random(pulseatt),1) == 1 then
-								ent:AttachmentDamage(damage2 * 0.7, attacker, attacker, SLOWTYPE_PULSE)
+								ent:AttachmentDamage(damage2, attacker, attacker, SLOWTYPE_PULSE)
 								CurseAttach(attacker)
 							end
 							if attacker:HasTrinket("acid_at") and math.max(math.random(iceatt),1) == 1 then
-								ent:AttachmentDamage(damage2 * 0.5, attacker, attacker, SLOWTYPE_COLD)
+								ent:AttachmentDamage(damage2, attacker, attacker, SLOWTYPE_COLD)
 								if math.random(1,4) == 1 then
 									ent:GiveStatus("frost",math.random(1,7))
 								end

@@ -168,6 +168,9 @@ function meta:ClippedName()
 
 	return name
 end
+function meta:GetIndChance()
+	return self:GetNW2Float(12)
+end
 
 function meta:SigilTeleportDestination(not_from_sigil, corrupted)
 	local sigils = corrupted and GAMEMODE:GetCorruptedSigils() or GAMEMODE:GetUncorruptedSigils()
@@ -394,13 +397,10 @@ function meta:AttachmentDamage(damage, attacker, inflictor, type)
 		damage = damage * 2
 	end
 	if type == SLOWTYPE_PULSE then
-	
-
-
 		if SERVER and attacker:HasTrinket("resonance") then
-			attacker:SetProgress(attacker:GetProgress('pprog') + (self:GetFlatLegDamage() - startleg), 'pprog')
+			attacker:SetProgress(attacker:GetProgress('pprog') + damage, 'pprog')
 
-			if attacker:GetProgress('pprog') > 80 then
+			if attacker:GetProgress('pprog') > 80 * (self:GetIndChance() or 1) then
 				self:PulseResonance(attacker, inflictor)
 			end
 		end
@@ -415,7 +415,7 @@ function meta:AttachmentDamage(damage, attacker, inflictor, type)
 
 		if SERVER and attacker:HasTrinket("cryoindu") and not attacker:GetActiveWeapon().AntiInd and (attacker:GetActiveWeapon().Tier or 1) ~= 7  then
 			self:CryogenicInduction(attacker, inflictor, damage)
-			attacker:SetProgress(attacker:GetProgress('iprog') + damage/3,'iprog')
+			attacker:SetProgress(attacker:GetProgress('iprog') + damage,'iprog')
 		end
 		if SERVER then
 			GAMEMODE:DamageAtFloater(attacker, self, self:NearestPoint(attacker:EyePos()), damage, type)

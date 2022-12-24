@@ -29,8 +29,8 @@ function GM:GetInventoryItemType(item)
 end
 
 local index = 1
-function GM:AddInventoryItemData(intname, name, description, weles, tier, stocks, icon)
-	local datatab = {PrintName = name, DroppedEles = weles, Tier = tier, Description = description, Stocks = stocks, Index = index, Icon = icon}
+function GM:AddInventoryItemData(intname, name, description, weles, tier, stocks, icon, bounty)
+	local datatab = {PrintName = name, DroppedEles = weles, Tier = tier, Description = description, Stocks = stocks, Index = index, Icon = icon, Bounty = bounty}
 	self.ZSInventoryItemData[intname] = datatab
 	self.ZSInventoryItemData[index] = datatab
 
@@ -292,7 +292,7 @@ GM:AddSkillModifier(trinket, SKILLMOD_MELEE_RANGE_MUL, 0.10)
 trinket, trinketwep = GM:AddTrinket(trs("t_bioclean"), "biocleanser", false, hpveles, hpweles, 2, trs("t_d_bioclean"), nil, nil, "weapon_zs_special_trinket")
 trinketwep.PermitDismantle = true
 
-GM:AddSkillModifier(GM:AddTrinket(trs("t_cutset"), "cutlery", false, hpveles, hpweles, nil, trs("t_d_cutset"), nil, nil, "weapon_zs_defence_trinket"), SKILLMOD_FOODEATTIME_MUL, -0.8)
+GM:AddSkillModifier(GM:AddTrinket(trs("t_cutset"), "cutlery", false, hpveles, hpweles, nil, trs("t_d_cutset"), nil, nil, "weapon_zs_defence_trinket", "Lol"), SKILLMOD_FOODEATTIME_MUL, -0.8)
 trinket, trinketwep = GM:AddTrinket(trs("t_killer"), "killer", false, hpveles, hpweles, 2, trs("t_d_killer"), nil, nil, "weapon_zs_melee_trinket_d")
 GM:AddSkillModifier(trinket, SKILLMOD_BLOODARMOR, 110)
 GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, -50)
