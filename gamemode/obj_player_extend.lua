@@ -400,7 +400,7 @@ function meta:AttachmentDamage(damage, attacker, inflictor, type)
 		if SERVER and attacker:HasTrinket("resonance") then
 			attacker:SetProgress(attacker:GetProgress('pprog') + damage, 'pprog')
 
-			if attacker:GetProgress('pprog') > 80 * (self:GetIndChance() or 1) then
+			if attacker:GetProgress('pprog') > 80 * (attacker:GetIndChance() or 1) then
 				self:PulseResonance(attacker, inflictor)
 			end
 		end
@@ -434,6 +434,9 @@ function meta:AttachmentDamage(damage, attacker, inflictor, type)
 			GAMEMODE:DamageAtFloater(attacker, self, self:NearestPoint(attacker:EyePos()), damage, type)
 		end
 	end
+	if SERVER then
+		self:GiveAchievementProgress("elementarno",math.Round(damage))
+	end
 end
 function meta:AddLegDamageExt(damage, attacker, inflictor, type)
 	inflictor = inflictor or attacker
@@ -452,7 +455,7 @@ function meta:AddLegDamageExt(damage, attacker, inflictor, type)
 		if SERVER and attacker:HasTrinket("resonance") then
 			attacker:SetProgress(attacker:GetProgress('pprog') + (self:GetFlatLegDamage() - startleg), 'pprog')
 
-			if attacker:GetProgress('pprog') > 80 then
+			if attacker:GetProgress('pprog') > 80 * (attacker:GetIndChance() or 1) then
 				self:PulseResonance(attacker, inflictor)
 			end
 		end
@@ -487,6 +490,9 @@ function meta:AddLegDamageExt(damage, attacker, inflictor, type)
 		if SERVER then
 			GAMEMODE:DamageAtFloater(attacker, self, self:NearestPoint(attacker:EyePos()), damage, type)
 		end
+	end
+	if SERVER then
+		self:GiveAchievementProgress("elementarno",math.Round(damage))
 	end
 end
 

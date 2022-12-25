@@ -113,7 +113,7 @@ function meta:ProcessDamage(dmginfo)
 		end
 
 		self.ShouldFlinch = true
-		if self:GetZArmor() > 0 and (!attacker:GetStatus("renegade") and !self.ZArmor2) then
+		if self:GetZArmor() > 0 and (attacker:IsPlayer() and !attacker:GetStatus("renegade") and !self.ZArmor2) then
 			local damage = dmginfo:GetDamage()
 			if damage > 0 then
 	
@@ -2566,31 +2566,101 @@ function meta:GetRandomStartingItem2()
 
 end
 
+local function FindZapperTarget(pos, attacker)
+	local target
+	local targethealth = 99999
+	local isheadcrab
 
+	for k, ent in pairs(ents.FindInSphere(pos, 135)) do
+		if ent:IsValidLivingZombie() and not ent:GetZombieClassTable().NeverAlive then
+			isheadcrab = ent:IsHeadcrab()
+			if (isheadcrab or ent:Health() < targethealth) and TrueVisibleFilters(pos, ent:NearestPoint(pos), self, ent) then
+				targethealth = ent:Health()
+				target = ent
+
+				if isheadcrab then
+					break
+				end
+			end
+		end
+	end
+
+	return target
+end
+local function DoCryoArc(attacker, inflictor, pl, damage)
+	if pl:IsPlayer() and pl:IsValidLivingZombie() then
+		local pos = pl:LocalToWorld(Vector(0, 0, 29))
+		local target = FindZapperTarget(pos, attacker)
+
+		local shocked = {}
+		if target then
+			local effectdata = EffectData()
+				effectdata:SetOrigin(target:WorldSpaceCenter())
+				effectdata:SetStart(pos)
+				effectdata:SetEntity(attacker:GetActiveWeapon())
+			util.Effect("tracer_c_laser", effectdata)
+
+			shocked[target] = true
+			for i = 1, 8 do
+				local tpos = target:WorldSpaceCenter()
+
+				for k, ent in pairs(ents.FindInSphere(tpos, 405)) do
+					if not shocked[ent] and ent:IsValidLivingZombie() and not ent:GetZombieClassTable().NeverAlive then
+						if WorldVisible(tpos, ent:NearestPoint(tpos)) then
+							shocked[ent] = true
+							target = ent
+
+							timer.Simple(i * 0.15, function()
+								if not ent:IsValid() or not ent:IsValidLivingZombie() or not WorldVisible(tpos, ent:NearestPoint(tpos)) then return end
+
+								target:TakeDamage(damage*2/i, attacker, inflictor)
+								target:AttachmentDamage(damage*2/i, attacker, inflictor, SLOWTYPE_COLD)
+
+								local worldspace = ent:WorldSpaceCenter()
+								effectdata = EffectData()
+									effectdata:SetOrigin(worldspace)
+									effectdata:SetStart(tpos)
+									effectdata:SetEntity(target)
+								util.Effect("tracer_c_laser", effectdata)
+							end)
+
+							break
+						end
+					end
+				end
+			end
+		end
+	end
+end
 function meta:PulseResonance(attacker, inflictor)
 	-- Weird things happen with multishot weapons..
 
 	timer.Create("PulseResonance" .. attacker:UniqueID(), 0.06, 1, function()
 		if not attacker:IsValid() or not self:IsValid() then return end
 
-		attacker:SetProgress(attacker:GetProgress('pprog')-80 * (attacker:GetIndChance() or 1),'pprog')
+		attacker:SetProgress(attacker:GetProgress('pprog') - (80 * (attacker:GetIndChance() or 1)),'pprog')
+		if attacker:IsSkillActive(SKILL_CRYO_LASER) then
+			attacker:SetProgress(0,'pprog')	
+		end
 
 		local pos = self:WorldSpaceCenter()
 		pos.z = pos.z + 16
 
-		if attacker:IsValidLivingHuman() then
+		if attacker:IsValidLivingHuman() and !attacker:IsSkillActive(SKILL_CRYO_LASER) then
 			util.BlastDamagePlayer(inflictor, attacker, pos, 100 * (attacker.ExpDamageRadiusMul or 1), 75, DMG_ALWAYSGIB, 0.7)
 			for _, ent in pairs(util.BlastAlloc(inflictor, attacker, pos, 100 * (attacker.ExpDamageRadiusMul or 1))) do
 				if ent:IsValidLivingPlayer() and gamemode.Call("PlayerShouldTakeDamage", ent, attacker) then
 					ent:AddLegDamageExt(5, attacker, inflictor, SLOWTYPE_PULSE)
 				end
 			end
-		end
-
-		local effectdata = EffectData()
+			local effectdata = EffectData()
 			effectdata:SetOrigin(pos)
 			effectdata:SetNormal(attacker:GetShootPos())
 		util.Effect("explosion_shockcore", effectdata)
+		elseif attacker:IsValidLivingHuman() and attacker:IsSkillActive(SKILL_CRYO_LASER) then
+			DoCryoArc(attacker, inflictor, self, attacker:GetProgress('pprog') + 120)
+		end
+
 	end)
 end
 

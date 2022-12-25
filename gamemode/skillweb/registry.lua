@@ -407,6 +407,7 @@ SKILL_DOUBLE_ISSUE = 384
 SKILL_DOUBLE_EXPLOSIVE = 385
 SKILL_DOUBLE_EXPLOSIVE_ALT = 386
 SKILL_CURSED_ALT = 387
+SKILL_CRYO_LASER = 388
 
 
 
@@ -1125,7 +1126,9 @@ GM:AddSkill(SKILL_DOUBLE_ISSUE, translate.Get("skill_d_issue"), GOOD..translate.
 GM:AddSkill(SKILL_DOUBLE_EXPLOSIVE, translate.Get("skill_d_exp"), GOOD..translate.Get("skill_d_exp_d1")..BAD..translate.Get("skill_d_exp_d2"),
 																1,			-9,					{SKILL_DOUBLE_EXPLOSIVE_ALT, SKILL_CURSED_ALT}, TREE_BRANCH_ELEMENTS)
 GM:AddSkill(SKILL_DOUBLE_EXPLOSIVE_ALT, translate.Get("skill_d_exp2"), GOOD..translate.Get("skill_d_exp2_d1")..BAD..translate.Get("skill_d_exp2_d2"),
-																0,			-10,					{}, TREE_BRANCH_ELEMENTS)
+																0,			-10,					{SKILL_CRYO_LASER}, TREE_BRANCH_ELEMENTS)
+GM:AddSkill(SKILL_CRYO_LASER, translate.Get("skill_cryo_laser"), GOOD..translate.Get("skill_cryo_laser_d1")..BAD..translate.Get("skill_cryo_laser_d2"),
+																0,			-11,					{}, TREE_BRANCH_ELEMENTS)
 GM:AddSkill(SKILL_CURSED_ALT, translate.Get("skill_at_curse2"), GOOD..translate.Get("skill_at_curse2_d1")..BAD..translate.Get("skill_at_curse2_d2"),
 																2,			-10.5,					{}, TREE_BRANCH_ELEMENTS)
 GM:AddSkill(SKILL_ATTACHMENT_CURSE, translate.Get("skill_at_curse"), BAD..translate.Get("skill_at_curse_d1")..GOOD..translate.Get("skill_at_curse_d2"),
@@ -2616,8 +2619,11 @@ GM:AddSkillModifier(SKILL_DOUBLE_ISSUE, SKILLMOD_ATT_CHANCE,0.4)
 GM:AddSkillModifier(SKILL_DOUBLE_EXPLOSIVE, SKILLMOD_IND_CHANCE,1)
 GM:AddSkillModifier(SKILL_DOUBLE_EXPLOSIVE, SKILLMOD_ELEMENTAL_MUL,0.7)
 
-GM:AddSkillModifier(SKILL_DOUBLE_EXPLOSIVE_ALT, SKILLMOD_IND_CHANCE,-0.8)
-GM:AddSkillModifier(SKILL_DOUBLE_EXPLOSIVE_ALT, SKILLMOD_ELEMENTAL_MUL,-0.9)
+GM:AddSkillModifier(SKILL_DOUBLE_EXPLOSIVE_ALT, SKILLMOD_IND_CHANCE,-0.2)
+GM:AddSkillModifier(SKILL_DOUBLE_EXPLOSIVE_ALT, SKILLMOD_ELEMENTAL_MUL,-0.4)
+
+
+GM:AddSkillModifier(SKILL_CRYO_LASER, SKILLMOD_IND_CHANCE, 0.35)
 
 GM:AddSkillModifier(SKILL_N_FRIEND, SKILLMOD_ELEMENTAL_MUL,-0.25)
 GM:AddSkillModifier(SKILL_N_FRIEND, SKILLMOD_IND_DMG_TAKEN,-0.33)

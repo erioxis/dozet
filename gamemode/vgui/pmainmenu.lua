@@ -215,6 +215,15 @@ function GM:ShowHelp()
 
 	but = vgui.Create("DButton", menu)
 	but:SetFont("ZSHUDFontSmaller")
+	but:SetText(translate.Get("mm_stats"))
+	but:SetTall(buttonhei)
+	but:DockMargin(0, 0, 0, 12)
+	but:DockPadding(0, 12, 0, 12)
+	but:Dock(TOP)
+	but.DoClick = function() MakepStats() end
+
+	but = vgui.Create("DButton", menu)
+	but:SetFont("ZSHUDFontSmaller")
 	but:SetText(translate.Get("mm_close"))
 	but:SetTall(buttonhei)
 	but:DockMargin(0, 24, 0, 0)
@@ -223,4 +232,88 @@ function GM:ShowHelp()
 	but.DoClick = function() menu:Remove() end
 
 	menu:MakePopup()
+end
+
+function MakepStats()
+	PlayMenuOpenSound()
+
+	if pMakepStats then
+		pMakepStats:SetAlpha(0)
+		pMakepStats:AlphaTo(255, 0.15, 0)
+		pMakepStats:SetVisible(true)
+		pMakepStats:MakePopup()
+		
+		return
+	end
+
+	local Window = vgui.Create("DFrame")
+	local wide = math.min(ScrW(), 500)
+	local tall = math.min(ScrH(), 800)
+	Window:SetSize(wide, tall)
+	Window:Center()
+	Window:SetTitle(" ")
+	Window:SetDeleteOnClose(false)
+	pMakepStats = Window
+
+	local y = 8
+
+
+	local label = EasyLabel(Window, translate.Get("mm_stats"), "ZSScoreBoardTitle", color_white)
+	label:SetPos(wide * 0.5 - label:GetWide() * 0.5, y)
+	y = y + label:GetTall() + 8
+
+	local list = vgui.Create("DPanelList", pMakepStats)
+	list:EnableVerticalScrollbar()
+	list:EnableHorizontal(false)
+	list:SetSize(wide - 24, tall - y - 12)
+	list:SetPos(12, y)
+	list:SetPadding(8)
+	list:SetSpacing(4)
+	local updatetbl = table.ToAssoc(MySelf:GetDesiredActiveSkills())
+	for i=1,#GAMEMODE.SkillModifierFunctions do
+		local i = i or 1
+		local skillmodifiers = {}
+		local gm_modifiers = GAMEMODE.SkillModifiers
+		for skillid in pairs(updatetbl)  do
+			modifiers = gm_modifiers[skillid]
+			if modifiers then
+				for modid, amount in pairs(modifiers) do
+					skillmodifiers[modid] = (skillmodifiers[modid] or 0) + amount
+				end
+			end
+		end
+		local d = vgui.Create("DEXChangingLabel", bottom)
+		local c = skillmodifiers[i] or 0
+		local exlude2 = {32,108,103,91,90}
+		if i >= 6 and !table.HasValue(exlude2, i) then
+			c = (c*100).."%"
+		end
+		local exlude = {8,6,16,22,27,30,31,34,118,114,113,101,40,41,43,92,117,116,56,59,63,65,66,98,72,73,79,88 }
+		local colorred = table.HasValue(exlude, i) and Color(71,231,119) or Color(238,37,37)
+		local colorgreen = table.HasValue(exlude, i) and Color(238,37,37) or Color(71,231,119)
+		d:SetChangeFunction(function()
+			return translate.Format("skillmod_n"..i,c)
+		end, true)
+		d:SetChangedFunction(function()
+			if (skillmodifiers[i] or 0) < 0 then
+				d:SetTextColor(colorred)
+			elseif (skillmodifiers[i] or 0) > 0 then
+				d:SetTextColor(colorgreen)
+			else
+				d:SetTextColor(Color(255,255,255))
+			end
+		end)
+		local notbl = {10,107,71,75,82,86,87}
+		d:SetFont("DefaultFont")
+		if !table.HasValue(notbl,i) then
+			list:AddItem(d) 
+		end
+		if table.HasValue(notbl,i) then
+			d:Remove()
+		end
+	end
+--EasyLabel(parent, text, font, textcolor)
+	Window:SetAlpha(0)
+	Window:AlphaTo(255, 0.15, 0)
+	Window:MakePopup()
 end

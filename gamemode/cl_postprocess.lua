@@ -326,7 +326,7 @@ function GM:DrawInductorIndicators()
 			local colHealth = Color(21,213,226)
 			local screenscale = BetterScreenScale()
 			local health = icep
-			local progress = 210 + (35 * ((lp:GetActiveWeapon() and (lp:GetActiveWeapon().Tier or 1))-1) * (lp:GetActiveWeapon() and (lp:GetActiveWeapon().Tier or 1)))
+			local progress = 165 + (35 * ((lp:GetActiveWeapon() and (lp:GetActiveWeapon().Tier or 1))-1) * (lp:GetActiveWeapon() and (lp:GetActiveWeapon().Tier or 1)))
 			local progress = progress * (lp:GetIndChance() or 1)
 			local healthperc = math.Clamp(health / progress, 0.01, 1)
 			local wid, hei = 150 * screenscale, 20 * screenscale
@@ -358,7 +358,7 @@ function GM:DrawInductorIndicators()
 		if lp:IsValid() then
 			local matGlow = Material("sprites/glow04_noz")
 			local texDownEdge = surface.GetTextureID("gui/gradient_down")
-			local colHealth = Color(61,5,192)
+			local colHealth = lp:IsSkillActive(SKILL_CRYO_LASER) and Color(27,105,207) or Color(61,5,192)
 			local screenscale = BetterScreenScale()
 			local health = pulsed
 			local progress = 80 * (lp:GetIndChance() or 1)
@@ -384,7 +384,7 @@ function GM:DrawInductorIndicators()
 			surface.SetMaterial(matGlow)
 			surface.SetDrawColor(255, 255, 255, colHealth.a)
 			surface.DrawTexturedRect(x + 2 + subwidth - 6, y + 1 - hei/2, 4, hei * 2)
-			draw.SimpleTextBlurry(translate.Get("pc_hud")..math.Round(pulsed).."/"..progress , "ZSHUDFontTiny", x, y - 12, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM)
+			draw.SimpleTextBlurry((lp:IsSkillActive(SKILL_CRYO_LASER) and translate.Get("ca_hud") or translate.Get("pc_hud"))..math.Round(pulsed).."/"..progress , "ZSHUDFontTiny", x, y - 12, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM)
 			y = y + ScrH() * 0.07
 		end
 	end

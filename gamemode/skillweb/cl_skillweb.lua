@@ -1482,6 +1482,7 @@ function GM:ToggleSkillWeb()
 	self.SkillWeb = vgui.Create("ZSSkillWeb")
 end
 
+
 local meta = FindMetaTable("Player")
 if not meta then return end
 

@@ -223,7 +223,7 @@ function util.BlastDamageElemental(inflictor, attacker, epicenter, radius, damag
 				or TrueVisibleFilters(epicenter, ent:EyePos(), inflictor, attacker, ent)
 				or TrueVisibleFilters(epicenter, ent:WorldSpaceCenter(), inflictor, attacker, ent) then
 				if ent:IsValidLivingHuman() and bool then
-					ent:GiveStatus("holly", 50)
+					ent:GiveStatus("holly", 5)
 				end
 				if !bool then
 					ent:AttachmentDamage((((radius - nearest:Distance(epicenter)) / radius) * basedmg), attacker, inflictor,element)
