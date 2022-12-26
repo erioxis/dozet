@@ -78,6 +78,7 @@ DIR_LEFT = 3
 SLOWTYPE_PULSE = 1
 SLOWTYPE_COLD = 2
 SLOWTYPE_FLAME = 3
+SLOWTYPE_CHAM = 4
 
 -- Made because these are constantly swapped in different gmod updates for some bizzare reason.
 TEXT_ALIGN_TOP_REAL = 3

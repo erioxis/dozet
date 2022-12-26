@@ -694,6 +694,7 @@ GM:AddPointShopItem("flashlo",	      	ITEMCAT_TRINKETS,		30,				"trinket_flashlo
 GM:AddPointShopItem("pills",	      	ITEMCAT_TRINKETS,		30,				"trinket_pills").SubCategory =								ITEMSUBCAT_TRINKETS_MELEE
 GM:AddPointShopItem("damage222",	      	ITEMCAT_TRINKETS,		30,				"trinket_damage222").SubCategory =								ITEMSUBCAT_TRINKETS_MELEE
 -- Tier 4
+GM:AddPointShopItem("cham_at",		ITEMCAT_TRINKETS,		50,				"trinket_cham_at").SubCategory =							ITEMSUBCAT_TRINKETS_SPECIAL
 GM:AddPointShopItem("fire_at",		ITEMCAT_TRINKETS,		50,				"trinket_fire_at").SubCategory =							ITEMSUBCAT_TRINKETS_SPECIAL
 GM:AddPointShopItem("pulse_at",		ITEMCAT_TRINKETS,		50,				"trinket_pulse_at").SubCategory =							ITEMSUBCAT_TRINKETS_SPECIAL
 GM:AddPointShopItem("ultra_at",		ITEMCAT_TRINKETS,		50,				"trinket_ultra_at").SubCategory =							ITEMSUBCAT_TRINKETS_SPECIAL
@@ -715,6 +716,8 @@ GM:AddPointShopItem("store2",	        ITEMCAT_TRINKETS,		50,				"trinket_store2"
 GM:AddPointShopItem("kre",	            ITEMCAT_TRINKETS,		50,				"trinket_kre").SubCategory =						ITEMSUBCAT_TRINKETS_PERFOMANCE
 GM:AddPointShopItem("greedeye",	            ITEMCAT_TRINKETS,		50,				"trinket_greedeye").SubCategory =						ITEMSUBCAT_TRINKETS_SPECIAL
 -- Tier 5
+GM:AddPointShopItem("cham_storm",		ITEMCAT_TRINKETS,		70,				"trinket_cham_storm").SubCategory =							ITEMSUBCAT_TRINKETS_SPECIAL
+GM:AddPointShopItem("gasmask",		ITEMCAT_TRINKETS,		70,				"trinket_gasmask").SubCategory =							ITEMSUBCAT_TRINKETS_SPECIAL
 GM:AddPointShopItem("supasm",			ITEMCAT_TRINKETS,		70,				"trinket_supasm").SubCategory =									ITEMSUBCAT_TRINKETS_OFFENSIVE
 GM:AddPointShopItem("pulseimpedance",	ITEMCAT_TRINKETS,		70,				"trinket_pulseimpedance").SubCategory =							ITEMSUBCAT_TRINKETS_OFFENSIVE
 GM:AddPointShopItem("classix",	        ITEMCAT_TRINKETS,		70,				"trinket_classix").SubCategory =							  ITEMSUBCAT_TRINKETS_OFFENSIVE

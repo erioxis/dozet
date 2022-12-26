@@ -146,7 +146,7 @@ function PANEL:Text3Paint()
 				end
 			end
 			if god and d then
-				powergod = d:Health()/500000000 * 100
+				powergod = d:Health()/500000 * 100
 			end
 			if !god then
 				draw.SimpleText(((0 < balance) and translate.Get("dosei_inf")..balance.."%" or ""), "ZSHUDFontTiniest", 0, 16, COLOR_SOFTRED)
@@ -166,7 +166,7 @@ function PANEL:Text3Paint()
 				end
 			end
 			if god and d then
-				powergod = d:Health()/500000000 * 100
+				powergod = d:Health()/500000 * 100
 			end
 			
 			if !god then

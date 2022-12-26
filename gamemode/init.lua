@@ -2370,7 +2370,7 @@ function GM:ScalePlayerDamage(pl, hitgroup, dmginfo)
 		pl.m_LastHeadShot = CurTime()
 	end
 	if hitgroup == HITGROUP_HEAD and pl:IsValidLivingZombie() then
-		dmginfo:SetDamage(dmginfo:GetDamage() * 2)
+		dmginfo:SetDamage(dmginfo:GetDamage() * 2 * (attacker.HeadshotMul or 1))
 	end
 
 	--local crouchpunish = pl:ShouldCrouchJumpPunish()
@@ -2793,6 +2793,7 @@ function GM:PlayerInitialSpawnRound(pl)
 	pl.m_ZArmor2 = nil
 	pl.m_ZArmor3 = nil
 	pl.LastHealedFocus = 0
+	pl.AddXPMulti = 1
 
 	-- Boss Mutations (Z-Shop)
 	pl.m_Evo = nil
@@ -3452,35 +3453,36 @@ function GM:EntityTakeDamage(ent, dmginfo)
 							local debuffatt = 12* chnc
 							local damage2 = (damage * (attacker.ElementalMul or 1)) * (ent:GetZombieClassTable().ElementalDebuff or 1)
 							
-
-							if attacker:HasTrinket("fire_at") and math.max(math.random(fireatt),1) == 1 or attacker:GetProgress('fprog') >= 15*((attacker:GetActiveWeapon() and (attacker:GetActiveWeapon().Tier or 1))+1) then
-								ent:AttachmentDamage(damage2, attacker, attacker, SLOWTYPE_FLAME)
-								if ent:GetZombieClassTable().Name ~= "Shade" and (ent.NoFireTime or 1) < CurTime() then
-									local c = math.random(1,7)
-									local d =ent:GiveStatus("burn",c)
-									d.Damager = attacker
-									ent.NoFireTime = CurTime() + c + 1
+							if !attacker:HasTrinket("cham_at") then
+								if attacker:HasTrinket("fire_at") and math.max(math.random(fireatt),1) == 1 or attacker:GetProgress('fprog') >= 15*((attacker:GetActiveWeapon() and (attacker:GetActiveWeapon().Tier or 1))+1) then
+									ent:AttachmentDamage(damage2, attacker, attacker, SLOWTYPE_FLAME)
+									if ent:GetZombieClassTable().Name ~= "Shade" and (ent.NoFireTime or 1) < CurTime() then
+										local c = math.random(1,7)
+										local d =ent:GiveStatus("burn",c)
+										d.Damager = attacker
+										ent.NoFireTime = CurTime() + c + 1
+									end
+									CurseAttach(attacker)
 								end
-								CurseAttach(attacker)
-							end
-							if attacker:HasTrinket("pulse_at") and math.max(math.random(pulseatt),1) == 1 then
-								ent:AttachmentDamage(damage2, attacker, attacker, SLOWTYPE_PULSE)
-								CurseAttach(attacker)
-							end
-							if attacker:HasTrinket("acid_at") and math.max(math.random(iceatt),1) == 1 then
-								ent:AttachmentDamage(damage2, attacker, attacker, SLOWTYPE_COLD)
-								if math.random(1,4) == 1 then
-									ent:GiveStatus("frost",math.random(1,7))
+								if attacker:HasTrinket("pulse_at") and math.max(math.random(pulseatt),1) == 1 then
+									ent:AttachmentDamage(damage2, attacker, attacker, SLOWTYPE_PULSE)
+									CurseAttach(attacker)
 								end
-								CurseAttach(attacker)
-							end
-							local debuffed = ent:GetStatus("zombiestrdebuff")
-							if attacker:HasTrinket("ultra_at") and math.max(1,math.random(debuffatt)) == 1 then
-								ent:GiveStatus("zombiestrdebuff",math.random(1,7))
-								CurseAttach(attacker)
-							elseif attacker:HasTrinket("ultra_at") and (debuffed) and math.random(debuffatt) == 1 then
-								ent:GiveStatus("zombiestrdebuff",math.random(7,14))
-								CurseAttach(attacker)
+								if attacker:HasTrinket("acid_at") and math.max(math.random(iceatt),1) == 1 then
+									ent:AttachmentDamage(damage2, attacker, attacker, SLOWTYPE_COLD)
+									if math.random(1,4) == 1 then
+										ent:GiveStatus("frost",math.random(1,7))
+									end
+									CurseAttach(attacker)
+								end
+								local debuffed = ent:GetStatus("zombiestrdebuff")
+								if attacker:HasTrinket("ultra_at") and math.max(1,math.random(debuffatt)) == 1 then
+									ent:GiveStatus("zombiestrdebuff",math.random(1,7))
+									CurseAttach(attacker)
+								elseif attacker:HasTrinket("ultra_at") and (debuffed) and math.random(debuffatt) == 1 then
+									ent:GiveStatus("zombiestrdebuff",math.random(7,14))
+									CurseAttach(attacker)
+								end
 							end
 
 
@@ -5331,7 +5333,7 @@ function GM:WaveStateChanged(newstate, pl)
 					pl.LetalSave = true
 				end
 				if pl:IsSkillActive(SKILL_XPMULGOOD) then
-				   pl.XPMulti = (pl.XPMulti or 1) + 0.20
+				   pl.AddXPMulti = (pl.AddXPMulti or 1) + 0.20
 				end
 				if pl:Frags() == 1024 then
 					pl:GiveAchievement("bitbat")
@@ -5340,7 +5342,7 @@ function GM:WaveStateChanged(newstate, pl)
 					pl:GiveAchievement("ancient_secret")
 				end
 				if pl:IsSkillUnlocked(SKILL_HAHA) and pl:IsSkillUnlocked(SKILL_HIHI) and pl:IsSkillUnlocked(SKILL_HEHE) and pl:IsSkillUnlocked(SKILL_SOUL_TRADE) and pl:IsSkillUnlocked(SKILL_CHEESE) and pl:IsSkillUnlocked(SKILL_CHEESE2) and pl:IsSkillUnlocked(SKILL_SKYHELP) and pl:IsSkillUnlocked(SKILL_NULLED)
-				and pl:IsSkillUnlocked(SKILL_CHEESE3) then
+				and pl:IsSkillUnlocked(SKILL_CHEESE3) and pl:IsSkillUnlocked(SKILL_CHEESE_PIE) then
 					pl:GiveAchievement("hehiha")
 				end
 

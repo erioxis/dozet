@@ -269,7 +269,7 @@ function MakepStats()
 	list:SetPos(12, y)
 	list:SetPadding(8)
 	list:SetSpacing(4)
-	local updatetbl = table.ToAssoc(MySelf:GetDesiredActiveSkills())
+	local updatetbl = table.ToAssoc(MySelf:GetActiveSkills())
 	for i=1,#GAMEMODE.SkillModifierFunctions do
 		local i = i or 1
 		local skillmodifiers = {}
@@ -288,7 +288,10 @@ function MakepStats()
 		if i >= 6 and !table.HasValue(exlude2, i) then
 			c = (c*100).."%"
 		end
-		local exlude = {8,6,16,22,27,30,31,34,118,114,113,101,40,41,43,92,117,116,56,59,63,65,66,98,72,73,79,88 }
+		if (skillmodifiers[i] or 0) > 0 then
+			c = "+"..c
+		end
+		local exlude = {8,6,16,22,27,30,31,34,118,114,113,101,40,41,43,92,117,116,56,59,63,65,66,98,72,73,79,88 ,78}
 		local colorred = table.HasValue(exlude, i) and Color(71,231,119) or Color(238,37,37)
 		local colorgreen = table.HasValue(exlude, i) and Color(238,37,37) or Color(71,231,119)
 		d:SetChangeFunction(function()

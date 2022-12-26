@@ -433,6 +433,14 @@ function meta:AttachmentDamage(damage, attacker, inflictor, type)
 		if SERVER then
 			GAMEMODE:DamageAtFloater(attacker, self, self:NearestPoint(attacker:EyePos()), damage, type)
 		end
+	elseif type == SLOWTYPE_CHAM then
+		if SERVER and attacker:HasTrinket("cham_storm") and self:GetZombieClassTable().BaraCat then
+			attacker:SetProgress(attacker:GetProgress('cprog') + damage, 'cprog')
+			self:ChamStorm(attacker, inflictor, damage)
+		end
+		if SERVER then
+			GAMEMODE:DamageAtFloater(attacker, self, self:NearestPoint(attacker:EyePos()), damage, type)
+		end
 	end
 	if SERVER then
 		self:GiveAchievementProgress("elementarno",math.Round(damage))
@@ -486,6 +494,14 @@ function meta:AddLegDamageExt(damage, attacker, inflictor, type)
 		end
 		if SERVER and attacker:HasTrinket("fire_ind") and not attacker:GetActiveWeapon().AntiInd and !self:GetZombieClassTable().FireBuff and (attacker:GetActiveWeapon().Tier or 1) ~= 7 then
 			self:FireInduction(attacker, inflictor, damage * 3)
+		end
+		if SERVER then
+			GAMEMODE:DamageAtFloater(attacker, self, self:NearestPoint(attacker:EyePos()), damage, type)
+		end
+	elseif type == SLOWTYPE_CHAM then
+		if SERVER and attacker:HasTrinket("cham_storm") and self:GetZombieClassTable().BaraCat then
+			attacker:SetProgress(attacker:GetProgress('cprog') + damage, 'cprog')
+			self:ChamStorm(attacker, inflictor, damage)
 		end
 		if SERVER then
 			GAMEMODE:DamageAtFloater(attacker, self, self:NearestPoint(attacker:EyePos()), damage, type)

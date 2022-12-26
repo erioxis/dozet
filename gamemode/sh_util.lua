@@ -228,7 +228,7 @@ function util.BlastDamageElemental(inflictor, attacker, epicenter, radius, damag
 				if !bool then
 					ent:AttachmentDamage((((radius - nearest:Distance(epicenter)) / radius) * basedmg), attacker, inflictor,element)
 				else
-					for i=1,3 do
+					for i=1,4 do
 						ent:AttachmentDamage((((radius - nearest:Distance(epicenter)) / radius) * basedmg), attacker, inflictor,i)
 					end
 				end

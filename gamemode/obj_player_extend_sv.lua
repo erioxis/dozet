@@ -105,6 +105,10 @@ function meta:ProcessDamage(dmginfo)
 		if attacker:IsValidLivingHuman() and attacker:HasTrinket("antibaracat") and self:GetZombieClassTable().BaraCat then
             dmginfo:ScaleDamage(3)
 		end
+		if attacker:IsValidLivingHuman() and attacker:HasTrinket("cham_at") and self:GetZombieClassTable().BaraCat then
+            dmginfo:ScaleDamage(3)
+			self:AttachmentDamage(dmginfo:GetDamage(), attacker, inflictor, 4)
+		end
 		if GAMEMODE.ObjectiveMap then
 			dmginfo:ScaleDamage(0.25)
 		end
@@ -415,8 +419,8 @@ function meta:ProcessDamage(dmginfo)
 	if self:GetTimerBERS() >= CurTime() and self:IsSkillActive(SKILL_BERSERK) then
 		dmginfo:SetDamage(0)
 	end
-	if self:IsSkillActive(SKILL_XPMULGOOD) and self.XPMulti > 0.20 then
-        self.XPMulti = self.XPMulti - 0.05
+	if self:IsSkillActive(SKILL_XPMULGOOD) and self.AddXPMulti > 0.20 then
+        self.AddXPMulti = self.AddXPMulti - 0.05
 	end
 
 	if attacker:IsPlayer() and attacker:Team() == TEAM_UNDEAD and dmginfo:GetDamage() >= 1000 and !self:HasGodMode() then
@@ -680,7 +684,7 @@ function meta:ProcessDamage(dmginfo)
 				if attacker.m_ZArmor2 then
 					attacker:SetZArmor(math.min(attacker:Health() * 0.5, attacker:GetZArmor() + math.min(damage, self:Health() ) * 0.09))
 				end
-				if self:HasTrinket("flower") and dmginfo:GetDamage() >= 13 then
+				if self:HasTrinket("flower") and dmginfo:GetDamage() >= 13 and !self:HasGodMode() then
 					dmginfo:SetDamage(0)
 					self:TakeInventoryItem("trinket_flower")
 					net.Start("zs_trinketconsumed")
@@ -1678,6 +1682,7 @@ function meta:AddPoints(points, floatingscoreobject, fmtype, nomul)
 	end
 
 	local xp = wholepoints * 3 * ((self.XPMulti or 1) + math.Clamp(GAMEMODE:GetBalance() * 0.025,0,3))
+	local xp = xp *	(self.AddXPMulti or 1)
 	if GAMEMODE.HumanXPMulti and GAMEMODE.HumanXPMulti >= 0 then
 		xp = (xp * GAMEMODE.HumanXPMulti)
 		local wholexp = math.floor(xp)
@@ -2638,7 +2643,7 @@ function meta:PulseResonance(attacker, inflictor)
 	timer.Create("PulseResonance" .. attacker:UniqueID(), 0.06, 1, function()
 		if not attacker:IsValid() or not self:IsValid() then return end
 
-		attacker:SetProgress(attacker:GetProgress('pprog') - (80 * (attacker:GetIndChance() or 1)),'pprog')
+		attacker:SetProgress(0,'pprog')
 		if attacker:IsSkillActive(SKILL_CRYO_LASER) then
 			attacker:SetProgress(0,'pprog')	
 		end
@@ -2665,18 +2670,15 @@ function meta:PulseResonance(attacker, inflictor)
 end
 
 function meta:CryogenicInduction(attacker, inflictor, damage)
-	if (attacker.NoIceInd or 1) >= CurTime() or (self.NoIceInd or 1) >= CurTime() then return end
 	local formula = (165 + (35 * ((attacker:GetActiveWeapon() and (attacker:GetActiveWeapon().Tier or 1))-1) * (attacker:GetActiveWeapon() and (attacker:GetActiveWeapon().Tier or 1)))) * (attacker:GetIndChance() or 1)
 	if attacker:GetProgress('iprog') < formula then return end
 
 	timer.Create("Cryogenic" .. attacker:UniqueID(), 0.06, 1, function()
 		if not attacker:IsValid() or not self:IsValid() then return end
-		attacker.NoIceInd = CurTime() + 9
-		self.NoIceInd = CurTime() + 18
 		local pos = self:WorldSpaceCenter()
 		pos.z = pos.z + 16
 		self:TakeSpecialDamage(self:Health() * 0.2 + 165 + attacker:GetProgress('iprog'), DMG_DIRECT, attacker, inflictor, pos)
-		attacker:SetProgress(attacker:GetProgress('iprog') -formula,'iprog')
+		attacker:SetProgress((attacker:GetProgress('iprog') -formula)*0.1,'iprog')
 
 		if attacker:IsValidLivingHuman() then
 			util.BlastDamagePlayer(inflictor, attacker, pos, 100 * (attacker.ExpDamageRadiusMul or 1), self:GetMaxHealthEx() * 0.80, DMG_DROWN, 0.83, true)
@@ -2694,14 +2696,11 @@ function meta:CryogenicInduction(attacker, inflictor, damage)
 	end)
 end
 function meta:FireInduction(attacker, inflictor, damage)
-	if (attacker.NoFireInd or 1) >= CurTime() or (self.NoFireInd or 1) >= CurTime() then return end
 	if not self:GetZombieClassTable().Boss then
 		if math.random(20 * (attacker:GetActiveWeapon().Tier or 1) * (attacker:GetActiveWeapon().Primary.Numshots or 1) ) == 2 or attacker:GetProgress('fprog') >= ((15 * ((attacker:GetActiveWeapon().Tier or 1)+1))) * (attacker:GetIndChance() or 1) then
-			attacker:SetProgress(attacker:GetProgress("fprog")-(15 * ((self:GetActiveWeapon().Tier or 1)+1)),'fprog')
+			attacker:SetProgress(0,'fprog')
 			timer.Create("Fire_inder" .. attacker:UniqueID(), 0.1, 2, function()
 				if not attacker:IsValid() or not self:IsValid() then return end
-				attacker.NoFireInd = CurTime()+7
-				self.NoFireInd = CurTime()+23
 
 				local pos = self:WorldSpaceCenter()
 				pos.z = pos.z + 16
@@ -2719,6 +2718,28 @@ function meta:FireInduction(attacker, inflictor, damage)
 			end)
 		end
 	end
+end
+function meta:ChamStorm(attacker, inflictor, damage)
+		if attacker:GetProgress('cprog') >= 350 then
+			attacker:SetProgress(0,'cprog')
+			timer.Create("CHAAAAAMOMILEEE_inder" .. attacker:UniqueID(), 0.1, 2, function()
+				if not attacker:IsValid() or not self:IsValid() then return end
+
+				local pos = self:WorldSpaceCenter()
+				pos.z = pos.z + 16
+
+				self:TakeSpecialDamage(self:Health() * 0.5 + damage, DMG_DIRECT, attacker, inflictor, pos)
+
+				if attacker:IsValidLivingHuman() then
+					util.BlastDamagePlayer(inflictor, attacker, pos, 100 * (attacker.ExpDamageRadiusMul or 1), (self:Health() * 0.17) + damage, DMG_BURN, 0.83, true)
+				end
+
+				local effectdata = EffectData()
+					effectdata:SetOrigin(pos)
+					effectdata:SetNormal(attacker:GetShootPos())
+				util.Effect("hit_romashka", effectdata)
+			end)
+		end
 end
 
 function meta:SetPhantomHealth(amount)

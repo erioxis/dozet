@@ -410,8 +410,8 @@ function MakepWorth()
 	
 	local arsop = vgui.Create("DButton", frame)
 	arsop:SetFont("ZSHUDFontTiny")
-	arsop:SetText("Open Arsenal")
-	arsop:SetSize(128 * screenscale, 16 * screenscale)
+	arsop:SetText(translate.Get("gui_oa"))
+	arsop:SetSize(190 * screenscale, 16 * screenscale)
 	arsop:AlignBottom(8)
 	arsop:AlignRight(128)
 	arsop.DoClick = OpenArsenal

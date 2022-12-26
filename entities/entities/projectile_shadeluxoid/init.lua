@@ -58,6 +58,7 @@ function ENT:Hit(vHitPos, vHitNormal, hitent)
 			local scalar = ((110 - nearest:Distance(vHitPos)) / 110)
 
 			ent:GiveStatus("frost", scalar * 10)
+			ent:AttachmentDamage(30*scalar,owner,self , SLOWTYPE_COLD)
 			ent:AddLegDamageExt(30 * scalar, owner, self, SLOWTYPE_COLD)
 		end
 	end

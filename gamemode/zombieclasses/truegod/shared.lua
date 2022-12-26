@@ -9,6 +9,8 @@ CLASS.OverrideModel = Model("models/player/catpants.mdl")
 CLASS.Hidden = true
 CLASS.Boss = false
 
+CLASS.GodTRUE = true
+
 CLASS.KnockbackScale = 0
 
 CLASS.FearPerInstance = 1

@@ -1298,7 +1298,12 @@ function PANEL:OnMousePressed(mc)
 	
 					return
 				end
-				if GAMEMODE.Skills[hoveredskill].QuePro and not MySelf.ClanQuePro then
+				local quetbl = {
+				"76561198185649305",
+				"76561198813932012",
+				"76561198017105716",
+				"76561198834667136"}
+				if GAMEMODE.Skills[hoveredskill].QuePro and !table.HasValue(quetbl, MySelf:SteamID64()) then
 					self:DisplayMessage("FOR QUE PRO!!!!!!!", COLOR_RED)
 					surface.PlaySound("buttons/button8.wav")
 					return

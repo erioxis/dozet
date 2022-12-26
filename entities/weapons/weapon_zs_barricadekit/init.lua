@@ -70,7 +70,7 @@ function SWEP:PrimaryAttack()
 		if stored then
 			ent:SetObjectHealth(stored[1])
 		end
-		owner:TakePoints((35 * ((GAMEMODE:GetWave() + GAMEMODE:GetWave() * 0.2) * 2)) + 35)
+		owner:TakePoints((7 * ((GAMEMODE:GetWave() + GAMEMODE:GetWave() * 0.1) * 2)) + 15)
 	end
 end
 function SWEP:SecondaryAttack()

@@ -408,6 +408,13 @@ SKILL_DOUBLE_EXPLOSIVE = 385
 SKILL_DOUBLE_EXPLOSIVE_ALT = 386
 SKILL_CURSED_ALT = 387
 SKILL_CRYO_LASER = 388
+SKILL_FREE_WAY = 389
+SKILL_ABSOLUTE = 390
+SKILL_CHEESE_PIE = 391
+SKILL_MORE_INFO = 392
+SKILL_MAGIC_MYSTERY = 393
+SKILL_USEFULL = 394
+SKILL_ANATOMY = 395
 
 
 
@@ -531,6 +538,7 @@ SKILLMOD_ELEMENTAL_MUL = 115
 SKILLMOD_ATT_CHANCE = 116
 SKILLMOD_IND_DMG_TAKEN = 117
 SKILLMOD_IND_CHANCE = 118
+SKILLMOD_HEADSHOT_MUL = 119
 
 local GOOD = "^"..COLORID_GREEN
 local BAD = "^"..COLORID_RED
@@ -594,8 +602,13 @@ GM:AddSkill(SKILL_CHEESE2, translate.Get("skill_cheese_0").." II", GOOD..transla
 																0,			1,					{SKILL_CHEESE}, TREE_HEALTHTREE)
 GM:AddSkill(SKILL_CHEESE3, translate.Get("skill_cheese_0").." III", GOOD..translate.Get("skill_cheese_d3"),
 																0,			3,					{SKILL_CHEESE2}, TREE_HEALTHTREE)
+GM:AddSkill(SKILL_CHEESE_PIE, translate.Get("skill_cheesepie"), GOOD.."+7"..translate.Get("barmor"),
+																-2,			3,					{SKILL_CHEESE3}, TREE_HEALTHTREE)
+GM:AddSkillModifier(SKILL_CHEESE_PIE, SKILLMOD_BLOODARMOR, 7)
 GM:AddSkill(SKILL_TANKER, translate.Get("skill_tanker_0"), GOOD..translate.Get("skill_tanker_d1")..BAD..translate.Get("skill_tanker_d2"),
 																-5,			4,					{SKILL_LIVER}, TREE_HEALTHTREE)
+GM:AddSkill(SKILL_ABSOLUTE, translate.Get("skill_abs"), translate.Get("skill_abs_d"),
+																-5,			3,					{SKILL_TANKER}, TREE_HEALTHTREE)
 GM:AddSkill(SKILL_LIVER,  translate.Get("skill_curse_0"), BAD..translate.Get("skill_curse_d1")..GOOD..translate.Get("skill_curse_d2")..GOOD..translate.Get("skill_curse_d3")..GOOD.."+30"..translate.Get("worth"),
 																-5,			5,					{SKILL_TANKER}, TREE_HEALTHTREE)
 GM:AddSkillModifier(SKILL_LIVER, SKILLMOD_SPEED, 60)
@@ -1015,7 +1028,7 @@ GM:AddSkillModifier(SKILL_AMULET_14, SKILLMOD_SPOINT, 1)
 
 
 
-GM:AddSkill(SKILL_QUE_PRO, translate.Get("skill_quepro"), GOOD.."-100%"..translate.Get("xpmul"),
+GM:AddSkill(SKILL_QUE_PRO, translate.Get("skill_quepro"), GOOD.."-10000%"..translate.Get("xpmul"),
 																-40,			-10,					{SKILL_NONE}, TREE_GUNTREE)
 .QuePro = true														
 
@@ -1096,6 +1109,7 @@ GM:AddSkill(SKILL_LOX, translate.Get("skill_lox"), GOOD..translate.Get("skill_lo
 																2,		    6,					{SKILL_VAMPIRISM}, TREE_GUNTREE)
 .Hidden = true
 GM:AddSkillModifier(SKILL_LOX, SKILLMOD_ADD_STATUS, 1)
+GM:AddSkillModifier(SKILL_ABSOLUTE, SKILLMOD_ADD_STATUS, -0.05)
 GM:AddSkillModifier(SKILL_VAMPIRISM, SKILLMOD_DAMAGE, -0.25)
 GM:AddSkill(SKILL_D_CURSEDTRUE, translate.Get("skill_d_truecurse"), BAD.."-100%"..translate.Get("m_curse")..GOOD.."+35"..translate.Get("health")..GOOD.."+40"..translate.Get("speed")..GOOD.."+15%"..translate.Get("r_speed"),
 																2,		    8,					{SKILL_VAMPIRISM}, TREE_GUNTREE)
@@ -1341,6 +1355,7 @@ GM:AddSkill(SKILL_POINTD, translate.Get("skill_dtrouble"), BAD.."-0.9"..translat
 	GM:AddSkillModifier(SKILL_POINTFUL, SKILLMOD_POINT_MULTIPLIER, 0.1)
 	GM:AddSkillModifier(SKILL_POINTFUL, SKILLMOD_XP, -0.25)
 	GM:AddSkillModifier(SKILL_POINTFUL, SKILLMOD_WORTH, -25)
+	GM:AddSkillModifier(SKILL_QUE_PRO, SKILLMOD_XP, -100)
 GM:AddSkill(SKILL_POINTFUL, translate.Get("skill_pointful"), BAD.."-25%"..translate.Get("xpmul")..BAD.."-25"..translate.Get("worth")..GOOD.."+10%"..translate.Get("p_mul") ..GOOD.. "+10"..translate.Get("start_points"),
 																-2,			0,					{SKILL_POINTIII}, TREE_POINTTREE)
 SKILL_POINTMEGA = 242
@@ -1503,6 +1518,20 @@ GM:AddSkill(SKILL_CLASSIX1, "Classical scientia mundi", PURPLE.."Random bloodarm
 SKILL_MAGIC = 255
 GM:AddSkill(SKILL_MAGIC, "Magic", PURPLE.."Open a usage of magic\n",
 					-6,			-8,					{SKILL_CLASSIX1}, TREE_ANCIENTTREE)
+GM:AddSkill(SKILL_MAGIC_MYSTERY, "Master", PURPLE.."+25% Magic damage\n",
+					-7,			-9,					{SKILL_MAGIC}, TREE_ANCIENTTREE)
+GM:AddSkillModifier(SKILL_MAGIC_MYSTERY, SKILLMOD_M_DMG, 0.25)
+GM:AddSkill(SKILL_USEFULL, "Use...FULL", PURPLE.."+9% Magic blood armor regeneration\n",
+					-7,			-10,					{SKILL_MAGIC_MYSTERY}, TREE_ANCIENTTREE)
+GM:AddSkillModifier(SKILL_USEFULL, SKILLMOD_M_REG, 0.09)
+GM:AddSkill(SKILL_ANATOMY, "Knowledge of anatomy", PURPLE.."+10% Headshot damage\n",
+					-7,			-11,					{SKILL_USEFULL}, TREE_ANCIENTTREE)
+GM:AddSkillModifier(SKILL_ANATOMY, SKILLMOD_HEADSHOT_MUL, 0.10)
+GM:AddSkill(SKILL_MORE_INFO, "See the invisible", PURPLE.."Show more information about zombie\n",
+					-7,			-7.5,					{SKILL_MAGIC}, TREE_ANCIENTTREE).LevelReq = 76
+GM:AddSkill(SKILL_FREE_WAY, "Way", PURPLE.."Useless?\n",
+					-6,			-9,					{SKILL_MAGIC, SKILL_NONE}, TREE_ANCIENTTREE)
+.RemortReq = 32
 				
 SKILL_BLOODMARY = 186
 GM:AddSkill(SKILL_BLOODMARY, "Sanguinum Messis", PURPLE.."Regenerate blood armor",
@@ -1944,6 +1973,9 @@ GM:SetSkillModifierFunction(SKILLMOD_MEDKIT_COOLDOWN_MUL, function(pl, amount)
 end)
 GM:SetSkillModifierFunction(SKILLMOD_M_REG, function(pl, amount)
 	pl.MagicRegen = math.Clamp(amount + 1.0, 0.0, 1000.0)
+end)
+GM:SetSkillModifierFunction(SKILLMOD_HEADSHOT_MUL, function(pl, amount)
+	pl.HeadshotMul = math.Clamp(amount + 1.0, 0.0, 1000.0)
 end)
 GM:SetSkillModifierFunction(SKILLMOD_M_DMG, function(pl, amount)
 	pl.MagicDamage = math.Clamp(amount + 1.0, 0.0, 1000.0)

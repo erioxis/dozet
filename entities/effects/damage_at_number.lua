@@ -10,6 +10,7 @@ local Particles = {}
 local ColorFire = Color(238, 90, 4)
 local ColorIce = Color(0, 207, 222)
 local ColorPulse = Color(33, 0, 220)
+local ColorCham = Color(245, 216, 131)
 hook.Add("PostDrawTranslucentRenderables", "DrawDamageAttachment", function()
 	if #Particles == 0 then return end
 	local done = true
@@ -25,7 +26,7 @@ hook.Add("PostDrawTranslucentRenderables", "DrawDamageAttachment", function()
 
 	for _, particle in pairs(Particles) do
 		if particle and curtime < particle.DieTime then
-			local c = particle.Type == 3 and ColorFire or particle.Type == 2 and ColorIce or particle.Type == 1 and ColorPulse
+			local c = particle.Type == 3 and ColorFire or particle.Type == 2 and ColorIce or particle.Type == 1 and ColorPulse or particle.Type == 4 and ColorCham
 
 			done = false
 

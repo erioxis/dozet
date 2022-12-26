@@ -242,13 +242,51 @@ function GM:DrawInductorIndicators()
 	local pulsed =lp:GetProgress('pprog')
 	local bountyd =lp:GetProgress('bprog')
 	local icep =lp:GetProgress('iprog')
+	local cham =lp:GetProgress('cprog')
 
 	local medt = lp:GetPTime('mprog')
 	local firet =lp:GetPTime('fprog')
 	local pulset =lp:GetPTime('pprog')
 	local bountyt =lp:GetPTime('bprog')
 	local icet =lp:GetPTime('iprog')
+	local chamt =lp:GetPTime('cprog')
 
+	if cham > 0 and chamt >= CurTime() then
+		if lp:IsValid() then
+
+			local matGlow = Material("sprites/glow04_noz")
+			local texDownEdge = surface.GetTextureID("gui/gradient_down")
+			local colHealth = Color(247,229,132)
+			local screenscale = BetterScreenScale()
+			local health = cham
+			local formula = 350* (lp:GetIndChance() or 1)
+			local healthperc = math.Clamp(health / formula, 0.01, 1)
+
+			local wid, hei = 150 * screenscale, 20 * screenscale
+	 
+			
+	
+			local subwidth = healthperc * wid
+			local fraction = (chamt-CurTime())/2
+			local form = math.Clamp( fraction, 0, 1 )
+			colHealth.a = form *255
+			surface.SetDrawColor(0, 0, 0, colHealth.a)
+			surface.DrawRect(x, y, wid, hei)
+
+			
+			surface.SetDrawColor(colHealth.r * 1, colHealth.g * 0.2, colHealth.b, 40)
+			surface.SetTexture(texDownEdge)
+			surface.DrawTexturedRect(x + 2, y + 1, subwidth - 4, hei - 2)
+			surface.SetDrawColor(colHealth.r * 0.6, colHealth.g * 0.6, colHealth.b, 30)
+			surface.DrawRect(x + 2, y + 1, subwidth - 4, hei - 2)
+	
+			surface.SetMaterial(matGlow)
+			surface.SetDrawColor(255, 255, 255, colHealth.a)
+			surface.DrawTexturedRect(x + 2 + subwidth - 6, y + 1 - hei/2, 4, hei * 2)
+			draw.SimpleTextBlurry(translate.Get("cham_hud")..math.Round(cham).."/"..formula , "ZSHUDFontTiny", x, y - 12, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM)
+			y = y + ScrH() * 0.07
+		end
+	end
 	if fired > 0 and lp:HasTrinket("fire_ind") and firet >= CurTime() then
 		if lp:IsValid() then
 
@@ -455,12 +493,15 @@ function GM:DrawHumanIndicators()
 end
 function GM:DrawZombieIndicators()
 	if MySelf:Team() ~= TEAM_HUMAN or not MySelf:IsSkillActive(SKILL_SEEAURA) or MySelf:KeyDown(IN_SPEED) then return end
-
+	local matGlow = Material("sprites/glow04_noz")
+	local texDownEdge = surface.GetTextureID("gui/gradient_down")
+	local colHealth = Color(0, 0, 0, 240)
 	local eyepos = EyePos()
 	local range, dist, healthfrac, pos, size
 	for _, pl in pairs(team_GetPlayers(TEAM_UNDEAD)) do
 		range = pl:GetAuraRangeSqr()/4
 		dist = pl:GetPos():DistToSqr(eyepos)
+		local lp = pl
 		if pl:Alive() and dist <= range then
 			healthfrac = math_max(pl:Health(), 0) / pl:GetMaxHealth()
 			colHealth.r = math_Approach(colHealthEmpty.r, colHealthFull.r, math_abs(colHealthEmpty.r - colHealthFull.r) * healthfrac)
@@ -479,18 +520,90 @@ function GM:DrawZombieIndicators()
 		local dot = EyeVector():Dot(norm)
 		local dotsq = dot * dot
 		local vis = math.Clamp((dotsq * dotsq) - 0.1, 0, 1)
-
+		local wid, hei = 150, 6
+		local x, y = wid * -0.5 + 2, 0
 				cam.IgnoreZ(true)
 				cam.Start3D2D(nearest, ang, 0.1)
-					local wid, hei = 150, 6
-					local x, y = wid * -0.5 + 2, 0
+				local screenscale = BetterScreenScale()
+				local health = lp:Health()
+				local healthperc = math.Clamp(health / lp:GetMaxHealthEx(), 0, 1)
+				local wid, hei = 300 * screenscale, 18 * screenscale
+		 
+				colHealth.r = (lp:GetInfo("zs_rhealth") + healthperc) * 100
+				colHealth.g = lp:GetInfo("zs_ghealth") - healthperc
+				colHealth.b = lp:GetInfo("zs_bhealth")
+		
+				local x = 18 * screenscale
+				local y = 115 * screenscale
+		
+				local subwidth = healthperc * wid
+		
+				draw.SimpleTextBlurry(health.."|"..pl:GetMaxHealth(), "ZSHUDFont", x + wid + 18 * screenscale, y + 8 * screenscale, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+		
+				surface.SetDrawColor(0, 0, 0, 230)
+				surface.DrawRect(x, y, wid, hei)
+		
+				surface.SetDrawColor(colHealth.r * 1, colHealth.g * 0.2, colHealth.b, 40)
+				surface.SetTexture(texDownEdge)
+				surface.DrawTexturedRect(x + 2, y + 1, subwidth - 4, hei - 2)
+				surface.SetDrawColor(colHealth.r * 0.6, colHealth.g * 0.6, colHealth.b, 30)
+				surface.DrawRect(x + 2, y + 1, subwidth - 4, hei - 2)
+		
+				surface.SetMaterial(matGlow)
+				surface.SetDrawColor(255, 255, 255, 255)
+				surface.DrawTexturedRect(x + 2 + subwidth - 6, y + 1 - hei/2, 4, hei * 2)
+		
+				local phantomhealth = math.max(lp:GetPhantomHealth(), 0)
+				healthperc = math.Clamp(phantomhealth / lp:GetMaxHealthEx(), 0, 1)
+		
+				colHealth.r = 100
+				colHealth.g = 50
+				colHealth.b = 70
+				local phantomwidth = healthperc * wid
+		
+				surface.SetDrawColor(colHealth.r, colHealth.g, colHealth.b, 40)
+				surface.SetTexture(texDownEdge)
+				surface.DrawTexturedRect(x + 2 + subwidth - 4, y + 1, phantomwidth, hei - 2)
+				surface.SetDrawColor(colHealth.r, colHealth.g, colHealth.b, 30)
+				surface.DrawRect(x + 2 + subwidth - 4, y + 1, phantomwidth, hei - 2)
 						y = y + hei + 3
 						hei = 8
 						x = wid * -0.5 + 2
 		                if pl:GetZombieClassTable().Boss then
 							draw.SimpleText("BOSS", "ZSHUDFontBig", x + 55, y - 150, COLOR_CYAN, TEXT_ALIGN_CENTER)
 						end
-						draw.SimpleText(pl:Health().."|"..pl:GetMaxHealth(), "ZSHUDFontBig", x + 55, y + 150, COLOR_CYAN, TEXT_ALIGN_CENTER)
+						if MySelf:IsSkillActive(SKILL_MORE_INFO) then
+							y = y + 30
+							draw.SimpleText(translate.Get(pl:GetZombieClassTable().TranslationName), "ZSHUDFontBig", x + 55, y - 250, COLOR_CYAN, TEXT_ALIGN_CENTER)
+							local bloodarmor = lp:GetZArmor()
+							if bloodarmor > 0 then
+								x = 78 * screenscale
+								y = 142 * screenscale
+								wid, hei = 240 * screenscale, 14 * screenscale
+				
+								colHealth.r = 0
+								colHealth.g = 0
+								colHealth.b = 255
+								healthperc = 1
+				
+								subwidth = healthperc * wid
+				
+								draw.SimpleTextBlurry(bloodarmor, "ZSHUDFontSmall", x + wid + 12 * screenscale, y + 8 * screenscale, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+				
+								surface.SetDrawColor(0, 0, 0, 230)
+								surface.DrawRect(x, y, wid, hei)
+				
+								surface.SetDrawColor(colHealth.r * 0.6, colHealth.g * 0.6, colHealth.b, 160)
+								surface.SetTexture(texDownEdge)
+								surface.DrawTexturedRect(x + 2, y + 1, subwidth - 4, hei - 2)
+								surface.SetDrawColor(colHealth.r * 0.5, colHealth.g * 0.5, colHealth.b, 30)
+								surface.DrawRect(x + 2, y + 1, subwidth - 4, hei - 2)
+				
+								surface.SetMaterial(matGlow)
+								surface.SetDrawColor(255, 255, 255, 255)
+								surface.DrawTexturedRect(x + 2 + subwidth - 6, y + 1 - hei/2, 4, hei * 2)
+							end
+						end
 							
 				cam.End3D2D()
 				cam.IgnoreZ(false)

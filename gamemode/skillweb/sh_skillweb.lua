@@ -5,7 +5,6 @@ function GM:LevelForXP(xp)
 	--return math.floor(1 + 1 * math.sqrt(xp))
 	return math.floor(1 + 0.25 * math.sqrt(xp))
 end
-
 function GM:XPForLevel(level)
 	return 16 * level * level - 32 * level + 16
 end
@@ -43,9 +42,6 @@ end
 function GM:SkillCanUnlock(pl, skillid, skilllist)
 	local skill = self.Skills[skillid]
 	if skill then
-		if skill.Amulet then
-			return true
-		end
 		if skill.RemortLevel and pl:GetZSRemortLevel() < skill.RemortLevel then
 			return false
 		end
@@ -58,6 +54,9 @@ function GM:SkillCanUnlock(pl, skillid, skilllist)
 		end
 		if skill.RemortReq and pl:GetZSRemortLevel() < skill.RemortReq then
 			return false
+		end
+		if skill.Amulet then
+			return true
 		end
 
 		local connections = skill.Connections

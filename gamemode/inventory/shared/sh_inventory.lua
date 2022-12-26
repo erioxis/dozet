@@ -237,12 +237,13 @@ local bookw = {
 }
 -- some text
 trinket, trinketwep = GM:AddTrinket(trs("t_lticket"), "lotteryticket", false, hpveles, hpweles, 2, trs("t_d_lticket"), nil, nil, "weapon_zs_special_trinket")
-
 trinketwep.PermitDismantle = true
 trinket, trinketwep = GM:AddTrinket(trs("t_mticket"), "mysteryticket", false, hpveles, hpweles, 5, trs("t_d_mticket"), nil, nil, "weapon_zs_special_trinket")
-
 trinketwep.PermitDismantle = true
 -- Health Trinkets
+
+trinket, trinketwep = GM:AddTrinket(trs("t_gasmask"), "gasmask", false, hpveles, hpweles, 4, trs("t_d_gasmask"), nil, nil, "weapon_zs_special_trinket")
+GM:AddSkillModifier(trinket, SKILLMOD_POISON_DAMAGE_TAKEN_MUL, -0.1)
 trinket, trinketwep = GM:AddTrinket(trs("t_healthpack"), "vitpackagei", false, hpveles, hpweles, 2, trs("t_d_healthpack"), nil, nil, "weapon_zs_defence_trinket_d")
 GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, 10)
 GM:AddSkillModifier(trinket, SKILLMOD_HEALING_RECEIVED, 0.09)
@@ -749,7 +750,8 @@ GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_MUL, -0.1)
 trinket = GM:AddTrinket(trs("t_ultra_at"), "ultra_at", false, supveles, supweles, 2, trs("t_d_ultra_at"))
 GM:AddSkillModifier(trinket, SKILLMOD_DAMAGE, -0.1)
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_MUL, -0.1)
-
+trinket = GM:AddTrinket(trs("t_cham_at"), "cham_at", false, supveles, supweles, 2, trs("t_d_cham_at"))
+trinket = GM:AddTrinket(trs("t_cham_storm"), "cham_storm", false, develes, deweles, 3, trs("t_d_cham_storm"), nil, nil, "weapon_zs_special_trinket")
 
 
 
