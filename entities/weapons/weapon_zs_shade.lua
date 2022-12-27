@@ -22,7 +22,12 @@ SWEP.ShadeProjectile = "projectile_shaderock"
 function SWEP:Initialize()
 	self:HideWorldModel()
 end
-
+function SWEP:GetNextShadeTime()
+	return self:GetDTFloat(21)
+end
+function SWEP:SetNextShadeTime(t)
+	self:SetDTFloat(21,t)
+end
 function SWEP:Think()
 end
 
@@ -182,5 +187,42 @@ function SWEP:PostDrawViewModel(vm)
 	local owner = self:GetOwner()
 	if owner:IsValid() then
 		owner:CallZombieFunction1("PostRenderEffects", vm)
+	end
+end
+function SWEP:DrawWeaponSelection(x, y, w, h, alpha)
+	self:BaseDrawWeaponSelection(x, y, w, h, alpha)
+end
+
+local texGradDown = surface.GetTextureID("VGUI/gradient_down")
+function SWEP:DrawHUD()
+	local wid, hei = 384, 16
+	local x, y = ScrW() - wid - 32, ScrH() - hei - 72
+	local texty = y - 4 - draw.GetFontHeight("ZSHUDFontSmall")
+
+	local timeleft = self:GetNextShadeTime() - CurTime()	
+	local typeshield = self.Ice and "frostshadeshield" or "shadeshield"
+	local theme = self.Ice and Color(42,204,204) or Color(81, 50, 255, 180) 
+	
+	local shield = self:GetOwner():GetStatus(typeshield):IsValid() and  self:GetOwner():GetStatus(typeshield)
+	if shield and shield:IsValid() then
+		surface.SetDrawColor(5, 5, 5, 180)
+		surface.DrawRect(x, y, wid, hei)
+
+		surface.SetDrawColor(theme.r, theme.g, theme.b, 180)
+		surface.SetTexture(texGradDown)
+		surface.DrawTexturedRect(x, y, math.min(1,shield:GetObjectHealth()/shield:GetMaxObjectHealth()) * wid, hei)
+
+		surface.SetDrawColor(theme.r, theme.g, theme.b, 180)
+		surface.DrawOutlinedRect(x, y, wid, hei)
+	end
+	if timeleft > 0 then
+		draw.SimpleText(translate.Get("ns_shade").. math.Round(timeleft), "ZSHUDFontSmall", x, texty, theme, TEXT_ALIGN_LEFT)
+	end
+	if shield then
+		draw.SimpleText(shield:GetObjectHealth(), "ZSHUDFontSmall", x + wid, texty, theme, TEXT_ALIGN_RIGHT)
+	end
+
+	if GetConVar("crosshair"):GetInt() == 1 then
+		self:DrawCrosshairDot()
 	end
 end

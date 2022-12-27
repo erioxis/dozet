@@ -109,6 +109,11 @@ GM.Achievements["highvel"] = {
     Desc = translate("challenge_highvelocity_d"),
     Reward = 10000
 }
+GM.Achievements["full_curse"] = {
+    Name = translate("challenge_cursed"),
+    Desc = translate("challenge_cursed_d"),
+    Reward = 250000
+}
 GM.Achievements["godisdead"] = {
     Name = translate("challenge_godisdead"),
     Desc = translate("challenge_godisdead_d"),

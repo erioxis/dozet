@@ -85,6 +85,14 @@ function ENT:Think()
 			local extraduration = (1 - self:GetObjectHealth()/self:GetMaxObjectHealth()) * 10
 			owner.NextShield = fCurTime + (self.Destroyed and 12 or (2 + extraduration))
 			self:Remove()
+			if self.Destroyed then
+				for _, ent in pairs(ents.FindInSphere(owner:GetPos(), 238)) do
+					if ent:IsValidLivingZombie() and pl ~= ent then
+						ent:SetZArmor(ent:GetZArmor() + 255 * (GAMEMODE:GetWave() /2))
+					end
+				end
+			end
+			owner:GetActiveWeapon():SetNextShadeTime(fCurTime + (self.Destroyed and 12 or (2 + extraduration)))
 			return
 		elseif self:GetStateEndTime() <= fCurTime and self:GetState() == 0 and not self.Constructed then
 			self:PhysicsInit(SOLID_VPHYSICS)

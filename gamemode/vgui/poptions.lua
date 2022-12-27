@@ -127,7 +127,7 @@ function MakepOptions()
 	list:AddItem(check)
 
 	check = vgui.Create("DCheckBoxLabel", Window)
-	check:SetText(""..translate.Get("op_nofloatingscore"))
+	check:SetText(translate.Get("op_nofloatingscore"))
 	check:SetConVar("zs_nofloatingscore")
 	check:SizeToContents()
 	list:AddItem(check)

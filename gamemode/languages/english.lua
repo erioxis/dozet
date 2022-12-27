@@ -20,6 +20,9 @@ translate.AddLanguage("en", "English")
 --Чаленге
 LANGUAGE.survivor = "Survirvor"
 LANGUAGE.undead = "Undead"
+
+LANGUAGE.challenge_cursed = "Cursed..."
+LANGUAGE.challenge_cursed_d = "Take ALL CURSES in 1 ROUND and survive(And status too)."
 LANGUAGE.challenge_fullofelements = "Elementary"
 LANGUAGE.challenge_fullofelements_d = "Deal 20000000 elemental damage."
 LANGUAGE.challenge_hehiha = "Cheesy pants"
@@ -167,6 +170,8 @@ LANGUAGE.op_nocrosshairrotate = "Disable crosshair rotate"
 LANGUAGE.op_disablescopes = "Disable ironsight scopes"
 LANGUAGE.op_xpdisplay = "Display experience"
 LANGUAGE.op_nofloatingscore = "Don't show point floaters"
+LANGUAGE.fc_assist = " (assist)"
+LANGUAGE.fc_assisted = " (assisted)"
 LANGUAGE.op_hidepacks = "Don't hide resupply packs"
 LANGUAGE.op_mcore = "Multicore rendering (Increases FPS, RECOMMENDED"
 LANGUAGE.op_color_c = "Color Correction"
@@ -2623,6 +2628,8 @@ LANGUAGE.ditem_hud = "Drop Item"
 LANGUAGE.gi_5_hud = "Give Item and 5 clips"
 LANGUAGE.gi_hud = "Give Item"
 LANGUAGE.ewc_hud = "Empty Weapon Clip"
+
+LANGUAGE.ns_shade = "Next shield: "
 
 LANGUAGE.si_hud = "Selected Item"
 

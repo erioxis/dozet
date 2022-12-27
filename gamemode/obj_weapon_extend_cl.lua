@@ -59,9 +59,14 @@ function meta:DrawCrosshairCross()
 		local width1 = 200
 		local height1 = 20
 		local x1, y1 = ScrW() * 0.5 , ScrH() * 0.5
+		local screenscale = BetterScreenScale()
 		
-		ratio = (MySelf:GetActiveWeapon().Primary.Delay or 1) / firedelay
+		local ratio = (MySelf:GetActiveWeapon().Primary.Delay or 1) / firedelay
 		surface.DrawCircle(x1, y1, 38 * cone, 5, 35 * ratio * 0.5, 5, 255 * ratio * 0.4)
+		local ratio = ((CurTime()-((MySelf:GetActiveWeapon().Primary.Delay or 1) + MySelf:GetActiveWeapon():GetNextPrimaryFire() - MySelf:GetActiveWeapon():GetFireDelay()))) * 100
+		if ratio/100 <= 0 and MySelf:GetActiveWeapon() and !MySelf:GetActiveWeapon().IsMelee then
+			draw.SimpleTextBlurry(-math.Round(ratio)/100, "ZSHUDFontTiniest",x1-70 * math.max(1.004,cone), y1+10 * math.max(1.004,cone), colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+		end
 
 	local ang = Angle(0, 0, baserot)
 	for i=0, 359, 360 / GAMEMODE.CrosshairLines do
@@ -78,9 +83,8 @@ function meta:DrawCrosshairDot()
 	local size = 4 * thickness
 	local hsize = size/2
 	local firedelay = MySelf:GetActiveWeapon():GetNextPrimaryFire() - CurTime() 
-	ratio = (MySelf:GetActiveWeapon().IsMelee and MySelf:GetActiveWeapon().MeleeDelay or 1) / firedelay
+	local ratio = (MySelf:GetActiveWeapon().IsMelee and MySelf:GetActiveWeapon().MeleeDelay or 1) / firedelay
 	surface.DrawCircle(x, y, 10, 5 * ratio * 0.2, 35 * ratio * 0.5, 5, 255 * ratio * 0.4)
-
 	surface.SetDrawColor(GAMEMODE.CrosshairColor2)
 	surface.DrawRect(x - hsize, y - hsize, size, size)
 	surface.SetDrawColor(0, 0, 0, GAMEMODE.CrosshairColor2.a)

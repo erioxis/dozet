@@ -2270,6 +2270,11 @@ function GM:OnPlayerWin(pl)
 		if pl:HasTrinket("flower") and not self.ObjectiveMap then
 			pl:GiveAchievement("flower")	
 		end
+		if pl:HasTrinket("curse_dropping") and pl:HasTrinket("hurt_curse") and pl:HasTrinket("uncurse") and pl:HasTrinket("curse_faster") and pl:HasTrinket("curse_slow") and pl:HasTrinket("curse_heart") and pl:HasTrinket("curse_fragility")
+		and pl:HasTrinket("curse_ponos") and pl:GetStatus("cursed") and pl:IsSkillActive(SKILL_ATTACHMENT_CURSE) and pl:HasTrinket("cursedtrinket") 
+		and pl:IsSkillActive(SKILL_NOSEE) and  pl:IsSkillActive(SKILL_D_CURSEDTRUE) and pl:IsSkillActive(SKILL_BARA_CURSED) and pl:IsSkillActive(SKILL_LIVER) and pl:IsSkillActive(SKILL_TRIP) then
+			pl:GiveAchievement("full_curse")
+		end
 	end
 end
 

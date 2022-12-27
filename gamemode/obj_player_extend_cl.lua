@@ -25,9 +25,8 @@ function meta:HasWon()
 end
 
 function meta:GetStatus(sType)	
-	if !self:IsValid() then return end
 	local ent = self["status_"..sType]
-	if ent and ent:GetOwner() == self then return ent end
+	if ent and ent:IsValid() and ent:GetOwner() == self then return ent end
 end
 
 function meta:GiveStatus(sType, fDie)

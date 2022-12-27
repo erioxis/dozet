@@ -155,11 +155,6 @@ if SERVER then
 				local status = pl:GiveStatus("shadeshield")
 				if status and status:IsValid() then
 					status:SetStateEndTime(curtime + 0.5)
-					for _, ent in pairs(ents.FindInSphere(pl:GetPos(), 238)) do
-						if ent:IsValidLivingZombie() and pl ~= ent then
-							ent:SetZArmor(ent:GetZArmor() + 255 * (GAMEMODE:GetWave() /2))
-						end
-					end
 
 					for _, ent in pairs(ents.FindByClass("env_shadecontrol")) do
 						if ent:IsValid() and ent:GetOwner() == pl then

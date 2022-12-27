@@ -67,7 +67,8 @@ SWEP.HitDecal = "Manhackcut"
 
 
 function SWEP:PlaySwingSound()
-	self:EmitSound("weapons/iceaxe/iceaxe_swing1.wav", 75, math.random(65, 70))
+	self:EmitSound("weapons/iceaxe/iceaxe_swing1.wav", 75, 76 * self:GetOwner():GetVelocity():Length() * 0.01 + 25)
+	--print(self:GetOwner():GetVelocity():Length() * 0.001)
 end
 
 function SWEP:PlayHitSound()
@@ -79,20 +80,13 @@ function SWEP:PlayHitFleshSound()
 end
 
 function SWEP:SetNextAttack()
-	if self.Block then
-    return false end
 	local owner = self:GetOwner()
 	local armdelay = owner:GetMeleeSpeedMul()
-		self:SetNextPrimaryFire(CurTime() + math.Clamp((self.Primary.Delay * armdelay) - owner:GetVelocity():Length() * 0.00001, 0.25,2))
+		self:SetNextPrimaryFire(CurTime() + math.Clamp((self.Primary.Delay * armdelay) - owner:GetVelocity():Length() * 0.001, 0.15,5))
 
 end
 function SWEP:StartSwinging()
 	local owner = self:GetOwner()
-	if self:GetBlockState() then 
-		return 
-		false
-	end
-
 	if self.StartSwingAnimation then
 		self:SendWeaponAnim(self.StartSwingAnimation)
 		self.IdleAnimation = CurTime() + self:SequenceDuration()
@@ -100,7 +94,7 @@ function SWEP:StartSwinging()
 	self:PlayStartSwingSound()
 
 	local armdelay = owner:GetMeleeSpeedMul()
-		self:SetSwingEnd(CurTime() + math.Clamp((self.SwingTime * (owner.MeleeSwingDelayMul or 1) * armdelay) - owner:GetVelocity():Length() * 0.00001, 0.25,2))
+		self:SetSwingEnd(CurTime() + math.Clamp((self.SwingTime * (owner.MeleeSwingDelayMul or 1) * armdelay) - owner:GetVelocity():Length() * 0.001, 0.15,5))
 
 end
 function SWEP:OnMeleeHit(hitent, hitflesh, tr)
@@ -118,11 +112,6 @@ function SWEP:PostOnMeleeHit(hitent, hitflesh, tr)
 end
 function SWEP:MeleeSwing()
 	local owner = self:GetOwner()
-	if self.Block == 1 then 
-		return 
-        false
-	end
-
 	self:DoMeleeAttackAnim()
 
 	local tr = owner:CompensatedMeleeTrace(self.MeleeRange * (owner.MeleeRangeMul or 1), self.MeleeSize)
