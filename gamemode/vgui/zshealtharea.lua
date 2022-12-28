@@ -19,8 +19,10 @@ local function ContentsPaint(self, w, h)
 		local y = 115 * screenscale
 
 		local subwidth = healthperc * wid
-
-		draw.SimpleTextBlurry(health, "ZSHUDFont", x + wid + 18 * screenscale, y + 8 * screenscale, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+		if health > lp:GetMaxHealthEx() then
+			health = lp:GetMaxHealthEx().." (+"..health-lp:GetMaxHealthEx()..")"
+		end
+		draw.SimpleTextBlurry(health, (string.len(health) >= 13 and "ZSHUDFontSmall"or"ZSHUDFont"), x + wid + 18 * screenscale, y + 8 * screenscale, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 
 		surface.SetDrawColor(0, 0, 0, 230)
 		surface.DrawRect(x, y, wid, hei)

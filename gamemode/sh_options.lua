@@ -665,7 +665,7 @@ GM:AddPointShopItem("mainsuite",		ITEMCAT_TRINKETS,		15,				"trinket_mainsuite")
 GM:AddPointShopItem("hateome",		ITEMCAT_TRINKETS,		100,				"trinket_hateome").SubCategory =					    		ITEMSUBCAT_TRINKETS_SUPPORT
 -- Tier 3
 GM:AddPointShopItem("autoreload",		ITEMCAT_TRINKETS,		30,				"trinket_autoreload").SubCategory =								ITEMSUBCAT_TRINKETS_OFFENSIVE
-GM:AddPointShopItem("fire_ind",  	ITEMCAT_TRINKETS,		30,				"trinket_fire_ind").SubCategory =							ITEMSUBCAT_TRINKETS_SPECIAL
+GM:AddPointShopItem("fire_ind",  	ITEMCAT_TRINKETS,		30,				"trinket_fire_ind").SubCategory =							ITEMSUBCAT_TRINKETS_OFFENSIVE
 GM:AddPointShopItem("reachem",			ITEMCAT_TRINKETS,		30,				"trinket_reachem").SubCategory =								ITEMSUBCAT_TRINKETS_OFFENSIVE
 GM:AddPointShopItem("momentumsupsysiii",ITEMCAT_TRINKETS,		30,				"trinket_momentumsupsysiii").SubCategory =						ITEMSUBCAT_TRINKETS_MELEE
 GM:AddPointShopItem("adrenaline",ITEMCAT_TRINKETS,		30,				"trinket_adrenaline").SubCategory =						ITEMSUBCAT_TRINKETS_PERFOMANCE
@@ -694,11 +694,10 @@ GM:AddPointShopItem("flashlo",	      	ITEMCAT_TRINKETS,		30,				"trinket_flashlo
 GM:AddPointShopItem("pills",	      	ITEMCAT_TRINKETS,		30,				"trinket_pills").SubCategory =								ITEMSUBCAT_TRINKETS_MELEE
 GM:AddPointShopItem("damage222",	      	ITEMCAT_TRINKETS,		30,				"trinket_damage222").SubCategory =								ITEMSUBCAT_TRINKETS_MELEE
 -- Tier 4
-GM:AddPointShopItem("cham_at",		ITEMCAT_TRINKETS,		50,				"trinket_cham_at").SubCategory =							ITEMSUBCAT_TRINKETS_SPECIAL
-GM:AddPointShopItem("fire_at",		ITEMCAT_TRINKETS,		50,				"trinket_fire_at").SubCategory =							ITEMSUBCAT_TRINKETS_SPECIAL
-GM:AddPointShopItem("pulse_at",		ITEMCAT_TRINKETS,		50,				"trinket_pulse_at").SubCategory =							ITEMSUBCAT_TRINKETS_SPECIAL
-GM:AddPointShopItem("ultra_at",		ITEMCAT_TRINKETS,		50,				"trinket_ultra_at").SubCategory =							ITEMSUBCAT_TRINKETS_SPECIAL
-GM:AddPointShopItem("acid_at",		ITEMCAT_TRINKETS,		50,				"trinket_acid_at").SubCategory =							ITEMSUBCAT_TRINKETS_SPECIAL
+GM:AddPointShopItem("cham_at",		ITEMCAT_TRINKETS,		50,				"trinket_cham_at").SubCategory =							ITEMSUBCAT_TRINKETS_OFFENSIVE
+GM:AddPointShopItem("fire_at",		ITEMCAT_TRINKETS,		50,				"trinket_fire_at").SubCategory =							ITEMSUBCAT_TRINKETS_OFFENSIVE
+GM:AddPointShopItem("pulse_at",		ITEMCAT_TRINKETS,		50,				"trinket_pulse_at").SubCategory =							ITEMSUBCAT_TRINKETS_OFFENSIVE
+GM:AddPointShopItem("acid_at",		ITEMCAT_TRINKETS,		50,				"trinket_acid_at").SubCategory =							ITEMSUBCAT_TRINKETS_OFFENSIVE
 GM:AddPointShopItem("hemoadrenaliii",	ITEMCAT_TRINKETS,		50,				"trinket_hemoadrenaliii").SubCategory =							ITEMSUBCAT_TRINKETS_MELEE
 GM:AddPointShopItem("ammoband",			ITEMCAT_TRINKETS,		50,				"trinket_ammovestiii").SubCategory =							ITEMSUBCAT_TRINKETS_OFFENSIVE
 GM:AddPointShopItem("resonance",		ITEMCAT_TRINKETS,		50,				"trinket_resonance").SubCategory =								ITEMSUBCAT_TRINKETS_OFFENSIVE
@@ -708,7 +707,6 @@ GM:AddPointShopItem("targetingvisiii",	ITEMCAT_TRINKETS,		30,				"trinket_target
 GM:AddPointShopItem("sammovest",	   ITEMCAT_TRINKETS,		50,				"trinket_sammovest").SubCategory =						ITEMSUBCAT_TRINKETS_OFFENSIVE
 GM:AddPointShopItem("eodvest",			ITEMCAT_TRINKETS,		50,				"trinket_eodvest").SubCategory =								ITEMSUBCAT_TRINKETS_DEFENSIVE
 GM:AddPointShopItem("composite",		ITEMCAT_TRINKETS,		50,				"trinket_composite").SubCategory =								ITEMSUBCAT_TRINKETS_DEFENSIVE
-GM:AddPointShopItem("toysite  ",		ITEMCAT_TRINKETS,		150,				"trinket_toysite").SubCategory =								ITEMSUBCAT_TRINKETS_DEFENSIVE
 GM:AddPointShopItem("resupplypack",		ITEMCAT_TRINKETS,		50,				"trinket_resupplypack").SubCategory =							ITEMSUBCAT_TRINKETS_SUPPORT
 GM:AddPointShopItem("promanifest",		ITEMCAT_TRINKETS,		50,				"trinket_promanifest").SubCategory =							ITEMSUBCAT_TRINKETS_SUPPORT
 GM:AddPointShopItem("opsmatrix",		ITEMCAT_TRINKETS,		50,				"trinket_opsmatrix").SubCategory =								ITEMSUBCAT_TRINKETS_SUPPORT
@@ -716,8 +714,8 @@ GM:AddPointShopItem("store2",	        ITEMCAT_TRINKETS,		50,				"trinket_store2"
 GM:AddPointShopItem("kre",	            ITEMCAT_TRINKETS,		50,				"trinket_kre").SubCategory =						ITEMSUBCAT_TRINKETS_PERFOMANCE
 GM:AddPointShopItem("greedeye",	            ITEMCAT_TRINKETS,		50,				"trinket_greedeye").SubCategory =						ITEMSUBCAT_TRINKETS_SPECIAL
 -- Tier 5
-GM:AddPointShopItem("cham_storm",		ITEMCAT_TRINKETS,		70,				"trinket_cham_storm").SubCategory =							ITEMSUBCAT_TRINKETS_SPECIAL
-GM:AddPointShopItem("gasmask",		ITEMCAT_TRINKETS,		70,				"trinket_gasmask").SubCategory =							ITEMSUBCAT_TRINKETS_SPECIAL
+GM:AddPointShopItem("cham_storm",		ITEMCAT_TRINKETS,		70,				"trinket_cham_storm").SubCategory =							ITEMSUBCAT_TRINKETS_OFFENSIVE
+GM:AddPointShopItem("gasmask",		ITEMCAT_TRINKETS,		70,				"trinket_gasmask").SubCategory =							ITEMSUBCAT_TRINKETS_PERFOMANCE
 GM:AddPointShopItem("supasm",			ITEMCAT_TRINKETS,		70,				"trinket_supasm").SubCategory =									ITEMSUBCAT_TRINKETS_OFFENSIVE
 GM:AddPointShopItem("pulseimpedance",	ITEMCAT_TRINKETS,		70,				"trinket_pulseimpedance").SubCategory =							ITEMSUBCAT_TRINKETS_OFFENSIVE
 GM:AddPointShopItem("classix",	        ITEMCAT_TRINKETS,		70,				"trinket_classix").SubCategory =							  ITEMSUBCAT_TRINKETS_OFFENSIVE
@@ -725,6 +723,7 @@ GM:AddPointShopItem("killer",	        ITEMCAT_TRINKETS,		70,				"trinket_killer"
 GM:AddPointShopItem("stopit",        	ITEMCAT_TRINKETS,		70,				"trinket_stopit").SubCategory =						ITEMSUBCAT_TRINKETS_PERFOMANCE
 GM:AddPointShopItem("classil",	        ITEMCAT_TRINKETS,		70,				"trinket_classil").SubCategory =							  ITEMSUBCAT_TRINKETS_OFFENSIVE 
 GM:AddPointShopItem("ttimes",	        ITEMCAT_TRINKETS,		70,				"trinket_ttimes").SubCategory =							  ITEMSUBCAT_TRINKETS_DEFENSIVE
+GM:AddPointShopItem("toysite  ",		ITEMCAT_TRINKETS,		150,				"trinket_toysite").SubCategory =								ITEMSUBCAT_TRINKETS_DEFENSIVE
 -- GM:AddPointShopItem("void",	        ITEMCAT_TRINKETS,		70,				"trinket_void").SubCategory =							  ITEMSUBCAT_TRINKETS_OFFENSIVE
 
 
@@ -789,6 +788,7 @@ GM:AddMutationItem("m_rclaw", translate.Get("zshop_rclaw"), translate.Get("zshop
 GM:AddMutationItem("m_evo", translate.Get("zshop_evo"), translate.Get("zshop_evo_d1"), ITEMCAT_MUTATIONS_BOSS, 670, nil, function(pl) pl.m_Evo = true end, "models/player/zombie_classic.mdl")
 GM:AddMutationItem("m_zarmor", translate.Get("zshop_zarmor"), translate.Get("zshop_zarmor_d1"), ITEMCAT_MUTATIONS_BOSS, 1210, nil, function(pl) pl.m_ZArmor = true end, "models/player/zombie_classic.mdl")
 GM:AddMutationItem("m_zarmor2", translate.Get("zshop_zarmor2"), translate.Get("zshop_zarmor2_d1"), ITEMCAT_MUTATIONS_BOSS, 900, nil, function(pl) pl.m_ZArmor2 = true end, "models/player/zombie_classic.mdl")
+GM:AddMutationItem("redeem_pshop", translate.Get("zshop_red"), translate.Get("zshop_red_d1"), ITEMCAT_MUTATIONS_BOSS, 10000, nil, function(pl) pl:Redeem() pl:GiveAchievement("amnesty") end, "models/player/zombie_classic.mdl")
 -- These are the honorable mentions that come at the end of the round.
 -- classes
 

@@ -37,7 +37,9 @@ function ENT:AcceptInput(name, activator, caller, arg)
 				ent:GiveStatus("spawnslow", self.TickTime + 0.1)
 				if (ent.NextPoisonZGAS or 1) <= CurTime() and !ent:HasTrinket("gasmask") then
 					local p = ent:GiveStatus("poison")
-					p:AddDamage(8)
+					if p and p:IsValid() then
+						p:AddDamage(8)
+					end
 					ent.NextPoisonZGAS = CurTime() + 3
 					ent:TakeDamage(12)
 				end

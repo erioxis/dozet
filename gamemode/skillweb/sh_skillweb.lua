@@ -48,6 +48,9 @@ function GM:SkillCanUnlock(pl, skillid, skilllist)
 		if skill.DontUnlock and pl:IsSkillUnlocked(skill.DontUnlock) then
 			return false
 		end
+		if skill.DontUnlock2 and pl:IsSkillUnlocked(skill.DontUnlock2) then
+			return false
+		end
 
 		if skill.LevelReq and pl:GetZSLevel() < skill.LevelReq then
 			return false

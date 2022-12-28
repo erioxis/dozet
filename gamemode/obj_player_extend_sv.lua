@@ -164,16 +164,20 @@ function meta:ProcessDamage(dmginfo)
 			if (attacker:IsSkillActive(SKILL_BOUNTYKILLER) or self:GetZombieClassTable().Boss or self:GetZombieClassTable().DemiBoss) and !self:GetZombieClassTable().CrowDa and !self:GetZombieClassTable().Skeletal then
 				local mul = ((attacker:IsSkillActive(SKILL_BOUNTYKILLER) and 0.15 or 0) + (self:GetZombieClassTable().DemiBoss and 0.05 or self:GetZombieClassTable().Boss and 0.1 or 0))
 				attacker:SetProgress(attacker:GetProgress('bprog')+damage*mul, 'bprog')
-				if attacker:GetProgress('bprog') >= 2500 then
+				local tbl = {"headshoter", "ind_buffer", "altbetsoul", "soulalteden", "ultra_at"}
+				local hm = table.Random(tbl)
+				if attacker:GetProgress('bprog') >= 1500 * attacker:GetProgress('bprogmul')+1 and !attacker:HasTrinket(hm) then
 					attacker:SetProgress(0, 'bprog')
-					attacker:SetPoints(attacker:GetPoints() + 150)
+					attacker:SetProgress(attacker:GetProgress('bprogmul')+1,'bprogmul') 
+					attacker:AddInventoryItem("trinket_"..hm)
+					attacker:SetPoints(attacker:GetPoints() + 50)
 				end
 			end
-			dmginfo:SetDamage(damage * math.min(3,attacker:GetModelScale() * attacker:GetModelScale()))
+			dmginfo:SetDamage(damage * math.Clamp(attacker:GetModelScale() * attacker:GetModelScale(), 0.05, 5))
 			if attacker:HasTrinket("soulalteden") then
 				attacker.RandomDamage = attacker.RandomDamage + math.random(1,5)
 
-				if attacker.RandomDamage > math.random(35,95) then
+				if attacker.RandomDamage > 250 then
 														local buff = {
 							"holly",
 							"medrifledefboost",

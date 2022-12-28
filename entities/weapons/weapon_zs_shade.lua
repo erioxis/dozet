@@ -203,7 +203,7 @@ function SWEP:DrawHUD()
 	local typeshield = self.Ice and "frostshadeshield" or "shadeshield"
 	local theme = self.Ice and Color(42,204,204) or Color(81, 50, 255, 180) 
 	
-	local shield = self:GetOwner():GetStatus(typeshield):IsValid() and  self:GetOwner():GetStatus(typeshield)
+	local shield = self:GetOwner():GetStatus(typeshield)
 	if shield and shield:IsValid() then
 		surface.SetDrawColor(5, 5, 5, 180)
 		surface.DrawRect(x, y, wid, hei)

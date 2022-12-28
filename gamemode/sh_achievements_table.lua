@@ -12,6 +12,16 @@ GM.Achievements["zsfan"] = {
     Goal = 250,
     Reward = 120000
 }
+GM.Achievements["amnesty"] = {
+    Name = translate("challenge_amnesty"),
+    Desc = translate("challenge_amnesty_d"),
+    Reward = 10000
+}
+GM.Achievements["soul"] = {
+    Name = translate("challenge_soul"),
+    Desc = translate("challenge_soul_d"),
+    Reward = 12000
+}
 GM.Achievements["gurrenlagann"] = {
     Name = translate("challenge_inwork"),
     Desc = translate("challenge_inwork_d"),

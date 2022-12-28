@@ -82,7 +82,7 @@ if self.DieTime ~= 0 and activator:IsSkillActive(SKILL_CAN_EATER) and not activa
 
 	activator:SetHealth(math.min(activator:GetMaxHealth(), activator:Health() + 20))
 	local cursed = activator:GetStatus("cursed")
-	if (cursed) then
+	if (cursed) and activator:IsSkillActive(SKILL_RESNYA) then
 		activator:AddCursed(activator, cursed.DieTime - CurTime() - 20)
 	end
 	for _, pl3 in pairs(ents.FindInSphere(activator:GetPos(), 128 * activator:GetModelScale())) do

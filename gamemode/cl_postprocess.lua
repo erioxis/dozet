@@ -433,7 +433,7 @@ function GM:DrawInductorIndicators()
 			local colHealth = Color(97,255,24)
 			local screenscale = BetterScreenScale()
 			local health = bountyd
-			local progress = 2500
+			local progress = 1500 * MySelf:GetProgress('bprogmul')+1
 			local healthperc = math.Clamp(health / progress, 0.01, 1)
 			local wid, hei = 150 * screenscale, 20 * screenscale
 	 
@@ -538,7 +538,7 @@ function GM:DrawZombieIndicators()
 		
 				local subwidth = healthperc * wid
 		
-				draw.SimpleTextBlurry(health.."|"..pl:GetMaxHealth(), "ZSHUDFont", x + wid + 18 * screenscale, y + 8 * screenscale, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+				draw.SimpleTextBlurry(health.."|"..pl:GetMaxHealth(), "ZSHUDFont", x + 18 * screenscale, y - 36 * screenscale, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 		
 				surface.SetDrawColor(0, 0, 0, 230)
 				surface.DrawRect(x, y, wid, hei)

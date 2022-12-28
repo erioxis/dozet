@@ -117,6 +117,7 @@ GM.Assemblies["trinket_lotteryticket"] 						= {"comp_ticket",	"trinket_greedeye
 GM.Assemblies["trinket_mysteryticket"] 						= {"comp_ticket",	"trinket_greedsoul"}
 GM.Assemblies["trinket_soulrepairman"] 						= {"trinket_soulmedical",	"weapon_zs_hammer"}
 GM.Assemblies["trinket_soulmedical"] 						= {"trinket_curse_dropping",	"trinket_altisaacsoul"}
+GM.Assemblies["trinket_toykasoul"] 						= {"trinket_toysoul",	"weapon_zs_loy_q5"}
 --Собирание душ из осколков
 GM.Assemblies["trinket_soulrepairman"] 						= {"comp_soul_dosei",	"comp_soul_alt_h"}
 GM.Assemblies["trinket_soulmedical"] 						= {"comp_soul_dosei",	"comp_soul_health"}
@@ -756,7 +757,8 @@ trinket = GM:AddTrinket(trs("t_cham_storm"), "cham_storm", false, develes, dewel
 
 
 
-
+GM:AddSkillModifier(GM:AddTrinket(trs("t_headshoter"), "headshoter", false, supveles, supweles, 2, trs("t_d_headshoter"), nil, nil, "weapon_zs_help_trinket"), SKILLMOD_HEADSHOT_MUL, 0.3)
+GM:AddSkillModifier(GM:AddTrinket(trs("t_ind_buffer"), "ind_buffer", false, supveles, supweles, 2, trs("t_d_ind_buffer"), nil, nil, "weapon_zs_help_trinket"), SKILLMOD_ELEMENTAL_MUL, 0.3)
 -- ???
 GM:AddSkillModifier(GM:AddTrinket(trs("t_manifesti"), "acqmanifest", false, supveles, supweles, 2, trs("t_d_manifesti"), nil, nil, "weapon_zs_help_trinket"), SKILLMOD_RESUPPLY_DELAY_MUL, -0.03)
 GM:AddSkillModifier(GM:AddTrinket(trs("t_manifestii"), "promanifest", false, supveles, supweles, 4, trs("t_d_manifestii"), nil, nil, "weapon_zs_help_trinket"), SKILLMOD_RESUPPLY_DELAY_MUL, -0.07)
@@ -994,7 +996,28 @@ GM:AddSkillModifier(trinket, SKILLMOD_ENDWAVE_POINTS, 55)
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_ATTACKER_DMG_REFLECT, 60)
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_ATTACKER_DMG_REFLECT_PERCENT, 3)
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.10)
-GM:AddSkillModifier(trinket, SKILLMOD_KNOCKDOWN_RECOVERY_MUL, 4)
+GM:AddSkillModifier(trinket, SKILLMOD_KNOCKDOWN_RECOVERY_MUL, 40)
+GM:AddSkillModifier(trinket, SKILLMOD_LUCK, 15)
+trinket = GM:AddTrinket("Soul of Toyka", "toykasoul", false, nil, {
+	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 7.697, y = 7.697 }, color = Color(61, 0, 230, 125), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
+	["black_core_2+"] = { type = "Sprite", sprite = "effects/splashwake1", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 10, y = 10 }, color = Color(95, 51, 216, 189), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
+	["black_core"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 2, 0), angle = Angle(0, 0, 0), size = Vector(0.349, 0.349, 0.349), color = Color(82, 19, 124, 100), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} }
+}, nil, "Душа бочкобога и дизбалансобога!Минус только один - стрелять запрещено\nSoul of gods of explosive barrels and disbalance god, minus only 1 - Fire is gone\n Q:Disbalance", nil, nil, "weapon_zs_soul")
+GM:AddSkillModifier(trinket, SKILLMOD_SPEED, 100)
+GM:AddSkillModifier(trinket, SKILLMOD_FIELD_RANGE_MUL, 1)
+GM:AddSkillModifier(trinket, SKILLMOD_FIELD_DELAY_MUL, -1)
+GM:AddSkillModifier(trinket, SKILLMOD_EXP_DAMAGE_TAKEN_MUL, -2)
+GM:AddSkillModifier(trinket, SKILLMOD_EXP_DAMAGE_RADIUS, 3)
+GM:AddSkillModifier(trinket, SKILLMOD_CONTROLLABLE_HEALTH_MUL, 2)
+GM:AddSkillModifier(trinket, SKILLMOD_CONTROLLABLE_SPEED_MUL, 0.50)
+GM:AddSkillModifier(trinket, SKILLMOD_MANHACK_DAMAGE_MUL, 10)
+GM:AddSkillModifier(trinket, SKILLMOD_MEDKIT_COOLDOWN_MUL, -1)
+GM:AddSkillModifier(trinket, SKILLMOD_MEDGUN_FIRE_DELAY_MUL, -0.3)
+GM:AddSkillModifier(trinket, SKILLMOD_ENDWAVE_POINTS, 55)
+GM:AddSkillModifier(trinket, SKILLMOD_DAMAGE, -55)
+GM:AddSkillModifier(trinket, SKILLMOD_MELEE_ATTACKER_DMG_REFLECT, 60)
+GM:AddSkillModifier(trinket, SKILLMOD_MELEE_ATTACKER_DMG_REFLECT_PERCENT, 3)
+GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.10)
 GM:AddSkillModifier(trinket, SKILLMOD_LUCK, 15)
 trinket = GM:AddTrinket("Soul of Tea", "teasoul", false, nil, {
 	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 7.697, y = 7.697 }, color = Color(255, 0, 255, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},

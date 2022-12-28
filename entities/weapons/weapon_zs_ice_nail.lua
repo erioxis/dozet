@@ -74,10 +74,15 @@ SWEP.PrintName = translate.Get("wep_ice_nail")
 SWEP.Description = translate.Get("wep_d_ice_nail")
 function SWEP:PlayHitSound()
 	self:EmitSound("physics/glass/glass_bottle_break"..math.random(1,2)..".wav", 1215, self:GetBlockState() and 200 or 2109)
+	for i=1,3 do
+		timer.Simple(0.09*i, function()	self:EmitSound("physics/glass/glass_bottle_break"..math.random(1,2)..".wav", 1215, self:GetBlockState() and 200/i or 2109/i) end)
+	end
 end
 
 function SWEP:PlayHitFleshSound()
-	self:EmitSound("physics/body/body_medium_break"..math.random(2, 4)..".wav")
+	for i=1,3 do
+		timer.Simple(0.05*i, function()	self:EmitSound("physics/glass/glass_bottle_break"..math.random(1,2)..".wav", 1215, self:GetBlockState() and 200 or 2109) end)
+	end
 end
 
 SWEP.Base = "weapon_zs_basemelee"

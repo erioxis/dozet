@@ -99,8 +99,8 @@ function ENT:OnTakeDamage(dmginfo)
 		if self:CanBeDamagedByTeam(attacker:Team()) then
 			if attacker:Team() == TEAM_HUMAN then
 				local dmgtype = dmginfo:GetDamageType()
-				if bit.band(dmgtype, DMG_SLASH) ~= 0 or bit.band(dmgtype, DMG_CLUB) ~= 0 then
-					dmginfo:SetDamage(dmginfo:GetDamage() * 0.5)
+				if bit.band(dmgtype, DMG_SLASH) ~= 0 or bit.band(dmgtype, DMG_CLUB) ~= 0 or bit.band(dmgtype, DMG_BULLET) ~= 0 and attacker:IsSkillActive(SKILL_UNSIGIL)  then
+					dmginfo:SetDamage(dmginfo:GetDamage() * 0.5 * (attacker:IsSkillActive(SKILL_UNSIGIL) and 0.1 or 1))
 				else
 					dmginfo:SetDamage(0)
 					return

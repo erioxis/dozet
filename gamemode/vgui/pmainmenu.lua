@@ -220,7 +220,7 @@ function GM:ShowHelp()
 	but:DockMargin(0, 0, 0, 12)
 	but:DockPadding(0, 12, 0, 12)
 	but:Dock(TOP)
-	but.DoClick = function() MakepStats() end
+	but.DoClick = function() GAMEMODE:Stats() end
 
 	but = vgui.Create("DButton", menu)
 	but:SetFont("ZSHUDFontSmaller")
@@ -233,17 +233,18 @@ function GM:ShowHelp()
 
 	menu:MakePopup()
 end
-
+function GM:Stats()
+	if pMakepStats and pMakepStats:IsValid() then
+		pMakepStats:Remove()
+	end
+	MakepStats()
+end
 function MakepStats()
 	PlayMenuOpenSound()
 
-	if pMakepStats then
-		pMakepStats:SetAlpha(0)
-		pMakepStats:AlphaTo(255, 0.15, 0)
-		pMakepStats:SetVisible(true)
-		pMakepStats:MakePopup()
-		
-		return
+	if pMakepStats and pMakepStats:IsValid() then
+		pMakepStats:Remove()
+		pMakepStats = nil
 	end
 
 	local Window = vgui.Create("DFrame")
@@ -258,7 +259,7 @@ function MakepStats()
 	local y = 8
 
 
-	local label = EasyLabel(Window, translate.Get("mm_stats"), "ZSScoreBoardTitle", color_white)
+	local label = EasyLabel(Window, translate.Get("pe_another"), "ZSScoreBoardTitle", color_white)
 	label:SetPos(wide * 0.5 - label:GetWide() * 0.5, y)
 	y = y + label:GetTall() + 8
 
@@ -319,4 +320,5 @@ function MakepStats()
 	Window:SetAlpha(0)
 	Window:AlphaTo(255, 0.15, 0)
 	Window:MakePopup()
+	return Window
 end

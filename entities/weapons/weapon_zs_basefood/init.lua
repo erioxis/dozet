@@ -31,7 +31,7 @@ function SWEP:Eat()
 		elseif debuff == 5 then
 			owner:GiveStatus("reaper", 70)
 		else
-			owner:GiveStatus("status_strengthdartboost", 70)
+			owner:GiveStatus("strengthdartboost", 70)
 		end
 	end
 	if owner:IsSkillActive(SKILL_FOODHEALS) then

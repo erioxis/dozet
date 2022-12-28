@@ -92,6 +92,11 @@ TREE_DONATETREE = 10
 TREE_USELESSTREE = 11
 TREE_BRANCH_ELEMENTS = 12
 
+
+TREE_RESNYA = 13
+TREE_DOSET = 14
+TREE_OLD_GOD = 15
+
 -- Dummy skill used for "connecting" to their trees.
 SKILL_NONE = 0
 
@@ -417,6 +422,11 @@ SKILL_USEFULL = 394
 SKILL_ANATOMY = 395
 
 
+SKILL_RESNYA = 396
+SKILL_OLD_GOD = 397
+SKILL_DOSET = 398
+
+
 
 
 
@@ -545,7 +555,23 @@ local BAD = "^"..COLORID_RED
 local NEUTRAL = "^"..COLORID_GRAY
 local PURPLE = "^"..COLORID_PURPLE
 --
-
+local d = GM:AddSkill(SKILL_RESNYA, translate.Get("skill_resnya"), GOOD..translate.Get("skill_resnya_d1")..GOOD..translate.Get("skill_resnya_d2"),
+																22,			-6,					{SKILL_NONE}, TREE_RESNYA)
+GM:AddSkillModifier(SKILL_RESNYA, SKILLMOD_MELEE_DAMAGE_MUL, 0.15)
+d.DontUnlock = SKILL_OLD_GOD
+d.DontUnlock2 = SKILL_DOSET
+local d = GM:AddSkill(SKILL_DOSET, translate.Get("skill_doset"), GOOD..translate.Get("skill_doset_d1")..GOOD..translate.Get("skill_doset_d2"),
+																22,			-4,					{SKILL_NONE}, TREE_DOSET)
+GM:AddSkillModifier(SKILL_DOSET, SKILLMOD_LUCK, 1)
+GM:AddSkillModifier(SKILL_DOSET, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.1)
+d.DontUnlock = SKILL_OLD_GOD
+d.DontUnlock2 = SKILL_RESNYA
+local d = GM:AddSkill(SKILL_OLD_GOD, translate.Get("skill_old_g"), GOOD..translate.Get("skill_old_g_d1")..GOOD..translate.Get("skill_old_g_d2"),
+																22,			-2,					{SKILL_NONE}, TREE_OLD_GOD)
+GM:AddSkillModifier(SKILL_OLD_GOD, SKILLMOD_M_DMG, 0.3)
+GM:AddSkillModifier(SKILL_OLD_GOD, SKILLMOD_M_REG, 0.3)
+d.DontUnlock = SKILL_DOSET
+d.DontUnlock2 = SKILL_RESNYA
 -- Health Tree
 GM:AddSkill(SKILL_STOIC1, translate.Get("skill_stoici_0"), GOOD..translate.Get("skill_stoici_d1")..BAD..translate.Get("skill_stoici_d2"),
 																-4,			-6,					{SKILL_NONE, SKILL_STOIC2}, TREE_HEALTHTREE)
