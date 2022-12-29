@@ -433,7 +433,7 @@ function GM:DrawInductorIndicators()
 			local colHealth = Color(97,255,24)
 			local screenscale = BetterScreenScale()
 			local health = bountyd
-			local progress = 1500 * MySelf:GetProgress('bprogmul')+1
+			local progress = 1500 * (MySelf:GetProgress('bprogmul')+1)
 			local healthperc = math.Clamp(health / progress, 0.01, 1)
 			local wid, hei = 150 * screenscale, 20 * screenscale
 	 

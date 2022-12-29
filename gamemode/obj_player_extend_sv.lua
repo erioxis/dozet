@@ -166,7 +166,7 @@ function meta:ProcessDamage(dmginfo)
 				attacker:SetProgress(attacker:GetProgress('bprog')+damage*mul, 'bprog')
 				local tbl = {"headshoter", "ind_buffer", "altbetsoul", "soulalteden", "ultra_at"}
 				local hm = table.Random(tbl)
-				if attacker:GetProgress('bprog') >= 1500 * attacker:GetProgress('bprogmul')+1 and !attacker:HasTrinket(hm) then
+				if attacker:GetProgress('bprog') >= 1500 * (attacker:GetProgress('bprogmul')+1) and !attacker:HasTrinket(hm) then
 					attacker:SetProgress(0, 'bprog')
 					attacker:SetProgress(attacker:GetProgress('bprogmul')+1,'bprogmul') 
 					attacker:AddInventoryItem("trinket_"..hm)
