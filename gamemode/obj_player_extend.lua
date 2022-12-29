@@ -1150,14 +1150,14 @@ function meta:GetMaxZombieHealth()
 	local classtab = self:GetZombieClassTable()
 	local health = 0
 	if classtab.Boss then
-		health = classtab.Health + GAMEMODE:GetWave() * 90 *  (classtab.DynamicHealth or 1) * (GAMEMODE:GetRage()/5000+1)
+		health = classtab.Health +  (((GAMEMODE:GetWave() * 250)) * math.max(1,team.NumPlayers(TEAM_HUMAN)/2 - (team.NumPlayers(TEAM_UNDEAD)/3)))* (classtab.DynamicHealth or 1)
 	elseif classtab.DemiBoss then
-		health = classtab.Health + GAMEMODE:GetWave() * 40 * (classtab.DynamicHealth or 1) * (GAMEMODE:GetRage()/5000+1)
+		health = classtab.Health + (((GAMEMODE:GetWave() * 80)) * team.NumPlayers(TEAM_HUMAN)) * (classtab.DynamicHealth or 1)
 	else
-		health = classtab.Health * healthmulti * (GAMEMODE:GetRage()/5000+1)
+		health = (classtab.Health * healthmulti) + ((GAMEMODE:GetWave() * 45) * (classtab.DynamicHealth or 1)) 
 	end
 	local health  = health * (self.m_HealthMulZS or 1)
-	return math.Round(health)
+	return health
 end
 function meta:SetMaxZombieHealth(add)
 	self:GetZombieClassTable().Health = add

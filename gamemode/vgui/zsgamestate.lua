@@ -75,7 +75,7 @@ function PANEL:Text1Paint()
 		else
 			local maxwaves = GAMEMODE:GetNumberOfWaves()
 			if maxwaves ~= -1 then
-				text = translate.Format("wave_x", wave)
+				text = translate.Format("wave_x_of_y", wave, maxwaves)
 				if not GAMEMODE:GetWaveActive() then
 					text = translate.Get("intermission").." - "..text
 				end
@@ -136,7 +136,7 @@ function PANEL:Text3Paint()
 			else
 				draw.SimpleText(translate.Format("brains_eaten_x", MySelf:Frags()), self.Font, 0, -6, COLOR_SOFTRED)
 			end
-			local balance = GAMEMODE:GetBalance()
+			local balance = GAMEMODE:GetBalance() * 2
 			local god = false
 			local d = NULL
 			for _, pl in pairs(player.GetAll()) do
@@ -154,7 +154,7 @@ function PANEL:Text3Paint()
 				draw.SimpleText(translate.Get("power_god")..powergod.."%", "ZSHUDFontTiniest", 0, 16, COLOR_SOFTRED)
 			end
 		else
-			local balance = GAMEMODE:GetBalance()
+			local balance = GAMEMODE:GetBalance() * 2
 			--draw.SimpleText(translate.Format("points_x", MySelf:GetPoints().." / "..MySelf:Frags()), self.Font, 0, 0, COLOR_DARKRED)
 			draw.SimpleText(translate.Format("sboard_points_x_score_x_dps_x", MySelf:GetPoints(), MySelf:GetMScore(),	math.Round(MySelf:GetDPS())), self.Font, 0, -6, COLOR_SOFTRED)
 			local god = false

@@ -92,7 +92,7 @@ function ENT:StartTouch(ent)
 		ent:GiveAchievementProgress("gift_is_good", 1)
 		ent:GiveAchievementProgress("gift_collector", 1)
 		local gift = math.random(1,7)
-		local random = math.random(50,5000)
+		local random = math.random(50,500)
 		if gift == 1 then
 			ent:AddZSXP(random)
 			gift = "XP"
@@ -171,16 +171,11 @@ function ENT:StartTouch(ent)
 		self:EmitSound("buttons/lever"..math.random(1,8)..".wav")
     elseif self.DieTime ~= 0 and ent:IsValidLivingZombie() and !ent:IsBot() and !ent:GetZombieClassTable().AllowTeamDamage then
 		self.DieTime = 0
-		local random = math.random(50,5000)
+		local random = math.random(50,500)
 		local gift = math.random(1,100)
 		if gift <= 75 then
-			if math.random(1,2) == 1 then
-				ent:AddZSXP(random)
-				gift = "XP"
-			else
-				ent:SetHealth(ent:Health() + random)
-				gift = "HP"
-			end
+			ent:AddZSXP(random)
+			gift = "XP"
 		elseif gift >= 85 and gift <= 95 then
 			gamemode.Call( "SpawnBossZombie", ent)
 			gift = "BOSS"
