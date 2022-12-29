@@ -119,7 +119,7 @@ GM.ExtraHealthPerExtraNail = 300
 GM.MaxNails = 4
 
 -- Moved from options to globals because the game is now balanced around it being static. The gamemode will BREAK if this is not 6!!
-GM.NumberOfWaves = 12
+GM.NumberOfWaves = 10000
 
 GM.PulsePointsMultiplier = 1.5
 

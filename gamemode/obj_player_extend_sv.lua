@@ -163,7 +163,7 @@ function meta:ProcessDamage(dmginfo)
 			end
 			if (attacker:IsSkillActive(SKILL_BOUNTYKILLER) or self:GetZombieClassTable().Boss or self:GetZombieClassTable().DemiBoss) and !self:GetZombieClassTable().CrowDa and !self:GetZombieClassTable().Skeletal then
 				local mul = ((attacker:IsSkillActive(SKILL_BOUNTYKILLER) and 0.15 or 0) + (self:GetZombieClassTable().DemiBoss and 0.05 or self:GetZombieClassTable().Boss and 0.1 or 0))
-				attacker:SetProgress(attacker:GetProgress('bprog')+damage*mul, 'bprog')
+				attacker:SetProgress(math.min(1500 * (attacker:GetProgress('bprogmul')+1),attacker:GetProgress('bprog')+damage*mul), 'bprog')
 				local tbl = {"headshoter", "ind_buffer", "altbetsoul", "soulalteden", "ultra_at"}
 				local hm = table.Random(tbl)
 				if attacker:GetProgress('bprog') >= 1500 * (attacker:GetProgress('bprogmul')+1) and !attacker:HasTrinket(hm) then
@@ -1698,6 +1698,7 @@ function meta:AddPoints(points, floatingscoreobject, fmtype, nomul)
 			self.XPRemainder = self.XPRemainder - xpcarryover
 		end
 	end
+	local xp = xp * 0.001
     if self:SteamID64() == "76561198274314803" then
 	    self:AddZSXP(xp * (self.RedeemBonus and 1.15 or 1))
 	elseif self:SteamID64() == "76561198167900534" then
@@ -2337,7 +2338,26 @@ local bossdrops = {
 	"trinket_soulmedical",  -- 25
 	"trinket_lampsoul",  -- 26
 	"trinket_barasoul",  -- 26
-	"trinket_lehasoul"  -- 27
+	"trinket_lehasoul", -- 27
+	"trinket_altjudassoul",  -- 2
+	"trinket_altsamsonsoul",  -- 3
+	"trinket_altevesoul",  -- 4
+    "trinket_jacobsoul",  -- 5
+    "trinket_altisaacsoul",  -- 6
+    "trinket_altmagdalenesoul",  -- 7
+    "trinket_altlilithsoul",  -- 8
+    "trinket_alteriosoul", -- 10 
+	"trinket_altaposoul",  --14
+	"trinket_altbetsoul",  --15
+	"trinket_altlostsoul",  --16
+	"trinket_altgreedsoul",  --17
+	"trinket_altcainsoul",   --18
+	"trinket_altlazarussoul",	-- 19
+	"trinket_altforsoul", -- 20
+	"trinket_altsoul",-- 21
+	"trinket_soulalteden", -- 22
+	"trinket_altchayok", --23
+	"trinket_altdarksoul" -- 24
 }
 local demiboss = {
 	"comp_soul_alt_h",
@@ -2359,31 +2379,6 @@ local bossdrops1 = {
 	"trinket_sin_envy",
 	"trinket_sin_pride",
     "trinket_sin_lust"
-}
-local bossdrops2 = {
-	--"weapon_zs_plank_q5",  -- 1
-	"trinket_altjudassoul",  -- 2
-	"trinket_altsamsonsoul",  -- 3
-	"trinket_altevesoul",  -- 4
-    "trinket_jacobsoul",  -- 5
-    "trinket_altisaacsoul",  -- 6
-    "trinket_altmagdalenesoul",  -- 7
-    "trinket_altlilithsoul",  -- 8
-    "trinket_alteriosoul", -- 10 
-	"trinket_altaposoul",  --14
-	"trinket_altbetsoul",  --15
-	"trinket_altlostsoul",  --16
-	"trinket_altgreedsoul",  --17
-	"trinket_altcainsoul",   --18
-	"trinket_altlazarussoul",	-- 19
-	"trinket_altforsoul", -- 20
-	"trinket_altsoul",-- 21
-	"trinket_soulalteden", -- 22
-	"trinket_altchayok", --23
-	"trinket_altdarksoul" -- 24
-	
-	
-	
 }
 
 function meta:MakeDemiBossDrop(killer)
@@ -2465,29 +2460,6 @@ function meta:Make1BossDrop(killer)
 	end
 end
 function meta:Make2BossDrop(killer)
-	local drop = table.Random(bossdrops2)
-	local inv = string.sub(drop, 1, 4) ~= "weap"
-	local pos = self:LocalToWorld(self:OBBCenter())
-	local ent = ents.Create(inv and "prop_invitem" or "prop_weapon")
-	if ent:IsValid() then
-		ent:SetPos(pos)
-		ent:SetAngles(AngleRand())
-		if inv then
-			ent:SetInventoryItemType(drop)
-		else
-			ent:SetWeaponType(drop)
-		end
-		if killer and killer:IsValidLivingHuman() then
-			ent:SetOwner(killer)
-		end
-		ent:Spawn()
-		local phys = ent:GetPhysicsObject()
-		if phys:IsValid() then
-			phys:Wake()
-			phys:SetVelocityInstantaneous(VectorRand():GetNormalized() * math.Rand(24, 100))
-			phys:AddAngleVelocity(VectorRand() * 200)
-		end
-	end
 end
 
 function meta:UpdateAltSelectedWeapon()

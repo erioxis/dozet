@@ -3,16 +3,16 @@ CLASS.TranslationName = "class_skeletal_walker"
 CLASS.Description = "description_skeletal_walker"
 CLASS.Help = "controls_skeletal_walker"
 
-CLASS.Wave = 2 / 6
+CLASS.Wave = 22 / 10000
 
-CLASS.Health = 260
+CLASS.Health = 1080
 CLASS.Speed = 150
 CLASS.Variations = {"Skeletal Walker", "Shadow Walker",  "Skeletal Shambler", "Skeletal Crawler", "Shadow Lurker", "Frigid Revenant"}
 CLASS.Original = true
 
 CLASS.CanTaunt = true
 
-CLASS.Points = CLASS.Health/GM.SkeletonPointRatio
+CLASS.Points = CLASS.Health/GM.SkeletonPointRatio/10
 
 CLASS.SWEP = "weapon_zs_skeleton"
 

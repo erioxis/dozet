@@ -447,9 +447,7 @@ function GM:Initialize()
 	self:LoadProfiler()
 	self:LoadWinRate()
 	self.Da = self.Da or {"mmm", "what", "yes", "ммм", "да", "что", "obed", "обед", "уютненько", "Я", "I", "you", "ты", "амням", "санбой", "пророк"}
-	if self:GetRage() >= 10000 then
-		self:SetRage(0)
-	end
+	self:SetRage(0)
 	if self:GetWinRate() >= 5 then
 		self:SetWinRate(1)
 	end
@@ -1327,31 +1325,6 @@ function GM:Think()
 					pl:StripWeapon(pl:GetActiveWeapon():GetClass())
 				end
 				local barac = pl:IsSkillActive(SKILL_BARA_CURSED)
-				if self.MaxSigils >= 1 then
-					if not pl:GetStatus("sigildef") and self:GetWave() >= 6 and  time >= pl.NextDamage and self:GetWaveActive() and self:GetBalance() < 40 or self:GetBalance() > 40 and not pl:GetStatus("sigildef") and  time >= pl.NextDamage then
-						pl:TakeSpecialDamage(((pl:HasTrinket("jacobsoul") and 1 or 8 ) * (pl.TickBuff or 0)) /(barac and 200 or 1), DMG_DIRECT)
-						pl.NextDamage = time + (pl:HasTrinket("jacobsoul") and 4 or 2.4) * (barac and 3 or 1)
-						pl:CenterNotify(COLOR_RED, translate.ClientGet(pl, "danger"))
-						pl.TickBuff = pl.TickBuff + (pl.TickBuff * 0.2) + 1 * (pl.IsLastHuman and 20 or 1)
-
-					end
-					if !pl:GetStatus("sigildef") and pl.IsLastHuman and !barac and self:GetWave() >= 6 and table.Count(player.GetHumans()) >= 4  then
-						pl:TakeSpecialDamage(((pl:HasTrinket("jacobsoul") and 1 or 8 ) * (pl.TickBuff or 0)) /(barac and 200 or 1), DMG_DIRECT)
-						pl.TickBuff = pl.TickBuff + (pl.TickBuff * 0.2) + 10
-					end
-					if pl:GetStatus("sigildef") and self:GetWave() >= 6 and time >= pl.NextDamage and self:GetWaveActive() and pl:HasTrinket("jacobsoul") and not (self:GetWave() == 12) then
-						pl:TakeSpecialDamage(13 * (pl.IsLastHuman and 5 or 1), DMG_DIRECT)
-						pl.NextDamage = time + 7
-						pl:CenterNotify(COLOR_GREEN, translate.ClientGet(pl, "danger_x"))
-					end
-					if time >= (pl.NextDamage + 4) then
-						pl.TickBuff = pl.TickBuff - pl.TickBuff
-					end
-					if pl:HasTrinket("antibaracat") and barac then
-						pl:Kill()
-					end
-					
-				end
 				if !pl:OnGround() and not (pl:GetVelocity():LengthSqr() > 7600) then
 					pl.StuckedInProp = true
 				else
@@ -2259,7 +2232,7 @@ function GM:OnPlayerWin(pl)
 		pl:GiveAchievementProgress("loveof6", 1)
 	end
 	if self:GetNumberOfWaves() == 12 then
-		if self:GetBalance() >= 50 then
+		if self:GetBalance() >= 25 then
 			pl:GiveAchievement("infected_dosei")
 		end
 		if pl:GetMaxHealth() < 35 and not self.ObjectiveMap then
@@ -4931,13 +4904,13 @@ function GM:PlayerSpawn(pl)
 		end
 
 		if classtab.Boss then
-			pl:SetHealth(classtab.Health + (((self:GetWave() * 250)) * math.max(1,team.NumPlayers(TEAM_HUMAN)/2 - (team.NumPlayers(TEAM_UNDEAD)/3)))* (classtab.DynamicHealth or 1))
+			pl:SetHealth(classtab.Health * (self:GetRage()/5000+1))
 		elseif classtab.DemiBoss then
-			pl:SetHealth(classtab.Health + (((self:GetWave() * 80)) * team.NumPlayers(TEAM_HUMAN)) * (classtab.DynamicHealth or 1))
+			pl:SetHealth(classtab.Health * (self:GetRage()/5000+1) * (classtab.DynamicHealth or 1))
 		else
 			local lowundead = team.NumPlayers(TEAM_UNDEAD) < 4
 			local healthmulti = (self.ObjectiveMap or self.ZombieEscape) and 1 or lowundead and 1.5 or 1
-			pl:SetHealth((classtab.Health * healthmulti) + ((self:GetWave() * 45) * (classtab.DynamicHealth or 1)) )
+			pl:SetHealth((classtab.Health * healthmulti) * (self:GetRage()/5000+1) )
 		end
 
 		if classtab.SWEP then

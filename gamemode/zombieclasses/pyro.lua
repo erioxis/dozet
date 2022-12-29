@@ -5,7 +5,7 @@ CLASS.TranslationName = "class_pyro"
 CLASS.Description = "description_pyro"
 CLASS.Help = "controls_pyro"
 
-CLASS.Wave = 3 / 12
+CLASS.Wave = 20 / 10000
 
 CLASS.Health = 325
 CLASS.Points = CLASS.Health/GM.HumanoidZombiePointRatio
@@ -16,9 +16,6 @@ CLASS.FireBuff = true
 CLASS.Original = false
 CLASS.Variations = {"Zombie"}
 
-if SERVER then
-	function CLASS:OnKilled() end
-end
 if SERVER then
 	function CLASS:AltUse(pl)
 		pl:StartFeignDeath()

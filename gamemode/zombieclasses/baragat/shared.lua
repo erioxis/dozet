@@ -7,7 +7,7 @@ CLASS.Help = "controls_asskicker"
 CLASS.Model = Model("models/player/catpants.mdl")
 CLASS.OverrideModel = Model("models/player/catpants.mdl")
 
-CLASS.Wave = 6 / 6
+CLASS.Wave = 290 / 10000
 CLASS.Variations = false
 CLASS.KnockbackScale = 0
 

@@ -373,13 +373,13 @@ local function GetMaxZombieHealth(classtab)
 	local healthmulti = (GAMEMODE.ObjectiveMap or GAMEMODE.ZombieEscape) and 1 or lowundead and 1.5 or 1
 	local health = 0
 	if classtab.Boss then
-		health = classtab.Health +  (((GAMEMODE:GetWave() * 250)) * math.max(1,team.NumPlayers(TEAM_HUMAN)/2 - (team.NumPlayers(TEAM_UNDEAD)/3)))* (classtab.DynamicHealth or 1)
+		health = classtab.Health + GAMEMODE:GetWave() * 90 *  (classtab.DynamicHealth or 1)
 	elseif classtab.DemiBoss then
-		health = classtab.Health + (((GAMEMODE:GetWave() * 80)) * team.NumPlayers(TEAM_HUMAN)) * (classtab.DynamicHealth or 1)
+		health = classtab.Health + GAMEMODE:GetWave() * 40 * (classtab.DynamicHealth or 1)
 	else
-		health = (classtab.Health * healthmulti) + ((GAMEMODE:GetWave() * 45) * (classtab.DynamicHealth or 1)) 
+		health = classtab.Health * healthmulti
 	end
-	return health
+	return health * (GAMEMODE:GetRage()/5000+1)
 end
 local function GetZombieName(name)
 	for i=1, #GAMEMODE.ZombieClasses do

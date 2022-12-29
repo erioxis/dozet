@@ -3,15 +3,15 @@ CLASS.TranslationName = "class_skeletal_shambler"
 CLASS.Description = "description_skeletal_shambler"
 CLASS.Help = "controls_skeletal_shambler"
 
-CLASS.Wave = 5 / 6
+CLASS.Wave = 202 / 10000
 
-CLASS.Health = 346
+CLASS.Health = 12900
 CLASS.Speed = 155
 CLASS.Original = false
 CLASS.Variations = {}
 CLASS.CanTaunt = true
 
-CLASS.Points = CLASS.Health/GM.SkeletonPointRatio
+CLASS.Points = 30
 
 CLASS.SWEP = "weapon_zs_skelesham"
 

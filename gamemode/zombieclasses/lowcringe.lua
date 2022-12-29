@@ -5,11 +5,12 @@ CLASS.Help = "controls_the_tickle_monster"
 
 
 CLASS.KnockbackScale = 0
-CLASS.Wave = 10 / 12
+CLASS.Wave = 50 / 10000
 
 CLASS.Health = 4000
 CLASS.Speed = 120
 CLASS.Hidden = false
+CLASS.Points = 5
 
 CLASS.BetterVersion = "The Cringe+"
 
