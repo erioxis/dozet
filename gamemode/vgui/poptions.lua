@@ -46,15 +46,29 @@ function MakepOptions()
 	list2:SetSpacing(4)
 	gamemode.Call("AddExtraOptions", list2, Window)
 
+	local list3 = vgui.Create("DPanelList", pOptions)
+	list3:EnableVerticalScrollbar()
+	list3:EnableHorizontal(false)
+	list3:SetSize(wide - 24, tall - y - 12)
+	list3:SetPos(12, y)
+	list3:SetPadding(8)
+	list3:SetSpacing(4)
+	gamemode.Call("AddExtraOptions", list3, Window)
+
 		
 	
 	local panel2 = vgui.Create( "DPanel", sheet )
-	panel2.Paint = function( self, w, h ) list:SetVisible(true) list2:SetVisible(false)	end 
+	panel2.Paint = function( self, w, h ) list:SetVisible(true) list2:SetVisible(false)	 list3:SetVisible(false)end 
 	sheet:AddSheet( translate.Get('old_op'), panel2)--, "icon16/tick.png" )
 
 	local panel1 = vgui.Create( "DPanel", sheet )
-	panel1.Paint = function( self, w, h )  list:SetVisible(false) list2:SetVisible(true) end 
+	panel1.Paint = function( self, w, h )  list:SetVisible(false) list2:SetVisible(true) list3:SetVisible(false) end 
 	sheet:AddSheet( translate.Get('new_op'), panel1)--, "icon16/cross.png" )
+
+
+	--local panel3 = vgui.Create( "DPanel", sheet )
+--	panel3.Paint = function( self, w, h )  list:SetVisible(false) list2:SetVisible(false) list3:SetVisible(true)  end 
+--	sheet:AddSheet( translate.Get('skill_op'), panel3)--, "icon16/cross.png" )
 
 	local check = vgui.Create("DCheckBoxLabel", Window)
 	check:SetText(""..translate.Get("op_naildisplay"))
@@ -81,6 +95,22 @@ function MakepOptions()
 	check:SetText(translate.Get("op_show_dmgp"))
 	check:SetConVar("zs_show_dmg_in_perc")
 	check:SizeToContents()
+	list2:AddItem(check)
+
+	check = vgui.Create("DCheckBoxLabel", Window)
+	check:SetText(translate.Get("op_show_node"))
+	check:SetConVar("zs_disablenode")
+	check:SizeToContents()
+	check:SetTooltip(translate.Get("op_show_node_tool"))
+	list2:AddItem(check)
+
+
+	
+	check = vgui.Create("DCheckBoxLabel", Window)
+	check:SetText(translate.Get("op_show_node"))
+	check:SetConVar("zs_disablesprite")
+	check:SizeToContents()
+	check:SetTooltip(translate.Get("op_show_sprite_tool"))
 	list2:AddItem(check)
 
 	check = vgui.Create("DCheckBoxLabel", Window)

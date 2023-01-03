@@ -4,7 +4,7 @@ SWEP.ZombieOnly = false
 SWEP.MeleeDamage = 32
 SWEP.MeleeKnockBack = 160
 
-SWEP.Primary.Delay = 0.4
+SWEP.Primary.Delay = 0.46
 SWEP.BlockTrue = false
 SWEP.CanPickup = true
 

@@ -125,7 +125,7 @@ function SWEP:PrimaryAttack()
 end
 
 function SWEP:Think()
-	BaseClass.Think(self)
+
 
 	local shotsleft = self:GetShotsLeft()
 	if shotsleft > 0 and CurTime() >= self:GetNextShot() then

@@ -353,6 +353,7 @@ GM:AddStartingItem("bloodshot",			ITEMCAT_OTHER,			35,				"weapon_zs_bloodshotbo
 --Magic
 GM:AddPointShopItem("magicheal",			ITEMCAT_MAGIC,			400,				"weapon_zs_m_heal")
 GM:AddPointShopItem("magicdamage",			ITEMCAT_MAGIC,			400,				"weapon_zs_m_damage")
+GM:AddPointShopItem("magicboom",			ITEMCAT_MAGIC,			400,				"weapon_zs_m_boom")
 
 -- Tier 1
 GM:AddPointShopItem("pshtr",			ITEMCAT_GUNS,			35,				"weapon_zs_peashooter", nil, nil, nil, function(pl) pl:GiveEmptyWeapon("weapon_zs_peashooter") end)
@@ -502,6 +503,7 @@ GM:AddPointShopItem("scythe",			ITEMCAT_MELEE,			435,			"weapon_zs_scythe")
 GM:AddPointShopItem("powerfists",		ITEMCAT_MELEE,			435,			"weapon_zs_powerfists")
 GM:AddPointShopItem("kshield",		ITEMCAT_MELEE,			435,			"weapon_zs_kobaldshield")
 GM:AddPointShopItem("inail",		ITEMCAT_MELEE,			435,			"weapon_zs_ice_nail")
+GM:AddPointShopItem("mogilka",			ITEMCAT_MELEE,			435,			"weapon_zs_graveshovelz").SkillRequirement = SKILL_RESNYA1
 -- Tier 5
 GM:AddPointShopItem("frotchet",			ITEMCAT_MELEE,			1500,			"weapon_zs_frotchet")
 GM:AddPointShopItem("luxrockj",			ITEMCAT_MELEE,			435,			"weapon_zs_luxshade")
@@ -513,6 +515,7 @@ GM:AddPointShopItem("baragay",			ITEMCAT_MELEE,			1500,			"weapon_zs_baramelee")
 GM:AddPointShopItem("megahook",			ITEMCAT_MELEE,			2500,			"weapon_zs_harpoon_mega")
 GM:AddPointShopItem("teslar",			ITEMCAT_MELEE,			2500,			"weapon_zs_teslorer")
 GM:AddPointShopItem("pw7",			ITEMCAT_MELEE,			2500,			"weapon_zs_powerfists_t7")
+
 -- Tier 7
 GM:AddPointShopItem("speed",			ITEMCAT_MELEE,			180600,			"weapon_zs_speed")
 GM:AddPointShopItem("xouryc",			ITEMCAT_MELEE,			4500,			"weapon_zs_loy")
@@ -713,6 +716,7 @@ GM:AddPointShopItem("opsmatrix",		ITEMCAT_TRINKETS,		50,				"trinket_opsmatrix")
 GM:AddPointShopItem("store2",	        ITEMCAT_TRINKETS,		50,				"trinket_store2").SubCategory =						ITEMSUBCAT_TRINKETS_PERFOMANCE
 GM:AddPointShopItem("kre",	            ITEMCAT_TRINKETS,		50,				"trinket_kre").SubCategory =						ITEMSUBCAT_TRINKETS_PERFOMANCE
 GM:AddPointShopItem("greedeye",	            ITEMCAT_TRINKETS,		50,				"trinket_greedeye").SubCategory =						ITEMSUBCAT_TRINKETS_SPECIAL
+GM:AddPointShopItem("antidevo",		ITEMCAT_TRINKETS,		50,				"trinket_antidevo").SubCategory =								ITEMSUBCAT_TRINKETS_DEFENSIVE
 -- Tier 5
 GM:AddPointShopItem("cham_storm",		ITEMCAT_TRINKETS,		70,				"trinket_cham_storm").SubCategory =							ITEMSUBCAT_TRINKETS_OFFENSIVE
 GM:AddPointShopItem("gasmask",		ITEMCAT_TRINKETS,		70,				"trinket_gasmask").SubCategory =							ITEMSUBCAT_TRINKETS_PERFOMANCE
@@ -723,7 +727,8 @@ GM:AddPointShopItem("killer",	        ITEMCAT_TRINKETS,		70,				"trinket_killer"
 GM:AddPointShopItem("stopit",        	ITEMCAT_TRINKETS,		70,				"trinket_stopit").SubCategory =						ITEMSUBCAT_TRINKETS_PERFOMANCE
 GM:AddPointShopItem("classil",	        ITEMCAT_TRINKETS,		70,				"trinket_classil").SubCategory =							  ITEMSUBCAT_TRINKETS_OFFENSIVE 
 GM:AddPointShopItem("ttimes",	        ITEMCAT_TRINKETS,		70,				"trinket_ttimes").SubCategory =							  ITEMSUBCAT_TRINKETS_DEFENSIVE
-GM:AddPointShopItem("toysite  ",		ITEMCAT_TRINKETS,		150,				"trinket_toysite").SubCategory =								ITEMSUBCAT_TRINKETS_DEFENSIVE
+GM:AddPointShopItem("toysite2",		ITEMCAT_TRINKETS,		150,				"trinket_toysite").SubCategory =								ITEMSUBCAT_TRINKETS_DEFENSIVE
+GM:AddPointShopItem("bloodgrass",		ITEMCAT_TRINKETS,		150,				"trinket_bloodgrass").SubCategory =								ITEMSUBCAT_TRINKETS_DEFENSIVE
 -- GM:AddPointShopItem("void",	        ITEMCAT_TRINKETS,		70,				"trinket_void").SubCategory =							  ITEMSUBCAT_TRINKETS_OFFENSIVE
 
 

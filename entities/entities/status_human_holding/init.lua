@@ -308,8 +308,8 @@ function ENT:Think()
 			self.StartY = math.NormalizeAngle(self.StartY - (sydiff))
 		end
 
-		ShadowParams.pos = self.ObjectPosition
-		ShadowParams.angle = self.ObjectAngles
+		ShadowParams.pos = self.ObjectPosition 
+		ShadowParams.angle = self.ObjectAngles 
 		ShadowParams.deltatime = frametime
 		objectphys:ComputeShadowControl(ShadowParams)
 	end

@@ -27,7 +27,7 @@ SWEP.WorldModel = "models/weapons/w_smg_ump45.mdl"
 SWEP.UseHands = true
 
 SWEP.Primary.Sound = Sound("Weapon_UMP45.Single")
-SWEP.Primary.Damage = 12
+SWEP.Primary.Damage = 19
 SWEP.Primary.NumShots = 1
 SWEP.Primary.Delay = 0.22
 

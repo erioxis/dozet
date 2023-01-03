@@ -266,6 +266,43 @@ function GM:CreateWeaponQualities()
 		end
 	end
 end
+--[[
+function GM:CreateTrinketQualities()
+	local allweapons = GAMEMODE.Skills
+	local classname
+
+	for k, v in ipairs(allweapons) do
+		classname = v.ClassName
+
+		local wept = classname.Trinket
+		if wept and wept.AllowQualityWeapons then
+			local orig = weapons.GetStored(classname)
+			orig.RemantleDescs = {}
+			orig.RemantleDescs[0] = {}
+
+			if orig.Branches then
+				for no, _ in pairs(orig.Branches) do
+					orig.RemantleDescs[no] = {}
+				end
+			end
+
+			for i, quality in ipairs(self.WeaponQualities) do
+				self:CreateWeaponOfQuality(i, orig, quality, classname)
+
+				if orig.Branches then
+					for no, tbl in pairs(orig.Branches) do
+						local ntbl = table.Copy(tbl)
+						ntbl.No = no
+
+						self:CreateWeaponOfQuality(i, orig, quality, classname, ntbl)
+					end
+				end
+			end
+		end
+	end
+end
+
+]]
 
 function GM:GetWeaponClassOfQuality(classname, quality, branch)
 	return classname.."_"..string.char(113 + (branch or 0))..quality

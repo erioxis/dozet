@@ -1463,7 +1463,7 @@ function GM:Think()
 				end
 				if pl:IsSkillActive(SKILL_OMEGA) and (pl:GetVelocity():Length() <= 0) and pl:Health() > pl:GetMaxHealth() * 0.35 then
 					pl:TakeDamage(pl:GetMaxHealth() * 0.05)
-					pl:AddUselessDamage(pl:GetMaxHealth() * 0.05)
+					pl:AddUselessDamage(pl:GetMaxHealth() * 0.025)
 				end
 
 				if pl:HasTrinket("regenimplant") and time >= pl.NextRegenTrinket and pl:Health() < healmax then
@@ -1513,7 +1513,6 @@ function GM:Think()
 				damaged = math.random(1,250)
 				if pl:IsSkillActive(SKILL_DAMAGER) and damaged == 1 then
                    pl:TakeDamage((pl:GetMaxHealth() * 0.10) + 1)
-				   pl:SetHealth((pl:Health() * 0.9) - ((pl:GetMaxHealth() * 0.05)))
 				end
 
 
@@ -2717,6 +2716,7 @@ function GM:PlayerInitialSpawnRound(pl)
 	pl.NextDamage = 0
 	pl.TickBuff = 0
 	pl.NextStuckThink = 0
+	pl.Zmainer = false
 
 	pl.BloodDead = 0
 
@@ -2813,14 +2813,14 @@ function GM:PlayerInitialSpawnRound(pl)
 	pl.DamageVulnerability = nil
 	pl.ClanQuePro = nil
 	pl.ClanAvanguard = nil
-	pl.ClanLoxov = nil
+	pl.ClanMelee = nil
 	pl.ClanMich = nil
 	pl.ClanShooter = nil
 	pl.ClanAnsableRevolution = nil
-	local loxclan ={
+	local meleeclan ={
 		"76561198394385289",
-		"76561198976953638",
-		"76561199132153283",
+		"76561198974292374",
+		"76561199124580085",
 	}
     local avanguardtbl ={
 		"76561198874285897",
@@ -2856,8 +2856,8 @@ function GM:PlayerInitialSpawnRound(pl)
 		"76561198086333703"
 	}
 	self:LoadVault(pl)
-	if table.HasValue(loxclan, pl:SteamID64()) then 
-		pl.ClanLoxov = true
+	if table.HasValue(meleeclan, pl:SteamID64()) then 
+		pl.ClanMelee = true
 	end
 	local uniqueid = pl:UniqueID()
 	if pl:SteamID64() == "76561198086333703" then
@@ -3462,12 +3462,6 @@ function GM:EntityTakeDamage(ent, dmginfo)
 							if !attacker:HasTrinket("cham_at") then
 								if attacker:HasTrinket("fire_at") and math.max(math.random(fireatt),1) == 1 or attacker:GetProgress('fprog') >= 15*((attacker:GetActiveWeapon() and (attacker:GetActiveWeapon().Tier or 1))+1) then
 									ent:AttachmentDamage(damage2, attacker, attacker, SLOWTYPE_FLAME)
-									if ent:GetZombieClassTable().Name ~= "Shade" and (ent.NoFireTime or 1) < CurTime() then
-										local c = math.random(1,7)
-										local d =ent:GiveStatus("burn",c)
-										d.Damager = attacker
-										ent.NoFireTime = CurTime() + c + 1
-									end
 									CurseAttach(attacker)
 								end
 								if attacker:HasTrinket("pulse_at") and math.max(math.random(pulseatt),1) == 1 then
@@ -4523,6 +4517,9 @@ function GM:DoPlayerDeath(pl, attacker, dmginfo)
 
 	local inflictor = dmginfo:GetInflictor()
 	local plteam = pl:Team()
+	if plteam == TEAM_HUMAN and self:GetWave() <= 4 and pl:GetZSRemortLevel() >= 4 then
+		pl.Zmainer = true
+	end
 	local ct = CurTime()
 	local suicide = attacker == pl or attacker:IsWorld()
 

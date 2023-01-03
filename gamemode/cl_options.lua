@@ -104,6 +104,14 @@ GM.DisableScopes = CreateClientConVar("zs_disablescopes", "0", true, false):GetB
 cvars.AddChangeCallback("zs_disablescopes", function(cvar, oldvalue, newvalue)
 	GAMEMODE.DisableScopes = tonumber(newvalue) == 1
 end)
+GM.DisableNode = CreateClientConVar("zs_disablenode", "0", true, false):GetBool()
+cvars.AddChangeCallback("zs_disablenode", function(cvar, oldvalue, newvalue)
+	GAMEMODE.DisableNode = tonumber(newvalue) == 1
+end)
+GM.DisableNode2 = CreateClientConVar("zs_disablesprite", "0", true, false):GetBool()
+cvars.AddChangeCallback("zs_disablesprite", function(cvar, oldvalue, newvalue)
+	GAMEMODE.DisableNode2 = tonumber(newvalue) == 1
+end)
 GM.OneClickSkill = CreateClientConVar("zs_blockunable", "0", true, false):GetBool()
 cvars.AddChangeCallback("zs_blockunable", function(cvar, oldvalue, newvalue)
 	GAMEMODE.OneClickSkill = tonumber(newvalue) == 1

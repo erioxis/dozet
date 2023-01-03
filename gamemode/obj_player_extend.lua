@@ -30,11 +30,20 @@ local P_Team = meta.Team
 local E_IsValid = M_Entity.IsValid
 local E_GetDTBool = M_Entity.GetDTBool
 local E_GetTable = M_Entity.GetTable
-
+local spraytbl = {}
 function meta:LogID()
 	return "<"..self:SteamID().."> "..self:Name()
 end
+function meta:PostSprayPlayer(sprayorigin,spraypos)
+	local spray = ents.Create("text_post_spray") 
 
+	if spray:IsValid() then
+		spray:SetPos(spraypos)
+		spray:SetOwner(self)
+		spray:Spawn()
+		timer.Simple(15,function() spray:Remove() end)
+	end
+end
 function meta:GetMaxHealthEx()
 	if P_Team(self) == TEAM_UNDEAD then
 		return self:GetMaxZombieHealth()
@@ -400,7 +409,7 @@ function meta:AttachmentDamage(damage, attacker, inflictor, type)
 		if SERVER and attacker:HasTrinket("resonance") then
 			attacker:SetProgress(attacker:GetProgress('pprog') + damage, 'pprog')
 
-			if attacker:GetProgress('pprog') > 80 * (attacker:GetIndChance() or 1) then
+			if attacker:GetProgress('pprog') > 80* GAMEMODE:GetWave() * (attacker:GetIndChance() or 1) then
 				self:PulseResonance(attacker, inflictor)
 			end
 		end
@@ -463,7 +472,7 @@ function meta:AddLegDamageExt(damage, attacker, inflictor, type)
 		if SERVER and attacker:HasTrinket("resonance") then
 			attacker:SetProgress(attacker:GetProgress('pprog') + (self:GetFlatLegDamage() - startleg), 'pprog')
 
-			if attacker:GetProgress('pprog') > 80 * (attacker:GetIndChance() or 1) then
+			if attacker:GetProgress('pprog') > 80* GAMEMODE:GetWave() * (attacker:GetIndChance() or 1) then
 				self:PulseResonance(attacker, inflictor)
 			end
 		end

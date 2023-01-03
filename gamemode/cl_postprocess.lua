@@ -399,7 +399,7 @@ function GM:DrawInductorIndicators()
 			local colHealth = lp:IsSkillActive(SKILL_CRYO_LASER) and Color(27,105,207) or Color(61,5,192)
 			local screenscale = BetterScreenScale()
 			local health = pulsed
-			local progress = 80 * (lp:GetIndChance() or 1)
+			local progress = 20 * GAMEMODE:GetWave() * (lp:GetIndChance() or 1)
 			local healthperc = math.Clamp(health / progress, 0.01, 1)
 			local wid, hei = 150 * screenscale, 20 * screenscale
 	 

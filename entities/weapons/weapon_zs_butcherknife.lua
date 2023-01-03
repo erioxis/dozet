@@ -14,8 +14,27 @@ if CLIENT then
 	SWEP.WElements = {
 		["base"] = { type = "Model", model = "models/props_lab/cleaver.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3, 1, -3.182), angle = Angle(90, 0, 0), size = Vector(0.8, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
 	}
+	function SWEP:PostDrawViewModel(vm, pl, wep)
+		local veles = self.VElements
+		local tbl = {}
+		for k,v in pairs(self.VElements) do
+			if k == "base" then
+				local clr = Color(veles[k].color.r,veles[k].color.g,veles[k].color.b,0)
+				veles[k].color = clr
+			end
+		end
+		if self:GetClip() - 0.2 <= CurTime() then
+			for k,v in pairs(self.VElements) do
+				if k == "base"  then
+					local clr = Color(veles[k].color.r,veles[k].color.g,veles[k].color.b,255)
+					veles[k].color = clr
+				end
+			end
+		end
+	end
 end
 SWEP.Base = "weapon_zs_basemelee"
+DEFINE_BASECLASS("weapon_zs_basemelee")
 SWEP.DamageType = DMG_SLASH
 SWEP.ViewModel = "models/weapons/c_crowbar.mdl"
 SWEP.WorldModel = "models/weapons/w_crowbar.mdl"
@@ -37,8 +56,21 @@ SWEP.HitAnim = ACT_VM_MISSCENTER
 SWEP.Tier = 2
 SWEP.AllowQualityWeapons = true
 SWEP.Culinary = true
+SWEP.NextKick = 0
 
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_FIRE_DELAY, -0.04)
+function SWEP:GetClip()
+	return self:GetNWFloat(3)
+end
+function SWEP:SetClip(d)
+	self:SetNWFloat(3, d)
+end
+function SWEP:CanPrimaryAttack()
+	if self:GetOwner():IsHolding() or self:GetOwner():GetBarricadeGhosting() then return false end 
+	if self:GetClip() >= CurTime() then return false end
+	return self:GetNextPrimaryFire() <= CurTime() and not self:IsSwinging()
+end
+
 function SWEP:PlaySwingSound()
 	self:EmitSound("weapons/knife/knife_slash"..math.random(2)..".wav", 72, math.Rand(85, 95))
 end
@@ -53,6 +85,30 @@ function SWEP:PostOnMeleeHit(hitent, hitflesh, tr)
 	--[[if hitent:IsValid() and hitent:IsPlayer() and hitent:Health() <= 0 then
 		-- Dismember closest limb to tr.HitPos
 	end]]
+end
+function SWEP:SecondaryAttack()
+	if self.NextKick <= CurTime() and self:GetOwner():IsSkillActive(SKILL_RESNYA1) then
+		self:SetClip(CurTime() + 1)
+		self:PrimaryAttack()
+		self.NextKick = CurTime() + 1
+		local tr = self:GetOwner():CompensatedMeleeTrace(1222, 1)
+		self:PlayHitSound()
+		if tr.Entity then
+			local ent =tr.Entity 
+			if ent:IsPlayer() and ent:IsValidLivingZombie() then
+				self.IsMelee = false
+				if SERVER then
+					ent:AddBleedDamage(self.MeleeDamage * 3.24, self:GetOwner())
+					ent:TakeDamage(self.MeleeDamage*2.2,self:GetOwner(),self)
+				
+				else
+					self:PlayHitFleshSound()
+				end
+				self.IsMelee = true
+			end
+		end
+	end
+	BaseClass.SecondaryAttack(self)
 end
 function SWEP:OnMeleeHit(hitent, hitflesh, tr)
 	if hitent:IsValid() and hitent:IsPlayer() and not self.m_BackStabbing and math.abs(hitent:GetForward():Angle().yaw - self:GetOwner():GetForward():Angle().yaw) <= 90 then

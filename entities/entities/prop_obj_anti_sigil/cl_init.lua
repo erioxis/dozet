@@ -31,8 +31,8 @@ ENT.Rotation = math.random(360)
 local matWhite = Material("models/debug/debugwhite")
 local matGlow = Material("sprites/light_glow02_add")
 
-local cDrawWhite = Color(0, 255, 255)
-local cDraw = Color(125, 0, 0)
+local cDrawWhite = Color(78, 46, 223)
+local cDraw = Color(138, 231, 125)
 
 local math_sin = math.sin
 local math_cos = math.cos
@@ -61,7 +61,7 @@ function ENT:DrawTranslucent()
         render.SetMaterial( matBeam )
         render.StartBeam( 20 )
         for i=1, 20 do
-            render.AddBeam( ringpos + ang:Forward() * ringsize, 10, 10, Color( 255, 154, 154) )
+            render.AddBeam( ringpos + ang:Forward() * ringsize, 10, 10, Color( 109, 151, 54) )
             ang:RotateAroundAxis( up, 20 )
         end
             
@@ -87,19 +87,19 @@ function ENT:DrawTranslucent()
 	local r, g, b
 	if corrupt then
 		r = colsat
-		g = 0.3
+		g = 0.56
 		b = colsat
 	else
-		r = 0.20 + colsat
+		r = 0.1 + colsat
 		g = 0 + colsat
-		b = 0.2
+		b = 0.6
 	end
 
 	r = r * healthperc
 	g = g * healthperc
 	b = b * healthperc
 	render_SuppressEngineLighting(true)
-	render_SetColorModulation(r ^ 0.5, g ^ 0.5, b ^ 0.5)
+	render_SetColorModulation(r ^ 0.5, g ^ 0.5, b ^ 0.2)
 
 	self:SetModelScaleVector(Vector(1, 1, 1) * scale)
 
@@ -108,14 +108,14 @@ function ENT:DrawTranslucent()
 	render_SetColorModulation(r, g, b)
 
 	render_ModelMaterialOverride(matWhite)
-	render_SetBlend(0.1 * healthperc)
+	render_SetBlend(0.7 * healthperc)
 
 	self:DrawModel()
 
 	render_SetColorModulation(r, g, b)
 
 	self:SetModelScaleVector(Vector(0.1, 0.1, 0.9 * math.max(0.02, healthperc)) * scale)
-	render_SetBlend(1)
+	render_SetBlend(0.2)
 	cam_Start3D(eyepos + forwardoffset + rightoffset, eyeangles)
 	self:DrawModel()
 	cam_End3D()
@@ -130,7 +130,7 @@ function ENT:DrawTranslucent()
 	cam_End3D()
 	self:SetModelScaleVector(Vector(1, 1, 1) * scale)
 
-	render_SetBlend(1)
+	render_SetBlend(0.8)
 	render_ModelMaterialOverride()
 	render_SuppressEngineLighting(false)
 	render_SetColorModulation(1, 1, 1)

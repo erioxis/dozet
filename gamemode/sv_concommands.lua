@@ -19,11 +19,11 @@ concommand.Add("zs_pointsshopbuy", function(sender, command, arguments)
 	local id = arguments[1]
 	id = tonumber(id) or id
 	local itemtab = FindItem(id)
-	if sender:HasTrinket("sin_envy") and ((weapons.Get(itemtab) and weapons.Get(itemtab).Tier and weapons.Get(itemtab).Tier or 0) <= 4) then
+	if sender:HasTrinket("sin_envy") and (FindItem(id).Tier and FindItem(id).Tier or 1) <= 4 then
 		GAMEMODE:ConCommandErrorMessage(sender, translate.ClientGet(sender, "envy_taken"))
 		return
 	end
-	if sender:HasTrinket("sin_pride") and ((weapons.Get(itemtab) and weapons.Get(itemtab).Tier and weapons.Get(itemtab).Tier or 0) >= 4) then
+	if sender:HasTrinket("sin_pride") and ((FindItem(id).Tier and FindItem(id).Tier or 1) >= 4) then
 		GAMEMODE:ConCommandErrorMessage(sender, translate.ClientGet(sender, "envy_pride"))
 		return
 	end
@@ -616,6 +616,7 @@ concommand.Add("zsdropweapon", function(sender, command, arguments)
 	end
 end)
 
+
 concommand.Add("zsemptyclip", function(sender, command, arguments)
 	if GAMEMODE.ZombieEscape then return end
 
@@ -782,6 +783,8 @@ concommand.Add("zsgiveweapon", function(sender, command, arguments)
 	if invitem and not sender:HasInventoryItem(invitem) then return end
 	if invitem == "trinket_a_flower" then sender:TakeInventoryItem("trinket_a_flower")  return end
 	if invitem == "trinket_flower" then sender:TakeInventoryItem("trinket_flower")  return end
+	if string.sub(invitem, 9, 11) == "sin" then return end
+	
 
 	local currentwep = sender:GetActiveWeapon()
 	if not invitem and not IsValid(currentwep) then return end
@@ -1048,3 +1051,5 @@ concommand.Add("zs_botmod", function(sender, command, arguments, pl)
 	RunConsoleCommand("botmod", arguments[1])
 	
 end)
+
+

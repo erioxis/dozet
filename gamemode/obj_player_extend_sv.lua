@@ -117,7 +117,7 @@ function meta:ProcessDamage(dmginfo)
 		end
 
 		self.ShouldFlinch = true
-		if self:GetZArmor() > 0 and (attacker:IsPlayer() and !attacker:GetStatus("renegade") and !self.ZArmor2) then
+		if self:GetZArmor() > 0 then
 			local damage = dmginfo:GetDamage()
 			if damage > 0 then
 	
@@ -127,6 +127,16 @@ function meta:ProcessDamage(dmginfo)
 				self:SetZArmor(self:GetZArmor() - absorb)
 				self.BloodDead = absorb
 				if attacker:IsPlayer() then
+					local points = damage / self:GetMaxHealth() * self:GetZombieClassTable().Points
+					if POINTSMULTIPLIER then
+						points = points * POINTSMULTIPLIER
+					end
+					if self.PointsMultiplier then
+						points = points * self.PointsMultiplier
+					end
+					if self:GetMaxHealth() >= 250 then
+						attacker.PointQueue = attacker.PointQueue + points/25
+					end
 					GAMEMODE:DamageFloater(attacker, self, dmginfo:GetDamagePosition() - Vector(0,0,-5), absorb, true)
 				end
 				if damage > 20 and damage - absorb <= 0 then
@@ -145,7 +155,7 @@ function meta:ProcessDamage(dmginfo)
 				attacker:SetHealth(math.min(attacker:GetMaxHealth(), attacker:Health() + attacker:GetMaxHealth() * 0.11))
 			end
 			if attacker:IsSkillActive(SKILL_INF_POWER) then
-				dmginfo:ScaleDamage(0.25 + #attacker:GetUnlockedSkills() * 0.006)
+				dmginfo:ScaleDamage(0.5 + #attacker:GetUnlockedSkills() * 0.006)
 			end
 			if damage >= 10000 then
 				attacker:GiveAchievement("opm")
@@ -191,7 +201,14 @@ function meta:ProcessDamage(dmginfo)
 
 				end
 			end
-
+			if attacker:IsSkillActive(SKILL_OLD_GOD1) then
+				if LASTHUMAN then
+					dmginfo:ScaleDamage(1.75)
+				end
+				if self.Zmainer and !self:IsBot() then
+					dmginfo:ScaleDamage(1.25)
+				end
+			end
 			if wep.IsMelee then
 				if attacker:IsSkillActive(SKILL_CHEAPKNUCKLE) and math.abs(self:GetForward():Angle().yaw - attacker:GetForward():Angle().yaw) <= 90 then
 					self:AddLegDamage(12)
@@ -280,6 +297,9 @@ function meta:ProcessDamage(dmginfo)
 	end
 	if (((self:GetZSRemortLevel() / 4) or 0) + (self.AmuletPiece or 0)) < 0 then
 		dmginfo:ScaleDamage(2 + ((self:GetZSRemortLevel() / 4) - (self.AmuletPiece or 0)))
+	end
+	if  self.ClanMelee then
+		dmginfo:ScaleDamage(0.85)
 	end
 
     truedogder = 30 - (self:GetWalkSpeed() / 15)
@@ -377,15 +397,9 @@ function meta:ProcessDamage(dmginfo)
 	    elseif self:IsSkillActive(SKILL_TRUEBLOCK) and not self:GetActiveWeapon().ParryTiming then
 			self:EmitSound("npc/turret_floor/active.wav", 120, 40)
 		end
-		if attacker:IsPlayer() then
-			GAMEMODE:BlockFloater(attacker, self, dmginfo:GetDamagePosition())
-		end
 	end
 	local mythrilchance = math.random(1,25)
 	if self:IsSkillActive(SKILL_MYTHRIL) and mythrilchance == 1 and not self:GetStatus("hshield") and dmginfo:GetDamage() < 200 then
-		if attacker:IsValid() and attacker:IsPlayer() and inflictor:IsValid() then
-		    attacker:GiveStatus("hollowing", 51)
-		end
 		xpadded = dmginfo:GetDamage() * 0.5
 		net.Start("zs_xp_damage")
 		net.WriteString(xpadded)
@@ -436,6 +450,9 @@ function meta:ProcessDamage(dmginfo)
 		if attacker.Zban then
 			dmginfo:SetDamage(0)
 		end
+		if attacker.Zmainer and self:IsSkillActive(SKILL_DOSET1) then
+			dmginfo:ScaleDamage(0.75)
+		end
 
 		if inflictor == attacker:GetActiveWeapon() then
 			if (GAMEMODE:GetBalance() * 0.05) >= 0.1 then
@@ -464,8 +481,8 @@ function meta:ProcessDamage(dmginfo)
 					end
 				end
 			end
-			local amuletrng = math.random(0, math.max(1,10 / (self.CarefullMelody_DMG *0.5)))
-			if self:IsSkillActive(SKILL_AMULET_1) and amuletrng == 1 then
+			local amuletrng = math.random(1, math.max(2,10 / (self.CarefullMelody_DMG *0.5)))
+			if self:IsSkillActive(SKILL_AMULET_1) and amuletrng == 2 then
 				dmginfo:SetDamage(0)
 				net.Start("zs_damageblock")
 				net.Send(self)
@@ -608,9 +625,9 @@ function meta:ProcessDamage(dmginfo)
 					self.BleakSoulMessage = nil
 				end
 
-				local chance = math.random(1,5)
+				local chance = math.random(1,100)
 
-				if self:IsSkillActive(SKILL_TTIMES) and chance == 1 then
+				if self:IsSkillActive(SKILL_TTIMES) and chance <= 5 then
 					attacker:GiveStatus("dimvision", 1)
 					net.Start("zs_damageblock")
 					net.Send(self)
@@ -624,8 +641,8 @@ function meta:ProcessDamage(dmginfo)
 				end
 
 
-				local trinkett = math.random(1,10)
-				if self:HasTrinket("ttimes") and trinkett == 1 then
+				local trinkett = math.random(1,100)
+				if self:HasTrinket("ttimes") and trinkett <= 9 then
 					attacker:GiveStatus("dimvision", 1)
 					net.Start("zs_damageblock")
 					net.Send(self)
@@ -976,7 +993,7 @@ function meta:SetBloodArmor(armor)
 	self:SetDTInt(DT_PLAYER_INT_BLOODARMOR, armor)
 end
 function meta:SetZArmor(armor)
-	self:SetDTInt(DT_PLAYER_INT_ZOMBIEARMOR, armor)
+	self:SetDTInt(DT_PLAYER_INT_ZOMBIEARMOR, math.min(armor, self:GetMaxHealth()*2.5))
 end
 
 function meta:WouldDieFrom(damage, hitpos)
@@ -1932,6 +1949,7 @@ function meta:Redeem(silent, noequip)
 	if gamemode.Call("PrePlayerRedeemed", self) then return end
 
 	self:RemoveStatus("overridemodel", false, true)
+	self.Zmainer = false
 
 	self:KillSilent()
 
@@ -2648,9 +2666,7 @@ function meta:PulseResonance(attacker, inflictor)
 		if not attacker:IsValid() or not self:IsValid() then return end
 
 		attacker:SetProgress(0,'pprog')
-		if attacker:IsSkillActive(SKILL_CRYO_LASER) then
-			attacker:SetProgress(0,'pprog')	
-		end
+
 
 		local pos = self:WorldSpaceCenter()
 		pos.z = pos.z + 16
@@ -2685,7 +2701,7 @@ function meta:CryogenicInduction(attacker, inflictor, damage)
 		attacker:SetProgress((attacker:GetProgress('iprog') -formula)*0.1,'iprog')
 
 		if attacker:IsValidLivingHuman() then
-			util.BlastDamagePlayer(inflictor, attacker, pos, 100 * (attacker.ExpDamageRadiusMul or 1), self:GetMaxHealthEx() * 0.80, DMG_DROWN, 0.83, true)
+			util.BlastDamagePlayer(inflictor, attacker, pos, 100 * (attacker.ExpDamageRadiusMul or 1), self:GetMaxHealthEx() * 0.2, DMG_DROWN, 0.83, true)
 			for _, ent in pairs(util.BlastAlloc(inflictor, attacker, pos, 100 * (attacker.ExpDamageRadiusMul or 1))) do
 				if ent:IsValidLivingPlayer() and gamemode.Call("PlayerShouldTakeDamage", ent, attacker) then
 					ent:AddLegDamageExt(6, attacker, inflictor, SLOWTYPE_COLD)

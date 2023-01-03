@@ -28,7 +28,7 @@ end
 
 local function worthmenuDoClick()
 	MakepWorth()
-	GAMEMODE.ArsenalInterface:Close()
+	GAMEMODE.ArsenalInterface:Remove()
 end
 
 local function CanBuy(item, pan)
@@ -440,6 +440,9 @@ function GM:AddShopItem(list, i, tab, issub, nopointshop)
 		local arsd = math.Clamp((MySelf.ArsenalDiscount or 1),(GAMEMODE:GetWave() <= 4 and 0.75 or 0),255)
 		local points = math.ceil(tab.Price * arsd)
 		local price = tostring(points)
+	--	if GAMEMODE:GetWave() <= 4 and MySelf.ArsenalDiscount <= 0.75 then
+	--		price = price..translate.Get("max_p")
+	--	end
 		if nopointshop then
 			price = tostring(math.ceil(self:PointsToScrap(tab.Price * (MySelf.ScrapDiscount or 1))))
 		end
@@ -692,12 +695,12 @@ end
 
 function GM:OpenArsenalMenu()
 	if self.ArsenalInterface and self.ArsenalInterface:IsValid() then
-		self.ArsenalInterface:SetVisible(true)
-		self.ArsenalInterface:CenterMouse()
-		self.ArsenalInterface:Refresh()
-		return
+		self.ArsenalInterface:Remove()
 	end
-
+	MiniArs(self)
+	
+end
+function MiniArs(self)
 	local screenscale = BetterScreenScale()
 	local wid, hei = math.min(ScrW(), 1200) * screenscale, math.min(ScrH(), 800) * screenscale
 	local tabhei = 24 * screenscale

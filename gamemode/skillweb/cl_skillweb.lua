@@ -268,7 +268,7 @@ local offsets = {
 	[TREE_DOSET] = {0, 0},
 	[TREE_OLD_GOD] = {0, 0}
 }
-local nodemodel_beta = {
+--[[local nodemodel_beta = {
 	[TREE_HEALTHTREE] = "models/Gibs/HGIBS.mdl",
 	[TREE_SPEEDTREE] = "models/props_junk/Shoe001a.mdl",
 	[TREE_SUPPORTTREE] = "models/Items/HealthKit.mdl",
@@ -280,7 +280,20 @@ local nodemodel_beta = {
 	[TREE_DEFENSETREE] = "models/props_wasteland/controlroom_chair001a.mdl",
 	[TREE_DONATETREE] = "models/props_c17/lampShade001a.mdl",
 	[TREE_USELESSTREE] = "models/props_junk/gascan001a.mdl"
-}
+}]]
+--[[local nodemodel_scale = {
+	[TREE_HEALTHTREE] = 2,
+	[TREE_SPEEDTREE] = 2,
+	[TREE_SUPPORTTREE] = 1,
+	[TREE_BUILDINGTREE] = 1,
+	[TREE_MELEETREE] = 2,
+	[TREE_GUNTREE] = 3,
+	[TREE_POINTTREE] = 3,
+	[TREE_ANCIENTTREE] = 2,
+	[TREE_DEFENSETREE] = 1,
+	[TREE_DONATETREE] = 3,
+	[TREE_USELESSTREE] = 2
+}]]
 function PANEL:Init()
 	local allskills = GAMEMODE.Skills
 	local node
@@ -305,11 +318,19 @@ function PANEL:Init()
 			if IsValid(node) then
 				node:SetNoDraw(true)
 				node:SetPos(Vector(0, (skill.x + offsets[skill.Tree][1]) * 20, (skill.y + offsets[skill.Tree][2]) * 20))
-				if skill.Disabled then
-					node:SetModelScale(0.90, 0)
-				else
-					node:SetModelScale(0.66, 0)
-				end
+				--if nodemodel_scale[skill.Tree] then
+				--	if skill.Disabled then
+				--		node:SetModelScale((nodemodel_scale[skill.Tree] or 0.9), 0)
+				--	else
+				--		node:SetModelScale((nodemodel_scale[skill.Tree] or 0.66), 0)
+				--	end
+				--else
+					if skill.Disabled then
+						node:SetModelScale( 0.9, 0)
+					else
+						node:SetModelScale(0.66, 0)
+					end
+				--end
 
 				node.Skill = skill
 				node.SkillID = id
@@ -1144,7 +1165,7 @@ function PANEL:Paint(w, h)
 
 			render_ModelMaterialOverride(matWhite)
 			render_SetBlend(0.95)
-			if !skill.Hidden1 then
+			if !skill.Hidden1 and !GAMEMODE.DisableNode then
 				node:DrawModel()
 			end
 
@@ -1202,7 +1223,9 @@ function PANEL:Paint(w, h)
 					end
 				end
 				size = selected and 40 or 27
-				render.DrawQuadEasy(nodepos, to_camera, size, size, colGlow, angle)
+				if !GAMEMODE.DisableNode2 then
+					render.DrawQuadEasy(nodepos, to_camera, size, size, colGlow, angle)
+				end
 				angle = angle + 45
 			end
 		end

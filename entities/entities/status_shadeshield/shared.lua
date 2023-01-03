@@ -1,7 +1,7 @@
 ENT.Type = "anim"
 ENT.Base = "status__base"
 ENT.RenderGroup = RENDERGROUP_TRANSLUCENT
-ENT.IgnoreMelee = true
+ENT.IgnoreMelee = false
 
 function ENT:ShouldNotCollide(ent)
 	if ent:IsProjectile() then

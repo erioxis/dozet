@@ -18,7 +18,6 @@ function ENT:Think()
 		owner:TakeSpecialDamage((lox and owner:Health()*0.05 or owner:Health()*0.01),DMG_ACID,dmger and dmger:IsValid() and dmger:IsPlayer() and dmger or owner, self, nil, 0)
 		if dmger and dmger:IsValid() and dmger:IsPlayer() and self.NextThinker <= CurTime() then
 			dmger:SetHealth(math.min(dmger:Health() + (lox and owner:Health()*0.05 or owner:Health()*0.01), dmger:GetMaxHealth() * 1.1))
-			dmger:SetBloodArmor(math.min(dmger:GetBloodArmor() + (lox and owner:Health()*0.05 or owner:Health()*0.01), dmger.MaxBloodArmor * 1.2))
 			self.NextThinker = CurTime() + 0.5
 		end
 	end

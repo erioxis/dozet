@@ -19,12 +19,12 @@ function ENT:Think()
 	if not owner:HasTrinket("a_flower") then
 		if not (holly) then
 			if (cursed) and not owner:IsSkillActive(SKILL_UPLOAD) then
-				if (cursed.DieTime >= CurTime() + 100 * (owner.CurseMultiplier or 1)) and not owner:IsSkillActive(SKILL_CURSEDHEALTH) then
+				if (cursed.DieTime >= CurTime() + 100 * (owner.CurseMultiplier or 1) +(owner.ClanMelee and 50 or 0)) and not owner:IsSkillActive(SKILL_CURSEDHEALTH) then
 					if not owner:IsSkillActive(SKILL_UPLOAD) then
 					cursed:GetOwner():Kill()
 					cursed:Remove()
 					end
-				elseif (cursed.DieTime >= CurTime() + (owner:GetMaxHealth() * 2) * (owner.CurseMultiplier or 1)) and owner:IsSkillActive(SKILL_CURSEDHEALTH) and not owner:IsSkillActive(SKILL_UPLOAD) then
+				elseif (cursed.DieTime >= CurTime() + (owner:GetMaxHealth() * 2) * (owner.CurseMultiplier or 1) +(owner.ClanMelee and 50 or 0)) and owner:IsSkillActive(SKILL_CURSEDHEALTH) and not owner:IsSkillActive(SKILL_UPLOAD) then
 					if not (owner:IsSkillActive(SKILL_UPLOAD) or owner:HasTrinket("a_flower")) then
 
 					cursed:GetOwner():Kill()

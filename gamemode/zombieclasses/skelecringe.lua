@@ -8,7 +8,7 @@ CLASS.Model = Model("models/player/zombie_fast.mdl")
 CLASS.Wave = 11 / 12
 CLASS.Revives = false
 
-CLASS.Health = 32000
+CLASS.Health = 11200
 CLASS.Speed = 420
 CLASS.SWEP = "weapon_zs_skelecringe"
 
@@ -17,9 +17,6 @@ CLASS.Points = 20
 if SERVER then
 function CLASS:ProcessDamage(pl, dmginfo)
 	dmgblock = math.random(1,3)
-	if dmginfo:GetDamage() > 100 then 
-		dmginfo:SetDamage(100)
-	end
 
 	if dmgblock == 1 then
 		dmginfo:SetDamage(0)

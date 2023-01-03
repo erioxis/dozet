@@ -380,13 +380,14 @@ killicon.Add("weapon_zs_graveshovel", "zombiesurvival/killicons/weapon_zs_graves
 killicon.Add("weapon_zs_graveshovelz", "zombiesurvival/killicons/butcher", Color(100, 0, 220)) -- temp killicon
 killicon.Add("weapon_zs_m_heal", "zombiesurvival/killicons/weapon_zs_graveshovel")
 killicon.Add("weapon_zs_m_damage", "zombiesurvival/killicons/weapon_zs_graveshovel")
+killicon.Add("weapon_zs_m_boom", "zombiesurvival/killicons/weapon_zs_graveshovel")
 killicon.Add("weapon_zs_pushbroom", "zombiesurvival/killicons/weapon_zs_broom")
 killicon.Add("weapon_zs_scythe", "zombiesurvival/killicons/weapon_zs_scythe2")
 killicon.Add("weapon_zs_syx", "zombiesurvival/killicons/weapon_zs_scythe2")
 killicon.Add("weapon_zs_teslorer", "zombiesurvival/killicons/weapon_zs_teslorer")
 killicon.Add("weapon_zs_kobaldshield", "zombiesurvival/killicons/weapon_zs_koboldshield")
 
-killicon.Add("weapon_zs_flamethrower", "weapon_zs_flamethrower")
+killicon.Add("weapon_zs_flamethrower", "zombiesurvival/killicons/weapon_zs_flamethrower")
 killicon.Add("weapon_zs_stone", "zombiesurvival/killicons/weapon_zs_stone")
 killicon.Add("projectile_stone", "zombiesurvival/killicons/weapon_zs_stone")
 killicon.Add("projectile_shaderock", "zombiesurvival/killicons/weapon_zs_stone")

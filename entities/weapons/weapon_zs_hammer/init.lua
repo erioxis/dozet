@@ -138,14 +138,15 @@ function SWEP:SecondaryAttack()
 			end
 		end
 	end
-
-	if tr.MatType == MAT_GRATE or tr.MatType == MAT_CLIP then
-		owner:PrintTranslatedMessage(HUD_PRINTCENTER, "impossible")
-		return
-	end
-	if tr.MatType == MAT_GLASS then
-		owner:PrintTranslatedMessage(HUD_PRINTCENTER, "trying_to_put_nails_in_glass")
-		return
+	if !owner:IsSkillActive(SKILL_GENIUS) then
+		if tr.MatType == MAT_GRATE or tr.MatType == MAT_CLIP then
+			owner:PrintTranslatedMessage(HUD_PRINTCENTER, "impossible")
+			return
+		end
+		if tr.MatType == MAT_GLASS then
+			owner:PrintTranslatedMessage(HUD_PRINTCENTER, "trying_to_put_nails_in_glass")
+			return
+		end
 	end
 
 	for _, nail in pairs(ents.FindByClass("prop_nail")) do
@@ -175,13 +176,15 @@ function SWEP:SecondaryAttack()
 	local ent = trtwo.Entity
 	if trtwo.HitWorld
 	or ent:IsValid() and util.IsValidPhysicsObject(ent, trtwo.PhysicsBone) and (ent:GetMoveType() == MOVETYPE_VPHYSICS or ent:GetNailFrozen()) and not ent.NoNails and not (not ent:IsNailed() and not ent:GetPhysicsObject():IsMoveable()) and not (ent:GetMaxHealth() == 1 and ent:Health() == 0 and not ent.TotalHealth) then
-		if trtwo.MatType == MAT_GRATE or trtwo.MatType == MAT_CLIP then
-			owner:PrintTranslatedMessage(HUD_PRINTCENTER, "impossible")
-			return
-		end
-		if trtwo.MatType == MAT_GLASS then
-			owner:PrintTranslatedMessage(HUD_PRINTCENTER, "trying_to_put_nails_in_glass")
-			return
+		if !owner:IsSkillActive(SKILL_GENIUS) then
+			if trtwo.MatType == MAT_GRATE or trtwo.MatType == MAT_CLIP then
+				owner:PrintTranslatedMessage(HUD_PRINTCENTER, "impossible")
+				return
+			end
+			if trtwo.MatType == MAT_GLASS then
+				owner:PrintTranslatedMessage(HUD_PRINTCENTER, "trying_to_put_nails_in_glass")
+				return
+			end
 		end
 
 		if ent and ent:IsValid() and (ent:IsProjectile() or ent.NoNails or ent:IsNailed() and (#ent.Nails >= 8 or ent:GetPropsInContraption() >= GAMEMODE.MaxPropsInBarricade)) then return end
@@ -210,7 +213,7 @@ function SWEP:SecondaryAttack()
 
 		owner:DoAnimationEvent(ACT_HL2MP_GESTURE_RANGE_ATTACK_MELEE)
 
-		self:SetNextPrimaryFire(CurTime() + 1)
+		self:SetNextPrimaryFire(CurTime() + 1 + (owner:IsSkillActive(SKILL_GENIUS)  and 3 or 0))
 		self:TakePrimaryAmmo(1)
 
 		local nail = ents.Create("prop_nail")

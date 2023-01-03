@@ -22,12 +22,12 @@ function ENT:EntityTakeDamage(ent, dmginfo)
 
 		if self.Applier and self.Applier:IsValidLivingHuman() and ent:IsPlayer() and ent:Team() == TEAM_ZOMBIE then
 			local applier = self.Applier
-			if extradamage > 5000 then return end
+
 
 			ent.DamagedBy[applier] = (ent.DamagedBy[applier] or 0) + extradamage
 			applier.StrengthBoostDamage = (applier.StrengthBoostDamage or 0) + extradamage
 			local points = math.min(50,extradamage / ent:GetMaxHealth() * ent:GetZombieClassTable().Points)
-			applier.PointQueue = applier.PointQueue + points * 0.1
+			applier.PointQueue = applier.PointQueue + points
 
 			local pos = ent:GetPos()
 			pos.z = pos.z + 32

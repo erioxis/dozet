@@ -115,8 +115,8 @@ function ENT:StartTouch(ent)
 			gift = weapons.Get(food).PrintName
 		elseif gift == 6 and ent:GetActiveWeapon():GetClass() ~= "weapon_zs_sigil_port" and (ent:GetActiveWeapon().FoodHealth or 0) < 1 then
 			random = random/6
-			ent:GiveAmmo(random, (ent:GetActiveWeapon() and !ent:GetActiveWeapon().IsMelee and ent:GetActiveWeapon().Primary.Ammo or "scrap"), true)
-			local ammotype = (GAMEMODE.AmmoNames[ent:GetActiveWeapon().Primary.Ammo] or !ent:GetActiveWeapon().IsMelee and ent:GetActiveWeapon().Primary.Ammo or ent:GetActiveWeapon().IsMelee and "scrap")
+			ent:GiveAmmo(random, (ent:GetActiveWeapon() and ent:GetResupplyAmmoType() or "scrap"), true)
+			local ammotype = (GAMEMODE.AmmoNames[ent:GetResupplyAmmoType()] or ent:GetResupplyAmmoType())
 			gift = (translate.ClientGet(ent,string.lower(string.Implode("",string.Explode(" ","ammo_"..ammotype)) or ammotype)))
 			net.Start("zs_ammopickup")
 				net.WriteUInt(random, 16)

@@ -425,6 +425,12 @@ SKILL_ANATOMY = 395
 SKILL_RESNYA = 396
 SKILL_OLD_GOD = 397
 SKILL_DOSET = 398
+SKILL_RESNYA1 = 399
+SKILL_OLD_GOD1 = 400
+SKILL_DOSET1 = 401
+
+SKILL_GENIUS = 402
+SKILL_ANTI_DEVO = 403
 
 
 
@@ -572,6 +578,15 @@ GM:AddSkillModifier(SKILL_OLD_GOD, SKILLMOD_M_DMG, 0.3)
 GM:AddSkillModifier(SKILL_OLD_GOD, SKILLMOD_M_REG, 0.3)
 d.DontUnlock = SKILL_DOSET
 d.DontUnlock2 = SKILL_RESNYA
+
+
+GM:AddSkill(SKILL_RESNYA1, translate.Get("skill_resnya1"), GOOD..translate.Get("skill_resnya1_d1")..GOOD..translate.Get("skill_resnya1_d2"),
+																24,			-6,					{SKILL_RESNYA}, TREE_RESNYA)
+GM:AddSkill(SKILL_DOSET1, translate.Get("skill_doset1"), GOOD..translate.Get("skill_doset1_d1")..GOOD..translate.Get("skill_doset1_d2"),
+																24,			-4,					{SKILL_DOSET}, TREE_DOSET)
+GM:AddSkillModifier(SKILL_DOSET1, SKILLMOD_ELEMENTAL_MUL, 0.1)
+GM:AddSkill(SKILL_OLD_GOD1, translate.Get("skill_old1_g"), GOOD..translate.Get("skill_old_g1_d1")..GOOD..translate.Get("skill_old_g1_d2"),
+																24,			-2,					{SKILL_OLD_GOD}, TREE_OLD_GOD)
 -- Health Tree
 GM:AddSkill(SKILL_STOIC1, translate.Get("skill_stoici_0"), GOOD..translate.Get("skill_stoici_d1")..BAD..translate.Get("skill_stoici_d2"),
 																-4,			-6,					{SKILL_NONE, SKILL_STOIC2}, TREE_HEALTHTREE)
@@ -878,6 +893,8 @@ GM:AddSkillModifier(SKILL_JEW, SKILLMOD_ARSENAL_DISCOUNT, -0.10)
 GM:AddSkillModifier(SKILL_JEW, SKILLMOD_SCRAPDISCOUNT, -0.10)
 GM:AddSkillModifier(SKILL_JEW, SKILLMOD_RES_AMMO_MUL, 0.15)
 GM:AddSkillModifier(SKILL_SAMODOS, SKILLMOD_SCRAPDISCOUNT, -0.25)
+GM:AddSkill(SKILL_GENIUS, translate.Get("skill_genius"), GOOD..translate.Get("skill_genius_d1")..BAD..translate.Get("skill_genius_d2"),
+																3,			4,					{SKILL_JEW}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_FIELDAMP, translate.Get("skill_field_amp"), GOOD..translate.Get("skill_field_amp_d1")..BAD..translate.Get("skill_field_amp_d2"),
 																6,			4,					{}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_TECHNICIAN, translate.Get("skill_field_tech"), GOOD..translate.Get("skill_field_tech_d1")..GOOD..translate.Get("skill_field_tech_d2"),
@@ -1731,9 +1748,9 @@ GM:AddSkillModifier(SKILL_HEAVY, SKILLMOD_SPEED, -30)
 GM:AddSkillModifier(SKILL_HEAVY, SKILLMOD_JUMPPOWER_MUL, -0.5)
 GM:AddSkillModifier(SKILL_HEAVY, SKILLMOD_KNOCKDOWN_RECOVERY_MUL, -0.33)
 SKILL_TTIMES = 249
-GM:AddSkill(SKILL_TTIMES, translate.Get("skill_ttimes"), GOOD..translate.Get("skill_ttimes_d1")..BAD.."+15%"..translate.Get("meleedamagetaken"),
+GM:AddSkill(SKILL_TTIMES, translate.Get("skill_ttimes"), GOOD..translate.Get("skill_ttimes_d1")..BAD.."+5%"..translate.Get("meleedamagetaken"),
 				                                                            	-3,			1.5,					{SKILL_TRIP,SKILL_TTIMES1}, TREE_DEFENSETREE)
-GM:AddSkillModifier(SKILL_TTIMES, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 0.15)
+GM:AddSkillModifier(SKILL_TTIMES, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 0.05)
 SKILL_TTIMES1 = 250
 GM:AddSkill(SKILL_TTIMES1, translate.Get("skill_ttime"), GOOD.."-7%"..translate.Get("meleedamagetaken"),
 				                                                            	-4,			2,					{SKILL_TTIMES}, TREE_DEFENSETREE)
@@ -1764,6 +1781,12 @@ GM:AddSkill(SKILL_ANTINEGR, translate.Get("skill_antinegr"), GOOD..translate.Get
 				                                                            	-1,			6,					{SKILL_UPLOAD}, TREE_DEFENSETREE)
 GM:AddSkill(SKILL_MOREDAMAGE, translate.Get("skill_moredamage"), GOOD..translate.Get("skill_moredamage_d1")..BAD.."+35%"..translate.Get("meleedamagetaken"),
 				                                                            	0,			7,					{SKILL_ANTINEGR}, TREE_DEFENSETREE)
+GM:AddSkillModifier(SKILL_MOREDAMAGE, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 0.35)
+GM:AddSkillModifier(SKILL_MOREDAMAGE, SKILLMOD_BLOODARMOR_DMG_REDUCTION, 0.15)
+GM:AddSkill(SKILL_ANTI_DEVO, translate.Get("skill_adevo"), GOOD..translate.Get("skill_adevo_d1")..BAD..translate.Get("skill_adevo_d2"),
+				                                                            	1,			7,					{SKILL_MOREDAMAGE}, TREE_DEFENSETREE)
+GM:AddSkillModifier(SKILL_ANTI_DEVO, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 0.25)
+GM:AddSkillModifier(SKILL_ANTI_DEVO, SKILLMOD_BLOODARMOR_DMG_REDUCTION, -0.07)
 GM:AddSkill(SKILL_SECONDCHANCE, translate.Get("skill_schance"), GOOD..translate.Get("skill_schance_d1"),
 				                                                            	0,			8,					{SKILL_MOREDAMAGE}, TREE_DEFENSETREE)
 GM:AddSkill(SKILL_CQARMOR, translate.Get("skill_cqarmor"), GOOD..translate.Get("skill_cqarmor_d1")..BAD..translate.Get("skill_cqarmor_d2"),

@@ -160,8 +160,7 @@ end
 
 function SWEP:CanPrimaryAttack()
 	if self:GetOwner():IsHolding() or self:GetOwner():GetBarricadeGhosting() then return false end
-		
-		return self:GetNextPrimaryFire() <= CurTime() and not self:IsSwinging()
+	return self:GetNextPrimaryFire() <= CurTime() and not self:IsSwinging()
 end
 
 function SWEP:PlaySwingSound()

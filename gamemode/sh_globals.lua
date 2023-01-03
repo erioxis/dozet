@@ -175,6 +175,7 @@ GM.BannedProps = {
 }
 
 GM.PropHealthMultipliers = {
+	["models/props_c17/oildrum001_explosive.mdl"] = 0.001
 }
 
 GM.CleanupFilter = {
