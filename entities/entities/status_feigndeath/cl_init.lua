@@ -53,11 +53,11 @@ function ENT:DrawTranslucent()
 	if MySelf ~= owner then return end
 
 	local pos = owner:GetPos() + EyeAngles():Right() * 32
-	local col = table.Copy(COLOR_GRAY)
+	local col = table.Copy(COLOR_GREEN)
 	if self:GetState() == 1 then
-		col.a = math.max(self:GetStateEndTime() - CurTime(), 0) * 80
+		col.a = math.max(self:GetStateEndTime() - CurTime(), 0) * 255
 	else
-		col.a = (1 - math.max(self:GetStateEndTime() - CurTime(), 0)) * 80
+		col.a = (1 - math.max(self:GetStateEndTime() - CurTime(), 0)) * 255
 	end
 	local ang = owner:GetAngles()
 	ang.pitch = 0

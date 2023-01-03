@@ -84,35 +84,29 @@ function ENT:DrawTranslucent()
 	local spritepos = self:GetPos() + up
 	local spritepos2 = self:WorldSpaceCenter()
 	local corrupt = self:GetSigilCorrupted()
-	local r, g, b
+	local ColorD = HSVToColor((CurTime() * 60 + (2 * 5)) % 360, (CurTime() * 60 + (2 * 5)) % 360, 1)
 	if corrupt then
-		r = colsat
-		g = 0.56
-		b = colsat
-	else
-		r = 0.1 + colsat
-		g = 0 + colsat
-		b = 0.6
+		ColorD.g = 0.56
 	end
 
-	r = r * healthperc
-	g = g * healthperc
-	b = b * healthperc
+	ColorD.r = ColorD.r/270 * healthperc
+	ColorD.g = ColorD.g/270 * healthperc
+	ColorD.b = ColorD.b/270 * healthperc
 	render_SuppressEngineLighting(true)
-	render_SetColorModulation(r ^ 0.5, g ^ 0.5, b ^ 0.2)
+	render_SetColorModulation(ColorD.r ^ 0.5, ColorD.g ^ 0.5, ColorD.b ^ 0.2)
 
 	self:SetModelScaleVector(Vector(1, 1, 1) * scale)
 
 	self:DrawModel()
 
-	render_SetColorModulation(r, g, b)
+	render_SetColorModulation(ColorD.r, ColorD.g, ColorD.b)
 
 	render_ModelMaterialOverride(matWhite)
 	render_SetBlend(0.7 * healthperc)
 
 	self:DrawModel()
 
-	render_SetColorModulation(r, g, b)
+	render_SetColorModulation(ColorD.r, ColorD.g, ColorD.b)
 
 	self:SetModelScaleVector(Vector(0.1, 0.1, 0.9 * math.max(0.02, healthperc)) * scale)
 	render_SetBlend(0.2)
@@ -140,9 +134,9 @@ function ENT:DrawTranslucent()
 		self.Rotation = self.Rotation - 360
 	end
 
-	cDraw.r = r * 255
-	cDraw.g = g * 255
-	cDraw.b = b * 255
+	cDraw.r = ColorD.r * 255
+	cDraw.g = ColorD.g * 255
+	cDraw.b = ColorD.b * 255
 	cDrawWhite.r = healthperc * 255
 	cDrawWhite.g = cDrawWhite.r
 	cDrawWhite.b = cDrawWhite.r
@@ -178,7 +172,7 @@ function ENT:DrawTranslucent()
 	particle:SetEndSize(0)
 	particle:SetRoll(math.Rand(0, 360))
 	particle:SetRollDelta(math.Rand(-1, 1))
-	particle:SetColor(r * 255, g * 255, b * 255)
+	particle:SetColor(ColorD.r * 255, ColorD.g * 255, ColorD.b * 255)
 	particle:SetCollide(true)
 
 	emitter:Finish() emitter = nil collectgarbage("step", 64)

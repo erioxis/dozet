@@ -12,6 +12,8 @@ function SWEP:ApplyMeleeDamage(ent, trace, damage)
 		if (ent.TakedIce or 1) >= 90 then
 			ent.TakedIce = ent.TakedIce - 90
 			timer.Create("IceShadeInductor"..ent:Name(),0.5, 3, function() 
+				ent:SetBloodArmor(ent:GetBloodArmor() * 0.4)
+				ent:SetHealth(ent:Health() * 0.8)
 				local effectdata = EffectData()
 					effectdata:SetOrigin(ent:GetPos())
 					effectdata:SetNormal(owner:GetEyeTrace().HitNormal)

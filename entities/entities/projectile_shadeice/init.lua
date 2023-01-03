@@ -62,6 +62,8 @@ function ENT:Hit(vHitPos, vHitNormal, hitent)
 			if (ent.TakedIce or 1) >= 90 then
 				ent.TakedIce = 0
 				timer.Create("IceShadeInductor"..ent:Name(),0.5, 3, function() 
+					ent:SetBloodArmor(ent:GetBloodArmor() * 0.2)
+					ent:SetHealth(ent:Health() * 0.5)
 					local effectdata = EffectData()
 						effectdata:SetOrigin(ent:GetPos())
 						effectdata:SetNormal(vHitNormal)

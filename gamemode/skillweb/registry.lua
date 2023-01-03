@@ -431,7 +431,7 @@ SKILL_DOSET1 = 401
 
 SKILL_GENIUS = 402
 SKILL_ANTI_DEVO = 403
-
+SKILL_SLOWCOACH = 404
 
 
 
@@ -769,7 +769,10 @@ GM:AddSkill(SKILL_ROBUST,  translate.Get("skill_rob_0"), GOOD.. translate.Get("s
 GM:AddSkill(SKILL_CARDIOTONIC,translate.Get("skill_cardi_0"), GOOD..translate.Get("skill_cardi_d0")..BAD.."-12"..translate.Get("speed")..BAD..translate.Get("skill_cardi_d1"),
 																-6,			-4,					{}, TREE_SPEEDTREE)
 GM:AddSkill(SKILL_UNBOUND,translate.Get("skill_unbound_0"), GOOD..translate.Get("skill_unbound_d0")..BAD.."-4"..translate.Get("speed"),
-																-4,			-4,					{}, TREE_SPEEDTREE)
+																-4,			-4,					{SKILL_SLOWCOACH}, TREE_SPEEDTREE)
+GM:AddSkill(SKILL_SLOWCOACH,translate.Get("skill_scoach"), GOOD..translate.Get("skill_scoach_d1")..BAD.."-8"..translate.Get("speed"),
+																-4,			-5,					{}, TREE_SPEEDTREE)
+GM:AddSkillModifier(SKILL_SLOWCOACH, SKILLMOD_SPEED,-8)
 -- Medic Tree
 GM:AddSkill(SKILL_SURGEON1, translate.Get("skill_surg").."I", GOOD.."-6%"..translate.Get("med_cool"),
 																-4,			6,					{SKILL_NONE, SKILL_SURGEON2}, TREE_SUPPORTTREE)
