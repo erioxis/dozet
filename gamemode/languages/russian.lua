@@ -1222,6 +1222,7 @@ LANGUAGE.pointsdoubled							= "Поинты которые даются под 
 --переводы милишки
 
 -- Exit point objectives
+LANGUAGE.x_sigils_appeared							= "%d Сигила появилось. Люди могут телепортироваться между ними."
 LANGUAGE.exit_destroyed								= "Зараженные уничтожили какой-то выход!"
 LANGUAGE.exit_destroyed_only_one_remain_h			= "Последный остался! Если он будет уничтожен, у Вас не останется шанса на побег!"
 LANGUAGE.exit_destroyed_only_one_remain_z			= "Остается последний!"
