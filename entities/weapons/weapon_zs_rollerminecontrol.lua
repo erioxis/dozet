@@ -1,6 +1,6 @@
 AddCSLuaFile()
 
-SWEP.PrintName = "Rollermine Control"
+SWEP.PrintName = translate.Get("control_rmine")
 SWEP.Description = "Controller for your Rollermine."
 
 if CLIENT then

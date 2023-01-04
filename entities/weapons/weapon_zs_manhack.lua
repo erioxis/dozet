@@ -1,8 +1,7 @@
 AddCSLuaFile()
 
-SWEP.PrintName = "Manhack"
-SWEP.Description = "A deployable, remotely controlled device.\nIdeal for scouting but also can be used for attacking from safety.\nHas sharp blades that pierce into zombies."
-
+SWEP.PrintName = translate.Get("wep_mhack")
+SWEP.Description = translate.Get("wep_d_mhack")
 if CLIENT then
 	SWEP.ViewModelFlip = false
 	SWEP.ViewModelFOV = 50

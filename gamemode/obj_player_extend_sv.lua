@@ -209,6 +209,9 @@ function meta:ProcessDamage(dmginfo)
 					dmginfo:ScaleDamage(1.25)
 				end
 			end
+			if attacker:IsSkillActive(SKILL_BARA_CURSED) and GAMEMODE:GetWave() >= 6 then
+				dmginfo:ScaleDamage(1.45)
+			end
 			if wep.IsMelee then
 				if attacker:IsSkillActive(SKILL_CHEAPKNUCKLE) and math.abs(self:GetForward():Angle().yaw - attacker:GetForward():Angle().yaw) <= 90 then
 					self:AddLegDamage(12)
@@ -251,7 +254,7 @@ function meta:ProcessDamage(dmginfo)
                     dmginfo:SetDamage(damage * 2)
 				end
 
-
+	
 				if attacker:IsSkillActive(SKILL_BLOODLUST) and attacker:GetPhantomHealth() > 0 and attacker:Health() < attackermaxhp then
 					local toheal = math.min(attacker:GetPhantomHealth(), math.min(self:Health(), damage * 0.65))
 					attacker:SetHealth(math.min(attacker:Health() + toheal, attackermaxhp))
@@ -322,9 +325,7 @@ function meta:ProcessDamage(dmginfo)
 		if self:IsSkillActive(SKILL_SKYHELP) then
 		self:SetVelocity(VectorRand() * math.random(200,1700))
     end
-	if self:IsSkillActive(SKILL_BARA_CURSED) then
-		dmginfo:ScaleDamage(3)
-    end
+
 
 
 

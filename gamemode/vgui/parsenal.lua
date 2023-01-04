@@ -81,7 +81,7 @@ local function ItemPanelThink(self)
 			if stocks ~= self.m_LastStocks then
 				self.m_LastStocks = stocks
 
-				self.StockLabel:SetText(stocks.." remaining")
+				self.StockLabel:SetText(stocks..translate.Get("remaining"))
 				self.StockLabel:SizeToContents()
 				self.StockLabel:AlignRight(10)
 				self.StockLabel:SetTextColor(stocks > 0 and COLOR_GRAY or COLOR_RED)
@@ -453,7 +453,7 @@ function GM:AddShopItem(list, i, tab, issub, nopointshop)
 		pricelabel:Refresh()
 
 	if tab.MaxStock then
-		local stocklabel = EasyLabel(itempan, tab.MaxStock..""..translate.Get("remaining"), "ZSHUDFontTiny")
+		local stocklabel = EasyLabel(itempan, tab.MaxStock..translate.Get("remaining"), "ZSHUDFontTiny")
 		stocklabel:SizeToContents()
 		stocklabel:AlignRight(alignri)
 		stocklabel:SetPos(itempan:GetWide() - stocklabel:GetWide(), itempan:GetTall() * 0.45 - stocklabel:GetTall() * 0.5)

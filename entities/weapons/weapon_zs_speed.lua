@@ -78,7 +78,9 @@ function SWEP:PrimaryAttack()
 	if not self:CanPrimaryAttack() then return end
 
 	local owner = self:GetOwner()
-    owner:GiveAchievement("1to1")
+	if SERVER then
+   		 owner:GiveAchievement("1to1")
+	end
 	if self:GetOwner():IsValid() then
 		self:GetOwner():GiveStatus("sigildef", 12)
 	end

@@ -157,11 +157,8 @@ function ENT:Think()
 				effectdata:SetNormal((self:GetPos() - hitent:GetPos()):GetNormalized())
 				effectdata:SetMagnitude(1)
 			util.Effect("nailrepaired", effectdata, true, true)
-			self:SetAmmo(self:GetAmmo() - totalheal)
+			self:SetAmmo(self:GetAmmo() - totalheal/3)
 			count = count + 1
-			if hitent:IsValidLivingZombie() then
-				owner:AddPoints(-(totalheal * 2))
-			end
 			
 			if count >= 3 or self:GetAmmo() <= 0 then break end
 	   end

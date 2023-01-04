@@ -13,6 +13,7 @@ SWEP.Primary.DefaultClip = 1
 SWEP.Primary.Ammo = "xmas_tree"
 SWEP.Primary.Delay = 1
 SWEP.Primary.Automatic = true
+SWEP.NoAmmoFrom = true
 
 SWEP.Secondary.ClipSize = 1
 SWEP.Secondary.DefaultClip = 1

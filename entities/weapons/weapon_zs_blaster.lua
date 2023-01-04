@@ -4,8 +4,8 @@ SWEP.Base = "weapon_zs_baseshotgun"
 
 --SWEP.PrintName = "'Blaster' Shotgun"
 --SWEP.Description = "A basic shotgun that can deal significant amounts of damage at close range."
-SWEP.PrintName = ""..translate.Get("wep_blaster")
-SWEP.Description = ""..translate.Get("wep_d_blaster")
+SWEP.PrintName = translate.Get("wep_blaster")
+SWEP.Description = translate.Get("wep_d_blaster")
 
 if CLIENT then
 	SWEP.ViewModelFlip = false

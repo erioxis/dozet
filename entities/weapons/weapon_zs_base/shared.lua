@@ -9,7 +9,8 @@ SWEP.ConeMax = 1.5
 SWEP.ConeMin = 0.5
 SWEP.ConeRamp = 2
 
-SWEP.CSMuzzleFlashes = true
+SWEP.CSMuzzleFlashes = true 
+SWEP.ShotGunHeatTime = 0
 
 SWEP.Primary.ClipSize = 8
 SWEP.Primary.DefaultClip = 0
@@ -17,6 +18,7 @@ SWEP.Primary.Automatic = false
 SWEP.Primary.Ammo = "pistol"
 SWEP.RequiredClip = 1
 SWEP.Souleater = 0
+SWEP.NoAmmoFrom = false
 
 SWEP.Secondary.ClipSize = 1
 SWEP.Secondary.DefaultClip = 1
@@ -41,6 +43,12 @@ SWEP.FireAnimSpeed = 1.0
 SWEP.IdleActivity = ACT_VM_IDLE
 
 SWEP.Weight = 5
+function SWEP:GetShotgunHeat()
+	return self:GetDTFloat(16)
+end
+function SWEP:SetShotgunHeat(c)
+	self:SetDTFloat(16, c)
+end
 
 function SWEP:Initialize()
 	if not self:IsValid() then return end --???
@@ -77,7 +85,9 @@ function SWEP:PrimaryAttack()
 		extramulti = 1.25
 	end
 
+
 	self:EmitFireSound()
+	self:SetShotgunHeat(CurTime()+(self.ShotGunHeatTimeMul or 1.2))
 	self:TakeAmmo()
 	self:ShootBullets(self.Primary.Damage * (self:GetPrimaryClipSize() >= 12 and owner:IsSkillActive(SKILL_LAST_AMMO) and 0.75 or self:GetPrimaryClipSize() <= 11 and owner:IsSkillActive(SKILL_LAST_AMMO) and 1.5 + ((self:GetPrimaryClipSize()) * 0.01) or 1) * (extramulti or 1), self.Primary.NumShots, self:GetCone())
 	self.IdleAnimation = CurTime() + self:SequenceDuration()
@@ -171,12 +181,15 @@ function SWEP:GetCone()
 	local orphic = not owner.Orphic and 1 or self:GetIronsights() and 0.9 or 1.1
 	local tiervalid = (self.Tier or 1) <= 3
 	local spreadmul = ((owner.AimSpreadMul or 1) - ((tiervalid and owner:HasTrinket("refinedsub")) and 0.27 or 0))
+	if self.ShotGunHeat then
+		spreadmul = spreadmul + 3*math.Clamp(self:GetShotgunHeat()-CurTime(),0,1)
+	end
 
 	if owner.TrueWooism then
 		return (basecone + conedelta * 0.5 ^ self.ConeRamp) * spreadmul * orphic
 	end
 
-	if not owner:OnGround() or self.ConeMax == basecone then return self.ConeMax end
+	if not owner:OnGround() or self.ConeMax == basecone then return self.ConeMax * (self.ShotGunHeat and math.max(1,(3*math.Clamp(self:GetShotgunHeat()-CurTime(),0,1))) or 1) end
 
 	local multiplier = math.min(owner:GetVelocity():Length() / self.WalkSpeed, 1) * 0.5
 
@@ -354,6 +367,7 @@ function SWEP:ShootBullets(dmg, numbul, cone)
 	if self.PointsMultiplier then
 		POINTSMULTIPLIER = nil
 	end
+	self:SetShotgunHeat(CurTime()+(self.ShotGunHeatTimeMul or 1.2))
 end
 
 local ActIndex = {

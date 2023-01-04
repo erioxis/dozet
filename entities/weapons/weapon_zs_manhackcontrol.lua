@@ -1,6 +1,6 @@
 AddCSLuaFile()
 
-SWEP.PrintName = "Manhack Control"
+SWEP.PrintName = translate.Get("control_mhack")
 SWEP.Description = "Controller for your Manhack."
 
 if CLIENT then

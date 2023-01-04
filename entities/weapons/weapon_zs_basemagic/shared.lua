@@ -21,6 +21,8 @@ SWEP.Secondary.DefaultClip = 1
 SWEP.Secondary.Automatic = false
 SWEP.Secondary.Ammo = "dummy"
 
+SWEP.Magic = true
+
 SWEP.WalkSpeed = SPEED_NORMAL
 
 SWEP.HoldType = "pistol"

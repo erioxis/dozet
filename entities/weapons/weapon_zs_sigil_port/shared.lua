@@ -1,5 +1,5 @@
-SWEP.PrintName = "Portable Sigil"
-SWEP.Description = "Umm what."
+SWEP.PrintName = translate.Get("wep_p_sigil")
+SWEP.Description = translate.Get("wep_d_p_sigil")
 SWEP.Slot = 4
 SWEP.SlotPos = 0
 
@@ -13,6 +13,7 @@ SWEP.Primary.DefaultClip = 1
 SWEP.Primary.Ammo = "sigil_port"
 SWEP.Primary.Delay = 1
 SWEP.Primary.Automatic = true
+SWEP.NoAmmoFrom = true
 
 SWEP.Secondary.ClipSize = 1
 SWEP.Secondary.DefaultClip = 1

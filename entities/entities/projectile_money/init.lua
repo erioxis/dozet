@@ -89,10 +89,8 @@ local owner = self:GetOwner()
 	if attacker:IsValid() and attacker:IsPlayer() and attacker:Team() == TEAM_HUMAN then
 		for _, ent in pairs(ents.FindInSphere(pos, 1048)) do
 			if WorldVisible(self:LocalToWorld(Vector(0, 0, 30)), ent:NearestPoint(self:LocalToWorld(Vector(0, 0, 30)))) then
-				if not attacker:GetActiveWeapon().IsMelee then
-					self:DoRicoShot(ent, ent:GetPos(), nil, dmginfotrue, attacker)
-				elseif attacker:GetActiveWeapon().IsMelee then
-					self:DoRicoShot(ent, ent:GetPos(), true, dmginfotrue, attacker)
+				if not attacker:IsValidLivingHuman()	then
+					self:DoRicoShot(ent, ent:GetPos(), attacker:GetActiveWeapon().IsMelee, dmginfotrue, owner)
 				elseif attacker:IsValidLivingZombie() then
 					self:DoBackShot(dmginfotrue, attacker)
 				end

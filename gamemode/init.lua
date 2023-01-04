@@ -1327,22 +1327,14 @@ function GM:Think()
 					pl:StripWeapon(pl:GetActiveWeapon():GetClass())
 				end
 				local barac = pl:IsSkillActive(SKILL_BARA_CURSED)
-				if self.MaxSigils >= 1 then
+				local baracurse = false
+				if self.MaxSigils >= 1 and baracurse then
 					if not pl:GetStatus("sigildef") and self:GetWave() >= 6 and  time >= pl.NextDamage and self:GetWaveActive() and self:GetBalance() < 40 or self:GetBalance() > 40 and not pl:GetStatus("sigildef") and  time >= pl.NextDamage then
-						pl:TakeSpecialDamage(((pl:HasTrinket("jacobsoul") and 1 or 8 ) * (pl.TickBuff or 0)) /(barac and 200 or 1), DMG_DIRECT)
-						pl.NextDamage = time + (pl:HasTrinket("jacobsoul") and 4 or 2.4) * (barac and 3 or 1)
+						pl:TakeSpecialDamage(8 * (pl.TickBuff or 0), DMG_DIRECT)
+						pl.NextDamage = time + 2.4
 						pl:CenterNotify(COLOR_RED, translate.ClientGet(pl, "danger"))
-						pl.TickBuff = pl.TickBuff + (pl.TickBuff * 0.2) + 1 * (pl.IsLastHuman and 20 or 1)
+						pl.TickBuff = pl.TickBuff + (pl.TickBuff * 0.2) + 1
 
-					end
-					if !pl:GetStatus("sigildef") and pl.IsLastHuman and !barac and self:GetWave() >= 6 and table.Count(player.GetHumans()) >= 4  then
-						pl:TakeSpecialDamage(((pl:HasTrinket("jacobsoul") and 1 or 8 ) * (pl.TickBuff or 0)) /(barac and 200 or 1), DMG_DIRECT)
-						pl.TickBuff = pl.TickBuff + (pl.TickBuff * 0.2) + 10
-					end
-					if pl:GetStatus("sigildef") and self:GetWave() >= 6 and time >= pl.NextDamage and self:GetWaveActive() and pl:HasTrinket("jacobsoul") and not (self:GetWave() == 12) then
-						pl:TakeSpecialDamage(13 * (pl.IsLastHuman and 5 or 1), DMG_DIRECT)
-						pl.NextDamage = time + 7
-						pl:CenterNotify(COLOR_GREEN, translate.ClientGet(pl, "danger_x"))
 					end
 					if time >= (pl.NextDamage + 4) then
 						pl.TickBuff = pl.TickBuff - pl.TickBuff
@@ -1417,8 +1409,8 @@ function GM:Think()
 				if math.random(1230000) == 2000 then
 					pl:GiveAchievement("bruhwtf")
 				end
-				if time >= pl.NextRegenerate and pl.HolyMantle == 0 and pl:IsSkillActive(SKILL_HOLY_MANTLE) then
-					pl.NextRegenerate = time + ((27 - (pl.Luck / 3)) + self.GetWave() * 3)
+				if time >= (pl.NextRegenerateMantle or 1) and pl.HolyMantle == 0 and pl:IsSkillActive(SKILL_HOLY_MANTLE) then
+					pl.NextRegenerateMantle = time + math.max((27 - (pl.Luck / 3)) + self.GetWave() * 3,5)
 					pl.HolyMantle = pl.HolyMantle + 1
 				end
 				if pl.HolyMantle == 1 and pl:IsSkillActive(SKILL_HOLY_MANTLE) and pl:IsValid() and pl.MantleFix <= CurTime() then
@@ -3433,7 +3425,7 @@ function GM:EntityTakeDamage(ent, dmginfo)
 							if otherteam == TEAM_HUMAN then
 									attacker:AddLifeHumanDamage(damage)
 									attacker:AddTokens(math.ceil(damage * 2))
-									attacker:AddZSXP(math.ceil(damage * 0.2))
+									attacker:AddZSXP(math.min(ent:GetMaxHealth()*0.2,math.ceil(damage * 0.2)))
 								
 								GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_ZOMBIECLASS, attacker:GetZombieClassTable().Name, "HumanDamage", damage)
 							end
@@ -4355,10 +4347,13 @@ function GM:HumanKilledZombie(pl, attacker, inflictor, dmginfo, headshot, suicid
 	if pl:GetZombieClassTable().BaraCat then
 		attacker:GiveAchievementProgress("antibaracat", 1)		
 	end
-	if attacker:IsSkillActive(SKILL_NFINGERS) and inflictor == attacker:GetActiveWeapon() and !inflictor.IsMelee then
+	if attacker:IsSkillActive(SKILL_NFINGERS) and inflictor == attacker:GetActiveWeapon() and !inflictor.IsMelee and !inflictor.NoAmmoFrom then
 		attacker:GiveAmmo(1, inflictor.Primary.Ammo)
 	elseif attacker:IsSkillActive(SKILL_NFINGERS) and inflictor == attacker:GetActiveWeapon() and inflictor.IsMelee and math.random(1,10) == 1 then
-		attacker:GiveAmmo(1, inflictor.Primary.Ammo)
+		attacker:GiveAmmo(1, "scrap")
+	end
+	if attacker:IsSkillActive(SKILL_NFINGERS) and inflictor == attacker:GetActiveWeapon() and inflictor.Magic then
+		attacker:SetBloodArmor(attacker:GetBloodArmor() + 25)
 	end
 	if attacker:IsSkillActive(SKILL_SFINGERS) and inflictor == attacker:GetActiveWeapon() and !inflictor.IsMelee then
 		local inflictor2 = inflictor

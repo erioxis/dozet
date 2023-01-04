@@ -21,8 +21,8 @@ function SWEP:ApplyMeleeDamage(ent, trace, damage)
 				ent:TakeDamage(ent:Health() * 0.15, owner, owner:GetActiveWeapon())
 				for _, ent2 in pairs(util.BlastAlloc(self, owner, ent:GetPos(), 110)) do
 					if ent2:IsValidLivingPlayer() and gamemode.Call("PlayerShouldTakeDamage", ent2, owner) and ent2 ~= owner and ent2 ~= ent then
-						local nearest = ent2:NearestPoint(vHitPos)
-						local scalar = ((110 - nearest:Distance(vHitPos)) / 110)
+						local nearest = ent2:NearestPoint(ent:GetPos())
+						local scalar = ((110 - nearest:Distance(ent:GetPos())) / 110)
 			
 						ent2:GiveStatus("frost", scalar * 7)
 						ent2:AddLegDamageExt(18 * scalar, owner, self, SLOWTYPE_COLD)

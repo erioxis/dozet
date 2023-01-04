@@ -46,7 +46,7 @@ function PANEL:PerformLayout()
 	self.m_Text2:SizeToContentsY()
 	self.m_Text2:MoveRightOf(self.m_HumanCount, 16)
 	self.m_Text2:CenterVertical()
-	self.m_Text3:SetWide(self:GetWide() * 1.5)
+	self.m_Text3:SetWide(self:GetWide() * 1.8)
 	self.m_Text3:SizeToContentsY()
 	self.m_Text3:MoveRightOf(self.m_HumanCount, 16)
 	self.m_Text3:AlignBottom(4)
@@ -109,18 +109,18 @@ function PANEL:Text2Paint()
 			col = COLOR_GRAY
 		end
 
-		draw.SimpleText(translate.Format("zombie_invasion_in_x", util.ToMinutesSecondsCD(timeleft)), self.Font, 0, 0, col)
+		draw.SimpleText(GAMEMODE.MCSeconds and translate.Format("start_by_x", util.ToMinutesSecondsMilliseconds(timeleft)) or translate.Format("zombie_invasion_in_x", util.ToMinutesSecondsCD(timeleft)), self.Font, 0, 0, col)
 	elseif GAMEMODE:GetWaveActive() then
 		local waveend = GAMEMODE:GetWaveEnd()
 		if waveend ~= -1 then
 			local timeleft = math.max(0, waveend - CurTime())
-			draw.SimpleText(translate.Format("wave_ends_in_x", util.ToMinutesSecondsCD(timeleft)), self.Font, 0, 0, 10 < timeleft and COLOR_GRAY or Color(255, 0, 0, math.abs(math.sin(RealTime() * 8)) * 180 + 40))
+			draw.SimpleText(GAMEMODE.MCSeconds and translate.Format("wave_e_in_x", util.ToMinutesSecondsMilliseconds(timeleft)) or translate.Format("wave_ends_in_x", util.ToMinutesSecondsCD(timeleft)), self.Font, 0, 0, 10 < timeleft and COLOR_GRAY or Color(255, 0, 0, math.abs(math.sin(RealTime() * 8)) * 180 + 40))
 		end
 	else
 		local wavestart = GAMEMODE:GetWaveStart()
 		if wavestart ~= -1 then
 			local timeleft = math.max(0, wavestart - CurTime())
-			draw.SimpleText(translate.Format("next_wave_in_x", util.ToMinutesSecondsCD(timeleft)), self.Font, 0, 0, 10 < timeleft and COLOR_GRAY or Color(255, 0, 0, math.abs(math.sin(RealTime() * 8)) * 180 + 40))
+			draw.SimpleText(GAMEMODE.MCSeconds and translate.Format("next_wave_in_x", util.ToMinutesSecondsMilliseconds(timeleft)) or translate.Format("next_wave_in_x", util.ToMinutesSecondsCD(timeleft)), self.Font, 0, 0, 10 < timeleft and COLOR_GRAY or Color(255, 0, 0, math.abs(math.sin(RealTime() * 8)) * 180 + 40))
 		end
 	end
 
@@ -156,7 +156,7 @@ function PANEL:Text3Paint()
 		else
 			local balance = GAMEMODE:GetBalance() * 2
 			--draw.SimpleText(translate.Format("points_x", MySelf:GetPoints().." / "..MySelf:Frags()), self.Font, 0, 0, COLOR_DARKRED)
-			draw.SimpleText(translate.Format("sboard_points_x_score_x_dps_x", MySelf:GetPoints(), MySelf:GetMScore(),	math.Round(MySelf:GetDPS())), self.Font, 0, -6, COLOR_SOFTRED)
+			draw.SimpleText(translate.Format("sboard_points_x_score_x_dps_x", MySelf:GetPoints(), MySelf:GetMScore(),	math.Round(MySelf:GetDPS())), self.Font, 0, -7, COLOR_SOFTRED)
 			local god = false
 			local d = NULL
 			for _, pl in pairs(player.GetAll()) do
@@ -170,7 +170,7 @@ function PANEL:Text3Paint()
 			end
 			
 			if !god then
-				draw.SimpleText(((0 < balance) and translate.Get("dosei_inf")..balance.."%" or ""), "ZSHUDFontTiniest", 0, 16, COLOR_SOFTRED)
+				draw.SimpleText(((0 < balance) and translate.Get("dosei_inf")..balance.."%" or ""), "ZSHUDFontTiniest", 0, 17, COLOR_SOFTRED)
 			else
 				draw.SimpleText(translate.Get("power_god")..powergod.."%", "ZSHUDFontTiniest", 0, 16, COLOR_SOFTRED)
 			end

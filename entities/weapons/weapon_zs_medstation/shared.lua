@@ -1,5 +1,5 @@
-SWEP.PrintName = "'Mealdeal' Med station"
-SWEP.Description = "Just heal."
+SWEP.PrintName = translate.Get("wep_mstat")
+SWEP.Description = translate.Get("wep_d_mstat")
 
 SWEP.ViewModel = "models/weapons/v_pistol.mdl"
 SWEP.WorldModel = Model("models/props/de_nuke/smokestack01.mdl")

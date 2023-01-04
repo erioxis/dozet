@@ -409,7 +409,7 @@ function meta:AttachmentDamage(damage, attacker, inflictor, type)
 		if SERVER and attacker:HasTrinket("resonance") then
 			attacker:SetProgress(attacker:GetProgress('pprog') + damage, 'pprog')
 
-			if attacker:GetProgress('pprog') > 80* GAMEMODE:GetWave() * (attacker:GetIndChance() or 1) then
+			if attacker:GetProgress('pprog') > 20* GAMEMODE:GetWave() * (attacker:GetIndChance() or 1) then
 				self:PulseResonance(attacker, inflictor)
 			end
 		end
@@ -472,7 +472,7 @@ function meta:AddLegDamageExt(damage, attacker, inflictor, type)
 		if SERVER and attacker:HasTrinket("resonance") then
 			attacker:SetProgress(attacker:GetProgress('pprog') + (self:GetFlatLegDamage() - startleg), 'pprog')
 
-			if attacker:GetProgress('pprog') > 80* GAMEMODE:GetWave() * (attacker:GetIndChance() or 1) then
+			if attacker:GetProgress('pprog') > 20* GAMEMODE:GetWave() * (attacker:GetIndChance() or 1) then
 				self:PulseResonance(attacker, inflictor)
 			end
 		end

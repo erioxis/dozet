@@ -104,6 +104,13 @@ function MakepOptions()
 	check:SetTooltip(translate.Get("op_show_node_tool"))
 	list2:AddItem(check)
 
+	
+	check = vgui.Create("DCheckBoxLabel", Window)
+	check:SetText(translate.Get("op_ms_mss"))
+	check:SetConVar("zs_ms_mss")
+	check:SizeToContents()
+	list2:AddItem(check)
+
 
 	
 	check = vgui.Create("DCheckBoxLabel", Window)

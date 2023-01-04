@@ -1,5 +1,5 @@
-SWEP.PrintName = "'Stinger' Zapper"
-SWEP.Description = "Zaps any zombies that enter proximity, prioritizing headcrabs. Has a long recharge and uses pulse ammo.\nPress PRIMARY ATTACK to deploy the zapper.\nPress SECONDARY ATTACK and RELOAD to rotate the zapper."
+SWEP.PrintName =  translate.Get("wep_stinger")
+SWEP.Description = translate.Get("wep_d_stinger")
 
 SWEP.ViewModel = "models/weapons/v_pistol.mdl"
 SWEP.WorldModel = Model("models/props_c17/utilityconnecter006c.mdl")

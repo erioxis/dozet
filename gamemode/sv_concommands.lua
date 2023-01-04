@@ -142,6 +142,7 @@ concommand.Add("zs_pointsshopbuy", function(sender, command, arguments)
 				if not sender:IsSkillActive(SKILL_SAMODOS) then
 					local scrapcom = math.ceil(cost / 6)
 					nearest:SetScraps(nearest:GetScraps() + scrapcom)
+					nearest:GetObjectOwner():GiveAchievementProgress("grem", scrapcom)
 					nearest:GetObjectOwner():CenterNotify(COLOR_GREEN, translate.ClientFormat(owner,"remantle_used", scrapcom)..sender:Nick())
 				end
 			end
@@ -311,6 +312,7 @@ concommand.Add("zs_anti_pointsshopbuy", function(sender, command, arguments)
 				if not sender:IsSkillActive(SKILL_SAMODOS) then
 					local scrapcom = math.ceil(cost / 6)
 					nearest:SetScraps(nearest:GetScraps() + scrapcom)
+					nearest:GetObjectOwner():GiveAchievementProgress("grem", scrapcom)
 					nearest:GetObjectOwner():CenterNotify(COLOR_GREEN, translate.ClientFormat(owner ,"remantle_used", scrapcom)..sender:Nick())
 				end
 			end
@@ -475,6 +477,7 @@ concommand.Add("zs_upgrade", function(sender, command, arguments)
 	if owner:IsValid() and owner ~= sender then
 		local scrapcom = math.ceil(scrapcost * 0.13)
 		nearest:SetScraps(nearest:GetScraps() + scrapcom)
+		nearest:GetObjectOwner():GiveAchievementProgress("grem", scrapcom)
 		nearest:GetObjectOwner():CenterNotify(COLOR_GREEN, translate.ClientFormat(owner,"remantle_used", scrapcom)..sender:Nick())
 	end
 end)
@@ -783,7 +786,7 @@ concommand.Add("zsgiveweapon", function(sender, command, arguments)
 	if invitem and not sender:HasInventoryItem(invitem) then return end
 	if invitem == "trinket_a_flower" then sender:TakeInventoryItem("trinket_a_flower")  return end
 	if invitem == "trinket_flower" then sender:TakeInventoryItem("trinket_flower")  return end
-	if string.sub(invitem, 9, 11) == "sin" then return end
+	if invitem and string.sub(invitem, 9, 11) == "sin" then return end
 	
 
 	local currentwep = sender:GetActiveWeapon()

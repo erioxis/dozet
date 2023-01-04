@@ -1509,7 +1509,7 @@ function GM:CreateVGUI()
 	self.GameStatePanel = vgui.Create("ZSGameState")
 	self.GameStatePanel:SetTextFont("ZSHUDFontSmaller")
 	self.GameStatePanel:SetAlpha(220)
-	self.GameStatePanel:SetSize(screenscale * 420, screenscale * 100)
+	self.GameStatePanel:SetSize(screenscale * 420, screenscale * 115)
 	self.GameStatePanel:ParentToHUD()
 
 	self.TopNotificationHUD = vgui.Create("DEXNotificationsList")
