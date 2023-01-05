@@ -122,7 +122,12 @@ function SWEP:MeleeSwing()
 			damagemultiplier = damagemultiplier * 0.85
 		end
 	end
-
+	if owner:IsSkillActive(SKILL_CURSE_OF_MISS) and math.random(1,3) == 1 and SERVER then
+		GAMEMODE:BlockFloater(owner, NULL, tr.HitPos, true)
+		self:SetPowerCombo(0)
+		return
+	end
+	 
 	for _, trace in ipairs(tr) do
 		if not trace.Hit then continue end
 

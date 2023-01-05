@@ -24,7 +24,7 @@ end
 function compare(a,b)
 	return a.Health < b.Health
   end
-  
+local targets = {}
 function ENT:Think()
 	if self.PhysicsData then
 		self:Hit(self.PhysicsData.HitPos, self.PhysicsData.HitNormal, self.PhysicsData.HitEntity)
@@ -35,31 +35,28 @@ function ENT:Think()
 	elseif self.DieTime < CurTime() then
 		self:Remove()
 	end
-	local targets = {}
-	for _, ent in pairs(ents.FindInSphere(self:GetPos(), 12048)) do
+	for _, ent in pairs(ents.FindInSphere(self:GetPos(), 2048)) do
 		if !ent:IsValid() then continue end
 		target = ent
 		if WorldVisible(self:LocalToWorld(Vector(0, 0, 30)), ent:NearestPoint(self:LocalToWorld(Vector(0, 0, 30))))  then
 			if target:IsValidLivingHuman() then 
-				targets[#targets + 1] = {Health = (ent:Health() + (ent:GetBloodArmor() or 1)/2) * (ent:HasTrinket("antidevo") and 2.5 or 1), trg = target}
+				targets[(#targets or 0) + 1] = {Health = (ent:Health() + (ent:GetBloodArmor() or 1)/2) * (ent:HasTrinket("antidevo") and 2.5 or 1), trg = target}
 			end
 		end
 	end
 	table.sort(targets, compare)
-	PrintTable(targets)
 	for k, target1 in pairs(targets) do
 		target = target1.trg
 		--print( target1.Health)
-			if target and target:IsValid() and !target:IsSkillActive(SKILL_ANTI_DEVO) then
-				local targetpos = target:LocalToWorld(target:OBBCenter())
-				local direction = (targetpos - self:GetPos()):GetNormal()
-
-				self:SetAngles(direction:Angle())
-
-				local phys = self:GetPhysicsObject()
-				phys:SetVelocityInstantaneous(direction * 2000 + target:GetVelocity())
-				break
-			end
+		if target and target:IsValidLivingHuman() and !target:IsSkillActive(SKILL_ANTI_DEVO) and self.NextHook <= CurTime() then
+			local targetpos = target:LocalToWorld(target:OBBCenter())
+			local direction = (targetpos - self:GetPos()):GetNormal()
+			self:SetAngles(direction:Angle())
+			local phys = self:GetPhysicsObject()
+			phys:SetVelocityInstantaneous(direction * 2000 + target:GetVelocity())
+			self.NextHook = CurTime() + 0.11
+			break
+		end
 	end
 end
 

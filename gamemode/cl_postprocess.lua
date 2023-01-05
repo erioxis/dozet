@@ -500,7 +500,7 @@ function GM:DrawZombieIndicators()
 	local range, dist, healthfrac, pos, size
 	for _, pl in pairs(team_GetPlayers(TEAM_UNDEAD)) do
 		if pl:GetStatus("feigndeath") then continue  end
-		range = pl:GetAuraRangeSqr()/4
+		range = pl:GetAuraRangeSqr()/4 * (MySelf:IsSkillActive(SKILL_OLD_GOD2) and 2.5 or 1)
 		dist = pl:GetPos():DistToSqr(eyepos)
 		local lp = pl
 		if pl:Alive() and dist <= range then

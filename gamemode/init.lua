@@ -1328,7 +1328,7 @@ function GM:Think()
 				end
 				local barac = pl:IsSkillActive(SKILL_BARA_CURSED)
 				local baracurse = false
-				if self.MaxSigils >= 1 and baracurse then
+				if self.MaxSigils >= 1 and (barac or LASTHUMAN or baracurse) then
 					if not pl:GetStatus("sigildef") and self:GetWave() >= 6 and  time >= pl.NextDamage and self:GetWaveActive() and self:GetBalance() < 40 or self:GetBalance() > 40 and not pl:GetStatus("sigildef") and  time >= pl.NextDamage then
 						pl:TakeSpecialDamage(8 * (pl.TickBuff or 0), DMG_DIRECT)
 						pl.NextDamage = time + 2.4
@@ -1996,8 +1996,10 @@ function GM:PreRestartRound()
 end
 
 GM.CurrentRound = 1
+GM.RestartedGame = false
 function GM:RestartRound()
 	self.CurrentRound = self.CurrentRound + 1
+	self.RestartedGame = true
 
 	net.Start("zs_currentround")
 		net.WriteUInt(self.CurrentRound, 6)
@@ -2106,7 +2108,7 @@ function GM:DoRestartGame()
 	if self.ZombieEscape then
 		self:SetWaveStart(CurTime() + 30)
 	else
-		self:SetWaveStart(CurTime() + self.WaveZeroLength)
+		self:SetWaveStart(CurTime() + self.WaveZeroLength - (self.RestartedGame and 60 or 0))
 	end
 	self:SetWaveEnd(self:GetWaveStart() + self:GetWaveOneLength())
 
@@ -2160,7 +2162,7 @@ function GM:RestartGame()
 	if self.ZombieEscape then
 		self:SetWaveStart(CurTime() + 30)
 	else
-		self:SetWaveStart(CurTime() + self.WaveZeroLength)
+		self:SetWaveStart(CurTime() + self.WaveZeroLength - (self.RestartedGame and 60 or 0))
 	end
 	self:SetWaveEnd(self:GetWaveStart() + self:GetWaveOneLength())
 	self:SetWaveActive(false)
@@ -2264,7 +2266,7 @@ function GM:OnPlayerWin(pl)
 		end
 		if pl:HasTrinket("curse_dropping") and pl:HasTrinket("hurt_curse") and pl:HasTrinket("uncurse") and pl:HasTrinket("curse_faster") and pl:HasTrinket("curse_slow") and pl:HasTrinket("curse_heart") and pl:HasTrinket("curse_fragility")
 		and pl:HasTrinket("curse_ponos") and pl:GetStatus("cursed") and pl:IsSkillActive(SKILL_ATTACHMENT_CURSE) and pl:HasTrinket("cursedtrinket") 
-		and pl:IsSkillActive(SKILL_NOSEE) and  pl:IsSkillActive(SKILL_D_CURSEDTRUE) and pl:IsSkillActive(SKILL_BARA_CURSED) and pl:IsSkillActive(SKILL_LIVER) and pl:IsSkillActive(SKILL_TRIP) then
+		and pl:IsSkillActive(SKILL_NOSEE) and  pl:IsSkillActive(SKILL_D_CURSEDTRUE) and pl:IsSkillActive(SKILL_BARA_CURSED) and pl:IsSkillActive(SKILL_CURSE_OF_MISS) and pl:IsSkillActive(SKILL_LIVER) and pl:IsSkillActive(SKILL_TRIP) then
 			pl:GiveAchievement("full_curse")
 		end
 	end
@@ -4347,8 +4349,8 @@ function GM:HumanKilledZombie(pl, attacker, inflictor, dmginfo, headshot, suicid
 	if pl:GetZombieClassTable().BaraCat then
 		attacker:GiveAchievementProgress("antibaracat", 1)		
 	end
-	if attacker:IsSkillActive(SKILL_NFINGERS) and inflictor == attacker:GetActiveWeapon() and !inflictor.IsMelee and !inflictor.NoAmmoFrom then
-		attacker:GiveAmmo(1, inflictor.Primary.Ammo)
+	if attacker:IsSkillActive(SKILL_NFINGERS) and inflictor == attacker:GetActiveWeapon() and !inflictor.IsMelee then
+		attacker:GiveAmmo(1, attacker:GetResupplyAmmoType())
 	elseif attacker:IsSkillActive(SKILL_NFINGERS) and inflictor == attacker:GetActiveWeapon() and inflictor.IsMelee and math.random(1,10) == 1 then
 		attacker:GiveAmmo(1, "scrap")
 	end

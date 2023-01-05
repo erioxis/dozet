@@ -1,4 +1,4 @@
--- Translated by Mr. Darkness (http://www.noxiousnet.com/forums/index.php?action=profile;u=6296)
+ -- Translated by Mr. Darkness (http://www.noxiousnet.com/forums/index.php?action=profile;u=6296)
 
 translate.AddLanguage("ru", "Russian")
 --Чаленге
@@ -7,7 +7,8 @@ LANGUAGE.undead = "Зомби"
 LANGUAGE.new_op = "Новые настройки"
 LANGUAGE.old_op = "Старые настройки"
 
-
+LANGUAGE.challenge_koso = "Уютно"
+LANGUAGE.challenge_koso_d = "Промахнись 10 раз подряд."
 LANGUAGE.challenge_grem = "Золотая мастерская"
 LANGUAGE.challenge_grem_d = "Получить за все время 9999 скрапа с мастерской."
 LANGUAGE.challenge_soul = "Душа дизбаланса"
@@ -1444,7 +1445,7 @@ LANGUAGE.r_speed = " к скорости перезарядки\n"
 LANGUAGE.health = " максимум здоровья\n"
 LANGUAGE.speed = " скорости\n"
 LANGUAGE.meleedamage = " урона от ближнего оружия\n"
-LANGUAGE.meleedamagetaken = " Получаемый мили урон\n"
+LANGUAGE.meleedamagetaken = " Получаемый урон ближнего боя\n"
 LANGUAGE.jump = " к силе прыжка\n"
 LANGUAGE.barricadespeed = " к скорости прохождения сквозь пропы\n"
 LANGUAGE.sigilteleport = " к времени телепортации\n"
@@ -1487,7 +1488,7 @@ LANGUAGE.skill_freexp = "Доп.Опыт "
 LANGUAGE.skill_schance = "Второй шанс"
 LANGUAGE.skill_schance_d1 = "Вы можете пережить летальный удар(один раз на волну) и восстановить 50% здоровья.\n"
 LANGUAGE.skill_moredamage = "Урон?"
-LANGUAGE.skill_moredamage_d1 = "+15% К защите кровавой брони.\n"
+LANGUAGE.skill_moredamage_d1 = "+25% К защите кровавой брони.\n"
 LANGUAGE.skill_adevo = "Тощий"
 LANGUAGE.skill_adevo_d1 = "Крюк пожирателя вас не видит .\n"
 LANGUAGE.skill_adevo_d2 = "-15% К защите кровавой брони и +7% получаемого мили урона.\n"
@@ -1588,6 +1589,9 @@ LANGUAGE.pshop_other = "Другое"
 LANGUAGE.pshop_magic = "Магия"
 --конец мелочи
 --мили
+LANGUAGE.miss = "ПРОМАХ!"
+LANGUAGE.skill_curse_of_bruh = "Проклятье промаха"
+LANGUAGE.skill_curse_of_bruh_d1 = "Есть шанс ПРОМАХНУТЬСЯ по зомби(Отображается)\n"
 LANGUAGE.skill_goodattack = "Идеальные удары"
 LANGUAGE.skill_goodattack_d1 = "Каждое 4 попадание по зомби кулаками наносит x3 урон\n"
 LANGUAGE.skill_trueblock = "Парирование"
@@ -2668,6 +2672,15 @@ LANGUAGE.skillmod_n116 = "%s К шансу использования модиф
 LANGUAGE.skillmod_n117 = "%s К получаемому урона от индуктора"
 LANGUAGE.skillmod_n118 = "%s К требованию для взрыва индуктора"
 LANGUAGE.skillmod_n119 = "%s К урону в голову"
+--СП
+LANGUAGE.toyka_sp = "Создатель\nЫ"
+LANGUAGE.normal_sp = "Нормальный кот?"
+LANGUAGE.erioxis_sp = "Помощник\nЖир и роксис"
+LANGUAGE.admin_sp = "Админ"
+LANGUAGE.nickmarlya_sp = "Хороший человек"
+LANGUAGE.vip_sp = "В-И-П"
+LANGUAGE.ap_sp = "Истинный Про"
+LANGUAGE.bot_sp = "Мычка"
 -- БОГИ
 LANGUAGE.skill_resnya = "Милость резни"
 LANGUAGE.skill_resnya_d1 = "+15% Мили урона\n"
@@ -2688,3 +2701,14 @@ LANGUAGE.skill_doset1_d2 = "-25% Получаемого урона от змей
 LANGUAGE.skill_old1_g = "Хорошо"
 LANGUAGE.skill_old_g1_d1 = "+25% Урона против змейнеров\n"
 LANGUAGE.skill_old_g1_d2 = "+75% Урона когда последний."
+
+
+LANGUAGE.skill_resnya2 = "Резня"
+LANGUAGE.skill_resnya2_d1 = "Увеличивает урон ближнего боя по тирам.\n"
+LANGUAGE.skill_resnya2_d2 = "+20% Получаемого мили урона."
+LANGUAGE.skill_doset2 = "Истина"
+LANGUAGE.skill_doset2_d1 = "-10% Получаемого урона\n"
+LANGUAGE.skill_doset2_d2 = "-20% Мили урона."
+LANGUAGE.skill_old_g2 = "Конец"
+LANGUAGE.skill_old_g2_d1 = "+250% Радиус древнего виденья\n"
+LANGUAGE.skill_old_g2_d2 = "-25% К урону от пуль."

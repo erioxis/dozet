@@ -4,6 +4,7 @@ AddCSLuaFile()
 --SWEP.Description = "A unique pair of fast firing, high damage shotguns. Reloads quickly by quickly replacing the shotguns used with a new pair, throwing the old away."
 SWEP.PrintName = ""..translate.Get("wep_dualshot")
 SWEP.Description = ""..translate.Get("wep_d_dualshot")
+SWEP.ShotGunHeat = true
 
 SWEP.Slot = 3
 SWEP.SlotPos = 0

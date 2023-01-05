@@ -454,6 +454,9 @@ function meta:ProcessDamage(dmginfo)
 		if attacker.Zmainer and self:IsSkillActive(SKILL_DOSET1) then
 			dmginfo:ScaleDamage(0.75)
 		end
+		if self:IsSkillActive(SKILL_DOSET2) then
+			dmginfo:ScaleDamage(0.9)
+		end
 
 		if inflictor == attacker:GetActiveWeapon() then
 			if (GAMEMODE:GetBalance() * 0.05) >= 0.1 then
@@ -589,7 +592,7 @@ function meta:ProcessDamage(dmginfo)
 
 					self.LastReactiveFlash = CurTime()
 					self.ReactiveFlashMessage = nil
-					if self:HasTrinket("reactiveflasher") and (not self.LastReactiveFlash or self.LastReactiveFlash + 10 < CurTime()) then
+				if self:HasTrinket("reactiveflasher") and (not self.LastReactiveFlash or self.LastReactiveFlash + 10 < CurTime()) then
 					attacker:ScreenFade(SCREENFADE.IN, nil, 1, 1)
 					attacker:SetDSP(36)
 					attacker:GiveStatus("disorientation", 2)
@@ -617,11 +620,6 @@ function meta:ProcessDamage(dmginfo)
 				if self:HasTrinket("eriosoul") and (not self.LastBleakSoul or self.LastBleakSoul + 2 < CurTime()) then
 					attacker:GiveStatus("dimvision", 1)
 					attacker:SetGroundEntity(nil)
-					attacker:SetLocalVelocity((attacker:GetPos() - self:GetPos()):GetNormalized() * 450 + Vector(0, 0, 140))
-
-					self:EmitSound("ambient/creatures/town_child_scream1.wav", 70, 60)
-					self:EmitSound("npc/stalker/go_alert2a.wav", 70, 45, 0.25)
-
 					self.LastBleakSoul = CurTime()
 					self.BleakSoulMessage = nil
 				end
@@ -664,7 +662,8 @@ function meta:ProcessDamage(dmginfo)
 
 				end
 		        if self:HasTrinket("lazarussoul") and (not self.LastBleakSoul or self.LastBleakSoul + 30 < CurTime()) then
-					attacker:GiveStatus("bleed", 50)
+					local g =attacker:GiveStatus("bleed")
+					g:AddDamage(50, self)
 					attacker:SetGroundEntity(nil)
 					attacker:SetLocalVelocity((attacker:GetPos() - self:GetPos()):GetNormalized() * 450 + Vector(0, 0, 140))
 
@@ -693,7 +692,7 @@ function meta:ProcessDamage(dmginfo)
 					end
 				end
 				if attacker.m_Rot_Claws then
-					dmginfo:SetDamage(dmginfo:GetDamage() * 0.5)
+					dmginfo:SetDamage(dmginfo:GetDamage()/2)
 					local rot = self:GetStatus("rot")
 					if (rot) then 
 						self:AddRot(attacker, rot.DieTime - CurTime() + 2)
@@ -780,9 +779,6 @@ function meta:ProcessDamage(dmginfo)
 				dmginfo:SetDamage(dmginfo:GetDamage() * self.ProjDamageTakenMul)
 			end
 		end
-	end
-	if dmginfo:GetDamage() >= 41 and self:IsSkillActive(SKILL_MOREDAMAGE) then
-		dmginfo:SetDamage(41)
 	end
 	self.NextBloodArmorRegen = CurTime() + 3
 	if self:GetBloodArmor() > 0 then

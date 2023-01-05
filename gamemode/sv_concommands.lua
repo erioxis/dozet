@@ -24,7 +24,7 @@ concommand.Add("zs_pointsshopbuy", function(sender, command, arguments)
 		return
 	end
 	if sender:HasTrinket("sin_pride") and ((FindItem(id).Tier and FindItem(id).Tier or 1) >= 4) then
-		GAMEMODE:ConCommandErrorMessage(sender, translate.ClientGet(sender, "envy_pride"))
+		GAMEMODE:ConCommandErrorMessage(sender, translate.ClientGet(sender, "pride_taken"))
 		return
 	end
 

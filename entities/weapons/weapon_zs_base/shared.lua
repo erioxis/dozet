@@ -87,9 +87,9 @@ function SWEP:PrimaryAttack()
 
 
 	self:EmitFireSound()
-	self:SetShotgunHeat(CurTime()+(self.ShotGunHeatTimeMul or 1.2))
 	self:TakeAmmo()
 	self:ShootBullets(self.Primary.Damage * (self:GetPrimaryClipSize() >= 12 and owner:IsSkillActive(SKILL_LAST_AMMO) and 0.75 or self:GetPrimaryClipSize() <= 11 and owner:IsSkillActive(SKILL_LAST_AMMO) and 1.5 + ((self:GetPrimaryClipSize()) * 0.01) or 1) * (extramulti or 1), self.Primary.NumShots, self:GetCone())
+	self:SetShotgunHeat(CurTime()+(self.ShotGunHeatTimeMul or 1.2))
 	self.IdleAnimation = CurTime() + self:SequenceDuration()
 end
 

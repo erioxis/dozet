@@ -87,10 +87,18 @@ function SWEP:PostOnMeleeHit(hitent, hitflesh, tr)
 	end]]
 end
 function SWEP:SecondaryAttack()
+	
 	if self.NextKick <= CurTime() and self:GetOwner():IsSkillActive(SKILL_RESNYA1) then
-		self:SetClip(CurTime() + 1)
+		if owner:IsSkillActive(SKILL_CURSE_OF_MISS) and math.random(1,2) == 1 and SERVER then
+			GAMEMODE:BlockFloater(owner, NULL, tr.HitPos, true)
+			self:SetPowerCombo(0)
+			BaseClass.SecondaryAttack(self)
+			return
+		end
+		 
+		self:SetClip(CurTime() + 1.5)
 		self:PrimaryAttack()
-		self.NextKick = CurTime() + 1
+		self.NextKick = CurTime() + 2
 		local tr = self:GetOwner():CompensatedMeleeTrace(1222, 1)
 		self:PlayHitSound()
 		if tr.Entity then
@@ -98,9 +106,8 @@ function SWEP:SecondaryAttack()
 			if ent:IsPlayer() and ent:IsValidLivingZombie() then
 				self.IsMelee = false
 				if SERVER then
-					ent:AddBleedDamage(self.MeleeDamage * 3.24, self:GetOwner())
-					ent:TakeDamage(self.MeleeDamage*2.2,self:GetOwner(),self)
-				
+					ent:AddBleedDamage(self.MeleeDamage * 1.24, self:GetOwner())
+					ent:TakeDamage(self.MeleeDamage*0.8,self:GetOwner(),self)
 				else
 					self:PlayHitFleshSound()
 				end

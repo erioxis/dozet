@@ -264,8 +264,17 @@ function SWEP:MeleeSwing()
 			damagemultiplier = damagemultiplier * 0.85
 		end
 	end
-
-	
+	if owner:IsSkillActive(SKILL_CURSE_OF_MISS) and math.random(1,3) == 1 and SERVER then
+		GAMEMODE:BlockFloater(owner, NULL, tr.HitPos, true)
+		self:SetPowerCombo(0)
+		owner.MissTimes = owner.MissTimes + 1
+		if owner.MissTimes >= 10 then
+			owner:GiveAchievement("koso")
+		end
+		return
+	end
+	owner.MissTimes = 0
+	 
 
 
 
@@ -313,7 +322,7 @@ function SWEP:OnMeleeHit(hitent, hitflesh, tr)
 	local ent = hitent
 	if IsFirstTimePredicted() then
 		if ent:IsPlayer() and SERVER and self:GetOwner():IsSkillActive(SKILL_CURSECURE) then
-			local count = 1
+			local count = 0
 			for _, ent in pairs(ents.FindInSphere(tr.HitPos, 158)) do
 				if ent:IsValid() and ent:IsPlayer() and ent ~= self:GetOwner() and ent:IsValidLivingZombie() then
 					count = count + 1
@@ -322,7 +331,7 @@ function SWEP:OnMeleeHit(hitent, hitflesh, tr)
 			for i = 1, math.random(3) do
 				for _, ent in pairs(ents.FindInSphere(tr.HitPos, 158)) do
 					if ent:IsValid() and ent:IsPlayer() and ent ~= self:GetOwner() and ent:IsValidLivingZombie() then
-						ent:TakeSpecialDamage((self.MeleeDamage*0.35)/count,DMG_BULLET, self:GetOwner(), self)
+						ent:TakeDamage((self.MeleeDamage*0.35)/count, self:GetOwner(), self)
 					end
 				end
 			end
@@ -386,10 +395,15 @@ function SWEP:PostHitUtil(owner, hitent, dmginfo, tr, vel)
 	if self.PointsMultiplier then
 		POINTSMULTIPLIER = self.PointsMultiplier
 	end
+	if owner:IsSkillActive(SKILL_RESNYA2) then
+		local tierscale = {["0tier"] = 1,["1tier"] = 1.05,["2tier"] = 1.09,["3tier"] = 1.15,["4tier"] = 1.12, ["5tier"] = 1.09, ["6tier"] = 1.05, ["7tier"] = 1}
+		dmginfo:ScaleDamage(tierscale[tostring((self.Tier or 1)).."tier"])
+	end
 	hitent:DispatchTraceAttack(dmginfo, tr, owner:GetAimVector())
 	if self.PointsMultiplier then
 		POINTSMULTIPLIER = nil
 	end
+
 
 	if vel then
 		hitent:SetLocalVelocity(vel)

@@ -1,8 +1,8 @@
 AddCSLuaFile()
 
 --SWEP.PrintName = "Axe"
-SWEP.PrintName = ""..translate.Get("wep_m_damage")
-SWEP.Description = ""..translate.Get("wep_d_m_damage")
+SWEP.PrintName = translate.Get("wep_m_damage")
+SWEP.Description = translate.Get("wep_d_m_damage")
 
 if CLIENT then
 	

@@ -27,7 +27,7 @@ hook.Add("PostDrawTranslucentRenderables", "DrawBlocking", function()
 
 
 			cam.Start3D2D(particle:GetPos(), ang, 0.1 * GAMEMODE.DamageNumberScale)
-				draw.SimpleText(translate.Get("blockistrue").."!", "ZS3D2DFont2", 0, 0, Color(33, 65, 209, math.Clamp(particle.DieTime - curtime, 0, 1) * 220), TEXT_ALIGN_CENTER, TEXT_ALIGN_BOTTOM)
+				draw.SimpleText(particle.Bool and translate.Get("miss").."!" or translate.Get("blockistrue").."!", "ZS3D2DFont2", 0, 0, Color(33, 65, 209, math.Clamp(particle.DieTime - curtime, 0, 1) * 220), TEXT_ALIGN_CENTER, TEXT_ALIGN_BOTTOM)
 			cam.End3D2D()
 		end
 	end

@@ -32,11 +32,12 @@ function ENT:Think()
 
 		if ent and ent:IsValid() and self.Classes[class] and WorldVisible(pos, ent:NearestPoint(pos)) and droppedrecent and ownsitem then
 			local phys = ent:GetPhysicsObject()
+			local pos = owner:KeyDown(IN_ATTACK) and owner:GetEyeTrace().HitPos or pos
 			local dir = (pos - ent:NearestPoint(pos)):GetNormalized()
 			phys:ApplyForceCenter((phys:GetMass() or 2) * self.Force * dir)
 			ent:SetPhysicsAttacker(owner, 4)
 
-			if (ent:GetPos() - pos):LengthSqr() <= 5600 and ent.GiveToActivator then
+			if (ent:GetPos() - self:GetPos()):LengthSqr() <= 5600 and ent.GiveToActivator then
 				ent:GiveToActivator(owner)
 			end
 		end

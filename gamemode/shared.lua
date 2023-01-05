@@ -5,7 +5,7 @@ GM.Website	=	"https://github.com/erioxis/dozet"
 
 -- No, adding a gun doesn't make your name worth being here.
 GM.Credits = {
-	{"Version", "", "6.3.0"},
+	{"Version", "", "6.3.6"},
 	{"erioxis", "Phantom coder", "dead"},
 	{"Nullted", "", "RU-ENG Translation"},
 	{"Bro 3", "", "Some models"}
@@ -910,37 +910,39 @@ end
 
 function GM:IsSpecialPerson(pl, image)
 	local img, tooltip
+	local trs = translate.Get
 
 	if pl:SteamID() == "STEAM_0:0:426833142" then
 		img = "VGUI/steam/games/icon_sourcesdk"
-		tooltip = "Toyka\nCoder"
-		pl:SetMaxHealth(pl:GetMaxHealth() * 1.5)
-
+		tooltip = trs("toyka_sp")
 	elseif pl:SteamID() == "STEAM_0:0:445794125" then
 		img = "noxiousnet/cat.png"
-		tooltip = "Normal Cat?"
+		tooltip = trs("normal_sp")
 	elseif pl:SteamID() == "STEAM_0:1:245602574" then
 			img = "noxiousnet/noxicon.png"
-			tooltip = "Erioxis\nHelper"
+			tooltip = trs("erioxis_sp")
 	elseif pl:IsAdmin() then
 		img = "VGUI/servers/icon_robotron"
-		tooltip = "Admin"
+		tooltip = trs("admin_sp")
 	elseif pl:SteamID() == "STEAM_0:1:196107962" then
 		img = "noxiousnet/noxicon.png"
-		tooltip = "Good Man"
+		tooltip = trs("nickmarlya_sp")
 	elseif pl:SteamID() == "STEAM_0:1:434267757" then
 		img = "zombiesurvival/sigil.png"
-		tooltip = "V-I-P"
+		tooltip = trs("vip_sp")
 	elseif pl:SteamID() == "STEAM_0:1:92937109" then
 		img = "noxiousnet/arsenalcrate.png"
 		tooltip = "Bruh"
 	elseif pl:SteamID() == "STEAM_0:0:103817403" then
 		img = "noxiousnet/arsenalcrate.png"
-		tooltip = "Absolute Pro"
+		tooltip = trs("ap_sp")
     elseif pl:SteamID() == "STEAM_0:1:157024537" then
-	img = "noxiousnet/noxicon.png"
-	tooltip = "Old Player"
-    end
+		img = "noxiousnet/noxicon.png"
+		tooltip = "Old Player"
+	elseif pl:IsBot() then
+		img = "icon16/wrench_orange.png"
+		tooltip = trs("bot_sp")
+	end
 
 	if img then
 		if CLIENT then

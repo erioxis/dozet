@@ -145,7 +145,12 @@ function SWEP:MeleeSwing()
 
 		return
 	end
-
+	if owner:IsSkillActive(SKILL_CURSE_OF_MISS) and math.random(1,3) == 1 and SERVER then
+		GAMEMODE:BlockFloater(owner, NULL, tr.HitPos, true)
+		self:SetPowerCombo(0)
+		return
+	end
+	 
 	local damagemultiplier = owner:Team() == TEAM_HUMAN and owner.MeleeDamageMultiplier or 1 --(owner.BuffMuscular and owner:Team()==TEAM_HUMAN) and 1.2 or 1
 	if owner:IsSkillActive(SKILL_LASTSTAND) then
 		if owner:Health() <= owner:GetMaxHealth() * 0.25 then
