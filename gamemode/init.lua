@@ -1898,7 +1898,7 @@ function GM:PlayerRepairedObject(pl, other, health, wep)
 
 	pl.RepairedThisRound = pl.RepairedThisRound + health
 	if numofdaily == 2 then
-		attacker:GiveAchievementProgress("daily"..(self.DailyNum or 1), healthhealth)
+		pl:GiveAchievementProgress("daily"..(self.DailyNum or 1), math.Round(health))
 	end
 
 	local hpperpoint = self.RepairPointsPerHealth
@@ -3462,7 +3462,7 @@ function GM:EntityTakeDamage(ent, dmginfo)
 								GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_WEAPON, inflictor:GetClass(), "Damage", damage)
 							end
 							if numofdaily == 3 then
-								attacker:GiveAchievementProgress("daily"..(self.DailyNum or 1), damage)
+								attacker:GiveAchievementProgress("daily"..(self.DailyNum or 1), math.Round(math.min(damage, ent:Health())))
 							end
 							local chnc = (attacker.AttChance or 1)
 							local fireatt = 8 * chnc

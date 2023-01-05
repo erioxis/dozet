@@ -24,6 +24,14 @@ LANGUAGE.undead = "Undead"
 LANGUAGE.new_op = "New Options"
 LANGUAGE.old_op = "Old Options"
 
+LANGUAGE.challenge_daily1 = "DAILY:Killer"
+LANGUAGE.challenge_daily_d1 = "Kill 100 Zombie."
+LANGUAGE.challenge_daily2 = "DAILY:Engineer"
+LANGUAGE.challenge_daily_d2 = "Repair props by amount 15k."
+LANGUAGE.challenge_daily3 = " DAILY:Again"
+LANGUAGE.challenge_daily_d3 = "Deal damage 25k."
+
+
 LANGUAGE.challenge_koso = "Sniper"
 LANGUAGE.challenge_koso_d = "Miss 10+ times."
 LANGUAGE.challenge_grem = "Golden Remantler"
