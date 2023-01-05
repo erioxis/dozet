@@ -8,9 +8,9 @@ local dailyreward = {["Daily1"] = {Goal = 100, Reward = 2500},
 local tbl = {Goal = 100, Reward = 2500}
 local num = 1
 for i=1,99 do
-    if table.HasValue({"1","2","3"},tostring(math.Round((GM.DailyNum or 1)/i))) then
-        tbl = dailyreward["Daily"..math.Round((GM.DailyNum or 1)/i)]
-        num = math.Round((GM.DailyNum or 1)/i)
+    if table.HasValue({"1","2","3"},tostring(math.Round(((GM.DailyNum or 1)+i)/i))) then
+        tbl = dailyreward["Daily"..math.Round(((GM.DailyNum or 1)+i)/i)]
+        num = math.Round(((GM.DailyNum or 1)+i)/i)
         break
     end
 end

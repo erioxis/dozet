@@ -175,8 +175,8 @@ function GM:WorldHint(hint, pos, ent, lifetime, filter)
 end
 local numofdaily = 1
 for i=1,99 do
-    if table.HasValue({"1","2","3"},tostring(math.Round((GM.DailyNum or 1)/i))) then
-        numofdaily = math.Round((GM.DailyNum or 1)/i)
+    if table.HasValue({"1","2","3"},tostring(math.Round(((GM.DailyNum or 1)+i)/i))) then
+        numofdaily = math.Round(((GM.DailyNum or 1)+i)/i)
         break
     end
 end
