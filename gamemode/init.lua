@@ -23,6 +23,7 @@ AddCSLuaFile("sh_humanclasses.lua")
 AddCSLuaFile("sh_animations.lua")
 AddCSLuaFile("sh_sigils.lua")
 AddCSLuaFile("vgui/achievements.lua")
+
 AddCSLuaFile("sh_channel.lua")
 AddCSLuaFile("sh_weaponquality.lua")
 AddCSLuaFile("sh_crafts.lua")
@@ -48,6 +49,8 @@ AddCSLuaFile("cl_voicesets.lua")
 AddCSLuaFile("skillweb/sh_skillweb.lua")
 AddCSLuaFile("skillweb/cl_skillweb.lua")
 AddCSLuaFile("skillweb/registry.lua")
+
+
 
 AddCSLuaFile("obj_vector_extend.lua")
 AddCSLuaFile("obj_entity_extend.lua")
@@ -122,6 +125,8 @@ include("vault/server.lua")
 include("skillweb/sv_registry.lua")
 include("skillweb/sv_skillweb.lua")
 
+
+
 include("sv_zombieescape.lua")
 
 
@@ -168,7 +173,13 @@ function GM:WorldHint(hint, pos, ent, lifetime, filter)
 		net.Broadcast()
 	end
 end
-
+local numofdaily = 1
+for i=1,99 do
+    if table.HasValue({"1","2","3"},tostring(math.Round((GM.DailyNum or 1)/i))) then
+        numofdaily = math.Round((GM.DailyNum or 1)/i)
+        break
+    end
+end
 function GM:CreateGibs(pos, headoffset)
 	headoffset = headoffset or 0
 
@@ -1886,6 +1897,9 @@ function GM:PlayerRepairedObject(pl, other, health, wep)
 	if self:GetWave() == 0 or health <= 0 then return end
 
 	pl.RepairedThisRound = pl.RepairedThisRound + health
+	if numofdaily == 2 then
+		attacker:GiveAchievementProgress("daily"..(self.DailyNum or 1), healthhealth)
+	end
 
 	local hpperpoint = self.RepairPointsPerHealth
 	if hpperpoint <= 0 then return end
@@ -3433,6 +3447,7 @@ function GM:EntityTakeDamage(ent, dmginfo)
 							end
 						elseif myteam == TEAM_HUMAN and otherteam == TEAM_UNDEAD then
 							ent.DamagedBy[attacker] = (ent.DamagedBy[attacker] or 0) + damage
+							
 							if time >= ent.m_LastWaveStartSpawn + 3 and time >= ent.m_LastGasHeal + 2 then
 								local points = damage / ent:GetMaxHealth() * ent:GetZombieClassTable().Points
 								if POINTSMULTIPLIER then
@@ -3446,6 +3461,9 @@ function GM:EntityTakeDamage(ent, dmginfo)
 								GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_WEAPON, inflictor:GetClass(), "PointsEarned", points)
 								GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_WEAPON, inflictor:GetClass(), "Damage", damage)
 							end
+							if numofdaily == 3 then
+								attacker:GiveAchievementProgress("daily"..(self.DailyNum or 1), damage)
+							end
 							local chnc = (attacker.AttChance or 1)
 							local fireatt = 8 * chnc
 							local iceatt = 5* chnc
@@ -3454,20 +3472,23 @@ function GM:EntityTakeDamage(ent, dmginfo)
 							local damage2 = (damage * (attacker.ElementalMul or 1)) * (ent:GetZombieClassTable().ElementalDebuff or 1)
 							
 							if !attacker:HasTrinket("cham_at") then
-								if attacker:HasTrinket("fire_at") and math.max(math.random(fireatt),1) == 1 or attacker:GetProgress('fprog') >= 15*((attacker:GetActiveWeapon() and (attacker:GetActiveWeapon().Tier or 1))+1) then
+								if attacker:HasTrinket("fire_at") and (math.max(math.random(fireatt),1) == 1 or attacker:IsSkillActive(SKILL_100_PERC) and (attacker.NextFireAtt or 0) < CurTime() ) then
 									ent:AttachmentDamage(damage2, attacker, attacker, SLOWTYPE_FLAME)
 									CurseAttach(attacker)
+									attacker.NextFireAtt = CurTime() + 2
 								end
-								if attacker:HasTrinket("pulse_at") and math.max(math.random(pulseatt),1) == 1 then
+								if attacker:HasTrinket("pulse_at") and (math.max(math.random(pulseatt),1) == 1 or attacker:IsSkillActive(SKILL_100_PERC) and (attacker.NextPulseAtt or 0) < CurTime())  then
 									ent:AttachmentDamage(damage2, attacker, attacker, SLOWTYPE_PULSE)
 									CurseAttach(attacker)
+									attacker.NextPulseAtt = CurTime() + 1
 								end
-								if attacker:HasTrinket("acid_at") and math.max(math.random(iceatt),1) == 1 then
+								if attacker:HasTrinket("acid_at") and (math.max(math.random(iceatt),1) == 1  or attacker:IsSkillActive(SKILL_100_PERC) and (attacker.NextIceAtt or 0) < CurTime()) then
 									ent:AttachmentDamage(damage2, attacker, attacker, SLOWTYPE_COLD)
 									if math.random(1,4) == 1 then
 										ent:GiveStatus("frost",math.random(1,7))
 									end
 									CurseAttach(attacker)
+									attacker.NextIceAtt = CurTime() + 3
 								end
 								local debuffed = ent:GetStatus("zombiestrdebuff")
 								if attacker:HasTrinket("ultra_at") and math.max(1,math.random(debuffatt)) == 1 then
@@ -4343,6 +4364,9 @@ end
 function GM:HumanKilledZombie(pl, attacker, inflictor, dmginfo, headshot, suicide)
 	if (pl:GetZombieClassTable().Points or 0) == 0 or self.RoundEnded then return end
 	-- Simply distributes based on damage but also do some stuff for assists.
+	if numofdaily == 1 then
+		attacker:GiveAchievementProgress("daily"..(self.DailyNum or 1), 1)
+	end
 	attacker:GiveAchievementProgress("everycan", 1)
 	attacker:GiveAchievementProgress("dzs", 1)
 	pl:GiveAchievementProgress("goodtime", 1)

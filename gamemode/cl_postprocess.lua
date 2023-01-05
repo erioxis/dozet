@@ -499,7 +499,8 @@ function GM:DrawZombieIndicators()
 	local eyepos = EyePos()
 	local range, dist, healthfrac, pos, size
 	for _, pl in pairs(team_GetPlayers(TEAM_UNDEAD)) do
-		if pl:GetStatus("feigndeath") then continue  end
+		if pl:GetStatus("feigndeath") then continue end
+		if pl:GetRenderMode() == RENDERMODE_TRANSALPHA then continue end
 		range = pl:GetAuraRangeSqr()/4 * (MySelf:IsSkillActive(SKILL_OLD_GOD2) and 2.5 or 1)
 		dist = pl:GetPos():DistToSqr(eyepos)
 		local lp = pl
@@ -534,12 +535,12 @@ function GM:DrawZombieIndicators()
 				colHealth.g = lp:GetInfo("zs_ghealth") - healthperc
 				colHealth.b = lp:GetInfo("zs_bhealth")
 		
-				local x = 18 * screenscale
+				local x = -16 * screenscale
 				local y = 115 * screenscale
 		
 				local subwidth = healthperc * wid
 		
-				draw.SimpleTextBlurry(health.."|"..pl:GetMaxHealth(), "ZSHUDFont", x + 18 * screenscale, y - 36 * screenscale, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+				draw.SimpleTextBlurry(health.."|"..pl:GetMaxHealth(), "ZSHUDFont", x * screenscale, y - 36 * screenscale, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 		
 				surface.SetDrawColor(0, 0, 0, 230)
 				surface.DrawRect(x, y, wid, hei)

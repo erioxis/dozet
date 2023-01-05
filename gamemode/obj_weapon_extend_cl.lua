@@ -24,7 +24,9 @@ local function DrawLine(x, y, rot)
 	surface.SetDrawColor(GAMEMODE.CrosshairColor)
 	surface.DrawTexturedRectRotated(x, y, 12, 2 * thickness, rot)
 end
-
+local matGlow = Material("sprites/glow04_noz")
+local texDownEdge = surface.GetTextureID("gui/gradient_down")
+local colHealth = Color(0, 0, 0, 240)
 local baserot = 0
 function meta:DrawCrosshairCross()
 	local x = ScrW() * 0.5
@@ -66,6 +68,34 @@ function meta:DrawCrosshairCross()
 		local ratio = ((CurTime()-((MySelf:GetActiveWeapon().Primary.Delay or 1) + MySelf:GetActiveWeapon():GetNextPrimaryFire() - MySelf:GetActiveWeapon():GetFireDelay()))) * 100
 		if ratio/100+0.11 <= 0 and MySelf:GetActiveWeapon() and !MySelf:GetActiveWeapon().IsMelee then
 			draw.SimpleTextBlurry(-math.Round(ratio)/100-0.11, "ZSHUDFontTiny",x1-70 * math.max(1.004,cone), y1+10 * math.max(1.004,cone), Color(255,255,255), TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+		end
+		if MySelf:IsSkillActive(SKILL_VAMPIRISM) then
+			local lp = MySelf
+			local screenscale = BetterScreenScale()
+			local prog = lp:GetNWFloat("vampirism_progress",value)
+			local healthperc = math.Clamp(prog  / 1200, 0, 1)
+			local wid, hei = 100 * screenscale, 18 * screenscale
+	
+			colHealth.r = 255 * healthperc
+			colHealth.g = 120
+			colHealth.b = 122
+
+			local y = y + 35 *  screenscale
+			local subwidth = healthperc * wid
+			draw.SimpleTextBlurry(math.Round(prog) , "ZSHUDFontSmallest", x + wid + 18 * screenscale, y + 8 * screenscale, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+
+			surface.SetDrawColor(0, 0, 0, 230)
+			surface.DrawRect(x, y, wid, hei)
+
+			surface.SetDrawColor(colHealth.r * 1, colHealth.g * 0.2, colHealth.b, 40)
+			surface.SetTexture(texDownEdge)
+			surface.DrawTexturedRect(x + 2, y + 1, subwidth - 4, hei - 2)
+			surface.SetDrawColor(colHealth.r * 0.6, colHealth.g * 0.6, colHealth.b, 30)
+			surface.DrawRect(x + 2, y + 1, subwidth - 4, hei - 2)
+
+			surface.SetMaterial(matGlow)
+			surface.SetDrawColor(255, 255, 255, 255)
+			surface.DrawTexturedRect(x + 2 + subwidth - 6, y + 1 - hei/2, 4, hei * 2)
 		end
 
 	local ang = Angle(0, 0, baserot)

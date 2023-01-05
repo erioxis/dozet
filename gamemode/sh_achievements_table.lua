@@ -1,5 +1,25 @@
 GM.Achievements = {}
 local translate = translate.Get
+local dailyreward = {["Daily1"] = {Goal = 100, Reward = 2500},
+["Daily2"] = {Goal = 15000, Reward = 6500},
+["Daily3"] = {Goal = 25000, Reward = 3500}
+
+}
+local tbl = {Goal = 100, Reward = 2500}
+local num = 1
+for i=1,99 do
+    if table.HasValue({"1","2","3"},tostring(math.Round((GM.DailyNum or 1)/i))) then
+        tbl = dailyreward["Daily"..math.Round((GM.DailyNum or 1)/i)]
+        num = math.Round((GM.DailyNum or 1)/i)
+        break
+    end
+end
+GM.Achievements["daily"..(GM.DailyNum or 1)] = {
+    Name = translate("challenge_daily"..num),
+    Desc = translate("challenge_daily_d"..num),
+    Goal = tbl.Goal,
+    Reward = tbl.Reward
+}
 GM.Achievements["elementarno"] = {
     Name = translate("challenge_fullofelements"),
     Desc = translate("challenge_fullofelements_d"),

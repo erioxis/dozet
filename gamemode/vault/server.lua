@@ -198,20 +198,23 @@ function GM:SaveWinRate()
 	local tosave = {
 		Winrate = math.floor(self:GetWinRate() or 0),
 		ZSRage = math.floor(self:GetRage() or 0),
-		Da = (#DaData <= 300 and DaData or {"mmm"})
-
-		
+		Da = (#DaData <= 300 and DaData or {"mmm"}),
+		DailySecs = math.floor(self.DailySecs or os.time() +86400),
+		DailyNum = math.floor(self.DailyNum or 1)
 	}
 
+	if self.DailySecs and os.time() > self.DailySecs then
+		tosave.DailyNum = math.floor(self.DailyNum or 1) + 1
+		tosave.DailySecs = os.time() + 86400
+	end
 
-
-	local filename = "system_balance"..".txt"
+	local filename = "system_balance.txt"
 	file.CreateDir(string.GetPathFromFilename(filename))
 	file.Write(filename, Serialize(tosave))
 end
 function GM:LoadWinRate()
 
-	local filename = "system_balance"..".txt"
+	local filename = "system_balance.txt"
 	if file.Exists(filename, "DATA") then
 		local contents = file.Read(filename, "DATA")
 		if contents and #contents > 0 then
@@ -225,6 +228,12 @@ function GM:LoadWinRate()
 				end
 				if contents.Da then
 					self.Da = contents.Da or {"mmm"}
+				end
+				if contents.DailySecs then
+					self.DailySecs = contents.DailySecs or 0
+				end
+				if contents.DailyNum then
+					self.DailyNum = contents.DailyNum or 1
 				end
 				
 			end

@@ -61,12 +61,12 @@ end
 function PANEL:Init()
 	self.ClassButtons = {}
 
-	self.ClassTypeButton = EasyButton(nil, bossmode and not demiboss and "Open Normal Class Selection" or "Open Boss Class Selection", 8, 4)
+	self.ClassTypeButton = EasyButton(nil, bossmode and not demiboss and translate.Get("vgui_open_class") or translate.Get("vgui_open_class_b"), 8, 4)
 	self.ClassTypeButton:SetFont("ZSHUDFontSmall")
 	self.ClassTypeButton:SizeToContents()
 	self.ClassTypeButton.DoClick = BossTypeDoClick
 
-	self.DemiClassTypeButton = EasyButton(nil, demiboss and "Open Normal Class Selection" or "Open DemiBoss Class Selection", 8, 4)
+	self.DemiClassTypeButton = EasyButton(nil, demiboss and translate.Get("vgui_open_class") or translate.Get("vgui_open_class_db"), 8, 4)
 	self.DemiClassTypeButton:SetFont("ZSHUDFontSmall")
 	self.DemiClassTypeButton:SizeToContents()
 	self.DemiClassTypeButton.DoClick = DemiBossTypeDoClick

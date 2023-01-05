@@ -1,14 +1,14 @@
-CLASS.Name = "Skelecringe"
-CLASS.TranslationName = "class_skel"
-CLASS.Description = "description_skel"
+CLASS.Name = "Sigiler"
+CLASS.TranslationName = "class_sigil"
+CLASS.Description = "description_sigil"
 CLASS.Help = "controls_fast_zombie"
 
 CLASS.Model = Model("models/player/zombie_fast.mdl")
 
-CLASS.Wave = 11 / 12
+CLASS.Wave = 12 / 12
 CLASS.Revives = false
-
-CLASS.Health = 4200
+CLASS.Infliction = 0.8
+CLASS.Health = 2200
 CLASS.Speed = 420
 CLASS.SWEP = "weapon_zs_skelecringe"
 
@@ -245,4 +245,53 @@ function CLASS:CreateMove(pl, cmd)
 			end]]
 		end
 	end
+end
+
+local nodraw = false
+local matWhite = Material("models/debug/debugwhite")
+local matRefract = Material("models/spawn_effect")
+function CLASS:PreRenderEffects(pl)
+
+	if nodraw then return end
+
+	render.SetColorModulation(0.086, 0.702, 0.239)
+	render.SetBlend(0.5 + math.abs(math.cos(CurTime())) ^ 2 * 0.1)
+	render.SuppressEngineLighting(true)
+	render.ModelMaterialOverride(matWhite)
+end
+
+function CLASS:PostRenderEffects(pl)
+	if render.SupportsVertexShaders_2_0() then
+		render.PopCustomClipPlane()
+		render.EnableClipping(false)
+	end
+
+	if nodraw then return end
+
+	render.SetColorModulation(1, 1, 1)
+	render.SetBlend(1)
+	render.SuppressEngineLighting(false)
+	render.ModelMaterialOverride()
+
+	if render.SupportsPixelShaders_2_0() then
+		render.UpdateRefractTexture()
+
+		matRefract:SetFloat("$refractamount", 0.6)
+
+		render.ModelMaterialOverride(matRefract)
+		nodraw = true
+		pl:DrawModel()
+		nodraw = false
+		render.ModelMaterialOverride(0)
+	end
+end
+
+function CLASS:PrePlayerDraw(pl)
+	pl:RemoveAllDecals()
+
+	self:PreRenderEffects(pl)
+end
+
+function CLASS:PostPlayerDraw(pl)
+	self:PostRenderEffects(pl)
 end

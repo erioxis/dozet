@@ -10,7 +10,6 @@ end]]
 function meta:IsDoorLocked()
 	return self:GetSaveTable().m_bLocked
 end
-
 function meta:HealPlayer(pl, amount, pointmul, nobymsg, poisononly)
 	local healed, rmv = 0, 0
 

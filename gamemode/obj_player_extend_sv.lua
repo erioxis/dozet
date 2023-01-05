@@ -151,8 +151,11 @@ function meta:ProcessDamage(dmginfo)
 			local attackermaxhp = math.floor(attacker:GetMaxHealth() * (attacker:IsSkillActive(SKILL_ABUSE) and 0.25 or 1))
 
 			--attacker.dpsmeter = damage
-			if attacker:IsSkillActive(SKILL_VAMPIRISM) and math.random(1,4 * (wep.Primary.NumShots or 1)) == 1 and damage >= 120 then
-				attacker:SetHealth(math.min(attacker:GetMaxHealth(), attacker:Health() + attacker:GetMaxHealth() * 0.11))
+			if attacker:IsSkillActive(SKILL_VAMPIRISM) then
+				attacker:SetNWFloat("vampirism_progress", attacker:GetNWFloat("vampirism_progress",value)+damage*0.09)
+				if attacker:GetNWFloat("vampirism_progress",value) >= 620 then
+					attacker:SetHealth(math.min(attacker:GetMaxHealth(),attacker:Health() + attacker:GetMaxHealth()*0.09))
+				end
 			end
 			if attacker:IsSkillActive(SKILL_INF_POWER) then
 				dmginfo:ScaleDamage(0.5 + #attacker:GetUnlockedSkills() * 0.006)
