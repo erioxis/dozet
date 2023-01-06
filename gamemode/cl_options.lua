@@ -244,7 +244,7 @@ cvars.AddChangeCallback("zs_interfacesize", function(cvar, oldvalue, newvalue)
 	GAMEMODE.HealthHUD:InvalidateLayout()
 
 	GAMEMODE.GameStatePanel:InvalidateLayout()
-	GAMEMODE.GameStatePanel:SetSize(screenscale * 420, screenscale * 80)
+	GAMEMODE.GameStatePanel:SetSize(screenscale * 420, screenscale * 110)
 
 	GAMEMODE.TopNotificationHUD:InvalidateLayout()
 	GAMEMODE.CenterNotificationHUD:InvalidateLayout()

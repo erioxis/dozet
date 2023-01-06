@@ -1,4 +1,35 @@
 local PANEL = {}
+local dailyreward = {["Daily1"] = {Goal = 100, Reward = 2500},
+["Daily2"] = {Goal = 15000, Reward = 6500},
+["Daily3"] = {Goal = 25000, Reward = 3500}
+
+}
+local num = 1
+local tbl = {Goal = 100, Reward = 2500}
+local function DoAchievements()
+    local daily = GAMEMODE:GetDaily()
+    for i=1,99 do
+        if table.HasValue({"1","2","3"},tostring(math.Round(((daily or 1)+i)/i))) and math.Round(((daily or 1)+i)/i) ~= GAMEMODE.LastDaily then
+            tbl = dailyreward["Daily"..math.Round(((daily or 1)+i)/i)]
+            num = math.Round(((daily or 1)+i)/i)
+            break
+        end
+    end
+   --[[self.Achievements["daily"..daily] = {
+        Name = translate("challenge_daily"..num),
+        Desc = translate("challenge_daily_d"..num),
+        Goal = tbl.Goal,
+    --    Daily = true,
+        Reward = tbl.Reward
+    }]]
+	GAMEMODE.Achievements["daily_post"].Name = translate.Get("challenge_daily"..num)
+	GAMEMODE.Achievements["daily_post"].Desc = translate.Get("challenge_daily_d"..num)
+	GAMEMODE.Achievements["daily_post"].Goal = tbl.Goal
+	GAMEMODE.Achievements["daily_post"].Daily = true
+	GAMEMODE.Achievements["daily_post"].DailyCount = daily
+	GAMEMODE.Achievements["daily_post"].Reward = tbl.Reward
+    --PrintTable(self.Achievements["daily"..(daily or 1)]) print("daily"..(daily or 1))
+end
 
 function PANEL:Init()
     self:SetSize(510, 600)
@@ -12,6 +43,9 @@ function PANEL:Init()
     self.CB:SetSize(24, 24)
     self.CB:SetPos(486, 0)
     self.CB:SetText("")
+
+
+    
 
     self.CB.DoClick = function()
         self:Close()
@@ -39,6 +73,7 @@ function PANEL:Init()
     end
 
     local i = 1
+    DoAchievements()
     local count = table.Count(GAMEMODE.Achievements)
 
     for id, ach in pairs(GAMEMODE.Achievements) do
@@ -66,7 +101,7 @@ function PANEL:Init()
             end
 
             -- Texts
-            self:ShadowedText(ach.Name:upper().." -"..translate.Get("xp")..(ach.Reward or 0), "ZSHUDFontTiny", 8, 7, self:GetTheme(3), TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP)
+            self:ShadowedText(ach.Name:upper().." -"..translate.Get("xp")..(ach.Reward or ""), "ZSHUDFontTiny", 8, 7, ach.Daily and Color(178, 192, 53) or self:GetTheme(3), TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP)
             self:ShadowedText(ach.Desc, "ZSHUDFontTiniest", 8, 25, self:GetTheme(3), TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP)
 
             -- Bars
@@ -89,6 +124,8 @@ function PANEL:Init()
 
         i = i + 1
     end
+
+
 end
 
 function PANEL:Paint(w, h)

@@ -7,7 +7,7 @@ CLASS.Model = Model("models/player/zombie_fast.mdl")
 
 CLASS.Wave = 12 / 12
 CLASS.Revives = false
-CLASS.Infliction = 0.8
+CLASS.Infliction = 0.95
 CLASS.Health = 2200
 CLASS.Speed = 420
 CLASS.SWEP = "weapon_zs_skelecringe"

@@ -192,6 +192,7 @@ function GM:SaveVault(pl)
 	file.CreateDir(string.GetPathFromFilename(filenamexp))
 	file.Write(filenamexp, Serialize(tosavexp))
 end
+local num = 1
 
 function GM:SaveWinRate()
 	local DaData = self.Da
@@ -200,10 +201,17 @@ function GM:SaveWinRate()
 		ZSRage = math.floor(self:GetRage() or 0),
 		Da = (#DaData <= 300 and DaData or {"mmm"}),
 		DailySecs = math.floor(self.DailySecs or os.time() +86400),
-		DailyNum = math.floor(self.DailyNum or 1)
+		DailyNum = math.floor(self.DailyNum or 1),
+		LastDaily = (self.LastDaily or 1)
 	}
-
+	for i=1,99 do
+		if table.HasValue({"1","2","3"},tostring(math.Round(((self.DailyNum or 1)+i)/i))) and math.Round(((self.DailyNum or 1)+i)/i) ~= self.LastDaily then
+			num = math.Round(((self.DailyNum or 1)+i)/i)
+			break
+		end
+	end
 	if self.DailySecs and os.time() > self.DailySecs then
+		tosave.LastDaily = num
 		tosave.DailyNum = math.floor(self.DailyNum or 1) + 1
 		tosave.DailySecs = os.time() + 86400
 	end
@@ -234,6 +242,7 @@ function GM:LoadWinRate()
 				end
 				if contents.DailyNum then
 					self.DailyNum = contents.DailyNum or 1
+					SetGlobalInt("dailynum", self.DailyNum)
 				end
 				
 			end

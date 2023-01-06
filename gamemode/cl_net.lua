@@ -89,12 +89,15 @@ net.Receive("zs_block_number", function(length)
 	end
 end)
 net.Receive("HNS.AchievementsProgress", function()
-    GAMEMODE.AchievementsProgress = util.JSONToTable(net.ReadString())
+	local p = util.JSONToTable(net.ReadString())
+    GAMEMODE.AchievementsProgress =  p
+
 
     -- Clamp progress
-    for id, progress in pairs(GAMEMODE.AchievementsProgress) do
-        if isnumber(progress) then
-            GAMEMODE.AchievementsProgress[id] = math.Clamp(progress, 0, GAMEMODE.Achievements[id].Goal)
+    for id, progress in pairs(p) do
+        if isnumber(progress)   then
+            GAMEMODE.AchievementsProgress[id] = math.Clamp(progress, 0, GAMEMODE.Achievements[id].Goal or 1)
+			--print(GAMEMODE.AchievementsProgress["daily5"])
         end
     end
 end)
@@ -104,7 +107,7 @@ net.Receive("HNS.AchievementsGet", function()
     -- Chat
     chat.AddText(COLOR_WHITE, "[", Color(125, 255, 125), "ZS", COLOR_WHITE, "] ", ply, COLOR_WHITE, " has earned ", Color(125, 255, 125), GAMEMODE.Achievements[id].Name, COLOR_WHITE, ".")
     -- Sound
-    ply:EmitSound("misc/achievement_earned.wav")
+  
 
 end)
 

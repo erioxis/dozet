@@ -175,7 +175,7 @@ function GM:WorldHint(hint, pos, ent, lifetime, filter)
 end
 local numofdaily = 1
 for i=1,99 do
-    if table.HasValue({"1","2","3"},tostring(math.Round(((GM.DailyNum or 1)+i)/i))) then
+    if table.HasValue({"1","2","3"},tostring(math.Round(((GM.DailyNum or 1)+i)/i))) and math.Round(((GM.DailyNum or 1)+i)/i) ~= GM.LastDaily then
         numofdaily = math.Round(((GM.DailyNum or 1)+i)/i)
         break
     end
@@ -456,6 +456,7 @@ function GM:Initialize()
 	self:CreateWeaponQualities()
 	self:RegisterFood()
 	self:LoadProfiler()
+	
 	self:LoadWinRate()
 	self.Da = self.Da or {"mmm", "what", "yes", "ммм", "да", "что", "obed", "обед", "уютненько", "Я", "I", "you", "ты", "амням", "санбой", "пророк"}
 	if self:GetRage() >= 10000 then
@@ -464,6 +465,7 @@ function GM:Initialize()
 	if self:GetWinRate() >= 5 then
 		self:SetWinRate(1)
 	end
+	self:DoAchievements()
 
 
 

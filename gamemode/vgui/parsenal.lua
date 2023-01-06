@@ -693,14 +693,18 @@ function GM:CreateItemInfoViewer(frame, propertysheet, topspace, bottomspace, me
 	viewer.m_AmmoPrice = pricelab
 end
 
+local function DoArsRefresh()
+	if GAMEMODE.ArsenalInterface and GAMEMODE.ArsenalInterface:IsValid() then
+		GAMEMODE.ArsenalInterface:SetVisible(false)
+		GAMEMODE.ArsenalInterface:Remove()
+	end
+end
 function GM:OpenArsenalMenu()
 	if self.ArsenalInterface and self.ArsenalInterface:IsValid() then
-		self.ArsenalInterface:Remove()
+		self.ArsenalInterface:SetVisible(true)
+		self.ArsenalInterface:CenterMouse()
+		return
 	end
-	MiniArs(self)
-	
-end
-function MiniArs(self)
 	local screenscale = BetterScreenScale()
 	local wid, hei = math.min(ScrW(), 1200) * screenscale, math.min(ScrH(), 800) * screenscale
 	local tabhei = 24 * screenscale
@@ -722,7 +726,7 @@ function MiniArs(self)
 	local topspace = vgui.Create("DPanel", frame)
 	topspace:SetWide(wid - 16)
 
-	local title = EasyLabel(topspace, ""..translate.Get("pointshop1"), "ZSHUDFontSmall", COLOR_WHITE)
+	local title = EasyLabel(topspace, translate.Get("pointshop1"), "ZSHUDFontSmall", COLOR_WHITE)
 	title:CenterHorizontal()
 	local subtitle = EasyLabel(topspace, "Your little world", "ZSHUDFontTiny", COLOR_WHITE)
 	subtitle:CenterHorizontal()
@@ -733,12 +737,20 @@ function MiniArs(self)
 	topspace:AlignTop(8)
 	topspace:CenterHorizontal()
 
-	local wsb = EasyButton(topspace, ""..translate.Get("worthshop1"), 8, 4)
+	local wsb = EasyButton(topspace, translate.Get("worthshop1"), 8, 4)
 	wsb:SetFont("ZSHUDFontSmaller")
 	wsb:SizeToContents()
 	wsb:AlignRight(8)
 	wsb:AlignTop(8)
 	wsb.DoClick = worthmenuDoClick
+
+	local ref = EasyButton(topspace, translate.Get("refresh"), 8, 4)
+	ref:SetFont("ZSHUDFontSmaller")
+	ref:SizeToContents()
+	ref:AlignRight(190)
+	ref:AlignTop(8)
+	ref.DoClick = DoArsRefresh
+
 
 	local bottomspace = vgui.Create("DPanel", frame)
 	bottomspace:SetWide(topspace:GetWide())

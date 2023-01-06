@@ -23,6 +23,7 @@ LANGUAGE.undead = "Undead"
 
 LANGUAGE.new_op = "New Options"
 LANGUAGE.old_op = "Old Options"
+LANGUAGE.refresh = "Refresh"
 
 LANGUAGE.challenge_daily1 = "DAILY:Killer"
 LANGUAGE.challenge_daily_d1 = "Kill 100 Zombie."

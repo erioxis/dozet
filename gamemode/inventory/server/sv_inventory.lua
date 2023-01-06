@@ -119,7 +119,7 @@ function meta:TryAssembleItem(component, heldclass)
 		self:AddInventoryItem(desiassembly)
 		self:CenterNotify(COLOR_LIMEGREEN, translate.ClientGet(self, "crafting_successful"), color_white, "   ("..GAMEMODE.ZSInventoryItemData[desiassembly].PrintName..")")
 		if desiassembly == "trinket_toykasoul" then
-			self:GiveAchivement("soul")
+			self:GiveAchievement("soul")
 		end
 	else
 		desitable = weapons.Get(desiassembly)

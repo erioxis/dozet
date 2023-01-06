@@ -6,6 +6,7 @@ LANGUAGE.survivor = "Выживший"
 LANGUAGE.undead = "Зомби"
 LANGUAGE.new_op = "Новые настройки"
 LANGUAGE.old_op = "Старые настройки"
+LANGUAGE.refresh = "Обновить"
 
 LANGUAGE.challenge_daily1 = "ЕЖЕДНЕВНОЕ:Наемник досета"
 LANGUAGE.challenge_daily_d1 = "Убить 100 зомби."

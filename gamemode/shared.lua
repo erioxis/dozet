@@ -974,6 +974,9 @@ end
 function GM:SetRage(rage)
 	SetGlobalFloat("rage", rage)
 end
+function GM:GetDaily()
+	return GetGlobalInt("dailynum", self.DailyNum)
+end
 function GM:GetWinRate()
 	return GetGlobalFloat("winrate", 0)
 end
@@ -1036,4 +1039,36 @@ end
 end
 
 function GM:VehicleMove()
+end
+local dailyreward = {["Daily1"] = {Goal = 100, Reward = 2500},
+["Daily2"] = {Goal = 15000, Reward = 6500},
+["Daily3"] = {Goal = 25000, Reward = 3500}
+
+}
+local num = 1
+local tbl = {Goal = 100, Reward = 2500}
+local translate = translate.Get
+function GM:DoAchievements()
+    local daily = self:GetDaily()
+    for i=1,99 do
+        if table.HasValue({"1","2","3"},tostring(math.Round(((daily or 1)+i)/i))) and math.Round(((daily or 1)+i)/i) ~= self.LastDaily then
+            tbl = dailyreward["Daily"..math.Round(((daily or 1)+i)/i)]
+            num = math.Round(((daily or 1)+i)/i)
+            break
+        end
+    end
+   --[[self.Achievements["daily"..daily] = {
+        Name = translate("challenge_daily"..num),
+        Desc = translate("challenge_daily_d"..num),
+        Goal = tbl.Goal,
+    --    Daily = true,
+        Reward = tbl.Reward
+    }]]
+	self.Achievements["daily_post"].Name = translate("challenge_daily"..num)
+	self.Achievements["daily_post"].Desc = translate("challenge_daily_d"..num)
+	self.Achievements["daily_post"].Goal = tbl.Goal
+	self.Achievements["daily_post"].Daily = true
+	self.Achievements["daily_post"].DailyCount = daily
+	self.Achievements["daily_post"].Reward = tbl.Reward
+    --PrintTable(self.Achievements["daily"..(daily or 1)]) print("daily"..(daily or 1))
 end
