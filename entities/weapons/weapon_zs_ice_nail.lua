@@ -47,41 +47,33 @@ if CLIENT then
 		["e1+++++++++++++++++"] = { type = "Model", model = "models/hunter/misc/squarecap2x1x1.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "e1", pos = Vector(-0.418, 0, 48.457), angle = Angle(0, 90, 0), size = Vector(0.008, 0.009, 0.023), color = Color(42, 215, 255, 255), surpresslightning = false, material = "phoenix_storms/Fender_white", skin = 0, bodygroup = {} },
 		["e1++++++++++++++++++"] = { type = "Model", model = "models/hunter/misc/squarecap2x1x1.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "e1", pos = Vector(-0.418, 0, 48.457), angle = Angle(0, 90, 0), size = Vector(0.009, 0.009, 0.024), color = Color(255, 255, 255, 255), surpresslightning = false, material = "models/wireframe", skin = 0, bodygroup = {} }
 	}
-	--[[function SWEP:PostDrawViewModel(vm, pl, wep)
+	function SWEP:PostDrawViewModel(vm, pl, wep)
 		local veles = self.VElements
-		local tbl = {}
 		for k,v in pairs(self.VElements) do
-			local b = string.Explode("",k)
-			if b[1] == "e" and b[2] == "1" then
-				local clr = Color(veles[k].color.r,veles[k].color.g,veles[k].color.b,0)
+				local clr = Color(veles[k].color.r *(self.FireNail and 1.15 or self.CNail and 0.56 or 1),veles[k].color.g * (self.CNail and 1.9 or 1),veles[k].color.b * (self.FireNail and 0 or self.CNail and 0.25 or 1))
 				veles[k].color = clr
-			end
 		end
-		if self:GetClip() - 1 <= CurTime() then
-			for k,v in pairs(self.VElements) do
-				local b = string.Explode("",k)
-				if b[1] == "e" and b[2] == "1" then
-					local clr = Color(veles[k].color.r,veles[k].color.g,veles[k].color.b,255)
-					veles[k].color = clr
-				end
-			end
+		local veles = self.WElements
+		for k,v in pairs(self.WElements) do
+				local clr = Color(veles[k].color.r *(self.FireNail and 1.15 or self.CNail and 0.56 or 1),veles[k].color.g * (self.CNail and 1.9 or 1),veles[k].color.b * (self.FireNail and 0 or self.CNail and 0.25 or 1))
+				veles[k].color = clr
 		end
-	end]]
+	end
 	
 	
 end
 SWEP.PrintName = translate.Get("wep_ice_nail")
 SWEP.Description = translate.Get("wep_d_ice_nail")
 function SWEP:PlayHitSound()
-	self:EmitSound("physics/glass/glass_bottle_break"..math.random(1,2)..".wav", 1215, self:GetBlockState() and 200 or 2109)
+	self:EmitSound(( self.FireNail and "ambient/fire/ignite.wav" or "physics/glass/glass_bottle_break"..math.random(1,2)..".wav"), 1215, (self:GetBlockState() and 200 or 2109))
 	for i=1,3 do
-		timer.Simple(0.09*i, function()	self:EmitSound("physics/glass/glass_bottle_break"..math.random(1,2)..".wav", 1215, self:GetBlockState() and 200/i or 2109/i) end)
+		timer.Simple(0.09*i, function()	self:EmitSound(( self.FireNail and "ambient/fire/ignite.wav" or "physics/glass/glass_bottle_break"..math.random(1,2)..".wav"), 1215, (self:GetBlockState() and 200/i or 2109/i)) end)
 	end
 end
 
 function SWEP:PlayHitFleshSound()
 	for i=1,3 do
-		timer.Simple(0.05*i, function()	self:EmitSound("physics/glass/glass_bottle_break"..math.random(1,2)..".wav", 1215, self:GetBlockState() and 200 or 2109) end)
+		timer.Simple(0.05*i, function()	self:EmitSound(( self.FireNail and "ambient/fire/ignite.wav" or "physics/glass/glass_bottle_break"..math.random(1,2)..".wav"), 1215, self:GetBlockState() and 200 or 2109) end)
 	end
 end
 
@@ -108,14 +100,28 @@ SWEP.Primary.Delay = 0.5
 SWEP.Secondary.Delay = 10
 SWEP.HitAnim = ACT_VM_MISSCENTER
 SWEP.ChargeSpeed = 1000
+SWEP.FireNail = false
+SWEP.CNail = false
 
 function SWEP:OnMeleeHit(hitent, hitflesh, tr)
 	local ent = tr.Entity
 	local owner = self:GetOwner()
 	if ent:IsPlayer() and SERVER then
-		ent:AttachmentDamage(self.MeleeDamage/1.7/(self:GetBlockState() and 2 or 1), owner, self, SLOWTYPE_COLD)
+		ent:AttachmentDamage(self.MeleeDamage/1.7/(self:GetBlockState() and 2 or 1), owner, self, (self.FireNail and SLOWTYPE_FLAME or self.CNail and 4 or SLOWTYPE_COLD))
 		if self:GetBlockState() then
 			owner:SetVelocity(owner:GetEyeTrace().Normal * 1 + (-owner:GetAngles():Forward()*190))
 		end
 	end
 end
+GAMEMODE:AddNewRemantleBranch(SWEP, 1, translate.Get("wep_ice_nail_r1"), translate.Get("wep_d_ice_nail_r1"), function(wept)
+	wept.MeleeDamage = wept.MeleeDamage * 1.2
+	wept.Primary.Delay = wept.Primary.Delay * 1.6
+
+	wept.FireNail = true
+end)
+GAMEMODE:AddNewRemantleBranch(SWEP, 2, translate.Get("wep_ice_nail_r2"), translate.Get("wep_d_ice_nail_r2"), function(wept)
+	wept.MeleeDamage = wept.MeleeDamage * 1.2
+	wept.Primary.Delay = wept.Primary.Delay * 1.6
+
+	wept.CNail = true
+end)

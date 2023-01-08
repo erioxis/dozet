@@ -440,6 +440,8 @@ SKILL_DOSET2 = 408
 
 SKILL_100_PERC = 409
 
+SKILL_BLOODHACK = 410
+
 
 
 
@@ -879,7 +881,9 @@ GM:AddSkill(SKILL_LOADEDHULL, translate.Get("skill_l_hull"), GOOD..translate.Get
 GM:AddSkill(SKILL_REINFORCEDHULL, translate.Get("skill_r_hull"), GOOD..translate.Get("skill_r_hull_d1")..BAD..translate.Get("skill_r_hull_d2")..BAD..translate.Get("skill_r_hull_d3"),
 																-2,			-2,					{SKILL_STABLEHULL}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_BARA_CURSED, translate.Get("skill_baracurse"), GOOD..translate.Get("skill_baracurse_d1")..BAD..translate.Get("skill_baracurse_d2"),
-																-2,			-0.5,					{SKILL_REINFORCEDHULL}, TREE_BUILDINGTREE)
+																-2,			-0.5,					{SKILL_REINFORCEDHULL,SKILL_BLOODHACK}, TREE_BUILDINGTREE)
+GM:AddSkill(SKILL_BLOODHACK, translate.Get("skill_bloodhack"), GOOD..translate.Get("skill_bloodhack_d1")..BAD..translate.Get("skill_bloodhack_d2"),
+																-2,			0,					{SKILL_REINFORCEDHULL}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_STABLEHULL, translate.Get("skill_s_hull"), GOOD..translate.Get("skill_s_hull_d1")..BAD..translate.Get("skill_r_hull_d3"),
 																0,			-3,					{SKILL_U_DRONE}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_REINFORCEDBLADES, translate.Get("skill_r_blade"), GOOD..translate.Get("skill_r_blade_d1")..BAD..translate.Get("skill_r_blade_d2"),

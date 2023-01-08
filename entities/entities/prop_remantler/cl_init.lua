@@ -33,7 +33,7 @@ function ENT:RenderInfo(pos, ang, owner)
 		end]]
 
 		if owner == MySelf then
-			draw.SimpleText(self:GetScraps() .. " Scrap", "ZS3D2DFont2Big", 0, 290, COLOR_GRAY, TEXT_ALIGN_CENTER)
+			draw.SimpleText(self:GetScraps() .. translate.Get("scram_rem"), "ZS3D2DFont2Big", 0, 290, COLOR_GRAY, TEXT_ALIGN_CENTER)
 			--[[local ammotype = MySelf:GetResupplyAmmoType()
 			ammotype = GAMEMODE.AmmoNames[ammotype] or ammotype
 

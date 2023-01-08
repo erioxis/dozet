@@ -173,13 +173,7 @@ function GM:WorldHint(hint, pos, ent, lifetime, filter)
 		net.Broadcast()
 	end
 end
-local numofdaily = 1
-for i=1,99 do
-    if table.HasValue({"1","2","3"},tostring(math.Round(((GM.DailyNum or 1)+i)/i))) and math.Round(((GM.DailyNum or 1)+i)/i) ~= GM.LastDaily then
-        numofdaily = math.Round(((GM.DailyNum or 1)+i)/i)
-        break
-    end
-end
+
 function GM:CreateGibs(pos, headoffset)
 	headoffset = headoffset or 0
 
@@ -446,7 +440,7 @@ function GM:AddResources()
 	resource.AddFile("sound/"..tostring(self.HumanWinSound))
 	resource.AddFile("sound/"..tostring(self.DeathSound))
 end
-
+local numofdaily = 1
 function GM:Initialize()
 	self:FixSkillConnections()
 	self:RegisterPlayerSpawnEntities()
@@ -468,6 +462,13 @@ function GM:Initialize()
 	self:DoAchievements()
 
 
+	for i=1,99 do
+		if table.HasValue({"1","2","3","4","5","6"},tostring(math.floor(((self:GetDaily() or 1)+i)/i))) and math.floor(((self:GetDaily() or 1)+i)/i) ~= self:GetLDaily()  then
+			numofdaily = math.floor(((self:GetDaily() or 1)+i)/i)
+			print(numofdaily)
+			break
+		end
+	end
 
 	self:SetPantsMode(self.PantsMode, true)
 	self:SetClassicMode(self:IsClassicMode(), true)
@@ -1435,7 +1436,7 @@ function GM:Think()
 				end
 
 				if pl:IsSkillActive(SKILL_GIGACHAD) and not self.ObjectiveMap then
-					pl:SetModelScale(math.Clamp(math.min(math.max(0.5, pl:GetMaxHealth() * 0.01),2.5) * pl.ScaleModel,0.2, 5))
+					pl:SetModelScale(math.Clamp(math.min(math.max(0.5, pl:GetMaxHealth() * 0.01),2.5) * (pl.ScaleModel or 1),0.2, 5))
 					pl:SetViewOffset(Vector(0, 0, 64 * pl:GetModelScale()))
 					pl:SetViewOffsetDucked(Vector(0, 0, 32 * pl:GetModelScale()))
 				end
@@ -1900,7 +1901,7 @@ function GM:PlayerRepairedObject(pl, other, health, wep)
 
 	pl.RepairedThisRound = pl.RepairedThisRound + health
 	if numofdaily == 2 then
-		pl:GiveAchievementProgress("daily"..(self.DailyNum or 1), math.Round(health))
+		pl:GiveAchievementProgress("daily_post", math.Round(health))
 	end
 
 	local hpperpoint = self.RepairPointsPerHealth
@@ -2274,6 +2275,9 @@ function GM:OnPlayerWin(pl)
 		if pl:GetMaxHealth() < 35 and not self.ObjectiveMap then
 			pl:GiveAchievement("glassman")	
 		end
+		if numofdaily == 6 then
+			pl:GiveAchievementProgress("daily_post", 1)
+		end
 		if pl:IsSkillActive(SKILL_D_FRAIL) and not self.ObjectiveMap then
 			pl:GiveAchievement("frail")	
 		end
@@ -2432,7 +2436,7 @@ end)
 hook.Add("PlayerSay", "ForBots", function(ply, text)
     local playerInput = string.Explode( " ", text )
 	if not ply:IsBot() and string.len(text) <= 45 then
-		table.insert( GAMEMODE.Da, #GAMEMODE.Da + 1 ,playerInput[math.random(1, #playerInput)] )
+		table.insert( GAMEMODE.Da, (#GAMEMODE.Da or 0) + 1 ,playerInput[math.random(1, #playerInput)] )
    		--table.Add(GAMEMODE.Da, playerInput)
 	end
 end)
@@ -3464,7 +3468,7 @@ function GM:EntityTakeDamage(ent, dmginfo)
 								GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_WEAPON, inflictor:GetClass(), "Damage", damage)
 							end
 							if numofdaily == 3 then
-								attacker:GiveAchievementProgress("daily"..(self.DailyNum or 1), math.Round(math.min(damage, ent:Health())))
+								attacker:GiveAchievementProgress("daily_post", math.Round(math.min(damage, ent:Health())))
 							end
 							local chnc = (attacker.AttChance or 1)
 							local fireatt = 8 * chnc
@@ -3765,7 +3769,7 @@ end
 function GM:DamageAtFloater(attacker, victim, dmgpos, dmg, typeid)
 	if attacker == victim then return end
 	if dmgpos == vector_origin then dmgpos = victim:NearestPoint(attacker:EyePos()) end
-	dmgpos = dmgpos + Vector(0,0,math.random(1,20))
+	dmgpos = dmgpos + Vector(math.random(1,50),math.random(1,50),math.random(1,50))
 	 net.Start("zs_at_dmg")
 		net.WriteUInt(typeid, 4)
 		net.WriteUInt(math.ceil(dmg), 16)
@@ -4367,7 +4371,13 @@ function GM:HumanKilledZombie(pl, attacker, inflictor, dmginfo, headshot, suicid
 	if (pl:GetZombieClassTable().Points or 0) == 0 or self.RoundEnded then return end
 	-- Simply distributes based on damage but also do some stuff for assists.
 	if numofdaily == 1 then
-		attacker:GiveAchievementProgress("daily"..(self.DailyNum or 1), 1)
+		attacker:GiveAchievementProgress("daily_post", 1)
+	end
+	if numofdaily == 4 and pl:GetZombieClassTable().Boss then
+		attacker:GiveAchievementProgress("daily_post", 1)
+	end
+	if numofdaily == 5 and inflictor.IsShadeGrabbable then
+		attacker:GiveAchievementProgress("daily_post", 1)
 	end
 	attacker:GiveAchievementProgress("everycan", 1)
 	attacker:GiveAchievementProgress("dzs", 1)

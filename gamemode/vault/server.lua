@@ -205,7 +205,7 @@ function GM:SaveWinRate()
 		LastDaily = (self.LastDaily or 1)
 	}
 	for i=1,99 do
-		if table.HasValue({"1","2","3"},tostring(math.Round(((self.DailyNum or 1)+i)/i))) and math.Round(((self.DailyNum or 1)+i)/i) ~= self.LastDaily then
+		if table.HasValue({"1","2","3","4","5","6"},tostring(math.Round(((self.DailyNum or 1)+i)/i))) and math.Round(((self.DailyNum or 1)+i)/i) ~= self.LastDaily then
 			num = math.Round(((self.DailyNum or 1)+i)/i)
 			break
 		end
@@ -239,6 +239,10 @@ function GM:LoadWinRate()
 				end
 				if contents.DailySecs then
 					self.DailySecs = contents.DailySecs or 0
+				end
+				if contents.LastDaily then
+					self.LastDaily = contents.LastDaily or 1
+					self:SetLDaily(contents.LastDaily or 1)
 				end
 				if contents.DailyNum then
 					self.DailyNum = contents.DailyNum or 1

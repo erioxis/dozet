@@ -150,7 +150,7 @@ function meta:DoHulls(classid, teamid)
 	else
 		self:SetIK(true)
 
-		self:SetModelScale(DEFAULT_MODELSCALE, 0)
+		self:SetModelScale(DEFAULT_MODELSCALE * (self.ScaleModel or 1), 0)
 		self:ResetHull()
 		self:SetViewOffset(DEFAULT_VIEW_OFFSET)
 		self:SetViewOffsetDucked(DEFAULT_VIEW_OFFSET_DUCKED)

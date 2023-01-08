@@ -283,7 +283,7 @@ function GM:DrawInductorIndicators()
 			surface.SetMaterial(matGlow)
 			surface.SetDrawColor(255, 255, 255, colHealth.a)
 			surface.DrawTexturedRect(x + 2 + subwidth - 6, y + 1 - hei/2, 4, hei * 2)
-			draw.SimpleTextBlurry(translate.Get("cham_hud")..math.Round(cham).."/"..formula , "ZSHUDFontTiny", x, y - 12, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM)
+			draw.SimpleTextBlurry(translate.Get("cham_hud")..math.Round(cham).."/"..math.Round(formula) , "ZSHUDFontTiny", x, y - 12, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM)
 			y = y + ScrH() * 0.07
 		end
 	end
@@ -320,7 +320,7 @@ function GM:DrawInductorIndicators()
 			surface.SetMaterial(matGlow)
 			surface.SetDrawColor(255, 255, 255, colHealth.a)
 			surface.DrawTexturedRect(x + 2 + subwidth - 6, y + 1 - hei/2, 4, hei * 2)
-			draw.SimpleTextBlurry(translate.Get("fi_hud")..math.Round(fired).."/"..formula , "ZSHUDFontTiny", x, y - 12, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM)
+			draw.SimpleTextBlurry(translate.Get("fi_hud")..math.Round(fired).."/"..math.Round(formula) , "ZSHUDFontTiny", x, y - 12, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM)
 			y = y + ScrH() * 0.07
 		end
 	end
@@ -388,7 +388,7 @@ function GM:DrawInductorIndicators()
 			surface.SetMaterial(matGlow)
 			surface.SetDrawColor(255, 255, 255, colHealth.a)
 			surface.DrawTexturedRect(x + 2 + subwidth - 6, y + 1 - hei/2, 4, hei * 2)
-			draw.SimpleTextBlurry(translate.Get("ii_hud")..math.Round(icep).."/"..progress , "ZSHUDFontTiny", x, y - 12, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM)
+			draw.SimpleTextBlurry(translate.Get("ii_hud")..math.Round(icep).."/"..math.Round(progress) , "ZSHUDFontTiny", x, y - 12, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM)
 			y = y + ScrH() * 0.07
 		end
 	end
@@ -422,7 +422,7 @@ function GM:DrawInductorIndicators()
 			surface.SetMaterial(matGlow)
 			surface.SetDrawColor(255, 255, 255, colHealth.a)
 			surface.DrawTexturedRect(x + 2 + subwidth - 6, y + 1 - hei/2, 4, hei * 2)
-			draw.SimpleTextBlurry((lp:IsSkillActive(SKILL_CRYO_LASER) and translate.Get("ca_hud") or translate.Get("pc_hud"))..math.Round(pulsed).."/"..progress , "ZSHUDFontTiny", x, y - 12, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM)
+			draw.SimpleTextBlurry((lp:IsSkillActive(SKILL_CRYO_LASER) and translate.Get("ca_hud") or translate.Get("pc_hud"))..math.Round(pulsed).."/"..math.Round(progress) , "ZSHUDFontTiny", x, y - 12, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM)
 			y = y + ScrH() * 0.07
 		end
 	end

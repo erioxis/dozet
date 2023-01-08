@@ -431,6 +431,7 @@ GM:AddPointShopItem("boomstick",		ITEMCAT_GUNS,			1000,			"weapon_zs_boomstick")
 GM:AddPointShopItem("bulldog",		ITEMCAT_GUNS,			1000,			"weapon_zs_bulldog")
 -- Tier 6 beta
 GM:AddPointShopItem("zeus",				ITEMCAT_GUNS,			3000,			"weapon_zs_zeus")
+GM:AddPointShopItem("balance_t6",				ITEMCAT_GUNS,			3000,			"weapon_zs_balance")
 GM:AddPointShopItem("classixg",			ITEMCAT_GUNS,			3000,			"weapon_zs_classic")
 GM:AddPointShopItem("plasmk",			ITEMCAT_GUNS,			3000,			"weapon_zs_plasmatik")
 GM:AddPointShopItem("deathdlrs",		ITEMCAT_GUNS,			3000,			"weapon_zs_deathdealers")

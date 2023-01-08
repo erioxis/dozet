@@ -16,6 +16,7 @@ function meta:ProcessDamage(dmginfo)
 	end
 	if P_Team(self) == TEAM_HUMAN and attacker:IsValidLivingZombie() then
 		self:GiveAchievementProgress("tanked", math.Round((dmginfo:GetDamage() or 1)))
+		self.LastHitTime = CurTime() + 1.3
 	end
 
 	if attacker.AttackerForward and attacker.AttackerForward:IsValid() then
@@ -236,7 +237,7 @@ function meta:ProcessDamage(dmginfo)
 				end
 
 
-				if attacker.MeleeDamageToBloodArmorMul and attacker.MeleeDamageToBloodArmorMul > 0 and attacker:GetBloodArmor() < attacker.MaxBloodArmor then
+				if attacker.MeleeDamageToBloodArmorMul and attacker.MeleeDamageToBloodArmorMul > 0 and attacker:GetBloodArmor() < attacker.MaxBloodArmor and !attacker:IsSkillActive(SKILL_BLOODHACK) then
 					attacker:SetBloodArmor(math.min(attacker.MaxBloodArmor, attacker:GetBloodArmor() + math.min(damage, self:Health()) * attacker.MeleeDamageToBloodArmorMul * attacker.BloodarmorGainMul))
 				end
 
@@ -2628,10 +2629,10 @@ local function DoCryoArc(attacker, inflictor, pl, damage)
 			util.Effect("tracer_c_laser", effectdata)
 
 			shocked[target] = true
-			for i = 1, 8 do
+			for i = 1, 3 do
 				local tpos = target:WorldSpaceCenter()
 
-				for k, ent in pairs(ents.FindInSphere(tpos, 405)) do
+				for k, ent in pairs(ents.FindInSphere(tpos, 210)) do
 					if not shocked[ent] and ent:IsValidLivingZombie() and not ent:GetZombieClassTable().NeverAlive then
 						if WorldVisible(tpos, ent:NearestPoint(tpos)) then
 							shocked[ent] = true
@@ -2640,8 +2641,8 @@ local function DoCryoArc(attacker, inflictor, pl, damage)
 							timer.Simple(i * 0.15, function()
 								if not ent:IsValid() or not ent:IsValidLivingZombie() or not WorldVisible(tpos, ent:NearestPoint(tpos)) then return end
 
-								target:TakeDamage(damage*2/i, attacker, inflictor)
-								target:AttachmentDamage(damage*2/i, attacker, inflictor, SLOWTYPE_COLD)
+								target:TakeDamage(damage*i, attacker, inflictor)
+								target:AttachmentDamage(damage*i, attacker, inflictor, SLOWTYPE_COLD)
 
 								local worldspace = ent:WorldSpaceCenter()
 								effectdata = EffectData()
@@ -2692,6 +2693,7 @@ end
 function meta:CryogenicInduction(attacker, inflictor, damage)
 	local formula = (165 + (35 * ((attacker:GetActiveWeapon() and (attacker:GetActiveWeapon().Tier or 1))-1) * (attacker:GetActiveWeapon() and (attacker:GetActiveWeapon().Tier or 1)))) * (attacker:GetIndChance() or 1)
 	if attacker:GetProgress('iprog') < formula then return end
+	if self:GetZombieClassTable().Boss then return end
 
 	timer.Create("Cryogenic" .. attacker:UniqueID(), 0.06, 1, function()
 		if not attacker:IsValid() or not self:IsValid() then return end

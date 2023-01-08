@@ -418,13 +418,14 @@ function meta:AttachmentDamage(damage, attacker, inflictor, type)
 		end
 	elseif type == SLOWTYPE_COLD then
 		if self:IsValidLivingZombie() and self:GetZombieClassTable().ResistFrost then return end
+		if self:IsValidLivingZombie() and self:GetZombieClassTable().Boss then return end
 		if self:GetZombieClassTable().FireBuff then
 			damage = damage * 2
 		end
 
-		if SERVER and attacker:HasTrinket("cryoindu") and not attacker:GetActiveWeapon().AntiInd and (attacker:GetActiveWeapon().Tier or 1) ~= 7  then
+		if SERVER and attacker:HasTrinket("cryoindu") and not attacker:GetActiveWeapon().AntiInd and (attacker:GetActiveWeapon().Tier or 1) ~= 7   then
+						attacker:SetProgress(attacker:GetProgress('iprog') + damage,'iprog')
 			self:CryogenicInduction(attacker, inflictor, damage)
-			attacker:SetProgress(attacker:GetProgress('iprog') + damage,'iprog')
 		end
 		if SERVER then
 			GAMEMODE:DamageAtFloater(attacker, self, self:NearestPoint(attacker:EyePos()), damage, type)
@@ -481,6 +482,7 @@ function meta:AddLegDamageExt(damage, attacker, inflictor, type)
 		end
 	elseif type == SLOWTYPE_COLD then
 		if self:IsValidLivingZombie() and self:GetZombieClassTable().ResistFrost then return end
+				if self:IsValidLivingZombie() and self:GetZombieClassTable().Boss then return end
 		if self:GetZombieClassTable().FireBuff then
 			damage = damage * 2
 		end
@@ -488,8 +490,8 @@ function meta:AddLegDamageExt(damage, attacker, inflictor, type)
 		self:AddArmDamage(damage)
 
 		if SERVER and attacker:HasTrinket("cryoindu") and not attacker:GetActiveWeapon().AntiInd and not (attacker:GetActiveWeapon().Tier or 1) == 7  then
+			attacker:SetProgress(attacker:GetProgress('iprog') + damage*2,'iprog')
 			self:CryogenicInduction(attacker, inflictor, damage)
-			attacker:SetProgress(attacker:GetProgress('iprog') + damage/3,'iprog')
 		end
 		if SERVER then
 			GAMEMODE:DamageAtFloater(attacker, self, self:NearestPoint(attacker:EyePos()), damage, type)

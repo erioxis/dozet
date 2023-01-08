@@ -1,7 +1,10 @@
 local PANEL = {}
 local dailyreward = {["Daily1"] = {Goal = 100, Reward = 2500},
 ["Daily2"] = {Goal = 15000, Reward = 6500},
-["Daily3"] = {Goal = 25000, Reward = 3500}
+["Daily3"] = {Goal = 25000, Reward = 3500},
+["Daily4"] = {Goal = 10, Reward = 4500},
+["Daily5"] = {Goal = 75, Reward = 8500},
+["Daily6"] = {Goal = 2, Reward = 8500}
 
 }
 local num = 1
@@ -9,9 +12,9 @@ local tbl = {Goal = 100, Reward = 2500}
 local function DoAchievements()
     local daily = GAMEMODE:GetDaily()
     for i=1,99 do
-        if table.HasValue({"1","2","3"},tostring(math.Round(((daily or 1)+i)/i))) and math.Round(((daily or 1)+i)/i) ~= GAMEMODE.LastDaily then
-            tbl = dailyreward["Daily"..math.Round(((daily or 1)+i)/i)]
-            num = math.Round(((daily or 1)+i)/i)
+        if table.HasValue({"1","2","3","4","5","6"},tostring(math.floor(((daily or 1)+i)/i))) and math.floor(((daily or 1)+i)/i) ~= GAMEMODE:GetLDaily()then
+            tbl = dailyreward["Daily"..math.floor(((daily or 1)+i)/i)]
+            num = math.floor(((daily or 1)+i)/i)
             break
         end
     end

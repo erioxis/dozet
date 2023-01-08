@@ -5,7 +5,7 @@ GM.Website	=	"https://github.com/erioxis/dozet"
 
 -- No, adding a gun doesn't make your name worth being here.
 GM.Credits = {
-	{"Version", "", "6.3.6"},
+	{"Version", "", "6.4.2"},
 	{"erioxis", "Phantom coder", "dead"},
 	{"Nullted", "", "RU-ENG Translation"},
 	{"Bro 3", "", "Some models"}
@@ -974,8 +974,15 @@ end
 function GM:SetRage(rage)
 	SetGlobalFloat("rage", rage)
 end
+
 function GM:GetDaily()
 	return GetGlobalInt("dailynum", self.DailyNum)
+end
+function GM:GetLDaily()
+	return GetGlobalInt("daily_num_last", self.LastDaily)
+end
+function GM:SetLDaily(l)
+	SetGlobalInt("daily_num_last", l or self.LastDaily)
 end
 function GM:GetWinRate()
 	return GetGlobalFloat("winrate", 0)
@@ -1042,7 +1049,10 @@ function GM:VehicleMove()
 end
 local dailyreward = {["Daily1"] = {Goal = 100, Reward = 2500},
 ["Daily2"] = {Goal = 15000, Reward = 6500},
-["Daily3"] = {Goal = 25000, Reward = 3500}
+["Daily3"] = {Goal = 25000, Reward = 3500},
+["Daily4"] = {Goal = 10, Reward = 4500},
+["Daily5"] = {Goal = 75, Reward = 8500},
+["Daily6"] = {Goal = 2, Reward = 8500}
 
 }
 local num = 1
@@ -1051,9 +1061,9 @@ local translate = translate.Get
 function GM:DoAchievements()
     local daily = self:GetDaily()
     for i=1,99 do
-        if table.HasValue({"1","2","3"},tostring(math.Round(((daily or 1)+i)/i))) and math.Round(((daily or 1)+i)/i) ~= self.LastDaily then
-            tbl = dailyreward["Daily"..math.Round(((daily or 1)+i)/i)]
-            num = math.Round(((daily or 1)+i)/i)
+        if table.HasValue({"1","2","3","4","5","6"},tostring(math.floor(((daily or 1)+i)/i))) and math.floor(((daily or 1)+i)/i) ~= self.LastDaily then
+            tbl = dailyreward["Daily"..math.floor(((daily or 1)+i)/i)]
+            num = math.floor(((daily or 1)+i)/i)
             break
         end
     end
