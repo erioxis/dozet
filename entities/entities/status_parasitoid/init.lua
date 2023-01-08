@@ -14,7 +14,7 @@ function ENT:Think()
 	local owner = self:GetOwner()
 	local dmger = self.Damager
 	local lox = dmger:IsSkillActive(SKILL_LOX)
-	if (owner) and not (dmger:GetStatus("rot")) and !owner:GetZombieClassTable().Skeletal and (owner.LastHitTime or 0) < CurTime() then
+	if (owner) and not (dmger:GetStatus("rot")) and !owner:GetZombieClassTable().Skeletal and (owner:GetProgress("parasite_prog")) < CurTime() then
 		owner:TakeSpecialDamage((lox and owner:Health()*0.05 or owner:Health()*0.01),DMG_ACID,dmger and dmger:IsValid() and dmger:IsPlayer() and dmger or owner, self, nil, 0)
 		if dmger and dmger:IsValid() and dmger:IsPlayer() and self.NextThinker <= CurTime() then
 			dmger:SetHealth(math.min(dmger:Health() + (lox and owner:Health()*0.1 or owner:Health()*0.02), dmger:GetMaxHealth()))

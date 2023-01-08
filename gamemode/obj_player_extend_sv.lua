@@ -16,7 +16,7 @@ function meta:ProcessDamage(dmginfo)
 	end
 	if P_Team(self) == TEAM_HUMAN and attacker:IsValidLivingZombie() then
 		self:GiveAchievementProgress("tanked", math.Round((dmginfo:GetDamage() or 1)))
-		self.LastHitTime = CurTime() + 1.3
+		attacker:SetProgress(CurTime() + 1.4, "parasite_prog")
 	end
 
 	if attacker.AttackerForward and attacker.AttackerForward:IsValid() then

@@ -26,6 +26,7 @@ local function DrawLine(x, y, rot)
 end
 local matGlow = Material("sprites/glow04_noz")
 local texDownEdge = surface.GetTextureID("gui/gradient_down")
+local NoParasite = surface.GetTextureID("zombiesurvival/killicons/bleed")
 local colHealth = Color(0, 0, 0, 240)
 local baserot = 0
 function meta:DrawCrosshairCross()
@@ -54,7 +55,6 @@ function meta:DrawCrosshairCross()
 	else
 		baserot = math.NormalizeAngle(baserot + vel:Dot(EyeAngles():Right()) * math.min(10, len / 40000))
 	end
-	local texGradDown = surface.GetTextureID("VGUI/gradient_down")
 	local firedelay = MySelf:GetActiveWeapon():GetNextPrimaryFire() - CurTime() 
 		local scrW1 = ScrW()
 		local scrH1 = ScrH()
@@ -62,7 +62,7 @@ function meta:DrawCrosshairCross()
 		local height1 = 20
 		local x1, y1 = ScrW() * 0.5 , ScrH() * 0.5
 		local screenscale = BetterScreenScale()
-		
+		local lp = MySelf
 		local ratio = (MySelf:GetActiveWeapon().Primary.Delay or 1) / firedelay
 		surface.DrawCircle(x1, y1, 38 * cone, 5, 35 * ratio * 0.5, 5, 255 * ratio * 0.4)
 		local ratio = ((CurTime()-((MySelf:GetActiveWeapon().Primary.Delay or 1) + MySelf:GetActiveWeapon():GetNextPrimaryFire() - MySelf:GetActiveWeapon():GetFireDelay()))) * 100
@@ -70,7 +70,6 @@ function meta:DrawCrosshairCross()
 			draw.SimpleTextBlurry(-math.Round(ratio)/100-0.11, "ZSHUDFontTiny",x1-70 * math.max(1.004,cone), y1+10 * math.max(1.004,cone), Color(255,255,255), TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 		end
 		if MySelf:IsSkillActive(SKILL_VAMPIRISM) then
-			local lp = MySelf
 			local screenscale = BetterScreenScale()
 			local prog = lp:GetNWFloat("vampirism_progress",value)
 			local healthperc = math.Clamp(prog  / 1200, 0, 1)
@@ -98,6 +97,7 @@ function meta:DrawCrosshairCross()
 			surface.DrawTexturedRect(x + 2 + subwidth - 6, y + 1 - hei/2, 4, hei * 2)
 		end
 
+
 	local ang = Angle(0, 0, baserot)
 	for i=0, 359, 360 / GAMEMODE.CrosshairLines do
 		ang.roll = baserot + i
@@ -105,7 +105,7 @@ function meta:DrawCrosshairCross()
 		DrawLine(math.Round(x + p.y), math.Round(y + p.z), ang.roll)
 	end
 end
-
+local NoParasite2 = surface.GetTextureID("zombiesurvival/killicons/weapon_zs_scythe2")
 function meta:DrawCrosshairDot()
 	local x = ScrW() * 0.5
 	local y = ScrH() * 0.5
@@ -122,6 +122,24 @@ function meta:DrawCrosshairDot()
 
 	if GAMEMODE.LastOTSBlocked and MySelf:Team() == TEAM_HUMAN and GAMEMODE:UseOverTheShoulder() then
 		GAMEMODE:DrawCircle(x, y, 8, COLOR_RED)
+	end
+	if MySelf:IsSkillActive(SKILL_PARASITOID) and MySelf:GetProgress("parasite_prog") > CurTime() then
+		local screenscale = BetterScreenScale()
+		local wid, hei = 32 * screenscale, 32 * screenscale
+
+		colHealth.r = 255 
+		colHealth.g = 120
+		colHealth.b = 122
+
+		draw.SimpleTextBlurry(math.Round((MySelf:GetProgress("parasite_prog")-CurTime())*100)/100 , "ZSHUDFontSmallest", x + wid  * screenscale, y + 8 * screenscale, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+
+
+		surface.SetDrawColor(colHealth.r * 1, colHealth.g * 0.2, colHealth.b, 255)
+		surface.SetTexture(NoParasite)
+		surface.DrawTexturedRect(x, y , 32, hei)
+		surface.SetDrawColor(colHealth.r * 0.2, colHealth.g * 1.2, colHealth.b*2, 255)
+		surface.SetTexture(NoParasite2)
+		surface.DrawTexturedRect(x, y , 32, hei)
 	end
 end
 
