@@ -439,8 +439,8 @@ SKILL_OLD_GOD2 = 407
 SKILL_DOSET2 = 408
 
 SKILL_100_PERC = 409
-
 SKILL_BLOODHACK = 410
+SKILL_HEALMODULE = 411
 
 
 
@@ -800,6 +800,8 @@ GM:AddSkill(SKILL_COOL_MED, translate.Get("skill_cool_med"), GOOD..translate.Get
 																-1,			3,					{SKILL_SURGEON2}, TREE_SUPPORTTREE)
 GM:AddSkill(SKILL_FLOWER, translate.Get("skill_flower"), GOOD..translate.Get("skill_flower_d1")..BAD..translate.Get("skill_flower_d2"),
 																-1,			1,					{SKILL_COOL_MED}, TREE_SUPPORTTREE)
+GM:AddSkill(SKILL_HEALMODULE, translate.Get("skill_hmod"), GOOD..translate.Get("skill_hmod_d1"),
+																-1,			0,					{SKILL_FLOWER}, TREE_SUPPORTTREE)
 GM:AddSkillModifier(SKILL_FLOWER, SKILLMOD_POINT_MULTIPLIER, -0.25)
 local d = GM:AddSkill(SKILL_ABYSSFLOWER, translate.Get("skill_aflower"), GOOD..translate.Get("skill_aflower_d1")..BAD..translate.Get("skill_aflower_d2"),
 																-1,			0.5,					{SKILL_FLOWER}, TREE_SUPPORTTREE)

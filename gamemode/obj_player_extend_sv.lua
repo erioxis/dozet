@@ -27,7 +27,9 @@ function meta:ProcessDamage(dmginfo)
 			dmginfo:SetDamage(0)
 		end
 	end
-
+	if table.HasValue({"prop_physics", "prop_physics_multiplier"}, inflictor) and !inflictor:GetPhysicsAttacker() then
+		dmginfo:ScaleDamage(0)
+	end
 	if attacker.PBAttacker and attacker.PBAttacker:IsValid() then
 		attacker = attacker.PBAttacker
 	end

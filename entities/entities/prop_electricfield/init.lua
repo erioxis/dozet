@@ -13,16 +13,14 @@ function ENT:Initialize()
 	self:SetUseType(SIMPLE_USE)
 	self:SetColor(Color(155, 208, 255, 255))
 	self:SetModelScale(2,math.random(0.3,0.9))
-	if self.DieTime == 0 then
-		self.DieTime = CurTime() + self.LifeTime
-	end
+	self.DieTime = CurTime() + self.LifeTime
 end
 
 function ENT:Think()
 	local owner = self:GetOwner()
 	if CurTime() >= self.NextHurt then 
 		for _, pl in pairs(ents.FindInSphere(self:GetPos(), 68 * self:GetModelScale() )) do
-			if pl:IsPlayer() and owner:IsPlayer() and pl:Team() != owner:Team() and pl:Alive() or pl == owner then
+			if pl:IsPlayer() and owner:IsValidLivingHuman() and pl:Team() != owner:Team() and pl:Alive() or pl == owner then
 				pl:TakeSpecialDamage(self.HurtTick, DMG_SHOCK, owner, self, self:GetPos(), self:GetPos())
 				self.TotalHurt = self.TotalHurt - self.HurtTick
 			end

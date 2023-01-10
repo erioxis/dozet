@@ -7,12 +7,12 @@ local function RefreshRepFieldOwners(pl)
 		end
 	end
 end
-hook.Add("PlayerDisconnected", "RepairField.PlayerDisconnected", RefreshRepFieldOwners)
-hook.Add("OnPlayerChangedTeam", "RepairField.OnPlayerChangedTeam", RefreshRepFieldOwners)
+hook.Add("PlayerDisconnected", "MedField.PlayerDisconnected", RefreshRepFieldOwners)
+hook.Add("OnPlayerChangedTeam", "MedField.OnPlayerChangedTeam", RefreshRepFieldOwners)
 
 function ENT:Initialize()
-	self:SetModel("models/props/de_nuke/smokestack01.mdl")
-	self:SetModelScale(0.55, 0)
+	self:SetModel("models/props_combine/combinethumper001a.mdl")
+	self:SetModelScale(0.05, 0)
 	self:PhysicsInitBox(Vector(-12.29, -12.29, 0), Vector(12.29, 12.29, 90.13))
 	self:SetCollisionBounds(Vector(-12.29, -12.29, 0), Vector(12.29, 12.29, 90.13))
 	self:SetCollisionGroup(COLLISION_GROUP_WORLD) -- I decided to make them not collide.
@@ -159,7 +159,7 @@ function ENT:Think()
 			util.Effect("nailrepaired", effectdata, true, true)
 			self:SetAmmo(self:GetAmmo() - totalheal/3)
 			count = count + 1
-			
+			self:SetSequence(0)
 			if count >= 3 or self:GetAmmo() <= 0 then break end
 	   end
 	end

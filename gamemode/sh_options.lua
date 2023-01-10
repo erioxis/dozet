@@ -275,6 +275,10 @@ GM:AddStartingItem("hauldrone",			ITEMCAT_DEPLOYABLES,			25,				"weapon_zs_drone
 item.Countables = "prop_drone_hauler"
 item.SkillRequirement = SKILL_HAULMODULE
 item =
+GM:AddStartingItem("healdrone",			ITEMCAT_DEPLOYABLES,			25,				"weapon_zs_drone_healer",		nil,							nil,									nil,											function(pl) pl:GiveEmptyWeapon("weapon_zs_drone_healer") pl:GiveAmmo(1, "drone_healer") end)
+item.Countables = "prop_drone_healer"
+item.SkillRequirement = SKILL_HEALMODULE
+item =
 GM:AddStartingItem("rollermine",		ITEMCAT_DEPLOYABLES,			35,				"weapon_zs_rollermine",			nil,							nil,									nil,											function(pl) pl:GiveEmptyWeapon("weapon_zs_rollermine") pl:GiveAmmo(1, "rollermine") end)
 item.Countables = "prop_rollermine"
 item.SkillRequirement = SKILL_U_ROLLERMINE
@@ -589,6 +593,10 @@ GM:AddPointShopItem("hauldrone",		ITEMCAT_DEPLOYABLES,			15,				"weapon_zs_drone
 item.Countables = "prop_drone_hauler"
 item.SkillRequirement = SKILL_HAULMODULE
 item =
+GM:AddPointShopItem("healdrone",		ITEMCAT_DEPLOYABLES,			15,				"weapon_zs_drone_healer")
+item.Countables = "prop_drone_healer"
+item.SkillRequirement = SKILL_HEALMODULE
+item =
 GM:AddPointShopItem("rollermine",		ITEMCAT_DEPLOYABLES,			35,				"weapon_zs_rollermine")
 item.Countables = "prop_rollermine"
 item.SkillRequirement = SKILL_U_ROLLERMINE
@@ -865,6 +873,7 @@ GM:AddDeployableInfo("prop_manhack_saw",		"Sawblade Manhack",		"weapon_zs_manhac
 GM:AddDeployableInfo("prop_drone",				"Drone",				"weapon_zs_drone")
 GM:AddDeployableInfo("prop_drone_pulse",		"Pulse Drone",			"weapon_zs_drone_pulse")
 GM:AddDeployableInfo("prop_drone_hauler",		"Hauler Drone",			"weapon_zs_drone_hauler")
+GM:AddDeployableInfo("prop_drone_healer",		"Healer Drone",			"weapon_zs_drone_healer")
 GM:AddDeployableInfo("prop_rollermine",			"Rollermine",			"weapon_zs_rollermine")
 GM:AddDeployableInfo("prop_tv",                   	 "TV",                    	"weapon_zs_tv")
 GM:AddDeployableInfo("prop_obj_sigil",                   	 "Sigil",                    	"weapon_zs_sigil_port")

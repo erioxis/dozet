@@ -617,6 +617,7 @@ concommand.Add("zsdropweapon", function(sender, command, arguments)
 			ent:SetAngles(sender:GetAngles())
 		end
 	end
+	sender:SetProgress(CurTime() +2,"giveditem")
 end)
 
 
@@ -727,12 +728,12 @@ concommand.Add("zsgiveammo", function(sender, command, arguments)
 				net.WriteString(ammotype)
 				net.WriteEntity(sender)
 			net.Send(ent)
-
+			sender:SetProgress(CurTime() +2,"giveditem")
 			return
 		end
 
     else
-	GAMEMODE:ConCommandErrorMessage(sender, translate.ClientGet(sender, "no_person_in_range")) 
+		GAMEMODE:ConCommandErrorMessage(sender, translate.ClientGet(sender, "no_person_in_range")) 
     end
 end)
 
@@ -810,6 +811,7 @@ concommand.Add("zsgiveweapon", function(sender, command, arguments)
 	else
 		GAMEMODE:ConCommandErrorMessage(sender, translate.ClientGet(sender, "no_person_in_range"))
 	end
+	sender:SetProgress(CurTime() +2,"giveditem")
 end)
 
 concommand.Add("zsgiveweaponclip", function(sender, command, arguments)

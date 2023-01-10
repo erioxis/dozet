@@ -22,23 +22,10 @@ SWEP.Primary.Ammo = "foodtakeout"
 SWEP.FoodHealth = 234342
 SWEP.FoodEatTime = 1
 function SWEP:Eat()
-	owner = self:GetOwner()
+	local	owner = self:GetOwner()
 	if !owner:IsSkillActive(SKILL_BARA_CURSED) then 
-			timer.Simple(15, function() 
-				lastpos = owner:GetPos()
-						owner:Kill()
-					timer.Simple(0.05, function() 
-								owner:KillSilent()
-								owner:SetZombieClass(GAMEMODE.ZombieClasses["Baracat"].Index)
-								timer.Simple(0.1, function() 
-								owner:SetPos(lastpos)
-								owner:Respawn()
-								owner:DoHulls(GAMEMODE.ZombieClasses["Baracat"].Index, TEAM_UNDEAD)
-
-								end)
-				end)
-			end)
-		end
+		return
+	end
 				self:TakePrimaryAmmo(1)
 	if self:GetPrimaryAmmoCount() <= 0 then
 		owner:StripWeapon(self:GetClass())
@@ -54,9 +41,5 @@ function SWEP:SecondaryAttack()
 
 	if owner:HasTrinket("processor") then
 		owner:EmitSound("weapons/bugbait/bugbait_squeeze1.wav", 65, 150)
-
-		if SERVER then
-           owner:Kill()
-		end
 	end
 end

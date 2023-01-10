@@ -117,7 +117,7 @@ GM.Assemblies["trinket_lotteryticket"] 						= {"comp_ticket",	"trinket_greedeye
 GM.Assemblies["trinket_mysteryticket"] 						= {"comp_ticket",	"trinket_greedsoul"}
 GM.Assemblies["trinket_soulrepairman"] 						= {"trinket_soulmedical",	"weapon_zs_hammer"}
 GM.Assemblies["trinket_soulmedical"] 						= {"trinket_curse_dropping",	"trinket_altisaacsoul"}
-GM.Assemblies["trinket_toykasoul"] 						= {"trinket_toysoul",	"weapon_zs_loy_q5"}
+GM.Assemblies["trinket_toykasoul"] 						= {"trinket_toysoul",	"weapon_zs_loy_q4"}
 --Собирание душ из осколков
 GM.Assemblies["trinket_soulrepairman"] 						= {"comp_soul_dosei",	"comp_soul_alt_h"}
 GM.Assemblies["trinket_soulmedical"] 						= {"comp_soul_dosei",	"comp_soul_health"}

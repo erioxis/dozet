@@ -55,13 +55,14 @@ function ENT:Explode(hitpos, hitnormal, hitent)
 					break
 				end
 			end
-
-		end
-	end
-	for _, pl in pairs(ents.FindInSphere(hitpos, 138)) do
-		if WorldVisible(self:LocalToWorld(Vector(0, 0, 10), pl:NearestPoint(self:LocalToWorld(Vector(0, 0, 10))))) then
 			if pl:IsValidLivingHuman() then
-				pl:TakeDamage(7, self:GetOwner(), self:GetOwner():GetActiveWeapon())
+				pl:TakeDamage(5, self:GetOwner(), self)
+				pl:PoisonDamage(4, owner, self)
+			end
+		end
+		for _, pl in pairs(ents.FindInSphere(hitpos, 45)) do
+			if pl:IsValidLivingHuman() then
+				pl:TakeDamage(5, self:GetOwner(), self)
 				pl:PoisonDamage(4, owner, self)
 			end
 		end

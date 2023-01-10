@@ -1024,8 +1024,8 @@ local function BossZombieSort(za, zb)
 	return ascore > bscore
 end
 local function DemiBossZombieSort(za, zb)
-	local ascore = za.WaveBarricadeDamage * 0.13 + za.WaveHumanDamage
-	local bscore = zb.WaveBarricadeDamage * 0.13 + zb.WaveHumanDamage
+	local ascore = za.WaveBarricadeDamage * 0.73 + za.WaveHumanDamage
+	local bscore = zb.WaveBarricadeDamage * 0.73 + zb.WaveHumanDamage
 	if ascore == bscore then
 		return za:Deaths() < zb:Deaths()
 	end
@@ -3168,7 +3168,7 @@ function GM:GiveDefaultOrRandomEquipment(pl)
 		else
 			pl:SendLua("GAMEMODE:RequestedDefaultCart()")
 			if self.StartingWorth > 0 then
-				timer.Simple(20, function() TimedOut(pl) end)
+				timer.Simple(6, function() TimedOut(pl) end)
 			end
 		end
 	end
@@ -3778,7 +3778,7 @@ function GM:DamageAtFloater(attacker, victim, dmgpos, dmg, typeid)
 end
 function GM:BlockFloater(attacker, victim, dmgpos, bool)
 	if attacker == victim then return end
-	if dmgpos == vector_origin then dmgpos = victim:NearestPoint(attacker:EyePos()) end
+	if dmgpos == vector_origin and victim:IsValid() then dmgpos = victim:NearestPoint(attacker:EyePos()) end
 
 	net.Start("zs_block_number")
 		net.WriteBool(bool)

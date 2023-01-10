@@ -1026,13 +1026,13 @@ function GM:ZombieHUD()
 
 	if not self:GetWaveActive() and self:GetWave() ~= 0 then
 		local pl = GAMEMODE.NextBossZombie
-		local demipl = math.floor((#team.GetPlayers(TEAM_UNDEAD) * 0.5 or 0))
+		local demipl = math.floor(#player.GetAll(),0.05,math.max(((#team.GetPlayers(TEAM_UNDEAD) * 0.5) - 1),1))
 		if pl and pl:IsValid() then
 			local x, y = ScrW() / 2, ScrH() * 0.3 + draw_GetFontHeight("ZSHUDFont")
 			if pl == MySelf then
-				draw_SimpleTextBlur(translate.Format("you_will_be_x_soon", GAMEMODE.NextBossZombieClass), "ZSHUDFont", x, y, Color(255, 50, 50), TEXT_ALIGN_CENTER)
+				draw_SimpleTextBlur(translate.Format("you_will_be_x_soon", translate.Get(GAMEMODE.ZombieClasses[GAMEMODE.NextBossZombieClass].TranslationName)), "ZSHUDFont", x, y, Color(255, 50, 50), TEXT_ALIGN_CENTER)
 			else
-				draw_SimpleTextBlur(translate.Format("x_will_be_y_soon", pl:Name(), GAMEMODE.NextBossZombieClass), "ZSHUDFont", x, y, COLOR_GRAY, TEXT_ALIGN_CENTER)
+				draw_SimpleTextBlur(translate.Format("x_will_be_y_soon", pl:Name(), translate.Get(GAMEMODE.ZombieClasses[GAMEMODE.NextBossZombieClass].TranslationName)), "ZSHUDFont", x, y, COLOR_GRAY, TEXT_ALIGN_CENTER)
 			end
 			if demipl >= 1 then
 				draw_SimpleTextBlur(translate.Get("demibosses").." "..demipl, "ZSHUDFontSmall", x, y - 25, COLOR_YELLOW, TEXT_ALIGN_CENTER)
@@ -1683,6 +1683,7 @@ end
 local function GiveWeapon()
 	if GAMEMODE.HumanMenuLockOn then
 		RunConsoleCommand("zsgiveweapon", GAMEMODE.HumanMenuLockOn:EntIndex(), GAMEMODE.InventoryMenu.SelInv)
+		
 	end
 end
 local function GiveWeaponClip()

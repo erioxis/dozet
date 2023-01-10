@@ -4,7 +4,8 @@ ENT.Pulsed = true
 local matBeam = Material( "trails/electric" )
 
 function ENT:Initialize()
-	self:SetModelScale(0.5, 0)
+	self:SetModelScale(0, 0)
+	self:SetPos(self:LocalToWorld(Vector(0, 0, -1)))
 
 	self.AmbientSound = CreateSound(self, "npc/scanner/combat_scan_loop4.wav")
 	self.AmbientSound:SetSoundLevel(55)
@@ -26,6 +27,25 @@ function ENT:Initialize()
 		cmodel:Spawn()
 
 		self.CModel = cmodel
+	end
+	local cmodel = ClientsideModel(self:GetModel())
+	if cmodel:IsValid() then
+		
+		cmodel:SetPos(self:LocalToWorld(Vector(0, 0, -11)))
+		cmodel:SetAngles(self:LocalToWorldAngles(Angle(0, 0, 0)))
+		cmodel:SetSolid(SOLID_NONE)
+		cmodel:SetMoveType(MOVETYPE_NONE)
+		cmodel:SetColor(Color(81, 238, 34))
+		cmodel:SetParent(self)
+		cmodel:SetOwner(self)
+
+		local matrix = Matrix()
+		matrix:Scale(Vector(0.1, 0.1, 0.1))
+		cmodel:EnableMatrix( "RenderMultiply", matrix )
+
+		cmodel:Spawn()
+
+		self.CModel2 = cmodel
 	end
 end
 
@@ -87,24 +107,40 @@ function ENT:Think()
 
 			if self:GetAmmo() > 0 then
 				self:EmitSound("npc/scanner/scanner_scan2.wav", 70, 50)
-
+				self.CModel2:ResetSequenceInfo()
+				self.CModel2:SetSequence(0)
 				local pos = self:LocalToWorld(Vector(0, 0, 30))
 				local emitter = ParticleEmitter(pos)
 				emitter:SetNearClip(24, 32)
-
 				for i=1, 45 do
 					local dir = VectorRand():GetNormalized()
 					local particle = emitter:Add("sprites/glow04_noz", pos)
 					particle:SetDieTime(0.7)
-					particle:SetColor(225,150,255)
-					particle:SetStartAlpha(40)
+					particle:SetColor(1,222,90)
+					particle:SetStartAlpha(120)
 					particle:SetEndAlpha(0)
 					particle:SetStartSize(5)
-					particle:SetEndSize(15)
+					particle:SetEndSize(20)
 					particle:SetCollide(true)
 					particle:SetBounce(0)
 					particle:SetGravity(dir * -210)
 					particle:SetVelocity(dir * 205)
+					timer.Simple(0.33, function() particle:SetGravity(dir * 210) particle:SetVelocity(dir * -205) end)
+					timer.Simple(0.7, function() 					local emitter = ParticleEmitter(pos)
+						emitter:SetNearClip(24, 32)			for i=1, 45 do
+						local dir = VectorRand():GetNormalized()
+						local particle = emitter:Add("sprites/glow04_noz", pos)
+						particle:SetDieTime(0.7)
+						particle:SetColor(255,22,0)
+						particle:SetStartAlpha(30)
+						particle:SetEndAlpha(0)
+						particle:SetStartSize(5)
+						particle:SetEndSize(20)
+						particle:SetCollide(true)
+						particle:SetBounce(0)
+						particle:SetGravity(dir * -210)
+						particle:SetVelocity(dir * 205)
+					end end)
 				end
 
 				for i=1, 10 do
@@ -118,6 +154,7 @@ function ENT:Think()
 					particle:SetEndSize(0)
 					particle:SetGravity(dir * -6)
 					particle:SetVelocity(dir * 5)
+					timer.Simple(0.3, function() particle:SetGravity(dir * 6) particle:SetVelocity(dir * -5) end)
 				end
 
 				emitter:Finish() emitter = nil collectgarbage("step", 64)
@@ -134,5 +171,8 @@ function ENT:OnRemove()
 
 	if self.CModel and self.CModel:IsValid() then
 		self.CModel:Remove()
+	end
+	if self.CModel2 and self.CModel2:IsValid() then
+		self.CModel2:Remove()
 	end
 end

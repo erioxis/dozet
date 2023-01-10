@@ -12,6 +12,7 @@ SWEP.ViewModel = Model("models/weapons/c_crowbar.mdl")
 SWEP.WorldModel = "models/weapons/w_crowbar.mdl"
 
 AccessorFuncDT(SWEP, "HookTime", "Float", 1)
+GAMEMODE:SetPrimaryWeaponModifier(SWEP, WEAPON_MODIFIER_FIRE_DELAY, -0.08)
 
 function SWEP:SecondaryAttack()
 	if CurTime() < self:GetNextPrimaryFire() or CurTime() < self:GetNextSecondaryFire() then return end
