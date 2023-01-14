@@ -931,7 +931,7 @@ GM.NoNewHumansWave = 5
 GM.NoSuicideWave = -1
 
 -- How long 'wave 0' should last in seconds. This is the time you should give for new players to join and get ready.
-GM.WaveZeroLength = 180
+GM.WaveZeroLength = 240
 
 -- Time humans have between waves to do stuff without NEW zombies spawning. Any dead zombies will be in spectator (crow) view and any living ones will still be living.
 GM.WaveIntermissionLength = 90

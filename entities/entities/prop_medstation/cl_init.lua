@@ -107,8 +107,6 @@ function ENT:Think()
 
 			if self:GetAmmo() > 0 then
 				self:EmitSound("npc/scanner/scanner_scan2.wav", 70, 50)
-				self.CModel2:ResetSequenceInfo()
-				self.CModel2:SetSequence(0)
 				local pos = self:LocalToWorld(Vector(0, 0, 30))
 				local emitter = ParticleEmitter(pos)
 				emitter:SetNearClip(24, 32)

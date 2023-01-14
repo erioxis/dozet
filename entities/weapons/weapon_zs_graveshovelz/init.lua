@@ -60,6 +60,7 @@ function SWEP:ApplyMeleeDamage(ent, trace, damage)
 		end
 		ent:ThrowFromPositionSetZ(trace.StartPos, ent:IsPlayer() and 600 or 1600, nil, noknockdown)
 	end
+	self.Primary.Delay = math.max(0.2,self.Primary.Delay)
 
 	self.BaseClass.ApplyMeleeDamage(self, ent, trace, damage)
 end

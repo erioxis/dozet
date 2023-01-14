@@ -160,9 +160,9 @@ function CLASS:ProcessDamage(pl, dmginfo)
 			dmginfo:GetAttacker():TakeSpecialDamage(dmginfo:GetDamage() * 0.05, DMG_DIRECT, pl, pl)
 			local cursed = dmginfo:GetAttacker():GetStatus("cursed")
 			if (cursed) then 
-				dmginfo:GetAttacker():AddCursed(pl, cursed.DieTime - CurTime() + 5)
+				dmginfo:GetAttacker():AddCursed(pl, cursed.DieTime - CurTime() + 5 + ((attacker:GetZSRemortLevel()+1) or 1)/6)
 			else
-				dmginfo:GetAttacker():AddCursed(pl, 5)
+				dmginfo:GetAttacker():AddCursed(pl, 5+ ((attacker:GetZSRemortLevel()+1) or 1)/6)
 			end
 		end
 		dmginfo:SetDamage(((attacker:IsValidLivingHuman() and attacker:IsSkillActive(SKILL_AMULET_12) or attacker:IsValidLivingHuman() and attacker:GetActiveWeapon().ResistDamage) and 0 or 5))

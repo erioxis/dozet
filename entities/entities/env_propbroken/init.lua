@@ -32,8 +32,11 @@ function ENT:Think()
 
 		local ent = self:GetParent()
 		if ent:IsValid() then
-			ent:Fire("break", "", 0)
-			ent:Fire("kill", "", 0.01)
+			if ent:GetPhysicsObject():IsValid() then
+				ent:GetPhysicsObject():EnableMotion(false)
+			end
+			ent:Fire("break", "", 15)
+			ent:Fire("kill", "", 15.1)
 
 			local effectdata = EffectData()
 				effectdata:SetOrigin(ent:WorldSpaceCenter())

@@ -377,7 +377,7 @@ function ENT:ThreadSafePhysicsCollide(data)
 
 		self.NextTouch[ent] = CurTime() + self.HitCooldown
 		if owner.MeleeDamageToBloodArmorMul and owner.MeleeDamageToBloodArmorMul > 0 and owner:GetBloodArmor() < owner.MaxBloodArmor and owner:IsSkillActive(SKILL_BLOODHACK) then
-			owner:SetBloodArmor(math.min(owner.MaxBloodArmor,owner:GetBloodArmor() + math.min(damage, ent:Health()) * owner.MeleeDamageToBloodArmorMul* owner.BloodarmorGainMul * 0.2))
+			owner:SetBloodArmor(math.min((owner.MaxBloodArmor or 20),owner:GetBloodArmor() + math.min(self.HitDamage, ent:Health()) * (owner.MeleeDamageToBloodArmorMul or 1)* (owner.BloodarmorGainMul or 1) * 0.2))
 		end
 		ent:TakeSpecialDamage(self.HitDamage, DMG_SLASH, owner, self)
 

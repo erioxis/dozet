@@ -130,7 +130,7 @@ function ENT:Use(activator, caller)
 	local ammotype = self.AmmoType
 	local curammo = self:GetAmmo()
 
-	local togive = math.min(GAMEMODE.AmmoCache[ammotype], activator:GetAmmoCount(ammotype), self.MaxAmmo - curammo)
+	local togive = math.min(activator:GetAmmoCount(ammotype), self.MaxAmmo - curammo)
 	if togive > 0 then
 		self:SetAmmo(curammo + togive)
 		activator:RemoveAmmo(togive, ammotype)

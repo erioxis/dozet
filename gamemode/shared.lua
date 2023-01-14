@@ -922,9 +922,12 @@ function GM:IsSpecialPerson(pl, image)
 	elseif pl:SteamID() == "STEAM_0:1:245602574" then
 			img = "noxiousnet/noxicon.png"
 			tooltip = trs("erioxis_sp")
-	elseif pl:IsAdmin() then
-		img = "VGUI/servers/icon_robotron"
-		tooltip = trs("admin_sp")
+	elseif pl:IsBot() then
+		img = "icon16/wrench_orange.png"
+		tooltip = trs("bot_sp")
+	elseif pl:IsUserGroup("vip_1") or pl:IsUserGroup("vip_1_nav") then
+		img = "noxiousnet/noxicon.png"
+		tooltip = trs("vip_sp")
 	elseif pl:SteamID() == "STEAM_0:1:196107962" then
 		img = "noxiousnet/noxicon.png"
 		tooltip = trs("nickmarlya_sp")

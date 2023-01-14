@@ -33,10 +33,8 @@ SWEP.GhostStatus = "ghost_medstation"
 SWEP.DeployClass = "prop_medstation"
 
 SWEP.NoDeploySpeedChange = true
-SWEP.AllowQualityWeapons = true
+SWEP.AllowQualityWeapons = false
 
-GAMEMODE:SetPrimaryWeaponModifier(SWEP, WEAPON_MODIFIER_REPAIR, 0.75)
-GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_MAX_DISTANCE, 4)
 
 function SWEP:Initialize()
 	self:SetWeaponHoldType("slam")

@@ -2584,6 +2584,8 @@ LANGUAGE.ammo_boards = "Boards"
 LANGUAGE.ammo_grenades = "Grenades"
 LANGUAGE.ammo_molotovs = "Molotovs"
 LANGUAGE.ammo_medicalsupplies = "Medical Supplies"
+LANGUAGE.ammo_battery = "Medical Supplies"
+LANGUAGE.ammo_ = "Nothing"
 LANGUAGE.ammo_pistol = "Pistol"
 LANGUAGE.ammo_smg = "SMG"
 
@@ -2668,6 +2670,8 @@ LANGUAGE.on_dismantle_give = "\nOn dismantle give: "
 
 LANGUAGE.skill_godheart = "God Heart"
 LANGUAGE.skill_godheart_d1  = "After killing supreme baragods of supreme baracats this skill become useless(only +4 amulet cells)"
+LANGUAGE.skill_vip = "V.I.P (1)"
+LANGUAGE.skill_vip_d1  = "+5 Health,+0.1 luck,+5% xp mul,+2.5% jump mul\nOnly for VIP"
 LANGUAGE.gui_oa = "Open Arsenal"
 
 LANGUAGE.p_dmg = "Damage"

@@ -15,8 +15,9 @@ CLASS.Points = 40
 
 CLASS.SWEP = "weapon_zs_shitslapper"
 
-CLASS.Variations = false
-CLASS.Original = true
+CLASS.Variations = nil
+CLASS.Original = nil
+
 
 CLASS.Health = 1200
 CLASS.Speed = 225

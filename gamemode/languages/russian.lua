@@ -19,7 +19,7 @@ LANGUAGE.challenge_daily_d4 = "Убить 10 боссов."
 LANGUAGE.challenge_daily5 = "ЕЖЕДНЕВНОЕ:Идеальный механизм"
 LANGUAGE.challenge_daily_d5 = "Убить 75 зомби с помощью манхака или дрона."
 LANGUAGE.challenge_daily6 = "ЕЖЕДНЕВНОЕ:Во вторых..."
-LANGUAGE.challenge_daily_d6 = "Убить 75 зомби с помощью манхака или дрона."
+LANGUAGE.challenge_daily_d6 = "Выжить 2 раза."
 
 LANGUAGE.scram_rem = " Скрапа"
 
@@ -1393,6 +1393,7 @@ LANGUAGE.class_bartor        						= "Береторс"
 LANGUAGE.vgui_open_class				= "Открыть Выбор Обычных классов"
 LANGUAGE.vgui_open_class_b				= "Открыть Выбор Классов Босса"
 LANGUAGE.vgui_open_class_db				= "Открыть Выбор классов Мини-Босса"
+LANGUAGE.class_vile_bloated_zombie					= "Дикий Жирный Зомби"
 -- Class descriptions
 LANGUAGE.description_tank						= "Имеют невероятный шанс заблокировать любой урон.\nПопадание в голову гарантированно не даст им подняться."
 LANGUAGE.description_eradicator						= "Вестники смерти и разрушения. Густные зомби имеют довольно сильное телосложение.\nПопадание в голову гарантированно не даст им подняться."
@@ -2450,6 +2451,8 @@ LANGUAGE.ammo_molotovs = "Молотовы"
 LANGUAGE.ammo_medicalsupplies = "Медицинские капсулы"
 LANGUAGE.ammo_pistol = "Пистолетные"
 LANGUAGE.ammo_smg = "СМГ"
+LANGUAGE.ammo_battery = "Медицинские капсулы"
+LANGUAGE.ammo_ = "Ничего"
 
 LANGUAGE.buff_mrifle = "Медицинская винтовка"
 LANGUAGE.buff_srifle = "Усиляющая Винтовка"
@@ -2524,6 +2527,8 @@ LANGUAGE.on_dismantle_give = "\nПри разборке дает: "
 
 LANGUAGE.skill_godheart = "Божье Сердце"
 LANGUAGE.skill_godheart_d1  = "После убийства высшего барабога высших баракотов он стал бесполезным(но дает 4 ячейки)"
+LANGUAGE.skill_vip = "Vыр (1)"
+LANGUAGE.skill_vip_d1  = "+5 хп,+0.1 удачи,+5% к опыту,+2.5% к силе прыжка\nТолько для VIP"
 
 
 LANGUAGE.p_speed1 = "Нормальная"

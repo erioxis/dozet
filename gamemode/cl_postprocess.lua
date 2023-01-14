@@ -501,7 +501,7 @@ function GM:DrawZombieIndicators()
 	for _, pl in pairs(team_GetPlayers(TEAM_UNDEAD)) do
 		if pl:GetStatus("feigndeath") then continue end
 		if pl:GetRenderMode() == RENDERMODE_TRANSALPHA then continue end
-		range = pl:GetAuraRangeSqr()/4 * (MySelf:IsSkillActive(SKILL_OLD_GOD2) and 2.5 or 1) * (MySelf:IsUserGroup("vip_1") and 1.1 or 1)
+		range = pl:GetAuraRangeSqr()/4 * (MySelf:IsSkillActive(SKILL_OLD_GOD2) and 2.5 or 1) * ((MySelf:IsUserGroup("vip_1_nav") or MySelf:IsUserGroup("vip_1")) and 1.1 or 1)
 		dist = pl:GetPos():DistToSqr(eyepos)
 		local lp = pl
 		if pl:Alive() and dist <= range then

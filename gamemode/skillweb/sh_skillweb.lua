@@ -58,6 +58,9 @@ function GM:SkillCanUnlock(pl, skillid, skilllist)
 		if skill.RemortReq and pl:GetZSRemortLevel() < skill.RemortReq then
 			return false
 		end
+		if skill.Vip1 then
+			return (pl:IsUserGroup("vip_1") or pl:IsUserGroup("vip_1_nav")) 
+		end
 		if skill.Amulet then
 			return true
 		end

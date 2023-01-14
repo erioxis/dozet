@@ -441,6 +441,7 @@ SKILL_DOSET2 = 408
 SKILL_100_PERC = 409
 SKILL_BLOODHACK = 410
 SKILL_HEALMODULE = 411
+SKILL_VIP = 412
 
 
 
@@ -801,7 +802,7 @@ GM:AddSkill(SKILL_COOL_MED, translate.Get("skill_cool_med"), GOOD..translate.Get
 GM:AddSkill(SKILL_FLOWER, translate.Get("skill_flower"), GOOD..translate.Get("skill_flower_d1")..BAD..translate.Get("skill_flower_d2"),
 																-1,			1,					{SKILL_COOL_MED}, TREE_SUPPORTTREE)
 GM:AddSkill(SKILL_HEALMODULE, translate.Get("skill_hmod"), GOOD..translate.Get("skill_hmod_d1"),
-																-1,			0,					{SKILL_FLOWER}, TREE_SUPPORTTREE)
+																-1,			-0.5,					{SKILL_FLOWER}, TREE_SUPPORTTREE)
 GM:AddSkillModifier(SKILL_FLOWER, SKILLMOD_POINT_MULTIPLIER, -0.25)
 local d = GM:AddSkill(SKILL_ABYSSFLOWER, translate.Get("skill_aflower"), GOOD..translate.Get("skill_aflower_d1")..BAD..translate.Get("skill_aflower_d2"),
 																-1,			0.5,					{SKILL_FLOWER}, TREE_SUPPORTTREE)
@@ -1130,6 +1131,16 @@ d.AmuletCost = -4
 GM:AddSkillModifier(SKILL_GOD_HEART, SKILLMOD_SPOINT, 4)
 d.AlwaysActive = true
 d.Hidden = true	
+local d = GM:AddSkill(SKILL_VIP, translate.Get("skill_vip"), GOOD..translate.Get("skill_vip_d1"),
+				                                                            	-14,			14,					{}, TREE_DONATETREE)								
+GM:AddSkillModifier(SKILL_VIP, SKILLMOD_SPOINT, 1)
+GM:AddSkillModifier(SKILL_VIP, SKILLMOD_LUCK, 0.1)
+GM:AddSkillModifier(SKILL_VIP, SKILLMOD_HEALTH, 5)
+GM:AddSkillModifier(SKILL_VIP, SKILLMOD_XP, 0.05)
+GM:AddSkillModifier(SKILL_VIP, SKILLMOD_JUMPPOWER_MUL, 0.025)
+d.AlwaysActive = true
+d.Amulet = true	
+d.Vip1 = true
 GM:AddSkillModifier(SKILL_SECRET_VI, SKILLMOD_SPOINT, 5)
 GM:AddSkillModifier(SKILL_SECRET_VII, SKILLMOD_SPOINT, 5)
 GM:AddSkill(SKILL_TRIGGER_DISCIPLINE1, translate.Get("skill_t_d").."I", GOOD.."+2%"..translate.Get("r_speed")..GOOD.."+1%"..translate.Get("b_damage")..GOOD.."+2%"..translate.Get("w_draw")..BAD.."-9%"..translate.Get("meleedamage"),
@@ -2128,7 +2139,7 @@ end)
 
 
 GM:SetSkillModifierFunction(SKILLMOD_SELF_DAMAGE_MUL, function(pl, amount)
-	pl.SelfDamageMul = math.Clamp(amount + 1.0, 0.0, 100.0)
+	pl.SelfDamageMul = math.Clamp(amount + 1.0, 0.05, 100.0)
 end)
 
 GM:SetSkillModifierFunction(SKILLMOD_MELEE_KNOCKBACK_MUL, function(pl, amount)

@@ -343,6 +343,10 @@ function SWEP:TranslateActivity( act )
 end
 function SWEP:Reload()
 	local time = CurTime()
+	if time >= self:GetNextJudgeMoment() and self:GetOwner():KeyDown(IN_DUCK) and self:GetOwner():KeyDown(IN_ATTACK) and self:GetOwner():KeyDown(IN_ATTACK2)  then
+		self:SetObed(true)	
+		self:SetNextJudgeMoment(time + 1)
+	end
 	if time >= self:GetNextJudgeMoment() and self:GetJudge() and !self:GetOwner():KeyDown(IN_ATTACK2) then
 		self:SetJudge(false)
 		self:SetDiePower(false)	
@@ -358,10 +362,6 @@ function SWEP:Reload()
 	elseif time >= self:GetNextJudgeMoment() and !self:GetDiePower() and self:GetOwner():KeyDown(IN_ATTACK2) then
 		self:SetJudge(false)
 		self:SetDiePower(true)	
-		self:SetNextJudgeMoment(time + 1)
-	end
-	if time >= self:GetNextJudgeMoment() and self:GetOwner():KeyDown(IN_DUCK) and self:GetOwner():KeyDown(IN_ATTACK) then
-		self:SetObed(true)	
 		self:SetNextJudgeMoment(time + 1)
 	end
 end
