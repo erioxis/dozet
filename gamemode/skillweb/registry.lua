@@ -442,6 +442,9 @@ SKILL_100_PERC = 409
 SKILL_BLOODHACK = 410
 SKILL_HEALMODULE = 411
 SKILL_VIP = 412
+SKILL_CIRCULATION1 = 413
+SKILL_CIRCULATION2 = 414
+SKILL_STONEBLOOD = 415
 
 
 
@@ -626,7 +629,9 @@ GM:AddSkill(SKILL_PREPAREDNESS, translate.Get("skill_prepadnes_0"), GOOD..transl
 GM:AddSkill(SKILL_GOURMET, translate.Get("skill_gurman_0"), GOOD..translate.Get("skill_gurman_d1")..BAD..translate.Get("skill_gurman_d2"),
 																4,			-4,					{SKILL_PREPAREDNESS, SKILL_VITALITY1}, TREE_HEALTHTREE)
 GM:AddSkill(SKILL_HAEMOSTASIS, translate.Get("skill_haemostasis_0"), GOOD..translate.Get("skill_haemostasis_d1")..BAD..translate.Get("skill_haemostasis_d2")..GOOD..translate.Get("skill_haemostasis_d3"),
-																4,			6,					{}, TREE_HEALTHTREE)
+																4,			6,					{SKILL_STONEBLOOD}, TREE_HEALTHTREE)
+GM:AddSkill(SKILL_STONEBLOOD, translate.Get("skill_stoneblood"), GOOD..translate.Get("skill_stoneblood_d1"),
+																4,			5,					{}, TREE_HEALTHTREE)
 GM:AddSkill(SKILL_BLOODLETTER, translate.Get("skill_bloodlet_0"), GOOD..translate.Get("skill_bloodlet_d1")..BAD..translate.Get("skill_bloodlet_d2"),
 																0,			4,					{SKILL_ANTIGEN}, TREE_HEALTHTREE)
 GM:AddSkill(SKILL_REGENERATOR, translate.Get("skill_regen_0"), GOOD..translate.Get("skill_regen_d1")..BAD..translate.Get("skill_regen_d2"),
@@ -687,6 +692,10 @@ GM:AddSkill(SKILL_SUGARRUSH, translate.Get("skill_srush_0"), GOOD..translate.Get
 																4,			0,					{SKILL_GOURMET}, TREE_HEALTHTREE)
 GM:AddSkill(SKILL_CIRCULATION, translate.Get("skill_cir_0"), GOOD..translate.Get("skill_cir_d1"),
 																4,			4,					{SKILL_SANGUINE}, TREE_HEALTHTREE)
+GM:AddSkill(SKILL_CIRCULATION1, translate.Get("skill_cir_0").." II", GOOD.."+3"..translate.Get("barmor"),
+																6,			6,					{SKILL_CIRCULATION,SKILL_CIRCULATION2}, TREE_HEALTHTREE)
+GM:AddSkill(SKILL_CIRCULATION2, translate.Get("skill_cir_0").." III", GOOD.."+3"..translate.Get("barmor"),
+																4,			8,					{}, TREE_HEALTHTREE)
 GM:AddSkill(SKILL_SANGUINE, translate.Get("skill_san_0"), GOOD..translate.Get("skill_san_d1")..BAD..translate.Get("skill_san_d2"),
 																6,			2,					{}, TREE_HEALTHTREE)
 GM:AddSkill(SKILL_BLOODYMAN, translate.Get("skill_bloodyman"), GOOD.."+130"..translate.Get("barmor")..BAD.."-100"..translate.Get("health"),
@@ -1134,10 +1143,8 @@ d.Hidden = true
 local d = GM:AddSkill(SKILL_VIP, translate.Get("skill_vip"), GOOD..translate.Get("skill_vip_d1"),
 				                                                            	-14,			14,					{}, TREE_DONATETREE)								
 GM:AddSkillModifier(SKILL_VIP, SKILLMOD_SPOINT, 1)
-GM:AddSkillModifier(SKILL_VIP, SKILLMOD_LUCK, 0.1)
-GM:AddSkillModifier(SKILL_VIP, SKILLMOD_HEALTH, 5)
-GM:AddSkillModifier(SKILL_VIP, SKILLMOD_XP, 0.05)
-GM:AddSkillModifier(SKILL_VIP, SKILLMOD_JUMPPOWER_MUL, 0.025)
+GM:AddSkillModifier(SKILL_VIP, SKILLMOD_XP, 0.25)
+
 d.AlwaysActive = true
 d.Amulet = true	
 d.Vip1 = true
@@ -2645,6 +2652,7 @@ GM:AddSkillModifier(SKILL_CARRIER, SKILLMOD_PROP_CARRY_SLOW_MUL, -1)
 GM:AddSkillModifier(SKILL_BLOODARMOR, SKILLMOD_HEALTH, -5)
 
 GM:AddSkillModifier(SKILL_HAEMOSTASIS, SKILLMOD_BLOODARMOR_DMG_REDUCTION, 0.16)
+GM:AddSkillModifier(SKILL_STONEBLOOD, SKILLMOD_BLOODARMOR_DMG_REDUCTION, 0.03)
 
 GM:AddSkillModifier(SKILL_DEFENDBLOOD, SKILLMOD_BLOODARMOR_DMG_REDUCTION, -1)
 
@@ -2795,6 +2803,8 @@ GM:AddSkillModifier(SKILL_THREE_IN_ONE, SKILLMOD_HEALTH, -10)
 GM:AddSkillModifier(SKILL_THREE_IN_ONE, SKILLMOD_MELEE_SWING_DELAY_MUL, -0.16)
 
 GM:AddSkillModifier(SKILL_CIRCULATION, SKILLMOD_BLOODARMOR, 1)
+GM:AddSkillModifier(SKILL_CIRCULATION1, SKILLMOD_BLOODARMOR, 3)
+GM:AddSkillModifier(SKILL_CIRCULATION2, SKILLMOD_BLOODARMOR, 3)
 
 GM:AddSkillModifier(SKILL_SANGUINE, SKILLMOD_BLOODARMOR, 11)
 GM:AddSkillModifier(SKILL_SANGUINE, SKILLMOD_HEALTH, -9)

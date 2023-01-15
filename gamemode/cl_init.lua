@@ -586,6 +586,48 @@ function GM:DrawFearMeter(power, screenscale)
 			sigilsc = sigilsc + 1
 		end
 	end
+	--[[for i, sigil in pairs(GAMEMODE.CachedSigils) do
+		if not sigil:IsValid() then continue end
+
+		health = sigil:GetSigilHealth()
+		if health > 0 then
+			pos = sigil:GetPos()
+			pos.z = pos.z + 48
+			distance = eyepos:DistToSqr(pos)
+
+			maxhealth = sigil:GetSigilMaxHealth()
+			corrupted = sigil:GetSigilCorrupted()
+			damageflash = math.min((CurTime() - sigil:GetSigilLastDamaged()) * 2, 1) * 255
+			missinghealthfrac = 1 - health / maxhealth
+			alpha = math.min(220, math.sqrt(distance / 4))
+
+			ang = (eyepos - pos):Angle()
+			ang:RotateAroundAxis(ang:Right(), 270)
+			ang:RotateAroundAxis(ang:Up(), 90)
+
+			cam_IgnoreZ(true)
+			cam_Start3D2D(pos, ang, math.max(250, math.sqrt(distance)) / 5000)
+			local oldfogmode = render_GetFogMode()
+			render_FogMode(0)
+
+			if corrupted then
+				surface_SetDrawColor(255 - damageflash, damageflash, 0, alpha)
+			else
+				surface_SetDrawColor(damageflash, 255, damageflash, alpha)
+			end
+			surface_DrawTexturedRect(-64, -128, 128, 256)
+			if missinghealthfrac > 0 then
+				surface_SetDrawColor(40, 40, 40, 255)
+				surface_DrawTexturedRectUV(-64, -128, 128, 256 * missinghealthfrac, 0, 0, 1, missinghealthfrac)
+			end
+
+			draw_SimpleTextBlurry(string.char(65 + i), "ZS3D2DFont2Big", 0, 128, COLOR_GRAY, TEXT_ALIGN_CENTER)
+
+			render_FogMode(oldfogmode)
+			cam_End3D2D()
+			cam_IgnoreZ(false)
+		end
+	end]]
 	if  sigilsc > 0 then
 		local sigwid, sighei = screenscale * 18, screenscale * 36
 		local extrude = size * 0.25 + sighei / 2
@@ -626,6 +668,7 @@ function GM:DrawFearMeter(power, screenscale)
 
 				surface_SetMaterial(matSigil)
 				surface_DrawTexturedRectRotated(sigx, sigy, sigwid, sighei, angle_current + 90)
+				draw_SimpleTextBlurry(string.char(65 + i), "ZS3D2DFontSuperTiny", sigx, sigy, COLOR_GRAY, TEXT_ALIGN_CENTER)
 
 				if corrupt then
 					surface_SetMaterial(matCrossout)

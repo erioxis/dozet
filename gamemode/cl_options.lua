@@ -108,6 +108,10 @@ GM.DisableNode = CreateClientConVar("zs_disablenode", "0", true, false):GetBool(
 cvars.AddChangeCallback("zs_disablenode", function(cvar, oldvalue, newvalue)
 	GAMEMODE.DisableNode = tonumber(newvalue) == 1
 end)
+GM.AddDesc = CreateClientConVar("zs_adddesc", "0", true, false):GetBool()
+cvars.AddChangeCallback("zs_adddesc", function(cvar, oldvalue, newvalue)
+	GAMEMODE.AddDesc = tonumber(newvalue) == 1
+end)
 GM.DisableNode2 = CreateClientConVar("zs_disablesprite", "0", true, false):GetBool()
 cvars.AddChangeCallback("zs_disablesprite", function(cvar, oldvalue, newvalue)
 	GAMEMODE.DisableNode2 = tonumber(newvalue) == 1
@@ -147,6 +151,7 @@ GM.Alpha_B = math.Clamp(CreateClientConVar("zs_alpha_b", 30, true, false):GetFlo
 cvars.AddChangeCallback("zs_alpha_b", function(cvar, oldvalue, newvalue)
 	GAMEMODE.Alpha_B = math.Clamp(tonumber(newvalue) or 1, 0, 255)
 end)
+
 
 GM.BG_AL = math.Clamp(CreateClientConVar("zs_bg_alpha", 252, true, false):GetFloat(), 0, 255)
 cvars.AddChangeCallback("zs_bg_alpha", function(cvar, oldvalue, newvalue)

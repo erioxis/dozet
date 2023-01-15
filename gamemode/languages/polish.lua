@@ -16,14 +16,14 @@ RULES FOR TRANSLATORS!!
   It will then fall back to this file instead of potentially using out of date wording in yours.
 ]]
 
-translate.AddLanguage("en", "English")
+translate.AddLanguage("pl", "Polish")
 --Чаленге
 LANGUAGE.survivor = "Survirvor"
-LANGUAGE.undead = "Undead"
+LANGUAGE.undead = "Nieumarli"
 
 LANGUAGE.new_op = "New Options"
 LANGUAGE.old_op = "Old Options"
-LANGUAGE.refresh = "Refresh"
+LANGUAGE.refresh = "Odśwież"
 
 LANGUAGE.challenge_daily1 = "DAILY:Killer"
 LANGUAGE.challenge_daily_d1 = "Kill 100 Zombie."
@@ -213,8 +213,6 @@ LANGUAGE.op_drawscore = "Draw crosshair in ironsights"
 LANGUAGE.op_musicon = "Enable ambient music"
 LANGUAGE.op_lhmusic = "Enable last human music"
 LANGUAGE.op_1click = "Activate skill on 1 click"
-LANGUAGE.op_adddesc_ms = "Show skill desc lower!"
-LANGUAGE.op_adddesc = "Upgraded Desc"
 --Honorable Mentions
 LANGUAGE.hm_mostkills  = "Guard of Dozet"
 LANGUAGE.hm_mostkills_desc  = "by %s, with %d killed zombies."
@@ -1606,9 +1604,6 @@ LANGUAGE.pshop_trinkets = "Trinkets"
 LANGUAGE.pshop_other = "Other"
 LANGUAGE.pshop_magic = "Magic"
 --конец мелочи
-
-
-LANGUAGE.caches_x_ready = "You have %s caches in resupply box!"
 --модификаторы
 LANGUAGE.p_mul = " point mul\n"
 LANGUAGE.exp_r = " explosive damage radius\n"
@@ -1719,7 +1714,7 @@ LANGUAGE.skill_cqarmor_d2 = "Speed = 50"
 LANGUAGE.skill_cboots = "HS-BOOTS" -- High Speed
 LANGUAGE.skill_cboots_d2 = "+10% Damage taken"
 LANGUAGE.skill_cboots_d1 = "+35 speed for CA ARMOR\n"
-LANGUAGE.skill_sdefender = "Sigil Defender "
+LANGUAGE.skill_sdefender = "Defender of the Sigil "
 LANGUAGE.skill_heavy = "Heavy"
 LANGUAGE.skill_meris = "Meris"
 LANGUAGE.skill_ttimes = "Tougher Times"
@@ -2196,7 +2191,7 @@ LANGUAGE.skill_blife_0 = "Bloody life"
 LANGUAGE.skill_blife_d1 = "+5% Melee damage for 10 blood armor,-25% melee damage"
 LANGUAGE.skill_stoici_0 = "Stoic I"
 LANGUAGE.skill_stoicii_0 = "Stoic II"
-LANGUAGE.skill_stoiciii_0 = "Stoic III"
+LANGUAGE.skill_stoiciii_0 = "Stoic II"
 LANGUAGE.skill_stoiciv_0 = "Stoic IV"
 LANGUAGE.skill_stoicv_0 = "Stoic V"
 LANGUAGE.skill_stoici_d1 = "+4 maximum health\n"
@@ -2678,7 +2673,7 @@ LANGUAGE.on_dismantle_give = "\nOn dismantle give: "
 LANGUAGE.skill_godheart = "God Heart"
 LANGUAGE.skill_godheart_d1  = "After killing supreme baragods of supreme baracats this skill become useless(only +4 amulet cells)"
 LANGUAGE.skill_vip = "V.I.P (1)"
-LANGUAGE.skill_vip_d1  = "+25% xp mul\nOnly for VIP"
+LANGUAGE.skill_vip_d1  = "+5 Health,+0.1 luck,+5% xp mul,+2.5% jump mul\nOnly for VIP"
 LANGUAGE.gui_oa = "Open Arsenal"
 
 LANGUAGE.p_dmg = "Damage"

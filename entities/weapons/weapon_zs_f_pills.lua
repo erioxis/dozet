@@ -21,7 +21,7 @@ end
 SWEP.ViewModel = "models/weapons/c_grenade.mdl"
 SWEP.WorldModel = "models/props/cs_office/water_bottle.mdl"
 
-SWEP.Primary.Ammo = "foodwater"
+SWEP.Primary.Ammo = "foodpill"
 
 SWEP.FoodHealth = 71
 SWEP.FoodEatTime = 1
@@ -62,7 +62,7 @@ function SWEP:Eat()
 		end
 	end
 	if owner:IsSkillActive(SKILL_PILLUCK) then
-	   owner.Luck = owner.Luck + 2
+	   owner.LuckAdd = owner.LuckAdd + 2
 	end
 
 	local max = owner:IsSkillActive(SKILL_D_FRAIL) and math.floor(owner:GetMaxHealth() * 0.25) or owner:GetMaxHealth()

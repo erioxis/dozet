@@ -21,7 +21,7 @@ end
 SWEP.ViewModel = "models/weapons/c_grenade.mdl"
 SWEP.WorldModel = "models/props/cs_office/water_bottle.mdl"
 
-SWEP.Primary.Ammo = "foodwater"
+SWEP.Primary.Ammo = "foodpill"
 
 SWEP.FoodHealth = 200
 SWEP.FoodEatTime = 1
@@ -61,7 +61,7 @@ function SWEP:Eat()
 		end
 	end
 	if owner:IsSkillActive(SKILL_PILLUCK) then
-	   owner.Luck = owner.Luck + 12
+	   owner.LuckAdd = owner.LuckAdd + 12
 	end
 	 owner:TakeInventoryItem("trinket_curse_dropping")
 

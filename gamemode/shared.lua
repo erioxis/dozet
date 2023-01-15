@@ -5,7 +5,7 @@ GM.Website	=	"https://github.com/erioxis/dozet"
 
 -- No, adding a gun doesn't make your name worth being here.
 GM.Credits = {
-	{"Version", "", "6.4.9"},
+	{"Version", "", "6.5.3"},
 	{"erioxis", "Phantom coder", "dead"},
 	{"Nullted", "", "RU-ENG Translation"},
 	{"Bro 3", "", "Some models"}
@@ -184,6 +184,7 @@ function GM:AddCustomAmmo()
 	game.AddAmmoType({name = "foodbanana"})
 	game.AddAmmoType({name = "foodsoda"})
 	game.AddAmmoType({name = "foodmilk"})
+	game.AddAmmoType({name = "foodpill"})
 	game.AddAmmoType({name = "foodtakeout"})
 	game.AddAmmoType({name = "foodwater"})
 end

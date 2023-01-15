@@ -1185,9 +1185,9 @@ trinket, soul = GM:AddTrinket("Soul of Alt Bethany", "altbetsoul", false, nil, {
 	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 10.697, y = 10.697 }, color = Color(33, 33, 31, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core_2+"] = { type = "Sprite", sprite = "effects/splashwake1", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 30, y = 30 }, color = Color(120, 200, 255, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 2, 0), angle = Angle(0, 0, 0), size = Vector(0.349, 0.349, 0.349), color = Color(55, 0, 5, 255), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} }
-}, nil, "Больше никакого хп!...Только кровка и хороший хил по хп!\n-100 HP hp,+700 blood armor\n+100% Heal received\n Q:4", nil, nil, "weapon_zs_soulalt")
-GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, -100) 
-GM:AddSkillModifier(trinket, SKILLMOD_BLOODARMOR, 700) 
+}, nil, "Больше никакого хп!...Только кровка и хороший хил по хп!\n-999 HP hp,+320 blood armor\n+100% Heal received\n Q:4", nil, nil, "weapon_zs_soulalt")
+GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, -999) 
+GM:AddSkillModifier(trinket, SKILLMOD_BLOODARMOR, 320) 
 GM:AddSkillModifier(trinket, SKILLMOD_HEALING_RECEIVED, 2) 
 GM:AddSkillModifier(trinket, SKILLMOD_BLOODARMOR_DMG_REDUCTION, 0.20) 
 

@@ -1174,12 +1174,18 @@ function PANEL:Paint(w, h)
 
 			render_SetColorModulation(1, 1, 1)
 
+			local xskill = 58
+			local colo = skill.Disabled and COLOR_DARKGRAY or selected and color_white or notunlockable and COLOR_MIDGRAY or COLOR_GRAY
 			if self.DesiredZoom < 9500 then
-				local colo = skill.Disabled and COLOR_DARKGRAY or selected and color_white or notunlockable and COLOR_MIDGRAY or COLOR_GRAY
 				if !skill.Hidden1 then
+					
+					--local g = string.Split(skill.Name, "\n")
 					draw_SimpleText(skill.Name, skillid <= -1 and "ZS3D2DFont2Big" or "ZS3D2DFont2", 0, 0, skill.AlwaysActive and not selected and  Color(255,202,202) or colo, TEXT_ALIGN_CENTER)
+					--if g[2] then
+					--	xskill = xskill + 32
+						--draw_SimpleText(g[2], skillid <= -1 and "ZS3D2DFont2Big" or "ZS3D2DFont2", 0, xskill-30, skill.AlwaysActive and not selected and  Color(255,202,202) or colo, TEXT_ALIGN_CENTER)
+					--end
 				end
-				local xskill = 58
 				if skill.AlwaysActive then
 					draw_SimpleText(translate.Get("s_alw_act"),"ZS3D2DFontSmall", 0, xskill, colo, TEXT_ALIGN_CENTER)
 					xskill = xskill + 32
@@ -1197,7 +1203,45 @@ function PANEL:Paint(w, h)
 					xskill = xskill + 32
 				end
 			end
-
+			if self.DesiredZoom < 3000 and GAMEMODE.AddDesc and !skill.Hidden1 then
+				--local c = string.Explode("\n", skill.Description)
+				if (type(GAMEMODE.SkillModifiers[skillid]) == "table" and table.Count(GAMEMODE.SkillModifiers[skillid]) or 0) > 0 then
+					for k,v in pairs(GAMEMODE.SkillModifiers[skillid]) do
+						local i = v or 1
+	
+						local exlude2 = {32,108,103,91,90}
+						if k >= 6 and !table.HasValue(exlude2, k) then
+							i = (i*100).."%"
+						end
+						if (v or 0) > 0 then
+							i = "+"..i
+						end
+						local exlude = {8,6,16,22,27,30,31,34,118,114,113,101,40,41,43,92,117,116,56,59,63,65,66,98,72,73,79,88 ,78}
+						local colorred = table.HasValue(exlude, k) and Color(71,231,119) or Color(238,37,37)
+						local colorgreen = table.HasValue(exlude, k) and Color(238,37,37) or Color(71,231,119)
+							--translate.Format("skillmod_n"..i,c)
+							if (v or 0) < 0 then
+								col = colorred
+							elseif (v or 0) > 0 then
+								col = colorgreen
+							else
+								col = Color(255,255,255)
+							end
+							xskill= xskill+32
+						draw_SimpleText(translate.Format("skillmod_n"..k,i),"ZS3D2DFontSmall", 0, xskill, col, TEXT_ALIGN_CENTER)
+					end
+				end
+		
+				--local colid = 0
+			--	for i=1,#c do
+				--	local txt = c[i] or " "
+				--	if txt:sub(1, 1) == "^" then
+						-- colid = tonumber(txt:sub(2, 2)) or 0
+					--	 txt = txt:sub(3)
+					--end
+					--draw_SimpleText(txt,"ZSHUDFontSmallest", 0, xskill+i*32, util.ColorIDToColor(colid, COLOR_GRAY), TEXT_ALIGN_CENTER)
+				--end
+			end
 			DisableClipping(false)
 			surface.DisableClipping(false)
 			cam.End3D2D()
@@ -1207,7 +1251,7 @@ function PANEL:Paint(w, h)
 				if can_remort then
 					render.DrawQuadEasy(nodepos, to_camera, 32, 32, color_white, angle)
 				end
-			elseif not skill.Disabled and !skill.Hidden1 then
+			elseif not skill.Disabled and !skill.Hidden1 and !GAMEMODE.DisableNode2 then
 				colGlow.r = sat * 255 colGlow.g = sat * 255 colGlow.b = sat * 255
 				if MySelf:IsSkillDesired(skillid) then
 					colGlow.r = colGlow.r / 4
@@ -1223,9 +1267,7 @@ function PANEL:Paint(w, h)
 					end
 				end
 				size = selected and 40 or 27
-				if !GAMEMODE.DisableNode2 then
-					render.DrawQuadEasy(nodepos, to_camera, size, size, colGlow, angle)
-				end
+				render.DrawQuadEasy(nodepos, to_camera, size, size, colGlow, angle)
 				angle = angle + 45
 			end
 		end
@@ -1238,7 +1280,6 @@ function PANEL:Paint(w, h)
 	end
 
 	render_SuppressEngineLighting(false)
-
 	cam.IgnoreZ(false)
 	cam.End3D()
 

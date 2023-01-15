@@ -27,7 +27,7 @@ SWEP.WorldModel = "models/weapons/w_smg_ump45.mdl"
 SWEP.UseHands = true
 
 SWEP.Primary.Sound = Sound("Weapon_UMP45.Single")
-SWEP.Primary.Damage = 89
+SWEP.Primary.Damage = 77
 SWEP.Primary.NumShots = 1
 SWEP.Primary.Delay = 0.16
 
@@ -56,6 +56,7 @@ SWEP.IronSightsAng = Vector(-1, 0.2, 2.55)
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_FIRE_DELAY, -0.015)
 
 function SWEP:FinishReload()
+	if self.AllDamage then 	BaseClass.FinishReload(self) return end
 	self:SendWeaponAnim(ACT_VM_IDLE)
 	self:SetNextReload(0)
 	self:SetReloadStart(0)
@@ -80,7 +81,7 @@ function SWEP:FinishReload()
 end
 GAMEMODE:AddNewRemantleBranch(SWEP, 1, translate.Get("wep_balance_r1"), translate.Get("wep_d_balance_r1"), function(wept)
 	wept.Primary.Damage = wept.Primary.Damage * 0.8
-	wept.Primary.Delay = wept.Primary.Delay * 0.8
+	wept.Primary.Delay = wept.Primary.Delay * 1.2
 	wept.Primary.ClipSize = 25
 	wept.AllDamage = true
 end)
@@ -89,10 +90,10 @@ function SWEP.BulletCallback(attacker, tr, dmginfo)
 	local hitent = tr.Entity
 	if hitent:IsValidLivingZombie() then
 		if !wep.AllDamage then
-			hitent:AttachmentDamage(dmginfo:GetDamage()*0.1, attacker,wep,(wep:Clip1() <= 100 and wep:Clip1() > 75 and 1 or wep:Clip1() <= 75 and wep:Clip1() > 50 and 2 or wep:Clip1() <= 50 and wep:Clip1() > 25 and 3 or 4))
+			hitent:AttachmentDamage(dmginfo:GetDamage()*0.25, attacker,wep,(wep:Clip1() <= 100 and wep:Clip1() > 75 and 1 or wep:Clip1() <= 75 and wep:Clip1() > 50 and 2 or wep:Clip1() <= 50 and wep:Clip1() > 25 and 3 or 4))
 		else
 			for i=1,4 do
-				hitent:AttachmentDamage(dmginfo:GetDamage()*0.15, attacker,wep,i)
+				hitent:AttachmentDamage(dmginfo:GetDamage()*0.05, attacker,wep,i)
 			end
 		end
 	end

@@ -21,7 +21,7 @@ end
 SWEP.ViewModel = "models/weapons/c_grenade.mdl"
 SWEP.WorldModel = "models/props/cs_office/water_bottle.mdl"
 
-SWEP.Primary.Ammo = "foodwater"
+SWEP.Primary.Ammo = "foodpill"
 
 SWEP.FoodHealth = -345
 SWEP.FoodEatTime = 1

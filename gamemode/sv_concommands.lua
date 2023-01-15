@@ -576,7 +576,7 @@ concommand.Add("zsdropweapon", function(sender, command, arguments)
 		
 	end
 	if sender:HasTrinket("curse_fragility") then
-		sender.Luck = sender.Luck - 6
+		sender.LuckAdd = sender.LuckAdd - 6
 		sender:TakeInventoryItem("curse_fragility")
 	end
 	if sender:HasTrinket("curse_ponos") then

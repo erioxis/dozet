@@ -155,14 +155,22 @@ end
 function CLASS:ProcessDamage(pl, dmginfo)
 	local attacker = dmginfo:GetAttacker()
 
-	if dmginfo:GetAttacker() and dmginfo:GetAttacker() ~= pl and dmginfo:GetInflictor() and dmginfo:GetInflictor().IsMelee and not dmginfo:GetInflictor().IgnoreNiggers then
-		if !dmginfo:GetAttacker().ClanLoxov or attacker:IsValidLivingHuman() and !attacker:GetActiveWeapon().ResistDamage then
-			dmginfo:GetAttacker():TakeSpecialDamage(dmginfo:GetDamage() * 0.05, DMG_DIRECT, pl, pl)
-			local cursed = dmginfo:GetAttacker():GetStatus("cursed")
+	if attacker and attacker ~= pl and dmginfo:GetInflictor() and dmginfo:GetInflictor().IsMelee and not dmginfo:GetInflictor().IgnoreNiggers then
+		if !attacker.ClanLoxov or attacker:IsValidLivingHuman() and !attacker:GetActiveWeapon().ResistDamage then
+			attacker:TakeSpecialDamage(dmginfo:GetDamage() * 0.05, DMG_DIRECT, pl, pl)
+			local cursed = attacker:GetStatus("cursed")
 			if (cursed) then 
-				dmginfo:GetAttacker():AddCursed(pl, cursed.DieTime - CurTime() + 5 + ((attacker:GetZSRemortLevel()+1) or 1)/6)
+				attacker:AddCursed(pl, cursed.DieTime - CurTime() + 5 + ((attacker:GetZSRemortLevel()+1) or 1)/6)
 			else
-				dmginfo:GetAttacker():AddCursed(pl, 5+ ((attacker:GetZSRemortLevel()+1) or 1)/6)
+				attacker:AddCursed(pl, 5+ ((attacker:GetZSRemortLevel()+1) or 1)/6)
+			end
+			if dmginfo:GetInflictor().OneTapDevo then
+				local cursed = attacker:GetStatus("cursed")
+				if (cursed) then 
+					attacker:AddCursed(pl, cursed.DieTime - CurTime() + 50 )
+				else
+					attacker:AddCursed(pl, 50)
+				end
 			end
 		end
 		dmginfo:SetDamage(((attacker:IsValidLivingHuman() and attacker:IsSkillActive(SKILL_AMULET_12) or attacker:IsValidLivingHuman() and attacker:GetActiveWeapon().ResistDamage) and 0 or 5))

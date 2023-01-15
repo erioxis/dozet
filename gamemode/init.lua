@@ -1424,7 +1424,7 @@ function GM:Think()
 					pl:GiveAchievement("bruhwtf")
 				end
 				if time >= (pl.NextRegenerateMantle or 1) and pl.HolyMantle == 0 and pl:IsSkillActive(SKILL_HOLY_MANTLE) then
-					pl.NextRegenerateMantle = time + math.max((27 - (pl.Luck / 3)) + self.GetWave() * 3,5)
+					pl.NextRegenerateMantle = time + math.max((27 - ((pl.Luck + pl.LuckAdd) / 3)) + self.GetWave() * 3,5)
 					pl.HolyMantle = pl.HolyMantle + 1
 				end
 				if pl.HolyMantle == 1 and pl:IsSkillActive(SKILL_HOLY_MANTLE) and pl:IsValid() and pl.MantleFix <= CurTime() then
@@ -1581,7 +1581,8 @@ function GM:Think()
 					net.Send(pl)
 
 					net.Start("zs_stowagecaches")
-						net.WriteInt(pl.StowageCaches, 8)
+						net.WriteInt(pl.StowageCaches, 12)
+						net.WriteBool(true)
 					net.Send(pl)
 				end
 			elseif P_Team(pl) == TEAM_UNDEAD and P_Alive(pl) then
@@ -2819,6 +2820,7 @@ function GM:PlayerInitialSpawnRound(pl)
 	pl.m_Evo = nil
 	pl.m_Shade_Force = nil
 	pl.m_Zombie_CursedHealth = nil
+	pl.LuckAdd = 0
 
 	pl.ZSInventory = {}
 	pl.IsLastHuman = nil
@@ -4469,8 +4471,8 @@ function GM:HumanKilledZombie(pl, attacker, inflictor, dmginfo, headshot, suicid
 		if pl:WasHitInHead() then
 			attacker.Headshots = (attacker.Headshots or 0) + 1
 		end
-		if attacker:IsSkillActive(SKILL_PILLUCK) then
-			attacker.Luck = attacker.Luck + 0.1
+		if attacker:IsSkillActive(SKILL_PILLUCK) and pl.LuckFromKillYes >= CurTime() then
+			attacker.LuckAdd = attacker.LuckAdd + 0.05
 		end
 
 		GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_WEAPON, wep:GetClass(), "Kills", 1)
@@ -5059,7 +5061,8 @@ function GM:PlayerSpawn(pl)
 		pl.StowageCaches = 0
 
 		net.Start("zs_stowagecaches")
-			net.WriteInt(pl.StowageCaches, 8)
+			net.WriteInt(pl.StowageCaches, 12)
+			net.WriteBool(false)
 		net.Send(pl)
 
 		pl:ResetSpeed()
@@ -5340,7 +5343,7 @@ function GM:WaveStateChanged(newstate, pl)
 
 		for _, pl in pairs(player.GetAll()) do
 			if pl:Team() == TEAM_HUMAN and pl:Alive() then
-				local lucktrue  = (pl.Luck or 1) + ((pl:IsSkillActive(SKILL_LUCKY_UNLIVER) and self:GetWave() or 0) * 2)
+				local lucktrue  = (pl.Luck or 1) + pl.LuckAdd + ((pl:IsSkillActive(SKILL_LUCKY_UNLIVER) and self:GetWave() or 0) * 2)
 				if self.EndWaveHealthBonus > 0 and !pl:HasTrinket("lehasoul") then
 					pl:SetHealth(math.min(pl:GetMaxHealth(), pl:Health() + self.EndWaveHealthBonus))
 				end

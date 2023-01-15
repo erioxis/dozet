@@ -180,7 +180,7 @@ function meta:ProcessDamage(dmginfo)
 			if (attacker:IsSkillActive(SKILL_BOUNTYKILLER) or self:GetZombieClassTable().Boss or self:GetZombieClassTable().DemiBoss) and !self:GetZombieClassTable().CrowDa and !self:GetZombieClassTable().Skeletal then
 				local mul = ((attacker:IsSkillActive(SKILL_BOUNTYKILLER) and 0.15 or 0) + (self:GetZombieClassTable().DemiBoss and 0.05 or self:GetZombieClassTable().Boss and 0.1 or 0))
 				attacker:SetProgress(attacker:GetProgress('bprog')+damage*mul, 'bprog')
-				local tbl = {"headshoter", "ind_buffer", "altbetsoul", "soulalteden", "ultra_at"}
+				local tbl = {"headshoter", "ind_buffer", "soulalteden", "ultra_at"}
 				local hm = table.Random(tbl)
 				if attacker:GetProgress('bprog') >= 1500 * (attacker:GetProgress('bprogmul')+1) and !attacker:HasTrinket(hm) then
 					attacker:SetProgress(0, 'bprog')
@@ -195,7 +195,6 @@ function meta:ProcessDamage(dmginfo)
 
 				if attacker.RandomDamage > 250 then
 														local buff = {
-							"holly",
 							"medrifledefboost",
 							"renegade",
 							"strengthdartboost",
@@ -274,9 +273,9 @@ function meta:ProcessDamage(dmginfo)
 					dmginfo:SetDamage(dmginfo:GetDamage() + (attacker:GetBloodArmor() * 0.05))
 				end
 
-				if attacker:IsSkillActive(SKILL_PILLUCK) then
+				if attacker:IsSkillActive(SKILL_PILLUCK) and math.random(10) == 1 then
 					self.LuckFromKillYesOwner = attacker
-					self.LuckFromKillYes = CurTime() + 0.1
+					self.LuckFromKillYes = CurTime() + 0.5
 				end
 				
 
@@ -301,20 +300,20 @@ function meta:ProcessDamage(dmginfo)
 	end
 	
 
-	if self:IsSkillActive(SKILL_BLESSEDROD) and dmginfo:GetDamage() >= 30 then
+	if self:IsSkillActive(SKILL_BLESSEDROD) and dmginfo:GetDamage() >= 30 and !dmgbypass then
 		dmginfo:SetDamage(dmginfo:GetDamage() - 12)
 	end
 	if (((self:GetZSRemortLevel() / 4) or 0) + (self.AmuletPiece or 0)) < 0 then
 		dmginfo:ScaleDamage(2 + ((self:GetZSRemortLevel() / 4) - (self.AmuletPiece or 0)))
 	end
-	if  self.ClanMelee then
+	if  self.ClanMelee and !dmgbypass  then
 		dmginfo:ScaleDamage(0.85)
 	end
 
     truedogder = 30 - (self:GetWalkSpeed() / 15)
 	rngdogde = math.max(0,math.random(1,math.max(truedogder,2)))
  
-	if self:IsSkillActive(SKILL_DODGE) and rngdogde == 1 then
+	if self:IsSkillActive(SKILL_DODGE) and rngdogde == 1 and !dmgbypass then
 		if attacker:IsPlayer() then
 			GAMEMODE:BlockFloater(attacker, self, dmginfo:GetDamagePosition())
 		end
@@ -322,7 +321,7 @@ function meta:ProcessDamage(dmginfo)
 		net.Start("zs_damageblock")
 		net.Send(self)
     end
-	if self:IsSkillActive(SKILL_HELPLIFER) and math.random(1,3) == 1 and dmginfo:GetDamage() >= self:Health() then
+	if self:IsSkillActive(SKILL_HELPLIFER) and math.random(1,3) == 1 and dmginfo:GetDamage() >= self:Health() and !dmgbypass then
 		dmginfo:SetDamage(0)
 		if attacker:IsPlayer() then
 			GAMEMODE:BlockFloater(attacker, self, dmginfo:GetDamagePosition())
@@ -561,7 +560,7 @@ function meta:ProcessDamage(dmginfo)
 					dmginfo:ScaleDamage(0.75)
 				end
 
-				if self:GetActiveWeapon().CanDefend and math.min(10,self:GetActiveWeapon():GetPerc()) > 0 then
+				if self:GetActiveWeapon().CanDefend and math.min(10,self:GetActiveWeapon():GetPerc()) > 0 and !dmgbypass then
 					dmginfo:SetDamage(dmginfo:GetDamage() / self:GetActiveWeapon():GetPerc())
 					self:GetActiveWeapon():SetPerc(self:GetActiveWeapon():GetPerc() - 1)
 				end
@@ -894,7 +893,7 @@ function meta:GetBossZombieIndex()
 		"Puke Pus",
 		"Skeleton"  --16
 	}
-	if (self:GetInfo("zs_bossclass") == ("Minos Prime" or "Devourer")) and GAMEMODE:GetWave() <= 3 then return bossclasses[3] end
+	if table.HasValue({"Minos Prime","Devourer"},self:GetInfo("zs_bossclass")) and GAMEMODE:GetWave() <= 3 then return bossclasses[3] end
 	local desired = self:GetInfo("zs_bossclass") or ""
 	if GAMEMODE:IsBabyMode() then
 		desired = "Giga Gore Child"
@@ -1604,7 +1603,8 @@ function meta:Resupply(owner, obj)
 		self.StowageCaches = self.StowageCaches - 1
 
 		net.Start("zs_stowagecaches")
-			net.WriteInt(self.StowageCaches, 8)
+			net.WriteInt(self.StowageCaches, 12)
+			net.WriteBool(false)
 		net.Send(self)
 
 
@@ -2601,7 +2601,7 @@ local function FindZapperTarget(pos, attacker)
 	local targethealth = 99999
 	local isheadcrab
 
-	for k, ent in pairs(ents.FindInSphere(pos, 135)) do
+	for k, ent in pairs(ents.FindInSphere(pos, 210)) do
 		if ent:IsValidLivingZombie() and not ent:GetZombieClassTable().NeverAlive then
 			isheadcrab = ent:IsHeadcrab()
 			if (isheadcrab or ent:Health() < targethealth) and TrueVisibleFilters(pos, ent:NearestPoint(pos), self, ent) then
@@ -2619,7 +2619,7 @@ local function FindZapperTarget(pos, attacker)
 end
 local function DoCryoArc(attacker, inflictor, pl, damage)
 	if pl:IsPlayer() and pl:IsValidLivingZombie() then
-		local pos = pl:LocalToWorld(Vector(0, 0, 29))
+		local pos = pl:LocalToWorld(Vector(0, 0, 12))
 		local target = FindZapperTarget(pos, attacker)
 
 		local shocked = {}
