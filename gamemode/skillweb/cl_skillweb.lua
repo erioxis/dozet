@@ -317,7 +317,7 @@ function PANEL:Init()
 			node = ClientsideModel("models/dav0r/hoverball.mdl", RENDER_GROUP_OPAQUE_ENTITY)
 			if IsValid(node) then
 				node:SetNoDraw(true)
-				node:SetPos(Vector(0, (skill.x + offsets[skill.Tree][1]) * 20, (skill.y + offsets[skill.Tree][2]) * 20))
+				node:SetPos(Vector(0, (skill.x + offsets[skill.Tree][1]) * GAMEMODE.X_Y_Skill, (skill.y + offsets[skill.Tree][2]) * GAMEMODE.X_Y_Skill))
 				--if nodemodel_scale[skill.Tree] then
 				--	if skill.Disabled then
 				--		node:SetModelScale((nodemodel_scale[skill.Tree] or 0.9), 0)

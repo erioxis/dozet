@@ -195,6 +195,8 @@ function meta:ProcessDamage(dmginfo)
 
 				if attacker.RandomDamage > 250 then
 														local buff = {
+															
+							"holly",
 							"medrifledefboost",
 							"renegade",
 							"strengthdartboost",
@@ -202,6 +204,7 @@ function meta:ProcessDamage(dmginfo)
 							"bleed",
 							"bloodlust"
 						}
+						attacker.RandomDamage = 0
 						attacker:GiveStatus(buff[math.random(1, #buff)],math.random(10,50))
 
 				end
@@ -2357,8 +2360,9 @@ local bossdrops = {
 	"trinket_nulledsoul",  -- 24
 	"trinket_soulmedical",  -- 25
 	"trinket_lampsoul",  -- 26
-	"trinket_barasoul",  -- 26
-	"trinket_lehasoul"  -- 27
+	"trinket_barasoul",  -- 27
+	"trinket_troyaksoul",  -- 28
+	"trinket_lehasoul"  -- 29
 }
 local demiboss = {
 	"comp_soul_alt_h",

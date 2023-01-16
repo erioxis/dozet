@@ -154,6 +154,7 @@ LANGUAGE.skill_add_health = "Здоровья"
 LANGUAGE.skill_add_amulet = "Ячеек Амулета"
 LANGUAGE.skill_add_speed = "Скорости"
 -- Настройки||
+LANGUAGE.op_xy = "X и Y Стандартная поза для скиллов(Есть баги!)"
 LANGUAGE.op_adddesc_ms = "Показывает описание скиллов!"
 LANGUAGE.op_adddesc = "Улучшенное описание"
 LANGUAGE.op_ms_mss = "Обновленные волны"

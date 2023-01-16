@@ -167,6 +167,8 @@ LANGUAGE.skill_add_health = "Health"
 LANGUAGE.skill_add_amulet = "Amulet Cells"
 LANGUAGE.skill_add_speed = "Speed"
 -- Options|||
+LANGUAGE.op_xy = "X and Y standart pos for F3(Have bugs!)"
+LANGUAGE.op_show_node = "Optimised F3"
 LANGUAGE.op_ms_mss = "Updated Gamestate"
 LANGUAGE.op_show_node = "Optimised F3"
 LANGUAGE.op_show_node_tool = "Disable Skill Model"

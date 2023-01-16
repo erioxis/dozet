@@ -2545,12 +2545,7 @@ concommand.Add("zs_mutationshop_click", function(sender, command, arguments)
 			if tab.Worth and tab.Callback then
 				cost = tab.Worth
 				hasalready[id] = true
-				tab.Callback(sender)
-				sender:TakeTokens(cost)
-				sender:PrintTranslatedMessage(HUD_PRINTTALK, "purchased_x_for_y_btokens", tab.Name, cost )
-				sender:SendLua("surface.PlaySound(\"ambient/levels/labs/coinslot1.wav\")")
-				sender.UsedMutations = sender.UsedMutations or { }
-				table.insert( sender.UsedMutations, tab.Signature )
+
 			end
 		end
 	end
@@ -2572,20 +2567,25 @@ concommand.Add("zs_mutationshop_click", function(sender, command, arguments)
 		end
 	end
 
-	--[[if itemtab.Worth then
+	if itemtab.Worth then
 	
 		local tokens = sender:GetTokens()
 		local cost = itemtab.Worth
 		
 		cost = math.ceil(cost)
-										-- FIX THIS LATER
+
 		if tokens < cost  then
 			sender:CenterNotify(COLOR_RED, translate.ClientGet(sender, "you_dont_have_enough_btokens"))
 			sender:SendLua("surface.PlaySound(\"buttons/button10.wav\")")
 			return
 		end
-	
-	end]]
+		itemtab.Callback(sender)
+		sender:TakeTokens(cost)
+		sender:PrintTranslatedMessage(HUD_PRINTTALK, "purchased_x_for_y_btokens", itemtab.Name, cost )
+		sender:SendLua("surface.PlaySound(\"ambient/levels/labs/coinslot1.wav\")")
+		sender.UsedMutations = sender.UsedMutations or { }
+		table.insert( sender.UsedMutations, itemtab.Signature )
+	end
 
 	net.Start("zs_mutations_table")
 		net.WriteTable(sender.UsedMutations)

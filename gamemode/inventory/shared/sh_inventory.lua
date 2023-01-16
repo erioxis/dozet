@@ -1065,7 +1065,14 @@ trinket = GM:AddTrinket("Soul of botyara(leha)", "lehasoul", false, nil, {
 GM:AddSkillModifier(trinket, SKILLMOD_ARSENAL_DISCOUNT, 0.1)
 GM:AddSkillModifier(trinket, SKILLMOD_BLEED_DAMAGE_TAKEN_MUL, 0.5)
 
-
+trinket, soul = GM:AddTrinket("Soul of Troy", "troyaksoul", false, nil, {
+	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 1.697, y = 1.697 }, color = Color(94, 94, 94), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
+	["black_core_2+"] = { type = "Sprite", sprite = "effects/splashwake1", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 10, y = 10 }, color = Color(172, 172, 172), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
+	["black_core"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 2, 0), angle = Angle(0, 0, 0), size = Vector(0.349, 0.349, 0.349), color = Color(126, 126, 126, 100), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} }
+}, nil, "-7 удачи,+35% Сила починки, -25% к времени перед следующим удара молотка\n-7 Luck,+35% Repair rate,-25% swing delay with the Carpenter Hammer \n Q:3", nil, nil, "weapon_zs_soul")
+GM:AddSkillModifier(trinket, SKILLMOD_LUCK, -7)
+GM:AddSkillModifier(trinket, SKILLMOD_REPAIRRATE_MUL, 0.35)
+GM:AddSkillModifier(trinket, SKILLMOD_HAMMER_SWING_DELAY_MUL, -0.25)
 
 
 
@@ -1239,6 +1246,8 @@ trinket, soul = GM:AddTrinket("Soul of Baragod", "barasoul", false, nil, {
 	["black_core"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 2, 0), angle = Angle(0, 0, 0), size = Vector(0.349, 0.349, 0.349), color = Color(55, 55, 5, 100), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} }
 }, nil, "+1 Здоровья\n+1 HP \n Q:-1", nil, nil, "weapon_zs_soul")
 GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, 1)
+
+
 
 
 

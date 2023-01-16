@@ -141,6 +141,10 @@ GM.IronsightZoomScale = math.Clamp(CreateClientConVar("zs_ironsightzoom", 1, tru
 cvars.AddChangeCallback("zs_ironsightzoom", function(cvar, oldvalue, newvalue)
 	GAMEMODE.IronsightZoomScale = math.Clamp(tonumber(newvalue) or 1, 0, 1)
 end)
+GM.X_Y_Skill = math.Clamp(CreateClientConVar("zs_x_y", 20, true, false):GetFloat(), 12, 45)
+cvars.AddChangeCallback("zs_x_y", function(cvar, oldvalue, newvalue)
+	GAMEMODE.X_Y_Skill = math.Clamp(tonumber(newvalue) or 20, 12, 45)
+end)
 
 GM.Alpha_P = math.Clamp(CreateClientConVar("zs_alpha_p", 90, true, false):GetFloat(), 0, 1)
 cvars.AddChangeCallback("zs_alpha_p", function(cvar, oldvalue, newvalue)
