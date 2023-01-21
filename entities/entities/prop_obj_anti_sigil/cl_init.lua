@@ -15,7 +15,7 @@ end
 
 function ENT:Think()
 	if EyePos():DistToSqr(self:GetPos()) <= 4900000 then -- 700^2
-		self.AmbientSound:PlayEx(0.33, 75 + (self:GetSigilHealth() / self:GetSigilMaxHealth()) * 25)
+		self.AmbientSound:PlayEx(0.33, 75)
 	else
 		self.AmbientSound:Stop()
 	end
@@ -47,25 +47,6 @@ local render_DrawQuadEasy = render.DrawQuadEasy
 local render_DrawSprite = render.DrawSprite
 
 function ENT:DrawTranslucent()
-        local distance = MySelf:GetPos():Distance( self:GetPos() )
-        local alpha = 255
-        local at = self:GetPos():ToScreen()
-
-
-        local ang = Angle( 0, 0, 0 )
-        local up = Vector( 0, 0, 1 )
-        local ringpos = self:GetPos()
-        local frametime = FrameTime() * 500
-        local ringsize = math.Clamp(948 / (GAMEMODE:GetWave() * 0.33),163,948)
-
-        render.SetMaterial( matBeam )
-        render.StartBeam( 20 )
-        for i=1, 20 do
-            render.AddBeam( ringpos + ang:Forward() * ringsize, 10, 10, Color( 109, 151, 54) )
-            ang:RotateAroundAxis( up, 20 )
-        end
-            
-        render.EndBeam()
 	self:RemoveAllDecals()
 
 	local scale = self.ModelScale
@@ -77,21 +58,19 @@ function ENT:DrawTranslucent()
 	local eyeangles = EyeAngles()
 	local forwardoffset = 16 * scale * self:GetForward()
 	local rightoffset = 16 * scale * self:GetRight()
-	local healthperc = self:GetSigilHealth() / self:GetSigilMaxHealth()
 	local radius = (180 + math_cos(sat) * 40) * scale
 	local whiteradius = (122 + math_sin(sat) * 32) * scale
 	local up = self:GetUp()
 	local spritepos = self:GetPos() + up
 	local spritepos2 = self:WorldSpaceCenter()
-	local corrupt = self:GetSigilCorrupted()
-	local ColorD = HSVToColor((CurTime() * 60 + (2 * 5)) % 360, (CurTime() * 60 + (2 * 5)) % 360, 1)
+	local ColorD = HSVToColor(CurTime()*90 % 360, 0.7, 0.7)
 	if corrupt then
 		ColorD.g = 0.56
 	end
 
-	ColorD.r = ColorD.r/270 * healthperc
-	ColorD.g = ColorD.g/270 * healthperc
-	ColorD.b = ColorD.b/270 * healthperc
+	ColorD.r = ColorD.r/270 
+	ColorD.g = ColorD.g/270 
+	ColorD.b = ColorD.b/270 
 	render_SuppressEngineLighting(true)
 	render_SetColorModulation(ColorD.r ^ 0.5, ColorD.g ^ 0.5, ColorD.b ^ 0.2)
 
@@ -102,13 +81,13 @@ function ENT:DrawTranslucent()
 	render_SetColorModulation(ColorD.r, ColorD.g, ColorD.b)
 
 	render_ModelMaterialOverride(matWhite)
-	render_SetBlend(0.7 * healthperc)
+	render_SetBlend(0.7)
 
 	self:DrawModel()
 
 	render_SetColorModulation(ColorD.r, ColorD.g, ColorD.b)
 
-	self:SetModelScaleVector(Vector(0.1, 0.1, 0.9 * math.max(0.02, healthperc)) * scale)
+	self:SetModelScaleVector(Vector(0.1, 0.1, 0.9) * scale)
 	render_SetBlend(0.2)
 	cam_Start3D(eyepos + forwardoffset + rightoffset, eyeangles)
 	self:DrawModel()
@@ -137,7 +116,7 @@ function ENT:DrawTranslucent()
 	cDraw.r = ColorD.r * 255
 	cDraw.g = ColorD.g * 255
 	cDraw.b = ColorD.b * 255
-	cDrawWhite.r = healthperc * 255
+	cDrawWhite.r = 255
 	cDrawWhite.g = cDrawWhite.r
 	cDrawWhite.b = cDrawWhite.r
 
@@ -163,12 +142,12 @@ function ENT:DrawTranslucent()
 	local emitter = ParticleEmitter(pos)
 	emitter:SetNearClip(24, 32)
 
-	local particle = emitter:Add(corrupt and "particle/smokesprites_0001" or "sprites/glow04_noz", pos)
+	local particle = emitter:Add("sprites/glow04_noz", pos)
 	particle:SetDieTime(math.Rand(1.5, 4))
 	particle:SetVelocity(Vector(0, 0, math.Rand(32, 64) * scale))
 	particle:SetStartAlpha(0)
 	particle:SetEndAlpha(255)
-	particle:SetStartSize(math.Rand(2, 4) * (corrupt and 3 or 1) * scale)
+	particle:SetStartSize(math.Rand(2, 4) * 1 * scale)
 	particle:SetEndSize(0)
 	particle:SetRoll(math.Rand(0, 360))
 	particle:SetRollDelta(math.Rand(-1, 1))

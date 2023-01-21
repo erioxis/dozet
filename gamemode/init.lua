@@ -88,6 +88,7 @@ AddCSLuaFile("vgui/pendboard.lua")
 AddCSLuaFile("vgui/pworth.lua")
 
 AddCSLuaFile("vgui/parsenal.lua")
+AddCSLuaFile("vgui/parsenal_anti.lua")
 AddCSLuaFile("vgui/premantle.lua")
 AddCSLuaFile("vgui/zshealtharea.lua")
 AddCSLuaFile("vgui/zsstatusarea.lua")
@@ -499,7 +500,7 @@ end
 GM.CenterNotify = GM.CenterNotifyAll
 GM.NoBaracursed = true
 GM.DamageLock = false 
-GM.NewYear = true
+GM.NewYear = false
 
 function GM:TopNotifyAll(...)
 	net.Start("zs_topnotify")
@@ -3780,11 +3781,11 @@ function GM:DamageAtFloater(attacker, victim, dmgpos, dmg, typeid)
 end
 function GM:BlockFloater(attacker, victim, dmgpos, bool)
 	if attacker == victim then return end
-	if dmgpos == vector_origin and victim:IsValid() then dmgpos = victim:NearestPoint(attacker:EyePos()) end
+	if dmgpos == vector_origin and victim:IsValid() then dmgpos = Vector(0,0,0) end
 
 	net.Start("zs_block_number")
 		net.WriteBool(bool)
-		net.WriteVector(dmgpos)
+		net.WriteVector((dmgpos or Vector(0,0,0)))
 	net.Send(attacker)
 end
 
@@ -4316,6 +4317,9 @@ function GM:PlayerDeath(pl, inflictor, attacker)
 			end
 		end)
 	end
+	if pl:Team() == TEAM_HUMAN then
+		pl:AddTokens(math.ceil((pl:GetPoints() or 1)/2))
+	end
 end
 
 function GM:PlayerDeathSound()
@@ -4683,15 +4687,38 @@ function GM:DoPlayerDeath(pl, attacker, dmginfo)
 
 		pl:CallZombieFunction5("PostOnKilled", attacker, inflictor, suicide, headshot, dmginfo)
 	elseif plteam == TEAM_HUMAN then
-		pl.NextSpawnTime = ct + 4
+		if pl:IsSkillActive(SKILL_PHOENIX) and pl.RedeemedOnce then 
+			local oldw = {}
+			local oldt = {}
+			for _, wep in pairs(pl:GetWeapons()) do
+				if wep:IsValid() then
+					table.insert(oldw,#oldw+1,wep:GetClass())
+				end
+			end
+			for invitem, count in pairs(pl:GetInventoryItems()) do
+				for i = 1, count do
+					table.insert(oldt, #oldt+1,invitem)
+				end
+			end
+			timer.Simple(0.1, function()
+				for k,v in pairs(oldw) do
+					pl:Give(v)
+				end
+				for k,v in pairs(oldt) do
+					pl:AddInventoryItem(v)
+				end
+			end)
+			return false
+	 	end
+		pl.NextSpawnTime = ct + 4 
 
 		pl:PlayDeathSound()
 
 		if attacker:IsPlayer() and attacker ~= pl then
 			gamemode.Call("ZombieKilledHuman", pl, attacker, inflictor, dmginfo, headshot, suicide)
 		end
-
 		pl:DropAll()
+			
 		timer.Simple(0, function() DelayedChangeToZombie(pl) end) -- We don't want people shooting barrels near teammates.
 		self.PreviouslyDied[pl:UniqueID()] = CurTime()
 		if self:GetWave() == 0 then
@@ -5396,11 +5423,11 @@ function GM:WaveStateChanged(newstate, pl)
 						if pl:HasTrinket("lotteryticket")  then 
 					    local luckdis = (lucktrue  / 4)
 						local chargemax = 6 - luckdis
-						local luck = 20 - lucktrue 
+						local luck = math.max(20 - lucktrue,3) 
 						local lucky1 = math.random(1,luck)
 						local charge = math.random(1,chargemax)
 
-						if lucky1 == 5 then 
+						if lucky1 == 1 then 
 							
 
 						pl:AddPoints(120)
@@ -5422,13 +5449,13 @@ function GM:WaveStateChanged(newstate, pl)
 					if pl:HasTrinket("mysteryticket")  then 
 						local luckdis = (lucktrue  / 4)
 						local chargemax = 6 - luckdis
-						local luck = 40 - lucktrue 
+						local luck = math.max(40 - lucktrue/4,5)
 						local lucky2 = math.random(1,luck)
 					
 						
 						local charge = math.random(1,chargemax)
 					
-						if lucky2 == 2 then 
+						if lucky2 == 1 then 
 
 						pl:AddZSXP(10000)
 
@@ -5490,7 +5517,7 @@ function GM:WaveStateChanged(newstate, pl)
 						end 
 					end
 						if pl:IsSkillActive(SKILL_LIVER)  then 
-								pl:AddInventoryItem(GAMEMODE.Curses[math.random(#GAMEMODE.Curses)])
+							pl:AddInventoryItem(GAMEMODE.Curses[math.random(#GAMEMODE.Curses)])
 								net.Start("zs_getacurse")
 							net.Send(pl)
 						end
@@ -5534,7 +5561,7 @@ function GM:WaveStateChanged(newstate, pl)
 				pl.DeathClass = curclass
 			end
 			if pl:Team() == TEAM_UNDEAD then
-				pl:AddTokens(math.ceil(self:GetWave() * 50))
+				pl:AddTokens(math.ceil(self:GetWave() * 90))
 			end
 
 			pl.SkipCrow = nil

@@ -941,8 +941,8 @@ function PANEL:DoEdgeScroll(deltatime)
 
 	if camera_velocity.y ~= 0 or camera_velocity.z ~= 0 then
 		campos = campos + deltatime * edge * 12 * camera_velocity
-		campos.y = math.Clamp(campos.y, -262, 262)
-		campos.z = math.Clamp(campos.z, -262, 310)
+		campos.y = math.Clamp(campos.y, -1062, 1062)
+		campos.z = math.Clamp(campos.z, -1062, 1062)
 
 		self:SetCamPos(campos)
 		self.vLookatPos:Set(campos)
@@ -1173,8 +1173,8 @@ function PANEL:Paint(w, h)
 			render_ModelMaterialOverride()
 
 			render_SetColorModulation(1, 1, 1)
-
-			local xskill = 58
+			local screenscale = BetterScreenScale()
+			local xskill = 58 * screenscale
 			local colo = skill.Disabled and COLOR_DARKGRAY or selected and color_white or notunlockable and COLOR_MIDGRAY or COLOR_GRAY
 			if self.DesiredZoom < 9500 then
 				if !skill.Hidden1 then
@@ -1188,22 +1188,22 @@ function PANEL:Paint(w, h)
 				end
 				if skill.AlwaysActive then
 					draw_SimpleText(translate.Get("s_alw_act"),"ZS3D2DFontSmall", 0, xskill, colo, TEXT_ALIGN_CENTER)
-					xskill = xskill + 32
+					xskill = xskill + 32 * screenscale
 				end
 				if skill.RemortReq then
 					draw_SimpleText(translate.Get("s_need_r")..skill.RemortReq,"ZS3D2DFontSmall", 0, xskill, colo, TEXT_ALIGN_CENTER)
-					xskill = xskill + 32
+					xskill = xskill + 32 * screenscale
 				end
 				if skill.LevelReq then
 					draw_SimpleText(translate.Get("s_need_l")..skill.LevelReq,"ZS3D2DFontSmall", 0, xskill, colo, TEXT_ALIGN_CENTER)
-					xskill = xskill + 32
+					xskill = xskill + 32 * screenscale
 				end
 				if skill.AmuletCost then
 					draw_SimpleText(( 0 < skill.AmuletCost and translate.Get("s_need_am") or translate.Get("s_give_am"))..( 0 < skill.AmuletCost and skill.AmuletCost or -skill.AmuletCost),"ZS3D2DFontSmall", 0, xskill, colo, TEXT_ALIGN_CENTER)
-					xskill = xskill + 32
+					xskill = xskill + 32 * screenscale
 				end
 			end
-			if self.DesiredZoom < 3000 and GAMEMODE.AddDesc and !skill.Hidden1 then
+			if GAMEMODE.AddDesc and !skill.Hidden1 and skillid == hoveredskill then
 				--local c = string.Explode("\n", skill.Description)
 				if (type(GAMEMODE.SkillModifiers[skillid]) == "table" and table.Count(GAMEMODE.SkillModifiers[skillid]) or 0) > 0 then
 					for k,v in pairs(GAMEMODE.SkillModifiers[skillid]) do
@@ -1227,8 +1227,8 @@ function PANEL:Paint(w, h)
 							else
 								col = Color(255,255,255)
 							end
-							xskill= xskill+32
-						draw_SimpleText(translate.Format("skillmod_n"..k,i),"ZS3D2DFontSmall", 0, xskill, col, TEXT_ALIGN_CENTER)
+							xskill= xskill + 32 * screenscale
+						draw_SimpleText(translate.Format("skillmod_n"..k,i),"ZS3D2DFontSmall", 0, xskill-26, col, TEXT_ALIGN_CENTER)
 					end
 				end
 		

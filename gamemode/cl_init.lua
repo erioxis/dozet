@@ -49,6 +49,7 @@ include("vgui/pendboard.lua")
 include("vgui/pworth.lua")
 
 include("vgui/parsenal.lua")
+include("vgui/parsenal_anti.lua")
 include("vgui/premantle.lua")
 include("vgui/dpingmeter.lua")
 include("vgui/dsidemenu.lua")
@@ -1471,6 +1472,7 @@ function GM:CreateScalingFonts()
 
 	surface.CreateLegacyFont(fontfamily, screenscale * (5 + fontsizeadd), fontweight, fontaa, false, "ZSHUDFontTiniestStatus2", fontshadow, fontoutline, nil, true)
 	surface.CreateLegacyFont(fontfamily, screenscale * (10 + fontsizeadd), fontweight, fontaa, false, "ZSHUDFontTiniestStatus", fontshadow, fontoutline, nil, true)
+	surface.CreateLegacyFont(fontfamily, screenscale * (18 + fontsizeadd),  fontweight, fontaa, false,  "ZS3D2DFontSuperTinyBlur", fontshadow, fontoutline, nil, true)
 	surface.CreateLegacyFont(fontfamily, screenscale * (16 + fontsizeadd), fontweight, fontaa, false, "ZSHUDFontTiniest", fontshadow, fontoutline, nil, true)
 	surface.CreateLegacyFont(fontfamily, screenscale * (18 + fontsizeadd), fontweight, fontaa, false, "ZSHUDFontTiny", fontshadow, fontoutline, nil, true)
 	surface.CreateLegacyFont(fontfamily, screenscale * (22 + fontsizeadd), fontweight, fontaa, false, "ZSHUDFontSmallest", fontshadow, fontoutline, nil, true)
@@ -1923,7 +1925,10 @@ function GM:_CalcView(pl, origin, angles, fov, znear, zfar)
 	if pl:IsSkillActive(SKILL_MADNESS) then
 		angles = angles * 2
 	end
-
+	local gp = (((pl:GetZSRemortLevel() / 4) or 0) + (pl.AmuletPiece or 0)) < 0 and pl:Team() == TEAM_HUMAN
+	if gp then
+		fov = fov + ((CurTime()/2)%30)
+	end
 	if pl.Revive and pl.Revive:IsValid() and pl.Revive.GetRagdollEyes then
 		if self.ThirdPersonKnockdown or self.ZombieThirdPerson then
 			origin = pl:GetThirdPersonCameraPos(origin, angles)

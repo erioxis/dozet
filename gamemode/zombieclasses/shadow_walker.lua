@@ -154,7 +154,9 @@ end
 
 function CLASS:ProcessDamage(pl, dmginfo)
 	local attacker = dmginfo:GetAttacker()
-
+	if dmginfo:GetInflictor().IgnoreNiggers then
+		dmginfo:SetDamage(math.min(dmginfo:GetDamage(),50))
+	end
 	if attacker and attacker ~= pl and dmginfo:GetInflictor() and dmginfo:GetInflictor().IsMelee and not dmginfo:GetInflictor().IgnoreNiggers then
 		if !attacker.ClanLoxov or attacker:IsValidLivingHuman() and !attacker:GetActiveWeapon().ResistDamage then
 			attacker:TakeSpecialDamage(dmginfo:GetDamage() * 0.05, DMG_DIRECT, pl, pl)

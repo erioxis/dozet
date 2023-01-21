@@ -162,6 +162,7 @@ end
 
 function PANEL:PerformLayout()
 	if #self.ClassButtons < 8 then self.Rows = 1 end
+	--if #self.ClassButtons >= 20 then self.Rows = 3 end
 
 	local cols = math.ceil(#self.ClassButtons / self.Rows)
 	local cell_size = ScrW() / cols

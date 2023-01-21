@@ -32,6 +32,7 @@ SWEP.MeleeDamage = 16
 SWEP.MeleeRange = 64
 SWEP.MeleeSize = 2
 SWEP.Primary.Delay = 0.28
+SWEP.IgnoreNiggers = true
 
 SWEP.WalkSpeed = SPEED_FASTER
 

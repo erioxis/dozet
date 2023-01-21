@@ -29,7 +29,7 @@ SWEP.UseHands = true
 SWEP.Primary.Sound = Sound("Weapon_UMP45.Single")
 SWEP.Primary.Damage = 77
 SWEP.Primary.NumShots = 1
-SWEP.Primary.Delay = 0.16
+SWEP.Primary.Delay = 0.19
 
 SWEP.Primary.ClipSize = 100
 SWEP.Primary.Automatic = true
@@ -53,10 +53,8 @@ SWEP.AllDamage = false
 SWEP.IronSightsPos = Vector(-5.3, -3, 4.4)
 SWEP.IronSightsAng = Vector(-1, 0.2, 2.55)
 
-GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_FIRE_DELAY, -0.015)
-
 function SWEP:FinishReload()
-	if self.AllDamage then 	BaseClass.FinishReload(self) return end
+	if self.AllDamage then 	self.BaseClass.FinishReload(self) return end
 	self:SendWeaponAnim(ACT_VM_IDLE)
 	self:SetNextReload(0)
 	self:SetReloadStart(0)

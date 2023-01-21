@@ -47,6 +47,9 @@ function ENT:Hit(vHitPos, vHitNormal, eHitEntity)
 	if owner:IsValid() then
 		util.BlastDamagePlayer(self, owner, vHitPos + vHitNormal, 60, 40, DMG_DISSOLVE)
 	end
+	if eHitEntity and eHitEntity:GetClass() == "prop_manhack*" then
+		eHitEntity:TakeDamage(250,owner,self)
+	end
 
 	local effectdata = EffectData()
 		effectdata:SetOrigin(vHitPos)

@@ -14,6 +14,12 @@ GM.Achievements["elementarno"] = {
     Goal = 20000000,
     Reward = 120000
 }
+GM.Achievements["haha_lox"] = {
+    Name = translate("challenge_l_o_x"),
+    Desc = translate("challenge_l_o_x_d"),
+    Goal = 100,
+    Reward = 12500
+}
 GM.Achievements["grem"] = {
     Name = translate("challenge_grem"),
     Desc = translate("challenge_grem_d"),

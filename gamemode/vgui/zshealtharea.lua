@@ -6,6 +6,7 @@ local colHealth = Color(0, 0, 0, 240)
 local function ContentsPaint(self, w, h)
 	local lp = MySelf
 	if lp:IsValid() then
+		local gp = (((lp:GetZSRemortLevel() / 4) or 0) + (lp.AmuletPiece or 0)) < 0 and lp:Team() == TEAM_HUMAN
 		local screenscale = BetterScreenScale()
 		local health = lp:Health()
 		local healthperc = math.Clamp(health / lp:GetMaxHealthEx(), 0, 1)
@@ -22,7 +23,7 @@ local function ContentsPaint(self, w, h)
 		if health > lp:GetMaxHealthEx() then
 			health = lp:GetMaxHealthEx().." (+"..health-lp:GetMaxHealthEx()..")"
 		end
-		draw.SimpleTextBlurry(health, (string.len(health) >= 13 and "ZSHUDFontSmall"or"ZSHUDFont"), x + wid + 18 * screenscale, y + 8 * screenscale, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+		draw.SimpleTextBlurry(health..(gp and " x"..((((lp:GetZSRemortLevel() / 4) or 0) + (lp.AmuletPiece or 0))-2)*-1 or ""), ((gp or string.len(health) >= 13) and "ZSHUDFontSmall"or"ZSHUDFont"), x + wid + 18 * screenscale, y + 8 * screenscale, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 
 		surface.SetDrawColor(0, 0, 0, 230)
 		surface.DrawRect(x, y, wid, hei)
@@ -50,7 +51,7 @@ local function ContentsPaint(self, w, h)
 		surface.DrawTexturedRect(x + 2 + subwidth - 4, y + 1, phantomwidth, hei - 2)
 		surface.SetDrawColor(colHealth.r, colHealth.g, colHealth.b, 30)
 		surface.DrawRect(x + 2 + subwidth - 4, y + 1, phantomwidth, hei - 2)
-		if (((lp:GetZSRemortLevel() / 4) or 0) + (lp.AmuletPiece or 0)) < 0 and lp:Team() == TEAM_HUMAN then
+		if gp then
 			surface.SetDrawColor(255, 31, 206, 50)
 			surface.SetTexture(texDownEdge)
 			surface.DrawTexturedRect(x, y, wid, hei * 2)

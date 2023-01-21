@@ -2,8 +2,8 @@ AddCSLuaFile()
 
 --SWEP.PrintName = "'Deathdealers' Dual Shotguns"
 --SWEP.Description = "A unique pair of fast firing, high damage shotguns. Reloads quickly by quickly replacing the shotguns used with a new pair, throwing the old away."
-SWEP.PrintName = ""..translate.Get("wep_dualshot")
-SWEP.Description = ""..translate.Get("wep_d_dualshot")
+SWEP.PrintName = translate.Get("wep_dualshot")
+SWEP.Description = translate.Get("wep_d_dualshot")
 SWEP.ShotGunHeat = true
 
 SWEP.Slot = 3
@@ -63,8 +63,8 @@ SWEP.WorldModel = "models/weapons/w_pist_elite.mdl"
 SWEP.FakeWorldModel = "models/weapons/w_shotgun.mdl"
 SWEP.UseHands = true
 
-SWEP.Primary.Damage = 19
-SWEP.Primary.NumShots = 8
+SWEP.Primary.Damage = 17.5
+SWEP.Primary.NumShots = 7
 SWEP.Primary.Delay = 0.6
 
 SWEP.Primary.ClipSize = 8
@@ -82,7 +82,7 @@ function SWEP:OnZombieKilled()
 	local killer = self:GetOwner()
 
 	if killer:IsValid() then
-		local reaperstatus = killer:GiveStatus("reaper", 20)
+		local reaperstatus = killer:GiveStatus("reaper", 3)
 		if reaperstatus and reaperstatus:IsValid() then
 			reaperstatus:SetDTInt(1, math.min(reaperstatus:GetDTInt(1) + 1, 10))
 			killer:EmitSound("hl1/ambience/particle_suck1.wav", 55, 150 + reaperstatus:GetDTInt(1) * 30, 0.45)
@@ -148,12 +148,6 @@ function SWEP:GetTracerOrigin()
 		end
 	end
 end
-
-
-
-
-
-if not CLIENT then return end
 
 function SWEP:Draw3DHUD(vm, pos, ang)
 	self.BaseClass.Draw3DHUD(self, vm, pos, ang)

@@ -102,7 +102,12 @@ function GM:AddItem(signature, category, price, swep, name, desc, model, callbac
 	return tab
 end
 
+function GM:AddAPointShopItem(signature, category, price, swep, name, desc, model, callback)
+	local item = self:AddItem("ps_"..signature, category, price, swep, name, desc, model, callback)
+	item.APointShop = true
 
+	return item
+end
 
 function GM:AddStartingItem(signature, category, price, swep, name, desc, model, callback)
 	local item = self:AddItem(signature, category, price, swep, name, desc, model, callback)
@@ -526,7 +531,6 @@ GM:AddPointShopItem("speed",			ITEMCAT_MELEE,			180600,			"weapon_zs_speed")
 GM:AddPointShopItem("xouryc",			ITEMCAT_MELEE,			4500,			"weapon_zs_loy")
 GM:AddPointShopItem("murasama",			ITEMCAT_MELEE,			4500,			"weapon_zs_murasama")
 -- Super Trinkets ------------------------------------------------------------------------------------------------------------------------------------------------
-
 --
 GM:AddPointShopItem("futureblu",			ITEMCAT_TRINKETS,		250,				"trinket_futureblu").SubCategory =								ITEMSUBCAT_TRINKETS_SUPER
 GM:AddPointShopItem("sman",			ITEMCAT_TRINKETS,		450,				"trinket_sman").SubCategory =								ITEMSUBCAT_TRINKETS_SUPER
@@ -637,6 +641,39 @@ GM:AddPointShopItem("healray",			ITEMCAT_TOOLS,			190,			"weapon_zs_healingray")
 GM:AddPointShopItem("repairray",			ITEMCAT_TOOLS,			220,			"weapon_zs_hammerray")
 GM:AddPointShopItem("stone",			ITEMCAT_TOOLS,			5,			"weapon_zs_stone")
 GM:AddPointShopItem("bannahuy",			ITEMCAT_TOOLS,			120000,			"weapon_zs_banhammer")
+
+GM:AddAPointShopItem("soul_of_judas",			ITEMCAT_TRINKETS,			1250,			"trinket_bleaksoul").SubCategory =								ITEMSUBCAT_TRINKETS_DEFENSIVE
+GM:AddAPointShopItem("soul_of_spiritess",			ITEMCAT_TRINKETS,			1250,			"trinket_spiritess").SubCategory =								ITEMSUBCAT_TRINKETS_SUPER
+GM:AddAPointShopItem("soul_of_samsonsoul",			ITEMCAT_TRINKETS,			2250,			"trinket_samsonsoul").SubCategory =								ITEMSUBCAT_TRINKETS_MELEE
+GM:AddAPointShopItem("soul_of_evesoul",			ITEMCAT_TRINKETS,			2250,			"trinket_evesoul").SubCategory =								ITEMSUBCAT_TRINKETS_DEFENSIVE
+GM:AddAPointShopItem("soul_of_magdalenesoul",			ITEMCAT_TRINKETS,			2250,			"trinket_magdalenesoul").SubCategory =								ITEMSUBCAT_TRINKETS_DEFENSIVE
+GM:AddAPointShopItem("soul_of_jacobjesausoul",			ITEMCAT_TRINKETS,			2500,			"trinket_jacobjesausoul").SubCategory =								ITEMSUBCAT_TRINKETS_SUPER
+GM:AddAPointShopItem("soul_of_isaacsoul",			ITEMCAT_TRINKETS,			800,			"trinket_isaacsoul").SubCategory =								ITEMSUBCAT_TRINKETS_PERFOMANCE
+GM:AddAPointShopItem("soul_of_lilithsoul",			ITEMCAT_TRINKETS,			800,			"trinket_lilithsoul").SubCategory =								ITEMSUBCAT_TRINKETS_SUPPORT
+GM:AddAPointShopItem("soul_of_whysoul",			ITEMCAT_TRINKETS,			3300,			"trinket_whysoul").SubCategory =								ITEMSUBCAT_TRINKETS_SUPER
+GM:AddAPointShopItem("soul_of_blanksoul",			ITEMCAT_TRINKETS,			1000,			"trinket_blanksoul").SubCategory =								ITEMSUBCAT_TRINKETS_SPECIAL
+GM:AddAPointShopItem("soul_of_classixsoul",			ITEMCAT_TRINKETS,			1000,			"trinket_classixsoul").SubCategory =								ITEMSUBCAT_TRINKETS_OFFENSIVE
+GM:AddAPointShopItem("soul_of_darksoul",			ITEMCAT_TRINKETS,			2500,			"trinket_darksoul").SubCategory =								ITEMSUBCAT_TRINKETS_SUPPORT
+GM:AddAPointShopItem("soul_of_eriosoul",			ITEMCAT_TRINKETS,			1200,			"trinket_eriosoul").SubCategory =								ITEMSUBCAT_TRINKETS_MELEE
+GM:AddAPointShopItem("soul_of_aposoul",			ITEMCAT_TRINKETS,			2900,			"trinket_aposoul").SubCategory =								ITEMSUBCAT_TRINKETS_OFFENSIVE
+GM:AddAPointShopItem("soul_of_betsoul",			ITEMCAT_TRINKETS,			2900,			"trinket_betsoul").SubCategory =								ITEMSUBCAT_TRINKETS_DEFENSIVE
+GM:AddAPointShopItem("soul_of_lostsoul",			ITEMCAT_TRINKETS,			500,			"trinket_lostsoul").SubCategory =								ITEMSUBCAT_TRINKETS_SPECIAL
+GM:AddAPointShopItem("soul_of_greedsoul",			ITEMCAT_TRINKETS,			5000,			"trinket_greedsoul").SubCategory =								ITEMSUBCAT_TRINKETS_SPECIAL
+GM:AddAPointShopItem("soul_of_cainsoul",			ITEMCAT_TRINKETS,			2500,			"trinket_cainsoul").SubCategory =								ITEMSUBCAT_TRINKETS_SUPPORT
+GM:AddAPointShopItem("soul_of_lazarussoul",			ITEMCAT_TRINKETS,			1250,			"trinket_lazarussoul").SubCategory =								ITEMSUBCAT_TRINKETS_DEFENSIVE
+GM:AddAPointShopItem("soul_of_forsoul",			ITEMCAT_TRINKETS,			1800,			"trinket_forsoul").SubCategory =								ITEMSUBCAT_TRINKETS_MELEE
+GM:AddAPointShopItem("soul_of_starsoul",			ITEMCAT_TRINKETS,			1000,			"trinket_starsoul").SubCategory =								ITEMSUBCAT_TRINKETS_PERFOMANCE
+GM:AddAPointShopItem("soul_of_teasoul",			ITEMCAT_TRINKETS,			1200,			"trinket_teasoul").SubCategory =								ITEMSUBCAT_TRINKETS_PERFOMANCE
+GM:AddAPointShopItem("soul_of_sugersoul",			ITEMCAT_TRINKETS,			900,			"trinket_sugersoul").SubCategory =								ITEMSUBCAT_TRINKETS_MELEE
+GM:AddAPointShopItem("soul_of_nulledsoul",			ITEMCAT_TRINKETS,			900,			"trinket_nulledsoul").SubCategory =								ITEMSUBCAT_TRINKETS_SPECIAL
+GM:AddAPointShopItem("soul_of_soulmedical",			ITEMCAT_TRINKETS,			3000,			"trinket_soulmedical").SubCategory =								ITEMSUBCAT_TRINKETS_SUPPORT
+GM:AddAPointShopItem("soul_of_lampsoul",			ITEMCAT_TRINKETS,			892,			"trinket_lampsoul").SubCategory =								ITEMSUBCAT_TRINKETS_MELEE
+GM:AddAPointShopItem("soul_of_barasoul",			ITEMCAT_TRINKETS,			999999999,			"trinket_barasoul").SubCategory =								ITEMSUBCAT_TRINKETS_SPECIAL
+GM:AddAPointShopItem("soul_of_troyaksoul",			ITEMCAT_TRINKETS,			320,			"trinket_troyaksoul").SubCategory =								ITEMSUBCAT_TRINKETS_SUPPORT
+GM:AddAPointShopItem("soul_of_lehasoul",			ITEMCAT_TRINKETS,			180,			"trinket_lehasoul").SubCategory =								ITEMSUBCAT_TRINKETS_SPECIAL
+
+GM:AddAPointShopItem("speedx22",			ITEMCAT_MELEE,			8000,			"weapon_zs_speed")
+GM:AddAPointShopItem("bannahuyx222",			ITEMCAT_TOOLS,			2500,			"weapon_zs_banhammer")
 -- Tier 1
 GM:AddPointShopItem("cutlery",			ITEMCAT_TRINKETS,		10,				"trinket_cutlery").SubCategory =								ITEMSUBCAT_TRINKETS_DEFENSIVE
 GM:AddPointShopItem("boxingtraining",	ITEMCAT_TRINKETS,		10,				"trinket_boxingtraining").SubCategory =							ITEMSUBCAT_TRINKETS_MELEE

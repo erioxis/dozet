@@ -1,4 +1,4 @@
- -- Translated by Mr. Darkness (http://www.noxiousnet.com/forums/index.php?action=profile;u=6296)
+-- Translated by Mr. Darkness (http://www.noxiousnet.com/forums/index.php?action=profile;u=6296)
 
 translate.AddLanguage("ru", "Russian")
 --Чаленге
@@ -132,6 +132,8 @@ LANGUAGE.challenge_cleaner = "Уборщик"
 LANGUAGE.challenge_cleaner_d = "Очисти 150 сигилов."
 LANGUAGE.challenge_amnesty = "Я могу подкупить всех!"
 LANGUAGE.challenge_amnesty_d = "Быть помилованным."
+LANGUAGE.challenge_l_o_x = "УРА ПОБЕДА"
+LANGUAGE.challenge_l_o_x_d = "Потерять 100 нежных цветков"
 LANGUAGE.xp= " ОПЫТА "
 --sigil
 
@@ -1026,6 +1028,8 @@ LANGUAGE.wep_mhack_s = "Человекорез"
 LANGUAGE.wep_d_mhack_s = "Модифицированный манхак чтобы устраивать резню.\nМенее управляем и более устойчив к урону."
 LANGUAGE.wep_p_sigil = "Портативный Сигил"
 LANGUAGE.wep_d_p_sigil = "Установи свой сигил!"
+LANGUAGE.wep_p_sigil_a = "Портативный Анти-Сигил"
+LANGUAGE.wep_d_p_sigil_a = "Ошибка этого мира."
 LANGUAGE.wep_mstat = "'Стражник' Мед.станция"
 LANGUAGE.wep_d_mstat = "Лечит ближайших игроков используя ПУЛЬС патроны.\nНевероятно полезно.\nНажмите БЕГ чтобы увидеть радиус действия."
 LANGUAGE.wep_sent = "'Санитар' Станция Починки"
@@ -1779,7 +1783,7 @@ LANGUAGE.skill_shooter_fast_d1 = "+15% К скорости стрельбы\n"
 LANGUAGE.skill_ell_buff = "Сила элементов"
 LANGUAGE.skill_ell_buff_d1 = "+10% Элементальный урон и +10% шанс для прока для модификаторов.\n"
 LANGUAGE.skill_ind_issue = "Зависимость силы"
-LANGUAGE.skill_ind_issue_d1 = "-30% Элементального урона.\n"
+LANGUAGE.skill_ind_issue_d1 = "-25% Элементального урона.\n"
 LANGUAGE.skill_ind_issue_d2 = "+25% Шанс срабатывания модификаторов.\n"
 LANGUAGE.skill_d_issue = "Удвоенное заявление"
 LANGUAGE.skill_d_issue_d1 = "Есть шанс удвоить урон элемента.\n"

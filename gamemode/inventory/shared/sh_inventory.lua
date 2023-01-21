@@ -127,6 +127,11 @@ GM.Assemblies["trinket_aposoul"] 						= {"comp_soul_hack",	"comp_soul_status"}
 GM.Assemblies["trinket_lilithsoul"] 						= {"comp_soul_status",	"comp_soul_hack"}
 GM.Assemblies["trinket_whysoul"] 						= {"comp_soul_godlike",	"comp_soul_dosei"}
 GM.Assemblies["trinket_darksoul"] 						= {"comp_soul_dd",	"comp_soul_booms"}
+GM.Assemblies["comp_soul_emm"] 						= {"comp_soul_dd",	"weapon_zs_sigilfragment"}
+GM.Assemblies["comp_soul_emm2"] 						= {"comp_soul_dosei",	"comp_soul_godlike"}
+GM.Assemblies["comp_soul_emm3"] 						= {"comp_soul_emm2",	"comp_soul_emm"}
+GM.Assemblies["weapon_zs_sigil_port_a"] 						= {"comp_soul_emm3",	"trinket_altcainsoul"}
+
 
 local trs = translate.Get
 GM:AddInventoryItemData("comp_modbarrel",		trs("c_modbarrel"),			trs("c_modbarrel_d"),								"models/props_c17/trappropeller_lever.mdl")
@@ -181,6 +186,10 @@ GM:AddInventoryItemData("comp_soul_godlike",		"Piece of soul(GOD LIKE)",		"Blank
 GM:AddInventoryItemData("comp_soul_dosei",		"Piece of soul(DOSEI)",		"Blank soul of dosei things", soulrec)
 GM:AddInventoryItemData("comp_soul_dd",		"Piece of soul(BIG MANS)",		"Blank soul of big mans things", soulrec)
 GM:AddInventoryItemData("comp_soul_booms",		"Piece of soul(BOOMS)",		"Blank soul of booms things", soulrec)
+
+GM:AddInventoryItemData("comp_soul_emm",		"Piece of Anti-Sigil",		"Ermmmm", soulrec)
+GM:AddInventoryItemData("comp_soul_emm2",		"Piece of sigil???",		"Worth", soulrec)
+GM:AddInventoryItemData("comp_soul_emm3",		"*23LskdNhx3796SDhnHadj",		"27^39j4nHndk0890-2=23+3nH\nsjDnhfgjgyrjb", soulrec)
 
 -- Trinkets
 local trinket, description, trinketwep

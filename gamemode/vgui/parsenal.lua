@@ -651,7 +651,7 @@ function GM:CreateItemInfoViewer(frame, propertysheet, topspace, bottomspace, me
 	)
 
 	viewer:MoveBelow(topspace, 4 + (worthmenu and 32 or 0))
-	if menutype == MENU_POINTSHOP or worthmenu then
+	if menutype == MENU_POINTSHOP or menutype == MENU_POINTSHOPA or worthmenu then
 		viewer:MoveRightOf(propertysheet, 8 - (worthmenu and 328 or 0) * screenscale)
 	else
 		viewer:Dock(RIGHT)

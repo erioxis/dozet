@@ -236,8 +236,7 @@ concommand.Add("zs_anti_pointsshopbuy", function(sender, command, arguments)
 		GAMEMODE:ConCommandErrorMessage(sender, translate.ClientGet(sender, "out_of_stock"))
 		return
 	end
-	local arsd = math.Clamp((sender.ArsenalDiscount or 1),(GAMEMODE:GetWave() <= 4 and 0.75 or 0),255)
-	cost = usescrap and math.ceil(GAMEMODE:PointsToScrap(cost * (sender.ScrapDiscount or 1))) or math.ceil(cost * arsd)
+	cost = usescrap and math.ceil(GAMEMODE:PointsToScrap(cost)) or math.ceil(cost)
 
 	if points < cost then
 		timer.Create("buy"..itemtab.Name.."WARNING", 0.01,1, function()GAMEMODE:ConCommandErrorMessage(sender, translate.ClientGet(sender, usescrap and "need_to_have_enough_scrap" or "dont_have_enough_points")) end)
@@ -1034,27 +1033,4 @@ concommand.Add("zs_weapon", function(sender, command, arguments, pl)
 	sender:Give(arguments[1])
 	sender:AddInventoryItem(arguments[1])
 end)
-concommand.Add("zs_waveset", function(sender, command, arguments, pl)
-	if sender == nil then return end
-	if not sender:IsAdmin() then 
-		sender:PrintMessage(HUD_PRINTTALK, translate.ClientFormat(sender, "noadmin"))
-		return end
-	print(sender)
-	print("wave set"..tonumber(arguments[1]))
-	if arguments[1] == nil then return end
-	RunConsoleCommand("say", "wave set"..arguments[1])
-	GAMEMODE:SetWave(tonumber(arguments[1]))
-end)
-concommand.Add("zs_botmod", function(sender, command, arguments, pl)
-	if sender == nil then return end
-	if not sender:IsAdmin() then 
-		sender:PrintMessage(HUD_PRINTTALK, translate.ClientFormat(sender, "noadmin"))
-		return end
-	print(sender)
-	print("botmod"..tonumber(arguments[1]))
-	if arguments[1] == nil then return end
-	RunConsoleCommand("botmod", arguments[1])
-	
-end)
-
 

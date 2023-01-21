@@ -345,6 +345,7 @@ function meta:ProcessDamage(dmginfo)
 		net.Send(self)
 		self.HolyMantle = self.HolyMantle - 1
 		self:GiveStatus("hshield", 3, true)
+		self.NextRegenerateMantle = CurTime() + math.max((27 - ((self.Luck + self.LuckAdd) / 3)) + GAMEMODE.GetWave() * 3,5)
 		timer.Simple(0,function()
 			self:GodEnable()
 			end )
@@ -719,7 +720,9 @@ function meta:ProcessDamage(dmginfo)
 					net.Start("zs_trinketconsumed")
 						net.WriteString("Flower")
 					net.Send(self)
+					self:GiveAchievementProgress("haha_lox", 1)
 					if attacker:IsPlayer() then
+						
 						GAMEMODE:BlockFloater(attacker, self, dmginfo:GetDamagePosition())
 					end
 				end
@@ -2679,8 +2682,8 @@ function meta:PulseResonance(attacker, inflictor)
 		pos.z = pos.z + 16
 
 		if attacker:IsValidLivingHuman() and !attacker:IsSkillActive(SKILL_CRYO_LASER) then
-			util.BlastDamagePlayer(inflictor, attacker, pos, 100 * (attacker.ExpDamageRadiusMul or 1), 75, DMG_ALWAYSGIB, 0.7)
-			for _, ent in pairs(util.BlastAlloc(inflictor, attacker, pos, 100 * (attacker.ExpDamageRadiusMul or 1))) do
+			util.BlastDamagePlayer(inflictor, attacker, pos, 85 + 25 * (attacker.ExpDamageRadiusMul or 1), 75, DMG_ALWAYSGIB, 0.7)
+			for _, ent in pairs(util.BlastAlloc(inflictor, attacker, pos, 85 + 25 * (attacker.ExpDamageRadiusMul or 1))) do
 				if ent:IsValidLivingPlayer() and gamemode.Call("PlayerShouldTakeDamage", ent, attacker) then
 					ent:AddLegDamageExt(5, attacker, inflictor, SLOWTYPE_PULSE)
 				end
@@ -2709,8 +2712,8 @@ function meta:CryogenicInduction(attacker, inflictor, damage)
 		attacker:SetProgress((attacker:GetProgress('iprog') -formula)*0.1,'iprog')
 
 		if attacker:IsValidLivingHuman() then
-			util.BlastDamagePlayer(inflictor, attacker, pos, 100 * (attacker.ExpDamageRadiusMul or 1), self:GetMaxHealthEx() * 0.2, DMG_DROWN, 0.83, true)
-			for _, ent in pairs(util.BlastAlloc(inflictor, attacker, pos, 100 * (attacker.ExpDamageRadiusMul or 1))) do
+			util.BlastDamagePlayer(inflictor, attacker, pos, 85 + 25 * (attacker.ExpDamageRadiusMul or 1), self:GetMaxHealthEx() * 0.2, DMG_DROWN, 0.83, true)
+			for _, ent in pairs(util.BlastAlloc(inflictor, attacker, pos, 100)) do
 				if ent:IsValidLivingPlayer() and gamemode.Call("PlayerShouldTakeDamage", ent, attacker) then
 					ent:AddLegDamageExt(6, attacker, inflictor, SLOWTYPE_COLD)
 				end
@@ -2736,7 +2739,7 @@ function meta:FireInduction(attacker, inflictor, damage)
 				self:TakeSpecialDamage((self:Health() * 0.5)/math.max(1,GAMEMODE:GetWave()-3) + damage + attacker:GetProgress("fprog"), DMG_DIRECT, attacker, inflictor, pos)
 
 				if attacker:IsValidLivingHuman() then
-					util.BlastDamagePlayer(inflictor, attacker, pos, 100 * (attacker.ExpDamageRadiusMul or 1), (self:Health() * 0.07) + damage, DMG_BURN, 0.83, true)
+					util.BlastDamagePlayer(inflictor, attacker, pos, 85 + 25 * (attacker.ExpDamageRadiusMul or 1), (self:Health() * 0.07) + damage, DMG_BURN, 0.83, true)
 				end
 
 				local effectdata = EffectData()
@@ -2759,7 +2762,7 @@ function meta:ChamStorm(attacker, inflictor, damage)
 				self:TakeSpecialDamage(self:Health() * 0.5 + damage, DMG_DIRECT, attacker, inflictor, pos)
 
 				if attacker:IsValidLivingHuman() then
-					util.BlastDamagePlayer(inflictor, attacker, pos, 100 * (attacker.ExpDamageRadiusMul or 1), (self:Health() * 0.17) + damage, DMG_BURN, 0.83, true)
+					util.BlastDamagePlayer(inflictor, attacker, pos, 85 + 25 * (attacker.ExpDamageRadiusMul or 1), (self:Health() * 0.17) + damage, DMG_BURN, 0.83, true)
 				end
 
 				local effectdata = EffectData()
