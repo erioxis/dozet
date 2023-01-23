@@ -31,6 +31,11 @@ GM.Achievements["koso"] = {
     Desc = translate("challenge_koso_d"),
     Reward = 15000
 }
+GM.Achievements["anti_sigil"] = {
+    Name = "DlsmAHu2^3hm7u*234^7j",
+    Desc = translate("challenge_anti_sigil_d"),
+    Reward = 5000
+}
 GM.Achievements["zsfan"] = {
     Name = translate("challenge_godzs"),
     Desc = translate("challenge_godzs_d"),
@@ -364,6 +369,13 @@ GM.Statuses["dim_vision"] = {
 	Name = "dim_vision",
 	ValFunc = statusValueFunction("dimvision"),
 	Max = 10,
+	Icon = Material("zombiesurvival/dim_vision.png")
+}
+GM.Statuses["world"] = {
+	Color = Color(112, 247, 108),
+	Name = "world",
+	ValFunc = statusValueFunction("world"),
+	Max = 30,
 	Icon = Material("zombiesurvival/dim_vision.png")
 }
 GM.Statuses["slow"] = {

@@ -120,7 +120,60 @@ local function ContentsPaint(self, w, h)
 		end
 	end
 end
+local matGlow = Material("sprites/glow04_noz")
+texDownEdge = surface.GetTextureID("gui/gradient_down")
+local colHealth = Color(0, 0, 0, 240)
+local function ContentsPaint2(self, w, h)
+	local lp = MySelf
+	if lp:IsValid() then
+		local screenscale = BetterScreenScale()
+		local health = math.max(lp:GetBloodArmor(), 0)
+		local healthperc = math.Clamp(health / 100, 0, 1)
+		local wid, hei = 100 * screenscale, 18 * screenscale
+ 
+		colHealth.r = (lp:GetInfo("zs_rhealth") + healthperc) * 100
+		colHealth.g = lp:GetInfo("zs_ghealth") - healthperc
+		colHealth.b = lp:GetInfo("zs_bhealth")
 
+		local x = 18 * screenscale
+		local y = 65 * screenscale
+
+		local subwidth = healthperc * wid
+        if lp:GetActiveWeapon().IsMelee then
+			draw.SimpleTextBlurry(health.."+"..(lp:GetActiveWeapon().IsMelee and lp:GetActiveWeapon().MeleeDamage * 0.25 or 0), "ZSHUDFontSmall", 8, self:GetTall() - 92, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM)
+		else
+			draw.SimpleTextBlurry(health, "ZSHUDFontSmall", 8, self:GetTall() - 92, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM)
+		end
+
+		surface.SetDrawColor(0, 0, 0, 230)
+		surface.DrawRect(x, y, wid, hei)
+
+		surface.SetDrawColor(colHealth.r * 1, colHealth.g * 0.2, colHealth.b, 40)
+		surface.SetTexture(texDownEdge)
+		surface.DrawTexturedRect(x + 2, y + 1, subwidth - 4, hei - 2)
+		surface.SetDrawColor(colHealth.r * 0.6, colHealth.g * 0.6, colHealth.b, 30)
+		surface.DrawRect(x + 2, y + 1, subwidth - 4, hei - 2)
+
+		surface.SetMaterial(matGlow)
+		surface.SetDrawColor(255, 255, 255, 255)
+		surface.DrawTexturedRect(x + 2 + subwidth - 6, y + 1 - hei/2, 4, hei * 2)
+		local phantomwidth = (health == 100 and 0 or wid) * (lp:GetActiveWeapon().IsMelee and (lp:GetActiveWeapon().MeleeDamage/100) * 0.25 or 0)
+
+		colHealth.r = 210
+		colHealth.g = 120
+		colHealth.b = 70
+		
+		surface.SetDrawColor(colHealth.r, colHealth.g, colHealth.b, 255)
+		surface.SetTexture(texDownEdge)
+		surface.DrawTexturedRect(x + 2 + subwidth - 4, y + 1, phantomwidth, hei - 2)
+		surface.SetDrawColor(colHealth.r, colHealth.g, colHealth.b, 30)
+		surface.DrawRect(x + 2 + subwidth - 4, y + 1, phantomwidth, hei - 2)
+		colHealth.r = 100
+		colHealth.g = 120
+		colHealth.b = 70
+		draw.SimpleTextBlurry(lp:Health(), "ZSHUDFont", 16, self:GetTall() - 12, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM)
+	end
+end
 function PANEL:Init()
 	self:DockMargin(0, 0, 0, 0)
 	self:DockPadding(0, 0, 0, 0)
@@ -137,6 +190,8 @@ function PANEL:PerformLayout()
 	local screenscale = BetterScreenScale()
 
 	self:SetSize(screenscale * 500, screenscale * 168)
+
+		--self.HealthModel:SetWide(screenscale * 120)
 
 	self:AlignLeft()
 	self:AlignBottom()
@@ -156,7 +211,40 @@ function PANEL:Paint(w, h)
 	surface.SetDrawColor(0, 0, 0, 250)
 	surface.SetMaterial(matGradientLeft)
 	surface.DrawTexturedRect(0, y, w, 1)
+--[[	local lp = LocalPlayer()
+	if lp:IsValid() and !GAMEMODE.UseModelHealthBar then
+		local health = math.max(lp:Health(), 0)
+		local healthperc =  math.Clamp(health / lp:GetMaxHealthEx(), 0, 1)
+		local barghost = lp:IsBarricadeGhosting()
+		colHealth.r = (1 - healthperc) * 180
+		colHealth.g = healthperc * 180
+		colHealth.b = 0		
+		local screenscale = BetterScreenScale()		
+		local wid, hei = 24 * screenscale, 156 * screenscale
 
+		local x = (self.HealthModel:GetWide() - wid - 16)
+
+		local subhei = healthperc * hei
+		if barghost then
+			surface.SetDrawColor(60, 60, 255, 255)
+			surface.DrawRect(x-5, 0, wid+10, hei)		
+		end
+		surface.SetDrawColor(0, 0, 0, 150)
+		surface.DrawRect(x ,0, wid, hei)
+
+		surface.SetDrawColor(colHealth.r * 0.6, colHealth.g * 0.6, colHealth.b, 160)
+		surface.SetTexture(texSideEdge)
+		surface.DrawTexturedRect(x + 2, 2+(hei-subhei), wid - 4, subhei - 4)
+		surface.SetDrawColor(colHealth.r * 0.6, colHealth.g * 0.6, colHealth.b, 230)
+		surface.DrawRect(x + 2, 2+(hei-subhei), wid - 4, subhei - 4)
+
+		surface.SetMaterial(matGlow)
+		surface.SetDrawColor(255, 255, 255, 255)
+		surface.DrawTexturedRect(x + 1 - wid/2 , hei-subhei+1, wid*2, 4)
+		
+		surface.SetDrawColor(60, 60, 60, 240)
+		surface.DrawOutlinedRect(x-1, -1, wid+2, hei+2,3)
+	end]]
 	return true
 end
 

@@ -121,7 +121,7 @@ function GM:DrawTargetID(ent, fade)
 	end
 end
 
-function GM:DrawSigilTargetHint(ent, fade)
+function GM:DrawSigilTargetHint(ent, fade, anti)
 	fade = fade or 1
 	local pos = ent:GetPos()
 	pos.z = pos.z + 16
@@ -131,12 +131,10 @@ function GM:DrawSigilTargetHint(ent, fade)
 	colTemp.a = fade * 128
 	util.ColorCopy(color_white, colTemp)
 
-	draw.SimpleTextBlur(translate.Get("sigil_nm"), "ZSHUDFontSmaller", x, y, colTemp, TEXT_ALIGN_CENTER)
+	draw.SimpleTextBlur(translate.Get("sigil_nm"..(anti and "_a" or "")), "ZSHUDFontSmaller", x, y, colTemp, TEXT_ALIGN_CENTER)
 	y = y + draw.GetFontHeight("ZSHUDFontSmaller") + 0
 
-	draw.SimpleTextBlur(translate.Get("sigil_tp"), "ZSHUDFontTiny", x, y, colTemp, TEXT_ALIGN_CENTER)
-	y = y + draw.GetFontHeight("ZSHUDFontTiny") + 4
-	draw.SimpleTextBlur((GAMEMODE:GetWave() >= 6 and GAMEMODE:GetWaveActive() and translate.Get("sigildefend") or translate.Get("sigildanger_6")), "ZSHUDFontTiny", x, y, colTemp, TEXT_ALIGN_CENTER)
+	draw.SimpleTextBlur(translate.Get("sigil_tp"..(anti and "_a" or "")), "ZSHUDFontTiny", x, y, colTemp, TEXT_ALIGN_CENTER)
 end
 
 GM.TraceTarget = NULL
@@ -175,7 +173,11 @@ function GM:HUDDrawTargetID(teamid)
 		if ent:IsValidPlayer() and (ent:Team() == teamid or isspectator) and CurTime() < time + 1.5 then
 			self:DrawTargetID(ent, 1 - math.Clamp((CurTime() - time) / 1.5, 0, 1))
 		elseif teamid == TEAM_HUMAN and ent.Sigil and CurTime() < time + 0.5 then
-			self:DrawSigilTargetHint(ent, 1 - math.Clamp((CurTime() - time) / 0.5, 0, 1))
+			if ent.AntiSigil then
+				self:DrawSigilTargetHint(ent, 1 - math.Clamp((CurTime() - time) / 0.5, 0, 1), true)
+			else
+				self:DrawSigilTargetHint(ent, 1 - math.Clamp((CurTime() - time) / 0.5, 0, 1))	
+			end
 		else
 			entitylist[ent] = nil
 		end

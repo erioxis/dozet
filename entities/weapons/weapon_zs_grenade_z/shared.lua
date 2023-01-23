@@ -6,3 +6,4 @@ SWEP.Base = "weapon_zs_basethrown"
 SWEP.MaxStock = 8
 
 SWEP.ZombieOnly = true
+SWEP.ZombieCanPickup = true

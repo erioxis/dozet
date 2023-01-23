@@ -1070,7 +1070,7 @@ function GM:ZombieHUD()
 
 	if not self:GetWaveActive() and self:GetWave() ~= 0 then
 		local pl = GAMEMODE.NextBossZombie
-		local demipl = math.floor(#player.GetAll(),0.05,math.max(((#team.GetPlayers(TEAM_UNDEAD) * 0.5) - 1),1))
+		local demipl = math.floor(math.max(((#team.GetPlayers(TEAM_UNDEAD) * 0.5) - 1),1))
 		if pl and pl:IsValid() then
 			local x, y = ScrW() / 2, ScrH() * 0.3 + draw_GetFontHeight("ZSHUDFont")
 			if pl == MySelf then

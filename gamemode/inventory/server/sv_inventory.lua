@@ -121,6 +121,9 @@ function meta:TryAssembleItem(component, heldclass)
 		if desiassembly == "trinket_toykasoul" then
 			self:GiveAchievement("soul")
 		end
+		if desiassembly == "weapon_zs_sigil_port_a" then
+			self:GiveAchievement("anti_sigil")
+		end
 	else
 		desitable = weapons.Get(desiassembly)
 		if (not desitable.AmmoIfHas and self:HasWeapon(desiassembly)) or not self:TakeInventoryItem(component) then return end

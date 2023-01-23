@@ -1211,9 +1211,9 @@ function GM:Think()
 			and (self.BossZombiePlayersRequired <= 0 or #player.GetAll() >= self.BossZombiePlayersRequired) then
 				if self:GetWaveStart() - 10 <= time then
 					self:SpawnBossZombie()
-					timer.Create("demibosses"..#player.GetAll(),0.05,math.max(((#team.GetPlayers(TEAM_UNDEAD) * 0.5) - 1),1), function()	self:SpawnDemiBossZombie() end)
+					timer.Create("demibosses"..#player.GetAll(),0.1,math.max(((#team.GetPlayers(TEAM_UNDEAD) * 0.5) - 1),1), function()	self:SpawnDemiBossZombie() end)
 					if self:GetWave() > 5 then
-					   timer.Simple(0.5, function()	self:SpawnBossZombie() end)
+					   timer.Simple(0.07, function()	self:SpawnBossZombie() end)
 					end
 					if self:GetWave() > 10 then
 					   timer.Create("bosses"..#player.GetAll(),0.05,#player.GetAll(), function()	self:SpawnBossZombie() end)
@@ -2519,81 +2519,6 @@ concommand.Add("initpostentity", function(sender, command, arguments)
 		gamemode.Call("PlayerReady", sender)
 	end
 end)
-concommand.Add("zs_mutationshop_click", function(sender, command, arguments)
-	if not (sender:IsValid() and sender:IsConnected()) or #arguments == 0 then return end
-
-	--[[for _, pl in pairs(player.GetAll(TEAM_HUMAN)) do
-		if LASTHUMAN then
-		sender:CenterNotify(COLOR_RED, translate.ClientGet(sender, "cant_buy_mutations"))
-		sender:SendLua("surface.PlaySound(\"buttons/button10.wav\")")
-		return
-		end
-	end]]
-
-	if  gamemode.Call("ZombieCanPurchase", sender) then
-		sender:CenterNotify(COLOR_RED, translate.ClientGet(sender, "cant_buy_mutations"))
-		sender:SendLua("surface.PlaySound(\"buttons/button10.wav\")")
-		return
-	end
-
-	local cost
-	local hasalready = {}
-	local tokens = sender:GetTokens()
-
-	for _, id in pairs(arguments) do
-		local tab = FindMutation(id)
-		if tab and not hasalready[id] then
-			if tab.Worth and tab.Callback then
-				cost = tab.Worth
-				hasalready[id] = true
-
-			end
-		end
-	end
-
-	if cost > tokens then return end
-
-	local itemtab
-	local id = arguments[1]
-	local num = tonumber(id)
-
-	if num then
-		itemtab = GAMEMODE.Mutations[num]
-	else
-		for i, tab in pairs(GAMEMODE.Mutations) do
-			if tab.Signature == id then
-				itemtab = tab
-				break
-			end
-		end
-	end
-
-	if itemtab.Worth then
-	
-		local tokens = sender:GetTokens()
-		local cost = itemtab.Worth
-		
-		cost = math.ceil(cost)
-
-		if tokens < cost  then
-			sender:CenterNotify(COLOR_RED, translate.ClientGet(sender, "you_dont_have_enough_btokens"))
-			sender:SendLua("surface.PlaySound(\"buttons/button10.wav\")")
-			return
-		end
-		itemtab.Callback(sender)
-		sender:TakeTokens(cost)
-		sender:PrintTranslatedMessage(HUD_PRINTTALK, "purchased_x_for_y_btokens", itemtab.Name, cost )
-		sender:SendLua("surface.PlaySound(\"ambient/levels/labs/coinslot1.wav\")")
-		sender.UsedMutations = sender.UsedMutations or { }
-		table.insert( sender.UsedMutations, itemtab.Signature )
-	end
-
-	net.Start("zs_mutations_table")
-		net.WriteTable(sender.UsedMutations)
-	net.Send(sender)
-
-end)
-
 
 local playerheight = Vector(0, 0, 72)
 local function groupsort(ga, gb)
@@ -4813,7 +4738,7 @@ function GM:PlayerCanPickupWeapon(pl, ent)
 
 	if pl:IsSpectator() then return false end
 
-	if pl:Team() == TEAM_UNDEAD then return ent:GetClass() == pl:GetZombieClassTable().SWEP end
+	if pl:Team() == TEAM_UNDEAD then return ent:GetClass() == pl:GetZombieClassTable().SWEP or ent.ZombieCanPickup end
 
 
 	return not ent.ZombieOnly

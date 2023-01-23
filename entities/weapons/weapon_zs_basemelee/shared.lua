@@ -331,7 +331,7 @@ function SWEP:OnMeleeHit(hitent, hitflesh, tr)
 			for i = 1, math.random(3) do
 				for _, ent in pairs(ents.FindInSphere(tr.HitPos, 158)) do
 					if ent:IsValid() and ent:IsPlayer() and ent ~= self:GetOwner() and ent:IsValidLivingZombie() then
-						ent:TakeDamage((self.MeleeDamage*0.35)/count, self:GetOwner(), self)
+						ent:TakeDamage((self.MeleeDamage*0.35*(self:GetOwner().MeleeDamageMultiplier or 1))/count, self:GetOwner(), self)
 					end
 				end
 			end

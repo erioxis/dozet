@@ -67,11 +67,11 @@ function ENT:RecalculateValidity()
 			for _, ent in pairs(ents.FindInSphere(tr.HitPos, self.GhostDistance)) do
 				if ent and ent:IsValid() then
 					if self.GhostEntityWildCard then
-						if self.GhostEntityWildCard == ent:GetClass():sub(1, #self.GhostEntityWildCard) then
+						if self.GhostEntityWildCard == ent:GetClass():sub(1, #self.GhostEntityWildCard) and ent:GetOwner() == owner then
 							valid = false
 							break
 						end
-					elseif ent:GetClass() == self.GhostEntity then
+					elseif ent:GetClass() == self.GhostEntity and ent:GetOwner() == owner then
 						valid = false
 						break
 					end

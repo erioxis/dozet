@@ -977,6 +977,9 @@ local colBeam = Color(0, 0, 0)
 local colBeam2 = Color(255, 255, 255)
 local colSmoke = Color(140, 160, 185, 160)
 local colGlow = Color(0, 0, 0)
+local exlude = {8,6,16,22,27,30,31,34,118,114,113,101,40,41,43,92,117,116,56,59,63,65,66,98,72,73,79,88 ,78}
+local exlude2 = {32,108,103,91,90}
+
 function PANEL:Paint(w, h)
 	local realtime = RealTime()
 	local lifetime = realtime - self.CreationTime
@@ -1209,14 +1212,13 @@ function PANEL:Paint(w, h)
 					for k,v in pairs(GAMEMODE.SkillModifiers[skillid]) do
 						local i = v or 1
 	
-						local exlude2 = {32,108,103,91,90}
+
 						if k >= 6 and !table.HasValue(exlude2, k) then
 							i = (i*100).."%"
 						end
 						if (v or 0) > 0 then
 							i = "+"..i
 						end
-						local exlude = {8,6,16,22,27,30,31,34,118,114,113,101,40,41,43,92,117,116,56,59,63,65,66,98,72,73,79,88 ,78}
 						local colorred = table.HasValue(exlude, k) and Color(71,231,119) or Color(238,37,37)
 						local colorgreen = table.HasValue(exlude, k) and Color(238,37,37) or Color(71,231,119)
 							--translate.Format("skillmod_n"..i,c)

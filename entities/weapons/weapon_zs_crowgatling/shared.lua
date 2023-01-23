@@ -14,7 +14,7 @@ SWEP.UseHands = true
 
 SWEP.Primary.Damage = 2
 SWEP.Primary.NumShots = 1
-SWEP.Primary.Delay = 0.33
+SWEP.Primary.Delay = 0.23
 
 SWEP.Primary.ClipSize = 100333
 SWEP.Primary.Automatic = true

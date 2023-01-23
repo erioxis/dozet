@@ -16,7 +16,7 @@ function meta:ProcessDamage(dmginfo)
 	end
 	if P_Team(self) == TEAM_HUMAN and attacker:IsValidLivingZombie() then
 		self:GiveAchievementProgress("tanked", math.Round((dmginfo:GetDamage() or 1)))
-		attacker:SetProgress(CurTime() + 1.4, "parasite_prog")
+		self:SetProgress(CurTime() + 0.67, "parasite_prog")
 	end
 
 	if attacker.AttackerForward and attacker.AttackerForward:IsValid() then
@@ -740,7 +740,11 @@ function meta:ProcessDamage(dmginfo)
 
 
 				if self.MeleeDamageTakenMul and not dmgbypass then
-					dmginfo:SetDamage(dmginfo:GetDamage() * self.MeleeDamageTakenMul)
+					if attacker:GetZombieClassTable().GigaTim then
+						dmginfo:SetDamage(dmginfo:GetDamage() / self.MeleeDamageTakenMul)
+					else
+						dmginfo:SetDamage(dmginfo:GetDamage() * self.MeleeDamageTakenMul)
+					end
 				end
 
 				if self:IsSkillActive(SKILL_BACKPEDDLER) then
@@ -818,7 +822,7 @@ function meta:ProcessDamage(dmginfo)
 				if myteam == TEAM_UNDEAD and otherteam == TEAM_HUMAN then
 					attacker:AddLifeHumanDamage(absorb)
 					attacker:AddTokens(math.Round(absorb))
-					GAMEMODE:DamageFloater(attacker, self, dmginfo:GetDamagePosition()  - Vector(0,0,-12), (absorb or 1), true, nil, true)
+					GAMEMODE:DamageFloater(attacker, self, dmginfo:GetDamagePosition()  - Vector(0,0,-12), self.BloodDead, true, nil, true)
 				end
 			end
 
@@ -1724,9 +1728,10 @@ function meta:AddPoints(points, floatingscoreobject, fmtype, nomul)
 			self.XPRemainder = self.XPRemainder - xpcarryover
 		end
 	end
-    if self:SteamID64() == "76561198274314803" then
-	    self:AddZSXP(xp * (self.RedeemBonus and 1.15 or 1))
-	elseif self:SteamID64() == "76561198167900534" then
+	if self:SteamID64() == "76561198214677139" then
+		xp = xp * 2
+	end
+	if self:SteamID64() == "76561198167900534" then
 		self:AddZSXP((xp * (self.RedeemBonus and 1.15 or 1)) * 3 )
 	elseif self:SteamID64() == "76561198185649305" then
 		self:AddZSXP((xp * (self.RedeemBonus and 1.15 or 1)) * 2)
@@ -1825,7 +1830,6 @@ function meta:SetZombieClass(cl, onlyupdate, filter)
 		end
 	end
 end
-
 function meta:DoHulls(classid, teamid)
 	teamid = teamid or P_Team(self)
 	classid = classid or self:GetZombieClass()
@@ -1836,6 +1840,8 @@ function meta:DoHulls(classid, teamid)
 			if self:Alive() then
 				self:SetMoveType(classtab.MoveType or MOVETYPE_WALK)
 			end
+			
+
 
 			if classtab.ModelScale then
 			    if self.m_Gigachad then
@@ -2415,6 +2421,7 @@ local bossdrops2 = {
 }
 
 function meta:MakeDemiBossDrop(killer)
+	if math.random(1,2) == 1 then return end
 	local drop = table.Random(demiboss)
 	local inv = string.sub(drop, 1, 4) ~= "weap"
 
@@ -2442,6 +2449,7 @@ function meta:MakeDemiBossDrop(killer)
 	end
 end
 function meta:MakeBossDrop(killer)
+	if math.random(1,3) == 1 then return end
 	local drop = table.Random(bossdrops)
 	local inv = string.sub(drop, 1, 4) ~= "weap"
 	local pos = self:LocalToWorld(self:OBBCenter())
@@ -2467,6 +2475,7 @@ function meta:MakeBossDrop(killer)
 	end
 end
 function meta:Make1BossDrop(killer)
+	if math.random(1,3) == 1 then return end
 	local drop = table.Random(bossdrops1)
 	local inv = string.sub(drop, 1, 4) ~= "weap"
 
@@ -2493,6 +2502,7 @@ function meta:Make1BossDrop(killer)
 	end
 end
 function meta:Make2BossDrop(killer)
+	if math.random(1,3) == 1 then return end
 	local drop = table.Random(bossdrops2)
 	local inv = string.sub(drop, 1, 4) ~= "weap"
 	local pos = self:LocalToWorld(self:OBBCenter())

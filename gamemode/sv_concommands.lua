@@ -176,27 +176,13 @@ concommand.Add("zs_anti_pointsshopbuy", function(sender, command, arguments)
 		end
 	end
 	if !sigiled then GAMEMODE:ConCommandErrorMessage(sender, translate.ClientGet(sender, "no_anti_sigil")) return end
-	local midwave = GAMEMODE:GetWave() < GAMEMODE:GetNumberOfWaves() / 2 or GAMEMODE:GetWave() == GAMEMODE:GetNumberOfWaves() / 2 and GAMEMODE:GetWaveActive() and CurTime() < GAMEMODE:GetWaveEnd() - (GAMEMODE:GetWaveEnd() - GAMEMODE:GetWaveStart()) / 2
-	if sender:IsSkillActive(SKILL_D_LATEBUYER) and not usescrap and midwave or GAMEMODE.ObjectiveMap and sender:IsSkillActive(SKILL_D_LATEBUYER) and not usescrap then
-		GAMEMODE:ConCommandErrorMessage(sender, translate.ClientGet(sender, "late_buyer_warning"))
-		return
-	end
-	if not sender.CanBuy and sender:HasTrinket("vir_pat") and not usescrap then
-		GAMEMODE:ConCommandErrorMessage(sender, translate.ClientGet(sender, "vir_pat_warning"))
-		return
-	end
+	
+
 	local id = arguments[1]
+	--print(id)
 	id = tonumber(id) or id
 	local itemtab = FindItem(id)
 	
-	if sender:HasTrinket("sin_envy") and weapons.Get(itemtab).Tier <= 4 then
-		GAMEMODE:ConCommandErrorMessage(sender, translate.ClientGet(sender, "envy_taken"))
-		return
-	end
-	if sender:HasTrinket("sin_pride") and weapons.Get(itemtab).Tier <= 4 then
-		GAMEMODE:ConCommandErrorMessage(sender, translate.ClientGet(sender, "envy_pride"))
-		return
-	end
 
 
 	if not (usescrap or gamemode.Call("PlayerCanPurchase", sender)) then
@@ -205,7 +191,7 @@ concommand.Add("zs_anti_pointsshopbuy", function(sender, command, arguments)
 	end
 
 
-	if not itemtab or not itemtab.PointShop then return end
+	if not itemtab or not itemtab.APointShop then return end
 	local itemcat = itemtab.Category
 	if usescrap and not (itemcat == ITEMCAT_TRINKETS or itemcat == ITEMCAT_AMMO) and not itemtab.CanMakeFromScrap then return end
 
@@ -335,6 +321,81 @@ concommand.Add("zs_anti_pointsshopbuy", function(sender, command, arguments)
 		end
 	end
 end)
+concommand.Add("zs_mutationshop_click", function(sender, command, arguments)
+	if not (sender:IsValid() and sender:IsConnected()) or #arguments == 0 then return end
+
+	--[[for _, pl in pairs(player.GetAll(TEAM_HUMAN)) do
+		if LASTHUMAN then
+		sender:CenterNotify(COLOR_RED, translate.ClientGet(sender, "cant_buy_mutations"))
+		sender:SendLua("surface.PlaySound(\"buttons/button10.wav\")")
+		return
+		end
+	end]]
+
+	if  gamemode.Call("ZombieCanPurchase", sender) or sender:Team() == TEAM_HUMAN then
+		sender:CenterNotify(COLOR_RED, translate.ClientGet(sender, "cant_buy_mutations"))
+		sender:SendLua("surface.PlaySound(\"buttons/button10.wav\")")
+		return
+	end
+
+	local cost
+	local hasalready = {}
+	local tokens = sender:GetTokens()
+
+	for _, id in pairs(arguments) do
+		local tab = FindMutation(id)
+		if tab and not hasalready[id] then
+			if tab.Worth and tab.Callback then
+				cost = tab.Worth
+				hasalready[id] = true
+
+			end
+		end
+	end
+
+	if cost > tokens then return end
+
+	local itemtab
+	local id = arguments[1]
+	local num = tonumber(id)
+
+	if num then
+		itemtab = GAMEMODE.Mutations[num]
+	else
+		for i, tab in pairs(GAMEMODE.Mutations) do
+			if tab.Signature == id then
+				itemtab = tab
+				break
+			end
+		end
+	end
+
+	if itemtab.Worth then
+	
+		local tokens = sender:GetTokens()
+		local cost = itemtab.Worth
+		
+		cost = math.ceil(cost)
+
+		if tokens < cost  then
+			sender:CenterNotify(COLOR_RED, translate.ClientGet(sender, "you_dont_have_enough_btokens"))
+			sender:SendLua("surface.PlaySound(\"buttons/button10.wav\")")
+			return
+		end
+		itemtab.Callback(sender)
+		sender:TakeTokens(cost)
+		sender:PrintTranslatedMessage(HUD_PRINTTALK, "purchased_x_for_y_btokens", itemtab.Name, cost )
+		sender:SendLua("surface.PlaySound(\"ambient/levels/labs/coinslot1.wav\")")
+		sender.UsedMutations = sender.UsedMutations or { }
+		table.insert( sender.UsedMutations, itemtab.Signature )
+	end
+
+	net.Start("zs_mutations_table")
+		net.WriteTable(sender.UsedMutations)
+	net.Send(sender)
+
+end)
+
 concommand.Add("zs_dismantle", function(sender, command, arguments)
 	if not (sender:IsValid() and sender:IsConnected() and sender:IsValidLivingHuman()) then return end
 

@@ -95,7 +95,17 @@ function meta:DoHulls(classid, teamid)
 			elseif self:GetModelScale() ~= DEFAULT_MODELSCALE then
 				self:SetModelScale(DEFAULT_MODELSCALE, 0)
 			end
-
+			--if lp and lp:IsValid() and lp == self then
+				if self.OutFitPac then
+					self:RemovePACPart(self.OutFitPac)
+					self.OutFitPac = nil 
+				end
+				if classtab.Pac3Out then
+					pac.SetupENT(self)
+					self:AttachPACPart(classtab.Pac3Out)
+					self.OutFitPac = classtab.Pac3Out
+				end
+			--end
 			if not classtab.Hull or not classtab.HullDuck then
 				self:ResetHull()
 			end
@@ -161,6 +171,10 @@ function meta:DoHulls(classid, teamid)
 		if self.ClientsideModelScale then
 			self.ClientsideModelScale = nil
 			self:DisableMatrix("RenderMultiply")
+		end
+		if self.OutFitPac then
+			self:RemovePACPart(self.OutFitPac)
+			self.OutFitPac = nil 
 		end
 		self.NoCollideAll = nil
 		--self.NoCollideInside = nil

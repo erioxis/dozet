@@ -59,6 +59,9 @@ end
 
 function SWEP:PostOnMeleeHit(hitent, hitflesh, tr)
 	if hitent:IsValid() and hitent:IsPlayer() then
+		if GAMEMODE:GetWave() >= 6 then
+			self.IgnoreNiggers = false
+		end
 		local combo = self:GetDTInt(2)
 		local owner = self:GetOwner()
 		local armdelay = owner:GetMeleeSpeedMul()

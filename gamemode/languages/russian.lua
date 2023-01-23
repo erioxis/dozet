@@ -6,6 +6,10 @@ LANGUAGE.survivor = "Выживший"
 LANGUAGE.undead = "Зомби"
 LANGUAGE.new_op = "Новые настройки"
 LANGUAGE.old_op = "Старые настройки"
+
+LANGUAGE.vgui_trin = "Тринкеты"
+LANGUAGE.vgui_comp = "Компоненты"
+LANGUAGE.vgui_cons = "Тратищиеся"
 LANGUAGE.refresh = "Обновить"
 
 LANGUAGE.challenge_daily1 = "ЕЖЕДНЕВНОЕ:Наемник досета"
@@ -23,6 +27,7 @@ LANGUAGE.challenge_daily_d6 = "Выжить 2 раза."
 
 LANGUAGE.scram_rem = " Скрапа"
 
+LANGUAGE.challenge_anti_sigil_d = "Создай анти-сигил."
 LANGUAGE.challenge_koso = "Уютно"
 LANGUAGE.challenge_koso_d = "Промахнись 10 раз подряд."
 LANGUAGE.challenge_grem = "Золотая мастерская"
@@ -146,6 +151,10 @@ LANGUAGE.press_shift_to_cancel						= "Нажмите БЕГ чтобы отме
 LANGUAGE.point_at_a_sigil_to_choose_destination		= "Целься на сигил чтобы телепортироваться к нему."
 LANGUAGE.sigil_nm = "Сигил"
 LANGUAGE.sigil_tp = "Нажми E Чтобы Телепортироваться"
+
+LANGUAGE.sigil_nm_a = "Анти-Сигил"
+LANGUAGE.sigil_tp_a = "Нажми E Чтобы открыть анти-арсенал"
+
 LANGUAGE.sigildefend = "Сигил Защищает пока ты рядом"
 LANGUAGE.sigildanger_6 = "На 6 волне или выше вы начнете умирать если сигила нету рядом"
 --skill value
@@ -1391,6 +1400,7 @@ LANGUAGE.class_lacerator_charging					= "Таран"
 LANGUAGE.class_lacerator							= "Растерзатель"
 LANGUAGE.class_barbed_headcrab						= "Шипокраб"
 LANGUAGE.class_mprime								= "Король Минос"
+LANGUAGE.class_tim								= "Гига-Тим"
 LANGUAGE.class_slime								= "Лайм Сисуса"
 LANGUAGE.class_bloodsucker_headcrab					= "Краб-сосунок"
 LANGUAGE.class_noxiousghoul							= "Кислогуль"
@@ -1410,6 +1420,7 @@ LANGUAGE.description_pyro						= "Поджигающий зомби.\nИммун
 LANGUAGE.description_zombienie             ="50% Шанс заблокировать любой урон.\n20% Шанс возродится при смерти."
 LANGUAGE.description_devourer						= "Идеально слияние кости и плоти, с метательным самонаводящиемся костью и это просто охуенно.\nНе быстр но наедине сожрет."
 LANGUAGE.description_devourer_d						= "Не идеальное слияние плоти и кости, метает те же кости.\nНаедине оставаться - плохая затея.\nЛюбит яблоки."
+LANGUAGE.description_tim				= "Не чувствует боль от атак ближнего боя.\nНастолько крут что инверсирует защиту.\nПереиграл в бандитку."
 LANGUAGE.description_mprime				= "Имеет довольно маленькое здоровье с большим резистом к урону.\nКороль Круга Похоти.\nИспользует невероятной силы атаки против людей."
 LANGUAGE.description_slime				= "Меньшая версия Короля Миноса.\nСлаб."
 LANGUAGE.description_skeletal_walker				= "Груда костей собранно магией кринжа.\nНевероятно сложно раздавить и получает 0 урона от пуль."
@@ -1481,6 +1492,7 @@ LANGUAGE.controls_flesh_beast						= "> ПЕРВИЧНЫЙ: Когти\n> ВТО
 LANGUAGE.controls_chem_zombie						= "> СМЕРТЬ: Ядовитый взрыв"
 LANGUAGE.controls_shade								= "> ПЕРВИЧНЫЙ: Левитация\n> ВТОРИЧНЫЙ: Кинуть"
 LANGUAGE.controls_mprime							= "> ПЕРВИЧНЫЙ: Умри!\n> ВТОРИЧНЫЙ: Правосудие!\n> ПЕРЕЗАРЯДКА: Смена режима на ПРАВОСУДИЕ\n> ПЕРЕЗАРЯДКА + ВТОРИЧНАЯ АТАКА: Смена режима на режим СМЕРТИ\n> ЗДОРОВЬЕ НИЖЕ 50%: ВСЕ ЛЮДИ ПОЛУЧАЮТ УРОН В ВИДЕ 45% СВОЕГО ХП"
+LANGUAGE.controls_tim							= "> ПЕРВИЧНЫЙ: Гига-удар\n> ВТОРИЧНЫЙ: Блок\n> Новая волна - новое оружие"
 LANGUAGE.controls_god2							= "> ПЕРВИЧНЫЙ: Удар бога!\n> ПЕРЕЗАРЯДКА: Призыв бочки\n> ПЕРЕЗАРЯДКА + ВТОРИЧНАЯ АТАКА: Заклинание"
 -- The help file... Quite big! I wouldn't blame you if you didn't translate this part.
 
@@ -2412,11 +2424,14 @@ LANGUAGE.s_frightened = "ЛОУ-СКИЛЛ!"
 LANGUAGE.s_frost = "ОТМОРОЗОК!"
 LANGUAGE.s_slow = "МЕДЛЕННЫЙ!"
 LANGUAGE.s_dim_vision = "ОЧКАРИК!"
+LANGUAGE.s_world = "Мир"
 LANGUAGE.s_enfeeb = "СЛОМЛЕННЫЙ!"
 LANGUAGE.s_bleed = "КРОВОТОК!"
 LANGUAGE.s_poison = "ОТРАВЛЕН!"
 LANGUAGE.s_sigildef = "ЗАЩИЩЕН!"
 LANGUAGE.s_target = "МЕТКА!"
+
+LANGUAGE.s_world_d = "Мир.\nДает эффект древнего виденья и улучшает его."
 
 LANGUAGE.s_hollow_d = "Когда кончается вы получите урон в виде максимального пика времени у статуса."
 LANGUAGE.s_mantle_d = "Дает иммунитет к ваншоту от древнего кошмара."

@@ -33,7 +33,10 @@ end
 
 function SWEP:ApplyMeleeDamage(ent, trace, damage)
 	if SERVER and ent:IsPlayer() then 	
-	if ent:IsSkillActive(SKILL_CQARMOR) then self.BaseClass.ApplyMeleeDamage(self, ent, trace, damage) return end
+		if (ent:GetStatus("bleed")) then
+			damage = damage * math.max(0.6, ent:GetStatus("bleed"):GetDamage()/100)
+		end
+	if ent:IsSkillActive(SKILL_CQARMOR) then self.BaseClass.ApplyMeleeDamage(self, ent, trace, damage*3) return end
 		local gt = ent:GiveStatus("enfeeble", damage * self.EnfeebleDurationMul)
 		if gt and gt:IsValid() then
 			gt.Applier = self:GetOwner()

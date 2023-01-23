@@ -4,7 +4,7 @@ ENT.DieTime = 0
 
 function ENT:Initialize()
 	self.ObjHealth = 25
-
+	self.NextUse = 0
 	if self.DieTime == 0 then
 		self.DieTime = CurTime() + GAMEMODE.GibLifeTime
 	end
@@ -77,35 +77,38 @@ function ENT:Think()
 	end
 end
 function ENT:Use(activator, caller)
-if self.DieTime ~= 0 and activator:IsSkillActive(SKILL_CAN_EATER) and not activator:IsSkillActive(SKILL_GLUTTON) and not activator:IsValidLivingZombie() then
-	self.DieTime = 0
+	if self.NextUse > CurTime() then return end
+	if self.DieTime ~= 0 and activator:IsSkillActive(SKILL_CAN_EATER) and not activator:IsSkillActive(SKILL_GLUTTON) and not activator:IsValidLivingZombie() then
+		self:TakeDamage(6)
+		self:GetPhysicsObject():SetVelocity(VectorRand(50,320))
+		self.NextUse = CurTime()+ 0.8
 
-	activator:SetHealth(math.min(activator:GetMaxHealth(), activator:Health() + 20))
-	local cursed = activator:GetStatus("cursed")
-	if (cursed) and activator:IsSkillActive(SKILL_RESNYA) then
-		activator:AddCursed(activator, cursed.DieTime - CurTime() - 20)
-	end
-	for _, pl3 in pairs(ents.FindInSphere(activator:GetPos(), 128 * activator:GetModelScale())) do
-		if pl3:IsValidLivingHuman() and activator:IsSkillActive(SKILL_FOODHEALS) then
-			activator:HealPlayer(pl3, 15)
+		activator:SetHealth(math.min(activator:GetMaxHealth(), activator:Health() + 6))
+		local cursed = activator:GetStatus("cursed")
+		if (cursed) and activator:IsSkillActive(SKILL_RESNYA) then
+			activator:AddCursed(activator, cursed.DieTime - CurTime() - 20)
 		end
-	end
-	self:EmitSound("physics/body/body_medium_break"..math.random(2, 4)..".wav")
-	util.Blood(self:GetPos(), math.random(2), Vector(0, 0, 1), 100, self:GetDTInt(0), true)
-elseif self.DieTime ~= 0 and activator:IsSkillActive(SKILL_CAN_EATER) and activator:IsSkillActive(SKILL_GLUTTON)  then
-	self.DieTime = 0
-	for _, pl in pairs(ents.FindInSphere(activator:GetPos(), 128 * activator:GetModelScale())) do
-		if pl:IsValidLivingHuman() and activator:IsSkillActive(SKILL_FOODHEALS) then
-			pl:SetBloodArmor(math.min(pl.MaxBloodArmor + 40, pl:GetBloodArmor() + 10))
-			if pl:GetBloodArmor() < pl.MaxBloodArmor + 40 then
-				activator:AddPoints(2)
+		for _, pl3 in pairs(ents.FindInSphere(activator:GetPos(), 128 * activator:GetModelScale())) do
+			if pl3:IsValidLivingHuman() and activator:IsSkillActive(SKILL_FOODHEALS) then
+				activator:HealPlayer(pl3, 15)
 			end
 		end
+		self:EmitSound("physics/body/body_medium_break"..math.random(2, 4)..".wav")
+		util.Blood(self:GetPos(), math.random(2), Vector(0, 0, 1), 100, self:GetDTInt(0), true)
+	elseif self.DieTime ~= 0 and activator:IsSkillActive(SKILL_CAN_EATER) and activator:IsSkillActive(SKILL_GLUTTON)  then
+		self.DieTime = 0
+		for _, pl in pairs(ents.FindInSphere(activator:GetPos(), 128 * activator:GetModelScale())) do
+			if pl:IsValidLivingHuman() and activator:IsSkillActive(SKILL_FOODHEALS) then
+				pl:SetBloodArmor(math.min(pl.MaxBloodArmor + 40, pl:GetBloodArmor() + 10))
+				if pl:GetBloodArmor() < pl.MaxBloodArmor + 40 then
+					activator:AddPoints(2)
+				end
+			end
+		end
+		activator:SetBloodArmor(math.min(activator.MaxBloodArmor + 40, activator:GetBloodArmor() + 30))
+		self:EmitSound("physics/body/body_medium_break"..math.random(2, 4)..".wav")
+		util.Blood(self:GetPos(), math.random(2), Vector(0, 0, 1), 100, self:GetDTInt(0), true)
 	end
-	activator:SetBloodArmor(math.min(activator.MaxBloodArmor + 40, activator:GetBloodArmor() + 30))
-	self:EmitSound("physics/body/body_medium_break"..math.random(2, 4)..".wav")
-	util.Blood(self:GetPos(), math.random(2), Vector(0, 0, 1), 100, self:GetDTInt(0), true)
-end
 end
 
 function ENT:StartTouch(ent)

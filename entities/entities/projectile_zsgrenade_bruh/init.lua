@@ -36,10 +36,10 @@ function ENT:Explode()
 	self.Exploded = true
 
 	local owner = self:GetOwner()
-	if owner:IsValidHuman() then
+	if owner:IsValidLivingZombie() then
 		local pos = self:GetPos()
 
-		util.BlastDamagePlayer(self, owner, pos, self.GrenadeRadius or 256, self.GrenadeDamage or 22, DMG_ALWAYSGIB)
+		util.BlastDamagePlayer(self, owner, pos, 120, 11, DMG_ALWAYSGIB)
 
 		local effectdata = EffectData()
 			effectdata:SetOrigin(pos + Vector(0, 0, -1))

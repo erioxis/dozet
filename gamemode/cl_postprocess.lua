@@ -492,7 +492,7 @@ function GM:DrawHumanIndicators()
 	end
 end
 function GM:DrawZombieIndicators()
-	if MySelf:Team() ~= TEAM_HUMAN or not MySelf:IsSkillActive(SKILL_SEEAURA) or MySelf:KeyDown(IN_SPEED) then return end
+	if MySelf:Team() ~= TEAM_HUMAN or not (MySelf:IsSkillActive(SKILL_SEEAURA) or (MySelf:GetStatus("world"))) or MySelf:KeyDown(IN_SPEED) then return end
 	local matGlow = Material("sprites/glow04_noz")
 	local texDownEdge = surface.GetTextureID("gui/gradient_down")
 	local colHealth = Color(0, 0, 0, 240)
@@ -541,6 +541,9 @@ function GM:DrawZombieIndicators()
 				local subwidth = healthperc * wid
 		
 				draw.SimpleTextBlurry(health.."|"..pl:GetMaxHealth(), "ZSHUDFont", x * screenscale, y - 36 * screenscale, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+				if (MySelf:GetStatus("world")) then
+					draw.SimpleTextBlurry(lp:GetName(), "ZSHUDFont", x * screenscale, y - 96 * screenscale, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+				end
 		
 				surface.SetDrawColor(0, 0, 0, 230)
 				surface.DrawRect(x, y, wid, hei)

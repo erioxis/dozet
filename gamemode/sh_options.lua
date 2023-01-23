@@ -585,9 +585,11 @@ item.Countables = "prop_medstation"
 item =
 GM:AddPointShopItem("sigil_portable",			ITEMCAT_DEPLOYABLES,			1000,				"weapon_zs_sigil_port")
 item.Countables = "prop_obj_sigil"
-item =
-GM:AddPointShopItem("xmas_tree",			ITEMCAT_DEPLOYABLES,			1000,				"weapon_zs_xmas_tree")
-item.Countables = "prop_xmas_tree"
+if GM.NewYear then
+	item =
+	GM:AddPointShopItem("xmas_tree",			ITEMCAT_DEPLOYABLES,			1000,				"weapon_zs_xmas_tree")
+	item.Countables = "prop_xmas_tree"
+end
 item =
 GM:AddPointShopItem("pulsedrone",		ITEMCAT_DEPLOYABLES,			40,				"weapon_zs_drone_pulse")
 item.Countables = "prop_drone_pulse"
@@ -671,6 +673,8 @@ GM:AddAPointShopItem("soul_of_lampsoul",			ITEMCAT_TRINKETS,			892,			"trinket_l
 GM:AddAPointShopItem("soul_of_barasoul",			ITEMCAT_TRINKETS,			999999999,			"trinket_barasoul").SubCategory =								ITEMSUBCAT_TRINKETS_SPECIAL
 GM:AddAPointShopItem("soul_of_troyaksoul",			ITEMCAT_TRINKETS,			320,			"trinket_troyaksoul").SubCategory =								ITEMSUBCAT_TRINKETS_SUPPORT
 GM:AddAPointShopItem("soul_of_lehasoul",			ITEMCAT_TRINKETS,			180,			"trinket_lehasoul").SubCategory =								ITEMSUBCAT_TRINKETS_SPECIAL
+
+GM:AddAPointShopItem("world_card",			ITEMCAT_OTHER,			250,				nil,							translate.Get("s_world"),			translate.Get("s_world_d"),									"status_dim_vision",					function(pl) pl:GiveStatus("world",CurTime()+30) end)
 
 GM:AddAPointShopItem("speedx22",			ITEMCAT_MELEE,			8000,			"weapon_zs_speed")
 GM:AddAPointShopItem("bannahuyx222",			ITEMCAT_TOOLS,			2500,			"weapon_zs_banhammer")

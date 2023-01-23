@@ -7,7 +7,7 @@ CLASS.Help = "controls_ancient_nightmare"
 
 CLASS.Boss = true
 
-CLASS.Health = 1230
+CLASS.Health = 1900
 CLASS.Speed = 110
 
 CLASS.Points = 30
@@ -56,11 +56,6 @@ if SERVER then
 end
 function CLASS:GetAlpha(pl)
 	local wep = pl:GetActiveWeapon()
-	if not wep.IsAttacking then wep = NULL end
-
-	if wep:IsValid() and wep:IsAttacking() then
-		return 0.7
-	end
 
 	local eyepos = EyePos()
 	local nearest = pl:WorldSpaceCenter()
