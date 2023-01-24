@@ -199,7 +199,7 @@ function GM:SaveWinRate()
 	local tosave = {
 		Winrate = math.floor(self:GetWinRate() or 0),
 		ZSRage = math.floor(self:GetRage() or 0),
-		Da = (#DaData <= 300 and DaData or {"mmm"}),
+		Da = (#DaData <= 1200 and DaData or {"mmm", "what", "yes", "ммм", "да", "что", "obed", "обед", "уютненько", "Я", "I", "you", "ты", "амням", "санбой", "пророк"}),
 		DailySecs = math.floor(self.DailySecs or os.time() +86400),
 		DailyNum = math.floor(self.DailyNum or 1),
 		LastDaily = (self.LastDaily or 1)

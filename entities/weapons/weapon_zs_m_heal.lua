@@ -78,8 +78,7 @@ function SWEP:SecondaryAttack()
 			owner:AddCursed(self:GetOwner(), cursed.DieTime - CurTime() - 20)
 		end
 		end
-local healmax = owner:IsSkillActive(SKILL_D_FRAIL) and math.floor(owner:GetMaxHealth() * 0.44) or owner:GetMaxHealth()
-local healmax = owner:IsSkillActive(SKILL_ABUSE) and math.floor(owner:GetMaxHealth() * 0.25) or owner:GetMaxHealth()
+		local healmax = (owner:IsSkillActive(SKILL_D_FRAIL) or owner:IsSkillActive(SKILL_ABUSE)) and math.floor(owner:GetMaxHealth() * 0.44) or owner:GetMaxHealth()
 		if owner:GetBloodArmor() > 0 and self.Primary.ArmorBleed <= owner:GetBloodArmor() and owner:Health() < math.min(healmax, owner:GetMaxHealth() * 1) then
 			owner:SetHealth(owner:Health() + self.Primary.ArmorBleed + (owner:Health() * 0.10))
 			owner:SetBloodArmor(math.min(owner:GetBloodArmor() - self.Primary.ArmorBleed))

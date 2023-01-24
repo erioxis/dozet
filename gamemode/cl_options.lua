@@ -108,6 +108,10 @@ GM.DisableNode = CreateClientConVar("zs_disablenode", "0", true, false):GetBool(
 cvars.AddChangeCallback("zs_disablenode", function(cvar, oldvalue, newvalue)
 	GAMEMODE.DisableNode = tonumber(newvalue) == 1
 end)
+GM.NewbieMode = CreateClientConVar("zs_nb_mode", "1", true, false):GetBool()
+cvars.AddChangeCallback("zs_nb_mode", function(cvar, oldvalue, newvalue)
+	GAMEMODE.NewbieMode = tonumber(newvalue) == 1
+end)
 GM.AddDesc = CreateClientConVar("zs_adddesc", "0", true, false):GetBool()
 cvars.AddChangeCallback("zs_adddesc", function(cvar, oldvalue, newvalue)
 	GAMEMODE.AddDesc = tonumber(newvalue) == 1

@@ -146,6 +146,7 @@ function ENT:DrawTranslucent()
 		cam.IgnoreZ(true)
 
 		cam.Start3D2D(nearest, ang, 0.1)
+			local scale = false
 			local wid, hei = 150, 6
 			local x, y = wid * -0.5 + 2, 0
 
@@ -160,6 +161,15 @@ function ENT:DrawTranslucent()
 					validfriend and 16 or 24,
 					validfriend and 16 or 24
 				)
+			end
+			if MySelf:GetEyeTrace().Entity == parent then
+				scale = true
+				if GAMEMODE.NewbieMode then
+					draw.SimpleText(translate.Get("press_z_or_b"), "ZS3D2DUnstyleSmaller", x + 25, y - 90,  COLOR_WHITE, TEXT_ALIGN_CENTER)
+				end
+			end
+			if GAMEMODE.NewbieMode and self:GetNailHealth() < self:GetMaxNailHealth() * 0.5 then
+				draw.SimpleText(translate.Get("run_danger_nb"), "ZS3D2DUnstyleSmaller", x + 25, y - 120,  COLOR_RED, TEXT_ALIGN_CENTER)
 			end
 
 			if self:GetMaxRepairs() > 0 or self:GetMaxNailHealth() > 0 then
@@ -201,11 +211,14 @@ function ENT:DrawTranslucent()
 				if displayowner then
 					local col = redname and colDead or colText
 					col.a = 125 * vis
-
+					if scale then 
+						x = x * 3
+						y = y * 2
+					end
 
 					draw.SimpleText(displayowner, "ZS3D2DUnstyleSmallest", 0, y + 20, col, TEXT_ALIGN_CENTER)
-					draw.SimpleText(math.floor(nhp) .. "/" .. math.floor(self:GetMaxNailHealth()), "ZS3D2DUnstyleNail", x + 25, y - 30,  COLOR_RPINK, TEXT_ALIGN_CENTER)
-					draw.SimpleText(math.floor(repairs) .. "/" .. math.floor(mrps), "ZS3D2DUnstyleNail", x + 25, y - 50, COLOR_CYAN, TEXT_ALIGN_CENTER)
+					draw.SimpleText(math.floor(nhp) .. "/" .. math.floor(self:GetMaxNailHealth()), (scale and "ZS3D2DUnstyleSmaller" or "ZS3D2DUnstyleNail"), x + 25, y - 30,  COLOR_RPINK, TEXT_ALIGN_CENTER)
+					draw.SimpleText(math.floor(repairs) .. "/" .. math.floor(mrps), (scale and "ZS3D2DUnstyleSmaller" or  "ZS3D2DUnstyleNail"), x + 25, y - 50, COLOR_CYAN, TEXT_ALIGN_CENTER)
 				end
 			end
 		cam.End3D2D()

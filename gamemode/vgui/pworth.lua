@@ -222,9 +222,9 @@ function MakepWorth()
 	topspace:SetWide(wid * 0.75)
 	topspace:SetPaintBackground(false)
 
-	local title = EasyLabel(topspace, "The Worth Menu", "ZSHUDFontSmall", COLOR_WHITE)
+	local title = EasyLabel(topspace, translate.Get("pworth"), "ZSHUDFontSmall", COLOR_WHITE)
 	title:CenterHorizontal()
-	local subtitle = EasyLabel(topspace, "Select the items you're going to start with this round.", "ZSHUDFontTiny", COLOR_WHITE)
+	local subtitle = EasyLabel(topspace, translate.Get("pworth_sel"), "ZSHUDFontTiny", COLOR_WHITE)
 	subtitle:CenterHorizontal()
 	subtitle:MoveBelow(title, 4)
 

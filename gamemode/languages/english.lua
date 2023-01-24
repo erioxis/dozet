@@ -178,10 +178,17 @@ LANGUAGE.skill_add_worth = "Worth"
 LANGUAGE.skill_add_health = "Health"
 LANGUAGE.skill_add_amulet = "Amulet Cells"
 LANGUAGE.skill_add_speed = "Speed"
+LANGUAGE.pworth_sel = "Select the items you're going to start with this round."
+LANGUAGE.pworth = "The Worth Menu"
 -- Options|||
 LANGUAGE.op_xy = "X and Y standart pos for F3(Have bugs!)"
 LANGUAGE.op_show_node = "Optimised F3"
 LANGUAGE.op_ms_mss = "Updated Gamestate"
+LANGUAGE.op_nb_mode = "Newbie mode"
+--ПОДСКАЗКИ
+LANGUAGE.press_z_or_b = "Press Z or B for phase!"
+LANGUAGE.run_danger_nb = "Run! This prop in danger!"
+--
 LANGUAGE.op_show_node = "Optimised F3"
 LANGUAGE.op_show_node_tool = "Disable Skill Model"
 LANGUAGE.op_show_sprite_tool = "Disable Skill Sprite"

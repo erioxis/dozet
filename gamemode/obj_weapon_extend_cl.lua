@@ -123,7 +123,7 @@ function meta:DrawCrosshairDot()
 	if GAMEMODE.LastOTSBlocked and MySelf:Team() == TEAM_HUMAN and GAMEMODE:UseOverTheShoulder() then
 		GAMEMODE:DrawCircle(x, y, 8, COLOR_RED)
 	end
-	if MySelf:IsSkillActive(SKILL_PARASITOID) and MySelf:GetProgress("parasite_prog") > CurTime() then
+	if (MySelf:IsSkillActive(SKILL_PARASITOID) or MySelf:IsSkillActive(SKILL_CAN_EATER)) and MySelf:GetProgress("parasite_prog") > CurTime() then
 		local screenscale = BetterScreenScale()
 		local wid, hei = 32 * screenscale, 32 * screenscale
 

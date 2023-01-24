@@ -967,7 +967,7 @@ function GM:HumanHUD(screenscale)
 		local txth = draw_GetFontHeight("ZSHUDFontSmall")
 		draw_SimpleTextBlurry(translate.Format("giving_items_to", lockon:Name()), "ZSHUDFontSmall", w * 0.5, h * 0.55 + txth, COLOR_GRAY, TEXT_ALIGN_CENTER)
 	end
-	if gamemode.Call("PlayerCanPurchase", MySelf) then
+	if gamemode.Call("PlayerCanPurchase", MySelf) and GAMEMODE.NewbieMode then
 		draw_SimpleTextBlurry(translate.Get("press_f2_for_the_points_shop"), "ZSHUDFontSmall", w * 0.5, screenscale * 135, COLOR_GRAY, TEXT_ALIGN_CENTER)
 	end
 end

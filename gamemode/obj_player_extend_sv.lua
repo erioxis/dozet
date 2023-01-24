@@ -16,7 +16,7 @@ function meta:ProcessDamage(dmginfo)
 	end
 	if P_Team(self) == TEAM_HUMAN and attacker:IsValidLivingZombie() then
 		self:GiveAchievementProgress("tanked", math.Round((dmginfo:GetDamage() or 1)))
-		self:SetProgress(CurTime() + 0.67, "parasite_prog")
+		self:SetProgress(CurTime() + 0.97, "parasite_prog")
 	end
 
 	if attacker.AttackerForward and attacker.AttackerForward:IsValid() then
@@ -185,7 +185,11 @@ function meta:ProcessDamage(dmginfo)
 				if attacker:GetProgress('bprog') >= 1500 * (attacker:GetProgress('bprogmul')+1) and !attacker:HasTrinket(hm) then
 					attacker:SetProgress(0, 'bprog')
 					attacker:SetProgress(attacker:GetProgress('bprogmul')+1,'bprogmul') 
-					attacker:AddInventoryItem("trinket_"..hm)
+					local itype = "trinket_"..hm
+					attacker:AddInventoryItem(itype)
+					net.Start("zs_invitem")
+					net.WriteString(itype)
+				net.Send(attacker)
 					attacker:SetPoints(attacker:GetPoints() + 50)
 				end
 			end

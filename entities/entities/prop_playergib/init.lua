@@ -77,7 +77,7 @@ function ENT:Think()
 	end
 end
 function ENT:Use(activator, caller)
-	if self.NextUse > CurTime() then return end
+	if self.NextUse > CurTime() or activator and activator:IsValidLivingHuman() and activator:GetProgress("parasite_prog") > CurTime()  then return end
 	if self.DieTime ~= 0 and activator:IsSkillActive(SKILL_CAN_EATER) and not activator:IsSkillActive(SKILL_GLUTTON) and not activator:IsValidLivingZombie() then
 		self:TakeDamage(6)
 		self:GetPhysicsObject():SetVelocity(VectorRand(50,320))
@@ -86,7 +86,7 @@ function ENT:Use(activator, caller)
 		activator:SetHealth(math.min(activator:GetMaxHealth(), activator:Health() + 6))
 		local cursed = activator:GetStatus("cursed")
 		if (cursed) and activator:IsSkillActive(SKILL_RESNYA) then
-			activator:AddCursed(activator, cursed.DieTime - CurTime() - 20)
+			activator:AddCursed(activator, cursed.DieTime - CurTime() - 2)
 		end
 		for _, pl3 in pairs(ents.FindInSphere(activator:GetPos(), 128 * activator:GetModelScale())) do
 			if pl3:IsValidLivingHuman() and activator:IsSkillActive(SKILL_FOODHEALS) then
