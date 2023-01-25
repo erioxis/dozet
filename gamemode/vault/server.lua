@@ -204,7 +204,7 @@ function GM:SaveWinRate()
 		DailyNum = math.floor(self.DailyNum or 1),
 		LastDaily = (self.LastDaily or 1)
 	}
-	num = (self.DailyNum or 1)%
+	num = (self.DailyNum or 1)%6
 	if self.DailySecs and os.time() > self.DailySecs then
 		tosave.LastDaily = num
 		tosave.DailyNum = math.floor(self.DailyNum or 1) + 1
