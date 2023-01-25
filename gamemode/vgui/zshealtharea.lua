@@ -23,6 +23,10 @@ local function ContentsPaint(self, w, h)
 		if health > lp:GetMaxHealthEx() then
 			health = lp:GetMaxHealthEx().." (+"..health-lp:GetMaxHealthEx()..")"
 		end
+		if lp:HasTrinket("curse_unknown") then
+			health = "?"
+			subwidth = wid
+		end
 		draw.SimpleTextBlurry(health..(gp and " x"..((((lp:GetZSRemortLevel() / 4) or 0) + (lp.AmuletPiece or 0))-2)*-1 or ""), ((gp or string.len(health) >= 13) and "ZSHUDFontSmall"or"ZSHUDFont"), x + wid + 18 * screenscale, y + 8 * screenscale, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 
 		surface.SetDrawColor(0, 0, 0, 230)
@@ -72,7 +76,10 @@ local function ContentsPaint(self, w, h)
 				colHealth.b = (lp:GetInfo("zs_bblood") - healthperc) * 50
 
 				subwidth = healthperc * wid
-
+				if lp:HasTrinket("curse_unknown") then
+					bloodarmor = "?"
+					subwidth = wid
+				end
 				draw.SimpleTextBlurry(bloodarmor.."/"..math.Round(lp.MaxBloodArmor), "ZSHUDFontSmall", x + wid + 12 * screenscale, y + 8 * screenscale, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 
 				surface.SetDrawColor(0, 0, 0, 230)

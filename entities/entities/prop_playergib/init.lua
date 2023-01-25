@@ -77,7 +77,8 @@ function ENT:Think()
 	end
 end
 function ENT:Use(activator, caller)
-	if self.NextUse > CurTime() or activator and activator:IsValidLivingHuman() and activator:GetProgress("parasite_prog") > CurTime()  then return end
+	if self.NextUse > CurTime() or activator and activator:IsValidLivingHuman() and activator:GetProgress("parasite_prog") >= CurTime() or (activator.NextGibEat or 1) >= CurTime()  then return end
+	activator.NextGibEat = CurTime() + 0.2
 	if self.DieTime ~= 0 and activator:IsSkillActive(SKILL_CAN_EATER) and not activator:IsSkillActive(SKILL_GLUTTON) and not activator:IsValidLivingZombie() then
 		self:TakeDamage(6)
 		self:GetPhysicsObject():SetVelocity(VectorRand(50,320))

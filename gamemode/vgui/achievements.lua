@@ -11,13 +11,10 @@ local num = 1
 local tbl = {Goal = 100, Reward = 2500}
 local function DoAchievements()
     local daily = GAMEMODE:GetDaily()
-    for i=1,99 do
-        if table.HasValue({"1","2","3","4","5","6"},tostring(math.floor(((daily or 1)+i)/i))) and math.floor(((daily or 1)+i)/i) ~= GAMEMODE:GetLDaily()then
-            tbl = dailyreward["Daily"..math.floor(((daily or 1)+i)/i)]
-            num = math.floor(((daily or 1)+i)/i)
-            break
-        end
-    end
+    tbl = dailyreward["Daily"..daily%6]
+    num = daily%6
+        
+
    --[[self.Achievements["daily"..daily] = {
         Name = translate("challenge_daily"..num),
         Desc = translate("challenge_daily_d"..num),

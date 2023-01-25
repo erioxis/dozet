@@ -16,7 +16,7 @@ CLASS.GigaTim = true
 
 CLASS.Points = 40
 
-CLASS.SWEP = "weapon_zs_mprime"
+CLASS.SWEP = "weapon_zs_luxoidz"
 
 CLASS.Model = Model("models/Gigabreen/Gigabreen.mdl")
 

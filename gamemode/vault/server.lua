@@ -204,12 +204,7 @@ function GM:SaveWinRate()
 		DailyNum = math.floor(self.DailyNum or 1),
 		LastDaily = (self.LastDaily or 1)
 	}
-	for i=1,99 do
-		if table.HasValue({"1","2","3","4","5","6"},tostring(math.Round(((self.DailyNum or 1)+i)/i))) and math.Round(((self.DailyNum or 1)+i)/i) ~= self.LastDaily then
-			num = math.Round(((self.DailyNum or 1)+i)/i)
-			break
-		end
-	end
+	num = (self.DailyNum or 1)%
 	if self.DailySecs and os.time() > self.DailySecs then
 		tosave.LastDaily = num
 		tosave.DailyNum = math.floor(self.DailyNum or 1) + 1

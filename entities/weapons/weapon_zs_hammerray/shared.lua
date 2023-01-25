@@ -58,7 +58,7 @@ function SWEP:PrimaryAttack()
 	local ent
 	for _, tr in pairs(trtbl) do
 		local test = tr.Entity
-		if test and test:IsValid() and not test:IsPlayer() then
+		if test and test:IsValid() then
 			hitent = test
             
 			break
@@ -78,10 +78,6 @@ function SWEP:PrimaryAttack()
 		self:SetDTEntity(10, hitent)
 		self:SetNextPrimaryFire(CurTime() + 1)
 		gamemode.Call("PlayerRepairedObject", owner, hitent, healed, self)
-	elseif hitent:IsNailed() and CLIENT  then
-		local healstrength = self.HealStrength * (owner.RepairRateMul or 1)
-		local oldhealth = hitent:GetBarricadeHealth()
-		if oldhealth <= 0 or oldhealth >= hitent:GetMaxBarricadeHealth() or hitent:GetBarricadeRepairs() <= 0.01 then return end
 	elseif hitent.GetObjectHealth and SERVER then
 		-- Taking the nil tr parameter for granted for now
 		local healstrength = self.HealStrength * (owner.RepairRateMul or 1)
@@ -102,6 +98,12 @@ function SWEP:PrimaryAttack()
 			effectdata:SetNormal((self:GetPos() - hitent:GetPos()):GetNormalized())
 			effectdata:SetMagnitude(1)
 		util.Effect("nailrepaired", effectdata, true, true)
+	elseif hitent:IsValidLivingZombie() then
+		if SERVER then
+			hitent:TakeDamage(self.HealStrength, self:GetOwner(),self)
+		end
+		self:SetDTEntity(10, hitent)
+		self:SetNextPrimaryFire(CurTime() + 1)
 	end
 end
 
@@ -138,7 +140,26 @@ end
 function SWEP:CheckHealRay()
 	local ent = self:GetDTEntity(10)
 	local owner = self:GetOwner()
-
+	if ent:IsValidLivingZombie() and owner:KeyDown(IN_ATTACK) and
+	ent:WorldSpaceCenter():DistToSqr(owner:WorldSpaceCenter()) <= self.HealRange * self.HealRange and self:GetCombinedPrimaryAmmo() > 0 then 
+		local effectdata = EffectData()
+		effectdata:SetOrigin(ent:WorldSpaceCenter())
+		effectdata:SetFlags(3)
+		effectdata:SetEntity(self)
+		effectdata:SetAttachment(1)
+		util.Effect("tracer_hammerray", effectdata)
+		if CurTime() > self:GetDTFloat(10) then
+			if SERVER then
+				ent:TakeSpecialDamage(self.HealStrength * (owner.BulletMul or 1),DMG_BULLET, self:GetOwner(),self)
+			end
+			self:SetDTFloat(10, CurTime() + 0.36)
+			self:TakeAmmo()
+		end
+		self.ChargeSound:PlayEx(1, 70)
+	elseif ent:IsValid() then
+		self:StopHealing()
+	end
+	if ent:IsPlayer() then return end
 	if ent:IsNailed() and owner:KeyDown(IN_ATTACK) and
 		ent:WorldSpaceCenter():DistToSqr(owner:WorldSpaceCenter()) <= self.HealRange * self.HealRange and self:GetCombinedPrimaryAmmo() > 0 then
 
@@ -198,8 +219,7 @@ function SWEP:CheckHealRay()
 			self:SetDTFloat(10, CurTime() + 0.36)
 			self:SendWeaponAnim(ACT_VM_PRIMARYATTACK)
 		end
-		end
-
+	end
 		self.ChargeSound:PlayEx(1, 70)
 	elseif ent:IsValid() then
 		self:StopHealing()

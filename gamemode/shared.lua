@@ -1065,13 +1065,9 @@ local tbl = {Goal = 100, Reward = 2500}
 local translate = translate.Get
 function GM:DoAchievements()
     local daily = self:GetDaily()
-    for i=1,99 do
-        if table.HasValue({"1","2","3","4","5","6"},tostring(math.floor(((daily or 1)+i)/i))) and math.floor(((daily or 1)+i)/i) ~= self.LastDaily then
-            tbl = dailyreward["Daily"..math.floor(((daily or 1)+i)/i)]
-            num = math.floor(((daily or 1)+i)/i)
-            break
-        end
-    end
+    tbl = dailyreward["Daily"..(self:GetDaily() or 1)%6]
+ 	num =  (self:GetDaily() or 1)%6
+
    --[[self.Achievements["daily"..daily] = {
         Name = translate("challenge_daily"..num),
         Desc = translate("challenge_daily_d"..num),

@@ -139,11 +139,14 @@ function ENT:Think()
 	local pos = self:LocalToWorld(Vector(0, 0, 30))
 	local count = 0
 
-	local totalheal = self.HealValue * (self:GetObjectOwner().MedicHealMul or 1)
+	local totalheal = (self.HealValue * (self:GetObjectOwner().MedicHealMul or 1))/2
 	local owner = self:GetObjectOwner()
 
 	for _, hitent in pairs(ents.FindInSphere(pos, self.MaxDistance)) do
 		if not hitent:IsValid() or hitent == self or not WorldVisible(pos, hitent:NearestPoint(pos)) then
+			continue
+		end
+		if hitent:IsPlayer() and hitent:HasTrinket("curse_unknown") then
 			continue
 		end
 
@@ -151,6 +154,7 @@ function ENT:Think()
 
        if hitent:GetMaxHealth() > hitent:Health() and hitent:IsPlayer() and hitent:IsValidLivingHuman() and !(hitent:IsSkillActive(SKILL_ABUSE) or hitent:IsSkillActive(SKILL_D_FRAIL))  then
 			hitent:EmitSound("npc/dog/dog_servo"..math.random(7, 8)..".wav", 70, math.random(100, 105))
+			
 		  	owner:HealPlayer(hitent, totalheal)
 		  	local effectdata = EffectData()
 				effectdata:SetOrigin(hitent:GetPos())

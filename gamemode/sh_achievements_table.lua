@@ -354,6 +354,9 @@ GM.Statuses["bleed"] = {
 	ValFunc = function(self, lp)
 		return lp:GetBleedDamage()
 	end,
+    ValFunc2 = function(self, lp)
+		return (lp:GetBleedDamage() * 0.01 >= 1 and lp:GetBleedDamage() * 0.01 or 1)
+	end,
 	Max = GM.MaxBleedDamage or 50,
 	Icon = Material("zombiesurvival/bleed.png")
 }

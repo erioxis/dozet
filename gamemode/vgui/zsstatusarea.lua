@@ -26,6 +26,9 @@ function PANEL:Init()
 		status:SetColor(statusdisp.Color)
 		status:SetMemberName(translate.Get("s_"..statusdisp.Name))
 		status.GetMemberValue = statusdisp.ValFunc
+		if status.ValFunc2 then
+			status.GetMemberValue2 = statusdisp.ValFunc2
+		end
 		status.MemberMaxValue = statusdisp.Max
 		status.Icon = statusdisp.Icon
 		status:Dock(LEFT)
@@ -63,7 +66,9 @@ vgui.Register("ZSStatusArea", PANEL, "Panel")
 PANEL = {}
 
 PANEL.MemberValue = 0
+PANEL.MemberValue2 = 0
 PANEL.LerpMemberValue = 0
+PANEL.LerpMemberValue2 = 0
 PANEL.MemberMaxValue = 100
 PANEL.MemberName = "Unnamed"
 
@@ -82,6 +87,9 @@ function PANEL:StatusThink(lp)
 	if self.GetMemberValue then
 		self.MemberValue = self:GetMemberValue(lp) or self.MemberValue
 	end
+	--if self.GetMemberValue2 then
+	--	self.MemberValue2 = self:GetMemberValue2(lp) or self.MemberValue2
+	--end
 	if self.GetMemberMaxValue then
 		self.MemberMaxValue = self:GetMemberMaxValue(lp) or self.MemberMaxValue
 	end
@@ -91,6 +99,8 @@ function PANEL:StatusThink(lp)
 	elseif self.MemberValue < self.LerpMemberValue then
 		self.LerpMemberValue = math.Approach(self.LerpMemberValue, self.MemberValue, FrameTime() * 30)
 	end
+
+
 
 	if self.MemberValue < 0.1 and self:GetWide() ~= 0 then
 		self:SetWide(0)
@@ -159,8 +169,12 @@ function PANEL:Paint(w, h)
 	)
 
 	local t1 = math.ceil(value)
+	--local t2 = t1
+	--if self.MemberValue2 then
+	--	t2 = t2.."|"..self.LerpMemberValue2
+	--end
 	local nm = self:GetMemberName()
-	draw.SimpleText(t1, (t1 >= 10000 and "ZS3D2DFontTiny" or "ZSHUDFontSmall"), w / 2, y + h / 2 - boxsize/2 + 5, color_white_alpha230, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+	draw.SimpleText(t1, (t1 >= 10000  and "ZS3D2DFontTiny" or "ZSHUDFontSmall"), w / 2, y + h / 2 - boxsize/2 + 5, color_white_alpha230, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 	if nm then
 		draw.SimpleText(nm, (string.len(nm) >= 8 and "ZSHUDFontTiniestStatus2" or "ZSHUDFontTiniestStatus"), w / 2, y + h / 2.5 - boxsize/2 + 5, color_white_alpha230, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 	end

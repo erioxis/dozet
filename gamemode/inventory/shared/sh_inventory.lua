@@ -398,6 +398,8 @@ GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 0.50)
 trinketwep.PermitDismantle = true
 trinket, trinketwep = GM:AddTrinket(trs("t_curse_ponos"), "curse_ponos", false, nil, cursesoul, 3, trs("t_d_curse_ponos"), nil, nil, "weapon_zs_cursed")
 trinketwep.PermitDismantle = true
+trinket, trinketwep = GM:AddTrinket(trs("t_curse_un"), "curse_unknown", false, nil, cursesoul, 3, trs("t_d_curse_un"), nil, nil, "weapon_zs_cursed")
+trinketwep.PermitDismantle = true
 
 --perfomance
 GM:AddSkillModifier(GM:AddTrinket( trs("t_adrenaline"), "adrenaline", false, pveles, pweles, nil, trs("t_d_adrenaline"), nil, nil, "weapon_zs_special_trinket"), SKILLMOD_JUMPPOWER_MUL, 0.01)

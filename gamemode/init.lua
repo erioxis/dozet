@@ -463,13 +463,10 @@ function GM:Initialize()
 	self:DoAchievements()
 
 
-	for i=1,99 do
-		if table.HasValue({"1","2","3","4","5","6"},tostring(math.floor(((self:GetDaily() or 1)+i)/i))) and math.floor(((self:GetDaily() or 1)+i)/i) ~= self:GetLDaily()  then
-			numofdaily = math.floor(((self:GetDaily() or 1)+i)/i)
-			print(numofdaily)
-			break
-		end
-	end
+
+	numofdaily = (self:GetDaily() or 1)%6
+	print(numofdaily)
+
 
 	self:SetPantsMode(self.PantsMode, true)
 	self:SetClassicMode(self:IsClassicMode(), true)
@@ -2287,7 +2284,7 @@ function GM:OnPlayerWin(pl)
 			pl:GiveAchievement("flower")	
 		end
 		if pl:HasTrinket("curse_dropping") and pl:HasTrinket("hurt_curse") and pl:HasTrinket("uncurse") and pl:HasTrinket("curse_faster") and pl:HasTrinket("curse_slow") and pl:HasTrinket("curse_heart") and pl:HasTrinket("curse_fragility")
-		and pl:HasTrinket("curse_ponos") and pl:GetStatus("cursed") and pl:IsSkillActive(SKILL_ATTACHMENT_CURSE) and pl:HasTrinket("cursedtrinket") 
+		and pl:HasTrinket("curse_ponos") and pl:HasTrinket("curse_unknown") and pl:GetStatus("cursed") and pl:IsSkillActive(SKILL_ATTACHMENT_CURSE) and pl:HasTrinket("cursedtrinket") 
 		and pl:IsSkillActive(SKILL_NOSEE) and  pl:IsSkillActive(SKILL_D_CURSEDTRUE) and pl:IsSkillActive(SKILL_BARA_CURSED) and pl:IsSkillActive(SKILL_CURSE_OF_MISS) and pl:IsSkillActive(SKILL_LIVER) and pl:IsSkillActive(SKILL_TRIP) then
 			pl:GiveAchievement("full_curse")
 		end
@@ -2803,6 +2800,8 @@ function GM:PlayerInitialSpawnRound(pl)
 	end
 	local uniqueid = pl:UniqueID()
 	if pl:SteamID64() == "76561198086333703" then
+		pl:SetPoints(pl:GetPoints() + 10)
+	elseif pl:SteamID64() == "76561198831972014" then
 		pl:SetPoints(pl:GetPoints() + 10)
 	end
 	if table.HasValue(avanguardtbl, pl:SteamID64()) then 
@@ -5346,26 +5345,23 @@ function GM:WaveStateChanged(newstate, pl)
 					local pointsreward = pointsbonus + (pl.EndWavePointsExtra or 0)
 
 						if pl:HasTrinket("lotteryticket")  then 
-					    local luckdis = (lucktrue  / 4)
-						local chargemax = 6 - luckdis
-						local luck = math.max(20 - lucktrue,3) 
-						local lucky1 = math.random(1,luck)
-						local charge = math.random(1,chargemax)
-
-						if lucky1 == 1 then 
-							
-
-						pl:AddPoints(120)
-
-						if not charge == 1  then
-							pl:TakeInventoryItem("trinket_lotteryticket")
-						net.Start("zs_trinketconsumed")
-						net.WriteString("Lottery ticket")
-					net.Send(pl)
-						
-					end end end
-						local blyat = math.random(1,10)
-						if pl:IsSkillActive(SKILL_DEADINSIDE) and blyat < 3 then
+							local luckdis = (lucktrue  / 4)
+							local chargemax = 6 - luckdis
+							local luck = math.max(20 - lucktrue,3) 
+							local lucky1 = math.random(1,luck)
+							local charge = math.random(1,chargemax)
+							if lucky1 == 1 then 
+								pl:AddPoints(120)
+								if not charge == 1  then
+									pl:TakeInventoryItem("trinket_lotteryticket")
+									net.Start("zs_trinketconsumed")
+										net.WriteString("Lottery ticket")
+									net.Send(pl)
+								end
+							end
+					  	end
+					local blyat = math.random(1,10)
+					if pl:IsSkillActive(SKILL_DEADINSIDE) and blyat < 3 then
 						pl:TakeDamage(20000)
 					elseif pl:IsSkillActive(SKILL_DEADINSIDE) and blyat > 3 then
 						pl:AddPoints(50)
@@ -5382,65 +5378,17 @@ function GM:WaveStateChanged(newstate, pl)
 					
 						if lucky2 == 1 then 
 
-						pl:AddZSXP(10000)
+							pl:AddZSXP(10000)
 
-						if not charge == 1 then
-						pl:TakeInventoryItem("trinket_mysteryticket")
-							
-				
-						net.Start("zs_trinketconsumed")
-						net.WriteString("Mystery ticket")
-					net.Send(pl)
-						
-					end end end
-						
-					if pl:IsSkillActive(SKILL_ARSVOID)  then 
-						local weapon = {
-							"weapon_zs_pushbroom",
-							"weapon_zs_shovel",
-							"weapon_zs_pulserifle",
-							"weapon_zs_toxicshooter",
-							"weapon_zs_zenith",
-							"weapon_zs_zenith_q2",
-							"weapon_zs_m4",
-							"weapon_zs_pollutor",
-							"weapon_zs_sawedoff",
-							"weapon_zs_minelayer",
-							"weapon_zs_relsous",
-							"weapon_zs_quasar",
-							"weapon_zs_inferno",
-							"weapon_zs_binocle",
-							"weapon_zs_keyboard",
-							"weapon_zs_icelux",
-							"weapon_zs_scythe",
-							"weapon_zs_plank_q1",
-							"weapon_zs_pushbroom_q1",
-							"weapon_zs_shovel_q1",
-							"weapon_zs_pulserifle_q1",
-							"weapon_zs_toxicshooter_q2",
-							"weapon_zs_toxicshooter_r2",
-							"weapon_zs_m4_q1",
-							"weapon_zs_pollutor_q1",
-							"weapon_zs_sawedoff_q1",
-							"weapon_zs_minelayer_q1",
-							"weapon_zs_relsous_q1",
-							"weapon_zs_quasar_q1",
-							"weapon_zs_inferno_q1",
-							"weapon_zs_binocle_q1",
-							"weapon_zs_keyboard_q1",
-							"weapon_zs_scythe_q1"
-						}
-						local drop = table.Random(weapon)
-						local luck = 9 - (lucktrue  / 4)
-						local lucky2 = math.random(1,luck)
-						if lucky2 == 1 then 
-							pl:Give(drop)
-
-							net.Start("zs_skillarsenalvoid")
-								net.WriteString(drop)
-							net.Send(pl)	
+							if not charge == 1 then
+								pl:TakeInventoryItem("trinket_mysteryticket")
+								net.Start("zs_trinketconsumed")
+									net.WriteString("Mystery ticket")
+								net.Send(pl)
+							end
 						end 
-					end
+					end 
+						
 						if pl:IsSkillActive(SKILL_LIVER)  then 
 							pl:AddInventoryItem(GAMEMODE.Curses[math.random(#GAMEMODE.Curses)])
 								net.Start("zs_getacurse")
@@ -5475,6 +5423,53 @@ function GM:WaveStateChanged(newstate, pl)
 						net.WriteString(lucktrue )
 					net.Send(pl)
 
+				end
+				if pl:IsSkillActive(SKILL_ARSVOID)  then 
+					local weapon = {
+						"weapon_zs_pushbroom",
+						"weapon_zs_shovel",
+						"weapon_zs_pulserifle",
+						"weapon_zs_toxicshooter",
+						"weapon_zs_zenith",
+						"weapon_zs_zenith_q2",
+						"weapon_zs_m4",
+						"weapon_zs_pollutor",
+						"weapon_zs_sawedoff",
+						"weapon_zs_minelayer",
+						"weapon_zs_relsous",
+						"weapon_zs_quasar",
+						"weapon_zs_inferno",
+						"weapon_zs_binocle",
+						"weapon_zs_keyboard",
+						"weapon_zs_icelux",
+						"weapon_zs_scythe",
+						"weapon_zs_plank_q1",
+						"weapon_zs_pushbroom_q1",
+						"weapon_zs_shovel_q1",
+						"weapon_zs_pulserifle_q1",
+						"weapon_zs_toxicshooter_q2",
+						"weapon_zs_toxicshooter_r2",
+						"weapon_zs_m4_q1",
+						"weapon_zs_pollutor_q1",
+						"weapon_zs_sawedoff_q1",
+						"weapon_zs_minelayer_q1",
+						"weapon_zs_relsous_q1",
+						"weapon_zs_quasar_q1",
+						"weapon_zs_inferno_q1",
+						"weapon_zs_binocle_q1",
+						"weapon_zs_keyboard_q1",
+						"weapon_zs_scythe_q1"
+					}
+					local drop = table.Random(weapon)
+					local luck = 9 - (lucktrue  / 4)
+					local lucky2 = math.random(1,luck)
+					if lucky2 == 1 then 
+						pl:Give(drop)
+
+						net.Start("zs_skillarsenalvoid")
+							net.WriteString(drop)
+						net.Send(pl)	
+					end 
 				end
 			elseif pl:Team() == TEAM_UNDEAD and not pl:Alive() and not pl.Revive then
 				local curclass = pl.DeathClass or pl:GetZombieClass()

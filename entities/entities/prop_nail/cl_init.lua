@@ -41,6 +41,7 @@ local colNail = Color(0, 0, 5, 220)
 local colText = Color(240, 240, 240, 105)
 local colDead = Color(230, 80, 80, 95)
 function ENT:DrawTranslucent()
+	local cader = false
 	local parent = self:GetParent()
 	if not parent:IsValid() or RealTime() == parent.LastNailInfoDraw then
 		self:DrawModel()
@@ -164,12 +165,18 @@ function ENT:DrawTranslucent()
 			end
 			if MySelf:GetEyeTrace().Entity == parent then
 				scale = true
-				if GAMEMODE.NewbieMode then
+				if GAMEMODE.NewbieMode and myteam ~= TEAM_UNDEAD then
+
 					draw.SimpleText(translate.Get("press_z_or_b"), "ZS3D2DUnstyleSmaller", x + 25, y - 90,  COLOR_WHITE, TEXT_ALIGN_CENTER)
 				end
 			end
-			if GAMEMODE.NewbieMode and self:GetNailHealth() < self:GetMaxNailHealth() * 0.5 then
-				draw.SimpleText(translate.Get("run_danger_nb"), "ZS3D2DUnstyleSmaller", x + 25, y - 120,  COLOR_RED, TEXT_ALIGN_CENTER)
+			if GAMEMODE.NewbieMode and myteam ~= TEAM_UNDEAD and self:GetNailHealth() < self:GetMaxNailHealth() * 0.5 then
+				for k,v in pairs(MySelf:GetWeapons()) do
+					if v.HealStrength and v.HealStrength > 0.8 then
+						cader = true
+					end
+				end
+				draw.SimpleText((cader and  translate.Get("repair_this_nb") or translate.Get("run_danger_nb")), "ZS3D2DUnstyleSmaller", x + 25, y - 120,  (cader and COLOR_BLUE or COLOR_RED), TEXT_ALIGN_CENTER)
 			end
 
 			if self:GetMaxRepairs() > 0 or self:GetMaxNailHealth() > 0 then

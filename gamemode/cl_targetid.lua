@@ -33,6 +33,9 @@ function GM:DrawTargetID(ent, fade)
 	local bloodarmor = ent:GetBloodArmor()
 	if bloodarmor > 0 and ent:Team() == TEAM_HUMAN then
 		util.ColorCopy(COLOR_SOFTRED, colTemp)
+		if ent:HasTrinket("curse_unknown") then
+			bloodarmor = "?"
+		end
 		draw.SimpleTextBlur(translate.Get("trg_bdarmor")..math.floor(bloodarmor), "ZSHUDFontSmaller", x, y, colTemp, TEXT_ALIGN_CENTER)
 		y = y + draw.GetFontHeight("ZSHUDFontSmaller") + 2
 	end
@@ -41,7 +44,9 @@ function GM:DrawTargetID(ent, fade)
 		util.ColorCopy(0.75 <= healthfraction and COLOR_HEALTHY or 0.5 <= healthfraction and COLOR_SCRATCHED or 0.25 <= healthfraction and COLOR_HURT or COLOR_CRITICAL, colTemp)
 
 		local hptxt = self.HealthTargetDisplay == 1 and math_ceil(ent:Health()).." HP" or self.HealthTargetDisplay == 2 and math_ceil(ent:Health()).."|"..math_ceil(ent:GetMaxHealth()) or math_ceil(healthfraction * 100).."%"
-
+		if ent:HasTrinket("curse_unknown") then
+			hptxt = "?"
+		end
 		draw.SimpleTextBlur(hptxt, "ZSHUDFont", x, y, colTemp, TEXT_ALIGN_CENTER)
 		y = y + draw.GetFontHeight("ZSHUDFont") + 3
 

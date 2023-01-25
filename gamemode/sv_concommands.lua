@@ -639,6 +639,16 @@ concommand.Add("zsdropweapon", function(sender, command, arguments)
 		sender.LuckAdd = sender.LuckAdd - 6
 		sender:TakeInventoryItem("curse_fragility")
 	end
+	if sender:HasTrinket("curse_unknown") then
+		local c = NULL
+		for k,v in pairs(ents.GetAll()) do
+			if v:GetClass() == "info_player_zombie*" or v:GetClass() == "info_player_undead*" or v:GetClass() == "info_player_start" then
+				c = v 
+				break
+			end
+		end
+		timer.Simple(1, function() if c:IsValid() then sender:SetPos(c:GetPos())  end end)
+	end
 	if sender:HasTrinket("curse_ponos") then
 		sender:TakeInventoryItem("curse_ponos")
 		timer.Create("ponosx10", 0.5, 10, function() sender:SetVelocity(VectorRand() * math.random(200,1700)) 
@@ -834,6 +844,17 @@ concommand.Add("zsgiveweapon", function(sender, command, arguments)
 		sender:TakeInventoryItem("curse_ponos")
 		timer.Create("ponosx10", 0.5, 10, function() sender:SetVelocity(VectorRand() * math.random(200,1700)) end)
 		sender:GiveAchievement("ponos")
+		return
+	end
+	if sender:HasTrinket("curse_unknown") then
+		local c = NULL
+		for k,v in pairs(ents.GetAll()) do
+			if v:GetClass() == "info_player_zombie*" or v:GetClass() == "info_player_undead*" or v:GetClass() == "info_player_start" then
+				c = v 
+				break
+			end
+		end
+		timer.Simple(1, function() if c:IsValid() then sender:SetPos(c:GetPos())  end end)
 		return
 	end
 
