@@ -42,8 +42,9 @@ end
 function SWEP:SecondaryAttack()
 end
 GAMEMODE:AddNewRemantleBranch(SWEP, 1, translate.Get("wep_flamethrower_r1"), translate.Get("wep_d_flamethrower_r1"), function(wept)
-	wept.Primary.Damage = wept.Primary.Damage * 2
+	wept.Primary.Damage = wept.Primary.Damage * 3
 	wept.Deathtrue = true
+	wept.Primary.Delay = wept.Primary.Delay * 3
 	
 
 	wept.OnZombieKilled = function(self, zombie, total, dmginfo)
@@ -53,7 +54,7 @@ GAMEMODE:AddNewRemantleBranch(SWEP, 1, translate.Get("wep_flamethrower_r1"), tra
 			local pos = zombie:GetPos()
 
 			timer.Simple(0.15, function()
-				util.BlastDamagePlayer(killer:GetActiveWeapon(), killer, pos, 72, minushp, DMG_ALWAYSGIB, 0.92)
+				util.BlastDamagePlayer(killer:GetActiveWeapon(), killer, pos, 72, minushp*3, DMG_ALWAYSGIB, 0.92)
 			end)
 
 			local effectdata = EffectData()

@@ -48,7 +48,7 @@ function ENT:Think()
 	for k, target1 in pairs(targets) do
 		target = target1.trg
 		--print( target1.Health)
-		if target and target:IsValidLivingHuman() and !target:IsSkillActive(SKILL_ANTI_DEVO) and self.NextHook <= CurTime() then
+		if target and target:IsValidLivingHuman() and !target:IsSkillActive(SKILL_ANTI_DEVO) or !self:GetOwner().Zmainer and self.NextHook <= CurTime() then
 			local targetpos = target:LocalToWorld(target:OBBCenter())
 			local direction = (targetpos - self:GetPos()):GetNormal()
 			self:SetAngles(direction:Angle())

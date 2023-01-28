@@ -33,10 +33,7 @@ function GM:DrawTargetID(ent, fade)
 	local bloodarmor = ent:GetBloodArmor()
 	if bloodarmor > 0 and ent:Team() == TEAM_HUMAN then
 		util.ColorCopy(COLOR_SOFTRED, colTemp)
-		if ent:HasTrinket("curse_unknown") then
-			bloodarmor = "?"
-		end
-		draw.SimpleTextBlur(translate.Get("trg_bdarmor")..math.floor(bloodarmor), "ZSHUDFontSmaller", x, y, colTemp, TEXT_ALIGN_CENTER)
+		draw.SimpleTextBlur(translate.Get("trg_bdarmor")..(ent:HasTrinket("curse_unknown") and "???" or math.floor(bloodarmor)), "ZSHUDFontSmaller", x, y, colTemp, TEXT_ALIGN_CENTER)
 		y = y + draw.GetFontHeight("ZSHUDFontSmaller") + 2
 	end
 	if healthfraction ~= 1 then

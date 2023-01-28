@@ -103,10 +103,6 @@ end
 
 if SERVER then
 	function CLASS:ProcessDamage(pl, dmginfo)
-		if dmginfo:GetDamage() >= 100 and dmginfo:GetAttacker():IsPlayer()  then
-			pl:EmitSound(Sound("zombiesurvival/mp_useless.wav"),560,2000,2000)
-			dmginfo:ScaleDamage(0.1)
-		end
 		if dmginfo:GetAttacker() and dmginfo:GetAttacker():IsPlayer() and dmginfo:GetAttacker():GetActiveWeapon().IsMelee then
 			dmginfo:ScaleDamage(0)
 		end

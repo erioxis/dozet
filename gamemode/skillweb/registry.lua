@@ -420,24 +420,19 @@ SKILL_MORE_INFO = 392
 SKILL_MAGIC_MYSTERY = 393
 SKILL_USEFULL = 394
 SKILL_ANATOMY = 395
-
-
 SKILL_RESNYA = 396
 SKILL_OLD_GOD = 397
 SKILL_DOSET = 398
 SKILL_RESNYA1 = 399
 SKILL_OLD_GOD1 = 400
 SKILL_DOSET1 = 401
-
 SKILL_GENIUS = 402
 SKILL_ANTI_DEVO = 403
 SKILL_SLOWCOACH = 404
 SKILL_CURSE_OF_MISS = 405
-
 SKILL_RESNYA2 = 406
 SKILL_OLD_GOD2 = 407
 SKILL_DOSET2 = 408
-
 SKILL_100_PERC = 409
 SKILL_BLOODHACK = 410
 SKILL_HEALMODULE = 411
@@ -445,6 +440,8 @@ SKILL_VIP = 412
 SKILL_CIRCULATION1 = 413
 SKILL_CIRCULATION2 = 414
 SKILL_STONEBLOOD = 415
+SKILL_AMULET_15 = 416
+SKILL_GODHEART = 417
 
 
 
@@ -815,8 +812,8 @@ GM:AddSkill(SKILL_HEALMODULE, translate.Get("skill_hmod"), GOOD..translate.Get("
 GM:AddSkillModifier(SKILL_FLOWER, SKILLMOD_POINT_MULTIPLIER, -0.25)
 local d = GM:AddSkill(SKILL_ABYSSFLOWER, translate.Get("skill_aflower"), GOOD..translate.Get("skill_aflower_d1")..BAD..translate.Get("skill_aflower_d2"),
 																-1,			0.5,					{SKILL_FLOWER}, TREE_SUPPORTTREE)
-d.RemortReq = 16
-d.Disabled = true
+d.RemortReq = 46
+--d.Disabled = true
 GM:AddSkill(SKILL_SURGEON3, translate.Get("skill_surg").."III", GOOD.."-11%"..translate.Get("med_cool"),
 																-2,			0,					{SKILL_U_MEDICCLOUD, SKILL_D_FRAIL, SKILL_SURGEONIV}, TREE_SUPPORTTREE)
 GM:AddSkill(SKILL_SURGEONIV, translate.Get("skill_surg").."IV", GOOD.."-21%"..translate.Get("med_cool"),
@@ -1103,6 +1100,12 @@ d.AmuletCost = 5
 GM:AddSkillModifier(SKILL_AMULET_14, SKILLMOD_POISON_DAMAGE_TAKEN_MUL, -0.33)									
 GM:AddSkillModifier(SKILL_AMULET_14, SKILLMOD_PIECE_OF_AMULET, -5)
 GM:AddSkillModifier(SKILL_AMULET_14, SKILLMOD_SPOINT, 1)
+local d = GM:AddSkill(SKILL_AMULET_15, translate.Get("skill_amulet_15"),  GOOD..translate.Get("skill_amulet_15_d1"),
+																-23,			-15,					{SKILL_NONE}, TREE_GUNTREE)
+d.Amulet = true				
+d.AmuletCost = 2				
+GM:AddSkillModifier(SKILL_AMULET_15, SKILLMOD_PIECE_OF_AMULET, -2)
+GM:AddSkillModifier(SKILL_AMULET_15, SKILLMOD_SPOINT, 1)
 
 
 
@@ -1133,11 +1136,16 @@ d.Hidden = true
 d.Hidden1 = true	
 
 local d = GM:AddSkill(SKILL_GOD_HEART, translate.Get("skill_godheart"), GOOD..translate.Get("skill_godheart_d1"),
-				                                                            	-14,			16,					{SKILL_LOX}, TREE_DONATETREE)
+				                                                            	-14,			16,					{}, TREE_DONATETREE)
 d.RemortReq = 64
 d.LevelReq = 99
-d.AmuletCost = -4								
-GM:AddSkillModifier(SKILL_GOD_HEART, SKILLMOD_SPOINT, 4)
+d.AmuletCost = -4		
+local d = GM:AddSkill(SKILL_GODHEART, translate.Get("skill_godheart"), GOOD..translate.Get("skill_godheart2_d1"),
+				                                                            	-14,			99,					{}, TREE_DONATETREE)
+d.RemortReq = 256
+d.AmuletCost = 4					
+GM:AddSkillModifier(SKILL_GODHEART, SKILLMOD_SPOINT, -4)
+GM:AddSkillModifier(SKILL_GODHEART, SKILLMOD_CURSEM, -99)
 d.AlwaysActive = true
 d.Hidden = true	
 local d = GM:AddSkill(SKILL_VIP, translate.Get("skill_vip"), GOOD..translate.Get("skill_vip_d1"),
@@ -1355,11 +1363,11 @@ GM:AddSkill(SKILL_BLOODLOST, translate.Get("skill_bloodlust"), GOOD..translate.G
 																3,			2,					{}, TREE_MELEETREE)
 GM:AddSkill(SKILL_PARASITOID, translate.Get("skill_parasitoid"), GOOD..translate.Get("skill_parasitoid_d1")..BAD.."-45"..translate.Get("barmor"),
 																4,			2,					{SKILL_BLOODLOST}, TREE_MELEETREE)
-GM:AddSkill(SKILL_LANKY, translate.Get("skill_lanky").."I", GOOD.."+10%"..translate.Get("m_range")..BAD.."-15%"..translate.Get("meleedamage"),
+GM:AddSkill(SKILL_LANKY, translate.Get("skill_lanky").."I", GOOD.."+10%"..translate.Get("m_range")..BAD.."-5%"..translate.Get("meleedamage"),
 																-4,			0,					{SKILL_LANKYII}, TREE_MELEETREE)
-GM:AddSkill(SKILL_LANKYII, translate.Get("skill_lanky").."II", GOOD.."+10%"..translate.Get("m_range")..BAD.."-15%"..translate.Get("meleedamage"),
+GM:AddSkill(SKILL_LANKYII, translate.Get("skill_lanky").."II", GOOD.."+10%"..translate.Get("m_range")..BAD.."-6%"..translate.Get("meleedamage"),
 																-4,			2,					{SKILL_LANKYIII}, TREE_MELEETREE)
-GM:AddSkill(SKILL_LANKYIII, translate.Get("skill_lanky").."III", GOOD.."+10%"..translate.Get("m_range")..BAD.."-15%"..translate.Get("meleedamage"),
+GM:AddSkill(SKILL_LANKYIII, translate.Get("skill_lanky").."III", GOOD.."+10%"..translate.Get("m_range")..BAD.."-7%"..translate.Get("meleedamage"),
 																-4,			4,					{}, TREE_MELEETREE)
 GM:AddSkill(SKILL_MASTERCHEF, translate.Get("skill_mchef"), GOOD..translate.Get("skill_mchef_d1")..BAD.."-10%"..translate.Get("meleedamage"),
 																0,			-3,					{SKILL_BATTLER4,SKILL_CURSE_OF_MISS}, TREE_MELEETREE)
@@ -2693,14 +2701,14 @@ GM:AddSkillModifier(SKILL_SMARTTARGETING, SKILLMOD_MEDDART_EFFECTIVENESS_MUL, -0
 GM:AddSkillModifier(SKILL_RECLAIMSOL, SKILLMOD_MEDGUN_FIRE_DELAY_MUL, 1.5)
 GM:AddSkillModifier(SKILL_RECLAIMSOL, SKILLMOD_MEDGUN_RELOAD_SPEED_MUL, -0.4)
 
-GM:AddSkillModifier(SKILL_LANKY, SKILLMOD_MELEE_DAMAGE_MUL, -0.15)
+GM:AddSkillModifier(SKILL_LANKY, SKILLMOD_MELEE_DAMAGE_MUL, -0.05)
 GM:AddSkillModifier(SKILL_LANKY, SKILLMOD_MELEE_RANGE_MUL, 0.1)
 
-GM:AddSkillModifier(SKILL_LANKYII, SKILLMOD_MELEE_DAMAGE_MUL, -0.15)
+GM:AddSkillModifier(SKILL_LANKYII, SKILLMOD_MELEE_DAMAGE_MUL, -0.06)
 GM:AddSkillModifier(SKILL_LANKYII, SKILLMOD_MELEE_RANGE_MUL, 0.1)
 
 
-GM:AddSkillModifier(SKILL_LANKYIII, SKILLMOD_MELEE_DAMAGE_MUL, -0.15)
+GM:AddSkillModifier(SKILL_LANKYIII, SKILLMOD_MELEE_DAMAGE_MUL, -0.07)
 GM:AddSkillModifier(SKILL_LANKYIII, SKILLMOD_MELEE_RANGE_MUL, 0.1)
 
 GM:AddSkillModifier(SKILL_D_FRAIL, SKILLMOD_MEDKIT_EFFECTIVENESS_MUL, 0.33)

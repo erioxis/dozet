@@ -382,7 +382,7 @@ trinket, trinketwep = GM:AddTrinket(trs("t_curse_dropping"), "curse_dropping", f
 trinketwep.PermitDismantle = true
 trinket, trinketwep = GM:AddTrinket(trs("t_hurt_curse"), "hurt_curse", false, nil,cursesoul, 3,trs("t_d_hurt_curse"), nil, nil, "weapon_zs_cursed")
 trinketwep.PermitDismantle = true
-trinket, trinketwep = GM:AddTrinket(trs("t_uncurse"), "uncurse", false, nil,cursesoul, 3, trs("t_d_uncurse"), nil, nil, "weapon_zs_cursed")
+trinket, trinketwep = GM:AddTrinket(trs("t_uncurse"), "un_curse", false, nil,cursesoul, 3, trs("t_d_uncurse"), nil, nil, "weapon_zs_cursed")
 GM:AddSkillModifier(trinket, SKILLMOD_CURSEM, -0.70)
 trinketwep.PermitDismantle = true
 trinket, trinketwep = GM:AddTrinket(trs("t_curse_faster"), "curse_faster", false, nil,cursesoul, 3, trs("t_d_curse_faster"), nil, nil, "weapon_zs_cursed")
@@ -419,6 +419,10 @@ trinket = GM:AddTrinket(trs("t_flower"), "flower", false, pveles, pweles, 3, trs
 GM:AddSkillModifier(trinket, SKILLMOD_POINT_MULTIPLIER, 0.75)
 GM:AddSkillModifier(trinket, SKILLMOD_MEDKIT_COOLDOWN_MUL, -0.5)
 GM:AddSkillModifier(trinket, SKILLMOD_MEDKIT_EFFECTIVENESS_MUL, 0.5)
+
+
+trinket = GM:AddTrinket(trs("t_flower_g"), "flower_g", false, pveles, pweles, 3, trs("t_d_flower_g"), nil, nil, "weapon_zs_special_trinket")
+GM:AddSkillModifier(trinket, SKILLMOD_POINT_MULTIPLIER, 1)
 
 -- Special Trinkets
 GM:AddTrinket(trs("t_otank"), "oxygentank", true, nil, {
@@ -1311,6 +1315,9 @@ GM:AddSkillModifier(trinket, SKILLMOD_ARSENAL_DISCOUNT, -0.15)
 trinket = GM:AddTrinket(trs("t_sin_envy"), "sin_envy", false, supveles, supweles, 1, trs("t_d_sin_envy"))
 GM:AddSkillModifier(trinket, SKILLMOD_ARSENAL_DISCOUNT, -0.15)
 trinket = GM:AddTrinket(trs("t_sin_lust"), "sin_lust", false, supveles, supweles, 1, trs("t_d_sin_lust"))
+
+trinket = GM:AddTrinket(trs("t_ego"), "sin_ego", false, supveles, supweles, 1, trs("t_d_ego"))
+GM:AddSkillModifier(trinket, SKILLMOD_SCRAPDISCOUNT, 0.75)
 
 trinket = GM:AddTrinket(trs("t_vir_pat"), "vir_pat", false, supveles, supweles, 1, trs("t_d_vir_pat"))
 GM:AddSkillModifier(trinket, SKILLMOD_ARSENAL_DISCOUNT, -0.10)

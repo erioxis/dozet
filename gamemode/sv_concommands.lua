@@ -410,7 +410,7 @@ concommand.Add("zs_dismantle", function(sender, command, arguments)
 	local contents, wtbl = active:GetClass()
 	if not invitem then
 		wtbl = weapons.Get(contents)
-		if wtbl.NoDismantle or not (wtbl.AllowQualityWeapons or wtbl.PermitDismantle) then
+		if wtbl.NoDismantle or not (wtbl.AllowQualityWeapons and !wtbl.CanDismantle or wtbl.PermitDismantle) then
 			GAMEMODE:ConCommandErrorMessage(sender, translate.ClientGet(sender, "cannot_dismantle"))
 			return
 		end
@@ -617,9 +617,9 @@ concommand.Add("zsdropweapon", function(sender, command, arguments)
 		sender:TakeDamage(60)
 		sender:TakeInventoryItem("hurt_curse")
 	end
-	if sender:HasTrinket("uncurse") then
+	if sender:HasTrinket("un_curse") then
 		sender:SetHealth(1)
-		sender:TakeInventoryItem("uncurse")
+		sender:TakeInventoryItem("un_curse")
 	end
 	if sender:HasTrinket("curse_faster") then
 		sender.zKills = sender.zKills + 50
@@ -676,6 +676,7 @@ concommand.Add("zsdropweapon", function(sender, command, arguments)
 	end
 	if invitem and not sender:HasInventoryItem(invitem) then return end
 	if invitem == "trinket_a_flower" then sender:TakeInventoryItem("trinket_a_flower")  return end
+	if sender:HasTrinket("flower_g") then sender:TakeInventoryItem("trinket_flower_g")  return end
 	if invitem == "trinket_flower" then 	sender:TakeInventoryItem("trinket_flower") return end
 
 	if invitem or (currentwep and currentwep:IsValid()) then
@@ -819,9 +820,9 @@ concommand.Add("zsgiveweapon", function(sender, command, arguments)
 		sender:TakeInventoryItem("hurt_curse")
 		return
 	end
-	if sender:HasTrinket("uncurse") then
+	if sender:HasTrinket("un_curse") then
 		sender:SetHealth(1)
-		sender:TakeInventoryItem("uncurse")
+		sender:TakeInventoryItem("un_curse")
 		return
 	end
 	if sender:HasTrinket("curse_faster") then
@@ -867,6 +868,7 @@ concommand.Add("zsgiveweapon", function(sender, command, arguments)
 	
 	if invitem and not sender:HasInventoryItem(invitem) then return end
 	if invitem == "trinket_a_flower" then sender:TakeInventoryItem("trinket_a_flower")  return end
+	if sender:HasTrinket("flower_g") then sender:TakeInventoryItem("trinket_flower_g")  return end
 	if invitem == "trinket_flower" then sender:TakeInventoryItem("trinket_flower")  return end
 	if invitem and string.sub(invitem, 9, 11) == "sin" then return end
 	
@@ -903,6 +905,7 @@ concommand.Add("zsgiveweaponclip", function(sender, command, arguments)
 	if sender:HasTrinket("curse_dropping") then
 		sender:Kill()
 	end
+	if sender:HasTrinket("flower_g") then sender:TakeInventoryItem("trinket_flower_g")  return end
 
 
 	local currentwep = sender:GetActiveWeapon()

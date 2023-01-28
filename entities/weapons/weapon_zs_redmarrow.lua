@@ -16,7 +16,7 @@ function SWEP:MeleeHit(ent, trace, damage, forcescale)
 	if ent:IsPlayer() and (not ent:GetStatus("hshield")) and ent:GetTimerBERS() < CurTime() and ent:HasTrinket("antibaracat") then
 		ent:Kill()
 	end
-	if owner:GetStatus("redmarrow") and !(ent:GetStatus("hshield")) then
+	if ent:IsPlayer() and owner:GetStatus("redmarrow") and !(ent:GetStatus("hshield")) and !owner.Zmainer then
 		damage = self.MeleeDamageShielded
 	end
 	if not ent:IsPlayer() then

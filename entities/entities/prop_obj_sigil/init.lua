@@ -115,8 +115,6 @@ function ENT:OnTakeDamage(dmginfo)
 				if self:GetSigilCorrupted() then
 					gamemode.Call("PreOnSigilUncorrupted", self, dmginfo)
 					self:SetSigilCorrupted(false)
-					self.MaxHealth = 1260
-					self:SetSigilHealthBase(self.MaxHealth)
 					self:SetSigilLastDamaged(0)
 					gamemode.Call("OnSigilUncorrupted", self, dmginfo)
 					attacker:GiveAchievementProgress("cleaner", 1)
@@ -124,8 +122,6 @@ function ENT:OnTakeDamage(dmginfo)
 					gamemode.Call("PreOnSigilCorrupted", self, dmginfo)
 					self.HealthLock = CurTime() + 4
 					self:SetSigilCorrupted(true)
-					self.MaxHealth = 1260
-					self:SetSigilHealthBase(self.MaxHealth)
 					self:SetSigilLastDamaged(0)
 					gamemode.Call("OnSigilCorrupted", self, dmginfo)
 					if !self.Immune then self:Remove() return end

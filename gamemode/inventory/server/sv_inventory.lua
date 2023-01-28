@@ -225,6 +225,12 @@ function meta:DropAllInventoryItems()
 		if self:HasTrinket("flower") then
 			self:TakeInventoryItem("trinket_flower")
 		end
+		if self:HasTrinket("flower_g") then
+			self:TakeInventoryItem("trinket_flower_g")
+		end
+		if self:HasTrinket("a_flower") then
+			self:TakeInventoryItem("trinket_a_flower")
+		end
 		for i = 1, count do
 			local ent = self:DropInventoryItemByType(invitem)
 			if ent and ent:IsValid() then

@@ -2,6 +2,16 @@ local meta = FindMetaTable("Player")
 local P_Team = meta.Team
 
 local DMG_TAKE_BLEED = DMG_SLASH + DMG_CLUB + DMG_BULLET + DMG_BUCKSHOT + DMG_CRUSH
+local function GetTaper(pl, str, mul)
+	local taper = 1
+	for item,v in pairs(pl:GetInventoryItems()) do
+		local g = string.Explode("_",item)
+		if table.HasValue(g,str) then
+			taper = taper + mul * v
+		end
+	end
+	return taper
+end
 function meta:ProcessDamage(dmginfo)
 	if not self:IsValidLivingPlayer() then return end --??? Apparently player was null sometimes on server?
 
@@ -147,12 +157,33 @@ function meta:ProcessDamage(dmginfo)
 				end
 			end
 		end
+		if attacker:IsValidLivingHuman() and attacker:IsSkillActive(SKILL_AMULET_15) then 
+			local g = GetTaper(attacker, "curse", 0.06)
+			dmginfo:SetDamage(dmginfo:GetDamage()*g)
+		end
+		if attacker:IsValidLivingHuman() and attacker:HasTrinket("sin_ego") then 
+			local g = GetTaper(attacker, "ego", 0.04)
+			dmginfo:SetDamage(dmginfo:GetDamage()*g)
+		end
+		if attacker:IsValidLivingHuman()  and self:GetZombieClassTable().FireBuff and attacker:HasTrinket("fire_at") then
+			dmginfo:SetDamage(0)
+			GAMEMODE:BlockFloater(attacker, self, dmginfo:GetDamagePosition())
+		end
+		if attacker:IsValidLivingHuman()  and self:GetZombieClassTable().ResistFrost and attacker:HasTrinket("acid_at") then
+			dmginfo:SetDamage(0)
+			GAMEMODE:BlockFloater(attacker, self, dmginfo:GetDamagePosition())
+		end
+		if attacker:IsValidLivingHuman()  and self:GetZombieClassTable().FireBuff and attacker:HasTrinket("acid_at") then
+			dmginfo:ScaleDamage(2)
+		end
+		if attacker:IsValidLivingHuman()  and self:GetZombieClassTable().ResistFrost and attacker:HasTrinket("fire_at") then
+			dmginfo:ScaleDamage(2)
+		end
 		if attacker:IsValidLivingHuman() and inflictor:IsValid() and inflictor == attacker:GetActiveWeapon() then
 			local damage = dmginfo:GetDamage()
 			local wep = attacker:GetActiveWeapon()
-			local attackermaxhp = math.floor(attacker:GetMaxHealth() * (attacker:IsSkillActive(SKILL_D_FRAIL) and 0.44 or 1))
-			local attackermaxhp = math.floor(attacker:GetMaxHealth() * (attacker:IsSkillActive(SKILL_ABUSE) and 0.25 or 1))
-
+			local attackermaxhp = math.floor(attacker:GetMaxHealth() * ((attacker:IsSkillActive(SKILL_D_FRAIL) or attacker:IsSkillActive(SKILL_ABUSE)) and 0.44 or 1))
+	
 			--attacker.dpsmeter = damage
 			if attacker:IsSkillActive(SKILL_VAMPIRISM) then
 				attacker:SetNWFloat("vampirism_progress", attacker:GetNWFloat("vampirism_progress",value)+damage*0.09)
@@ -165,14 +196,6 @@ function meta:ProcessDamage(dmginfo)
 			end
 			if damage >= 10000 then
 				attacker:GiveAchievement("opm")
-			end
-			if self:GetZombieClassTable().FireBuff and attacker:HasTrinket("fire_at") then
-				dmginfo:SetDamage(0)
-				GAMEMODE:BlockFloater(attacker, self, dmginfo:GetDamagePosition())
-			end
-			if self:GetZombieClassTable().ResistFrost and attacker:HasTrinket("acid_at") then
-				dmginfo:SetDamage(0)
-				GAMEMODE:BlockFloater(attacker, self, dmginfo:GetDamagePosition())
 			end
 			if attacker:HasTrinket("fire_at") and math.random(6) == 5 then
 				attacker:SetProgress(attacker:GetProgress('fprog')+damage* 0.1, 'fprog')
@@ -371,6 +394,9 @@ function meta:ProcessDamage(dmginfo)
 	if attacker == self and dmgtype ~= DMG_CRUSH and dmgtype ~= DMG_FALL and self.SelfDamageMul then
 		dmginfo:SetDamage(dmginfo:GetDamage() * self.SelfDamageMul)
 	end
+	if !bypass and self:IsSkillActive(SKILL_GODHEART) then
+		dmginfo:SetDamage(0)
+	end
 	if bit.band(dmgtype, DMG_ALWAYSGIB) ~= 0 and self.ExplosiveDamageTakenMul then
 		dmginfo:SetDamage(dmginfo:GetDamage() * self.ExplosiveDamageTakenMul)
 	end
@@ -514,7 +540,7 @@ function meta:ProcessDamage(dmginfo)
 				dmginfo:ScaleDamage(0.76)
 			end
 
-			if bit.band(dmgtype, DMG_SLASH) ~= 0 or inflictor.IsMelee then
+			if bit.band(dmgtype, DMG_SLASH) ~= 0 or inflictor.IsMelee or self:GetActiveWeapon().ParryTiming and attacker:IsPlayer() then
 				if self.BarbedArmor and self.BarbedArmor > 0 then
 					attacker:TakeSpecialDamage(self.BarbedArmor, DMG_SLASH, self, self)
 					attacker:AddArmDamage(self.BarbedArmor)
@@ -2396,6 +2422,7 @@ local bossdrops1 = {
 	"trinket_sin_sloth",
 	"trinket_sin_envy",
 	"trinket_sin_pride",
+	"trinket_sin_ego",
     "trinket_sin_lust"
 }
 local bossdrops2 = {

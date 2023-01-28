@@ -941,8 +941,8 @@ function PANEL:DoEdgeScroll(deltatime)
 
 	if camera_velocity.y ~= 0 or camera_velocity.z ~= 0 then
 		campos = campos + deltatime * edge * 12 * camera_velocity
-		campos.y = math.Clamp(campos.y, -1062, 1062)
-		campos.z = math.Clamp(campos.z, -1062, 1062)
+		campos.y = math.Clamp(campos.y, -20062, 2062)
+		campos.z = math.Clamp(campos.z, -2062, 2062)
 
 		self:SetCamPos(campos)
 		self.vLookatPos:Set(campos)

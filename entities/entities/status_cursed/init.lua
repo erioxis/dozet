@@ -25,10 +25,10 @@ function ENT:Think()
 					cursed:Remove()
 					end
 				elseif (cursed.DieTime >= CurTime() + (owner:GetMaxHealth() * 2) * (owner.CurseMultiplier or 1) +(owner.ClanMelee and 50 or 0)) and owner:IsSkillActive(SKILL_CURSEDHEALTH) and not owner:IsSkillActive(SKILL_UPLOAD) then
-					if not (owner:IsSkillActive(SKILL_UPLOAD) or owner:HasTrinket("a_flower")) then
+					if not owner:IsSkillActive(SKILL_UPLOAD) then
 
-					cursed:GetOwner():Kill()
-					cursed:Remove()
+						cursed:GetOwner():Kill()
+						cursed:Remove()
 					end
 				end
 			end

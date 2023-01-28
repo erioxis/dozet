@@ -8,7 +8,7 @@ function SWEP:ApplyMeleeDamage(ent, trace, damage)
 			gt.Applier = owner
 		end
 		ent:AddLegDamageExt(12, owner, self, SLOWTYPE_COLD)
-        ent.TakedIce = (ent.TakedIce or 0) + 80
+        ent.TakedIce = (ent.TakedIce or 0) + 20
 		if (ent.TakedIce or 1) >= 90 then
 			ent.TakedIce = 0
 			timer.Create("IceShadeInductor"..ent:Name(),0.5, 3, function() 

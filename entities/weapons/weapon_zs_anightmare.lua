@@ -25,7 +25,7 @@ function SWEP:MeleeHit(ent, trace, damage, forcescale)
 end
 
 function SWEP:ApplyMeleeDamage(pl, trace, damage)
-	if SERVER and pl:IsPlayer() and (not pl:GetStatus("hshield")) then
+	if SERVER and pl:IsPlayer() and ((not pl:GetStatus("hshield")) or !owner.Zmainer ) then
 		if pl:IsSkillActive(SKILL_ASAVE) then self.BaseClass.ApplyMeleeDamage(self, pl, trace, damage)
 			local cursed = pl:GetStatus("cursed")
 			if (cursed) then 

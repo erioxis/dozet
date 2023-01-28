@@ -11,7 +11,7 @@ SWEP.ShowWorldModel = false
 SWEP.ViewModelBoneMods = {
 	["ValveBiped.Bip01_Spine4"] = { scale = Vector(1, 1, 1), pos = Vector(-6.467, -2.515, 2.515), angle = Angle(0, 0, 0) }
 }
-
+SWEP.CanDismantle = true
 SWEP.SCKMaterials = {"cs_assault/concretefloor026a",}
 
 SWEP.IronSightsPos = Vector(0.64, 0, 4.76)

@@ -44,7 +44,7 @@ GM.Via = {
 GM.Curses = {
 	"trinket_curse_dropping",
 	"trinket_hurt_curse",
-	"trinket_uncurse",
+	"trinket_un_curse",
 	"trinket_curse_faster",
 	"trinket_curse_slow",
 	"trinket_curse_ponos",

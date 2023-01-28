@@ -167,7 +167,7 @@ function ENT:DrawTranslucent()
 				scale = true
 				if GAMEMODE.NewbieMode and myteam ~= TEAM_UNDEAD then
 
-					draw.SimpleText(translate.Get("press_z_or_b"), "ZS3D2DUnstyleSmaller", x + 25, y - 90,  COLOR_WHITE, TEXT_ALIGN_CENTER)
+					draw.SimpleText(translate.Format("press_z_or_b", input.LookupBinding("+undo") or "B"), "ZS3D2DUnstyleSmaller", x + 25, y - 90,  COLOR_WHITE, TEXT_ALIGN_CENTER)
 				end
 			end
 			if GAMEMODE.NewbieMode and myteam ~= TEAM_UNDEAD and self:GetNailHealth() < self:GetMaxNailHealth() * 0.5 then

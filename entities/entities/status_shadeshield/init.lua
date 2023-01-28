@@ -20,7 +20,7 @@ function ENT:Initialize()
 
 	--self:EmitSound("weapons/physcannon/physcannon_charge.wav", 70, 190)
 
-	self:SetMaxObjectHealth((220 * GAMEMODE:GetWave()) * table.Count(team.GetPlayers(TEAM_HUMAN)))
+	self:SetMaxObjectHealth((190 * (GAMEMODE:GetWave()-1)) + (table.Count(team.GetPlayers(TEAM_HUMAN))*90))
 	self:SetObjectHealth(self:GetMaxObjectHealth())
 end
 

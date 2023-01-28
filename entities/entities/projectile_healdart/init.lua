@@ -62,11 +62,11 @@ function ENT:AttachToPlayer(vHitPos, eHitEntity)
 	if owner:IsValid() and owner:IsSkillActive(SKILL_PHIK) then
 		self:Remove()
 		local source = self:ProjectileDamageSource()
-		for _, pl in pairs(ents.FindInSphere(self:GetPos(), 77)) do
+		for _, pl in pairs(ents.FindInSphere(self:GetPos(), 34)) do
 			if WorldVisible(self:LocalToWorld(Vector(0, 0, 30)), pl:NearestPoint(self:LocalToWorld(Vector(0, 0, 30)))) then
 				if pl:IsValidLivingZombie() then
-					pl:TakeSpecialDamage(self.Heal * 0.2, DMG_ACID,owner, self:GetOwner():GetActiveWeapon())
-					pl:PoisonDamage(33, owner, self)
+					pl:TakeSpecialDamage(self.Heal * 0.2 * (owner.BulletMul or 1)/(pl:GetZombieClassTable().Boss and 10 or 1), DMG_ACID,owner, self:GetOwner():GetActiveWeapon())
+					pl:PoisonDamage(33 * (owner.BulletMul or 1)/(pl:GetZombieClassTable().Boss and 10 or 1), owner, self)
 				elseif	pl:IsValidLivingHuman() then
 					owner:HealPlayer(pl, self.Heal * 0.3)
 				end

@@ -1,4 +1,4 @@
-CLASS.Name = "Gatling Crow"
+CLASS.Name = "Minigun Crow"
 CLASS.TranslationName = "class_crow_gatling"
 CLASS.Description = "description_crow"
 

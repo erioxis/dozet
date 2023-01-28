@@ -1408,6 +1408,29 @@ function GM:Think()
 					pl.NextRegenerate = time + 20
 					pl:TakeDamage(pl:Health() * 0.25)
 				end
+				
+				if pl:HasTrinket("sin_ego") and time > (pl.NextConsumeEgo or 1) then
+					local use = {}
+					for item,v in pairs(pl:GetInventoryItems()) do
+						if item ~= "trinket_sin_ego" then
+							table.insert(use, #use + 1,item)
+						end
+					end
+					if #use < 1 then
+						pl.NextConsumeEgo = time + 30
+					else
+						local take = table.Random(use)
+						if take == "trinket_flower" then  
+							pl:TakeInventoryItem(take)
+							pl:AddInventoryItem("trinket_flower_g")
+							pl.NextConsumeEgo = time + 60
+						else
+							pl:TakeInventoryItem(take)
+							pl:AddInventoryItem("trinket_sin_ego")
+							pl.NextConsumeEgo = time + 120
+						end
+					end
+				end
 				if pl:HasTrinket("altlazarussoul") and time >= pl.NextRegenerate and pl:Health() < math.min(healmax, pl:GetMaxHealth() * 0.10) then
 					pl.NextRegenerate = time + 60
 					pl:SetHealth(math.min(healmax, pl:Health() + 500))
@@ -2283,7 +2306,7 @@ function GM:OnPlayerWin(pl)
 		if pl:HasTrinket("flower") and not self.ObjectiveMap then
 			pl:GiveAchievement("flower")	
 		end
-		if pl:HasTrinket("curse_dropping") and pl:HasTrinket("hurt_curse") and pl:HasTrinket("uncurse") and pl:HasTrinket("curse_faster") and pl:HasTrinket("curse_slow") and pl:HasTrinket("curse_heart") and pl:HasTrinket("curse_fragility")
+		if pl:HasTrinket("curse_dropping") and pl:HasTrinket("hurt_curse") and pl:HasTrinket("un_curse") and pl:HasTrinket("curse_faster") and pl:HasTrinket("curse_slow") and pl:HasTrinket("curse_heart") and pl:HasTrinket("curse_fragility")
 		and pl:HasTrinket("curse_ponos") and pl:HasTrinket("curse_unknown") and pl:GetStatus("cursed") and pl:IsSkillActive(SKILL_ATTACHMENT_CURSE) and pl:HasTrinket("cursedtrinket") 
 		and pl:IsSkillActive(SKILL_NOSEE) and  pl:IsSkillActive(SKILL_D_CURSEDTRUE) and pl:IsSkillActive(SKILL_BARA_CURSED) and pl:IsSkillActive(SKILL_CURSE_OF_MISS) and pl:IsSkillActive(SKILL_LIVER) and pl:IsSkillActive(SKILL_TRIP) then
 			pl:GiveAchievement("full_curse")

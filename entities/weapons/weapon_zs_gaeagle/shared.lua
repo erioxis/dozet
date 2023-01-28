@@ -54,7 +54,7 @@ SWEP.Tier = 7
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_CLIP_SIZE, 2)
 
 function SWEP:ShootBullets(dmg, numbul, cone)
-	dmg = dmg + dmg * (10 * self:Clip1() / self.Primary.ClipSize)
+	dmg = dmg + dmg * (20 * self:Clip1() / self.Primary.ClipSize)
 
 	BaseClass.ShootBullets(self, dmg, numbul, cone)
 end
