@@ -156,7 +156,7 @@ function SWEP:CheckHealRay()
 			self:TakeAmmo()
 		end
 		self.ChargeSound:PlayEx(1, 70)
-	elseif ent:IsValid() then
+	elseif ent:IsValid() and ent:IsPlayer() then
 		self:StopHealing()
 	end
 	if ent:IsPlayer() then return end

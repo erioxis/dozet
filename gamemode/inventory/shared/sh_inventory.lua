@@ -771,6 +771,8 @@ GM:AddSkillModifier(trinket, SKILLMOD_DAMAGE, -0.1)
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_MUL, -0.1)
 trinket = GM:AddTrinket(trs("t_cham_at"), "cham_at", false, supveles, supweles, 2, trs("t_d_cham_at"))
 trinket = GM:AddTrinket(trs("t_cham_storm"), "cham_storm", false, develes, deweles, 3, trs("t_d_cham_storm"), nil, nil, "weapon_zs_special_trinket")
+trinket = GM:AddTrinket(trs("t_clever"), "clever", false, develes, deweles, 5, trs("t_d_clever"), nil, nil, "weapon_zs_special_trinket")
+GM:AddSkillModifier(trinket, SKILLMOD_LUCK, 32)
 
 
 

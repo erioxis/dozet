@@ -1096,8 +1096,7 @@ GM:AddSkillModifier(SKILL_AMULET_13, SKILLMOD_SPOINT, 1)
 local d = GM:AddSkill(SKILL_AMULET_14, translate.Get("skill_amulet_14"),  GOOD..translate.Get("skill_amulet_14_d1"),
 																-23,			-14,					{SKILL_NONE}, TREE_GUNTREE)
 d.Amulet = true				
-d.AmuletCost = 5
-GM:AddSkillModifier(SKILL_AMULET_14, SKILLMOD_POISON_DAMAGE_TAKEN_MUL, -0.33)									
+d.AmuletCost = 5								
 GM:AddSkillModifier(SKILL_AMULET_14, SKILLMOD_PIECE_OF_AMULET, -5)
 GM:AddSkillModifier(SKILL_AMULET_14, SKILLMOD_SPOINT, 1)
 local d = GM:AddSkill(SKILL_AMULET_15, translate.Get("skill_amulet_15"),  GOOD..translate.Get("skill_amulet_15_d1"),

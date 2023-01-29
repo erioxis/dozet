@@ -1065,8 +1065,8 @@ local tbl = {Goal = 100, Reward = 2500}
 local translate = translate.Get
 function GM:DoAchievements()
     local daily = self:GetDaily()
-    tbl = dailyreward["Daily"..(self:GetDaily() or 1)%6]
- 	num =  (self:GetDaily() or 1)%6
+    tbl = dailyreward["Daily"..math.max(1,(self:GetDaily() or 1)%7)]
+ 	num =  math.max(1,(self:GetDaily() or 1)%7)
 
    --[[self.Achievements["daily"..daily] = {
         Name = translate("challenge_daily"..num),

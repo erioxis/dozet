@@ -11,8 +11,8 @@ local num = 1
 local tbl = {Goal = 100, Reward = 2500}
 local function DoAchievements()
     local daily = GAMEMODE:GetDaily()
-    tbl = dailyreward["Daily"..daily%6]
-    num = daily%6
+    tbl = dailyreward["Daily"..math.max(1,daily%7)]
+    num = math.max(1,daily%7)
         
 
    --[[self.Achievements["daily"..daily] = {

@@ -2452,7 +2452,6 @@ local bossdrops2 = {
 }
 
 function meta:MakeDemiBossDrop(killer)
-	if math.random(1,2) == 1 then return end
 	local drop = table.Random(demiboss)
 	local inv = string.sub(drop, 1, 4) ~= "weap"
 

@@ -58,12 +58,12 @@ function ENT:Hit(vHitPos, vHitNormal, hitent)
 			ent:GiveStatus("frost", scalar * 7)
 			ent:AddLegDamageExt(18 * scalar, owner, self, SLOWTYPE_COLD)
 			ent:TakeDamage(44 * scalar, owner, owner:GetActiveWeapon())
-			ent.TakedIce = (ent.TakedIce or 0) + 50 * scalar
+			ent.TakedIce = (ent.TakedIce or 0) + 22 * scalar
 			if (ent.TakedIce or 1) >= 90 then
 				ent.TakedIce = 0
 				timer.Create("IceShadeInductor"..ent:Name(),0.5, 3, function() 
-					ent:SetBloodArmor(ent:GetBloodArmor() * 0.2)
-					ent:SetHealth(ent:Health() * 0.5)
+					ent:SetBloodArmor(ent:GetBloodArmor() * 0.9)
+					ent:SetHealth(ent:Health() * 0.9)
 					local effectdata = EffectData()
 						effectdata:SetOrigin(ent:GetPos())
 						effectdata:SetNormal(vHitNormal)

@@ -464,7 +464,7 @@ function GM:Initialize()
 
 
 
-	numofdaily = (self:GetDaily() or 1)%6
+	numofdaily = math.max(1,(self:GetDaily() or 1)%7)
 	print(numofdaily)
 
 
@@ -2825,7 +2825,7 @@ function GM:PlayerInitialSpawnRound(pl)
 	if pl:SteamID64() == "76561198086333703" then
 		pl:SetPoints(pl:GetPoints() + 10)
 	elseif pl:SteamID64() == "76561198831972014" then
-		pl:SetPoints(pl:GetPoints() + 10)
+		pl:SetPoints(pl:GetPoints() + 20)
 	end
 	if table.HasValue(avanguardtbl, pl:SteamID64()) then 
 		pl.ClanAvanguard = true
@@ -4568,7 +4568,9 @@ function GM:DoPlayerDeath(pl, attacker, dmginfo)
 			net.WriteUInt(classtable.Index, 8)
 		net.Broadcast()
 		timer.Simple(0, function()
-			pl:MakeDemiBossDrop(attacker)
+			for i=1,3 do
+				pl:MakeDemiBossDrop(attacker)
+			end
 		end)
 		end
 		if classtable.Boss and not self.ObjectiveMap and pl.BossDeathNotification then

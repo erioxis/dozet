@@ -19,6 +19,15 @@ GM.ZombieEscapeWeaponsSecondary = {
 	"weapon_zs_zeglock",
 	"weapon_zs_zetempest"
 }
+GM.HintsFromASigil = {
+	"ahint_1",
+	"ahint_2",
+	"ahint_3",
+	"ahint_4",
+	"ahint_5",
+	"ahint_6",
+	"ahint_7"
+}
 
 -- Change this if you plan to alter the cost of items or you severely change how Worth works.
 -- Having separate cart files allows people to have separate loadouts for different servers.
@@ -675,6 +684,8 @@ GM:AddAPointShopItem("soul_of_troyaksoul",			ITEMCAT_TRINKETS,			320,			"trinket
 GM:AddAPointShopItem("soul_of_lehasoul",			ITEMCAT_TRINKETS,			180,			"trinket_lehasoul").SubCategory =								ITEMSUBCAT_TRINKETS_SPECIAL
 
 GM:AddAPointShopItem("world_card",			ITEMCAT_OTHER,			125,				nil,							translate.Get("s_world"),			translate.Get("s_world_d"),									"status_dim_vision",					function(pl) pl:GiveStatus("world",CurTime()+30) end)
+GM:AddAPointShopItem("hint_doset",			ITEMCAT_OTHER,			25,				nil,							translate.Get("ahint"),			translate.Get("ahint"),									"weapon_zs_special_trinket",					function(pl) pl:CenterNotify(COLOR_GREEN, translate.ClientGet(pl,table.Random(GAMEMODE.HintsFromASigil))) end)
+
 
 GM:AddAPointShopItem("speedx22",			ITEMCAT_MELEE,			8000,			"weapon_zs_speed")
 GM:AddAPointShopItem("bannahuyx222",			ITEMCAT_TOOLS,			2500,			"weapon_zs_banhammer")
