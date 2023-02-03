@@ -521,6 +521,12 @@ net.Receive("zs_trinketconsumed", function(length)
 
 	GAMEMODE:CenterNotify({killicon = "weapon_zs_trinket"}, " ", COLOR_RORANGE, translate.Format("trinket_consumed", trinket))
 end)
+net.Receive("zs_trinketcorrupt", function(length)
+	local trinket = GAMEMODE.ZSInventoryItemData[net.ReadString()].PrintName
+	MySelf:EmitSound("buttons/button3.wav", 75, 50)
+
+	GAMEMODE:CenterNotify({killicon = "weapon_zs_trinket"}, " ", COLOR_RED, translate.Format("trinket_dead", trinket))
+end)
 net.Receive("zs_pointsdoubled", function(length)
 	MySelf:EmitSound("buttons/button3.wav", 75, 50)
 
@@ -530,7 +536,7 @@ net.Receive("zs_luck", function(length)
 	local luck = net.ReadString()
 	MySelf:EmitSound("buttons/button3.wav", 75, 50)
 
-	GAMEMODE:CenterNotify({killicon = "weapon_zs_trinket", Tag = "luck"..luck}, " ", COLOR_RED, translate.Format("yluck", luck))
+	GAMEMODE:CenterNotify({killicon = "weapon_zs_trinket", Tag = "luck"..luck}, " ", COLOR_RED, translate.Format("yluck", luck, math.Round(math.max((luck/(MySelf:IsSkillActive(SKILL_BLUCK) and 3 or 5) or 1),1))))
 end)
 
 net.Receive("zs_damageblock", function(length)

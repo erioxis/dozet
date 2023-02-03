@@ -1,5 +1,7 @@
 
 	util.AddNetworkString("zs_gamestate")
+	
+	util.AddNetworkString("zs_item_pac")
 	util.AddNetworkString("zs_wavestart")
 	util.AddNetworkString("zs_waveend")
 	util.AddNetworkString("zs_lasthuman")
@@ -57,6 +59,7 @@
 	util.AddNetworkString("zs_deployableclaim")
 	util.AddNetworkString("zs_deployableout")
 	util.AddNetworkString("zs_trinketconsumed")
+	util.AddNetworkString("zs_trinketcorrupt")
 	util.AddNetworkString("zs_pointsdoubled")
 	util.AddNetworkString("zs_nailremoved")
 	util.AddNetworkString("zs_remantlercontent")

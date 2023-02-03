@@ -59,3 +59,22 @@ function SWEP:ShootBullets(dmg, numbul, cone)
 	BaseClass.ShootBullets(self, dmg, numbul, cone)
 end
 
+function SWEP:PrimaryAttack()
+	if not self:CanPrimaryAttack() then return end
+	local owner = self:GetOwner()
+	if owner:GetAmmoCount("pulse") < 30 then return end
+	local owm = (owner.M_FireDelay or 1)
+	self:SetNextPrimaryFire(CurTime() + self:GetFireDelay() * ( owner:HasTrinket("altevesoul") and owner:Health() < 50 and (0.33 * owm) or (1 * owm) ))
+	local extramulti = 1
+	if owner:HasTrinket("supasm") and (self.Tier or 1) <= 2  then
+		extramulti = 1.25
+	end
+
+
+	self:EmitFireSound()
+	self:TakeAmmo()
+	owner:SetAmmo(owner:GetAmmoCount("pulse")-30,"pulse")
+	self:ShootBullets(self.Primary.Damage * (self:GetPrimaryClipSize() >= 12 and owner:IsSkillActive(SKILL_LAST_AMMO) and 0.75 or self:GetPrimaryClipSize() <= 11 and owner:IsSkillActive(SKILL_LAST_AMMO) and 1.5 + ((self:GetPrimaryClipSize()) * 0.01) or 1) * (extramulti or 1), self.Primary.NumShots, self:GetCone())
+	self:SetShotgunHeat(CurTime()+(self.ShotGunHeatTimeMul or 1.2))
+	self.IdleAnimation = CurTime() + self:SequenceDuration()
+end

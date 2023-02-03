@@ -243,6 +243,7 @@ function GM:ShowHelp()
 
 	menu:MakePopup()
 end
+local exlude = {8,6,16,22,27,30,31,34,118,114,113,101,40,41,43,92,117,116,56,59,63,65,66,98,72,73,79,88 ,78,120,57,58}
 function GM:Stats()
 	if pMakepStats and pMakepStats:IsValid() then
 		pMakepStats:Remove()
@@ -302,7 +303,6 @@ function MakepStats()
 		if (skillmodifiers[i] or 0) > 0 then
 			c = "+"..c
 		end
-		local exlude = {8,6,16,22,27,30,31,34,118,114,113,101,40,41,43,92,117,116,56,59,63,65,66,98,72,73,79,88 ,78}
 		local colorred = table.HasValue(exlude, i) and Color(71,231,119) or Color(238,37,37)
 		local colorgreen = table.HasValue(exlude, i) and Color(238,37,37) or Color(71,231,119)
 		d:SetChangeFunction(function()

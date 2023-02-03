@@ -27,7 +27,22 @@ function FindStartingItem(id)
 	local item = FindItem(id)
 	if item and item.WorthShop then return item end
 end
+function math.randomr(min, max, need, pl, chances)
+	local ch = chances
+	local rand = min
+	if pl then ch = math.Round(math.max((pl.Luck/(pl:IsSkillActive(SKILL_BLUCK) and 3 or 5) or 1),1)) end
+	for i=1,ch do
+		local random = math.random(min,max)
+		if random == need then
+			rand = need
+			break
+		else
+			rand = random
+		end
+	end
 
+	return rand
+end
 function FindItem(id)
 	if not id then return false end
 	return GAMEMODE.Items[id]

@@ -248,6 +248,7 @@ function SWEP:Deploy()
 end
 
 function SWEP:Holster()
+	if (self:GetOwner():GetStatus("sticky")) then return false end
 	if CLIENT then
 		self:Anim_Holster()
 	end

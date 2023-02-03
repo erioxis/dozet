@@ -34,8 +34,9 @@ concommand.Add("zs_pointsshopbuy", function(sender, command, arguments)
 		return
 	end
 
-
+	
 	if not itemtab or not itemtab.PointShop then return end
+	if usescrap and itemtab.DontScrap then return end
 	local itemcat = itemtab.Category
 	if usescrap and not (itemcat == ITEMCAT_TRINKETS or itemcat == ITEMCAT_AMMO) and not itemtab.CanMakeFromScrap then return end
 
@@ -466,7 +467,7 @@ end)
 
 concommand.Add("zs_upgrade", function(sender, command, arguments)
 	if not (sender:IsValid() and sender:IsConnected() and sender:IsValidLivingHuman()) then return end
-
+	if sender:HasTrinket("flower_g") then sender:TakeInventoryItem("trinket_flower_g")  return end
 	if not sender:NearRemantler() then
 		GAMEMODE:ConCommandErrorMessage(sender, translate.ClientGet(sender, "need_to_be_near_remantler"))
 		return
@@ -612,6 +613,11 @@ concommand.Add("zsdropweapon", function(sender, command, arguments)
 		sender:Kill()
 		sender:TakeInventoryItem("curse_dropping")
 		
+	end
+	if sender:HasTrinket("curse_point") then
+		sender:SetPoints(sender:GetPoints() * 0.75)
+		sender:TakeInventoryItem("trinket_curse_point")
+		return
 	end
 	if sender:HasTrinket("hurt_curse") then
 		sender:TakeDamage(60)
@@ -815,6 +821,11 @@ concommand.Add("zsgiveweapon", function(sender, command, arguments)
 		sender:TakeInventoryItem("curse_dropping")
 		return
 	end
+	if sender:HasTrinket("curse_point") then
+		sender:SetPoints(sender:GetPoints() * 0.75)
+		sender:TakeInventoryItem("curse_point")
+		return
+	end
 	if sender:HasTrinket("hurt_curse") then
 		sender:TakeDamage(60)
 		sender:TakeInventoryItem("hurt_curse")
@@ -904,6 +915,11 @@ concommand.Add("zsgiveweaponclip", function(sender, command, arguments)
 	if not (sender:IsValid() and sender:Alive() and sender:Team() == TEAM_HUMAN) then return end
 	if sender:HasTrinket("curse_dropping") then
 		sender:Kill()
+	end
+	if sender:HasTrinket("curse_point") then
+		sender:SetPoints(sender:GetPoints() * 0.75)
+		sender:TakeInventoryItem("curse_point")
+		return
 	end
 	if sender:HasTrinket("flower_g") then sender:TakeInventoryItem("trinket_flower_g")  return end
 

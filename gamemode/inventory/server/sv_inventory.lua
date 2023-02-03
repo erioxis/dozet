@@ -8,6 +8,25 @@ function meta:AddInventoryItem(item)
 	if GAMEMODE:GetInventoryItemType(item) == INVCAT_TRINKETS then
 		self:ApplyTrinkets()
 	end
+	--[[
+				if self.OutFitPac then
+					self:RemovePACPart(self.OutFitPac)
+					self.OutFitPac = nil 
+				end
+				if classtab.Pac3Out then
+					pac.SetupENT(self)
+					self:AttachPACPart(classtab.Pac3Out)
+					self.OutFitPac = classtab.Pac3Out
+				end
+
+	]]
+	if GAMEMODE.ZSInventoryItemData[item].PacModels then
+		net.Start("zs_item_pac")
+			net.WriteString(item)
+			net.WriteEntity(self)
+			net.WriteBool(false)
+		net.Send(self)
+	end
 
 	net.Start("zs_inventoryitem")
 		net.WriteString(item)
@@ -42,7 +61,13 @@ function meta:TakeInventoryItem(item)
 	if setnil then
 		self.ZSInventory[item] = nil
 	end
-
+	if GAMEMODE.ZSInventoryItemData[item].PacModels then
+		net.Start("zs_item_pac")
+			net.WriteString(item)
+			net.WriteEntity(self)
+			net.WriteBool(true)
+		net.Send(self)
+	end
 	if GAMEMODE:GetInventoryItemType(item) == INVCAT_TRINKETS then
 		self:ApplyTrinkets()
 	end
@@ -121,13 +146,12 @@ function meta:TryAssembleItem(component, heldclass)
 		if desiassembly == "trinket_toykasoul" then
 			self:GiveAchievement("soul")
 		end
-		if desiassembly == "weapon_zs_sigil_port_a" then
-			self:GiveAchievement("anti_sigil")
-		end
 	else
 		desitable = weapons.Get(desiassembly)
 		if (not desitable.AmmoIfHas and self:HasWeapon(desiassembly)) or not self:TakeInventoryItem(component) then return end
-
+		if desiassembly == "weapon_zs_sigil_port_a" then
+			self:GiveAchievement("anti_sigil")
+		end
 		if desitable.AmmoIfHas then
 			self:GiveAmmo(1, desitable.Primary.Ammo)
 		end

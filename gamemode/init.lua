@@ -1424,10 +1424,16 @@ function GM:Think()
 							pl:TakeInventoryItem(take)
 							pl:AddInventoryItem("trinket_flower_g")
 							pl.NextConsumeEgo = time + 60
+							net.Start("zs_trinketcorrupt")
+							net.WriteString(take)
+						net.Send(pl)
 						else
 							pl:TakeInventoryItem(take)
 							pl:AddInventoryItem("trinket_sin_ego")
 							pl.NextConsumeEgo = time + 120
+							net.Start("zs_trinketcorrupt")
+								net.WriteString(take)
+							net.Send(pl)
 						end
 					end
 				end
@@ -2598,6 +2604,7 @@ function GM:PlayerInitialSpawn(pl)
 	pl.m_LastGasHeal = 0
 	pl.OneTime = true
 	pl.RespawnedTime = CurTime() + 5
+	pl.OutFitPacTrinket = {}
 	--self:PlayerSaveDataMASTERY(pl)
 	self:InitializeVault(pl)
 
@@ -2822,9 +2829,11 @@ function GM:PlayerInitialSpawnRound(pl)
 		pl.ClanMelee = true
 	end
 	local uniqueid = pl:UniqueID()
-	if pl:SteamID64() == "76561198086333703" then
+	if pl:SteamID64() == "76561198086333703" or pl:SteamID64() == "76561198974292374" then
 		pl:SetPoints(pl:GetPoints() + 10)
 	elseif pl:SteamID64() == "76561198831972014" then
+		pl:SetPoints(pl:GetPoints() + 20)
+	elseif pl:SteamID64() == "76561198394385289" then
 		pl:SetPoints(pl:GetPoints() + 20)
 	end
 	if table.HasValue(avanguardtbl, pl:SteamID64()) then 
@@ -4332,6 +4341,9 @@ function GM:HumanKilledZombie(pl, attacker, inflictor, dmginfo, headshot, suicid
 	if numofdaily == 5 and inflictor.IsShadeGrabbable then
 		attacker:GiveAchievementProgress("daily_post", 1)
 	end
+	if attacker:IsSkillActive(SKILL_SCAM) and math.randomr(1,100,1,attacker) == 1 then
+		attacker:AddInventoryItem("trinket_curse_point")
+	end
 	attacker:GiveAchievementProgress("everycan", 1)
 	attacker:GiveAchievementProgress("dzs", 1)
 	pl:GiveAchievementProgress("goodtime", 1)
@@ -5370,11 +5382,8 @@ function GM:WaveStateChanged(newstate, pl)
 					local pointsreward = pointsbonus + (pl.EndWavePointsExtra or 0)
 
 						if pl:HasTrinket("lotteryticket")  then 
-							local luckdis = (lucktrue  / 4)
-							local chargemax = 6 - luckdis
-							local luck = math.max(20 - lucktrue,3) 
-							local lucky1 = math.random(1,luck)
-							local charge = math.random(1,chargemax)
+							local lucky1 = math.randomr(1,6,1,pl)
+							local charge = math.randomr(1,6,2,pl)
 							if lucky1 == 1 then 
 								pl:AddPoints(120)
 								if not charge == 1  then
@@ -5385,7 +5394,7 @@ function GM:WaveStateChanged(newstate, pl)
 								end
 							end
 					  	end
-					local blyat = math.random(1,10)
+					local blyat = math.randomr(1,10,6,pl)
 					if pl:IsSkillActive(SKILL_DEADINSIDE) and blyat < 3 then
 						pl:TakeDamage(20000)
 					elseif pl:IsSkillActive(SKILL_DEADINSIDE) and blyat > 3 then
@@ -5393,13 +5402,10 @@ function GM:WaveStateChanged(newstate, pl)
 					end
 
 					if pl:HasTrinket("mysteryticket")  then 
-						local luckdis = (lucktrue  / 4)
-						local chargemax = 6 - luckdis
-						local luck = math.max(40 - lucktrue/4,5)
-						local lucky2 = math.random(1,luck)
+						local lucky2 = math.randomr(1,15,1,pl)
 					
 						
-						local charge = math.random(1,chargemax)
+						local charge = math.randomr(1,25,1,pl)
 					
 						if lucky2 == 1 then 
 
@@ -5420,8 +5426,7 @@ function GM:WaveStateChanged(newstate, pl)
 							net.Send(pl)
 						end
 						if pl:IsSkillActive(SKILL_ABUSE)  then 
-							local luck = 8 - (lucktrue  / 3)
-							local lucky5 = math.random(1,luck)
+							local lucky5 = math.randomr(1,8,1,pl)
 							if lucky5 == 1 then 
 							pl:AddPoints(pointsreward, nil, nil, true)
 							net.Start("zs_pointsdoubled")
@@ -5429,8 +5434,7 @@ function GM:WaveStateChanged(newstate, pl)
 							
 							end end
 							if pl:IsSkillActive(SKILL_POINTD)  then 
-								local luck = 8 - (lucktrue  / 3)
-								local lucky5 = math.random(1,luck)
+								local lucky5 = math.randomr(1,8,1,pl)
 								if lucky5 == 1 then 
 		
 								pl:AddPoints(pointsreward, nil, nil, true)
@@ -5486,8 +5490,7 @@ function GM:WaveStateChanged(newstate, pl)
 						"weapon_zs_scythe_q1"
 					}
 					local drop = table.Random(weapon)
-					local luck = 9 - (lucktrue  / 4)
-					local lucky2 = math.random(1,luck)
+					local lucky2 = math.randomr(1,9,1,pl)
 					if lucky2 == 1 then 
 						pl:Give(drop)
 
@@ -5506,7 +5509,7 @@ function GM:WaveStateChanged(newstate, pl)
 				pl.DeathClass = curclass
 			end
 			if pl:Team() == TEAM_UNDEAD then
-				pl:AddTokens(math.ceil(self:GetWave() * 90))
+				pl:AddTokens(math.ceil(self:GetWave() * 90) + 120)
 			end
 
 			pl.SkipCrow = nil

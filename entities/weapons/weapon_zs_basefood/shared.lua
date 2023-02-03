@@ -132,6 +132,7 @@ function SWEP:Think()
 end
 
 function SWEP:Holster()
+	if (self:GetOwner():GetStatus("sticky")) then return false end
 	self:SetEatStartTime(0)
 	self:SetEatEndTime(0)
 	self:GetOwner():RemoveStatus("obed", true, true)

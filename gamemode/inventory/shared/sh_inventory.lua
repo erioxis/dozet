@@ -72,7 +72,7 @@ GM:AddWeaponBreakdownRecipe("weapon_zs_crymam",							"trinket_toysoul")
 GM.Assemblies["weapon_zs_waraxe"] 								= {"comp_modbarrel", 		"weapon_zs_glock3"}
 GM.Assemblies["weapon_zs_bust"] 								= {"comp_busthead", 		"weapon_zs_plank"}
 GM.Assemblies["weapon_zs_sawhack"] 								= {"comp_sawblade", 		"weapon_zs_axe"}
-GM.Assemblies["weapon_zs_bloodhack"] 							= {"comp_sawblade", 		"weapon_zs_manhack"}
+--GM.Assemblies["weapon_zs_bloodhack"] 							= {"comp_sawblade", 		"weapon_zs_manhack"}
 GM.Assemblies["weapon_zs_megamasher"] 							= {"comp_propanecan", 		"weapon_zs_sledgehammer"}
 GM.Assemblies["weapon_zs_electrohammer"] 						= {"comp_electrobattery",	"weapon_zs_hammer"}
 GM.Assemblies["weapon_zs_novablaster"] 							= {"comp_basicecore",		"weapon_zs_magnum"}
@@ -277,7 +277,110 @@ GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, i / 5)
 end
 trinket = GM:AddTrinket(trs("t_a_flower"), "a_flower", false, hpveles, hpweles, 5, trs("t_d_a_flower"), nil, 15, "weapon_zs_melee_trinket")
 
-trinket = GM:AddTrinket(trs("t_richeye"), "greedeye", false, hpveles, hpweles, 3, trs("t_d_richeye"), nil, nil, "weapon_zs_special_trinket")
+trinket = GM:AddTrinket(trs("t_richeye"), "greedeye", false, hpveles, hpweles, 3, trs("t_d_richeye"), nil, nil, "weapon_zs_special_trinket", {[1] = {
+	["children"] = {
+		[1] = {
+			["children"] = {
+				[1] = {
+					["children"] = {
+					},
+					["self"] = {
+						["Skin"] = 0,
+						["UniqueID"] = "62f09606e93a91ba4c42b4f77cfe4c0458874690b0103bd13e71fb2e47dea9f9",
+						["NoLighting"] = false,
+						["AimPartName"] = "",
+						["IgnoreZ"] = false,
+						["AimPartUID"] = "",
+						["Materials"] = "",
+						["Name"] = "cube025x025x025",
+						["LevelOfDetail"] = 0,
+						["NoTextureFiltering"] = false,
+						["PositionOffset"] = Vector(1.5, 0, 0),
+						["IsDisturbing"] = false,
+						["EyeAngles"] = false,
+						["DrawOrder"] = 0,
+						["TargetEntityUID"] = "",
+						["Alpha"] = 1,
+						["Material"] = "models/debug/debugwhite",
+						["Invert"] = false,
+						["ForceObjUrl"] = false,
+						["Bone"] = "head",
+						["Angles"] = Angle(0, 0, 0),
+						["AngleOffset"] = Angle(0, 0, 0),
+						["BoneMerge"] = false,
+						["Color"] = Vector(1, 1, 0),
+						["Position"] = Vector(0, 0.80000001192093, 0.12999999523163),
+						["ClassName"] = "model2",
+						["Brightness"] = 0.6,
+						["Hide"] = false,
+						["NoCulling"] = false,
+						["Scale"] = Vector(10.39999961853, 0.20000000298023, 0.80000001192093),
+						["LegacyTransform"] = false,
+						["EditorExpand"] = false,
+						["Size"] = 0.025,
+						["ModelModifiers"] = "",
+						["Translucent"] = false,
+						["BlendMode"] = "",
+						["EyeTargetUID"] = "",
+						["Model"] = "models/hunter/blocks/cube025x025x025.mdl",
+					},
+				},
+			},
+			["self"] = {
+				["Skin"] = 0,
+				["UniqueID"] = "dd8f0a0dd9a0fde373e4c04a14e0e7bd423e01745e99332ddfd985bdf9b3dacc",
+				["NoLighting"] = false,
+				["AimPartName"] = "",
+				["IgnoreZ"] = false,
+				["AimPartUID"] = "",
+				["Materials"] = "",
+				["Name"] = "",
+				["LevelOfDetail"] = 0,
+				["NoTextureFiltering"] = false,
+				["PositionOffset"] = Vector(0, 0, 0),
+				["IsDisturbing"] = false,
+				["EyeAngles"] = false,
+				["DrawOrder"] = 0,
+				["TargetEntityUID"] = "",
+				["Alpha"] = 1,
+				["Material"] = "",
+				["Invert"] = false,
+				["ForceObjUrl"] = false,
+				["Bone"] = "eyes",
+				["Angles"] = Angle(90, 180, 180),
+				["AngleOffset"] = Angle(0, 0, 0),
+				["BoneMerge"] = false,
+				["Color"] = Vector(1, 1, 0),
+				["Position"] = Vector(1.1000000238419, 1.5, 0),
+				["ClassName"] = "model2",
+				["Brightness"] = 3,
+				["Hide"] = false,
+				["NoCulling"] = false,
+				["Scale"] = Vector(0.69999998807907, 0.69999998807907, 3),
+				["LegacyTransform"] = false,
+				["EditorExpand"] = true,
+				["Size"] = 0.025,
+				["ModelModifiers"] = "",
+				["Translucent"] = false,
+				["BlendMode"] = "",
+				["EyeTargetUID"] = "",
+				["Model"] = "models/props_phx/construct/glass/glass_angle360.mdl",
+			},
+		},
+	},
+	["self"] = {
+		["DrawOrder"] = 0,
+		["UniqueID"] = "fac50a0ad260b8caa8cd5fa308a13bd2e41e45d2996d038a18ce7e5e1604f0e1",
+		["Hide"] = false,
+		["TargetEntityUID"] = "",
+		["EditorExpand"] = true,
+		["OwnerName"] = "self",
+		["IsDisturbing"] = false,
+		["Name"] = "dsadasdada2",
+		["Duplicate"] = false,
+		["ClassName"] = "group",
+	},
+}})
 GM:AddSkillModifier(trinket, SKILLMOD_ENDWAVE_POINTS, 20)
 GM:AddSkillModifier(trinket, SKILLMOD_ARSENAL_DISCOUNT, 0.05)
 
@@ -399,6 +502,8 @@ trinketwep.PermitDismantle = true
 trinket, trinketwep = GM:AddTrinket(trs("t_curse_ponos"), "curse_ponos", false, nil, cursesoul, 3, trs("t_d_curse_ponos"), nil, nil, "weapon_zs_cursed")
 trinketwep.PermitDismantle = true
 trinket, trinketwep = GM:AddTrinket(trs("t_curse_un"), "curse_unknown", false, nil, cursesoul, 3, trs("t_d_curse_un"), nil, nil, "weapon_zs_cursed")
+trinketwep.PermitDismantle = true
+trinket, trinketwep = GM:AddTrinket(trs("t_curse_point"), "curse_point", false, nil, cursesoul, 3, trs("t_d_curse_point"), nil, nil, "weapon_zs_cursed")
 trinketwep.PermitDismantle = true
 
 --perfomance
@@ -563,8 +668,216 @@ local eicev = {
 local eicew = {
 	["base"] = { type = "Model", model = "models/gibs/glass_shard04.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3.556, 2.519, -1.468), angle = Angle(0, -5.844, -75.974), size = Vector(0.5, 0.5, 0.5), color = Color(0, 137, 255, 255), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} }
 }
-
-GM:AddTrinket(trs("t_iceshield"), "iceburst", false, eicev, eicew, nil, trs("t_d_iceshield"), nil, nil, "weapon_zs_special_trinket")
+local shield = {
+[1] = {
+	["children"] = {
+		[1] = {
+			["children"] = {
+				[1] = {
+					["children"] = {
+						[1] = {
+							["children"] = {
+							},
+							["self"] = {
+								["DrawOrder"] = 0,
+								["UniqueID"] = "27c539367fcda1046dd5e5ab8b613aa757b6ccc6b8c4b83e7b50ca28b2cd885c",
+								["TargetEntityUID"] = "",
+								["AimPartName"] = "",
+								["Bone"] = "head",
+								["BlendMode"] = "",
+								["Position"] = Vector(0, 0, 25),
+								["AimPartUID"] = "",
+								["NoTextureFiltering"] = false,
+								["Hide"] = false,
+								["Name"] = "",
+								["Translucent"] = false,
+								["IgnoreZ"] = false,
+								["Angles"] = Angle(-90, 0, 0),
+								["AngleOffset"] = Angle(0, 0, 0),
+								["PositionOffset"] = Vector(0, 0, 0),
+								["IsDisturbing"] = false,
+								["ClassName"] = "clip2",
+								["EyeAngles"] = false,
+								["EditorExpand"] = false,
+							},
+						},
+					},
+					["self"] = {
+						["Skin"] = 0,
+						["UniqueID"] = "9a87528647432f7db67534b9c4f42a25e99e700e509014c283fee91ba2ff0a49",
+						["NoLighting"] = false,
+						["AimPartName"] = "",
+						["IgnoreZ"] = false,
+						["AimPartUID"] = "",
+						["Materials"] = "",
+						["Name"] = "",
+						["LevelOfDetail"] = 0,
+						["NoTextureFiltering"] = false,
+						["PositionOffset"] = Vector(0, 0, 0),
+						["IsDisturbing"] = false,
+						["EyeAngles"] = false,
+						["DrawOrder"] = 0,
+						["TargetEntityUID"] = "",
+						["Alpha"] = 1,
+						["Material"] = "",
+						["Invert"] = false,
+						["ForceObjUrl"] = false,
+						["Bone"] = "head",
+						["Angles"] = Angle(0, 0, 0),
+						["AngleOffset"] = Angle(0, 0, 0),
+						["BoneMerge"] = false,
+						["Color"] = Vector(1, 1, 1),
+						["Position"] = Vector(2.4000000953674, 0, -20),
+						["ClassName"] = "model2",
+						["Brightness"] = 1,
+						["Hide"] = false,
+						["NoCulling"] = false,
+						["Scale"] = Vector(1, 1, 1),
+						["LegacyTransform"] = false,
+						["EditorExpand"] = true,
+						["Size"] = 0.45,
+						["ModelModifiers"] = "",
+						["Translucent"] = false,
+						["BlendMode"] = "",
+						["EyeTargetUID"] = "",
+						["Model"] = "models/props_c17/signpole001.mdl",
+					},
+				},
+			},
+			["self"] = {
+				["Skin"] = 1,
+				["UniqueID"] = "9bb1f6f49a243ffcef55e1a978995896a8bd62ce038dd3c1f3e3e6ad4d4fb258",
+				["NoLighting"] = false,
+				["AimPartName"] = "",
+				["IgnoreZ"] = false,
+				["AimPartUID"] = "",
+				["Materials"] = "",
+				["Name"] = "",
+				["LevelOfDetail"] = 0,
+				["NoTextureFiltering"] = false,
+				["PositionOffset"] = Vector(0, 0, 0),
+				["IsDisturbing"] = false,
+				["EyeAngles"] = false,
+				["DrawOrder"] = 0,
+				["TargetEntityUID"] = "",
+				["Alpha"] = 1,
+				["Material"] = "",
+				["Invert"] = false,
+				["ForceObjUrl"] = false,
+				["Bone"] = "spine 2",
+				["Angles"] = Angle(0, -90, -90),
+				["AngleOffset"] = Angle(0, 0, 0),
+				["BoneMerge"] = false,
+				["Color"] = Vector(1, 1, 1),
+				["Position"] = Vector(0, -2.4000000953674, 0),
+				["ClassName"] = "model2",
+				["Brightness"] = 1,
+				["Hide"] = false,
+				["NoCulling"] = false,
+				["Scale"] = Vector(1, 1, 1.1000000238419),
+				["LegacyTransform"] = false,
+				["EditorExpand"] = true,
+				["Size"] = 0.25,
+				["ModelModifiers"] = "skin=1;",
+				["Translucent"] = false,
+				["BlendMode"] = "",
+				["EyeTargetUID"] = "",
+				["Model"] = "models/props_c17/oildrum001.mdl",
+			},
+		},
+		[2] = {
+			["children"] = {
+				[1] = {
+					["children"] = {
+					},
+					["self"] = {
+						["DrawOrder"] = 0,
+						["UniqueID"] = "cb8769a9041b1c1e0bfd0e71a753d6c250c65367c933fface4913ef821220893",
+						["Axis"] = "",
+						["Input"] = "time",
+						["TargetPartUID"] = "",
+						["InputMultiplier"] = 1,
+						["RootOwner"] = false,
+						["TargetEntityUID"] = "",
+						["ZeroEyePitch"] = false,
+						["ClassName"] = "proxy",
+						["ResetVelocitiesOnHide"] = true,
+						["VelocityRoughness"] = 10,
+						["Max"] = 10,
+						["Pow"] = 1,
+						["EditorExpand"] = false,
+						["AffectChildren"] = false,
+						["Min"] = 2,
+						["Hide"] = false,
+						["Name"] = "",
+						["VariableName"] = "Brightness",
+						["Offset"] = 0,
+						["PlayerAngles"] = false,
+						["Additive"] = false,
+						["InputDivider"] = 1,
+						["IsDisturbing"] = false,
+						["OutputTargetPartUID"] = "",
+						["Function"] = "sin",
+						["Expression"] = "",
+					},
+				},
+			},
+			["self"] = {
+				["Skin"] = 0,
+				["UniqueID"] = "9fe4a8756276e4196a7b5045ccb086c98a7f259cb1d52f0d9b0731e3a6fd1157",
+				["NoLighting"] = true,
+				["AimPartName"] = "",
+				["IgnoreZ"] = false,
+				["AimPartUID"] = "",
+				["Materials"] = "",
+				["Name"] = "",
+				["LevelOfDetail"] = 0,
+				["NoTextureFiltering"] = false,
+				["PositionOffset"] = Vector(0, 0, 0),
+				["IsDisturbing"] = false,
+				["EyeAngles"] = false,
+				["DrawOrder"] = 0,
+				["TargetEntityUID"] = "",
+				["Alpha"] = 0.5,
+				["Material"] = "phoenix_storms/gear",
+				["Invert"] = false,
+				["ForceObjUrl"] = false,
+				["Bone"] = "chest",
+				["Angles"] = Angle(0, 90, 0),
+				["AngleOffset"] = Angle(0, 0, 0),
+				["BoneMerge"] = false,
+				["Color"] = Vector(0, 0.75, 1),
+				["Position"] = Vector(-2, 0, -4.6999998092651),
+				["ClassName"] = "model2",
+				["Brightness"] = 6.0318553352169,
+				["Hide"] = false,
+				["NoCulling"] = false,
+				["Scale"] = Vector(2, 2, 4.0999999046326),
+				["LegacyTransform"] = false,
+				["EditorExpand"] = true,
+				["Size"] = 1.05,
+				["ModelModifiers"] = "",
+				["Translucent"] = true,
+				["BlendMode"] = "",
+				["EyeTargetUID"] = "",
+				["Model"] = "models/pac/default.mdl",
+			},
+		},
+	},
+	["self"] = {
+		["DrawOrder"] = 0,
+		["UniqueID"] = "fac50a0ad260b8caa8cd5fa308a13bd2e41e45d2996d038a18ce7e5e1604f0e1",
+		["Hide"] = false,
+		["TargetEntityUID"] = "",
+		["EditorExpand"] = true,
+		["OwnerName"] = "self",
+		["IsDisturbing"] = false,
+		["Name"] = "33333",
+		["Duplicate"] = false,
+		["ClassName"] = "group",
+	},
+},}
+GM:AddTrinket(trs("t_iceshield"), "iceburst", false, eicev, eicew, nil, trs("t_d_iceshield"), nil, nil, "weapon_zs_special_trinket", shield)
 
 GM:AddSkillModifier(GM:AddTrinket(trs("t_fdfe"), "forcedamp", false, develes, deweles, 2,trs("t_d_fdfe"), nil, nil, "weapon_zs_special_trinket"), SKILLMOD_PHYSICS_DAMAGE_TAKEN_MUL, -0.33)
 
@@ -601,8 +914,158 @@ trinketwep.PermitDismantle = true
 
 GM:AddTrinket(trs("t_magnet"), "magnet", true, supveles, supweles, nil, trs("t_d_magnet"), "magnet")
 GM:AddTrinket(trs("t_smagnet"), "electromagnet", true, supveles, supweles, nil, trs("t_d_smagnet"), "magnet_electro")
-
-trinket, trinketwep = GM:AddTrinket(trs("t_exoskelet"), "loadingex", false, supveles, supweles, 2, trs("t_d_exoskelet"), nil, nil, "weapon_zs_help_trinket")
+local ego = {[1] = {
+	["children"] = {
+		[1] = {
+			["children"] = {
+				[1] = {
+					["children"] = {
+					},
+					["self"] = {
+						["FollowAnglesOnly"] = false,
+						["DrawOrder"] = 0,
+						["InvertHideMesh"] = false,
+						["TargetEntityUID"] = "",
+						["AimPartName"] = "",
+						["FollowPartUID"] = "",
+						["Bone"] = "head",
+						["ScaleChildren"] = false,
+						["UniqueID"] = "8c1169ef99a6512f3ce54407061c3ec1f439a94fc787099a5368f096d1f5b1e8",
+						["MoveChildrenToOrigin"] = false,
+						["Position"] = Vector(0, 0, 0),
+						["AimPartUID"] = "",
+						["Angles"] = Angle(0, 0, 0),
+						["Hide"] = false,
+						["Name"] = "",
+						["Scale"] = Vector(1, 1, 1),
+						["EditorExpand"] = false,
+						["ClassName"] = "bone3",
+						["Size"] = 0,
+						["PositionOffset"] = Vector(0, 0, 0),
+						["IsDisturbing"] = false,
+						["AngleOffset"] = Angle(0, 0, 0),
+						["EyeAngles"] = false,
+						["HideMesh"] = false,
+					},
+				},
+				[2] = {
+					["children"] = {
+					},
+					["self"] = {
+						["FollowAnglesOnly"] = false,
+						["DrawOrder"] = 0,
+						["InvertHideMesh"] = false,
+						["TargetEntityUID"] = "",
+						["AimPartName"] = "",
+						["FollowPartUID"] = "",
+						["Bone"] = "spine 2",
+						["ScaleChildren"] = false,
+						["UniqueID"] = "cc5a83a70d711cfb9e5e03cd3dde1391344f68aaf244cd4166990bc40dc6617b",
+						["MoveChildrenToOrigin"] = false,
+						["Position"] = Vector(0, 0, 0),
+						["AimPartUID"] = "",
+						["Angles"] = Angle(0, 0, 0),
+						["Hide"] = false,
+						["Name"] = "",
+						["Scale"] = Vector(1, 1, 1),
+						["EditorExpand"] = false,
+						["ClassName"] = "bone3",
+						["Size"] = 0.9,
+						["PositionOffset"] = Vector(0, 0, 0),
+						["IsDisturbing"] = false,
+						["AngleOffset"] = Angle(0, 0, 0),
+						["EyeAngles"] = false,
+						["HideMesh"] = false,
+					},
+				},
+				[3] = {
+					["children"] = {
+					},
+					["self"] = {
+						["FollowAnglesOnly"] = false,
+						["DrawOrder"] = 0,
+						["InvertHideMesh"] = false,
+						["TargetEntityUID"] = "",
+						["AimPartName"] = "",
+						["FollowPartUID"] = "",
+						["Bone"] = "spine",
+						["ScaleChildren"] = false,
+						["UniqueID"] = "45221b39467182f09b0cf2c426c6c3c8556121081d283fcf845f6706770ed058",
+						["MoveChildrenToOrigin"] = false,
+						["Position"] = Vector(0, 0, 0),
+						["AimPartUID"] = "",
+						["Angles"] = Angle(0, 0, 0),
+						["Hide"] = false,
+						["Name"] = "",
+						["Scale"] = Vector(1, 1, 1),
+						["EditorExpand"] = false,
+						["ClassName"] = "bone3",
+						["Size"] = 0.925,
+						["PositionOffset"] = Vector(0, 0, 0),
+						["IsDisturbing"] = false,
+						["AngleOffset"] = Angle(0, 0, 0),
+						["EyeAngles"] = false,
+						["HideMesh"] = false,
+					},
+				},
+			},
+			["self"] = {
+				["Skin"] = 0,
+				["UniqueID"] = "8451e19aed0489f61d1199a49702f424540c2238d608d7238307a58450190214",
+				["NoLighting"] = false,
+				["AimPartName"] = "",
+				["IgnoreZ"] = false,
+				["AimPartUID"] = "",
+				["Materials"] = "",
+				["Name"] = "",
+				["LevelOfDetail"] = 0,
+				["NoTextureFiltering"] = false,
+				["PositionOffset"] = Vector(0, 0, 0),
+				["IsDisturbing"] = false,
+				["EyeAngles"] = false,
+				["DrawOrder"] = 0,
+				["TargetEntityUID"] = "",
+				["Alpha"] = 1,
+				["Material"] = "phoenix_storms/gear",
+				["Invert"] = false,
+				["ForceObjUrl"] = false,
+				["Bone"] = "head",
+				["Angles"] = Angle(0, 0, 0),
+				["AngleOffset"] = Angle(0, 0, 0),
+				["BoneMerge"] = true,
+				["Color"] = Vector(1, 1, 1),
+				["Position"] = Vector(0, 0, 0),
+				["ClassName"] = "model2",
+				["Brightness"] = 1,
+				["Hide"] = false,
+				["NoCulling"] = false,
+				["Scale"] = Vector(1, 1, 1),
+				["LegacyTransform"] = false,
+				["EditorExpand"] = true,
+				["Size"] = 1.375,
+				["ModelModifiers"] = "",
+				["Translucent"] = false,
+				["BlendMode"] = "",
+				["EyeTargetUID"] = "",
+				["Model"] = "models/player/soldier_stripped.mdl",
+			},
+		},
+	},
+	["self"] = {
+		["DrawOrder"] = 0,
+		["UniqueID"] = "fac50a0ad260b8caa8cd5fa308a13bd2e41e45d2996d038a18ce7e5e1604f0e1",
+		["Hide"] = false,
+		["TargetEntityUID"] = "",
+		["EditorExpand"] = true,
+		["OwnerName"] = "self",
+		["IsDisturbing"] = false,
+		["Name"] = "adsgryfghfhhg",
+		["Duplicate"] = false,
+		["ClassName"] = "group",
+	},
+},
+}
+trinket, trinketwep = GM:AddTrinket(trs("t_exoskelet"), "loadingex", false, supveles, supweles, 2, trs("t_d_exoskelet"), nil, nil, "weapon_zs_help_trinket", ego)
 GM:AddSkillModifier(trinket, SKILLMOD_PROP_CARRY_SLOW_MUL, -0.55)
 GM:AddSkillModifier(trinket, SKILLMOD_DEPLOYABLE_PACKTIME_MUL, -0.2)
 GM:AddSkillModifier(trinket, SKILLMOD_ENDWAVE_POINTS, 2)
@@ -686,7 +1149,112 @@ trinket = GM:AddTrinket(trs("t_adbat"), "adbat", false, supveles, supweles, 5, t
 GM:AddSkillModifier(trinket, SKILLMOD_RELOADSPEED_PULSE_MUL, 0.33)
 trinket = GM:AddTrinket(trs("t_mecharm"), "marm", false, supveles, supweles, 5, trs("t_d_mecharm"))
 GM:AddSkillModifier(trinket, SKILLMOD_RELOADSPEED_MUL, 0.22)
-trinket = GM:AddTrinket(trs("t_sshield"), "sshield", false, supveles, supweles, 5, trs("t_d_sshield"))
+local sshield = {[1] = {
+	["children"] = {
+		[1] = {
+			["children"] = {
+				[1] = {
+					["children"] = {
+					},
+					["self"] = {
+						["Skin"] = 0,
+						["UniqueID"] = "62f09606e93a91ba4c42b4f77cfe4c0458874690b0103bd13e71fb2e47dea9f9",
+						["NoLighting"] = false,
+						["AimPartName"] = "",
+						["IgnoreZ"] = false,
+						["AimPartUID"] = "",
+						["Materials"] = "",
+						["Name"] = "cube025x025x025",
+						["LevelOfDetail"] = 0,
+						["NoTextureFiltering"] = false,
+						["PositionOffset"] = Vector(1.5, 0, 0),
+						["IsDisturbing"] = false,
+						["EyeAngles"] = false,
+						["DrawOrder"] = 0,
+						["TargetEntityUID"] = "",
+						["Alpha"] = 1,
+						["Material"] = "models/debug/debugwhite",
+						["Invert"] = false,
+						["ForceObjUrl"] = false,
+						["Bone"] = "head",
+						["Angles"] = Angle(0, 0, 0),
+						["AngleOffset"] = Angle(0, 0, 0),
+						["BoneMerge"] = false,
+						["Color"] = Vector(1, 1, 0),
+						["Position"] = Vector(0, 0.80000001192093, 0.12999999523163),
+						["ClassName"] = "model2",
+						["Brightness"] = 0.6,
+						["Hide"] = false,
+						["NoCulling"] = false,
+						["Scale"] = Vector(10.39999961853, 0.20000000298023, 0.80000001192093),
+						["LegacyTransform"] = false,
+						["EditorExpand"] = false,
+						["Size"] = 0.025,
+						["ModelModifiers"] = "",
+						["Translucent"] = false,
+						["BlendMode"] = "",
+						["EyeTargetUID"] = "",
+						["Model"] = "models/hunter/blocks/cube025x025x025.mdl",
+					},
+				},
+			},
+			["self"] = {
+				["Skin"] = 0,
+				["UniqueID"] = "dd8f0a0dd9a0fde373e4c04a14e0e7bd423e01745e99332ddfd985bdf9b3dacc",
+				["NoLighting"] = false,
+				["AimPartName"] = "",
+				["IgnoreZ"] = false,
+				["AimPartUID"] = "",
+				["Materials"] = "",
+				["Name"] = "",
+				["LevelOfDetail"] = 0,
+				["NoTextureFiltering"] = false,
+				["PositionOffset"] = Vector(0, 0, 0),
+				["IsDisturbing"] = false,
+				["EyeAngles"] = false,
+				["DrawOrder"] = 0,
+				["TargetEntityUID"] = "",
+				["Alpha"] = 1,
+				["Material"] = "",
+				["Invert"] = false,
+				["ForceObjUrl"] = false,
+				["Bone"] = "eyes",
+				["Angles"] = Angle(90, 180, 180),
+				["AngleOffset"] = Angle(0, 0, 0),
+				["BoneMerge"] = false,
+				["Color"] = Vector(1, 1, 0),
+				["Position"] = Vector(1.1000000238419, 1.5, 0),
+				["ClassName"] = "model2",
+				["Brightness"] = 3,
+				["Hide"] = false,
+				["NoCulling"] = false,
+				["Scale"] = Vector(0.69999998807907, 0.69999998807907, 3),
+				["LegacyTransform"] = false,
+				["EditorExpand"] = true,
+				["Size"] = 0.025,
+				["ModelModifiers"] = "",
+				["Translucent"] = false,
+				["BlendMode"] = "",
+				["EyeTargetUID"] = "",
+				["Model"] = "models/props_phx/construct/glass/glass_angle360.mdl",
+			},
+		},
+	},
+	["self"] = {
+		["DrawOrder"] = 0,
+		["UniqueID"] = "fac50a0ad260b8caa8cd5fa308a13bd2e41e45d2996d038a18ce7e5e1604f0e1",
+		["Hide"] = false,
+		["TargetEntityUID"] = "",
+		["EditorExpand"] = true,
+		["OwnerName"] = "self",
+		["IsDisturbing"] = false,
+		["Name"] = "ad213312",
+		["Duplicate"] = false,
+		["ClassName"] = "group",
+	},
+},
+}
+trinket = GM:AddTrinket(trs("t_sshield"), "sshield", false, supveles, supweles, 5, trs("t_d_sshield"), nil,nil,nil, sshield)
 GM:AddSkillModifier(trinket, SKILLMOD_RELOADSPEED_MUL, -0.06)
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.10)
 trinket = GM:AddTrinket(trs("t_antibaracat"), "antibaracat", false, supveles, supweles, 5, trs("t_d_antibaracat"))
@@ -705,7 +1273,7 @@ GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, -20)
 trinket = GM:AddTrinket(trs("t_kheart"), "kheart", false, supveles, supweles, 4, trs("t_d_kheart"))
 GM:AddSkillModifier(trinket, SKILLMOD_POINT_MULTIPLIER, 0.25)
 GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, -15)
-GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 0.15)
+GM:AddSkillModifier(trinket, SKILLMOD_DMG_TAKEN, 0.15)
 d = math.random(1,5)
 skill1 =  math.Rand(-0.2,0.5)
 skill2 =  math.random(-30,70)
@@ -839,6 +1407,14 @@ trinket = GM:AddTrinket("Samson Soul", "samsonsoul", false, nil, {
 GM:AddSkillModifier(trinket, SKILLMOD_POISON_DAMAGE_TAKEN_MUL, 0.30)
 GM:AddSkillModifier(trinket, SKILLMOD_BLEED_DAMAGE_TAKEN_MUL, 0.30)
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_MUL, 0.10)
+
+trinket = GM:AddTrinket("Soul of Blue ligts", "slight_soul", false, nil, {
+	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 7.697, y = 7.697 }, color = Color(0, 204, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
+	["black_core_2+"] = { type = "Sprite", sprite = "effects/splashwake1", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 10, y = 10 }, color = Color(43, 5, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
+	["black_core"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 2, 0), angle = Angle(0, 0, 0), size = Vector(0.349, 0.349, 0.349), color = Color(37, 122, 192), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} }
+}, nil,"-50% Получаемого урона от огня и +25% элементального урона.\n-50% Fire damage taken and +25% Elemental damage\n Q:3", nil, nil, "weapon_zs_soul")
+GM:AddSkillModifier(trinket, SKILLMOD_ELEMENTAL_MUL, 0.25)
+GM:AddSkillModifier(trinket, SKILLMOD_FIRE_DAMAGE_TAKEN_MUL, -0.50)
 
 trinket = GM:AddTrinket("Soul of Eve", "evesoul", false, nil, {
 	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 7.697, y = 7.697 }, color = Color(0, 0, 0, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},

@@ -32,14 +32,14 @@ end
 
 
 -- Use this after all skills have been added. It assigns dynamic IDs!
-function GM:AddTrinket(name, swepaffix, pairedweapon, veles, weles, tier, description, status, stocks, icon)
+function GM:AddTrinket(name, swepaffix, pairedweapon, veles, weles, tier, description, status, stocks, icon, models)
 	local skill = {Connections = {}}
 
 	skill.Name = name
 	skill.Trinket = swepaffix
 	skill.Status = status
 
-	local datatab = {PrintName = name, DroppedEles = weles, Tier = tier, Description = description, Status = status, Stocks = stocks, Icon = icon}
+	local datatab = {PrintName = name, DroppedEles = weles, Tier = tier, Description = description, Status = status, Stocks = stocks, Icon = icon, PacModels = models}
 
 	if pairedweapon then
 		skill.PairedWeapon = "weapon_zs_t_" .. swepaffix
@@ -565,6 +565,7 @@ SKILLMOD_ATT_CHANCE = 116
 SKILLMOD_IND_DMG_TAKEN = 117
 SKILLMOD_IND_CHANCE = 118
 SKILLMOD_HEADSHOT_MUL = 119
+SKILLMOD_DMG_TAKEN = 120
 
 local GOOD = "^"..COLORID_GREEN
 local BAD = "^"..COLORID_RED
@@ -603,6 +604,7 @@ GM:AddSkillModifier(SKILL_RESNYA2, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 0.2)
 GM:AddSkill(SKILL_DOSET2, translate.Get("skill_doset2"), GOOD..translate.Get("skill_doset2_d1")..BAD..translate.Get("skill_doset2_d2"),
 																26,			-4,					{SKILL_DOSET1}, TREE_DOSET)
 GM:AddSkillModifier(SKILL_DOSET2, SKILLMOD_MELEE_DAMAGE_MUL, -0.2)
+GM:AddSkillModifier(SKILL_DOSET2, SKILLMOD_DMG_TAKEN, -0.1)
 GM:AddSkill(SKILL_OLD_GOD2, translate.Get("skill_old_g2"), GOOD..translate.Get("skill_old_g2_d1")..BAD..translate.Get("skill_old_g2_d2"),
 																26,			-2,					{SKILL_OLD_GOD1}, TREE_OLD_GOD)
 GM:AddSkillModifier(SKILL_OLD_GOD2, SKILLMOD_DAMAGE, -0.25)
@@ -1498,8 +1500,8 @@ GM:AddSkill(SKILL_LUCKY_UNLIVER, translate.Get("skill_luckstacker"), GOOD..trans
 GM:AddSkill(SKILL_LUCKE, translate.Get("skill_badluck"), NEUTRAL.."+2"..translate.Get("luck")..BAD.. "-10%"..translate.Get("p_mul"),
 	1,			-2,					{SKILL_POINTIIII}, TREE_POINTTREE)
 	SKILL_BLUCK = 163
-	GM:AddSkillModifier(SKILL_BLUCK, SKILLMOD_POINT_MULTIPLIER, 0.01)
-GM:AddSkill(SKILL_BLUCK, translate.Get("skill_quad"), GOOD..translate.Get("skill_quad_d1") ..BAD.. "-3%"..translate.Get("p_mul"),
+	GM:AddSkillModifier(SKILL_BLUCK, SKILLMOD_LUCK, -5)
+GM:AddSkill(SKILL_BLUCK, translate.Get("skill_quad"), GOOD..translate.Get("skill_quad_d1") ..BAD.. "-5"..translate.Get("luck"),
 	2,			-2.75,					{SKILL_LUCKE}, TREE_POINTTREE)
 GM:AddSkill(SKILL_CREDIT, translate.Get("skill_credit"), GOOD..translate.Get("skill_credit_d1")..GOOD.."+25"..translate.Get("worth")..BAD.."-7%"..translate.Get("sale")..BAD..translate.Get("skill_credit_d2"),
 	3,			-4,					{SKILL_BLUCK}, TREE_POINTTREE)
@@ -1523,7 +1525,7 @@ GM:AddSkill(SKILL_DUDEE, translate.Get("skill_toyluck"), GOOD.."+2"..translate.G
 .RemortReq = 6
 SKILL_SCAM = 168
 GM:AddSkillModifier(SKILL_SCAM, SKILLMOD_POINT_MULTIPLIER, 0.01)
-GM:AddSkill(SKILL_SCAM, "Scam", GOOD.."+1%"..translate.Get("p_mul")..BAD.. "Quality is worse",
+GM:AddSkill(SKILL_SCAM, "Scam", GOOD.."+1%"..translate.Get("p_mul")..BAD.. "On kill curses with 1.5% chance(GIVE SPECIAL CURSE)",
 			3,			-8,					{SKILL_BADTRIP}, TREE_POINTTREE)
 SKILL_SOLARUZ = 169
 GM:AddSkillModifier(SKILL_SOLARUZ, SKILLMOD_POINT_MULTIPLIER, 0.10)
@@ -1845,8 +1847,10 @@ GM:AddSkill(SKILL_SECONDCHANCE, translate.Get("skill_schance"), GOOD..translate.
 				                                                            	0,			8,					{SKILL_MOREDAMAGE}, TREE_DEFENSETREE)
 GM:AddSkill(SKILL_CQARMOR, translate.Get("skill_cqarmor"), GOOD..translate.Get("skill_cqarmor_d1")..BAD..translate.Get("skill_cqarmor_d2"),
 				                                                            	-2,			7,					{SKILL_ANTINEGR}, TREE_DEFENSETREE)
+GM:AddSkillModifier(SKILL_CQARMOR, SKILLMOD_DMG_TAKEN, -0.25)
 GM:AddSkill(SKILL_CQBOOTS, translate.Get("skill_cboots"), GOOD..translate.Get("skill_cboots_d1")..BAD..translate.Get("skill_cboots_d2"),
 				                                                            	-2,			8,					{SKILL_CQARMOR}, TREE_DEFENSETREE)
+GM:AddSkillModifier(SKILL_CQBOOTS, SKILLMOD_DMG_TAKEN, 0.10)
 
 GM:AddSkillModifier(SKILL_MERIS, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.10)
 GM:AddSkillModifier(SKILL_MERIS, SKILLMOD_MELEE_DAMAGE_MUL, -0.2)
@@ -2217,6 +2221,9 @@ end)
 
 GM:SetSkillModifierFunction(SKILLMOD_RELOADSPEED_RIFLE_MUL, function(pl, amount)
 	pl.ReloadSpeedMultiplier357 = math.Clamp(amount + 1.0, 0.0, 100.0)
+end)
+GM:SetSkillModifierFunction(SKILLMOD_DMG_TAKEN, function(pl, amount)
+	pl.DamageTakenMul = math.Clamp(amount + 1.0 - (pl.ClanMelee and 0.2 or 0), 0.05, 100.0) 
 end)
 
 GM:SetSkillModifierFunction(SKILLMOD_RELOADSPEED_XBOW_MUL, function(pl, amount)

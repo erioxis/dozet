@@ -2,10 +2,13 @@ local meta = FindMetaTable("Player")
 local P_Team = meta.Team
 
 local DMG_TAKE_BLEED = DMG_SLASH + DMG_CLUB + DMG_BULLET + DMG_BUCKSHOT + DMG_CRUSH
-local function GetTaper(pl, str, mul)
+local function GetTaper(pl, str, mul, sep)
 	local taper = 1
+	if !sep then
+		sep = "_"
+	end
 	for item,v in pairs(pl:GetInventoryItems()) do
-		local g = string.Explode("_",item)
+		local g = string.Explode(sep,item)
 		if table.HasValue(g,str) then
 			taper = taper + mul * v
 		end
@@ -197,7 +200,7 @@ function meta:ProcessDamage(dmginfo)
 			if damage >= 10000 then
 				attacker:GiveAchievement("opm")
 			end
-			if attacker:HasTrinket("fire_at") and math.random(6) == 5 then
+			if attacker:HasTrinket("fire_at") and math.randomr(1,6,5,attacker) == 5 then
 				attacker:SetProgress(attacker:GetProgress('fprog')+damage* 0.1, 'fprog')
 			end
 			if (attacker:IsSkillActive(SKILL_BOUNTYKILLER) or self:GetZombieClassTable().Boss or self:GetZombieClassTable().DemiBoss) and !self:GetZombieClassTable().CrowDa and !self:GetZombieClassTable().Skeletal then
@@ -216,11 +219,11 @@ function meta:ProcessDamage(dmginfo)
 					attacker:SetPoints(attacker:GetPoints() + 50)
 				end
 			end
-			dmginfo:SetDamage(damage * math.Clamp(attacker:GetModelScale() * attacker:GetModelScale(), 0.05, 5))
+			dmginfo:SetDamage(dmginfo:GetDamage() * math.Clamp(attacker:GetModelScale() * attacker:GetModelScale(), 0.05, 5))
 			if attacker:HasTrinket("soulalteden") then
-				attacker.RandomDamage = attacker.RandomDamage + math.random(1,5)
+				attacker.RandomDamage = attacker.RandomDamage + math.randomr(1,5,5,attacker)
 
-				if attacker.RandomDamage > 250 then
+				if attacker.RandomDamage >= 100 then
 														local buff = {
 															
 							"holly",
@@ -228,7 +231,7 @@ function meta:ProcessDamage(dmginfo)
 							"renegade",
 							"strengthdartboost",
 							"healdartboost",
-							"bleed",
+							"sticky",
 							"bloodlust"
 						}
 						attacker.RandomDamage = 0
@@ -303,13 +306,13 @@ function meta:ProcessDamage(dmginfo)
 					dmginfo:SetDamage(dmginfo:GetDamage() + (attacker:GetBloodArmor() * 0.05))
 				end
 
-				if attacker:IsSkillActive(SKILL_PILLUCK) and math.random(10) == 1 then
+				if attacker:IsSkillActive(SKILL_PILLUCK) and math.random(1,10,1,attacker) == 1 then
 					self.LuckFromKillYesOwner = attacker
 					self.LuckFromKillYes = CurTime() + 0.5
 				end
 				
 
-				if wep.Culinary and attacker:IsSkillActive(SKILL_MASTERCHEF) and math.random(5) == 1 then
+				if wep.Culinary and attacker:IsSkillActive(SKILL_MASTERCHEF) and math.random(1,5,1,attacker) == 1 then
 					self.ChefMarkOwner = attacker
 					self.ChefMarkTime = CurTime() + 1
 				end
@@ -336,12 +339,10 @@ function meta:ProcessDamage(dmginfo)
 	if (((self:GetZSRemortLevel() / 4) or 0) + (self.AmuletPiece or 0)) < 0 then
 		dmginfo:ScaleDamage(2 + ((self:GetZSRemortLevel() / 4) - (self.AmuletPiece or 0)))
 	end
-	if  self.ClanMelee and !dmgbypass  then
-		dmginfo:ScaleDamage(0.85)
-	end
+
 
     truedogder = 30 - (self:GetWalkSpeed() / 15)
-	rngdogde = math.max(0,math.random(1,math.max(truedogder,2)))
+	rngdogde = math.max(0,math.randomr(1,math.max(truedogder,2),1,self))
  
 	if self:IsSkillActive(SKILL_DODGE) and rngdogde == 1 and !dmgbypass then
 		if attacker:IsPlayer() then
@@ -351,7 +352,7 @@ function meta:ProcessDamage(dmginfo)
 		net.Start("zs_damageblock")
 		net.Send(self)
     end
-	if self:IsSkillActive(SKILL_HELPLIFER) and math.random(1,3) == 1 and dmginfo:GetDamage() >= self:Health() and !dmgbypass then
+	if self:IsSkillActive(SKILL_HELPLIFER) and math.randomr(1,3,1,self) == 1 and dmginfo:GetDamage() >= self:Health() and !dmgbypass then
 		dmginfo:SetDamage(0)
 		if attacker:IsPlayer() then
 			GAMEMODE:BlockFloater(attacker, self, dmginfo:GetDamagePosition())
@@ -438,7 +439,7 @@ function meta:ProcessDamage(dmginfo)
 			self:EmitSound("npc/turret_floor/active.wav", 120, 40)
 		end
 	end
-	local mythrilchance = math.random(1,25)
+	local mythrilchance = math.randomr(1,25,1,self)
 	if self:IsSkillActive(SKILL_MYTHRIL) and mythrilchance == 1 and not self:GetStatus("hshield") and dmginfo:GetDamage() < 200 then
 		xpadded = dmginfo:GetDamage() * 0.5
 		net.Start("zs_xp_damage")
@@ -452,8 +453,8 @@ function meta:ProcessDamage(dmginfo)
 		end
 	end
 
-	if self:IsSkillActive(SKILL_CQARMOR) then
-		dmginfo:SetDamage(dmginfo:GetDamage() * 0.75 + (self:IsSkillActive(SKILL_CQBOOTS) and 0.1 or 0))
+	if self.DamageTakenMul and !dmgbypass then
+		dmginfo:SetDamage(dmginfo:GetDamage() * self.DamageTakenMul)
 	end
 	if self:IsSkillActive(SKILL_DOSETHELP) then
 		dmginfo:SetDamage(dmginfo:GetDamage() * (1 - GAMEMODE:GetWave() * 0.02))
@@ -493,9 +494,7 @@ function meta:ProcessDamage(dmginfo)
 		if attacker.Zmainer and self:IsSkillActive(SKILL_DOSET1) then
 			dmginfo:ScaleDamage(0.75)
 		end
-		if self:IsSkillActive(SKILL_DOSET2) then
-			dmginfo:ScaleDamage(0.9)
-		end
+
 
 		if inflictor == attacker:GetActiveWeapon() then
 			if (GAMEMODE:GetBalance() * 0.05) >= 0.1 then
@@ -524,7 +523,7 @@ function meta:ProcessDamage(dmginfo)
 					end
 				end
 			end
-			local amuletrng = math.random(1, math.max(2,10 / (self.CarefullMelody_DMG *0.5)))
+			local amuletrng = math.randomr(1, math.max(2,10 / (self.CarefullMelody_DMG *0.5)),2,self)
 			if self:IsSkillActive(SKILL_AMULET_1) and amuletrng == 2 then
 				dmginfo:SetDamage(0)
 				net.Start("zs_damageblock")
@@ -663,7 +662,7 @@ function meta:ProcessDamage(dmginfo)
 					self.BleakSoulMessage = nil
 				end
 
-				local chance = math.random(1,100)
+				local chance = math.randomr(1,100,5,self)
 
 				if self:IsSkillActive(SKILL_TTIMES) and chance <= 5 then
 					attacker:GiveStatus("dimvision", 1)
@@ -679,7 +678,7 @@ function meta:ProcessDamage(dmginfo)
 				end
 
 
-				local trinkett = math.random(1,100)
+				local trinkett = math.randomr(1,100,8,self)
 				if self:HasTrinket("ttimes") and trinkett <= 9 then
 					attacker:GiveStatus("dimvision", 1)
 					net.Start("zs_damageblock")
@@ -692,7 +691,7 @@ function meta:ProcessDamage(dmginfo)
 					end
 
 				end
-				local slavec = math.random(1,10)
+				local slavec = math.randomr(1,10,1,self)
 				if self:IsSkillActive(SKILL_SLAVEC) and slavec == 1 then
 					attacker:GiveStatus("dimvision", 5)
 
@@ -1708,6 +1707,11 @@ function meta:AddPoints(points, floatingscoreobject, fmtype, nomul)
 	if points > 0 and not nomul and self.PointIncomeMul then
 		points = points * self.PointIncomeMul
 	end
+	local taper = GetTaper(self,"point",0.02)
+	print(taper)
+	if points > 0 and self:HasTrinket("curse_point") then
+		points = points * taper
+	end
 
 	-- This lets us add partial amounts of points (floats)
 	local wholepoints = math.floor(points)
@@ -2401,6 +2405,7 @@ local bossdrops = {
 	"trinket_lampsoul",  -- 26
 	"trinket_barasoul",  -- 27
 	"trinket_troyaksoul",  -- 28
+	"trinket_slight_soul",  -- 29
 	"trinket_lehasoul"  -- 29
 }
 local demiboss = {

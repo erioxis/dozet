@@ -242,6 +242,29 @@ net.Receive("zs_zclass", function(length)
 		ent:SetZombieClass(id)
 	end
 end)
+net.Receive("zs_item_pac", function(length)
+	local name = net.ReadString()
+	local ent = net.ReadEntity()
+	local kill = net.ReadBool()
+	--print(name)
+	local pac2 = GAMEMODE.ZSInventoryItemData[name].PacModels
+	if !pac2 or type(pac2) ~= "table" then return end
+	--print(ent:Name())
+	if !ent.OutFitPacTrinket then
+		ent.OutFitPacTrinket = {}
+	end
+	if ent.OutFitPacTrinket and ent.OutFitPacTrinket[name] == pac2 and kill then
+		ent:RemovePACPart(pac2)
+		ent.OutFitPacTrinket[name] = nil 
+		--PrintTable(pac2)
+	end
+	if pac2 and !kill then
+		pac.SetupENT(ent)
+		ent:AttachPACPart(pac2)
+		ent.OutFitPacTrinket[name] = pac2
+		--PrintTable(pac2)
+	end
+end)
 
 net.Receive("zs_floatscore", function(length)
 	local victim = net.ReadEntity()

@@ -69,6 +69,9 @@ function SWEP:Initialize()
 		self:Anim_Initialize()
 	end
 end
+function SWEP:Holster()
+	return true
+end
 function SWEP:SetBlock(bool)
    self:SetDTBool(31, bool)
 end
@@ -198,6 +201,7 @@ function SWEP:SetNextAttack()
 end
 
 function SWEP:Holster()
+	if (self:GetOwner():GetStatus("sticky")) then return false end
 	if CurTime() >= self:GetSwingEnd() then
 		if CLIENT then
 			self:Anim_Holster()
