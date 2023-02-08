@@ -12,7 +12,7 @@ function ENT:Initialize()
 	self:PhysicsInit(SOLID_NONE)
 	self:SetUseType(SIMPLE_USE)
 	self:SetColor(Color(155, 208, 255, 255))
-	self:SetModelScale(2,math.random(0.3,0.9))
+	self:SetModelScale(2,math.random(1,-1+GAMEMODE:GetWave()/2)/10)
 	self.DieTime = CurTime() + self.LifeTime
 end
 

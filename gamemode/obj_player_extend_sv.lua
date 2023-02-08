@@ -57,6 +57,9 @@ function meta:ProcessDamage(dmginfo)
 		if attacker:IsPlayer()and attacker.RedeemedOnce and attacker:IsSkillActive(SKILL_PHOENIX) then
 			dmginfo:SetDamage(dmginfo:GetDamage() * 0.7)
 		end
+		if attacker:IsPlayer()and attacker:HasTrinket("soul_lime") and attacker:GetModel() == "models/ultrakill/v1_pm.mdl" then
+			dmginfo:SetDamage(dmginfo:GetDamage() * 1.2)
+		end
 		dmginfo:SetDamage(dmginfo:GetDamage() * (1 - (math.Clamp(GAMEMODE:GetBalance() * 0.005,-2.5,0.7))))
 		if self.m_zombiedef then
 			dmginfo:SetDamage(dmginfo:GetDamage() * 0.75)
@@ -181,6 +184,9 @@ function meta:ProcessDamage(dmginfo)
 		end
 		if attacker:IsValidLivingHuman()  and self:GetZombieClassTable().ResistFrost and attacker:HasTrinket("fire_at") then
 			dmginfo:ScaleDamage(2)
+		end
+		if self:GetZombieClassTable().Boss and attacker:IsPlayer() then
+			dmginfo:SetDamage(math.min(dmginfo:GetDamage(), (self:GetMaxHealth() * 0.09) * (inflictor.Tier or 1)))
 		end
 		if attacker:IsValidLivingHuman() and inflictor:IsValid() and inflictor == attacker:GetActiveWeapon() then
 			local damage = dmginfo:GetDamage()
@@ -352,7 +358,7 @@ function meta:ProcessDamage(dmginfo)
 		net.Start("zs_damageblock")
 		net.Send(self)
     end
-	if self:IsSkillActive(SKILL_HELPLIFER) and math.randomr(1,3,1,self) == 1 and dmginfo:GetDamage() >= self:Health() and !dmgbypass then
+	if self:IsSkillActive(SKILL_HELPLIFER) and math.randomr(1,10,1,self) == 1 and dmginfo:GetDamage() >= self:Health() and !dmgbypass then
 		dmginfo:SetDamage(0)
 		if attacker:IsPlayer() then
 			GAMEMODE:BlockFloater(attacker, self, dmginfo:GetDamagePosition())
@@ -395,7 +401,7 @@ function meta:ProcessDamage(dmginfo)
 	if attacker == self and dmgtype ~= DMG_CRUSH and dmgtype ~= DMG_FALL and self.SelfDamageMul then
 		dmginfo:SetDamage(dmginfo:GetDamage() * self.SelfDamageMul)
 	end
-	if !bypass and self:IsSkillActive(SKILL_GODHEART) then
+	if !dmgbypass and self:IsSkillActive(SKILL_GODHEART) then
 		dmginfo:SetDamage(0)
 	end
 	if bit.band(dmgtype, DMG_ALWAYSGIB) ~= 0 and self.ExplosiveDamageTakenMul then
@@ -467,7 +473,8 @@ function meta:ProcessDamage(dmginfo)
 			GAMEMODE:BlockFloater(attacker, self, dmginfo:GetDamagePosition())
 		end
 	end
-	if self:IsSkillActive(SKILL_BERSERK) and self.BerserkerCharge and dmginfo:GetDamage() >= self:Health() then
+	if self:IsSkillActive(SKILL_BERSERK) and self.BerserkerCharge and dmginfo:GetDamage() >= (self:Health() + (self:GetBloodArmor() * math.max(0.5 + self.BloodArmorDamageReductionAdd + (self:IsSkillActive(SKILL_IRONBLOOD) and self:Health() <= self:GetMaxHealth() * 0.5 and 0.25 or 0),(attacker:IsPlayer() and -1 or 0.05)))) then
+		
 		dmginfo:SetDamage(0)
 		self:SetTimerBERS(CurTime())
 		self.BerserkerCharge = false
@@ -477,6 +484,9 @@ function meta:ProcessDamage(dmginfo)
 	end
 	if self:GetTimerBERS() >= CurTime() and self:IsSkillActive(SKILL_BERSERK) then
 		dmginfo:SetDamage(0)
+		if attacker:IsPlayer() then
+			GAMEMODE:BlockFloater(attacker, self, dmginfo:GetDamagePosition())
+		end
 	end
 	if self:IsSkillActive(SKILL_XPMULGOOD) and self.AddXPMulti > 0.20 then
         self.AddXPMulti = self.AddXPMulti - 0.05
@@ -488,11 +498,17 @@ function meta:ProcessDamage(dmginfo)
 
 
 	if attacker:IsValid() and attacker:IsPlayer() and inflictor:IsValid() and attacker:Team() == TEAM_UNDEAD then
+		if self:HasTrinket("soul_lime") and attacker:GetZombieClassTable().HeathMax then
+			dmginfo:SetDamage(dmginfo:GetDamage() * 0.5)
+		end
 		if attacker.Zban then
 			dmginfo:SetDamage(0)
 		end
 		if attacker.Zmainer and self:IsSkillActive(SKILL_DOSET1) then
 			dmginfo:ScaleDamage(0.75)
+		end
+		if attacker.Zmainer then
+			dmginfo:ScaleDamage(0.67)
 		end
 
 
@@ -825,7 +841,7 @@ function meta:ProcessDamage(dmginfo)
 		end
 	end
 	self.NextBloodArmorRegen = CurTime() + 3
-	if self:GetBloodArmor() > 0 then
+	if self:GetBloodArmor() > 0 and !dmgbypass then
 		local damage = dmginfo:GetDamage()
 		if damage > 0 then
 			if damage >= self:GetBloodArmor() and self:IsSkillActive(SKILL_BLOODLETTER) then
@@ -1708,7 +1724,7 @@ function meta:AddPoints(points, floatingscoreobject, fmtype, nomul)
 		points = points * self.PointIncomeMul
 	end
 	local taper = GetTaper(self,"point",0.02)
-	print(taper)
+	--print(taper)
 	if points > 0 and self:HasTrinket("curse_point") then
 		points = points * taper
 	end
@@ -2450,7 +2466,8 @@ local bossdrops2 = {
 	"trinket_altsoul",-- 21
 	"trinket_soulalteden", -- 22
 	"trinket_altchayok", --23
-	"trinket_altdarksoul" -- 24
+	"trinket_altdarksoul", -- 24
+	"trinket_soul_lime" --25
 	
 	
 	

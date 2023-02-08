@@ -40,7 +40,7 @@ net.Receive("zs_skills_all_desired", function(length, pl)
 	end
 end)
 net.Receive("zs_secret", function(length, pl)
-	pl:GiveAchievement("promocode")
+	GAMEMODE:WritePromo(net.ReadString(),net.ReadEntity())
 end)
 net.Receive("zs_skill_set_desired", function(length, pl)
 	local skillset = net.ReadTable()

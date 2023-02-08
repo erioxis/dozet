@@ -24,7 +24,6 @@ end
 function compare(a,b)
 	return a.Health < b.Health
   end
-local targets = {}
 function ENT:Think()
 	if self.PhysicsData then
 		self:Hit(self.PhysicsData.HitPos, self.PhysicsData.HitNormal, self.PhysicsData.HitEntity)
@@ -35,6 +34,7 @@ function ENT:Think()
 	elseif self.DieTime < CurTime() then
 		self:Remove()
 	end
+	local targets = {}
 	for _, ent in pairs(ents.FindInSphere(self:GetPos(), 1048)) do
 		if !ent:IsValid() then continue end
 		target = ent
@@ -81,7 +81,7 @@ function ENT:Hit(vHitPos, vHitNormal, ent)
 				self.Exploded = true
 
 
-				ent:TakeSpecialDamage((math.random(12) == 12 and 69 or 23), DMG_DIRECT, owner, self)
+				ent:TakeSpecialDamage((math.random(12) == 12 and 69 or 23), DMG_GENERIC, owner, self)
 				ent:KnockDown()
 				ent:SetVelocity(Vector(0,0,350))
 

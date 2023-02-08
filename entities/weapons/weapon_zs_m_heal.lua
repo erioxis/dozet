@@ -34,7 +34,7 @@ SWEP.UseHands = true
 SWEP.HoldType = "melee2"
 SWEP.ArmorRegen = 1
 
-
+SWEP.Tier = 5
 SWEP.WalkSpeed = SPEED_FAST
 
 SWEP.SwingTime = 0.71

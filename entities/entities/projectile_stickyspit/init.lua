@@ -39,15 +39,17 @@ function ENT:Hit(vHitPos, vHitNormal, eHitEntity)
 
 	vHitPos = vHitPos or self:GetPos()
 	vHitNormal = vHitNormal or Vector(0, 0, 1)
-	local cursed = eHitEntity:GetStatus("sticky")
-	if (cursed) then 
-		eHitEntity:GiveStatus("sticky",cursed.DieTime - CurTime() + 3)
-	end
-	if (not cursed) then 
-		eHitEntity:GiveStatus("sticky",4)
-	end
-	if eHitEntity:IsValid() then
-		eHitEntity:PoisonDamage(5, owner, self)
+	if eHitEntity and eHitEntity:IsPlayer() then
+		local cursed = eHitEntity:GetStatus("sticky")
+		if (cursed) then 
+			eHitEntity:GiveStatus("sticky",cursed.DieTime - CurTime() + 3)
+		end
+		if (not cursed) then 
+			eHitEntity:GiveStatus("sticky",4)
+		end
+		if eHitEntity:IsValid() then
+			eHitEntity:PoisonDamage(5, owner, self)
+		end
 	end
 
 	local effectdata = EffectData()

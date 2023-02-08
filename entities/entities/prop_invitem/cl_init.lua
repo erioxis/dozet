@@ -93,8 +93,8 @@ function ENT:Draw()
 					if not itype then
 						return
 					end
-					local item = GAMEMODE:GetInventoryItemType(itype)
-					draw.SimpleText(GAMEMODE.ZSInventoryItemData[itype].PrintName, "ZSHUDFontBig", x + 55, y - 150, COLOR_CYAN, TEXT_ALIGN_CENTER)
+					--local item = GAMEMODE:GetInventoryItemType(itype)
+					draw.SimpleText((GAMEMODE.ZSInventoryItemData[itype].PrintName or translate.Get("ammo_")), "ZSHUDFontBig", x + 55, y - 150, COLOR_CYAN, TEXT_ALIGN_CENTER)
 		cam.End3D2D()
 
 		cam.IgnoreZ(false)

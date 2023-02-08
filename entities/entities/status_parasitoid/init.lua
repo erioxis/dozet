@@ -11,6 +11,7 @@ function ENT:SetDie(fTime)
 	end
 end
 function ENT:Think()
+	if self:GetOwner():GetZombieClassTable().Boss then self:Remove() return end
 	local owner = self:GetOwner()
 	local dmger = self.Damager
 	local lox = dmger:IsSkillActive(SKILL_LOX)

@@ -339,7 +339,9 @@ GM:AddStartingItem("reactiveflasher",	ITEMCAT_TRINKETS,		5,				"trinket_reactive
 GM:AddStartingItem("magnet",			ITEMCAT_TRINKETS,		10,				"trinket_magnet").SubCategory =					ITEMSUBCAT_TRINKETS_SPECIAL
 GM:AddStartingItem("resupplypack",		ITEMCAT_TRINKETS,		25,				"trinket_resupplypack").SubCategory =			ITEMSUBCAT_TRINKETS_SUPPORT
 
-
+GM:AddStartingItem("m_w_damager",				ITEMCAT_MAGIC,			75,				"weapon_zs_m_damage")
+GM:AddStartingItem("m_w_heal",				ITEMCAT_MAGIC,			75,				"weapon_zs_m_heal")
+GM:AddStartingItem("m_w_boom",				ITEMCAT_MAGIC,			75,				"weapon_zs_m_boom")
 GM:AddStartingItem("stone",				ITEMCAT_OTHER,			5,				"weapon_zs_stone")
 GM:AddStartingItem("grenade",			ITEMCAT_OTHER,			20,				"weapon_zs_grenade")
 GM:AddStartingItem("h_o_l_y_grenade",			ITEMCAT_OTHER,			45,				"weapon_zs_holy_grenade")
@@ -458,11 +460,11 @@ GM:AddPointShopItem("biotic_grl",		ITEMCAT_GUNS,			3000,			"weapon_zs_biotic_grl
 GM:AddPointShopItem("smorning",		ITEMCAT_GUNS,			3000,			"weapon_zs_smorning")
 GM:AddPointShopItem("drill",		ITEMCAT_GUNS,			3000,			"weapon_zs_drill")
 -- Tier 7
-GM:AddPointShopItem("sacredhh",			ITEMCAT_GUNS,			6000,			"weapon_zs_m6")
-GM:AddPointShopItem("gaysseagle",   	ITEMCAT_GUNS,			6000,			"weapon_zs_gaeagle")
-GM:AddPointShopItem("doomstick",   	ITEMCAT_GUNS,			6000,			"weapon_zs_doomstick")
-GM:AddPointShopItem("zenith2",		ITEMCAT_GUNS,			6000,			"weapon_zs_zenithmega")
-GM:AddPointShopItem("flamethrower",		ITEMCAT_GUNS,			6000,			"weapon_zs_flamethrower")
+GM:AddAPointShopItem("sacredhh",			ITEMCAT_GUNS,			1250,			"weapon_zs_m6")
+GM:AddAPointShopItem("gaysseagle",   	ITEMCAT_GUNS,			1250,			"weapon_zs_gaeagle")
+GM:AddAPointShopItem("doomstick",   	ITEMCAT_GUNS,			1250,			"weapon_zs_doomstick")
+GM:AddAPointShopItem("zenith2",		ITEMCAT_GUNS,			1250,			"weapon_zs_zenithmega")
+GM:AddAPointShopItem("flamethrower",		ITEMCAT_GUNS,			1250,			"weapon_zs_flamethrower")
 
 
 GM:AddPointShopItem("pistolammo",		ITEMCAT_AMMO,			9,				nil,							translate.Get("ammo_pistol").." (x24)",				nil,									"ammo_pistol",						function(pl) pl:GiveAmmo(25, "pistol", true) end)
@@ -536,9 +538,9 @@ GM:AddPointShopItem("teslar",			ITEMCAT_MELEE,			2500,			"weapon_zs_teslorer")
 GM:AddPointShopItem("pw7",			ITEMCAT_MELEE,			2500,			"weapon_zs_powerfists_t7")
 
 -- Tier 7
-GM:AddPointShopItem("speed",			ITEMCAT_MELEE,			180600,			"weapon_zs_speed")
-GM:AddPointShopItem("xouryc",			ITEMCAT_MELEE,			4500,			"weapon_zs_loy")
-GM:AddPointShopItem("murasama",			ITEMCAT_MELEE,			4500,			"weapon_zs_murasama")
+--GM:AddPointShopItem("speed",			ITEMCAT_MELEE,			180600,			"weapon_zs_speed")
+GM:AddAPointShopItem("xouryc",			ITEMCAT_MELEE,			1250,			"weapon_zs_loy")
+GM:AddAPointShopItem("murasama",			ITEMCAT_MELEE,			1250,			"weapon_zs_murasama")
 -- Super Trinkets ------------------------------------------------------------------------------------------------------------------------------------------------
 --
 GM:AddPointShopItem("futureblu",			ITEMCAT_TRINKETS,		250,				"trinket_futureblu").SubCategory =								ITEMSUBCAT_TRINKETS_SUPER

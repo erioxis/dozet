@@ -17,12 +17,37 @@ RULES FOR TRANSLATORS!!
 ]]
 
 translate.AddLanguage("en", "English")
+
+LANGUAGE.g2p_by			= "By %s"
+LANGUAGE.g2p_arsenal			= "Arsenal Menu (ZS)"
+LANGUAGE.g2p_options			= "Options (ZS)"
+LANGUAGE.g2p_worth			= "Worth Menu (ZS)"
+LANGUAGE.g2p_m_m			= "Mutagen Menu (ZS)"
+LANGUAGE.g2p_ds			= "Discord (DOZET)"
+LANGUAGE.g2p_skills			= "Skills (ZS)"
+LANGUAGE.g2p_lm			= "Legacy Menu"
+LANGUAGE.g2p_disc			= "Disconnect"
+LANGUAGE.g2p_mm			= "Main Menu"
+
+LANGUAGE.g2p_promo			= "Enter a Promocode"
+
+LANGUAGE.promo_dont_used			= "Promocode is invalid"
+LANGUAGE.promo_used			= "Promocode used!"
+LANGUAGE.were_rich			= "We're Rich!"
+
+LANGUAGE.ent_promoce			= "Enter a promocode"
+
+
 --Чаленге
 LANGUAGE.survivor = "Survirvor"
 LANGUAGE.undead = "Undead"
 
 LANGUAGE.new_op = "New Options"
 LANGUAGE.old_op = "Old Options"
+
+
+LANGUAGE.only_changes = "Show only changes"
+LANGUAGE.only_all = "Show all"
 
 LANGUAGE.vgui_trin = "Trinkets"
 LANGUAGE.vgui_comp = "Components"
@@ -1741,7 +1766,7 @@ LANGUAGE.skill_moredamage = "Damage?"
 LANGUAGE.skill_moredamage_d1 = "+25% Blood armor damage reduction.\n"
 LANGUAGE.skill_adevo = "Invis"
 LANGUAGE.skill_adevo_d1 = "Devourer hook don't see you.\n"
-LANGUAGE.skill_adevo_d2 = "-15% Blood armor damage reduction and +7% Melee damage taken.\n"
+LANGUAGE.skill_adevo_d2 = "-7% Blood armor damage reduction and +25% Melee damage taken.\n"
 LANGUAGE.skill_scoach = "Slowcoach"
 LANGUAGE.skill_scoach_d1 = "+3 Speed per wave.\n"
 LANGUAGE.skill_ancientsave = "Ancient save"
@@ -1818,7 +1843,7 @@ LANGUAGE.skill_knuckmaster_d1 = "Movement speed is no longer slower when using u
 LANGUAGE.skill_hknucke = "Heavy Strikes"
 LANGUAGE.skill_hknucke_d1 = "On Ground enemy take 45% melee damage.\n"
 LANGUAGE.skill_bloodlust = "Bloodlust"
-LANGUAGE.skill_bloodlust_d1 = "Killing give reaper stacks\n"
+LANGUAGE.skill_bloodlust_d1 = "Killing with melee weapon give reaper stacks\n"
 LANGUAGE.skill_longarm = "Longarm"
 LANGUAGE.skill_jouster = "Jouster"
 LANGUAGE.skill_combohits = "Combo Knuckle"

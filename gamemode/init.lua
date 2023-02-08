@@ -646,6 +646,12 @@ function GM:InitPostEntity()
 
 		ErrorNoHalt("Lmao why you use dozet")
 	end
+	local v = self.Credits[1]
+	if GetConVar("hostname"):GetString() ~= "Дозет["..v[3].."|ДОСТИЖЕНИЯ|БОТЫ|СКИЛЛЫ]" then
+
+		RunConsoleCommand("hostname", "Дозет["..v[3].."|ДОСТИЖЕНИЯ|БОТЫ|СКИЛЛЫ]")
+
+	end
 end
 
 function GM:SetupProps()
@@ -658,6 +664,7 @@ function GM:SetupProps()
 			convert:SetMaterial(d:GetMaterial())
 			convert:SetModel(d:GetModel())
 			convert:SetSkin(d:GetSkin() or 0)
+			--convert:SetKeyValue( convert:GetKeyValues())
 			convert:Spawn()
 			d:Remove()
 		end
@@ -1208,13 +1215,14 @@ function GM:Think()
 			and (self.BossZombiePlayersRequired <= 0 or #player.GetAll() >= self.BossZombiePlayersRequired) then
 				if self:GetWaveStart() - 10 <= time then
 					self:SpawnBossZombie()
-					timer.Create("demibosses"..#player.GetAll(),0.1,math.max(((#team.GetPlayers(TEAM_UNDEAD) * 0.5) - 1),1), function()	self:SpawnDemiBossZombie() end)
 					if self:GetWave() > 5 then
 					   timer.Simple(0.07, function()	self:SpawnBossZombie() end)
 					end
 					if self:GetWave() > 10 then
 					   timer.Create("bosses"..#player.GetAll(),0.05,#player.GetAll(), function()	self:SpawnBossZombie() end)
 					end
+				elseif self:GetWaveStart() - 15 <= time then
+					timer.Create("demibosses"..#player.GetAll(),0.1,math.max(((#team.GetPlayers(TEAM_UNDEAD) * 0.5) - 1),1), function()	self:SpawnDemiBossZombie() end)
 				else
 					self:CalculateNextBoss()
 					self:CalculateNextDemiBoss()
@@ -2267,10 +2275,29 @@ function GM:InitPostEntityMap(fromze)
 
 	gamemode.Call("CreateSigils")
 end
-
+local wereriches = {}
 function GM:SetDynamicSpawning(onoff)
 	SetGlobalBool("DynamicSpawningDisabled", not onoff)
 	self.DynamicSpawning = onoff
+end
+function GM:WritePromo(promo,pl)
+	if promo == "D0zet2_p" then
+		pl:GiveAchievement("promocode")
+		pl:CenterNotify(COLOR_GREEN, translate.ClientGet(pl, "promo_used"))
+		return
+	elseif promo == "baracat_sucks"  then
+		pl:GiveAchievement("baracat_sucks")
+		pl:CenterNotify(COLOR_GREEN, translate.ClientGet(pl, "promo_used"))
+		return
+	elseif promo == "Were_Rich" and !wereriches[pl:SteamID64()] then
+		pl:AddZSXP(100)
+		print("We're rich! And he is rich - "..pl:Nick())
+		wereriches[pl:SteamID64()] = true
+		pl:CenterNotify(COLOR_GREEN, translate.ClientGet(pl, "were_rich"))
+		return
+	end
+	pl:CenterNotify(COLOR_RED, translate.ClientGet(pl, "promo_dont_used"))
+	
 end
 
 local function EndRoundPlayerShouldTakeDamage(pl, attacker) return pl:Team() == TEAM_UNDEAD or not attacker:IsPlayer() end
@@ -2288,6 +2315,9 @@ function GM:OnPlayerWin(pl)
 	local xp = math.Clamp(#player.GetAll() * 120, 300, 4000) * (GAMEMODE.WinXPMulti or 1)
 	if self.ZombieEscape then
 		xp = xp / 4
+	end
+	if LASTHUMAN then
+		xp = xp * 4
 	end
 	pl:AddZSXP(xp * (math.max(0.33,self:GetWinRate())))
 	self:SetRage(self:GetRage() + 100)
@@ -2918,6 +2948,7 @@ function GM:PostPlayerRedeemed(pl, silent, noequip)
 end
 
 function GM:PlayerDisconnected(pl)
+	pl:SetTokens(0)
 	pl.Disconnecting = true
 
 	local uid = pl:UniqueID()
@@ -4274,7 +4305,7 @@ function GM:PlayerDeath(pl, inflictor, attacker)
 		end)
 	end
 	if pl:Team() == TEAM_HUMAN then
-		pl:AddTokens(math.ceil((pl:GetPoints() or 1)/2))
+		pl:AddTokens(math.ceil(math.max(1,(pl:GetPoints() or 1))/2))
 	end
 end
 
@@ -5335,7 +5366,7 @@ function GM:WaveStateChanged(newstate, pl)
 				if self.EndWaveHealthBonus > 0 and !pl:HasTrinket("lehasoul") then
 					pl:SetHealth(math.min(pl:GetMaxHealth(), pl:Health() + self.EndWaveHealthBonus))
 				end
-				if pl:IsSkillActive(SKILL_LUCKY_UNLIVER) then
+				if pl:IsSkillActive(SKILL_LUCKY_UNLIVER) and pl:GetMaxHealth() >= 10 then
 					pl:SetMaxHealth(pl:GetMaxHealth() * 0.9) pl:SetHealth(pl:Health() * 0.5)
 				end
 				if pl:IsSkillActive(SKILL_XPHUNTER) then

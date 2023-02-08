@@ -111,6 +111,9 @@ function SWEP:OnMeleeHit(hitent, hitflesh, tr)
 		if self:GetBlockState() then
 			owner:SetVelocity(owner:GetEyeTrace().Normal * 1 + (-owner:GetAngles():Forward()*190))
 		end
+		if self.FireNail then
+			owner.TakedIce = 0
+		end
 	end
 end
 GAMEMODE:AddNewRemantleBranch(SWEP, 1, translate.Get("wep_ice_nail_r1"), translate.Get("wep_d_ice_nail_r1"), function(wept)

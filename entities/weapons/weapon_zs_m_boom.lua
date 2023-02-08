@@ -53,6 +53,7 @@ SWEP.SwingHoldType = "melee"
 SWEP.HitDecal = "Manhackcut"
 SWEP.Primary.Damage = 121
 SWEP.ArmorRegen = -2
+SWEP.Tier = 5
 
 SWEP.AllowQualityWeapons = true
 

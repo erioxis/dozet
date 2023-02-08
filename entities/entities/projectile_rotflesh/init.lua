@@ -13,17 +13,19 @@ function ENT:Hit(vHitPos, vHitNormal, eHitEntity)
 
 	if eHitEntity:IsValidLivingPlayer() then
 		eHitEntity:GiveStatus("frost", 5)
-		local rot = eHitEntity:GetStatus("rot")
-		if (rot) then 
-			eHitEntity:GiveStatus("rot", rot.DieTime - CurTime() + 1)
-			if rot and rot:IsValid() then
-				rot:AddDamage(5, owner)
+		if math.random(1,4) == 4 then
+			local rot = eHitEntity:GetStatus("rot")
+			if (rot) then 
+				eHitEntity:GiveStatus("rot", rot.DieTime - CurTime() + 1)
+				if rot and rot:IsValid() then
+					rot:AddDamage(5, owner)
+				end
 			end
-		end
-		if (not rot) then 
-			eHitEntity:GiveStatus("rot", 1)
-			if rot and rot:IsValid() then
-				rot:AddDamage(5, owner)
+			if (not rot) then 
+				eHitEntity:GiveStatus("rot", 1)
+				if rot and rot:IsValid() then
+					rot:AddDamage(5, owner)
+				end
 			end
 		end
 		eHitEntity:AddArmDamage(11)

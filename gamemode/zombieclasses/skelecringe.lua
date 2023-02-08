@@ -7,6 +7,7 @@ CLASS.Model = Model("models/player/zombie_fast.mdl")
 
 CLASS.Wave = 11 / 12
 CLASS.Revives = false
+CLASS.Hidden = true
 
 CLASS.Health = 4200
 CLASS.Speed = 420

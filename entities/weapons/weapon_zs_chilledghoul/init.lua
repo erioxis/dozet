@@ -8,7 +8,7 @@ function SWEP:ApplyMeleeDamage(ent, trace, damage)
 			gt.Applier = owner
 		end
 		ent:AddLegDamageExt(12, owner, self, SLOWTYPE_COLD)
-        ent.TakedIce = (ent.TakedIce or 0) + 20
+        ent.TakedIce = (ent.TakedIce or 0) + 7
 		if (ent.TakedIce or 1) >= 90 then
 			ent.TakedIce = 0
 			timer.Create("IceShadeInductor"..ent:Name(),0.5, 3, function() 
@@ -19,15 +19,15 @@ function SWEP:ApplyMeleeDamage(ent, trace, damage)
 					effectdata:SetNormal(owner:GetEyeTrace().HitNormal)
 				util.Effect("hit_ice", effectdata)
 				ent:TakeDamage(ent:Health() * 0.15, owner, owner:GetActiveWeapon())
-				for _, ent2 in pairs(util.BlastAlloc(self, owner, ent:GetPos(), 110)) do
+				for _, ent2 in pairs(util.BlastAlloc(self, owner, ent:GetPos(), 20)) do
 					if ent2:IsValidLivingPlayer() and gamemode.Call("PlayerShouldTakeDamage", ent2, owner) and ent2 ~= owner and ent2 ~= ent then
 						local nearest = ent2:NearestPoint(ent:GetPos())
-						local scalar = ((110 - nearest:Distance(ent:GetPos())) / 110)
+						local scalar = ((20 - nearest:Distance(ent:GetPos())) / 20)
 			
 						ent2:GiveStatus("frost", scalar * 7)
 						ent2:AddLegDamageExt(18 * scalar, owner, self, SLOWTYPE_COLD)
 						ent2:TakeDamage(44 * scalar, owner, owner:GetActiveWeapon())
-						ent2.TakedIce = (ent.TakedIce or 0) + 20 * scalar
+						ent2.TakedIce = (ent.TakedIce or 0)
 					end
 				end
 			end)

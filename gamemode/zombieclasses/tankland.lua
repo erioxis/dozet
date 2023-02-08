@@ -11,7 +11,7 @@ CLASS.KnockbackScale = 0
 CLASS.NoSlowdown = true
 
 CLASS.CanTaunt = true
-CLASS.BetterVersion = "Skelecringe"
+--CLASS.BetterVersion = "Skelecringe"
 
 CLASS.Points = CLASS.Health/GM.HumanoidZombiePointRatio/3
 

@@ -102,6 +102,7 @@ function SWEP.BulletCallback(attacker, tr, dmginfo)
 		explosion:SetKeyValue( "iMagnitude", dmginfo:GetDamage() * 2) -- the magnitude of the explosion
 		explosion:Fire( "Explode", 0, 0 ) -- explode
 		explosion:SetOwner(attacker)
+		attacker:SetBloodArmor(0)
 	end
 end
 

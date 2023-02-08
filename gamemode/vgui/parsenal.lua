@@ -831,7 +831,7 @@ function GM:OpenArsenalMenu()
 			local subcats = GAMEMODE.ItemSubCategories
 			if usecats then
 				local ind, tbn = 1
-				for i = ind, (trinkets and #subcats or 7) do
+				for i = ind, (trinkets and #subcats or 6) do
 					local ispacer = trinkets and ((i-1) % 4)+1 or i
 					local start = i == (catid == ITEMCAT_GUNS and 2 or ind)
 					local trs = translate.Get

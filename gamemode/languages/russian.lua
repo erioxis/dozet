@@ -1,11 +1,32 @@
 -- Translated by Mr. Darkness (http://www.noxiousnet.com/forums/index.php?action=profile;u=6296)
 
 translate.AddLanguage("ru", "Russian")
+LANGUAGE.g2p_by			= "От %s"
+LANGUAGE.g2p_arsenal			= "Арсенал меню (ЗС)"
+LANGUAGE.g2p_skills			= "Навыки (ЗС)"
+LANGUAGE.g2p_options			= "Настройки (ЗС)"
+LANGUAGE.g2p_worth			= "Начальное меню закупа (ЗС)"
+LANGUAGE.g2p_ds			= "Дискорд (ДОЗЕТ)"
+LANGUAGE.g2p_m_m			= "Меню мутаций (ЗС)"
+LANGUAGE.g2p_disc			= "Отключиться"
+LANGUAGE.g2p_lm			= "Стандартное Меню"
+LANGUAGE.g2p_mm			= "Главное меню"
+
+LANGUAGE.g2p_promo			= "Ввести промокод"
+
+LANGUAGE.promo_dont_used			= "Промокода не существует или вы неверно его ввели"
+LANGUAGE.promo_used			= "Промокод использован!"
+LANGUAGE.were_rich			= "Мы богаты!"
+
+LANGUAGE.ent_promoce			= "Введите промокод"
 --Чаленге
 LANGUAGE.survivor = "Выживший"
 LANGUAGE.undead = "Зомби"
 LANGUAGE.new_op = "Новые настройки"
 LANGUAGE.old_op = "Старые настройки"
+
+LANGUAGE.only_changes = "Показать только измененные"
+LANGUAGE.only_all = "Показать все"
 
 LANGUAGE.vgui_trin = "Тринкеты"
 LANGUAGE.vgui_comp = "Компоненты"
@@ -263,6 +284,7 @@ LANGUAGE.they_already_have_this_trinket				= "У него уже есть это
 LANGUAGE.you_have_remorted_now_rl_x					= "Ты ремортнулся и достиг %d реморта!"
 LANGUAGE.you_now_have_x_extra_sp					= "У тебя есть %d дополнительных СП!"
 LANGUAGE.x_has_remorted_to_rl_y						= "%s ремортнулся до %d реморта!!"
+LANGUAGE.x_has_been_slain_as_y						= "%s был убит как %s!"
 LANGUAGE.you_have_reset_all							= "Все твои скиллы, ОПЫТ,и поинты прокачки были перезагружены."
 LANGUAGE.round_x_of_y								= "Раунд %d из %d"
 LANGUAGE.win_endboard  = "Вы выйграли!"
@@ -1581,7 +1603,7 @@ LANGUAGE.skill_moredamage = "Урон?"
 LANGUAGE.skill_moredamage_d1 = "+25% К защите кровавой брони.\n"
 LANGUAGE.skill_adevo = "Тощий"
 LANGUAGE.skill_adevo_d1 = "Крюк пожирателя вас не видит .\n"
-LANGUAGE.skill_adevo_d2 = "-15% К защите кровавой брони и +7% получаемого мили урона.\n"
+LANGUAGE.skill_adevo_d2 = "-7% К защите кровавой брони и +25% получаемого мили урона.\n"
 LANGUAGE.skill_scoach = "Тугодум"
 LANGUAGE.skill_scoach_d1 = "+3 К Скорости за волну.\n"
 LANGUAGE.skill_ancientsave = "Время древних"
@@ -1707,7 +1729,7 @@ LANGUAGE.skill_knuckmaster_d1 = "Кулаки при ударе больше н�
 LANGUAGE.skill_hknucke = "Ослабление гравитации"
 LANGUAGE.skill_hknucke_d1 = "При приземление жертва получит дополнительно 45% Урона мили оружия\n"
 LANGUAGE.skill_bloodlust = "Ярость"
-LANGUAGE.skill_bloodlust_d1 = "Убийства дают риперстаки\n"
+LANGUAGE.skill_bloodlust_d1 = "Убийства с оружия ближнего боя дают риперстаки\n"
 LANGUAGE.skill_longarm = "Длиннорук"
 LANGUAGE.skill_jouster = "Рыцарь"
 LANGUAGE.skill_combohits = "Комбо удары"

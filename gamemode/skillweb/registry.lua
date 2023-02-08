@@ -1178,11 +1178,11 @@ GM:AddSkill(SKILL_FOCUS, translate.Get("skill_focus").."I", GOOD.."+11%"..transl
 																5,			6,					{SKILL_NONE, SKILL_FOCUSII}, TREE_GUNTREE)
 GM:AddSkill(SKILL_FOCUSII, translate.Get("skill_focus").."II", GOOD.."+9%"..translate.Get("w_ac")..GOOD.."+3%"..translate.Get("b_damage")..BAD.."-7%"..translate.Get("r_speed"),
 																4,			3,					{SKILL_FOCUSIII, SKILL_SCAVENGER, SKILL_D_PALSY, SKILL_PITCHER}, TREE_GUNTREE)
-GM:AddSkill(SKILL_FOCUSIII, translate.Get("skill_focus").."III", GOOD.."+12%"..translate.Get("w_ac")..GOOD.."+5"..translate.Get("b_damage")..BAD.."-6%"..translate.Get("r_speed"),
+GM:AddSkill(SKILL_FOCUSIII, translate.Get("skill_focus").."III", GOOD.."+12%"..translate.Get("w_ac")..GOOD.."+3"..translate.Get("b_damage")..BAD.."-6%"..translate.Get("r_speed"),
 																3,			0,					{SKILL_EGOCENTRIC, SKILL_WOOISM, SKILL_ORPHICFOCUS, SKILL_SCOURER}, TREE_GUNTREE)
 GM:AddSkillModifier(SKILL_FOCUS, SKILLMOD_DAMAGE, 0.01)
 GM:AddSkillModifier(SKILL_FOCUSII, SKILLMOD_DAMAGE, 0.03)
-GM:AddSkillModifier(SKILL_FOCUSIII, SKILLMOD_DAMAGE, 0.05)
+GM:AddSkillModifier(SKILL_FOCUSIII, SKILLMOD_DAMAGE, 0.03)
 SKILL_ARSVOID = 238
 GM:AddSkill(SKILL_ARSVOID, translate.Get("skill_ars_void"), GOOD..translate.Get("skill_ars_void_d1")..GOOD.."+5%"..translate.Get("b_damage")..BAD.."+12%"..translate.Get("sale"),
 																6,			-4,					{SKILL_DELIBRATION}, TREE_GUNTREE)
@@ -1559,8 +1559,8 @@ GM:AddSkillModifier(SKILL_PIGNUS, SKILLMOD_TURRET_RANGE_MUL, 0.33)
 GM:AddSkill(SKILL_PIGNUS, "Pignus", PURPLE.."Better turrets!All stats up by 33%",
 					-1,			-5,					{SKILL_VERUS}, TREE_ANCIENTTREE)
 SKILL_STRENGHT = 176
-GM:AddSkillModifier(SKILL_STRENGHT, SKILLMOD_MELEE_DAMAGE_MUL, 0.1)
-GM:AddSkill(SKILL_STRENGHT, "Strongman", PURPLE.."+10% Melee damage!",
+GM:AddSkillModifier(SKILL_STRENGHT, SKILLMOD_MELEE_DAMAGE_MUL, 0.05)
+GM:AddSkill(SKILL_STRENGHT, "Strongman", PURPLE.."+5% Melee damage!",
 					1,			-5,					{SKILL_STRICTE}, TREE_ANCIENTTREE)
 SKILL_EX = 177
 GM:AddSkill(SKILL_EX, "Exsecrandus", PURPLE.."USELESS!",
@@ -1573,9 +1573,9 @@ GM:AddSkill(SKILL_SEX_IS_REAL, "Reality", PURPLE.."Sex is real\n"..PURPLE.."+5 S
 .RemortReq = 32
 GM:AddSkillModifier(SKILL_SEX_IS_REAL, SKILLMOD_SPOINT, 5)	
 					SKILL_ANIMA = 179		
-GM:AddSkillModifier(SKILL_ANIMA, SKILLMOD_MELEE_DAMAGE_MUL, 0.15)
-GM:AddSkillModifier(SKILL_ANIMA, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 0.10)			
-GM:AddSkill(SKILL_ANIMA, "Fines de anima", PURPLE.."+15% melee damage\n" ..BAD.."+10% Melee damage taken!",
+GM:AddSkillModifier(SKILL_ANIMA, SKILLMOD_MELEE_DAMAGE_MUL, 0.05)
+GM:AddSkillModifier(SKILL_ANIMA, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 0.03)			
+GM:AddSkill(SKILL_ANIMA, "Fines de anima", PURPLE.."+5% melee damage\n" ..BAD.."+3% Melee damage taken!",
 					-3,			-7,					{SKILL_EX2}, TREE_ANCIENTTREE)
 	SKILL_MERCUS = 184
 					GM:AddSkillModifier(SKILL_MERCUS, SKILLMOD_RESUPPLY_DELAY_MUL, -0.10)			
@@ -1592,7 +1592,7 @@ GM:AddSkillModifier(SKILL_DEATH, SKILLMOD_MEDKIT_COOLDOWN_MUL, 0.2)
 GM:AddSkillModifier(SKILL_DEATH, SKILLMOD_MEDKIT_EFFECTIVENESS_MUL, 0.2)		
 GM:AddSkill(SKILL_DEATH, "Morieris", PURPLE.."Better medicine\n" ..BAD.."+20% Medkit Cooldown\n"..PURPLE.."+20% Medkit effectiveness",
 										-3,			-7.5,					{SKILL_EX2}, TREE_ANCIENTTREE)
-GM:AddSkill(SKILL_HELPLIFER, "Chance", PURPLE.."Can save from fatal hit\n33% Chance\nOn upgrade chance is 50%",
+GM:AddSkill(SKILL_HELPLIFER, "Chance", PURPLE.."Can save from fatal hit\n10% Chance\nOn upgrade chance is 50%",
 										2,			-7,					{SKILL_EX2}, TREE_ANCIENTTREE,0)
 .CanUpgrade = 2
 GM:AddSkill(SKILL_INF_POWER, "Dozei Core", PURPLE.."-50% Damage.\nExtra-damage for every skills you unlocked\n+0.6% damage per skill",
@@ -1608,9 +1608,9 @@ GM:AddSkillModifier(SKILL_ALLPOWER, SKILLMOD_REPAIRRATE_MUL, 0.10)
 GM:AddSkill(SKILL_ALLPOWER, "Cunctipotens", PURPLE.."Better cades\n" ..PURPLE.."+10% Repair Mul",
 					-4,			-7.3,					{SKILL_DEATH}, TREE_ANCIENTTREE)
 SKILL_ANCIENT = 183
-GM:AddSkillModifier(SKILL_ANCIENT, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 0.10)
-GM:AddSkillModifier(SKILL_ANCIENT, SKILLMOD_MELEE_DAMAGE_MUL, 0.2)		
-GM:AddSkill(SKILL_ANCIENT, "Adventum Antiqua", PURPLE.."+20% Damage melee\n" ..BAD.."+10% Damage taken mul",
+GM:AddSkillModifier(SKILL_ANCIENT, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 0.03)
+GM:AddSkillModifier(SKILL_ANCIENT, SKILLMOD_MELEE_DAMAGE_MUL, 0.05)		
+GM:AddSkill(SKILL_ANCIENT, "Adventum Antiqua", PURPLE.."+5% Damage melee\n" ..BAD.."+3% Damage taken mul",
 					-4,			-9.5,					{SKILL_SIGILIBERATOR}, TREE_ANCIENTTREE)
 					SKILL_CLASSIX1 = 185	
 GM:AddSkill(SKILL_CLASSIX1, "Classical scientia mundi", PURPLE.."Random bloodarmor",
@@ -1909,9 +1909,9 @@ GM:AddSkill(SKILL_DONATE11, "Donate XI", GOOD.."+30% Max curse\n"..GOOD.."THX fo
 				                                                            	23,			27,					{SKILL_DONATE10}, TREE_DONATETREE)
 GM:AddSkillModifier(SKILL_DONATE11, SKILLMOD_CURSEM, 0.3)
 SKILL_DONATE12 = 269
-GM:AddSkill(SKILL_DONATE12, "Donate XII", GOOD.."+15% Bullet damage\n"..GOOD.."Thx TTo3oR!",
+GM:AddSkill(SKILL_DONATE12, "Donate XII", GOOD.."+10% Bullet damage\n"..GOOD.."Thx TTo3oR!",
 				                                                            	22,			28,					{SKILL_DONATE11}, TREE_DONATETREE)
-GM:AddSkillModifier(SKILL_DONATE12, SKILLMOD_DAMAGE, 0.15)
+GM:AddSkillModifier(SKILL_DONATE12, SKILLMOD_DAMAGE, 0.10)
 GM:AddSkill(SKILL_DONATE13, "Donate XIII", GOOD.."-35% Scale model\n"..GOOD.."Thx chayok",
 				                                                            	23,			29,					{SKILL_DONATE12}, TREE_DONATETREE)
 GM:AddSkillModifier(SKILL_DONATE13, SKILLMOD_SCALEMODEL, -0.35)
@@ -1922,9 +1922,9 @@ GM:AddSkillModifier(SKILL_DONATE14, SKILLMOD_M_REG, 0.05)
 GM:AddSkill(SKILL_DONATE15, "Donate XV", GOOD.."+10 speed\n"..GOOD.."Thx for normal gay",
 				                                                            	21,			28,					{SKILL_DONATE14}, TREE_DONATETREE)
 GM:AddSkillModifier(SKILL_DONATE15, SKILLMOD_SPEED, 10)
-GM:AddSkill(SKILL_DONATE16, "Donate XVI", GOOD.."+10% Bullet Damage\n"..GOOD.."Thx for MarioL",
+GM:AddSkill(SKILL_DONATE16, "Donate XVI", GOOD.."+5% Bullet Damage\n"..GOOD.."Thx for MarioL",
 				                                                            	20,			26,					{SKILL_DONATE15}, TREE_DONATETREE)
-GM:AddSkillModifier(SKILL_DONATE16, SKILLMOD_DAMAGE, 0.10)
+GM:AddSkillModifier(SKILL_DONATE16, SKILLMOD_DAMAGE, 0.05)
 
 
 SKILL_CHALLENGER1 = 215
@@ -1991,13 +1991,13 @@ GM:AddSkill(SKILL_USELESS_11, "Useless 11", GOOD.."-10% knockdown time",
 				                                                            	3,		    1,					{SKILL_USELESS_10}, TREE_USELESSTREE)
 GM:AddSkillModifier(SKILL_USELESS_11, SKILLMOD_KNOCKDOWN_RECOVERY_MUL, -0.1)
 SKILL_USELESS_12 = 511
-GM:AddSkill(SKILL_USELESS_12, "Useless 12", GOOD.."+5% Bullet damage",
+GM:AddSkill(SKILL_USELESS_12, "Useless 12", GOOD.."+1% Bullet damage",
 				                                                            	3,		    0,					{SKILL_USELESS_11}, TREE_USELESSTREE)
-GM:AddSkillModifier(SKILL_USELESS_12, SKILLMOD_DAMAGE, 0.05)
+GM:AddSkillModifier(SKILL_USELESS_12, SKILLMOD_DAMAGE, 0.01)
 SKILL_USELESS_13 = 512
-GM:AddSkill(SKILL_USELESS_13, "Useless 13", GOOD.."+5% Melee damage",
+GM:AddSkill(SKILL_USELESS_13, "Useless 13", GOOD.."+1% Melee damage",
 				                                                            	2,		    -1,					{SKILL_USELESS_12}, TREE_USELESSTREE)
-GM:AddSkillModifier(SKILL_USELESS_13, SKILLMOD_MELEE_DAMAGE_MUL, 0.05)
+GM:AddSkillModifier(SKILL_USELESS_13, SKILLMOD_MELEE_DAMAGE_MUL, 0.01)
 SKILL_USELESS_14 = 513
 GM:AddSkill(SKILL_USELESS_14, "Useless 14", GOOD.."-5% Melee damage taken mul\n You have TOO MUCH USELESS SKILL POINTS???",
 				                                                            	1,		    -1,					{SKILL_USELESS_13}, TREE_USELESSTREE)

@@ -250,6 +250,59 @@ function GM:Stats()
 	end
 	MakepStats()
 end
+local function DoStats(self, list, neg)
+	for k,v in pairs(list:GetItems()) do 
+		v:Remove()
+	end
+	local updatetbl = table.ToAssoc(MySelf:GetActiveSkills())
+	for i=1,#GAMEMODE.SkillModifierFunctions do
+		local i = i or 1
+		local remove = false
+		local skillmodifiers = {}
+		local gm_modifiers = GAMEMODE.SkillModifiers
+		for skillid in pairs(updatetbl)  do
+			modifiers = gm_modifiers[skillid]
+			if modifiers then
+				for modid, amount in pairs(modifiers) do
+					skillmodifiers[modid] = (skillmodifiers[modid] or 0) + amount
+				end
+			end
+		end
+		local d = vgui.Create("DEXChangingLabel", bottom)
+		if neg and (skillmodifiers[i] or 0) == 0 then d:Remove() continue end
+		local c = skillmodifiers[i] or 0
+		local exlude2 = {32,108,103,91,90}
+		if i >= 6 and !table.HasValue(exlude2, i) then
+			c = (c*100).."%"
+		end
+		if (skillmodifiers[i] or 0) > 0 then
+			c = "+"..c
+		end
+		local colorred = table.HasValue(exlude, i) and Color(71,231,119) or Color(238,37,37)
+		local colorgreen = table.HasValue(exlude, i) and Color(238,37,37) or Color(71,231,119)
+		d:SetChangeFunction(function()
+			return translate.Format("skillmod_n"..i,c)
+		end, true)
+		d:SetChangedFunction(function()
+			if (skillmodifiers[i] or 0) < 0 then
+				d:SetTextColor(colorred)
+			elseif (skillmodifiers[i] or 0) > 0 then
+				d:SetTextColor(colorgreen)
+			else
+				
+				d:SetTextColor(Color(255,255,255))
+			end
+		end)
+		local notbl = {10,107,71,75,82,86,87}
+		d:SetFont("DefaultFont")
+		if !table.HasValue(notbl,i) then
+			list:AddItem(d) 
+		end
+		if table.HasValue(notbl,i) then
+			d:Remove()
+		end
+	end
+end
 function MakepStats()
 	PlayMenuOpenSound()
 
@@ -257,7 +310,8 @@ function MakepStats()
 		pMakepStats:Remove()
 		pMakepStats = nil
 	end
-
+	local g = true
+	local p = "only_changes"
 	local Window = vgui.Create("DFrame")
 	local wide = math.min(ScrW(), 500)
 	local tall = math.min(ScrH(), 800)
@@ -281,52 +335,22 @@ function MakepStats()
 	list:SetPos(12, y)
 	list:SetPadding(8)
 	list:SetSpacing(4)
-	local updatetbl = table.ToAssoc(MySelf:GetActiveSkills())
-	for i=1,#GAMEMODE.SkillModifierFunctions do
-		local i = i or 1
-		local skillmodifiers = {}
-		local gm_modifiers = GAMEMODE.SkillModifiers
-		for skillid in pairs(updatetbl)  do
-			modifiers = gm_modifiers[skillid]
-			if modifiers then
-				for modid, amount in pairs(modifiers) do
-					skillmodifiers[modid] = (skillmodifiers[modid] or 0) + amount
-				end
-			end
-		end
-		local d = vgui.Create("DEXChangingLabel", bottom)
-		local c = skillmodifiers[i] or 0
-		local exlude2 = {32,108,103,91,90}
-		if i >= 6 and !table.HasValue(exlude2, i) then
-			c = (c*100).."%"
-		end
-		if (skillmodifiers[i] or 0) > 0 then
-			c = "+"..c
-		end
-		local colorred = table.HasValue(exlude, i) and Color(71,231,119) or Color(238,37,37)
-		local colorgreen = table.HasValue(exlude, i) and Color(238,37,37) or Color(71,231,119)
-		d:SetChangeFunction(function()
-			return translate.Format("skillmod_n"..i,c)
-		end, true)
-		d:SetChangedFunction(function()
-			if (skillmodifiers[i] or 0) < 0 then
-				d:SetTextColor(colorred)
-			elseif (skillmodifiers[i] or 0) > 0 then
-				d:SetTextColor(colorgreen)
-			else
-				d:SetTextColor(Color(255,255,255))
-			end
-		end)
-		local notbl = {10,107,71,75,82,86,87}
-		d:SetFont("DefaultFont")
-		if !table.HasValue(notbl,i) then
-			list:AddItem(d) 
-		end
-		if table.HasValue(notbl,i) then
-			d:Remove()
-		end
-	end
+	
+	but = vgui.Create("DButton", list)
+	but:SetFont("ZSHUDFontTiniest")
+	but:SetText(translate.Get(p))
+	but:SizeToContents()
+	but:Dock(BOTTOM)
+	but:SetTall(26)
+	but:DockMargin(0, 0, 0, 0)
+	but:DockPadding(0, 0, 0, 0)
+	but:Dock(TOP)
+	but.DoClick = function()  if g then DoStats(self,list,true) g = !g but:SetText(translate.Get("only_all")) else  DoStats(self,list) g = !g but:SetText(translate.Get(p)) end end
+	
+	DoStats(self,list)
+
 --EasyLabel(parent, text, font, textcolor)
+
 	Window:SetAlpha(0)
 	Window:AlphaTo(255, 0.15, 0)
 	Window:MakePopup()
