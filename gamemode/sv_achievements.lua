@@ -11,6 +11,11 @@ function GM:PlayerNotifyAchievement(ply, id)
     net.WriteString(id)
     net.Broadcast()
 end
+function GM:HASAchievementEarned(pl, id)
+    if self.Achievements[id].Daily then
+        pl:GiveAchievementProgress("daily_hehe", 1)
+    end
+end
 
 -- Get player achievements from SQL (I'd say this is fairly expensive to do)
 function PLAYER:ProcessAchievements()

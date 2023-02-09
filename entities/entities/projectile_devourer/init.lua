@@ -8,6 +8,7 @@ function ENT:Initialize()
 	self:SetSolid(SOLID_VPHYSICS)
 	self:SetModelScale(2.2, 0)
 	self:SetupGenericProjectile(false)
+	self.trg = NULL
 
 	self.DieTime = CurTime() + 10
 	self.LastPhysicsUpdate = UnPredictedCurTime()
@@ -34,30 +35,36 @@ function ENT:Think()
 	elseif self.DieTime < CurTime() then
 		self:Remove()
 	end
-	local targets = {}
-	for _, ent in pairs(ents.FindInSphere(self:GetPos(), 1048)) do
-		if !ent:IsValid() then continue end
-		target = ent
-		if WorldVisible(self:LocalToWorld(Vector(0, 0, 30)), ent:NearestPoint(self:LocalToWorld(Vector(0, 0, 30))))  then
-			if target:IsValidLivingHuman() then 
-				targets[(#targets or 0) + 1] = {Health = (ent:Health() + (ent:GetBloodArmor() or 1)/2) * (ent:HasTrinket("antidevo") and 2.5 or 1), trg = target}
+	if !self.trg:IsValid() then
+		local targets = {}
+		for _, ent in pairs(ents.FindInSphere(self:GetPos(), 1048)) do
+			if !ent:IsValid() then continue end
+			target = ent
+			if WorldVisible(self:LocalToWorld(Vector(0, 0, 30)), ent:NearestPoint(self:LocalToWorld(Vector(0, 0, 30))))  then
+				if target:IsValidLivingHuman() then 
+					targets[(#targets or 0) + 1] = {Health = (ent:Health() + (ent:GetBloodArmor() or 1)/2) * (ent:HasTrinket("antidevo") and 2.5 or 1), trg = target}
+				end
 			end
 		end
-	end
-	table.sort(targets, compare)
-	for k, target1 in pairs(targets) do
-		target = target1.trg
-		--print( target1.Health)
-		if target and target:IsValidLivingHuman() and !target:IsSkillActive(SKILL_ANTI_DEVO) or !self:GetOwner().Zmainer and self.NextHook <= CurTime() then
-			local targetpos = target:LocalToWorld(target:OBBCenter())
-			local direction = (targetpos - self:GetPos()):GetNormal()
-			self:SetAngles(direction:Angle())
-			local phys = self:GetPhysicsObject()
-			phys:SetVelocityInstantaneous(direction * 2000 + target:GetVelocity())
-			self.NextHook = CurTime() + 0.11
-			break
+		table.sort(targets, compare)
+		for k, target1 in pairs(targets) do
+			target = target1.trg
+			--print( target1.Health)
+			if target and target:IsValidLivingHuman() and !target:IsSkillActive(SKILL_ANTI_DEVO) or !self:GetOwner().Zmainer and self.NextHook <= CurTime() then
+				self.trg = target
+				break
+			end
 		end
+	else
+		local target = self.trg
+		local targetpos = target:LocalToWorld(target:OBBCenter())
+		local direction = (targetpos - self:GetPos()):GetNormal()
+		self:SetAngles(direction:Angle())
+		local phys = self:GetPhysicsObject()
+		phys:SetVelocityInstantaneous(direction * 2000 + target:GetVelocity())
+		self.NextHook = CurTime() + 0.11
 	end
+	
 end
 
 function ENT:OnRemove()

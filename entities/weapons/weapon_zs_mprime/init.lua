@@ -45,7 +45,7 @@ function SWEP:ToDie(damage, numshots, cone)
 
 	end
 	if !self:GetDiePower() then
-	for i = 0,1 do
+	for i = 1,1 do
 		local ent = (self:GetJudge() and  ents.Create("prop_playergibs") or ents.Create(self.Primary.Projectile))
 		if ent:IsValid() then
 			if !self:GetJudge() then

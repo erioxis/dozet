@@ -1,5 +1,5 @@
 GM.Name		=	""
-GM.Author	=	"JetBoom(Server by Toyka)"
+GM.Author	=	"Toyka"
 GM.Email	=	"nope"
 GM.Website	=	"https://github.com/erioxis/dozet"
 

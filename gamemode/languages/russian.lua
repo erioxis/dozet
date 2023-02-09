@@ -19,6 +19,8 @@ LANGUAGE.promo_used			= "Промокод использован!"
 LANGUAGE.were_rich			= "Мы богаты!"
 
 LANGUAGE.ent_promoce			= "Введите промокод"
+
+LANGUAGE.op_d_esc = "Отключить кастомный ESC"
 --Чаленге
 LANGUAGE.survivor = "Выживший"
 LANGUAGE.undead = "Зомби"
@@ -45,6 +47,9 @@ LANGUAGE.challenge_daily5 = "ЕЖЕДНЕВНОЕ:Идеальный механ�
 LANGUAGE.challenge_daily_d5 = "Убить 75 зомби с помощью манхака или дрона."
 LANGUAGE.challenge_daily6 = "ЕЖЕДНЕВНОЕ:Во вторых..."
 LANGUAGE.challenge_daily_d6 = "Выжить 2 раза."
+
+LANGUAGE.challenge_daily_hehe = "Зависимость"
+LANGUAGE.challenge_daily_hehe_d = "Пройти 31 ежедневных задания."
 
 LANGUAGE.scram_rem = " Скрапа"
 

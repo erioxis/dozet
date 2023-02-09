@@ -98,6 +98,12 @@ function MakepOptions()
 	list2:AddItem(check)
 
 	check = vgui.Create("DCheckBoxLabel", Window)
+	check:SetText(translate.Get("op_d_esc"))
+	check:SetConVar("zs_disablecustommenu")
+	check:SizeToContents()
+	list2:AddItem(check)
+
+	check = vgui.Create("DCheckBoxLabel", Window)
 	check:SetText(translate.Get("op_show_node"))
 	check:SetConVar("zs_disablenode")
 	check:SizeToContents()

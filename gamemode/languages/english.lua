@@ -45,6 +45,8 @@ LANGUAGE.undead = "Undead"
 LANGUAGE.new_op = "New Options"
 LANGUAGE.old_op = "Old Options"
 
+LANGUAGE.op_d_esc = "Disable custom ESC menu"
+
 
 LANGUAGE.only_changes = "Show only changes"
 LANGUAGE.only_all = "Show all"
@@ -67,6 +69,10 @@ LANGUAGE.challenge_daily5 = " DAILY:Ideal Mechanism"
 LANGUAGE.challenge_daily_d5 = "Kill 75 zombies by manhack or drone's."
 LANGUAGE.challenge_daily6 = " DAILY:Zombie Escape"
 LANGUAGE.challenge_daily_d6 = "Survives 2 times."
+
+LANGUAGE.challenge_daily_hehe = "Dozet madness"
+LANGUAGE.challenge_daily_hehe_d = "Complete 31 dailes."
+
 
 LANGUAGE.scram_rem = " Scrap"
 

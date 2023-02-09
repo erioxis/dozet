@@ -63,7 +63,7 @@ end
 function math.randomr(min, max, need, pl, chances)
 	local ch = chances
 	local rand = min
-	if pl then ch = math.Round(math.max((pl.Luck/(pl:IsSkillActive(SKILL_BLUCK) and 3 or 5) or 1),1)) end
+	if pl then ch = math.Round(math.max(((pl.Luck or 1)/(pl:IsSkillActive(SKILL_BLUCK) and 3 or 5) or 1),1)) end
 	for i=1,ch do
 		local random = math.random(min,max)
 		if random == need then
