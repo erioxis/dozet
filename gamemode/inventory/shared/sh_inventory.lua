@@ -1346,6 +1346,8 @@ GM:AddSkillModifier(trinket, SKILLMOD_LUCK, 32)
 
 
 GM:AddSkillModifier(GM:AddTrinket(trs("t_headshoter"), "headshoter", false, supveles, supweles, 2, trs("t_d_headshoter"), nil, nil, "weapon_zs_help_trinket"), SKILLMOD_HEADSHOT_MUL, 0.3)
+GM:AddSkillModifier(GM:AddTrinket(trs("t_pearl"), "headshoter", false, supveles, supweles, 3, trs("t_d_pearl"), nil, nil, "weapon_zs_help_trinket"), SKILLMOD_ADD_STATUS, 0.09)
+GM:AddTrinket(trs("t_broken_world"), "broken_world", false, supveles, supweles, 3, trs("t_d_broken_world"), nil, nil, "weapon_zs_help_trinket")
 GM:AddSkillModifier(GM:AddTrinket(trs("t_ind_buffer"), "ind_buffer", false, {
 	["base"] = { type = "Model", model = "models/props_junk/glassjug01.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3.381, 2.617, 2.062), angle = Angle(180, 12.243, 0), size = Vector(0.6, 0.6, 0.6), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
 	["base+"] = { type = "Model", model = "models/props_c17/oildrum001.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "base", pos = Vector(0, 0, 4.07), angle = Angle(180, 12.243, 0), size = Vector(0.123, 0.123, 0.085), color = HSVToColor((CurTime() * 60 + (2 * 5)) % 360, 1, 1), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} }
@@ -1672,6 +1674,12 @@ trinket, soul = GM:AddTrinket("Soul of Troy", "troyaksoul", false, nil, {
 GM:AddSkillModifier(trinket, SKILLMOD_LUCK, -7)
 GM:AddSkillModifier(trinket, SKILLMOD_REPAIRRATE_MUL, 0.35)
 GM:AddSkillModifier(trinket, SKILLMOD_HAMMER_SWING_DELAY_MUL, -0.25)
+
+trinket, soul = GM:AddTrinket("Soul of Clown", "clownsoul", false, nil, {
+	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 1.697, y = 1.697 }, color = Color(30, 214, 153), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
+	["black_core_2+"] = { type = "Sprite", sprite = "effects/splashwake1", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 10, y = 10 }, color = Color(9, 0, 61), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
+	["black_core"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 2, 0), angle = Angle(0, 0, 0), size = Vector(0.349, 0.349, 0.349), color = Color(83, 165, 50, 150), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} }
+}, nil, "Получаемый урон не выше 30\n Max dmg taken = 30\n Q:Pro", nil, nil, "weapon_zs_soul")
 
 
 

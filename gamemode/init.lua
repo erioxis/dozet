@@ -1455,9 +1455,7 @@ function GM:Think()
 					pl:GiveStatus("strengthdartboost", 1.3)
 					pl:GiveStatus("medrifledefboost", 1.3)
 				end
-				if math.random(1230000) == 2000 then
-					pl:GiveAchievement("bruhwtf")
-				end
+
 				if time >= (pl.NextRegenerateMantle or 1) and pl.HolyMantle == 0 and pl:IsSkillActive(SKILL_HOLY_MANTLE) then
 					pl.NextRegenerateMantle = time + math.max((27 - ((pl.Luck + pl.LuckAdd) / 3)) + self.GetWave() * 3,5)
 					pl.HolyMantle = pl.HolyMantle + 1
@@ -2290,6 +2288,9 @@ function GM:WritePromo(promo,pl)
 		pl:CenterNotify(COLOR_GREEN, translate.ClientGet(pl, "promo_used"))
 		return
 	elseif promo == "Were_Rich" and !wereriches[pl:SteamID64()] then
+		if math.randomr(1,100,100,pl) == 100 then
+			pl:AddInventoryItem("trinket_clever")
+		end
 		pl:AddZSXP(100)
 		print("We're rich! And he is rich - "..pl:Nick())
 		wereriches[pl:SteamID64()] = true

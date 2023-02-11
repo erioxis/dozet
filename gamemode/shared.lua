@@ -5,7 +5,7 @@ GM.Website	=	"https://github.com/erioxis/dozet"
 
 -- No, adding a gun doesn't make your name worth being here.
 GM.Credits = {
-	{"Version", "", "6.8.5"},
+	{"Version", "", "6.9.1"},
 	{"erioxis", "Phantom coder", "dead"},
 	{"Nullted", "", "RU-ENG Translation"},
 	{"Bro 3", "", "Some models"}
@@ -31,7 +31,7 @@ function GM:stringRandom( length )
 
     if length < 1 then return end
 
-    local result = {} -- The empty table we start with
+    local result = {}
 
     for i = 1, length do
 

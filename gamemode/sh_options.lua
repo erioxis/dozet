@@ -26,7 +26,16 @@ GM.HintsFromASigil = {
 	"ahint_4",
 	"ahint_5",
 	"ahint_6",
-	"ahint_7"
+	"ahint_7",
+	"ahint_8",
+	"ahint_9",
+	"ahint_10",
+	"ahint_11",
+	"ahint_12",
+	"ahint_13",
+	"ahint_14",
+	"ahint_15",
+	"ahint_16",
 }
 
 -- Change this if you plan to alter the cost of items or you severely change how Worth works.
@@ -674,6 +683,7 @@ GM:AddAPointShopItem("soul_of_lostsoul",			ITEMCAT_TRINKETS,			500,			"trinket_l
 GM:AddAPointShopItem("soul_of_greedsoul",			ITEMCAT_TRINKETS,			700,			"trinket_greedsoul").SubCategory =								ITEMSUBCAT_TRINKETS_SPECIAL
 GM:AddAPointShopItem("soul_of_cainsoul",			ITEMCAT_TRINKETS,			900,			"trinket_cainsoul").SubCategory =								ITEMSUBCAT_TRINKETS_SUPPORT
 GM:AddAPointShopItem("soul_of_lazarussoul",			ITEMCAT_TRINKETS,			250,			"trinket_lazarussoul").SubCategory =								ITEMSUBCAT_TRINKETS_DEFENSIVE
+GM:AddAPointShopItem("soul_of_clownsoul",			ITEMCAT_TRINKETS,			590,			"trinket_clownsoul").SubCategory =								ITEMSUBCAT_TRINKETS_DEFENSIVE
 GM:AddAPointShopItem("soul_of_forsoul",			ITEMCAT_TRINKETS,			700,			"trinket_forsoul").SubCategory =								ITEMSUBCAT_TRINKETS_MELEE
 GM:AddAPointShopItem("soul_of_starsoul",			ITEMCAT_TRINKETS,			1000,			"trinket_starsoul").SubCategory =								ITEMSUBCAT_TRINKETS_PERFOMANCE
 GM:AddAPointShopItem("soul_of_teasoul",			ITEMCAT_TRINKETS,			1200,			"trinket_teasoul").SubCategory =								ITEMSUBCAT_TRINKETS_PERFOMANCE

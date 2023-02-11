@@ -212,7 +212,7 @@ function meta:ProcessDamage(dmginfo)
 			if (attacker:IsSkillActive(SKILL_BOUNTYKILLER) or self:GetZombieClassTable().Boss or self:GetZombieClassTable().DemiBoss) and !self:GetZombieClassTable().CrowDa and !self:GetZombieClassTable().Skeletal then
 				local mul = ((attacker:IsSkillActive(SKILL_BOUNTYKILLER) and 0.15 or 0) + (self:GetZombieClassTable().DemiBoss and 0.05 or self:GetZombieClassTable().Boss and 0.1 or 0))
 				attacker:SetProgress(attacker:GetProgress('bprog')+damage*mul, 'bprog')
-				local tbl = {"headshoter", "ind_buffer", "soulalteden", "ultra_at"}
+				local tbl = {"headshoter", "ind_buffer", "soulalteden", "ultra_at", "pearl"}
 				local hm = table.Random(tbl)
 				if attacker:GetProgress('bprog') >= 1500 * (attacker:GetProgress('bprogmul')+1) and !attacker:HasTrinket(hm) then
 					attacker:SetProgress(0, 'bprog')
@@ -886,6 +886,9 @@ function meta:ProcessDamage(dmginfo)
 		self.NextRegenTrinket = CurTime() + 12
 
 		self.ShouldFlinch = true
+	end
+	if self:HasTrinket("clownsoul") and dmginfo:GetDamage() > 30 then
+		dmginfo:SetDamage(30)
 	end
 
 
@@ -2421,8 +2424,9 @@ local bossdrops = {
 	"trinket_lampsoul",  -- 26
 	"trinket_barasoul",  -- 27
 	"trinket_troyaksoul",  -- 28
-	"trinket_slight_soul",  -- 29
-	"trinket_lehasoul"  -- 29
+	"trinket_clownsoul",  -- 29
+	"trinket_slight_soul",  -- 30
+	"trinket_lehasoul"  -- 31
 }
 local demiboss = {
 	"comp_soul_alt_h",
@@ -2503,6 +2507,10 @@ end
 function meta:MakeBossDrop(killer)
 	if math.random(1,3) == 1 then return end
 	local drop = table.Random(bossdrops)
+	local rand = math.random(1,50)
+	if drop == "trinket_clownsoul" then
+		drop = table.Random(bossdrops)
+	end
 	local inv = string.sub(drop, 1, 4) ~= "weap"
 	local pos = self:LocalToWorld(self:OBBCenter())
 	local ent = ents.Create(inv and "prop_invitem" or "prop_weapon")
@@ -2526,6 +2534,9 @@ function meta:MakeBossDrop(killer)
 		end
 	end
 end
+
+
+
 function meta:Make1BossDrop(killer)
 	if math.random(1,3) == 1 then return end
 	local drop = table.Random(bossdrops1)

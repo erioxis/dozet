@@ -6,6 +6,7 @@ function ENT:Hit(vHitPos, vHitNormal, eHitEntity, vOldVelocity)
 	self:SetDTEntity(5,self:GetOwner())
 	local oldowner = self:GetDTEntity(5)
 	if owner:IsValid() and owner:IsSkillActive(SKILL_PHIK) and eHitEntity:IsPlayer() then
+		local taper = 1
 		self:Remove()
 		local source = self:ProjectileDamageSource()
 		for _, pl in pairs(ents.FindInSphere(self:GetPos(), 77)) do
@@ -13,16 +14,17 @@ function ENT:Hit(vHitPos, vHitNormal, eHitEntity, vOldVelocity)
 				if pl:IsPlayer() and (pl:GetStatus("rot")) then return end
 				if pl:IsValidLivingZombie() and pl ~= owner then
 					local alt = self:GetDTBool(0)
-					pl:TakeSpecialDamage(self.Heal * 1.2, DMG_ACID,owner, self:GetOwner():GetActiveWeapon(), nil, 0)
+					pl:TakeSpecialDamage(self.Heal * 1.2 * taper, DMG_ACID,owner, self:GetOwner():GetActiveWeapon(), nil, 0)
 					pl:PoisonDamage(12, owner, self)
 					local status = pl:GiveStatus(alt and "zombiestrdebuff" or "zombiedartdebuff")
 					status.DieTime = CurTime() + (self.BuffDuration or 10)
 					status.Applier = owner
+					taper = taper * 0.5
 				elseif	pl:IsValidLivingHuman() and pl ~= owner then
 					local alt = self:GetDTBool(0)
 					local strstatus = pl:GiveStatus(alt and "medrifledefboost" or "strengthdartboost", (alt and 0.1 or 0.2) * (self.BuffDuration or 10))
 					strstatus.Applier = owner
-					owner:HealPlayer(pl, self.Heal * 0.3)
+					owner:HealPlayer(pl, self.Heal * taper)
 					local txt = alt and translate.Get("buff_mdart") or translate.Get("buff_bdart")
 						net.Start("zs_buffby")
 						net.WriteEntity(owner)
@@ -33,6 +35,7 @@ function ENT:Hit(vHitPos, vHitNormal, eHitEntity, vOldVelocity)
 						net.WriteEntity(pl)
 						net.WriteString(txt)
 					net.Send(owner)
+					taper = taper * 0.5
 				end
 			end
 		end

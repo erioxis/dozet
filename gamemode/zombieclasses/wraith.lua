@@ -172,10 +172,3 @@ end
 
 --https://tenor.com/view/get-real-jungle-junglecord-gif-20306452
 
-if SERVER then
-	function CLASS:ProcessDamage(pl, dmginfo)
-		if dmginfo:GetInflictor().IsMelee then
-			dmginfo:SetDamage(dmginfo:GetDamage() / 50)
-		end
-	end
-	end

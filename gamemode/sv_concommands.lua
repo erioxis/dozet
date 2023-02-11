@@ -121,7 +121,7 @@ concommand.Add("zs_pointsshopbuy", function(sender, command, arguments)
 		return
 	end
     local scrapd = sender.ScrapDiscount or 1
-	local buy = translate.Get("ba_chat")
+	local buy = translate.ClientGet(sender,"ba_chat")
 	if usescrap then
 		sender:RemoveAmmo(math.ceil(cost), "scrap")
 		sender:SendLua("surface.PlaySound(\"buttons/lever"..math.random(5)..".wav\")")
@@ -684,6 +684,7 @@ concommand.Add("zsdropweapon", function(sender, command, arguments)
 	if invitem == "trinket_a_flower" then sender:TakeInventoryItem("trinket_a_flower")  return end
 	if sender:HasTrinket("flower_g") then sender:TakeInventoryItem("trinket_flower_g")  return end
 	if invitem == "trinket_flower" then 	sender:TakeInventoryItem("trinket_flower") return end
+	if invitem == "trinket_clever" then  return end
 
 	if invitem or (currentwep and currentwep:IsValid()) then
 		local ent = invitem and sender:DropInventoryItemByType(invitem) or sender:DropWeaponByType(currentwep:GetClass())
@@ -881,6 +882,7 @@ concommand.Add("zsgiveweapon", function(sender, command, arguments)
 	if invitem == "trinket_a_flower" then sender:TakeInventoryItem("trinket_a_flower")  return end
 	if sender:HasTrinket("flower_g") then sender:TakeInventoryItem("trinket_flower_g")  return end
 	if invitem == "trinket_flower" then sender:TakeInventoryItem("trinket_flower")  return end
+	if invitem == "trinket_clever" then  return end
 	if invitem and string.sub(invitem, 9, 11) == "sin" then return end
 	
 
@@ -922,6 +924,7 @@ concommand.Add("zsgiveweaponclip", function(sender, command, arguments)
 		return
 	end
 	if sender:HasTrinket("flower_g") then sender:TakeInventoryItem("trinket_flower_g")  return end
+	if invitem == "trinket_clever" then  return end
 
 
 	local currentwep = sender:GetActiveWeapon()

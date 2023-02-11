@@ -442,6 +442,7 @@ SKILL_CIRCULATION2 = 414
 SKILL_STONEBLOOD = 415
 SKILL_AMULET_15 = 416
 SKILL_GODHEART = 417
+--SKILL_DAMAGE_N = 418
 
 
 
@@ -857,7 +858,7 @@ GM:AddSkill(SKILL_COMBOHEAL, translate.Get("skill_comboheal"), GOOD..translate.G
 																0,			-5,					{SKILL_DISPERSION}, TREE_SUPPORTTREE)
 GM:AddSkill(SKILL_PHIK, translate.Get("skill_phik"), GOOD..translate.Get("skill_phik_d1")..BAD..translate.Get("skill_phik_d2"),
 																-2,			-5,					{SKILL_COMBOHEAL}, TREE_SUPPORTTREE)
---.Disabled = true
+.Disabled = true
 GM:AddSkill(SKILL_FOREVERALONE, translate.Get("skill_foreveralone"), GOOD..translate.Get("skill_foreveralone_d1")..BAD..translate.Get("skill_foreveralone_d2"),
 																-1,			-6,					{SKILL_COMBOHEAL}, TREE_SUPPORTTREE)
 GM:AddSkill(SKILL_WYRDREC, translate.Get("skill_wyrdrec"), GOOD..translate.Get("skill_wyrdrec_d1")..BAD..translate.Get("skill_wyrdrec_d2"),
@@ -1143,7 +1144,7 @@ d.LevelReq = 99
 d.AmuletCost = -4		
 local d = GM:AddSkill(SKILL_GODHEART, translate.Get("skill_godheart"), GOOD..translate.Get("skill_godheart2_d1"),
 				                                                            	-14,			99,					{}, TREE_DONATETREE)
-d.RemortReq = 256
+d.RemortReq = 128
 d.AmuletCost = 4					
 GM:AddSkillModifier(SKILL_GODHEART, SKILLMOD_SPOINT, -4)
 GM:AddSkillModifier(SKILL_GODHEART, SKILLMOD_CURSEM, -99)
@@ -1584,7 +1585,7 @@ GM:AddSkill(SKILL_ANIMA, "Fines de anima", PURPLE.."+5% melee damage\n" ..BAD.."
 					GM:AddSkill(SKILL_NANOPEL, "Napoleon", PURPLE.."-35% Model scale",
 										-6,			-7,					{SKILL_MERCUS}, TREE_ANCIENTTREE)
 SKILL_SIGILIBERATOR = 180	
-GM:AddSkillModifier(SKILL_SIGILIBERATOR, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 0.5)		
+GM:AddSkillModifier(SKILL_SIGILIBERATOR, SKILLMOD_DMG_TAKEN, 0.5)		
 GM:AddSkill(SKILL_SIGILIBERATOR, "Liberator", PURPLE.."x1.45 damage\n" ..BAD.."+50% damage taken",
 										-3,			-8.3,					{SKILL_EX2}, TREE_ANCIENTTREE)
 										SKILL_DEATH = 181	

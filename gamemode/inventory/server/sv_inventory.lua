@@ -8,6 +8,9 @@ function meta:AddInventoryItem(item)
 	if GAMEMODE:GetInventoryItemType(item) == INVCAT_TRINKETS then
 		self:ApplyTrinkets()
 	end
+	if item == "trinket_clever" then
+		self:GiveAchievement("bruhwtf")
+	end
 	--[[
 				if self.OutFitPac then
 					self:RemovePACPart(self.OutFitPac)
@@ -251,6 +254,9 @@ function meta:DropAllInventoryItems()
 		end
 		if self:HasTrinket("flower_g") then
 			self:TakeInventoryItem("trinket_flower_g")
+		end
+		if self:HasTrinket("clever") then
+			self:TakeInventoryItem("trinket_clever")
 		end
 		if self:HasTrinket("a_flower") then
 			self:TakeInventoryItem("trinket_a_flower")
