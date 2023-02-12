@@ -17,6 +17,7 @@ GM.GetActiveTrinkets = {
 	"cons_chaos",
 	"cons_d4",
 	"cons_friendship",
+	"cons_gausscard",
 	"cons_timer"
 }
 GM.StarterSoul = {
