@@ -62,12 +62,13 @@ local matBlack = CreateMaterial("shadowlurkersheet", "UnlitGeneric", {["$basetex
 local vecEyeLeft = Vector(5, -3.5, -1)
 local vecEyeRight = Vector(5, -3.5, 1)
 function CLASS:PrePlayerDraw(pl)
-	render.SetColorModulation(0.373, 0.3 + (CurTime()%7)*0.1, 0.914)
 	render.SetBlend(math.max(0.1,(CurTime()%10)/10))
+	render.SetColorModulation(0.373, 0.3 + (CurTime()%7)*0.1, 0.914)
 end
 
 function CLASS:PostPlayerDraw(pl)
-	render.SetColorModulation(0.373, 1 - (CurTime()%7)*0.1,1)
+	render.SetBlend(1)
+	render.SetColorModulation(1,1,1)
 end
 function CLASS:PostPlayerDrawOverrideModel(pl)
 	render_ModelMaterialOverride(nil)

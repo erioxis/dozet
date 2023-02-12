@@ -203,6 +203,9 @@ function GM:SupplyItemViewerDetail(viewer, sweptable, shoptbl)
 		viewer.m_Desc:MoveBelow(viewer.m_VBG, 8)
 		viewer.m_Desc:SetFont("ZSBodyTextFont")
 	else
+		if self.ZSInventoryItemData[shoptbl.SWEP].BountyNeed then
+			desctext = desctext..translate.Get("w_cost_a")..self.ZSInventoryItemData[shoptbl.SWEP].BountyNeed 
+		end
 		viewer.ModelPanel:SetModel("")
 		viewer.m_VBG:SetVisible(false)
 
@@ -211,6 +214,7 @@ function GM:SupplyItemViewerDetail(viewer, sweptable, shoptbl)
 		viewer.m_Bruh:MoveBelow(viewer.m_Title, 20)
 		viewer.m_Bruh:SetFont("ZSBodyTextFontBig")
 	end
+
 	viewer.m_Desc:SetText(desctext)
 	viewer.m_Bruh:SetText(bruh)
 

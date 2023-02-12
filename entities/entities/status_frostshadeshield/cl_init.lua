@@ -40,7 +40,7 @@ function ENT:Think()
 			pos.z = pos.z + 8
 			local owner = self:GetOwner()
 			local emitter = ParticleEmitter(pos)
-			local handpos = owner:GetAttachment(owner:LookupAttachment("anim_attachment_RH")).Pos
+			local handpos = (owner:GetAttachment(owner:LookupAttachment("anim_attachment_RH")).Pos or Vector(0,0,0))
 			emitter:SetNearClip(16, 24)
 
 			local particle = emitter:Add("sprites/glow04_noz", handpos)

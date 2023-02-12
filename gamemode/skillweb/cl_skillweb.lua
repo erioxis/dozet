@@ -591,7 +591,7 @@ function PANEL:Init()
 
 		local frame = Derma_StringRequest(translate.ClientGet(MySelf ,"add_xp"), "Here XP!.", "XP",
 		function(xp)
-
+			--if tonumber(xp)
 			xp = tonumber(xp)
 			if xp <= 0 then
 				xp = 1

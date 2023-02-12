@@ -522,10 +522,11 @@ net.Receive("zs_trinketconsumed", function(length)
 	GAMEMODE:CenterNotify({killicon = "weapon_zs_trinket"}, " ", COLOR_RORANGE, translate.Format("trinket_consumed", trinket))
 end)
 net.Receive("zs_trinketcorrupt", function(length)
-	local trinket = GAMEMODE.ZSInventoryItemData[net.ReadString()].PrintName
+	local trinket = (GAMEMODE.ZSInventoryItemData[net.ReadString()].PrintName or "?")
+	local trinket2 = (GAMEMODE.ZSInventoryItemData[net.ReadString()].PrintName or "?")
 	MySelf:EmitSound("buttons/button3.wav", 75, 50)
 
-	GAMEMODE:CenterNotify({killicon = "weapon_zs_trinket"}, " ", COLOR_RED, translate.Format("trinket_dead", trinket))
+	GAMEMODE:CenterNotify({killicon = "weapon_zs_trinket"}, " ", COLOR_RED, translate.Format("trinket_dead", trinket, trinket2))
 end)
 net.Receive("zs_pointsdoubled", function(length)
 	MySelf:EmitSound("buttons/button3.wav", 75, 50)
@@ -565,7 +566,7 @@ end)
 
 net.Receive("zs_invitem", function(length)
 	local invitemt = net.ReadString()
-	local inviname = GAMEMODE.ZSInventoryItemData[invitemt].PrintName
+	local inviname = (GAMEMODE.ZSInventoryItemData[invitemt].PrintName or "Nothing")
 	local category = GAMEMODE:GetInventoryItemType(invitemt)
 
 	surface.PlaySound("items/ammo_pickup.wav")

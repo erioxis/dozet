@@ -1221,12 +1221,12 @@ function GM:Think()
 					if self:GetWave() > 10 then
 					   timer.Create("bosses"..#player.GetAll(),0.05,#player.GetAll(), function()	self:SpawnBossZombie() end)
 					end
-				elseif self:GetWaveStart() - 15 <= time then
-					timer.Create("demibosses"..#player.GetAll(),0.1,math.max(((#team.GetPlayers(TEAM_UNDEAD) * 0.5) - 1),1), function()	self:SpawnDemiBossZombie() end)
 				else
 					self:CalculateNextBoss()
 					self:CalculateNextDemiBoss()
 				end
+			elseif self:GetWaveStart() - 15 <= time and !self.ObjectiveMap then
+				timer.Create("demibosses"..#player.GetAll(),0.1,math.max(((#team.GetPlayers(TEAM_UNDEAD) * 0.5) - 1),1), function()	self:SpawnDemiBossZombie() end)
 			end
 		end
 	end 
@@ -1441,9 +1441,14 @@ function GM:Think()
 							pl.NextConsumeEgo = time + 120
 							net.Start("zs_trinketcorrupt")
 								net.WriteString(take)
+								net.WriteString("trinket_sin_ego")
 							net.Send(pl)
 						end
 					end
+				end
+				if pl:IsSkillActive(SKILL_PACIFISMIUM) and time >= (pl.NextEnergy or 1) then
+					pl.NextEnergy = time + 45
+					pl:SetChargesActive(pl:GetChargesActive()+1)
 				end
 				if pl:HasTrinket("altlazarussoul") and time >= pl.NextRegenerate and pl:Health() < math.min(healmax, pl:GetMaxHealth() * 0.10) then
 					pl.NextRegenerate = time + 60
@@ -1651,6 +1656,11 @@ local function DoDropStart(pl)
 		end
 		local drop = table.Random(weapon)
 		pl:Give(drop)
+	end
+	if pl:IsSkillActive(SKILL_ACTIVATE_THIS) then
+		local drop = table.Random(GAMEMODE.GetActiveTrinkets)
+		local func = GAMEMODE:GetInventoryItemType(drop) == INVCAT_CONSUMABLES and pl.AddInventoryItem or pl.Give
+		timer.Simple(0, function() func(pl, drop) end)
 	end
 	local start = pl:GetRandomStartingItem()
 	if start then
@@ -1903,6 +1913,11 @@ function GM:PlayerHealedTeamMember(pl, other, health, wep, pointmul, nobymsg, fl
 		pl:AddPoints(50)
 		pl:SetProgress(math.Round(pl:GetProgress('mprog')-1800), 'mprog')
 	end
+	pl.NextChargeHeal = (pl.NextChargeHeal or 0) + health
+	if (pl.NextChargeHeal or 0) >= 250 then
+		pl:SetChargesActive(pl:GetChargesActive()+1)
+		pl.NextChargeHeal = 0
+	end
 
 	if pointmul ~= 0 then
 		local hpperpoint = self.MedkitPointsPerHealth
@@ -1932,7 +1947,11 @@ end
 function GM:PlayerRepairedObject(pl, other, health, wep)
 	health = health - other:RemoveUselessDamage(health)
 	if self:GetWave() == 0 or health <= 0 then return end
-
+	pl.NextChargeRepair = (pl.NextChargeRepair or 0) + health
+	if (pl.NextChargeRepair or 0) >= 200 then
+		pl:SetChargesActive(pl:GetChargesActive()+1)
+		pl.NextChargeRepair = 0
+	end
 	pl.RepairedThisRound = pl.RepairedThisRound + health
 	if numofdaily == 2 then
 		pl:GiveAchievementProgress("daily_post", math.Round(health))
@@ -4378,6 +4397,9 @@ function GM:HumanKilledZombie(pl, attacker, inflictor, dmginfo, headshot, suicid
 	end
 	attacker:GiveAchievementProgress("everycan", 1)
 	attacker:GiveAchievementProgress("dzs", 1)
+	if attacker.ZombiesKilled % 10 + (attacker:IsSkillActive(SKILL_PACIFISMIUM) and 25 or 0) == 0 then
+		attacker:SetChargesActive(attacker:GetChargesActive()+1)
+	end
 	pl:GiveAchievementProgress("goodtime", 1)
 	if pl:GetZombieClassTable().BaraCat then
 		attacker:GiveAchievementProgress("antibaracat", 1)		
@@ -5363,6 +5385,7 @@ function GM:WaveStateChanged(newstate, pl)
 
 		for _, pl in pairs(player.GetAll()) do
 			if pl:Team() == TEAM_HUMAN and pl:Alive() then
+				pl:SetChargesActive(pl:GetChargesActive()+3)
 				local lucktrue  = (pl.Luck or 1) + pl.LuckAdd + ((pl:IsSkillActive(SKILL_LUCKY_UNLIVER) and self:GetWave() or 0) * 2)
 				if self.EndWaveHealthBonus > 0 and !pl:HasTrinket("lehasoul") then
 					pl:SetHealth(math.min(pl:GetMaxHealth(), pl:Health() + self.EndWaveHealthBonus))

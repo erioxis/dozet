@@ -442,7 +442,8 @@ SKILL_CIRCULATION2 = 414
 SKILL_STONEBLOOD = 415
 SKILL_AMULET_15 = 416
 SKILL_GODHEART = 417
---SKILL_DAMAGE_N = 418
+SKILL_ACTIVATE_THIS = 418
+SKILL_PACIFISMIUM = 419
 
 
 
@@ -851,14 +852,16 @@ GM:AddSkill(SKILL_WORTHINESS4, translate.Get("worthness").."IV", GOOD.."+10"..tr
 GM:AddSkill(SKILL_U_ANTITODESHOT, translate.Get("skill_u_antidote"), GOOD..translate.Get("skill_u_antidote_d1"),
 																4,			-2,					{SKILL_PREMIUM}, TREE_SUPPORTTREE)
 GM:AddSkill(SKILL_PREMIUM, translate.Get("skill_premium"), GOOD..translate.Get("skill_premium_d1")..BAD..translate.Get("skill_premium_d2"),
-																3,			-3,					{}, TREE_SUPPORTTREE)
+																3,			-3,					{SKILL_PACIFISMIUM}, TREE_SUPPORTTREE)
+GM:AddSkill(SKILL_PACIFISMIUM, translate.Get("skill_paci"), GOOD..translate.Get("skill_paci_d1")..BAD..translate.Get("skill_paci_d2"),
+																3,			-4,					{}, TREE_SUPPORTTREE)
 GM:AddSkill(SKILL_DISPERSION, translate.Get("skill_disp"), GOOD..translate.Get("skill_disp_d1")..BAD..translate.Get("skill_disp_d2"),
 																0,			-4,					{}, TREE_SUPPORTTREE)
 GM:AddSkill(SKILL_COMBOHEAL, translate.Get("skill_comboheal"), GOOD..translate.Get("skill_comboheal_d1")..BAD..translate.Get("skill_comboheal_d2"),
 																0,			-5,					{SKILL_DISPERSION}, TREE_SUPPORTTREE)
 GM:AddSkill(SKILL_PHIK, translate.Get("skill_phik"), GOOD..translate.Get("skill_phik_d1")..BAD..translate.Get("skill_phik_d2"),
 																-2,			-5,					{SKILL_COMBOHEAL}, TREE_SUPPORTTREE)
-.Disabled = true
+--.Disabled = true
 GM:AddSkill(SKILL_FOREVERALONE, translate.Get("skill_foreveralone"), GOOD..translate.Get("skill_foreveralone_d1")..BAD..translate.Get("skill_foreveralone_d2"),
 																-1,			-6,					{SKILL_COMBOHEAL}, TREE_SUPPORTTREE)
 GM:AddSkill(SKILL_WYRDREC, translate.Get("skill_wyrdrec"), GOOD..translate.Get("skill_wyrdrec_d1")..BAD..translate.Get("skill_wyrdrec_d2"),
@@ -1281,9 +1284,12 @@ GM:AddSkill(SKILL_PITCHER2, translate.Get("skill_pitcher2"), GOOD..translate.Get
 																7,			1,					{SKILL_PITCHER}, TREE_GUNTREE)
 GM:AddSkill(SKILL_EQUIPPED, translate.Get("skill_alacraty"), GOOD.. translate.Get("skill_alacraty_d1"),
 																-6,			2,					{}, TREE_GUNTREE)
-GM:AddSkill(SKILL_MOBILIZED, translate.Get("skill_mobile"), GOOD.. translate.Get("skill_mobile_d1")..BAD..translate.Get("skill_mobile_d2"),
+GM:AddSkill(SKILL_MOBILIZED, translate.Get("skill_mobile"), GOOD.. translate.Get("skill_mobile_d1")..BAD.."-1"..translate.Get("luck"),
 																-7,			1,					{SKILL_EQUIPPED}, TREE_GUNTREE)
 GM:AddSkillModifier(SKILL_MOBILIZED, SKILLMOD_LUCK, -1)
+GM:AddSkill(SKILL_ACTIVATE_THIS, translate.Get("skill_acrftt"), GOOD.. translate.Get("skill_acrftt_d1")..BAD.."-2"..translate.Get("luck"),
+																-7,			3,					{SKILL_MOBILIZED}, TREE_GUNTREE)
+GM:AddSkillModifier(SKILL_ACTIVATE_THIS, SKILLMOD_LUCK, -2)
 GM:AddSkill(SKILL_WORTHINESS1, translate.Get("worthness"), GOOD.."+10"..translate.Get("worth")..BAD.."-3"..translate.Get("start_points"),
 																-4,			-3,					{}, TREE_GUNTREE)
 GM:AddSkill(SKILL_CANNONBALL, translate.Get("skill_cannonball"), translate.Get("skill_cannonball_d1")..GOOD..translate.Get("skill_cannonball_d2"),

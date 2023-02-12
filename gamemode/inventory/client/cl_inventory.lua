@@ -75,7 +75,12 @@ local function TryGetItemWithComponent(me)
 		net.WriteString(me.Item)
 	net.SendToServer()
 end
-
+local function ActivateTrinket(me, pl)
+	net.Start("zs_activate_trinket")
+		net.WriteString(me.Item)
+		net.WriteEntity(pl)
+	net.SendToServer()
+end
 local function ItemPanelDoClick(self)
 	local item = self.Item
 	if not item then return end
@@ -153,14 +158,20 @@ local function ItemPanelDoClick(self)
 		viewer.m_CraftWith:SetVisible( false )
 	end
 
-
+	if category == INVCAT_CONSUMABLES and MySelf:GetChargesActive() >= (item.BountyNeed or 1) then
+		viewer.m_Activate.Item = item
+		if input.IsMouseDown(MOUSE_RIGHT) then
+			viewer.m_Activate.DoClick = ActivateTrinket(viewer.m_Activate,MySelf)
+		end
+		viewer.m_Activate:SetVisible(false)
+	end
 	GAMEMODE:SupplyItemViewerDetail( viewer, sweptable, { SWEP = self.Item } )
 end
 
 local categorycolors = {
 	[ INVCAT_TRINKETS ] = { COLOR_RED, COLOR_DARKRED },
 	[ INVCAT_COMPONENTS ] = { COLOR_BLUE, COLOR_DARKBLUE },
-	[ INVCAT_CONSUMABLES ] = { COLOR_YELLOW, COLOR_DARKYELLOW }
+	[ INVCAT_CONSUMABLES ] = { COLOR_YELLOW, Color(75,67,1) }
 }
 local colBG = Color( 10, 10, 10, 252 )
 local colBGH = Color( 200, 200, 200, 5 )
@@ -224,6 +235,13 @@ function GM:CreateInventoryElements()
 	itemwith:SetSize( viewer:GetWide() / 1.15, 27 * screenscale )
 	itemwith:SetVisible( false )
 	viewer.m_ItemWith = itemwith
+	local act = vgui.Create( "DButton", viewer )
+	act:SetText("Activate")
+	act:SetSize( viewer:GetWide() / 1.15, 27 * screenscale )
+	act:SetVisible(false)
+	viewer.m_Activate = act
+
+
 end
 
 function GM:InventoryAddGridItem( item, category )
@@ -254,10 +272,11 @@ function GM:InventoryAddGridItem( item, category )
 		local trintier = EasyLabel( itempan, "", "ZSHUDFontSmaller", COLOR_WHITE )
 		trintier:CenterHorizontal( 0.8 )
 		trintier:CenterVertical( 0.8 )
+		
 
 
 		local icon = GAMEMODE.ZSInventoryItemData[item].Icon or "weapon_zs_trinket"
-		local kitbl = killicon.Get(category == INVCAT_TRINKETS and icon or "weapon_zs_craftables")
+		local kitbl = killicon.Get((category == INVCAT_TRINKETS or category == INVCAT_CONSUMABLES) and icon or "weapon_zs_craftables")
 		if kitbl then
 			self:AttachKillicon(kitbl, itempan, mdlframe)
 		end
@@ -332,18 +351,17 @@ function GM:OpenInventory()
 	if frame.btnClose and frame.btnClose:IsValid() then frame.btnClose:SetVisible( false ) end
 	if frame.btnMinim and frame.btnMinim:IsValid() then frame.btnMinim:SetVisible( false ) end
 	if frame.btnMaxim and frame.btnMaxim:IsValid() then frame.btnMaxim:SetVisible( false ) end
-	local quickstats = {}
---[[	for i=1,4 do
-		local hpstat = vgui.Create("DLabel", bottomleftup)
+
+		local hpstat = vgui.Create("DEXChangingLabel", frame)
 		hpstat:SetFont("ZSHUDFontTiny")
-		hpstat:SetTextColor(COLOR_WHITE)
+		hpstat:SetTextColor(Color(216,95,95))
 		hpstat:SetContentAlignment(8)
 		hpstat:Dock(TOP)
 		hpstat:SizeToContents()
-		hpstat:SetText("---")
-		table.insert(quickstats, hpstat)
-	end]]
-	self.QuickStats = quickstats
+		hpstat:SetChangeFunction(function()
+			return 		hpstat:SetText(translate.Get("charges_active")..MySelf:GetChargesActive())
+		end, true)
+
 	local topspace = vgui.Create( "DPanel", frame )
 	topspace:Dock( TOP )
 	topspace:DockMargin( 4 * screenscale, 4 * screenscale, 4 * screenscale, 4 * screenscale )
@@ -359,8 +377,8 @@ function GM:OpenInventory()
 	title:Dock( FILL )
 	title:SetContentAlignment( 5 )
 	
-	--local stats = EasyLabel( frame, "Some", "ZSHUDFontSmall", Color(221,70,70) )
-	--stats:SetContentAlignment( 0 )
+
+
 
 	local invprop = vgui.Create( "DPropertySheet", frame )
 	invprop:Dock( FILL )
@@ -415,23 +433,4 @@ function GM:OpenInventory()
 
 	self:CreateItemInfoViewer( frame, invprop, topspace, bottomspace )
 	self:CreateInventoryElements()
-	--self:UpdateQuickStatsInventory()
-end
-function GM:UpdateQuickStatsInventory()
-	local skillmodifiers = {}
-	local gm_modifiers = GAMEMODE.SkillModifiers
-	for skillid in pairs(table.ToAssoc(MySelf:GetInventoryItems())) do
-		local modifiers = gm_modifiers[skillid]
-		if modifiers then
-			for modid, amount in pairs(modifiers) do
-				skillmodifiers[modid] = (skillmodifiers[modid] or 0) + amount
-			end
-		end
-	end
-
-	for i=1,4 do
-		local prefix = i == 1 and translate.Get("skill_add_health") or i == 2 and translate.Get("skill_add_speed") or i == 4 and translate.Get("skill_add_bloodarmor") or translate.Get("skill_add_worth")
-		local val = i == 2 and SPEED_NORMAL or i == 1 and 100 or i == 4 and 25 or 135
-		self.QuickStats[i]:SetText(prefix .. " : " .. (val + (skillmodifiers[i] or 0)))
-	end
 end

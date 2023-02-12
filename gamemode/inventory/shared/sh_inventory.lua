@@ -29,8 +29,8 @@ function GM:GetInventoryItemType(item)
 end
 
 local index = 1
-function GM:AddInventoryItemData(intname, name, description, weles, tier, stocks, icon, bounty)
-	local datatab = {PrintName = name, DroppedEles = weles, Tier = tier, Description = description, Stocks = stocks, Index = index, Icon = icon, Bounty = bounty}
+function GM:AddInventoryItemData(intname, name, description, weles, tier, stocks, icon, bounty, b2)
+	local datatab = {PrintName = name, DroppedEles = weles, Tier = tier, Description = description, Stocks = stocks, Index = index, Icon = icon, Bounty = bounty, BountyNeed = b2}
 	self.ZSInventoryItemData[intname] = datatab
 	self.ZSInventoryItemData[index] = datatab
 
@@ -134,6 +134,62 @@ GM.Assemblies["weapon_zs_sigil_port_a"] 						= {"comp_soul_emm3",	"trinket_altc
 
 
 local trs = translate.Get
+GM:AddInventoryItemData("cons_pill_unk",		trs("c_pill"),			trs("c_pill_d"),								"models/props_c17/trappropeller_lever.mdl", 2, nil, nil, function(pl) 
+	if math.random(1,3) ~= 1 then
+		pl:TakeDamage(pl:Health()*0.25, pl, pl) 
+	else 
+		local melee = (pl:GetActiveWeapon() and pl:GetActiveWeapon().IsMelee or true)
+		pl:GiveAmmo((melee and 5 or 20), (pl:GetActiveWeapon() and !melee and pl:GetActiveWeapon():GetPrimaryAmmoType() or "scrap")) 
+	end
+end,2)
+GM:AddInventoryItemData("cons_mantle",		trs("c_mantle"),			trs("c_mantle_d"),								"models/props_c17/trappropeller_lever.mdl", 2, nil, nil, function(pl) 
+	pl.HolyMantle = 1
+end,5)
+GM:AddInventoryItemData("cons_necronomicon",		trs("c_necronomicon"),			trs("c_necronomicon_d"),								"models/props_c17/trappropeller_lever.mdl", 2, nil, nil, function(pl) 
+	for k,v in pairs(team.GetPlayers(TEAM_UNDEAD)) do
+		timer.Simple(0.3, function() v:TakeSpecialDamage(250,DMG_DIRECT,pl,pl) end)
+		pl:EmitSound("ambient/atmosphere/thunder1.wav", 50, 500, 0.5)
+	end
+	if math.random(1,100) <= 10 then pl:TakeInventoryItem("cons_necronomicon") pl:AddInventoryItem("cons_necronomicon_broke") end
+end,2)
+GM:AddInventoryItemData("cons_necronomicon_broke",		trs("c_necronomicon"),			trs("c_necronomicon_broke_d"),								"models/props_c17/trappropeller_lever.mdl", 2, nil, nil, function(pl) 
+	local z = 0
+	for k,v in pairs(team.GetPlayers(TEAM_UNDEAD)) do
+		if z >= 3 then break end
+		if !(v:GetZombieClassTable().Boss or v:GetZombieClassTable().DemiBoss) then
+			timer.Simple(0.1, function() v:TakeSpecialDamage(250,DMG_DIRECT,pl,pl) end)
+			z = z + 1
+			pl:EmitSound("ambient/atmosphere/thunder1.wav", 50, 500, 0.5)
+		end
+	end
+end,1)
+GM:AddInventoryItemData("cons_void",		trs("c_void"),			trs("c_void_d"),								"models/props_c17/trappropeller_lever.mdl", 3, nil, nil, function(pl) 
+	local use = {}
+	for item,v in pairs(pl:GetInventoryItems()) do
+		local g = table.HasValue(string.Explode("_",item), "curse")
+		if item ~= "cons_void" and string.len(item) >= 7 and !g then
+			table.insert(use, #use + 1,item)
+		end
+	end
+	if #use <= 1 then return end
+	local toeat = table.Random(use)
+	local use2 = {}
+	for item,v in pairs(GAMEMODE.ZSInventoryItemData) do
+		local g = table.HasValue(string.Explode("_",item), "curse")
+		if item ~= "cons_void" and (GAMEMODE.ZSInventoryItemData[item].Tier or 1) == (GAMEMODE.ZSInventoryItemData[toeat].Tier or 1) and string.len(item) >= 7 and !g then
+			table.insert(use2, #use2 + 1,item)
+		end
+	end
+	if #use2 <= 1 then return end
+	pl:TakeInventoryItem(toeat)
+	local gived = table.Random(use2)
+	pl:AddInventoryItem(gived)
+	net.Start("zs_trinketcorrupt")
+		net.WriteString(toeat)
+		net.WriteString(gived)
+	net.Send(pl)
+
+end,4)
 GM:AddInventoryItemData("comp_modbarrel",		trs("c_modbarrel"),			trs("c_modbarrel_d"),								"models/props_c17/trappropeller_lever.mdl")
 GM:AddInventoryItemData("comp_burstmech",		trs("c_burstmech"),			trs("c_burstmech_d"),										"models/props_c17/trappropeller_lever.mdl")
 GM:AddInventoryItemData("comp_basicecore",		trs("c_basicecore"),		trs("c_basicecore_d"),	"models/Items/combine_rifle_cartridge01.mdl")
@@ -271,10 +327,7 @@ GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, 10)
 GM:AddSkillModifier(trinket, SKILLMOD_HEALING_RECEIVED, 0.11)
 --trinket = GM:AddTrinket("Damage", "damage222", false, hpveles, hpweles, 4, "+10% damage melee ")
 --GM:AddWeaponModifier(trinket, WEAPON_MODIFIER_DAMAGE, 3)
-for i=1,99 do 
-	trinket = GM:AddTrinket(trs("t_d_rageflower")..i, "rageflower"..i, false, hpveles, hpweles, 1, trs("t_d_rageflower")..(i / 5), nil, 15, "weapon_zs_melee_trinket")
-GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, i / 5)
-end
+
 trinket = GM:AddTrinket(trs("t_a_flower"), "a_flower", false, hpveles, hpweles, 5, trs("t_d_a_flower"), nil, 15, "weapon_zs_melee_trinket")
 
 trinket = GM:AddTrinket(trs("t_richeye"), "greedeye", false, hpveles, hpweles, 3, trs("t_d_richeye"), nil, nil, "weapon_zs_special_trinket", {[1] = {
@@ -1591,7 +1644,7 @@ trinket = GM:AddTrinket("Soul of Toy", "toysoul", false, nil, {
 	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 7.697, y = 7.697 }, color = Color(0, 0, 0, 125), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core_2+"] = { type = "Sprite", sprite = "effects/splashwake1", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 10, y = 10 }, color = Color(0, 0, 0, 125), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 2, 0), angle = Angle(0, 0, 0), size = Vector(0.349, 0.349, 0.349), color = Color(82, 19, 124, 100), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} }
-}, nil, "Душа Тоя???Невозможно.Большая уязвимость к баракотам,дает 100 скорости,чинильная станция лучше на 100%,вы не взорветесь!Хотя смысл все объяснять?\n+400% Knockdown time but you very STRONG\n Q:One For All ", nil, nil, "weapon_zs_soul")
+}, 5, "Душа Тоя???Невозможно.Большая уязвимость к баракотам,дает 100 скорости,чинильная станция лучше на 100%,вы не взорветесь!Хотя смысл все объяснять?\n+400% Knockdown time but you very STRONG\n Q:One For All ", nil, nil, "weapon_zs_soul")
 GM:AddSkillModifier(trinket, SKILLMOD_SPEED, 100)
 GM:AddSkillModifier(trinket, SKILLMOD_FIELD_RANGE_MUL, 1)
 GM:AddSkillModifier(trinket, SKILLMOD_FIELD_DELAY_MUL, -1)
@@ -1612,7 +1665,7 @@ trinket = GM:AddTrinket("Soul of Toyka", "toykasoul", false, nil, {
 	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 7.697, y = 7.697 }, color = Color(61, 0, 230, 125), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core_2+"] = { type = "Sprite", sprite = "effects/splashwake1", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 10, y = 10 }, color = Color(95, 51, 216, 189), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 2, 0), angle = Angle(0, 0, 0), size = Vector(0.349, 0.349, 0.349), color = Color(82, 19, 124, 100), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} }
-}, nil, "Душа бочкобога и дизбалансобога!Минус только один - стрелять запрещено\nSoul of gods of explosive barrels and disbalance god, minus only 1 - Fire is gone\n Q:Disbalance", nil, nil, "weapon_zs_soul")
+}, 5, "Душа бочкобога и дизбалансобога!Минус только один - стрелять запрещено\nSoul of gods of explosive barrels and disbalance god, minus only 1 - Fire is gone\n Q:Disbalance", nil, nil, "weapon_zs_soul")
 GM:AddSkillModifier(trinket, SKILLMOD_SPEED, 100)
 GM:AddSkillModifier(trinket, SKILLMOD_FIELD_RANGE_MUL, 1)
 GM:AddSkillModifier(trinket, SKILLMOD_FIELD_DELAY_MUL, -1)

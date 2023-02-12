@@ -372,6 +372,9 @@ end
 function meta:GetBloodArmor()
 	return self:GetDTInt(DT_PLAYER_INT_BLOODARMOR)
 end
+function meta:GetChargesActive()
+	return self:GetDTInt(DT_PLAYER_INT_ACTIV)
+end
 function meta:GetDCoins()
 	return self:GetDTFloat(DT_PLAYER_FLOAT_DOSET_COINS)
 end

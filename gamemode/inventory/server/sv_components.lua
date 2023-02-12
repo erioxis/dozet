@@ -9,6 +9,12 @@ GM.StarterTrinkets = {
 	"trinket_chemistry"
 	
 }
+GM.GetActiveTrinkets = {
+	"cons_pill_unk",
+	"cons_void",
+	"cons_mantle",
+	"cons_necronomicon"
+}
 GM.StarterSoul = {
 	"trinket_bleaksoul",  -- 1
 	"trinket_spiritess",  -- 2

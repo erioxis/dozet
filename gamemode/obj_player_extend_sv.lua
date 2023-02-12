@@ -167,6 +167,10 @@ function meta:ProcessDamage(dmginfo)
 			local g = GetTaper(attacker, "curse", 0.06)
 			dmginfo:SetDamage(dmginfo:GetDamage()*g)
 		end
+		attacker.ChargeDMG = (attacker.ChargeDMG or 1) + math.min(self:GetMaxHealth(),dmginfo:GetDamage())
+		if attacker:IsValidLivingHuman() and (attacker.ChargeDMG or 1) >= 1500 + (attacker:IsSkillActive(SKILL_PACIFISMIUM) and 3000 or 0) then 
+			attacker:SetChargesActive(attacker:GetChargesActive()+1)
+		end
 		if attacker:IsValidLivingHuman() and attacker:HasTrinket("sin_ego") then 
 			local g = GetTaper(attacker, "ego", 0.04)
 			dmginfo:SetDamage(dmginfo:GetDamage()*g)
@@ -212,7 +216,7 @@ function meta:ProcessDamage(dmginfo)
 			if (attacker:IsSkillActive(SKILL_BOUNTYKILLER) or self:GetZombieClassTable().Boss or self:GetZombieClassTable().DemiBoss) and !self:GetZombieClassTable().CrowDa and !self:GetZombieClassTable().Skeletal then
 				local mul = ((attacker:IsSkillActive(SKILL_BOUNTYKILLER) and 0.15 or 0) + (self:GetZombieClassTable().DemiBoss and 0.05 or self:GetZombieClassTable().Boss and 0.1 or 0))
 				attacker:SetProgress(attacker:GetProgress('bprog')+damage*mul, 'bprog')
-				local tbl = {"headshoter", "ind_buffer", "soulalteden", "ultra_at", "pearl"}
+				local tbl = {"headshoter", "ind_buffer", "soulalteden", "ultra_at", "pearl","broken_world"}
 				local hm = table.Random(tbl)
 				if attacker:GetProgress('bprog') >= 1500 * (attacker:GetProgress('bprogmul')+1) and !attacker:HasTrinket(hm) then
 					attacker:SetProgress(0, 'bprog')
@@ -1051,6 +1055,9 @@ end
 
 function meta:SetBloodArmor(armor)
 	self:SetDTInt(DT_PLAYER_INT_BLOODARMOR, armor)
+end
+function meta:SetChargesActive(charges)
+	self:SetDTInt(DT_PLAYER_INT_ACTIV, charges)
 end
 function meta:SetZArmor(armor)
 	self:SetDTInt(DT_PLAYER_INT_ZOMBIEARMOR, math.min(armor, self:GetMaxHealth()*2.5))
@@ -2434,10 +2441,10 @@ local demiboss = {
 	"comp_soul_status",
 	"comp_soul_melee", 
 	"comp_soul_hack",
-	"comp_soul_godlike",
-	"comp_soul_dd",
+	"comp_soul_godlike","comp_soul_godlike",
+	"comp_soul_dd","comp_soul_dd",
 	"comp_soul_booms",
-	"comp_soul_dosei"
+	"comp_soul_dosei","comp_soul_dosei"
 
 }
 local bossdrops1 = {
@@ -2464,7 +2471,7 @@ local bossdrops2 = {
 	"trinket_altbetsoul",  --15
 	"trinket_altlostsoul",  --16
 	"trinket_altgreedsoul",  --17
-	"trinket_altcainsoul",   --18
+	"trinket_altcainsoul","trinket_altcainsoul",   --18
 	"trinket_altlazarussoul",	-- 19
 	"trinket_altforsoul", -- 20
 	"trinket_altsoul",-- 21

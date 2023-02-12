@@ -13,6 +13,7 @@
 	util.AddNetworkString("zs_getacurse")
 	util.AddNetworkString("zs_zvols")
 	util.AddNetworkString("zs_nextboss")
+	util.AddNetworkString("zs_activate_trinket")
 	util.AddNetworkString("zs_deminextboss")
 	util.AddNetworkString("zs_classunlock")
 	util.AddNetworkString("zs_sigilcorrupted")
