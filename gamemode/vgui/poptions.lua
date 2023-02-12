@@ -131,6 +131,12 @@ function MakepOptions()
 	check:SizeToContents()
 	list2:AddItem(check)
 
+	check = vgui.Create("DCheckBoxLabel", Window)
+	check:SetText(translate.Get("op_voice"))
+	check:SetConVar("zs_voice_n")
+	check:SizeToContents()
+	list2:AddItem(check)
+
 
 
 	

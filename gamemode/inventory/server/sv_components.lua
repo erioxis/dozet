@@ -13,7 +13,11 @@ GM.GetActiveTrinkets = {
 	"cons_pill_unk",
 	"cons_void",
 	"cons_mantle",
-	"cons_necronomicon"
+	"cons_necronomicon",
+	"cons_chaos",
+	"cons_d4",
+	"cons_friendship",
+	"cons_timer"
 }
 GM.StarterSoul = {
 	"trinket_bleaksoul",  -- 1

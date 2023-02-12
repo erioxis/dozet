@@ -97,6 +97,7 @@
 	util.AddNetworkString("zs_trygetitem")
 	util.AddNetworkString("zs_updatealtselwep")
 	util.AddNetworkString("zs_invitem")
+	util.AddNetworkString("zs_t_activated")
 	util.AddNetworkString("zs_invgiven")
 	util.AddNetworkString("zs_wipeinventory")
 

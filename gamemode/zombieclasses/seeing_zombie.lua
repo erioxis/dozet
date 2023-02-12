@@ -8,11 +8,11 @@ CLASS.Help = "controls_zdreams"
 CLASS.Wave = 2 / 12
 
 CLASS.Health = 210
-CLASS.Points = CLASS.Health/GM.HumanoidZombiePointRatio
+CLASS.Points = CLASS.Health/GM.HumanoidZombiePointRatio*0.85
 
 CLASS.UsePlayerModel = true
 CLASS.SWEP = "weapon_zs_zombie_dreams"
-CLASS.Magical = true
+CLASS.Magical = false
 CLASS.Original = false
 CLASS.Variations = {"Zombie"}
 
@@ -33,15 +33,13 @@ if SERVER then
 			return true
 		end
 	end
-end
-if SERVER then
 	function CLASS:AltUse(pl)
 		pl:StartFeignDeath()
 	end
 
 	function CLASS:ProcessDamage(pl, dmginfo)
-		if dmginfo:GetAttacker():IsPlayer() and dmginfo:GetAttacker():IsSkillActive(SKILL_MAGIC) then
-			dmginfo:SetDamage(0)
+		if dmginfo:GetAttacker():IsPlayer() and dmginfo:GetInflictor().Magic then
+			dmginfo:ScaleDamage(0)
 		end
 	end
 end

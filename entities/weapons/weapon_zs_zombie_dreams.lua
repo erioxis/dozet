@@ -12,6 +12,20 @@ SWEP.AlertDelay = 2.75
 function SWEP:Reload()
 	self:SecondaryAttack()
 end
+function SWEP:SecondaryAttack()
+	self.BaseClass.SecondaryAttack(self)
+	if self:GetOwner():GetZombieClassTable().Magical and SERVER then
+		local ented = {}
+		for i = 1, 3 do
+			for _, ent in pairs(ents.FindInSphere(self:GetOwner():GetPos(), 124)) do
+				if ent:IsValid() and ent ~= self:GetOwner() and !ented[ent] then
+					ent:TakeDamage(self.MeleeDamage * 0.5, self:GetOwner(), self)
+					ented[ent] = true
+				end
+			end
+		end
+	end
+end
 
 function SWEP:PlayAttackSound()
 	self:EmitSound("npc/zombie/zo_attack"..math.random(2)..".wav", 70, math.random(87, 92))

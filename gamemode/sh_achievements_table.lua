@@ -366,14 +366,14 @@ GM.Statuses["bleed"] = {
 	Max = GM.MaxBleedDamage or 50,
 	Icon = Material("zombiesurvival/bleed.png")
 }
-GM.Statuses["enfeeb"] = {
+GM.Statuses["enfeeble"] = {
 	Color = Color(255, 50, 50),
 	Name = "enfeeb",
 	ValFunc = statusValueFunction("enfeeble"),
 	Max = 10,
 	Icon = Material("zombiesurvival/infeeble.png")
 }
-GM.Statuses["dim_vision"] = {
+GM.Statuses["dimvision"] = {
 	Color = Color(90, 90, 90),
 	Name = "dim_vision",
 	ValFunc = statusValueFunction("dimvision"),
@@ -408,7 +408,7 @@ GM.Statuses["frost"] = {
 	Max = 9,
 	Icon = Material("zombiesurvival/frost.png")
 }
-GM.Statuses["fright"] = {
+GM.Statuses["frightened"] = {
 	Color = Color(155, 0, 255),
 	Name = "frightened",
 	ValFunc = statusValueFunction("frightened"),
@@ -422,7 +422,7 @@ GM.Statuses["sickness"] = {
 	Max = 15,
 	Icon = Material("zombiesurvival/sickness.png")
 }
-GM.Statuses["burned"] =  {
+GM.Statuses["burn"] =  {
 	Color = Color(255, 120, 0),
 	Name = "burned",
 	ValFunc = statusValueFunction("burn"),
@@ -436,7 +436,7 @@ GM.Statuses["knockdown"] =  {
 	Max = 5,
 	Icon = Material("zombiesurvival/knock_down.png")
 }
-GM.Statuses["strong"] =   {
+GM.Statuses["strengthdartboost"] =   {
 	Color = Color(200, 100, 90),
 	Name = "strength",
 	ValFunc = statusValueFunction("strengthdartboost"),
@@ -450,7 +450,7 @@ GM.Statuses["sticky"] =   {
 	Max = 7,
 	Icon = Material("zombiesurvival/strength_shot.png")
 }
-GM.Statuses["adrenaline"] = {
+GM.Statuses["adrenalineamp"] = {
 	Color = Color(170, 200, 120),
 	Name = "adrenaline",
 	ValFunc = statusValueFunction("adrenalineamp"),
@@ -471,14 +471,14 @@ GM.Statuses["holly"] =  {
 	Max = 20,
 	Icon = Material("zombiesurvival/cursed.png")
 }
-GM.Statuses["speed2"] = {
+GM.Statuses["healdartboost"] = {
 	Color = Color(130, 220, 110),
 	Name = "speed",
 	ValFunc = statusValueFunction("healdartboost"),
 	Max = 10,
 	Icon = Material("zombiesurvival/speed_up.png")
 }
-GM.Statuses["defence"] =  {
+GM.Statuses["medrifledefboost"] =  {
 	Color = Color(90, 120, 220),
 	Name = "defence",
 	ValFunc = statusValueFunction("medrifledefboost"),
@@ -520,7 +520,7 @@ GM.Statuses["bloodrage"] =  {
 	Max = 6,
 	Icon = Material("zombiesurvival/bleed.png")
 }
-GM.Statuses["curse"] =  {
+GM.Statuses["cursed"] =  {
 	Color = Color(100, 100, 100),
 	Name = "curse",
 	ValFunc = statusValueFunction("cursed"),
@@ -534,14 +534,14 @@ GM.Statuses["rot"] = {
 	Max = GM.MaxRotDamage or 100,
 	Icon = Material("zombiesurvival/rot.png")
 }
-GM.Statuses["hollow"] = {
+GM.Statuses["hollowing"] = {
 	Color = Color(100, 100, 100),
 	Name = "hollow",
 	ValFunc = statusValueFunction("hollowing"),
 	Max = 1000,
 	Icon = Material("zombiesurvival/hallow.png")
 }
-GM.Statuses["mantle"] =	{
+GM.Statuses["hshield"] =	{
 	Color = Color(255, 255, 255),
 	Name = "mantle",
 	ValFunc = statusValueFunction("hshield"),
@@ -554,4 +554,11 @@ GM.Statuses["target"] =	{
 	ValFunc = statusValueFunction("target"),
 	Max = 10,
 	Icon = Material("zombiesurvival/headshot_stacks.png")
+}
+GM.Statuses["death"] =	{
+	Color = Color(209, 40, 40),
+	Name = "death",
+	ValFunc = statusValueFunction("death"),
+	Max = 100,
+	Icon = Material("zombiesurvival/reaper.png")
 }

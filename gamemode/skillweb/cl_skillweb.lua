@@ -591,12 +591,12 @@ function PANEL:Init()
 
 		local frame = Derma_StringRequest(translate.ClientGet(MySelf ,"add_xp"), "Here XP!.", "XP",
 		function(xp)
-			--if tonumber(xp)
+			if tonumber(xp) == nil then return end
 			xp = tonumber(xp)
 			if xp <= 0 then
 				xp = 1
 			end
-			if MySelf:GetDCoins() - xp + 1 <= 0 	then self:DisplayMessage(translate.ClientGet(MySelf ,"no_ach_xp"), COLOR_GREEN)  return end 
+			if MySelf:GetDCoins() - xp + 1 <= 0 then self:DisplayMessage(translate.ClientGet(MySelf ,"no_ach_xp"), COLOR_GREEN)  return end 
 				net.Start("zs_xp_ach")
 				net.WriteFloat(xp)
 				net.SendToServer() 

@@ -336,6 +336,7 @@ killicon.Add("weapon_zs_fryingpan", "zombiesurvival/killicons/weapon_zs_fryingpa
 killicon.Add("weapon_zs_pot", "zombiesurvival/killicons/weapon_zs_pot")
 killicon.Add("weapon_zs_plank", "zombiesurvival/killicons/weapon_zs_plank")
 killicon.Add("weapon_zs_hammer", "zombiesurvival/killicons/weapon_zs_hammer2")
+killicon.Add("weapon_zs_envy_hammer", "zombiesurvival/killicons/weapon_zs_hammer2")
 killicon.Add("weapon_zs_shovel", "zombiesurvival/killicons/weapon_zs_shovel")
 killicon.Add("weapon_zs_hook", "zombiesurvival/killicons/weapon_zs_hook2")
 killicon.Add("weapon_zs_meattenderizer", "zombiesurvival/killicons/weapon_zs_meattenderizer2")
@@ -465,6 +466,7 @@ killicon.Add("projectile_moneyauto", "zombiesurvival/soul.png")
 
 
 
+killicon.Add("status_death", "zombiesurvival/reaper.png", Color(51, 51, 51))
 killicon.Add("weapon_zs_cursed", "zombiesurvival/reaper.png", Color(255, 1, 255))
 killicon.Add("weapon_zs_defence_trinket_d", "zombiesurvival/defense.png", Color(255, 0, 0))
 killicon.Add("weapon_zs_melee_trinket_d", "zombiesurvival/defense.png", Color(255, 0, 0))

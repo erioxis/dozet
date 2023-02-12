@@ -26,6 +26,7 @@ function ENT:EntityTakeDamage(ent, dmginfo)
 
 			ent.DamagedBy[applier] = (ent.DamagedBy[applier] or 0) + extradamage
 			applier.StrengthBoostDamage = (applier.StrengthBoostDamage or 0) + extradamage
+			if GAMEMODE.ObjectiveMap then return end
 			local points = math.min(50,extradamage / ent:GetMaxHealth() * ent:GetZombieClassTable().Points)
 			applier.PointQueue = applier.PointQueue + points
 

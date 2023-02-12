@@ -406,11 +406,11 @@ concommand.Add("zs_dismantle", function(sender, command, arguments)
 	end
 
 	if invitem and not sender:HasInventoryItem(invitem) then return end
-
 	local active = sender:GetActiveWeapon()
 	local contents, wtbl = active:GetClass()
 	if not invitem then
 		wtbl = weapons.Get(contents)
+		if wtbl.RemoveOnGive then return end
 		if wtbl.NoDismantle or not (wtbl.AllowQualityWeapons and !wtbl.CanDismantle or wtbl.PermitDismantle) then
 			GAMEMODE:ConCommandErrorMessage(sender, translate.ClientGet(sender, "cannot_dismantle"))
 			return
@@ -685,7 +685,7 @@ concommand.Add("zsdropweapon", function(sender, command, arguments)
 	if sender:HasTrinket("flower_g") then sender:TakeInventoryItem("trinket_flower_g")  return end
 	if invitem == "trinket_flower" then 	sender:TakeInventoryItem("trinket_flower") return end
 	if invitem == "trinket_clever" then  return end
-
+	if (currentwep and currentwep:IsValid() and currentwep).RemoveOnGive then return end
 	if invitem or (currentwep and currentwep:IsValid()) then
 		local ent = invitem and sender:DropInventoryItemByType(invitem) or sender:DropWeaponByType(currentwep:GetClass())
 		if ent and ent:IsValid() then
@@ -887,6 +887,7 @@ concommand.Add("zsgiveweapon", function(sender, command, arguments)
 	
 
 	local currentwep = sender:GetActiveWeapon()
+	if (currentwep and currentwep:IsValid() and currentwep).RemoveOnGive then return end
 	if not invitem and not IsValid(currentwep) then return end
 
 	local ent = GAMEMODE:TryGetLockOnTrace(sender, arguments)
@@ -929,6 +930,7 @@ concommand.Add("zsgiveweaponclip", function(sender, command, arguments)
 
 	local currentwep = sender:GetActiveWeapon()
 	if currentwep and currentwep:IsValid() then
+		if currentwep.RemoveOnGive then return end
 		local ent = GAMEMODE:TryGetLockOnTrace(sender, arguments)
 		if ent:IsSkillActive(SKILL_SAMODOS) then 
 			GAMEMODE:ConCommandErrorMessage(sender, translate.ClientGet(sender, "have_skill_samodos")) 

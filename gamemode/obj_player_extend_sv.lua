@@ -168,7 +168,8 @@ function meta:ProcessDamage(dmginfo)
 			dmginfo:SetDamage(dmginfo:GetDamage()*g)
 		end
 		attacker.ChargeDMG = (attacker.ChargeDMG or 1) + math.min(self:GetMaxHealth(),dmginfo:GetDamage())
-		if attacker:IsValidLivingHuman() and (attacker.ChargeDMG or 1) >= 1500 + (attacker:IsSkillActive(SKILL_PACIFISMIUM) and 3000 or 0) then 
+		if attacker:IsValidLivingHuman() and (attacker.ChargeDMG or 1) >= 2500 + (attacker:IsSkillActive(SKILL_PACIFISMIUM) and 3000 or 0) then 
+			attacker.ChargeDMG = 0
 			attacker:SetChargesActive(attacker:GetChargesActive()+1)
 		end
 		if attacker:IsValidLivingHuman() and attacker:HasTrinket("sin_ego") then 
@@ -231,22 +232,11 @@ function meta:ProcessDamage(dmginfo)
 			end
 			dmginfo:SetDamage(dmginfo:GetDamage() * math.Clamp(attacker:GetModelScale() * attacker:GetModelScale(), 0.05, 5))
 			if attacker:HasTrinket("soulalteden") then
-				attacker.RandomDamage = attacker.RandomDamage + math.randomr(1,5,5,attacker)
+				attacker.RandomDamage = attacker.RandomDamage + math.random(1,5)
 
 				if attacker.RandomDamage >= 100 then
-														local buff = {
-															
-							"holly",
-							"medrifledefboost",
-							"renegade",
-							"strengthdartboost",
-							"healdartboost",
-							"sticky",
-							"bloodlust"
-						}
-						attacker.RandomDamage = 0
-						attacker:GiveStatus(buff[math.random(1, #buff)],math.random(10,50))
-
+					attacker.RandomDamage = 0
+					attacker:GiveRandomStatus(math.random(10,50), {"death","hollowing","cursed","bleed","poison"})
 				end
 			end
 			if attacker:IsSkillActive(SKILL_OLD_GOD1) then
@@ -899,6 +889,17 @@ function meta:ProcessDamage(dmginfo)
 
 end
 
+
+function meta:GiveRandomStatus(time, exlude)
+	local status = {}
+	for k,v in pairs(GAMEMODE.Statuses) do 
+		if exlude and table.HasValue(exlude,k) then continue end
+		table.insert(status, #status+1,k)
+		--print(k)
+	end
+	local give = table.Random(status)
+	self:GiveStatus(give, time)
+end
 
 GM.TrinketRecharges = {
 	reactiveflasher = {"ReactiveFlashMessage", "LastReactiveFlash", "Reactive Flasher", 35},
@@ -1594,6 +1595,7 @@ function meta:DropAllWeapons()
 	local vVel = self:GetVelocity()
 	local zmax = self:OBBMaxs().z * 0.75
 	for _, wep in pairs(self:GetWeapons()) do
+		if wep.RemoveOnGive then continue  end
 		if wep:IsValid() then
 			local ent = self:DropWeaponByType(wep:GetClass())
 			if ent and ent:IsValid() then
@@ -2485,6 +2487,7 @@ local bossdrops2 = {
 }
 
 function meta:MakeDemiBossDrop(killer)
+	if math.random(1,3) ~= 1 then return end
 	local drop = table.Random(demiboss)
 	local inv = string.sub(drop, 1, 4) ~= "weap"
 

@@ -5,7 +5,7 @@ GM.Website	=	"https://github.com/erioxis/dozet"
 
 -- No, adding a gun doesn't make your name worth being here.
 GM.Credits = {
-	{"Version", "", "6.9.5"},
+	{"Version", " Бета А", "7.0.0"}, -- Привет.
 	{"erioxis", "Phantom coder", "dead"},
 	{"Nullted", "", "RU-ENG Translation"},
 	{"Bro 3", "", "Some models"}
@@ -685,8 +685,9 @@ end
 
 -- This is actually only called by the engine on the server but it's here in case the client wants to know.
 local TEAM_SPECTATOR = TEAM_SPECTATOR
+local PInfo = FindMetaTable("Player").GetInfo
 function GM:PlayerCanHearPlayersVoice(listener, talker)
-	return PTeam(listener) == PTeam(talker) or PTeam(listener) == TEAM_SPECTATOR, false
+	return (PInfo(listener, "zs_voice_n") == PInfo(talker, "zs_voice_n") and PInfo(listener, "zs_voice_n") ~= "1" or PTeam(listener) == PTeam(talker)) or PTeam(listener) == TEAM_SPECTATOR, false
 end
 GM.PlayerCanHearPlayersVoiceDefault = GM.PlayerCanHearPlayersVoice
 

@@ -647,9 +647,9 @@ function GM:InitPostEntity()
 		ErrorNoHalt("Lmao why you use dozet")
 	end
 	local v = self.Credits[1]
-	if GetConVar("hostname"):GetString() ~= "Дозет["..v[3].."|ДОСТИЖЕНИЯ|БОТЫ|СКИЛЛЫ]" then
+	if GetConVar("hostname"):GetString() ~= "Дозет["..v[3]..v[2].."|ДОСТИЖЕНИЯ|СКИЛЛЫ]" then
 
-		RunConsoleCommand("hostname", "Дозет["..v[3].."|ДОСТИЖЕНИЯ|БОТЫ|СКИЛЛЫ]")
+		RunConsoleCommand("hostname", "Дозет["..v[3]..v[2].."|ДОСТИЖЕНИЯ|СКИЛЛЫ]")
 
 	end
 end
@@ -1638,8 +1638,9 @@ function GM:Think()
 
 		if self:GetEscapeStage() == ESCAPESTAGE_DEATH then
 			for _, pl in pairs(allplayers) do
-				if P_Team(pl) == TEAM_HUMAN then
-					pl:TakeSpecialDamage(50, DMG_ACID)
+				if P_Team(pl) == TEAM_HUMAN and !pl.DeathUsed then
+					pl:GiveStatus("death",10)
+					pl.DeathUsed = true
 				end
 			end
 		end
@@ -2720,6 +2721,7 @@ function GM:PlayerInitialSpawnRound(pl)
 	pl.Headshots = 0
 	pl.BrainsEaten = 0
 	pl.zKills = 0
+	pl.DeathUsed = false
 	pl.RespawnedTime = CurTime() + 5
 	if self.NoPhoenix[pl:UniqueID()] then
 		pl.RedeemedOnce = false
