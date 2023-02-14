@@ -61,7 +61,10 @@ function GM:Move(pl, move)
 			M_SetMaxSpeed(move, M_GetMaxSpeed(move) * 1.90)
 			M_SetMaxClientSpeed(move, M_GetMaxClientSpeed(move) * 1.90)
 		end
-
+		local wep = P_GetActiveWeapon(pl)
+		if wep.Move then
+			wep:Move(move) 
+		end
 		if P_CallZombieFunction1(pl, "Move", move) then return end
 	end
 

@@ -444,6 +444,8 @@ SKILL_AMULET_15 = 416
 SKILL_GODHEART = 417
 SKILL_ACTIVATE_THIS = 418
 SKILL_PACIFISMIUM = 419
+SKILL_DONATE17 = 420
+SKILL_DONATE18 = 421
 
 
 
@@ -1932,6 +1934,12 @@ GM:AddSkillModifier(SKILL_DONATE15, SKILLMOD_SPEED, 10)
 GM:AddSkill(SKILL_DONATE16, "Donate XVI", GOOD.."+5% Bullet Damage\n"..GOOD.."Thx for MarioL",
 				                                                            	20,			26,					{SKILL_DONATE15}, TREE_DONATETREE)
 GM:AddSkillModifier(SKILL_DONATE16, SKILLMOD_DAMAGE, 0.05)
+GM:AddSkill(SKILL_DONATE17, "Donate XVII", GOOD.."-9% Damage taken\n"..GOOD.."Thx for Добрый",
+				                                                            	18,			25,					{SKILL_DONATE16}, TREE_DONATETREE)
+GM:AddSkillModifier(SKILL_DONATE17, SKILLMOD_DMG_TAKEN, -0.09)
+GM:AddSkill(SKILL_DONATE18, "Donate XVIII", GOOD.."+2.5 luck\n"..GOOD.."Thx for Добрый",
+				                                                            	19,			24,					{SKILL_DONATE17}, TREE_DONATETREE)
+GM:AddSkillModifier(SKILL_DONATE18, SKILLMOD_LUCK, 2.5)
 
 
 SKILL_CHALLENGER1 = 215

@@ -16,9 +16,21 @@ CLASS.GigaTim = true
 
 CLASS.Points = 40
 
-CLASS.SWEP = "weapon_zs_luxoidz"
-
 CLASS.Model = Model("models/Gigabreen/Gigabreen.mdl")
+
+CLASS.WeaponsWave = {
+	"weapon_zs_devourer", -- 1
+	"weapon_zs_slime", -- 2
+	"weapon_zs_butcherknifez", -- 3
+	"weapon_zs_hammer_x", --  4
+	"weapon_zs_energyswordz",-- 5
+	"weapon_zs_crowbar", --  6
+	"weapon_zs_energyswordz_dasher", -- 7
+	"weapon_zs_bust_z",-- 8
+	"weapon_zs_mprime",-- 9
+	"weapon_zs_luxoidz",-- 10
+	"weapon_zs_loy_z"-- 11
+}
 
 
 CLASS.Health = 1200

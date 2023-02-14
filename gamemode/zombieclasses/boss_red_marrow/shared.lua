@@ -13,6 +13,8 @@ CLASS.Points = 30
 
 CLASS.Model = Model("models/player/skeleton.mdl")
 
+CLASS.NoBypass = true
+
 CLASS.VoicePitch = 0.65
 
 CLASS.SWEP = "weapon_zs_redmarrow"

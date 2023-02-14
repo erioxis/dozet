@@ -22,7 +22,7 @@ function ENT:PlayerHurt(victim, attacker, healthleft, damage)
 			applier.DamageDealt[TEAM_HUMAN] = applier.DamageDealt[TEAM_HUMAN] + attributeddamage
 			victim.DamagedBy[applier] = (victim.DamagedBy[applier] or 0) + attributeddamage
 			if GAMEMODE.ObjectiveMap then return end
-			local points = attributeddamage / victim:GetMaxHealth() * victim:GetZombieClassTable().Points 
+			local points = math.min(victim:Health(),attributeddamage) / victim:GetMaxHealth() * victim:GetZombieClassTable().Points 
 			applier.PointQueue = applier.PointQueue + points
 
 			local pos = victim:GetPos()

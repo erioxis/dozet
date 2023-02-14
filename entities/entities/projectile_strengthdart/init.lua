@@ -20,22 +20,6 @@ function ENT:Hit(vHitPos, vHitNormal, eHitEntity, vOldVelocity)
 					status.DieTime = CurTime() + (self.BuffDuration or 10)
 					status.Applier = owner
 					taper = taper * 0.5
-				elseif	pl:IsValidLivingHuman() and pl ~= owner then
-					local alt = self:GetDTBool(0)
-					local strstatus = pl:GiveStatus(alt and "medrifledefboost" or "strengthdartboost", (alt and 0.1 or 0.2) * (self.BuffDuration or 10))
-					strstatus.Applier = owner
-					owner:HealPlayer(pl, self.Heal * taper)
-					local txt = alt and translate.Get("buff_mdart") or translate.Get("buff_bdart")
-						net.Start("zs_buffby")
-						net.WriteEntity(owner)
-						net.WriteString(txt)
-					net.Send(pl)
-
-					net.Start("zs_buffwith")
-						net.WriteEntity(pl)
-						net.WriteString(txt)
-					net.Send(owner)
-					taper = taper * 0.5
 				end
 			end
 		end

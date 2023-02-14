@@ -16,7 +16,7 @@ SWEP.HoldType = "fist"
 
 SWEP.WalkSpeed = SPEED_NORMAL
 SWEP.OldWalkSpeed = 0
-
+SWEP.ZombieCanPickup = true
 SWEP.MeleeDamage = 65
 SWEP.DamageType = DMG_CLUB
 SWEP.UppercutDamageMultiplier = 3

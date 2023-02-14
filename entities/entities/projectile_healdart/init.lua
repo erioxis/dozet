@@ -65,14 +65,10 @@ function ENT:AttachToPlayer(vHitPos, eHitEntity)
 		local taper = 1
 		for _, pl in pairs(ents.FindInSphere(self:GetPos(), 34)) do
 			if WorldVisible(self:LocalToWorld(Vector(0, 0, 30)), pl:NearestPoint(self:LocalToWorld(Vector(0, 0, 30)))) then
-			
 				if pl:IsValidLivingZombie() then
 					pl:TakeSpecialDamage(self.Heal * 0.2 * (owner.BulletMul or 1)/(pl:GetZombieClassTable().Boss and 10 or 1) * taper, DMG_ACID,owner, self:GetOwner():GetActiveWeapon())
 					pl:PoisonDamage(33 * (owner.BulletMul or 1)/(pl:GetZombieClassTable().Boss and 10 or 1) * taper, owner, self)
 					taper = taper * 0.3
-				elseif	pl:IsValidLivingHuman() then
-					owner:HealPlayer(pl, self.Heal * taper)
-					taper = taper * 0.6
 				end
 			end
 		end
@@ -123,9 +119,9 @@ function ENT:Hit(vHitPos, vHitNormal, eHitEntity, vOldVelocity)
 				owner:CenterNotify(COLOR_RED, translate.Format("frail_healdart_warning", eHitEntity:GetName()))
 				self:EmitSound("buttons/button8.wav", 70, math.random(115,128))
 				self:DoRefund(owner)
-			elseif not (owner:IsSkillActive(SKILL_RECLAIMSOL) and ehithp >= ehitmaxhp) then
+			elseif not (owner:IsSkillActive(SKILL_RECLAIMSOL) and ehithp >= ehitmaxhp) and !owner:IsSkillActive(SKILL_PHIK) then
 				eHitEntity:GiveStatus("healdartboost", self.BuffDuration or 10)
-				owner:HealPlayer(eHitEntity, self.Heal * (owner:IsSkillActive(SKILL_PHIK) and 0.5 or 1))
+				owner:HealPlayer(eHitEntity, self.Heal)
 			else
 				self:DoRefund(owner)
 			end

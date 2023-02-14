@@ -6,6 +6,7 @@ SWEP.ZombieOnly = true
 SWEP.MeleeDamage = 31
 SWEP.OriginalMeleeDamage = SWEP.MeleeDamage
 SWEP.Primary.Delay = 0.41
+SWEP.ZombieCanPickup = true
 
 function SWEP:OnMeleeHit(hitent, hitflesh, tr)
 	if not hitent:IsPlayer() then

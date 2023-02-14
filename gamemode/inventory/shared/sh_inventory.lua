@@ -179,14 +179,14 @@ GM:AddInventoryItemData("cons_friendship",		trs("c_friendship"),			trs("c_friend
 			tabled[v] = v
 		end
 	end
-	if table.Count(tabled) <= 1 then return end
+	if table.Count(tabled) < 1 then return end
 	local healed = NULL
 	for i=1,2 do
 		local heal = table.Random(tabled)
 		if healed == heal then
 			tabled[heal] = nil
 			heal = table.Random(tabled)
-			PrintTable(tabled)
+			--PrintTable(tabled)
 		end
 		if heal:IsValid() then
 			healed = heal
@@ -221,11 +221,12 @@ GM:AddInventoryItemData("cons_pill_unk",		trs("c_pill"),			trs("c_pill_d"),					
 		pl:TakeDamage(pl:Health()*0.25, pl, pl) 
 	else 
 		local melee = (pl:GetActiveWeapon() and pl:GetActiveWeapon().IsMelee or false)
-		pl:GiveAmmo((melee and 5 or 20), (pl:GetActiveWeapon() and !melee and pl:GetActiveWeapon():GetPrimaryAmmoType() or "scrap")) 
+		local ammo = (!melee and pl:GetResupplyAmmoType() or "scrap")
+		pl:GiveAmmo((melee and 5 or 20),ammo) 
 	end
 end,2)
 GM:AddInventoryItemData("cons_mantle",		trs("c_mantle"),			trs("c_mantle_d"),								"models/props_c17/trappropeller_lever.mdl", 2, nil, nil, function(pl) 
-	pl.HolyMantle = 1
+	pl.HolyMantle = pl.HolyMantle+1
 end,5)
 GM:AddInventoryItemData("cons_necronomicon",		trs("c_necronomicon"),			trs("c_necronomicon_d"),								"models/props_c17/trappropeller_lever.mdl", 2, nil, nil, function(pl) 
 	for k,v in pairs(team.GetPlayers(TEAM_UNDEAD)) do
@@ -1463,7 +1464,7 @@ GM:AddSkillModifier(trinket, SKILLMOD_LUCK, 32)
 
 
 GM:AddSkillModifier(GM:AddTrinket(trs("t_headshoter"), "headshoter", false, supveles, supweles, 2, trs("t_d_headshoter"), nil, nil, "weapon_zs_help_trinket"), SKILLMOD_HEADSHOT_MUL, 0.3)
-GM:AddSkillModifier(GM:AddTrinket(trs("t_pearl"), "headshoter", false, supveles, supweles, 3, trs("t_d_pearl"), nil, nil, "weapon_zs_help_trinket"), SKILLMOD_ADD_STATUS, 0.09)
+GM:AddSkillModifier(GM:AddTrinket(trs("t_pearl"), "pearl", false, supveles, supweles, 3, trs("t_d_pearl"), nil, nil, "weapon_zs_help_trinket"), SKILLMOD_ADD_STATUS, 0.09)
 GM:AddTrinket(trs("t_broken_world"), "broken_world", false, supveles, supweles, 3, trs("t_d_broken_world"), nil, nil, "weapon_zs_help_trinket")
 GM:AddSkillModifier(GM:AddTrinket(trs("t_ind_buffer"), "ind_buffer", false, {
 	["base"] = { type = "Model", model = "models/props_junk/glassjug01.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3.381, 2.617, 2.062), angle = Angle(180, 12.243, 0), size = Vector(0.6, 0.6, 0.6), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
@@ -1932,7 +1933,7 @@ GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 10)
 GM:AddSkillModifier(trinket, SKILLMOD_SPEED, 50)
 GM:AddSkillModifier(trinket, SKILLMOD_LUCK, 6)
 
-trinket, soul = GM:AddTrinket("Soul of Keeper", "altgreedsoul", false, nil, {
+trinket, soul = GM:AddTrinket("Soul of Alt Keeper", "altgreedsoul", false, nil, {
 	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 10.697, y = 10.697 }, color = Color(21, 255, 1, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core_2+"] = { type = "Sprite", sprite = "effects/splashwake1", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 30, y = 30 }, color = Color(120, 0, 255, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 2, 0), angle = Angle(0, 0, 0), size = Vector(0.349, 0.349, 0.349), color = Color(55, 0, 255, 255), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} }

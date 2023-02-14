@@ -5,7 +5,8 @@ GM.Website	=	"https://github.com/erioxis/dozet"
 
 -- No, adding a gun doesn't make your name worth being here.
 GM.Credits = {
-	{"Version", " Бета А", "7.0.0"}, -- Привет.
+	{"Version", " Бета Б", "7.0.0"}, -- Привет.
+	{"Season of ", "zombie buffs and code optimisation", "XD"},
 	{"erioxis", "Phantom coder", "dead"},
 	{"Nullted", "", "RU-ENG Translation"},
 	{"Bro 3", "", "Some models"}
@@ -927,9 +928,6 @@ function GM:IsSpecialPerson(pl, image)
 	elseif pl:IsBot() then
 		img = "icon16/wrench_orange.png"
 		tooltip = trs("bot_sp")
-	elseif pl:IsUserGroup("vip_1") or pl:IsUserGroup("vip_1_nav") then
-		img = "noxiousnet/noxicon.png"
-		tooltip = trs("vip_sp")
 	elseif pl:SteamID() == "STEAM_0:1:196107962" then
 		img = "noxiousnet/noxicon.png"
 		tooltip = trs("nickmarlya_sp")
@@ -945,9 +943,15 @@ function GM:IsSpecialPerson(pl, image)
     elseif pl:SteamID() == "STEAM_0:1:157024537" then
 		img = "noxiousnet/noxicon.png"
 		tooltip = "Old Player"
+    elseif pl:SteamID() == "STEAM_0:0:425830924" then
+		img = "noxiousnet/goody.png"
+		tooltip =  trs("ap_gg")
 	elseif pl:IsBot() then
 		img = "icon16/wrench_orange.png"
 		tooltip = trs("bot_sp")
+	elseif pl:IsUserGroup("vip_1") or pl:IsUserGroup("vip_1_nav") then
+		img = "noxiousnet/noxicon.png"
+		tooltip = trs("vip_sp")
 	end
 
 	if img then

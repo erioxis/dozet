@@ -1461,11 +1461,11 @@ function GM:Think()
 					pl:GiveStatus("medrifledefboost", 1.3)
 				end
 
-				if time >= (pl.NextRegenerateMantle or 1) and pl.HolyMantle == 0 and pl:IsSkillActive(SKILL_HOLY_MANTLE) then
+				if time >= (pl.NextRegenerateMantle or 1) and pl.HolyMantle <= 0 and pl:IsSkillActive(SKILL_HOLY_MANTLE) then
 					pl.NextRegenerateMantle = time + math.max((27 - ((pl.Luck + pl.LuckAdd) / 3)) + self.GetWave() * 3,5)
 					pl.HolyMantle = pl.HolyMantle + 1
 				end
-				if pl.HolyMantle == 1 and pl:IsSkillActive(SKILL_HOLY_MANTLE) and pl:IsValid() and pl.MantleFix <= CurTime() then
+				if pl.HolyMantle >= 1 and pl:IsSkillActive(SKILL_HOLY_MANTLE) and pl:IsValid() and pl.MantleFix <= CurTime() then
                     pl:GiveStatus("hshield", 1.3, true)
 				end
 				if time >= pl.NextSleep and pl:IsSkillActive(SKILL_NOSEE) and self:GetWave() ~= 0 then
@@ -5021,6 +5021,9 @@ function GM:PlayerSpawn(pl)
 				pl:Give("weapon_zs_grenade_z")
 			end
 			pl:Give(classtab.SWEP)
+		end
+		if classtab.WeaponsWave then
+			pl:Give((classtab.WeaponsWave[(self:GetWave() or 1)] and classtab.WeaponsWave[(self:GetWave() or 1)] or classtab.WeaponsWave[1]))
 		end
 
 

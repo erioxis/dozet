@@ -13,7 +13,7 @@ if CLIENT then
 end
 
 SWEP.HoldType = "fist"
-
+SWEP.ZombieCanPickup = true
 SWEP.WalkSpeed = SPEED_NORMAL
 SWEP.OldWalkSpeed = 0
 

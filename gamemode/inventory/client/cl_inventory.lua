@@ -178,17 +178,22 @@ local colBGH = Color( 200, 200, 200, 5 )
 local blur = Material( "pp/blurscreen" )
 local function TrinketPanelPaint( self, w, h )
 	if categorycolors[ self.Category ] then
-		draw.RoundedBox( 2, 0, 0, w, h, ( self.Depressed or self.On ) and categorycolors[ self.Category ][ 1 ] or categorycolors[ self.Category ][ 2 ]  )
+		draw.RoundedBox( 2, 0, 0, w, h, ( self.Depressed or self.On or self.Category == INVCAT_CONSUMABLES and input.IsMouseDown(MOUSE_RIGHT) ) and categorycolors[ self.Category ][ 1 ] or categorycolors[ self.Category ][ 2 ]  )
 	end
-	
+
+	if self.Category == INVCAT_CONSUMABLES and input.IsMouseDown(MOUSE_RIGHT) and !(self.Hovered or self.On)then
+		colBG = HSVToColor(CurTime()*90 % 360, 1, 1)
+		colBG.a = 252
+	else
+		colBG = Color( 10, 10, 10, 252 )
+	end
 	draw.RoundedBox( 2, 2, 2, w - 4, h - 4, colBG )
-	
-	if self.On or self.Hovered then
+	if self.On or self.Hovered  then
 		draw.RoundedBox( 2, 2, 2, w - 4, h - 4, colBGH )
 	end
 
 	if self.SWEP then
-		draw.SimpleText( self.SWEP.PrintName, "ZSHUDFontTiny", w/2, h/2, Color( 255, 255, 255 ), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER )	
+		draw.SimpleText( self.SWEP.PrintName..(self.SWEP.BountyNeed and ":"..self.SWEP.BountyNeed or ""), "ZSHUDFontTiny", w/2, h/2, Color( 255, 255, 255 ), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER )	
 	end
 
 	return true
@@ -261,6 +266,9 @@ function GM:InventoryAddGridItem( item, category )
 
 		grid:AddItem( itempan )
 		grid:SortByMember( "Category" )
+		--if category == INVCAT_CONSUMABLES then
+			--itempan:SetTooltip("da")
+		--end
 
 		local mdlframe = vgui.Create("DPanel", itempan)
 		mdlframe:SetSize( (category ~= INVCAT_TRINKETS and (125 * screenscale) or (35 * screenscale)), 35 * screenscale )
@@ -353,14 +361,18 @@ function GM:OpenInventory()
 	if frame.btnMaxim and frame.btnMaxim:IsValid() then frame.btnMaxim:SetVisible( false ) end
 
 		local hpstat = vgui.Create("DEXChangingLabel", frame)
+
 		hpstat:SetFont("ZSHUDFontTiny")
+		hpstat:SetChangeFunction(function()
+			return 	hpstat:SetText(translate.Get("charges_active")..MySelf:GetChargesActive()) 
+					
+		end, true)
 		hpstat:SetTextColor(Color(216,95,95))
 		hpstat:SetContentAlignment(8)
 		hpstat:Dock(TOP)
 		hpstat:SizeToContents()
-		hpstat:SetChangeFunction(function()
-			return 		hpstat:SetText(translate.Get("charges_active")..MySelf:GetChargesActive())
-		end, true)
+
+		
 
 	local topspace = vgui.Create( "DPanel", frame )
 	topspace:Dock( TOP )

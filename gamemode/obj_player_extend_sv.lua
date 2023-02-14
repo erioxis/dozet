@@ -216,7 +216,7 @@ function meta:ProcessDamage(dmginfo)
 			end
 			if (attacker:IsSkillActive(SKILL_BOUNTYKILLER) or self:GetZombieClassTable().Boss or self:GetZombieClassTable().DemiBoss) and !self:GetZombieClassTable().CrowDa and !self:GetZombieClassTable().Skeletal then
 				local mul = ((attacker:IsSkillActive(SKILL_BOUNTYKILLER) and 0.15 or 0) + (self:GetZombieClassTable().DemiBoss and 0.05 or self:GetZombieClassTable().Boss and 0.1 or 0))
-				attacker:SetProgress(attacker:GetProgress('bprog')+damage*mul, 'bprog')
+				attacker:SetProgress(attacker:GetProgress('bprog')+(math.min(dmginfo:GetDamage()*mul,self:GetMaxHealth()*mul)), 'bprog')
 				local tbl = {"headshoter", "ind_buffer", "soulalteden", "ultra_at", "pearl","broken_world"}
 				local hm = table.Random(tbl)
 				if attacker:GetProgress('bprog') >= 1500 * (attacker:GetProgress('bprogmul')+1) and !attacker:HasTrinket(hm) then
@@ -329,6 +329,9 @@ function meta:ProcessDamage(dmginfo)
 			attacker:SetDPS(attacker:GetDPS() + damage)
 			timer.Create("DPS"..damage..attacker:Nick()..math.Rand(1,5)..damage*0.5, 1, 1, function() attacker:SetDPS(attacker:GetDPS() - damage1) end)
 		end
+		if self:GetZombieClassTable().NoBypass then
+			dmgbypass = false
+		end
 		return not dmgbypass and self:CallZombieFunction1("ProcessDamage", dmginfo)
 	end
 	
@@ -367,7 +370,7 @@ function meta:ProcessDamage(dmginfo)
 
     
 
-	if self:IsSkillActive(SKILL_HOLY_MANTLE) and self.HolyMantle == 1 and not self:HasGodMode() then
+	if self:IsSkillActive(SKILL_HOLY_MANTLE) and self.HolyMantle >= 1 and not self:HasGodMode() then
 		dmginfo:SetDamage(0)
 		net.Start("zs_holymantle")
 		net.Send(self)

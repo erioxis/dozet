@@ -22,7 +22,7 @@ SWEP.Description = translate.Get("wep_d_energysword_d")
 
 
 SWEP.Base = "weapon_zs_basemelee"
-SWEP.ZombieCanPickup = true
+
 SWEP.HoldType = "melee2"
 SWEP.DamageType = DMG_DISSOLVE
 SWEP.ViewModel = "models/weapons/c_crowbar.mdl"
@@ -31,13 +31,13 @@ SWEP.WorldModel = "models/weapons/w_knife_t.mdl"
 SWEP.UseHands = true
 SWEP.HitDecal = "Manhackcut"
 
-SWEP.MeleeDamage = 119
+SWEP.MeleeDamage = 45
 SWEP.MeleeRange = 99
 SWEP.MeleeSize = 2
 SWEP.Tier = 3
 
-SWEP.AllowQualityWeapons = true
-
+SWEP.AllowQualityWeapons = false
+SWEP.ZombieCanPickup = true
 SWEP.WalkSpeed = SPEED_NORMAL
 
 SWEP.Primary.Delay = 0.7

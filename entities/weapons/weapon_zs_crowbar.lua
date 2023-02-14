@@ -13,7 +13,7 @@ SWEP.WorldModel = "models/weapons/w_crowbar.mdl"
 
 SWEP.ShootSound = Sound("Metal.SawbladeStick")
 
-
+SWEP.ZombieCanPickup = true
 SWEP.Tier = 3
 
 SWEP.MeleeDamage = 45

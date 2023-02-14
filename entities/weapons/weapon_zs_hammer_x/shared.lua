@@ -15,7 +15,7 @@ SWEP.Primary.Ammo = "GaussEnergy"
 SWEP.Primary.Delay = 1
 SWEP.Primary.DefaultClip = 32
 
-
+SWEP.ZombieCanPickup = true
 
 SWEP.Secondary.ClipSize = 1
 SWEP.Secondary.DefaultClip = 1

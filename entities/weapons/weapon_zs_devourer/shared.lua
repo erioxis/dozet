@@ -7,7 +7,7 @@ SWEP.MeleeDamage = 34
 SWEP.SlowDownScale = 2
 SWEP.MeleeDamageType = DMG_SLASH
 SWEP.MeleeAnimationDelay = 0.11
-
+SWEP.ZombieCanPickup = true
 SWEP.Primary.Delay = 0.87
 
 SWEP.ViewModel = Model("models/weapons/v_pza.mdl")
