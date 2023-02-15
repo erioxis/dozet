@@ -975,7 +975,7 @@ local colBeam2 = Color(255, 255, 255)
 local colSmoke = Color(140, 160, 185, 160)
 local colGlow = Color(0, 0, 0)
 local exlude = {8,6,16,22,27,30,31,34,118,114,113,101,40,41,43,92,117,116,56,59,63,65,66,98,72,73,79,88,78,120,57,58}
-local exlude2 = {32,108,103,91,90}
+local exlude2 = {121,122,32,108,103,91,90}
 
 function PANEL:Paint(w, h)
 	local realtime = RealTime()

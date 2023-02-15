@@ -167,11 +167,7 @@ function meta:ProcessDamage(dmginfo)
 			local g = GetTaper(attacker, "curse", 0.06)
 			dmginfo:SetDamage(dmginfo:GetDamage()*g)
 		end
-		attacker.ChargeDMG = (attacker.ChargeDMG or 1) + math.min(self:GetMaxHealth(),dmginfo:GetDamage())
-		if attacker:IsValidLivingHuman() and (attacker.ChargeDMG or 1) >= 2500 + (attacker:IsSkillActive(SKILL_PACIFISMIUM) and 3000 or 0) then 
-			attacker.ChargeDMG = 0
-			attacker:SetChargesActive(attacker:GetChargesActive()+1)
-		end
+
 		if attacker:IsValidLivingHuman() and attacker:HasTrinket("sin_ego") then 
 			local g = GetTaper(attacker, "ego", 0.04)
 			dmginfo:SetDamage(dmginfo:GetDamage()*g)

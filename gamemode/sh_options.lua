@@ -469,11 +469,11 @@ GM:AddPointShopItem("biotic_grl",		ITEMCAT_GUNS,			3000,			"weapon_zs_biotic_grl
 GM:AddPointShopItem("smorning",		ITEMCAT_GUNS,			3000,			"weapon_zs_smorning")
 GM:AddPointShopItem("drill",		ITEMCAT_GUNS,			3000,			"weapon_zs_drill")
 -- Tier 7
-GM:AddAPointShopItem("sacredhh",			ITEMCAT_GUNS,			1250,			"weapon_zs_m6")
-GM:AddAPointShopItem("gaysseagle",   	ITEMCAT_GUNS,			1250,			"weapon_zs_gaeagle")
-GM:AddAPointShopItem("doomstick",   	ITEMCAT_GUNS,			1250,			"weapon_zs_doomstick")
-GM:AddAPointShopItem("zenith2",		ITEMCAT_GUNS,			1250,			"weapon_zs_zenithmega")
-GM:AddAPointShopItem("flamethrower",		ITEMCAT_GUNS,			1250,			"weapon_zs_flamethrower")
+GM:AddAPointShopItem("sacredhh",			ITEMCAT_GUNS,			2250,			"weapon_zs_m6")
+GM:AddAPointShopItem("gaysseagle",   	ITEMCAT_GUNS,			2250,			"weapon_zs_gaeagle")
+GM:AddAPointShopItem("doomstick",   	ITEMCAT_GUNS,			2250,			"weapon_zs_doomstick")
+GM:AddAPointShopItem("zenith2",		ITEMCAT_GUNS,			2250,			"weapon_zs_zenithmega")
+GM:AddAPointShopItem("flamethrower",		ITEMCAT_GUNS,			2250,			"weapon_zs_flamethrower")
 
 
 GM:AddPointShopItem("pistolammo",		ITEMCAT_AMMO,			9,				nil,							translate.Get("ammo_pistol").." (x24)",				nil,									"ammo_pistol",						function(pl) pl:GiveAmmo(25, "pistol", true) end)
@@ -548,8 +548,8 @@ GM:AddPointShopItem("pw7",			ITEMCAT_MELEE,			2500,			"weapon_zs_powerfists_t7")
 
 -- Tier 7
 --GM:AddPointShopItem("speed",			ITEMCAT_MELEE,			180600,			"weapon_zs_speed")
-GM:AddAPointShopItem("xouryc",			ITEMCAT_MELEE,			1250,			"weapon_zs_loy")
-GM:AddAPointShopItem("murasama",			ITEMCAT_MELEE,			1250,			"weapon_zs_murasama")
+GM:AddAPointShopItem("xouryc",			ITEMCAT_MELEE,			2250,			"weapon_zs_loy")
+GM:AddAPointShopItem("murasama",			ITEMCAT_MELEE,			2250,			"weapon_zs_murasama")
 -- Super Trinkets ------------------------------------------------------------------------------------------------------------------------------------------------
 --
 GM:AddPointShopItem("futureblu",			ITEMCAT_TRINKETS,		250,				"trinket_futureblu").SubCategory =								ITEMSUBCAT_TRINKETS_SUPER
@@ -701,7 +701,7 @@ GM:AddAPointShopItem("hint_doset",			ITEMCAT_OTHER,			25,				nil,							translat
 
 
 GM:AddAPointShopItem("speedx22",			ITEMCAT_MELEE,			8000,			"weapon_zs_speed")
-GM:AddAPointShopItem("bannahuyx222",			ITEMCAT_TOOLS,			2500,			"weapon_zs_banhammer")
+GM:AddAPointShopItem("bannahuyx222",			ITEMCAT_TOOLS,			4500,			"weapon_zs_banhammer")
 -- Tier 1
 GM:AddPointShopItem("cutlery",			ITEMCAT_TRINKETS,		10,				"trinket_cutlery").SubCategory =								ITEMSUBCAT_TRINKETS_DEFENSIVE
 GM:AddPointShopItem("boxingtraining",	ITEMCAT_TRINKETS,		10,				"trinket_boxingtraining").SubCategory =							ITEMSUBCAT_TRINKETS_MELEE

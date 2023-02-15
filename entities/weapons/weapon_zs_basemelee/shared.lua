@@ -69,9 +69,7 @@ function SWEP:Initialize()
 		self:Anim_Initialize()
 	end
 end
-function SWEP:Holster()
-	return true
-end
+
 function SWEP:SetBlock(bool)
    self:SetDTBool(31, bool)
 end
@@ -202,6 +200,7 @@ end
 
 function SWEP:Holster()
 	if (self:GetOwner():GetStatus("sticky")) then return false end
+	self.SwingingTrue = false
 	if CurTime() >= self:GetSwingEnd() then
 		if CLIENT then
 			self:Anim_Holster()
@@ -227,6 +226,8 @@ function SWEP:StartSwinging()
 		self:SendWeaponAnim(self.StartSwingAnimation)
 		self.IdleAnimation = CurTime() + self:SequenceDuration()
 	end
+	self.SwingingTrue = true
+	owner:ResetSpeed()
 	self:PlayStartSwingSound()
 
 	local armdelay = owner:GetMeleeSpeedMul()
@@ -239,7 +240,8 @@ end
 
 function SWEP:MeleeSwing()
 	local owner = self:GetOwner()
-
+	self.SwingingTrue = false
+	owner:ResetSpeed()
 	self:DoMeleeAttackAnim()
 
 	local tr = owner:CompensatedMeleeTrace(self.MeleeRange * (owner.MeleeRangeMul or 1), self.MeleeSize)

@@ -73,14 +73,8 @@ function CLASS:PlayerStepSoundTime(pl, iType, bWalking)
 end
 
 function CLASS:PlayDeathSound(pl)
-	pl:EmitSound("npc/antlion_guard/antlion_guard_die"..math_random(2)..".wav", 100, math_random(80, 90))
-
-	return true
-end
-
-function CLASS:PlayPainSound(pl)
-	pl:EmitSound("npc/combine_gunship/gunship_pain.wav", 75, math_random(85, 95))
-	pl.NextPainSound = CurTime() + 1.5
+	--pl:EmitSound("zombiesurvival/mp_dead.wav", 100, 100)
+	MySelf:EmitSound("zombiesurvival/mp_dead.wav", 100, 100)
 
 	return true
 end

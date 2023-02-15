@@ -446,6 +446,9 @@ SKILL_ACTIVATE_THIS = 418
 SKILL_PACIFISMIUM = 419
 SKILL_DONATE17 = 420
 SKILL_DONATE18 = 421
+SKILL_CRESCENDO1 = 422
+SKILL_CRESCENDO2 = 423
+SKILL_CRESCENDO3 = 424
 
 
 
@@ -570,6 +573,8 @@ SKILLMOD_IND_DMG_TAKEN = 117
 SKILLMOD_IND_CHANCE = 118
 SKILLMOD_HEADSHOT_MUL = 119
 SKILLMOD_DMG_TAKEN = 120
+SKILLMOD_HP_PER_WAVE = 121
+SKILLMOD_SP_PER_WAVE = 122
 
 local GOOD = "^"..COLORID_GREEN
 local BAD = "^"..COLORID_RED
@@ -757,6 +762,12 @@ GM:AddSkill(SKILL_MOTIONIII, translate.Get("skill_motion3"), GOOD..translate.Get
 																0,			-2,					{SKILL_D_SLOW}, TREE_SPEEDTREE)
 GM:AddSkill(SKILL_BACKPEDDLER, translate.Get("skill_backpeddler"), GOOD..translate.Get("skill_backpeddler_d1")..BAD..translate.Get("skill_backpeddler_d2")..BAD..translate.Get("skill_backpeddler_d3"),
 																-6,			0,					{}, TREE_SPEEDTREE)
+GM:AddSkill(SKILL_CRESCENDO1, translate.Get("skill_crescendo").."I", GOOD.."+3 "..translate.Get("hp_per_wave")..BAD.."-3 "..translate.Get("sp_per_wave"),
+																-6,			1,					{SKILL_BACKPEDDLER}, TREE_SPEEDTREE)
+GM:AddSkill(SKILL_CRESCENDO2, translate.Get("skill_crescendo").."II", GOOD.."+2 "..translate.Get("hp_per_wave")..BAD.."-2 "..translate.Get("sp_per_wave"),
+																-6,			2,					{SKILL_CRESCENDO1}, TREE_SPEEDTREE)
+GM:AddSkill(SKILL_CRESCENDO3, translate.Get("skill_crescendo").."III", GOOD.."+1 "..translate.Get("hp_per_wave")..BAD.."-1 "..translate.Get("sp_per_wave"),
+																-6,			3,					{SKILL_CRESCENDO2}, TREE_SPEEDTREE)
 GM:AddSkill(SKILL_PHASER, translate.Get("skill_phaser"), GOOD.."+15%"..translate.Get("barricadespeed")..BAD.."+15%"..translate.Get("sigilteleport"),
 																-1,			4,					{SKILL_D_WIDELOAD, SKILL_DRIFT}, TREE_SPEEDTREE)
 GM:AddSkill(SKILL_LAST_MAN, translate.Get("skill_last_man"), GOOD..translate.Get("skill_last_man_d1")..BAD..translate.Get("skill_last_man_d2"),
@@ -773,6 +784,7 @@ GM:AddSkill(SKILL_CURSEDHEALTH, translate.Get("skill_mda"), GOOD..translate.Get(
 																1,		    4.5,					{SKILL_CURSEDTRINKETS}, TREE_SPEEDTREE)
 GM:AddSkill(SKILL_OMEGA, translate.Get("skill_omega"), BAD..translate.Get("skill_omega_d1")..GOOD.."+50%"..translate.Get("m_curse"),
 																0,		    5,					{SKILL_CURSEDHEALTH}, TREE_SPEEDTREE)
+
 
 
 
@@ -1504,7 +1516,7 @@ GM:AddSkill(SKILL_ULUCK, translate.Get("skill_ultraluck"), GOOD.."+5"..translate
 SKILL_LUCKE = 162
 GM:AddSkillModifier(SKILL_LUCKE, SKILLMOD_POINT_MULTIPLIER, -0.1)
 GM:AddSkillModifier(SKILL_LUCKE, SKILLMOD_LUCK, 2)	
-GM:AddSkill(SKILL_LUCKY_UNLIVER, translate.Get("skill_luckstacker"), GOOD..translate.Get("skill_luckstacker_d1")..BAD..translate.Get("skill_luckstacker_d2"),
+GM:AddSkill(SKILL_LUCKY_UNLIVER, translate.Get("skill_luckstacker"), GOOD..translate.Get("skill_luckstacker_d1")..BAD.."-10 "..translate.Get("hp_per_wave"),
 	1,			-3,					{SKILL_LUCKE}, TREE_POINTTREE)
 GM:AddSkill(SKILL_LUCKE, translate.Get("skill_badluck"), NEUTRAL.."+2"..translate.Get("luck")..BAD.. "-10%"..translate.Get("p_mul"),
 	1,			-2,					{SKILL_POINTIIII}, TREE_POINTTREE)
@@ -2026,9 +2038,9 @@ GM:AddSkill(SKILL_USELESS_16, "Useless 16", GOOD.."-10% Medkit Cooldown",
 				                                                            	0,		    -2,					{SKILL_USELESS_15}, TREE_USELESSTREE)
 GM:AddSkillModifier(SKILL_USELESS_16, SKILLMOD_MEDKIT_COOLDOWN_MUL, -0.10)
 SKILL_USELESS_17 = 516
-GM:AddSkill(SKILL_USELESS_17, "Useless 17", GOOD.."meh take this,+7 skills points(secret iv?)",
+GM:AddSkill(SKILL_USELESS_17, "Useless 17", GOOD.."meh take this,+4 skills points(secret iv?)",
 				                                                            	-2,		    -2,					{SKILL_USELESS_16}, TREE_USELESSTREE)
-GM:AddSkillModifier(SKILL_USELESS_17, SKILLMOD_SPOINT, 8)
+GM:AddSkillModifier(SKILL_USELESS_17, SKILLMOD_SPOINT, 5)
 SKILL_USELESS_18 = 517
 GM:AddSkill(SKILL_USELESS_18, "Useless 18", GOOD.."-15% Dimvision effectiveness",
 				                                                            	-3,		    -1,					{SKILL_USELESS_17}, TREE_USELESSTREE)
@@ -2038,9 +2050,9 @@ GM:AddSkill(SKILL_USELESS_19, "Useless 19", GOOD.."+20% Medic Heal Mul",
 				                                                            	-3,		    -0,					{SKILL_USELESS_18}, TREE_USELESSTREE)
 GM:AddSkillModifier(SKILL_USELESS_19, SKILLMOD_MEDKIT_EFFECTIVENESS_MUL, 0.20)
 SKILL_USELESS_20 = 519
-GM:AddSkill(SKILL_USELESS_20, "Useless 20", GOOD.."+5 spoints",
+GM:AddSkill(SKILL_USELESS_20, "Useless 20", GOOD.."+2 spoints",
 				                                                            	-4,		    -0,					{SKILL_USELESS_19}, TREE_USELESSTREE)
-GM:AddSkillModifier(SKILL_USELESS_20, SKILLMOD_SPOINT, 5)
+GM:AddSkillModifier(SKILL_USELESS_20, SKILLMOD_SPOINT, 2)
 SKILL_USELESS_21 = 520
 GM:AddSkill(SKILL_USELESS_21, "Useless 21", GOOD.."+9% Sale",
 				                                                            	-4,		    1,					{SKILL_USELESS_20}, TREE_USELESSTREE)
@@ -2172,6 +2184,12 @@ end)
 
 GM:SetSkillModifierFunction(SKILLMOD_SELF_DAMAGE_MUL, function(pl, amount)
 	pl.SelfDamageMul = math.Clamp(amount + 1.0, 0.05, 100.0)
+end)
+GM:SetSkillModifierFunction(SKILLMOD_HP_PER_WAVE, function(pl, amount)
+	pl.HPPerWave = math.Clamp(amount, -50, 100.0)
+end)
+GM:SetSkillModifierFunction(SKILLMOD_SP_PER_WAVE, function(pl, amount)
+	pl.SPPerWave = math.Clamp(amount, -500, 100.0)
 end)
 
 GM:SetSkillModifierFunction(SKILLMOD_MELEE_KNOCKBACK_MUL, function(pl, amount)
@@ -2885,3 +2903,14 @@ GM:AddSkillModifier(SKILL_VKID2, SKILLMOD_SPEED, 15)
 GM:AddSkillModifier(SKILL_VKID2, SKILLMOD_HEALTH, -25)
 
 GM:AddSkillModifier(SKILL_CURSEDHEALTH, SKILLMOD_CURSEM, -0.25)
+GM:AddSkillModifier(SKILL_CRESCENDO1, SKILLMOD_HP_PER_WAVE, 3)
+GM:AddSkillModifier(SKILL_CRESCENDO2, SKILLMOD_HP_PER_WAVE, 2)
+GM:AddSkillModifier(SKILL_CRESCENDO3, SKILLMOD_HP_PER_WAVE, 1)
+
+GM:AddSkillModifier(SKILL_CRESCENDO1, SKILLMOD_SP_PER_WAVE, -3)
+GM:AddSkillModifier(SKILL_CRESCENDO2, SKILLMOD_SP_PER_WAVE, -2)
+GM:AddSkillModifier(SKILL_CRESCENDO3, SKILLMOD_SP_PER_WAVE, -1)
+
+GM:AddSkillModifier(SKILL_SLOWCOACH, SKILLMOD_SP_PER_WAVE, 3)
+
+GM:AddSkillModifier(SKILL_LUCKY_UNLIVER, SKILLMOD_HP_PER_WAVE, -10)

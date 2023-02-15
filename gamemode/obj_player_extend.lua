@@ -740,27 +740,33 @@ function meta:ResetSpeed(noset, health)
 	if speed < SPEED_NORMAL then
 		speed = SPEED_NORMAL - (SPEED_NORMAL - speed) * (self.WeaponWeightSlowMul or 1)
 	end
-
-	if P_Team(self) == TEAM_HUMAN and self:IsSkillActive(SKILL_CQARMOR) then
-		speed = (GAMEMODE.ObjectiveMap and 125 or 50) + (self:IsSkillActive(SKILL_CQBOOTS) and 35 or 0)
-	else
-		if self.SkillSpeedAdd and P_Team(self) == TEAM_HUMAN and not self:HasTrinket("altchayok") then
-			speed = speed + self.SkillSpeedAdd
-		elseif self.SkillSpeedAdd and P_Team(self) == TEAM_HUMAN and self:HasTrinket("altchayok") then
-			speed = speed + self.SkillSpeedAdd * math.max(1, GAMEMODE:GetWave() * 0.33 or 1)
+	if P_Team(self) == TEAM_HUMAN then
+		
+		if self:IsSkillActive(SKILL_CQARMOR) then
+			speed = (GAMEMODE.ObjectiveMap and 125 or 50) + (self:IsSkillActive(SKILL_CQBOOTS) and 35 or 0)
+		else
+			if self.SkillSpeedAdd then
+				speed = speed + self.SkillSpeedAdd
+			end
+			if self:HasTrinket("altchayok") then
+				speed = speed * math.max(1, GAMEMODE:GetWave() * 0.33 or 1)
+			end
+			if self.SPPerWave then
+				speed = speed + (self.SPPerWave * (GAMEMODE:GetWave() or 1))
+			end
 		end
-		if self:IsSkillActive(SKILL_SLOWCOACH) then
-			speed = speed + GAMEMODE:GetWave() * 3
+		if self.ClanQuePro  then 
+			speed = speed + 35
 		end
-	end
-	if self.ClanQuePro and P_Team(self) == TEAM_HUMAN then 
-		speed = speed + 35
-	end
-	if self.ClanAvanguard and P_Team(self) == TEAM_HUMAN then 
-		speed = speed + 25
-	end
-	if self:IsSkillActive(SKILL_LIGHTWEIGHT) and wep:IsValid() and wep.IsMelee then
-		speed = speed * 1.15
+		if self.ClanAvanguard then 
+			speed = speed + 25
+		end
+		if self:IsSkillActive(SKILL_LIGHTWEIGHT) and wep:IsValid() and wep.IsMelee then
+			speed = speed * 1.15
+		end
+		if wep.SwingingTrue then
+			speed = speed * 0.7
+		end
 	end
 
 	speed = math.max(1, speed)
@@ -1189,8 +1195,11 @@ function meta:GetMaxHealth()
 	if P_Team(self) == TEAM_UNDEAD then
 		return self:GetMaxZombieHealth()
 	end
-
-	return oldmaxhealth(self)
+	local health = oldmaxhealth(self)
+	if self.HPPerWave then
+		health = health + (self.HPPerWave * (GAMEMODE:GetWave() or 1))
+	end
+	return math.max(1,health)
 end
 
 

@@ -244,6 +244,7 @@ function GM:ShowHelp()
 	menu:MakePopup()
 end
 local exlude = {8,6,16,22,27,30,31,34,118,114,113,101,40,41,43,92,117,116,56,59,63,65,66,98,72,73,79,88 ,78,120,57,58}
+local exlude2 = {121,122,32,108,103,91,90}
 function GM:Stats()
 	if pMakepStats and pMakepStats:IsValid() then
 		pMakepStats:Remove()
@@ -271,7 +272,6 @@ local function DoStats(self, list, neg)
 		local d = vgui.Create("DEXChangingLabel", bottom)
 		if neg and (skillmodifiers[i] or 0) == 0 then d:Remove() continue end
 		local c = skillmodifiers[i] or 0
-		local exlude2 = {32,108,103,91,90}
 		if i >= 6 and !table.HasValue(exlude2, i) then
 			c = (c*100).."%"
 		end
