@@ -25,7 +25,7 @@ function ENT:Hit(vHitPos, vHitNormal, eHitEntity, vOldVelocity)
 					local strstatus = pl:GiveStatus(alt and "strengthdartboost" or "medrifledefboost", (alt and 0.1 or 0.2) * (self.BuffDuration or 1))
 					strstatus.Applier = owner
 					owner:HealPlayer(pl, self.Heal * 0.3)
-					local txt = alt and translate.Get("buff_srifle") or translate.Get("buff_mrifle")
+					local txt = alt and translate.ClientGet(pl,"buff_srifle") or translate.ClientGet(pl,"buff_mrifle")
 						net.Start("zs_buffby")
 						net.WriteEntity(owner)
 						net.WriteString(txt)
@@ -86,7 +86,7 @@ function ENT:Hit(vHitPos, vHitNormal, eHitEntity, vOldVelocity)
 
 					owner:HealPlayer(eHitEntity, self.Heal)
 
-					local txt = alt and translate.Get("buff_srifle") or translate.Get("buff_mrifle")
+					local txt = alt and translate.ClientGet(pl,"buff_srifle") or translate.ClientGet(pl,"buff_mrifle")
 
 					net.Start("zs_buffby")
 						net.WriteEntity(owner)

@@ -63,7 +63,7 @@ function GM:SkillCanUnlock(pl, skillid, skilllist)
 			return vip
 		end
 		if skill.Amulet then
-			return true
+			return pl:GetZSRemortLevel() >= 4
 		end
 
 		local connections = skill.Connections

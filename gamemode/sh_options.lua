@@ -694,9 +694,9 @@ GM:AddAPointShopItem("soul_of_lampsoul",			ITEMCAT_TRINKETS,			892,			"trinket_l
 GM:AddAPointShopItem("soul_of_barasoul",			ITEMCAT_TRINKETS,			9999,			"trinket_barasoul").SubCategory =								ITEMSUBCAT_TRINKETS_SPECIAL
 GM:AddAPointShopItem("soul_of_troyaksoul",			ITEMCAT_TRINKETS,			320,			"trinket_troyaksoul").SubCategory =								ITEMSUBCAT_TRINKETS_SUPPORT
 GM:AddAPointShopItem("soul_of_slight_soul",			ITEMCAT_TRINKETS,			600,			"trinket_slight_soul").SubCategory =								ITEMSUBCAT_TRINKETS_DEFENSIVE
-GM:AddAPointShopItem("soul_of_lehasoul",			ITEMCAT_TRINKETS,			180,			"trinket_lehasoul").SubCategory =								ITEMSUBCAT_TRINKETS_SPECIAL
+--GM:AddAPointShopItem("soul_of_lehasoul",			ITEMCAT_TRINKETS,			180,			"trinket_lehasoul").SubCategory =								ITEMSUBCAT_TRINKETS_SPECIAL
 
-GM:AddAPointShopItem("world_card",			ITEMCAT_OTHER,			125,				nil,							translate.Get("s_world"),			translate.Get("s_world_d"),									"status_dim_vision",					function(pl) pl:GiveStatus("world",CurTime()+30) end)
+GM:AddAPointShopItem("world_card",			ITEMCAT_OTHER,			125,				nil,							translate.Get("s_world"),			translate.Get("s_world_d"),									"status_dim_vision",					function(pl) pl:GiveStatus("world",30) end)
 GM:AddAPointShopItem("hint_doset",			ITEMCAT_OTHER,			25,				nil,							translate.Get("ahint"),			translate.Get("ahint"),									"weapon_zs_special_trinket",					function(pl) pl:CenterNotify(COLOR_GREEN, translate.ClientGet(pl,table.Random(GAMEMODE.HintsFromASigil))) end)
 
 

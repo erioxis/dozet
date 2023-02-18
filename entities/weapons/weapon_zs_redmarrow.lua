@@ -21,6 +21,8 @@ function SWEP:MeleeHit(ent, trace, damage, forcescale)
 	end
 	if not ent:IsPlayer() then
 		damage = self.MeleeDamageVsProps
+	else
+		ent:GiveStatus("flimsy", 6)
 	end
 	self.BaseClass.MeleeHit(self, ent, trace, damage, forcescale)
 end

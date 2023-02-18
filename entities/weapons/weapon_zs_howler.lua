@@ -45,11 +45,12 @@ function SWEP:Think()
 			local owner = self:GetOwner()
 			local center = owner:GetPos() + Vector(0, 0, 32)
 			if SERVER then
-				for _, ent in pairs(ents.FindInSphere(center, 80)) do
+				for _, ent in pairs(ents.FindInSphere(center, 120)) do
 					if ent:IsValidLivingZombie() and WorldVisible(ent:WorldSpaceCenter(), center)then
 						ent:GiveStatus("zombie_battlecry", 1)
 					end
 				end
+
 			end
 		end
 	end
@@ -75,6 +76,7 @@ function SWEP:SecondaryAttack()
 		for _, ent in pairs(ents.FindInSphere(center, 150)) do
 			if ent:IsValidLivingHuman() and WorldVisible(ent:WorldSpaceCenter(), center) then
 				ent:GiveStatus("frightened", 10)
+				ent:GiveStatus("flimsy", 20)
 			end
 		end
 	end

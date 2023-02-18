@@ -2520,7 +2520,7 @@ hook.Add("PlayerSay", "ForBots", function(ply, text)
 	end
 end)
 hook.Add( "PlayerConnect", "JoinGlobalMessage", function( name, ip )
-	PrintMessage( HUD_PRINTTALK, name.." has joined the game.\n" )
+	PrintTranslatedMessage( HUD_PRINTTALK, "mich_is_here", name )
 	MsgC( Color( 255, 0, 0 ), name.." has joined the game.")
 	--print(ip)
 end )

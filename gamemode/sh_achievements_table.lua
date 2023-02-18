@@ -562,3 +562,19 @@ GM.Statuses["death"] =	{
 	Max = 100,
 	Icon = Material("zombiesurvival/reaper.png")
 }
+GM.Statuses["flimsy"] =	{
+	Color = Color(39, 8, 124),
+	Name = "flimsy",
+	ValFunc = statusValueFunction("flimsy"),
+	Max = 25,
+	Icon = Material("zombiesurvival/sickness.png")
+}
+GM.Statuses["portal"] =	{
+	Color = Color(156, 40, 209),
+	Name = "portal",
+	ValFunc = statusValueFunction("portal"),
+	Max = 25,
+	Icon = Material("zombiesurvival/rot.png")
+}
+
+

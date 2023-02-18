@@ -19,3 +19,6 @@ function ENT:OnRemove()
 
 	self:GetOwner().ZaWarudo = nil
 end
+function ENT:PlayerSet()
+	self:SetStartTime(CurTime())
+end

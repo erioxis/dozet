@@ -291,6 +291,7 @@ local offsets = {
 	[TREE_DONATETREE] = 3,
 	[TREE_USELESSTREE] = 2
 }]]
+PANEL.Nodeio = {}
 function PANEL:Init()
 	local allskills = GAMEMODE.Skills
 	local node
@@ -314,7 +315,9 @@ function PANEL:Init()
 			node = ClientsideModel("models/dav0r/hoverball.mdl", RENDER_GROUP_OPAQUE_ENTITY)
 			if IsValid(node) then
 				node:SetNoDraw(true)
-				node:SetPos(Vector(0, (skill.x + offsets[skill.Tree][1]) * GAMEMODE.X_Y_Skill, (skill.y + offsets[skill.Tree][2]) * GAMEMODE.X_Y_Skill))
+				self.Nodeio[id] = node
+				self.Nodeio[id]:SetPos(Vector(3033, 3333, 333))
+				timer.Simple(0.55,function() self.Nodeio[id]:SetPos(Vector(0, (skill.x + offsets[skill.Tree][1]) * GAMEMODE.X_Y_Skill, (skill.y + offsets[skill.Tree][2]) * GAMEMODE.X_Y_Skill)) end)
 				--if nodemodel_scale[skill.Tree] then
 				--	if skill.Disabled then
 				--		node:SetModelScale((nodemodel_scale[skill.Tree] or 0.9), 0)
@@ -717,7 +720,7 @@ function PANEL:Init()
 	warningtext:SetKeyboardInputEnabled(false)
 	warningtext:SetMouseInputEnabled(false)
 
-	self:GenerateParticles()
+	timer.Simple(1, function() self:GenerateParticles() end)
 
 	self.Top = top
 	self.BottomLeft = bottomleft
@@ -1025,10 +1028,12 @@ function PANEL:Paint(w, h)
 
 	local particles = self.Particles
 	render.SetMaterial(matSmoke)
-	for i, particle in pairs(particles) do
-		particle[2] = particle[2] + particle[3] * dt
-		colSmoke.a = particle[5]
-		render.DrawQuadEasy(particle[1], to_camera, particle[4], particle[4], colSmoke, particle[2])
+	if particles then
+		for i, particle in pairs(particles) do
+			particle[2] = particle[2] + particle[3] * dt
+			colSmoke.a = particle[5]
+			render.DrawQuadEasy(particle[1], to_camera, particle[4], particle[4], colSmoke, particle[2])
+		end
 	end
 
 	local skillnodes = self.SkillNodes
@@ -1114,6 +1119,7 @@ function PANEL:Paint(w, h)
 	end
 
 	local oldskill = hoveredskill
+	--local hoveredskilltrue = nil
 	hoveredskill = nil
 
 	local angle = (realtime * 180) % 360
@@ -1135,10 +1141,21 @@ function PANEL:Paint(w, h)
 
 			if selected then
 				hoveredskill = skillid
+--				hoveredskilltrue = skill
 
 				sat = 1 - math.abs(math.sin(realtime * math.pi)) * 0.25
+				if skill.Tree == TREE_ANCIENTTREE then
+					satscale = 0.66 - math.abs(math.sin(realtime * 2 * math.pi)) * 0.45
+				else
+					satscale = 0.8 - math.abs(math.sin(realtime * math.pi)) * 0.1
+				end
 			else
 				sat = 1
+				if skill.Tree == TREE_ANCIENTTREE then
+					satscale = 0.8
+				else
+					satscale = 0.66
+				end
 			end
 
 			local notunlockable = false
@@ -1165,8 +1182,11 @@ function PANEL:Paint(w, h)
 
 			render_ModelMaterialOverride(matWhite)
 			render_SetBlend(0.95)
-			if !skill.Hidden1 and !GAMEMODE.DisableNode then
+			if !skill.Hidden1 and !GAMEMODE.DisableNode  then
 				node:DrawModel()
+				if skillid ~= -1 then
+					node:SetModelScale(satscale)
+				end
 			end
 
 			render_SetBlend(1)

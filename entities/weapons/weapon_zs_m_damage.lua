@@ -51,6 +51,7 @@ SWEP.SwingOffset = Vector(10, 0, 0)
 SWEP.SwingHoldType = "melee"
 SWEP.Tier = 5
 SWEP.HitDecal = "Manhackcut"
+SWEP.Primary.Delay = 1.9
 SWEP.Primary.Damage = 121
 SWEP.ArmorRegen = 2
 

@@ -2433,8 +2433,8 @@ local bossdrops = {
 	"trinket_barasoul",  -- 27
 	"trinket_troyaksoul",  -- 28
 	"trinket_clownsoul",  -- 29
-	"trinket_slight_soul",  -- 30
-	"trinket_lehasoul"  -- 31
+	"trinket_slight_soul"  -- 30
+	--"trinket_lehasoul"  -- 31
 }
 local demiboss = {
 	"comp_soul_alt_h",
