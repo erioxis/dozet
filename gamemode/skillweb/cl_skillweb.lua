@@ -317,7 +317,7 @@ function PANEL:Init()
 				node:SetNoDraw(true)
 				self.Nodeio[id] = node
 				self.Nodeio[id]:SetPos(Vector(3033, 3333, 333))
-				timer.Simple(0.55,function() self.Nodeio[id]:SetPos(Vector(0, (skill.x + offsets[skill.Tree][1]) * GAMEMODE.X_Y_Skill, (skill.y + offsets[skill.Tree][2]) * GAMEMODE.X_Y_Skill)) end)
+				timer.Simple(0.55,function() if IsValid(self) then self.Nodeio[id]:SetPos(Vector(0, (skill.x + offsets[skill.Tree][1]) * GAMEMODE.X_Y_Skill, (skill.y + offsets[skill.Tree][2]) * GAMEMODE.X_Y_Skill)) end end)
 				--if nodemodel_scale[skill.Tree] then
 				--	if skill.Disabled then
 				--		node:SetModelScale((nodemodel_scale[skill.Tree] or 0.9), 0)
@@ -720,7 +720,7 @@ function PANEL:Init()
 	warningtext:SetKeyboardInputEnabled(false)
 	warningtext:SetMouseInputEnabled(false)
 
-	timer.Simple(1, function() self:GenerateParticles() end)
+	timer.Simple(1, function() if IsValid(self) then self:GenerateParticles() end end)
 
 	self.Top = top
 	self.BottomLeft = bottomleft

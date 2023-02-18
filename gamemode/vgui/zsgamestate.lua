@@ -166,7 +166,7 @@ function PANEL:Text3Paint()
 				end
 			end
 			if god and d then
-				powergod = d:Health()/500000 * 100
+				powergod = d:Health()/5000000 * 100
 			end
 			
 			if !god then

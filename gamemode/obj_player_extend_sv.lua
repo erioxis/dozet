@@ -188,6 +188,12 @@ function meta:ProcessDamage(dmginfo)
 		end
 		if self:GetZombieClassTable().Boss and attacker:IsPlayer() then
 			dmginfo:SetDamage(math.min(dmginfo:GetDamage(), (self:GetMaxHealth() * 0.09) * (inflictor.Tier or 1)))
+			timer.Simple(0,function()
+				self:GodEnable()
+				end )
+				timer.Simple(0.2,function()
+					if self:IsValid() then self:GodDisable() end
+				end )
 		end
 		if attacker:IsValidLivingHuman() and inflictor:IsValid() and inflictor == attacker:GetActiveWeapon() then
 			local damage = dmginfo:GetDamage()
@@ -2755,10 +2761,10 @@ function meta:PulseResonance(attacker, inflictor)
 	-- Weird things happen with multishot weapons..
 
 	timer.Create("PulseResonance" .. attacker:UniqueID(), 0.06, 1, function()
-		if not attacker:IsValid() or not self:IsValid() then return end
+		if not attacker:IsValid() or not self:IsValid() or (self.Cascaded or 1) >= CurTime() then return end
 
 		attacker:SetProgress(0,'pprog')
-
+		self.Cascaded = CurTime() + 0.6
 
 		local pos = self:WorldSpaceCenter()
 		pos.z = pos.z + 16
