@@ -5390,13 +5390,11 @@ function GM:WaveStateChanged(newstate, pl)
 
 		for _, pl in pairs(player.GetAll()) do
 			if pl:Team() == TEAM_HUMAN and pl:Alive() then
+				pl.UsesChaosCard = false
 				pl:SetChargesActive(pl:GetChargesActive()+3)
 				local lucktrue  = (pl.Luck or 1) + pl.LuckAdd + ((pl:IsSkillActive(SKILL_LUCKY_UNLIVER) and self:GetWave() or 0) * 2)
 				if self.EndWaveHealthBonus > 0 and !pl:HasTrinket("lehasoul") then
 					pl:SetHealth(math.min(pl:GetMaxHealth(), pl:Health() + self.EndWaveHealthBonus))
-				end
-				if pl:IsSkillActive(SKILL_LUCKY_UNLIVER) and pl:GetMaxHealth() >= 10 then
-					pl:SetMaxHealth(pl:GetMaxHealth() * 0.9) pl:SetHealth(pl:Health() * 0.5)
 				end
 				if pl:IsSkillActive(SKILL_XPHUNTER) then
 					pl:AddZSXP(5 + self.GetWave() * 10)

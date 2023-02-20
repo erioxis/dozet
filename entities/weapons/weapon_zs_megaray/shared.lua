@@ -107,13 +107,16 @@ function SWEP:CheckHealRay()
 	local ent = self:GetDTEntity(10)
 	local owner = self:GetOwner()
 
-	if ent:IsValidLivingHuman() and gamemode.Call("PlayerCanBeHealed", ent) and owner:KeyDown(IN_ATTACK) and
+	if ent:IsValidLivingHuman() and (gamemode.Call("PlayerCanBeHealed", ent) or ent:GetStatus("cursed"))  and owner:KeyDown(IN_ATTACK) and
 		ent:WorldSpaceCenter():DistToSqr(owner:WorldSpaceCenter()) <= self.HealRange * self.HealRange and self:GetCombinedPrimaryAmmo() > 0 then
 
 		if CurTime() > self:GetDTFloat(10) then
 			owner:HealPlayer(ent, math.min(self:GetCombinedPrimaryAmmo(), self.Heal))
 			if owner:IsSkillActive(SKILL_COOL_MED) then
 				ent:GiveStatus("sigildef",3)
+			end
+			if ent:GetStatus("cursed") then
+				ent:GiveStatus("cursed", math.max(1,((ent:GetStatus("cursed").DieTime - CurTime() - 1) or 1)))
 			end
 
 			self:TakeAmmo()

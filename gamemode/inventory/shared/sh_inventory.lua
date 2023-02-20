@@ -163,6 +163,36 @@ end
 GM:AddInventoryItemData("cons_void",		trs("c_void"),			trs("c_void_d"),								"models/props_c17/trappropeller_lever.mdl", 3, nil, nil, function(pl) 
 	funcofvoid(pl, "cons_void")
 end,3)
+GM:AddInventoryItemData("cons_flame_p",		trs("c_flame_p"),			trs("c_flame_p_d"),								"models/props_c17/trappropeller_lever.mdl", 3, nil, nil, function(pl) 
+	if pl:HasWeapon("weapon_zs_molotov") then pl:GiveAmmo(1, "molotov") return end
+	pl:Give("weapon_zs_molotov")
+end,3)
+GM:AddInventoryItemData("cons_minos",		trs("c_minos"),			trs("c_minos_d"),								"models/props_c17/trappropeller_lever.mdl", 3, nil, nil, function(owner) 
+	local ent = ents.Create("projectile_mprime_proj_act")
+	if ent:IsValid() then
+		ent:SetPos(owner:GetShootPos())
+		ent:SetAngles(owner:EyeAngles())
+		ent:SetOwner(owner)
+		ent.ProjDamage = 320 
+		ent.ProjSource = owner
+		ent.ShotMarker = i
+		ent.Team = owner:Team()
+
+		ent:Spawn()
+
+		local phys = ent:GetPhysicsObject()
+		if phys:IsValid() then
+			phys:Wake()
+
+			local angle = owner:GetAimVector():Angle()
+			angle:RotateAroundAxis(angle:Forward(), ssfw or math.Rand(0, 360))
+			angle:RotateAroundAxis(angle:Up(), ssup or math.Rand(0, 0))
+
+			ent.PreVel = angle:Forward() * 2600 * (owner.ProjectileSpeedMul or 1)
+			phys:SetVelocityInstantaneous(ent.PreVel)
+		end
+	end
+end,2)
 GM:AddInventoryItemData("cons_d4",		"D4",			trs("c_d4_d"),								"models/props_c17/trappropeller_lever.mdl", 3, nil, nil, function(pl) 
 	for i=1,10 do
 		funcofvoid(pl, "cons_d4")
@@ -171,6 +201,16 @@ end,12)
 GM:AddInventoryItemData("cons_gausscard",		trs("c_gausscard"),			trs("c_gausscard_d"),								"models/props_c17/trappropeller_lever.mdl", 3, nil, nil, function(pl) 
 	pl:Give("weapon_zs_gauss_card_r5")
 	timer.Simple(10, function() pl:StripWeapon("weapon_zs_gauss_card_r5") end)
+end,10)
+GM:AddInventoryItemData("cons_sack_of_trinkets",		trs("c_sack_of_trinkets"),			trs("c_sack_of_trinkets_d"),								"models/props_c17/trappropeller_lever.mdl", 3, nil, nil, function(pl)
+	local use2 = {} 
+	for item,v in pairs(GAMEMODE.ZSInventoryItemData) do
+		local g = table.HasValue(string.Explode("_",item), "curse")
+		if item ~= nouse and !pl:HasInventoryItem(item) and string.len(item) >= 5 and !g and  (GAMEMODE.ZSInventoryItemData[item].Tier or 1) <= 3 then
+			table.insert(use2, #use2 + 1,item)
+		end
+	end
+	pl:AddInventoryItem(table.Random(use2))
 end,10)
 GM:AddInventoryItemData("cons_friendship",		trs("c_friendship"),			trs("c_friendship_d"),								"models/props_c17/trappropeller_lever.mdl", 1, nil, nil, function(pl) 
 	local tabled = {}
@@ -200,11 +240,13 @@ GM:AddInventoryItemData("cons_friendship",		trs("c_friendship"),			trs("c_friend
 end,2)
 GM:AddInventoryItemData("cons_chaos",		trs("c_chaos"),			trs("c_chaos_d"),								"models/props_c17/trappropeller_lever.mdl", 3, nil, nil, function(pl) 
 	local use2 = {}
+	if pl.UsesChaosCard then pl:AddChargesActive(12) return end
 	for item,v in pairs(GAMEMODE.ZSInventoryItemData) do
 		if item ~= "cons_chaos" and GAMEMODE.ZSInventoryItemData[item].Bounty and GAMEMODE.ZSInventoryItemData[item].BountyNeed and string.len(item) >= 3 then
 			table.insert(use2, #use2 + 1,item)
 		end
 	end
+	pl.UsesChaosCard = true
 	for i=1,5 do
 		local trinket = table.Random(use2)
 		net.Start("zs_t_activated")
@@ -214,8 +256,7 @@ GM:AddInventoryItemData("cons_chaos",		trs("c_chaos"),			trs("c_chaos_d"),						
 		callback(pl)
 		--print(trinket)
 	end
-	timer.Simple(0, function() pl:TakeInventoryItem("cons_chaos") end)
-end,10)
+end,12)
 GM:AddInventoryItemData("cons_pill_unk",		trs("c_pill"),			trs("c_pill_d"),								"models/props_c17/trappropeller_lever.mdl", 2, nil, nil, function(pl) 
 	if math.random(1,3) ~= 1 then
 		pl:TakeDamage(pl:Health()*0.25, pl, pl) 

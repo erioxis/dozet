@@ -11,7 +11,7 @@ CLASS.DynamicHealth = 1.5
 CLASS.Model = Model("models/Zombie/Poison.mdl")
 
 CLASS.Health = 600
-CLASS.Points = CLASS.Health/GM.HumanoidZombiePointRatio*0.7
+CLASS.Points = CLASS.Health/GM.HumanoidZombiePointRatio*0.55
 
 CLASS.PainSounds = {"npc/zombie_poison/pz_pain1.wav", "npc/zombie_poison/pz_pain2.wav", "npc/zombie_poison/pz_pain3.wav"}
 CLASS.DeathSounds = {"npc/zombie_poison/pz_die1.wav", "npc/zombie_poison/pz_die2.wav"}

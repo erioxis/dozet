@@ -294,6 +294,7 @@ killicon.Add("weapon_zs_cinderrod", "zombiesurvival/killicons/weapon_zs_blareduc
 killicon.Add("weapon_zs_shroud", "zombiesurvival/killicons/weapon_zs_shroud2")
 killicon.Add("weapon_zs_stabber", "zombiesurvival/killicons/weapon_zs_stabber")
 killicon.Add("weapon_zs_bulwark", "zombiesurvival/killicons/weapon_zs_bulwark2")
+killicon.Add("weapon_zs_med_bulwark", "zombiesurvival/killicons/weapon_zs_bulwark2")
 killicon.Add("weapon_zs_deathdealers", "zombiesurvival/killicons/weapon_zs_deathdealers")
 killicon.Add("weapon_zs_galestorm", "zombiesurvival/killicons/weapon_zs_galestorm")
 killicon.Add("weapon_zs_battlerifle", "zombiesurvival/killicons/weapon_zs_battlerifle")

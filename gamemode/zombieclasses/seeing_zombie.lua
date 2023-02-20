@@ -8,7 +8,7 @@ CLASS.Help = "controls_zdreams"
 CLASS.Wave = 2 / 12
 
 CLASS.Health = 210
-CLASS.Points = CLASS.Health/GM.HumanoidZombiePointRatio*0.85
+CLASS.Points = CLASS.Health/GM.HumanoidZombiePointRatio*0.55
 
 CLASS.UsePlayerModel = true
 CLASS.SWEP = "weapon_zs_zombie_dreams"

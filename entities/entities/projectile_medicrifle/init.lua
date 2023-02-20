@@ -86,7 +86,7 @@ function ENT:Hit(vHitPos, vHitNormal, eHitEntity, vOldVelocity)
 
 					owner:HealPlayer(eHitEntity, self.Heal)
 
-					local txt = alt and translate.ClientGet(pl,"buff_srifle") or translate.ClientGet(pl,"buff_mrifle")
+					local txt = alt and translate.ClientGet(eHitEntity,"buff_srifle") or translate.ClientGet(eHitEntity,"buff_mrifle")
 
 					net.Start("zs_buffby")
 						net.WriteEntity(owner)

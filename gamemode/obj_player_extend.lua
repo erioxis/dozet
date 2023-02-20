@@ -375,6 +375,9 @@ end
 function meta:GetChargesActive()
 	return self:GetDTInt(DT_PLAYER_INT_ACTIV)
 end
+function meta:AddChargesActive(int)
+	self:SetChargesActive(self:GetChargesActive()+int)
+end
 function meta:GetDCoins()
 	return self:GetDTFloat(DT_PLAYER_FLOAT_DOSET_COINS)
 end

@@ -16,12 +16,12 @@ function SWEP:SecondaryAttack()
 	self.BaseClass.SecondaryAttack(self)
 	if self:GetOwner():GetZombieClassTable().Magical and SERVER then
 		local ented = {}
-		for i = 1, 3 do
-			for _, ent in pairs(ents.FindInSphere(self:GetOwner():GetPos(), 124)) do
-				if ent:IsValid() and ent ~= self:GetOwner() and !ented[ent] then
-					ent:TakeDamage(self.MeleeDamage * 0.5, self:GetOwner(), self)
-					ented[ent] = true
-				end
+		local taped = 0
+		for _, ent in pairs(ents.FindInSphere(self:GetOwner():GetPos(), 76)) do
+			if ent:IsValid() and ent ~= self:GetOwner() and !ented[ent] and taped <= 3 then
+				ent:TakeDamage(self.MeleeDamage * 0.5, self:GetOwner(), self)
+				ented[ent] = true
+				taped = taped + 1
 			end
 		end
 	end

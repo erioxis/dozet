@@ -45,7 +45,6 @@ function SWEP:ToDie(damage, numshots, cone)
 
 	end
 	if !self:GetDiePower() then
-	for i = 1,1 do
 		local ent = (self:GetJudge() and  ents.Create("prop_playergibs") or ents.Create(self.Primary.Projectile))
 		if ent:IsValid() then
 			if !self:GetJudge() then
@@ -77,7 +76,6 @@ function SWEP:ToDie(damage, numshots, cone)
 				self:PhysModify(phys)
 			end
 		end
-	end
 	else
 		owner:EmitSound(Sound("zombiesurvival/mp_prepare"..(math.random(1,2) == 2 and 2 or "")..".ogg"))
 		timer.Create("DieCombo", 0.64, 3 , function() self:PrimaryAttack((math.random(1,2) == 2 and true or nil)) 

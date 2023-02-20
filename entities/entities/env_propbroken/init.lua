@@ -21,6 +21,7 @@ function ENT:AttachTo(ent)
 		self:SetOwner(ent)
 		self:SetParent(ent)
 		ent._BARRICADEBROKEN = self
+		self.NoCollideProp = true
 	else
 		self:Fire("kill", "", 1)
 	end

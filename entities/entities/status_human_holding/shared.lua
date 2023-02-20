@@ -81,5 +81,5 @@ end
 
 function ENT:ShouldNotCollide(ent)
 	local object = self:GetObject()
-	return object:IsPlayer() and object:Team() == TEAM_HUMAN or object:IsProjectile()
+	return object:IsPlayer() and object:Team() == TEAM_HUMAN or object:IsProjectile() or ent.NoCollideProp
 end

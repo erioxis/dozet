@@ -449,6 +449,8 @@ SKILL_DONATE18 = 421
 SKILL_CRESCENDO1 = 422
 SKILL_CRESCENDO2 = 423
 SKILL_CRESCENDO3 = 424
+SKILL_AMULET_16 = 425
+SKILL_HYPERCOAGULATION = 426
 
 
 
@@ -697,7 +699,9 @@ GM:AddSkill(SKILL_JUSTICE_2, translate.Get("skill_justice2"), GOOD.."+9%"..trans
 GM:AddSkillModifier(SKILL_JUSTICE_2, SKILLMOD_RESUPPLY_DELAY_MUL, 0.1)	
 GM:AddSkillModifier(SKILL_JUSTICE_2, SKILLMOD_RES_AMMO_MUL, 0.09)			
 GM:AddSkill(SKILL_SUGARRUSH, translate.Get("skill_srush_0"), GOOD..translate.Get("skill_srush_d1")..BAD..translate.Get("skill_srush_d2"),
-																4,			0,					{SKILL_GOURMET}, TREE_HEALTHTREE)
+																4,			0,					{SKILL_GOURMET,SKILL_HYPERCOAGULATION}, TREE_HEALTHTREE)
+GM:AddSkill(SKILL_HYPERCOAGULATION, translate.Get("skill_hp_cog"), GOOD..translate.Get("skill_hp_cog_d1")..BAD..translate.Get("skill_hp_cog_d2"),
+																4,			1,					{SKILL_GOURMET}, TREE_HEALTHTREE)
 GM:AddSkill(SKILL_CIRCULATION, translate.Get("skill_cir_0"), GOOD..translate.Get("skill_cir_d1"),
 																4,			4,					{SKILL_SANGUINE}, TREE_HEALTHTREE)
 GM:AddSkill(SKILL_CIRCULATION1, translate.Get("skill_cir_0").." II", GOOD.."+3"..translate.Get("barmor"),
@@ -762,11 +766,11 @@ GM:AddSkill(SKILL_MOTIONIII, translate.Get("skill_motion3"), GOOD..translate.Get
 																0,			-2,					{SKILL_D_SLOW}, TREE_SPEEDTREE)
 GM:AddSkill(SKILL_BACKPEDDLER, translate.Get("skill_backpeddler"), GOOD..translate.Get("skill_backpeddler_d1")..BAD..translate.Get("skill_backpeddler_d2")..BAD..translate.Get("skill_backpeddler_d3"),
 																-6,			0,					{}, TREE_SPEEDTREE)
-GM:AddSkill(SKILL_CRESCENDO1, translate.Get("skill_crescendo").."I", GOOD.."+3 "..translate.Get("hp_per_wave")..BAD.."-3 "..translate.Get("sp_per_wave"),
+GM:AddSkill(SKILL_CRESCENDO1, translate.Get("skill_crescendo").."I", GOOD.."+4 "..translate.Get("hp_per_wave")..BAD.."-3 "..translate.Get("sp_per_wave"),
 																-6,			1,					{SKILL_BACKPEDDLER}, TREE_SPEEDTREE)
-GM:AddSkill(SKILL_CRESCENDO2, translate.Get("skill_crescendo").."II", GOOD.."+2 "..translate.Get("hp_per_wave")..BAD.."-2 "..translate.Get("sp_per_wave"),
+GM:AddSkill(SKILL_CRESCENDO2, translate.Get("skill_crescendo").."II", GOOD.."+4 "..translate.Get("hp_per_wave")..BAD.."-4 "..translate.Get("sp_per_wave"),
 																-6,			2,					{SKILL_CRESCENDO1}, TREE_SPEEDTREE)
-GM:AddSkill(SKILL_CRESCENDO3, translate.Get("skill_crescendo").."III", GOOD.."+1 "..translate.Get("hp_per_wave")..BAD.."-1 "..translate.Get("sp_per_wave"),
+GM:AddSkill(SKILL_CRESCENDO3, translate.Get("skill_crescendo").."III", GOOD.."+4 "..translate.Get("hp_per_wave")..BAD.."-2 "..translate.Get("sp_per_wave"),
 																-6,			3,					{SKILL_CRESCENDO2}, TREE_SPEEDTREE)
 GM:AddSkill(SKILL_PHASER, translate.Get("skill_phaser"), GOOD.."+15%"..translate.Get("barricadespeed")..BAD.."+15%"..translate.Get("sigilteleport"),
 																-1,			4,					{SKILL_D_WIDELOAD, SKILL_DRIFT}, TREE_SPEEDTREE)
@@ -1125,6 +1129,12 @@ d.Amulet = true
 d.AmuletCost = 2				
 GM:AddSkillModifier(SKILL_AMULET_15, SKILLMOD_PIECE_OF_AMULET, -2)
 GM:AddSkillModifier(SKILL_AMULET_15, SKILLMOD_SPOINT, 1)
+local d = GM:AddSkill(SKILL_AMULET_16, translate.Get("skill_amulet_16"),  GOOD..translate.Get("skill_amulet_16_d1"),
+																-20,			-15,					{SKILL_NONE}, TREE_GUNTREE)
+d.Amulet = true				
+d.AmuletCost = 3				
+GM:AddSkillModifier(SKILL_AMULET_16, SKILLMOD_PIECE_OF_AMULET, -3)
+GM:AddSkillModifier(SKILL_AMULET_16, SKILLMOD_SPOINT, 1)
 
 
 
@@ -1516,7 +1526,7 @@ GM:AddSkill(SKILL_ULUCK, translate.Get("skill_ultraluck"), GOOD.."+5"..translate
 SKILL_LUCKE = 162
 GM:AddSkillModifier(SKILL_LUCKE, SKILLMOD_POINT_MULTIPLIER, -0.1)
 GM:AddSkillModifier(SKILL_LUCKE, SKILLMOD_LUCK, 2)	
-GM:AddSkill(SKILL_LUCKY_UNLIVER, translate.Get("skill_luckstacker"), GOOD..translate.Get("skill_luckstacker_d1")..BAD.."-10 "..translate.Get("hp_per_wave"),
+GM:AddSkill(SKILL_LUCKY_UNLIVER, translate.Get("skill_luckstacker"), GOOD..translate.Get("skill_luckstacker_d1")..BAD.."-5 "..translate.Get("hp_per_wave"),
 	1,			-3,					{SKILL_LUCKE}, TREE_POINTTREE)
 GM:AddSkill(SKILL_LUCKE, translate.Get("skill_badluck"), NEUTRAL.."+2"..translate.Get("luck")..BAD.. "-10%"..translate.Get("p_mul"),
 	1,			-2,					{SKILL_POINTIIII}, TREE_POINTTREE)
@@ -2608,8 +2618,8 @@ GM:AddSkillModifier(SKILL_QUICKDRAW, SKILLMOD_RELOADSPEED_MUL, -0.01)
 GM:AddSkillModifier(SKILL_QUICKRELOAD, SKILLMOD_RELOADSPEED_MUL, 0.10)
 GM:AddSkillModifier(SKILL_QUICKRELOAD, SKILLMOD_DEPLOYSPEED_MUL, -0.15)
 
-GM:AddSkillModifier(SKILL_SLEIGHTOFHAND, SKILLMOD_RELOADSPEED_MUL, 0.30)
-GM:AddSkillModifier(SKILL_SLEIGHTOFHAND, SKILLMOD_AIMSPREAD_MUL, 0.5)
+GM:AddSkillModifier(SKILL_SLEIGHTOFHAND, SKILLMOD_RELOADSPEED_MUL, 0.1)
+GM:AddSkillModifier(SKILL_SLEIGHTOFHAND, SKILLMOD_AIMSPREAD_MUL, 0.05)
 
 GM:AddSkillModifier(SKILL_TRIGGER_DISCIPLINE1, SKILLMOD_RELOADSPEED_MUL, 0.02)
 GM:AddSkillModifier(SKILL_TRIGGER_DISCIPLINE1, SKILLMOD_DEPLOYSPEED_MUL, 0.02)
@@ -2668,6 +2678,12 @@ GM:AddSkillModifier(SKILL_D_NOODLEARMS, SKILLMOD_SCRAP_START, 25)
 GM:AddSkillFunction(SKILL_D_NOODLEARMS, function(pl, active)
 	pl.NoObjectPickup = active
 end)
+
+GM:AddSkillModifier(SKILL_HYPERCOAGULATION, SKILLMOD_HEALING_RECEIVED, -0.9)
+GM:AddSkillFunction(SKILL_HYPERCOAGULATION, function(pl, active)
+	pl.HyperCoagulation = active
+end)
+
 
 GM:AddSkillModifier(SKILL_D_PALSY, SKILLMOD_WORTH, 20)
 GM:AddSkillModifier(SKILL_D_PALSY, SKILLMOD_RESUPPLY_DELAY_MUL, -0.15)
@@ -2903,14 +2919,14 @@ GM:AddSkillModifier(SKILL_VKID2, SKILLMOD_SPEED, 15)
 GM:AddSkillModifier(SKILL_VKID2, SKILLMOD_HEALTH, -25)
 
 GM:AddSkillModifier(SKILL_CURSEDHEALTH, SKILLMOD_CURSEM, -0.25)
-GM:AddSkillModifier(SKILL_CRESCENDO1, SKILLMOD_HP_PER_WAVE, 3)
-GM:AddSkillModifier(SKILL_CRESCENDO2, SKILLMOD_HP_PER_WAVE, 2)
-GM:AddSkillModifier(SKILL_CRESCENDO3, SKILLMOD_HP_PER_WAVE, 1)
+GM:AddSkillModifier(SKILL_CRESCENDO1, SKILLMOD_HP_PER_WAVE, 4)
+GM:AddSkillModifier(SKILL_CRESCENDO2, SKILLMOD_HP_PER_WAVE, 4)
+GM:AddSkillModifier(SKILL_CRESCENDO3, SKILLMOD_HP_PER_WAVE, 4)
 
 GM:AddSkillModifier(SKILL_CRESCENDO1, SKILLMOD_SP_PER_WAVE, -3)
-GM:AddSkillModifier(SKILL_CRESCENDO2, SKILLMOD_SP_PER_WAVE, -2)
-GM:AddSkillModifier(SKILL_CRESCENDO3, SKILLMOD_SP_PER_WAVE, -1)
+GM:AddSkillModifier(SKILL_CRESCENDO2, SKILLMOD_SP_PER_WAVE, -4)
+GM:AddSkillModifier(SKILL_CRESCENDO3, SKILLMOD_SP_PER_WAVE, -2)
 
 GM:AddSkillModifier(SKILL_SLOWCOACH, SKILLMOD_SP_PER_WAVE, 3)
 
-GM:AddSkillModifier(SKILL_LUCKY_UNLIVER, SKILLMOD_HP_PER_WAVE, -10)
+GM:AddSkillModifier(SKILL_LUCKY_UNLIVER, SKILLMOD_HP_PER_WAVE, -5)

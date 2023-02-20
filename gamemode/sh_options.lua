@@ -663,6 +663,7 @@ GM:AddPointShopItem("healray",			ITEMCAT_TOOLS,			190,			"weapon_zs_healingray")
 GM:AddPointShopItem("repairray",			ITEMCAT_TOOLS,			220,			"weapon_zs_hammerray")
 GM:AddPointShopItem("stone",			ITEMCAT_TOOLS,			5,			"weapon_zs_stone")
 GM:AddPointShopItem("bannahuy",			ITEMCAT_TOOLS,			120000,			"weapon_zs_banhammer")
+GM:AddPointShopItem("bulwark_med",			ITEMCAT_TOOLS,		   3500,			"weapon_zs_med_bulwark")
 
 GM:AddAPointShopItem("soul_of_judas",			ITEMCAT_TRINKETS,			125,			"trinket_bleaksoul").SubCategory =								ITEMSUBCAT_TRINKETS_DEFENSIVE
 GM:AddAPointShopItem("soul_of_spiritess",			ITEMCAT_TRINKETS,			125,			"trinket_spiritess").SubCategory =								ITEMSUBCAT_TRINKETS_SUPER

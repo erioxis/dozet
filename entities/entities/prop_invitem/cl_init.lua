@@ -48,7 +48,7 @@ function ENT:Draw()
 		pos = self:GetPos()
 		eyepos = EyePos()
 		if myteam == TEAM_HUMAN or myteam == TEAM_SPECTATOR then
-			drawinfo = (GAMEMODE.AlwaysShowNails or not MySelf:KeyDown(IN_SPEED) or GAMEMODE.TraceTargetNoPlayers == self:GetParent()) and eyepos:DistToSqr(pos) <= 262144 and WorldVisible(eyepos, pos)
+			drawinfo = (not MySelf:KeyDown(IN_SPEED) or GAMEMODE.TraceTargetNoPlayers == self:GetParent()) and eyepos:DistToSqr(pos) <= 262144 and WorldVisible(eyepos, pos)
 		elseif myteam == TEAM_UNDEAD then
 			drawinfo = GAMEMODE.TraceTargetNoPlayers == self:GetParent()
 		end

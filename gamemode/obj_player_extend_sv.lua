@@ -131,7 +131,7 @@ function meta:ProcessDamage(dmginfo)
 		if GAMEMODE.ObjectiveMap then
 			dmginfo:ScaleDamage(0.25)
 		end
-		if attacker:IsPlayer() and attacker:IsSkillActive(SKILL_AMULET_2) and (15 >= attacker:Health() or attacker:Health() <= (attacker:GetMaxHealth() * 0.1) )then
+		if attacker:IsPlayer() and attacker:IsSkillActive(SKILL_AMULET_2) and (attacker:Health() <= (attacker:GetMaxHealth() * 0.35) or (attacker.MaxBloodArmor * 0.1 >= attacker:GetBloodArmor()) and attacker:Health() <= 15) then
 			dmginfo:ScaleDamage(2)
 		end
 
@@ -173,12 +173,10 @@ function meta:ProcessDamage(dmginfo)
 			dmginfo:SetDamage(dmginfo:GetDamage()*g)
 		end
 		if attacker:IsValidLivingHuman()  and self:GetZombieClassTable().FireBuff and attacker:HasTrinket("fire_at") then
-			dmginfo:SetDamage(0)
-			GAMEMODE:BlockFloater(attacker, self, dmginfo:GetDamagePosition())
+			dmginfo:ScaleDamage(0.25)
 		end
 		if attacker:IsValidLivingHuman()  and self:GetZombieClassTable().ResistFrost and attacker:HasTrinket("acid_at") then
-			dmginfo:SetDamage(0)
-			GAMEMODE:BlockFloater(attacker, self, dmginfo:GetDamagePosition())
+			dmginfo:ScaleDamage(0.25)
 		end
 		if attacker:IsValidLivingHuman()  and self:GetZombieClassTable().FireBuff and attacker:HasTrinket("acid_at") then
 			dmginfo:ScaleDamage(2)
@@ -189,7 +187,7 @@ function meta:ProcessDamage(dmginfo)
 		if self:GetZombieClassTable().Boss and attacker:IsPlayer() then
 			dmginfo:SetDamage(math.min(dmginfo:GetDamage(), (self:GetMaxHealth() * 0.09) * (inflictor.Tier or 1)))
 			timer.Simple(0,function()
-				self:GodEnable()
+				if self:IsValid() then  self:GodEnable() end
 				end )
 				timer.Simple(0.2,function()
 					if self:IsValid() then self:GodDisable() end
@@ -199,7 +197,9 @@ function meta:ProcessDamage(dmginfo)
 			local damage = dmginfo:GetDamage()
 			local wep = attacker:GetActiveWeapon()
 			local attackermaxhp = math.floor(attacker:GetMaxHealth() * ((attacker:IsSkillActive(SKILL_D_FRAIL) or attacker:IsSkillActive(SKILL_ABUSE)) and 0.44 or 1))
-	
+			if attacker:IsSkillActive(SKILL_AMULET_16) then 
+				dmginfo:ScaleDamage(math.random(1,250)/100)
+			end
 			--attacker.dpsmeter = damage
 			if attacker:IsSkillActive(SKILL_VAMPIRISM) then
 				attacker:SetNWFloat("vampirism_progress", attacker:GetNWFloat("vampirism_progress",value)+damage*0.09)
@@ -370,7 +370,6 @@ function meta:ProcessDamage(dmginfo)
 
 
 
-    
 
 	if self:IsSkillActive(SKILL_HOLY_MANTLE) and self.HolyMantle >= 1 and not self:HasGodMode() then
 		dmginfo:SetDamage(0)
@@ -888,6 +887,16 @@ function meta:ProcessDamage(dmginfo)
 	end
 	if self:HasTrinket("clownsoul") and dmginfo:GetDamage() > 30 then
 		dmginfo:SetDamage(30)
+	end
+    if self.HyperCoagulation and math.random(1,2) == 2 then
+		local droped = ents.Create("prop_hp")
+		droped:SetPos(self:GetPos()+Vector(0,0,30))
+		droped:Spawn()
+		droped:SetHP(dmginfo:GetDamage()*0.5)
+		droped:SetOwner(self)
+		droped:SetTime(4.5+CurTime())
+		droped.DieTime = CurTime() + 4.5
+		timer.Simple(0.1, function() droped:GetPhysicsObject():SetVelocity(VectorRand(-500,500)) end )
 	end
 
 
