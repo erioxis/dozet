@@ -1242,8 +1242,11 @@ function meta:GetMeleeSpeedMul()
 	if P_Team(self) == TEAM_UNDEAD then
 		return self:GetZombieMeleeSpeedMul()
 	end
-
-	return 1 * (1 + math.Clamp(self:GetArmDamage() / GAMEMODE.MaxArmDamage, 0, 1)) / (self:GetStatus("frost") and 0.7 or 1)
+	local mul = 1
+	if self.StaminaHAHA and self:GetStamina() <= 33 then
+		mul = mul * (self:GetStamina()/50)
+	end
+	return 1 * (1 + math.Clamp(self:GetArmDamage() / GAMEMODE.MaxArmDamage, 0, 1)) / (self:GetStatus("frost") and 0.7 or 1) / (self:GetStatus("resnya") and 1.45 or 1) / (self.SoyMilk and 1.5 or 1) / mul
 end
 
 function meta:GetPhantomHealth()

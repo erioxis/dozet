@@ -88,6 +88,10 @@ hook.Add("Initialize", "LoadCarts", function()
 		GAMEMODE.SavedCarts = Deserialize(file.Read(GAMEMODE.CartFile)) or {}
 	end
 end)
+--hook.Add("PlayerInitialSpawnRound", "LoadCarts2", function(pl)
+--	if GAMEMODE:GetWave() >= 1 then
+	--end
+--end)
 
 local function ClearCartDoClick()
 	for _, btn in ipairs(WorthButtons) do

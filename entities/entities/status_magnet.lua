@@ -8,7 +8,7 @@ ENT.Radius = 700
 if CLIENT then return end
 
 ENT.Classes = table.ToAssoc(
-	{"prop_ammo", "prop_invitem", "prop_weapon"}
+	{"prop_ammo", "prop_invitem", "prop_weapon", "prop_hp"}
 )
 ENT.Force = 30
 ENT.ForceDelay = 0.1
@@ -39,6 +39,10 @@ function ENT:Think()
 
 			if (ent:GetPos() - self:GetPos()):LengthSqr() <= 5600 and ent.GiveToActivator then
 				ent:GiveToActivator(owner)
+			end
+			
+			if (ent:GetPos() - self:GetPos()):LengthSqr() <= 5600 and ent.Use then
+				ent:Use(owner, self)
 			end
 		end
 	end

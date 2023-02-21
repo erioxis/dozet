@@ -5,7 +5,7 @@ GM.Website	=	"https://github.com/erioxis/dozet"
 
 -- No, adding a gun doesn't make your name worth being here.
 GM.Credits = {
-	{"Version", "", "7.0.7"}, -- Привет.
+	{"Version", "", "7.1.3"}, -- Привет.
 	{"Season of ", "zombie buffs and code optimisation", "XD"},
 	{"erioxis", "Phantom coder", "dead"},
 	{"Nullted", "", "RU-ENG Translation"},
@@ -53,7 +53,7 @@ include("sh_colors.lua")
 include("sh_serialization.lua")
 include("sh_util.lua")
 include("shared/sh_bullets.lua")
-
+include("sh_stamina.lua")
 include("skillweb/sh_skillweb.lua")
 
 include("sh_options.lua")

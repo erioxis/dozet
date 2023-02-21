@@ -11,7 +11,7 @@ This was my first ever gamemode. A lot of stuff is from years ago and some stuff
 ]]
 AddCSLuaFile("cl_init.lua")
 AddCSLuaFile("shared.lua")
-
+AddCSLuaFile("sh_stamina.lua")
 AddCSLuaFile("sh_translate.lua")
 AddCSLuaFile("sh_colors.lua")
 AddCSLuaFile("sh_serialization.lua")
@@ -1364,6 +1364,9 @@ function GM:Think()
 					end
 					
 				end
+				if pl.StaminaHAHA and (pl.StaminaUsed or 0) <= CurTime() then
+					pl:AddStamina(7)
+				end
 				if !pl:OnGround() and not (pl:GetVelocity():LengthSqr() > 7600) then
 					pl.StuckedInProp = true
 				else
@@ -2071,7 +2074,7 @@ GM.RestartedGame = false
 function GM:RestartRound()
 	self.CurrentRound = self.CurrentRound + 1
 	self.RestartedGame = true
-
+	self.UsedReady = 0
 	net.Start("zs_currentround")
 		net.WriteUInt(self.CurrentRound, 6)
 	net.Broadcast()
@@ -2342,12 +2345,14 @@ function GM:OnPlayerWin(pl)
 	end
 	pl:AddZSXP(xp * (math.max(0.33,self:GetWinRate())))
 	self:SetRage(self:GetRage() + 100)
-	self:SetWinRate(math.max(0,self:GetWinRate() + 1 / #team.GetPlayers(TEAM_HUMAN)))
 	pl:GiveAchievement("winfirst")
 	if not self.ObjectiveMap then
 		pl:GiveAchievementProgress("loveof6", 1)
 	end
 	if self:GetNumberOfWaves() == 12 then
+		if pl.BestFriend then
+			pl:AddZSXP(10000)
+		end
 		if self:GetBalance() >= 50 then
 			pl:GiveAchievement("infected_dosei")
 		end
@@ -2415,12 +2420,13 @@ function GM:EndRound(winner)
 			if pl:Team() == TEAM_HUMAN then
 				if not self:GetUseSigils() then
 					gamemode.Call("OnPlayerWin", pl)
+
 				end
 			elseif pl:Team() == TEAM_UNDEAD then
 				gamemode.Call("OnPlayerLose", pl)
 			end
 		end
-
+		self:SetWinRate(math.max(0,self:GetWinRate() + 1))
 		hook.Add("PlayerShouldTakeDamage", "EndRoundShouldTakeDamage", EndRoundPlayerShouldTakeDamage)
 	elseif winner == TEAM_UNDEAD then
 		hook.Add("PlayerShouldTakeDamage", "EndRoundShouldTakeDamage", EndRoundPlayerCanSuicide)
@@ -2718,6 +2724,7 @@ function GM:PlayerInitialSpawnRound(pl)
 	pl.ZombiesKilled = 0
 	pl.ZombiesKilledAssists = 0
 	pl.RageMul = 0
+	pl.Readyd_COM = true
 	pl.Headshots = 0
 	pl.BrainsEaten = 0
 	pl.zKills = 0
@@ -3178,6 +3185,23 @@ function GM:GiveDefaultOrRandomEquipment(pl)
 		if self.StartingLoadout then
 			self:GiveStartingLoadout(pl)
 		else
+			--[[	elseif #self.StartLoadouts >= 1 then
+		for _, id in pairs(self.StartLoadouts[math.random(#self.StartLoadouts)]) do
+			local tab = FindStartingItem(id)
+			if tab then
+				if tab.Callback then
+					tab.Callback(pl)
+				elseif tab.SWEP then
+					if not pl:AddInventoryItem(tab.SWEP) then
+						pl:StripWeapon(tab.SWEP)
+						pl:Give(tab.SWEP)
+					end
+
+					GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_WEAPON, tab.SWEP, "RandomCheckouts", 1)
+				end
+			end
+		end
+	end]]
 			pl:SendLua("GAMEMODE:RequestedDefaultCart()")
 			if self.StartingWorth > 0 then
 				timer.Simple(6, function() TimedOut(pl) end)
@@ -4399,7 +4423,7 @@ function GM:HumanKilledZombie(pl, attacker, inflictor, dmginfo, headshot, suicid
 	end
 	attacker:GiveAchievementProgress("everycan", 1)
 	attacker:GiveAchievementProgress("dzs", 1)
-	if attacker.ZombiesKilled % 10 + (attacker:IsSkillActive(SKILL_PACIFISMIUM) and 25 or 0) == 0 then
+	if attacker.ZombiesKilled % 5 + (attacker:IsSkillActive(SKILL_PACIFISMIUM) and 25 or 0) == 0 then
 		attacker:SetChargesActive(attacker:GetChargesActive()+1)
 	end
 	pl:GiveAchievementProgress("goodtime", 1)

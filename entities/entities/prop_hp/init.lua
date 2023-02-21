@@ -33,13 +33,19 @@ function ENT:Think()
 end
 function ENT:Use(activator, caller)
 	if self:GetOwner() == activator and self.NextUse <= CurTime() then
-		activator:SetHealth(activator:Health() + self:GetHP())
+		activator:SetHealth(math.max(1,activator:Health() + self:GetHP()))
+		if self:GetBA() >= 1 then
+			activator:SetBloodArmor(activator:GetBloodArmor() + self:GetBA())
+		end
 		self:Remove()
 	end
 end
 function ENT:StartTouch(ent)
 	if self:GetOwner() == ent and self.NextUse <= CurTime() then
-		ent:SetHealth(ent:Health() + self:GetHP())
+		ent:SetHealth(math.max(1,ent:Health() + self:GetHP()))
+		if self:GetBA() >= 1 then
+			ent:SetBloodArmor(ent:GetBloodArmor() + self:GetBA())
+		end
 		self:Remove()
 	end
 end

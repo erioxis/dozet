@@ -243,6 +243,7 @@ function GM:DrawInductorIndicators()
 	local bountyd =lp:GetProgress('bprog')
 	local icep =lp:GetProgress('iprog')
 	local cham =lp:GetProgress('cprog')
+	local resnyad =lp:GetProgress('rprog')
 
 	local medt = lp:GetPTime('mprog')
 	local firet =lp:GetPTime('fprog')
@@ -250,6 +251,7 @@ function GM:DrawInductorIndicators()
 	local bountyt =lp:GetPTime('bprog')
 	local icet =lp:GetPTime('iprog')
 	local chamt =lp:GetPTime('cprog')
+	local resnyat =lp:GetPTime('rprog')
 
 	if cham > 0 and chamt >= CurTime() then
 		if lp:IsValid() then
@@ -457,6 +459,40 @@ function GM:DrawInductorIndicators()
 			surface.SetDrawColor(255, 255, 255, colHealth.a)
 			surface.DrawTexturedRect(x + 2 + subwidth - 6, y + 1 - hei/2, 4, hei * 2)
 			draw.SimpleTextBlurry(translate.Get("bp_hud")..math.Round(bountyd).."/"..progress , "ZSHUDFontTiny", x, y - 12, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM)
+			y = y + ScrH() * 0.07
+		end
+	end
+	if resnyad > 0 and resnyat >= CurTime() then
+		if lp:IsValid() then
+			local matGlow = Material("sprites/glow04_noz")
+			local texDownEdge = surface.GetTextureID("gui/gradient_down")
+			local colHealth = Color(145,9,9)
+			local screenscale = BetterScreenScale()
+			local health = resnyad
+			local progress = 500
+			local healthperc = math.Clamp(health / progress, 0.01, 1)
+			local wid, hei = 150 * screenscale, 20 * screenscale
+	 
+			
+	
+			local subwidth = healthperc * wid
+			local fraction = (resnyat-CurTime())/2
+			local form = math.Clamp( fraction, 0, 1 )
+			colHealth.a = form *255
+			surface.SetDrawColor(0, 0, 0, colHealth.a)
+			surface.DrawRect(x, y, wid, hei)
+
+			
+			surface.SetDrawColor(colHealth.r * 1, colHealth.g * 0.2, colHealth.b, 40)
+			surface.SetTexture(texDownEdge)
+			surface.DrawTexturedRect(x + 2, y + 1, subwidth - 4, hei - 2)
+			surface.SetDrawColor(colHealth.r * 0.6, colHealth.g * 0.6, colHealth.b, 30)
+			surface.DrawRect(x + 2, y + 1, subwidth - 4, hei - 2)
+	
+			surface.SetMaterial(matGlow)
+			surface.SetDrawColor(255, 255, 255, colHealth.a)
+			surface.DrawTexturedRect(x + 2 + subwidth - 6, y + 1 - hei/2, 4, hei * 2)
+			draw.SimpleTextBlurry(translate.Get("resnya_hud")..math.Round(resnyad).."/"..progress , "ZSHUDFontTiny", x, y - 12, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM)
 			y = y + ScrH() * 0.07
 		end
 	end

@@ -220,6 +220,9 @@ function SWEP:StartSwinging()
 	if self:GetBlockState() then
 		self.ParryTiming = false
 	end
+	if owner.StaminaHAHA then
+		owner:AddStamina(-self.MeleeDamage/10)
+	end
 
 
 	if self.StartSwingAnimation then
@@ -239,7 +242,11 @@ function SWEP:DoMeleeAttackAnim()
 end
 
 function SWEP:MeleeSwing()
+	
 	local owner = self:GetOwner()
+	if owner.StaminaHAHA then
+		owner:AddStamina(-self.MeleeDamage/12)
+	end
 	self.SwingingTrue = false
 	owner:ResetSpeed()
 	self:DoMeleeAttackAnim()
@@ -327,6 +334,9 @@ end
 function SWEP:OnMeleeHit(hitent, hitflesh, tr)
 	local ent = hitent
 	if IsFirstTimePredicted() then
+		if self:GetOwner().StaminaHAHA then
+			self:GetOwner():AddStamina(-self.MeleeDamage/20)
+		end
 		if ent:IsPlayer() and SERVER and self:GetOwner():IsSkillActive(SKILL_CURSECURE) then
 			local count = 0
 			for _, ent in pairs(ents.FindInSphere(tr.HitPos, 97)) do

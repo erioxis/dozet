@@ -327,7 +327,7 @@ end
 
 function SWEP:GetFireDelay()
 	local owner = self:GetOwner()
-	return self.Primary.Delay / (owner:GetStatus("frost") and 0.7 or 1)
+	return self.Primary.Delay / (owner:GetStatus("frost") and 0.7 or 1) * ( owner:HasTrinket("altevesoul") and owner:Health() < 50 and 0.33 or 1 )
 end
 
 function SWEP:ShootBullets(dmg, numbul, cone)

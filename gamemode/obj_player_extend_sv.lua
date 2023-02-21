@@ -318,7 +318,15 @@ function meta:ProcessDamage(dmginfo)
 					self.ChefMarkOwner = attacker
 					self.ChefMarkTime = CurTime() + 1
 				end
+				if attacker:IsSkillActive(SKILL_RESNYATOST)  then
+					attacker:SetProgress(attacker:GetProgress("rprog") + math.min(100,dmginfo:GetDamage()*0.3),"rprog")
+					if attacker:GetProgress("rprog") >= 500 then
+						attacker:SetProgress(0,"rprog")
+						attacker:GiveStatus("resnya",6)
+					end
+				end
 			end
+		
 		end
 		if attacker:IsValidLivingHuman() then
 			local damage = dmginfo:GetDamage()
@@ -493,7 +501,7 @@ function meta:ProcessDamage(dmginfo)
 	if attacker:IsPlayer() and attacker:Team() == TEAM_UNDEAD and dmginfo:GetDamage() >= 1000 and !self:HasGodMode() then
 		timer.Simple(2, function() if self:IsValid() and self:Team() == TEAM_HUMAN then self:GiveAchievement("onepieceisreal") end end)
 	end
-
+	local takedbl = 0
 
 	if attacker:IsValid() and attacker:IsPlayer() and inflictor:IsValid() and attacker:Team() == TEAM_UNDEAD then
 		if self:HasTrinket("soul_lime") and attacker:GetZombieClassTable().HeathMax then
@@ -856,6 +864,7 @@ function meta:ProcessDamage(dmginfo)
 			dmginfo:SetDamage(damage - absorb)
 			self:SetBloodArmor(self:GetBloodArmor() - absorb)
 			self.BloodDead = absorb
+			takedbl = absorb
 
 			if attacker:IsValid() and attacker:IsPlayer() then
 				local myteam = attacker:Team()
@@ -893,11 +902,26 @@ function meta:ProcessDamage(dmginfo)
 		droped:SetPos(self:GetPos()+Vector(0,0,30))
 		droped:Spawn()
 		droped:SetHP(dmginfo:GetDamage()*0.5)
+		if takedbl >= 1 then
+			droped:SetBA(takedbl*0.5)
+		end
 		droped:SetOwner(self)
 		droped:SetTime(4.5+CurTime())
 		droped.DieTime = CurTime() + 4.5
 		timer.Simple(0.1, function() droped:GetPhysicsObject():SetVelocity(VectorRand(-500,500)) end )
 	end
+	if self.Purgatory then
+		self:GiveStatus("portal",1)
+		for i=1,3 do
+			local droped = ents.Create("projectile_purgatory_soul")
+			droped:SetPos(self:GetPos()+Vector(0,0,30*i))
+			droped:Spawn()
+			timer.Simple(0, function() droped.TimeToDash = CurTime() + 1 + (0.1 * i) end)
+			droped.DamageToDeal = dmginfo:GetDamage() * 2.5 + ((takedbl and takedbl or 0) * 1.5)
+			droped:SetOwner(self)
+		end
+	end
+
 
 
 

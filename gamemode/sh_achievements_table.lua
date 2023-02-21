@@ -443,6 +443,13 @@ GM.Statuses["strengthdartboost"] =   {
 	Max = 10,
 	Icon = Material("zombiesurvival/strength_shot.png")
 }
+GM.Statuses["resnya"] =   {
+	Color = Color(199, 52, 39),
+	Name = "resnya",
+	ValFunc = statusValueFunction("resnya"),
+	Max = 10,
+	Icon = Material("zombiesurvival/strength_shot.png")
+}
 GM.Statuses["sticky"] =   {
 	Color = Color(35, 190, 15),
 	Name = "sticky",

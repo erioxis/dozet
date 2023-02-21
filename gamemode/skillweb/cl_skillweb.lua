@@ -1438,6 +1438,8 @@ function PANEL:OnMousePressed(mc)
 	elseif MOUSE_RIGHT then
 		local contextmenu = self.UpgradeMenu
 		if MySelf:IsSkillUnlocked(hoveredskill) and (GAMEMODE.Skills[hoveredskill].CanUpgrade or 0) >= 1 then
+		--	MySelf:SetUnlockedSkills({})
+		--	MySelf:SetDesiredActiveSkills({})
 			local mx, my = gui.MousePos()
 			if MySelf:GetZSSPRemaining() >= 1 then
 				contextmenu:SetPos(mx - contextmenu:GetWide() / 2, my - contextmenu:GetTall() / 2)

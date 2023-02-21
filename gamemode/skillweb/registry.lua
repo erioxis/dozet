@@ -451,7 +451,11 @@ SKILL_CRESCENDO2 = 423
 SKILL_CRESCENDO3 = 424
 SKILL_AMULET_16 = 425
 SKILL_HYPERCOAGULATION = 426
-
+SKILL_RESNYATOST = 427
+SKILL_TOY_BEST_FRIEND = 428
+SKILL_PURGATORY = 429
+--SKILL_BLOODY_BULLETS = 430
+SKILL_STAMINA = 431
 
 
 
@@ -577,6 +581,8 @@ SKILLMOD_HEADSHOT_MUL = 119
 SKILLMOD_DMG_TAKEN = 120
 SKILLMOD_HP_PER_WAVE = 121
 SKILLMOD_SP_PER_WAVE = 122
+SKILLMOD_STAMINA_ADD = 123
+SKILLMOD_STAMINA_USE = 124
 
 local GOOD = "^"..COLORID_GREEN
 local BAD = "^"..COLORID_RED
@@ -701,7 +707,7 @@ GM:AddSkillModifier(SKILL_JUSTICE_2, SKILLMOD_RES_AMMO_MUL, 0.09)
 GM:AddSkill(SKILL_SUGARRUSH, translate.Get("skill_srush_0"), GOOD..translate.Get("skill_srush_d1")..BAD..translate.Get("skill_srush_d2"),
 																4,			0,					{SKILL_GOURMET,SKILL_HYPERCOAGULATION}, TREE_HEALTHTREE)
 GM:AddSkill(SKILL_HYPERCOAGULATION, translate.Get("skill_hp_cog"), GOOD..translate.Get("skill_hp_cog_d1")..BAD..translate.Get("skill_hp_cog_d2"),
-																4,			1,					{SKILL_GOURMET}, TREE_HEALTHTREE)
+																4,			1,					{}, TREE_HEALTHTREE)
 GM:AddSkill(SKILL_CIRCULATION, translate.Get("skill_cir_0"), GOOD..translate.Get("skill_cir_d1"),
 																4,			4,					{SKILL_SANGUINE}, TREE_HEALTHTREE)
 GM:AddSkill(SKILL_CIRCULATION1, translate.Get("skill_cir_0").." II", GOOD.."+3"..translate.Get("barmor"),
@@ -1251,7 +1257,11 @@ GM:AddSkill(SKILL_SLEIGHTOFHAND, translate.Get("skill_s_hand"), GOOD.."+10%"..tr
 GM:AddSkill(SKILL_BANDOLIER, translate.Get("skill_bandolier"), GOOD..translate.Get("skill_bandolier_d1"),
 																-6,			-1,					{SKILL_SLEIGHTOFHAND}, TREE_GUNTREE)
 GM:AddSkill(SKILL_U_CRYGASGREN, translate.Get("skill_u_cryogas"), GOOD..translate.Get("skill_u_cryogas_d1"),
-																2,			-3,					{SKILL_EGOCENTRIC}, TREE_GUNTREE)
+																2,			-3,					{SKILL_EGOCENTRIC,SKILL_PURGATORY}, TREE_GUNTREE)
+--GM:AddSkill(SKILL_BLOODY_BULLETS, translate.Get("skill_bb"), GOOD..translate.Get("skill_bb_d1")..BAD..translate.Get("skill_bb_d2"),
+--																2,			-2,					{SKILL_BLOODY_BULLETS}, TREE_GUNTREE) марио передай коту что мне лень деелать этот скииииииллл
+GM:AddSkill(SKILL_PURGATORY, translate.Get("skill_purgatory"), GOOD..translate.Get("skill_purgatory_d1")..BAD.."-15%"..translate.Get("b_damage"),
+																2,			-4,					{}, TREE_GUNTREE)
 GM:AddSkill(SKILL_SOFTDET, translate.Get("skill_sdeton"), GOOD.."-40%"..translate.Get("exp_damage_t")..BAD.."-10%"..translate.Get("exp_damage"),
 																0,			-5,					{SKILL_ELEMENTAL_BUFF}, TREE_GUNTREE)
 GM:AddSkill(SKILL_ELEMENTAL_BUFF, translate.Get("skill_ell_buff"), BAD.."+20%"..translate.Get("exp_damage_t")..GOOD..translate.Get("skill_ell_buff_d1"),
@@ -1386,15 +1396,17 @@ GM:AddSkill(SKILL_HEAVYSTRIKES, translate.Get("skill_hknucke"), GOOD.."+90%"..tr
 GM:AddSkill(SKILL_JOUSTER, translate.Get("skill_jouster"), GOOD.."+15%"..translate.Get("meleedamage")..BAD.."-90%"..translate.Get("melee_knock")..BAD.."-50%"..translate.Get("b_damage"),
 																2,			2,					{SKILL_BLOODLOST,SKILL_SOY}, TREE_MELEETREE)
 GM:AddSkillModifier(SKILL_JOUSTER, SKILLMOD_DAMAGE, -0.50)
-GM:AddSkill(SKILL_SOY, translate.Get("skill_soy"), GOOD.."-50%"..translate.Get("m_delay")..BAD.."-50%"..translate.Get("meleedamage"),
+GM:AddSkill(SKILL_SOY, translate.Get("skill_soy"), GOOD..translate.Get("skill_soy_d1")..BAD.."-75%"..translate.Get("meleedamage"),
 																3,			3,					{SKILL_JOUSTER}, TREE_MELEETREE)
-GM:AddSkillModifier(SKILL_SOY, SKILLMOD_MELEE_DAMAGE_MUL, -0.50)
-GM:AddSkillModifier(SKILL_SOY, SKILLMOD_MELEE_SWING_DELAY_MUL, -0.50)
+GM:AddSkillModifier(SKILL_SOY, SKILLMOD_MELEE_DAMAGE_MUL, -0.75)
 																
 GM:AddSkill(SKILL_BLOODLOST, translate.Get("skill_bloodlust"), GOOD..translate.Get("skill_bloodlust_d1")..BAD.."-30"..translate.Get("health"),
 																3,			2,					{}, TREE_MELEETREE)
 GM:AddSkill(SKILL_PARASITOID, translate.Get("skill_parasitoid"), GOOD..translate.Get("skill_parasitoid_d1")..BAD.."-45"..translate.Get("barmor"),
-																4,			2,					{SKILL_BLOODLOST}, TREE_MELEETREE)
+																4,			2,					{SKILL_BLOODLOST,SKILL_RESNYATOST}, TREE_MELEETREE)
+GM:AddSkill(SKILL_RESNYATOST, translate.Get("skill_resnyatost"), GOOD..translate.Get("skill_resnyatost_d1")..BAD.."-20%"..translate.Get("meleedamage"),
+																4,			4,					{}, TREE_MELEETREE)
+GM:AddSkillModifier(SKILL_RESNYATOST, SKILLMOD_MELEE_DAMAGE_MUL, -0.20)
 GM:AddSkill(SKILL_LANKY, translate.Get("skill_lanky").."I", GOOD.."+10%"..translate.Get("m_range")..BAD.."-5%"..translate.Get("meleedamage"),
 																-4,			0,					{SKILL_LANKYII}, TREE_MELEETREE)
 GM:AddSkill(SKILL_LANKYII, translate.Get("skill_lanky").."II", GOOD.."+10%"..translate.Get("m_range")..BAD.."-6%"..translate.Get("meleedamage"),
@@ -1447,6 +1459,9 @@ GM:AddSkillModifier(SKILL_MELEEFAN, SKILLMOD_DAMAGE, -0.50)
 GM:AddSkillModifier(SKILL_MELEEFAN, SKILLMOD_UNARMED_DAMAGE_MUL, -3.50)
 GM:AddSkillModifier(SKILL_MELEEFAN, SKILLMOD_MELEE_SWING_DELAY_MUL, -0.15)
 GM:AddSkillModifier(SKILL_MELEEFAN, SKILLMOD_MELEE_DAMAGE_MUL, 0.45)
+GM:AddSkill(SKILL_STAMINA, translate.Get("skill_stamina"), GOOD.."+30%"..translate.Get("meleedamage")..BAD..translate.Get("skill_stamina_d1"),
+																9,			-1,					{SKILL_MELEEFAN}, TREE_MELEETREE)
+GM:AddSkillModifier(SKILL_STAMINA, SKILLMOD_DAMAGE, 0.30)
 SKILL_OPM = 225				
 GM:AddSkill(SKILL_OPM, translate.Get("skill_opm"), GOOD.."+350%"..translate.Get("fist_damage")..BAD.."-35%"..translate.Get("meleedamage")..BAD.."+150%"..translate.Get("fist_delay"),
 																9,			-5,					{SKILL_MELEEFAN}, TREE_MELEETREE)
@@ -1711,6 +1726,7 @@ GM:AddSkillModifier(SKILL_SLAVEC, SKILLMOD_HEALTH, -15)
 GM:AddSkillModifier(SKILL_SLAVEC, SKILLMOD_SPEED, 20)
 GM:AddSkill(SKILL_BERSERK, translate.Get("skill_ultra_r"), GOOD..translate.Get("skill_ultra_r_d1")..BAD..translate.Get("skill_ultra_r_d2")..BAD..translate.Get("skill_ultra_r_d3"),
 																				1.5,			6,					{}, TREE_DEFENSETREE)
+GM:AddSkillModifier(SKILL_BERSERK, SKILLMOD_DMG_TAKEN, 0.1)
 SKILL_TORMENT3 = 231
 GM:AddSkill(SKILL_TORMENT3, translate.Get("skill_torment").."III", GOOD.."+15%"..translate.Get("xpmul")..BAD.."+50%"..translate.Get("res_delay")..BAD.."-5%"..translate.Get("p_mul").."Secret III(+2 skill points)",
 				                                                            	1,			28,					{SKILL_TORMENT2}, TREE_ANCIENTTREE)
@@ -1761,6 +1777,9 @@ GM:AddSkill(SKILL_TORMENT8,translate.Get("skill_torment").."VIII", GOOD.."+15%".
 
 GM:AddSkillModifier(SKILL_TORMENT8, SKILLMOD_HEALTH, -50)
 GM:AddSkillModifier(SKILL_TORMENT8, SKILLMOD_XP, 0.15)
+GM:AddSkill(SKILL_TOY_BEST_FRIEND,translate.Get("skill_toy"), GOOD..translate.Get("skill_toy_d")..BAD.."-10%"..translate.Get("xpmul"),
+																				1,			30,						{SKILL_TORMENT4}, TREE_ANCIENTTREE)
+GM:AddSkillModifier(SKILL_TOY_BEST_FRIEND, SKILLMOD_XP, -0.10)
 GM:AddSkill(SKILL_FREEPOINT1,translate.Get("skill_freexp").."I", GOOD.."+1%"..translate.Get("xpmul"),
 				                                                            	4,			33,					{SKILL_TORMENT8}, TREE_ANCIENTTREE)
 GM:AddSkillModifier(SKILL_FREEPOINT1, SKILLMOD_XP, 0.01)
@@ -2201,6 +2220,13 @@ end)
 GM:SetSkillModifierFunction(SKILLMOD_SP_PER_WAVE, function(pl, amount)
 	pl.SPPerWave = math.Clamp(amount, -500, 100.0)
 end)
+GM:SetSkillModifierFunction(SKILLMOD_STAMINA_ADD, function(pl, amount)
+	pl.StaminaAdd = math.Clamp(amount+1, -1, 100.0)
+end)
+GM:SetSkillModifierFunction(SKILLMOD_STAMINA_USE, function(pl, amount)
+	pl.StaminaUse = math.Clamp(amount+1, -1, 100.0)
+end)
+
 
 GM:SetSkillModifierFunction(SKILLMOD_MELEE_KNOCKBACK_MUL, function(pl, amount)
 	pl.MeleeKnockbackMultiplier = math.Clamp(amount + 1.0, 0.0, 10000.0)
@@ -2930,3 +2956,22 @@ GM:AddSkillModifier(SKILL_CRESCENDO3, SKILLMOD_SP_PER_WAVE, -2)
 GM:AddSkillModifier(SKILL_SLOWCOACH, SKILLMOD_SP_PER_WAVE, 3)
 
 GM:AddSkillModifier(SKILL_LUCKY_UNLIVER, SKILLMOD_HP_PER_WAVE, -5)
+
+
+GM:AddSkillFunction(SKILL_RESNYATOST, function(pl, active)
+	pl.ResnyaMoment = active
+end)
+GM:AddSkillFunction(SKILL_TOY_BEST_FRIEND, function(pl, active)
+	pl.BestFriend = active
+end)
+GM:AddSkillModifier(SKILL_PURGATORY, SKILLMOD_DAMAGE, -0.15)
+GM:AddSkillFunction(SKILL_PURGATORY, function(pl, active)
+	pl.Purgatory = active
+end)
+GM:AddSkillModifier(SKILL_SOY, SKILLMOD_HAMMER_SWING_DELAY_MUL, 0.5)
+GM:AddSkillFunction(SKILL_SOY, function(pl, active)
+	pl.SoyMilk = active
+end)
+GM:AddSkillFunction(SKILL_STAMINA, function(pl, active)
+	pl.StaminaHAHA = active
+end)

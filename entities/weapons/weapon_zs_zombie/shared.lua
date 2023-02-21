@@ -275,7 +275,7 @@ function SWEP:PrimaryAttack()
 	local armdelay = owner:GetMeleeSpeedMul()
 
 	self:SetNextPrimaryFire(CurTime() + self.Primary.Delay * armdelay)
-	self:SetNextSecondaryFire(self:GetNextPrimaryFire() + 0.5)
+	self:SetNextSecondaryFire(self:GetNextPrimaryFire() + 0.1)
 
 	self:StartSwinging()
 end
@@ -289,7 +289,7 @@ end
 
 function SWEP:DoAlert()
 	self:GetOwner():DoReloadEvent()
-
+	self:SetNextPrimaryFire(CurTime())
 	if SERVER then
 		local ent = self:GetOwner():CompensatedMeleeTrace(4096, 24).Entity
 		if ent:IsValidPlayer() then

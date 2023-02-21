@@ -49,6 +49,9 @@ function ENT:Draw()
 				x = wid * -0.5 + 2
 					--local item = GAMEMODE:GetInventoryItemType(itype)
 					draw.SimpleText(self:GetHP(), "ZSHUDFontBig", x + 55, y - 100, COLOR_RED, TEXT_ALIGN_CENTER)
+					if self:GetBA() >= 1 then
+						draw.SimpleText(self:GetBA(), "ZSHUDFontBig", x + 55, y - 150, Color(113,255,177), TEXT_ALIGN_CENTER)
+					end
 		cam.End3D2D()
 
 		cam.IgnoreZ(false)

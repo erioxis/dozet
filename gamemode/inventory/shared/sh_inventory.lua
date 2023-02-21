@@ -163,10 +163,28 @@ end
 GM:AddInventoryItemData("cons_void",		trs("c_void"),			trs("c_void_d"),								"models/props_c17/trappropeller_lever.mdl", 3, nil, nil, function(pl) 
 	funcofvoid(pl, "cons_void")
 end,3)
-GM:AddInventoryItemData("cons_flame_p",		trs("c_flame_p"),			trs("c_flame_p_d"),								"models/props_c17/trappropeller_lever.mdl", 3, nil, nil, function(pl) 
+GM:AddInventoryItemData("cons_flame_p",		trs("c_flame_p"),			trs("c_flame_p_d"),								"models/props_c17/trappropeller_lever.mdl", 1, nil, nil, function(pl) 
 	if pl:HasWeapon("weapon_zs_molotov") then pl:GiveAmmo(1, "molotov") return end
 	pl:Give("weapon_zs_molotov")
 end,3)
+GM:AddInventoryItemData("cons_grandma_vase",		trs("c_grandma"),			trs("c_grandma_d"),								"models/props_c17/trappropeller_lever.mdl", 3, nil, nil, function(pl) 
+	local droped = ents.Create("projectile_purgatory_soul")
+	droped:SetPos(pl:GetPos()+Vector(0,0,70))
+	droped:Spawn()
+	droped.TimeToDash = CurTime() + 0.3
+	droped.DamageToDeal = 350
+	droped:SetOwner(pl)
+	if math.randomr(1,100,1,pl) == 1 then
+		for i=1,9 do
+			local droped = ents.Create("projectile_purgatory_soul")
+			droped:SetPos(pl:GetPos()+Vector(0,0,70))
+			droped:Spawn()
+			droped.TimeToDash = CurTime() + 0.3 + 0.7 * i
+			droped.DamageToDeal = 350
+			droped:SetOwner(pl)
+		end
+	end
+end,1)
 GM:AddInventoryItemData("cons_minos",		trs("c_minos"),			trs("c_minos_d"),								"models/props_c17/trappropeller_lever.mdl", 3, nil, nil, function(owner) 
 	local ent = ents.Create("projectile_mprime_proj_act")
 	if ent:IsValid() then
