@@ -1,17 +1,20 @@
 INVCAT_TRINKETS = 1
 INVCAT_COMPONENTS = 2
 INVCAT_CONSUMABLES = 3
+INVCAT_WEAPONS = 4
 
 GM.ZSInventoryItemData = {}
 GM.ZSInventoryCategories = {
 	[INVCAT_TRINKETS] = translate.Get("vgui_trin"),
 	[INVCAT_COMPONENTS] =  translate.Get("vgui_comp"),
-	[INVCAT_CONSUMABLES] = translate.Get("vgui_cons")
+	[INVCAT_CONSUMABLES] = translate.Get("vgui_cons"),
+	[INVCAT_WEAPONS] = translate.Get("vgui_weap")
 }
 GM.ZSInventoryPrefix = {
 	[INVCAT_TRINKETS] = "trin",
 	[INVCAT_COMPONENTS] = "comp",
-	[INVCAT_CONSUMABLES] = "cons"
+	[INVCAT_CONSUMABLES] = "cons",
+	[INVCAT_WEAPONS] = "weap"
 }
 
 GM.Assemblies = {}
@@ -19,6 +22,10 @@ GM.TakeItem = {}
 GM.Breakdowns = {}
 
 function GM:GetInventoryItemType(item)
+	--print(type(item))
+--	if type(item) == "Weapon" then
+		--item = item:GetClass()
+	--end
 	for typ, aff in pairs(self.ZSInventoryPrefix) do
 		if string.sub(item, 1, 4) == aff then
 			return typ

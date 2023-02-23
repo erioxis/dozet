@@ -4861,29 +4861,18 @@ function GM:PlayerCanPickupWeapon(pl, ent)
 end
 
 function GM:PlayerCanPickupItem(pl, ent)
-	if pl:IsSkillActive(SKILL_D_FRAIL) then
+	if pl:IsSkillActive(SKILL_D_FRAIL) or pl:IsSkillActive(SKILL_ABUSE) then
 		local class = ent:GetClass()
 		if class == "item_healthkit" or class == "item_healthvial" then
 			local healamount = #class == 14 and 25 or 10
-			if pl:Health() + healamount > math.floor(pl:GetMaxHealth() * 0.44) then
+			if pl:Health() + healamount > math.floor(pl:GetMaxHealth() * 0.33) then
 				return false
 			end
 		end
 	end
 	return true
 end
-function GM:PlayerCanPickupItem(pl, ent)
-	if pl:IsSkillActive(SKILL_ABUSE) then
-		local class = ent:GetClass()
-		if class == "item_healthkit" or class == "item_healthvial" then
-			local healamount = #class == 14 and 25 or 10
-			if pl:Health() + healamount > math.floor(pl:GetMaxHealth() * 0.44) then
-				return false
-			end
-		end
-	end
-	return true
-end
+
 
 
 -- This function is only for footsteps for players not in the local player's pvs or something.

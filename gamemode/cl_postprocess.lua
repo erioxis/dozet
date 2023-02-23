@@ -469,7 +469,7 @@ function GM:DrawInductorIndicators()
 			local colHealth = Color(145,9,9)
 			local screenscale = BetterScreenScale()
 			local health = resnyad
-			local progress = 500
+			local progress = 1000
 			local healthperc = math.Clamp(health / progress, 0.01, 1)
 			local wid, hei = 150 * screenscale, 20 * screenscale
 	 

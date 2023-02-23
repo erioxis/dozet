@@ -186,10 +186,15 @@ function GM:SupplyItemViewerDetail(viewer, sweptable, shoptbl)
 	local desctext = sweptable.Description or ""
 	local bruh = ""
 	if not self.ZSInventoryItemData[shoptbl.SWEP] then
-		viewer.ModelPanel:SetModel(sweptable.WorldModel)
-		local mins, maxs = viewer.ModelPanel.Entity:GetRenderBounds()
-		viewer.ModelPanel:SetCamPos(mins:Distance(maxs) * Vector(1.15, 0.75, 0.5))
-		viewer.ModelPanel:SetLookAt((mins + maxs) / 2)
+		local mins, maxs = 0,0
+		if sweptable.WorldModel ~= "" then
+			viewer.ModelPanel:SetModel(sweptable.WorldModel)
+			mins, maxs = viewer.ModelPanel.Entity:GetRenderBounds()
+			viewer.ModelPanel:SetCamPos(mins:Distance(maxs) * Vector(1.15, 0.75, 0.5))
+			viewer.ModelPanel:SetLookAt((mins + maxs) / 2)
+		else
+			viewer.ModelPanel:SetModel("")
+		end
 		viewer.m_VBG:SetVisible(true)
 
 		if sweptable.NoDismantle then
@@ -218,7 +223,7 @@ function GM:SupplyItemViewerDetail(viewer, sweptable, shoptbl)
 	viewer.m_Desc:SetText(desctext)
 	viewer.m_Bruh:SetText(bruh)
 
-	self:ViewerStatBarUpdate(viewer, shoptbl.Category ~= ITEMCAT_GUNS and shoptbl.Category ~= ITEMCAT_MELEE, sweptable)
+	self:ViewerStatBarUpdate(viewer, shoptbl.Category ~= ITEMCAT_GUNS and shoptbl.Category ~= ITEMCAT_MELEE or shoptbl.Category ~= INVCAT_WEAPONS, sweptable)
 
 	if self:HasPurchaseableAmmo(sweptable) and self.AmmoNames[string.lower(sweptable.Primary.Ammo)] then
 		local lower = string.lower(sweptable.Primary.Ammo)

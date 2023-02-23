@@ -977,7 +977,7 @@ local colBeam = Color(0, 0, 0)
 local colBeam2 = Color(255, 255, 255)
 local colSmoke = Color(140, 160, 185, 160)
 local colGlow = Color(0, 0, 0)
-local exlude = {8,6,16,22,27,30,31,34,118,114,113,101,40,41,43,92,117,116,56,59,63,65,66,98,72,73,79,88,78,120,57,58}
+local exlude = {8,6,16,22,27,30,31,34,118,114,113,101,40,41,43,92,117,116,56,59,63,65,66,98,72,73,79,88,78,120,57,58,124}
 local exlude2 = {121,122,32,108,103,91,90}
 
 function PANEL:Paint(w, h)
@@ -1437,20 +1437,20 @@ function PANEL:OnMousePressed(mc)
 		end
 	elseif MOUSE_RIGHT then
 		local contextmenu = self.UpgradeMenu
-		if MySelf:IsSkillUnlocked(hoveredskill) and (GAMEMODE.Skills[hoveredskill].CanUpgrade or 0) >= 1 then
-		--	MySelf:SetUnlockedSkills({})
-		--	MySelf:SetDesiredActiveSkills({})
-			local mx, my = gui.MousePos()
-			if MySelf:GetZSSPRemaining() >= 1 then
-				contextmenu:SetPos(mx - contextmenu:GetWide() / 2, my - contextmenu:GetTall() / 2)
-				contextmenu.Button:SetText("Upgrade")
-				contextmenu:SetVisible(true)
-			else
-				self:DisplayMessage("You need SP to upgrade this skill!", COLOR_RED)
-				surface.PlaySound("buttons/button8.wav")
+	--	if MySelf:IsSkillUnlocked(hoveredskill) then
+		--	local tbl = MySelf:GetUnlockedSkills()
+		--	local tbl2 = MySelf:GetDesiredActiveSkills()
+		--	for k,v in pairs(tbl) do
+			--	if v == hoveredskill then
+			--		tbl[k] = nil
+			--		tbl2[k] = nil
+			--	end
+			--end
+			--MySelf:SetUnlockedSkills(tbl)
+			--MySelf:SetDesiredActiveSkills(tbl)
+			--self:DisplayMessage("Skill removed!", COLOR_YELLOW)
+			--surface.PlaySound("buttons/button8.wav")
 
-				return
-			end
 		end
 		contextmenu.SkillID = hoveredskill
 	end

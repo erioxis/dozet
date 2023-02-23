@@ -456,6 +456,9 @@ SKILL_TOY_BEST_FRIEND = 428
 SKILL_PURGATORY = 429
 --SKILL_BLOODY_BULLETS = 430
 SKILL_STAMINA = 431
+SKILL_STAMINLESS1 = 432
+SKILL_STAMINLESS2 = 433
+SKILL_STAMINLESS3 = 434
 
 
 
@@ -1461,7 +1464,19 @@ GM:AddSkillModifier(SKILL_MELEEFAN, SKILLMOD_MELEE_SWING_DELAY_MUL, -0.15)
 GM:AddSkillModifier(SKILL_MELEEFAN, SKILLMOD_MELEE_DAMAGE_MUL, 0.45)
 GM:AddSkill(SKILL_STAMINA, translate.Get("skill_stamina"), GOOD.."+30%"..translate.Get("meleedamage")..BAD..translate.Get("skill_stamina_d1"),
 																9,			-1,					{SKILL_MELEEFAN}, TREE_MELEETREE)
-GM:AddSkillModifier(SKILL_STAMINA, SKILLMOD_DAMAGE, 0.30)
+GM:AddSkillModifier(SKILL_STAMINA, SKILLMOD_MELEE_DAMAGE_MUL, 0.30)
+GM:AddSkill(SKILL_STAMINLESS1, translate.Get("skill_stamina").." I", GOOD..translate.Format("skillmod_n123", "+6%").."\n"..BAD..translate.Format("skillmod_n124", "+6%"),
+																11,			-1,					{SKILL_STAMINA}, TREE_MELEETREE)
+GM:AddSkillModifier(SKILL_STAMINLESS1, SKILLMOD_STAMINA_ADD, 0.06)
+GM:AddSkillModifier(SKILL_STAMINLESS1, SKILLMOD_STAMINA_USE, 0.06)
+GM:AddSkill(SKILL_STAMINLESS2, translate.Get("skill_stamina").." II", GOOD..translate.Format("skillmod_n123", "+4%").."\n"..BAD..translate.Format("skillmod_n124", "+4%"),
+																12,			0,					{SKILL_STAMINLESS1}, TREE_MELEETREE)
+GM:AddSkillModifier(SKILL_STAMINLESS2, SKILLMOD_STAMINA_ADD, 0.04)
+GM:AddSkillModifier(SKILL_STAMINLESS2, SKILLMOD_STAMINA_USE, 0.04)
+GM:AddSkill(SKILL_STAMINLESS3, translate.Get("skill_stamina").." III", GOOD..translate.Format("skillmod_n123", "+3%").."\n"..BAD..translate.Format("skillmod_n124", "+3%"),
+																13,			-1,					{SKILL_STAMINLESS2}, TREE_MELEETREE)
+GM:AddSkillModifier(SKILL_STAMINLESS3, SKILLMOD_STAMINA_ADD, 0.03)
+GM:AddSkillModifier(SKILL_STAMINLESS3, SKILLMOD_STAMINA_USE, 0.03)
 SKILL_OPM = 225				
 GM:AddSkill(SKILL_OPM, translate.Get("skill_opm"), GOOD.."+350%"..translate.Get("fist_damage")..BAD.."-35%"..translate.Get("meleedamage")..BAD.."+150%"..translate.Get("fist_delay"),
 																9,			-5,					{SKILL_MELEEFAN}, TREE_MELEETREE)

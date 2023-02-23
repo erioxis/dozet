@@ -36,6 +36,7 @@ LANGUAGE.only_all = "Показать все"
 LANGUAGE.vgui_trin = "Тринкеты"
 LANGUAGE.vgui_comp = "Компоненты"
 LANGUAGE.vgui_cons = "Используемые"
+LANGUAGE.vgui_weap = "Оружия"
 LANGUAGE.refresh = "Обновить"
 
 LANGUAGE.challenge_daily1 = "ЕЖЕДНЕВНОЕ:Наемник досета"

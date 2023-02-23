@@ -110,6 +110,17 @@ local function ItemPanelDoClick(self)
 		self.On = true
 
 		GAMEMODE.InventoryMenu.SelInv = item
+		if category == INVCAT_WEAPONS then 
+			local ent
+			for k,v in pairs(MySelf:GetWeapons()) do
+				if item == v:GetClass() then
+					ent = v
+					break
+				end
+			end
+			input.SelectWeapon(ent)
+			GAMEMODE.InventoryMenu.SelInv = nil
+		end
 		GAMEMODE.InventoryMenu.Category = category
 
 		GAMEMODE:DoAltSelectedItemUpdate()
@@ -165,13 +176,17 @@ local function ItemPanelDoClick(self)
 		end
 		viewer.m_Activate:SetVisible(false)
 	end
+	if category == INVCAT_WEAPONS then
+		GAMEMODE:ViewerStatBarUpdate( viewer, true, sweptable )
+	end
 	GAMEMODE:SupplyItemViewerDetail( viewer, sweptable, { SWEP = self.Item } )
 end
 
 local categorycolors = {
 	[ INVCAT_TRINKETS ] = { COLOR_RED, COLOR_DARKRED },
 	[ INVCAT_COMPONENTS ] = { COLOR_BLUE, COLOR_DARKBLUE },
-	[ INVCAT_CONSUMABLES ] = { COLOR_YELLOW, Color(75,67,1) }
+	[ INVCAT_CONSUMABLES ] = { COLOR_YELLOW, Color(75,67,1) },
+	[INVCAT_WEAPONS] = {Color(41,39,182),Color(99,173,233)}
 }
 local colBG = Color( 10, 10, 10, 252 )
 local colBGH = Color( 200, 200, 200, 5 )
@@ -254,13 +269,18 @@ function GM:InventoryAddGridItem( item, category )
 	local grid = self.InventoryMenu.Grids[ self:GetInventoryItemType( item ) ]
 	local types = nodes
 
+
 	if grid and grid:IsValid() then
 		local itempan = vgui.Create("DButton")
 		itempan:SetText( "" )
 		itempan.Paint = TrinketPanelPaint
 
 		itempan.Item = item
-		itempan.SWEP = self.ZSInventoryItemData[ item ]
+		if category == INVCAT_WEAPONS then
+			itempan.SWEP =  weapons.Get(item)
+		else
+			itempan.SWEP =  self.ZSInventoryItemData[ item ]
+		end
 		itempan.DoClick = ItemPanelDoClick
 		itempan.Category = category
 
@@ -282,9 +302,9 @@ function GM:InventoryAddGridItem( item, category )
 		trintier:CenterVertical( 0.8 )
 		
 
-
-		local icon = GAMEMODE.ZSInventoryItemData[item].Icon or "weapon_zs_trinket"
-		local kitbl = killicon.Get((category == INVCAT_TRINKETS or category == INVCAT_CONSUMABLES) and icon or "weapon_zs_craftables")
+		
+		local icon = category == INVCAT_WEAPONS and item or GAMEMODE.ZSInventoryItemData[item].Icon or "weapon_zs_trinket"
+		local kitbl = killicon.Get((category ~= INVCAT_COMPONENTS) and icon or "weapon_zs_craftables")
 		if kitbl then
 			self:AttachKillicon(kitbl, itempan, mdlframe)
 		end
@@ -327,9 +347,35 @@ function GM:InventoryWipeGrid()
 	self.InventoryMenu.SelInv = nil
 	self:DoAltSelectedItemUpdate()
 end
+function GM:UpdateWeapons()
+	local countw = #MySelf:GetWeapons()
+	if !self.InventoryMenu.Grids[INVCAT_WEAPONS]:GetItems() then return end
+	for k, v in pairs( self.InventoryMenu.Grids[INVCAT_WEAPONS]:GetItems() ) do
+		if #self.InventoryMenu.Grids[INVCAT_WEAPONS]:GetItems() > 0 then
+			if !MySelf:GetWeapons()[v.Item] then
+				self:InventoryRemoveGridItem(v.Item)
+			end
+			
+		end
+	end
+	for k, v in pairs(MySelf:GetWeapons()) do
+		local delete = false
+		for _, v2 in pairs( self.InventoryMenu.Grids[INVCAT_WEAPONS]:GetItems() ) do
+			if v2.Item == v:GetClass() then  delete = true continue end
+		end
+		if delete then continue end
+		if countw > 0 then
+			--for i = 1, countw do
+			self:InventoryAddGridItem( v:GetClass(), INVCAT_WEAPONS )
+			--end
+		end
+	end
+end
 
 local NextRefresh = 0
 local RefreshTime = 0.1
+
+
 function GM:OpenInventory()
 	if self.InventoryMenu and self.InventoryMenu:IsValid() then
 		self.InventoryMenu:SetVisible( true )
@@ -442,6 +488,7 @@ function GM:OpenInventory()
 			end
 		end
 	end
+
 
 	self:CreateItemInfoViewer( frame, invprop, topspace, bottomspace )
 	self:CreateInventoryElements()

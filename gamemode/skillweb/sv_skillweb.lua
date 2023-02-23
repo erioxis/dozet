@@ -19,6 +19,8 @@ net.Receive("zs_skills_desired", function(length, pl)
 	end
 	pl:SetDesiredActiveSkills(desired)
 end)
+
+
 net.Receive("zs_xp_ach", function(length, pl)
 	local xp = net.ReadFloat()
 	pl:AddZSXP(xp)

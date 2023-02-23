@@ -320,9 +320,9 @@ function meta:ProcessDamage(dmginfo)
 				end
 				if attacker:IsSkillActive(SKILL_RESNYATOST)  then
 					attacker:SetProgress(attacker:GetProgress("rprog") + math.min(100,dmginfo:GetDamage()*0.3),"rprog")
-					if attacker:GetProgress("rprog") >= 500 then
+					if attacker:GetProgress("rprog") >= 1000 then
 						attacker:SetProgress(0,"rprog")
-						attacker:GiveStatus("resnya",6)
+						attacker:GiveStatus("resnya",12)
 					end
 				end
 			end
@@ -910,7 +910,8 @@ function meta:ProcessDamage(dmginfo)
 		droped.DieTime = CurTime() + 4.5
 		timer.Simple(0.1, function() droped:GetPhysicsObject():SetVelocity(VectorRand(-500,500)) end )
 	end
-	if self.Purgatory then
+	if self.Purgatory and (self.NextPRG or 1) <= CurTime() and (dmginfo:GetDamage() >= 4 or (takedbl or 1) >= 10) then
+		self.NextPRG = CurTime() + 0.3
 		self:GiveStatus("portal",1)
 		for i=1,3 do
 			local droped = ents.Create("projectile_purgatory_soul")

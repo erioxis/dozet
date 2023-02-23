@@ -1770,26 +1770,33 @@ end
 local function GiveWeapon()
 	if GAMEMODE.HumanMenuLockOn then
 		RunConsoleCommand("zsgiveweapon", GAMEMODE.HumanMenuLockOn:EntIndex(), GAMEMODE.InventoryMenu.SelInv)
-		
+		GAMEMODE:UpdateWeapons()
 	end
 end
 local function GiveWeaponClip()
 	if GAMEMODE.HumanMenuLockOn then
 		RunConsoleCommand("zsgiveweaponclip", GAMEMODE.HumanMenuLockOn:EntIndex(), GAMEMODE.InventoryMenu.SelInv)
+		GAMEMODE:UpdateWeapons()
 	end
 end
 local function DropWeapon()
 	RunConsoleCommand("zsdropweapon", GAMEMODE.InventoryMenu.SelInv)
+	GAMEMODE:UpdateWeapons()
 end
 local function EmptyClip()
 	RunConsoleCommand("zsemptyclip")
 end
 local function DismantleWeapon()
 	RunConsoleCommand("zs_dismantle", GAMEMODE.InventoryMenu.SelInv)
+	GAMEMODE:UpdateWeapons()
 end
 
-local function AltSelItemUpd()
+local function AltSelItemUpd(wep)
+	
 	local activeweapon = MySelf:GetActiveWeapon()
+	if wep then
+		activeweapon = wep
+	end
 	if not activeweapon or not activeweapon:IsValid() then return end
 
 	local actwclass = activeweapon:GetClass()
@@ -1798,7 +1805,11 @@ end
 
 function GM:DoAltSelectedItemUpdate()
 	if self.InventoryMenu.SelInv then
-		self.HumanMenuPanel.SelectedItemLabel:SetText(self.ZSInventoryItemData[self.InventoryMenu.SelInv].PrintName)
+		if GAMEMODE:GetInventoryItemType(self.InventoryMenu.SelInv) == INVCAT_WEAPONS then
+			self.HumanMenuPanel.SelectedItemLabel:SetText(weapons.Get(self.InventoryMenu.SelInv).PrintName )
+		else
+			self.HumanMenuPanel.SelectedItemLabel:SetText(self.ZSInventoryItemData[self.InventoryMenu.SelInv].PrintName)
+		end
 	else
 		timer.Simple(0.25, AltSelItemUpd)
 	end
@@ -1815,6 +1826,7 @@ function GM:HumanMenu()
 	end
 
 	self:OpenInventory()
+	self:UpdateWeapons()
 	if self.HumanMenuPanel and self.HumanMenuPanel:IsValid() then
 		self.HumanMenuPanel:SetVisible(true)
 		self.HumanMenuPanel:OpenMenu()
