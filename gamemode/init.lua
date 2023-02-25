@@ -218,7 +218,7 @@ function GM:DisallowHumanPickup(pl, entity)
 end
 
 function GM:TryHumanPickup(pl, entity)
-	if self.ZombieEscape or pl.NoObjectPickup or not pl:Alive() or pl:Team() ~= TEAM_HUMAN or (entity.NoPickupsTime and CurTime() < entity.NoPickupsTime and entity.NoPickupsOwner ~= pl) then return end
+	if self.ZombieEscape or pl.NoObjectPickup or not pl:Alive() or (pl:Team() ~= TEAM_HUMAN and !pl:GetZombieClassTable().CanPickupProp) or (entity.NoPickupsTime and CurTime() < entity.NoPickupsTime and entity.NoPickupsOwner ~= pl) then return end
 
 	if gamemode.Call("DisallowHumanPickup", pl, entity) or pl:GetInfo("zs_nopickupprops") == "1" then return end
 
@@ -4157,7 +4157,7 @@ function GM:Merge(bossplayer, entmerge)
 end
 function GM:KeyPress(pl, key)
 	if key == IN_USE then
-		if pl:Team() == TEAM_HUMAN and pl:Alive() then
+		if pl:Team() == TEAM_HUMAN and pl:Alive() or pl:GetZombieClassTable().CanPickupProp then
 			if pl:IsCarrying() then
 				pl.status_human_holding:OnRemove() -- No idea...
 				pl.status_human_holding:RemoveNextFrame()
@@ -4294,7 +4294,7 @@ function GM:ShutDown()
 end
 
 function GM:PlayerUse(pl, ent)
-	if not pl:Alive() or pl:Team() == TEAM_UNDEAD and pl:GetZombieClassTable().NoUse or pl:GetBarricadeGhosting() then return false end
+	if not pl:Alive() or pl:Team() == TEAM_UNDEAD and pl:GetZombieClassTable().NoUse or pl:GetBarricadeGhosting()  then return false end
 
 
 	if pl:IsHolding() and pl:GetHolding() ~= ent then return false end
@@ -4313,7 +4313,7 @@ function GM:PlayerUse(pl, ent)
 		elseif pl:IsSkillActive(SKILL_ABUSE) and pl:Health() >= math.floor(pl:GetMaxHealth() * 0.25) then
 			return false
 		end
-	elseif pl:Team() == TEAM_HUMAN and not pl:IsCarrying() and pl:KeyPressed(IN_USE) then
+	elseif (pl:Team() == TEAM_HUMAN or pl:GetZombieClassTable().CanPickupProp) and not pl:IsCarrying() and pl:KeyPressed(IN_USE) then
 		self:TryHumanPickup(pl, ent)
 	end
 end

@@ -31,7 +31,7 @@ function ENT:Initialize()
 
 	local object = self:GetObject()
 	if object:IsValid() then
-		object.IgnoreMeleeTeam = TEAM_HUMAN
+		object.IgnoreMeleeTeam = self:GetOwner():Team()
 		object.IgnoreTraces = true
 		object.IgnoreBullets = true
 
@@ -210,7 +210,7 @@ function ENT:Think()
 
 	local object = self:GetObject()
 	local owner = self:GetOwner()
-	if not object:IsValid() or object:IsNailed() or not owner:IsValid() or not owner:Alive() or owner:Team() ~= TEAM_HUMAN then
+	if not object:IsValid() or object:IsNailed() or not owner:IsValid() or not owner:Alive() or owner:Team() ~= TEAM_HUMAN and !owner:GetZombieClassTable().CanPickupProp then
 		self:Remove()
 		return
 	end
@@ -227,7 +227,7 @@ function ENT:Think()
 	local ent2 = NULL
 	local anti = {"prop_invitem", "prop_weapon", "prop_ammo"}
 	for _, ent1 in pairs(ents.FindInSphere((objectphys:GetPos() or self:GetPos()), (object:GetModelScale() or 1) * 35)) do
-		if (ent1:IsValid() and ent1:IsPlayer() and ent1:Team() == TEAM_UNDEAD or ent1:GetClass() == "prop_ragdoll") and !table.HasValue(anti,object:GetClass()) then
+		if (ent1:IsValid() and ent1:IsPlayer() and ent1:Team() == TEAM_UNDEAD or ent1:GetClass() == "prop_ragdoll") and !table.HasValue(anti,object:GetClass()) and owner:Team() ~= TEAM_HUMAN  then
 			table.insert(ent,#ent + 1,ent1)
 			ent2 = ent1
 
@@ -235,13 +235,14 @@ function ENT:Think()
 		end
 	end
 	for k, v in pairs(ent) do 
+		if owner:Team() ~= TEAM_HUMAN then break end
 		local vel = owner:GetEyeTrace().Normal * 0 + (owner:GetAngles():Forward()*4500)
 		vel.z = 0
 		vel.x = math.Clamp(vel.x,-90,90)
 		vel.y = math.Clamp(vel.y,-90,90)
 		v:SetVelocity(vel)
 	end
-	if ent2:IsValid() and ent2:IsPlayer() and ent2:Team() == TEAM_UNDEAD then
+	if ent2:IsValid() and ent2:IsPlayer() and ent2:Team() == TEAM_UNDEAD and owner:Team() ~= TEAM_HUMAN then
 		object:SetCollisionGroup(COLLISION_GROUP_NONE)
 		object:CollisionRulesChanged()
 	else

@@ -222,7 +222,7 @@ function meta:ProcessDamage(dmginfo)
 			if (attacker:IsSkillActive(SKILL_BOUNTYKILLER) or self:GetZombieClassTable().Boss or self:GetZombieClassTable().DemiBoss) and !self:GetZombieClassTable().CrowDa and !self:GetZombieClassTable().Skeletal then
 				local mul = ((attacker:IsSkillActive(SKILL_BOUNTYKILLER) and 0.15 or 0) + (self:GetZombieClassTable().DemiBoss and 0.05 or self:GetZombieClassTable().Boss and 0.1 or 0))
 				attacker:SetProgress(attacker:GetProgress('bprog')+(math.min(dmginfo:GetDamage()*mul,self:GetMaxHealth()*mul)), 'bprog')
-				local tbl = {"headshoter", "ind_buffer", "soulalteden", "ultra_at", "pearl","broken_world"}
+				local tbl = {"headshoter", "ind_buffer",  "ultra_at", "pearl","broken_world"}
 				local hm = table.Random(tbl)
 				if attacker:GetProgress('bprog') >= 1500 * (attacker:GetProgress('bprogmul')+1) and !attacker:HasTrinket(hm) then
 					attacker:SetProgress(0, 'bprog')

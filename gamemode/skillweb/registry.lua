@@ -463,6 +463,7 @@ SKILL_SHINNING_HIT = 435
 SKILL_BIRD_EYE = 436
 SKILL_LEUKEMIA = 437
 SKILL_X_GEN = 438
+SKILL_SAHA = 439
 
 
 
@@ -1474,8 +1475,11 @@ GM:AddSkillModifier(SKILL_MELEEFAN, SKILLMOD_UNARMED_DAMAGE_MUL, -3.50)
 GM:AddSkillModifier(SKILL_MELEEFAN, SKILLMOD_MELEE_SWING_DELAY_MUL, -0.15)
 GM:AddSkillModifier(SKILL_MELEEFAN, SKILLMOD_MELEE_DAMAGE_MUL, 0.45)
 GM:AddSkill(SKILL_STAMINA, translate.Get("skill_stamina"), GOOD.."+30%"..translate.Get("meleedamage")..BAD..translate.Get("skill_stamina_d1"),
-																9,			-1,					{SKILL_MELEEFAN}, TREE_MELEETREE).AlwaysActive = true
+																9,			-1,					{SKILL_MELEEFAN,SKILL_SAHA}, TREE_MELEETREE).AlwaysActive = true
 GM:AddSkillModifier(SKILL_STAMINA, SKILLMOD_MELEE_DAMAGE_MUL, 0.30)
+GM:AddSkill(SKILL_SAHA, translate.Get("skill_saha"), BAD.."-10%"..translate.Get("meleedamage")..GOOD..translate.Get("skill_saha_d1")..BAD..translate.Get("skill_saha_d2"),
+																9,			0,					{}, TREE_MELEETREE)
+GM:AddSkillModifier(SKILL_SAHA, SKILLMOD_MELEE_DAMAGE_MUL, -0.1)
 GM:AddSkill(SKILL_STAMINLESS1, translate.Get("skill_stamina").." I", GOOD..translate.Format("skillmod_n123", "+6%").."\n"..BAD..translate.Format("skillmod_n124", "+6%"),
 																11,			-1,					{SKILL_STAMINA}, TREE_MELEETREE)
 GM:AddSkillModifier(SKILL_STAMINLESS1, SKILLMOD_STAMINA_ADD, 0.06)
@@ -2768,7 +2772,7 @@ GM:AddSkillModifier(SKILL_CARRIER, SKILLMOD_PROP_CARRY_SLOW_MUL, -1)
 
 GM:AddSkillModifier(SKILL_BLOODARMOR, SKILLMOD_HEALTH, -5)
 
-GM:AddSkillModifier(SKILL_HAEMOSTASIS, SKILLMOD_BLOODARMOR_DMG_REDUCTION, 0.04)
+GM:AddSkillModifier(SKILL_HAEMOSTASIS, SKILLMOD_BLOODARMOR_DMG_REDUCTION, 0.06)
 GM:AddSkillModifier(SKILL_LEUKEMIA, SKILLMOD_BLOODARMOR_DMG_REDUCTION, 0.25)
 GM:AddSkillModifier(SKILL_X_GEN, SKILLMOD_BLOODARMOR_DMG_REDUCTION, -0.10)
 GM:AddSkillModifier(SKILL_X_GEN, SKILLMOD_BLOODARMOR, 45)

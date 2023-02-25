@@ -278,6 +278,11 @@ function SWEP:MeleeSwing()
 			damagemultiplier = damagemultiplier * 0.85
 		end
 	end
+	if owner:IsSkillActive(SKILL_SAHA) and owner.StaminaHAHA then
+		if owner:GetStamina() <= 50 then
+			damagemultiplier = damagemultiplier * 1.33
+		end
+	end
 	if owner:IsSkillActive(SKILL_CURSE_OF_MISS) and math.random(1,3) == 1 and SERVER then
 		GAMEMODE:BlockFloater(owner, NULL, tr.HitPos, true)
 		self:SetPowerCombo(0)

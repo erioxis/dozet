@@ -3,7 +3,7 @@ CLASS.TranslationName = "class_skeletal_walker"
 CLASS.Description = "description_skeletal_walker"
 CLASS.Help = "controls_skeletal_walker"
 
-CLASS.Wave = 2 / 6
+CLASS.Wave = 3 / 12
 
 CLASS.Health = 260
 CLASS.Speed = 150

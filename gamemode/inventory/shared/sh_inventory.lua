@@ -2042,8 +2042,10 @@ trinket, soul = GM:AddTrinket("Soul of Beregod", "barasoul", false, nil, {
 	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 10.697, y = 10.697 }, color = Color(2, 0, 61), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core_2+"] = { type = "Sprite", sprite = "effects/splashwake1", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 30, y = 30 }, color = Color(0, 0, 255, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 2, 0), angle = Angle(0, 0, 0), size = Vector(0.349, 0.349, 0.349), color = Color(55, 55, 5, 100), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} }
-}, 4, "\n+1 HP \n Q:-1", nil, nil, "weapon_zs_soul")
-GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, 1)
+}, 4, "+25 хп,+20% к опыту,+35 кровавой брони\n+25 HP,+20% XP Mul,+35 blood armor\n Q:-1", nil, nil, "weapon_zs_soul")
+GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, 25)
+GM:AddSkillModifier(trinket, SKILLMOD_XP, 0.2)
+GM:AddSkillModifier(trinket, SKILLMOD_BLOODARMOR, 35)
 
 
 
