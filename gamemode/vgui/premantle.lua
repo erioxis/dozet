@@ -740,11 +740,6 @@ function GM:OpenRemantlerMenu(remantler)
 	compdisl:MoveBelow(disscrap, 4 * screenscale)
 	compdisl:CenterHorizontal()
 	frame.m_ComponentDis = compdisl
-	local title = EasyLabel(frame.m_Remantler, compdistxt, "ZSHUDFontSmaller", COLOR_WHITE)
-	title:MoveBelow(disscrap, 4 * screenscale)
-	title:CenterHorizontal()
-
-	frame.m_Remantler.m_Title = title
 	frame:MakePopup()
 	frame:CenterMouse()
 end
