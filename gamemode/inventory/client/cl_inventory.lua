@@ -145,7 +145,7 @@ local function ItemPanelDoClick(self)
 		count = count + 1
 
 		local crab, cral = viewer.m_CraftBtns[ count ][ 1 ], viewer.m_CraftBtns[ count ][ 2 ]
-		local iitype = GAMEMODE:GetInventoryItemType( k ) ~= -1
+		local iitype = GAMEMODE:GetInventoryItemType( k ) == 4
 
 		crab.Item = item
 		crab.WeaponCraft = k
@@ -153,7 +153,7 @@ local function ItemPanelDoClick(self)
 		crab:SetPos( viewer:GetWide() / 2 - crab:GetWide() / 2, ( viewer:GetTall() - 33 * screenscale ) - ( count - 1 ) * 33 * screenscale )
 		crab:SetVisible( true )
 
-		cral:SetText( ( iitype and GAMEMODE.ZSInventoryItemData[ k ] or weapons.Get( k ) ).PrintName )
+		cral:SetText( ( iitype and weapons.Get( k ) or  GAMEMODE.ZSInventoryItemData[ k ]).PrintName )
 		cral:SetPos( crab:GetWide() / 2 - cral:GetWide() / 2, ( crab:GetTall() * 0.5 - cral:GetTall() * 0.5 ) )
 		cral:SetContentAlignment( 5 )
 		cral:SetVisible( true )
@@ -179,7 +179,7 @@ local function ItemPanelDoClick(self)
 	if category == INVCAT_WEAPONS then
 		GAMEMODE:ViewerStatBarUpdate( viewer, true, sweptable )
 	end
-	GAMEMODE:SupplyItemViewerDetail( viewer, sweptable, { SWEP = self.Item } )
+	GAMEMODE:SupplyItemViewerDetail( viewer, sweptable, { SWEP = self.Item }, category == INVCAT_WEAPONS )
 end
 
 local categorycolors = {

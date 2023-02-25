@@ -459,6 +459,10 @@ SKILL_STAMINA = 431
 SKILL_STAMINLESS1 = 432
 SKILL_STAMINLESS2 = 433
 SKILL_STAMINLESS3 = 434
+SKILL_SHINNING_HIT = 435
+SKILL_BIRD_EYE = 436
+SKILL_LEUKEMIA = 437
+SKILL_X_GEN = 438
 
 
 
@@ -648,7 +652,11 @@ GM:AddSkill(SKILL_PREPAREDNESS, translate.Get("skill_prepadnes_0"), GOOD..transl
 GM:AddSkill(SKILL_GOURMET, translate.Get("skill_gurman_0"), GOOD..translate.Get("skill_gurman_d1")..BAD..translate.Get("skill_gurman_d2"),
 																4,			-4,					{SKILL_PREPAREDNESS, SKILL_VITALITY1}, TREE_HEALTHTREE)
 GM:AddSkill(SKILL_HAEMOSTASIS, translate.Get("skill_haemostasis_0"), GOOD..translate.Get("skill_haemostasis_d1")..BAD..translate.Get("skill_haemostasis_d2")..GOOD..translate.Get("skill_haemostasis_d3"),
-																4,			6,					{SKILL_STONEBLOOD}, TREE_HEALTHTREE)
+																4,			6,					{SKILL_STONEBLOOD,SKILL_LEUKEMIA}, TREE_HEALTHTREE)
+GM:AddSkill(SKILL_LEUKEMIA, translate.Get("skill_leuke"), GOOD..translate.Get("skill_leuke_d2")..BAD..translate.Get("skill_leuke_d1"),
+																4,			7,					{}, TREE_HEALTHTREE)
+GM:AddSkill(SKILL_X_GEN, translate.Get("skill_x_gen"), GOOD.."+45"..translate.Get("barmor")..BAD..translate.Get("skill_x_gen_d1"),
+																2,			7,					{SKILL_LEUKEMIA}, TREE_HEALTHTREE)
 GM:AddSkill(SKILL_STONEBLOOD, translate.Get("skill_stoneblood"), GOOD..translate.Get("skill_stoneblood_d1"),
 																4,			5,					{}, TREE_HEALTHTREE)
 GM:AddSkill(SKILL_BLOODLETTER, translate.Get("skill_bloodlet_0"), GOOD..translate.Get("skill_bloodlet_d1")..BAD..translate.Get("skill_bloodlet_d2"),
@@ -1332,7 +1340,10 @@ GM:AddSkill(SKILL_WORTHINESS1, translate.Get("worthness"), GOOD.."+10"..translat
 GM:AddSkill(SKILL_CANNONBALL, translate.Get("skill_cannonball"), translate.Get("skill_cannonball_d1")..GOOD..translate.Get("skill_cannonball_d2"),
 																-2,			-3,					{}, TREE_GUNTREE)
 GM:AddSkill(SKILL_SCOURER, translate.Get("skill_scourer"), GOOD..translate.Get("skill_scourer_d1")..BAD..translate.Get("skill_scourer_d2"),
-																4,			-3,					{}, TREE_GUNTREE)
+																4,			-3,					{SKILL_BIRD_EYE}, TREE_GUNTREE)
+GM:AddSkill(SKILL_BIRD_EYE, translate.Get("skill_deal_eye"), GOOD..translate.Get("skill_deal_eye_d1")..BAD.."-10%"..translate.Get("b_damage"),
+																4,			-4,					{}, TREE_GUNTREE)
+GM:AddSkillModifier(SKILL_BIRD_EYE, SKILLMOD_DAMAGE, -0.10)
 GM:AddSkill(SKILL_CONEFFECT, translate.Get("skill_concetrate"), GOOD..translate.Get("skill_concetrate_d1")..BAD.."-20%"..translate.Get("exp_r"),
 																2,			-5,					{}, TREE_GUNTREE)
 GM:AddSkill(SKILL_LAST_AMMO, translate.Get("skill_last_ammo"), GOOD..translate.Get("skill_last_ammo_d1")..BAD..translate.Get("skill_last_ammo_d2"),
@@ -1463,7 +1474,7 @@ GM:AddSkillModifier(SKILL_MELEEFAN, SKILLMOD_UNARMED_DAMAGE_MUL, -3.50)
 GM:AddSkillModifier(SKILL_MELEEFAN, SKILLMOD_MELEE_SWING_DELAY_MUL, -0.15)
 GM:AddSkillModifier(SKILL_MELEEFAN, SKILLMOD_MELEE_DAMAGE_MUL, 0.45)
 GM:AddSkill(SKILL_STAMINA, translate.Get("skill_stamina"), GOOD.."+30%"..translate.Get("meleedamage")..BAD..translate.Get("skill_stamina_d1"),
-																9,			-1,					{SKILL_MELEEFAN}, TREE_MELEETREE)
+																9,			-1,					{SKILL_MELEEFAN}, TREE_MELEETREE).AlwaysActive = true
 GM:AddSkillModifier(SKILL_STAMINA, SKILLMOD_MELEE_DAMAGE_MUL, 0.30)
 GM:AddSkill(SKILL_STAMINLESS1, translate.Get("skill_stamina").." I", GOOD..translate.Format("skillmod_n123", "+6%").."\n"..BAD..translate.Format("skillmod_n124", "+6%"),
 																11,			-1,					{SKILL_STAMINA}, TREE_MELEETREE)
@@ -1739,6 +1750,9 @@ GM:AddSkill(SKILL_SLAVEC, translate.Get("skill_cot"), GOOD..translate.Get("skill
 																				1.5,			5,					{SKILL_DOSETHELP, SKILL_BERSERK}, TREE_DEFENSETREE)
 GM:AddSkillModifier(SKILL_SLAVEC, SKILLMOD_HEALTH, -15)
 GM:AddSkillModifier(SKILL_SLAVEC, SKILLMOD_SPEED, 20)
+GM:AddSkill(SKILL_SHINNING_HIT, translate.Get("skill_shine_hit"), GOOD..translate.Get("skill_shine_hit_d1")..BAD.."-20%"..translate.Get("meleedamage"),
+																				3,			6,					{SKILL_SLAVEC}, TREE_DEFENSETREE)
+GM:AddSkillModifier(SKILL_SHINNING_HIT, SKILLMOD_MELEE_DAMAGE_MUL, -0.2)
 GM:AddSkill(SKILL_BERSERK, translate.Get("skill_ultra_r"), GOOD..translate.Get("skill_ultra_r_d1")..BAD..translate.Get("skill_ultra_r_d2")..BAD..translate.Get("skill_ultra_r_d3"),
 																				1.5,			6,					{}, TREE_DEFENSETREE)
 GM:AddSkillModifier(SKILL_BERSERK, SKILLMOD_DMG_TAKEN, 0.1)
@@ -2754,7 +2768,10 @@ GM:AddSkillModifier(SKILL_CARRIER, SKILLMOD_PROP_CARRY_SLOW_MUL, -1)
 
 GM:AddSkillModifier(SKILL_BLOODARMOR, SKILLMOD_HEALTH, -5)
 
-GM:AddSkillModifier(SKILL_HAEMOSTASIS, SKILLMOD_BLOODARMOR_DMG_REDUCTION, 0.16)
+GM:AddSkillModifier(SKILL_HAEMOSTASIS, SKILLMOD_BLOODARMOR_DMG_REDUCTION, 0.04)
+GM:AddSkillModifier(SKILL_LEUKEMIA, SKILLMOD_BLOODARMOR_DMG_REDUCTION, 0.25)
+GM:AddSkillModifier(SKILL_X_GEN, SKILLMOD_BLOODARMOR_DMG_REDUCTION, -0.10)
+GM:AddSkillModifier(SKILL_X_GEN, SKILLMOD_BLOODARMOR, 45)
 GM:AddSkillModifier(SKILL_STONEBLOOD, SKILLMOD_BLOODARMOR_DMG_REDUCTION, 0.03)
 
 GM:AddSkillModifier(SKILL_DEFENDBLOOD, SKILLMOD_BLOODARMOR_DMG_REDUCTION, -1)
@@ -2989,4 +3006,10 @@ GM:AddSkillFunction(SKILL_SOY, function(pl, active)
 end)
 GM:AddSkillFunction(SKILL_STAMINA, function(pl, active)
 	pl.StaminaHAHA = active
+end)
+GM:AddSkillFunction(SKILL_SHINNING_HIT, function(pl, active)
+	pl.ShineAndHit = active
+end)
+GM:AddSkillFunction(SKILL_BIRD_EYE, function(pl, active)
+	pl.BirdEye = active
 end)

@@ -116,7 +116,7 @@ end)
 
 function meta:TryAssembleItem(component, heldclass)
 	local heldwep, desiassembly = self:GetWeapon(heldclass)
-	local heldwepiitype = GAMEMODE:GetInventoryItemType(heldclass) ~= -1
+	local heldwepiitype = GAMEMODE:GetInventoryItemType(heldclass) ~= 4
 
 	if heldwepiitype then
 		if not self:HasInventoryItem(heldclass) then
@@ -147,7 +147,7 @@ function meta:TryAssembleItem(component, heldclass)
 		return
 	end
 
-	local invitemresult = GAMEMODE:GetInventoryItemType(desiassembly) ~= -1
+	local invitemresult = GAMEMODE:GetInventoryItemType(desiassembly) ~= 4
 
 	local desitable
 	if invitemresult then

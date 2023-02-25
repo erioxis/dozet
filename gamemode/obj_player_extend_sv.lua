@@ -200,6 +200,9 @@ function meta:ProcessDamage(dmginfo)
 			if attacker:IsSkillActive(SKILL_AMULET_16) then 
 				dmginfo:ScaleDamage(math.random(1,250)/100)
 			end
+			if attacker.BirdEye and !wep.IsMelee then
+				wep.DamageEyeMul = (wep.DamageEyeMul or 0) + 1	
+			end
 			--attacker.dpsmeter = damage
 			if attacker:IsSkillActive(SKILL_VAMPIRISM) then
 				attacker:SetNWFloat("vampirism_progress", attacker:GetNWFloat("vampirism_progress",value)+damage*0.09)
@@ -355,7 +358,7 @@ function meta:ProcessDamage(dmginfo)
 
 
     truedogder = 30 - (self:GetWalkSpeed() / 15)
-	rngdogde = math.max(0,math.randomr(1,math.max(truedogder,2),1,self))
+	rngdogde = math.max(0,math.random(1,math.max(truedogder,2)))
  
 	if self:IsSkillActive(SKILL_DODGE) and rngdogde == 1 and !dmgbypass then
 		if attacker:IsPlayer() then
@@ -365,7 +368,7 @@ function meta:ProcessDamage(dmginfo)
 		net.Start("zs_damageblock")
 		net.Send(self)
     end
-	if self:IsSkillActive(SKILL_HELPLIFER) and math.randomr(1,10,1,self) == 1 and dmginfo:GetDamage() >= self:Health() and !dmgbypass then
+	if self:IsSkillActive(SKILL_HELPLIFER) and math.random(1,10) == 1 and dmginfo:GetDamage() >= self:Health() and !dmgbypass then
 		dmginfo:SetDamage(0)
 		if attacker:IsPlayer() then
 			GAMEMODE:BlockFloater(attacker, self, dmginfo:GetDamagePosition())
@@ -860,7 +863,7 @@ function meta:ProcessDamage(dmginfo)
 
 
 			local ratio = math.max(0.5 + self.BloodArmorDamageReductionAdd + (self:IsSkillActive(SKILL_IRONBLOOD) and self:Health() <= self:GetMaxHealth() * 0.5 and 0.25 or 0),(attacker:IsPlayer() and -1 or 0.05))
-			local absorb = math.min(self:GetBloodArmor(), damage * ratio)
+			local absorb = math.min(self:GetBloodArmor(), damage * ratio) * (self:IsSkillActive(SKILL_LEUKEMIA) and math.random(1,4) == 1 and 0 or 1)
 			dmginfo:SetDamage(damage - absorb)
 			self:SetBloodArmor(self:GetBloodArmor() - absorb)
 			self.BloodDead = absorb

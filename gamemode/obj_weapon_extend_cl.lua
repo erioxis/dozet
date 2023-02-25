@@ -11,7 +11,53 @@ local ironsightscrosshair = CreateClientConVar("zs_ironsightscrosshair", "0", tr
 cvars.AddChangeCallback("zs_ironsightscrosshair", function(cvar, oldvalue, newvalue)
 	ironsightscrosshair = tonumber(newvalue) == 1
 end)
+local matGlow = Material("sprites/glow04_noz")
+local texDownEdge = surface.GetTextureID("gui/gradient_down")
+local colHealth = Color(0,0,0)
+function meta:DrawStaminaBar()
+	local lp = MySelf
+	if lp:GetStamina() < 100 then
+		local health = math.max(lp:GetStamina(), 0)
+		local healthperc = math.Clamp(health / 100, 0.01, 1)
+		local x = ScrW() * 0.45
+		local y = ScrH() * 0.78
+		local screenscale = BetterScreenScale()
+		local wid, hei = 250 * screenscale, 30 * screenscale
+		if lp:IsValid() then
+	 
+			colHealth.r = 255/healthperc
+			colHealth.g = 255 * healthperc
+			colHealth.b = 0
+	
+			local subwidth = healthperc * wid
+	
+			surface.SetDrawColor(0, 0, 0, 230)
+			surface.DrawRect(x, y, wid, hei)
+			surface.SetAlphaMultiplier(0.3)
+			surface.SetDrawColor((healthperc < 0.33 and 120 or 0), (healthperc < 0.33 and  50 or 0), 0,120)
+			surface.DrawRect(x, y, wid*0.33, hei)
+			surface.SetAlphaMultiplier(1)
+			
+	
+			surface.SetDrawColor(colHealth.r * 1, colHealth.g * 0.2, colHealth.b, 40)
+			surface.SetTexture(texDownEdge)
+			surface.DrawTexturedRect(x + 2, y + 1, subwidth - 4, hei - 2)
+			surface.SetDrawColor(colHealth.r * 0.6, colHealth.g * 0.6, colHealth.b, 30)
+			surface.DrawRect(x + 2, y + 1, subwidth - 4, hei - 2)
+	
+			surface.SetMaterial(matGlow)
+			surface.SetDrawColor(255, 255, 255, 255)
+			surface.DrawTexturedRect(x + 2 + subwidth - 6, y + 1 - hei/2, 4, hei * 2)
 
+			surface.SetMaterial(matGlow)
+			surface.SetDrawColor(255, 255, 255, 255)
+			surface.DrawTexturedRect(x + 2 +  wid*0.33 - 6.5, y + 1 - hei/2, 4, hei * 2)
+			local phantomwidth = (health == 100 and 0 or wid)
+			draw.SimpleTextBlurry(math.Round(lp:GetStamina()).."%" , "ZSHUDFontSmall", x, y - 12, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM)
+
+		end
+	end
+end
 --local CrossHairScale = 1
 local matGrad = Material("VGUI/gradient-r")
 local function DrawLine(x, y, rot)
@@ -140,6 +186,9 @@ function meta:DrawCrosshairDot()
 		surface.SetDrawColor(colHealth.r * 0.2, colHealth.g * 1.2, colHealth.b*2, 255)
 		surface.SetTexture(NoParasite2)
 		surface.DrawTexturedRect(x, y , 32, hei)
+	end
+	if MySelf.StaminaHAHA then
+		self:DrawStaminaBar()
 	end
 end
 

@@ -60,7 +60,22 @@ function SWEP:Eat()
 			owner:GiveStatus("status_strengthdartboost", 70)
 		end
 	end
-owner:Kill()
+	if math.random(1,6) == 1 then
+		for i=1,math.random(1,6) do
+			local droped = ents.Create("prop_hp")
+			droped:SetPos(owner:GetPos()+Vector(0,0,30))
+			droped:Spawn()
+			droped:SetHP(owner:GetMaxHealth()*0.2)
+			droped:SetOwner(owner)
+			droped:SetTime(20.5+CurTime())
+			owner:SetHealth(owner:GetMaxHealth()*0.2)
+			owner:Say("hematemesis!!")
+			droped.DieTime = CurTime() + 40.5
+			timer.Simple(0.1, function() droped:GetPhysicsObject():SetVelocity(VectorRand(-500,500)) end )
+		end
+		return
+	end
+	owner:Kill()
 
 	local max = owner:IsSkillActive(SKILL_D_FRAIL) and math.floor(owner:GetMaxHealth() * 0.25) or owner:GetMaxHealth()
 

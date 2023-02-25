@@ -154,7 +154,9 @@ function SWEP:MeleeHitEntity(tr, hitent, damagemultiplier, damage)
 		damagemultiplier = damagemultiplier * 7
 		owner.GlassWeaponShouldBreak = not owner.GlassWeaponShouldBreak
 	end
-
+	if SERVER and owner.ShineAndHit and hitent:IsPlayer() and hitent:GetActiveWeapon() and hitent:GetActiveWeapon().IsSwinging and hitent:GetActiveWeapon():IsSwinging() then
+		damagemultiplier = damagemultiplier * 1.4
+	end
 	damage = damage * damagemultiplier
 
 	local dmginfo = DamageInfo()

@@ -13,13 +13,14 @@ function SWEP:Reload()
 	self:SecondaryAttack()
 end
 function SWEP:SecondaryAttack()
+	if self:GetNextSecondaryFire() >= CurTime() then return end
 	self.BaseClass.SecondaryAttack(self)
 	if self:GetOwner():GetZombieClassTable().Magical and SERVER then
-		local ented = {}
-		local taped = 0
+		local ented = {} -- * (!ent:IsPlayer() and 10 or 1)
+		local taped = 1
 		for _, ent in pairs(ents.FindInSphere(self:GetOwner():GetPos(), 76)) do
 			if ent:IsValid() and ent ~= self:GetOwner() and !ented[ent] and taped <= 3 then
-				ent:TakeDamage(self.MeleeDamage * 0.5, self:GetOwner(), self)
+				ent:TakeDamage(self.MeleeDamage * 0.5 * taped, self:GetOwner(), self)
 				ented[ent] = true
 				taped = taped + 1
 			end

@@ -20,6 +20,7 @@ SWEP.BlockTrue = true
 SWEP.IgnoreNiggers = false
 SWEP.Move = true
 SWEP.ParryTiming = nil
+SWEP.StaminaUse = 13
 
 
 SWEP.Block = false
@@ -221,7 +222,7 @@ function SWEP:StartSwinging()
 		self.ParryTiming = false
 	end
 	if owner.StaminaHAHA then
-		owner:AddStamina(-self.MeleeDamage/10)
+		owner:AddStamina(-(self.StaminaUse or 13))
 	end
 
 
@@ -245,7 +246,7 @@ function SWEP:MeleeSwing()
 	
 	local owner = self:GetOwner()
 	if owner.StaminaHAHA then
-		owner:AddStamina(-self.MeleeDamage/12)
+		owner:AddStamina(-(self.StaminaUse or 13)*0.4)
 	end
 	self.SwingingTrue = false
 	owner:ResetSpeed()
@@ -335,7 +336,7 @@ function SWEP:OnMeleeHit(hitent, hitflesh, tr)
 	local ent = hitent
 	if IsFirstTimePredicted() then
 		if self:GetOwner().StaminaHAHA then
-			self:GetOwner():AddStamina(-self.MeleeDamage/20)
+			self:GetOwner():AddStamina(-(self.StaminaUse or 13)*0.3)
 		end
 		if ent:IsPlayer() and SERVER and self:GetOwner():IsSkillActive(SKILL_CURSECURE) then
 			local count = 0
@@ -461,8 +462,10 @@ function SWEP:MeleeHitEntity(tr, hitent, damagemultiplier)
 		owner.GlassWeaponShouldBreak = not owner.GlassWeaponShouldBreak
 
 	end
-	local damage = (self.MeleeDamage * damagemultiplier)
-	local damage = self:GetBlockState() and (damage * 0.4) or damage 
+	if SERVER and owner.ShineAndHit and hitent:IsPlayer() and hitent:GetActiveWeapon() and hitent:GetActiveWeapon().IsSwinging and hitent:GetActiveWeapon():IsSwinging() then
+		damagemultiplier = damagemultiplier * 1.4
+	end
+	local damage = (self.MeleeDamage * damagemultiplier) * (self:GetBlockState() and 0.4 or 1)
 	local dmginfo = DamageInfo()
 	dmginfo:SetDamagePosition(tr.HitPos)
 	dmginfo:SetAttacker(owner)

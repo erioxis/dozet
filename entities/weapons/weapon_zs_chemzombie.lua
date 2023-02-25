@@ -38,11 +38,11 @@ function SWEP:PlayAttackSound()
 end
 function SWEP:MeleeHit(ent, trace, damage, forcescale)
 	if not ent:IsPlayer() and SERVER then
-		for i = 1, math.random(7) do
-			for _, ent in pairs(ents.FindInSphere(trace.HitPos, 38)) do
+		for i = 1, math.random(3) do
+			for _, ent in pairs(ents.FindInSphere(trace.HitPos, 18)) do
 				if ent:IsValid() and !ent:IsPlayer() then
 					ent:TakeDamage((self.MeleeDamage * i) * 0.25, self:GetOwner(), self)
-					break
+					continue 
 				end
 				
 			end

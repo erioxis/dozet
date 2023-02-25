@@ -142,7 +142,7 @@ function GM:ViewerStatBarUpdate(viewer, display, sweptable)
 
 		local statnum, stattext = statshow[6] and sweptable[statshow[6]][statshow[1]] or sweptable[statshow[1]]
 		if statshow[1] == "Damage" and sweptable.Primary.NumShots and sweptable.Primary.NumShots > 1 then
-			stattext = statnum .. " x " .. sweptable.Primary.NumShots-- .. " (" .. (statnum * sweptable.Primary.NumShots) .. ")"
+			stattext = statnum * (sweptable.IsMelee and MySelf.MeleeDamageMultiplier or MySelf.BulletMul or 1) .. " x " .. sweptable.Primary.NumShots-- .. " (" .. (statnum * sweptable.Primary.NumShots) .. ")"
 		elseif statshow[1] == "WalkSpeed" then
 			stattext = speedtotext[SPEED_NORMAL]
 			if speedtotext[sweptable[statshow[1]]] then
@@ -151,7 +151,7 @@ function GM:ViewerStatBarUpdate(viewer, display, sweptable)
 				stattext = speedtotext[-1]
 			end
 		elseif statshow[1] == "ClipSize" then
-			stattext = statnum / sweptable.RequiredClip
+			stattext = statnum / (sweptable.RequiredClip or 1)
 		else
 			stattext = statnum
 		end
@@ -160,9 +160,9 @@ function GM:ViewerStatBarUpdate(viewer, display, sweptable)
 		viewer.ItemStatValues[i]:SetText(stattext)
 
 		if statshow[1] == "Damage" then
-			statnum = statnum * sweptable.Primary.NumShots
+			statnum = statnum * sweptable.Primary.NumShots * (sweptable.IsMelee and MySelf.MeleeDamageMultiplier or MySelf.BulletMul or 1)
 		elseif statshow[1] == "ClipSize" then
-			statnum = statnum / sweptable.RequiredClip
+			statnum = statnum / (sweptable.RequiredClip or 1)
 		end
 
 		viewer.ItemStatBars[i].Stat = statnum
@@ -179,7 +179,7 @@ function GM:HasPurchaseableAmmo(sweptable)
 	end
 end
 
-function GM:SupplyItemViewerDetail(viewer, sweptable, shoptbl)
+function GM:SupplyItemViewerDetail(viewer, sweptable, shoptbl, from)
 	viewer.m_Title:SetText(sweptable.PrintName)
 	viewer.m_Title:PerformLayout()
 
@@ -222,8 +222,12 @@ function GM:SupplyItemViewerDetail(viewer, sweptable, shoptbl)
 
 	viewer.m_Desc:SetText(desctext)
 	viewer.m_Bruh:SetText(bruh)
-
-	self:ViewerStatBarUpdate(viewer, shoptbl.Category ~= ITEMCAT_GUNS and shoptbl.Category ~= ITEMCAT_MELEE or shoptbl.Category ~= INVCAT_WEAPONS, sweptable)
+	if from then
+		self:ViewerStatBarUpdate(viewer, false, sweptable)
+	else
+		self:ViewerStatBarUpdate(viewer, shoptbl.Category ~= ITEMCAT_GUNS and shoptbl.Category ~= ITEMCAT_MELEE, sweptable)
+	end
+	
 
 	if self:HasPurchaseableAmmo(sweptable) and self.AmmoNames[string.lower(sweptable.Primary.Ammo)] then
 		local lower = string.lower(sweptable.Primary.Ammo)

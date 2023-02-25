@@ -41,7 +41,7 @@ function ENT:AcceptInput(name, activator, caller, arg)
 						p:AddDamage(8)
 					end
 					ent.NextPoisonZGAS = CurTime() + 3
-					ent:TakeDamage(12)
+					ent:TakeSpecialDamage(12, DMG_DIRECT)
 				end
 			end
 		end

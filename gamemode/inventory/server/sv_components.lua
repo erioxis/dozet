@@ -22,7 +22,8 @@ GM.GetActiveTrinkets = {
 	"cons_flame_p",
 	"cons_minos",
 	"cons_sack_of_trinkets",
-	'cons_grandma_vase'
+	'cons_grandma_vase',
+	"cons_black_hole"
 }
 GM.StarterSoul = {
 	"trinket_bleaksoul",  -- 1

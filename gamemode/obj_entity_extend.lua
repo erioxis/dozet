@@ -167,6 +167,7 @@ function meta:FireBulletsLua(src, dir, spread, num, damage, attacker, force_mul,
 		end
 
 		local ent = bullet_tr.Entity
+		if !E_IsValid(ent) then inflictor.DamageEyeMul = 0 end
 		if E_IsValid(ent) and use_damage then
 			if ent:IsPlayer() then
 				temp_vel_ents[ent] = temp_vel_ents[ent] or ent:GetVelocity()

@@ -23,7 +23,9 @@ function ENT:Think()
 		self:Remove()
 	end
 end
-
+function compare(a,b)
+	return a.Health > b.Health
+  end
 function ENT:OnRemove()
 	self:Hit(self:GetPos(), Vector(0, 0, 1), NULL)
 end

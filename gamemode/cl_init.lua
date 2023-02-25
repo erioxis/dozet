@@ -882,46 +882,7 @@ function GM:DrawPackUpBar(x, y, fraction, notowner, screenscale)
 
 	draw_SimpleText(notowner and CurTime() % 2 < 1 and translate.Format("requires_x_people", 4) or notowner and translate.Get("packing_others_object") or translate.Get("packing"), "ZSHUDFontSmall", x, y - draw_GetFontHeight("ZSHUDFontSmall") - 2, col, TEXT_ALIGN_CENTER)
 end
-local matGlow = Material("sprites/glow04_noz")
-local texDownEdge = surface.GetTextureID("gui/gradient_down")
-local colHealth = Color(0,0,0)
-function GM:DrawStaminaBar()
-	local lp = MySelf
-	if lp:GetStamina() < 100 then
-		local health = math.max(lp:GetStamina(), 0)
-		local healthperc = math.Clamp(health / 100, 0.01, 1)
-		local x = ScrW() * 0.45
-		local y = ScrH() * 0.78
-		local screenscale = BetterScreenScale()
-		local wid, hei = 250 * screenscale, 30 * screenscale
-		if lp:IsValid() then
-	 
-			colHealth.r = 255/healthperc
-			colHealth.g = 255 * healthperc
-			colHealth.b = 0
-	
-			local subwidth = healthperc * wid
-	
-			surface.SetDrawColor(0, 0, 0, 230)
-			surface.DrawRect(x, y, wid, hei)
 
-			
-	
-			surface.SetDrawColor(colHealth.r * 1, colHealth.g * 0.2, colHealth.b, 40)
-			surface.SetTexture(texDownEdge)
-			surface.DrawTexturedRect(x + 2, y + 1, subwidth - 4, hei - 2)
-			surface.SetDrawColor(colHealth.r * 0.6, colHealth.g * 0.6, colHealth.b, 30)
-			surface.DrawRect(x + 2, y + 1, subwidth - 4, hei - 2)
-	
-			surface.SetMaterial(matGlow)
-			surface.SetDrawColor(255, 255, 255, 255)
-			surface.DrawTexturedRect(x + 2 + subwidth - 6, y + 1 - hei/2, 4, hei * 2)
-			local phantomwidth = (health == 100 and 0 or wid)
-			draw.SimpleTextBlurry(math.Round(lp:GetStamina()) , "ZSHUDFontSmall", x, y - 12, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM)
-
-		end
-	end
-end
 local colSigilTeleport = Color(236, 65, 131, 220)
 function GM:DrawSigilTeleportBar(x, y, fraction, target, screenscale)
 	local maxbarwidth = 270 * screenscale
@@ -959,9 +920,6 @@ function GM:HumanHUD(screenscale)
 		self:DrawPackUpBar(w * 0.5, h * 0.55, 1 - packup:GetTimeRemaining() / packup:GetMaxTime(), packup:GetNotOwner(), screenscale)
 	elseif sigiltp and sigiltp:IsValid() then
 		self:DrawSigilTeleportBar(w * 0.5, h * 0.55, 1 - sigiltp:GetTimeRemaining() / sigiltp:GetMaxTime(), sigiltp:GetTargetSigil(), screenscale)
-	end
-	if MySelf.StaminaHAHA then
-		self:DrawStaminaBar()
 	end
 	if not self.RoundEnded then
 		if self:GetWave() == 0 and not self:GetWaveActive() then

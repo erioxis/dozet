@@ -1437,20 +1437,19 @@ function PANEL:OnMousePressed(mc)
 		end
 	elseif MOUSE_RIGHT then
 		local contextmenu = self.UpgradeMenu
-	--	if MySelf:IsSkillUnlocked(hoveredskill) then
-		--	local tbl = MySelf:GetUnlockedSkills()
-		--	local tbl2 = MySelf:GetDesiredActiveSkills()
-		--	for k,v in pairs(tbl) do
-			--	if v == hoveredskill then
-			--		tbl[k] = nil
-			--		tbl2[k] = nil
-			--	end
-			--end
-			--MySelf:SetUnlockedSkills(tbl)
-			--MySelf:SetDesiredActiveSkills(tbl)
-			--self:DisplayMessage("Skill removed!", COLOR_YELLOW)
-			--surface.PlaySound("buttons/button8.wav")
-
+		if MySelf:IsSkillUnlocked(hoveredskill) and (GAMEMODE.Skills[hoveredskill].CanUpgrade or 0) >= 1 then
+		--	MySelf:SetUnlockedSkills({})
+		--	MySelf:SetDesiredActiveSkills({})
+			local mx, my = gui.MousePos()
+			if MySelf:GetZSSPRemaining() >= 1 then
+				contextmenu:SetPos(mx - contextmenu:GetWide() / 2, my - contextmenu:GetTall() / 2)
+				contextmenu.Button:SetText("Upgrade")
+				contextmenu:SetVisible(true)
+			else
+				self:DisplayMessage("You need SP to upgrade this skill!", COLOR_RED)
+				surface.PlaySound("buttons/button8.wav")
+				return
+			end
 		end
 		contextmenu.SkillID = hoveredskill
 	end

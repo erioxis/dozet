@@ -419,6 +419,7 @@ function PANEL:Paint(w, h)
 				self.QualityDesc[i]:SetText(dtxt)
 				self.QualityDesc[i]:SizeToContents()
 			end
+			--self:ViewerStatBarUpdate(ыу,false,self.GunTab)
 
 			surface.PlaySound("zombiesurvival/ui/misc1.ogg")
 
@@ -686,6 +687,7 @@ function GM:OpenRemantlerMenu(remantler)
 	end
 	frame.m_SubProp = subpropertysheet
 
+
 	self:CreateItemInfoViewer(trinketsframe, frame, topspace, bottomspace, MENU_REMANTLER)
 
 	local scroller = remprop:GetChildren()[1]
@@ -738,7 +740,11 @@ function GM:OpenRemantlerMenu(remantler)
 	compdisl:MoveBelow(disscrap, 4 * screenscale)
 	compdisl:CenterHorizontal()
 	frame.m_ComponentDis = compdisl
+	local title = EasyLabel(frame.m_Remantler, compdistxt, "ZSHUDFontSmaller", COLOR_WHITE)
+	title:MoveBelow(disscrap, 4 * screenscale)
+	title:CenterHorizontal()
 
+	frame.m_Remantler.m_Title = title
 	frame:MakePopup()
 	frame:CenterMouse()
 end

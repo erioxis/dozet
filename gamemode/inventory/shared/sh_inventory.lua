@@ -192,6 +192,13 @@ GM:AddInventoryItemData("cons_grandma_vase",		trs("c_grandma"),			trs("c_grandma
 		end
 	end
 end,1)
+GM:AddInventoryItemData("cons_black_hole",		trs("c_bhole"),			trs("c_bhole_d"),								"models/props_c17/trappropeller_lever.mdl", 3, nil, nil, function(pl) 
+	local droped = ents.Create("projectile_succubus_test")
+	droped:SetPos(pl:GetPos()+Vector(0,0,70))
+	droped:Spawn()
+	droped:SetOwner(pl)
+	--droped:SetParent(pl)
+end,4)
 GM:AddInventoryItemData("cons_minos",		trs("c_minos"),			trs("c_minos_d"),								"models/props_c17/trappropeller_lever.mdl", 3, nil, nil, function(owner) 
 	local ent = ents.Create("projectile_mprime_proj_act")
 	if ent:IsValid() then
