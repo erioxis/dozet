@@ -15,6 +15,9 @@ local function ContentsPaint(self, w, h)
 		colHealth.r = (lp:GetInfo("zs_rhealth") + healthperc) * 100
 		colHealth.g = lp:GetInfo("zs_ghealth") - healthperc
 		colHealth.b = lp:GetInfo("zs_bhealth")
+		if GAMEMODE.RGB_HP then
+			colHealth = HSVToColor(CurTime()*110 % 360, 1, 1)
+		end
 
 		local x = 18 * screenscale
 		local y = 115 * screenscale
@@ -48,6 +51,9 @@ local function ContentsPaint(self, w, h)
 		colHealth.r = 100
 		colHealth.g = 50
 		colHealth.b = 70
+		if GAMEMODE.RGB_HP then
+			colHealth = HSVToColor(CurTime()*220 % 360, 1, 1)
+		end
 		local phantomwidth = healthperc * wid
 
 		surface.SetDrawColor(colHealth.r, colHealth.g, colHealth.b, 40)
@@ -74,6 +80,9 @@ local function ContentsPaint(self, w, h)
 				colHealth.r = lp:GetInfo("zs_rblood") + healthperc * 2.5
 				colHealth.g = lp:GetInfo("zs_gblood")
 				colHealth.b = (lp:GetInfo("zs_bblood") - healthperc) * 50
+				if GAMEMODE.RGB_HP then
+					colHealth = HSVToColor(CurTime()*90 % 360, 1, 1)
+				end
 
 				subwidth = healthperc * wid
 				if lp:HasTrinket("curse_unknown") then
@@ -105,9 +114,12 @@ local function ContentsPaint(self, w, h)
 				colHealth.r = 0
 				colHealth.g = 0
 				colHealth.b = 255
-				healthperc = 1
+	
+				if GAMEMODE.RGB_HP then
+					colHealth = HSVToColor(CurTime()*120 % 360, 1, 1)
+				end
 
-				subwidth = healthperc * wid
+				subwidth = wid
 
 				draw.SimpleTextBlurry(bloodarmor, "ZSHUDFontSmall", x + wid + 12 * screenscale, y + 8 * screenscale, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 

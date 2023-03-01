@@ -105,6 +105,10 @@ GM.DisableScopes = CreateClientConVar("zs_disablescopes", "0", true, false):GetB
 cvars.AddChangeCallback("zs_disablescopes", function(cvar, oldvalue, newvalue)
 	GAMEMODE.DisableScopes = tonumber(newvalue) == 1
 end)
+GM.RGB_HP = CreateClientConVar("zs_rgb_ura", "0", true, false):GetBool()
+cvars.AddChangeCallback("zs_rgb_ura", function(cvar, oldvalue, newvalue)
+	GAMEMODE.RGB_HP = tonumber(newvalue) == 1
+end)
 GM.DisableCMenu = CreateClientConVar("zs_disablecustommenu", "0", true, false):GetBool()
 cvars.AddChangeCallback("zs_disablecustommenu", function(cvar, oldvalue, newvalue)
 	GAMEMODE.DisableCMenu = tonumber(newvalue) == 1

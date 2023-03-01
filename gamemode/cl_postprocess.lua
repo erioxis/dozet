@@ -235,6 +235,7 @@ end
 function GM:DrawInductorIndicators()
 	local x = ScrW() * 0.45
 	local y = ScrH() * 0.05
+	--local base = ScrH() * 0.07
 
 	local lp = MySelf
 	local medp = lp:GetProgress('mprog')
@@ -294,7 +295,7 @@ function GM:DrawInductorIndicators()
 
 			local matGlow = Material("sprites/glow04_noz")
 			local texDownEdge = surface.GetTextureID("gui/gradient_down")
-			local colHealth = Color(226,62,33)
+			local colHealth = lp.HoleOfHell  and Color(65,12,2) or Color(226,62,33)
 			local screenscale = BetterScreenScale()
 			local health = fired
 			local formula = 15 * ((lp:GetActiveWeapon() and (lp:GetActiveWeapon().Tier or 1))+1)
@@ -322,7 +323,7 @@ function GM:DrawInductorIndicators()
 			surface.SetMaterial(matGlow)
 			surface.SetDrawColor(255, 255, 255, colHealth.a)
 			surface.DrawTexturedRect(x + 2 + subwidth - 6, y + 1 - hei/2, 4, hei * 2)
-			draw.SimpleTextBlurry(translate.Get("fi_hud")..math.Round(fired).."/"..math.Round(formula) , "ZSHUDFontTiny", x, y - 12, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM)
+			draw.SimpleTextBlurry((lp.HoleOfHell and translate.Get("hell_hud") or translate.Get("fi_hud"))..math.Round(fired).."/"..math.Round(formula) , "ZSHUDFontTiny", x, y - 12, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM)
 			y = y + ScrH() * 0.07
 		end
 	end

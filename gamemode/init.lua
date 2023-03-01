@@ -1348,7 +1348,7 @@ function GM:Think()
 				end
 				local barac = pl:IsSkillActive(SKILL_BARA_CURSED)
 				local baracurse = false
-				if self.MaxSigils >= 1 and (barac or LASTHUMAN or baracurse) then
+				if self.MaxSigils >= 1 and (barac or #team.GetPlayers(TEAM_HUMAN) <= 1 or baracurse) then
 					if not pl:GetStatus("sigildef") and self:GetWave() >= 6 and  time >= pl.NextDamage and self:GetWaveActive() and self:GetBalance() < 40 or self:GetBalance() > 40 and not pl:GetStatus("sigildef") and  time >= pl.NextDamage then
 						pl:TakeSpecialDamage(8 * (pl.TickBuff or 0), DMG_DIRECT)
 						pl.NextDamage = time + 2.4
@@ -1398,7 +1398,7 @@ function GM:Think()
                 if pl:GetVelocity():LengthSqr() >= 5636052 then
 					pl:GiveAchievement("highvel")
 				end
-				if pl.ClanQuePro and time >= pl.NextRegenerateClan then
+				if (pl.ClanQuePro or pl:IsSkillActive(SKILL_SAUL_GOODMAN)) and time >= pl.NextRegenerateClan then
 					pl.NextRegenerateClan = time + 20
 					pl:AddZSXP(1)
 				end
@@ -4458,7 +4458,21 @@ function GM:HumanKilledZombie(pl, attacker, inflictor, dmginfo, headshot, suicid
 			end
 		end
 	end
-
+	if attacker:IsSkillActive(SKILL_GREEDNESS) then
+		for i=1,math.random(1,5) do
+			local d = ents.Create("prop_money")
+			if d:IsValid() then
+				d:SetPos(pl:GetPos() + Vector(0,0,80))
+				d:SetAngles(pl:GetAngles())
+				d:Spawn()
+				d:SetOwner(attacker)
+				d:SetHP(math.random(1,3))
+				d:SetTime(CurTime()+4)
+				d.DieTime = CurTime() + 3.5
+				timer.Simple(0.1, function() d:GetPhysicsObject():SetVelocity(VectorRand(-1000,1000)) end )
+			end
+		end
+	end
 	local totaldamage = 0
 	for otherpl, dmg in pairs(pl.DamagedBy) do
 		if otherpl:IsValid() and otherpl:Team() == TEAM_HUMAN then

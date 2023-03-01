@@ -11,12 +11,12 @@ SWEP.UseHands = true
 
 SWEP.CSMuzzleFlashes = false
 
-SWEP.Primary.Delay = 0.26
-SWEP.Primary.ClipSize = 68
+SWEP.Primary.Delay = 0.5
+SWEP.Primary.ClipSize = 32
 SWEP.Primary.Automatic = true
 SWEP.Primary.Ammo = "chemical"
-SWEP.Primary.DefaultClip = 22
-SWEP.Primary.Damage = 66
+SWEP.Primary.DefaultClip = 32
+SWEP.Primary.Damage = 77
 
 SWEP.ConeMin = 0.5
 SWEP.ConeMax = 0.9

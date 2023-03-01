@@ -10,6 +10,7 @@
 	util.AddNetworkString("zs_endround")
 	util.AddNetworkString("zs_centernotify")
 	util.AddNetworkString("zs_topnotify")
+	util.AddNetworkString("zs_hpnotify")
 	util.AddNetworkString("zs_getacurse")
 	util.AddNetworkString("zs_zvols")
 	util.AddNetworkString("zs_nextboss")

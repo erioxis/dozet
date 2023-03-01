@@ -464,6 +464,10 @@ SKILL_BIRD_EYE = 436
 SKILL_LEUKEMIA = 437
 SKILL_X_GEN = 438
 SKILL_SAHA = 439
+SKILL_FAST_EYE = 440
+SKILL_HOLE_OF_HELL = 441
+SKILL_SAUL_GOODMAN = 442
+SKILL_GREEDNESS = 443
 
 
 
@@ -789,7 +793,13 @@ GM:AddSkill(SKILL_CRESCENDO1, translate.Get("skill_crescendo").."I", GOOD.."+4 "
 GM:AddSkill(SKILL_CRESCENDO2, translate.Get("skill_crescendo").."II", GOOD.."+4 "..translate.Get("hp_per_wave")..BAD.."-4 "..translate.Get("sp_per_wave"),
 																-6,			2,					{SKILL_CRESCENDO1}, TREE_SPEEDTREE)
 GM:AddSkill(SKILL_CRESCENDO3, translate.Get("skill_crescendo").."III", GOOD.."+4 "..translate.Get("hp_per_wave")..BAD.."-2 "..translate.Get("sp_per_wave"),
-																-6,			3,					{SKILL_CRESCENDO2}, TREE_SPEEDTREE)
+																-6,			3,					{SKILL_CRESCENDO2,SKILL_SAUL_GOODMAN}, TREE_SPEEDTREE)
+GM:AddSkill(SKILL_SAUL_GOODMAN, translate.Get("skill_saul_goodman"), GOOD..translate.Get("skill_saul_goodman_d1")..BAD.."-4%"..translate.Get("xpmul"),
+																-6,			4,					{SKILL_CRESCENDO2}, TREE_SPEEDTREE)
+GM:AddSkillModifier(SKILL_SAUL_GOODMAN, SKILLMOD_XP, -0.04)
+GM:AddSkill(SKILL_GREEDNESS, translate.Get("skill_greedy"), GOOD..translate.Get("skill_greedy_d1")..BAD.."-33%"..translate.Get("p_mul"),
+																-5,			3.5,					{SKILL_CRESCENDO2}, TREE_SPEEDTREE)
+GM:AddSkillModifier(SKILL_GREEDNESS, SKILLMOD_POINT_MULTIPLIER, -0.33)
 GM:AddSkill(SKILL_PHASER, translate.Get("skill_phaser"), GOOD.."+15%"..translate.Get("barricadespeed")..BAD.."+15%"..translate.Get("sigilteleport"),
 																-1,			4,					{SKILL_D_WIDELOAD, SKILL_DRIFT}, TREE_SPEEDTREE)
 GM:AddSkill(SKILL_LAST_MAN, translate.Get("skill_last_man"), GOOD..translate.Get("skill_last_man_d1")..BAD..translate.Get("skill_last_man_d2"),
@@ -1287,7 +1297,10 @@ GM:AddSkill(SKILL_DOUBLE_EXPLOSIVE, translate.Get("skill_d_exp"), GOOD..translat
 GM:AddSkill(SKILL_DOUBLE_EXPLOSIVE_ALT, translate.Get("skill_d_exp2"), GOOD..translate.Get("skill_d_exp2_d1")..BAD..translate.Get("skill_d_exp2_d2"),
 																0,			-10,					{SKILL_CRYO_LASER}, TREE_BRANCH_ELEMENTS)
 GM:AddSkill(SKILL_CRYO_LASER, translate.Get("skill_cryo_laser"), GOOD..translate.Get("skill_cryo_laser_d1")..BAD..translate.Get("skill_cryo_laser_d2"),
-																0,			-11,					{}, TREE_BRANCH_ELEMENTS)
+																0,			-11,					{SKILL_HOLE_OF_HELL}, TREE_BRANCH_ELEMENTS)
+GM:AddSkill(SKILL_HOLE_OF_HELL, translate.Get("skill_hellhole"), GOOD..translate.Get("skill_hellhole_d1")..BAD..translate.Get("skill_hellhole_d2"),
+																0,			-12,					{}, TREE_BRANCH_ELEMENTS)
+																--SKILL_HOLE_OF_HELL
 GM:AddSkill(SKILL_CURSED_ALT, translate.Get("skill_at_curse2"), GOOD..translate.Get("skill_at_curse2_d1")..BAD..translate.Get("skill_at_curse2_d2"),
 																2,			-10.5,					{}, TREE_BRANCH_ELEMENTS)
 GM:AddSkill(SKILL_ATTACHMENT_CURSE, translate.Get("skill_at_curse"), BAD..translate.Get("skill_at_curse_d1")..GOOD..translate.Get("skill_at_curse_d2"),
@@ -1345,6 +1358,9 @@ GM:AddSkill(SKILL_SCOURER, translate.Get("skill_scourer"), GOOD..translate.Get("
 GM:AddSkill(SKILL_BIRD_EYE, translate.Get("skill_deal_eye"), GOOD..translate.Get("skill_deal_eye_d1")..BAD.."-10%"..translate.Get("b_damage"),
 																4,			-4,					{}, TREE_GUNTREE)
 GM:AddSkillModifier(SKILL_BIRD_EYE, SKILLMOD_DAMAGE, -0.10)
+GM:AddSkill(SKILL_FAST_EYE, translate.Get("skill_fast_eye"), GOOD..translate.Get("skill_fast_eye_d1")..BAD.."+5%"..translate.Get("f_delay"),
+																8,			2,					{SKILL_BUG_GET}, TREE_GUNTREE)
+GM:AddSkillModifier(SKILL_FAST_EYE, SKILLMOD_FIRE_DELAY, 0.05)
 GM:AddSkill(SKILL_CONEFFECT, translate.Get("skill_concetrate"), GOOD..translate.Get("skill_concetrate_d1")..BAD.."-20%"..translate.Get("exp_r"),
 																2,			-5,					{}, TREE_GUNTREE)
 GM:AddSkill(SKILL_LAST_AMMO, translate.Get("skill_last_ammo"), GOOD..translate.Get("skill_last_ammo_d1")..BAD..translate.Get("skill_last_ammo_d2"),
@@ -2881,6 +2897,8 @@ GM:AddSkillModifier(SKILL_DOUBLE_EXPLOSIVE_ALT, SKILLMOD_ELEMENTAL_MUL,-0.4)
 
 GM:AddSkillModifier(SKILL_CRYO_LASER, SKILLMOD_IND_CHANCE, 0.35)
 
+GM:AddSkillModifier(SKILL_HOLE_OF_HELL, SKILLMOD_ELEMENTAL_MUL, -0.25)
+
 GM:AddSkillModifier(SKILL_N_FRIEND, SKILLMOD_ELEMENTAL_MUL,-0.25)
 GM:AddSkillModifier(SKILL_N_FRIEND, SKILLMOD_IND_DMG_TAKEN,-0.33)
 
@@ -3016,4 +3034,10 @@ GM:AddSkillFunction(SKILL_SHINNING_HIT, function(pl, active)
 end)
 GM:AddSkillFunction(SKILL_BIRD_EYE, function(pl, active)
 	pl.BirdEye = active
+end)
+GM:AddSkillFunction(SKILL_FAST_EYE, function(pl, active)
+	pl.FastEye = active
+end)
+GM:AddSkillFunction(SKILL_HOLE_OF_HELL, function(pl, active)
+	pl.HoleOfHell = active
 end)

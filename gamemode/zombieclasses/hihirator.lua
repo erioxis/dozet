@@ -162,10 +162,6 @@ if SERVER then
 		return true
 	end
 
-	function CLASS:PostOnKilled(pl, attacker, inflictor, suicide, headshot, dmginfo)
-		pl:SetZombieClass(GAMEMODE.DefaultZombieClass)
-	end
-
 	function CLASS:AltUse(pl)
 		pl:StartFeignDeath()
 	end

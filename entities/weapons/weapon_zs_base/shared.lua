@@ -348,7 +348,11 @@ end
 
 function SWEP:GetFireDelay()
 	local owner = self:GetOwner()
-	return self.Primary.Delay / (owner:GetStatus("frost") and 0.7 or 1) * (owner.M_FireDelay or 1)
+	local spd = 1
+	if owner.FastEye and SERVER then
+		spd = spd + math.max(-spd*0.5,-((self.SpeedEyeMul or 1)/100))
+	end
+	return self.Primary.Delay / (owner:GetStatus("frost") and 0.7 or 1) * (owner.M_FireDelay or 1) * spd
 end
 
 function SWEP:ShootBullets(dmg, numbul, cone)

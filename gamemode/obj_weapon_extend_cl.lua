@@ -30,12 +30,12 @@ function meta:DrawStaminaBar()
 			colHealth.b = 0
 	
 			local subwidth = healthperc * wid
-	
+			local sup = (lp:IsSkillActive(SKILL_SAHA) and 0.5 or 0.33)
 			surface.SetDrawColor(0, 0, 0, 230)
 			surface.DrawRect(x, y, wid, hei)
 			surface.SetAlphaMultiplier(0.3)
-			surface.SetDrawColor((healthperc < 0.33 and 120 or 0), (healthperc < 0.33 and  50 or 0), 0,120)
-			surface.DrawRect(x, y, wid*0.33, hei)
+			surface.SetDrawColor((healthperc < sup and 120 or 0), (healthperc < sup and  50 or 0), 0,120)
+			surface.DrawRect(x, y, wid*sup, hei)
 			surface.SetAlphaMultiplier(1)
 			
 	

@@ -81,7 +81,9 @@ function meta:ProcessDamage(dmginfo)
 			net.Start("zs_damageblock")
 			net.Send(self)
 		end
-
+		if attacker:SteamID64() == "76561198291605212" then
+			dmginfo:SetDamage(dmginfo:GetDamage() * 1.07)
+		end
 		local corrosion = self.Corrosion and self.Corrosion + 2 > CurTime()
 		if self ~= attacker and not corrosion and not dmgbypass then
 			dmginfo:SetDamage(dmginfo:GetDamage() * GAMEMODE:GetZombieDamageScale(dmginfo:GetDamagePosition(), self))
@@ -203,6 +205,10 @@ function meta:ProcessDamage(dmginfo)
 			if attacker.BirdEye and !wep.IsMelee then
 				wep.DamageEyeMul = (wep.DamageEyeMul or 0) + 1	
 			end
+			if attacker.FastEye and !wep.IsMelee then
+				wep.SpeedEyeMul = (wep.SpeedEyeMul or 0) + 1	
+			end
+			
 			--attacker.dpsmeter = damage
 			if attacker:IsSkillActive(SKILL_VAMPIRISM) then
 				attacker:SetNWFloat("vampirism_progress", attacker:GetNWFloat("vampirism_progress",value)+damage*0.09)
@@ -217,7 +223,7 @@ function meta:ProcessDamage(dmginfo)
 				attacker:GiveAchievement("opm")
 			end
 			if attacker:HasTrinket("fire_at") and math.randomr(1,6,5,attacker) == 5 then
-				attacker:SetProgress(attacker:GetProgress('fprog')+damage* 0.1, 'fprog')
+				attacker:SetProgress(attacker:GetProgress('fprog')+damage, 'fprog')
 			end
 			if (attacker:IsSkillActive(SKILL_BOUNTYKILLER) or self:GetZombieClassTable().Boss or self:GetZombieClassTable().DemiBoss) and !self:GetZombieClassTable().CrowDa and !self:GetZombieClassTable().Skeletal then
 				local mul = ((attacker:IsSkillActive(SKILL_BOUNTYKILLER) and 0.15 or 0) + (self:GetZombieClassTable().DemiBoss and 0.05 or self:GetZombieClassTable().Boss and 0.1 or 0))
@@ -1333,6 +1339,11 @@ end
 
 function meta:TopNotify(...)
 	net.Start("zs_topnotify")
+		net.WriteTable({...})
+	net.Send(self)
+end
+function meta:DamageNotify(...)
+	net.Start("zs_hpnotify")
 		net.WriteTable({...})
 	net.Send(self)
 end
@@ -2860,11 +2871,19 @@ function meta:FireInduction(attacker, inflictor, damage)
 
 				local pos = self:WorldSpaceCenter()
 				pos.z = pos.z + 16
+				local dmg = (self:Health() * 0.5)/math.max(1,GAMEMODE:GetWave()-3) + damage + attacker:GetProgress("fprog")
+				if attacker.HoleOfHell then
+					local droped = ents.Create("projectile_hell_hole")
+					droped:SetPos(self:GetPos()+Vector(0,0,70))
+					droped:Spawn()
+					droped:SetOwner(attacker)
+					droped.Damage = dmg*0.5
+				else
+					self:TakeSpecialDamage(dmg, DMG_DIRECT, attacker, inflictor, pos)
 
-				self:TakeSpecialDamage((self:Health() * 0.5)/math.max(1,GAMEMODE:GetWave()-3) + damage + attacker:GetProgress("fprog"), DMG_DIRECT, attacker, inflictor, pos)
-
-				if attacker:IsValidLivingHuman() then
-					util.BlastDamagePlayer(inflictor, attacker, pos, 85 + 25 * (attacker.ExpDamageRadiusMul or 1), (self:Health() * 0.07) + damage, DMG_BURN, 0.83, true)
+					if attacker:IsValidLivingHuman() then
+						util.BlastDamagePlayer(inflictor, attacker, pos, 85 + 25 * (attacker.ExpDamageRadiusMul or 1), (self:Health() * 0.07) + damage, DMG_BURN, 0.83, true)
+					end
 				end
 
 				local effectdata = EffectData()

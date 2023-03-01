@@ -118,6 +118,12 @@ function MakepOptions()
 	list2:AddItem(check)
 
 	check = vgui.Create("DCheckBoxLabel", Window)
+	check:SetText(translate.Get("op_rgb_hp"))
+	check:SetConVar("zs_rgb_ura")
+	check:SizeToContents()
+	list2:AddItem(check)
+
+	check = vgui.Create("DCheckBoxLabel", Window)
 	check:SetText(translate.Get("op_nb_mode"))
 	check:SetConVar("zs_nb_mode")
 	check:SizeToContents()

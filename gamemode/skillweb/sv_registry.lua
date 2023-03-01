@@ -1,7 +1,7 @@
 
 GM:SetSkillModifierFunction(SKILLMOD_HEALTH, function(pl, amount)
-	local current = pl:GetMaxHealth()
-	local new = 100 + math.Clamp(amount, -99, 1000) 
+	local current = pl:GetMaxHealth() - ((pl.HPPerWave or 0) * GAMEMODE:GetWave())
+	local new = 100 + math.Clamp(amount, -99, 1000)
 	pl:SetMaxHealth(new)
 	pl:SetHealth(math.Clamp(pl:Health() / current * new,1,pl:GetMaxHealth() ))
 end)

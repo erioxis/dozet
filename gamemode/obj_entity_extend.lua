@@ -167,7 +167,6 @@ function meta:FireBulletsLua(src, dir, spread, num, damage, attacker, force_mul,
 		end
 
 		local ent = bullet_tr.Entity
-		if !E_IsValid(ent) then inflictor.DamageEyeMul = 0 end
 		if E_IsValid(ent) and use_damage then
 			if ent:IsPlayer() then
 				temp_vel_ents[ent] = temp_vel_ents[ent] or ent:GetVelocity()
@@ -185,6 +184,14 @@ function meta:FireBulletsLua(src, dir, spread, num, damage, attacker, force_mul,
 			end
 
 			ent:DispatchTraceAttack(damageinfo, bullet_tr, dir)
+		elseif !E_IsValid(ent) and attacker_player then
+			inflictor.DamageEyeMul = (inflictor.DamageEyeMul or 1)/2  
+			inflictor.SpeedEyeMul = 1 
+			if CLIENT and (attacker.FastEye or attacker.BirdEye) then
+				if attacker == MySelf then
+					MySelf:EmitSound("npc/fast_zombie/wake1.wav", 100,50)
+				end
+			end
 		end
 
 		if SERVER and num > 1 and i == num - 1 and attacker_player then

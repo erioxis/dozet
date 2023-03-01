@@ -432,7 +432,7 @@ function meta:AttachmentDamage(damage, attacker, inflictor, type)
 			damage = damage * 2
 		end
 
-		if SERVER and attacker:HasTrinket("cryoindu") and not attacker:GetActiveWeapon().AntiInd and (attacker:GetActiveWeapon().Tier or 1) ~= 7   then
+		if SERVER and attacker:HasTrinket("cryoindu") and not attacker:GetActiveWeapon().AntiInd and (attacker:GetActiveWeapon().Tier or 1) <= 5   then
 						attacker:SetProgress(attacker:GetProgress('iprog') + damage,'iprog')
 			self:CryogenicInduction(attacker, inflictor, damage)
 		end
@@ -446,7 +446,7 @@ function meta:AttachmentDamage(damage, attacker, inflictor, type)
 		if self:GetZombieClassTable().FireBuff then
 			damage = 0
 		end
-		if SERVER and attacker:HasTrinket("fire_ind") and not attacker:GetActiveWeapon().AntiInd and !self:GetZombieClassTable().FireBuff and (attacker:GetActiveWeapon().Tier or 1) ~= 7 then
+		if SERVER and attacker:HasTrinket("fire_ind") and not attacker:GetActiveWeapon().AntiInd and !self:GetZombieClassTable().FireBuff and (attacker:GetActiveWeapon().Tier or 1) <= 5 then
 			self:FireInduction(attacker, inflictor, damage * 3)
 		end
 		if SERVER then
@@ -462,7 +462,7 @@ function meta:AttachmentDamage(damage, attacker, inflictor, type)
 		end
 	end
 	if SERVER then
-		self:GiveAchievementProgress("elementarno",math.Round(damage))
+		attacker:GiveAchievementProgress("elementarno",math.Round(damage))
 	end
 end
 function meta:AddLegDamageExt(damage, attacker, inflictor, type)
@@ -498,7 +498,7 @@ function meta:AddLegDamageExt(damage, attacker, inflictor, type)
 		self:AddLegDamage(damage)
 		self:AddArmDamage(damage)
 
-		if SERVER and attacker:HasTrinket("cryoindu") and not attacker:GetActiveWeapon().AntiInd and not (attacker:GetActiveWeapon().Tier or 1) == 7  then
+		if SERVER and attacker:HasTrinket("cryoindu") and not attacker:GetActiveWeapon().AntiInd and (attacker:GetActiveWeapon().Tier or 1) <= 5  then
 			attacker:SetProgress(attacker:GetProgress('iprog') + damage*2,'iprog')
 			self:CryogenicInduction(attacker, inflictor, damage)
 		end
@@ -512,8 +512,8 @@ function meta:AddLegDamageExt(damage, attacker, inflictor, type)
 		if self:GetZombieClassTable().FireBuff then
 			damage = 0
 		end
-		if SERVER and attacker:HasTrinket("fire_ind") and not attacker:GetActiveWeapon().AntiInd and !self:GetZombieClassTable().FireBuff and (attacker:GetActiveWeapon().Tier or 1) ~= 7 then
-			self:FireInduction(attacker, inflictor, damage * 3)
+		if SERVER and attacker:HasTrinket("fire_ind") and not attacker:GetActiveWeapon().AntiInd and !self:GetZombieClassTable().FireBuff and (attacker:GetActiveWeapon().Tier or 1) <= 5 then
+			self:FireInduction(attacker, inflictor, damage)
 		end
 		if SERVER then
 			GAMEMODE:DamageAtFloater(attacker, self, self:NearestPoint(attacker:EyePos()), damage, type)
@@ -528,7 +528,7 @@ function meta:AddLegDamageExt(damage, attacker, inflictor, type)
 		end
 	end
 	if SERVER then
-		self:GiveAchievementProgress("elementarno",math.Round(damage))
+		attacker:GiveAchievementProgress("elementarno",math.Round(damage))
 	end
 end
 
