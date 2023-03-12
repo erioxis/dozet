@@ -507,34 +507,34 @@ end
 GM.TopNotify = GM.TopNotifyAll
 
 function GM:ShowHelp(pl)
-	pl:SendLua("GAMEMODE:ShowHelp()")
+	--pl:SendLua("GAMEMODE:ShowHelp()")
 end
 
 function GM:ShowTeam(pl)
-	if pl:Team() == TEAM_HUMAN and not self.ZombieEscape then
-		pl:SendLua(self:GetWave() > 0 and "GAMEMODE:OpenArsenalMenu()" or "MakepWorth()")
+	--if pl:Team() == TEAM_HUMAN and not self.ZombieEscape then
+	--	pl:SendLua(self:GetWave() > 0 and "GAMEMODE:OpenArsenalMenu()" or "MakepWorth()")
 
-    elseif pl:Team() == TEAM_UNDEAD then
-	pl:SendLua("MakepMutationShop()")
-	end
+   -- elseif pl:Team() == TEAM_UNDEAD then
+	--pl:SendLua("MakepMutationShop()")
+	--end
 end
 
 
 function GM:ShowSpare1(pl)
-	if pl:Team() == TEAM_UNDEAD and not pl:KeyDown(IN_SPEED) then
-		if self:ShouldUseAlternateDynamicSpawn() then
-			pl:CenterNotify(COLOR_RED, translate.ClientGet(pl, "no_class_switch_in_this_mode"))
-		else
-			pl:SendLua("GAMEMODE:OpenClassSelect()")
-		end
-	elseif (pl:Team() == TEAM_HUMAN or pl:Team() == TEAM_UNDEAD and pl:KeyDown(IN_SPEED)) then
-		pl:SendLua("GAMEMODE:ToggleSkillWeb()")
+	--if pl:Team() == TEAM_UNDEAD and not pl:KeyDown(IN_SPEED) then
+		--if self:ShouldUseAlternateDynamicSpawn() then
+		--	pl:CenterNotify(COLOR_RED, translate.ClientGet(pl, "no_class_switch_in_this_mode"))
+	--	else
+		--	pl:SendLua("GAMEMODE:OpenClassSelect()")
+	--	end
+	--elseif (pl:Team() == TEAM_HUMAN or pl:Team() == TEAM_UNDEAD and pl:KeyDown(IN_SPEED)) then
+	--	pl:SendLua("GAMEMODE:ToggleSkillWeb()")
 		--pl:SendLua("GAMEMODE:OpenHClassSelect()")
-	end
+	--end
 end
 
 function GM:ShowSpare2(pl)
-	pl:SendLua("MakepOptions()")
+	--pl:SendLua("MakepOptions()")
 end
 
 
@@ -1666,6 +1666,10 @@ local function DoDropStart(pl)
 		local func = GAMEMODE:GetInventoryItemType(drop) == INVCAT_CONSUMABLES and pl.AddInventoryItem or pl.Give
 		timer.Simple(0, function() func(pl, drop) end)
 	end
+	if pl:IsSkillActive(SKILL_AMULET_15) then
+		local drop = GAMEMODE.Curses[math.random(#GAMEMODE.Curses)]
+		timer.Simple(0, function() pl:AddInventoryItem(drop) end)
+	end
 	local start = pl:GetRandomStartingItem()
 	if start then
 		local func = GAMEMODE:GetInventoryItemType(start) == INVCAT_TRINKETS and pl.AddInventoryItem or pl.Give
@@ -2353,7 +2357,7 @@ function GM:OnPlayerWin(pl)
 		if pl.BestFriend then
 			pl:AddZSXP(10000)
 		end
-		if self:GetBalance() >= 50 then
+		if self:GetBalance() >= 25 then
 			pl:GiveAchievement("infected_dosei")
 		end
 		if pl:GetMaxHealth() < 35 and not self.ObjectiveMap then
@@ -3768,6 +3772,9 @@ function GM:EntityTakeDamage(ent, dmginfo)
 		dispatchdamagedisplay = true
 
 	end
+	if !ent:IsPlayer() then
+		dmginfo:ScaleDamage(1 + math.Clamp(GAMEMODE:GetBalance()/100,0,3))
+	end
 
 	local dmg = dmginfo:GetDamage()
 	if dmg > 0 then --or attacker:IsPlayer() and ent:IsPlayer() and ((ent:Team() == TEAM_HUMAN) and ent:GetBloodArmor() or ent:GetZArmor()) >0 then
@@ -4473,6 +4480,21 @@ function GM:HumanKilledZombie(pl, attacker, inflictor, dmginfo, headshot, suicid
 			end
 		end
 	end
+	if attacker:IsSkillActive(SKILL_KEEPER_HEART) then
+		for i=1,math.random(1,3) do
+			local d = ents.Create("prop_hp")
+			if d:IsValid() then
+				d:SetPos(pl:GetPos() + Vector(0,0,80))
+				d:SetAngles(pl:GetAngles())
+				d:Spawn()
+				d:SetOwner(attacker)
+				d:SetHP(math.random(1,5))
+				d:SetTime(CurTime()+4)
+				d.DieTime = CurTime() + 3.5
+				timer.Simple(0.1, function() d:GetPhysicsObject():SetVelocity(VectorRand(-300,300)) end )
+			end
+		end
+	end
 	local totaldamage = 0
 	for otherpl, dmg in pairs(pl.DamagedBy) do
 		if otherpl:IsValid() and otherpl:Team() == TEAM_HUMAN then
@@ -4561,7 +4583,7 @@ function GM:ZombieKilledHuman(pl, attacker, inflictor, dmginfo, headshot, suicid
     attacker:GiveAchievementProgress("zsfan", 1)
 	attacker:GiveAchievementProgress("zmainer", 1)
 	attacker:AddBrains(1)
-	attacker:AddTokens(pl:GetMaxHealth() * 1.25)
+	attacker:AddTokens(math.Clamp(pl:GetMaxHealth() * 1.25,1,500))
 	attacker:AddLifeBrainsEaten(1)
 	attacker:AddZSXP(self.InitialVolunteers[attacker:UniqueID()] and xp or math.floor(xp*4))
 	self:SetRage(self:GetRage() - 15 / self:GetWinRate())

@@ -26,7 +26,7 @@ hook.Add("PostDrawTranslucentRenderables", "DrawDamageAttachment", function()
 
 	for _, particle in pairs(Particles) do
 		if particle and curtime < particle.DieTime then
-			local c = particle.Type == 3 and ColorFire or particle.Type == 2 and ColorIce or particle.Type == 1 and ColorPulse or particle.Type == 4 and ColorCham
+			local c = particle.Type == 3 and ColorFire or particle.Type == 2 and ColorIce or particle.Type == 1 and ColorPulse or particle.Type == 4 and ColorCham or Color(255,255,255)
 
 			done = false
 

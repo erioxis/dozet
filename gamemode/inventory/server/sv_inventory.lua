@@ -108,9 +108,16 @@ net.Receive("zs_activate_trinket", function(len, pl)
 	local trinket = net.ReadString()
 	local pl = net.ReadEntity()
 	local callback = GAMEMODE.ZSInventoryItemData[trinket].Bounty
-	if pl:HasInventoryItem(trinket) and callback and GAMEMODE.ZSInventoryItemData[trinket].BountyNeed <= pl:GetChargesActive() then
+	local uses = GAMEMODE.ZSInventoryItemData[trinket].BountyNeed*(pl.ChargesUse or 1)
+	if pl:HasInventoryItem(trinket) and callback and uses <= pl:GetChargesActive() or pl:HasInventoryItem(trinket) and callback and GAMEMODE.ZSInventoryItemData[trinket].BountyNeed == 0 then
 		callback(pl)
-		pl:SetChargesActive(pl:GetChargesActive()-GAMEMODE.ZSInventoryItemData[trinket].BountyNeed)
+		if GAMEMODE.ZSInventoryItemData[trinket].BountyNeed ~= 0 then
+			pl.LastCall = trinket
+		end
+		if pl:IsSkillActive(SKILL_DOUBLE) and math.random(1,4) == 1 then
+			uses = 0
+		end
+		pl:SetChargesActive(pl:GetChargesActive()-uses)
 	end
 end)
 

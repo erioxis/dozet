@@ -243,7 +243,7 @@ function GM:ShowHelp()
 
 	menu:MakePopup()
 end
-local exlude = {8,6,16,22,27,30,31,34,118,114,113,101,40,41,43,92,117,116,56,59,63,65,66,98,72,73,79,88 ,78,120,57,58,124}
+local exlude = {8,6,16,22,27,30,31,34,118,114,113,101,40,41,43,92,117,116,56,59,63,65,66,98,72,73,79,88 ,78,120,57,58,124,125}
 local exlude2 = {121,122,32,108,103,91,90}
 function GM:Stats()
 	if pMakepStats and pMakepStats:IsValid() then

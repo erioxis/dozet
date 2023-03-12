@@ -1917,7 +1917,31 @@ function GM:PlayerBindPress(pl, bind, wasin)
 		if P_Team(pl) == TEAM_UNDEAD and pl:Alive() then
 			self:ToggleZombieVision()
 		end
-	end
+	elseif bind == "gm_showhelp" then
+        GAMEMODE:ShowHelp()
+    elseif bind == "gm_showteam" then
+        if pl:Team() == TEAM_HUMAN and not self.ZombieEscape then
+            if self:GetWave() > 0 then
+                GAMEMODE:OpenArsenalMenu()
+            else
+                MakepWorth()
+            end
+        elseif pl:Team() == TEAM_UNDEAD then
+            MakepMutationShop()
+        end
+    elseif bind == "gm_showspare1" then
+        if pl:Team() == TEAM_UNDEAD and not input.IsShiftDown() then
+            if self:ShouldUseAlternateDynamicSpawn() then
+                pl:CenterNotify(COLOR_RED, translate.ClientGet(pl, "no_class_switch_in_this_mode"))
+            else
+                GAMEMODE:OpenClassSelect()
+            end
+        elseif (pl:Team() == TEAM_HUMAN or pl:Team() == TEAM_UNDEAD and input.IsShiftDown()) then
+            GAMEMODE:ToggleSkillWeb()
+        end
+    elseif bind == "gm_showspare2" then
+        MakepOptions()
+    end
 end
 
 function GM:_ShouldDrawLocalPlayer(pl)

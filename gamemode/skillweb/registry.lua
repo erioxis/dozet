@@ -454,7 +454,7 @@ SKILL_HYPERCOAGULATION = 426
 SKILL_RESNYATOST = 427
 SKILL_TOY_BEST_FRIEND = 428
 SKILL_PURGATORY = 429
---SKILL_BLOODY_BULLETS = 430
+SKILL_BLOODY_BULLETS = 430 -- maybe LATER
 SKILL_STAMINA = 431
 SKILL_STAMINLESS1 = 432
 SKILL_STAMINLESS2 = 433
@@ -468,6 +468,10 @@ SKILL_FAST_EYE = 440
 SKILL_HOLE_OF_HELL = 441
 SKILL_SAUL_GOODMAN = 442
 SKILL_GREEDNESS = 443
+SKILL_DOUBLE = 444
+SKILL_PARASITE = 445
+SKILL_AUTOAIM = 446
+SKILL_KEEPER_HEART = 447
 
 
 
@@ -595,6 +599,7 @@ SKILLMOD_HP_PER_WAVE = 121
 SKILLMOD_SP_PER_WAVE = 122
 SKILLMOD_STAMINA_ADD = 123
 SKILLMOD_STAMINA_USE = 124
+SKILLMOD_C_USE = 125
 
 local GOOD = "^"..COLORID_GREEN
 local BAD = "^"..COLORID_RED
@@ -748,6 +753,9 @@ GM:AddSkillModifier(SKILL_BLOODLIFE, SKILLMOD_MELEE_DAMAGE_MUL, -0.25)
 GM:AddSkill(SKILL_CAN_EATER, translate.Get("skill_cani_0"), BAD.."-33"..translate.Get("health")..GOOD..translate.Get("skill_cani_d1"),
 																0,			5,					{SKILL_DAMAGER}, TREE_HEALTHTREE)
 GM:AddSkillModifier(SKILL_CAN_EATER, SKILLMOD_HEALTH, -33)
+GM:AddSkill(SKILL_KEEPER_HEART, translate.Get("skill_k_heart"), BAD.."-33"..translate.Get("health")..GOOD..translate.Get("skill_k_heart_d1"),
+																1,			6,					{SKILL_CAN_EATER}, TREE_HEALTHTREE)
+GM:AddSkillModifier(SKILL_KEEPER_HEART, SKILLMOD_HEALTH, -33)
 -- Speed Tree
 GM:AddSkill(SKILL_SPEED1, translate.Get("skill_speed").."I", GOOD.."+5"..translate.Get("speed")..BAD.."-4"..translate.Get("health"),
 																-4,			6,					{SKILL_NONE, SKILL_SPEED2}, TREE_SPEEDTREE)
@@ -1177,6 +1185,14 @@ GM:AddSkillModifier(SKILL_UNSIGIL, SKILLMOD_DAMAGE, 0.06)
 SKILL_PHOENIX = 260
 GM:AddSkill(SKILL_PHOENIX, translate.Get("skill_phoenix"), GOOD..translate.Get("skill_phoenix_d1")..BAD.."-30%"..translate.Get("meleedamage")..BAD.."-30%"..translate.Get("b_damage"),
 																0,			6,					{SKILL_GUNSLINGER}, TREE_GUNTREE)
+GM:AddSkill(SKILL_DOUBLE, translate.Get("skill_double"), GOOD..translate.Get("skill_double_d1")..BAD.."+25%"..translate.Get("c_for_use"),
+																-1,			7,					{SKILL_PHOENIX}, TREE_GUNTREE)
+GM:AddSkillModifier(SKILL_DOUBLE, SKILLMOD_C_USE, 0.25)
+GM:AddSkill(SKILL_PARASITE, translate.Get("skill_parasite"), GOOD..translate.Get("skill_parasite_d1")..BAD.."-33%"..translate.Get("b_damage"),
+																-1,			8,					{SKILL_DOUBLE,SKILL_AUTOAIM}, TREE_GUNTREE)
+GM:AddSkillModifier(SKILL_PARASITE, SKILLMOD_DAMAGE, -0.33)
+GM:AddSkill(SKILL_AUTOAIM, translate.Get("skill_aim"), GOOD..translate.Get("skill_aim_d1")..BAD..translate.Get("skill_aim_d2"),
+																-1,			9,					{}, TREE_GUNTREE)
 local d = GM:AddSkill(SKILL_SECRET_VI, "Secret VI", GOOD.."+5 Skill Points",
 																-2,			3,					{SKILL_NONE}, TREE_GUNTREE)
 d.Hidden = true	
@@ -2275,6 +2291,9 @@ end)
 GM:SetSkillModifierFunction(SKILLMOD_STAMINA_USE, function(pl, amount)
 	pl.StaminaUse = math.Clamp(amount+1, -1, 100.0)
 end)
+GM:SetSkillModifierFunction(SKILLMOD_C_USE, function(pl, amount)
+	pl.ChargesUse = math.Clamp(amount+1, 0, 100.0)
+end)
 
 
 GM:SetSkillModifierFunction(SKILLMOD_MELEE_KNOCKBACK_MUL, function(pl, amount)
@@ -2902,7 +2921,7 @@ GM:AddSkillModifier(SKILL_HOLE_OF_HELL, SKILLMOD_ELEMENTAL_MUL, -0.25)
 GM:AddSkillModifier(SKILL_N_FRIEND, SKILLMOD_ELEMENTAL_MUL,-0.25)
 GM:AddSkillModifier(SKILL_N_FRIEND, SKILLMOD_IND_DMG_TAKEN,-0.33)
 
-GM:AddSkillModifier(SKILL_IRONBLOOD, SKILLMOD_BLOODARMOR_DMG_REDUCTION, 0.65)
+GM:AddSkillModifier(SKILL_IRONBLOOD, SKILLMOD_BLOODARMOR_DMG_REDUCTION, 0.25)
 GM:AddSkillModifier(SKILL_IRONBLOOD, SKILLMOD_BLOODARMOR_MUL, -0.3)
 
 GM:AddSkillModifier(SKILL_BLOODLETTER, SKILLMOD_BLOODARMOR_GAIN_MUL, 1)

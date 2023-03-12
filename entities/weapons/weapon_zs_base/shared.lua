@@ -354,7 +354,36 @@ function SWEP:GetFireDelay()
 	end
 	return self.Primary.Delay / (owner:GetStatus("frost") and 0.7 or 1) * (owner.M_FireDelay or 1) * spd
 end
-
+local function DoRicochet(attacker, hitpos, hitnormal, normal, damage)
+	for i=1,2 do
+		if attacker:IsValid() then
+			attacker:FireBulletsLua(hitpos, i*hitnormal * hitnormal:Dot(normal * -1 * i) + normal, 0, 1, damage, nil, nil, "tracer_rico", nil, nil, nil, nil, nil, attacker:GetActiveWeapon())
+		end
+	end
+end
+function SWEP.BulletCallback(attacker, tr, dmginfo)
+	if attacker:IsSkillActive(SKILL_PARASITE) and attacker:GetActiveWeapon().Primary.NumShots <= 2 then
+		if attacker:IsSkillActive(SKILL_AUTOAIM) then
+			local target = NULL
+			for _, ent in pairs(ents.FindInSphere(tr.HitPos, 1048)) do
+				if ent:IsValidLivingZombie() then
+					target = ent
+					break
+				end
+			end
+			if target:IsValid() then
+				local targetpos = target:LocalToWorld(target:OBBCenter())
+				local direction = (targetpos - tr.HitPos):GetNormal()
+				timer.Simple(0, function()attacker:FireBulletsLua(tr.HitPos, direction, 0, 1, dmginfo:GetDamage()*0.33, nil, nil, "tracer_rico", nil, nil, nil, nil, nil, attacker:GetActiveWeapon()) end)
+			end
+		end
+		local ent = tr.Entity
+		if SERVER and (tr.HitWorld and not tr.HitSky or ent) and !attacker:IsSkillActive(SKILL_AUTOAIM) then
+			local hitpos, hitnormal, normal, dmg = tr.HitPos, tr.HitNormal, tr.Normal, dmginfo:GetDamage() *0.25
+			timer.Simple(0, function() DoRicochet(attacker, hitpos, hitnormal, normal, dmg) end)
+		end
+	end
+end
 function SWEP:ShootBullets(dmg, numbul, cone)
 	local owner = self:GetOwner()
 	self:SendWeaponAnimation()

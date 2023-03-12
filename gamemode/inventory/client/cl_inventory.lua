@@ -169,7 +169,7 @@ local function ItemPanelDoClick(self)
 		viewer.m_CraftWith:SetVisible( false )
 	end
 
-	if category == INVCAT_CONSUMABLES and MySelf:GetChargesActive() >= (item.BountyNeed or 1) then
+	if category == INVCAT_CONSUMABLES and MySelf:GetChargesActive() >= (item.BountyNeed or 0) then
 		viewer.m_Activate.Item = item
 		if input.IsMouseDown(MOUSE_RIGHT) then
 			viewer.m_Activate.DoClick = ActivateTrinket(viewer.m_Activate,MySelf)
@@ -196,7 +196,7 @@ local function TrinketPanelPaint( self, w, h )
 		draw.RoundedBox( 2, 0, 0, w, h, ( self.Depressed or self.On or self.Category == INVCAT_CONSUMABLES and input.IsMouseDown(MOUSE_RIGHT) ) and categorycolors[ self.Category ][ 1 ] or categorycolors[ self.Category ][ 2 ]  )
 	end
 
-	if self.Category == INVCAT_CONSUMABLES and input.IsMouseDown(MOUSE_RIGHT) and !(self.Hovered or self.On)then
+	if self.Category == INVCAT_CONSUMABLES and input.IsMouseDown(MOUSE_RIGHT) and !(self.Hovered or self.On) and self.SWEP.BountyNeed and self.SWEP.BountyNeed >= 1 then
 		colBG = HSVToColor(CurTime()*90 % 360, 1, 1)
 		colBG.a = 252
 	else
@@ -208,7 +208,12 @@ local function TrinketPanelPaint( self, w, h )
 	end
 
 	if self.SWEP then
-		draw.SimpleText( self.SWEP.PrintName..(self.SWEP.BountyNeed and ":"..self.SWEP.BountyNeed or ""), "ZSHUDFontTiny", w/2, h/2, Color( 255, 255, 255 ), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER )	
+		--MySelf:GetChargesActive() >= (item.BountyNeed or 1)
+		local txt = ""
+		if self.SWEP.BountyNeed and self.SWEP.BountyNeed >= 1 then
+			txt = ":"..self.SWEP.BountyNeed
+		end
+		draw.SimpleText( self.SWEP.PrintName..txt, "ZSHUDFontTiny", w/2, h/2, Color( 255, 255, 255 ), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER )	
 	end
 
 	return true

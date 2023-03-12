@@ -81,7 +81,7 @@ function meta:ProcessDamage(dmginfo)
 			net.Start("zs_damageblock")
 			net.Send(self)
 		end
-		if attacker:SteamID64() == "76561198291605212" then
+		if attacker:IsPlayer() and attacker:SteamID64() == "76561198291605212" then
 			dmginfo:SetDamage(dmginfo:GetDamage() * 1.07)
 		end
 		local corrosion = self.Corrosion and self.Corrosion + 2 > CurTime()
@@ -327,8 +327,9 @@ function meta:ProcessDamage(dmginfo)
 					self.ChefMarkOwner = attacker
 					self.ChefMarkTime = CurTime() + 1
 				end
-				if attacker:IsSkillActive(SKILL_RESNYATOST)  then
-					attacker:SetProgress(attacker:GetProgress("rprog") + math.min(100,dmginfo:GetDamage()*0.3),"rprog")
+				if attacker:IsSkillActive(SKILL_RESNYATOST) or attacker:HasTrinket("sin_wrath") then
+					local double = attacker:IsSkillActive(SKILL_RESNYATOST) and attacker:HasTrinket("sin_wrath")
+					attacker:SetProgress(attacker:GetProgress("rprog") + math.min(100,dmginfo:GetDamage()*0.3*(double and 2 or 1)),"rprog")
 					if attacker:GetProgress("rprog") >= 1000 then
 						attacker:SetProgress(0,"rprog")
 						attacker:GiveStatus("resnya",12)
@@ -346,7 +347,7 @@ function meta:ProcessDamage(dmginfo)
 			--end
 			local damage1 = damage
 			attacker:SetDPS(attacker:GetDPS() + damage)
-			timer.Create("DPS"..damage..attacker:Nick()..math.Rand(1,5)..damage*0.5, 1, 1, function() attacker:SetDPS(attacker:GetDPS() - damage1) end)
+			timer.Simple(1, function() if attacker:IsValid() then attacker:SetDPS(attacker:GetDPS() - damage1) end end)
 		end
 		if self:GetZombieClassTable().NoBypass then
 			dmgbypass = false
@@ -2084,7 +2085,7 @@ function meta:Redeem(silent, noequip)
 	self:KillSilent()
 
 	self:ChangeTeam(TEAM_HUMAN)
-	if not GAMEMODE.InitialVolunteers[self:UniqueID()] then
+	if not GAMEMODE.InitialVolunteers[self:UniqueID()] and !GAMEMODE.NoPhoenix[self:UniqueID()] then
 		self:AddZSXP(50 * (GAMEMODE.ZombieXPMulti or 1))
 		self.RedeemBonus = true
 	end

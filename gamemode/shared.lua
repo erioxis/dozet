@@ -5,7 +5,7 @@ GM.Website	=	"https://github.com/erioxis/dozet"
 
 -- No, adding a gun doesn't make your name worth being here.
 GM.Credits = {
-	{"Version", "", "7.2.5"}, -- Привет.
+	{"Version", "", "7.3.0"}, -- Привет.
 	{"Season of ", "zombie buffs and code optimisation", "XD"},
 	{"erioxis", "Phantom coder", "dead"},
 	{"Nullted", "", "RU-ENG Translation"},
@@ -518,7 +518,8 @@ function GM:ShouldCollide(enta, entb)
 
 	local sncb = entb.ShouldNotCollide
 	if sncb and sncb(entb, enta) then return false end
-
+	--if enta:IsPlayer() and enta:IsBot() and entb:GetClass() == "func_door_rotating" then return false end
+	--if entb:IsPlayer() and entb:IsBot() and enta:GetClass() == "func_door_rotating" then return false end
 	--[[if enta.ShouldNotCollide and enta:ShouldNotCollide(entb) or entb.ShouldNotCollide and entb:ShouldNotCollide(enta) then
 		return false
 	end]]

@@ -170,6 +170,29 @@ end
 GM:AddInventoryItemData("cons_void",		trs("c_void"),			trs("c_void_d"),								"models/props_c17/trappropeller_lever.mdl", 3, nil, nil, function(pl) 
 	funcofvoid(pl, "cons_void")
 end,3)
+GM:AddInventoryItemData("cons_wildcard",		trs("c_wildcard"),			trs("c_wildcard_d"),								"models/props_c17/trappropeller_lever.mdl", 4, nil, nil, function(pl) 
+	local lcall = pl.LastCall or "cons_void"
+	local callback = GAMEMODE.ZSInventoryItemData[lcall].Bounty
+	local n = 1
+	if math.random(1,20) == 5 then
+		n = 3
+	end
+	for i=1,n do
+		timer.Simple(i*0.1, function()
+			local uses = GAMEMODE.ZSInventoryItemData[lcall].BountyNeed*0.5*(pl.ChargesUse or 1)
+			if pl:HasInventoryItem(lcall) and callback and uses <= pl:GetChargesActive() then
+				callback(pl)
+				if pl:IsSkillActive(SKILL_DOUBLE) and math.random(1,4) == 1 then
+					uses = 0
+				end
+				pl:SetChargesActive(pl:GetChargesActive()-uses)
+				if n == 2 then
+					pl:TakeInventoryItem("cons_wildcard")
+				end
+			end
+		end)
+	end
+end,0)
 GM:AddInventoryItemData("cons_flame_p",		trs("c_flame_p"),			trs("c_flame_p_d"),								"models/props_c17/trappropeller_lever.mdl", 1, nil, nil, function(pl) 
 	if pl:HasWeapon("weapon_zs_molotov") then pl:GiveAmmo(1, "molotov") return end
 	pl:Give("weapon_zs_molotov")
@@ -274,7 +297,7 @@ GM:AddInventoryItemData("cons_chaos",		trs("c_chaos"),			trs("c_chaos_d"),						
 	local use2 = {}
 	if pl.UsesChaosCard then pl:AddChargesActive(12) return end
 	for item,v in pairs(GAMEMODE.ZSInventoryItemData) do
-		if item ~= "cons_chaos" and GAMEMODE.ZSInventoryItemData[item].Bounty and GAMEMODE.ZSInventoryItemData[item].BountyNeed and string.len(item) >= 3 then
+		if item ~= "cons_chaos" and item ~= "cons_wildcard" and GAMEMODE.ZSInventoryItemData[item].Bounty and GAMEMODE.ZSInventoryItemData[item].BountyNeed and string.len(item) >= 3 then
 			table.insert(use2, #use2 + 1,item)
 		end
 	end
@@ -288,7 +311,7 @@ GM:AddInventoryItemData("cons_chaos",		trs("c_chaos"),			trs("c_chaos_d"),						
 		callback(pl)
 		--print(trinket)
 	end
-end,12)
+end,5)
 GM:AddInventoryItemData("cons_pill_unk",		trs("c_pill"),			trs("c_pill_d"),								"models/props_c17/trappropeller_lever.mdl", 2, nil, nil, function(pl) 
 	if math.random(1,3) ~= 1 then
 		pl:TakeDamage(pl:Health()*0.25, pl, pl) 
@@ -773,6 +796,7 @@ GM:AddSkillModifier(GM:AddTrinket(trs("t_ammovestiiii"), "sammovest", false, amm
 GM:AddSkillModifier(GM:AddTrinket(trs("t_ammovestiii"), "classix", false, book, bookw, 4,trs("t_d_ammovestinf"), nil, nil, "weapon_zs_shot_trinket"), SKILLMOD_RELOADSPEED_MUL, 0.16)
 
 GM:AddTrinket(trs("t_autor"), "autoreload", false, ammoveles, ammoweles, 2, trs("t_d_autor"), nil, nil, "weapon_zs_shot_trinket")
+GM:AddTrinket(trs("t_gg_nomi"), "gg_nomi", false, ammoveles, ammoweles, 4, trs("t_d_gg_nomi"), nil, nil, "weapon_zs_shot_trinket")
 
 -- Offensive Implants
 GM:AddSkillModifier(GM:AddTrinket(trs("t_targeti"), "targetingvisori", false, oveles, oweles, nil, trs("t_d_targeti"), nil, nil, "weapon_zs_shot_trinket"), SKILLMOD_AIMSPREAD_MUL, -0.06)
@@ -2092,8 +2116,7 @@ trinketwep.PermitDismantle = true
 trinket = GM:AddTrinket(trs("t_sin_greed"), "sin_greed", false, supveles, supweles, 1, trs("t_d_sin_greed"))
 trinket = GM:AddTrinket(trs("t_sin_sloth"), "sin_sloth", false, supveles, supweles, 1, trs("t_d_sin_sloth"))
 trinket = GM:AddTrinket(trs("t_sin_wrath"), "sin_wrath", false, supveles, supweles, 1, trs("t_d_sin_wrath"))
-GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_MUL, 2)
-GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL , 4)
+GM:AddSkillModifier(trinket, SKILLMOD_DMG_TAKEN, 1.5)
 trinket = GM:AddTrinket(trs("t_sin_gluttony"), "sin_gluttony", false, supveles, supweles, 1, trs("t_d_sin_gluttony"))
 trinket = GM:AddTrinket(trs("t_sin_pride"), "sin_pride", false, supveles, supweles, 1, trs("t_d_sin_pride"))
 GM:AddSkillModifier(trinket, SKILLMOD_ARSENAL_DISCOUNT, -0.15)

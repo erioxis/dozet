@@ -409,6 +409,7 @@ function meta:DamageNails(attacker, inflictor, damage, dmginfo)
 
 		return true
 	end
+	
 
 	if self.ReinforceEnd and CurTime() < self.ReinforceEnd and self.ReinforceApplier and self.ReinforceApplier:IsValidLivingHuman() then
 		local applier = self.ReinforceApplier

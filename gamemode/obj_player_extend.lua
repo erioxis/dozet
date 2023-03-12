@@ -35,7 +35,7 @@ function meta:LogID()
 	return "<"..self:SteamID().."> "..self:Name()
 end
 function meta:PostSprayPlayer(sprayorigin,spraypos)
-	local spray = ents.Create("text_post_spray") 
+	local spray = ents.Create("prop_spray") 
 
 	if spray:IsValid() then
 		spray:SetPos(spraypos)
@@ -432,7 +432,7 @@ function meta:AttachmentDamage(damage, attacker, inflictor, type)
 			damage = damage * 2
 		end
 
-		if SERVER and attacker:HasTrinket("cryoindu") and not attacker:GetActiveWeapon().AntiInd and (attacker:GetActiveWeapon().Tier or 1) <= 5   then
+		if SERVER and attacker:HasTrinket("cryoindu") and not attacker:GetActiveWeapon().AntiInd  then
 						attacker:SetProgress(attacker:GetProgress('iprog') + damage,'iprog')
 			self:CryogenicInduction(attacker, inflictor, damage)
 		end
@@ -446,7 +446,7 @@ function meta:AttachmentDamage(damage, attacker, inflictor, type)
 		if self:GetZombieClassTable().FireBuff then
 			damage = 0
 		end
-		if SERVER and attacker:HasTrinket("fire_ind") and not attacker:GetActiveWeapon().AntiInd and !self:GetZombieClassTable().FireBuff and (attacker:GetActiveWeapon().Tier or 1) <= 5 then
+		if SERVER and attacker:HasTrinket("fire_ind") and not attacker:GetActiveWeapon().AntiInd and !self:GetZombieClassTable().FireBuff then
 			self:FireInduction(attacker, inflictor, damage * 3)
 		end
 		if SERVER then
@@ -498,7 +498,7 @@ function meta:AddLegDamageExt(damage, attacker, inflictor, type)
 		self:AddLegDamage(damage)
 		self:AddArmDamage(damage)
 
-		if SERVER and attacker:HasTrinket("cryoindu") and not attacker:GetActiveWeapon().AntiInd and (attacker:GetActiveWeapon().Tier or 1) <= 5  then
+		if SERVER and attacker:HasTrinket("cryoindu") and not attacker:GetActiveWeapon().AntiInd  then
 			attacker:SetProgress(attacker:GetProgress('iprog') + damage*2,'iprog')
 			self:CryogenicInduction(attacker, inflictor, damage)
 		end
@@ -512,7 +512,7 @@ function meta:AddLegDamageExt(damage, attacker, inflictor, type)
 		if self:GetZombieClassTable().FireBuff then
 			damage = 0
 		end
-		if SERVER and attacker:HasTrinket("fire_ind") and not attacker:GetActiveWeapon().AntiInd and !self:GetZombieClassTable().FireBuff and (attacker:GetActiveWeapon().Tier or 1) <= 5 then
+		if SERVER and attacker:HasTrinket("fire_ind") and not attacker:GetActiveWeapon().AntiInd and !self:GetZombieClassTable().FireBuff then
 			self:FireInduction(attacker, inflictor, damage)
 		end
 		if SERVER then

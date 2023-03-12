@@ -109,9 +109,24 @@ function SWEP:SetClip(d)
 end
 function SWEP:OnMeleeHit(hitent, hitflesh, tr)
 	local ent = tr.Entity
+	local own = self:GetOwner()
+	if self.HealthSteal and hitent and hitent:IsPlayer() and SERVER and !hitent:GetZombieClassTable().Boss then
+		local d = ents.Create("prop_hp")
+		if d:IsValid() then
+			d:SetPos(hitent:GetPos() + Vector(0,0,80))
+			d:SetAngles(hitent:GetAngles())
+			d:Spawn()
+			d:SetOwner(own)
+			d:SetHP(hitent:Health()*0.03)
+			d:SetTime(CurTime()+4)
+			d.DieTime = CurTime() + 3.5
+			timer.Simple(0.1, function() d:GetPhysicsObject():SetVelocity(VectorRand(-300,300)) end )
+			hitent:SetHealth(hitent:Health()*0.94)
+		end
+	end
 	if ent:IsPlayer() and SERVER then
-		ent:AddBleedDamage(self.MeleeDamage * 0.12, self:GetOwner())
-		self:GetOwner():SetHealth(math.min(self:GetOwner():Health() + self.MeleeDamage *0.05,self:GetOwner():GetMaxHealth()))
+		ent:AddBleedDamage(self.MeleeDamage * 0.12, own)
+		own:SetHealth(math.min(own:Health() + self.MeleeDamage *0.05,own:GetMaxHealth()))
 	end
 end
 function SWEP:SecondaryAttack()
@@ -133,3 +148,9 @@ function SWEP:SecondaryAttack()
 		end
 	end
 end
+GAMEMODE:AddNewRemantleBranch(SWEP, 1, translate.Get("wep_lowers_r1"), translate.Get("wep_d_lowers_r1"), function(wept)
+	wept.MeleeDamage = wept.MeleeDamage * 0.5
+	wept.Primary.Delay = wept.Primary.Delay * 0.9
+
+	wept.HealthSteal = true
+end)
