@@ -18,6 +18,7 @@ RULES FOR TRANSLATORS!!
 
 translate.AddLanguage("en", "English")
 LANGUAGE.mich_is_here = "%s has joined the game.\n"
+LANGUAGE.drop_dice = "%s throw the dice and drop a %d"
 LANGUAGE.x_has_ready			= "%s Is ready!(%d from %d) !ready"
 LANGUAGE.g2p_by			= "By %s"
 LANGUAGE.g2p_arsenal			= "Arsenal Menu (ZS)"
@@ -1298,6 +1299,7 @@ LANGUAGE.scrap_for_surviving						= "You've gained %d scrap for surviving."
 LANGUAGE.you_are_x									= "You are %s!"
 LANGUAGE.x_has_risen_as_y							= "%s has risen as %s!!"
 LANGUAGE.x_has_risen								= "A boss zombie has risen!"
+LANGUAGE.you_champion = "You're a champion!"
 
 LANGUAGE.ach_trans							= "[ZS] Player %s (%s) earned achievement %s (%s)"
 

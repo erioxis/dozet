@@ -2084,6 +2084,7 @@ end
 
 local undo = false
 local matWhite = Material("models/debug/debugwhite")
+local matSkin = Material("models/Zombie_Classic/Zombie_Classic_sheet.vtf")
 local lowhealthcolor = GM.AuraColorEmpty
 local fullhealthcolor = GM.AuraColorFull
 function GM:_PrePlayerDraw(pl)
@@ -2115,7 +2116,14 @@ function GM:_PrePlayerDraw(pl)
 	end
 
 	pl.ShadowMan = shadowman
-
+	if pl:IsChampion() and pl:GetChampionColor() then
+		local col = pl:GetChampionColor()
+		local r = (col.r+1)/255
+		local g = (col.g+1)/255
+		local b = (col.b+1)/255
+		render_ModelMaterialOverride(matSkin)
+		render_SetColorModulation(r, g, b)
+	end
 	if pl:CallZombieFunction0("PrePlayerDraw") then return true end
 
 	if pl.SpawnProtection and (not (pl.status_overridemodel and pl.status_overridemodel:IsValid()) or pl:GetZombieClassTable().NoHideMainModel) then
@@ -2150,7 +2158,10 @@ local matFriendRing = Material("SGM/playercircle")
 local matTargetTri = Material("gui/point.png")
 function GM:_PostPlayerDraw(pl)
 	pl:CallZombieFunction0("PostPlayerDraw")
-
+	if pl:IsChampion() and pl:GetChampionColor() then
+		render_ModelMaterialOverride()
+		render_SetColorModulation(1, 1, 1)
+	end
 	if undo then
 		render_SetBlend(1)
 		render_ModelMaterialOverride()

@@ -265,6 +265,17 @@ net.Receive("zs_boss_spawned", function(length)
 		MySelf:EmitSound(string.format("npc/zombie_poison/pz_alert%d.wav", math.random(1, 2)), 0, math.random(95, 105))
 	end
 end)
+net.Receive("zs_champion", function(length)
+	local classindex = net.ReadUInt(8)
+	local classtbl = GAMEMODE.ZombieClasses[classindex]
+	local ki = {killicon = classtbl.SWEP}
+	local kid = {killicon = "default"}
+	GAMEMODE:CenterNotify(kid, " ", COLOR_RED, translate.Get("you_champion"), kid)
+
+	if MySelf:IsValid() then
+		MySelf:EmitSound(string.format("npc/zombie_poison/pz_alert%d.wav", math.random(1, 2)), 0, math.random(25,35))
+	end
+end)
 net.Receive("zs_boss_spawned_merge", function(length)
 	local ent = net.ReadEntity()
 	local classindex = net.ReadUInt(8)

@@ -2522,11 +2522,28 @@ end)
 //hook.Add("player_say", "PlayerSayForBot", function( data )
 	//D3bot_SaySmth(data.text)
 //end)
+local cubes = {"/dice","!dice","!куб","!кбу","!dcie","куб","cube","/cube","re,","сгиу","кб","dice","/dcie","/icde","/diec","кбу","/куб","/кбу"}
+local promos = {"/promo", "промо","промокод","/promocode","/промокод","!промокод","!promo","!promocode","!промо"}
 hook.Add("PlayerSay", "ForBots", function(ply, text)
     local playerInput = string.Explode( " ", text )
 	if not ply:IsBot() and string.len(text) <= 45 then
 		table.insert( GAMEMODE.Da, (#GAMEMODE.Da or 0) + 1 ,playerInput[math.random(1, #playerInput)] )
    		--table.Add(GAMEMODE.Da, playerInput)
+	end
+	
+	if ( table.HasValue(cubes,string.lower( playerInput[1] )) and playerInput[2] and tonumber(playerInput[2]) and tonumber(playerInput[2]) >= 2) and (ply.NextDiceDrop or 1) <= CurTime() then
+		local drop = math.random(1,tonumber(playerInput[2]) )
+		ply.NextDiceDrop = CurTime() + 1.5
+		PrintTranslatedMessage( HUD_PRINTTALK, "drop_dice",ply:Nick(), drop )
+		MsgC( Color( 255, 0, 0 ), ply:Nick().." throw the dice and drop a " .. drop)
+		if playerInput[3] or playerInput[4] then
+			return true
+		end
+		return false
+	end
+	if table.HasValue(promos,string.lower( playerInput[1] )) and playerInput[2] then
+		GAMEMODE:WritePromo(playerInput[2],ply)
+		return false
 	end
 end)
 hook.Add( "PlayerConnect", "JoinGlobalMessage", function( name, ip )
@@ -3407,7 +3424,12 @@ function GM:EntityTakeDamage(ent, dmginfo)
 	if ent.GetObjectHealth and not (attacker:IsPlayer() and attacker:Team() == TEAM_HUMAN) then
 		ent.m_LastDamaged = CurTime()
 	end
-
+	if attacker:IsPlayer() and attacker:IsChampion() then
+		dmginfo:ScaleDamage(1.5)
+	end
+	if !ent:IsPlayer() and (attacker:IsPlayer() and attacker:Team() == TEAM_UNDEAD) then
+		dmginfo:ScaleDamage(1 + math.Clamp(GAMEMODE:GetBalance()/100,0,3))
+	end
 	if ent.ProcessDamage and ent:ProcessDamage(dmginfo) then return end
 	attacker, inflictor = dmginfo:GetAttacker(), dmginfo:GetInflictor()
 
@@ -3772,9 +3794,7 @@ function GM:EntityTakeDamage(ent, dmginfo)
 		dispatchdamagedisplay = true
 
 	end
-	if !ent:IsPlayer() then
-		dmginfo:ScaleDamage(1 + math.Clamp(GAMEMODE:GetBalance()/100,0,3))
-	end
+
 
 	local dmg = dmginfo:GetDamage()
 	if dmg > 0 then --or attacker:IsPlayer() and ent:IsPlayer() and ((ent:Team() == TEAM_HUMAN) and ent:GetBloodArmor() or ent:GetZArmor()) >0 then
@@ -3847,7 +3867,6 @@ function GM:SetRandomToZombie()
 
 	return pl
 end
-
 function GM:PreOnPlayerChangedTeam(pl, oldteam, newteam)
 	--[[if oldteam == TEAM_HUMAN then
 		self:SaveVault(pl)
@@ -4327,6 +4346,7 @@ end
 
 
 function GM:PlayerDeath(pl, inflictor, attacker)
+	pl:SetChampion(0)
 	if pl:IsSkillActive(SKILL_PHOENIX) and pl.RedeemedOnce then
 		local dpos = pl:GetPos()
 		local eyepos = pl:EyeAngles()
@@ -4621,6 +4641,12 @@ local function DelayedChangeToZombie(pl)
 		pl:ChangeTeam(TEAM_UNDEAD)
 	end
 end
+hook.Add("InitPostEntityMap", "BlueBomb", function()
+	BLUE_BOMB = ents.Create("dummy_chemzombie")
+	if BLUE_BOMB:IsValid() then
+		BLUE_BOMB:Spawn()
+	end
+end)
 function GM:DoPlayerDeath(pl, attacker, dmginfo)
 
 	pl:RemoveEphemeralStatuses()
@@ -4666,6 +4692,20 @@ function GM:DoPlayerDeath(pl, attacker, dmginfo)
 			effectdata:SetEntity(pl)
 		util.Effect("headshot", effectdata, true, true)
 	end
+	if pl:GetChampion() == CHAMP_BLUE then
+
+		local pos = pl:LocalToWorld(pl:OBBCenter())
+		local effectdata = EffectData()
+			effectdata:SetOrigin(pos)
+		util.Effect("explosion_chem", effectdata, true)
+	
+		if BLUE_BOMB:IsValid() then
+			BLUE_BOMB:SetPos(pos)
+		end
+		util.PoisonBlastDamage(BLUE_BOMB, pl, pos, 320, 125, true)
+	
+		pl:CheckRedeem()
+	end
 
 	if not pl:CallZombieFunction5("OnKilled", attacker, inflictor, suicide, headshot, dmginfo) then
 		if pl:Health() <= -70 and not pl.NoGibs and not self.ZombieEscape then
@@ -4679,6 +4719,7 @@ function GM:DoPlayerDeath(pl, attacker, dmginfo)
 
 	local revive = false
 	local assistpl
+	pl:SetChampion(0)
 	if plteam == TEAM_UNDEAD then
 		if GAMEMODE.ZombieEscape then
 			local zewep = pl:GetWeapon("weapon_knife")

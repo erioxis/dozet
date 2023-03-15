@@ -42,7 +42,7 @@ function ENT:Use(activator, caller)
 end
 function ENT:StartTouch(ent)
 	if self:GetOwner() == ent and self.NextUse <= CurTime() then
-		ent:SetHealth(math.Clamp(activator:Health() + self:GetHP(),1,activator:GetMaxHealth()))
+		ent:SetHealth(math.Clamp(ent:Health() + self:GetHP(),1,ent:GetMaxHealth()))
 		if self:GetBA() >= 1 then
 			ent:SetBloodArmor(ent:GetBloodArmor() + self:GetBA())
 		end

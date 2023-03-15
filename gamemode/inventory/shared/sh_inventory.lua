@@ -265,7 +265,11 @@ GM:AddInventoryItemData("cons_sack_of_trinkets",		trs("c_sack_of_trinkets"),			t
 			table.insert(use2, #use2 + 1,item)
 		end
 	end
-	pl:AddInventoryItem(table.Random(use2))
+	local bl = table.Random(use2)
+	pl:AddInventoryItem(bl)
+	net.Start("zs_invitem")
+		net.WriteString(bl)
+	net.Send(pl)
 end,10)
 GM:AddInventoryItemData("cons_friendship",		trs("c_friendship"),			trs("c_friendship_d"),								"models/props_c17/trappropeller_lever.mdl", 1, nil, nil, function(pl) 
 	local tabled = {}
@@ -295,7 +299,7 @@ GM:AddInventoryItemData("cons_friendship",		trs("c_friendship"),			trs("c_friend
 end,2)
 GM:AddInventoryItemData("cons_chaos",		trs("c_chaos"),			trs("c_chaos_d"),								"models/props_c17/trappropeller_lever.mdl", 3, nil, nil, function(pl) 
 	local use2 = {}
-	if pl.UsesChaosCard then pl:AddChargesActive(12) return end
+	if pl.UsesChaosCard then pl:AddChargesActive(5) return end
 	for item,v in pairs(GAMEMODE.ZSInventoryItemData) do
 		if item ~= "cons_chaos" and item ~= "cons_wildcard" and GAMEMODE.ZSInventoryItemData[item].Bounty and GAMEMODE.ZSInventoryItemData[item].BountyNeed and string.len(item) >= 3 then
 			table.insert(use2, #use2 + 1,item)

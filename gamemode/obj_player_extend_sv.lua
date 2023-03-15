@@ -1956,20 +1956,25 @@ function meta:DoHulls(classid, teamid)
 			if self:Alive() then
 				self:SetMoveType(classtab.MoveType or MOVETYPE_WALK)
 			end
+			if math.random(1,25) == 1 then
+				self:SetChampion(math.random(1,9))
+				net.Start("zs_champion")
+					net.WriteUInt(classid, 8)
+				net.Send(self)
+			end
 			
-
-
+			local scale = (self:IsChampion() and (self:GetChampion() == CHAMP_SMOL and 0.75 or self:GetChampion() == CHAMP_BIG and 1.3 or 1.1) or 1)
 			if classtab.ModelScale then
 			    if self.m_Gigachad then
-					self:SetModelScale(classtab.ModelScale * 1.5, 0)
+					self:SetModelScale(classtab.ModelScale * 1.5 * scale, 0)
 				else
-					self:SetModelScale(classtab.ModelScale, 0)
+					self:SetModelScale(classtab.ModelScale * scale, 0)
 				end
 			elseif self:GetModelScale() ~= DEFAULT_MODELSCALE then
 			    if self.m_Gigachad then
-					self:SetModelScale(1.5, 0)
+					self:SetModelScale(1.5 * scale, 0)
 				else
-					self:SetModelScale(DEFAULT_MODELSCALE, 0)
+					self:SetModelScale(DEFAULT_MODELSCALE * scale, 0)
 				end
 			end
 
@@ -1977,14 +1982,14 @@ function meta:DoHulls(classid, teamid)
 				self:ResetHull()
 			end
 			if classtab.ViewOffset then
-				self:SetViewOffset(classtab.ViewOffset)
+				self:SetViewOffset(classtab.ViewOffset * scale)
 			elseif self:GetViewOffset() ~= DEFAULT_VIEW_OFFSET then
-				self:SetViewOffset(DEFAULT_VIEW_OFFSET)
+				self:SetViewOffset(DEFAULT_VIEW_OFFSET * scale)
 			end
 			if classtab.ViewOffsetDucked then
-				self:SetViewOffsetDucked(classtab.ViewOffsetDucked)
+				self:SetViewOffsetDucked(classtab.ViewOffsetDucked * scale)
 			elseif self:GetViewOffsetDucked() ~= DEFAULT_VIEW_OFFSET_DUCKED then
-				self:SetViewOffsetDucked(DEFAULT_VIEW_OFFSET_DUCKED)
+				self:SetViewOffsetDucked(DEFAULT_VIEW_OFFSET_DUCKED * scale)
 			end
 			if classtab.HullDuck then
 				self:SetHullDuck(classtab.HullDuck[1], classtab.HullDuck[2])
@@ -1998,9 +2003,9 @@ function meta:DoHulls(classid, teamid)
 				self:SetStepSize(DEFAULT_STEP_SIZE)
 			end
 			if classtab.JumpPower then
-				self:SetJumpPower(classtab.JumpPower)
+				self:SetJumpPower(classtab.JumpPower * scale)
 			elseif self:GetJumpPower() ~= DEFAULT_JUMP_POWER then
-				self:SetJumpPower(DEFAULT_JUMP_POWER)
+				self:SetJumpPower(DEFAULT_JUMP_POWER * scale)
 			end
 			if classtab.Gravity then
 				self:SetGravity(classtab.Gravity)

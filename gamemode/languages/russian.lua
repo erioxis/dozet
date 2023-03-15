@@ -4,6 +4,7 @@ translate.AddLanguage("ru", "Russian")
 
 LANGUAGE.x_has_ready			= "%s Готов!%d Готовы(голосов чтобы начать волну надо %d),чтобы стать готовым пропишите !ready"
 LANGUAGE.mich_is_here = "%s присоеденился к игре.\n"
+LANGUAGE.drop_dice = "%s кинул кубик и выбросил %d"
 LANGUAGE.g2p_by			= "От %s"
 LANGUAGE.g2p_arsenal			= "Арсенал меню (ЗС)"
 LANGUAGE.g2p_skills			= "Навыки (ЗС)"
@@ -1320,6 +1321,7 @@ LANGUAGE.wave_x_is_over_sub							= "Зараженные остановили �
 LANGUAGE.you_are_x									= "Вы %s!"
 LANGUAGE.x_has_risen_as_y							= "%s появился как %s!!"
 LANGUAGE.x_has_risen								= "Босс появился!"
+LANGUAGE.you_champion = "Ты стал чемпионом!"
 LANGUAGE.x_has_risen_demi								= "Мини-Босс появился!"
 LANGUAGE.cant_use_worth_anymore						= "Вы больше не можете использовать worth меню!"
 LANGUAGE.class_not_unlocked_will_be_unlocked_x		= "Этот класс ещё не разблокирован. Он будет разблокирован на следующей волне %d."

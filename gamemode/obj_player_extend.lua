@@ -54,6 +54,41 @@ end
 function meta:GetVIP()
 	return (self:IsUserGroup("vip_1") or self:IsUserGroup("vip_1_nav") or self:GetZSRemortLevel() >= 64),(self:IsUserGroup("vip_2") or self:IsUserGroup("vip_2_nav")),(self:IsUserGroup("vip_3") or self:IsUserGroup("vip_3_nav"))
 end
+function meta:SetChampion(id)
+	self:SetNW2Int("champion", id)
+end
+function meta:GetChampion()
+	return self:GetNW2Int("champion", 0)
+end
+function meta:IsChampion()
+	return (P_Team(self) == TEAM_UNDEAD and self:GetChampion() ~= 0)
+end
+function meta:GetChampionColor(id)
+	local color = nil
+	if !id then
+		id = self:GetChampion()
+	end
+	if !self:IsChampion() then return color end
+	if id == CHAMP_RED then
+		color = Color(143,5,5)
+	elseif id == CHAMP_WHITE then
+		color = Color(255,255,255)
+	elseif id == CHAMP_BLUE then
+		color = Color(30,0,197)
+	elseif id == CHAMP_YELLOW then
+		color = Color(191,194,23)
+	elseif id == CHAMP_ETERNAL then
+		color = Color(211,211,211)
+	elseif id == CHAMP_PINK then
+		color = Color(252,109,209)
+	elseif id == CHAMP_GRAY then
+		color = Color(173,173,173)
+	end
+	return color
+end
+function meta:GetChampTable()
+	return {Type = self:GetChampion(),Color = self:GetChampionColor(),ValidChamp = self:IsChampion()}
+end
 
 function meta:Dismember(dismembermenttype)
 	local effectdata = EffectData()
@@ -1199,6 +1234,8 @@ function meta:GetMaxHealth()
 		return self:GetMaxZombieHealth()
 	end
 	local health = oldmaxhealth(self)
+	local champion = self:GetChampion()
+	local health = health * (self:IsChampion() and ((champion == CHAMP_SMOL or champion == CHAMP_GRAY) and 0.5 or champion == CHAMP_BIG and 2 or 1.5) or 1)
 	if self.HPPerWave then
 		health = health + (self.HPPerWave * (GAMEMODE:GetWave() or 1))
 	end
