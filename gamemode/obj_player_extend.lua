@@ -74,7 +74,7 @@ function meta:GetChampionColor(id)
 	elseif id == CHAMP_WHITE then
 		color = Color(255,255,255)
 	elseif id == CHAMP_BLUE then
-		color = Color(30,0,197)
+		color = Color(0,53,114)
 	elseif id == CHAMP_YELLOW then
 		color = Color(191,194,23)
 	elseif id == CHAMP_ETERNAL then
@@ -760,6 +760,9 @@ function meta:ResetSpeed(noset, health)
 			speed = speed * (self.GetSpeedUpTimer/CurTime())
 			speed = speed * 1.2
 		end
+		if self:GetChampion() == CHAMP_YELLOW then
+			speed = speed * 1.5
+		end
 		self:SetSpeed(speed)
 		return speed
 	end
@@ -1235,7 +1238,7 @@ function meta:GetMaxHealth()
 	end
 	local health = oldmaxhealth(self)
 	local champion = self:GetChampion()
-	local health = health * (self:IsChampion() and ((champion == CHAMP_SMOL or champion == CHAMP_GRAY) and 0.5 or champion == CHAMP_BIG and 2 or 1.5) or 1)
+	health = health * (self:IsChampion() and ((champion == CHAMP_SMOL or champion == CHAMP_GRAY) and 0.5 or champion == CHAMP_BIG and 2 or 1.5) or 1)
 	if self.HPPerWave then
 		health = health + (self.HPPerWave * (GAMEMODE:GetWave() or 1))
 	end

@@ -28,7 +28,7 @@ CLASS.StepSize = 8
 CLASS.Hull = {Vector(-16, -16, 0) * CLASS.ModelScale, Vector(16, 16, 100) * CLASS.ModelScale}
 CLASS.HullDuck = {Vector(-16, -16, 0) * CLASS.ModelScale, Vector(16, 16, 60) * CLASS.ModelScale}
 
-CLASS.CanFeignDeath = true
+CLASS.CanFeignDeath = false
 
 local CurTime = CurTime
 local math_random = math.random

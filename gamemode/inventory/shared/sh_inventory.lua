@@ -1561,6 +1561,9 @@ trinket = GM:AddTrinket(trs("t_cham_storm"), "cham_storm", false, develes, dewel
 trinket = GM:AddTrinket(trs("t_clever"), "clever", false, develes, deweles, 5, trs("t_d_clever"), nil, nil, "weapon_zs_special_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_LUCK, 32)
 
+trinket = GM:AddTrinket(trs("t_hp_up"), "hp_up", false, develes, deweles, 5, trs("t_d_hp_up"), nil, nil, "weapon_zs_special_trinket")
+GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, 20)
+
 
 
 

@@ -48,6 +48,17 @@ function meta:ProcessDamage(dmginfo)
 	end
 
 	if P_Team(self) == TEAM_UNDEAD then
+		if self:GetChampion() == CHAMP_ETERNAL then
+			dmginfo:ScaleDamage(0.5)
+			if math.random(1,4) == 4 then
+				if attacker:IsPlayer() then
+					GAMEMODE:BlockFloater(attacker, self, dmginfo:GetDamagePosition())
+				end
+				dmginfo:SetDamage(0)
+				net.Start("zs_damageblock")
+				net.Send(self)
+			end
+		end
 		if self.SpawnProtection then
 			dmginfo:SetDamage(1)
 			dmginfo:ScaleDamage(0.1)

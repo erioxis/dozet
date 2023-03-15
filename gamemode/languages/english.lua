@@ -600,6 +600,8 @@ LANGUAGE.t_d_sin_gluttony = "Foods give buff or debuffs"
 LANGUAGE.t_d_fire_ind = "Can create massive explode if you kill or damage zombie with flame damage"
 LANGUAGE.t_d_cham_storm = "Create storm if damaging baracats."
 LANGUAGE.t_d_clever = "+32 Luck"
+LANGUAGE.t_hp_up = "Piece of eternity"
+LANGUAGE.t_d_hp_up = "+20 HP"
 LANGUAGE.t_d_cham_at = "Super-effective vs baracats.\nAll damages don't work with this."
 LANGUAGE.t_d_fire_at = "Ignite damage\n-10% DMG"
 LANGUAGE.t_d_acid_at = "Cold damage\n-10% DMG"
@@ -2964,6 +2966,11 @@ LANGUAGE.ns_shade = "Next shield: "
 LANGUAGE.si_hud = "Selected Item"
 
 LANGUAGE.ba_chat = "Buyed a "
+
+
+LANGUAGE.node_wep = "Weapons"
+LANGUAGE.node_craft = "Crafts"
+LANGUAGE.node_trinket = "Trinkets"
 --Impossible
 LANGUAGE.skillmod_n1 = "%s Additional Health."
 LANGUAGE.skillmod_n2 = "%s Additional Speed"

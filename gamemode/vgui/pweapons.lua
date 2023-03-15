@@ -21,9 +21,9 @@ local function SetWeaponViewerSWEP(self, swep, category, comps)
 	viewer:SetSize(wid, hei)
 	viewer:SetPos(self:GetWide() - viewer:GetWide() - 8, self.ViewerY)
 	self.Viewer = viewer
-
 	if not swep then return end
-	local sweptable = weapons.Get(swep)
+
+	local sweptable = weapons.Get(swep) or GAMEMODE.ZSInventoryItemData[swep] or swep
 	if not sweptable then return end
 
 	GAMEMODE:CreateItemViewerGenericElems(viewer)
@@ -33,8 +33,11 @@ local function SetWeaponViewerSWEP(self, swep, category, comps)
 
 	local desctext = sweptable.Description or ""
 
-	viewer.ModelPanel:SetModel(sweptable.WorldModel)
-	local mins, maxs = viewer.ModelPanel.Entity:GetRenderBounds()
+	viewer.ModelPanel:SetModel(sweptable.WorldModel or "")
+	local mins, maxs = Vector(1,1,1),Vector(1,1,1)
+	if viewer.ModelPanel.Entity and viewer.ModelPanel.Entity:GetRenderBounds() then
+		mins, maxs = viewer.ModelPanel.Entity:GetRenderBounds()
+	end
 	viewer.ModelPanel:SetCamPos(mins:Distance(maxs) * Vector(1.15, 0.75, 0.5))
 	viewer.ModelPanel:SetLookAt((mins + maxs) / 3)
 	viewer.m_VBG:SetVisible(true)
@@ -111,6 +114,7 @@ function MakepWeapons(silent)
 
 	local weps = {}
 	local crafts = {}
+	local trinkets = {}
 
 	for _, tab in ipairs(GAMEMODE.Items) do
 		if tab.SWEP and not added[tab.SWEP] then
@@ -128,6 +132,25 @@ function MakepWeapons(silent)
 				crafts[#crafts + 1] = wep
 				added[wep] = true
 			end
+		end
+	end
+	for k, wep in pairs(GAMEMODE.ZSInventoryItemData) do
+		print(k)
+		if not trinkets[wep] and GAMEMODE:GetInventoryItemType(k) == INVCAT_TRINKETS  and !added[wep.PrintName] then
+			trinkets[#trinkets + 1] = wep
+			added[wep.PrintName] = true
+		end
+	end
+	for k, wep in pairs(GAMEMODE.ZSInventoryItemData) do
+		if not trinkets[wep] and GAMEMODE:GetInventoryItemType(k)  == INVCAT_COMPONENTS and !added[wep.PrintName] then
+			trinkets[#trinkets + 1] = wep
+			added[wep.PrintName] = true
+		end
+	end
+	for k, wep in pairs(GAMEMODE.ZSInventoryItemData) do
+		if not trinkets[wep] and GAMEMODE:GetInventoryItemType(k)  == INVCAT_CONSUMABLES and !added[wep.PrintName] then
+			trinkets[#trinkets + 1] = wep
+			added[wep.PrintName] = true
 		end
 	end
 
@@ -169,6 +192,13 @@ function MakepWeapons(silent)
 	tree:SetIndentSize(4)
 	frame.CraftsTree = tree
 
+	local tree = vgui.Create("DTree", propertysheet)
+	tree:SetWide(propertysheet:GetWide() - 16)
+	local sheet = propertysheet:AddSheet("Trinkets", tree, nil, false, false)
+	sheet.Panel:SetPos(0, tabhei + 2)
+	tree:SetIndentSize(4)
+	frame.TrinketTree = tree
+
 	local scroller = propertysheet:GetChildren()[1]
 	local dragbase = scroller:GetChildren()[1]
 	local tabs = dragbase:GetChildren()
@@ -204,6 +234,16 @@ function MakepWeapons(silent)
 		wepnode.Comps = GAMEMODE.Assemblies[wep]
 	end
 
+	for k, wep in pairs(trinkets) do
+		local enttab = k
+		local wepnode
+		wepnode = frame.TrinketTree:AddNode(wep.PrintName or wep)
+
+		wepnode.SWEP = wep
+		wepnode.DoClick = WeaponButtonDoClick
+		wepnode.Category = ITEMCAT_TRINKETS
+		wepnode.Comps = GAMEMODE.Assemblies[wep]
+	end
 	frame:SetWeaponViewerSWEP()
 
 	MakepWeapons(true)

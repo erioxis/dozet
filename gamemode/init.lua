@@ -4692,9 +4692,9 @@ function GM:DoPlayerDeath(pl, attacker, dmginfo)
 			effectdata:SetEntity(pl)
 		util.Effect("headshot", effectdata, true, true)
 	end
-	if pl:GetChampion() == CHAMP_BLUE then
-
-		local pos = pl:LocalToWorld(pl:OBBCenter())
+	local champ = pl:GetChampion()
+	local pos = pl:LocalToWorld(pl:OBBCenter())
+	if champ == CHAMP_BLUE then
 		local effectdata = EffectData()
 			effectdata:SetOrigin(pos)
 		util.Effect("explosion_chem", effectdata, true)
@@ -4702,10 +4702,59 @@ function GM:DoPlayerDeath(pl, attacker, dmginfo)
 		if BLUE_BOMB:IsValid() then
 			BLUE_BOMB:SetPos(pos)
 		end
-		util.PoisonBlastDamage(BLUE_BOMB, pl, pos, 320, 125, true)
-	
+		util.PoisonBlastDamage(BLUE_BOMB, pl, pos, 222, 65, true)
+		
 		pl:CheckRedeem()
+		if math.random(1,3) == 1 then
+			local d = ents.Create("prop_hp")
+			if d:IsValid() then
+				if !attacker then
+					attacker = pl
+				end
+				d:SetPos(pos + Vector(0,0,80))
+				d:Spawn()
+				d:SetOwner(attacker)
+				d:SetHP(attacker:GetMaxHealth()*0.1)
+				d:SetTime(CurTime()+10.5)
+				d.DieTime = CurTime() + 10.5
+				timer.Simple(0.1, function() d:GetPhysicsObject():SetVelocity(Vector(0,0,0)) end )
+			end
+		end
+	elseif champ == CHAMP_YELLOW then
+		if math.random(1,3) == 1 then
+			local d = ents.Create("prop_money")
+			if d:IsValid() then
+				if !attacker then
+					attacker = pl
+				end
+				d:SetPos(pos + Vector(0,0,80))
+				d:Spawn()
+				d:SetOwner(attacker)
+				d:SetHP((math.random(1,5) == 1 and 10 or 5))
+				d:SetTime(CurTime()+20.5)
+				d.DieTime = CurTime() + 20.5
+				timer.Simple(0.1, function() d:GetPhysicsObject():SetVelocity(Vector(0,0,0)) end )
+			end
+		end
+	elseif champ == CHAMP_GRAY then
+		if math.random(1,3) == 1 then
+			if !attacker then
+				attacker = pl
+			end
+			attacker:AddChargesActive(5)
+		end
+	elseif champ == CHAMP_ETERNAL then
+		if math.random(1,10) == 1 then
+			local ent = ents.Create("prop_invitem")
+			if ent:IsValid() then
+				ent:SetInventoryItemType("trinket_hp_up")
+				ent:Spawn()
+				ent:SetPos(pos)
+				ent.DroppedTime = CurTime()
+			end
+		end
 	end
+
 
 	if not pl:CallZombieFunction5("OnKilled", attacker, inflictor, suicide, headshot, dmginfo) then
 		if pl:Health() <= -70 and not pl.NoGibs and not self.ZombieEscape then
@@ -5103,6 +5152,7 @@ function GM:PlayerSpawn(pl)
 		else
 			local lowundead = team.NumPlayers(TEAM_UNDEAD) < 4
 			local healthmulti = (self.ObjectiveMap or self.ZombieEscape) and 1 or lowundead and 1.5 or 1
+			healthmulti = healthmulti * (pl:IsChampion() and ((champion == CHAMP_SMOL or champion == CHAMP_GRAY) and 0.5 or champion == CHAMP_BIG and 2 or 1.5) or 1)
 			pl:SetHealth((classtab.Health * healthmulti) + ((self:GetWave() * 45) * (classtab.DynamicHealth or 1)) )
 		end
 
