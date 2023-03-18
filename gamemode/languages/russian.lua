@@ -1325,6 +1325,7 @@ LANGUAGE.you_are_x									= "Вы %s!"
 LANGUAGE.x_has_risen_as_y							= "%s появился как %s!!"
 LANGUAGE.x_has_risen								= "Босс появился!"
 LANGUAGE.you_champion = "Ты стал чемпионом!"
+LANGUAGE.s_champion = "%s Стал чемпионом!"
 LANGUAGE.x_has_risen_demi								= "Мини-Босс появился!"
 LANGUAGE.cant_use_worth_anymore						= "Вы больше не можете использовать worth меню!"
 LANGUAGE.class_not_unlocked_will_be_unlocked_x		= "Этот класс ещё не разблокирован. Он будет разблокирован на следующей волне %d."
@@ -2357,11 +2358,9 @@ LANGUAGE.skill_madness = "Безумие"
 LANGUAGE.skill_madness_d1 = "+15% защиты кровавой брони\n"
 LANGUAGE.skill_madness_d2 = "Экран в безумии!!!"
 --У меня идейный кризис так что оставлю это тут
---[[
 LANGUAGE.skill_gir = "Разгон II"
-LANGUAGE.skill_gir_d1 = "+50 скорости\n"
-LANGUAGE.skill_gir_d2 = "с 10% шансом можно ударить сильным ударом"
-]]
+LANGUAGE.skill_gir_d1 = "Повышенная утомляемость(При использовании деша -50% к скорости на 2 секунды)"
+LANGUAGE.skill_gir_d2 = "Вы можете дешиться на шифт!\n"
 --d
 LANGUAGE.help_cat_introduction						= "Вступление"
 LANGUAGE.help_cat_survival							= "Выживание"
@@ -3011,4 +3010,5 @@ LANGUAGE.ahint_7 = "Красная аура в зомби - сигнал о уб
 LANGUAGE.ahint_8 = "Проклятья и грехи - не для тебя"
 LANGUAGE.ahint_9 = "Нулл хоть и сын хехе но сыровое дает силы только людям!"
 LANGUAGE.ahint_10 = "Чем ты больше тем и больше урона и наоборот!"
+LANGUAGE.ahint_11 = "Чистилище + Разгон II невероятно сочетаются!"
 LANGUAGE.ahint = "ПОДСКАЗКА!"

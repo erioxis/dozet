@@ -180,21 +180,21 @@ function MakepWeapons(silent)
 
 	local tree = vgui.Create("DTree", propertysheet)
 	tree:SetWide(propertysheet:GetWide() - 16)
-	local sheet = propertysheet:AddSheet("Weapons", tree, nil, false, false)
+	local sheet = propertysheet:AddSheet(translate.Get("node_wep"), tree, nil, false, false)
 	sheet.Panel:SetPos(0, tabhei + 2)
 	tree:SetIndentSize(4)
 	frame.WeaponsTree = tree
 
 	tree = vgui.Create("DTree", propertysheet)
 	tree:SetWide(propertysheet:GetWide() - 16)
-	sheet = propertysheet:AddSheet("Crafts", tree, nil, false, false)
+	sheet = propertysheet:AddSheet(translate.Get("node_craft"), tree, nil, false, false)
 	sheet.Panel:SetPos(0, tabhei + 2)
 	tree:SetIndentSize(4)
 	frame.CraftsTree = tree
 
 	local tree = vgui.Create("DTree", propertysheet)
 	tree:SetWide(propertysheet:GetWide() - 16)
-	local sheet = propertysheet:AddSheet("Trinkets", tree, nil, false, false)
+	local sheet = propertysheet:AddSheet(translate.Get("node_trinket"), tree, nil, false, false)
 	sheet.Panel:SetPos(0, tabhei + 2)
 	tree:SetIndentSize(4)
 	frame.TrinketTree = tree

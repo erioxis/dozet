@@ -271,8 +271,16 @@ net.Receive("zs_champion", function(length)
 	local ki = {killicon = classtbl.SWEP}
 	local kid = {killicon = "default"}
 	GAMEMODE:CenterNotify(kid, " ", COLOR_RED, translate.Get("you_champion"), kid)
+end)
+net.Receive("zs_champion_all", function(length)
+	local ent = net.ReadEntity()
+	local classindex = net.ReadUInt(8)
+	local classtbl = GAMEMODE.ZombieClasses[classindex]
+	local ki = {killicon = classtbl.SWEP}
+	local kid = {killicon = "default"}
+	GAMEMODE:TopNotify(kid, " ", COLOR_RED, translate.Format("s_champion",(ent and ent.Nick and ent:Nick() or "?")), kid)
 
-	if MySelf:IsValid() then
+	if MySelf:IsValid() and MySelf == ent then
 		MySelf:EmitSound(string.format("npc/zombie_poison/pz_alert%d.wav", math.random(1, 2)), 0, math.random(25,35))
 	end
 end)

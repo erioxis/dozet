@@ -11,7 +11,7 @@ CLASS.Health = 1922
 CLASS.Speed = 220
 
 CLASS.CanTaunt = true
-
+CLASS.CanPickupProp = true
 CLASS.FearPerInstance = 1
 
 if SERVER then

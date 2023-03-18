@@ -472,6 +472,7 @@ SKILL_DOUBLE = 444
 SKILL_PARASITE = 445
 SKILL_AUTOAIM = 446
 SKILL_KEEPER_HEART = 447
+SKILL_GIER_II = 448
 
 
 
@@ -741,6 +742,8 @@ GM:AddSkill(SKILL_BLOODYMAN, translate.Get("skill_bloodyman"), GOOD.."+130"..tra
 																7,			3,					{SKILL_SANGUINE}, TREE_HEALTHTREE)
 GM:AddSkill(SKILL_MADNESS, translate.Get("skill_madness"), GOOD..translate.Get("skill_madness_d1")..BAD..translate.Get("skill_madness_d2"),
 																7,			4,					{SKILL_BLOODYMAN}, TREE_HEALTHTREE)
+GM:AddSkill(SKILL_GIER_II, translate.Get("skill_gir"), GOOD..translate.Get("skill_gir_d2")..BAD..translate.Get("skill_gir_d1"),
+																7,			5,					{SKILL_MADNESS}, TREE_HEALTHTREE)
 GM:AddSkill(SKILL_ANTIGEN, translate.Get("skill_agen_0"), GOOD..translate.Get("skill_agen_d1")..BAD..translate.Get("skill_agen_d2"),
 																-2,			4,					{}, TREE_HEALTHTREE)
 GM:AddSkill(SKILL_DAMAGER, translate.Get("skill_bhealth_0"), GOOD..translate.Get("skill_bhealth_d1")..BAD..translate.Get("skill_bhealth_d2"),

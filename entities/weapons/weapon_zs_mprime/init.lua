@@ -47,7 +47,7 @@ function SWEP:ToDie(damage, numshots, cone)
 	if !self:GetDiePower() then
 		local ent = (self:GetJudge() and  ents.Create("prop_playergibs") or ents.Create(self.Primary.Projectile))
 		if ent:IsValid() then
-			if !self:GetJudge() then
+			if !self:GetJudge() or self:GetObed() then
 				ent:SetPos(owner:GetShootPos())
 				ent:SetAngles(owner:EyeAngles())
 				ent:SetOwner(owner)
@@ -55,6 +55,9 @@ function SWEP:ToDie(damage, numshots, cone)
 				ent.ProjSource = self
 				ent.ShotMarker = i
 				ent.Team = owner:Team()
+				if self:GetObed() then
+					ent:SetModel("models/props_c17/oildrum001_explosive.mdl")
+				end
 			end
 
 			self:EntModify(ent)

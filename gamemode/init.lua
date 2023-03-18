@@ -1667,7 +1667,7 @@ local function DoDropStart(pl)
 		timer.Simple(0, function() func(pl, drop) end)
 	end
 	if pl:IsSkillActive(SKILL_AMULET_15) then
-		local drop = GAMEMODE.Curses[math.random(#GAMEMODE.Curses)]
+		local drop = table.Random(GAMEMODE.Curses)
 		timer.Simple(0, function() pl:AddInventoryItem(drop) end)
 	end
 	local start = pl:GetRandomStartingItem()
@@ -4248,12 +4248,30 @@ function GM:KeyPress(pl, key)
 		end
 
 	end
-	if pl:KeyPressed(IN_SPEED) and key == IN_SPEED and not pl:IsCarrying() and pl:Team() ~= TEAM_UNDEAD and pl.NextDash <= CurTime() and pl.ClanAvanguard and !pl.ClanShooter and !pl:GetBarricadeGhosting() then 
+	if pl:KeyPressed(IN_SPEED) and key == IN_SPEED and not pl:IsCarrying() and pl:Team() ~= TEAM_UNDEAD and pl.NextDash <= CurTime() and (pl.ClanAvanguard or pl:IsSkillActive(SKILL_GIER_II)) and !pl:GetBarricadeGhosting() then
+		if pl:IsSkillActive(SKILL_GIER_II) and pl:IsSkillActive(SKILL_STAMINA) and pl:GetStamina() <= 33 then return end
 			local pos = pl:GetPos()
-			local pushvel = pl:GetEyeTrace().Normal * 0 + (pl:GetAngles():Forward()*(pl:OnGround() and 800 or 200))
-			pl:SetLocalVelocity( pushvel)
-			pl.NextDash = CurTime() + 4
-		
+			local pushvel = pl:GetEyeTrace().Normal * 0 + (pl:GetAngles():Forward()*(pl:OnGround() and 1600 or 500))
+			pl:SetVelocity(pushvel)
+			pl.NextDash = CurTime() + 2 - (pl.ClanAvanguard and pl:IsSkillActive(SKILL_GIER_II) and 1 or 0)
+			if pl:IsSkillActive(SKILL_GIER_II) and !pl:IsSkillActive(SKILL_STAMINA) then
+				pl.Gear2_Used = CurTime() + 2
+				pl:ResetSpeed()
+				timer.Simple(2.2, function() pl:ResetSpeed() end)
+			elseif  pl:IsSkillActive(SKILL_GIER_II) and pl:IsSkillActive(SKILL_STAMINA) then
+				pl:AddStamina(-33)
+			end
+			if pl.Purgatory and (pl.NextPRG or 1) <= CurTime() and pl:IsSkillActive(SKILL_GIER_II) then
+				pl.NextPRG = CurTime() + 5
+				local droped = ents.Create("projectile_purgatory_soul")
+				if droped:IsValid() then
+					droped:SetPos(pl:GetPos()+Vector(0,0,100))
+					droped:Spawn()
+					timer.Simple(0, function() droped.TimeToDash = CurTime() + 2.5 end)
+					droped.DamageToDeal = 150
+					droped:SetOwner(pl)
+				end
+			end
 	end 
 	if key == IN_SPEED and pl:Team() == TEAM_HUMAN and pl:KeyDown(IN_USE) then 
 		for _, ent in pairs(ents.FindInSphere(pl:GetPos(), 26)) do
@@ -4751,6 +4769,18 @@ function GM:DoPlayerDeath(pl, attacker, dmginfo)
 				ent:Spawn()
 				ent:SetPos(pos)
 				ent.DroppedTime = CurTime()
+			end
+		end
+	elseif champ == CHAMP_RED then
+		if math.random(1,3) == 1 then
+			local d = ents.Create("prop_hp")
+			if d:IsValid() then
+				d:SetPos(pos + Vector(0,0,80))
+				d:Spawn()
+				d:SetHP((math.random(1,5) == 1 and 10 or 5))
+				d:SetTime(CurTime()+20.5)
+				d.DieTime = CurTime() + 20.5
+				timer.Simple(0.1, function() d:GetPhysicsObject():SetVelocity(Vector(0,0,0)) end )
 			end
 		end
 	end
@@ -5607,7 +5637,7 @@ function GM:WaveStateChanged(newstate, pl)
 					
 						if lucky2 == 1 then 
 
-							pl:AddZSXP(10000)
+						--	pl:AddZSXP(10000)
 
 							if not charge == 1 then
 								pl:TakeInventoryItem("trinket_mysteryticket")

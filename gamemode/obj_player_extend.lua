@@ -799,6 +799,9 @@ function meta:ResetSpeed(noset, health)
 		if self.ClanQuePro  then 
 			speed = speed + 35
 		end
+		if (self.Gear2_Used or 0) >= CurTime()  then 
+			speed = speed *0.5
+		end
 		if self.ClanAvanguard then 
 			speed = speed + 25
 		end
@@ -1238,7 +1241,7 @@ function meta:GetMaxHealth()
 	end
 	local health = oldmaxhealth(self)
 	local champion = self:GetChampion()
-	health = health * (self:IsChampion() and ((champion == CHAMP_SMOL or champion == CHAMP_GRAY) and 0.5 or champion == CHAMP_BIG and 2 or 1.5) or 1)
+	health = health * (self:IsChampion() and ((champion == CHAMP_SMOL or champion == CHAMP_GRAY) and 0.5 or champion == CHAMP_BIG and 2 or champion == CHAMP_RED and 3 or 1.5) or 1)
 	if self.HPPerWave then
 		health = health + (self.HPPerWave * (GAMEMODE:GetWave() or 1))
 	end

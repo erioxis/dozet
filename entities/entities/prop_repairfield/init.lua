@@ -171,7 +171,6 @@ function ENT:Think()
 		if healed then
 			hitent:EmitSound("npc/dog/dog_servo"..math.random(7, 8)..".wav", 70, math.random(100, 105))
 			gamemode.Call("PlayerRepairedObject", self:GetObjectOwner(), hitent, healed, self)
-
 			local effectdata = EffectData()
 				effectdata:SetOrigin(hitent:GetPos())
 				effectdata:SetNormal((self:GetPos() - hitent:GetPos()):GetNormalized())

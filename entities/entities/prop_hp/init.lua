@@ -5,6 +5,7 @@ ENT.DieTime = 0
 function ENT:Initialize()
 	self.ObjHealth = 25
 	self.NextUse = CurTime() + 0.4
+
 	if self.DieTime == 0 then
 		self.DieTime = CurTime() + GAMEMODE.GibLifeTime
 	end
@@ -32,8 +33,8 @@ function ENT:Think()
 	end
 end
 function ENT:Use(activator, caller)
-	if self:GetOwner() == activator and self.NextUse <= CurTime() then
-		activator:SetHealth(math.Clamp(activator:Health() + self:GetHP(),1,activator:GetMaxHealth()))
+	if (self:GetOwner() and self:GetOwner() == activator or !self:GetOwner():IsValid()) and self.NextUse <= CurTime() then
+		activator:SetHealth(math.max(activator:Health() + self:GetHP(),1))
 		if self:GetBA() >= 1 then
 			activator:SetBloodArmor(activator:GetBloodArmor() + self:GetBA())
 		end
@@ -41,8 +42,8 @@ function ENT:Use(activator, caller)
 	end
 end
 function ENT:StartTouch(ent)
-	if self:GetOwner() == ent and self.NextUse <= CurTime() then
-		ent:SetHealth(math.Clamp(ent:Health() + self:GetHP(),1,ent:GetMaxHealth()))
+	if (self:GetOwner() and self:GetOwner() == ent or !self:GetOwner():IsValid()) and self.NextUse <= CurTime() then
+		ent:SetHealth(math.max(ent:Health() + self:GetHP(),1))
 		if self:GetBA() >= 1 then
 			ent:SetBloodArmor(ent:GetBloodArmor() + self:GetBA())
 		end

@@ -13,7 +13,7 @@ function ENT:Draw()
 	if MySelf:IsValid() then
 		pos = self:GetPos()
 		eyepos = EyePos()
-		drawinfo = self:GetOwner() == MySelf
+		drawinfo = self:GetOwner() and self:GetOwner() == MySelf or !self:GetOwner():IsValid()
 	end
 
 

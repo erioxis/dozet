@@ -31,6 +31,7 @@
 	util.AddNetworkString("zs_lifestatshd")
 	util.AddNetworkString("zs_lifestatsbe")
 	util.AddNetworkString("zs_boss_spawned")
+	util.AddNetworkString("zs_champion_all")
 	util.AddNetworkString("zs_champion")
 	util.AddNetworkString("zs_boss_spawned_merge")
 	util.AddNetworkString("zs_boss_slain")

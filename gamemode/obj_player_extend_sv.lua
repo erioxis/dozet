@@ -931,7 +931,7 @@ function meta:ProcessDamage(dmginfo)
 		droped.DieTime = CurTime() + 4.5
 		timer.Simple(0.1, function() droped:GetPhysicsObject():SetVelocity(VectorRand(-500,500)) end )
 	end
-	if self.Purgatory and (self.NextPRG or 1) <= CurTime() and (dmginfo:GetDamage() >= 4 or (takedbl or 1) >= 10) then
+	if self.Purgatory and (self.NextPRG or 1) <= CurTime() and (dmginfo:GetDamage() >= 4 or (takedbl or 1) >= 10) and !self:IsSkillActive(SKILL_GIER_II) then
 		self.NextPRG = CurTime() + 0.3
 		self:GiveStatus("portal",1)
 		for i=1,3 do
@@ -1967,11 +1967,15 @@ function meta:DoHulls(classid, teamid)
 			if self:Alive() then
 				self:SetMoveType(classtab.MoveType or MOVETYPE_WALK)
 			end
-			if math.random(1,25) == 1 then
+			if math.random(1,25) == 1 and self:IsValid() then
 				self:SetChampion(math.random(1,9))
 				net.Start("zs_champion")
 					net.WriteUInt(classid, 8)
 				net.Send(self)
+				net.Start("zs_champion_all")
+				net.WriteEntity(self)
+				net.WriteUInt(classid, 8)
+				net.Broadcast()
 			end
 			
 			local scale = (self:IsChampion() and (self:GetChampion() == CHAMP_SMOL and 0.75 or self:GetChampion() == CHAMP_BIG and 1.3 or 1.1) or 1)

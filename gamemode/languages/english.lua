@@ -1302,6 +1302,7 @@ LANGUAGE.you_are_x									= "You are %s!"
 LANGUAGE.x_has_risen_as_y							= "%s has risen as %s!!"
 LANGUAGE.x_has_risen								= "A boss zombie has risen!"
 LANGUAGE.you_champion = "You're a champion!"
+LANGUAGE.s_champion = "%s Become a champion!"
 
 LANGUAGE.ach_trans							= "[ZS] Player %s (%s) earned achievement %s (%s)"
 
@@ -2479,6 +2480,10 @@ LANGUAGE.skill_madness = "Madness"
 LANGUAGE.skill_madness_d1 = "+15% blood armor damage absorption\n"
 LANGUAGE.skill_madness_d2 = "Screen in madness!!!"
 
+LANGUAGE.skill_gir = "Gier II"
+LANGUAGE.skill_gir_d1 = "On dash give debuff on 2 secs(-50% speed)\n"
+LANGUAGE.skill_gir_d2 = "You can dash on shift!\n"
+
 -- The help file... Quite big! I wouldn't blame you if you didn't translate this part.
 LANGUAGE.help_cat_introduction						= "Introduction"
 LANGUAGE.help_cat_survival							= "Survival"
@@ -3146,4 +3151,5 @@ LANGUAGE.ahint_7 = "Red aura in zombies - sign of one-shot!"
 LANGUAGE.ahint_8 = "Curses and sins is not for you..."
 LANGUAGE.ahint_9 = "LORE MOMENT"
 LANGUAGE.ahint_10 = "Than bigger then more damage and reverse!"
+  LANGUAGE.ahint_11 = "Purgatory + Gier II is good synergy!"
 LANGUAGE.ahint = "HINT!"

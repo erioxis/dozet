@@ -21,6 +21,11 @@ function ENT:Think()
 	if CurTime() >= self.NextHurt then 
 		for _, pl in pairs(ents.FindInSphere(self:GetPos(), 68 * self:GetModelScale() )) do
 			if pl:IsPlayer() and owner:IsValidLivingHuman() and pl:Team() != owner:Team() and pl:Alive() or pl == owner then
+				if pl.ShadeShield then
+					owner:TakeDamage(owner:Health()*0.2)
+					self:Remove()
+					return
+				end
 				pl:TakeSpecialDamage(self.HurtTick, DMG_SHOCK, owner, self, self:GetPos(), self:GetPos())
 				self.TotalHurt = self.TotalHurt - self.HurtTick
 			end
