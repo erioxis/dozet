@@ -213,8 +213,55 @@ GM.FogEnd = 8000
 GM.FogRed = 30
 GM.FogGreen = 30
 GM.FogBlue = 30
+local function GiveP(pl, p)
+	net.Start("zs_add_p") net.WriteInt(p,12) net.WriteEntity(pl) net.SendToServer()
+end
+function GM:GivePoints(pl)
+	if MySelf:Team() ~= TEAM_HUMAN then return end
+	surface.PlaySound("buttons/button15.wav")
+	local lp = MySelf
+    local menu = DermaMenu(true, self)
+    if pl:Team() == TEAM_HUMAN and lp:GetPoints() >= 20 then
+        menu:AddOption(translate.Format("add_x_points", 20), function() GiveP(pl,20) end) -- 20
+		if lp:GetPoints() >= 40 then
+			menu:AddOption(translate.Format("add_x_points", 40), function() GiveP(pl,40)  end)-- 40
+		end
+		if lp:GetPoints() >= 500 then
+			menu:AddOption(translate.Format("add_x_points", 500), function() GiveP(pl,500)  end)--1000
+		end
+		if lp:GetPoints() >= 1500 then
+			menu:AddOption(translate.Format("add_x_points", 1500), function() GiveP(pl,1500) end) -- 3000
+		end
+	else
+	--	menu:Close()
+		--return
+	end
+    menu:Open()
+end
 
 function GM:ClickedPlayerButton(pl, button)
+	surface.PlaySound("buttons/button15.wav")
+
+    local menu = DermaMenu(true, self)
+    menu:AddOption(translate.Format("tab_name", pl:GetName()), function() end)
+    if not pl:IsBot() then
+        menu:AddOption(translate.Get("tab_steam"), function() pl:ShowProfile() end)
+    end
+    if pl:Team() == TEAM_HUMAN and pl ~= MySelf then
+        menu:AddOption(translate.Format("tab_points", pl:GetPoints()), function() timer.Simple(0, function() self:GivePoints(pl) end) end)
+    else
+        if MySelf:Team() == TEAM_UNDEAD then
+            menu:AddOption(translate.Format("tab_zclass", translate.Get(pl:GetZombieClassTable().TranslationName)), function() end)
+        end
+    end
+    menu:AddOption(translate.Format("tab_xp", pl:GetZSXP(), self:XPForLevel(pl:GetZSLevel() + 1), self.MaxXP), function() end)
+    menu:AddOption(translate.Format("tab_level", pl:GetZSLevel()), function() end)
+    menu:AddOption(translate.Format("tab_remort", pl:GetZSRemortLevel()), function() end)
+	if self:IsSpecialPerson(pl) then
+		menu:AddOption(self:IsSpecialPerson(pl, nil,true), function() end)
+	end
+
+    menu:Open()
 end
 
 function GM:ClickedEndBoardPlayerButton(pl, button)

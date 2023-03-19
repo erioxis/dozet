@@ -60,7 +60,7 @@ if SERVER then
 		if dmginfo:GetDamage() >= pl:Health() and !pl.DeadZombied then
 			pl.DeadZombied = true 
 			pl.DeadXD = true
-			timer.Simple(4.5, function() pl.DeadXD = nil end)
+			timer.Simple(1.5, function() pl.DeadXD = nil end)
 		end
 		if pl.DeadXD then
 			dmginfo:SetDamage(0)

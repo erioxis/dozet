@@ -21,7 +21,7 @@ function ENT:PlayerSet(pPlayer, bExists)
 				pPlayer:DrawWorldModel( false )
 				pPlayer:DrawShadow( false )
 				pPlayer:Fire( "alpha", 0, 0 )
-				if !pPlayer:GetMaterial() == "models/effects/vol_light001" then 
+				if pPlayer:GetMaterial() ~= "models/effects/vol_light001" then 
 					pPlayer:SetMaterial( "models/effects/vol_light001" )
 				else
 					pPlayer:SetMaterial( "" )

@@ -31,6 +31,13 @@ function meta:ProcessDamage(dmginfo)
 		self:GiveAchievementProgress("tanked", math.Round((dmginfo:GetDamage() or 1)))
 		self:SetProgress(CurTime() + 0.97, "parasite_prog")
 	end
+	if self:IsValidLivingZombie() and self:GetZombieClassTable().Stoney and self:GetActiveWeapon() and self:GetActiveWeapon().IsSwinging and !self:GetActiveWeapon():IsSwinging() then
+		dmginfo:SetDamage(0)
+		if attacker:IsPlayer() then
+			GAMEMODE:BlockFloater(attacker, self, dmginfo:GetDamagePosition())
+		end
+		return
+	end
 
 	if attacker.AttackerForward and attacker.AttackerForward:IsValid() then
 		dmginfo:SetAttacker(attacker.AttackerForward)
@@ -468,6 +475,11 @@ function meta:ProcessDamage(dmginfo)
 		if self:IsSkillActive(SKILL_TRUEBLOCK) and self:GetActiveWeapon().ParryTiming then 
            dmginfo:SetDamage(0)
 			self:EmitSound("npc/strider/fire.wav", 120, 40)
+
+			if attacker.IdealHit then
+				attacker:TakeSpecialDamage(1000,DMG_DIRECT,self,self:GetActiveWeapon())
+				self:GiveAchievementProgress("ideal_p",1)
+			end
 	    elseif self:IsSkillActive(SKILL_TRUEBLOCK) and not self:GetActiveWeapon().ParryTiming then
 			self:EmitSound("npc/turret_floor/active.wav", 120, 40)
 		end
@@ -1109,9 +1121,6 @@ function meta:SetWasHitInHead()
 	self.m_LastHitInHead = CurTime() + 0.2
 end
 
-function meta:SetPoints(points)
-	self:SetDTInt(1, points)
-end
 
 
 function meta:SetBloodArmor(armor)

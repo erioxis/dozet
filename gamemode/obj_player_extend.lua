@@ -345,6 +345,9 @@ end
 function meta:GetPoints()
 	return self:GetDTInt(1)
 end
+function meta:SetPoints(points)
+	self:SetDTInt(1, points)
+end
 function meta:GetMScore()
 	return self:GetNWInt('metascore', metascore)	
 end
@@ -759,6 +762,9 @@ function meta:ResetSpeed(noset, health)
 		if self:GetZombieClassTable().SpeedUp and self.GetSpeedUpTimer and self.GetSpeedUpTimer >= CurTime() then
 			speed = speed * (self.GetSpeedUpTimer/CurTime())
 			speed = speed * 1.2
+		end
+		if self:GetZombieClassTable().Stoney then
+			speed = speed * (self:GetActiveWeapon() and self:GetActiveWeapon().IsSwinging and self:GetActiveWeapon():IsSwinging() and 5.5 or 1)
 		end
 		if self:GetChampion() == CHAMP_YELLOW then
 			speed = speed * 1.5

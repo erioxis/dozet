@@ -288,9 +288,14 @@ function GM:InventoryAddGridItem( item, category )
 		end
 		itempan.DoClick = ItemPanelDoClick
 		itempan.Category = category
+	--itempan.Name = itempan.SWEP.PrintName or "AAA"
 
 		grid:AddItem( itempan )
 		grid:SortByMember( "Category" )
+		grid:SortByMember( "Item" )
+		--for k, v in SortedPairs(grid:GetItems()) do
+			--grid:
+		--end
 		--if category == INVCAT_CONSUMABLES then
 			--itempan:SetTooltip("da")
 		--end

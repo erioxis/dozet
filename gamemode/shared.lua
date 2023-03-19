@@ -5,7 +5,7 @@ GM.Website	=	"https://github.com/erioxis/dozet"
 
 -- No, adding a gun doesn't make your name worth being here.
 GM.Credits = {
-	{"Version", "", "7.3.5"}, -- Привет.
+	{"Version", "", "7.4.3"}, -- Привет.
 	{"Season of ", "zombie buffs and code optimisation", "XD"},
 	{"erioxis", "Phantom coder", "dead"},
 	{"Nullted", "", "RU-ENG Translation"},
@@ -898,7 +898,7 @@ function GM:PlayerNoClip(pl, on)
 	return false
 end
 
-function GM:IsSpecialPerson(pl, image)
+function GM:IsSpecialPerson(pl, image, returns)
 	local img, tooltip
 	local trs = translate.Get
 
@@ -939,9 +939,11 @@ function GM:IsSpecialPerson(pl, image)
 		img = "noxiousnet/noxicon.png"
 		tooltip = trs("vip_sp")
 	end
-
+	if returns then
+		return tooltip
+	end
 	if img then
-		if CLIENT then
+		if CLIENT and image then
 			image:SetImage(img)
 			image:SetTooltip(tooltip)
 		end

@@ -11,6 +11,7 @@ ENT.NextEmit = 0
 	--function ENT:OnRemove()
 	--	self:RemovePACPart(outfit)
 	--end
+	
 function ENT:Draw()
 	self:DrawModel()
 
@@ -36,4 +37,7 @@ function ENT:Draw()
 
 		emitter:Finish() emitter = nil collectgarbage("step", 64)
 	end
+end
+function ENT:Initialize()
+	GAMEMODE:TopNotify(COLOR_GREEN,{killicon = "weapon_zs_arsenalcrate"},translate.Get("gift_s"))
 end

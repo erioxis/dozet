@@ -20,6 +20,12 @@ GM.Achievements["daily_hehe"] = {
     Goal = 31,
     Reward = 150000
 }
+GM.Achievements["ideal_p"] = {
+    Name = translate("challenge_parry"),
+    Desc = translate("challenge_parry_d"),
+    Goal = 250,
+    Reward = 35000
+}
 GM.Achievements["haha_lox"] = {
     Name = translate("challenge_l_o_x"),
     Desc = translate("challenge_l_o_x_d"),

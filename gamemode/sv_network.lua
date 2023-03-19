@@ -24,6 +24,7 @@
 	util.AddNetworkString("zs_playerredeemed")
 	util.AddNetworkString("zs_dohulls")
 	util.AddNetworkString("zs_penalty")
+	util.AddNetworkString("zs_add_p")
 	util.AddNetworkString("zs_nextresupplyuse")
 	util.AddNetworkString("zs_stowagecaches")
 	util.AddNetworkString("zs_lifestats")

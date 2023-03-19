@@ -649,7 +649,7 @@ function GM:InitPostEntity()
 	local v = self.Credits[1]
 	if GetConVar("hostname"):GetString() ~= "Дозет["..v[3]..v[2].."|ДОСТИЖЕНИЯ|СКИЛЛЫ]" then
 
-		RunConsoleCommand("hostname", "Дозет["..v[3]..v[2].."|ДОСТИЖЕНИЯ|СКИЛЛЫ]")
+		RunConsoleCommand("hostname", "Дозет["..v[3]..v[2].."|ДОСТИЖЕНИЯ|ИВЕНТ!]")
 
 	end
 end
@@ -1641,9 +1641,9 @@ function GM:Think()
 
 		if self:GetEscapeStage() == ESCAPESTAGE_DEATH then
 			for _, pl in pairs(allplayers) do
-				if P_Team(pl) == TEAM_HUMAN and !pl.DeathUsed then
+				if P_Team(pl) == TEAM_HUMAN and (pl.DeathUsed or 1) <= CurTime() and pl:Alive() then
 					pl:GiveStatus("death",10)
-					pl.DeathUsed = true
+					pl.DeathUsed = CurTime() + 20
 				end
 			end
 		end
@@ -2749,7 +2749,7 @@ function GM:PlayerInitialSpawnRound(pl)
 	pl.Headshots = 0
 	pl.BrainsEaten = 0
 	pl.zKills = 0
-	pl.DeathUsed = false
+	pl.DeathUsed = CurTime()
 	pl.RespawnedTime = CurTime() + 5
 	if self.NoPhoenix[pl:UniqueID()] then
 		pl.RedeemedOnce = false
@@ -3426,6 +3426,9 @@ function GM:EntityTakeDamage(ent, dmginfo)
 	end
 	if attacker:IsPlayer() and attacker:IsChampion() then
 		dmginfo:ScaleDamage(1.5)
+	end
+	if attacker.DeadXD then
+		dmginfo:ScaleDamage(2)
 	end
 	if !ent:IsPlayer() and (attacker:IsPlayer() and attacker:Team() == TEAM_UNDEAD) then
 		dmginfo:ScaleDamage(1 + math.Clamp(GAMEMODE:GetBalance()/100,0,3))
@@ -5814,6 +5817,25 @@ net.Receive("zs_changeclass", function(len, sender)
 				sender:Kill()
 			end
 		end
+	end
+end)
+net.Receive("zs_add_p", function(len, sender)
+	local points = net.ReadInt(12)
+	local ent = net.ReadEntity()
+	if sender:GetPoints() < points then return end
+	if ent and ent:IsValid() then
+		ent:SetPoints(ent:GetPoints()+points)
+		sender:SetPoints(sender:GetPoints()-points)
+		if points >= 500 then
+			ent:CenterNotify(COLOR_GREEN,"!!!")
+			ent:CenterNotify(COLOR_RED,translate.ClientFormat(ent,"givedpoints_for",sender:Nick(),points))
+			ent:CenterNotify(COLOR_GREEN,"!!!")
+			ent:SendLua("surface.PlaySound(\"buttons/button10.wav\")")
+		else
+			ent:CenterNotify(COLOR_GREEN,translate.ClientFormat(ent,"givedpoints_for",sender:Nick(),points))
+		end
+		ent:PlayGiveAmmoSound()
+		sender:PlayGiveAmmoSound()
 	end
 end)
 

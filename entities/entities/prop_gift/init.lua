@@ -24,7 +24,6 @@ function ENT:Initialize()
 	self:SetCollisionGroup(COLLISION_GROUP_DEBRIS_TRIGGER)
 	self:SetTrigger(true)
 	self:SetColor(Color(238, 24, 24))
-	GAMEMODE:TopNotify(COLOR_GREEN,{killicon = "weapon_zs_arsenalcrate"},translate.Get("gift_s"))
 	local phys = self:GetPhysicsObject()
 	if phys:IsValid() then
 		phys:EnableMotion(true)
