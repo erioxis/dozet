@@ -36,6 +36,13 @@ function meta:ProcessDamage(dmginfo)
 		if attacker:IsPlayer() then
 			GAMEMODE:BlockFloater(attacker, self, dmginfo:GetDamagePosition())
 		end
+		local vel = self:GetEyeTrace().Normal * 1 + (-self:GetAngles():Forward()*90)
+		vel.z = 0
+		self:SetVelocity(vel)
+		if math.random(1,30) == 1 then
+			self:GetActiveWeapon():PrimaryAttack()
+		end
+		self.LastDMGType = dmgtype
 		return
 	end
 
@@ -64,6 +71,7 @@ function meta:ProcessDamage(dmginfo)
 				dmginfo:SetDamage(0)
 				net.Start("zs_damageblock")
 				net.Send(self)
+				return
 			end
 		end
 		if self.SpawnProtection then

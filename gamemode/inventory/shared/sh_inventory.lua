@@ -316,6 +316,9 @@ GM:AddInventoryItemData("cons_chaos",		trs("c_chaos"),			trs("c_chaos_d"),						
 		--print(trinket)
 	end
 end,5)
+GM:AddInventoryItemData("cons_dust",		trs("c_dust"),			trs("c_dust_d"),								"models/props_c17/trappropeller_lever.mdl", 1, nil, nil, function(pl) 
+	pl:GiveStatus("portal",10)
+end,2)
 GM:AddInventoryItemData("cons_pill_unk",		trs("c_pill"),			trs("c_pill_d"),								"models/props_c17/trappropeller_lever.mdl", 2, nil, nil, function(pl) 
 	if math.random(1,3) ~= 1 then
 		pl:TakeDamage(pl:Health()*0.25, pl, pl) 

@@ -5,7 +5,7 @@ GM.Website	=	"https://github.com/erioxis/dozet"
 
 -- No, adding a gun doesn't make your name worth being here.
 GM.Credits = {
-	{"Version", "", "7.4.3"}, -- Привет.
+	{"Version", "", "7.4.5"}, -- Привет.
 	{"Season of ", "zombie buffs and code optimisation", "XD"},
 	{"erioxis", "Phantom coder", "dead"},
 	{"Nullted", "", "RU-ENG Translation"},
@@ -1072,6 +1072,8 @@ function GM:DoAchievements()
 	self.Achievements["daily_post"].Desc = translate("challenge_daily_d"..num)
 	self.Achievements["daily_post"].Goal = tbl.Goal
 	self.Achievements["daily_post"].Daily = true
+	self.Achievements["oof"].Daily = true
+	self.Achievements["oof"].DailyCount = daily
 	self.Achievements["daily_post"].DailyCount = daily
 	self.Achievements["daily_post"].Reward = tbl.Reward
     --PrintTable(self.Achievements["daily"..(daily or 1)]) print("daily"..(daily or 1))

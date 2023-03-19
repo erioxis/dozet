@@ -127,13 +127,13 @@ function meta:TryAssembleItem(component, heldclass)
 
 	if heldwepiitype then
 		if not self:HasInventoryItem(heldclass) then
-			self:CenterNotify(COLOR_RED, "You don't have the item to craft this with.")
+			self:CenterNotify(COLOR_RED, translate.ClientGet(self, "inv_dont_have_s"))
 			self:SendLua("surface.PlaySound(\"buttons/button10.wav\")")
 			return
 		end
 	else
 		if not heldwep or not heldwep:IsValid() then
-			self:CenterNotify(COLOR_RED, "You don't have the weapon to craft this with.")
+			self:CenterNotify(COLOR_RED, translate.ClientGet(self, "inv_dont_have_w"))
 			self:SendLua("surface.PlaySound(\"buttons/button10.wav\")")
 			return
 		end

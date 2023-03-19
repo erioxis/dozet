@@ -242,7 +242,9 @@ function GM:TryHumanPickup(pl, entity)
 					newstatus:SetParent(pl)
 					newstatus:SetObject(entity)
 					newstatus:Spawn()
-					
+					if newstatus:GetObject():GetOwner() then
+						newstatus:GetObject():SetOwner(entity:GetOwner())
+					end
 				end
 			end
 		end
@@ -649,7 +651,7 @@ function GM:InitPostEntity()
 	local v = self.Credits[1]
 	if GetConVar("hostname"):GetString() ~= "Дозет["..v[3]..v[2].."|ДОСТИЖЕНИЯ|СКИЛЛЫ]" then
 
-		RunConsoleCommand("hostname", "Дозет["..v[3]..v[2].."|ДОСТИЖЕНИЯ|ИВЕНТ!]")
+		RunConsoleCommand("hostname", "Дозет["..v[3]..v[2].."|ДОСТИЖЕНИЯ|СКИЛЛЫ]")
 
 	end
 end
@@ -5826,6 +5828,7 @@ net.Receive("zs_add_p", function(len, sender)
 	if ent and ent:IsValid() then
 		ent:SetPoints(ent:GetPoints()+points)
 		sender:SetPoints(sender:GetPoints()-points)
+		sender:GiveAchievementProgress("oof",points)
 		if points >= 500 then
 			ent:CenterNotify(COLOR_GREEN,"!!!")
 			ent:CenterNotify(COLOR_RED,translate.ClientFormat(ent,"givedpoints_for",sender:Nick(),points))

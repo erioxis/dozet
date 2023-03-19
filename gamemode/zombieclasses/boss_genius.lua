@@ -9,7 +9,7 @@ CLASS.KnockbackScale = 0
 
 CLASS.Health = 1300
 CLASS.Speed = 160
-
+CLASS.CanPickupProp = true
 if SERVER then
 function CLASS:ProcessDamage(pl, dmginfo)
 	if dmginfo:GetInflictor().IsMelee then

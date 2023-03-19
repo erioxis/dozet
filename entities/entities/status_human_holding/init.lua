@@ -68,7 +68,9 @@ function ENT:Initialize()
 			objectphys:EnableGravity(false)
 			objectphys:SetMass(50)
 			
-
+			if object:GetOwner() then
+				self.OldOwner = object:GetOwner()
+			end
 			object:SetOwner(owner)
 			object:SetCollisionGroup(COLLISION_GROUP_WEAPON)
 			object:SetRenderMode(RENDERMODE_TRANSALPHA)
@@ -172,8 +174,7 @@ function ENT:OnRemove()
 					child:CollisionRulesChanged()
 				end
 			end
-
-			object:SetOwner(NULL)
+			object:SetOwner((self.OldOwner or NULL))
 			object:CollisionRulesChanged()
 		end
 

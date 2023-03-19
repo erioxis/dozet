@@ -27,6 +27,8 @@ local function DoAchievements()
 	GAMEMODE.Achievements["daily_post"].Goal = tbl.Goal
 	GAMEMODE.Achievements["daily_post"].Daily = true
 	GAMEMODE.Achievements["daily_post"].DailyCount = daily
+    GAMEMODE.Achievements["oof"].Daily = true
+	GAMEMODE.Achievements["oof"].DailyCount = daily
 	GAMEMODE.Achievements["daily_post"].Reward = tbl.Reward
     --PrintTable(self.Achievements["daily"..(daily or 1)]) print("daily"..(daily or 1))
 end

@@ -50,7 +50,7 @@ function ENT:Draw()
 		if myteam == TEAM_HUMAN or myteam == TEAM_SPECTATOR then
 			drawinfo = (not MySelf:KeyDown(IN_SPEED) or GAMEMODE.TraceTargetNoPlayers == self:GetParent()) and eyepos:DistToSqr(pos) <= 262144 and WorldVisible(eyepos, pos)
 		elseif myteam == TEAM_UNDEAD then
-			drawinfo = GAMEMODE.TraceTargetNoPlayers == self:GetParent()
+			drawinfo = false
 		end
 	end
 
@@ -95,6 +95,9 @@ function ENT:Draw()
 					end
 					--local item = GAMEMODE:GetInventoryItemType(itype)
 					draw.SimpleText((GAMEMODE.ZSInventoryItemData[itype].PrintName or translate.Get("ammo_")), "ZSHUDFontBig", x + 55, y - 150, COLOR_CYAN, TEXT_ALIGN_CENTER)
+					if self:GetOwner() and self:GetOwner():IsValid() and self:GetOwner():IsPlayer() then
+						draw.SimpleText(self:GetOwner():Nick(), "ZSHUDFont", x + 55, y - 200, COLOR_CYAN, TEXT_ALIGN_CENTER)
+					end
 		cam.End3D2D()
 
 		cam.IgnoreZ(false)

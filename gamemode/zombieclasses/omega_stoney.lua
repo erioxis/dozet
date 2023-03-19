@@ -1,21 +1,19 @@
 CLASS.Base = "freshdead"
 
-CLASS.Name = "Stoney"
-CLASS.TranslationName = "class_stoney"
-CLASS.Description = "description_stoney"
-CLASS.Help = "controls_stoney"
+CLASS.Name = "Omega Stoney"
+CLASS.TranslationName = "class_o_stoney"
+CLASS.Description = "description_o_stoney"
+CLASS.Help = "controls_o_stoney"
 
-CLASS.Wave = 6 / 12
-CLASS.Speed = 40
-CLASS.Health = 425
-CLASS.Points = CLASS.Health/GM.HumanoidZombiePointRatio
+CLASS.Boss = true
+CLASS.Speed = 55
+CLASS.Health = 2000
+CLASS.Points = 35
 
-CLASS.Model = Model("models/player/zombie_classic_hbfix.mdl")
+CLASS.Model = Model("models/player/kleiner.mdl")
 CLASS.Stoney = true
-CLASS.SWEP = "weapon_zs_zombie_s"
-CLASS.Original = false
-CLASS.Variations = {"Zombie"}
-
+CLASS.SWEP = "weapon_zs_megamasher_z"
+local bit_band = bit.band
 if SERVER then
 	function CLASS:AltUse(pl)
 		pl:StartFeignDeath()
@@ -25,7 +23,7 @@ if SERVER then
 	end
 	function CLASS:ProcessDamage(pl, dmginfo)
 		if dmginfo:GetAttacker():IsPlayer() then
-			if pl:GetActiveWeapon() and pl:GetActiveWeapon().IsSwinging and !pl:GetActiveWeapon():IsSwinging() then
+			if bit.band(dmginfo:GetDamageType(),(pl.LastDMGType or DMG_BULLET)) ~= 0 then
 				dmginfo:SetDamage(0)
 			end
 		end
@@ -35,12 +33,12 @@ end
 if not CLIENT then return end
 local matSkin = Material("models/debug/debugwhite")
 CLASS.Icon = "zombiesurvival/killicons/zombie"
-CLASS.IconColor = Color(175, 73, 26)
+CLASS.IconColor = Color(110, 110, 110)
 
 function CLASS:PrePlayerDraw(pl)
 	if pl:GetActiveWeapon() and pl:GetActiveWeapon().IsSwinging and !pl:GetActiveWeapon():IsSwinging() then
 		
-		render.SetColorModulation(0.431, 0.431, 0.431)
+		render.SetColorModulation(0.275, 0.275, 0.275)
 		render.ModelMaterialOverride(matSkin)
 	end
 end
