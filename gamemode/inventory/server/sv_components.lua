@@ -16,6 +16,7 @@ GM.GetActiveTrinkets = {
 	"cons_necronomicon",
 	"cons_chaos",
 	"cons_d4",
+	"cons_d1",
 	"cons_dust",
 	"cons_friendship",
 	"cons_gausscard",

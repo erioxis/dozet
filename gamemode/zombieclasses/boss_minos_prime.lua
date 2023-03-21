@@ -64,6 +64,9 @@ if SERVER then
 		pl:CreateAmbience("minosprime_amb")
 		pl.HealthMax = pl:Health() * 0.5
 		pl.OneTime = true
+		if math.random(1,100) == 20 then
+			timer.Simple(0.5, function() pl:EmitSound("zombiesurvival/mp_intro2.wav") end)
+		end
 	end
 end
 
@@ -74,8 +77,13 @@ end
 
 function CLASS:PlayDeathSound(pl)
 	--pl:EmitSound("zombiesurvival/mp_dead.wav", 100, 100)
-	MySelf:EmitSound("zombiesurvival/mp_dead.wav", 100, 100)
-
+	local r = math.random(100)
+	if r == 1 then
+		MySelf:EmitSound("zombiesurvival/mp_outro.wav")
+		timer.Simple(15, function() 	MySelf:EmitSound("zombiesurvival/mp_dead.wav", 100, 100) end)
+	else
+		MySelf:EmitSound("zombiesurvival/mp_dead.wav", 100, 100)
+	end
 	return true
 end
 

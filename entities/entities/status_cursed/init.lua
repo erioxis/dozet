@@ -15,6 +15,7 @@ function ENT:Think()
 	local cursed = self:GetOwner():GetStatus("cursed")
 	local holly = self:GetOwner():GetStatus("holly")
 	local owner = self:GetOwner()
+	if (owner.CurseMultiplier or 0) <= -3 then owner:Kill() self:Remove() return end
 	if (cursed.DieTime >= CurTime() + 1200) then owner:Kill() self:Remove() end
 	if not owner:HasTrinket("a_flower") then
 		if not (holly) then

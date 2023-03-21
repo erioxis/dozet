@@ -156,6 +156,7 @@ SWEP.ConeMax = 6
 SWEP.ConeMin = 2.4
 
 SWEP.WalkSpeed = SPEED_SLOWEST
+SWEP.ControlWeapon = "weapon_zs_manhackcontrol"
 
 SWEP.Tier = 4
 SWEP.MaxStock = 2
@@ -179,6 +180,37 @@ function SWEP:PrimaryAttack()
 	self:TakeAmmo()
 	self:ShootBullets(self.Primary.Damage, self.Primary.NumShots, self:GetCone())
 	self.IdleAnimation = CurTime() + self:SequenceDuration()
+end
+function SWEP:SecondaryAttack()
+	if !self:CanSecondaryAttack() or CLIENT then return end
+	local owner = self:GetOwner()
+	local ent = ents.Create("prop_manhack")
+	if ent:IsValid() then
+		ent:SetPos(owner:GetShootPos())
+		ent:Spawn()
+		ent:SetObjectOwner(owner)
+		ent:SetupPlayerSkills()
+
+		local stored = owner:PopPackedItem(ent:GetClass())
+		if stored then
+			ent:SetObjectHealth(stored[1])
+		end
+
+		ent:EmitSound("WeaponFrag.Throw")
+		local phys = ent:GetPhysicsObject()
+		if phys:IsValid() then
+			phys:Wake()
+			phys:SetVelocityInstantaneous(self:GetOwner():GetAimVector() * 200)
+		end
+
+		if not owner:HasWeapon(self.ControlWeapon) then
+			owner:Give(self.ControlWeapon)
+		end
+		owner:SelectWeapon(self.ControlWeapon)
+
+		owner:StripWeapon(self:GetClass())
+	end
+	self:Remove()
 end
 
 function SWEP:EmitFireSound()

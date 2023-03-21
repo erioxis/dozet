@@ -73,16 +73,45 @@ end
 function ENT:SetObjectHealth(health)
 	self:SetDTFloat(3, health)
 	if health <= 0 and not self.Destroyed then
+
 		self.Destroyed = true
 
 		local pos = self:LocalToWorld(self:OBBCenter())
+
+		local owner = self:GetObjectOwner()
+		if owner and owner:IsValidLivingHuman() and owner:IsSkillActive(SKILL_DRONE_IN_T) then
+			for _, ent in pairs(ents.FindInSphere(self:GetPos(), 128)) do
+				if ent:IsValid() and ent:IsPlayer() and ent ~= owner and ent:IsValidLivingZombie() then
+					ent:TakeDamage(250, owner, self)
+				elseif ent:IsValid() and ent:IsPlayer() and ent == owner then
+					ent:Kill()
+				end
+			end
+			local ent = ents.Create("prop_drone")
+			if ent:IsValid() then
+				ent:SetPos(self:GetPos()+Vector(0,0,50))
+				ent:Spawn()
+				ent:SetObjectOwner(owner)
+				ent:SetupPlayerSkills()
+	
+
+				local phys = ent:GetPhysicsObject()
+				if phys:IsValid() then
+					phys:Wake()
+				end
+	
+				if not owner:HasWeapon("weapon_zs_dronecontrol") then
+					owner:Give("weapon_zs_dronecontrol")
+				end
+			end
+		end
 
 		local effectdata = EffectData()
 			effectdata:SetOrigin(pos)
 		util.Effect("Explosion", effectdata, true, true)
 
-		if self:GetObjectOwner():IsValidLivingHuman() then
-			self:GetObjectOwner():SendDeployableLostMessage(self)
+		if owner:IsValidLivingHuman() then
+			owner:SendDeployableLostMessage(self)
 		end
 
 		local amount = math.ceil(self:GetAmmo() * 0.5)

@@ -465,7 +465,7 @@ function SWEP:MeleeHitEntity(tr, hitent, damagemultiplier)
 	if SERVER then
 		if hitent:IsPlayer() and hitent:GetActiveWeapon() and hitent:GetActiveWeapon().IsSwinging and hitent:GetActiveWeapon():IsSwinging() then
 			hitent.IdealHit = true 
-			timer.Create("Parry_a_"..hitent:Nick(),5,1,function() hitent.IdealHit = false end)
+			timer.Create("Parry_a_"..hitent:Nick(),5,1,function() if hitent:IsValid() then hitent.IdealHit = false end end)
 		end
 		if hitent:IsPlayer() and owner:IsSkillActive(SKILL_GLASSWEAPONS) then
 			damagemultiplier = damagemultiplier * 3.5

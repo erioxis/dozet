@@ -218,8 +218,14 @@ function ENT:PhysicsSimulate(phys, frametime)
 	end
 
 	phys:EnableGravity(false)
-	phys:SetAngleDragCoefficient(20000)
+	phys:SetAngleDragCoefficient(10000)
 	phys:SetVelocityInstantaneous(vel)
+
+	local diff = math.AngleDifference(eyeangles.yaw, phys:GetAngles().yaw)
+	local z = math.Clamp(diff, -32, 32) * frametime * 10
+	local curz = phys:GetAngleVelocity().z
+	z = z - curz * (frametime * math.min(1, math.abs(z - curz) ^ 2 * 0.02))
+	phys:AddAngleVelocity(Vector(0, 0, z))
 
 	self:SetPhysicsAttacker(owner)
 
@@ -305,7 +311,7 @@ function ENT:FireTurret(src, dir)
 	end
 end
 
-ENT.PhysDamageImmunity = 1
+ENT.PhysDamageImmunity = 0
 function ENT:Think()
 	if self.Destroyed then
 		if not self.CreatedDebris then

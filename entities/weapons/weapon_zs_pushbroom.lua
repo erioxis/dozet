@@ -49,7 +49,18 @@ SWEP.DismantleDiv = 2
 
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_FIRE_DELAY, -0.08, 1)
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_MELEE_RANGE, 3, 1)
-
+function SWEP:MeleeSwing()
+	local owner = self:GetOwner()
+	local tr = owner:CompensatedMeleeTrace(self.MeleeRange * (owner.MeleeRangeMul or 1), self.MeleeSize)
+	if tr.Hit then
+		local pos = owner:GetPos()
+		local trpos = tr.HitPos
+		if math.floor(trpos.z) == math.floor(pos.z) and math.random(1,100) == 1 then
+			owner:Say("Ы")
+		end
+	end
+	self.BaseClass.MeleeSwing(self)
+end
 function SWEP:PlaySwingSound()
 	self:EmitSound("weapons/iceaxe/iceaxe_swing1.wav", 80, math.Rand(60, 65))
 end

@@ -167,6 +167,43 @@ local function funcofvoid(pl, nouse)
 		net.WriteString(gived)
 	net.Send(pl)
 end
+local function funcofd1(pl, nouse)
+	local use = {}
+	for item,v in pairs(pl:GetInventoryItems()) do
+		if item ~= nouse and string.len(item) >= 7  then
+			table.insert(use, #use + 1,item)
+		end
+		
+	end
+	if #use <= 1 then return end
+	local toeat = table.Random(use)
+	local use2 = {}
+	for item,v in pairs(GAMEMODE.ZSInventoryItemData) do
+		if item ~= nouse and (GAMEMODE.ZSInventoryItemData[item].Tier or 1) == (GAMEMODE.ZSInventoryItemData[toeat].Tier or 1) and string.len(item) >= 7 then
+			table.insert(use2, #use2 + 1,item)
+		end
+	end
+	if #use2 <= 1 then return end
+	
+	local gived = table.Random(use2)
+	if table.HasValue(string.Explode("_",toeat), "curse") then
+		pl:AddInventoryItem(GAMEMODE.Curses[math.random(1,#GAMEMODE.Curses)])
+		net.Start("zs_invitem")
+			net.WriteString(toeat)
+		net.Send(pl)
+	elseif math.random(1,10) ~= 1 then
+		pl:AddInventoryItem(toeat)
+		net.Start("zs_invitem")
+		net.WriteString(toeat)
+	net.Send(pl)
+	else
+		pl:AddInventoryItem(gived)
+		net.Start("zs_invitem")
+		net.WriteString(gived)
+	net.Send(pl)
+	end
+
+end
 GM:AddInventoryItemData("cons_void",		trs("c_void"),			trs("c_void_d"),								"models/props_c17/trappropeller_lever.mdl", 3, nil, nil, function(pl) 
 	funcofvoid(pl, "cons_void")
 end,3)
@@ -253,6 +290,9 @@ GM:AddInventoryItemData("cons_d4",		"D4",			trs("c_d4_d"),								"models/props_
 		funcofvoid(pl, "cons_d4")
 	end
 end,12)
+GM:AddInventoryItemData("cons_d1",		"D1",			trs("c_d1_d"),								"models/props_c17/trappropeller_lever.mdl", 3, nil, nil, function(pl) 
+	funcofd1(pl, "cons_d1")
+end,4)
 GM:AddInventoryItemData("cons_gausscard",		trs("c_gausscard"),			trs("c_gausscard_d"),								"models/props_c17/trappropeller_lever.mdl", 3, nil, nil, function(pl) 
 	pl:Give("weapon_zs_gauss_card_r5")
 	timer.Simple(10, function() pl:StripWeapon("weapon_zs_gauss_card_r5") end)

@@ -473,6 +473,7 @@ SKILL_PARASITE = 445
 SKILL_AUTOAIM = 446
 SKILL_KEEPER_HEART = 447
 SKILL_GIER_II = 448
+SKILL_DRONE_IN_T = 449
 
 
 
@@ -970,7 +971,9 @@ GM:AddSkill(SKILL_U_BLASTTURRET, translate.Get("skill_u_blast"), GOOD..translate
 GM:AddSkill(SKILL_TURRETLOCK, translate.Get("skill_blockturret"), translate.Get("skill_blockturret_d1")..BAD..translate.Get("skill_blockturret_d2"),
 																-6,			-2,					{}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_TWINVOLLEY, translate.Get("skill_t_vol"), GOOD..translate.Get("skill_t_vol_d1")..BAD..translate.Get("skill_t_vol_d2")..BAD..translate.Get("skill_t_vol_d3"),
-																-10,		-5,					{}, TREE_BUILDINGTREE)
+																-10,		-5,					{SKILL_DRONE_IN_T}, TREE_BUILDINGTREE)
+GM:AddSkill(SKILL_DRONE_IN_T, translate.Get("skill_drone_t"), GOOD..translate.Get("skill_drone_t_d1")..BAD..translate.Get("skill_drone_t_d2"),
+																-11,		-4,					{}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_TURRETOVERLOAD, translate.Get("skill_t_over"), GOOD..translate.Get("skill_t_over_d1")..BAD..translate.Get("skill_t_over_d2"),
 																-8,			-2,					{SKILL_INSTRUMENTS}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_U_DRONE, translate.Get("skill_u_pulse_drone"), GOOD..translate.Get("skill_u_pulse_d1"),
@@ -2434,7 +2437,7 @@ GM:SetSkillModifierFunction(SKILLMOD_FIRE_DAMAGE_TAKEN_MUL, function(pl, amount)
 	pl.FireDamageTakenMul = math.Clamp(amount + 1.0, 0.0, 1000.0)
 end)
 GM:SetSkillModifierFunction(SKILLMOD_CURSEM, function(pl, amount)
-	pl.CurseMultiplier = math.Clamp(amount + 1.0, 0.0, 1000.0)
+	pl.CurseMultiplier = math.Clamp(amount + 1.0, -10.0, 1000.0)
 end)
 
 GM:SetSkillModifierFunction(SKILLMOD_PROP_CARRY_CAPACITY_MUL, function(pl, amount)

@@ -659,14 +659,21 @@ end
 function GM:SetupProps()
 	for _, d in pairs(ents.FindByClass("prop_dynamic*")) do
 		if d:IsValid() then
-			convert = ents.Create("prop_physics")
-			pos = d:GetPos()
+			local convert = ents.Create("prop_physics")
+			local pos = d:GetPos()
 			convert:SetPos(pos)
 			convert:SetAngles(d:GetAngles())
 			convert:SetMaterial(d:GetMaterial())
 			convert:SetModel(d:GetModel())
 			convert:SetSkin(d:GetSkin() or 0)
-			--convert:SetKeyValue( convert:GetKeyValues())
+			convert:SetParent(d:GetParent(), d:GetParentAttachment())
+			convert:SetColor(d:GetColor())
+		--	convert:SetAnimation()
+			--if d:GetKeyValues() then
+				--for k,v in pairs(d:GetKeyValues()) do
+				--	convert:SetKeyValue(k,tostring(v))
+				--end
+			--end
 			convert:Spawn()
 			d:Remove()
 		end

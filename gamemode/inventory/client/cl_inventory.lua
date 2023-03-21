@@ -292,7 +292,7 @@ function GM:InventoryAddGridItem( item, category )
 
 		grid:AddItem( itempan )
 		grid:SortByMember( "Category" )
-		grid:SortByMember( "Item" )
+		--grid:SortByMember( "Item" )
 		--for k, v in SortedPairs(grid:GetItems()) do
 			--grid:
 		--end

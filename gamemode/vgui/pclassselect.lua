@@ -321,7 +321,6 @@ function PANEL:Think()
 
 	if enabled ~= self.LastEnabledState then
 		self.LastEnabledState = enabled
-
 		if enabled == 2 then
 			self.NameLabel:SetTextColor(COLOR_GREEN)
 			self.Image:SetImageColor(self.ClassTable.IconColor or color_white)
@@ -334,6 +333,9 @@ function PANEL:Think()
 			self.NameLabel:SetTextColor(COLOR_DARKRED)
 			self.Image:SetImageColor(COLOR_DARKRED)
 			self.Image:SetAlpha(170)
+		end
+		if self.ClassTable.Variations then
+			self.NameLabel:SetTextColor(COLOR_YELLOW)
 		end
 	end
 end
@@ -355,6 +357,9 @@ function PANEL:SetClassTable(classtable)
 	self.ClassTable = classtable
 
 	self.NameLabel:SetText(translate.Get(classtable.TranslationName))
+	if classtable.Variations then
+		self.NameLabel:SetTextColor(COLOR_YELLOW)
+	end
 	self.NameLabel:SizeToContents()
 
 	self:CreateDescLabels()

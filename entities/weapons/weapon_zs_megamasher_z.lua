@@ -31,8 +31,8 @@ SWEP.ViewModel = "models/weapons/v_sledgehammer/c_sledgehammer.mdl"
 SWEP.WorldModel = "models/weapons/w_crowbar.mdl"
 SWEP.UseHands = true
 
-SWEP.MeleeDamage = 69
-SWEP.MeleeRange = 89
+SWEP.MeleeDamage = 61
+SWEP.MeleeRange = 54
 SWEP.MeleeSize = 4
 SWEP.MeleeKnockBack = 420
 
@@ -44,7 +44,7 @@ SWEP.SwingOffset = Vector(0, -30, 0)
 SWEP.SwingTime = 0.8
 SWEP.SwingHoldType = "melee"
 
-SWEP.Tier = 5
+SWEP.Tier = 1
 
 SWEP.AllowQualityWeapons = false
 function SWEP:PrimaryAttack() 
@@ -54,6 +54,11 @@ end
 function SWEP:Swing()
 	self.BaseClass.Swing(self)
 	self:GetOwner():ResetSpeed()
+end
+function SWEP:OnMeleeHit(hitent, hitflesh, tr)
+	if IsFirstTimePredicted() and hitent and hitent:IsPlayer() then
+		hitent:GiveStatus("flimsy",6)
+	end
 end
 function SWEP:PlaySwingSound()
 	self:EmitSound("weapons/iceaxe/iceaxe_swing1.wav", 75, math.random(20, 25))

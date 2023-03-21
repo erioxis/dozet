@@ -618,10 +618,10 @@ function meta:ProcessDamage(dmginfo)
 					dmginfo:SetDamage(0)
 				end]]
 				if self:HasTrinket("ttimes") then
-					dmginfo:SetDamage(dmginfo:GetDamage() - 6)
+					dmginfo:SetDamage(dmginfo:GetDamage() - 3)
 				end
 				if self:IsSkillActive(SKILL_FOLGA) then
-					dmginfo:SetDamage(dmginfo:GetDamage() - 5)
+					dmginfo:SetDamage(dmginfo:GetDamage() - 1)
 				end
 				if self:HasTrinket("altsamsonsoul")  then
 					local rot = self:GetStatus("strengthdartboost")

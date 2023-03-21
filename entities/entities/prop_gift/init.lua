@@ -79,7 +79,6 @@ function ENT:Think()
 	if self.DieTime >= 0 and self.DieTime <= CurTime() then
 		self:Remove()
 	end
-	self:SetColor(Color(238, 24, 24))
 end
 
 
