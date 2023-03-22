@@ -23,9 +23,11 @@ local matWhite = Material("models/debug/debugwhite")
 function ENT:Draw()
 	render.ModelMaterialOverride(matWhite)
 	render.SuppressEngineLighting(true)
+	render.SetColorModulation(195/255,207/255,29/255)
 	self:DrawModel()
 	render.SuppressEngineLighting(false)
 	render.ModelMaterialOverride(nil)
+	render.SetColorModulation(1,1,1)
 
 	local pos = self:GetPos()
 
@@ -44,8 +46,10 @@ function ENT:Draw()
 		ang:Set(base_ang)
 		ang:RotateAroundAxis(ang:Right(), math.Rand(-30, 30))
 		ang:RotateAroundAxis(ang:Up(), math.Rand(-30, 30))
-
+	
 		local particle = emitter:Add("sprites/glow04_noz", pos)
+		--Color(195,207,29)
+		particle:SetColor(195,207,29)
 		particle:SetDieTime(2)
 		particle:SetVelocity(ang:Forward() * math.Rand(32, 64))
 		particle:SetAirResistance(24)

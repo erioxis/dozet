@@ -87,7 +87,10 @@ function ENT:SetObjectHealth(health)
 					ent:Kill()
 				end
 			end
-			local ent = ents.Create("prop_drone")
+			if owner:IsSkillActive(SKILL_EXPLOIT) and math.random(1,4) == 1 then
+				owner:Give("weapon_zs_gunturret")
+			end
+			local ent = ents.Create("prop_drone_exp")
 			if ent:IsValid() then
 				ent:SetPos(self:GetPos()+Vector(0,0,50))
 				ent:Spawn()

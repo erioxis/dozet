@@ -53,7 +53,13 @@ function ENT:SetObjectHealth(health)
 			ent:Fire("break", "", 0)
 			ent:Fire("kill", "", 0.1)
 		end
-
+		if owner:IsSkillActive(SKILL_EXPLOIT) and math.random(1,4) == 1 then
+			if math.random(1,5) ~= 1 then
+				owner:Give("weapon_zs_zapper")
+			else
+				owner:Give("weapon_zs_zapper_arc")
+			end
+		end
 		local pos = self:LocalToWorld(self:OBBCenter())
 
 		local effectdata = EffectData()

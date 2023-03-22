@@ -619,6 +619,8 @@ net.Receive("zs_playerredeemed", function(length)
 			GAMEMODE:CenterNotify(COLOR_CYAN, translate.Get("you_redeemed"))
 
 			util.WhiteOut(3)
+			pl.KnockedDown = nil
+			pl.KnockedDownD = nil
 		end
 	end
 end)

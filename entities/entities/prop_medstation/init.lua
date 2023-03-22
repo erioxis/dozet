@@ -38,7 +38,9 @@ function ENT:SetObjectHealth(health)
 		if self:GetObjectOwner():IsValidLivingHuman() then
 			self:GetObjectOwner():SendDeployableLostMessage(self)
 		end
-
+		if self:GetObjectOwner():IsSkillActive(SKILL_EXPLOIT) and math.random(1,4) == 1 then
+			self:GetObjectOwner():Give("weapon_zs_medstation")
+		end
 		local ent = ents.Create("prop_physics")
 		if ent:IsValid() then
 			ent:SetModel(self:GetModel())

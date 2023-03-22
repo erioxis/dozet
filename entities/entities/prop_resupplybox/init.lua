@@ -64,7 +64,13 @@ function ENT:SetObjectHealth(health)
 		if self:GetObjectOwner():IsValidLivingHuman() then
 			self:GetObjectOwner():SendDeployableLostMessage(self)
 		end
-
+		if self:GetObjectOwner():IsSkillActive(SKILL_EXPLOIT) and math.random(1,4) == 1 then
+			if math.random(1,3) ~= 1 then
+				self:GetObjectOwner():Give("weapon_zs_remantler")
+			else
+				self:GetObjectOwner():Give("weapon_zs_resupplybox")
+			end
+		end
 		local ent = ents.Create("prop_physics")
 		if ent:IsValid() then
 			ent:SetModel(self:GetModel())

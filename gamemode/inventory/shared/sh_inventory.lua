@@ -285,7 +285,19 @@ GM:AddInventoryItemData("cons_minos",		trs("c_minos"),			trs("c_minos_d"),						
 		end
 	end
 end,2)
-GM:AddInventoryItemData("cons_d4",		"D4",			trs("c_d4_d"),								"models/props_c17/trappropeller_lever.mdl", 3, nil, nil, function(pl) 
+GM:AddInventoryItemData("cons_d4",		"D4",			trs("c_d4_d"),								 {
+	["d4_p1"] = { type = "Model", model = "models/phxtended/trieq2x2x2solid.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(-2.435, 2.438, -4.36), angle = Angle(0, 0, 0), size = Vector(0.123, 0.123, 0.123), color = Color(13, 116, 0, 255), surpresslightning = true, material = "plastic/plasticwall001a", skin = 0, bodygroup = {} },
+	["d4_p1+"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(0.114, -4.167, -4.41), angle = Angle(0, 0, 0), size = Vector(0.223, 0.223, 0), color = Color(27, 51, 24, 255), surpresslightning = true, material = "plastic/plasticwall001a", skin = 0, bodygroup = {} },
+	["d4_p1++"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.37, 2.911, -2.547), angle = Angle(0, 0, 0), size = Vector(0.223, 0, 0.223), color = Color(27, 51, 24, 255), surpresslightning = true, material = "plastic/plasticwall001a", skin = 0, bodygroup = {} },
+	["d4_p1+++"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(-0.791, 2.61, 1.556), angle = Angle(0, 0, 0), size = Vector(0.223, 0, 0.223), color = Color(27, 51, 24, 255), surpresslightning = true, material = "plastic/plasticwall001a", skin = 0, bodygroup = {} },
+	["d4_p1++++"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(-2.881, -1.172, -0.716), angle = Angle(0, 0, 0), size = Vector(0, 0.323, 0.323), color = Color(27, 51, 24, 255), surpresslightning = true, material = "plastic/plasticwall001a", skin = 0, bodygroup = {} },
+	["d4_p1+++++"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4.389, -0.009, -4.41), angle = Angle(0, 0, 0), size = Vector(0.223, 0.223, 0), color = Color(27, 51, 24, 255), surpresslightning = true, material = "plastic/plasticwall001a", skin = 0, bodygroup = {} },
+	["d4_p1++++++"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(1.32, -4.983, -1.441), angle = Angle(0, 0, 0), size = Vector(0.223, 0.223, 0.223), color = Color(27, 51, 24, 255), surpresslightning = true, material = "plastic/plasticwall001a", skin = 0, bodygroup = {} },
+	["d4_p1+++++++"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(-0.087, -0.071, -4.577), angle = Angle(0, 0, 0), size = Vector(0.223, 0.223, 0), color = Color(27, 51, 24, 255), surpresslightning = true, material = "plastic/plasticwall001a", skin = 0, bodygroup = {} },
+	["d4_p1++++++++"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(0.785, -2.728, 2.274), angle = Angle(0, 0, 0), size = Vector(0.223, 0.223, 0.223), color = Color(27, 51, 24, 255), surpresslightning = true, material = "plastic/plasticwall001a", skin = 0, bodygroup = {} },
+	["d4_p1+++++++++"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(5.131, -1.581, -1.363), angle = Angle(0, 0, 0), size = Vector(0.223, 0.223, 0.223), color = Color(27, 51, 24, 255), surpresslightning = true, material = "plastic/plasticwall001a", skin = 0, bodygroup = {} },
+	["d4_p1++++++++++"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3.973, -1.118, 1.82), angle = Angle(0, 0, 0), size = Vector(0.223, 0.223, 0.223), color = Color(27, 51, 24, 255), surpresslightning = true, material = "plastic/plasticwall001a", skin = 0, bodygroup = {} }
+}, 3, nil, nil, function(pl) 
 	for i=1,10 do
 		funcofvoid(pl, "cons_d4")
 	end
@@ -1923,13 +1935,13 @@ trinket = GM:AddTrinket("Soul of Shitus", "lampsoul", false, nil, {
 	["black_core"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 2, 0), angle = Angle(0, 0, 0), size = Vector(0.349, 0.349, 0.349), color = Color(226, 226, 19, 100), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} }
 }, 4, "+30% Мили ренжа fdkosfdskffsk лампа\n +30% Melee range\n Q:4", nil, nil, "weapon_zs_soul")
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_RANGE_MUL, 0.30)
---[[trinket = GM:AddTrinket("Soul of botyara(leha)", "lehasoul", false, nil, {
+trinket = GM:AddTrinket("Soul of botyara(leha)", "lehasoul", false, nil, {
 	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 7.697, y = 7.697 }, color = Color(255, 255, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core_2+"] = { type = "Sprite", sprite = "effects/splashwake1", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 10, y = 10 }, color = Color(3, 26, 75), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 2, 0), angle = Angle(0, 0, 0), size = Vector(0.349, 0.349, 0.349), color = Color(226, 19, 19, 100), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} }
 }, 1, "Конец ВОЛНЫ НЕ ЛЕЧИТ,-10% скидки,+50% получаемого урона от кровотока\nEndwave don't heal,-10% Sale,+50% bleed damage\n Q:-1", nil, nil, "weapon_zs_soul")
 GM:AddSkillModifier(trinket, SKILLMOD_ARSENAL_DISCOUNT, 0.1)
-GM:AddSkillModifier(trinket, SKILLMOD_BLEED_DAMAGE_TAKEN_MUL, 0.5)]]
+GM:AddSkillModifier(trinket, SKILLMOD_BLEED_DAMAGE_TAKEN_MUL, 0.5)
 
 trinket, soul = GM:AddTrinket("Soul of Troy", "troyaksoul", false, nil, {
 	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 1.697, y = 1.697 }, color = Color(94, 94, 94), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},

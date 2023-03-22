@@ -334,7 +334,7 @@ function PANEL:Think()
 			self.Image:SetImageColor(COLOR_DARKRED)
 			self.Image:SetAlpha(170)
 		end
-		if self.ClassTable.Variations then
+		if self.ClassTable.Original then
 			self.NameLabel:SetTextColor(COLOR_YELLOW)
 		end
 	end
@@ -357,7 +357,7 @@ function PANEL:SetClassTable(classtable)
 	self.ClassTable = classtable
 
 	self.NameLabel:SetText(translate.Get(classtable.TranslationName))
-	if classtable.Variations then
+	if classtable.Original then
 		self.NameLabel:SetTextColor(COLOR_YELLOW)
 	end
 	self.NameLabel:SizeToContents()

@@ -9,7 +9,7 @@ CLASS.Boss = true
 CLASS.Speed = 55
 CLASS.Health = 2000
 CLASS.Points = 35
-
+CLASS.GigaTim = true
 CLASS.Model = Model("models/player/kleiner.mdl")
 CLASS.Stoney = true
 CLASS.SWEP = "weapon_zs_megamasher_z"

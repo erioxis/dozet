@@ -283,7 +283,13 @@ function ENT:Destroy()
 	if self:GetObjectOwner():IsValidLivingHuman() then
 		self:GetObjectOwner():SendDeployableLostMessage(self)
 	end
-
+	if self:GetObjectOwner():IsSkillActive(SKILL_EXPLOIT) and math.random(1,4) == 1 then
+		if math.random(1,10) ~= 1 then
+			self:GetObjectOwner():Give("weapon_zs_manhack")
+		else
+			self:GetObjectOwner():Give("weapon_zs_manhack_saw")
+		end
+	end
 	self:EmitSound("npc/manhack/gib.wav")
 
 	local effectdata = EffectData()

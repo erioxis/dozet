@@ -139,7 +139,6 @@ function ENT:Use(activator, caller)
 end
 
 function ENT:AltUse(activator, tr)
-	self:PackUp(activator)
 end
 
 function ENT:PhysicsCollide(data, phys)
@@ -148,13 +147,6 @@ function ENT:PhysicsCollide(data, phys)
 end
 
 function ENT:OnPackedUp(pl)
-	pl:GiveEmptyWeapon(self.SWEP)
-	pl:GiveAmmo(1, self.DeployableAmmo)
-
-	pl:PushPackedItem(self:GetClass(), self:GetObjectHealth())
-	pl:GiveAmmo(self:GetAmmo(), self.AmmoType)
-
-	self:Remove()
 end
 
 function ENT:PhysicsSimulate(phys, frametime)
@@ -248,13 +240,6 @@ function ENT:Destroy()
 	util.Effect("sparks", effectdata)
 
 	local owner = self:GetObjectOwner()
-	if owner:IsSkillActive(SKILL_EXPLOIT) and math.random(1,4) == 1 then
-		if math.random(1,5) ~= 1 then
-			owner:Give("weapon_zs_drone")
-		else
-			owner:Give("weapon_zs_drone_hauler")
-		end
-	end
 	if owner:IsValidLivingHuman() and owner:IsSkillActive(SKILL_LOADEDHULL) then
 		effectdata = EffectData()
 			effectdata:SetOrigin(pos)
@@ -303,14 +288,20 @@ function ENT:FireTurret(src, dir)
 	if self:GetNextFire() <= CurTime() then
 		local curammo = self:GetAmmo()
 		if curammo > 0 then
+			
+		local pos = self:LocalToWorld(self:OBBCenter())
 			local owner = self:GetObjectOwner()
-
-			self:SetNextFire(CurTime() + 0.15)
+			self:SetNextFire(CurTime() + 1.15)
 			self:SetAmmo(curammo - 1)
+				effectdata = EffectData()
+				effectdata:SetOrigin(pos)
+				effectdata:SetNormal(Vector(0, 0, -1))
+			util.Effect("decal_scorch", effectdata)
 
-			owner:LagCompensation(true)
-			self:FireBulletsLua(src, dir, 5, 1, 16.5 *  (owner.BulletMul or 1), owner, nil, "AR2Tracer", self.BulletCallback, nil, nil, self.GunRange, nil, self)
-			owner:LagCompensation(false)
+			self:EmitSound("npc/env_headcrabcanister/explosion.wav", 100, 100)
+			ParticleEffect("dusty_explosion_rockets", pos, angle_zero)
+
+			util.BlastDamagePlayer(self, owner, pos, 128, 225, DMG_ALWAYSGIB)
 		else
 			self:SetNextFire(CurTime() + 2)
 			self:EmitSound("npc/turret_floor/die.wav")
@@ -324,9 +315,6 @@ function ENT:Think()
 		if not self.CreatedDebris then
 			self.CreatedDebris = true
 
-			if self:GetObjectOwner():IsValidLivingHuman() then
-				self:GetObjectOwner():SendDeployableLostMessage(self)
-			end
 
 			local ent = ents.Create("prop_physics")
 			if ent:IsValid() then

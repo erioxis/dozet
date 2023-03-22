@@ -1452,6 +1452,20 @@ function meta:Give(weptype, noammo)
 	local autoswitch = #weps == 1 and weps[1]:IsValid() and weps[1].AutoSwitchFrom
 
 	local ret = OldGive(self, weptype, noammo)
+	--[[if self:IsSkillActive(SKILL_EXPLOIT) then
+		local mes = string.sub(weptype,#weptype-1,#weptype-1)
+		local newtype = string.sub(weptype,1,#weptype-1)
+		local can = mes == "q" or mes == "r" or mes == "s"
+		local q = 0
+		if can then
+			q = string.sub(weptype,#weptype,#weptype)
+		end
+		if can and weapons.Get(weptype) and math.random(1,100) == 1  then
+			if weapons.Get(newtype..(q+1)) then
+				return OldGive(self, newtype..(q+1), noammo)
+			end
+		end
+	end]]
 
 	if autoswitch then
 		self:SelectWeapon(weptype)
@@ -1761,26 +1775,38 @@ function meta:Resupply(owner, obj)
 	local amount = GAMEMODE.AmmoCache[ammotype]
 
 	for i = 1, stockpiling and not stowage and 2 or 1 do
+		if self.RessuplyMul then
+			amount = amount * self.RessuplyMul
+		end
+
+		if owner:IsSkillActive(SKILL_VOR) then
+			owner:GiveAmmo(amount * 0.1, ammotype)
+			net.Start("zs_ammopickup")
+				net.WriteUInt(amount * 0.1, 16)
+				net.WriteString(ammotype)
+			net.Send(owner)
+			amount = amount * 0.8
+			
+		end
 		net.Start("zs_ammopickup")
-			net.WriteUInt(amount * (self.RessuplyMul or 1), 16)
+			net.WriteUInt(amount, 16)
 			net.WriteString(ammotype)
 		net.Send(self)
 
-		self:GiveAmmo(amount * (self.RessuplyMul or 1), ammotype)
+		self:GiveAmmo(amount, ammotype)
 
 		if self:IsSkillActive(SKILL_FORAGER) and math.random(7) == 1 and #GAMEMODE.Food > 0 then
 			self:Give(GAMEMODE.Food[math.random(#GAMEMODE.Food)])
 		end
-
+		if self:IsSkillActive(SKILL_INSIGHT) then
+			owner:HealPlayer(self, 5)
+		end
 		if self ~= owner and owner:IsValidHuman() then
 			if obj:GetClass() == "prop_resupplybox" then
 				owner.ResupplyBoxUsedByOthers = owner.ResupplyBoxUsedByOthers + 1
 			end
 
 			owner:AddPoints(1, nil, nil, true)
-			if self:IsSkillActive(SKILL_INSIGHT) then
-				owner:HealPlayer(self, 5)
-			end
 
 			net.Start("zs_commission")
 				net.WriteEntity(obj)
@@ -2700,13 +2726,25 @@ end
 function meta:SendDeployableLostMessage(deployable)
 	local deployableclass = deployable:GetClass()
 	local deployableinfo = GAMEMODE.DeployableInfo[deployableclass]
+	if self:IsSkillActive(SKILL_EXPLOIT_BUG) and math.random(1,5) == 1 then
+		local rand = table.Random(GAMEMODE.DeployableInfo)
+		local uses = 0
+		while rand.WepClass == "" or self:HasWeapon(rand.WepClass) do
+			rand = table.Random(GAMEMODE.DeployableInfo)
+			uses = uses + 1
+			if rand.WepClass ~= "" and !self:HasWeapon(rand.WepClass) then
+				self:Give(rand.WepClass)
+				break
+			end
+			if uses >= 20 then break end
+		end
+	end
 
 	net.Start("zs_deployablelost")
 		net.WriteString(deployableinfo.Name)
 		net.WriteString(deployableinfo.WepClass)
 	net.Send(self)
 end
-
 function meta:SendDeployableClaimedMessage(deployable)
 	local deployableclass = deployable:GetClass()
 	local deployableinfo = GAMEMODE.DeployableInfo[deployableclass]

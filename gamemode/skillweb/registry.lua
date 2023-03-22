@@ -474,6 +474,9 @@ SKILL_AUTOAIM = 446
 SKILL_KEEPER_HEART = 447
 SKILL_GIER_II = 448
 SKILL_DRONE_IN_T = 449
+SKILL_EXPLOIT = 450
+SKILL_EXPLOIT_BUG = 451
+SKILL_VOR = 452
 
 
 
@@ -959,6 +962,10 @@ GM:AddSkill(SKILL_BLOODHACK, translate.Get("skill_bloodhack"), GOOD..translate.G
 																-2,			0,					{SKILL_REINFORCEDHULL}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_STABLEHULL, translate.Get("skill_s_hull"), GOOD..translate.Get("skill_s_hull_d1")..BAD..translate.Get("skill_r_hull_d3"),
 																0,			-3,					{SKILL_U_DRONE}, TREE_BUILDINGTREE)
+GM:AddSkill(SKILL_EXPLOIT, translate.Get("skill_exploit"), GOOD..translate.Get("skill_exploit_d1")..BAD..translate.Get("skill_exploit_d2"),
+																0,			-4,					{SKILL_STABLEHULL}, TREE_BUILDINGTREE)
+GM:AddSkill(SKILL_EXPLOIT_BUG, translate.Get("skill_exploit_bug"), GOOD..translate.Get("skill_exploit_bug_d1")..BAD..translate.Get("skill_exploit_bug_d2"),
+																1,			-4.5,					{SKILL_EXPLOIT}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_REINFORCEDBLADES, translate.Get("skill_r_blade"), GOOD..translate.Get("skill_r_blade_d1")..BAD..translate.Get("skill_r_blade_d2"),
 																0,			-5,					{SKILL_MECHANIC}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_MECHANIC, translate.Get("skill_mech"), GOOD.."-15%"..translate.Get("s_cost")..BAD.."-15%"..translate.Get("sale"),
@@ -991,6 +998,8 @@ GM:AddSkillModifier(SKILL_JEW, SKILLMOD_ARSENAL_DISCOUNT, -0.10)
 GM:AddSkillModifier(SKILL_JEW, SKILLMOD_SCRAPDISCOUNT, -0.10)
 GM:AddSkillModifier(SKILL_JEW, SKILLMOD_RES_AMMO_MUL, 0.15)
 GM:AddSkillModifier(SKILL_SAMODOS, SKILLMOD_SCRAPDISCOUNT, -0.25)
+
+
 GM:AddSkill(SKILL_GENIUS, translate.Get("skill_genius"), GOOD..translate.Get("skill_genius_d1")..BAD..translate.Get("skill_genius_d2"),
 																3,			4,					{SKILL_JEW}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_FIELDAMP, translate.Get("skill_field_amp"), GOOD..translate.Get("skill_field_amp_d1")..BAD..translate.Get("skill_field_amp_d2"),
@@ -1009,6 +1018,8 @@ GM:AddSkill(SKILL_STOCKPILE, translate.Get("skill_stock2"), GOOD..translate.Get(
 																8,			-3,					{SKILL_FREEAMMO}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_FREEAMMO, translate.Get("skill_f_ammo"), GOOD..translate.Get("skill_f_ammo_d1"),
 																9,			-4,					{SKILL_STOCKPILE}, TREE_BUILDINGTREE)
+GM:AddSkill(SKILL_VOR, translate.Get("skill_vor"), GOOD..translate.Get("skill_vor_d1")..BAD..translate.Get("skill_vor_d2"),
+																9,			-2,					{SKILL_FREEAMMO}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_ACUITY, translate.Get("skill_vision_ammo"), GOOD..translate.Get("skill_vision_ammo_d1"),
 																6,			-3,					{SKILL_INSIGHT, SKILL_STOCKPILE, SKILL_U_CRAFTINGPACK, SKILL_STOWAGE}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_VISION, translate.Get("skill_vision_r"), GOOD..translate.Get("skill_vision_r_d1"),
@@ -2811,6 +2822,8 @@ GM:AddSkillModifier(SKILL_CARRIER, SKILLMOD_DEPLOYABLE_PACKTIME_MUL, 0.50)
 GM:AddSkillModifier(SKILL_CARRIER, SKILLMOD_DEPLOYABLE_HEALTH_MUL, -0.50)
 GM:AddSkillModifier(SKILL_CARRIER, SKILLMOD_PROP_CARRY_SLOW_MUL, -1)
 
+GM:AddSkillModifier(SKILL_EXPLOIT, SKILLMOD_DEPLOYABLE_HEALTH_MUL, -0.33)
+
 GM:AddSkillModifier(SKILL_BLOODARMOR, SKILLMOD_HEALTH, -5)
 
 GM:AddSkillModifier(SKILL_HAEMOSTASIS, SKILLMOD_BLOODARMOR_DMG_REDUCTION, 0.06)
@@ -3066,3 +3079,4 @@ end)
 GM:AddSkillFunction(SKILL_HOLE_OF_HELL, function(pl, active)
 	pl.HoleOfHell = active
 end)
+GM:AddSkillModifier(SKILL_EXPLOIT_BUG, SKILLMOD_SCRAPDISCOUNT, 0.10)
