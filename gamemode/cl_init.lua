@@ -769,6 +769,7 @@ function GM:PostRender()
 end
 
 local lastwarntim = -1
+local scale = 1
 --local NextGas = 0
 function GM:_Think()
 	local time = CurTime()
@@ -842,7 +843,7 @@ function GM:_Think()
 		elseif self.FOVLerp ~= 1 then
 			self.FOVLerp = math.Approach(self.FOVLerp, 1, FrameTime() * 5)
 		end
-
+		self.FOVLerp = self.FOVLerp * scale
 		if MySelf:GetBarricadeGhosting() then
 			MySelf:BarricadeGhostingThink()
 		end
@@ -2000,6 +2001,21 @@ function GM:_ShouldDrawLocalPlayer(pl)
 end
 
 local roll = 0
+local math_sin = math.sin
+local math_Approach = math.Approach
+
+local tColorModHuman = {
+	["$pp_colour_addr"] = 0,
+	["$pp_colour_addg"] = 0,
+	["$pp_colour_addb"] = 0,
+	["$pp_colour_brightness"] = 0,
+	["$pp_colour_contrast"] = 1,
+	["$pp_colour_colour"] = 1,
+	["$pp_colour_mulr"] = 0,
+	["$pp_colour_mulg"] = 0,
+	["$pp_colour_mulb"] = 0
+}
+local redview = 0
 function GM:_CalcView(pl, origin, angles, fov, znear, zfar)
 	if pl.Confusion and pl.Confusion:IsValid() then
 		pl.Confusion:CalcView(pl, origin, angles, fov, znear, zfar)
@@ -2011,6 +2027,30 @@ function GM:_CalcView(pl, origin, angles, fov, znear, zfar)
 	if gp then
 		fov = fov + ((CurTime()/2)%30)
 	end
+	--[[if MySelf:KeyDown(IN_DUCK) then
+		--local add = MySelf:GetNW2Float("b_man",0)
+		
+		--if add >= 3 then
+			add = math_sin(add)*10
+			--print(add)
+			local curr = tColorModHuman["$pp_colour_addr"]
+			local health = add
+			local maxhealth = MySelf:GetNW2Float("b_man",0) / 3
+			if health <= maxhealth then
+				redview = math_Approach(redview, 1 - health / maxhealth, FrameTime() * 0.2)
+			elseif 0 < curr then
+				redview = math_Approach(redview, 0, FrameTime() * 0.2)
+			end
+
+			tColorModHuman["$pp_colour_addr"] = redview * (0.035 + math.abs(math_sin(CurTime() * 2)) * 0.14)
+			tColorModHuman["$pp_colour_brightness"] = 0.5 * -0.045
+			tColorModHuman["$pp_colour_contrast"] = 1 + 0.5 * 0.15
+			tColorModHuman["$pp_colour_colour"] = 1 - 0.5 * 0.725 --0.85
+
+			DrawColorModify(tColorModHuman)
+		end
+		fov =  fov + add 
+	end]]
 	if pl.Revive and pl.Revive:IsValid() and pl.Revive.GetRagdollEyes then
 		if self.ThirdPersonKnockdown or self.ZombieThirdPerson then
 			origin = pl:GetThirdPersonCameraPos(origin, angles)

@@ -62,6 +62,11 @@ function SWEP:Think()
 				return
 			end
 		end
+		for _, ent in pairs(ents.FindByClass("prop_rollermine_exp")) do
+			if ent:IsValid() and ent:GetObjectOwner() == self:GetOwner() then
+				return
+			end
+		end
 
 		self:GetOwner():StripWeapon(self:GetClass())
 	end

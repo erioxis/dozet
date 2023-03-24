@@ -116,15 +116,15 @@ function CLASS:ProcessDamage(pl, dmginfo)
 	end
 
 
-	local numthreshold = math_Clamp(math_ceil(hp / 500), 1, 15)
-	local dmgthreshold = math_Clamp(numthreshold * 500 - 100, 1, 4500)
+	local numthreshold = math_Clamp(math_ceil(hp / 250), 1, 15)
+	local dmgthreshold = math_Clamp(numthreshold * 250 - 100, 1, 4500)
 
 	local newhp = hp - dmg
 	local nulldmg = dmgthreshold - newhp
 
-	local slavec = math.random(1,3)
+	local slavec = math.random(1,6)
 	if slavec == 1 and attacker:IsPlayer() then
-		attacker:GiveStatus("dimvision", 5)
+		attacker:GiveStatus("dimvision", 1)
 
 		pl:EmitSound("ambient/creatures/town_child_scream1.wav", 20, 10)
 		dmginfo:SetDamage(0)
@@ -134,8 +134,8 @@ function CLASS:ProcessDamage(pl, dmginfo)
 	if newhp <= dmgthreshold and pl["bloodth"..numthreshold] then
 		pl["bloodth"..numthreshold] = false
 		dmginfo:SetDamage(dmg - nulldmg)
-		pl:GiveStatus("redmarrow", 3)
-		for _, ent in pairs(ents.FindInSphere(pl:GetPos(), 238)) do
+		pl:GiveStatus("redmarrow", 2 + (GAMEMODE:GetWave()*0.6))
+		for _, ent in pairs(ents.FindInSphere(pl:GetPos(), 438)) do
 			if ent:IsValidLivingZombie() and pl ~= ent then
 				ent:SetZArmor(ent:GetZArmor() + (pl:Health()/10) * (GAMEMODE:GetWave() /4))
 			end

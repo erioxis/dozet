@@ -29,7 +29,11 @@ function meta:ProcessDamage(dmginfo)
 	end
 	if P_Team(self) == TEAM_HUMAN and attacker:IsValidLivingZombie() then
 		self:GiveAchievementProgress("tanked", math.Round((dmginfo:GetDamage() or 1)))
-		self:SetProgress(CurTime() + 0.97, "parasite_prog")
+		self:SetProgress(CurTime() + 0.5, "parasite_prog")
+		self.NextMedStation = CurTime() + 0.9
+		if self:IsSkillActive(SKILL_FLIMSY) then
+			self:GiveStatus("flimsy")
+		end
 	end
 	if self:IsValidLivingZombie() and self:GetZombieClassTable().Stoney and self:GetActiveWeapon() and self:GetActiveWeapon().IsSwinging and !self:GetActiveWeapon():IsSwinging() then
 		dmginfo:SetDamage(0)
@@ -228,12 +232,6 @@ function meta:ProcessDamage(dmginfo)
 			if attacker:IsSkillActive(SKILL_AMULET_16) then 
 				dmginfo:ScaleDamage(math.random(1,250)/100)
 			end
-			if attacker.BirdEye and !wep.IsMelee then
-				wep.DamageEyeMul = (wep.DamageEyeMul or 0) + 1	
-			end
-			if attacker.FastEye and !wep.IsMelee then
-				wep.SpeedEyeMul = (wep.SpeedEyeMul or 0) + 1	
-			end
 			
 			--attacker.dpsmeter = damage
 			if attacker:IsSkillActive(SKILL_VAMPIRISM) then
@@ -254,7 +252,7 @@ function meta:ProcessDamage(dmginfo)
 			if (attacker:IsSkillActive(SKILL_BOUNTYKILLER) or self:GetZombieClassTable().Boss or self:GetZombieClassTable().DemiBoss) and !self:GetZombieClassTable().CrowDa and !self:GetZombieClassTable().Skeletal then
 				local mul = ((attacker:IsSkillActive(SKILL_BOUNTYKILLER) and 0.15 or 0) + (self:GetZombieClassTable().DemiBoss and 0.05 or self:GetZombieClassTable().Boss and 0.1 or 0))
 				attacker:SetProgress(attacker:GetProgress('bprog')+(math.min(dmginfo:GetDamage()*mul,self:GetMaxHealth()*mul)), 'bprog')
-				local tbl = {"headshoter", "ind_buffer",  "ultra_at", "pearl","broken_world"}
+				local tbl = {"headshoter", "ind_buffer",  "ultra_at", "pearl","broken_world","altevesoul"}
 				local hm = table.Random(tbl)
 				if attacker:GetProgress('bprog') >= 1500 * (attacker:GetProgress('bprogmul')+1) and !attacker:HasTrinket(hm) then
 					attacker:SetProgress(0, 'bprog')
@@ -1133,6 +1131,9 @@ end
 
 function meta:SetBloodArmor(armor)
 	self:SetDTInt(DT_PLAYER_INT_BLOODARMOR, armor)
+end
+function meta:AddBloodArmor(armor)
+	self:SetBloodArmor(self:GetBloodArmor() + armor)
 end
 function meta:SetChargesActive(charges)
 	self:SetDTInt(DT_PLAYER_INT_ACTIV, charges)

@@ -170,6 +170,8 @@ function meta:FireBulletsLua(src, dir, spread, num, damage, attacker, force_mul,
 		if E_IsValid(ent) and use_damage then
 			if ent:IsPlayer() then
 				temp_vel_ents[ent] = temp_vel_ents[ent] or ent:GetVelocity()
+				inflictor.DamageEyeMul = (inflictor.DamageEyeMul or 0)  + 1
+				inflictor.SpeedEyeMul = (inflictor.SpeedEyeMul or 0) + 1 
 				if SERVER then
 					ent:SetLastHitGroup(bullet_tr.HitGroup)
 					if bullet_tr.HitGroup == HITGROUP_HEAD then
@@ -184,10 +186,18 @@ function meta:FireBulletsLua(src, dir, spread, num, damage, attacker, force_mul,
 			end
 
 			ent:DispatchTraceAttack(damageinfo, bullet_tr, dir)
-		elseif !E_IsValid(ent) and attacker_player then
-			inflictor.DamageEyeMul = (inflictor.DamageEyeMul or 1)/2  
-			inflictor.SpeedEyeMul = 1 
-			if CLIENT and (attacker.FastEye or attacker.BirdEye) then
+		elseif !E_IsValid(ent) and attacker_player and (attacker.FastEye or attacker.BirdEye) then
+			local die = false
+			attacker.Luls = (attacker.Luls or 0) + 1
+			if math.random(1,4) == 1 then
+				inflictor.DamageEyeMul = math.max(1,(inflictor.DamageEyeMul or 1))/2  
+				die = true
+			end
+			if attacker.FastEye and math.random(1,math.max(1,5-(attacker.Luls or 0))) == 1 then
+				inflictor.SpeedEyeMul = 1 
+				die = true
+			end
+			if CLIENT and (attacker.FastEye or attacker.BirdEye) and die then
 				if attacker == MySelf then
 					MySelf:EmitSound("npc/fast_zombie/wake1.wav", 100,50)
 				end
@@ -242,7 +252,10 @@ function meta:FireBulletsLua(src, dir, spread, num, damage, attacker, force_mul,
 	end
 	table.Empty(temp_vel_ents)
 end
-
+function meta:RealisticBulletShoot(src, dir, spread, num, damage, attacker, force_mul, tracer, callback, hull_size, hit_own_team, max_distance, filter, inflictor)
+	--damage = ((radius - nearest:Distance(epicenter)) / radius) * damage
+	self:FireBulletsLua(src, dir, spread, num, damage, attacker, force_mul, tracer, callback, hull_size, hit_own_team, max_distance, filter, inflictor)
+end
 function meta:IsValidPlayer()
 	return E_IsValid(self) and self:IsPlayer()
 end

@@ -1205,6 +1205,7 @@ function GM:ShouldRestartRound()
 end
 
 local NextTick = 0
+local NextTick1 = 0
 function GM:Think()
 	local time = CurTime()
 	local wave = self:GetWave()
@@ -1286,6 +1287,9 @@ function GM:Think()
 
 		for _, pl in pairs(allplayers) do
 			if P_Team(pl) == TEAM_HUMAN and P_Alive(pl) then
+				if pl.StaminaHAHA and (pl.StaminaUsed or 0) <= CurTime() then
+					pl:AddStamina(7)
+				end
 				plpos = pl:GetPos()
 				if doafk then
 					if pl.LastAFKPosition and (pl.LastAFKPosition.x ~= plpos.x or pl.LastAFKPosition.y ~= plpos.y) then
@@ -1372,9 +1376,6 @@ function GM:Think()
 						pl:Kill()
 					end
 					
-				end
-				if pl.StaminaHAHA and (pl.StaminaUsed or 0) <= CurTime() then
-					pl:AddStamina(7)
 				end
 				if !pl:OnGround() and not (pl:GetVelocity():LengthSqr() > 7600) then
 					pl.StuckedInProp = true
@@ -1573,9 +1574,11 @@ function GM:Think()
 
 
 				if pl:KeyDown(IN_SPEED) and pl:GetVelocity() ~= vector_origin and pl:IsSkillActive(SKILL_CARDIOTONIC) then
-					if pl:GetBloodArmor() > 0 then
-						pl:SetBloodArmor(pl:GetBloodArmor() - 1)
-						if pl:GetBloodArmor() == 0 and pl:IsSkillActive(SKILL_BLOODLETTER) then
+					if (pl.StaminaHAHA and pl:GetStamina() or pl:GetBloodArmor())  > 0 then
+						local get = pl.StaminaHAHA and pl:GetStamina() or pl:GetBloodArmor()
+						local set = pl.StaminaHAHA and pl.AddStamina or pl.AddBloodArmor
+						set(pl,-(pl.StaminaHAHA and 6.5 or 1))
+						if get == 0 and pl:IsSkillActive(SKILL_BLOODLETTER) then
 							local bleed = pl:GiveStatus("bleed")
 							if bleed and bleed:IsValid() then
 								bleed:AddDamage(5)
@@ -1654,6 +1657,23 @@ function GM:Think()
 					pl:GiveStatus("death",10)
 					pl.DeathUsed = CurTime() + 20
 				end
+			end
+		end
+	end
+	if NextTick1 <= time then
+		NextTick1 = time + 0.05
+
+
+		for _, pl in pairs(allplayers) do
+			if P_Team(pl) == TEAM_HUMAN and P_Alive(pl) then
+				if pl.StaminaHAHA and (pl.StaminaUsed or 0) <= CurTime() then
+					pl:AddStamina(0.1)
+				end
+				--if pl:KeyDown(IN_DUCK) then
+				--	pl:SetNW2Float("b_man",pl:GetNW2Float("b_man")+0.05)
+				--else
+					--pl:SetNW2Float("b_man",math.max(0,pl:GetNW2Float("b_man",0)-0.1))
+				--end
 			end
 		end
 	end
@@ -4209,10 +4229,12 @@ function GM:KeyPress(pl, key)
 			if pl:Team() == TEAM_HUMAN then
 				pl:DispatchAltUse()
 
-				if not pl:IsCarrying() and pl:KeyPressed(IN_SPEED) and pl:IsSkillActive(SKILL_CARDIOTONIC) and pl:GetBloodArmor() > 0 then
-					pl:SetBloodArmor(pl:GetBloodArmor() - 1)
+				if not pl:IsCarrying() and pl:KeyPressed(IN_SPEED) and pl:IsSkillActive(SKILL_CARDIOTONIC) and (!pl.StaminaHAHA and pl:GetBloodArmor() or pl:GetStamina()) > 0 then
+					local get = pl.StaminaHAHA and pl:GetStamina() or pl:GetBloodArmor()
+					local set = pl.StaminaHAHA and pl.AddStamina or pl.AddBloodArmor
+					set(pl,-(pl.StaminaHAHA and 4 or 1))
 					pl:EmitSound("player/suit_sprint.wav", 50)
-					if pl:GetBloodArmor() == 0 and pl:IsSkillActive(SKILL_BLOODLETTER) then
+					if get == 0 and pl:IsSkillActive(SKILL_BLOODLETTER) then
 						local bleed = pl:GiveStatus("bleed")
 						if bleed and bleed:IsValid() then
 							bleed:AddDamage(5)
@@ -4229,7 +4251,7 @@ function GM:KeyPress(pl, key)
 				pl:GetActiveWeapon():SetPerc(0)
 				pl:GodEnable()
 				pl:GetActiveWeapon().GodMode = true
-				timer.Simple(35, function() pl:GodDisable() pl:GetActiveWeapon().GodMode = false end)
+				timer.Simple(15, function() pl:GodDisable() pl:GetActiveWeapon().GodMode = false end)
 			end
 
 	elseif key == IN_ZOOM then

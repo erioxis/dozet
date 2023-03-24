@@ -11,6 +11,14 @@ local ironsightscrosshair = CreateClientConVar("zs_ironsightscrosshair", "0", tr
 cvars.AddChangeCallback("zs_ironsightscrosshair", function(cvar, oldvalue, newvalue)
 	ironsightscrosshair = tonumber(newvalue) == 1
 end)
+local x_y = CreateClientConVar("zs_x_stamina", "0", true, false):GetFloat()
+cvars.AddChangeCallback("zs_x_stamina", function(cvar, oldvalue, newvalue)
+	x_y = tonumber(newvalue)
+end)
+local y_s = CreateClientConVar("zs_y_stamina", "0", true, false):GetFloat()
+cvars.AddChangeCallback("zs_y_stamina", function(cvar, oldvalue, newvalue)
+	y_s = tonumber(newvalue)
+end)
 local matGlow = Material("sprites/glow04_noz")
 local texDownEdge = surface.GetTextureID("gui/gradient_down")
 local colHealth = Color(0,0,0)
@@ -19,8 +27,8 @@ function meta:DrawStaminaBar()
 	if lp:GetStamina() < 100 then
 		local health = math.max(lp:GetStamina(), 0)
 		local healthperc = math.Clamp(health / 100, 0.01, 1)
-		local x = ScrW() * 0.45
-		local y = ScrH() * 0.78
+		local x = ScrW() * 0.45 + (x_y)
+		local y = ScrH() * 0.78 + (y_s)
 		local screenscale = BetterScreenScale()
 		local wid, hei = 250 * screenscale, 30 * screenscale
 		if lp:IsValid() then
@@ -53,7 +61,7 @@ function meta:DrawStaminaBar()
 			surface.SetDrawColor(255, 255, 255, 255)
 			surface.DrawTexturedRect(x + 2 +  wid*0.33 - 6.5, y + 1 - hei/2, 4, hei * 2)
 			local phantomwidth = (health == 100 and 0 or wid)
-			draw.SimpleTextBlurry(math.Round(lp:GetStamina()).."%" , "ZSHUDFontSmall", x, y - 12, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM)
+			draw.SimpleTextBlurry((math.Round(lp:GetStamina()*100)/100).."%" , "ZSHUDFontSmall", x, y - 12, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM)
 
 		end
 	end

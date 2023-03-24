@@ -78,7 +78,7 @@ end
 function SWEP:PrimaryAttack()
 	if not self:CanPrimaryAttack() then return end
 	local owner = self:GetOwner()
-	self:SetNextPrimaryFire(CurTime() + self:GetFireDelay() * ( owner:HasTrinket("altevesoul") and owner:Health() < 50 and 0.33 or 1 ))
+	self:SetNextPrimaryFire(CurTime() + self:GetFireDelay() * ( owner:HasTrinket("altevesoul") and owner:Health() < 50 and 0.5 or 1 ))
 	local extramulti = 1
 	if owner:HasTrinket("supasm") and (self.Tier or 1) <= 2  then
 		extramulti = 1.25

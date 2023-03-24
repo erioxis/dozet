@@ -182,13 +182,15 @@ function meta:SetZSXP(xp)
 end
 
 function meta:AddZSXP(xp, ach)
-	-- TODO: Level change checking. Cache the "XP for next level" in the vault load and compare it here instead of checking every add.
-	if ach then
-		self:AddDCoins(xp)
-	else
-		self:AddXPPerRound(xp)
-		self:SetZSXP(self:GetZSXP() + xp)
-	end
+    -- TODO: Level change checking. Cache the "XP for next level" in the vault load and compare it here instead of checking every add.
+    if ach then
+        self:AddDCoins(xp)
+    else
+        self.XPRemainder = self.XPRemainder + xp
+        self:AddXPPerRound(math.floor(self.XPRemainder))
+        self:SetZSXP(self:GetZSXP() + math.floor(self.XPRemainder))
+        self.XPRemainder = self.XPRemainder - math.floor(self.XPRemainder)
+    end
 end
 
 -- Done on team switch to anything except human.

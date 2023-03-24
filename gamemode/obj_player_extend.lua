@@ -740,8 +740,10 @@ end
 function meta:SetSpeed(speed)
 	if not speed then speed = 200 end
 
-	local runspeed = self:GetBloodArmor() > 0 and self:IsSkillActive(SKILL_CARDIOTONIC) and speed + 40 or speed
-
+	local runspeed = (!self.StaminaHAHA and self:GetBloodArmor() or self:GetStamina()) > 0 and self:IsSkillActive(SKILL_CARDIOTONIC) and speed + 40 or speed
+	if self:GetStamina() == 1 then
+		runspeed = runspeed - 100
+	end
 	self:SetWalkSpeed(speed)
 	self:SetRunSpeed(runspeed)
 	self:SetMaxSpeed(runspeed)
