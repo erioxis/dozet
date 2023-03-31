@@ -6,7 +6,7 @@ local matExpert = Material("zombiesurvival/padlock.png")
 local matHeart = Material("icon16/heart.png")
 function ENT:Draw()
 	
-	if self:GetOwner() ~= MySelf then return end
+	if self:GetOwner() and self:GetOwner() ~= MySelf or !self:GetOwner() then return end
 	local pos
 	local eyepos
 	if MySelf:IsValid() then

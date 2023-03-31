@@ -37,6 +37,9 @@ LANGUAGE.promo_dont_used			= "Promocode is invalid"
 LANGUAGE.promo_used			= "Promocode used!"
 LANGUAGE.were_rich			= "We're Rich!"
 
+LANGUAGE.wins_x_times			= "Winned a %s rounds!"
+LANGUAGE.lose_x_times			= "Losed a %s rounds!"
+
 LANGUAGE.ent_promoce			= "Enter a promocode"
 
 
@@ -230,6 +233,7 @@ LANGUAGE.press_z_or_b = "Press Z or %s for phase!"
 LANGUAGE.repair_this_nb = "Repair this prop!"
 LANGUAGE.run_danger_nb = "Run! This prop in danger!"
 --
+LANGUAGE.op_mge = "MGE Phrases on kill(on russian only :(. )!"
 LANGUAGE.op_rgb_hp = "RGB Health (:bruh:)"
 LANGUAGE.op_voice = "Hear and talk only in your team"
 LANGUAGE.op_show_node = "Optimised F3"
@@ -1561,6 +1565,9 @@ LANGUAGE.class_lacerator_charging					= "Charger"
 LANGUAGE.class_eradicator							= "Eradicator"
 LANGUAGE.class_howler								= "Howler"
 LANGUAGE.class_mprime								= "Minos Prime"
+LANGUAGE.wep_o_mode								= "xd mode"
+LANGUAGE.wep_d_mode								= "Die Mode"
+LANGUAGE.wep_j_mode								= "Judge Mode"
 LANGUAGE.class_tim								= "Giga-Tim"
 LANGUAGE.class_slime								= "Sisus Lime"
 LANGUAGE.class_extinctioncrab						= "Extinction Crab"

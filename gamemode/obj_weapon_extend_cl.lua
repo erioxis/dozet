@@ -66,6 +66,7 @@ function meta:DrawStaminaBar()
 		end
 	end
 end
+
 --local CrossHairScale = 1
 local matGrad = Material("VGUI/gradient-r")
 local function DrawLine(x, y, rot)

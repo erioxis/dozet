@@ -36,6 +36,65 @@ net.Receive("zs_deminextboss", function(length)
 
 	GAMEMODE.NextDemiBossZombieClass = net.ReadString()
 end)
+local kill_sounds = {
+    "mge/kill/6am.wav",
+    "mge/kill/16-0.wav",
+    "mge/kill/bro.wav",
+    "mge/kill/cock.wav",
+    "mge/kill/debil.wav",
+    "mge/kill/etoez.wav",
+    "mge/kill/ez.wav",
+    "mge/kill/hi_mother.wav",
+    "mge/kill/kak.wav",
+    "mge/kill/kakzhe.wav",
+    "mge/kill/kashtan.wav",
+    "mge/kill/killthemall.wav",
+    "mge/kill/knife.wav",
+    "mge/kill/kulak.wav",
+    "mge/kill/maloy.wav",
+    "mge/kill/musor.wav",
+    "mge/kill/musor2.wav",
+    "mge/kill/na.wav",
+    "mge/kill/noobs.wav",
+    "mge/kill/perhot.wav",
+    "mge/kill/petushok.wav",
+    "mge/kill/pivorezka.wav",
+    "mge/kill/roblox.wav",
+    "mge/kill/school.wav",
+    "mge/kill/shotgun.wav",
+    "mge/kill/shutup.wav",
+    "mge/kill/tolstyak.wav",
+	"mge/death/brat.wav",
+    "mge/death/che.wav",
+    "mge/death/circus.wav",
+    "mge/death/eeee.wav",
+    "mge/death/leave1.wav",
+    "mge/death/leave2.wav",
+    "mge/death/leave3.wav",
+    "mge/death/monitor.wav",
+    "mge/death/mrazi.wav",
+    "mge/death/prikolist.wav",
+    "mge/death/rest.wav",
+    "mge/death/rezat.wav",
+    "mge/death/shkaf1.wav",
+    "mge/death/shkaf2.wav",
+    "mge/death/shkaf3.wav",
+    "mge/death/shock.wav",
+    "mge/death/tip.wav",
+    "mge/death/vot_eto.wav",
+    "mge/death/vot_eto2.wav"
+}
+net.Receive("zs_mge_phr", function(length)
+	local sound = kill_sounds[math.random(1,#kill_sounds)]
+	MySelf:EmitSound(sound)
+end)
+net.Receive("zs_update_style", function(length)
+	local tbl = net.ReadTable()
+	MySelf.StyleMoment[#MySelf.StyleMoment+1] = tbl
+	if table.Count(tbl) <= 0 then
+		MySelf.StyleMoment = {[1] = {text = "OVERLOAD", time = 2 + CurTime()}}
+	end
+end)
 
 net.Receive("zs_zvols", function(length)
 	local volunteers = {}

@@ -16,7 +16,7 @@ function ENT:Think()
 	local owner = self:GetOwner()
 	if (hollowing) then
 		if (hollowing.DieTime <= CurTime()) then
-			owner:TakeSpecialDamage(self.maxHallow, DMG_DIRECT, owner, self)
+			owner:TakeSpecialDamage(self.maxHallow, DMG_DIRECT, (self.Applier or owner), self)
 			hollowing:Remove()
 			owner.MasteryHollowing = 0
 		end
@@ -25,16 +25,13 @@ function ENT:Think()
 		end
 		
 	end
-	if self:GetStartTime() + self:GetDuration() - CurTime() >= 5000 then
+	if self:GetStartTime() + self:GetDuration() - CurTime() >= 2000 then
 		owner:Kill()
 	end
 
 
-	self.timer = self.timer + 1
-	if self.timer >= self.maxTimer then
-		self.DieTime = self.DieTime - 5
-		self.timer = 1
-		self:SetDuration(self.DieTime - CurTime())
-	end
+	self:SetDuration(self.DieTime - CurTime() - 2)
+	self.DieTime = self.DieTime - 2
+
 
 end

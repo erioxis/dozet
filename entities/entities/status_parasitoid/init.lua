@@ -18,13 +18,13 @@ function ENT:Think()
 	local see = dmger:IsSkillActive(SKILL_PARASITOID_3)
 	local flimsy = dmger:IsSkillActive(SKILL_FLIMSY)
 	local who = dmger and dmger:IsValid() and dmger:IsPlayer() and dmger or owner
-	if (owner) and not (dmger:GetStatus("rot")) and !owner:GetZombieClassTable().Skeletal and (dmger:GetProgress("parasite_prog")) < CurTime() then
+	if (owner) and not (dmger:GetStatus("rot")) and !owner:GetZombieClassTable().Skeletal and (dmger:GetProgress("parasite_prog") -(dmger:IsSkillActive(SKILL_PARASITOID_2) and 2 or 0)) < CurTime() then
 		owner:TakeSpecialDamage(math.min((lox and owner:Health()*0.05 or owner:Health()*0.01),50) * (flimsy and 2.5 or 1),DMG_ACID,who, self, nil, 0)
 		if dmger and dmger:IsValid() and dmger:IsPlayer() and self.NextThinker <= CurTime() then
 			if !dmger:IsSkillActive(SKILL_PARASITOID_2) then
 				dmger:SetHealth(math.min(dmger:Health() + (lox and owner:Health()*0.1 or owner:Health()*0.02), dmger:GetMaxHealth()))
 			else
-				dmger:SetBloodArmor(math.min(dmger:GetBloodArmor() + (lox and owner:Health()*0.01 or owner:Health()*0.005), dmger.MaxBloodArmor))
+				dmger:SetBloodArmor(math.min(dmger:GetBloodArmor() + (lox and owner:Health()*0.01 or owner:Health()*0.005), dmger.MaxBloodArmor*2))
 			end
 			self.NextThinker = CurTime() + 0.33
 		end

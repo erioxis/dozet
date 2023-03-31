@@ -217,7 +217,6 @@ function meta:FireBulletsLua(src, dir, spread, num, damage, attacker, force_mul,
 			effectdata:SetOrigin(bullet_tr.HitPos)
 			effectdata:SetStart(src)
 			effectdata:SetNormal(bullet_tr.HitNormal)
-
 			if hitwater then
 				-- We may not impact, but we DO need to affect ragdolls on the client
 				if use_ragdoll_impact then

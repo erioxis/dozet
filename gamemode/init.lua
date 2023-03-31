@@ -1626,7 +1626,7 @@ function GM:Think()
 				if time > (pl.NextResupplyUse or 0) then
 					local stockpiling = pl:IsSkillActive(SKILL_STOCKPILE)
 
-					pl.NextResupplyUse = time + math.max(15,self.ResupplyBoxCooldown * (pl.ResupplyDelayMul or 1) * (stockpiling and 2 or 1)) - (pl:IsSkillActive(SKILL_STOWAGE) and math.max(0,self:GetBalance() / 4) or 0)
+					pl.NextResupplyUse = time + math.max(15,self.ResupplyBoxCooldown * (pl.ResupplyDelayMul or 1) * (stockpiling and 2 or 1)) - (pl:IsSkillActive(SKILL_STOWAGE) and math.max(0,self:GetBalance() / 4) or 0) * (pl.ClanPrime and 0.9 or 1)
 					pl.StowageCaches = (pl.StowageCaches or 0) + (stockpiling and 2 or 1)
 
 					net.Start("zs_nextresupplyuse")
@@ -1732,8 +1732,8 @@ local function DoDropStart(pl)
 	end
 end
 
-function GM:PlayerSwitchWeapon(pl, old, new)
-	if pl:HasTrinket("autoreload") then
+function GM:PlayerSwitchWeapon(pl, old, new)--
+	if pl:HasTrinket("autoreload") and old and !self.Food[old:GetClass()] then
 		pl.NextAutomatedReload = CurTime() + 2.5
 		pl.OldWeaponToReload = old
 	end
@@ -2446,7 +2446,8 @@ function GM:EndRound(winner)
 	util.RemoveAll("prop_invitem")
 
 	timer.Simple(5, function() gamemode.Call("DoHonorableMentions") end)
-
+	PrintTranslatedMessage(HUD_PRINTTALK,"wins_x_times",(self.WinsMAP or 0))
+	PrintTranslatedMessage(HUD_PRINTTALK,"lose_x_times",(self.LosesMAP or 0))
 	if winner == TEAM_HUMAN then
 		self.LastHumanPosition = nil
 		for _, pl in pairs(player.GetAll()) do
@@ -2460,12 +2461,14 @@ function GM:EndRound(winner)
 			end
 		end
 		self:SetWinRate(math.max(0,self:GetWinRate() + 1))
+		self.WinsMAP = (self.WinsMAP or 0) + 1
 		hook.Add("PlayerShouldTakeDamage", "EndRoundShouldTakeDamage", EndRoundPlayerShouldTakeDamage)
 	elseif winner == TEAM_UNDEAD then
 		hook.Add("PlayerShouldTakeDamage", "EndRoundShouldTakeDamage", EndRoundPlayerCanSuicide)
 		for _, pl in pairs(team.GetPlayers(TEAM_UNDEAD)) do
 			gamemode.Call("OnPlayerLose", pl)
 		end
+		self.LosesMAP = (self.LosesMAP or 0) + 1
 	end
 
 	net.Start("zs_endround")
@@ -2895,6 +2898,15 @@ function GM:PlayerInitialSpawnRound(pl)
 	pl.ClanMich = nil
 	pl.ClanShooter = nil
 	pl.ClanAnsableRevolution = nil
+	pl.ClanPrime = nil
+	
+	local prime ={
+		"76561198291605212",
+		"76561199226152985",
+		"76561199040548917",
+		"76561199124299400",
+		"76561198819916837"
+	}
 	local meleeclan ={
 		"76561198394385289",
 		"76561198974292374",
@@ -2906,7 +2918,6 @@ function GM:PlayerInitialSpawnRound(pl)
 		"76561198036866965",
 		"76561198995499738",
 		"76561198331898065",
-		"76561199124299400",
 		"76561199001034603",
 		"76561199080030510",
 		"76561199225706111",
@@ -2934,6 +2945,9 @@ function GM:PlayerInitialSpawnRound(pl)
 		"76561198086333703"
 	}
 	self:LoadVault(pl)
+	if table.HasValue(prime, pl:SteamID64()) then 
+		pl.ClanPrime = true
+	end
 	if table.HasValue(meleeclan, pl:SteamID64()) then 
 		pl.ClanMelee = true
 	end
@@ -3454,7 +3468,11 @@ function GM:EntityTakeDamage(ent, dmginfo)
 		ent.m_LastDamaged = CurTime()
 	end
 	if attacker:IsPlayer() and attacker:IsChampion() then
-		dmginfo:ScaleDamage(1.5)
+		if ent:IsPlayer() then
+			dmginfo:ScaleDamage(1.25)
+		else
+			dmginfo:ScaleDamage(1.5)
+		end
 	end
 	if attacker.DeadXD then
 		dmginfo:ScaleDamage(2)
@@ -3549,7 +3567,7 @@ function GM:EntityTakeDamage(ent, dmginfo)
 							ent.DamagedBy[attacker] = (ent.DamagedBy[attacker] or 0) + damage
 							
 							if time >= ent.m_LastWaveStartSpawn + 3 and time >= ent.m_LastGasHeal + 2 then
-								local points = damage / ent:GetMaxHealth() * ent:GetZombieClassTable().Points
+								local points = damage / ent:GetMaxHealth() * ent:GetZombieClassTable().Points * (ent:IsChampion() and 1.5 or 1)
 								if POINTSMULTIPLIER then
 									points = points * POINTSMULTIPLIER
 								end
@@ -4491,6 +4509,7 @@ function GM:HumanKilledZombie(pl, attacker, inflictor, dmginfo, headshot, suicid
 	if numofdaily == 1 then
 		attacker:GiveAchievementProgress("daily_post", 1)
 	end
+	
 	if numofdaily == 4 and pl:GetZombieClassTable().Boss then
 		attacker:GiveAchievementProgress("daily_post", 1)
 	end
@@ -4589,6 +4608,9 @@ function GM:HumanKilledZombie(pl, attacker, inflictor, dmginfo, headshot, suicid
 	self:SetRage(math.Round(self:GetRage() + (1 * (attacker.RageMul or 1)) * self:GetWinRate()))
 	timer.Create("rage"..attacker:Nick(),5,1, function() if attacker:IsValid() then		attacker.RageMul = 1 end end)
 	attacker:AddZSXP(1)
+	if attacker:GetInfo("zs_ultrakill_style") ~= 0 then
+		net.Start("zs_update_style") net.WriteTable({time = CurTime()+4+(math.random(1,20)*0.1),text = "KILL!"}) net.Send(attacker) 
+	end
 
 	
 
@@ -4640,6 +4662,10 @@ function GM:HumanKilledZombie(pl, attacker, inflictor, dmginfo, headshot, suicid
 end
 
 function GM:PostHumanKilledZombie(pl, attacker, inflictor, dmginfo, assistpl, assistamount, headshot)
+	if attacker:GetInfo("zs_mge_phrases") == "1" then
+		net.Start("zs_mge_phr")
+		net.Send(attacker)
+	end -- 
 end
 
 function GM:ZombieKilledHuman(pl, attacker, inflictor, dmginfo, headshot, suicide, victim)

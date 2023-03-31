@@ -376,6 +376,13 @@ function meta:AddXPPerRound(xp)
 	self:SetNWInt('xpperround', self:GetXPPerRound() + xp)	
 end	
 
+function meta:GetStyle()
+	return self:GetNWString(22, "Eugh")
+end
+function meta:SetStyle(s)
+	self:SetNWString(22, s)
+end
+
 
 function meta:SetTokens(pts)
 	self:SetNWInt('btokens', pts)	

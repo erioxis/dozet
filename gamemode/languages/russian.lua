@@ -22,6 +22,9 @@ LANGUAGE.promo_dont_used			= "Промокода не существует ил�
 LANGUAGE.promo_used			= "Промокод использован!"
 LANGUAGE.were_rich			= "Мы богаты!"
 
+LANGUAGE.wins_x_times			= "Выйгранно %s раундов!"
+LANGUAGE.lose_x_times			= "Проиграно %s раундов!"
+
 LANGUAGE.ent_promoce			= "Введите промокод"
 
 LANGUAGE.op_d_esc = "Отключить кастомный ESC"
@@ -209,6 +212,7 @@ LANGUAGE.repair_this_nb = "Чини эту баррикаду выбрав мо�
 LANGUAGE.press_z_or_b =  "Нажми Z или %s чтобы пройти сквозь проп!"
 LANGUAGE.run_danger_nb = "Беги! Баррикада в опасности!"
 --
+LANGUAGE.op_mge = "МГЕ фразы при убийстве!"
 LANGUAGE.op_rgb_hp = "ЛГБТ Здоровье (:bruh:)"
 LANGUAGE.op_voice = "Говорить и слышать только в свою команду"
 LANGUAGE.op_xy = "X и Y Стандартная поза для скиллов(Есть баги!)"
@@ -1521,6 +1525,9 @@ LANGUAGE.class_lacerator_charging					= "Таран"
 LANGUAGE.class_lacerator							= "Растерзатель"
 LANGUAGE.class_barbed_headcrab						= "Шипокраб"
 LANGUAGE.class_mprime								= "Король Минос"
+LANGUAGE.wep_d_mode								= "Режим смерти"
+LANGUAGE.wep_j_mode								= "Режим правосудия"
+LANGUAGE.wep_o_mode								= "ОБЕДУС"
 LANGUAGE.class_tim								= "Гига-Тим"
 LANGUAGE.class_slime								= "Лайм Сисуса"
 LANGUAGE.class_bloodsucker_headcrab					= "Краб-сосунок"

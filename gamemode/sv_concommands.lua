@@ -1019,7 +1019,7 @@ concommand.Add("zs_shitmap_check", function(sender, command, arguments)
 	local doors = ents.FindByClass("func_door_rotating")
 	table.Add(doors, ents.FindByClass("func_movelinear"))
 	local props = ents.FindByClass("prop_physics_multiplayer")
-	local props = ents.FindByClass("prop_physics")
+	table.Add(props,  ents.FindByClass("prop_physics"))
 	local weapon = ents.FindByClass("prop_weapon")
 	local players = ents.FindByClass("player")
 

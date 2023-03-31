@@ -32,7 +32,7 @@ end
 function ENT:OnRemove()
 	local owner = self:GetOwner()
 	if owner:IsValid() then
-		owner.KnockedDown = nil
+		owner.KnockedDownD = nil
 		owner:SetNoDraw(false)
 		if owner[self:GetClass()] == self then
 			owner[self:GetClass()] = nil

@@ -24,16 +24,16 @@ function ENT:Initialize()
 
 	self:SetCollisionGroup(COLLISION_GROUP_DEBRIS_TRIGGER)
 end
-
-
-
-
-
-
-function ENT:OnPackedUp(pl)
-	pl:GiveEmptyWeapon("weapon_zs_teleporter")
-	pl:GiveAmmo(1, "sniperpenetratedround")
-
-	self:Remove()
+function ENT:Think()
+	if (self.nextm or 1) <= CurTime() then
+		local d = ents.Create("prop_money")
+		if d:IsValid() then
+			d:SetPos(self:GetPos()+Vector(0,0,20))
+			d:Spawn()
+			d:SetHP(10)
+			d:SetTime(CurTime()+14)
+			d.DieTime = CurTime() + 13.5
+		end
+		self.nextm = CurTime() + 20
+	end
 end
-

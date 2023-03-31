@@ -39,6 +39,7 @@ function SWEP:PostDrawViewModel(vm)
 		render.SetBlend(1)
 	end
 
+
 	if self.HUD3DPos and GAMEMODE:ShouldDraw3DWeaponHUD() then
 		local pos, ang = self:GetHUD3DPos(vm)
 		if pos then
@@ -77,6 +78,13 @@ local colRed = Color(220, 0, 0, 230)
 local colYellow = Color(220, 220, 0, 230)
 local colWhite = Color(220, 220, 220, 230)
 local colAmmo = Color(255, 255, 255, 230)
+local colors = {
+	Color(255, 255, 255),
+	Color(220, 220, 220),
+	Color(220, 220, 0),
+	Color(220, 0, 0),
+	Color(16, 16, 16)
+}
 local function GetAmmoColor(clip, maxclip)
 	if clip == 0 then
 		colAmmo.r = 255 colAmmo.g = 0 colAmmo.b = 0
@@ -104,6 +112,31 @@ function SWEP:GetDisplayAmmo(clip, spare, maxclip)
 	return clip, spare, maxclip
 end
 
+local function DrawNew(text,sup,wid,x, y, col,time)
+	if time then
+		col.a = col.a * math.max(0.1,((time-CurTime()-0.5)/2))
+	end
+
+	draw.SimpleText("+ "..text , "ZS3D2DFont2Big", x - wid *-3, y*6.8+((sup-1)*100), col, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM)
+
+end
+local function sorter(a,b) 
+	if a and b then
+		if math.Round(a.time) == math.Round(b.time) then
+			if #a.text > #b.text then
+				return #a.text > #b.text 
+			else
+				return #a.text < #b.text 
+			end
+
+		end
+		if a.time < b.time then
+			return a.time > b.time
+		end
+		return a.time < b.time
+	end
+	return true
+end
 function SWEP:Draw3DHUD(vm, pos, ang)
 	local wid, hei = 180, 200
 	local x, y = wid * -0.6, hei * -0.5
@@ -123,6 +156,33 @@ function SWEP:Draw3DHUD(vm, pos, ang)
 
 		GetAmmoColor(dclip, dmaxclip)
 		draw.SimpleTextBlurry(dclip, dclip >= 100 and "ZS3D2DFont" or "ZS3D2DFontBig", x + wid * 0.5, y + hei * (displayspare and 0.3 or 0.5), colAmmo, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+		local colHealth = Color(1,1,1,255)
+		if !MySelf.StyleMoment or #MySelf.StyleMoment <= 0 or GAMEMODE.NoStyle then cam.End3D2D() return end
+		colHealth.r = math.abs(math.sin(CurTime() * 0.5 *  math.pi )) * 120
+		colHealth.g = math.abs(math.sin(CurTime() * 0.5 *math.pi)) * 120
+		colHealth.b = math.abs(math.sin(CurTime() * 0.5 *math.pi)) * 120
+		colHealth.a = 120
+		wid, hei = 220, 300
+		x, y =180 * -0.9, 200 * -0.9
+		draw.RoundedBoxEx(32, x*-3, y*7.5, wid*3, hei*4, colHealth, true,true, true, true) 
+		draw.RoundedBoxEx(32, x*-3, y*9, wid*3, hei*0.7, colHealth, true,true, true, true) 
+		local pable = MySelf.StyleMoment
+		colHealth = Color(math.abs(math.sin(CurTime() * math.pi)) * 255,math.abs(math.sin(CurTime()* 0.5 * math.pi)) * 255,math.abs(math.sin(CurTime()* 0.5 * math.pi)) * 255,255)
+		local col = colHealth
+		--table.sort(pable,sorter)
+		table.SortByMember(pable,"time")
+		for i=1,#pable do
+			if !pable[i] then continue end
+			local v = pable[i]
+			col = (v.color and colors[v.color] or colHealth)
+			DrawNew(v.text,i,wid,x,y,col,v.time)
+			if v.time-CurTime() <= 0 then
+				MySelf.StyleMoment[i] = nil
+			end
+		end
+		surface.SetDrawColor(colHealth)
+		draw.SimpleText(MySelf:GetStyle(), "ZS3D2DFont2Big", x - wid *-4, y*8.3, colors[(MySelf:GetStyle() == "Eugh" and 1 or 4)], TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM)
+		surface.DrawRect( hei*1.7, y - hei*4.05 , wid*2.7, hei*0.1*(math.max(0.2,math.abs(math.sin(CurTime() * math.pi)))))
 	cam.End3D2D()
 end
 

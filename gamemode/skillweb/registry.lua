@@ -454,7 +454,7 @@ SKILL_HYPERCOAGULATION = 426
 SKILL_RESNYATOST = 427
 SKILL_TOY_BEST_FRIEND = 428
 SKILL_PURGATORY = 429
-SKILL_BLOODY_BULLETS = 430 -- maybe LATER
+SKILL_SECRET_9 = 430 -- maybe LATER
 SKILL_STAMINA = 431
 SKILL_STAMINLESS1 = 432
 SKILL_STAMINLESS2 = 433
@@ -481,6 +481,7 @@ SKILL_MOTHER = 453
 SKILL_PARASITOID_2 = 454
 SKILL_PARASITOID_3 = 455
 SKILL_FLIMSY = 456
+
 
 
 
@@ -1224,6 +1225,13 @@ local rand = math.random(2,50)
 local d = GM:AddSkill(SKILL_SECRET_VIII, "Secret VIII", GOOD.."+10 Skill Points\nYou can!",
 																-2,			rand,					{SKILL_NONE}, TREE_GUNTREE)
 GM:AddSkillModifier(SKILL_SECRET_VIII, SKILLMOD_SPOINT, 11)
+d.Hidden = true	
+d.Hidden1 = true
+local rand2 = math.random(-50,50)
+local rand1 = math.random(-50,50)
+local d = GM:AddSkill(SKILL_SECRET_9, "Secret IX", GOOD.."+20 Skill Points\nAhh finded at last...",
+																rand2,			rand1,					{SKILL_NONE}, TREE_GUNTREE)
+GM:AddSkillModifier(SKILL_SECRET_9, SKILLMOD_SPOINT, 21)
 d.Hidden = true	
 d.Hidden1 = true
 local d = GM:AddSkill(SKILL_SECRET_VII, "ᅠ ᅠ ᅠ", GOOD.."+5 Skill Points\nSecret VII",

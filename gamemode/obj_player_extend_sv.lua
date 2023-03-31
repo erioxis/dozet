@@ -90,12 +90,15 @@ function meta:ProcessDamage(dmginfo)
 		if attacker:IsPlayer()and attacker:HasTrinket("soul_lime") and attacker:GetModel() == "models/ultrakill/v1_pm.mdl" then
 			dmginfo:SetDamage(dmginfo:GetDamage() * 1.2)
 		end
-		dmginfo:SetDamage(dmginfo:GetDamage() * (1 - (math.Clamp(GAMEMODE:GetBalance() * 0.005,-2.5,0.7))))
+		dmginfo:SetDamage(dmginfo:GetDamage() * (1 - (math.Clamp(GAMEMODE:GetBalance() * 0.01,-2.5,0.7))))
 		if self.m_zombiedef then
 			dmginfo:SetDamage(dmginfo:GetDamage() * 0.75)
 		end
 		if self.m_Zombie_Bara1 then
 				dmginfo:SetDamage(dmginfo:GetDamage() * 1.5)
+		end
+		if attacker.ClanPrime then
+			dmginfo:SetDamage(dmginfo:GetDamage() * (1 - GAMEMODE:GetWave() * 0.034))
 		end
 		if self.m_Zmain then
 			dmginfo:SetDamage(dmginfo:GetDamage() * 2)
@@ -161,7 +164,7 @@ function meta:ProcessDamage(dmginfo)
 			self:AttachmentDamage(dmginfo:GetDamage(), attacker, inflictor, 4)
 		end
 		if GAMEMODE.ObjectiveMap then
-			dmginfo:ScaleDamage(0.25)
+			dmginfo:ScaleDamage(0.5)
 		end
 		if attacker:IsPlayer() and attacker:IsSkillActive(SKILL_AMULET_2) and (attacker:Health() <= (attacker:GetMaxHealth() * 0.35) or (attacker.MaxBloodArmor * 0.1 >= attacker:GetBloodArmor()) and attacker:Health() <= 15) then
 			dmginfo:ScaleDamage(2)
@@ -238,6 +241,7 @@ function meta:ProcessDamage(dmginfo)
 				attacker:SetNWFloat("vampirism_progress", attacker:GetNWFloat("vampirism_progress",value)+damage*0.09)
 				if attacker:GetNWFloat("vampirism_progress",value) >= 620 then
 					attacker:SetHealth(math.min(attacker:GetMaxHealth(),attacker:Health() + attacker:GetMaxHealth()*0.09))
+					attacker:SetNWFloat("vampirism_progress", 0)
 				end
 			end
 			if attacker:IsSkillActive(SKILL_INF_POWER) then
@@ -648,10 +652,8 @@ function meta:ProcessDamage(dmginfo)
 				end
 					
 		
-				if attacker:IsBot() and self:GetZSRemortLevel() >= 2 then
-					dmginfo:ScaleDamage(1.25)
-				elseif attacker:IsBot() and self:GetZSRemortLevel() < 2 then
-					dmginfo:ScaleDamage(0.75)
+				if attacker:IsBot() and self:GetZSRemortLevel() <= 4 then
+					dmginfo:ScaleDamage(0.65)
 				end
 
 				if self:GetActiveWeapon().CanDefend and math.min(10,self:GetActiveWeapon():GetPerc()) > 0 and !dmgbypass then
@@ -961,10 +963,6 @@ function meta:ProcessDamage(dmginfo)
 			droped:SetOwner(self)
 		end
 	end
-
-
-
-
 end
 
 
@@ -1008,7 +1006,22 @@ function meta:HasWon()
 
 	return false
 end
-
+local bosses = {
+	"Bad Marrow",  -- 1
+	"Miss ASS",  -- 2
+	"Giga Shadow Child",  -- 3
+	"Red Marrow",  -- 4
+	"Ancient Nightmare",  -- 6
+	"Bloody Nightmare",  -- 7
+	"Bonemesh",  -- 8
+	"God of Shitcade",  --12
+	"Giga Gore Child",  --13
+	"The Grave Darkness",  --14
+	"Ice Puke Pus",  --15
+	"Nightmare",
+	"Puke Pus",
+	"Skeleton"  --16
+}
 function meta:GetBossZombieIndex()
 	local bossclasses = {}
 	for _, classtable in pairs(GAMEMODE.ZombieClasses) do
@@ -1018,23 +1031,7 @@ function meta:GetBossZombieIndex()
 	end
 
 	if #bossclasses == 0 then return -1 end
-	local bosses = {
-		"Bad Marrow",  -- 1
-		"Miss ASS",  -- 2
-		"Giga Shadow Child",  -- 3
-		"Red Marrow",  -- 4
-		"Ancient Nightmare",  -- 6
-		"Bloody Nightmare",  -- 7
-		"Bonemesh",  -- 8
-		"God of Shitcade",  --12
-		"Giga Gore Child",  --13
-		"The Grave Darkness",  --14
-		"Ice Puke Pus",  --15
-		"Nightmare",
-		"Puke Pus",
-		"Skeleton"  --16
-	}
-	if table.HasValue({"Minos Prime","Devourer"},self:GetInfo("zs_bossclass")) and GAMEMODE:GetWave() <= 3 then return bossclasses[3] end
+	if table.HasValue({"Minos Prime","Devourer","Omega Stoney"},self:GetInfo("zs_bossclass")) and GAMEMODE:GetWave() <= 3 then return bossclasses[4] end
 	local desired = self:GetInfo("zs_bossclass") or ""
 	if GAMEMODE:IsBabyMode() then
 		desired = "Giga Gore Child"
@@ -1281,7 +1278,8 @@ function meta:AddCursed(attacker, count)
 end
 
 function meta:AddHallow(attacker, count)
-	self:GiveStatus("hollowing", count)
+	local apl = self:GiveStatus("hollowing", count)
+	apl.Applier = attacker
 end
 
 function meta:AddRot(attacker, count)

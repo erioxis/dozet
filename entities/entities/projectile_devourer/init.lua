@@ -92,7 +92,7 @@ function ENT:Hit(vHitPos, vHitNormal, ent)
 				ent:KnockDown()
 				ent:SetVelocity(Vector(0,0,350))
 				
-				ent:GiveStatus("knockdown_dir",4)
+				ent:GiveStatus("knockdown_dir",2)
 
 				local status = ent:GiveStatus("devourer")
 				if status and status:IsValid() then

@@ -165,7 +165,7 @@ function ENT:PhysicsSimulate(phys, frametime)
 
 
 		if owner:KeyDown(IN_BULLRUSH) and onground and self.NextJump < CurTime() and vel:Length() <= 48 then
-			vel.z = vel.z + 180
+			vel.z = vel.z + 480
 			self.NextJump = CurTime() + 1
 		end
 	end
@@ -325,6 +325,7 @@ function ENT:ThreadSafePhysicsCollide(data)
 			self:EmitSound("npc/env_headcrabcanister/explosion.wav", 100, 100)
 			ParticleEffect("dusty_explosion_rockets", center, angle_zero)
 			self.NextBoom = CurTime() + 3
+			self:TakeDamage(20,self,self)
 			hitflesh = true
 		else
 			local physattacker = ent:GetPhysicsAttacker()

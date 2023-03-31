@@ -85,6 +85,7 @@ hook.Add("InitPostEntity", "GetLocal", function()
 	RunConsoleCommand("initpostentity")
 
 	MySelf:ApplySkills()
+	MySelf.StyleMoment = {}
 end)
 
 -- Remove when model decal crash is fixed.

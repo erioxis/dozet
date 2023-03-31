@@ -6,11 +6,6 @@ SWEP.Base = "weapon_zs_basemelee"
 
 SWEP.ViewModel = "models/weapons/c_arms_citizen.mdl"
 SWEP.WorldModel	= ""
-if CLIENT then
-	SWEP.UseHands = true
-	SWEP.ViewModelFOV = 40
-	SWEP.BobScale = 2
-end
 
 SWEP.HoldType = "fist"
 
@@ -23,7 +18,6 @@ SWEP.UppercutDamageMultiplier = 3
 SWEP.HitDistance = 75
 SWEP.MeleeKnockBack = 0
 
-SWEP.ViewModelFOV = 52
 SWEP.Primary.Ammo = "scrap"
 SWEP.Primary.DefaultClip = 5
 SWEP.AutoSwitchFrom = true

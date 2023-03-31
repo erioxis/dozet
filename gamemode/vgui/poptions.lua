@@ -85,6 +85,12 @@ function MakepOptions()
 	check:SizeToContents()
 	list3:AddItem(check)
 
+	check = vgui.Create("DCheckBoxLabel", Window)
+	check:SetText(translate.Get("op_mge"))
+	check:SetConVar("zs_mge_phrases")
+	check:SizeToContents()
+	list3:AddItem(check)
+
 
 	check = vgui.Create("DCheckBoxLabel", Window)
 	check:SetText(translate.Get("op_bezombie"))
@@ -385,7 +391,20 @@ function MakepOptions()
 	dropdown.OnSelect = function(me, index, value, data)
 		RunConsoleCommand("zs_healthtargetdisplay", value == "Health %" and 3 or value == "Health amount" and 1 or 2)
 	end
-	dropdown:SetText(GAMEMODE.HealthTargetDisplay == 1 and "Health amount" or "% of health")
+	dropdown:SetText(GAMEMODE.HealthTargetDisplay == 1 and "Health amount" or GAMEMODE.HealthTargetDisplay == 3 and "Health %" or "% of health")
+	dropdown:SetTextColor(color_black)
+	list3:AddItem(dropdown)
+
+	list3:AddItem(EasyLabel(Window, "ULTRAKILL Style meter(In developing!)", "DefaultFontSmall", color_white))
+	dropdown = vgui.Create("DComboBox", Window)
+	dropdown:SetMouseInputEnabled(true)
+	dropdown:AddChoice("None")
+	dropdown:AddChoice("YES!")
+	dropdown:AddChoice("In work...")
+	dropdown.OnSelect = function(me, index, value, data)
+		RunConsoleCommand("zs_ultrakill_style", value == "YES!" and 1 or value == "In work..." and 2 or 0)
+	end
+	dropdown:SetText("Some")
 	dropdown:SetTextColor(color_black)
 	list3:AddItem(dropdown)
 

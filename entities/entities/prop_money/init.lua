@@ -33,7 +33,7 @@ function ENT:Think()
 	end
 end
 function ENT:Use(activator, caller)
-	if self:GetOwner() == activator and self.NextUse <= CurTime() then
+	if (self:GetOwner() and self:GetOwner() == activator or !self:GetOwner()) and self.NextUse <= CurTime() then
 		activator:SetPoints(math.max(1,activator:GetPoints() + self:GetHP()))
 		self:Remove()
 	end

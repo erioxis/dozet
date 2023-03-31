@@ -1,4 +1,5 @@
 GM.VaultFolder = "zombiesurvival_vault"
+GM.VaultBalance = "zombiesurvival_maps_balance"
 GM.SkillTreeVersion = 1
 GM.DozetSeason = 2
 GM.OldSeason = 1
@@ -214,7 +215,22 @@ function GM:SaveWinRate()
 	local filename = "system_balance.txt"
 	file.CreateDir(string.GetPathFromFilename(filename))
 	file.Write(filename, Serialize(tosave))
+
+	local tosave = {
+		Wins = (self.WinsMAP or 0),
+		Loses = (self.LosesMAP or 0),
+		HPMUL = (self.HPMULMAP or 1),
+		PointsMul = (self.PointsMulMAP or 1),
+		DirectorMul = (self.DirectorMAP or 0),
+		Director = (self.Director or false),
+		Dif = (self.Dif or 0)
+	}
+
+	local filename = self.VaultBalance.."/".."map_"..game.GetMap().."_balance.txt"
+	file.CreateDir(string.GetPathFromFilename(filename))
+	file.Write(filename, Serialize(tosave))
 end
+
 function GM:LoadWinRate()
 
 	local filename = "system_balance.txt"
@@ -244,6 +260,36 @@ function GM:LoadWinRate()
 					SetGlobalInt("dailynum", self.DailyNum)
 				end
 				
+			end
+		end
+	end
+	local filename = self.VaultBalance.."/".."map_"..game.GetMap().."_balance.txt"
+	if file.Exists(filename, "DATA") then
+		local contents = file.Read(filename, "DATA")
+		if contents and #contents > 0 then
+			contents = Deserialize(contents)
+			if contents then
+				if contents.Wins then
+					self.WinsMAP = contents.Wins
+				end
+				if contents.Dif then
+					self.Dif = contents.Dif
+				end
+				if contents.Loses then
+					self.LosesMAP = contents.Loses
+				end
+				if contents.HPMUL then
+					self.HPMULMAP = contents.HPMUL
+				end
+				if contents.PointsMul then
+					self.PointsMulMAP = contents.PointsMul
+				end
+				if contents.DirectorMul then
+					self.DirectorMAP = contents.DirectorMul or 1
+				end
+				if contents.Director then
+					self.Director = contents.Director
+				end
 			end
 		end
 	end
