@@ -321,7 +321,11 @@ function PANEL:Init()
 
 	self.m_Mute = vgui.Create("DImageButton", self)
 	self.m_Mute.DoClick = MuteDoClick
+
 	
+	self.m_Flag = vgui.Create("DImage", self)
+	self.m_Flag:SetSize(32 * math.max(0.95, BetterScreenScale()), 32 * math.max(0.95, BetterScreenScale()))
+	self.m_Flag:SetImage("zombiesurvival/ultraobed.png")
 
 	self.m_Friend = vgui.Create("DImageButton", self)
 	self.m_Friend.DoClick = ToggleZSFriend
@@ -343,13 +347,14 @@ function PANEL:Paint()
 	end
 
 	if self.Hovered then
-		mul = math.min(1, mul * 1.5)
+		mul = math.min(1, mul * 1.5) + math.abs(math.sin(RealTime() * 3)) * 0.2
 	end
 
 	colTemp.r = col.r * mul
 	colTemp.g = col.g * mul
 	colTemp.b = col.b * mul
 	draw.RoundedBox(4, 0, 0, self:GetWide(), self:GetTall(), colTemp)
+	
 
 	return true
 end
@@ -399,6 +404,13 @@ function PANEL:PerformLayout()
 	self.m_RemortLabel:SizeToContents()
 	self.m_RemortLabel:MoveLeftOf(self.m_ClassImage, 2)
 	self.m_RemortLabel:CenterVertical()
+
+	self.m_Flag:SetSize(self:GetWide() * math.max(0.95, BetterScreenScale()), 32 * math.max(0.95, BetterScreenScale()))
+	self.m_Flag:SetZPos(-10)
+	if !self:GetPlayer():IsUserGroup("superadmin") then
+		self.m_Flag:SetVisible(false)
+		self.m_Flag:SetAlpha(190)
+	end
 end
 
 function PANEL:RefreshPlayer()
@@ -415,6 +427,9 @@ function PANEL:RefreshPlayer()
 	end
 	self.m_PlayerLabel:SetText(name)
 	self.m_PlayerLabel:SetAlpha(240)
+	if self:GetPlayer():IsUserGroup("superadmin") then
+		self.m_PlayerLabel:SetColor(Color(222,71,71))
+	end
 
 
 	self.m_ScoreLabel:SetText(pl:GetMScore().."|"..pl:GetPoints())
@@ -492,7 +507,7 @@ function PANEL:SetPlayer(pl)
 			self.m_SpecialImage:SetVisible(false)
 		end
 
-		self.m_Flash = pl:SteamID() == "STEAM_0:1:3307510"
+		self.m_Flash = math.random(1,100) == 1
 	else
 		self.m_Avatar:SetVisible(false)
 		self.m_SpecialImage:SetVisible(false)

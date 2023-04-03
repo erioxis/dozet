@@ -17,12 +17,6 @@ if CLIENT then
 	}
 	
 	function SWEP:PostDrawViewModel(vm, pl, wep)
-		if self.HUD3DPos and GAMEMODE:ShouldDraw3DWeaponHUD() then
-			local pos, ang = self:GetHUD3DPos(vm)
-			if pos then
-				self:Draw3DHUD(vm, pos, ang)
-			end
-		end
 		local veles = self.VElements
 	
 		local col1 = self:GetOwner():GetWeaponColor():ToColor()

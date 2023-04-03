@@ -491,8 +491,8 @@ function meta:AttachmentDamage(damage, attacker, inflictor, type)
 		if self:GetZombieClassTable().FireBuff then
 			damage = 0
 		end
-		if SERVER and attacker:HasTrinket("fire_ind") and not attacker:GetActiveWeapon().AntiInd and !self:GetZombieClassTable().FireBuff then
-			self:FireInduction(attacker, inflictor, damage * 3)
+		if SERVER and attacker:HasTrinket("fire_ind") and not attacker:GetActiveWeapon().AntiInd then
+			self:FireInduction(attacker, inflictor, damage)
 		end
 		if SERVER then
 			GAMEMODE:DamageAtFloater(attacker, self, self:NearestPoint(attacker:EyePos()), damage, type)

@@ -66,7 +66,57 @@ function meta:DrawStaminaBar()
 		end
 	end
 end
+local function DrawNew(text,sup,wid,x, y, col,time)
+	if time then
+		col.a = col.a * math.max(0.1,((time-CurTime()-0.5)/2))
+	end
 
+	draw.SimpleText("+ "..text , "ZS3D2DFont2Big", x - wid *-3, y*6.8+((sup-1)*100), col, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM)
+
+end
+local colors = {
+	Color(255, 255, 255),
+	Color(220, 220, 220),
+	Color(220, 220, 0),
+	Color(220, 0, 0),
+	Color(16, 16, 16)
+}
+function meta:DrawStyle()
+	local wid, hei = 180, 200
+	local x, y = wid * -0.6, hei * -0.5
+	local wep = MySelf:GetActiveWeapon()
+	local vm = MySelf:GetViewModel()
+	local pos,ang = wep:GetHUD3DPos(vm)
+	cam.Start3D2D(pos, ang, (wep.HUD3DScale or 0.01) / 2)
+		if !MySelf.StyleMoment or #MySelf.StyleMoment <= 0 or !GAMEMODE.NoStyle then cam.End3D2D() return end
+		local colHealth = Color(1,1,1,255)
+		colHealth.r = math.abs(math.sin(CurTime() * 0.5 *  math.pi )) * 120
+		colHealth.g = math.abs(math.sin(CurTime() * 0.5 *math.pi)) * 120
+		colHealth.b = math.abs(math.sin(CurTime() * 0.5 *math.pi)) * 120
+		colHealth.a = 120
+		wid, hei = 220, 300
+		x, y =180 * -0.9, 200 * -0.9
+		draw.RoundedBoxEx(32, x*-3, y*7.5, wid*3, hei*4, colHealth, true,true, true, true) 
+		draw.RoundedBoxEx(32, x*-3, y*9, wid*3, hei*0.7, colHealth, true,true, true, true) 
+		local pable = MySelf.StyleMoment
+		colHealth = Color(math.abs(math.sin(CurTime() * math.pi)) * 255,math.abs(math.sin(CurTime()* 0.5 * math.pi)) * 255,math.abs(math.sin(CurTime()* 0.5 * math.pi)) * 255,255)
+		local col = colHealth
+		--table.sort(pable,sorter)
+		table.SortByMember(pable,"time")
+		for i=1,#pable do
+			if !pable[i] then continue end
+			local v = pable[i]
+			col = (v.color and colors[v.color] or colHealth)
+			DrawNew(v.text,i,wid,x,y,col,v.time)
+			if v.time-CurTime() <= 0 then
+				MySelf.StyleMoment[i] = nil
+			end
+		end
+		surface.SetDrawColor(colHealth)
+		draw.SimpleText(MySelf:GetStyle(), "ZS3D2DFont2Big", x - wid *-4, y*8.3, colors[(MySelf:GetStyle() == "Eugh" and 1 or 4)], TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM)
+		surface.DrawRect( hei*1.7, y - hei*4.05 , wid*2.7, hei*0.1*(math.max(0.2,math.abs(math.sin(CurTime() * math.pi)))))
+	cam.End3D2D()
+end
 --local CrossHairScale = 1
 local matGrad = Material("VGUI/gradient-r")
 local function DrawLine(x, y, rot)
@@ -199,6 +249,7 @@ function meta:DrawCrosshairDot()
 	if MySelf.StaminaHAHA then
 		self:DrawStaminaBar()
 	end
+	--self:DrawStyle()
 end
 
 local matScope = Material("zombiesurvival/scope")

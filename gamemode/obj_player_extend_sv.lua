@@ -485,10 +485,15 @@ function meta:ProcessDamage(dmginfo)
 		if self:IsSkillActive(SKILL_TRUEBLOCK) and self:GetActiveWeapon().ParryTiming then 
            dmginfo:SetDamage(0)
 			self:EmitSound("npc/strider/fire.wav", 120, 40)
-
+			if attacker:GetInfo("zs_ultrakill_style") ~= 0 then
+				net.Start("zs_update_style") net.WriteTable({time = CurTime()+4+(math.random(1,20)*0.1),text = "PARRY!"}) net.Send(self) 
+			end
 			if attacker.IdealHit then
 				attacker:TakeSpecialDamage(1000,DMG_DIRECT,self,self:GetActiveWeapon())
 				self:GiveAchievementProgress("ideal_p",1)
+				if attacker:GetInfo("zs_ultrakill_style") ~= 0 then
+					net.Start("zs_update_style") net.WriteTable({time = CurTime()+4+(math.random(1,20)*0.1),text = "IDEAL PARRY!"}) net.Send(self) 
+				end
 			end
 	    elseif self:IsSkillActive(SKILL_TRUEBLOCK) and not self:GetActiveWeapon().ParryTiming then
 			self:EmitSound("npc/turret_floor/active.wav", 120, 40)
@@ -1913,7 +1918,8 @@ function meta:AddPoints(points, floatingscoreobject, fmtype, nomul)
 	else
 		self:AddZSXP(xp)
 	end
-
+	net.Start("zs_update_style") net.WriteTable({time = CurTime()+3+(math.random(1,20)*0.2),text = Format("%s POINTS & %s XP!",wholepoints,xp)}) net.Send(self) 
+	
 
 	gamemode.Call("PlayerPointsAdded", self, wholepoints)
 end
@@ -2939,7 +2945,7 @@ function meta:CryogenicInduction(attacker, inflictor, damage)
 end
 function meta:FireInduction(attacker, inflictor, damage)
 	if not self:GetZombieClassTable().Boss then
-		if math.random(20 * (attacker:GetActiveWeapon().Tier or 1) * (attacker:GetActiveWeapon().Primary.Numshots or 1) ) == 2 or attacker:GetProgress('fprog') >= ((15 * ((attacker:GetActiveWeapon().Tier or 1)+1))) * (attacker:GetIndChance() or 1) then
+		if math.random(5 * (attacker:GetActiveWeapon().Tier or 1) * (attacker:GetActiveWeapon().Primary.Numshots or 1) ) == 2 or attacker:GetProgress('fprog') >= ((15 * ((attacker:GetActiveWeapon().Tier or 1)+1))) * (attacker:GetIndChance() or 1) then
 			attacker:SetProgress(0,'fprog')
 			timer.Create("Fire_inder" .. attacker:UniqueID(), 0.1, 2, function()
 				if not attacker:IsValid() or not self:IsValid() then return end
@@ -2952,7 +2958,7 @@ function meta:FireInduction(attacker, inflictor, damage)
 					droped:SetPos(self:GetPos()+Vector(0,0,70))
 					droped:Spawn()
 					droped:SetOwner(attacker)
-					droped.Damage = dmg*0.5
+					droped.Damage = dmg*0.25
 				else
 					self:TakeSpecialDamage(dmg, DMG_DIRECT, attacker, inflictor, pos)
 

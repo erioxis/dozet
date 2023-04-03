@@ -55,7 +55,7 @@ if CLIENT then
 		["Прицел1++"] = { type = "Model", model = "models/hunter/triangles/1x1x1.mdl", bone = "Python", rel = "Рукоять1", pos = Vector(-0.19592, 0.49802, 7.04), angle = Angle(0, 180, 0), size = Vector(0.013, 0.007, 0.015), color = Color(169, 163, 147, 255), surpresslightning = false, material = "phoenix_storms/metal_plate", skin = 0, bodygroup = {} },
 		["Рукоять1"] = { type = "Model", model = "models/weapons/w_pist_deagle.mdl", bone = "Python", rel = "", pos = Vector(-0.045, 5.508, -3.702), angle = Angle(90, -90, 0), size = Vector(0.954, 0.848, 0.982), color = Color(169, 163, 147, 255), surpresslightning = false, material = "phoenix_storms/metal_plate", skin = 0, bodygroup = {} }
 	}
-		SWEP.WElements = {
+		--[[SWEP.WElements = {
 			["circle1"] = { type = "Model", model = "models/hunter/plates/plate1x1.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "Рукоять1", pos = Vector(-1.38802, 0.05005, 6.684), angle = Angle(53.99998, 0, 0), size = Vector(0.004, 0.011, 0.007), color = Color(0, 0, 0, 255), surpresslightning = true, material = "", skin = 0, bodygroup = {} },
 			["circle2"] = { type = "Model", model = "models/hunter/plates/plate1x1.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "Рукоять1", pos = Vector(-1.52501, 0.04999, 6.502), angle = Angle(53.99998, 0, 0), size = Vector(0.004, 0.011, 0.005), color = Color(0, 0, 0, 255), surpresslightning = true, material = "", skin = 0, bodygroup = {} },
 			["circle3"] = { type = "Model", model = "models/hunter/plates/plate1x1.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "Рукоять1", pos = Vector(-1.664, 0.05005, 6.3), angle = Angle(53.99998, 0, 0), size = Vector(0.004, 0.011, 0.005), color = Color(0, 0, 0, 255), surpresslightning = true, material = "", skin = 0, bodygroup = {} },
@@ -84,7 +84,7 @@ if CLIENT then
 			["Прицел1+"] = { type = "Model", model = "models/hunter/triangles/1x1x1.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "Рукоять1", pos = Vector(-0.19801, -0.39001, 7.04001), angle = Angle(0, 0, 0), size = Vector(0.013, 0.007, 0.015), color = Color(169, 163, 147, 255), surpresslightning = false, material = "phoenix_storms/metal_plate", skin = 0, bodygroup = {} },
 			["Прицел1++"] = { type = "Model", model = "models/hunter/triangles/1x1x1.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "Рукоять1", pos = Vector(-0.19601, 0.49799, 7.03999), angle = Angle(0, 180, 0), size = Vector(0.013, 0.007, 0.015), color = Color(169, 163, 147, 255), surpresslightning = false, material = "phoenix_storms/metal_plate", skin = 0, bodygroup = {} },
 			["Рукоять1"] = { type = "Model", model = "models/weapons/w_pist_deagle.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3.777, 1.585, 2.044), angle = Angle(-174.041, -180, 0), size = Vector(0.954, 0.848, 0.982), color = Color(169, 163, 147, 255), surpresslightning = false, material = "phoenix_storms/metal_plate", skin = 0, bodygroup = {} }
-		}
+		}]]
 
 
 
@@ -126,7 +126,7 @@ SWEP.Base = "weapon_zs_base"
 SWEP.HoldType = "revolver"
 
 SWEP.ViewModel = "models/weapons/c_357.mdl"
-SWEP.WorldModel = "models/weapons/w_357.mdl"
+SWEP.WorldModel = "models/ultrakill/revolver.mdl"
 SWEP.UseHands = true
 SWEP.ShowViewModel = false
 SWEP.ReloadSound = Sound("Weapon_AWP.ClipOut")

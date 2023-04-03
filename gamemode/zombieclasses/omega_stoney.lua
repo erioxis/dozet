@@ -24,7 +24,7 @@ if SERVER then
 	function CLASS:ProcessDamage(pl, dmginfo)
 		if dmginfo:GetAttacker():IsPlayer() then
 			if bit.band(dmginfo:GetDamageType(),(pl.LastDMGType or DMG_BULLET)) ~= 0 then
-				dmginfo:SetDamage(0)
+				dmginfo:SetDamage(dmginfo:GetDamage()*0.1)
 			end
 		end
 	end

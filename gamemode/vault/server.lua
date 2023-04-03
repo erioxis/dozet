@@ -153,12 +153,6 @@ end
 function GM:SaveVault(pl)
 	if not self:ShouldSaveVault(pl) then return end
 	local remort =pl:GetZSRemortLevel()
-	if self.DozetSeason ~= (pl.Season or 1) then
-		remort = remort/3
-		if remort <= 2 then
-			remort = 0
-		end
-	end
 	local tosave = {
 		Points = math.floor(pl.PointsVault),
 		XP = pl:GetZSXP(),

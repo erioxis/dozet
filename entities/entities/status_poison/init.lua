@@ -45,7 +45,10 @@ function ENT:Think()
 		attackers[attacker] = attackers[attacker] - damage
 	end
 
-	owner:TakeSpecialDamage(damage, DMG_ACID, attacker, self)
+	if self:GetDamage() >= owner:Health() then
+		owner:TakeSpecialDamage(self:GetDamage()*0.75, DMG_ACID, attacker, self)
+		self:Remove()
+	end
 
 	self:NextThink(CurTime() + 2 / (owner:IsValidLivingZombie() and 4 or owner.PoisonSpeedMul or 1))
 	return true

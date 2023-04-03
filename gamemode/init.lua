@@ -1626,7 +1626,7 @@ function GM:Think()
 				if time > (pl.NextResupplyUse or 0) then
 					local stockpiling = pl:IsSkillActive(SKILL_STOCKPILE)
 
-					pl.NextResupplyUse = time + math.max(15,self.ResupplyBoxCooldown * (pl.ResupplyDelayMul or 1) * (stockpiling and 2 or 1)) - (pl:IsSkillActive(SKILL_STOWAGE) and math.max(0,self:GetBalance() / 4) or 0) * (pl.ClanPrime and 0.9 or 1)
+					pl.NextResupplyUse = time + math.max(15,self.ResupplyBoxCooldown * (pl.ResupplyDelayMul or 1) * (stockpiling and 2 or 1))* (pl.ClanPrime and 0.9 or 1)  - (pl:IsSkillActive(SKILL_STOWAGE) and math.max(0,self:GetBalance() / 4) or 0)
 					pl.StowageCaches = (pl.StowageCaches or 0) + (stockpiling and 2 or 1)
 
 					net.Start("zs_nextresupplyuse")
@@ -1680,16 +1680,6 @@ function GM:Think()
 end
 local function DoDropStart(pl)	
 	if !pl:IsValid() then return end
-	if pl:IsSkillActive(SKILL_MOBILIZED) then
-		local weapon = {}
-		for _, wep in pairs(weapons.GetList()) do
-			if (wep.Tier or 1) <= 2 and !wep.ZombieOnly and !wep.NoMobilized and wep.Primary.DefaultClip and wep.Primary.DefaultClip < 9999 then
-				table.insert( weapon, wep.ClassName )
-			end
-		end
-		local drop = table.Random(weapon)
-		pl:Give(drop)
-	end
 	if pl:IsSkillActive(SKILL_ACTIVATE_THIS) then
 		local drop = table.Random(GAMEMODE.GetActiveTrinkets)
 		local func = GAMEMODE:GetInventoryItemType(drop) == INVCAT_CONSUMABLES and pl.AddInventoryItem or pl.Give
@@ -1729,6 +1719,17 @@ local function DoDropStart(pl)
 		elseif pl:IsSkillActive(SKILL_ABYSSFLOWER) then
 			pl:AddInventoryItem("trinket_a_flower")	
 		end
+	end
+	if pl:IsSkillActive(SKILL_MOBILIZED) then
+		if pl:IsSkillActive(SKILL_MOB_II) and math.random(1,4) == 1 then return end
+		local weapon = {}
+		for _, wep in pairs(weapons.GetList()) do
+			if (wep.Tier or 1) <= (pl:IsSkillActive(SKILL_MOB_II) and 4 or 2) and !wep.ZombieOnly and !wep.NoMobilized and wep.Primary.DefaultClip and wep.Primary.DefaultClip < 9999 and (pl:IsSkillActive(SKILL_MOB_II) and (wep.Tier or 1) >= 3 or !pl:IsSkillActive(SKILL_MOB_II)) then
+				table.insert( weapon, wep.ClassName )
+			end
+		end
+		local drop = table.Random(weapon)
+		pl:Give(drop)
 	end
 end
 
@@ -2556,12 +2557,15 @@ end)
 //end)
 local cubes = {"/dice","!dice","!куб","!кбу","!dcie","куб","cube","/cube","re,","сгиу","кб","dice","/dcie","/icde","/diec","кбу","/куб","/кбу"}
 local promos = {"/promo", "промо","промокод","/promocode","/промокод","!промокод","!promo","!promocode","!промо"}
+local casino = {"/rtd", "rtd","ртд","казино","!rtd","!казино","!casino","/casino","!ртд"}
+local wepf_c = {}
+for _, wep in pairs(weapons.GetList()) do
+	if (wep.Tier or 1) == 7 and !wep.ZombieOnly and !wep.NoMobilized and wep.Primary.DefaultClip and wep.Primary.DefaultClip < 9999 then
+		table.insert( wepf_c, wep.ClassName )
+	end
+end
 hook.Add("PlayerSay", "ForBots", function(ply, text)
     local playerInput = string.Explode( " ", text )
-	if not ply:IsBot() and string.len(text) <= 45 then
-		table.insert( GAMEMODE.Da, (#GAMEMODE.Da or 0) + 1 ,playerInput[math.random(1, #playerInput)] )
-   		--table.Add(GAMEMODE.Da, playerInput)
-	end
 	
 	if ( table.HasValue(cubes,string.lower( playerInput[1] )) and playerInput[2] and tonumber(playerInput[2]) and tonumber(playerInput[2]) >= 2) and (ply.NextDiceDrop or 1) <= CurTime() then
 		local drop = math.random(1,tonumber(playerInput[2]) )
@@ -2573,9 +2577,62 @@ hook.Add("PlayerSay", "ForBots", function(ply, text)
 		end
 		return false
 	end
+	if ( table.HasValue(casino,string.lower( playerInput[1] )) and playerInput[2] and tonumber(playerInput[2]) and tonumber(playerInput[2]) >= 10) and ply:IsValidLivingHuman() then
+		if (ply.NextCasino or 1) >= CurTime() then
+			ply:PrintTranslatedMessage( HUD_PRINTTALK, "casino_in_s",math.Round((ply.NextCasino or 1)-CurTime()) )
+			return
+		end
+		if ply:GetPoints() <  tonumber(playerInput[2]) then
+			ply:PrintTranslatedMessage( HUD_PRINTTALK, "casino_p")
+			return
+		end
+		local drop = math.random(1,7) 
+		local drop2 = math.random(1,7)
+		local drop3 = math.random(1,7)
+		ply.NextCasino = CurTime() + 60
+		timer.Simple(60, function() 
+			ply:PrintTranslatedMessage( HUD_PRINTTALK, "casino_ready" )
+		end)
+		local jackpot = false
+		if (drop+drop2+drop3) >= 18 and (drop+drop2+drop3) ~= 21 then
+			PrintTranslatedMessage( HUD_PRINTTALK, "casino_jack",tonumber(playerInput[2])*3,ply:Nick() )
+			ply:SetPoints(ply:GetPoints()+tonumber(playerInput[2])*3)
+			jackpot = true
+		end
+		if (drop+drop2+drop3) >= 14 and (drop+drop2+drop3) < 18 then
+			PrintTranslatedMessage( HUD_PRINTTALK, "casino_jack",tonumber(playerInput[2])*1.5,ply:Nick() )
+			ply:SetPoints(ply:GetPoints()+tonumber(playerInput[2])*1.5)
+			jackpot = true
+		end
+		if (drop+drop2+drop3) == 3 then
+			ply:Kill()
+			PrintTranslatedMessage( HUD_PRINTTALK, "casino_snake_eye" )
+			ply:GiveAchievement("snake_eye")
+		end
+		if (drop+drop2+drop3) == 21 then
+			PrintTranslatedMessage( HUD_PRINTTALK, "casino_gg" )
+			PrintTranslatedMessage( HUD_PRINTTALK, "casino_jack",tonumber(playerInput[2])*6,ply:Nick() )
+			ply:SetPoints(ply:GetPoints()+tonumber(playerInput[2])*6)
+			if tonumber(playerInput[2]) >= 200 then
+				ply:Give(table.Random(wepf_c))
+			end
+			ply:GiveAchievement("casino_gg")
+			jackpot = true
+		end
+		if !jackpot then
+			ply:SetPoints(ply:GetPoints()-tonumber(playerInput[2]))
+		end
+		PrintTranslatedMessage( HUD_PRINTTALK, "drop_casino",ply:Nick(), drop,drop2,drop3,tonumber(playerInput[2]) )
+		MsgC( Color( 255, 0, 0 ), ply:Nick().." throw casino" .. tonumber(playerInput[2]))
+		return false
+	end
 	if table.HasValue(promos,string.lower( playerInput[1] )) and playerInput[2] then
 		GAMEMODE:WritePromo(playerInput[2],ply)
 		return false
+	end
+	if not ply:IsBot() and string.len(text) <= 45 then
+		table.insert( GAMEMODE.Da, (#GAMEMODE.Da or 0) + 1 ,playerInput[math.random(1, #playerInput)] )
+   		--table.Add(GAMEMODE.Da, playerInput)
 	end
 end)
 hook.Add( "PlayerConnect", "JoinGlobalMessage", function( name, ip )
@@ -2905,7 +2962,8 @@ function GM:PlayerInitialSpawnRound(pl)
 		"76561199226152985",
 		"76561199040548917",
 		"76561199124299400",
-		"76561198819916837"
+		"76561198819916837",
+		"76561198236924140"
 	}
 	local meleeclan ={
 		"76561198394385289",
@@ -3410,8 +3468,6 @@ end
 function GM:PropBroken(ent, attacker)
 	if IsValid(ent) and IsValid(attacker) and not ent._PROPBROKEN and attacker:IsPlayer() and attacker:Team() == TEAM_HUMAN then
 		ent._PROPBROKEN = true
-			attacker:TakeDamage(attacker:Health() * 0.5, attacker, attacker:GetActiveWeapon())
-
 		if attacker.LogID then --failsafe for local dev
 			PrintMessage(HUD_PRINTCONSOLE, attacker:LogID().." broke "..ent:GetModel())
 		end
@@ -3590,17 +3646,17 @@ function GM:EntityTakeDamage(ent, dmginfo)
 							local damage2 = (damage * (attacker.ElementalMul or 1)) * (ent:GetZombieClassTable().ElementalDebuff or 1)
 							
 							if !attacker:HasTrinket("cham_at") then
-								if attacker:HasTrinket("fire_at") and (math.max(math.random(fireatt),1) == 1 or attacker:IsSkillActive(SKILL_100_PERC) and (attacker.NextFireAtt or 0) < CurTime() ) then
+								if attacker:HasTrinket("fire_at") and (math.max(math.random(1,fireatt),1) == 1 or attacker:IsSkillActive(SKILL_100_PERC) and (attacker.NextFireAtt or 0) < CurTime() ) then
 									ent:AttachmentDamage(damage2, attacker, attacker, SLOWTYPE_FLAME)
 									CurseAttach(attacker)
 									attacker.NextFireAtt = CurTime() + 2
 								end
-								if attacker:HasTrinket("pulse_at") and (math.max(math.random(pulseatt),1) == 1 or attacker:IsSkillActive(SKILL_100_PERC) and (attacker.NextPulseAtt or 0) < CurTime())  then
+								if attacker:HasTrinket("pulse_at") and (math.max(math.random(1,pulseatt),1) == 1 or attacker:IsSkillActive(SKILL_100_PERC) and (attacker.NextPulseAtt or 0) < CurTime())  then
 									ent:AttachmentDamage(damage2, attacker, attacker, SLOWTYPE_PULSE)
 									CurseAttach(attacker)
 									attacker.NextPulseAtt = CurTime() + 1
 								end
-								if attacker:HasTrinket("acid_at") and (math.max(math.random(iceatt),1) == 1  or attacker:IsSkillActive(SKILL_100_PERC) and (attacker.NextIceAtt or 0) < CurTime()) then
+								if attacker:HasTrinket("acid_at") and (math.max(math.random(1,iceatt),1) == 1  or attacker:IsSkillActive(SKILL_100_PERC) and (attacker.NextIceAtt or 0) < CurTime()) then
 									ent:AttachmentDamage(damage2, attacker, attacker, SLOWTYPE_COLD)
 									if math.random(1,4) == 1 then
 										ent:GiveStatus("frost",math.random(1,7))

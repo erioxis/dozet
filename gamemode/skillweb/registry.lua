@@ -481,6 +481,7 @@ SKILL_MOTHER = 453
 SKILL_PARASITOID_2 = 454
 SKILL_PARASITOID_3 = 455
 SKILL_FLIMSY = 456
+SKILL_MOB_II = 457
 
 
 
@@ -1393,6 +1394,9 @@ GM:AddSkill(SKILL_EQUIPPED, trs("skill_alacraty"), GOOD.. trs("skill_alacraty_d1
 GM:AddSkill(SKILL_MOBILIZED, trs("skill_mobile"), GOOD.. trs("skill_mobile_d1")..BAD.."-1"..trs("luck"),
 																-7,			1,					{SKILL_EQUIPPED}, TREE_GUNTREE)
 GM:AddSkillModifier(SKILL_MOBILIZED, SKILLMOD_LUCK, -1)
+--SKILL_MOB_II
+GM:AddSkill(SKILL_MOB_II, trs("skill_mobile2"), GOOD.. trs("skill_mobile2_d1")..BAD..trs("skill_mobile2_d2"),
+																-7,			0,					{SKILL_MOBILIZED}, TREE_GUNTREE)
 GM:AddSkill(SKILL_ACTIVATE_THIS, trs("skill_acrftt"), GOOD.. trs("skill_acrftt_d1")..BAD.."-2"..trs("luck"),
 																-7,			3,					{SKILL_MOBILIZED}, TREE_GUNTREE)
 GM:AddSkillModifier(SKILL_ACTIVATE_THIS, SKILLMOD_LUCK, -2)

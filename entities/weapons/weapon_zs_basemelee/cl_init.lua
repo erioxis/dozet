@@ -8,7 +8,9 @@ SWEP.ViewModelFOV = 60
 
 SWEP.Slot = 0
 SWEP.SlotPos = 0
-
+SWEP.HUD3DBone = "ValveBiped.Bip01_R_Hand"
+SWEP.HUD3DAng = Angle(180, 0, 0)
+SWEP.HUD3DPos = Vector(4, -1.5, -3)
 function SWEP:TranslateFOV(fov)
 	return GAMEMODE.FOVLerp * fov
 end
@@ -67,6 +69,30 @@ function SWEP:DrawWorldModel()
 	if owner:IsValid() and (owner.ShadowMan or owner.SpawnProtection) then return end
 
 	self:Anim_DrawWorldModel()
+end
+function SWEP:GetHUD3DPos(vm)
+	local bone = vm:LookupBone(self.HUD3DBone)
+	if not bone then return end
+
+	local m = vm:GetBoneMatrix(bone)
+	if not m then return end
+
+	local pos, ang = m:GetTranslation(), m:GetAngles()
+
+	if self.ViewModelFlip then
+		ang.r = -ang.r
+	end
+
+	local offset = self.HUD3DPos
+	local aoffset = self.HUD3DAng
+
+	pos = pos + ang:Forward() * offset.x + ang:Right() * offset.y + ang:Up() * offset.z
+
+	if aoffset.yaw ~= 0 then ang:RotateAroundAxis(ang:Up(), aoffset.yaw) end
+	if aoffset.pitch ~= 0 then ang:RotateAroundAxis(ang:Right(), aoffset.pitch) end
+	if aoffset.roll ~= 0 then ang:RotateAroundAxis(ang:Forward(), aoffset.roll) end
+
+	return pos, ang
 end
 
 local ghostlerp = 0

@@ -13,7 +13,7 @@ function SWEP:DrawHUD()
 	if !self:GetDiePower() then
 		draw.SimpleText(translate.Get("wep_d_mode"), "ZSHUDFontSmall", x + wid, texty - 45, COLOR_RED, TEXT_ALIGN_CENTER)
 	else
-		draw.SimpleText(translate.Get("wep_j_mode"), "ZSHUDFontSmall", x + wid, texty - 45, COLOR_GREEN, TEXT_ALIGN_CENTER)
+		draw.SimpleText(translate.Get("wep_d_mode"), "ZSHUDFontSmall", x + wid, texty - 45, COLOR_GREEN, TEXT_ALIGN_CENTER)
 	end
 	if self:GetObed() then
 		draw.SimpleText(translate.Get("wep_o_mode"), "ZSHUDFontSmall", x + wid, texty - 5, COLOR_GREEN, TEXT_ALIGN_CENTER)

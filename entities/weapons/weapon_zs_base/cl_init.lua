@@ -117,7 +117,7 @@ local function DrawNew(text,sup,wid,x, y, col,time)
 		col.a = col.a * math.max(0.1,((time-CurTime()-0.5)/2))
 	end
 
-	draw.SimpleText("+ "..text , "ZS3D2DFont2Big", x - wid *-3, y*6.8+((sup-1)*100), col, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM)
+	draw.SimpleText("+ "..text , "ZS3D2DUKFont", x - wid *-3, y*7+((sup-1)*81), col, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM)
 
 end
 local function sorter(a,b) 
@@ -164,8 +164,8 @@ function SWEP:Draw3DHUD(vm, pos, ang)
 		colHealth.a = 120
 		wid, hei = 220, 300
 		x, y =180 * -0.9, 200 * -0.9
-		draw.RoundedBoxEx(32, x*-3, y*7.5, wid*3, hei*4, colHealth, true,true, true, true) 
-		draw.RoundedBoxEx(32, x*-3, y*9, wid*3, hei*0.7, colHealth, true,true, true, true) 
+		draw.RoundedBoxEx(32, x*-3, y*7.5, wid*4, hei*4, colHealth, true,true, true, true) 
+		draw.RoundedBoxEx(32, x*-3, y*9, wid*4, hei*0.7, colHealth, true,true, true, true) 
 		local pable = MySelf.StyleMoment
 		colHealth = Color(math.abs(math.sin(CurTime() * math.pi)) * 255,math.abs(math.sin(CurTime()* 0.5 * math.pi)) * 255,math.abs(math.sin(CurTime()* 0.5 * math.pi)) * 255,255)
 		local col = colHealth
@@ -181,8 +181,8 @@ function SWEP:Draw3DHUD(vm, pos, ang)
 			end
 		end
 		surface.SetDrawColor(colHealth)
-		draw.SimpleText(MySelf:GetStyle(), "ZS3D2DFont2Big", x - wid *-4, y*8.3, colors[(MySelf:GetStyle() == "Eugh" and 1 or 4)], TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM)
-		surface.DrawRect( hei*1.7, y - hei*4.05 , wid*2.7, hei*0.1*(math.max(0.2,math.abs(math.sin(CurTime() * math.pi)))))
+		draw.SimpleText(MySelf:GetStyle(), "ZS3D2DFont2Big", x - wid *-4.5, y*8.3, colors[(MySelf:GetStyle() == "Eugh" and 1 or 4)], TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM)
+		surface.DrawRect( hei*1.7, y - hei*4.05 , wid*3.7, hei*0.1*(math.max(0.2,math.abs(math.sin(CurTime() * math.pi)))))
 	cam.End3D2D()
 end
 
