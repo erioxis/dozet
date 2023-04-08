@@ -88,12 +88,28 @@ net.Receive("zs_mge_phr", function(length)
 	local sound = kill_sounds[math.random(1,#kill_sounds)]
 	MySelf:EmitSound(sound)
 end)
+local function Some(tbl)
+	for k,v in pairs(MySelf.StyleMoment) do
+		if v.text == tbl.text then
+			v.count = (v.count or 1)+1
+			if v.score then
+				v.score = v.score + tbl.score
+			end
+			v.time = v.time + 2.1
+			MySelf.StyleMoment[k] = v
+			return true
+		end
+	end
+	return false
+end
 net.Receive("zs_update_style", function(length)
 	local tbl = net.ReadTable()
+	if Some(tbl) then return end
 	MySelf.StyleMoment[#MySelf.StyleMoment+1] = tbl
 	if table.Count(tbl) <= 0 then
 		MySelf.StyleMoment = {[1] = {text = "OVERLOAD", time = 2 + CurTime()}}
 	end
+
 end)
 
 net.Receive("zs_zvols", function(length)

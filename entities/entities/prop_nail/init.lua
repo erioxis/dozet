@@ -30,7 +30,7 @@ end
 ENT.TimeNext = CurTime() + 0.5
 function ENT:Think()
     if self.EntPos and self.TimeNext < CurTime() and self.EntPos:Distance( self:GetBaseEntity():GetPos() ) > 1 then
-      -- self:Remove()
+    	 self:Remove()
     end
 end
 

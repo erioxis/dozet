@@ -95,10 +95,7 @@ CreateClientConVar("zs_blockposition", "0", true, true)
 CreateClientConVar("zs_nousetodeposit", "0", true, true)
 CreateClientConVar("zs_mge_phrases", "0", true, true)
 
-GM.NoStyle = CreateClientConVar("zs_ultrakill_style", "0", true, false):GetBool()
-cvars.AddChangeCallback("zs_ultrakill_style", function(cvar, oldvalue, newvalue)
-	GAMEMODE.NoStyle = tonumber(newvalue) == 0
-end)
+
 CreateClientConVar("zs_nopickupprops", "1", true, true)
 CreateClientConVar("zs_nopickuploot", "0", true, true)
 CreateClientConVar("zs_nodiscord", "0", true, true)
@@ -298,7 +295,10 @@ GM.NoIronsights = CreateClientConVar("zs_noironsights", "0", true, false):GetBoo
 cvars.AddChangeCallback("zs_noironsights", function(cvar, oldvalue, newvalue)
 	GAMEMODE.NoIronsights = tonumber(newvalue) == 1
 end)
-
+GM.NoStyle = CreateClientConVar("zs_ultrakill_style", "0", true, false):GetBool()
+cvars.AddChangeCallback("zs_ultrakill_style", function(cvar, oldvalue, newvalue)
+	GAMEMODE.NoStyle = tonumber(newvalue) == 1
+end)
 GM.NoCrosshairRotate = CreateClientConVar("zs_nocrosshairrotate", "1", true, false):GetBool()
 cvars.AddChangeCallback("zs_nocrosshairrotate", function(cvar, oldvalue, newvalue)
 	GAMEMODE.NoCrosshairRotate = tonumber(newvalue) == 1

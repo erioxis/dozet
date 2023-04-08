@@ -170,10 +170,15 @@ function meta:FireBulletsLua(src, dir, spread, num, damage, attacker, force_mul,
 		if E_IsValid(ent) and use_damage then
 			if ent:IsPlayer() then
 				temp_vel_ents[ent] = temp_vel_ents[ent] or ent:GetVelocity()
-				inflictor.DamageEyeMul = (inflictor.DamageEyeMul or 0)  + 1
-				inflictor.SpeedEyeMul = (inflictor.SpeedEyeMul or 0) + 1 
+				if inflictor then
+					inflictor.DamageEyeMul = (inflictor.DamageEyeMul or 0)  + 1
+					inflictor.SpeedEyeMul = (inflictor.SpeedEyeMul or 0) + 1 
+				end
 				if SERVER then
 					ent:SetLastHitGroup(bullet_tr.HitGroup)
+					if attacker:IsValidPlayer() then
+						net.Start("zs_update_style") net.WriteTable({time = CurTime()+1.5+(math.random(10,20)*0.2),text = "HEADSHOT",score = 5}) net.Send(attacker) 
+					end
 					if bullet_tr.HitGroup == HITGROUP_HEAD then
 						ent:SetWasHitInHead()
 					end

@@ -1983,7 +1983,7 @@ GM:AddSkill(SKILL_SELFSAVER, trs("skill_selfsaver"), GOOD..trs("skill_selfsaver_
 GM:AddSkill(SKILL_BLOODYFISTS, trs("skill_bloodyfists"), GOOD..trs("skill_bloodyfists_d1")..BAD..trs("skill_bloodyfists_d2"),
 				                                                            	-5,			4,					{SKILL_SELFSAVER}, TREE_DEFENSETREE)
 GM:AddSkillModifier(SKILL_BLOODYFISTS, SKILLMOD_UNARMED_DAMAGE_MUL, -0.20)
-GM:AddSkill(SKILL_ASAVE, trs("skill_ancientsave"), GOOD..trs("skill_ancientsave_d1")..BAD.."-55"..trs("speed"),
+GM:AddSkill(SKILL_ASAVE, trs("skill_ancientsave"), GOOD..trs("skill_ancientsave_d1")..BAD.."-15"..trs("speed"),
 				                                                            	-4,			5,					{SKILL_SELFSAVER}, TREE_DEFENSETREE)
 SKILL_MERIS = 199
 GM:AddSkill(SKILL_MERIS, trs("skill_meris"), GOOD.."-10%"..trs("meleedamagetaken")..BAD.."-15%"..trs("meleedamage")..BAD.."-12%"..trs("b_damage"),
@@ -2687,7 +2687,7 @@ GM:AddSkillModifier(SKILL_EGOCENTRIC, SKILLMOD_HEALTH, -5)
 GM:AddSkillModifier(SKILL_SELFSAVER, SKILLMOD_SELF_DAMAGE_MUL, -0.25)
 GM:AddSkillModifier(SKILL_SELFSAVER, SKILLMOD_SPEED, -35)
 
-GM:AddSkillModifier(SKILL_ASAVE, SKILLMOD_SPEED, -55)
+GM:AddSkillModifier(SKILL_ASAVE, SKILLMOD_SPEED, -15)
 
 GM:AddSkillModifier(SKILL_BLASTPROOF, SKILLMOD_SELF_DAMAGE_MUL, -0.40)
 GM:AddSkillModifier(SKILL_BLASTPROOF, SKILLMOD_RELOADSPEED_MUL, -0.10)

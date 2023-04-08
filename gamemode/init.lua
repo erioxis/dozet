@@ -2591,7 +2591,9 @@ hook.Add("PlayerSay", "ForBots", function(ply, text)
 		local drop3 = math.random(1,7)
 		ply.NextCasino = CurTime() + 60
 		timer.Simple(60, function() 
-			ply:PrintTranslatedMessage( HUD_PRINTTALK, "casino_ready" )
+			if ply:IsValid() then
+				ply:PrintTranslatedMessage( HUD_PRINTTALK, "casino_ready" )
+			end
 		end)
 		local jackpot = false
 		if (drop+drop2+drop3) >= 18 and (drop+drop2+drop3) ~= 21 then
@@ -2619,9 +2621,7 @@ hook.Add("PlayerSay", "ForBots", function(ply, text)
 			ply:GiveAchievement("casino_gg")
 			jackpot = true
 		end
-		if !jackpot then
-			ply:SetPoints(ply:GetPoints()-tonumber(playerInput[2]))
-		end
+		ply:SetPoints(ply:GetPoints()-tonumber(playerInput[2]))
 		PrintTranslatedMessage( HUD_PRINTTALK, "drop_casino",ply:Nick(), drop,drop2,drop3,tonumber(playerInput[2]) )
 		MsgC( Color( 255, 0, 0 ), ply:Nick().." throw casino" .. tonumber(playerInput[2]))
 		return false
@@ -2963,7 +2963,8 @@ function GM:PlayerInitialSpawnRound(pl)
 		"76561199040548917",
 		"76561199124299400",
 		"76561198819916837",
-		"76561198236924140"
+		"76561198236924140",
+		"76561198811927576"
 	}
 	local meleeclan ={
 		"76561198394385289",
@@ -4664,8 +4665,13 @@ function GM:HumanKilledZombie(pl, attacker, inflictor, dmginfo, headshot, suicid
 	self:SetRage(math.Round(self:GetRage() + (1 * (attacker.RageMul or 1)) * self:GetWinRate()))
 	timer.Create("rage"..attacker:Nick(),5,1, function() if attacker:IsValid() then		attacker.RageMul = 1 end end)
 	attacker:AddZSXP(1)
-	if attacker:GetInfo("zs_ultrakill_style") ~= 0 then
-		net.Start("zs_update_style") net.WriteTable({time = CurTime()+4+(math.random(1,20)*0.1),text = "KILL!"}) net.Send(attacker) 
+	if pl:IsChampion() then
+		net.Start("zs_update_style") net.WriteTable({time = CurTime()+2.5+(math.random(10,20)*0.2),text = "CHAMPION KILL",color = pl:GetChampionColor(),score = 100}) net.Send(attacker) 
+	else
+		net.Start("zs_update_style") net.WriteTable({time = CurTime()+4+(math.random(1,20)*0.1),text = "KILL!",color = Color(250,21,21),score = 10}) net.Send(attacker) 
+	end
+	if !attacker:OnGround() then
+		net.Start("zs_update_style") net.WriteTable({time = CurTime()+4+(math.random(10,20)*0.2),text = "AIRKILL!",score = 50,color = Color(1161,161,161)}) net.Send(attacker) 
 	end
 
 	
@@ -4904,6 +4910,9 @@ function GM:DoPlayerDeath(pl, attacker, dmginfo)
 
 	if not pl:CallZombieFunction5("OnKilled", attacker, inflictor, suicide, headshot, dmginfo) then
 		if pl:Health() <= -70 and not pl.NoGibs and not self.ZombieEscape then
+			if attacker:IsValidLivingHuman() then
+				net.Start("zs_update_style") net.WriteTable({time = CurTime()+4+(math.random(1,20)*0.2),text = "OVERKILL!",score = 30}) net.Send(attacker) 
+			end
 			pl:Gib(dmginfo)
 		elseif not pl.KnockedDown then
 			pl:CreateRagdoll()
@@ -4935,6 +4944,9 @@ function GM:DoPlayerDeath(pl, attacker, dmginfo)
 			for i=1,3 do
 				pl:MakeDemiBossDrop(attacker)
 			end
+			if attacker:IsValidLivingHuman() then
+				net.Start("zs_update_style") net.WriteTable({time = CurTime()+2+(math.random(1,20)*0.2),text = "DEMI-BOSS KILLED!",score = 150}) net.Send(attacker) 
+			end
 		end)
 		end
 		if classtable.Boss and not self.ObjectiveMap and pl.BossDeathNotification then
@@ -4942,6 +4954,9 @@ function GM:DoPlayerDeath(pl, attacker, dmginfo)
 				net.WriteEntity(pl)
 				net.WriteUInt(classtable.Index, 8)
 			net.Broadcast()
+			if attacker:IsValidLivingHuman() then
+				net.Start("zs_update_style") net.WriteTable({time = CurTime()+8+(math.random(1,20)*0.2),text = "BOSS KILLED!",score = 350}) net.Send(attacker) 
+			end
 			if attacker:IsValidLivingHuman() and attacker:IsSkillActive(SKILL_SINS) then
 				timer.Simple(0, function()
 					pl:Make1BossDrop(attacker)

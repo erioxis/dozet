@@ -376,8 +376,8 @@ function meta:AddXPPerRound(xp)
 	self:SetNWInt('xpperround', self:GetXPPerRound() + xp)	
 end	
 
-function meta:GetStyle()
-	return self:GetNWString(22, "Eugh")
+function meta:GetStyle(score)
+	return math.Clamp(math.Round(score/1000)+1,1,9)
 end
 function meta:SetStyle(s)
 	self:SetNWString(22, s)
@@ -841,7 +841,7 @@ function meta:ResetSpeed(noset, health)
 	if not noset then
 		self:SetSpeed(speed)
 	end
-
+	speed = math.max(1, speed)
 	return speed
 end
 

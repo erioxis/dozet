@@ -6,7 +6,7 @@ function ENT:Initialize()
 	self:SetModel("models/props_trainstation/trainstation_clock001.mdl")
 	self:PhysicsInitSphere(1.7)
 	self:SetSolid(SOLID_VPHYSICS)
-	self:SetModelScale(0.15, 0.1)
+	self:SetModelScale(0.4, 0.1)
 	self:SetupGenericProjectile(true)
 	self:SetColor(Color(252,217,61, 120))
 	self:SetAlpha(60)
@@ -44,7 +44,13 @@ function ENT:DoRicoShot(ent, pos, melee, dmginfo, attacker)
 				
 				util.SpriteTrail( self, 0, Color( 61,252,109), false, 15, 1, 4, 1 / ( 15 + 1 ) * 0.5, "trails/plasma" )
 				timer.Simple(0.05, function() self:SetPos(pos) end)
+				if dmginfo <= 300 then
+					net.Start("zs_update_style") net.WriteTable({time = CurTime()+4+(math.random(10,20)*0.2),text = "RICOSHOT",score = 50}) net.Send(attacker) 
+				else
+					net.Start("zs_update_style") net.WriteTable({time = CurTime()+4+(math.random(10,20)*0.2),text = "ULTRARICOSHOT",score = 150,color = Color(139,26,133)}) net.Send(attacker) 
+				end
 			elseif melee then
+				net.Start("zs_update_style") net.WriteTable({time = CurTime()+4+(math.random(10,20)*0.2),text = "FISTFUL OF DOLLAR",score = 50,color = Color(70,181,255)}) net.Send(attacker) 
 				self:SetPos(pos)
 				pos.z = 5
 				timer.Simple(0.05, function()  self:SetPos(pos) end)
@@ -81,7 +87,7 @@ function ENT:Think()
 end
 function ENT:OnTakeDamage(dmginfo)
 	if dmginfo:GetDamage() <= 0 then return end
-local owner = self:GetOwner()
+	local owner = self:GetOwner()
 	local attacker = dmginfo:GetAttacker()
 	local pos = self:GetPos()
 	local dmginfotrue = dmginfo:GetDamage()
@@ -89,7 +95,7 @@ local owner = self:GetOwner()
 	if attacker:IsValid() and attacker:IsPlayer() and attacker:Team() == TEAM_HUMAN then
 		for _, ent in pairs(ents.FindInSphere(pos, 1048)) do
 			if WorldVisible(self:LocalToWorld(Vector(0, 0, 30)), ent:NearestPoint(self:LocalToWorld(Vector(0, 0, 30)))) then
-				if not attacker:IsValidLivingHuman()	then
+				if attacker:IsValidLivingHuman() then
 					self:DoRicoShot(ent, ent:GetPos(), attacker:GetActiveWeapon().IsMelee, dmginfotrue, owner)
 				elseif attacker:IsValidLivingZombie() then
 					self:DoBackShot(dmginfotrue, attacker)

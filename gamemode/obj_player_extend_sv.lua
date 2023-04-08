@@ -35,7 +35,7 @@ function meta:ProcessDamage(dmginfo)
 			self:GiveStatus("flimsy")
 		end
 	end
-	if self:IsValidLivingZombie() and self:GetZombieClassTable().Stoney and self:GetActiveWeapon() and self:GetActiveWeapon().IsSwinging and !self:GetActiveWeapon():IsSwinging() then
+	if self:IsValidLivingZombie() and self:GetZombieClassTable().Stoney and self:GetActiveWeapon() and self:GetActiveWeapon().IsSwinging and !self:GetActiveWeapon():IsSwinging() and !dmgbypass then
 		dmginfo:SetDamage(0)
 		if attacker:IsPlayer() then
 			GAMEMODE:BlockFloater(attacker, self, dmginfo:GetDamagePosition())
@@ -485,18 +485,17 @@ function meta:ProcessDamage(dmginfo)
 		if self:IsSkillActive(SKILL_TRUEBLOCK) and self:GetActiveWeapon().ParryTiming then 
            dmginfo:SetDamage(0)
 			self:EmitSound("npc/strider/fire.wav", 120, 40)
-			if attacker:GetInfo("zs_ultrakill_style") ~= 0 then
-				net.Start("zs_update_style") net.WriteTable({time = CurTime()+4+(math.random(1,20)*0.1),text = "PARRY!"}) net.Send(self) 
-			end
+				net.Start("zs_update_style") net.WriteTable({time = CurTime()+4+(math.random(1,20)*0.1),text = "PARRY!", Color(241,221,36),score = 15}) net.Send(self) 
+				self:AddStamina(15)
 			if attacker.IdealHit then
 				attacker:TakeSpecialDamage(1000,DMG_DIRECT,self,self:GetActiveWeapon())
 				self:GiveAchievementProgress("ideal_p",1)
-				if attacker:GetInfo("zs_ultrakill_style") ~= 0 then
-					net.Start("zs_update_style") net.WriteTable({time = CurTime()+4+(math.random(1,20)*0.1),text = "IDEAL PARRY!"}) net.Send(self) 
-				end
+				net.Start("zs_update_style") net.WriteTable({time = CurTime()+4+(math.random(1,20)*0.1),text = "IDEAL PARRY!",Color(169,139,253),score = 50}) net.Send(self) 
+				self:AddStamina(50)
 			end
 	    elseif self:IsSkillActive(SKILL_TRUEBLOCK) and not self:GetActiveWeapon().ParryTiming then
 			self:EmitSound("npc/turret_floor/active.wav", 120, 40)
+			self:AddStamina(-6)
 		end
 	end
 	local mythrilchance = math.randomr(1,25,1,self)
@@ -910,9 +909,8 @@ function meta:ProcessDamage(dmginfo)
 			dmginfo:SetDamage(damage - absorb)
 			self:SetBloodArmor(self:GetBloodArmor() - absorb)
 			self.BloodDead = absorb
-			takedbl = absorb
 
-			if attacker:IsValid() and attacker:IsPlayer() then
+			if attacker:IsValid() and attacker:IsPlayer() and absorb >= 1 then
 				local myteam = attacker:Team()
 				local otherteam = P_Team(self)
 				attacker.DamageDealt[myteam] = attacker.DamageDealt[myteam] + absorb
@@ -920,7 +918,7 @@ function meta:ProcessDamage(dmginfo)
 				if myteam == TEAM_UNDEAD and otherteam == TEAM_HUMAN then
 					attacker:AddLifeHumanDamage(absorb)
 					attacker:AddTokens(math.Round(absorb))
-					GAMEMODE:DamageFloater(attacker, self, dmginfo:GetDamagePosition()  - Vector(0,0,-12), self.BloodDead, true, nil, true)
+					GAMEMODE:DamageFloater(attacker, self, dmginfo:GetDamagePosition()  - Vector(0,0,-12), absorb, true, nil, true)
 				end
 			end
 
@@ -966,6 +964,12 @@ function meta:ProcessDamage(dmginfo)
 			timer.Simple(0, function() droped.TimeToDash = CurTime() + 1 + (0.1 * i) end)
 			droped.DamageToDeal = dmginfo:GetDamage() * 2.5 + ((takedbl and takedbl or 0) * 1.5)
 			droped:SetOwner(self)
+		end
+	end
+	if dmginfo:GetDamage() >= 1 then
+		net.Start("zs_update_style") net.WriteTable({time = CurTime()+1+(math.random(1,20)*0.1),text = Format("TAKED %s DAMAGE ",math.Round(dmginfo:GetDamage())),Color(247,97,97),score = -math.Round(dmginfo:GetDamage())}) net.Send(self) 
+		if dmginfo:GetAttacker() and dmginfo:GetAttacker():IsPlayer() then
+			net.Start("zs_update_style") net.WriteTable({time = CurTime()+2+(math.random(1,20)*0.1),text = Format("DAMAGE DEALED %s ",math.Round(dmginfo:GetDamage())),Color(247,97,97),score = math.Round(dmginfo:GetDamage())}) net.Send(dmginfo:GetAttacker())
 		end
 	end
 end
@@ -1918,7 +1922,7 @@ function meta:AddPoints(points, floatingscoreobject, fmtype, nomul)
 	else
 		self:AddZSXP(xp)
 	end
-	net.Start("zs_update_style") net.WriteTable({time = CurTime()+3+(math.random(1,20)*0.2),text = Format("%s POINTS & %s XP!",wholepoints,xp)}) net.Send(self) 
+	net.Start("zs_update_style") net.WriteTable({time = CurTime()+3+(math.random(1,20)*0.2),text = Format("%s POINTS & %s XP!",wholepoints,xp),score = wholepoints*5}) net.Send(self) 
 	
 
 	gamemode.Call("PlayerPointsAdded", self, wholepoints)

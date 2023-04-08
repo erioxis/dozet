@@ -188,49 +188,36 @@ end
 function SWEP:PhysModify(physobj)
 end
 function SWEP:SecondaryAttack()
-	self:SetNextSecondaryFire(CurTime() + 4)
 	self:SetCharge(0)
-	timer.Simple(4, function() if SERVER then self:SetCharge(2) end end)
+	timer.Simple(0.45, function() if SERVER then self:SetCharge(2) end end)
 	
 	if SERVER then
-
-	local owner = self:GetOwner()
- 	local ent = ents.Create("projectile_money")
-	owner:SetPoints(owner:GetPoints() * 0.95)
-	if ent:IsValid() then
-		for i = 1, self.Primary.NumShots do
-		ent:SetPos(owner:GetShootPos())
-		ent:SetAngles(owner:EyeAngles())
-		ent:SetOwner(owner)
-		ent.ProjDamage = self.Primary.Damage * (owner.ProjectileDamageMul or 1)
-		ent.ProjSource = self
-		ent.ShotMarker = i
-		ent.Team = owner:Team()
-		if self.TripleMoney then
-			ent.DamageMul = 3
+		if self:GetNextSecondaryFire() >= CurTime() then return end
+		local owner = self:GetOwner()
+		local ent = ents.Create("projectile_markcoin")
+		owner:SetPoints(owner:GetPoints() * 0.95)
+		if ent:IsValid() then
+			owner:EmitSound(Sound("zombiesurvival/Coin_Throw.mp3"),120,100,1,CHAN_STATIC,SND_NOFLAGS)
+			owner:LagCompensation( true )
+			ent:SetCollisionGroup(COLLISION_GROUP_DEBRIS_TRIGGER)
+			ent:SetPos( owner:GetShootPos() )
+			ent:SetOwner(owner)
+			ent:Spawn()
+			ent:GetPhysicsObject():SetBuoyancyRatio(0.01)
+			ent:GetPhysicsObject():EnableMotion( true )
+			ent:GetPhysicsObject():SetMass( 1 )
+			ent:GetPhysicsObject():EnableDrag( false )
+			ent:GetPhysicsObject():SetVelocity( owner:GetAimVector() * 600 + Vector(0,0,1) * 250 + owner:GetVelocity() )
+			ent:GetPhysicsObject():ApplyTorqueCenter( Vector(math.random(-50,50),math.random(-50,50),math.random(-50,50)) )
+			self:SetNextSecondaryFire(CurTime() + 0.45)
+			if self.TripleMoney then
+				timer.Simple(0.03, function() 
+				    ent.DCoin = 2
+					ent.PCoin = 2
+				end)
+			end
+			owner:LagCompensation( false )
 		end
-		self:EmitSound("physics/metal/metal_barrel_impact_soft"..math.random(1,4)..".wav")
-
-		self:EntModify(ent)
-		ent:Spawn()
-
-		local phys = ent:GetPhysicsObject()
-		if phys:IsValid() then
-			phys:Wake()
-			ent:SetGravity(20000)
-
-			local angle = owner:GetAimVector():Angle()
-			angle:RotateAroundAxis(angle:Forward(), ssfw or math.random(0,10))
-			angle:RotateAroundAxis(angle:Up(), ssup or math.random(0,10))
-
-			ent.PreVel = angle:Forward() * 520 * (owner.ProjectileSpeedMul or 1)
-			phys:SetVelocityInstantaneous(ent.PreVel)
-
-
-			self:PhysModify(phys)
-		end
-	end
-	end
 	end
 end
 if CLIENT then

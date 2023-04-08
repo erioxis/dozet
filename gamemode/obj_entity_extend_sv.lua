@@ -750,6 +750,9 @@ function meta:DealProjectileTraceDamage(damage, tr, owner)
 		ent:SetLastHitGroup(tr.HitGroup)
 		if tr.HitGroup == HITGROUP_HEAD then
 			ent:SetWasHitInHead()
+			if owner:IsValidPlayer() then
+				net.Start("zs_update_style") net.WriteTable({time = CurTime()+1.5+(math.random(10,20)*0.2),text = "HEADSHOT",score = 5}) net.Send(owner) 
+			end
 		end
 
 		vel = ent:GetVelocity()

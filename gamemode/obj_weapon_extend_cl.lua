@@ -66,56 +66,73 @@ function meta:DrawStaminaBar()
 		end
 	end
 end
-local function DrawNew(text,sup,wid,x, y, col,time)
+local function DrawNew(text,sup,wid,x, y, col,time,count)
 	if time then
-		col.a = col.a * math.max(0.1,((time-CurTime()-0.5)/2))
+		col.a = 255 * math.max(0.1,((time-CurTime()-0.5)/2))
 	end
 
-	draw.SimpleText("+ "..text , "ZS3D2DFont2Big", x - wid *-3, y*6.8+((sup-1)*100), col, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM)
+	draw.SimpleText("+ "..text..(count and " x"..count or "") , "ZSHUDFontTiny", x, y*1.07+((sup-1)*25), col, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM)
 
 end
 local colors = {
 	Color(255, 255, 255),
-	Color(220, 220, 220),
-	Color(220, 220, 0),
+	Color(59, 15, 15),
+	Color(0, 176, 220),
 	Color(220, 0, 0),
-	Color(16, 16, 16)
+	Color(16, 16, 16),
+	Color(189, 40, 40),
+	Color(71, 30, 184),
+	Color(184, 30, 125),
+	Color(231, 243, 62)
+}
+local text = {
+	"Eugh",
+	"Dead",
+	"COOL!",
+	"Bloody!",
+	"Agent of Style",
+	"SUPEER",
+	"Supreme Style",
+	"SSSHitStorm",
+	"GOD OF ZS"
 }
 function meta:DrawStyle()
-	local wid, hei = 180, 200
-	local x, y = wid * -0.6, hei * -0.5
-	local wep = MySelf:GetActiveWeapon()
-	local vm = MySelf:GetViewModel()
-	local pos,ang = wep:GetHUD3DPos(vm)
-	cam.Start3D2D(pos, ang, (wep.HUD3DScale or 0.01) / 2)
-		if !MySelf.StyleMoment or #MySelf.StyleMoment <= 0 or !GAMEMODE.NoStyle then cam.End3D2D() return end
-		local colHealth = Color(1,1,1,255)
+	local screenscale = BetterScreenScale()
+	local wid, hei = 110*screenscale , 150 *screenscale 
+	local x, y = ScrW() - wid - screenscale * 180 , ScrH() - hei - screenscale * 500
+	local col  = Color(0,0,0)
+	local colHealth = Color(1,1,1,255)
+		--if !GAMEMODE.NoStyle then return end
 		colHealth.r = math.abs(math.sin(CurTime() * 0.5 *  math.pi )) * 120
 		colHealth.g = math.abs(math.sin(CurTime() * 0.5 *math.pi)) * 120
 		colHealth.b = math.abs(math.sin(CurTime() * 0.5 *math.pi)) * 120
 		colHealth.a = 120
-		wid, hei = 220, 300
-		x, y =180 * -0.9, 200 * -0.9
-		draw.RoundedBoxEx(32, x*-3, y*7.5, wid*3, hei*4, colHealth, true,true, true, true) 
-		draw.RoundedBoxEx(32, x*-3, y*9, wid*3, hei*0.7, colHealth, true,true, true, true) 
+		draw.RoundedBoxEx(8, x, y, wid*2, hei*3, colHealth, true,true, true, true) 
+		draw.RoundedBoxEx(8, x, y*0.7, wid*2, hei*0.35, colHealth, true,true, true, true) 
 		local pable = MySelf.StyleMoment
 		colHealth = Color(math.abs(math.sin(CurTime() * math.pi)) * 255,math.abs(math.sin(CurTime()* 0.5 * math.pi)) * 255,math.abs(math.sin(CurTime()* 0.5 * math.pi)) * 255,255)
-		local col = colHealth
+		col = colHealth
 		--table.sort(pable,sorter)
 		table.SortByMember(pable,"time")
+		local style = 0
 		for i=1,#pable do
 			if !pable[i] then continue end
 			local v = pable[i]
-			col = (v.color and colors[v.color] or colHealth)
-			DrawNew(v.text,i,wid,x,y,col,v.time)
+			col = (v.color and v.color or colHealth)
+			DrawNew(v.text,i,wid,x,y,col,v.time,v.count)
 			if v.time-CurTime() <= 0 then
 				MySelf.StyleMoment[i] = nil
 			end
+			style = style + (v.score or 0)
 		end
+		local style2 = MySelf:GetStyle(style)
 		surface.SetDrawColor(colHealth)
-		draw.SimpleText(MySelf:GetStyle(), "ZS3D2DFont2Big", x - wid *-4, y*8.3, colors[(MySelf:GetStyle() == "Eugh" and 1 or 4)], TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM)
-		surface.DrawRect( hei*1.7, y - hei*4.05 , wid*2.7, hei*0.1*(math.max(0.2,math.abs(math.sin(CurTime() * math.pi)))))
-	cam.End3D2D()
+		if style2 == 9 then
+			draw.SimpleText(text[style2], "ZSHUDFont", x*1.07, y*0.78, Color(160,172,5,120), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+		end
+		draw.SimpleText(text[style2], "ZSHUDFontSmall", x*1.07, y*0.78, colors[style2], TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+		surface.DrawRect( x, y*0.9 , wid*2*((((style2*1000)-style)-500)/1000), hei*0.08*(math.max(0.2,math.abs(math.sin(CurTime() * math.pi)))))
+		--print((((style2*1000)-style)-500)/1000)
 end
 --local CrossHairScale = 1
 local matGrad = Material("VGUI/gradient-r")
@@ -249,7 +266,7 @@ function meta:DrawCrosshairDot()
 	if MySelf.StaminaHAHA then
 		self:DrawStaminaBar()
 	end
-	--self:DrawStyle()
+	self:DrawStyle()
 end
 
 local matScope = Material("zombiesurvival/scope")

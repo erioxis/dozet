@@ -35,6 +35,7 @@ function ENT:StartTouch(ent)
 			ent:EmitSound("weapons/crossbow/hitbod"..math.random(2)..".wav")
 			ent:TakeSpecialDamage(self.Damage, DMG_CLUB, owner, self, nil)
 			self:Explode()
+			net.Start("zs_update_style") net.WriteTable({time = CurTime()+3+(math.random(1,20)*0.2),text = "UGA-BUGA!",score = 50}) net.Send(owner)
 		end
 	end
 end

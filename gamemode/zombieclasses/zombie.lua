@@ -279,7 +279,7 @@ if SERVER then
 					pl:SecondWind()
 				end
 			end)
-
+			net.Start("zs_update_style") net.WriteTable({time = CurTime()+4+(math.random(1,20)*0.2),text = "CUT OFF!",score = 15}) net.Send(attacker) 
 			return true
 		end
 

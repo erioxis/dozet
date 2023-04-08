@@ -45,7 +45,7 @@ function SWEP:ToDie(damage, numshots, cone)
 
 	end
 	if !self:GetDiePower() then
-		local ent = (self:GetJudge() and  ents.Create("prop_playergibs") or ents.Create(self.Primary.Projectile))
+		local ent = (self:GetJudge() and  ents.Create("prop_gibs") or ents.Create(self.Primary.Projectile))
 		if ent:IsValid() then
 			if !self:GetJudge() or self:GetObed() then
 				ent:SetPos(owner:GetShootPos())

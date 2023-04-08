@@ -286,6 +286,7 @@ killicon.Add("weapon_zs_tithonus", "zombiesurvival/killicons/weapon_zs_tithonus2
 killicon.Add("weapon_zs_seditionist", "zombiesurvival/killicons/weapon_zs_seditionist2")
 killicon.Add("weapon_zs_hyena", "zombiesurvival/killicons/weapon_zs_hyena")
 killicon.Add("weapon_zs_barrage", "zombiesurvival/killicons/weapon_zs_barrage")
+killicon.Add("weapon_zs_rlauncher", "zombiesurvival/killicons/weapon_zs_barrage")
 killicon.Add("weapon_zs_hephaestus", "zombiesurvival/killicons/weapon_zs_heph")
 killicon.Add("weapon_zs_innervator", "zombiesurvival/killicons/weapon_zs_innervator2")
 killicon.Add("weapon_zs_cosmos", "zombiesurvival/killicons/weapon_zs_cosmos2")

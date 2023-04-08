@@ -44,7 +44,7 @@ SWEP.MaxCharge = 3
 SWEP.ChargeTime = 0.6
 
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_RELOAD_SPEED, 0.02)
-GAMEMODE:AddNewRemantleBranch(SWEP, 1, "'Triton' Charged Shotgun", "Focuses on firing quickly charged blasts, but reloads slower and has limited range", function(wept)
+GAMEMODE:AddNewRemantleBranch(SWEP, 1, translate.Get("wep_tit_r1"), translate.Get("wep_d_tit_r1"), function(wept)
 	wept.Primary.Damage = wept.Primary.Damage * 1.3
 	wept.Primary.ProjVelocity = 1000
 	wept.Primary.NumShots = 3
@@ -53,6 +53,15 @@ GAMEMODE:AddNewRemantleBranch(SWEP, 1, "'Triton' Charged Shotgun", "Focuses on f
 	wept.ChargeTime = 0.4
 	wept.ReloadSpeed = wept.ReloadSpeed * 0.8
 	wept.Primary.Projectile = "projectile_drone_pulse"
+end)
+GAMEMODE:AddNewRemantleBranch(SWEP, 2, translate.Get("wep_tit_r2"), translate.Get("wep_d_tit_r2"), function(wept)
+	wept.Primary.Damage = wept.Primary.Damage * 0.33
+	wept.Primary.ProjVelocity = 450
+	if SERVER then
+		wept.EntModify = function(self, ent)
+			ent:SetDTInt(5, 1)
+		end
+	end
 end)
 
 function SWEP:Initialize()

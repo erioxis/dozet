@@ -325,7 +325,6 @@ function PANEL:Init()
 	
 	self.m_Flag = vgui.Create("DImage", self)
 	self.m_Flag:SetSize(32 * math.max(0.95, BetterScreenScale()), 32 * math.max(0.95, BetterScreenScale()))
-	self.m_Flag:SetImage("zombiesurvival/ultraobed.png")
 
 	self.m_Friend = vgui.Create("DImageButton", self)
 	self.m_Friend.DoClick = ToggleZSFriend
@@ -407,10 +406,13 @@ function PANEL:PerformLayout()
 
 	self.m_Flag:SetSize(self:GetWide() * math.max(0.95, BetterScreenScale()), 32 * math.max(0.95, BetterScreenScale()))
 	self.m_Flag:SetZPos(-10)
-	if !self:GetPlayer():IsUserGroup("superadmin") then
-		self.m_Flag:SetVisible(false)
-		self.m_Flag:SetAlpha(190)
+	local pl = self:GetPlayer()
+	if not pl:IsValid() then
+		return
 	end
+	if pl:IsUserGroup("superadmin") or pl and pl:SteamID64() == "76561198811927576" then  return end
+	self.m_Flag:SetVisible(false)
+	self.m_Flag:SetAlpha(190)
 end
 
 function PANEL:RefreshPlayer()
@@ -427,9 +429,7 @@ function PANEL:RefreshPlayer()
 	end
 	self.m_PlayerLabel:SetText(name)
 	self.m_PlayerLabel:SetAlpha(240)
-	if self:GetPlayer():IsUserGroup("superadmin") then
-		self.m_PlayerLabel:SetColor(Color(222,71,71))
-	end
+
 
 
 	self.m_ScoreLabel:SetText(pl:GetMScore().."|"..pl:GetPoints())
@@ -479,7 +479,13 @@ function PANEL:RefreshPlayer()
 		self._LastTeam = pl:Team()
 		self:SetParent(self._LastTeam == TEAM_HUMAN and ScoreBoard.HumanList or ScoreBoard.ZombieList)
 	end
-
+	if pl:IsUserGroup("superadmin") then
+		self.m_PlayerLabel:SetColor(Color(222,71,71))
+		self.m_Flag:SetImage("zombiesurvival/ultraobed.png")
+	elseif pl:SteamID64() == "76561198811927576"  then
+		self.m_PlayerLabel:SetColor(HSVToColor(CurTime()*110 % 360, 1, 1))
+		self.m_Flag:SetImage("zombiesurvival/dobri_banner.png")
+	end
 	self:InvalidateLayout()
 end
 

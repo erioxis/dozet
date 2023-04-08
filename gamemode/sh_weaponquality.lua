@@ -187,7 +187,7 @@ function GM:CreateWeaponOfQuality(i, orig, quality, classname, branch)
 		local newent = self:GetWeaponClassOfQuality(class, i)
 		local afent = scripted_ents.Get((prefix or "") .. class)
 		if cbk then cbk(afent, newent) end
-
+		afent.ClassName = nil
 		scripted_ents.Register(afent, (prefix or "") .. newent)
 		return newent
 	end
@@ -224,7 +224,7 @@ function GM:CreateWeaponOfQuality(i, orig, quality, classname, branch)
 		ent.GhostEntity = ghostent
 		ent.GhostWeapon = newclass
 	end, "status_") end
-
+	wept.ClassName = nil
 	weapons.Register(wept, newclass)
 end
 
