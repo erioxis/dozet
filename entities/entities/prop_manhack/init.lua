@@ -101,7 +101,7 @@ function ENT:SetupPlayerSkills()
 
 	if owner:IsValid() then
 		newmaxhealth = newmaxhealth * owner:GetTotalAdditiveModifier("ControllableHealthMul", "ManhackHealthMul")
-		hitdamage = hitdamage * (owner.ManhackDamageMul or 1)
+		hitdamage = hitdamage * (owner.ManhackDamageMul or 1) 
 		maxspeed = maxspeed * (owner.ControllableSpeedMul or 1)
 		acceleration = acceleration * (owner.ControllableHandlingMul or 1)
 		loaded = owner:IsSkillActive(SKILL_LOADEDHULL)
@@ -219,6 +219,7 @@ function ENT:PhysicsSimulate(phys, frametime)
 		if owner:KeyDown(IN_MOVERIGHT) then
 			movedir = movedir + aimangles:Right()
 		end
+		--self:TakeDamage(10)
 		if owner:KeyDown(IN_MOVELEFT) then
 			movedir = movedir - aimangles:Right()
 		end
@@ -313,6 +314,13 @@ function ENT:Destroy()
 	else
 		util.Effect("HelicopterMegaBomb", effectdata, true, true)
 	end
+	local wep = self.WeaponClass
+	if owner:IsValidLivingHuman() and wep ~= "weapon_zs_manhack" then
+		if wep == "weapon_zs_auto_turret" then owner:Give("weapon_zs_juggernaut") return end
+		if wep == "weapon_zs_auto_turret_q1" then owner:Give("weapon_zs_auto_turret") return end
+		local who = string.sub(wep,0,#wep-1)
+		owner:Give(who..tonumber(string.sub(wep,#wep,#wep))-1)
+	end
 end
 
 ENT.PhysDamageImmunity = 0
@@ -385,7 +393,7 @@ function ENT:ThreadSafePhysicsCollide(data)
 		if owner.MeleeDamageToBloodArmorMul and owner.MeleeDamageToBloodArmorMul > 0 and owner:GetBloodArmor() < owner.MaxBloodArmor and owner:IsSkillActive(SKILL_BLOODHACK) then
 			owner:SetBloodArmor(math.min((owner.MaxBloodArmor or 20),owner:GetBloodArmor() + math.min(self.HitDamage, ent:Health()) * (owner.MeleeDamageToBloodArmorMul or 1)* (owner.BloodarmorGainMul or 1) * 0.2))
 		end
-		ent:TakeSpecialDamage(self.HitDamage, DMG_SLASH, owner, self)
+		ent:TakeSpecialDamage(self.HitDamage * (self.WeaponClass ~= "weapon_zs_manhack" and 4 or 1), DMG_SLASH, owner, self)
 
 		if ent:IsPlayer() and ent:Team() == TEAM_UNDEAD and ent:Alive() or nest then
 			hitflesh = true

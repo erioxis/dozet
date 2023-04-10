@@ -139,7 +139,8 @@ function SWEP:GetViewModelPosition(pos, ang)
 	end
 	if ghostlerp1 > 0 then
 		pos = pos - 3.5 * ghostlerp1 * ang:Up()
-		ang:RotateAroundAxis(ang:Right(), 20 * ghostlerp1)
+		pos = pos - 8.5 * ghostlerp1 * ang:Right()
+		ang:RotateAroundAxis(ang:Right(), 10 * ghostlerp1)
 		ang:RotateAroundAxis(ang:Forward(), 20 * ghostlerp1)
 	end
 

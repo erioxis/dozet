@@ -369,9 +369,12 @@ false
 	end]]
 	local damage = self:GetBlockState() and (damage * 0.4) or damage
 	if owner:IsSkillActive(SKILL_PARASITOID) and SERVER and not self:GetBlockState() and not self.NoParasits then
-		local parasite = hitent:GiveStatus("parasitoid", math.random(1,3))
+		local parasite = hitent:GiveStatus("parasitoid", 3)
 		if parasite and parasite:IsValid() then
 			parasite:AddDamage(6, owner)
+			parasite.Damage = self.MeleeDamage*0.05*(owner.MeleeDamageMultiplier or 1)
+			parasite:SetDTInt(1,parasite:GetDTInt(1)+1)
+			net.Start("zs_update_style") net.WriteTable({time = CurTime()+3+(math.random(10,20)*0.2),text = Format("PARASITED A %s!",hitent:Nick()),score = 10,color = Color(177,34,177)}) net.Send(owner) 
 		end
 	end
 	if owner:IsSkillActive(SKILL_HELPER) and SERVER and self:GetBlockState() and owner.BulletMul <= 1 then

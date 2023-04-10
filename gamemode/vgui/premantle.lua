@@ -724,7 +724,7 @@ function GM:OpenRemantlerMenu(remantler)
 
 	local disscraptxt = ""
 	if gtbl then
-		local retscrap = self:GetDismantleScrap(gtbl, SelectedInv())
+		local retscrap = self:GetDismantleScrap(gtbl, SelectedInv(),MySelf)
 		disscraptxt = gtbl.NoDismantle and translate.Get("rem_nodism") or translate.Format("rem_dis_for",retscrap)
 	end
 

@@ -11,7 +11,7 @@ CLASS.Health = 1230
 CLASS.Speed = 240
 
 
-CLASS.Points = CLASS.Health/GM.HumanoidZombiePointRatio*10
+CLASS.Points = CLASS.Health/(GM.HumanoidZombiePointRatio*7)
 CLASS.NoPlayerColor = true
 
 CLASS.SWEP = "weapon_zs_noxiousghoul"

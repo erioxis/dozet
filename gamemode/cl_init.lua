@@ -86,6 +86,9 @@ hook.Add("InitPostEntity", "GetLocal", function()
 
 	MySelf:ApplySkills()
 	MySelf.StyleMoment = {}
+	net.Start("zs_sync_style")
+		net.WriteTable(MySelf.StyleMoment)
+	net.SendToServer()
 end)
 
 -- Remove when model decal crash is fixed.
@@ -2213,6 +2216,9 @@ function GM:_PrePlayerDraw(pl)
 		render_ModelMaterialOverride(matSkin)
 		render_SetColorModulation(r, g, b)
 	end
+	if pl.FeignDeath then
+		render_SetBlend(0)
+	end
 	if pl:CallZombieFunction0("PrePlayerDraw") then return true end
 
 	if pl.SpawnProtection and (not (pl.status_overridemodel and pl.status_overridemodel:IsValid()) or pl:GetZombieClassTable().NoHideMainModel) then
@@ -2246,6 +2252,9 @@ local colFriend = Color(10, 255, 10, 60)
 local matFriendRing = Material("SGM/playercircle")
 local matTargetTri = Material("gui/point.png")
 function GM:_PostPlayerDraw(pl)
+	if pl.FeignDeath then
+		render_SetBlend(1)
+	end
 	pl:CallZombieFunction0("PostPlayerDraw")
 	if pl:IsChampion() and pl:GetChampionColor() then
 		render_ModelMaterialOverride()

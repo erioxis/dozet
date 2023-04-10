@@ -47,26 +47,56 @@ function ENT:Explode(hitpos, hitnormal, hitent, boom)
 	self.Exploded = true
 	local jump = false
 	local owner = self:GetOwner()
+	local used = false
 	if owner:IsValidLivingHuman() then
 		local source = self:ProjectileDamageSource()
 		for k,v in pairs(ents.FindInSphere(self:GetPos(),200)) do
-			v:SetVelocity(v:GetVelocity()+Vector(0,0,330))
-			if v:IsPlayer() and v ~= owner then
+			if self:GetDTInt(6) >= 1 then break end
+			if v:IsPlayer() and v ~= owner and v:Team() == TEAM_UNDEAD then
+				v:SetVelocity(v:GetVelocity()+Vector(0,0,330))
 				v:AddLegDamage(55)
 				if !v:OnGround() then
 					v:TakeDamage((self.ProjDamage or 29) * 3,owner,self)
 				end
+				used = true
 			end
 		end
 		for k,v in pairs(ents.FindInSphere(self:GetPos(),120)) do
-			if v == owner then
+			if self:GetDTInt(6) >= 1 then break end
+			if v == owner and !used then
 				jump = true
-				owner:SetVelocity(v:GetVelocity()+Vector(0,0,210))
+				owner:SetVelocity(v:GetVelocity()+Vector(0,0,310))
+			end
+		end
+		if self:GetDTInt(5) == 1 then
+			local old = self:GetPos()
+			local ange = self:GetAngles()
+			local dmg = self.ProjDamage
+			for i=1,2 do
+				local mr = ents.Create(self:GetClass())
+				timer.Simple(0.05*i, function() 
+					if mr:IsValid() then
+						local ang = Angle(0,ange.y + 180*i+90,0)
+	
+						mr:SetPos(old+Vector(0,0,60))
+						mr:SetOwner(owner)
+						mr.ProjDamage = dmg * 0.5
+						mr:SetAngles(ang)
+						mr:Spawn()
+						local phys = mr:GetPhysicsObject()
+						if phys:IsValid() then
+							phys:Wake()
+							phys:SetVelocityInstantaneous(mr:GetAngles():Forward()*1100)
+						end
+						mr:SetDTInt(6,1)
+						mr.Bounces = 3
+					end
+				end)
 			end
 		end
 		if !jump then
 			util.BlastDamagePlayer(source, owner, hitpos, 81 * (hitent and hitent:OnGround() and 1 or 3), (self.ProjDamage or 29) * (hitent and hitent:OnGround() and 1 or 3), DMG_ALWAYSGIB, 0.95)
-			if hitent and hitent:IsPlayer() and !hitent:OnGround() or boom then
+			if (hitent and hitent:IsPlayer() and !hitent:OnGround() or boom) and self:GetDTInt(6) < 1 then
 				net.Start("zs_update_style") net.WriteTable({time = CurTime()+4+(math.random(10,20)*0.2),text = "AIRBOOM!",score = 90,color = Color(196,196,196)}) net.Send(owner) 
 				local edata = EffectData()
 				edata:SetOrigin(self:GetPos())

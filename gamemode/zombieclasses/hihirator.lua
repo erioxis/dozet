@@ -10,6 +10,7 @@ CLASS.Health = 450
 CLASS.Speed = 220
 CLASS.CanPickupProp = true
 CLASS.Points = 3
+CLASS.CanPiz = true
 
 CLASS.CanTaunt = true
 

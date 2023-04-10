@@ -64,6 +64,14 @@ function SWEP:Draw3DHUD(vm, pos, ang)
 		draw.SimpleTextBlurry(spare, "ZS3D2DFontBig", x + wid * 0.5, y + hei, Color(COLOR_RED), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 	cam.End3D2D()
 end
+function SWEP:PreDrawViewModel()
+	if self:GetOwner():GetAmmoCount(self:GetPrimaryAmmoType()) < 1 then
+		self.VElements["element_name"].pos = Vector(0.116, 0.614, -221.20211)
+	else
+		self.VElements["element_name"].pos = Vector(0.116, 0.614, -1.202)
+	end
+	baseclass.Get("weapon_zs_base").PreDrawViewModel(self)
+end
 function SWEP:Draw2DHUD()
 	local screenscale = BetterScreenScale()
 

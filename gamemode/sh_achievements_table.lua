@@ -528,6 +528,13 @@ GM.Statuses["reaper"] = {
 	Max = 14,
 	Icon = Material("zombiesurvival/reaper.png")
 }
+GM.Statuses["parasitoid"] = {
+	Color = Color(238, 139, 247),
+	Name = "parasitoid",
+	ValFunc = statusValueFunction("parasitoid"),
+	Max = 14,
+	Icon = Material("zombiesurvival/reaper.png")
+}
 GM.Statuses["renegade"] = {
 	Color = Color(235, 160, 40),
 	Name = "renegade",
@@ -589,6 +596,13 @@ GM.Statuses["death"] =	{
 	Name = "death",
 	ValFunc = statusValueFunction("death"),
 	Max = 100,
+	Icon = Material("zombiesurvival/reaper.png")
+}
+GM.Statuses["unreal"] =	{
+	Color = Color(247, 228, 63),
+	Name = "unreal",
+	ValFunc = statusValueFunction("unreal"),
+	Max = 14,
 	Icon = Material("zombiesurvival/reaper.png")
 }
 GM.Statuses["flimsy"] =	{

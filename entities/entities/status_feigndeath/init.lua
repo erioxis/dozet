@@ -14,21 +14,8 @@ function ENT:PlayerSet(pPlayer, bExists)
 	pPlayer:AnimResetGestureSlot(GESTURE_SLOT_ATTACK_AND_RELOAD)
 	self.OldMaterial = pPlayer:GetMaterial()
 --	self.OldModel = pPlayer:GetModel()
-	if !pPlayer.BaraCat then
-		timer.Simple(1.5, function()
-			pPlayer:CreateRagdoll()
-			timer.Simple(0.1, function()
-				pPlayer:DrawWorldModel( false )
-				pPlayer:DrawShadow( false )
-				pPlayer:Fire( "alpha", 0, 0 )
-				if pPlayer:GetMaterial() ~= "models/effects/vol_light001" then 
-					pPlayer:SetMaterial( "models/effects/vol_light001" )
-				else
-					pPlayer:SetMaterial( "" )
-				end
-			end)
-		end)
-	end
+	pPlayer:CreateRagdoll()
+	pPlayer:DrawShadow( false )
 
 	if pPlayer:KeyDown(IN_BACK) then
 		self:SetDirection(DIR_BACK)
@@ -71,11 +58,7 @@ function ENT:OnRemove()
 		if parent:GetRagdollEntity():IsValid() then
 			parent:GetRagdollEntity():Remove()
 		end
-		parent:DrawWorldModel(true)
 		parent:DrawShadow(true)
-	--	parent:SetModel(self.OldModel or parent:GetModel())
-		parent:Fire( "alpha", 255, 0 )
 		parent:TemporaryNoCollide(true)
-		parent:SetMaterial( self.OldMaterial or parent:GetMaterial())
 	end
 end

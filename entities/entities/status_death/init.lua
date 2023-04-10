@@ -17,5 +17,6 @@ function ENT:Think()
 end
 function ENT:OnRemove()
 	local own = self:GetOwner()
+	if !own:IsValidLivingHuman() then return end
 	own:Kill()
 end

@@ -77,7 +77,20 @@ SWEP.ConeMin = 4
 
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_MAX_SPREAD, -0.75)
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_MIN_SPREAD, -0.5)
-
+GAMEMODE:AddNewRemantleBranch(SWEP, 1, translate.Get("wep_dualshot_r1"), translate.Get("wep_d_dualshot_r1"), function(wept)
+	wept.Primary.Delay = wept.Primary.Delay * 1.21
+	wept.OnZombieKilled = function(self)
+		local killer = self:GetOwner()
+	
+		if killer:IsValid() then
+			local reaperstatus = killer:GiveStatus("unreal", 3)
+			if reaperstatus and reaperstatus:IsValid() then
+				reaperstatus:SetDTInt(1, math.min(reaperstatus:GetDTInt(1) + 1, 10))
+				killer:EmitSound("npc/antlion/attack_single1.wav", 55, 150 + reaperstatus:GetDTInt(1) * 30, 0.45)
+			end
+		end
+	end
+end)
 function SWEP:OnZombieKilled()
 	local killer = self:GetOwner()
 
@@ -128,6 +141,12 @@ end
 
 function SWEP:SendWeaponAnimation()
 	self:SendWeaponAnim(self:Clip1() % 2 == 0 and ACT_VM_PRIMARYATTACK or ACT_VM_SECONDARYATTACK)
+end
+
+function SWEP:Holster()
+	self:GetOwner():GiveStatus("reaper",0)
+	self:GetOwner():GiveStatus("unreal",0)
+	return self.BaseClass.Holster(self)
 end
 
 function SWEP:EmitFireSound()

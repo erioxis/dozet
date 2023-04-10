@@ -308,7 +308,7 @@ function GM:GetWeaponClassOfQuality(classname, quality, branch)
 	return classname.."_"..string.char(113 + (branch or 0))..quality
 end
 
-function GM:GetDismantleScrap(wtbl, invitem)
+function GM:GetDismantleScrap(wtbl, invitem,pl)
 	local itier = wtbl.Tier
 	local quatier = wtbl.QualityTier
 
@@ -317,8 +317,11 @@ function GM:GetDismantleScrap(wtbl, invitem)
 
 	local qu = (quatier or 0) + 1
 	local basicvalue = baseval * GAMEMODE.DismantleMultipliers[qu] - ((quatier or itier) and 0 or 1)
-
-	return math.floor((basicvalue * (wtbl.IsMelee and 0.6 or 1)) / (wtbl.DismantleDiv or dismantlediv))
+	local mul = 1
+	if pl then
+		mul = pl.ScrapDiscount and (pl.ScrapDiscount * pl.ScrapDiscount) or mul
+	end
+	return math.floor((basicvalue * (wtbl.IsMelee and 0.6 or 1)) / (wtbl.DismantleDiv or dismantlediv)) * mul
 end
 
 function GM:GetUpgradeScrap(wtbl, qualitychoice)

@@ -5,7 +5,7 @@ GM.Website	=	"https://github.com/erioxis/dozet"
 
 -- No, adding a gun doesn't make your name worth being here.
 GM.Credits = {
-	{"Version", "", "7.6.9"}, -- Привет.
+	{"Version", "", "7.7.5"}, -- Привет.
 	{"Season of ", "zombie buffs and code optimisation", "XD"},
 	{"erioxis", "Phantom coder", "dead"},
 	{"Nullted", "", "RU-ENG Translation"},
@@ -613,12 +613,13 @@ function GM:OnPlayerHitGround(pl, inwater, hitfloater, speed)
 			elseif groundent:IsTorso() then
 				groundent:TakeSpecialDamage(4007, DMG_CLUB, pl, pl, pl:GetPos())
 			end
-
+			net.Start("zs_update_style") net.WriteTable({time = CurTime()+1+(math.random(1,20)*0.1),text = "COMPRESS!",score = 25}) net.Send(pl) 
 			groundent:TakeSpecialDamage((groundent:GetZombieClassTable().Skeletal and 10 or 120) * self:GetWave(), DMG_FALL, pl, pl, pl:GetPos())
 			return true
 		end
 		if groundent:IsValid() and groundent:IsPlayer() and PTeam(groundent) == TEAM_UNDEAD and pl:IsSkillActive(SKILL_VKID2) then
 			groundent:TakeSpecialDamage((groundent:GetZombieClassTable().Skeletal and 25 or 160) * self:GetWave(), DMG_FALL, pl, pl, pl:GetPos())
+			net.Start("zs_update_style") net.WriteTable({time = CurTime()+1+(math.random(1,20)*0.1),text = "COMPRESS!",score = 25}) net.Send(pl) 
 			return true
 		end
 	end

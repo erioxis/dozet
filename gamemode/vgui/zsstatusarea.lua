@@ -31,6 +31,7 @@ function PANEL:Init()
 		end
 		status.MemberMaxValue = statusdisp.Max
 		status.Icon = statusdisp.Icon
+		status.CodeName = statusdisp.Name
 		status:Dock(LEFT)
 
 		table.insert(self.StatusPanels, status)
@@ -71,6 +72,7 @@ PANEL.LerpMemberValue = 0
 PANEL.LerpMemberValue2 = 0
 PANEL.MemberMaxValue = 100
 PANEL.MemberName = "Unnamed"
+PANEL.CodeName = "Lol none"
 
 function PANEL:SetColor(col) self.m_Color = col end
 function PANEL:GetColor() return self.m_Color end
@@ -115,6 +117,7 @@ local texDownEdge = surface.GetTextureID("gui/gradient_down")
 function PANEL:Paint(w, h)
 	local value = self.LerpMemberValue
 	if value <= 0 then return end
+	local lp = MySelf
 
 	local col = self:GetColor()
 	local max = self.MemberMaxValue
@@ -174,7 +177,8 @@ function PANEL:Paint(w, h)
 	--	t2 = t2.."|"..self.LerpMemberValue2
 	--end
 	local nm = self:GetMemberName()
-	draw.SimpleText(t1, (t1 >= 10000  and "ZS3D2DFontTiny" or "ZSHUDFontSmall"), w / 2, y + h / 2 - boxsize/2 + 5, color_white_alpha230, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+	local stat = lp:GetStatus(self.CodeName)
+	draw.SimpleText(t1..(stat and stat:IsValid() and stat:GetDTInt(1) ~= 0 and "|"..stat:GetDTInt(1) or ""), ((stat and stat:IsValid() and stat:GetDTInt(1) ~= 0)  and "ZSHUDFontSmaller" or t1 >= 10000 and "ZSHUDFontSmallest" or "ZSHUDFontSmall"), w / 2, y + h / 2 - boxsize/2 + 5, color_white_alpha230, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 	if nm then
 		draw.SimpleText(nm, (string.len(nm) >= 8 and "ZSHUDFontTiniestStatus2" or "ZSHUDFontTiniestStatus"), w / 2, y + h / 2.5 - boxsize/2 + 5, color_white_alpha230, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 	end

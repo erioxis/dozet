@@ -124,7 +124,7 @@ if CLIENT then
 		["forbullet1+++"] = { type = "Model", model = "models/props_phx/construct/glass/glass_plate1x1.mdl", bone = "v_weapon.bullet1", rel = "m249", pos = Vector(1.44, 2.779, 1.753), angle = Angle(32.147, 0, 0), size = Vector(0.009, 0.009, 0.009), color = Color(255, 100, 0, 254), surpresslightning = false, material = "metal2a", skin = 0, bodygroup = {} }
 	}
 	SWEP.HUD3DBone = "v_weapon.m249"
-	SWEP.HUD3DPos = Vector(1.4, -1.3, 5)
+	SWEP.HUD3DPos = Vector(3, -1.3, 5)
 	SWEP.HUD3DAng = Angle(180, 0, 0)
 	SWEP.HUD3DScale = 0.015
 end
@@ -182,7 +182,7 @@ function SWEP:PrimaryAttack()
 	self.IdleAnimation = CurTime() + self:SequenceDuration()
 end
 function SWEP:SecondaryAttack()
-	if !self:CanSecondaryAttack() or CLIENT then return end
+	if !self:CanPrimaryAttack() or CLIENT then return end
 	local owner = self:GetOwner()
 	local ent = ents.Create("prop_manhack")
 	if ent:IsValid() then
@@ -194,7 +194,9 @@ function SWEP:SecondaryAttack()
 		local stored = owner:PopPackedItem(ent:GetClass())
 		if stored then
 			ent:SetObjectHealth(stored[1])
-		end
+		end		
+		local d = self:GetClass()
+		timer.Simple(0,function() ent.WeaponClass = d end)
 
 		ent:EmitSound("WeaponFrag.Throw")
 		local phys = ent:GetPhysicsObject()

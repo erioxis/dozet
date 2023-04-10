@@ -88,7 +88,7 @@ function ENT:GiveToActivator(activator, caller)
 	if self:GetOwner() and self:GetOwner():IsValid() and self:GetOwner():IsPlayer() and self:GetOwner():IsSkillActive(SKILL_SAMODOS) and self:GetOwner() ~= activator then activator:CenterNotify(COLOR_RED, translate.ClientGet(activator, "samodosa")) return end
 	if  not activator:IsPlayer()
 		or not activator:Alive()
-		or activator:Team() ~= TEAM_HUMAN
+		or activator:Team() ~= TEAM_HUMAN and !activator:GetZombieClassTable().CanPiz
 		or self.Removing
 		or activator:GetInfo("zs_nopickuploot") == "1"
 		or (activator:KeyDown(GAMEMODE.UtilityKey) and not self.Forced)

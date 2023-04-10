@@ -192,10 +192,10 @@ function SWEP:SecondaryAttack()
 	timer.Simple(0.45, function() if SERVER then self:SetCharge(2) end end)
 	
 	if SERVER then
-		if self:GetNextSecondaryFire() >= CurTime() then return end
+		if self:GetNextSecondaryFire() >= CurTime() or self:GetOwner():GetPoints() <= 0 then return end
 		local owner = self:GetOwner()
 		local ent = ents.Create("projectile_markcoin")
-		owner:SetPoints(owner:GetPoints() * 0.95)
+		owner:SetPoints(owner:GetPoints()-1)
 		if ent:IsValid() then
 			owner:EmitSound(Sound("zombiesurvival/Coin_Throw.mp3"),120,100,1,CHAN_STATIC,SND_NOFLAGS)
 			owner:LagCompensation( true )

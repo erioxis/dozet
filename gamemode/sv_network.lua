@@ -18,6 +18,8 @@
 	util.AddNetworkString("zs_deminextboss")
 	util.AddNetworkString("zs_update_style")
 	util.AddNetworkString("zs_mge_phr")
+	util.AddNetworkString("zs_sync_style")
+	
 	
 	util.AddNetworkString("zs_classunlock")
 	util.AddNetworkString("zs_sigilcorrupted")

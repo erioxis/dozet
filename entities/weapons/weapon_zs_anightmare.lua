@@ -28,7 +28,9 @@ function SWEP:ApplyMeleeDamage(pl, trace, damage)
 	if SERVER and pl:IsPlayer() and (not pl:GetStatus("hshield")) then
 		local killer = self:GetOwner()
 		timer.Simple(0.15, function()
-			pl:Kill()
+			if pl:IsValid() and math.random(1,5) == 1 then
+				pl:Kill()
+			end
 		end)
         
 	end

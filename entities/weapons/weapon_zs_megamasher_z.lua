@@ -41,7 +41,7 @@ SWEP.Primary.Delay = 1.4
 
 SWEP.SwingRotation = Angle(60, 0, -80)
 SWEP.SwingOffset = Vector(0, -30, 0)
-SWEP.SwingTime = 0.8
+SWEP.SwingTime = 1.6
 SWEP.SwingHoldType = "melee"
 
 SWEP.Tier = 1

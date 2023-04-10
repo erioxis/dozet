@@ -406,13 +406,6 @@ function PANEL:PerformLayout()
 
 	self.m_Flag:SetSize(self:GetWide() * math.max(0.95, BetterScreenScale()), 32 * math.max(0.95, BetterScreenScale()))
 	self.m_Flag:SetZPos(-10)
-	local pl = self:GetPlayer()
-	if not pl:IsValid() then
-		return
-	end
-	if pl:IsUserGroup("superadmin") or pl and pl:SteamID64() == "76561198811927576" then  return end
-	self.m_Flag:SetVisible(false)
-	self.m_Flag:SetAlpha(190)
 end
 
 function PANEL:RefreshPlayer()
@@ -422,7 +415,6 @@ function PANEL:RefreshPlayer()
 		return
 	end
 	
-
 	local name = pl:Name()
 	if #name > 23 then
 		name = string.sub(name, 1, 21)..".."
@@ -479,14 +471,26 @@ function PANEL:RefreshPlayer()
 		self._LastTeam = pl:Team()
 		self:SetParent(self._LastTeam == TEAM_HUMAN and ScoreBoard.HumanList or ScoreBoard.ZombieList)
 	end
+	local used = false
+	self:InvalidateLayout()
+	self.m_Flag:SetVisible(false)
+	self.m_Flag:SetAlpha(190)
 	if pl:IsUserGroup("superadmin") then
 		self.m_PlayerLabel:SetColor(Color(222,71,71))
 		self.m_Flag:SetImage("zombiesurvival/ultraobed.png")
+		used = true
 	elseif pl:SteamID64() == "76561198811927576"  then
 		self.m_PlayerLabel:SetColor(HSVToColor(CurTime()*110 % 360, 1, 1))
 		self.m_Flag:SetImage("zombiesurvival/dobri_banner.png")
+		used = true
+	elseif pl:SteamID64() == "76561198883589289"  then
+		self.m_Flag:SetImage("zombiesurvival/ivan_banner.vtf")
+		used = true
 	end
-	self:InvalidateLayout()
+	if used then
+		self.m_Flag:SetVisible(true)
+		self.m_Flag:SetAlpha(255)
+	end
 end
 
 function PANEL:Think()

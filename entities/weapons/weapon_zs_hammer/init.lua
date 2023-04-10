@@ -21,7 +21,7 @@ function SWEP:Reload()
 		end
 	end
 
-	if not ent or not gamemode.Call("CanRemoveNail", owner, ent) then return end
+	if not ent or not gamemode.Call("CanRemoveNail", owner, ent) or owner:Team() == TEAM_UNDEAD then return end
 
 	local nailowner = ent:GetOwner()
 	if nailowner:IsValid() and nailowner:IsPlayer() and nailowner ~= owner and nailowner:Team() == TEAM_HUMAN and not gamemode.Call("CanRemoveOthersNail", owner, nailowner, ent) then return end
@@ -60,7 +60,7 @@ function SWEP:OnMeleeHit(hitent, hitflesh, tr, dmginfo)
 	if not hitent:IsValid() then return end
 
 	local owner = self:GetOwner()
-
+	if owner:Team() == TEAM_UNDEAD then return end
 	if hitent.HitByHammer and hitent:HitByHammer(self, owner, tr) then
 		return
 	end

@@ -376,8 +376,19 @@ function meta:AddXPPerRound(xp)
 	self:SetNWInt('xpperround', self:GetXPPerRound() + xp)	
 end	
 
-function meta:GetStyle(score)
-	return math.Clamp(math.Round(score/1000)+1,1,9)
+function meta:GetStyle()
+	local pable = self.StyleMoment
+	local style = 0
+	for i=1,#pable do
+		if !pable[i] then continue end
+		local v = pable[i]
+		if v.time-CurTime() <= 0 then
+			self.StyleMoment[i] = nil
+		end
+		style = style + (v.score or 0)
+	end
+	--print(style)
+	return math.Clamp(math.Round(style/1000)+1,1,9)
 end
 function meta:SetStyle(s)
 	self:SetNWString(22, s)

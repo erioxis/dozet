@@ -1297,7 +1297,6 @@ function GM:Think()
 					end
 					pl.LastAFKPosition = plpos
 				end
-
 				if pl:WaterLevel() >= 3 and not (pl.status_drown and pl.status_drown:IsValid()) then
 					pl:GiveStatus("drown")
 				end
@@ -1438,7 +1437,7 @@ function GM:Think()
 						end
 					end
 					if #use < 1 then
-						pl.NextConsumeEgo = time + 30
+						pl.NextConsumeEgo = time + 10
 					else
 						local take = table.Random(use)
 						if take == "trinket_flower" then  
@@ -1451,7 +1450,7 @@ function GM:Think()
 						else
 							pl:TakeInventoryItem(take)
 							pl:AddInventoryItem("trinket_sin_ego")
-							pl.NextConsumeEgo = time + 120
+							pl.NextConsumeEgo = time + 60
 							net.Start("zs_trinketcorrupt")
 								net.WriteString(take)
 								net.WriteString("trinket_sin_ego")
@@ -2937,6 +2936,7 @@ function GM:PlayerInitialSpawnRound(pl)
 	pl.m_ZArmor3 = nil
 	pl.LastHealedFocus = 0
 	pl.AddXPMulti = 1
+	pl.StyleMoment = {}
 
 	-- Boss Mutations (Z-Shop)
 	pl.m_Evo = nil
@@ -4326,7 +4326,7 @@ function GM:KeyPress(pl, key)
 				pl:GetActiveWeapon():SetPerc(0)
 				pl:GodEnable()
 				pl:GetActiveWeapon().GodMode = true
-				timer.Simple(15, function() pl:GodDisable() pl:GetActiveWeapon().GodMode = false end)
+				timer.Simple(4, function() pl:GodDisable() pl:GetActiveWeapon().GodMode = false end)
 			end
 
 	elseif key == IN_ZOOM then
@@ -5141,7 +5141,7 @@ function GM:PlayerCanPickupWeapon(pl, ent)
 
 	if pl:IsSpectator() then return false end
 
-	if pl:Team() == TEAM_UNDEAD then return ent:GetClass() == pl:GetZombieClassTable().SWEP or ent.ZombieCanPickup end
+	if pl:Team() == TEAM_UNDEAD then return ent:GetClass() == pl:GetZombieClassTable().SWEP or ent.ZombieCanPickup or pl:GetZombieClassTable().CanPiz end
 
 
 	return not ent.ZombieOnly
@@ -5196,6 +5196,7 @@ VoiceSetTranslate["models/loyalists/mmd/flandre/flandre_mp_pm.mdl"] = VOICESET_F
 VoiceSetTranslate["models/jazzmcfly/kantai/yuudachi/yuudachi.mdl"] = VOICESET_FEMALE
 VoiceSetTranslate["models/player/dewobedil/vocaloid/haku/bikini_p.mdl"] = VOICESET_FEMALE
 VoiceSetTranslate["models/player/dewobedil/touhou/junko/default_p.mdl"] = VOICESET_FEMALE
+VoiceSetTranslate["models/minosprime1/minosprime1.mdl"] = VOICESET_MINOS
 
 function GM:PlayerSpawn(pl)
 	pl:StripWeapons()
@@ -5946,6 +5947,10 @@ net.Receive("zs_changeclass", function(len, sender)
 			end
 		end
 	end
+end)
+net.Receive("zs_sync_style", function(len, sender)
+	if !sender:IsValid() then return end
+	sender.StyleMoment = net.ReadTable()
 end)
 net.Receive("zs_add_p", function(len, sender)
 	local points = net.ReadInt(12)

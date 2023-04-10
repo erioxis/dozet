@@ -4,8 +4,8 @@ SWEP.Base = "weapon_zs_baseshotgun"
 
 --SWEP.PrintName = "'Annabelle' Rifle"
 --SWEP.Description = "This rifle loads rounds individually, at the cost of being not perfectly accurate."
-SWEP.PrintName = ""..translate.Get("wep_annabelle")
-SWEP.Description = ""..translate.Get("wep_d_annabelle")
+SWEP.PrintName = translate.Get("wep_annabelle")
+SWEP.Description = translate.Get("wep_d_annabelle")
 if CLIENT then
 	SWEP.ViewModelFlip = false
 
@@ -51,7 +51,7 @@ SWEP.Tier = 2
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_MAX_SPREAD, -0.5, 1)
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_MIN_SPREAD, -0.05, 1)
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_FIRE_DELAY, -0.1, 1)
-GAMEMODE:AddNewRemantleBranch(SWEP, 1, ""..translate.Get("wep_annabelle_r1"), ""..translate.Get("wep_d_annabelle_r1"), function(wept)
+GAMEMODE:AddNewRemantleBranch(SWEP, 1, translate.Get("wep_annabelle_r1"), translate.Get("wep_d_annabelle_r1"), function(wept)
 	wept.Primary.Damage = wept.Primary.Damage / 4.3
 	wept.Primary.NumShots = 4
 	wept.ConeMin = wept.ConeMin * 8

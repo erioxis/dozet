@@ -432,9 +432,7 @@ concommand.Add("zs_dismantle", function(sender, command, arguments)
 		potinv = GAMEMODE.Breakdowns[invitem]
 	end
 
-	local scrap = GAMEMODE:GetDismantleScrap(wtbl or GAMEMODE.ZSInventoryItemData[invitem], invitem)
-	local scrapd =  (sender.ScrapDiscount and (sender.ScrapDiscount * sender.ScrapDiscount) or 1)
-	local scrap = scrap * scrapd
+	local scrap = GAMEMODE:GetDismantleScrap(wtbl or GAMEMODE.ZSInventoryItemData[invitem], invitem,sender)
 	net.Start("zs_ammopickup")
 		net.WriteUInt(scrap, 16)
 		net.WriteString("scrap")

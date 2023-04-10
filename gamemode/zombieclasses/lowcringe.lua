@@ -1,6 +1,6 @@
 CLASS.Name = "The Cringe"
 CLASS.TranslationName = "class_cringe2"
-CLASS.Description = "description_the_tickle_monster"
+CLASS.Description = "description_cringe2"
 CLASS.Help = "controls_the_tickle_monster"
 
 

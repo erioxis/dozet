@@ -482,6 +482,7 @@ SKILL_PARASITOID_2 = 454
 SKILL_PARASITOID_3 = 455
 SKILL_FLIMSY = 456
 SKILL_MOB_II = 457
+SKILL_SSS = 458
 
 
 
@@ -883,7 +884,6 @@ GM:AddSkill(SKILL_HEALMODULE, trs("skill_hmod"), GOOD..trs("skill_hmod_d1"),
 GM:AddSkillModifier(SKILL_FLOWER, SKILLMOD_POINT_MULTIPLIER, -0.25)
 local d = GM:AddSkill(SKILL_ABYSSFLOWER, trs("skill_aflower"), GOOD..trs("skill_aflower_d1")..BAD..trs("skill_aflower_d2"),
 																-1,			0.5,					{SKILL_FLOWER}, TREE_SUPPORTTREE)
-d.RemortReq = 46
 --d.Disabled = true
 GM:AddSkill(SKILL_SURGEON3, trs("skill_surg").."III", GOOD.."-11%"..trs("med_cool"),
 																-2,			0,					{SKILL_U_MEDICCLOUD, SKILL_D_FRAIL, SKILL_SURGEONIV}, TREE_SUPPORTTREE)
@@ -1228,8 +1228,8 @@ local d = GM:AddSkill(SKILL_SECRET_VIII, "Secret VIII", GOOD.."+10 Skill Points\
 GM:AddSkillModifier(SKILL_SECRET_VIII, SKILLMOD_SPOINT, 11)
 d.Hidden = true	
 d.Hidden1 = true
-local rand2 = math.random(-50,50)
-local rand1 = math.random(-50,50)
+local rand2 = math.random(-20,20)
+local rand1 = math.random(-20,20)
 local d = GM:AddSkill(SKILL_SECRET_9, "Secret IX", GOOD.."+20 Skill Points\nAhh finded at last...",
 																rand2,			rand1,					{SKILL_NONE}, TREE_GUNTREE)
 GM:AddSkillModifier(SKILL_SECRET_9, SKILLMOD_SPOINT, 21)
@@ -1985,6 +1985,8 @@ GM:AddSkill(SKILL_BLOODYFISTS, trs("skill_bloodyfists"), GOOD..trs("skill_bloody
 GM:AddSkillModifier(SKILL_BLOODYFISTS, SKILLMOD_UNARMED_DAMAGE_MUL, -0.20)
 GM:AddSkill(SKILL_ASAVE, trs("skill_ancientsave"), GOOD..trs("skill_ancientsave_d1")..BAD.."-15"..trs("speed"),
 				                                                            	-4,			5,					{SKILL_SELFSAVER}, TREE_DEFENSETREE)
+GM:AddSkill(SKILL_SSS, trs("skill_sss"), GOOD..trs("skill_sss_d1")..BAD..trs("skill_sss_d2"),
+				                                                            	-4,			7,					{SKILL_ASAVE}, TREE_DEFENSETREE)
 SKILL_MERIS = 199
 GM:AddSkill(SKILL_MERIS, trs("skill_meris"), GOOD.."-10%"..trs("meleedamagetaken")..BAD.."-15%"..trs("meleedamage")..BAD.."-12%"..trs("b_damage"),
 				                                                            	-1,			3.5,					{SKILL_TRIP}, TREE_DEFENSETREE)

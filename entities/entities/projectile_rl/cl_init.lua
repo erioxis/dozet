@@ -10,7 +10,7 @@ end
 
 function ENT:OnRemove()
 	local pos = self:GetPos()
-
+	if self:GetDTInt(6) >= 1 then return end
 	local emitter = ParticleEmitter(pos)
 	emitter:SetNearClip(24, 32)
 	local particle

@@ -404,7 +404,7 @@ function MakepOptions()
 	dropdown.OnSelect = function(me, index, value, data)
 		RunConsoleCommand("zs_ultrakill_style", value == "YES!" and 1 or value == "In work..." and 1 or 0)
 	end
-	dropdown:SetText(GAMEMODE.NoStyle and "NO" or "NO")
+	dropdown:SetText(GAMEMODE.NoStyle and "NO" or "YES")
 	dropdown:SetTextColor(color_black)
 	list3:AddItem(dropdown)
 

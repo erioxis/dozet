@@ -102,7 +102,7 @@ function meta:DrawStyle()
 	local x, y = ScrW() - wid - screenscale * 180 , ScrH() - hei - screenscale * 500
 	local col  = Color(0,0,0)
 	local colHealth = Color(1,1,1,255)
-		--if !GAMEMODE.NoStyle then return end
+		if !GAMEMODE.NoStyle then return end
 		colHealth.r = math.abs(math.sin(CurTime() * 0.5 *  math.pi )) * 120
 		colHealth.g = math.abs(math.sin(CurTime() * 0.5 *math.pi)) * 120
 		colHealth.b = math.abs(math.sin(CurTime() * 0.5 *math.pi)) * 120
@@ -122,15 +122,21 @@ function meta:DrawStyle()
 			DrawNew(v.text,i,wid,x,y,col,v.time,v.count)
 			if v.time-CurTime() <= 0 then
 				MySelf.StyleMoment[i] = nil
+				net.Start("zs_sync_style")
+				net.WriteTable(MySelf.StyleMoment)
+			net.SendToServer()
 			end
 			style = style + (v.score or 0)
 		end
-		local style2 = MySelf:GetStyle(style)
+		local style2 = MySelf:GetStyle()
 		surface.SetDrawColor(colHealth)
 		if style2 == 9 then
 			draw.SimpleText(text[style2], "ZSHUDFont", x*1.07, y*0.78, Color(160,172,5,120), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 		end
 		draw.SimpleText(text[style2], "ZSHUDFontSmall", x*1.07, y*0.78, colors[style2], TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+		local al = table.Copy(colors[style2])
+		al.a = 77
+		draw.SimpleText(style2, "ZSHUDFontSmallest", x*1.07, y*0.74, al, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 		surface.DrawRect( x, y*0.9 , wid*2*((((style2*1000)-style)-500)/1000), hei*0.08*(math.max(0.2,math.abs(math.sin(CurTime() * math.pi)))))
 		--print((((style2*1000)-style)-500)/1000)
 end

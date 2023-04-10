@@ -12,8 +12,8 @@ function ENT:Initialize()
     self:SetMoveType(MOVETYPE_VPHYSICS)
     self:SetSolid(SOLID_VPHYSICS)
     self:GetPhysicsObject():EnableDrag( false )
-    self:SetModelScale(1)
-   -- self:PhysicsInitBox(Vector(10,20,10),Vector(10,20,10))
+    self:SetModelScale(1.3)
+    self:PhysicsInitSphere(0.01)
     util.SpriteTrail(self,1,Color(255,238,0),false,2,0,0.05,0.5,"phoenix_storms/cube")
     self.Coin = true
     self.Chain = 1
@@ -143,7 +143,7 @@ function ENT:OnRemove()
 
                 for i, e in pairs( table.Add(ents.GetAll(),player.GetAll()) ) do
 
-                    if e.Coin == true and e != self then
+                    if e.Coin == true and e != self and e:GetOwner() == self:GetOwner() then-- and e:GetOwner() == self:GetOwner()
 
                         local Dird = e:GetPos() - self:GetPos()
 
@@ -521,7 +521,7 @@ function ENT:OnRemove()
 
                 for i, e in pairs( table.Add(ents.GetAll(),player.GetAll()) ) do
 
-                    if e.Coin == true and e != self or e.Core == true and e != self then
+                    if e.Coin == true and e != self and e:GetOwner() == self:GetOwner()  or e.Core == true and e != self then
 
                         local Dird = e:GetPos() - self:GetPos()
 
@@ -548,7 +548,7 @@ function ENT:OnRemove()
                             SortedCoin[#SortedCoin + 1] = {dist,Dird,e}
                         end
 
-                    elseif e:IsNextBot() or e:IsNPC() or e:IsPlayer() and e != ply then
+                    elseif e:IsPlayer() and e != ply and e:IsValidLivingZombie() then
 
                         local Dird = e:HeadTarget( self:GetPos() ) - self:GetPos()
 

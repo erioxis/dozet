@@ -83,7 +83,7 @@ function SWEP:PrimaryAttack()
 	if owner:HasTrinket("supasm") and (self.Tier or 1) <= 2  then
 		extramulti = 1.25
 	end
-	local dmg = (self:GetPrimaryClipSize() >= 12 and owner:IsSkillActive(SKILL_LAST_AMMO) and 0.75 or self:GetPrimaryClipSize() <= 11 and owner:IsSkillActive(SKILL_LAST_AMMO) and 1.5 + ((self:GetPrimaryClipSize()) * 0.01) or 1) * (extramulti or 1)
+ 	local dmg = (self:GetPrimaryClipSize() >= 12 and owner:IsSkillActive(SKILL_LAST_AMMO) and 0.75 or self:GetPrimaryClipSize() <= 11 and owner:IsSkillActive(SKILL_LAST_AMMO) and 1.5 + ((self:GetPrimaryClipSize()) * 0.01) or 1) * (extramulti or 1)
 	--DamageEyeMul
 	if owner.BirdEye then
 		dmg = dmg + math.min(dmg*1.5,dmg * ((self.DamageEyeMul or 1)/100))
@@ -128,9 +128,9 @@ end
 
 function SWEP:GetPrimaryClipSize()
 	local owner = self:GetOwner()
-	local multi = self.Primary.ClipSize/self.RequiredClip >= 8 and owner:HasTrinket("extendedmag") and 1.15 or 1
+	local multi = self.Primary.ClipSize/self.RequiredClip >= 8 and owner:HasTrinket("extendedmag") and 1.15 or 1 
 
-	return math.floor(self:GetMaxClip1() * multi)
+	return math.floor(self:GetMaxClip1() * multi * (owner:IsSkillActive(SKILL_SSS) and math.max(0.7,owner:GetStyle()/3) or 1))
 end
 
 function SWEP:FinishReload()
@@ -351,6 +351,9 @@ function SWEP:GetFireDelay()
 	local spd = 1
 	if owner.FastEye and SERVER then
 		spd = spd + math.max(-spd*0.5,-((self.SpeedEyeMul or 1)/100))
+	end
+	if owner:GetStatus("unreal") then
+		spd = spd / (1 + (owner:GetStatus("unreal"):GetDTInt(1) or 0)*0.1)
 	end
 	return self.Primary.Delay / (owner:GetStatus("frost") and 0.7 or 1) * (owner.M_FireDelay or 1) * spd
 end
