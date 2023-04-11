@@ -137,8 +137,8 @@ GM.Assemblies["trinket_darksoul"] 						= {"comp_soul_dd",	"comp_soul_booms"}
 GM.Assemblies["comp_soul_emm"] 						= {"comp_soul_dd",	"weapon_zs_sigilfragment"}
 GM.Assemblies["comp_soul_emm2"] 						= {"comp_soul_dosei",	"comp_soul_godlike"}
 GM.Assemblies["comp_soul_emm3"] 						= {"comp_soul_emm2",	"comp_soul_emm"}
-GM.Assemblies["weapon_zs_sigil_port_a"] 						= {"comp_soul_emm3",	"trinket_altcainsoul"}
-GM.Assemblies["weapon_zs_envy_hammer"] 						= {"sin_envy",	"weapon_zs_singurhammer"}
+GM.Assemblies["weapon_zs_sigil_port_a"] 						= {"trinket_altcainsoul","comp_soul_emm3"}
+GM.Assemblies["weapon_zs_envy_hammer"] 						= {"trinket_sin_envy",	"weapon_zs_singurhammer"}
 
 local trs = translate.Get
 local function funcofvoid(pl, nouse)
@@ -1547,10 +1547,11 @@ trinket = GM:AddTrinket(trs("t_kheart"), "kheart", false, supveles, supweles, 4,
 GM:AddSkillModifier(trinket, SKILLMOD_POINT_MULTIPLIER, 0.25)
 GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, -15)
 GM:AddSkillModifier(trinket, SKILLMOD_DMG_TAKEN, 0.15)
-d = math.random(1,5)
-skill1 =  math.Rand(-0.2,0.5)
-skill2 =  math.random(-30,70)
-skill3 = math.Rand(-0.32,0.5)
+
+local d = math.Round(util.SharedRandom("d1",1,5, SysTime()))
+local skill1 =  util.SharedRandom("skill1",-0.2,0.5, SysTime())
+local skill2 =  math.Round(util.SharedRandom("skill3",-30,70, SysTime()))
+local skill3 = util.SharedRandom("skill2",-0.32,0.5, SysTime())
 if d == 1 then
 skill1d = "b_damage"
 skill2d = "health"
@@ -1559,14 +1560,17 @@ skill3d = "meleedamagetaken"
 		skill1d = "p_mul"
 		skill2d = "speed"
 		skill3d = "sale"
+
 	elseif d == 3 then
 		skill1d = "res_ammo"
 		skill2d = "barmor"
 		skill3d = "man_damage"
+
 	elseif d == 4 then
 		skill1d = "self_d"
 		skill2d = "health"
 		skill3d = "meleedamage"
+
 	else
 		skill1 = ""
 skill2 =  ""
@@ -1574,8 +1578,9 @@ skill3 = ""
 skill1d = "qual_0"
 skill2d = "qual_0"
 skill3d = "qual_0"
+--print(skill1.." "..skill2.." "..skill3.." "..d)
 end
-trinket = GM:AddTrinket(trs("t_cursedtrinket"), "cursedtrinket", false, supveles, supweles, 4, skill1..trs(skill1d)..skill2..trs(skill2d)..skill3..trs(skill3d)..trs("t_d_cursedtrinket"))
+trinket = GM:AddTrinket(trs("t_cursedtrinket"), "cursedtrinket", false, supveles, supweles, 4, (isnumber(tonumber(skill1)) and skill1* 100 or skill1)..trs(skill1d)..skill2..trs(skill2d)..(isnumber(tonumber(skill3)) and skill3* 100 or skill3)..trs(skill3d)..trs("t_d_cursedtrinket"))
 if d == 1 then
 GM:AddSkillModifier(trinket, SKILLMOD_DAMAGE, skill1)
 GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, skill2)
@@ -1595,6 +1600,7 @@ GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_MUL, skill3)
 else
 	
 end
+
 
 
 --Attachment

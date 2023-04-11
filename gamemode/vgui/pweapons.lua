@@ -88,12 +88,12 @@ local function SetWeaponViewerSWEP(self, swep, category, comps)
 	end
 
 	viewer.m_Recipe1:SetText(comps and (
-		GAMEMODE.ZSInventoryItemData[comps[1]].PrintName
-	) or "")
+		GAMEMODE.ZSInventoryItemData[comps[1]].PrintName or weapons.Get(comps[1]).PrintName
+		or "") or "")
 
 	viewer.m_Recipe2:SetText(comps and (
-		weapons.Get(comps[2]).PrintName
-	) or "")
+		weapons.Get(comps[2]) and weapons.Get(comps[2]).PrintName or GAMEMODE.ZSInventoryItemData[comps[2]].PrintName
+		or "")or "")
 end
 
 function MakepWeapons(silent)
@@ -135,7 +135,7 @@ function MakepWeapons(silent)
 		end
 	end
 	for k, wep in pairs(GAMEMODE.ZSInventoryItemData) do
-		print(k)
+		--print(k)
 		if not trinkets[wep] and GAMEMODE:GetInventoryItemType(k) == INVCAT_TRINKETS  and !added[wep.PrintName] then
 			trinkets[#trinkets + 1] = wep
 			added[wep.PrintName] = true

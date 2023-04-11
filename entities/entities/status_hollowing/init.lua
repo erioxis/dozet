@@ -22,6 +22,7 @@ function ENT:Think()
 		end
 		if (hollowing.DieTime-CurTime()>self.maxHallow) then
 			self.maxHallow = (math.ceil(hollowing.DieTime-CurTime()))
+			self:SetDTInt(1,self.maxHallow)
 		end
 		
 	end

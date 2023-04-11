@@ -232,6 +232,8 @@ local function DoProgressBar(lp, progress, ptype, color, formula)
 	if lp:IsValid() then
 	end
 end
+local matGlow = Material("sprites/glow04_noz")
+local texDownEdge = surface.GetTextureID("gui/gradient_down")
 function GM:DrawInductorIndicators()
 	local x = ScrW() * 0.45
 	local y = ScrH() * 0.05
@@ -257,8 +259,6 @@ function GM:DrawInductorIndicators()
 	if cham > 0 and chamt >= CurTime() then
 		if lp:IsValid() then
 
-			local matGlow = Material("sprites/glow04_noz")
-			local texDownEdge = surface.GetTextureID("gui/gradient_down")
 			local colHealth = Color(247,229,132)
 			local screenscale = BetterScreenScale()
 			local health = cham
@@ -293,8 +293,6 @@ function GM:DrawInductorIndicators()
 	if fired > 0 and lp:HasTrinket("fire_ind") and firet >= CurTime() then
 		if lp:IsValid() then
 
-			local matGlow = Material("sprites/glow04_noz")
-			local texDownEdge = surface.GetTextureID("gui/gradient_down")
 			local colHealth = lp.HoleOfHell  and Color(65,12,2) or Color(226,62,33)
 			local screenscale = BetterScreenScale()
 			local health = fired
@@ -329,8 +327,7 @@ function GM:DrawInductorIndicators()
 	end
 	if lp:GetProgress('mprog') > 0 and lp:IsSkillActive(SKILL_PREMIUM) and medt >= CurTime() then
 		if lp:IsValid() then
-			local matGlow = Material("sprites/glow04_noz")
-			local texDownEdge = surface.GetTextureID("gui/gradient_down")
+
 			local colHealth = Color(33,226,43)
 			local screenscale = BetterScreenScale()
 			local medprogress = 1800
@@ -362,8 +359,7 @@ function GM:DrawInductorIndicators()
 	end
 	if icep > 0 and icet >= CurTime() then
 		if lp:IsValid() then
-			local matGlow = Material("sprites/glow04_noz")
-			local texDownEdge = surface.GetTextureID("gui/gradient_down")
+
 			local colHealth = Color(21,213,226)
 			local screenscale = BetterScreenScale()
 			local health = icep
@@ -397,8 +393,7 @@ function GM:DrawInductorIndicators()
 	end
 	if pulsed > 0 and lp:HasTrinket("resonance") and pulset >= CurTime() then
 		if lp:IsValid() then
-			local matGlow = Material("sprites/glow04_noz")
-			local texDownEdge = surface.GetTextureID("gui/gradient_down")
+
 			local colHealth = lp:IsSkillActive(SKILL_CRYO_LASER) and Color(27,105,207) or Color(61,5,192)
 			local screenscale = BetterScreenScale()
 			local health = pulsed
@@ -431,8 +426,7 @@ function GM:DrawInductorIndicators()
 	end
 	if bountyd > 0 and bountyt >= CurTime() then
 		if lp:IsValid() then
-			local matGlow = Material("sprites/glow04_noz")
-			local texDownEdge = surface.GetTextureID("gui/gradient_down")
+
 			local colHealth = Color(97,255,24)
 			local screenscale = BetterScreenScale()
 			local health = bountyd
@@ -465,8 +459,7 @@ function GM:DrawInductorIndicators()
 	end
 	if resnyad > 0 and resnyat >= CurTime() then
 		if lp:IsValid() then
-			local matGlow = Material("sprites/glow04_noz")
-			local texDownEdge = surface.GetTextureID("gui/gradient_down")
+
 			local colHealth = Color(145,9,9)
 			local screenscale = BetterScreenScale()
 			local health = resnyad

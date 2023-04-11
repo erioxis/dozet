@@ -98,7 +98,7 @@ function meta:FireBulletsLua(src, dir, spread, num, damage, attacker, force_mul,
 			temp_ignore_team = nil
 		end
 	end
-
+	local hull_size = hull_size or 2
 	if hull_size then
 		bullet_trace.maxs = Vector(hull_size, hull_size, hull_size) * 0.5
 		bullet_trace.mins = bullet_trace.maxs * -1

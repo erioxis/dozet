@@ -82,13 +82,16 @@ function GM:LoadVault(pl)
 					pl:SetUpgradeSkills(util.DecompressBitTable(contents.UpgradableSkills), true)
 				end
 				if contents.MeleeMastery then
-					pl.MeleeMastery = contents.MeleeMastery
+					pl:SetMastery("melee",contents.MeleeMastery)
 				end
 				if contents.GunMastery then
-					pl.GunMastery = contents.GunMastery
+					pl:SetMastery("gunner",contents.GunMastery)
 				end
 				if contents.MedicMastery then
-					pl.MedicMastery = contents.MedicMastery
+					pl:SetMastery("medic",contents.MedicMastery)
+				end
+				if contents.CaderMastery then
+					pl:SetMastery("cadder",contents.CaderMastery)
 				end
 				if contents.Zban then
 					pl.Zban = contents.Zban
@@ -160,9 +163,10 @@ function GM:SaveVault(pl)
 		DesiredActiveSkills = util.CompressBitTable(pl:GetDesiredActiveSkills()),
 		UnlockedSkills = util.CompressBitTable(pl:GetUnlockedSkills()),
 		Version = pl.SkillVersion or self.SkillTreeVersion,
-		MedicMastery = pl.MedicMastery,
-		MeleeMastery = pl.MeleeMastery,
-		GunMastery = pl.GunMastery,
+		MedicMastery = pl:GetMastery("medic"),
+		MeleeMastery =pl:GetMastery("melee"),
+		GunMastery = pl:GetMastery("gunner"),
+		CaderMastery = pl:GetMastery("cadder"),
 		Zban = (pl.Zban or false),
 		AchXP = pl:GetDCoins(),
 		Season = self.DozetSeason

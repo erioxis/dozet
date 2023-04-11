@@ -70,6 +70,7 @@ SWEP.Primary.Delay = 0.6
 SWEP.Primary.ClipSize = 8
 SWEP.Primary.Automatic = true
 SWEP.Primary.Ammo = "buckshot"
+SWEP.Unrealing = false
 GAMEMODE:SetupDefaultClip(SWEP.Primary)
 
 SWEP.ConeMax = 6
@@ -79,23 +80,15 @@ GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_MAX_SPREAD, -0.75)
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_MIN_SPREAD, -0.5)
 GAMEMODE:AddNewRemantleBranch(SWEP, 1, translate.Get("wep_dualshot_r1"), translate.Get("wep_d_dualshot_r1"), function(wept)
 	wept.Primary.Delay = wept.Primary.Delay * 1.21
-	wept.OnZombieKilled = function(self)
-		local killer = self:GetOwner()
-	
-		if killer:IsValid() then
-			local reaperstatus = killer:GiveStatus("unreal", 3)
-			if reaperstatus and reaperstatus:IsValid() then
-				reaperstatus:SetDTInt(1, math.min(reaperstatus:GetDTInt(1) + 1, 10))
-				killer:EmitSound("npc/antlion/attack_single1.wav", 55, 150 + reaperstatus:GetDTInt(1) * 30, 0.45)
-			end
-		end
-	end
+	wept.Primary.Damage = wept.Primary.Damage * 0.8
+	wept.Unrealing = true
 end)
 function SWEP:OnZombieKilled()
 	local killer = self:GetOwner()
 
 	if killer:IsValid() then
-		local reaperstatus = killer:GiveStatus("reaper", 3)
+		local who = (self.Unrealing and "unreal" or "reaper")
+		local reaperstatus = killer:GiveStatus(who, 3)
 		if reaperstatus and reaperstatus:IsValid() then
 			reaperstatus:SetDTInt(1, math.min(reaperstatus:GetDTInt(1) + 1, 10))
 			killer:EmitSound("hl1/ambience/particle_suck1.wav", 55, 150 + reaperstatus:GetDTInt(1) * 30, 0.45)

@@ -48,11 +48,16 @@ SWEP.ReloadSpeed = 1.05
 
 SWEP.Tier = 4
 SWEP.MaxStock = 3
-
+SWEP.Unrealing = false
 SWEP.IronSightsPos = Vector(-5.3, -3, 4.4)
 SWEP.IronSightsAng = Vector(-1, 0.2, 2.55)
 
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_FIRE_DELAY, -0.015)
+GAMEMODE:AddNewRemantleBranch(SWEP, 1, translate.Get("wep_reaper_r1"), translate.Get("wep_d_reaper_r1"), function(wept)
+	wept.Primary.Delay = wept.Primary.Delay * 1.45
+	wept.Primary.Damage = wept.Primary.Damage * 0.8
+	wept.Unrealing = true
+end)
 
 function SWEP:OnZombieKilled()
 	local killer = self:GetOwner()

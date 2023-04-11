@@ -315,27 +315,22 @@ function ENT:OnRemove()
                     
                     local TraceD = {}
                     local rest = {}
-                    local dmg = DamageInfo()
-                    dmg:SetAttacker(ply)
-                    dmg:SetInflictor(self)
-                    dmg:SetReportedPosition(ply:GetShootPos())
-                    dmg:SetDamage(33 + damagedealt / 9)
-                    dmg:SetDamageForce(ply:GetAimVector() * 30000)
-                    dmg:SetDamagePosition(ply:GetShootPos())
-                    dmg:SetDamageType(DMG_BULLET)
+
+
                     TraceD.start = self:GetPos()
                     TraceD.endpos = Vec:GetNormalized() * 99999 + self:GetPos()
                     TraceD.maxs = Vector(15,15,15)
                     TraceD.mins = Vector(-15,-15,-15)
                     TraceD.filter = function(e) 
-                        if not e:IsWorld() then  
-                            if e:IsPlayer() and e != ply or e:IsNPC() or e.Coin == true or e.Core == true then
+                        if not e:IsWorld() or !e or !e:IsValid() then  
+                            if e:IsPlayer() and e != ply and e:IsValidLivingZombie() or e.Coin == true and e:IsValid() or e.Core == true and e:IsValid() then
                                 if e.Coin == true then
                                     e.ERail = true
                                     e:SetOwner(ply)
                                     return true
                                 end
-                                e:TakeDamageInfo(dmg)
+                                if !e:IsValid() then return false end
+                                e:TakeSpecialDamage(333 * 2 *  ((self.Chain or 1) / 2 + 1),DMG_DIRECT,self:GetOwner(),self)
                                 --e:TakePhysicsDamage(dmg)
                             end
                             return false
@@ -345,8 +340,8 @@ function ENT:OnRemove()
                     end
                     TraceD.output = rest
                     util.TraceHull(TraceD)
-                    timer.Simple(0.1,function() util.TraceHull(TraceD) end)
-                    timer.Simple(0.2,function() util.TraceHull(TraceD) end)
+                    timer.Simple(0.1,function()  util.TraceHull(TraceD)  end)
+                    timer.Simple(0.2,function()  util.TraceHull(TraceD)  end)
 
                     local gd = EffectData()
                     gd:SetOrigin(rest.HitPos)

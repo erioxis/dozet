@@ -1,5 +1,5 @@
 INC_SERVER()
-ENT.NextThinker = 1
+ENT.NextThinker = 0.2
 function ENT:SetDie(fTime)
 	if fTime == 0 or not fTime then
 		self.DieTime = 0
@@ -11,7 +11,6 @@ function ENT:SetDie(fTime)
 	end
 end
 function ENT:Think()
-	if self:GetOwner():GetZombieClassTable().Boss then self:Remove() return end
 	local owner = self:GetOwner()
 	local dmger = self.Damager
 	local lox = dmger:IsSkillActive(SKILL_LOX)
@@ -26,7 +25,7 @@ function ENT:Think()
 			else
 				dmger:SetBloodArmor(math.min(dmger:GetBloodArmor() + (self.Damage or 10)*0.05, dmger.MaxBloodArmor*2))
 			end
-			self.NextThinker = CurTime() + 0.8
+			self.NextThinker = CurTime() + 0.4
 		end
 		if see then
 			for _,ent in pairs(ents.FindInSphere(owner:GetPos(),55)) do

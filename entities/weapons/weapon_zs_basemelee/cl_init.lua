@@ -128,9 +128,9 @@ function SWEP:GetViewModelPosition(pos, ang)
 		ghostlerp = math.max(0, ghostlerp - FrameTime() * 5)
 	end
 	if not self:GetBlockState() then
-		ghostlerp1 = math.max(0, ghostlerp1 - FrameTime() * 3)
+		ghostlerp1 = math.max(0, ghostlerp1 - FrameTime() * 2)
 	elseif self:GetBlockState() then
-		ghostlerp1 = math.min(1, ghostlerp1 + FrameTime() * 2)
+		ghostlerp1 = math.min(1, ghostlerp1 +FrameTime()* 1.3)--1.1
 	end
 
 	if ghostlerp > 0 then

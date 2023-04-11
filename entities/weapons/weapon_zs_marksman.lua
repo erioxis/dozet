@@ -83,17 +83,17 @@ SWEP.HoldType = "revolver"
 SWEP.UseHands = true
 
 SWEP.Primary.Sound = Sound("weapons/ar2/npc_ar2_altfire.wav")
-SWEP.Primary.Damage = 32
+SWEP.Primary.Damage = 17
 SWEP.Primary.NumShots = 1
-SWEP.Primary.Delay = 0.15
+SWEP.Primary.Delay = 0.23
 
 SWEP.Primary.ClipSize = 12
 SWEP.Primary.Automatic = false
 SWEP.Primary.Ammo = "pistol"
 GAMEMODE:SetupDefaultClip(SWEP.Primary)
 
-SWEP.ConeMax = 0
-SWEP.ConeMin = 0
+SWEP.ConeMax = 2
+SWEP.ConeMin = 0.5
 
 SWEP.ReloadSpeed = 1
 SWEP.HeadshotMulti = 2.4
@@ -101,7 +101,7 @@ SWEP.HeadshotMulti = 2.4
 SWEP.TripleMoney = nil
 SWEP.JNumber = 1
 
-SWEP.Tier = 4
+SWEP.Tier = 2
 
 SWEP.IronSightsPos = Vector(-5.95, 0, 2.5)
 function SWEP:SetCharge(number)
@@ -116,7 +116,7 @@ GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_HEADSHOT_MULTI, 0.07)
 GAMEMODE:AddNewRemantleBranch(SWEP, 1, translate.Get("wep_marksman_r1"), translate.Get("wep_d_marksman_r1"), function(wept)
 	wept.ConeMax = wept.ConeMax * 1.7
 	wept.ConeMin = wept.ConeMin * 2.1
-	wept.Primary.Damage = wept.Primary.Damage * 0.2
+	wept.Primary.Damage = wept.Primary.Damage * 0.3
 	wept.HeadshotMulti = wept.HeadshotMulti * 0.8
 	wept.TripleMoney = true
     wept.Primary.NumShots = 3
@@ -177,11 +177,6 @@ function SWEP:EmitFireSound()
 	self:EmitSound(self.Primary.Sound, 75, 130 + (1 - (self:Clip1() / self.Primary.ClipSize)) * 70, 0.75, 22)
 end
 
-function SWEP:ShootBullets(dmg, numbul, cone)
-	dmg = dmg + dmg * (1 - self:Clip1() / self.Primary.ClipSize)
-
-	BaseClass.ShootBullets(self, dmg, numbul, cone)
-end
 function SWEP:EntModify(ent)
 end
 

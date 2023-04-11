@@ -431,6 +431,22 @@ end
 function meta:GetChargesActive()
 	return self:GetDTInt(DT_PLAYER_INT_ACTIV)
 end
+function meta:GetMastery(who,sum)
+	if sum then
+		return self:GetDTInt(11),self:GetDTInt(12),self:GetDTInt(13),self:GetDTInt(14)
+	end
+	local can = 11
+	if who == "cader" then
+		can =  14
+	elseif  who == "melee" then
+		can = 11
+	elseif who == "medic" then
+		can = 13
+	elseif  who == "gunner" then
+		can = 12
+	end
+	return self:GetDTInt(can)
+end
 function meta:AddChargesActive(int)
 	self:SetChargesActive(self:GetChargesActive()+int)
 end

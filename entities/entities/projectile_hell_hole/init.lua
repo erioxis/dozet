@@ -9,6 +9,7 @@ function ENT:Initialize()
 	self.trg = NULL
 	timer.Simple(0, function() self:GetPhysicsObject():SetVelocity(Vector(0,0,0)) end)
 	self.DieTime = CurTime() + 5
+	
 	--self.TimeToDash = CurTime() + 1
 	--self:Fire("kill", "", 4.75)
 end
@@ -60,7 +61,7 @@ function ENT:Think()
 		self:Hit(self.PhysicsData.HitPos, self.PhysicsData.HitNormal, self.PhysicsData.HitEntity)
 	end
 	if (self.TimeToDash or 1) <= CurTime() and self.trg:IsValidLivingZombie() then
-		local wep = self:GetOwner():GetActiveWeapon()
+		local wep = self:GetOwner():GetActiveWeapon() or self
 		local dmg = self.Damage
 		self.TimeToDash = CurTime() + 0.5
 		self:ShootBullets(dmg, 1)

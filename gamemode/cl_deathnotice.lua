@@ -461,12 +461,13 @@ killicon.Add("weapon_zs_melee_trinket", "zombiesurvival/reaper.png")
 killicon.Add("weapon_zs_shot_trinket", "zombiesurvival/bullet.png")
 killicon.Add("weapon_zs_help_trinket", "zombiesurvival/sickness.png")
 
-killicon.Add("weapon_zs_soul", "zombiesurvival/soul.png")
+killicon.Add("weapon_zs_soul", "zombiesurvival/money.png")
 
-killicon.Add("weapon_zs_soulalt", "zombiesurvival/soul.png", Color(255, 0, 195, 56))
+killicon.Add("weapon_zs_soulalt", "zombiesurvival/money.png", Color(255, 0, 195, 56))
 
-killicon.Add("projectile_money", "zombiesurvival/soul.png")
-killicon.Add("projectile_moneyauto", "zombiesurvival/soul.png")
+killicon.Add("projectile_money", "zombiesurvival/money.png")
+killicon.Add("projectile_moneyauto", "zombiesurvival/money.png")
+killicon.Add("projectile_markcoin", "zombiesurvival/money.png")
 
 
 

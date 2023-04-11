@@ -1241,12 +1241,11 @@ d.Hidden = true
 d.Hidden1 = true	
 
 local d = GM:AddSkill(SKILL_GOD_HEART, trs("skill_godheart"), GOOD..trs("skill_godheart_d1"),
-				                                                            	-14,			16,					{}, TREE_DONATETREE)
+				                                                            	-14,			16,					{SKILL_NONE}, TREE_DONATETREE)
 d.RemortReq = 64
-d.LevelReq = 99
 d.AmuletCost = -4		
 local d = GM:AddSkill(SKILL_GODHEART, trs("skill_godheart"), GOOD..trs("skill_godheart2_d1"),
-				                                                            	-14,			99,					{}, TREE_DONATETREE)
+				                                                            	-14,			99,					{SKILL_NONE}, TREE_DONATETREE)
 d.RemortReq = 128
 d.AmuletCost = 4					
 GM:AddSkillModifier(SKILL_GODHEART, SKILLMOD_SPOINT, -4)

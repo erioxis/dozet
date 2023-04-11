@@ -5418,9 +5418,9 @@ function GM:PlayerSpawn(pl)
 		pl:ResetJumpPower()
 		pl:SetCrouchedWalkSpeed(0.45)
 
-		pl:SetViewOffset(Vector(0, 0, 64 * (self.ObjectiveMap and 1 or (pl.ScaleModel or 1))))
+		timer.Simple(3, function() pl:SetViewOffset(Vector(0, 0, 64 * (self.ObjectiveMap and 1 or (pl.ScaleModel or 1))))
 		pl:SetViewOffsetDucked(Vector(0, 0, 32 * (self.ObjectiveMap and 1 or (pl.ScaleModel or 1))))
-		pl:SetModelScale(1 * (self.ObjectiveMap and 1 or (pl.ScaleModel or 1)))
+		pl:SetModelScale(1 * (self.ObjectiveMap and 1 or (pl.ScaleModel or 1))) end)
 
 		
 		pl:Give("weapon_zs_fists")

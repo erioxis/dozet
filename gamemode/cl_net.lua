@@ -95,7 +95,7 @@ local function Some(tbl,upd)
 			if v.score then
 				v.score = v.score + tbl.score
 			end
-			v.time = v.time + 1
+			v.time = math.min(v.time + 2,CurTime()+10)
 
 			MySelf.StyleMoment[k] = v
 			return true

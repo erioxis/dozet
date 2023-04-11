@@ -572,7 +572,7 @@ GM.Statuses["rot"] = {
 }
 GM.Statuses["hollowing"] = {
 	Color = Color(100, 100, 100),
-	Name = "hollow",
+	Name = "hollowing",
 	ValFunc = statusValueFunction("hollowing"),
 	Max = 1000,
 	Icon = Material("zombiesurvival/hallow.png")
