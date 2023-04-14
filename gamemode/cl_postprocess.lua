@@ -363,7 +363,7 @@ function GM:DrawInductorIndicators()
 			local colHealth = Color(21,213,226)
 			local screenscale = BetterScreenScale()
 			local health = icep
-			local progress = 165 + (35 * ((lp:GetActiveWeapon() and (lp:GetActiveWeapon().Tier or 1))-1) * (lp:GetActiveWeapon() and (lp:GetActiveWeapon().Tier or 1)))
+			local progress = 165 + (35 * ((lp:GetActiveWeapon() and (lp:GetActiveWeapon().Tier or 1))-1) * (lp:GetActiveWeapon().Tier or 1)) * (lp:GetIndChance() or 1)
 			local progress = progress * (lp:GetIndChance() or 1)
 			local healthperc = math.Clamp(health / progress, 0.01, 1)
 			local wid, hei = 150 * screenscale, 20 * screenscale

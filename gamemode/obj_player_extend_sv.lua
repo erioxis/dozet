@@ -1858,16 +1858,17 @@ end
 
 function meta:AddPoints(points, floatingscoreobject, fmtype, nomul)
 	if gamemode.Call("IsEscapeDoorOpen") then return end
-
-	if points > 0 and not nomul and self.PointIncomeMul then
-		points = points * self.PointIncomeMul
+	if points > 0 then
+		points = points * (0.95+0.05 *self:GetStyle())
+		if not nomul and self.PointIncomeMul then
+			points = points * self.PointIncomeMul
+		end
+		if  self:HasTrinket("curse_point") then
+			local taper = GetTaper(self,"point",0.02)
+			points = points * taper
+		end
+	
 	end
-	local taper = GetTaper(self,"point",0.02)
-	--print(taper)
-	if points > 0 and self:HasTrinket("curse_point") then
-		points = points * taper
-	end
-
 	-- This lets us add partial amounts of points (floats)
 	local wholepoints = math.floor(points)
 	local remainder = points - wholepoints
@@ -2908,31 +2909,28 @@ function meta:PulseResonance(attacker, inflictor)
 		if not attacker:IsValid() or not self:IsValid() or (self.Cascaded or 1) >= CurTime() then return end
 
 		attacker:SetProgress(0,'pprog')
-		self.Cascaded = CurTime() + 0.6
+		self.Cascaded = CurTime() + 4
 
 		local pos = self:WorldSpaceCenter()
 		pos.z = pos.z + 16
 
-		if attacker:IsValidLivingHuman() and !attacker:IsSkillActive(SKILL_CRYO_LASER) then
-			util.BlastDamagePlayer(inflictor, attacker, pos, 85 + 25 * (attacker.ExpDamageRadiusMul or 1), 75, DMG_ALWAYSGIB, 0.7)
-			for _, ent in pairs(util.BlastAlloc(inflictor, attacker, pos, 85 + 25 * (attacker.ExpDamageRadiusMul or 1))) do
-				if ent:IsValidLivingPlayer() and gamemode.Call("PlayerShouldTakeDamage", ent, attacker) then
-					ent:AddLegDamageExt(5, attacker, inflictor, SLOWTYPE_PULSE)
-				end
+		if attacker:IsValidLivingHuman() then
+			if !attacker:IsSkillActive(SKILL_CRYO_LASER) then
+				util.BlastDamagePlayer(inflictor, attacker, pos, 85, 75, DMG_ALWAYSGIB, 0.7)
+				local effectdata = EffectData()
+				effectdata:SetOrigin(pos)
+					effectdata:SetNormal(attacker:GetShootPos())
+				util.Effect("explosion_shockcore", effectdata)
+			else
+				DoCryoArc(attacker, inflictor, self, attacker:GetProgress('pprog') + 120)
 			end
-			local effectdata = EffectData()
-			effectdata:SetOrigin(pos)
-			effectdata:SetNormal(attacker:GetShootPos())
-		util.Effect("explosion_shockcore", effectdata)
-		elseif attacker:IsValidLivingHuman() and attacker:IsSkillActive(SKILL_CRYO_LASER) then
-			DoCryoArc(attacker, inflictor, self, attacker:GetProgress('pprog') + 120)
 		end
 
 	end)
 end
 
 function meta:CryogenicInduction(attacker, inflictor, damage)
-	local formula = (165 + (35 * ((attacker:GetActiveWeapon() and (attacker:GetActiveWeapon().Tier or 1))-1) * (attacker:GetActiveWeapon() and (attacker:GetActiveWeapon().Tier or 1)))) * (attacker:GetIndChance() or 1)
+	local formula = (165 + (35 * ((attacker:GetActiveWeapon() and (attacker:GetActiveWeapon().Tier or 1))-1) * (attacker:GetActiveWeapon().Tier or 1))) * (attacker:GetIndChance() or 1)
 	if attacker:GetProgress('iprog') < formula then return end
 	if self:GetZombieClassTable().Boss then return end
 
@@ -2960,9 +2958,9 @@ function meta:CryogenicInduction(attacker, inflictor, damage)
 end
 function meta:FireInduction(attacker, inflictor, damage)
 	if not self:GetZombieClassTable().Boss then
-		if math.random(5 * (attacker:GetActiveWeapon().Tier or 1) * (attacker:GetActiveWeapon().Primary.Numshots or 1) ) == 2 or attacker:GetProgress('fprog') >= ((15 * ((attacker:GetActiveWeapon().Tier or 1)+1))) * (attacker:GetIndChance() or 1) then
+		if attacker:GetProgress('fprog') >= ((15 * ((attacker:GetActiveWeapon().Tier or 1)+1))) * (attacker:GetIndChance() or 1) then
 			attacker:SetProgress(0,'fprog')
-			timer.Create("Fire_inder" .. attacker:UniqueID(), 0.1, 2, function()
+			timer.Create("Fire_inder" .. attacker:UniqueID(), 0.1, (attacker.HoleOfHell and 1 or 2), function()
 				if not attacker:IsValid() or not self:IsValid() then return end
 
 				local pos = self:WorldSpaceCenter()

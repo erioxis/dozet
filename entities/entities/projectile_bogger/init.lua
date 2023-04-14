@@ -13,7 +13,7 @@ function ENT:Initialize()
 	self:EmitSound("weapons/physcannon/physcannon_pickup.wav", math.random(2,255), math.random(1,50))
 	self:SetMaterial("phoenix_storms/plastic")
 
-	self.DieTime = CurTime() + (self.RageMode and 2 or 0.8)
+	self.DieTime = CurTime() + (self.RageMode and 3 or 1.3)
 	self.LastPhysicsUpdate = UnPredictedCurTime()
 end
 function ENT:PhysicsCollide(data, phys)
@@ -41,13 +41,13 @@ function ENT:Think()
 
 				local phys = self:GetPhysicsObject()
 				phys:SetVelocityInstantaneous(direction * 1500)
-				--target:TakeSpecialDamage((self.ProjDamage * 0.5 * (self.RageMode and (0.5) or math.max(0.5,GAMEMODE:GetWave() / 12))),DMG_BULLET , owner, owner:GetActiveWeapon())
+				target:TakeSpecialDamage((self.ProjDamage * 0.5 * (self.RageMode and (0.5) or math.max(0.5,GAMEMODE:GetWave() / 12))),DMG_BULLET , owner, owner:GetActiveWeapon())
 				break
 			end
 		end
-		--[[		if ent.AllowSelfRicoShot then
+		if ent.Coin then
 			ent:TakeDamage(1500, self:GetOwner(), self)
-		end]]
+		end
 	end
 		self.NextThink1 = CurTime() + 0.9
 	end
@@ -60,7 +60,6 @@ end
 
 function ENT:Explode(hitpos, hitnormal)
 	if self.Exploded then return end
-	self.Exploded = true
 
 	hitpos = hitpos or self:GetPos()
 	hitnormal = hitnormal or self:GetForward()
@@ -71,6 +70,7 @@ function ENT:Explode(hitpos, hitnormal)
 		local target = self.HitData.HitEntity
 
 		if target:IsValidLivingZombie() and not target:GetZombieClassTable().NeverAlive then
+			self.Exploded = true
 			target:TakeSpecialDamage((self.ProjDamage * (self.RageMode and 0.5 or 1) or math.max(0.5,GAMEMODE:GetWave() / 6)), DMG_BULLET, owner, source, hitpos)
 		end
 	end

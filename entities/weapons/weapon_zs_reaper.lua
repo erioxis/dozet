@@ -63,9 +63,10 @@ function SWEP:OnZombieKilled()
 	local killer = self:GetOwner()
 
 	if killer:IsValid() then
-		local reaperstatus = killer:GiveStatus("reaper", 14)
+		local who = (self.Unrealing and "unreal" or "reaper")
+		local reaperstatus = killer:GiveStatus(who, 14)
 		if reaperstatus and reaperstatus:IsValid() then
-			reaperstatus:SetDTInt(1, math.min(reaperstatus:GetDTInt(1) + 1, 3))
+			reaperstatus:SetDTInt(1, math.min(reaperstatus:GetDTInt(1) + 1, 5))
 			killer:EmitSound("hl1/ambience/particle_suck1.wav", 55, 150 + reaperstatus:GetDTInt(1) * 30, 0.45)
 		end
 	end

@@ -1044,12 +1044,13 @@ function PANEL:Paint(w, h)
 	for id, node in pairs(skillnodes) do
 		if IsValid(node) and !node.Skill.Hidden then
 			nodepos = node:GetPos()
-
+			
 			if (nodepos - campost):LengthSqr() > camheightadj then
 				continue
 			end
 
 			skill = node.Skill
+			if ((skill.RemortReq or 0) > MySelf:GetZSRemortLevel() or skill.Tree == TREE_USELESSTREE and 16 > MySelf:GetZSRemortLevel() or skill.Amulet and 4 >= MySelf:GetZSRemortLevel()) then continue  end
 			if skill.Disabled then
 				continue
 			end
@@ -1134,6 +1135,7 @@ function PANEL:Paint(w, h)
 			skillid = node.SkillID
 			skill = node.Skill
 			selected = not skill.Disabled and intersectpos and nodepos:DistToSqr(intersectpos) <= 36 -- 6^2
+			if ((skill.RemortReq or 0) > MySelf:GetZSRemortLevel() or skill.Tree == TREE_USELESSTREE and 16 > MySelf:GetZSRemortLevel() or skill.Amulet and 4 >= MySelf:GetZSRemortLevel()) then continue  end
 
 			cam.Start3D2D(node:GetPos() - to_camera * 8, Angle(0, 90, 90), 0.09)
 			surface.DisableClipping(true)
@@ -1196,7 +1198,7 @@ function PANEL:Paint(w, h)
 			local screenscale = BetterScreenScale()
 			local xskill = 58 * screenscale
 			local colo = skill.Disabled and COLOR_DARKGRAY or selected and color_white or notunlockable and COLOR_MIDGRAY or COLOR_GRAY
-			if self.DesiredZoom < 9500 then
+			if self.DesiredZoom < 9500  then
 				if !skill.Hidden1 then
 					
 					--local g = string.Split(skill.Name, "\n")
@@ -1270,7 +1272,7 @@ function PANEL:Paint(w, h)
 				if can_remort then
 					render.DrawQuadEasy(nodepos, to_camera, 32, 32, color_white, angle)
 				end
-			elseif not skill.Disabled and !skill.Hidden1 and !GAMEMODE.DisableNode2 then
+			elseif not skill.Disabled and !skill.Hidden1 and !GAMEMODE.DisableNode2  then
 				colGlow.r = sat * 255 colGlow.g = sat * 255 colGlow.b = sat * 255
 				if MySelf:IsSkillDesired(skillid) then
 					colGlow.r = colGlow.r / 4

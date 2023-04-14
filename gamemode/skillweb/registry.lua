@@ -1452,9 +1452,9 @@ GM:AddSkill(SKILL_LASTSTAND, trs("skill_laststand"), GOOD..trs("skill_laststand_
 																0,			6,					{SKILL_ABUSE}, TREE_MELEETREE)
 .RemortReq = 4
 GM:AddSkill(SKILL_ABUSE, trs("skill_lastabuse"), GOOD.."+10%"..trs("meleedamage")..GOOD..trs("skill_lastabuse_d1")..BAD..trs("skill_lastabuse_d2"),
-																0,			7,					{SKILL_CURSECURE}, TREE_MELEETREE)
+																0,			7,					{SKILL_CURSECURE}, TREE_MELEETREE).RemortReq = 4
 GM:AddSkill(SKILL_CURSECURE, trs("skill_cursecure"), GOOD..trs("skill_cursecure_d1")..GOOD.."+20%"..trs("m_curse")..BAD..trs("skill_cursecure_d2"),
-																0,			8,					{}, TREE_MELEETREE)
+																0,			8,					{}, TREE_MELEETREE).RemortReq = 4
 GM:AddSkill(SKILL_SOULNET, trs("skill_souleater"), GOOD..trs("skill_souleater_d1")..BAD.."-10%"..trs("meleedamage"),
 																0,			4,					{SKILL_LASTSTAND}, TREE_MELEETREE)
 .RemortReq = 4
@@ -1678,9 +1678,9 @@ GM:AddSkillModifier(SKILL_SCAM, SKILLMOD_POINT_MULTIPLIER, 0.01)
 GM:AddSkill(SKILL_SCAM, "Scam", GOOD.."+1%"..trs("p_mul")..BAD.. "On kill curses with 1.5% chance(GIVE SPECIAL CURSE)",
 			3,			-8,					{SKILL_BADTRIP}, TREE_POINTTREE)
 SKILL_SOLARUZ = 169
-GM:AddSkillModifier(SKILL_SOLARUZ, SKILLMOD_POINT_MULTIPLIER, 0.10)
-GM:AddSkillModifier(SKILL_SOLARUZ, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 0.40)
-GM:AddSkill(SKILL_SOLARUZ, "Debuff:Deadly Fortuna", PURPLE.."+10% Points Multiplicator \n" ..BAD.. "+40% damage taken melee",
+GM:AddSkillModifier(SKILL_SOLARUZ, SKILLMOD_POINT_MULTIPLIER, 0.50)
+GM:AddSkillModifier(SKILL_SOLARUZ, SKILLMOD_DMG_TAKEN, 1)
+GM:AddSkill(SKILL_SOLARUZ, "Debuff:Deadly Fortuna", PURPLE.."+50% Points Multiplicator \n" ..BAD.. "+100% damage taken",
 				3,			-9,					{SKILL_SCAM}, TREE_POINTTREE)
 SKILL_ANCK = 170
 GM:AddSkill(SKILL_ANCK, "Ancient knowledge", PURPLE.."Learn The Ancient knowledge \n" ..BAD.. "The cost of knowledge",
@@ -1747,7 +1747,7 @@ GM:AddSkill(SKILL_HELPLIFER, "Chance", PURPLE.."Can save from fatal hit\n10% Cha
 .CanUpgrade = 2
 GM:AddSkill(SKILL_INF_POWER, "Dozei Core", PURPLE.."-50% Damage.\nExtra-damage for every skills you unlocked\n+0.6% damage per skill",
 										4,			-5,					{SKILL_HELPLIFER}, TREE_ANCIENTTREE)
-GM:AddSkill(SKILL_SOUL_TRADE, "[TRADE]Soul", PURPLE.."Sell Your Soul For Toy.\n"..PURPLE.."+20% Point Mul",
+GM:AddSkill(SKILL_SOUL_TRADE, "[TRADE]Soul", PURPLE.."Sell Your Soul For Toy.\n"..PURPLE.."+10% Point Mul",
 										4,			-7,					{SKILL_HELPLIFER}, TREE_ANCIENTTREE)
 GM:AddSkill(SKILL_SEEAURA, "Ancient vision", PURPLE.."You can see zombie aura",
 										2,			-8.5,					{SKILL_HELPLIFER}, TREE_ANCIENTTREE)
@@ -2040,7 +2040,7 @@ GM:AddSkill(SKILL_DONATE4, "Donate IV", GOOD.."+10% Reload Speed\n"..BAD.."THX c
 				                                                            	21,			23,					{SKILL_DONATE3}, TREE_DONATETREE)
 GM:AddSkillModifier(SKILL_DONATE4, SKILLMOD_RELOADSPEED_MUL, 0.10)
 SKILL_DONATE5 = 208
-GM:AddSkill(SKILL_DONATE5, "Donate V", GOOD.."Sale by 6%\n"..BAD.."Thx ivan36099",
+GM:AddSkill(SKILL_DONATE5, "Donate V", GOOD.."Sale by 3%\n"..BAD.."Thx ivan36099",
 				                                                            	22,			23,					{SKILL_DONATE4}, TREE_DONATETREE)
 GM:AddSkillModifier(SKILL_DONATE5, SKILLMOD_ARSENAL_DISCOUNT, -0.03)
 SKILL_DONATE6 = 209
@@ -2093,11 +2093,10 @@ GM:AddSkillModifier(SKILL_DONATE18, SKILLMOD_LUCK, 2.5)
 
 
 SKILL_CHALLENGER1 = 215
-GM:AddSkill(SKILL_CHALLENGER1, "Challenger I", GOOD.."+20 Health,+1 luck,+5% Sale, help for challenges!\n"..GOOD.."Can use in any challenge",
+GM:AddSkill(SKILL_CHALLENGER1, "Challenger I", GOOD.."+20 Health,+1 luck, help for challenges!\n"..GOOD.."Can use in any challenge",
 				                                                            	25,			26,					{SKILL_NONE, SKILL_CHALLENGER2}, TREE_DONATETREE)
 GM:AddSkillModifier(SKILL_CHALLENGER1, SKILLMOD_LUCK, 1)																				
 GM:AddSkillModifier(SKILL_CHALLENGER1, SKILLMOD_HEALTH, 10)
-GM:AddSkillModifier(SKILL_CHALLENGER1, SKILLMOD_ARSENAL_DISCOUNT, -0.05)
 SKILL_CHALLENGER2 = 216
 GM:AddSkill(SKILL_CHALLENGER2, "Challenger II", GOOD.."+20% Reload speed\n"..GOOD.."Can use in any challenge",
 				                                                            	25,			24,					{SKILL_CHALLENGER1}, TREE_DONATETREE)
@@ -2108,7 +2107,7 @@ GM:AddSkill(SKILL_CHALLENGER3, "Challenger III", GOOD.."+100% XP Multiplier\n"..
 GM:AddSkillModifier(SKILL_CHALLENGER3, SKILLMOD_XP, 1)
 --Skill for high-remort
 GM:AddSkill(SKILL_SECRET2, "Secret V", GOOD.."Good thing, +3 spoints",
-				                                                            	-22,			-53,					{SKILL_NONE}, TREE_USELESSTREE)
+				                                                            	-22,			-53,					{SKILL_NONE}, TREE_MELEETREE)
 .HiddenU = true
 SKILL_USELESS_1 = 500
 GM:AddSkill(SKILL_USELESS_1, "Useless 1", GOOD.."+5% XP MUL",
@@ -2168,7 +2167,7 @@ GM:AddSkill(SKILL_USELESS_14, "Useless 14", GOOD.."-3% Melee damage taken mul\n 
 				                                                            	1,		    -1,					{SKILL_USELESS_13}, TREE_USELESSTREE)
 GM:AddSkillModifier(SKILL_USELESS_14, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.03)
 SKILL_USELESS_15 = 514
-GM:AddSkill(SKILL_USELESS_15, "Useless 15", GOOD.."+10% Block damage multiplier",
+GM:AddSkill(SKILL_USELESS_15, "Useless 15", GOOD.."-10% Damage taken while blocking",
 				                                                            	1,		    -2,					{SKILL_USELESS_14}, TREE_USELESSTREE)
 GM:AddSkillModifier(SKILL_USELESS_15, SKILLMOD_BLOCKMULTIPLIER, -0.10)
 SKILL_USELESS_16 = 515
@@ -2192,10 +2191,24 @@ GM:AddSkill(SKILL_USELESS_20, "Useless 20", GOOD.."+2 spoints",
 				                                                            	-4,		    -0,					{SKILL_USELESS_19}, TREE_USELESSTREE)
 GM:AddSkillModifier(SKILL_USELESS_20, SKILLMOD_SPOINT, 2)
 SKILL_USELESS_21 = 520
-GM:AddSkill(SKILL_USELESS_21, "Useless 21", GOOD.."+9% Sale",
+GM:AddSkill(SKILL_USELESS_21, "Useless 21", GOOD.."+4% Sale",
 				                                                            	-4,		    1,					{SKILL_USELESS_20}, TREE_USELESSTREE)
-GM:AddSkillModifier(SKILL_USELESS_21, SKILLMOD_ARSENAL_DISCOUNT, -0.09)
-
+GM:AddSkillModifier(SKILL_USELESS_21, SKILLMOD_ARSENAL_DISCOUNT, -0.04)
+SKILL_USELESS_22 = 521
+GM:AddSkill(SKILL_USELESS_22, "Useless 22", GOOD.."-4% Damage taken",
+				                                                            	-5,		    1,					{SKILL_USELESS_21}, TREE_USELESSTREE)
+GM:AddSkillModifier(SKILL_USELESS_22, SKILLMOD_DMG_TAKEN, -0.04)
+SKILL_USELESS_23 = 522
+GM:AddSkill(SKILL_USELESS_23, "Useless 23", GOOD.."+4% Attachment chance for use",
+				                                                            	-5,		    -1,					{SKILL_USELESS_22}, TREE_USELESSTREE)
+GM:AddSkillModifier(SKILL_USELESS_23, SKILLMOD_ATT_CHANCE, -0.04)
+SKILL_USELESS_24 = 523
+GM:AddSkill(SKILL_USELESS_24, "Useless 24", GOOD.."+5% Damage vs gods",
+				                                                            	-5,		    -2,					{SKILL_USELESS_23}, TREE_USELESSTREE)
+SKILL_USELESS_25 = 524
+GM:AddSkill(SKILL_USELESS_25, "Useless 25", GOOD.."+2% XP Multiplier",
+				                                                            	-5,		    -3,					{SKILL_USELESS_24}, TREE_USELESSTREE)
+GM:AddSkillModifier(SKILL_USELESS_25, SKILLMOD_XP, 0.02)
 
 
 
@@ -2582,7 +2595,7 @@ GM:SetSkillModifierFunction(SKILLMOD_ENDWAVE_POINTS, function(pl,amount)
 	pl.EndWavePointsExtra = math.Clamp(amount, 0.0, 1000.0)
 end)
 GM:SetSkillModifierFunction(SKILLMOD_ARSENAL_DISCOUNT, function(pl, amount)
-	pl.ArsenalDiscount = math.Clamp(amount + 1.0, 0.05, 1000.0)
+	pl.ArsenalDiscount = math.Clamp(amount + 1.0, 0.15, 1000.0)
 end)
 GM:SetSkillModifierFunction(SKILLMOD_SCRAPDISCOUNT, GM:MkGenericMod("ScrapDiscount"))
 GM:SetSkillModifierFunction(SKILLMOD_CLOUD_RADIUS, GM:MkGenericMod("CloudRadius"))
@@ -2929,7 +2942,7 @@ GM:AddSkillModifier(SKILL_AGILEII, SKILLMOD_SPEED, -3)
 GM:AddSkillModifier(SKILL_AGILEIII, SKILLMOD_JUMPPOWER_MUL, 0.06)
 GM:AddSkillModifier(SKILL_AGILEIII, SKILLMOD_SPEED, -4)
 
-GM:AddSkillModifier(SKILL_SOUL_TRADE, SKILLMOD_POINT_MULTIPLIER, 0.2)
+GM:AddSkillModifier(SKILL_SOUL_TRADE, SKILLMOD_POINT_MULTIPLIER, 0.1)
 
 GM:AddSkillModifier(SKILL_SOFTDET, SKILLMOD_EXP_DAMAGE_RADIUS, 0.10)
 GM:AddSkillModifier(SKILL_SOFTDET, SKILLMOD_EXP_DAMAGE_TAKEN_MUL, -0.4)

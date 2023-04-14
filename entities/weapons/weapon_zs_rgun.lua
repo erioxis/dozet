@@ -36,7 +36,7 @@ SWEP.ReloadDelay = 0.81
 SWEP.Primary.Sound = Sound("weapons/shotgun/shotgun_dbl_fire.wav")
 SWEP.Primary.Damage = 300
 SWEP.Primary.NumShots = 1
-SWEP.Primary.Delay = 1.2
+SWEP.Primary.Delay = 1
 
 SWEP.Recoil = 7.5
 
@@ -61,10 +61,9 @@ SWEP.ReloadSound = Sound("Weapon_Shotgun.Reload")
 
 
 
-GAMEMODE:SetPrimaryWeaponModifier(SWEP, WEAPON_MODIFIER_RELOAD_SPEED, 0.07)
-GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_CLIP_SIZE, 1)
+GAMEMODE:SetPrimaryWeaponModifier(SWEP, WEAPON_MODIFIER_FIRE_DELAY, -0.09)
 function SWEP:CanPrimaryAttack()
-	return self:GetOwner():GetNW2Float(8,1) <= CurTime()
+	return self:GetOwner():GetNW2Float(8,1)<= CurTime()
 end
 function SWEP:PrimaryAttack()
 
@@ -148,7 +147,7 @@ function SWEP:PrimaryAttack()
     timer.Simple(20,function() if self:IsValid() then self:SetClip1(1) end end)
 
     ply:LagCompensation( false )
-	ply:SetNW2Float(8,CurTime()+15)
+	ply:SetNW2Float(8,CurTime()+(15* self.Primary.Delay))
 
 end
 
@@ -169,5 +168,5 @@ function SWEP:Draw2DHUD()
 	surface.SetDrawColor(255, 255, 255, 255*spare/100)
 	surface.DrawTexturedRect(x + wid, y + hei * 0.5, wid*spare, hei * 2)
 
-	draw.SimpleTextBlurry(math.Round(spare),"ZSHUDFontBig", x + wid * (displayspare and 0.25 or 0.5), y + hei * 0.5, col1, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+	draw.SimpleTextBlurry(math.Round(100-spare),"ZSHUDFontBig", x + wid * (displayspare and 0.25 or 0.5), y + hei * 0.5, col1, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 end

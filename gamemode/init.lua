@@ -5769,7 +5769,7 @@ function GM:WaveStateChanged(newstate, pl)
 					
 						if lucky2 == 1 then 
 
-						--	pl:AddZSXP(10000)
+							pl:AddZSXP(1000)
 
 							if not charge == 1 then
 								pl:TakeInventoryItem("trinket_mysteryticket")

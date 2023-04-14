@@ -493,8 +493,7 @@ function meta:AttachmentDamage(damage, attacker, inflictor, type)
 			if attacker:GetProgress('pprog') > 20* GAMEMODE:GetWave() * (attacker:GetIndChance() or 1) then
 				self:PulseResonance(attacker, inflictor)
 			end
-		end
-		if SERVER then
+		elseif SERVER then
 			GAMEMODE:DamageAtFloater(attacker, self, self:NearestPoint(attacker:EyePos()), damage,type)
 		end
 	elseif type == SLOWTYPE_COLD then
@@ -507,8 +506,7 @@ function meta:AttachmentDamage(damage, attacker, inflictor, type)
 		if SERVER and attacker:HasTrinket("cryoindu") and not attacker:GetActiveWeapon().AntiInd  then
 						attacker:SetProgress(attacker:GetProgress('iprog') + damage,'iprog')
 			self:CryogenicInduction(attacker, inflictor, damage)
-		end
-		if SERVER then
+		elseif SERVER then
 			GAMEMODE:DamageAtFloater(attacker, self, self:NearestPoint(attacker:EyePos()), damage, type)
 		end
 	elseif type == SLOWTYPE_FLAME then
