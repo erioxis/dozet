@@ -483,6 +483,7 @@ SKILL_PARASITOID_3 = 455
 SKILL_FLIMSY = 456
 SKILL_MOB_II = 457
 SKILL_SSS = 458
+SKILL_ANTIVOR = 459
 
 
 
@@ -612,6 +613,7 @@ SKILLMOD_SP_PER_WAVE = 122
 SKILLMOD_STAMINA_ADD = 123
 SKILLMOD_STAMINA_USE = 124
 SKILLMOD_C_USE = 125
+SKILLMOD_RES_EFFECTIVNESS = 126
 
 local GOOD = "^"..COLORID_GREEN
 local BAD = "^"..COLORID_RED
@@ -814,6 +816,8 @@ GM:AddSkill(SKILL_CRESCENDO1, trs("skill_crescendo").."I", GOOD.."+4 "..trs("hp_
 																-6,			1,					{SKILL_BACKPEDDLER}, TREE_SPEEDTREE)
 GM:AddSkill(SKILL_CRESCENDO2, trs("skill_crescendo").."II", GOOD.."+4 "..trs("hp_per_wave")..BAD.."-4 "..trs("sp_per_wave"),
 																-6,			2,					{SKILL_CRESCENDO1}, TREE_SPEEDTREE)
+GM:AddSkill(SKILL_ANTIVOR, trs("skill_antivor"), GOOD..trs("skill_antivor_d1")..BAD..trs("skill_antivor_d2"),
+																-8,			1,					{SKILL_CRESCENDO2}, TREE_SPEEDTREE)
 GM:AddSkill(SKILL_CRESCENDO3, trs("skill_crescendo").."III", GOOD.."+4 "..trs("hp_per_wave")..BAD.."-2 "..trs("sp_per_wave"),
 																-6,			3,					{SKILL_CRESCENDO2,SKILL_SAUL_GOODMAN}, TREE_SPEEDTREE)
 GM:AddSkill(SKILL_SAUL_GOODMAN, trs("skill_saul_goodman"), GOOD..trs("skill_saul_goodman_d1")..BAD.."-4%"..trs("xpmul"),
@@ -921,7 +925,7 @@ GM:AddSkill(SKILL_U_ANTITODESHOT, trs("skill_u_antidote"), GOOD..trs("skill_u_an
 GM:AddSkill(SKILL_PREMIUM, trs("skill_premium"), GOOD..trs("skill_premium_d1")..BAD..trs("skill_premium_d2"),
 																3,			-3,					{SKILL_PACIFISMIUM}, TREE_SUPPORTTREE)
 GM:AddSkill(SKILL_PACIFISMIUM, trs("skill_paci"), GOOD..trs("skill_paci_d1")..BAD..trs("skill_paci_d2"),
-																3,			-4,					{}, TREE_SUPPORTTREE)
+																3,			-4,					{SKILL_ANTIVOR}, TREE_SUPPORTTREE)
 GM:AddSkill(SKILL_DISPERSION, trs("skill_disp"), GOOD..trs("skill_disp_d1")..BAD..trs("skill_disp_d2"),
 																0,			-4,					{}, TREE_SUPPORTTREE)
 GM:AddSkill(SKILL_COMBOHEAL, trs("skill_comboheal"), GOOD..trs("skill_comboheal_d1")..BAD..trs("skill_comboheal_d2"),
@@ -2297,6 +2301,9 @@ end)
 GM:SetSkillModifierFunction(SKILLMOD_DAMAGE, function(pl, amount)
 	pl.BulletMul = math.Clamp(amount + 1.0, 0.0, 100.0)
 end)
+GM:SetSkillModifierFunction(SKILLMOD_RES_EFFECTIVNESS, function(pl, amount)
+	pl.RessuplyEff = math.Clamp(amount + 1.0, 0.0, 100.0)
+end)
 
 GM:SetSkillModifierFunction(SKILLMOD_DEPLOYSPEED_MUL, function(pl, amount)
 	pl.DeploySpeedMultiplier = math.Clamp(amount + 1.0, 0.05, 100.0)
@@ -2619,6 +2626,10 @@ GM:AddSkillModifier(SKILL_BANDOLIER, SKILLMOD_RELOADSPEED_SHELL_MUL, 0.44)
 GM:AddSkillModifier(SKILL_BANDOLIER, SKILLMOD_RELOADSPEED_SMG_MUL, 0.12)
 GM:AddSkillModifier(SKILL_BANDOLIER, SKILLMOD_RELOADSPEED_XBOW_MUL, 0.09)
 GM:AddSkillModifier(SKILL_BANDOLIER, SKILLMOD_RELOADSPEED_MUL, 0.05)
+
+
+GM:AddSkillModifier(SKILL_VOR, SKILLMOD_RES_EFFECTIVNESS, -0.2)
+GM:AddSkillModifier(SKILL_ANTIVOR, SKILLMOD_RES_EFFECTIVNESS, 0.1)
 
 GM:AddSkillModifier(SKILL_SPEED1, SKILLMOD_SPEED, 5)
 GM:AddSkillModifier(SKILL_SPEED1, SKILLMOD_HEALTH, -4)

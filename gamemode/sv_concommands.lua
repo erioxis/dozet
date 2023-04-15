@@ -67,7 +67,7 @@ concommand.Add("zs_pointsshopbuy", function(sender, command, arguments)
 		GAMEMODE:ConCommandErrorMessage(sender, translate.ClientGet(sender, "out_of_stock"))
 		return
 	end
-	local arsd = math.Clamp((sender.ArsenalDiscount or 1),(GAMEMODE:GetWave() <= 4 and 0.75 or 0),255)
+	local arsd = (sender.ArsenalDiscount or 1)
 	cost = usescrap and math.ceil(GAMEMODE:PointsToScrap(cost * (sender.ScrapDiscount or 1))) or math.ceil(cost * arsd)
 
 	if points < cost then

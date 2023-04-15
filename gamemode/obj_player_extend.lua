@@ -490,8 +490,9 @@ function meta:AttachmentDamage(damage, attacker, inflictor, type)
 		if SERVER and attacker:HasTrinket("resonance") then
 			attacker:SetProgress(attacker:GetProgress('pprog') + damage, 'pprog')
 
-			if attacker:GetProgress('pprog') > 20* GAMEMODE:GetWave() * (attacker:GetIndChance() or 1) then
+			if attacker:GetProgress('pprog') > 20* GAMEMODE:GetWave() * (attacker:GetIndChance() or 1) and (attacker.NextInductors or 1) < CurTime() then
 				self:PulseResonance(attacker, inflictor)
+				attacker.NextInductors = CurTime() + 1.5
 			end
 		elseif SERVER then
 			GAMEMODE:DamageAtFloater(attacker, self, self:NearestPoint(attacker:EyePos()), damage,type)
@@ -503,10 +504,11 @@ function meta:AttachmentDamage(damage, attacker, inflictor, type)
 			damage = damage * 2
 		end
 
-		if SERVER and attacker:HasTrinket("cryoindu") and not attacker:GetActiveWeapon().AntiInd  then
+		if SERVER and attacker:HasTrinket("cryoindu") and not attacker:GetActiveWeapon().AntiInd and (attacker.NextInductors or 1) < CurTime()  then
 						attacker:SetProgress(attacker:GetProgress('iprog') + damage,'iprog')
 			self:CryogenicInduction(attacker, inflictor, damage)
-		elseif SERVER then
+		end
+		if SERVER then
 			GAMEMODE:DamageAtFloater(attacker, self, self:NearestPoint(attacker:EyePos()), damage, type)
 		end
 	elseif type == SLOWTYPE_FLAME then
@@ -516,14 +518,14 @@ function meta:AttachmentDamage(damage, attacker, inflictor, type)
 		if self:GetZombieClassTable().FireBuff then
 			damage = 0
 		end
-		if SERVER and attacker:HasTrinket("fire_ind") and not attacker:GetActiveWeapon().AntiInd then
+		if SERVER and attacker:HasTrinket("fire_ind") and not attacker:GetActiveWeapon().AntiInd and (attacker.NextInductors or 1) < CurTime() then
 			self:FireInduction(attacker, inflictor, damage)
 		end
 		if SERVER then
 			GAMEMODE:DamageAtFloater(attacker, self, self:NearestPoint(attacker:EyePos()), damage, type)
 		end
 	elseif type == SLOWTYPE_CHAM then
-		if SERVER and attacker:HasTrinket("cham_storm") and self:GetZombieClassTable().BaraCat then
+		if SERVER and attacker:HasTrinket("cham_storm") and self:GetZombieClassTable().BaraCat and (attacker.NextInductors or 1) < CurTime() then
 			attacker:SetProgress(attacker:GetProgress('cprog') + damage, 'cprog')
 			self:ChamStorm(attacker, inflictor, damage)
 		end
@@ -552,8 +554,9 @@ function meta:AddLegDamageExt(damage, attacker, inflictor, type)
 		if SERVER and attacker:HasTrinket("resonance") then
 			attacker:SetProgress(attacker:GetProgress('pprog') + (self:GetFlatLegDamage() - startleg), 'pprog')
 
-			if attacker:GetProgress('pprog') > 20* GAMEMODE:GetWave() * (attacker:GetIndChance() or 1) then
+			if attacker:GetProgress('pprog') > 20* GAMEMODE:GetWave() * (attacker:GetIndChance() or 1) and (attacker.NextInductors or 1) < CurTime() then
 				self:PulseResonance(attacker, inflictor)
+				attacker.NextInductors = CurTime() + 1.5
 			end
 		end
 		if SERVER then
@@ -568,7 +571,7 @@ function meta:AddLegDamageExt(damage, attacker, inflictor, type)
 		self:AddLegDamage(damage)
 		self:AddArmDamage(damage)
 
-		if SERVER and attacker:HasTrinket("cryoindu") and not attacker:GetActiveWeapon().AntiInd  then
+		if SERVER and attacker:HasTrinket("cryoindu") and not attacker:GetActiveWeapon().AntiInd and (attacker.NextInductors or 1) < CurTime()  then
 			attacker:SetProgress(attacker:GetProgress('iprog') + damage*2,'iprog')
 			self:CryogenicInduction(attacker, inflictor, damage)
 		end
@@ -582,14 +585,15 @@ function meta:AddLegDamageExt(damage, attacker, inflictor, type)
 		if self:GetZombieClassTable().FireBuff then
 			damage = 0
 		end
-		if SERVER and attacker:HasTrinket("fire_ind") and not attacker:GetActiveWeapon().AntiInd and !self:GetZombieClassTable().FireBuff then
+		if SERVER and attacker:HasTrinket("fire_ind") and not attacker:GetActiveWeapon().AntiInd and !self:GetZombieClassTable().FireBuff and (attacker.NextInductors or 1) < CurTime() then
 			self:FireInduction(attacker, inflictor, damage)
+
 		end
 		if SERVER then
 			GAMEMODE:DamageAtFloater(attacker, self, self:NearestPoint(attacker:EyePos()), damage, type)
 		end
 	elseif type == SLOWTYPE_CHAM then
-		if SERVER and attacker:HasTrinket("cham_storm") and self:GetZombieClassTable().BaraCat then
+		if SERVER and attacker:HasTrinket("cham_storm") and self:GetZombieClassTable().BaraCat and (attacker.NextInductors or 1) < CurTime() then
 			attacker:SetProgress(attacker:GetProgress('cprog') + damage, 'cprog')
 			self:ChamStorm(attacker, inflictor, damage)
 		end

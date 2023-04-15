@@ -463,7 +463,30 @@ function GM:Initialize()
 		self:SetWinRate(1)
 	end
 	self:DoAchievements()
+	if   GDiscord.sendToDS then
+		local name = GetConVar("hostname"):GetString()						
+			local params = 
+				{
+					['allowed_mentions'] = { ['parse'] = {} },
+					['username'] = name.."[ MAP CHANGE ]",
+					['avatar_url'] = GDiscord.players_avatars_cache[1],
+					['embeds'] = 
+					{ 
 
+						{
+							title = name.." сервер загрузился.",
+							description = "Карта: "..game.GetMap(),                      
+							color = 13048860,
+							footer = 
+							{
+								text = name,
+								icon_url = GDiscord.players_avatars_cache[1]
+							}
+						} 
+					}
+				}
+		GDiscord.sendToDS(params)
+	end
 
 
 	numofdaily = math.max(1,(self:GetDaily() or 1)%7)
@@ -1955,7 +1978,7 @@ function GM:PlayerHealedTeamMember(pl, other, health, wep, pointmul, nobymsg, fl
 		pl:SetChargesActive(pl:GetChargesActive()+1)
 		pl.NextChargeHeal = 0
 	end
-
+	net.Start("zs_update_style") net.WriteTable({time = CurTime()+7+(math.random(10,20)*0.2),text = "HEALED PLAYER FOR "..health,score = health,color = Color(37,194,23)}) net.Send(pl) 
 	if pointmul ~= 0 then
 		local hpperpoint = self.MedkitPointsPerHealth
 		if hpperpoint <= 0 then return end
@@ -1993,6 +2016,7 @@ function GM:PlayerRepairedObject(pl, other, health, wep)
 	if numofdaily == 2 then
 		pl:GiveAchievementProgress("daily_post", math.Round(health))
 	end
+	net.Start("zs_update_style") net.WriteTable({time = CurTime()+2+(math.random(10,20)*0.2),text = "REPAIRED PROP FOR "..health,score = health,color = Color(23,69,194)}) net.Send(pl) 
 
 	local hpperpoint = self.RepairPointsPerHealth
 	if hpperpoint <= 0 then return end
@@ -3575,7 +3599,7 @@ function GM:EntityTakeDamage(ent, dmginfo)
 
 	local dispatchdamagedisplay = false
 	local entclass = ent:GetClass()
-	if !ent:IsPlayer() and attacker and attacker:IsPlayer() then
+	if !ent:IsPlayer() and attacker and attacker:IsPlayer() and !pl.Zban  then
 		if ent:GetOwner() ~= attacker then
 			local damage = math.min(dmginfo:GetDamage(), ent:Health())
 			attacker:AddTokens(math.ceil((damage or 2) * 0.25))
@@ -3906,7 +3930,7 @@ function GM:EntityTakeDamage(ent, dmginfo)
 	local dmg = dmginfo:GetDamage()
 	if dmg > 0 then --or attacker:IsPlayer() and ent:IsPlayer() and ((ent:Team() == TEAM_HUMAN) and ent:GetBloodArmor() or ent:GetZArmor()) >0 then
 		local holder, status = ent:GetHolder()
-		if holder and not holder.BuffTaut then status:Remove() end
+		if holder and not (holder.BuffTaut or dmginfo:GetAttacker() and dmginfo:GetAttacker():IsPlayer() and dmginfo:GetAttacker():GetZombeClassTable().Boss) then status:Remove() end
 
 		local dmgpos = dmginfo:GetDamagePosition()
 		local hasdmgsess = attacker:IsPlayer() and attacker:HasDamageNumberSession()
@@ -4274,8 +4298,8 @@ function GM:Merge(bossplayer, entmerge)
 	entmerge.DeathClass = nil
 	entmerge:UnSpectateAndSpawn()
 	bossplayer:KillSilent()
-	bossplayer:SetZombieClass(12)
-	bossplayer:DoHulls(12, TEAM_UNDEAD)
+	bossplayer:SetZombieClass(self.ZombieClasses["God"].Index)
+	bossplayer:DoHulls(self.ZombieClasses["God"].Index, TEAM_UNDEAD)
 	bossplayer.DeathClass = nil
 	bossplayer:UnSpectateAndSpawn()
 	bossplayer.DeathClass = curclass
@@ -4283,7 +4307,7 @@ function GM:Merge(bossplayer, entmerge)
 	if not silent then
 		net.Start("zs_boss_spawned_merge")
 			net.WriteEntity(bossplayer)
-			net.WriteUInt(12, 8)
+			net.WriteUInt(self.ZombieClasses["God"].Index, 8)
 			net.WriteEntity(entmerge)
 		net.Broadcast()
 	end
@@ -4933,7 +4957,6 @@ function GM:DoPlayerDeath(pl, attacker, dmginfo)
 		end
 
 		local classtable = pl:GetZombieClassTable()
-
 		pl:PlayZombieDeathSound()
 		if classtable.DemiBoss and not self.ObjectiveMap then
 			net.Start("zs_demiboss_slain")
@@ -5545,6 +5568,7 @@ end
 GM.NextEscapeDamage = 0
 function GM:WaveStateChanged(newstate, pl)
 	if newstate then
+		
 		if self:GetWave() == 0 then
 			gamemode.Call("CreateSigils", true) -- Try creating sigils again. Only really matters if nobody seeded the map yet.
 
@@ -5661,7 +5685,7 @@ function GM:WaveStateChanged(newstate, pl)
 			end
 		else
 			-- If not using sigils then humans all win.
-			
+					
 			gamemode.Call("EndRound", TEAM_HUMAN)
 
 			local curwave = self:GetWave()
@@ -5689,7 +5713,9 @@ function GM:WaveStateChanged(newstate, pl)
 		if self.EndWavePointsBonus > 0 then
 			pointsbonus = self.EndWavePointsBonus + (self:GetWave() - 1) * self.EndWavePointsBonusPerWave
 		end
-
+		if self:GetWave() == 5 then 
+			gamemode.Call("CreateASigils")
+		end
 		for _, pl in pairs(player.GetAll()) do
 			if pl:Team() == TEAM_HUMAN and pl:Alive() then
 				pl.UsesChaosCard = false

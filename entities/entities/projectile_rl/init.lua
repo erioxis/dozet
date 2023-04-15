@@ -51,14 +51,7 @@ function ENT:Explode(hitpos, hitnormal, hitent, boom)
 	if owner:IsValidLivingHuman() then
 		local source = self:ProjectileDamageSource()
 		for k,v in pairs(ents.FindInSphere(self:GetPos(),120)) do
-			if self:GetDTInt(6) >= 1 then break end
-			if v == owner and !used then
-				jump = true
-				owner:SetVelocity(v:GetVelocity()+Vector(0,0,310))
-			end
-		end
-		for k,v in pairs(ents.FindInSphere(self:GetPos(),120)) do
-			if self:GetDTInt(6) >= 1 or jump then break end
+			if self:GetDTInt(6) >= 1 or v == owner then jump = true owner:SetVelocity(v:GetVelocity()+Vector(0,0,310)) break end
 			if v:IsPlayer() and v ~= owner and v:Team() == TEAM_UNDEAD then
 				v:SetVelocity(v:GetVelocity()+Vector(0,0,330))
 				v:AddLegDamage(55)

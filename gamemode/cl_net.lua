@@ -362,6 +362,14 @@ net.Receive("zs_champion_all", function(length)
 		MySelf:EmitSound(string.format("npc/zombie_poison/pz_alert%d.wav", math.random(1, 2)), 0, math.random(25,35))
 	end
 end)
+net.Receive("zs_golden", function(length)
+	local kid = {killicon = "default"}
+	GAMEMODE:TopNotify(kid, " ", COLOR_RED, translate.Get("golden_appeared"), kid)
+
+	if MySelf:IsValid() and MySelf == ent then
+		MySelf:EmitSound("zombiesurvival/Coin_Throw.mp3", 0, math.random(25,65))
+	end
+end)
 net.Receive("zs_boss_spawned_merge", function(length)
 	local ent = net.ReadEntity()
 	local classindex = net.ReadUInt(8)

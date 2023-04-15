@@ -6,7 +6,7 @@ ENT.RegenDelay = 0.3
 
 ENT.Sigil = true
 
-ENT.ModelScale = 0.85
+ENT.ModelScale = 0.45
 
 ENT.m_NoNailUnfreeze = true
 ENT.NoNails = true

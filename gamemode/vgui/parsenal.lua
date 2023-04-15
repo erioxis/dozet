@@ -49,7 +49,7 @@ local function CanBuy(item, pan)
 	if item.MaxStock and not GAMEMODE:HasItemStocks(item.Signature) then
 		return false
 	end
-	local arsd = math.Clamp((MySelf.ArsenalDiscount or 1),(GAMEMODE:GetWave() <= 4 and 0.75 or 0),255)
+	local arsd = (MySelf.ArsenalDiscount or 1)
 	if not pan.NoPoints and MySelf:GetPoints() < math.ceil(item.Price * arsd) then
 		return false
 	elseif pan.NoPoints and MySelf:GetAmmoCount("scrap") < math.ceil(GAMEMODE:PointsToScrap(item.Price * (MySelf.ScrapDiscount or 1))) then
@@ -309,7 +309,7 @@ local function ItemPanelDoClick(self)
 	purl:SetVisible(canammo)
 
 	ppurbl = viewer.m_AmmoPrice
-	local arsd = math.Clamp((MySelf.ArsenalDiscount or 1),(GAMEMODE:GetWave() <= 4 and 0.75 or 0),255)
+	local arsd = (MySelf.ArsenalDiscount or 1)
 	price = math.ceil(9 * arsd)
 	ppurbl:SetText(price .. " Points")
 	ppurbl:SizeToContents()
@@ -450,7 +450,7 @@ function GM:AddShopItem(list, i, tab, issub, nopointshop)
 		pricelabel:SetTextColor(COLOR_RED)
 		pricelabel:SetText(GAMEMODE.Skills[tab.SkillRequirement].Name)
 	else
-		local arsd = math.Clamp((MySelf.ArsenalDiscount or 1),(GAMEMODE:GetWave() <= 4 and 0.75 or 0),255)
+		local arsd = (MySelf.ArsenalDiscount or 1)
 		local points = math.ceil(tab.Price * arsd)
 		local price = tostring(points)
 	--	if GAMEMODE:GetWave() <= 4 and MySelf.ArsenalDiscount <= 0.75 then

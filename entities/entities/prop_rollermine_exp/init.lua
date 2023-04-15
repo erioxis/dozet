@@ -282,7 +282,7 @@ function ENT:Think()
 	end
 end
 function ENT:Dash()
-	if !self.trg:IsValidLivingZombie() then
+	if !self.trg:IsValidLivingZombie() or self.trg and self.trg:IsValid() and !WorldVisible(self:LocalToWorld(Vector(0, 0, 10)), self.trg:NearestPoint(self:LocalToWorld(Vector(0, 0, 10)))) then
 		local targets = {}
 		for _, ent in pairs(ents.FindInSphere(self:GetPos(), 1048)) do
 			if !ent:IsValid() then continue end
@@ -323,9 +323,8 @@ function ENT:ThreadSafePhysicsCollide(data)
 			util.Effect("decal_scorch", effectdata)
 			util.BlastDamagePlayer(self,owner,center,128,self.HitDamage*3, DMG_ALWAYSGIB)
 			self:EmitSound("npc/env_headcrabcanister/explosion.wav", 100, 100)
-			ParticleEffect("dusty_explosion_rockets", center, angle_zero)
 			self.NextBoom = CurTime() + 3
-			self:TakeDamage(20,self,self)
+			self:TakeDamage(30,self,self)
 			hitflesh = true
 		else
 			local physattacker = ent:GetPhysicsAttacker()

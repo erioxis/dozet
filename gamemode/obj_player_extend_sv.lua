@@ -23,7 +23,7 @@ function meta:ProcessDamage(dmginfo)
 	if not GAMEMODE:PlayerShouldTakeDamage(self, attacker) then return true end
 
 	local dmgbypass = bit.band(dmgtype, DMG_DIRECT) ~= 0
-	if  self:HasGodMode() then if attacker and attacker:IsValidLivingZombie() then  GAMEMODE:BlockFloater(attacker, self, dmginfo:GetDamagePosition())  end return end
+	if  self:HasGodMode() then if attacker and attacker:IsValidLivingHuman() then dmginfo:SetDamage(0)  GAMEMODE:BlockFloater(attacker, self, dmginfo:GetDamagePosition())  end return end
 
 	if self.DamageVulnerability and not dmgbypass then
 		dmginfo:SetDamage(dmginfo:GetDamage() * self.DamageVulnerability)
@@ -1620,6 +1620,13 @@ function meta:GiveStatus(sType, fDie, ignoredouble)
 end
 
 function meta:UnSpectateAndSpawn()
+	if math.random(1,2500) == 1 and self:Team() == TEAM_UNDEAD then
+		self:SetZombieClass(GAMEMODE.ZombieClasses["Golden Zombie"].Index)
+		self:DoHulls(GAMEMODE.ZombieClasses["Golden Zombie"].Index, TEAM_UNDEAD)
+		net.Start("zs_golden")
+		net.Broadcast() 
+		timer.Simple(0.3, function() self:SetHealth(1000) end)
+	end
 	self:UnSpectate()
 	self:Spawn()
 end
@@ -1797,6 +1804,9 @@ function meta:Resupply(owner, obj)
 		if self.RessuplyMul then
 			amount = amount * self.RessuplyMul
 		end
+		if owner.RessuplyEff then
+			amount = amount * owner.RessuplyEff
+		end
 
 		if owner:IsSkillActive(SKILL_VOR) then
 			owner:GiveAmmo(amount * 0.1, ammotype)
@@ -1804,8 +1814,6 @@ function meta:Resupply(owner, obj)
 				net.WriteUInt(amount * 0.1, 16)
 				net.WriteString(ammotype)
 			net.Send(owner)
-			amount = amount * 0.8
-			
 		end
 		net.Start("zs_ammopickup")
 			net.WriteUInt(amount, 16)
@@ -1820,7 +1828,7 @@ function meta:Resupply(owner, obj)
 		if self:IsSkillActive(SKILL_INSIGHT) then
 			owner:HealPlayer(self, 5)
 		end
-		if self ~= owner and owner:IsValidHuman() then
+		if self ~= owner and owner:IsValidHuman() and !owner:IsSkillActive(SKILL_ANTIVOR) then
 			if obj:GetClass() == "prop_resupplybox" then
 				owner.ResupplyBoxUsedByOthers = owner.ResupplyBoxUsedByOthers + 1
 			end
@@ -2031,7 +2039,7 @@ function meta:DoHulls(classid, teamid)
 			if self:Alive() then
 				self:SetMoveType(classtab.MoveType or MOVETYPE_WALK)
 			end
-			if math.random(1,25) == 1 and self:IsValid() then
+			if (math.random(1,25) == 1 or GAMEMODE:GetWave() == 12) and self:IsValid() then
 				self:SetChampion(math.random(1,9))
 				net.Start("zs_champion")
 					net.WriteUInt(classid, 8)
@@ -2933,7 +2941,7 @@ function meta:CryogenicInduction(attacker, inflictor, damage)
 	local formula = (165 + (35 * ((attacker:GetActiveWeapon() and (attacker:GetActiveWeapon().Tier or 1))-1) * (attacker:GetActiveWeapon().Tier or 1))) * (attacker:GetIndChance() or 1)
 	if attacker:GetProgress('iprog') < formula then return end
 	if self:GetZombieClassTable().Boss then return end
-
+	attacker.NextInductors = CurTime() + 1.5
 	timer.Create("Cryogenic" .. attacker:UniqueID(), 0.06, 1, function()
 		if not attacker:IsValid() or not self:IsValid() then return end
 		local pos = self:WorldSpaceCenter()
@@ -2960,6 +2968,7 @@ function meta:FireInduction(attacker, inflictor, damage)
 	if not self:GetZombieClassTable().Boss then
 		if attacker:GetProgress('fprog') >= ((15 * ((attacker:GetActiveWeapon().Tier or 1)+1))) * (attacker:GetIndChance() or 1) then
 			attacker:SetProgress(0,'fprog')
+			attacker.NextInductors = CurTime() + 1.5
 			timer.Create("Fire_inder" .. attacker:UniqueID(), 0.1, (attacker.HoleOfHell and 1 or 2), function()
 				if not attacker:IsValid() or not self:IsValid() then return end
 
@@ -2991,6 +3000,7 @@ end
 function meta:ChamStorm(attacker, inflictor, damage)
 		if attacker:GetProgress('cprog') >= 350 then
 			attacker:SetProgress(0,'cprog')
+			attacker.NextInductors = CurTime() + 1.5
 			timer.Create("CHAAAAAMOMILEEE_inder" .. attacker:UniqueID(), 0.1, 2, function()
 				if not attacker:IsValid() or not self:IsValid() then return end
 

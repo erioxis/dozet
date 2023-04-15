@@ -1534,7 +1534,8 @@ trinket = GM:AddTrinket(trs("t_antibaracat"), "antibaracat", false, supveles, su
 GM:AddSkillModifier(trinket, SKILLMOD_MEDKIT_EFFECTIVENESS_MUL, 0.5)
 trinket = GM:AddTrinket(trs("t_auto_magazine"), "ultra_mag", false, book, bookw, 5, trs("t_d_auto_magazine"))
 GM:AddSkillModifier(trinket, SKILLMOD_DAMAGE, -0.15)
-GM:AddSkillModifier(trinket, SKILLMOD_FIRE_DELAY, 0.15)
+GM:AddSkillModifier(trinket, SKILLMOD_PROJECTILE_DAMAGE_MUL, -0.85)
+GM:AddSkillModifier(trinket, SKILLMOD_FIRE_DELAY, -0.30)
 
 --Special Trinkets
 trinket = GM:AddTrinket(trs("t_nheart"), "nulledher", false, supveles, supweles, 4, trs("t_d_nheart"))
