@@ -17,7 +17,7 @@ function SWEP:ShootBullets(damage, numshots, cone)
 		ent:SetOwner(owner)
 		ent:Spawn()
 
-		ent.GrenadeDamage = self.GrenadeDamage
+		ent.GrenadeDamage = self.GrenadeDamage * (owner.ThrowDamageMul or 1)
 		ent.GrenadeRadius = self.GrenadeRadius
 		ent.Team = owner:Team()
 

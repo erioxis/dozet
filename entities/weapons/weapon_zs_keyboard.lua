@@ -1,9 +1,6 @@
 AddCSLuaFile()
-
---SWEP.PrintName = "Keyboard"
---SWEP.Description = "You overfilled by fury and shields!."
-SWEP.PrintName = ""..translate.Get("wep_keyboard")
-SWEP.Description = ""..translate.Get("wep_d_keyboard")
+SWEP.PrintName = translate.Get("wep_keyboard")
+SWEP.Description = translate.Get("wep_d_keyboard")
 
 if CLIENT then
 	SWEP.ViewModelFOV = 55
@@ -48,16 +45,14 @@ SWEP.SwingHoldType = "grenade"
 SWEP.AllowQualityWeapons = true
 SWEP.DismantleDiv = 2
 
-SWEP.OnZombieKilled = function(self, zombie, total, dmginfo)
+function SWEP:OnZombieKilled(zombie, total, dmginfo)
 	local killer = self:GetOwner()
-	local attacker = self:IsPlayer()
 
 	if killer:IsValid() then
 		killer:GiveStatus("medrifledefboost", 3) 
 		killer:GiveStatus("strengthdartboost", 4)
 		killer:GiveStatus("keyboard", 7)
-		end
-		
+	end	
 end
 function SWEP:ApplyMeleeDamage(ent, trace, damage)
 	if SERVER and ent:IsPlayer() then

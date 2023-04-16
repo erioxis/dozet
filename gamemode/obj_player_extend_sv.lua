@@ -211,11 +211,11 @@ function meta:ProcessDamage(dmginfo)
 			dmginfo:SetDamage(dmginfo:GetDamage()*g)
 		end
 		if self:GetZombieClassTable().Boss and attacker:IsPlayer() then
-			dmginfo:SetDamage(math.min(dmginfo:GetDamage(), (self:GetMaxHealth() * 0.09) * (inflictor.Tier or 1)))
+			dmginfo:SetDamage(math.min(dmginfo:GetDamage(), (self:GetMaxHealth() * 0.09)))
 			timer.Simple(0,function()
-				if self:IsValid() then  self:GodEnable() end
+				if self:IsValid() then self:GodEnable() end
 				end )
-				timer.Simple(0.2,function()
+				timer.Simple(0.6,function()
 					if self:IsValid() then self:GodDisable() end
 				end )
 		end

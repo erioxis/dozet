@@ -3,13 +3,19 @@ local PANEL = {}
 local matGlow = Material("sprites/glow04_noz")
 local texDownEdge = surface.GetTextureID("gui/gradient_down")
 local colHealth = Color(0, 0, 0, 240)
+local oldh = 100
+local oldh2 = 100
+local oldb = 35
+local math_Apr = math.Approach
 local function ContentsPaint(self, w, h)
 	local lp = MySelf
 	if lp:IsValid() then
 		local gp = (((lp:GetZSRemortLevel() / 4) or 0) + (lp.AmuletPiece or 0)) < 0 and lp:Team() == TEAM_HUMAN
 		local screenscale = BetterScreenScale()
-		local health = lp:Health()
+		local health2 = 0
+		local health = math_Apr(oldh,math.Clamp(lp:Health(), 1,lp:GetMaxHealthEx()),1.2)
 		local healthperc = math.Clamp(health / lp:GetMaxHealthEx(), 0, 1)
+		
 		local wid, hei = 300 * screenscale, 18 * screenscale
  
 		colHealth.r = (lp:GetInfo("zs_rhealth") + healthperc) * 100
@@ -23,14 +29,16 @@ local function ContentsPaint(self, w, h)
 		local y = 115 * screenscale
 
 		local subwidth = healthperc * wid
-		if health > lp:GetMaxHealthEx() then
-			health = lp:GetMaxHealthEx().." (+"..health-lp:GetMaxHealthEx()..")"
+		if lp:Health() > lp:GetMaxHealthEx() then
+			health2 = " (+"..math.Round(math_Apr(oldh2,math.Round(lp:Health()-lp:GetMaxHealthEx()),1.5))..")"
+			oldh2 = math_Apr(oldh2,math.Round(lp:Health()-lp:GetMaxHealthEx()),1.5)
 		end
 		if lp:HasTrinket("curse_unknown") then
 			health = "?"
 			subwidth = wid
 		end
-		draw.SimpleTextBlurry(health..(gp and " x"..((((lp:GetZSRemortLevel() / 4) or 0) + (lp.AmuletPiece or 0))-2)*-1 or ""), ((gp or string.len(health) >= 13) and "ZSHUDFontSmall"or"ZSHUDFont"), x + wid + 18 * screenscale, y + 8 * screenscale, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+		local txt = math.Round(health)..(health2 ~= 0 and health2 or "")..(gp and " x"..((((lp:GetZSRemortLevel() / 4) or 0) + (lp.AmuletPiece or 0))-2)*-1 or "")
+		draw.SimpleTextBlurry(txt, ((gp or string.len(txt)>= 10) and "ZSHUDFontSmall"or"ZSHUDFont"), x + wid + 18 * screenscale, y + 8 * screenscale, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 
 		surface.SetDrawColor(0, 0, 0, 230)
 		surface.DrawRect(x, y, wid, hei)
@@ -68,7 +76,7 @@ local function ContentsPaint(self, w, h)
 			surface.SetDrawColor(194, 12, 155, 50)
 			surface.DrawRect(x, y, wid, hei * 2)
 		end
-
+		oldh = math_Apr(oldh,math.Clamp(lp:Health(), 0,lp:GetMaxHealthEx()),0.4)
 		if lp:Team() == TEAM_HUMAN then
 			local bloodarmor = lp:GetBloodArmor()
 			if bloodarmor > 0 then

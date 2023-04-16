@@ -364,7 +364,6 @@ function meta:ResetLastBarricadeAttacker(attacker, dmginfo)
 			attacker.BarricadeDamage = attacker.BarricadeDamage + dmg
 			if attacker.LifeBarricadeDamage ~= nil then
 				attacker:AddLifeBarricadeDamage(dmg)
-				GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_ZOMBIECLASS, attacker:GetZombieClassTable().Name, "BarricadeDamage", dmg)
 			end
 		end
 	end

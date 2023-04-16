@@ -22,16 +22,20 @@ end)
 local matGlow = Material("sprites/glow04_noz")
 local texDownEdge = surface.GetTextureID("gui/gradient_down")
 local colHealth = Color(0,0,0)
+local olds = 100
+local apr = math.Approach
 function meta:DrawStaminaBar()
 	local lp = MySelf
+
 	if lp:GetStamina() < 100 then
-		local health = math.max(lp:GetStamina(), 0)
-		local healthperc = math.Clamp(health / 100, 0.01, 1)
 		local x = ScrW() * 0.45 + (x_y)
 		local y = ScrH() * 0.78 + (y_s)
 		local screenscale = BetterScreenScale()
 		local wid, hei = 250 * screenscale, 30 * screenscale
 		if lp:IsValid() then
+			local health = apr(olds,math.max(lp:GetStamina(), 0),0.9)
+		
+			local healthperc = math.Clamp(health / 100, 0.01, 1)
 	 
 			colHealth.r = 255/healthperc
 			colHealth.g = 255 * healthperc
@@ -61,8 +65,9 @@ function meta:DrawStaminaBar()
 			surface.SetDrawColor(255, 255, 255, 255)
 			surface.DrawTexturedRect(x + 2 +  wid*0.33 - 6.5, y + 1 - hei/2, 4, hei * 2)
 			local phantomwidth = (health == 100 and 0 or wid)
-			draw.SimpleTextBlurry((math.Round(lp:GetStamina()*100)/100).."%" , "ZSHUDFontSmall", x, y - 12, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM)
-
+			draw.SimpleTextBlurry((math.Round(olds*100)/100).."%" , "ZSHUDFontSmall", x, y - 12, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM)
+			--olds = math.MoveTowards(olds,math.max(lp:GetStamina(), 0),0.1)
+			olds = apr(olds,math.max(lp:GetStamina(), 0),0.1)
 		end
 	end
 end
@@ -171,7 +176,7 @@ function meta:DrawCrosshairCross()
 	cone = ScrH() * 0.0003125 * cone
 	cone = cone * 90 / MySelf:GetFOV()
 
-	--CrossHairScale = cone --math.Approach(CrossHairScale, cone, FrameTime() * math.max(5, math.abs(CrossHairScale - cone) * 0.02))
+	--CrossHairScale = cone --apr(CrossHairScale, cone, FrameTime() * math.max(5, math.abs(CrossHairScale - cone) * 0.02))
 
 	local midarea = 40 * cone --CrossHairScale
 

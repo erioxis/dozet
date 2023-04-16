@@ -116,7 +116,7 @@ concommand.Add("zs_pointsshopbuy", function(sender, command, arguments)
 			end
 		end
 
-		GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_WEAPON, itemtab.SWEP, "Purchases", 1)
+
 	else
 		return
 	end
@@ -271,7 +271,7 @@ concommand.Add("zs_anti_pointsshopbuy", function(sender, command, arguments)
 			end
 		end
 
-		GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_WEAPON, itemtab.SWEP, "Purchases", 1)
+
 	else
 		return
 	end
@@ -452,7 +452,7 @@ concommand.Add("zs_dismantle", function(sender, command, arguments)
 		sender:UpdateAltSelectedWeapon()
 	end
 
-	GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_WEAPON, invitem or contents, "Disassembles", 1)
+
 
 	if potinv and potinv.Result then
 		sender:AddInventoryItem(potinv.Result)
@@ -529,7 +529,6 @@ concommand.Add("zs_upgrade", function(sender, command, arguments)
 		net.Send(sender)
 		sender:GiveAchievementProgress("darvinupdate", 1)
 
-		GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_WEAPON, upgclass, "Upgrades", 1)
 	end
 
 	local owner = nearest.GetObjectOwner and nearest:GetObjectOwner() or nearest:GetOwner()
@@ -585,7 +584,6 @@ concommand.Add("worthcheckout", function(sender, command, arguments)
 				tab.Callback(sender)
 				hasalready[id] = true
 			elseif tab.SWEP then
-				GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_WEAPON, tab.SWEP, "Checkouts", 1)
 
 				sender:StripWeapon(tab.SWEP) -- "Fixes" players giving each other empty weapons to make it so they get no ammo from the Worth menu purchase.
 				if GAMEMODE.ZSInventoryItemData[tab.SWEP] then

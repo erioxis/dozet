@@ -2030,7 +2030,7 @@ LANGUAGE.skill_helper_d1 = "When blocking you give status TARGET on zombie\nHe t
 LANGUAGE.skill_helper_d2 = "TARGETET Zombie take x0.1 damage from melee"
 --shooter
 LANGUAGE.skill_dfingers = "Deep Fingers"
-LANGUAGE.skill_dfingers_d1 = "x2 Ammo use.\nx1.45 Damage for shooting damage."
+LANGUAGE.skill_dfingers_d1 = "x2 Ammo use.\nx1.45 Damage for shooting damage.\nOpen a thrower skillweb"
 LANGUAGE.skill_sfingers = "Super Fingers"
 LANGUAGE.skill_sfingers_d1 = "Kill give buff for non-use ammo for 1.5 secs.\n"
 LANGUAGE.skill_nfingers = "Nimble Fingers"
@@ -3189,6 +3189,7 @@ LANGUAGE.skillmod_n123 = "%s Stamina regeneration"
 LANGUAGE.skillmod_n124 = "%s Stamina use"
 LANGUAGE.skillmod_n125 = "%s Charges use"
 LANGUAGE.skillmod_n126 = "%s Your ressuply effectivness"
+LANGUAGE.skillmod_n127 = "%s Thrower Damage multiplier"
 LANGUAGE.c_for_use = " Charges use\n"
 --СП
 LANGUAGE.toyka_sp = "Creater\nHehe"

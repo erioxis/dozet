@@ -192,7 +192,6 @@ function meta:TryAssembleItem(component, heldclass)
 	end
 	self:SendLua("surface.PlaySound(\"buttons/lever"..math.random(5)..".wav\")")
 
-	GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_WEAPON, desiassembly, "Crafts", 1)
 end
 function meta:TryTakeItem(component)
 	local heldwep, desiassembly = self:GetWeapon(heldclass)
@@ -238,8 +237,6 @@ function meta:TryTakeItem(component)
 		self:TakeInventoryItem(heldclass)
 	end
 	self:SendLua("surface.PlaySound(\"buttons/lever"..math.random(5)..".wav\")")
-
-	GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_WEAPON, desiassembly, "Crafts", 1)
 end
 
 function meta:DropInventoryItemByType(itype)

@@ -22,15 +22,16 @@ function ENT:Think()
 	end
 
 	local activeweapon = owner:GetActiveWeapon()
-	if not activeweapon:IsValid() or not activeweapon.IsMagnet or owner:IsSkillActive(SKILL_SAMODOS) then return end
+	if not activeweapon:IsValid() or not activeweapon.IsMagnet then return end
 
 	local pos = self:GetPos()
 	for _, ent in pairs(ents.FindInSphere(pos, self.Radius)) do
 		local class = ent:GetClass()
 		local ownsitem = not ent.NoPickupsOwner or ent.NoPickupsOwner == owner
 		local droppedrecent = not ent.DroppedTime or ent.DroppedTime + 4 < CurTime()
+		if ent:GetOwner() ~= owner and (owner:IsSkillActive(SKILL_SAMODOS) or  ent:GetOwner() and ent:GetOwner():IsPlayer() and ent:GetOwner():IsSkillActive(SKILL_SAMODOS)) then continue end
 
-		if ent and ent:IsValid() and self.Classes[class] and WorldVisible(pos, ent:NearestPoint(pos)) and droppedrecent and ownsitem then
+		if ent and ent:IsValid() and self.Classes[class] and WorldVisible(pos, ent:NearestPoint(pos)) and droppedrecent and ownsitem  then
 			local phys = ent:GetPhysicsObject()
 			local pos = owner:KeyDown(IN_ATTACK) and owner:GetEyeTrace().HitPos or pos
 			local dir = (pos - ent:NearestPoint(pos)):GetNormalized()

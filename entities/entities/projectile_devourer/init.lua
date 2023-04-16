@@ -91,8 +91,9 @@ function ENT:Hit(vHitPos, vHitNormal, ent)
 				ent:TakeSpecialDamage((math.random(12) == 12 and 69 or 23), DMG_GENERIC, owner, self)
 				ent:KnockDown()
 				ent:SetVelocity(Vector(0,0,350))
-				
-				ent:GiveStatus("knockdown_dir",2)
+				if !ent:GetActiveWeapon().ResistDamage then
+					ent:GiveStatus("knockdown_dir",2)
+				end
 
 				local status = ent:GiveStatus("devourer")
 				if status and status:IsValid() then

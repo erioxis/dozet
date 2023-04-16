@@ -17,28 +17,29 @@ SWEP.Primary.Sound = Sound("Weapon_357.Single")
 SWEP.Primary.ClipSize = 1
 SWEP.Primary.Automatic = true
 SWEP.Primary.Ammo = "357"
-SWEP.Primary.Delay = 0.45
-SWEP.Primary.DefaultClip = 16
-SWEP.Primary.Damage = 44
+SWEP.Primary.Delay = 0.8
+SWEP.Primary.DefaultClip = 1
+SWEP.Primary.Damage = 41
 SWEP.Primary.NumShots = 1
+SWEP.PointsMultiplier = 0.45
 
 SWEP.ConeMax = 0.6
 SWEP.ConeMin = 0.1
 SWEP.RageModer = 0
 
-SWEP.MaxStock = 2
+SWEP.MaxStock = 1
 
 SWEP.WalkSpeed = SPEED_SLOW
 
 SWEP.Tier = 3
 
-SWEP.ReloadSpeed = 1.3
+SWEP.ReloadSpeed = 1
 
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_RELOAD_SPEED, 0.075)
 GAMEMODE:AddNewRemantleBranch(SWEP, 1, translate.Get("wep_bogger_r1"), translate.Get("wep_d_bogger_r1"), function(wept)
 	wept.Primary.Delay = wept.Primary.Delay * 5
 	wept.Primary.Damage  = wept.Primary.Damage * 0.25
-	wept.PointsMultiplier = 0.4
+	wept.PointsMultiplier = 0.8
 	if SERVER then
 		wept.EntModify = function(self, ent)
 			ent.RageMode = true

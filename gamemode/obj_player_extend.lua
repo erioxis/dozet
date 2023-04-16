@@ -494,7 +494,8 @@ function meta:AttachmentDamage(damage, attacker, inflictor, type)
 				self:PulseResonance(attacker, inflictor)
 				attacker.NextInductors = CurTime() + 1.5
 			end
-		elseif SERVER then
+		end
+		if SERVER then
 			GAMEMODE:DamageAtFloater(attacker, self, self:NearestPoint(attacker:EyePos()), damage,type)
 		end
 	elseif type == SLOWTYPE_COLD then

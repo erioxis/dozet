@@ -1087,7 +1087,6 @@ function GM:SpawnBossZombie(bossplayer, silent, bossindex, triggerboss)
 
 	if not triggerboss then
 		bossplayer.BossDeathNotification = true
-		GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_ZOMBIECLASS, GAMEMODE.ZombieClasses[bossindex].Name, "BossSpawn", 1)
 	end
 
 	self.LastBossZombieSpawned = self:GetWave()
@@ -1125,7 +1124,6 @@ function GM:SpawnDemiBossZombie(bossplayer, silent, bossindex, triggerboss)
 
 	if not triggerboss then
 		bossplayer.BossDeathNotification = true
-		GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_ZOMBIECLASS, GAMEMODE.ZombieClasses[bossindex].Name, "BossSpawn", 1)
 	end
 	self.LastDemiBossZombieSpawned = self:GetWave()
 	if !bossplayer:GetZombieClassTable().Boss then 
@@ -2500,8 +2498,6 @@ function GM:EndRound(winner)
 		net.WriteString(game.GetMapNext())
 	net.Broadcast()
 
-	GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_ROUND,
-		winner == TEAM_HUMAN and "Wins" or ("LossWave"..self:GetWave()), game.GetMap(), 1)
 
 	if winner == TEAM_HUMAN then
 		for _, ent in pairs(ents.FindByClass("logic_winlose")) do
@@ -2522,10 +2518,6 @@ function GM:ScalePlayerDamage(pl, hitgroup, dmginfo)
 	
 	local attacker = dmginfo:GetAttacker()
 	local inflictor = dmginfo:GetInflictor()
-	GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_WEAPON, inflictor:GetClass(), "Hits", 1)
-	if hitgroup == HITGROUP_HEAD then
-		GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_WEAPON, inflictor:GetClass(), "Headshots", 1)
-	end
 
 	if not dmginfo:IsBulletDamage() then return end
 
@@ -3344,7 +3336,7 @@ function GM:GiveDefaultOrRandomEquipment(pl)
 						pl:Give(tab.SWEP)
 					end
 
-					GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_WEAPON, tab.SWEP, "RandomCheckouts", 1)
+
 				end
 			end
 		end
@@ -3364,8 +3356,6 @@ function GM:GiveStartingLoadout(pl)
 	for item, amount in pairs(self.StartingLoadout) do
 		for i=1, amount do
 			pl:Give(item)
-
-			GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_WEAPON, item, "StartingLoadout", 1)
 		end
 	end
 end
@@ -3390,7 +3380,6 @@ function GM:GiveRandomEquipment(pl)
 						pl:Give(tab.SWEP)
 					end
 
-					GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_WEAPON, tab.SWEP, "RandomCheckouts", 1)
 				end
 			end
 		end
@@ -3599,7 +3588,7 @@ function GM:EntityTakeDamage(ent, dmginfo)
 
 	local dispatchdamagedisplay = false
 	local entclass = ent:GetClass()
-	if !ent:IsPlayer() and attacker and attacker:IsPlayer() and !pl.Zban  then
+	if !ent:IsPlayer() and attacker and attacker:IsPlayer() and !attacker.Zban  then
 		if ent:GetOwner() ~= attacker then
 			local damage = math.min(dmginfo:GetDamage(), ent:Health())
 			attacker:AddTokens(math.ceil((damage or 2) * 0.25))
@@ -3630,19 +3619,13 @@ function GM:EntityTakeDamage(ent, dmginfo)
 					if damage > 0 then
 						local time = CurTime()
 
-
 						attacker.DamageDealt[myteam] = attacker.DamageDealt[myteam] + damage
 
 						if myteam == TEAM_UNDEAD then
-							
-
-
 							if otherteam == TEAM_HUMAN then
 									attacker:AddLifeHumanDamage(damage)
 									attacker:AddTokens(math.ceil(damage * 2))
 									attacker:AddZSXP(math.min(ent:GetMaxHealth()*0.2,math.ceil(damage * 0.2)))
-								
-								GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_ZOMBIECLASS, attacker:GetZombieClassTable().Name, "HumanDamage", damage)
 							end
 						elseif myteam == TEAM_HUMAN and otherteam == TEAM_UNDEAD then
 							ent.DamagedBy[attacker] = (ent.DamagedBy[attacker] or 0) + damage
@@ -3656,15 +3639,12 @@ function GM:EntityTakeDamage(ent, dmginfo)
 									points = points * ent.PointsMultiplier
 								end
 								attacker.PointQueue = attacker.PointQueue + points
-
-								GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_WEAPON, inflictor:GetClass(), "PointsEarned", points)
-								GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_WEAPON, inflictor:GetClass(), "Damage", damage)
 							end
 							if numofdaily == 3 then
 								attacker:GiveAchievementProgress("daily_post", math.Round(math.min(damage, ent:Health())))
 							end
 							local chnc = (attacker.AttChance or 1)
-							local fireatt = 8 * chnc
+							local fireatt = 5 * chnc
 							local iceatt = 5* chnc
 							local pulseatt = 7* chnc
 							local debuffatt = 12* chnc
@@ -4734,7 +4714,6 @@ function GM:HumanKilledZombie(pl, attacker, inflictor, dmginfo, headshot, suicid
 			attacker.LuckAdd = attacker.LuckAdd + 0.05
 		end
 
-		GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_WEAPON, wep:GetClass(), "Kills", 1)
 
 		if wep.OnZombieKilled then
 			wep:OnZombieKilled(pl, totaldamage, dmginfo)
@@ -4772,9 +4751,7 @@ function GM:ZombieKilledHuman(pl, attacker, inflictor, dmginfo, headshot, suicid
 	attacker:AddZSXP(self.InitialVolunteers[attacker:UniqueID()] and xp or math.floor(xp*4))
 	self:SetRage(self:GetRage() - 15 / self:GetWinRate())
 	local classtab = attacker:GetZombieClassTable()
-	if classtab and classtab.Name then
-		GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_ZOMBIECLASS, classtab.Name, "BrainsEaten", 1)
-	end
+
 
 
 	if not pl.Gibbed and not suicide then
@@ -5389,8 +5366,6 @@ function GM:PlayerSpawn(pl)
 		if IsValid(oldhands) then
 			oldhands:Remove()
 		end
-
-		GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_ZOMBIECLASS, classtab.Name, "ClassSpawn", 1)
 
 		pl:CallZombieFunction0("OnSpawned")
 	elseif pl:Team() == TEAM_HUMAN then
