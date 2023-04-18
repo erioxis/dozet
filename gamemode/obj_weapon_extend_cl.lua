@@ -33,7 +33,7 @@ function meta:DrawStaminaBar()
 		local screenscale = BetterScreenScale()
 		local wid, hei = 250 * screenscale, 30 * screenscale
 		if lp:IsValid() then
-			local health = apr(olds,math.max(lp:GetStamina(), 0),0.9)
+			local health = apr(olds,math.max(lp:GetStamina(), 0),1.5)
 		
 			local healthperc = math.Clamp(health / 100, 0.01, 1)
 	 
@@ -67,7 +67,7 @@ function meta:DrawStaminaBar()
 			local phantomwidth = (health == 100 and 0 or wid)
 			draw.SimpleTextBlurry((math.Round(olds*100)/100).."%" , "ZSHUDFontSmall", x, y - 12, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM)
 			--olds = math.MoveTowards(olds,math.max(lp:GetStamina(), 0),0.1)
-			olds = apr(olds,math.max(lp:GetStamina(), 0),0.1)
+			olds = apr(olds,math.max(lp:GetStamina(), 0),0.45)
 		end
 	end
 end

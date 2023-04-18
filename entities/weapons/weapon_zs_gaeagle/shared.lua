@@ -64,7 +64,7 @@ function SWEP:PrimaryAttack()
 	local owner = self:GetOwner()
 	if owner:GetAmmoCount("pulse") < 30 then return end
 	local owm = (owner.M_FireDelay or 1)
-	self:SetNextPrimaryFire(CurTime() + self:GetFireDelay() * ( owner:HasTrinket("altevesoul") and owner:Health() < 50 and (0.5 * owm) or (1 * owm) ))
+	self:SetNextPrimaryFire(CurTime() + self:GetFireDelay() * (1 * owm))
 	local extramulti = 1
 	if owner:HasTrinket("supasm") and (self.Tier or 1) <= 2  then
 		extramulti = 1.25

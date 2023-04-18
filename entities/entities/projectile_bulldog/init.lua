@@ -36,6 +36,7 @@ function ENT:Think()
 			if target:IsValidLivingZombie() and target:Health() >= 500 and !target:GetZombieClassTable().Boss and !target:GetZombieClassTable().BaraCat then
 				local targetpos = target:LocalToWorld(target:OBBCenter())
 				local direction = (targetpos - self:GetPos()):GetNormal()
+				
 
 				self:SetAngles(direction:Angle())
 

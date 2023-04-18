@@ -52,6 +52,9 @@ function GM:SkillCanUnlock(pl, skillid, skilllist)
 		if skill.DontUnlock2 and pl:IsSkillUnlocked(skill.DontUnlock2) then
 			return false
 		end
+		if (skill.SPUse or 1) >= pl:GetZSSPRemaining() then
+			return false
+		end
 
 		if skill.LevelReq and pl:GetZSLevel() < skill.LevelReq then
 			return false
@@ -266,7 +269,7 @@ function meta:GetZSXP()
 end
 
 function meta:GetZSSPUsed()
-	return #self:GetUnlockedSkills() + (#self:UpgradesSkill() or 0) 
+	return #self:GetUnlockedSkills()
 end
 
 function meta:GetZSSPRemaining()
@@ -276,15 +279,22 @@ end
 function meta:GetZSSPTotal()
 	local skillmodifiers = {}
 	local gm_modifiers = GAMEMODE.SkillModifiers
+	local gm_s = GAMEMODE.Skills
+	local totaluse = 0
 	for skillid in pairs(table.ToAssoc(self:GetUnlockedSkills())) do
 		local modifiers = gm_modifiers[skillid]
 		if modifiers then
 			for modid, amount in pairs(modifiers) do
-				skillmodifiers[modid] = (skillmodifiers[modid] or 0) + amount
+				totaluse = totaluse + amount
 			end
 		end
 	end
-	return self:GetZSLevel() + self:GetZSRemortLevel() + (skillmodifiers[108] or 0)
+	for skillid in pairs(table.ToAssoc(self:GetUnlockedSkills())) do
+		if gm_s[skillid].SPUse then
+			totaluse = totaluse - gm_s[skillid].SPUse
+		end
+	end
+	return math.Round(self:GetZSLevel() + self:GetZSRemortLevel() + totaluse)
 end
 
 function meta:GetDesiredActiveSkills()

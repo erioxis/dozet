@@ -15,7 +15,7 @@ CLASS.Variations = {"Pyro", "Gore Blaster Zombie", "Chem Burster", "Eraditor", "
 CLASS.Original = true
 
 CLASS.DynamicHealth = 1
-
+CLASS.Weight = 0.95
 CLASS.CanTaunt = true
 
 CLASS.Points = CLASS.Health/GM.HumanoidZombiePointRatio

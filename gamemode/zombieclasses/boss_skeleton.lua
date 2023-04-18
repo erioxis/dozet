@@ -13,7 +13,7 @@ CLASS.Speed = 150
 CLASS.Points = 60
 
 CLASS.CanTaunt = true
-
+CLASS.Weight = 0
 CLASS.Points = CLASS.Health/GM.SkeletonPointRatio
 
 CLASS.SWEP = "weapon_zs_skeleton"
@@ -156,9 +156,9 @@ if SERVER then
 
 	function CLASS:ProcessDamage(pl, dmginfo)
 		if bit_band(dmginfo:GetDamageType(), DMG_BULLET) ~= 0 then
-			dmginfo:SetDamage(dmginfo:GetDamage() * 0.05)
+			dmginfo:SetDamage(1)
 		elseif bit_band(dmginfo:GetDamageType(), DMG_SLASH) == 0 and bit_band(dmginfo:GetDamageType(), DMG_CLUB) == 0 then
-			dmginfo:SetDamage(dmginfo:GetDamage() * 0.05)
+			dmginfo:SetDamage(1)
 		end
 	end
 end

@@ -22,7 +22,7 @@ hook.Add("PostDrawTranslucentRenderables", "DrawBlocking", function()
 	end
 
 	for _, particle in pairs(Particles) do
-		if particle and curtime < particle.DieTime then
+		if particle and curtime < (particle.DieTime or 1) then
 			done = false
 
 

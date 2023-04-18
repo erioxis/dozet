@@ -5,7 +5,7 @@ GM.Website	=	"https://github.com/erioxis/dozet"
 
 -- No, adding a gun doesn't make your name worth being here.
 GM.Credits = {
-	{"Version", "", "7.8.7"}, -- Привет.
+	{"Version", "", "7.9.0"}, -- Привет.
 	{"Season of ", "zombie buffs and code optimisation", "XD"},
 	{"erioxis", "Phantom coder", "dead"},
 	{"Nullted", "", "RU-ENG Translation"},
@@ -619,7 +619,7 @@ function GM:OnPlayerHitGround(pl, inwater, hitfloater, speed)
 	end
 
 
-	if math.floor(damage) > 0 then
+	if math.floor(damage) > 0 and !pl:IsSkillActive(SKILL_POGO) then
 		if SERVER then
 			local h = pl:Health()
 			pl:TakeSpecialDamage(damage * damage_mul, DMG_FALL, game.GetWorld(), game.GetWorld(), pl:GetPos())

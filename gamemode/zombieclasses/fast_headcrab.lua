@@ -27,7 +27,7 @@ CLASS.ViewOffsetDucked = Vector(0, 0, 10)
 CLASS.StepSize = 8
 CLASS.CrouchedWalkSpeed = 1
 CLASS.Mass = 16
-
+CLASS.Weight = 0.1
 if SERVER then
 function CLASS:ProcessDamage(pl, dmginfo)
 	if dmginfo:GetInflictor().IsMelee then

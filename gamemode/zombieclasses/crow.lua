@@ -15,6 +15,7 @@ CLASS.DeathSounds = {"NPC_Crow.Die"}
 
 CLASS.Unlocked = true
 CLASS.Hidden = true
+CLASS.Weight = 0
 
 CLASS.Hull = {Vector(-4, -4, 0), Vector(4, 4, 9)}
 CLASS.HullDuck = {Vector(-4, -4, 0), Vector(4, 4, 9)}

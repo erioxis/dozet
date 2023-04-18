@@ -19,6 +19,43 @@ function SWEP:ThrowGibs()
 			phys:AddAngleVelocity(VectorRand() * 360)
 		end
 	end
+	if GAMEMODE:GetWave() >= 6 and GAMEMODE:GetWave() < 12 then
+		for i=-1,2 do
+			ent = ents.Create("projectile_doomcrab")
+			if ent:IsValid() then
+				ent:SetPos(owner:GetShootPos()+Vector(30*i,0,0))
+				ent:SetAngles(AngleRand())
+				ent:SetOwner(owner)
+				ent:Spawn()
+		
+				local phys = ent:GetPhysicsObject()
+				if phys:IsValid() then
+					phys:Wake()
+					phys:SetVelocityInstantaneous(owner:GetAimVector() * 600)
+					phys:AddAngleVelocity(VectorRand() * 360)
+				end
+				self:GetOwner():EmitSound("npc/ichthyosaur/attack_growl"..math.random(3)..".wav")
+			end
+		end
+	elseif GAMEMODE:GetWave() >= 12 then
+		for i=1,10 do
+			ent = ents.Create("projectile_doomcrab")
+			if ent:IsValid() then
+				ent:SetPos(owner:GetShootPos()+Vector(30+i,0,0))
+				ent:SetAngles(AngleRand())
+				ent:SetOwner(owner)
+				ent:Spawn()
+		
+				local phys = ent:GetPhysicsObject()
+				if phys:IsValid() then
+					phys:Wake()
+					phys:SetVelocityInstantaneous(owner:GetAimVector() * 600)
+					phys:AddAngleVelocity(VectorRand() * 360)
+				end
+				self:GetOwner():EmitSound("npc/ichthyosaur/attack_growl"..math.random(3)..".wav")
+			end
+		end
+	end
 end
 
 function SWEP:PoundAttackProcess()

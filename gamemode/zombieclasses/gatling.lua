@@ -10,7 +10,7 @@ CLASS.SWEP = "weapon_zs_crowgatling"
 CLASS.Model = Model("models/crow.mdl")
 CLASS.Speed = 550
 CLASS.JumpPower = 1200
-
+CLASS.Weight = 0
 CLASS.PainSounds = {"NPC_Crow.Pain"}
 CLASS.DeathSounds = {"NPC_Crow.Die"}
 

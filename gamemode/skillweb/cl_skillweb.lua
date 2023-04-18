@@ -1212,8 +1212,8 @@ function PANEL:Paint(w, h)
 					draw_SimpleText(translate.Get("s_alw_act"),"ZS3D2DFontSmall", 0, xskill, colo, TEXT_ALIGN_CENTER)
 					xskill = xskill + 32 * screenscale
 				end
-				if skill.RemortReq then
-					draw_SimpleText(translate.Get("s_need_r")..skill.RemortReq,"ZS3D2DFontSmall", 0, xskill, colo, TEXT_ALIGN_CENTER)
+				if skill.SPUse then
+					draw_SimpleText(translate.Get("s_need_r")..(skill.SPUse+1),"ZS3D2DFontSmall", 0, xskill, colo, TEXT_ALIGN_CENTER)
 					xskill = xskill + 32 * screenscale
 				end
 				if skill.LevelReq then
@@ -1404,7 +1404,7 @@ function PANEL:OnMousePressed(mc)
 	
 					return
 				end
-				if MySelf:GetZSSPRemaining() >= 1 or GAMEMODE.Skills[hoveredskill].Amulet then
+				if MySelf:GetZSSPRemaining() >= (GAMEMODE.Skills[hoveredskill].SPUse or 1) or GAMEMODE.Skills[hoveredskill].Amulet then
 				    if GAMEMODE.Skills[hoveredskill].HiddenU and math.random(20) == 20 then
 						if GAMEMODE.OneClickSkill then UnlockSkill(self, hoveredskill) return end
 						contextmenu.Button:SetText("Unlock")

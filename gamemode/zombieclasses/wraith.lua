@@ -17,7 +17,7 @@ CLASS.Speed = 150
 CLASS.CanTaunt = true
 
 CLASS.Points = CLASS.Health/GM.NoHeadboxZombiePointRatio
-
+CLASS.Weight = 0.5
 CLASS.VoicePitch = 0.65
 
 CLASS.PainSounds = {Sound("npc/barnacle/barnacle_pull1.wav"), Sound("npc/barnacle/barnacle_pull2.wav"), Sound("npc/barnacle/barnacle_pull3.wav"), Sound("npc/barnacle/barnacle_pull4.wav")}

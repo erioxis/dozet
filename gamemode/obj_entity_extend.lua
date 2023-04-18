@@ -112,7 +112,7 @@ function meta:FireBulletsLua(src, dir, spread, num, damage, attacker, force_mul,
 
 	if SERVER and num > 1 and attacker_player then attacker:StartDamageNumberSession() end
 
-	for i=0, num - 1 do
+	for i=0, num - (attacker_player and attacker:HasTrinket("altevesoul") and 0 or 1) do
 		if temp_has_spread then
 			temp_angle:Set(base_ang)
 			temp_angle:RotateAroundAxis(

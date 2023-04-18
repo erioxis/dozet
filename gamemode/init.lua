@@ -3910,7 +3910,7 @@ function GM:EntityTakeDamage(ent, dmginfo)
 	local dmg = dmginfo:GetDamage()
 	if dmg > 0 then --or attacker:IsPlayer() and ent:IsPlayer() and ((ent:Team() == TEAM_HUMAN) and ent:GetBloodArmor() or ent:GetZArmor()) >0 then
 		local holder, status = ent:GetHolder()
-		if holder and not (holder.BuffTaut or dmginfo:GetAttacker() and dmginfo:GetAttacker():IsPlayer() and dmginfo:GetAttacker():GetZombeClassTable().Boss) then status:Remove() end
+		if holder and not (holder.BuffTaut or dmginfo:GetAttacker() and dmginfo:GetAttacker():IsPlayer() and dmginfo:GetAttacker():GetZombieClassTable().Boss) then status:Remove() end
 
 		local dmgpos = dmginfo:GetDamagePosition()
 		local hasdmgsess = attacker:IsPlayer() and attacker:HasDamageNumberSession()

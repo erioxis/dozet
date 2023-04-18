@@ -9,7 +9,7 @@ function ENT:Draw()
 	if owner.SpawnProtection then return end
 
 	if CurTime() < self.NextEmit then return end
-	self.NextEmit = CurTime() + 0.5
+	self.NextEmit = CurTime() + 0.01
 
 	local pos = owner:WorldSpaceCenter()
 
@@ -27,7 +27,7 @@ function ENT:Draw()
 		particle:SetAirResistance(300)
 		particle:SetStartLength(1)
 		particle:SetEndLength(35)
-		particle:SetColor(155, 55 * (i / (i - 1)), 255)
+		particle:SetColor(55*i, 55 * (i / (i - 1)), 255)
 	end
 
 	emitter:Finish() emitter = nil collectgarbage("step", 64)

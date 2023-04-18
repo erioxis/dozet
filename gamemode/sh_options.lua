@@ -677,7 +677,7 @@ GM:AddAPointShopItem("soul_of_jacobjesausoul",			ITEMCAT_TRINKETS,			600,			"tri
 GM:AddAPointShopItem("soul_of_isaacsoul",			ITEMCAT_TRINKETS,			800,			"trinket_isaacsoul").SubCategory =								ITEMSUBCAT_TRINKETS_PERFOMANCE
 GM:AddAPointShopItem("soul_of_lilithsoul",			ITEMCAT_TRINKETS,			800,			"trinket_lilithsoul").SubCategory =								ITEMSUBCAT_TRINKETS_SUPPORT
 GM:AddAPointShopItem("soul_of_whysoul",			ITEMCAT_TRINKETS,			2200,			"trinket_whysoul").SubCategory =								ITEMSUBCAT_TRINKETS_SUPER
-GM:AddAPointShopItem("soul_of_blanksoul",			ITEMCAT_TRINKETS,			100,			"trinket_blanksoul").SubCategory =								ITEMSUBCAT_TRINKETS_SPECIAL
+GM:AddAPointShopItem("soul_of_blanksoul",			ITEMCAT_TRINKETS,			700,			"trinket_blanksoul").SubCategory =								ITEMSUBCAT_TRINKETS_SPECIAL
 GM:AddAPointShopItem("soul_of_classixsoul",			ITEMCAT_TRINKETS,			200,			"trinket_classixsoul").SubCategory =								ITEMSUBCAT_TRINKETS_OFFENSIVE
 GM:AddAPointShopItem("soul_of_darksoul",			ITEMCAT_TRINKETS,			500,			"trinket_darksoul").SubCategory =								ITEMSUBCAT_TRINKETS_SUPPORT
 GM:AddAPointShopItem("soul_of_eriosoul",			ITEMCAT_TRINKETS,			200,			"trinket_eriosoul").SubCategory =								ITEMSUBCAT_TRINKETS_MELEE

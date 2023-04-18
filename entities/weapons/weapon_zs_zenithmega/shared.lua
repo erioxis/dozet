@@ -60,14 +60,8 @@ SWEP.FireAnimSpeed = 0.65
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_RELOAD_SPEED, 0.1)
 function SWEP:PrimaryAttack()
 	if not self:CanPrimaryAttack() then return end
-	
-	if not self:GetOwner():HasTrinket("altevesoul") then
-		self:SetNextPrimaryFire(CurTime() + self:GetFireDelay())
-	elseif self:GetOwner():HasTrinket("altevesoul") and self:GetOwner():Health() < 50 then
-		self:SetNextPrimaryFire(CurTime() + self:GetFireDelay() * 0.33)
-	else
-		self:SetNextPrimaryFire(CurTime() + self:GetFireDelay())
-	end
+	self:SetNextPrimaryFire(CurTime() + self:GetFireDelay())
+
 	lmao = math.random(200,2000)
 						zenithprojectiles = {
 							"projectile_flakbomb",

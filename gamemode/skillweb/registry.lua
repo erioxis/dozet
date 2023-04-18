@@ -484,6 +484,8 @@ SKILL_FLIMSY = 456
 SKILL_MOB_II = 457
 SKILL_SSS = 458
 SKILL_ANTIVOR = 459
+SKILL_BADBUYER = 460
+SKILL_SISUS_PRIME = 461
 
 
 
@@ -1046,6 +1048,10 @@ GM:AddSkill(SKILL_U_ZAPPER_ARC, trs("skill_u_arc_z"), GOOD..trs("skill_u_arc_z_d
 .AlwaysActive = true
 GM:AddSkill(SKILL_D_LATEBUYER, trs("skill_d_lbuyer"), GOOD.."+30"..trs("worth")..GOOD.."-13%"..trs("sale")..BAD..trs("skill_d_lbuyer_d1"),
 																8,			1,					{SKILL_HAMMERDOOR}, TREE_BUILDINGTREE)
+GM:AddSkill(SKILL_BADBUYER, trs("skill_bbuyer"), GOOD.."+100"..trs("worth")..GOOD.."-15%"..trs("sale")..BAD.."-900"..trs("start_points"),
+																9,			0,					{SKILL_D_LATEBUYER}, TREE_BUILDINGTREE)
+GM:AddSkillModifier(SKILL_BADBUYER, SKILLMOD_WORTH, 100)
+GM:AddSkillModifier(SKILL_BADBUYER, SKILLMOD_ARSENAL_DISCOUNT, -0.15)
 GM:AddSkill(SKILL_HAMMERDOOR, trs("skill_dd_3"), GOOD..trs("skill_dd_3_d1")..BAD.."+10%"..trs("hammerd"),
 																8,			3,					{SKILL_D_LATEBUYER}, TREE_BUILDINGTREE)
 GM:AddSkillModifier(SKILL_HAMMERDOOR, SKILLMOD_HAMMER_SWING_DELAY_MUL, 0.10)
@@ -1543,6 +1549,12 @@ GM:AddSkillModifier(SKILL_FISTING, SKILLMOD_UNARMED_DAMAGE_MUL, 0.50)
 GM:AddSkillModifier(SKILL_FISTING, SKILLMOD_UNARMED_SWING_DELAY_MUL, -0.30)
 GM:AddSkillModifier(SKILL_FISTING, SKILLMOD_MELEE_SWING_DELAY_MUL, 0.15)
 GM:AddSkillModifier(SKILL_FISTING, SKILLMOD_MELEE_DAMAGE_MUL, -0.25)
+GM:AddSkill(SKILL_SISUS_PRIME, trs("skill_sisus"), GOOD.. trs("skill_sisus_d1")..BAD.. trs("skill_sisus_d2"),
+																8,			-0.5,					{SKILL_FISTING}, TREE_MELEETREE).SPUse = 9
+GM:AddSkillModifier(SKILL_SISUS_PRIME, SKILLMOD_DMG_TAKEN, 0.25)
+GM:AddSkillFunction(SKILL_SISUS_PRIME, function(pl, active)
+	pl.Sisus = active
+end)
 GM:AddSkill(SKILL_GOODATTACK, trs("skill_goodattack"), BAD.."-15%"..trs("fist_damage")..GOOD..trs("skill_goodattack_d1"),
 																8,			-3.5,					{SKILL_FISTING}, TREE_MELEETREE)
 GM:AddSkillModifier(SKILL_GOODATTACK, SKILLMOD_UNARMED_DAMAGE_MUL, -0.15)

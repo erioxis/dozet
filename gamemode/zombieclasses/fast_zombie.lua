@@ -25,7 +25,7 @@ function CLASS:ProcessDamage(pl, dmginfo)
 end
 end
 
-
+CLASS.Weight = 0.8
 CLASS.CanTaunt = true
 
 CLASS.Hull = {Vector(-16, -16, 0), Vector(16, 16, 58)}

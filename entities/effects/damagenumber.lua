@@ -24,7 +24,7 @@ hook.Add("PostDrawTranslucentRenderables", "DrawDamage", function()
 	end
 
 	for _, particle in pairs(Particles) do
-		if particle and curtime < particle.DieTime then
+		if particle and curtime < (particle.DieTime or 1) then
 			local c = particle.Type == 1 and colprop or not particle.Bool and col or col1
 
 			done = false

@@ -13,7 +13,7 @@ CLASS.Original = true
 CLASS.CanTaunt = true
 
 CLASS.Points = CLASS.Health/GM.SkeletonPointRatio
-
+CLASS.Weight = 0
 CLASS.SWEP = "weapon_zs_skeleton"
 
 

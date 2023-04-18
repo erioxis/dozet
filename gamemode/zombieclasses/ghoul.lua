@@ -11,7 +11,7 @@ CLASS.Original = true
 
 CLASS.Health = 260
 CLASS.Speed = 175
-
+CLASS.Weight = 0.9
 CLASS.Points = CLASS.Health/GM.HumanoidZombiePointRatio
 
 CLASS.CanTaunt = true

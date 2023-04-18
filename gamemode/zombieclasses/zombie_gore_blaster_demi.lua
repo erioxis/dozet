@@ -14,7 +14,7 @@ CLASS.Points = 12
 CLASS.Original = false
 CLASS.Variations = false
 CLASS.SWEP = "weapon_zs_zombie_gore_blaster"
-
+CLASS.Weight = 2
 function CLASS:PlayPainSound(pl)
 	pl:EmitSound("npc/zombie/zombie_pain"..math.random(6)..".wav", 75, math.random(87, 92))
 

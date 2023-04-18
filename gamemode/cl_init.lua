@@ -225,10 +225,10 @@ function GM:GivePoints(pl)
 	surface.PlaySound("buttons/button15.wav")
 	local lp = MySelf
     local menu = DermaMenu(true, self)
-    if pl:Team() == TEAM_HUMAN and lp:GetPoints() >= 20 then
-        menu:AddOption(translate.Format("add_x_points", 20), function() GiveP(pl,20) end) -- 20
-		if lp:GetPoints() >= 40 then
-			menu:AddOption(translate.Format("add_x_points", 40), function() GiveP(pl,40)  end)-- 40
+    if pl:Team() == TEAM_HUMAN and lp:GetPoints() >= 50 then
+        menu:AddOption(translate.Format("add_x_points", 50), function() GiveP(pl,50) end) -- 20
+		if lp:GetPoints() >= 100 then
+			menu:AddOption(translate.Format("add_x_points", 100), function() GiveP(pl,100)  end)-- 40
 		end
 		if lp:GetPoints() >= 500 then
 			menu:AddOption(translate.Format("add_x_points", 500), function() GiveP(pl,500)  end)--1000
@@ -236,6 +236,7 @@ function GM:GivePoints(pl)
 		if lp:GetPoints() >= 1500 then
 			menu:AddOption(translate.Format("add_x_points", 1500), function() GiveP(pl,1500) end) -- 3000
 		end
+		menu:AddOption(translate.Format("add_x_points", lp:GetPoints()), function() GiveP(pl,lp:GetPoints()) end) 
 	else
 	--	menu:Close()
 		--return

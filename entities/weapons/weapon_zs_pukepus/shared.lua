@@ -22,7 +22,7 @@ function SWEP:PrimaryAttack()
 	local delay = owner:GetMeleeSpeedMul()
 	self:SetNextPrimaryFire(CurTime() + self.Primary.Delay * delay)
 
-	self.PukeLeft = 90
+	self.PukeLeft = 40 + (10 * GAMEMODE:GetWave())
 
 	owner:EmitSound("npc/barnacle/barnacle_die2.wav")
 	owner:EmitSound("npc/barnacle/barnacle_digesting1.wav")

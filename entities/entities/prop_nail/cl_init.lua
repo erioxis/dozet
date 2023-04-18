@@ -37,14 +37,23 @@ end
 
 local matExpert = Material("zombiesurvival/padlock.png")
 local matHeart = Material("icon16/heart.png")
+local matWhite = Material("models/debug/debugwhite")
 local colNail = Color(0, 0, 5, 220)
 local colText = Color(240, 240, 240, 105)
 local colDead = Color(230, 80, 80, 95)
-function ENT:DrawTranslucent()
+function ENT:DrawTranslucent()--[[
+]]
 	local cader = false
 	local parent = self:GetParent()
 	if not parent:IsValid() or RealTime() == parent.LastNailInfoDraw then
-		self:DrawModel()
+		if MySelf:Team() == TEAM_HUMAN then
+			render.ModelMaterialOverride(matWhite)
+			render.SetColorModulation(0.016, 1, 0)
+			render.SuppressEngineLighting(true)
+			self:DrawModel()
+			render.SuppressEngineLighting(false)
+			render.ModelMaterialOverride(nil)
+		end
 		return
 	end
 
@@ -63,8 +72,15 @@ function ENT:DrawTranslucent()
 		end
 	end
 
-	self:DrawModel()
 
+	if myteam == TEAM_HUMAN then
+		render.ModelMaterialOverride(matWhite)
+		render.SetColorModulation(0.016, 1, 0)
+		render.SuppressEngineLighting(true)
+		self:DrawModel()
+		render.SuppressEngineLighting(false)
+		render.ModelMaterialOverride(nil)
+	end
 	local nhp = self:GetNailHealth()
 	local mnhp = self:GetMaxNailHealth()
 
@@ -232,4 +248,6 @@ function ENT:DrawTranslucent()
 
 		cam.IgnoreZ(false)
 	end
+end
+function ENT:Think()
 end

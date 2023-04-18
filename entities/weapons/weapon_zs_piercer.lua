@@ -279,13 +279,7 @@ end
 function SWEP:PrimaryAttack()
 	if not self:CanPrimaryAttack() then return end
 	
-	if not self:GetOwner():HasTrinket("altevesoul") then
 	self:SetNextPrimaryFire(CurTime() + self:GetFireDelay())
-elseif self:GetOwner():HasTrinket("altevesoul") and self:GetOwner():Health() < 50 then
-	self:SetNextPrimaryFire(CurTime() + self:GetFireDelay() * 0.5)
-else
-	self:SetNextPrimaryFire(CurTime() + self:GetFireDelay())
-end
     self.TracerName = nil
     self.Knick = true
 	self:EmitFireSound()

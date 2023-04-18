@@ -78,7 +78,7 @@ end
 function SWEP:PrimaryAttack()
 	if not self:CanPrimaryAttack() then return end
 	local owner = self:GetOwner()
-	self:SetNextPrimaryFire(CurTime() + self:GetFireDelay() * ( owner:HasTrinket("altevesoul") and owner:Health() < 50 and 0.5 or 1 ))
+	self:SetNextPrimaryFire(CurTime() + self:GetFireDelay() )
 	local extramulti = 1
 	if owner:HasTrinket("supasm") and (self.Tier or 1) <= 2  then
 		extramulti = 1.25
@@ -365,7 +365,7 @@ local function DoRicochet(attacker, hitpos, hitnormal, normal, damage)
 	end
 end
 function SWEP.BulletCallback(attacker, tr, dmginfo)
-	if attacker:IsSkillActive(SKILL_PARASITE) and attacker:GetActiveWeapon().Primary.NumShots <= 2 then
+	if attacker:IsSkillActive(SKILL_PARASITE) and attacker:GetActiveWeapon().Primary.NumShots <= 3 then
 		if attacker:IsSkillActive(SKILL_AUTOAIM) then
 			local target = NULL
 			for _, ent in pairs(ents.FindInSphere(tr.HitPos, 1048)) do
@@ -382,7 +382,7 @@ function SWEP.BulletCallback(attacker, tr, dmginfo)
 		end
 		local ent = tr.Entity
 		if SERVER and (tr.HitWorld and not tr.HitSky or ent) and !attacker:IsSkillActive(SKILL_AUTOAIM) then
-			local hitpos, hitnormal, normal, dmg = tr.HitPos, tr.HitNormal, tr.Normal, dmginfo:GetDamage() *0.25
+			local hitpos, hitnormal, normal, dmg = tr.HitPos, tr.HitNormal, tr.Normal, dmginfo:GetDamage() *0.1
 			timer.Simple(0, function() DoRicochet(attacker, hitpos, hitnormal, normal, dmg) end)
 		end
 	end

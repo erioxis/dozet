@@ -11,7 +11,7 @@ CLASS.Original = false
 CLASS.Variations = {}
 CLASS.Hull = {Vector(-16, -16, 0), Vector(16, 16, 22)}
 CLASS.HullDuck = {Vector(-16, -16, 0), Vector(16, 16, 22)}
-
+CLASS.Weight = 0
 CLASS.SWEP = "weapon_zs_skeletallurker"
 
 CLASS.Wave = 2 / 6

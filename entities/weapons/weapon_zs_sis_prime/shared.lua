@@ -1,29 +1,27 @@
 AddCSLuaFile()
 
-SWEP.PrintName = "Fists"
+SWEP.PrintName = "A visitor?"
 
-SWEP.Base = "weapon_zs_hammer"
+SWEP.Base = "weapon_zs_basemelee"
 
 SWEP.ViewModel = "models/weapons/c_arms_citizen.mdl"
 SWEP.WorldModel	= ""
-SWEP.UseHands = true
 
 SWEP.HoldType = "fist"
 
 SWEP.WalkSpeed = SPEED_NORMAL
 SWEP.OldWalkSpeed = 0
-
-SWEP.MeleeDamage = 9
+SWEP.ZombieCanPickup = true
+SWEP.MeleeDamage = 65
 SWEP.DamageType = DMG_CLUB
 SWEP.UppercutDamageMultiplier = 3
-SWEP.HitDistance = 40
+SWEP.HitDistance = 75
 SWEP.MeleeKnockBack = 0
 
-SWEP.ViewModelFOV = 52
 SWEP.Primary.Ammo = "scrap"
 SWEP.Primary.DefaultClip = 5
 SWEP.AutoSwitchFrom = true
-SWEP.HealStrength = 0.05
+
 
 SWEP.GoodAttackPerk = 0
 
@@ -34,7 +32,7 @@ SWEP.NoPickupNotification = true
 SWEP.NoDismantle = true
 SWEP.NoGlassWeapons = true
 
-SWEP.Primary.Delay = 0.67
+SWEP.Primary.Delay = 0.6
 
 SWEP.Weight = 2 -- This is the second crappiest weapon you could hope for, besides food
 SWEP.SlotPos = 100
@@ -42,7 +40,6 @@ SWEP.SlotPos = 100
 SWEP.IsFistWeapon = true
 SWEP.SwingSound = Sound( "weapons/slam/throw.wav" )
 SWEP.HitSound = Sound( "Flesh.ImpactHard" )
-SWEP.Direction = Vector(0,0,0)
 
 function SWEP:PreDrawViewModel(vm, wep, pl)
 	vm:SetMaterial("engine/occlusionproxy")
@@ -52,11 +49,13 @@ function SWEP:SetupDataTables()
 	self:NetworkVar("Float", 0, "NextMeleeAttack")
 	self:NetworkVar("Float", 1, "NextIdle")
 	self:NetworkVar("Float", 2, "NextIdleHoldType")
+	self:NetworkVar("Float", 3, "NextJudgeMoment")
 	self:NetworkVar("Int", 2, "Combo")
+	self:NetworkVar("Bool", 0, "Judge")
+	self:NetworkVar("Bool", 1, "DiePower")
+	self:NetworkVar("Bool", 2, "Obed")
 	--self:NetworkVar("Bool", 0, "HitPrevious")
 	self:NetworkVar("Int", 0, "PowerCombo")
-	self:NetworkVar("Float", 5, "ChargePerc")
-	self:NetworkVar("Bool", 5, "IsCharging")
 end
 
 function SWEP:UpdateNextIdle()
@@ -66,9 +65,8 @@ end
 
 SWEP.LastSwingHit = 0
 SWEP.LastSwingStart = 0
-function SWEP:Reload()
-end
-function SWEP:PrimaryAttack(right)
+
+function SWEP:PrimaryAttack(right, sec)
 	local owner = self:GetOwner()
 	local time = CurTime()
 
@@ -90,33 +88,29 @@ function SWEP:PrimaryAttack(right)
 	vm:SendViewModelMatchingSequence( vm:LookupSequence( anim ) )
 
 	self:EmitSound( self.SwingSound )
+	owner:EmitSound( (sec and Sound("zombiesurvival/sp_destroy"..(math.random(1,2) == 2 and 2 or "")..".wav") or Sound("zombiesurvival/sp_nicetry"..(math.random(1,2) == 2 and 2 or "")..".wav")))
 
 	self:UpdateNextIdle()
 
 	local armdelay = owner:GetMeleeSpeedMul()
 	local hitdelay = self.Primary.Delay / 3 * (owner.MeleeSwingDelayMul or 1) * armdelay
 	owner:GetViewModel():SetPlaybackRate(1 / armdelay)
-	if time < self.LastSwingStart + 1 and owner:IsSkillActive(SKILL_COMBOKNUCKLE) then
-		if time < self.LastSwingHit + 0.75 then --if self:GetHitPrevious() then
-			hitdelay = hitdelay / 2
-			owner:GetViewModel():SetPlaybackRate(2 / armdelay)
-		else
-			hitdelay = hitdelay * 2
-			owner:GetViewModel():SetPlaybackRate(0.5 / armdelay)
-		end
-	end
 
 
-	self:SetNextMeleeAttack( time + hitdelay )
+
+	self:SetNextMeleeAttack( time + (sec and hitdelay * 5 or hitdelay) + (self:GetJudge() and sec and 4 or 0)  )
 
 	self:SetNextPrimaryFire( time + self.Primary.Delay * armdelay )
-	self:SetNextSecondaryFire( time + self.Primary.Delay * armdelay )
+	self:SetNextSecondaryFire( time + (self.Primary.Delay * armdelay) * 3 )
 
 	self.LastSwingStart = time
 end
 
 function SWEP:SecondaryAttack()
-	self:PrimaryAttack( true )
+	self:PrimaryAttack( true , true)
+	if SERVER then
+		self:ToDie()
+	end
 end
 
 function SWEP:GenerateDamageInfo(damage, hitpos)
@@ -201,7 +195,14 @@ function SWEP:DealDamage()
 		if hitent:IsPlayer() then
 
 			self:PlayerHitUtil(owner, damage, hitent, dmginfo)
-
+			if hitent:Health() <= damage then
+				hitent:EmitSound(Sound("zombiesurvival/sp_grunt.wav"))
+				owner:EmitSound(Sound("zombiesurvival/sp_grunt.wav"))
+			else
+				rand = math.random(1,2)
+				hitent:EmitSound(Sound("zombiesurvival/sp_youcantescape"..(rand == 2 and 2 or "")..".wav"))
+				owner:EmitSound(Sound("zombiesurvival/sp_youcantescape"..(rand == 2 and 2 or "").."wav"))
+			end
 			if SERVER then
 				hitent:SetLastHitGroup(tr.HitGroup)
 				if tr.HitGroup == HITGROUP_HEAD then
@@ -284,7 +285,7 @@ function SWEP:Holster(wep)
 
 		return true
 	end
-	self:GetOwner().Hooking = false
+
 	return false
 end
 
@@ -298,24 +299,22 @@ function SWEP:Deploy()
 		self:SetCombo(0)
 	end
 	self:GetOwner():ResetSpeed()
-	self:GetOwner().Hooking = false
 	return true
 end
 
 function SWEP:Think()
 	local idletime = self:GetNextIdle()
 	local idle_holdtype_time = self:GetNextIdleHoldType()
-	local owner = self:GetOwner()
 
 	if idle_holdtype_time > 0 and CurTime() >= idle_holdtype_time then
 		--self:SetWeaponHoldType("normal")
 		self:SetNextIdleHoldType(0)
 		self.WalkSpeed = self.OldWalkSpeed
-		owner:ResetSpeed()
+		self:GetOwner():ResetSpeed()
 	end
 
 	if idletime > 0 and CurTime() >= idletime then
-		local vm = owner:GetViewModel()
+		local vm = self:GetOwner():GetViewModel()
 		vm:SendViewModelMatchingSequence( vm:LookupSequence("fists_idle_0"..math.random(2)))
 
 		self:UpdateNextIdle()
@@ -331,89 +330,34 @@ function SWEP:Think()
 	if SERVER and CurTime() >= self:GetNextPrimaryFire() + 0.1 then
 		self:SetCombo( 0 )
 	end
-	if !owner.Sisus then return end
-		if  owner:KeyDown(IN_SPEED) then
-			owner.Hooking = false
-		end
-		if self.HookedOn and !owner:KeyDown(IN_RELOAD) and self.LastENT then
-			self:EmitSound("npc/barnacle/barnacle_bark"..math.random(2)..".wav",100,150)
-			self.TRG = self.LastENT
-			self.LastENT = NULL
-			self.HookedOn = false
-			self.NextHooking = CurTime()+0.78
-			owner.Hooking = true
-		end
-		if owner.Hooking and SERVER then
-			local target = self.TRG
-			if !target or target and !target:IsValid() then
-				self.TRG = NULL
-				owner.Hooking = false
-				self.HookedOn = false
-				return
-			end
-			local entclass = target:GetClass()
-			local targetpos = target:LocalToWorld(target:OBBCenter()) 
-			local direction = (targetpos - owner:GetPos()):GetNormal() * 2
-			local aimangles = owner:EyeAngles() 
-			local p = target:IsPlayer() and target:IsValidLivingZombie()
-			local mul = ((owner.SkillSpeedAdd or 1)+225)/225
-			if owner:KeyDown(IN_MOVERIGHT) then
-				direction = direction  + aimangles:Right()  * mul
-			end
-			if owner:KeyDown(IN_MOVELEFT) then
-				direction = direction  - aimangles:Right()  * mul
-			end
-			self.Direction = direction
-			if (entclass == "prop_physics" or entclass == "func_physbox" or target.HumanHoldable and target:HumanHoldable(pl)) and not target:IsNailed() and target:GetMoveType() == MOVETYPE_VPHYSICS and target:GetPhysicsObject():IsValid() and target:GetPhysicsObject():GetMass() <= 1200 and target:GetPhysicsObject():IsMoveable() and target:OBBMins():Length() + target:OBBMaxs():Length() <= 200 or p
-			or entclass == "projectile_rl" or  entclass == "projectile_markcoin"
-			then
-					--owner:SetLocalVelocity(direction*300)
-					if target:GetPhysicsObject():GetMass() <= 100 or p and (target:GetZombieClassTable().Weight or 1) < 1 then
-						if !p then
-							target:GetPhysicsObject():SetVelocityInstantaneous(-direction*600)
-							target:SetPhysicsAttacker(owner,2)
-						else
-							target:SetLocalVelocity(direction*-800)
-						end
-					else
-						owner:SetLocalVelocity(direction*300)
-					end
-				if (self.NextCheck or 2) <= CurTime() then
-					self.NextCheck = CurTime() + 0.1
-					for k,v in pairs(ents.FindInSphere(owner:GetPos(),100)) do
-						if v == self.TRG then
-							if  entclass == "projectile_markcoin" then
-								target:GetPhysicsObject():SetVelocityInstantaneous(Vector(0,0,500))
-							elseif  entclass == "projectile_rl"  then
-								target:GetPhysicsObject():SetVelocityInstantaneous(Vector(0,0,10))
-							end
-							owner.Hooking = false 
-							self.TRG = NULL
-						end
-					end
-				end
-			end
-		end
-		if (self.NextHooking or 1 ) >= CurTime() then return end
-		owner:LagCompensation(true)
-		local trace = owner:GetEyeTrace()
-		local ent = trace.Entity
-		local p = ent and ent:IsValid() and (ent:IsPlayer() or ent:GetClass() == "prop_physics" or ent:GetClass() == "projectile_rl" or ent:GetClass() == "projectile_markcoin" )
-		if ent and ent ~= owner and owner:KeyDown(IN_RELOAD) and p then
-			self.HookedOn = true
-			self.LastENT = ent
-			self.NextHooking = CurTime()+0.3
-			self:EmitSound("npc/barnacle/barnacle_bark"..math.random(2)..".wav",100,50)
-		elseif !p then
-			self.LastENT = NULL
-			self.HookedOn = false
-		end
-		owner:LagCompensation(false)
-
 end
 
 function SWEP:TranslateActivity( act )
 	return self.ActivityTranslate and self.ActivityTranslate[act] or -1
+end
+function SWEP:Reload()
+	local time = CurTime()
+	if time >= self:GetNextJudgeMoment() and self:GetOwner():KeyDown(IN_DUCK) and self:GetOwner():KeyDown(IN_ATTACK) and self:GetOwner():KeyDown(IN_ATTACK2)  then
+		self:SetObed(true)	
+		self:SetNextJudgeMoment(time + 1)
+	end
+	if time >= self:GetNextJudgeMoment() and self:GetJudge() and !self:GetOwner():KeyDown(IN_ATTACK2) then
+		self:SetJudge(false)
+		self:SetDiePower(false)	
+		self:SetNextJudgeMoment(time + 1)
+	elseif time >= self:GetNextJudgeMoment() and !self:GetJudge() and !self:GetOwner():KeyDown(IN_ATTACK2) then
+		self:SetJudge(true)	
+		self:SetDiePower(false)	
+		self:SetNextJudgeMoment(time + 1)
+	elseif time >= self:GetNextJudgeMoment() and self:GetDiePower() and self:GetOwner():KeyDown(IN_ATTACK2) then
+		self:SetDiePower(false)	
+		self:SetJudge(false)
+		self:SetNextJudgeMoment(time + 1)
+	elseif time >= self:GetNextJudgeMoment() and !self:GetDiePower() and self:GetOwner():KeyDown(IN_ATTACK2) then
+		self:SetJudge(false)
+		self:SetDiePower(true)	
+		self:SetNextJudgeMoment(time + 1)
+	end
 end
 
 if not CLIENT then return end
@@ -431,25 +375,3 @@ function SWEP:GetViewModelPosition(pos, ang)
 
 	return pos, ang
 end
-	local matBeam = Material("effects/bloodstream")
-	local matGlow = Material("sprites/glow04_noz")
-	local colBeam = Color(0, 0, 0)
-	local COLOR_WHITE = color_white	
-	local temp_angle = Angle(0, 0, 0)
-	function SWEP:PostDrawViewModel(vm, pl, wep)
-			
-		local owner = self:GetOwner()
-		if not MySelf:KeyDown(IN_RELOAD) then return end
-		 local beamcol = colBeam
-		 local trace = MySelf:GetEyeTraceNoCursor()
-		 local normal = trace.Normal
-		 local hitnormal = trace.HitNormal
-		 local hitpos = trace.HitPos
-		 render.SetMaterial(matBeam)
-		 if owner.Hooking and self.TRG and self.TRG:IsValid() then
-			render.DrawBeam(owner:LocalToWorld(Vector(0,0,20)), self.TRG:GetPos(),24,42, 42, beamcol)
-		 else
-			 render.DrawBeam(owner:LocalToWorld(Vector(0,0,20)), hitpos,34,42, 42, beamcol)
-		 end
-
-	end
