@@ -130,7 +130,11 @@ function SWEP:PrimaryAttack()
 			ent:AddBleedDamage(math.random(15,30), ent)
 		end
 	
-		
+		local cursed = ent:GetStatus("cursed")
+		if (cursed) and SERVER then 
+			ent:AddCursed(self:GetOwner(), cursed.DieTime - CurTime() - 5)
+			owner:AddPoints(3)
+		end
 		if self.BloodHeal == true and SERVER then
 			ent:SetBloodArmor(math.min(ent.MaxBloodArmor + 100, ent:GetBloodArmor() + self.Heal * 3))
 		end

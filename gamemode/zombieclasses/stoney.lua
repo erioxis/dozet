@@ -15,7 +15,7 @@ CLASS.Stoney = true
 CLASS.SWEP = "weapon_zs_zombie_s"
 CLASS.Original = false
 CLASS.Variations = {"Zombie"}
-
+CLASS.ElementalDebuff = 0
 if SERVER then
 	function CLASS:AltUse(pl)
 		pl:StartFeignDeath()

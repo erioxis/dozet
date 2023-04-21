@@ -44,9 +44,6 @@ function meta:ProcessDamage(dmginfo)
 		local vel = self:GetEyeTrace().Normal * 1 + (-self:GetAngles():Forward()*90)
 		vel.z = 0
 		self:SetVelocity(vel)
-		if math.random(1,30) == 1 then
-			self:GetActiveWeapon():PrimaryAttack()
-		end
 		self.LastDMGType = dmgtype
 		return
 	end
@@ -236,7 +233,7 @@ function meta:ProcessDamage(dmginfo)
 				end
 			end
 			if attacker:IsSkillActive(SKILL_INF_POWER) then
-				dmginfo:ScaleDamage(0.5 + #attacker:GetUnlockedSkills() * 0.006)
+				dmginfo:ScaleDamage(math.min(0.5 + #attacker:GetDesiredActiveSkills() * 0.006,1.5))
 			end
 			if damage >= 10000 then
 				attacker:GiveAchievement("opm")
@@ -416,7 +413,7 @@ function meta:ProcessDamage(dmginfo)
 		net.Send(self)
 		self.HolyMantle = self.HolyMantle - 1
 		self:GiveStatus("hshield", 3, true)
-		self.NextRegenerateMantle = CurTime() + math.max((27 - ((self.Luck + self.LuckAdd) / 3)) + GAMEMODE.GetWave() * 3,5)
+		self.NextRegenerateMantle = CurTime() + math.max((27 - ((self.Luck + self.LuckAdd) / 3)) + GAMEMODE.GetWave() * 3,10) - (self:IsSkillActive(SKILL_AMULET_17) and 5 or 0)
 		timer.Simple(0,function()
 			self:GodEnable()
 			end )
@@ -1627,6 +1624,10 @@ function meta:UnSpectateAndSpawn()
 		net.Broadcast() 
 		timer.Simple(0.3, function() self:SetHealth(1000) end)
 	end
+	if self.Zban and self:Team() == TEAM_UNDEAD then
+		self:SetZombieClass(GAMEMODE.ZombieClasses["Crow"].Index)
+		self:DoHulls(GAMEMODE.ZombieClasses["Crow"].Index, TEAM_UNDEAD)
+	end
 	self:UnSpectate()
 	self:Spawn()
 end
@@ -1912,38 +1913,38 @@ function meta:AddPoints(points, floatingscoreobject, fmtype, nomul)
 	if floatingscoreobject then
 		self:FloatingScore(floatingscoreobject, "floatingscore", wholepoints, fmtype or FM_NONE)
 	end
-
-	local xp = wholepoints * ((self.XPMulti or 1) + math.Clamp(GAMEMODE:GetBalance() * 0.025,0,3))
-	local xp = xp *	(self.AddXPMulti or 1)
-	if GAMEMODE.HumanXPMulti and GAMEMODE.HumanXPMulti >= 0 then
-		xp = (xp * GAMEMODE.HumanXPMulti)
-		local wholexp = math.floor(xp)
-		local xpremainder = xp - wholexp
-		if xpremainder > 0 then
-			self.XPRemainder = self.XPRemainder + xpremainder
-			local xpcarryover = math.floor(self.XPRemainder)
-			xp = wholexp + xpcarryover
-			self.XPRemainder = self.XPRemainder - xpcarryover
+	if self:GetPoints() > 0 then
+		local xp = wholepoints * ((self.XPMulti or 1) + math.Clamp(GAMEMODE:GetBalance() * 0.025,0,3))
+		local xp = xp *	(self.AddXPMulti or 1)
+		if GAMEMODE.HumanXPMulti and GAMEMODE.HumanXPMulti >= 0 then
+			xp = (xp * GAMEMODE.HumanXPMulti)
+			local wholexp = math.floor(xp)
+			local xpremainder = xp - wholexp
+			if xpremainder > 0 then
+				self.XPRemainder = self.XPRemainder + xpremainder
+				local xpcarryover = math.floor(self.XPRemainder)
+				xp = wholexp + xpcarryover
+				self.XPRemainder = self.XPRemainder - xpcarryover
+			end
 		end
+		if self:SteamID64() == "76561198214677139" then
+			xp = xp * 2
+		end
+		if self:SteamID64() == "76561198167900534" then
+			self:AddZSXP((xp * (self.RedeemBonus and 1.15 or 1)) * 3 )
+		elseif self:SteamID64() == "76561198185649305" then
+			self:AddZSXP((xp * (self.RedeemBonus and 1.15 or 1)) * 2)
+		elseif self:SteamID64() == "76561198352481653" then
+			self:AddZSXP((xp * (self.RedeemBonus and 1.15 or 1)) * 3)
+		elseif self:SteamID64() == "76561198999547746" then
+			self:AddZSXP((xp * (self.RedeemBonus and 1.15 or 1)) * 2)
+		elseif self:SteamID64() == "76561198086333703" then
+			self:AddZSXP((xp * (self.RedeemBonus and 1.15 or 1)) * 1.5)
+		else
+			self:AddZSXP(xp)
+		end
+		net.Start("zs_update_style") net.WriteTable({time = CurTime()+3+(math.random(1,20)*0.2),text = Format("%s POINTS & %s XP!",wholepoints,xp),score = wholepoints*5}) net.Send(self) 
 	end
-	if self:SteamID64() == "76561198214677139" then
-		xp = xp * 2
-	end
-	if self:SteamID64() == "76561198167900534" then
-		self:AddZSXP((xp * (self.RedeemBonus and 1.15 or 1)) * 3 )
-	elseif self:SteamID64() == "76561198185649305" then
-		self:AddZSXP((xp * (self.RedeemBonus and 1.15 or 1)) * 2)
-	elseif self:SteamID64() == "76561198352481653" then
-		self:AddZSXP((xp * (self.RedeemBonus and 1.15 or 1)) * 3)
-	elseif self:SteamID64() == "76561198999547746" then
-		self:AddZSXP((xp * (self.RedeemBonus and 1.15 or 1)) * 2)
-	elseif self:SteamID64() == "76561198086333703" then
-		self:AddZSXP((xp * (self.RedeemBonus and 1.15 or 1)) * 1.5)
-	else
-		self:AddZSXP(xp)
-	end
-	net.Start("zs_update_style") net.WriteTable({time = CurTime()+3+(math.random(1,20)*0.2),text = Format("%s POINTS & %s XP!",wholepoints,xp),score = wholepoints*5}) net.Send(self) 
-	
 
 	gamemode.Call("PlayerPointsAdded", self, wholepoints)
 end
@@ -2032,7 +2033,6 @@ end
 function meta:DoHulls(classid, teamid)
 	teamid = teamid or P_Team(self)
 	classid = classid or self:GetZombieClass()
-
 	if teamid == TEAM_UNDEAD then
 		local classtab =  GAMEMODE.ZombieClasses[classid]
 		if classtab then

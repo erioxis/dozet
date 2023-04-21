@@ -13,6 +13,7 @@ CLASS.GigaTim = true
 CLASS.Model = Model("models/player/kleiner.mdl")
 CLASS.Stoney = true
 CLASS.SWEP = "weapon_zs_megamasher_z"
+CLASS.ElementalDebuff = 0
 local bit_band = bit.band
 if SERVER then
 	function CLASS:AltUse(pl)

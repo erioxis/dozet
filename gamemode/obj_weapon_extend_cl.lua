@@ -117,7 +117,6 @@ function meta:DrawStyle()
 		local pable = MySelf.StyleMoment
 		colHealth = Color(math.abs(math.sin(CurTime() * math.pi)) * 255,math.abs(math.sin(CurTime()* 0.5 * math.pi)) * 255,math.abs(math.sin(CurTime()* 0.5 * math.pi)) * 255,255)
 		col = colHealth
-		--table.sort(pable,sorter)
 		table.SortByMember(pable,"time")
 		local style = 0
 		for i=1,#pable do
@@ -143,7 +142,6 @@ function meta:DrawStyle()
 		al.a = 77
 		draw.SimpleText(style2, "ZSHUDFontSmallest", x*1.07, y*0.74, al, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 		surface.DrawRect( x, y*0.9 , wid*2*((((style2*1000)-style)-500)/1000), hei*0.08*(math.max(0.2,math.abs(math.sin(CurTime() * math.pi)))))
-		--print((((style2*1000)-style)-500)/1000)
 end
 --local CrossHairScale = 1
 local matGrad = Material("VGUI/gradient-r")

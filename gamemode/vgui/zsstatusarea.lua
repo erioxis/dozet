@@ -185,3 +185,51 @@ function PANEL:Paint(w, h)
 end
 
 vgui.Register("ZSStatus", PANEL, "Panel")
+function GM:CreateDifficultyMenu()
+    local difficultyDescriptions = {
+        "Описание для сложности 1",
+        "Описание для сложности 2",
+        "Описание для сложности 3",
+        "Описание для сложности 4",
+        "Описание для сложности 5",
+        "Описание для сложности 6",
+        "Описание для сложности 7",
+        "Описание для сложности 8",
+        "Описание для сложности 9",
+        "Описание для сложности 10"
+    }
+
+    local panel = vgui.Create("DFrame")
+    panel:SetSize(500, 500)
+    panel:SetTitle("Выберите уровень сложности")
+    panel:Center()
+    panel:MakePopup()
+
+    local selectDifficulty = vgui.Create("DComboBox", panel)
+    selectDifficulty:SetPos(25, 50)
+    selectDifficulty:SetSize(150, 25)
+
+    -- добавляем 10 элементов в выпадающий список
+    for i = 1, 10 do
+        selectDifficulty:AddChoice("Сложность " .. i)
+    end
+
+    local difficultyLabel = vgui.Create("DLabel", panel)
+    difficultyLabel:SetPos(25, 100)
+    difficultyLabel:SetSize(450, 100)
+    difficultyLabel:SetWrap(true)
+
+    local submitButton = vgui.Create("DButton", panel)
+    submitButton:SetText("Выбрать")
+    submitButton:SetPos(200, 50)
+    submitButton:SetSize(75, 25)
+
+    submitButton.DoClick = function()
+        local selectedDifficulty = selectDifficulty:GetSelectedID() or 1
+        local difficultyName = selectDifficulty:GetSelected()  or 1
+        local difficultyDescription = difficultyDescriptions[selectedDifficulty]
+
+        difficultyLabel:SetText("Название сложности: " .. difficultyName .. "\n\n" .. "Описание: " .. difficultyDescription)
+        difficultyLabel:SetVisible(true)
+    end
+end

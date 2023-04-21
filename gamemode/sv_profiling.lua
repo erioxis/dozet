@@ -1,6 +1,7 @@
 -- This system creates nodes which can be used to spawn dynamic objectives.
 
 GM.ProfilerNodes = {}
+GM.ProfilerNodesAnti = {}
 GM.ProfilerFolder = "zsprofiler"
 GM.ProfilerFolderPreMade = "profilerpremade"
 GM.ProfilerVersion = 0
@@ -15,12 +16,14 @@ local mapname = string.lower(game.GetMap())
 if file.Exists(GM.ProfilerFolderPreMade.."/"..mapname..".txt", "DATA") then
 	GM.ProfilerIsPreMade = true
 	local data = Deserialize(file.Read(GM.ProfilerFolderPreMade.."/"..mapname..".txt", "DATA"))
-	GM.ProfilerNodes = data.Nodes ~= nil and data.Nodes or data or GM.ProfilerNodes
+	GM.ProfilerNodes = data and data.Nodes ~= nil and data.Nodes or data or GM.ProfilerNodes
+	GM.ProfilerNodesAnti = data and data.AntiNodes ~= nil and data.AntiNodes or data or GM.ProfilerNodesAnti
 	SRL = nil
 elseif file.Exists(GM.FolderName.."/gamemode/"..GM.ProfilerFolderPreMade.."/"..mapname..".lua", "LUA") then
 	include(GM.ProfilerFolderPreMade.."/"..mapname..".lua")
 	GM.ProfilerIsPreMade = true
 	GM.ProfilerNodes = SRL and SRL.Nodes ~= nil and SRL.Nodes or SRL or GM.ProfilerNodes
+	GM.ProfilerNodesAnti = SRL and SRL.AntiNodes ~= nil and SRL.AntiNodes or SRL or GM.ProfilerNodesAnti
 	SRL = nil
 end
 
@@ -31,7 +34,7 @@ function GM:ClearProfiler()
 end
 
 function GM:SaveProfilerPreMade()
-	file.Write(self:GetProfilerFilePreMade(), Serialize({Nodes = self.ProfilerNodes, Version = self.ProfilerVersion}))
+	file.Write(self:GetProfilerFilePreMade(), Serialize({Nodes = self.ProfilerNodes, Version = self.ProfilerVersion,AntiNodes = self.ProfilerNodesAnti}))
 end
 
 function GM:DeleteProfilerPreMade()
@@ -41,7 +44,7 @@ end
 function GM:SaveProfiler()
 	if not self:ProfilerEnabled() or self.ProfilerIsPreMade then return end
 
-	file.Write(self:GetProfilerFile(), Serialize({Nodes = self.ProfilerNodes, Version = self.ProfilerVersion}))
+	file.Write(self:GetProfilerFile(), Serialize({Nodes = self.ProfilerNodes, Version = self.ProfilerVersion,AntiNodes = self.ProfilerNodesAnti}))
 end
 
 local function FetchNodes(body, len, headers, code)
@@ -52,6 +55,11 @@ local function FetchNodes(body, len, headers, code)
 				GAMEMODE.ProfilerNodes = data.Nodes
 			else
 				GAMEMODE.ProfilerNodes = data
+			end
+			if data.AntiNodes then
+				GAMEMODE.ProfilerNodesAnti = data.AntiNodes
+			else
+				GAMEMODE.ProfilerNodesAnti = data
 			end
 			GAMEMODE.ProfilerIsPreMade = true
 
@@ -69,6 +77,11 @@ function GM:LoadNodeProfile(data)
 		else
 			self.ProfilerNodes = data
 		end
+		if data.AntiNodes then
+			self.ProfilerNodesAnti = data.AntiNodes
+		else
+			self.ProfilerNodesAnti = data
+		end
 
 		return true
 	elseif data.Nodes and data.Version >= self.ProfilerVersion then
@@ -77,7 +90,11 @@ function GM:LoadNodeProfile(data)
 		else
 			self.ProfilerNodes = data
 		end
-
+		if data.AntiNodes then
+			self.ProfilerNodesAnti = data.AntiNodes
+		else
+			self.ProfilerNodesAnti = data
+		end
 		return true
 	end
 
@@ -130,6 +147,23 @@ function GM:DebugProfiler()
 			end
 		end
 	end
+	for _, node in pairs(self.ProfilerNodesAnti) do
+		local spawned = false
+		for __, e in pairs(ents.FindByClass("prop_dynamic*")) do
+			if e.IsNode and e:GetPos() == node then spawned = true end
+		end
+		if not spawned then
+			local ent = ents.Create("prop_dynamic_override")
+			if ent:IsValid() then
+				ent:SetModel("models/player/breen.mdl")
+				ent:SetKeyValue("solid", "0")
+				ent:SetColor(Color(255, 0, 0))
+				ent:SetPos(node)
+				ent:Spawn()
+				ent.IsNode = true
+			end
+		end
+	end
 end
 
 local playerheight = Vector(0, 0, 92)
@@ -158,6 +192,12 @@ function GM:ProfilerPlayerValid(pl)
 
 	-- Are they near another node?
 	for _, node in pairs(self.ProfilerNodes) do
+		if SkewedDistance(node, plpos, 3) <= 128 then
+			--print('near')
+			return false
+		end
+	end
+	for _, node in pairs(self.ProfilerNodesAnti) do
 		if SkewedDistance(node, plpos, 3) <= 128 then
 			--print('near')
 			return false
@@ -280,6 +320,7 @@ function GM:ProfilerTick()
 		if not self:ProfilerPlayerValid(pl) then continue end
 
 		table.insert(self.ProfilerNodes, pl:GetPos())
+		table.insert(self.ProfilerNodesAnti, pl:GetPos())
 
 		changed = true
 	end

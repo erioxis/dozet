@@ -307,7 +307,7 @@ function util.BlastDamageElemental(inflictor, attacker, epicenter, radius, damag
 end
 
 -- I had to make this since the default function checks visibility vs. the entitiy's center and not the nearest position.
-function util.BlastDamageEx(inflictor, attacker, epicenter, radius, damage, damagetype, taperfactor, bool)
+--[[function util.BlastDamageEx(inflictor, attacker, epicenter, radius, damage, damagetype, taperfactor, bool)
 	local basedmg = damage
 
 	for _, ent in pairs(ents.FindInSphere(epicenter, radius)) do
@@ -325,6 +325,32 @@ function util.BlastDamageEx(inflictor, attacker, epicenter, radius, damage, dama
 			end
 		end
 	end
+end]]
+function util.BlastDamageEx(inflictor, attacker, epicenter, radius, damage, damagetype, taperfactor, bool) -- Clyde V
+    local basedmg = damage
+    local entList = ents.FindInSphere(epicenter, radius)
+
+    for _, ent in pairs(entList) do
+        if ent:IsValid() then
+            local entPos, eyePos, centerPos = ent:GetPos(), ent:EyePos(), ent:WorldSpaceCenter()
+            local nearest = entPos + (epicenter - entPos):GetNormalized() * entPos:Distance(epicenter)
+
+            if TrueVisibleFilters(epicenter, nearest, inflictor, attacker, ent)
+                or TrueVisibleFilters(epicenter, eyePos, inflictor, attacker, ent)
+                or TrueVisibleFilters(epicenter, centerPos, inflictor, attacker, ent) then
+
+                local specialDamage = ((radius - nearest:Distance(epicenter)) / radius) * basedmg
+                if ent == attacker and bool then
+                    specialDamage = specialDamage * (ent.IndDamageTaken or 1)
+                end
+                ent:TakeSpecialDamage(specialDamage, damagetype, attacker, inflictor, nearest)
+
+                if taperfactor and ent:IsPlayer() then
+                    basedmg = basedmg * taperfactor
+                end
+            end
+        end
+    end
 end
 
 function util.BlastDamageExAlloc(inflictor, attacker, epicenter, radius, damage, damagetype)

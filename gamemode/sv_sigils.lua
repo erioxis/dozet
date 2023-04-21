@@ -26,7 +26,6 @@ local validity_trace = {
 function GM:CreateSigils(secondtry, rearrange)
 	local alreadycreated = self:NumSigils()
 
-	--if #self.ProfilerNodes < self.MaxSigils
 	if self.ZombieEscape or self.ObjectiveMap
 	or self:IsClassicMode() or self.PantsMode or self:IsBabyMode() then
 		self:SetUseSigils(false)
@@ -40,7 +39,7 @@ function GM:CreateSigils(secondtry, rearrange)
 	-- Maybe the mapper made some!
 	local vec
 	local mapplacednodes = ents.FindByClass("info_sigilnode")
-	if #mapplacednodes > 0 and not self.ProfilerIsPreMade then -- or maybe they're a twit
+	if #mapplacednodes > 0 and !self.ProfilerIsPreMade then -- or maybe they're a twit
 		for _, placednode in pairs(mapplacednodes) do
 			nodes[#nodes + 1] = {v = placednode:GetPos(), en = placednode}
 		end
@@ -146,7 +145,6 @@ function GM:CreateSigils(secondtry, rearrange)
 end
 function GM:CreateASigils(secondtry, rearrange)
 
-	--if #self.ProfilerNodes < self.MaxSigils
 	if self.ZombieEscape or self.ObjectiveMap
 	or self:IsClassicMode() or self.PantsMode or self:IsBabyMode() then
 		self:SetUseSigils(false)
@@ -158,25 +156,44 @@ function GM:CreateASigils(secondtry, rearrange)
 
 	-- Maybe the mapper made some!
 	local vec
-	local mapplacednodes = ents.FindByClass("info_sigilnode")
+	local mapplacednodes = ents.FindByClass("info_sigilnode_a")
+	local nosigil = false
 	if #mapplacednodes > 0 and not self.ProfilerIsPreMade then -- or maybe they're a twit
 		for _, placednode in pairs(mapplacednodes) do
 			nodes[#nodes + 1] = {v = placednode:GetPos(), en = placednode}
 		end
 	else
 		-- Copy from profile
-		for _, node in pairs(self.ProfilerNodes) do
-			-- Check to see if this node is stuck in something.
-			validity_trace.start:Set(node)
-			validity_trace.start.z = node.z + 1
-			validity_trace.endpos:Set(node)
-			validity_trace.endpos.z = node.z + 73
-			if util.TraceHull(validity_trace).Hit then
-				print("bad sigil node at", node)
-			else
-				vec = Vector(0, 0, 0)
-				vec:Set(node)
-				nodes[#nodes + 1] = {v = vec}
+		if #self.ProfilerNodesAnti <= 0 then
+			for _, node in pairs(self.ProfilerNodes) do
+				-- Check to see if this node is stuck in something.
+				validity_trace.start:Set(node)
+				validity_trace.start.z = node.z + 1
+				validity_trace.endpos:Set(node)
+				validity_trace.endpos.z = node.z + 73
+				if util.TraceHull(validity_trace).Hit then
+					print("bad sigil node at", node)
+				else
+					vec = Vector(0, 0, 0)
+					vec:Set(node)
+					nodes[#nodes + 1] = {v = vec}
+				end
+			end
+			nosigil = true
+		else
+			for _, node in pairs(self.ProfilerNodesAnti) do
+				-- Check to see if this node is stuck in something.
+				validity_trace.start:Set(node)
+				validity_trace.start.z = node.z + 1
+				validity_trace.endpos:Set(node)
+				validity_trace.endpos.z = node.z + 73
+				if util.TraceHull(validity_trace).Hit then
+					print("bad sigil node at", node)
+				else
+					vec = Vector(0, 0, 0)
+					vec:Set(node)
+					nodes[#nodes + 1] = {v = vec}
+				end
 			end
 		end
 	end
@@ -252,7 +269,7 @@ function GM:CreateASigils(secondtry, rearrange)
 
 			local ent = rearrange and sigs[i] or ents.Create("prop_obj_anti_sigil")
 			if ent:IsValid() then
-				ent:SetPos(point+Vector(0,60,0))
+				ent:SetPos(point+Vector(0,(nosigil and 60 or 0),0))
 				if not rearrange then
 					ent:Spawn()
 				end

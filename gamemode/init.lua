@@ -463,7 +463,7 @@ function GM:Initialize()
 		self:SetWinRate(1)
 	end
 	self:DoAchievements()
-	if   GDiscord.sendToDS then
+	if  GDiscord and GDiscord.sendToDS then
 		local name = GetConVar("hostname"):GetString()						
 			local params = 
 				{
@@ -2526,7 +2526,7 @@ function GM:ScalePlayerDamage(pl, hitgroup, dmginfo)
 		pl.m_LastHeadShot = CurTime()
 	end
 	if hitgroup == HITGROUP_HEAD and pl:IsValidLivingZombie() then
-		dmginfo:SetDamage(dmginfo:GetDamage() * 2 * (attacker.HeadshotMul or 1))
+		dmginfo:SetDamage(dmginfo:GetDamage() * (attacker.HeadshotMul or 1))
 	end
 
 	--local crouchpunish = pl:ShouldCrouchJumpPunish()
@@ -3496,6 +3496,7 @@ function GM:NestDestroyed(ent, attacker)
 	end
 end
 local function CurseAttach(pl)
+	if pl:IsValidLivingHuman() and pl:IsSkillActive(SKILL_CURSED_ALT)   and pl:IsSkillActive(SKILL_ATTACHMENT_CURSE) then return end
 	if pl:IsValidLivingHuman() and pl:IsSkillActive(SKILL_ATTACHMENT_CURSE) then
 		local cursed = pl:GetStatus("cursed")
 		if (cursed) then 
@@ -4366,7 +4367,7 @@ function GM:KeyPress(pl, key)
 			local pos = pl:GetPos()
 			local pushvel = pl:GetEyeTrace().Normal * 0 + (pl:GetAngles():Forward()*(pl:OnGround() and 1600 or 500))
 			pl:SetVelocity(pushvel)
-			pl.NextDash = CurTime() + 2 - (pl.ClanAvanguard and pl:IsSkillActive(SKILL_GIER_II) and 1 or 0)
+			pl.NextDash = CurTime() + 4 - (pl.ClanAvanguard and pl:IsSkillActive(SKILL_GIER_II) and 2 or 0)
 			if pl:IsSkillActive(SKILL_GIER_II) and !pl:IsSkillActive(SKILL_STAMINA) then
 				pl.Gear2_Used = CurTime() + 2
 				pl:ResetSpeed()
@@ -5688,7 +5689,7 @@ function GM:WaveStateChanged(newstate, pl)
 		if self.EndWavePointsBonus > 0 then
 			pointsbonus = self.EndWavePointsBonus + (self:GetWave() - 1) * self.EndWavePointsBonusPerWave
 		end
-		if self:GetWave() == 5 then 
+		if self:GetWave() == 1 then 
 			gamemode.Call("CreateASigils")
 		end
 		for _, pl in pairs(player.GetAll()) do

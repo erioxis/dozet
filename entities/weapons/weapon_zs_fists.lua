@@ -1,5 +1,4 @@
 AddCSLuaFile()
-
 SWEP.PrintName = "Fists"
 
 SWEP.Base = "weapon_zs_hammer"
@@ -55,8 +54,7 @@ function SWEP:SetupDataTables()
 	self:NetworkVar("Int", 2, "Combo")
 	--self:NetworkVar("Bool", 0, "HitPrevious")
 	self:NetworkVar("Int", 0, "PowerCombo")
-	self:NetworkVar("Float", 5, "ChargePerc")
-	self:NetworkVar("Bool", 5, "IsCharging")
+	self:NetworkVar("Entity", 2, "HookedEnt")
 end
 
 function SWEP:UpdateNextIdle()
@@ -337,16 +335,17 @@ function SWEP:Think()
 		end
 		if self.HookedOn and !owner:KeyDown(IN_RELOAD) and self.LastENT then
 			self:EmitSound("npc/barnacle/barnacle_bark"..math.random(2)..".wav",100,150)
-			self.TRG = self.LastENT
+			self:SetHookedEnt(self.LastENT)
 			self.LastENT = NULL
 			self.HookedOn = false
 			self.NextHooking = CurTime()+0.78
 			owner.Hooking = true
 		end
+
 		if owner.Hooking and SERVER then
-			local target = self.TRG
+			local target = self:GetHookedEnt()
 			if !target or target and !target:IsValid() then
-				self.TRG = NULL
+				self:GetHookedEnt(NULL)
 				owner.Hooking = false
 				self.HookedOn = false
 				return
@@ -380,15 +379,19 @@ function SWEP:Think()
 					end
 				if (self.NextCheck or 2) <= CurTime() then
 					self.NextCheck = CurTime() + 0.1
+					if !WorldVisible(owner:LocalToWorld(Vector(0,0,40)),target:LocalToWorld(Vector(0,0,40))) then
+						owner.Hooking = false 
+						self:SetHookedEnt(NULL)
+					end
 					for k,v in pairs(ents.FindInSphere(owner:GetPos(),100)) do
-						if v == self.TRG then
+						if v == self:GetHookedEnt() then
 							if  entclass == "projectile_markcoin" then
 								target:GetPhysicsObject():SetVelocityInstantaneous(Vector(0,0,500))
 							elseif  entclass == "projectile_rl"  then
 								target:GetPhysicsObject():SetVelocityInstantaneous(Vector(0,0,10))
 							end
 							owner.Hooking = false 
-							self.TRG = NULL
+							self:SetHookedEnt(NULL)
 						end
 					end
 				end
@@ -431,25 +434,22 @@ function SWEP:GetViewModelPosition(pos, ang)
 
 	return pos, ang
 end
-	local matBeam = Material("effects/bloodstream")
-	local matGlow = Material("sprites/glow04_noz")
-	local colBeam = Color(0, 0, 0)
-	local COLOR_WHITE = color_white	
-	local temp_angle = Angle(0, 0, 0)
-	function SWEP:PostDrawViewModel(vm, pl, wep)
-			
-		local owner = self:GetOwner()
-		if not MySelf:KeyDown(IN_RELOAD) then return end
-		 local beamcol = colBeam
-		 local trace = MySelf:GetEyeTraceNoCursor()
-		 local normal = trace.Normal
-		 local hitnormal = trace.HitNormal
-		 local hitpos = trace.HitPos
-		 render.SetMaterial(matBeam)
-		 if owner.Hooking and self.TRG and self.TRG:IsValid() then
-			render.DrawBeam(owner:LocalToWorld(Vector(0,0,20)), self.TRG:GetPos(),24,42, 42, beamcol)
-		 else
-			 render.DrawBeam(owner:LocalToWorld(Vector(0,0,20)), hitpos,34,42, 42, beamcol)
-		 end
+local beamcol, matBeam = Color(0, 0, 0), Material("effects/bloodstream")
+function SWEP:PostDrawViewModel(vm, pl, wep)
+	local owner = self:GetOwner()
+	if !(MySelf:KeyDown(IN_RELOAD) or self:GetHookedEnt() and self:GetHookedEnt():IsValid()) or !MySelf.Sisus then return end
+	local trg = self:GetHookedEnt()
+	
+	local trace = owner:GetEyeTraceNoCursor()
+	local hitpos = trace.HitPos
 
+	render.SetMaterial(matBeam)
+	if owner.Hooking and trg and trg:IsValid() then
+	   render.DrawBeam(owner:LocalToWorld(Vector(0,0,20)), trg:WorldSpaceCenter(),24,42, 42, beamcol)
+	else
+		render.DrawBeam(owner:LocalToWorld(Vector(0,0,20)), hitpos,34,42, 42, beamcol)
 	end
+	
+	--render.SetMaterial(matBeam)
+	--render.DrawSprite(owner:LocalToWorld(Vector(0,0,20)), 32, 32, COLOR_WHITE)
+end

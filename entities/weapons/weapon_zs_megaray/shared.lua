@@ -115,7 +115,7 @@ function SWEP:CheckHealRay()
 			if owner:IsSkillActive(SKILL_COOL_MED) then
 				ent:GiveStatus("sigildef",3)
 			end
-			if ent:GetStatus("cursed") then
+			if ent:GetStatus("cursed") and SERVER then
 				ent:GiveStatus("cursed", math.max(1,((ent:GetStatus("cursed").DieTime - CurTime() - 1) or 1)))
 			end
 

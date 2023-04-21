@@ -365,7 +365,7 @@ local function DoRicochet(attacker, hitpos, hitnormal, normal, damage)
 	end
 end
 function SWEP.BulletCallback(attacker, tr, dmginfo)
-	if attacker:IsSkillActive(SKILL_PARASITE) and attacker:GetActiveWeapon().Primary.NumShots <= 3 then
+	if attacker:IsSkillActive(SKILL_PARASITE) and attacker:GetActiveWeapon().Primary.NumShots <= 3 and attacker:GetActiveWeapon().Tier < 5 then
 		if attacker:IsSkillActive(SKILL_AUTOAIM) then
 			local target = NULL
 			for _, ent in pairs(ents.FindInSphere(tr.HitPos, 1048)) do

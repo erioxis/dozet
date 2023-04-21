@@ -15,7 +15,6 @@ function GM:AddSkill(id, name, description, x, y, connections, tree, level)
 
 		skill.Description = description
 	end
-
 	if #name == 0 then
 		name = "Skill "..id
 		skill.Disabled = true
@@ -486,6 +485,7 @@ SKILL_SSS = 458
 SKILL_ANTIVOR = 459
 SKILL_BADBUYER = 460
 SKILL_SISUS_PRIME = 461
+SKILL_AMULET_17 = 463
 
 
 
@@ -1207,6 +1207,13 @@ d.Amulet = true
 d.AmuletCost = 3				
 GM:AddSkillModifier(SKILL_AMULET_16, SKILLMOD_PIECE_OF_AMULET, -3)
 GM:AddSkillModifier(SKILL_AMULET_16, SKILLMOD_SPOINT, 1)
+local d = GM:AddSkill(SKILL_AMULET_17, trs("skill_amulet_17"),  GOOD..trs("skill_amulet_17_d1"),
+																-20,			-16,					{SKILL_NONE}, TREE_GUNTREE)
+d.Amulet = true				
+d.AmuletCost = 3				
+GM:AddSkillModifier(SKILL_AMULET_17, SKILLMOD_PIECE_OF_AMULET, -3)
+GM:AddSkillModifier(SKILL_AMULET_17, SKILLMOD_SPOINT, 1)
+
 
 
 
@@ -1254,7 +1261,8 @@ d.Hidden1 = true
 local d = GM:AddSkill(SKILL_GOD_HEART, trs("skill_godheart"), GOOD..trs("skill_godheart_d1"),
 				                                                            	-14,			16,					{SKILL_NONE}, TREE_DONATETREE)
 d.RemortReq = 64
-d.AmuletCost = -4		
+d.AmuletCost = -4	
+GM:AddSkillModifier(SKILL_GOD_HEART, SKILLMOD_PIECE_OF_AMULET, 4)	
 local d = GM:AddSkill(SKILL_GODHEART, trs("skill_godheart"), GOOD..trs("skill_godheart2_d1"),
 				                                                            	-14,			99,					{SKILL_NONE}, TREE_DONATETREE)
 d.RemortReq = 128
@@ -1550,8 +1558,8 @@ GM:AddSkillModifier(SKILL_FISTING, SKILLMOD_UNARMED_SWING_DELAY_MUL, -0.30)
 GM:AddSkillModifier(SKILL_FISTING, SKILLMOD_MELEE_SWING_DELAY_MUL, 0.15)
 GM:AddSkillModifier(SKILL_FISTING, SKILLMOD_MELEE_DAMAGE_MUL, -0.25)
 GM:AddSkill(SKILL_SISUS_PRIME, trs("skill_sisus"), GOOD.. trs("skill_sisus_d1")..BAD.. trs("skill_sisus_d2"),
-																8,			-0.5,					{SKILL_FISTING}, TREE_MELEETREE).SPUse = 9
-GM:AddSkillModifier(SKILL_SISUS_PRIME, SKILLMOD_DMG_TAKEN, 0.25)
+																8,			-0.5,					{SKILL_FISTING}, TREE_MELEETREE).SPUse = 4
+GM:AddSkillModifier(SKILL_SISUS_PRIME, SKILLMOD_DMG_TAKEN, 0.1)
 GM:AddSkillFunction(SKILL_SISUS_PRIME, function(pl, active)
 	pl.Sisus = active
 end)
@@ -1762,7 +1770,7 @@ GM:AddSkill(SKILL_DEATH, "Morieris", PURPLE.."Better medicine\n" ..BAD.."+20% Me
 GM:AddSkill(SKILL_HELPLIFER, "Chance", PURPLE.."Can save from fatal hit\n10% Chance\nOn upgrade chance is 50%",
 										2,			-7,					{SKILL_EX2}, TREE_ANCIENTTREE,0)
 .CanUpgrade = 2
-GM:AddSkill(SKILL_INF_POWER, "Dozei Core", PURPLE.."-50% Damage.\nExtra-damage for every skills you unlocked\n+0.6% damage per skill",
+GM:AddSkill(SKILL_INF_POWER, "Dozei Core", PURPLE.."-50% Damage.\nExtra-damage for every skills you activated\n+0.6% damage per skill and maximum +50% damage!",
 										4,			-5,					{SKILL_HELPLIFER}, TREE_ANCIENTTREE)
 GM:AddSkill(SKILL_SOUL_TRADE, "[TRADE]Soul", PURPLE.."Sell Your Soul For Toy.\n"..PURPLE.."+10% Point Mul",
 										4,			-7,					{SKILL_HELPLIFER}, TREE_ANCIENTTREE)

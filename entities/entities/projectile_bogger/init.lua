@@ -41,7 +41,7 @@ function ENT:Think()
 
 				local phys = self:GetPhysicsObject()
 				phys:SetVelocityInstantaneous(direction * 1500)
-				target:TakeSpecialDamage((self.ProjDamage * 0.5 * (self.RageMode and (0.5) or math.max(0.5,GAMEMODE:GetWave() / 12))),DMG_BULLET , owner, owner:GetActiveWeapon())
+				target:TakeSpecialDamage((self.ProjDamage * 0.5 * (self.RageMode and 0.5 or math.max(0.5,GAMEMODE:GetWave() / 12))),DMG_BULLET , owner, owner:GetActiveWeapon())
 				break
 			end
 		end
