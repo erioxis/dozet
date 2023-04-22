@@ -1783,7 +1783,7 @@ LANGUAGE.controls_tim							= "> PRIMARY: Giga-Attack\n> SECONDARY: Block\nEvery
 LANGUAGE.controls_slime							= "> PRIMARY: Attack(+9% Damage for player if you attacked him)"
 LANGUAGE.controls_extinctioncrab					= "> PRIMARY: Leap Attack\n> SECONDARY: Extinction Spore"
 LANGUAGE.controls_god					= "> PRIMARY: DEADLY ATTACK\n> SECONDARY: Extinction Spore"
-LANGUAGE.controls_abysstyrant = "> PRIMARY: Axe of the Abyss\n> SECONDARY: Jerk of the Abyss (accumulates from damage to the tyrant ) \n> RECHARGE: Singularity of the Abyss\n> SHIFT: Jump of the Abyss"
+LANGUAGE.controls_abysstyrant = "> PRIMARY: Axe of the Abyss\n> SECONDARY: Dash of the Abyss (accumulates from damage to the tyrant ) \n> RECHARGE: Singularity of the Abyss\n> SHIFT: Jump of the Abyss"
 --Всякая мелоч 
 LANGUAGE.duck_for_remove = "Duck for camera-effect"
 LANGUAGE.pshop_w = "Weapons"
