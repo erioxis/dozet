@@ -92,7 +92,7 @@ function ENT:Hit(vHitPos, vHitNormal, ent)
 				ent:KnockDown()
 				ent:SetVelocity(Vector(0,0,350))
 				if !ent:GetActiveWeapon().ResistDamage then
-					ent:GiveStatus("knockdown_dir",2)
+					ent:GiveStatus("knockdown_dir",1)
 				end
 
 				local status = ent:GiveStatus("devourer")

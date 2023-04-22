@@ -233,7 +233,7 @@ function meta:ProcessDamage(dmginfo)
 				end
 			end
 			if attacker:IsSkillActive(SKILL_INF_POWER) then
-				local m = attacker:HasTrinket("toykasoul") and (0.5 + #attacker:GetUnlockedSkills() * 0.006) or math.min(0.5 + #attacker:GetDesiredActiveSkills() * 0.006,1.5)
+				local m = 0.5 + #attacker:GetUnlockedSkills() * 0.006
 				dmginfo:ScaleDamage(m)
 			end
 			if damage >= 10000 then

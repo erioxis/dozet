@@ -563,7 +563,7 @@ function PANEL:Init()
 		local bottom1 = vgui.Create("DLabel", self)
 		bottom1:SetSize(1200 * screenscale, math.Clamp(84 * screenscale, 40, 125))
 		bottom1:SetPos(0 * screenscale, -24 * screenscale)
-		local d = math.min(#MySelf:GetDesiredActiveSkills()*0.6-50,50)
+		local d = #MySelf:GetDesiredActiveSkills()*0.6-50
 		local txt = translate.Get("u_s")..#MySelf:GetDesiredActiveSkills()..": "..(d < 0 and "" or "+")..d.."% dmg"
 		bottom1:SetFont("ZSHUDFontSmall")
 		bottom1:SetText(txt)
