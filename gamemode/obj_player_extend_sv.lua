@@ -1131,11 +1131,11 @@ end
 
 
 
-function meta:SetBloodArmor(armor)
-	self:SetDTInt(DT_PLAYER_INT_BLOODARMOR, armor)
+function meta:SetBloodArmor( armor )
+	self:SetDTInt( DT_PLAYER_INT_BLOODARMOR, self:GetStatus( "bloodysickness" ) and 0 or armor )
 end
-function meta:AddBloodArmor(armor)
-	self:SetBloodArmor(self:GetBloodArmor() + armor)
+function meta:AddBloodArmor( armor )
+	self:SetBloodArmor( self:GetBloodArmor() + self:GetStatus( "bloodysickness" ) and 0 or armor )
 end
 function meta:SetChargesActive(charges)
 	self:SetDTInt(DT_PLAYER_INT_ACTIV, charges)

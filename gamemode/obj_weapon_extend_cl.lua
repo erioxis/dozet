@@ -414,3 +414,85 @@ end
 function meta:HideViewModel()
 	self.GetViewModelPosition = HiddenViewModel
 end
+
+local matGradientRight = CreateMaterial("gradient-r", "UnlitGeneric", {["$basetexture"] = "vgui/gradient-r", ["$vertexalpha"] = "1", ["$vertexcolor"] = "1", ["$ignorez"] = "1", ["$nomip"] = "1"})
+function meta:Draw2DFeature( progress, remst, nexst, text, font, color, cenpress, clipif )
+	local w, h = 300, 20
+	local x, y = ScrW() - w, ScrH() - h
+	local alpha = progress >= 1 and math.abs( math.sin( CurTime() * 10 ) ) * 255 or 255 
+	local col = Color( color.r, color.g, color.b, alpha )
+	
+	local wh = math.min( w, progress * w )
+	if remst and remst ~= 0 and nexst and progress >= 1 then
+		wh = math.min( w, wh * ( remst - CurTime() ) / nexst )
+	end
+
+	surface.SetMaterial( matGradientRight )
+	surface.SetDrawColor( Color( 0, 0, 0, 200 ) )
+	surface.DrawTexturedRect( x, y - 122, w, h + 4 )
+
+	surface.SetMaterial( matGradientRight )
+	surface.SetDrawColor( col )
+	surface.DrawTexturedRect( x, y - 120, wh, h )
+
+	surface.SetFont( font )
+	local wtxt, htxt = surface.GetTextSize( text )
+
+	draw.SimpleText( translate.Get( text ), font, x + w, y - 120 - htxt / 2 + 12, col, TEXT_ALIGN_RIGHT )
+
+	if cenpress and progress >= 1 then
+		if clipif and ( self:Clip1() < self:GetMaxClip1() / 2 and ( remst and remst ~= 0 ) ) then return end
+			
+		local txt, font = translate.Format( "weapon_press_x", string.upper( input.LookupBinding( cenpress ) ) ), "ZSSHUD4Font_30"
+		surface.SetFont( font )
+		local wid, hei = surface.GetTextSize( txt )
+
+		draw.SimpleText( txt, font, ScrW() / 2 + wid/2, ScrH() / 2 + 60, col, TEXT_ALIGN_RIGHT )
+	end
+end
+
+function meta:Draw3DFeature( vm, pos, ang, progress, remst, nexst, text, font, color )
+	cam.Start3D2D( pos, ang, self.HUD3DScale / 2 )
+		local alpha = progress >= 1 and math.abs( math.sin( CurTime() * 10 ) ) * 255 or 255 
+		local col = Color( color.r, color.g, color.b, alpha )
+		
+		local wid2, hei2 = 30, 200
+		local x, y = -wid2 - 40, -hei2/2
+
+		local heih = math.min( hei2, progress * hei2 )
+		if remst and remst ~= 0 and nexst and progress >= 0 then
+			heih = math.min( hei2, heih * ( remst - CurTime() ) / nexst )
+		end
+
+		surface.SetDrawColor( Color( 0, 0, 0, 150 ) )
+		surface.DrawRect( x - 10 - wid2, y, wid2, hei2 )
+
+		surface.SetDrawColor( col )
+		surface.DrawRect( x - 10 - wid2, y, wid2, heih )
+		
+		draw.SimpleText( translate.Get( text ), font, x + 150 - wid2, y - 50, col, TEXT_ALIGN_RIGHT )
+	cam.End3D2D()
+end
+
+function meta:Draw3DFeatureHorizontal( vm, pos, ang, progress, remst, nexst, text, font, color )
+	cam.Start3D2D( pos, ang, self.HUD3DScale / 2 )
+		local alpha = progress >= 1 and math.abs( math.sin( CurTime() * 10 ) ) * 255 or 255 
+		local col = Color( color.r, color.g, color.b, alpha )
+		
+		local wid2, hei2 = 40, 200
+		local x, y = -wid2 - 40, -hei2/2
+
+		local heih = math.min( hei2, progress * hei2 )
+		if remst and remst ~= 0 and nexst and progress >= 0 then
+			heih = math.min( hei2, heih * ( remst - CurTime() ) / nexst )
+		end
+
+		surface.SetDrawColor( Color( 0, 0, 0, 150 ) )
+		surface.DrawRect( x - 10 - wid2, y, hei2, wid2 )
+
+		surface.SetDrawColor( col )
+		surface.DrawRect( x - 10 - wid2, y, heih, wid2 )
+
+		draw.SimpleText( translate.Get( text ), font, x + 190 - wid2, y - 50, col, TEXT_ALIGN_RIGHT )
+	cam.End3D2D()
+end
