@@ -9,6 +9,7 @@ SWEP.BleedDamage = 120
 SWEP.SlowDownScale = 19
 SWEP.MeleeDamageVsProps = 40
 SWEP.EnfeebleDurationMul = 10 / SWEP.MeleeDamage
+SWEP.NextBleed = 0
 
 function SWEP:Reload()
 	self:SecondaryAttack()
@@ -34,7 +35,7 @@ end
 function SWEP:ApplyMeleeDamage(ent, trace, damage)
 	if SERVER and ent:IsPlayer() then 	
 		if (ent:GetStatus("bleed")) then
-			damage = damage * math.max(0.6, ent:GetStatus("bleed"):GetDamage()/100)
+			damage = damage * math.max(0.6, ent:GetStatus("bleed"):GetDamage()/33)
 		end
 	if ent:IsSkillActive(SKILL_CQARMOR) then self.BaseClass.ApplyMeleeDamage(self, ent, trace, damage*3) return end
 		local gt = ent:GiveStatus("enfeeble", damage * self.EnfeebleDurationMul)
@@ -42,12 +43,12 @@ function SWEP:ApplyMeleeDamage(ent, trace, damage)
 			gt.Applier = self:GetOwner()
 		end
 
-		ent:GiveStatus("dimvision", 3)
-
-		local bleed = ent:GiveStatus("bleed")
-		if bleed and bleed:IsValid() then
-			bleed:AddDamage(self.BleedDamage)
-			bleed.Damager = self:GetOwner()
+		if self.NextBleed%2 == 1 then
+			local bleed = ent:GiveStatus("bleed")
+			if bleed and bleed:IsValid() then
+				bleed:AddDamage(self.BleedDamage)
+				bleed.Damager = self:GetOwner()
+			end
 		end
 	end
 

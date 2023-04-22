@@ -51,13 +51,13 @@ SWEP.SwingOffset = Vector(10, 0, 0)
 SWEP.SwingHoldType = "melee"
 SWEP.Tier = 2
 SWEP.HitDecal = "Manhackcut"
-SWEP.Primary.Delay = 1.9
+SWEP.Primary.Delay = 0.5
 SWEP.Primary.Damage = 121
 SWEP.ArmorRegen = 2
 
 SWEP.AllowQualityWeapons = true
 
-GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_MELEE_RANGE, 3)
+GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_FIRE_DELAY, -0.05)
 
 function SWEP:PlaySwingSound()
 	self:EmitSound("weapons/iceaxe/iceaxe_swing1.wav", 75, math.random(65, 70))

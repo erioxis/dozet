@@ -33,7 +33,11 @@ function ENT:Hit(vHitPos, vHitNormal, eHitEntity)
 	vHitPos = vHitPos or self:GetPos()
 	vHitNormal = vHitNormal or Vector(0, 0, 1)
 	if owner:IsValid() and eHitEntity then
-		util.BlastDamagePlayer(self, owner, vHitPos + vHitNormal, 320, 40, DMG_DISSOLVE)
+		for _,v in pairs(ents.FindInSphere(vHitPos,220)) do
+			if v:IsPlayer() and v ~= owner then
+				v:TakeDamage(320)
+			end
+		end
 		if eHitEntity:IsPlayer() then
 			eHitEntity:TakeDamage(self.ProjDamage * (owner.ProjectileDamageMul or 1), owner,self)
 		end

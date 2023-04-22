@@ -15,7 +15,7 @@ function ENT:EntityTakeDamage(ent, dmginfo)
 	local owner = self:GetOwner()
 	if ent ~= owner then return end
 	
-	if math.random(10) == 5 and table.Count(owner:GetInventoryItems()) >= 1  then
+	if math.random(10) == 5 and table.Count(owner:GetInventoryItems()) > 1  then
 		local use = {}
 		for item,v in pairs(owner:GetInventoryItems()) do
 			local g = table.HasValue(string.Explode("_",item), "curse")

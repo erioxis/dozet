@@ -1226,7 +1226,7 @@ GM:AddSkill(SKILL_UNSIGIL, trs("skill_uncorrupt"), GOOD.."+24%"..trs("r_speed").
 																0,			2,					{SKILL_LEVELHEADED}, TREE_GUNTREE)
 GM:AddSkillModifier(SKILL_UNSIGIL, SKILLMOD_DAMAGE, 0.06)
 SKILL_PHOENIX = 260
-GM:AddSkill(SKILL_PHOENIX, trs("skill_phoenix"), GOOD..trs("skill_phoenix_d1")..BAD.."-30%"..trs("meleedamage")..BAD.."-30%"..trs("b_damage"),
+GM:AddSkill(SKILL_PHOENIX, trs("skill_phoenix"), GOOD..trs("skill_phoenix_d1")..BAD.."-6%"..trs("meleedamage")..BAD.."-6%"..trs("b_damage"),
 																0,			6,					{SKILL_GUNSLINGER}, TREE_GUNTREE)
 GM:AddSkill(SKILL_DOUBLE, trs("skill_double"), GOOD..trs("skill_double_d1")..BAD.."+25%"..trs("c_for_use"),
 																-1,			7,					{SKILL_PHOENIX}, TREE_GUNTREE)
@@ -1281,30 +1281,30 @@ d.Amulet = true
 d.Vip1 = true
 GM:AddSkillModifier(SKILL_SECRET_VI, SKILLMOD_SPOINT, 5)
 GM:AddSkillModifier(SKILL_SECRET_VII, SKILLMOD_SPOINT, 5)
-GM:AddSkill(SKILL_TRIGGER_DISCIPLINE1, trs("skill_t_d").."I", GOOD.."+2%"..trs("r_speed")..GOOD.."+1%"..trs("b_damage")..GOOD.."+2%"..trs("w_draw")..BAD.."-9%"..trs("meleedamage"),
+GM:AddSkill(SKILL_TRIGGER_DISCIPLINE1, trs("skill_t_d").."I", GOOD.."+2%"..trs("r_speed")..GOOD.."+3%"..trs("b_damage")..GOOD.."+2%"..trs("w_draw")..BAD.."-9%"..trs("meleedamage"),
 																-5,			6,					{SKILL_TRIGGER_DISCIPLINE2, SKILL_NONE}, TREE_GUNTREE)
-GM:AddSkill(SKILL_TRIGGER_DISCIPLINE2, trs("skill_t_d").."II", GOOD.."+3%"..trs("r_speed")..GOOD.."+2%"..trs("b_damage")..GOOD.."+3%"..trs("w_draw")..BAD.."-13%"..trs("meleedamage"),
+GM:AddSkill(SKILL_TRIGGER_DISCIPLINE2, trs("skill_t_d").."II", GOOD.."+3%"..trs("r_speed")..GOOD.."+5%"..trs("b_damage")..GOOD.."+3%"..trs("w_draw")..BAD.."-13%"..trs("meleedamage"),
 																-4,			3,					{SKILL_TRIGGER_DISCIPLINE3, SKILL_D_PALSY, SKILL_EQUIPPED}, TREE_GUNTREE)
-GM:AddSkill(SKILL_TRIGGER_DISCIPLINE3, trs("skill_t_d").."III", GOOD.."+4%"..trs("r_speed")..GOOD.."+3%"..trs("b_damage")..GOOD.."+4%"..trs("w_draw")..BAD.."-18%"..trs("meleedamage"),
+GM:AddSkill(SKILL_TRIGGER_DISCIPLINE3, trs("skill_t_d").."III", GOOD.."+4%"..trs("r_speed")..GOOD.."+7%"..trs("b_damage")..GOOD.."+4%"..trs("w_draw")..BAD.."-18%"..trs("meleedamage"),
 																-3,			0,					{SKILL_QUICKRELOAD, SKILL_QUICKDRAW, SKILL_WORTHINESS1, SKILL_EGOCENTRIC}, TREE_GUNTREE)
-GM:AddSkillModifier(SKILL_TRIGGER_DISCIPLINE1, SKILLMOD_DAMAGE, 0.01)
-GM:AddSkillModifier(SKILL_TRIGGER_DISCIPLINE2, SKILLMOD_DAMAGE, 0.02)
-GM:AddSkillModifier(SKILL_TRIGGER_DISCIPLINE3, SKILLMOD_DAMAGE, 0.03)
+GM:AddSkillModifier(SKILL_TRIGGER_DISCIPLINE1, SKILLMOD_DAMAGE, 0.03)
+GM:AddSkillModifier(SKILL_TRIGGER_DISCIPLINE2, SKILLMOD_DAMAGE, 0.05)
+GM:AddSkillModifier(SKILL_TRIGGER_DISCIPLINE3, SKILLMOD_DAMAGE, 0.07)
 GM:AddSkill(SKILL_D_PALSY, trs("skill_d_palsy"), GOOD.."+20"..trs("worth")..GOOD.."-15%".. trs("res_delay")..BAD..trs("skill_d_palsy_d2"),
 																0,			4,					{SKILL_LEVELHEADED,SKILL_GUNSLINGER}, TREE_GUNTREE)
 GM:AddSkill(SKILL_LEVELHEADED, trs("skill_l_headed"), GOOD..trs("skill_l_headed_d1"),
 																-2,			2,					{}, TREE_GUNTREE)
 GM:AddSkill(SKILL_QUICKDRAW, trs("skill_quick_d"), GOOD.."+65%"..trs("w_draw")..BAD.."-15%"..trs("r_speed"),
 																0,			1,					{}, TREE_GUNTREE)
-GM:AddSkill(SKILL_FOCUS, trs("skill_focus").."I", GOOD.."+11%"..trs("w_ac")..GOOD.."+1%"..trs("b_damage")..BAD.."-3%"..trs("r_speed"),
+GM:AddSkill(SKILL_FOCUS, trs("skill_focus").."I", GOOD.."+11%"..trs("w_ac")..GOOD.."+5%"..trs("b_damage")..BAD.."-3%"..trs("r_speed"),
 																5,			6,					{SKILL_NONE, SKILL_FOCUSII}, TREE_GUNTREE)
-GM:AddSkill(SKILL_FOCUSII, trs("skill_focus").."II", GOOD.."+9%"..trs("w_ac")..GOOD.."+3%"..trs("b_damage")..BAD.."-7%"..trs("r_speed"),
+GM:AddSkill(SKILL_FOCUSII, trs("skill_focus").."II", GOOD.."+9%"..trs("w_ac")..GOOD.."+9%"..trs("b_damage")..BAD.."-7%"..trs("r_speed"),
 																4,			3,					{SKILL_FOCUSIII, SKILL_SCAVENGER, SKILL_D_PALSY, SKILL_PITCHER}, TREE_GUNTREE)
-GM:AddSkill(SKILL_FOCUSIII, trs("skill_focus").."III", GOOD.."+12%"..trs("w_ac")..GOOD.."+3"..trs("b_damage")..BAD.."-6%"..trs("r_speed"),
+GM:AddSkill(SKILL_FOCUSIII, trs("skill_focus").."III", GOOD.."+12%"..trs("w_ac")..GOOD.."+11%"..trs("b_damage")..BAD.."-6%"..trs("r_speed"),
 																3,			0,					{SKILL_EGOCENTRIC, SKILL_WOOISM, SKILL_ORPHICFOCUS, SKILL_SCOURER}, TREE_GUNTREE)
-GM:AddSkillModifier(SKILL_FOCUS, SKILLMOD_DAMAGE, 0.01)
-GM:AddSkillModifier(SKILL_FOCUSII, SKILLMOD_DAMAGE, 0.03)
-GM:AddSkillModifier(SKILL_FOCUSIII, SKILLMOD_DAMAGE, 0.03)
+GM:AddSkillModifier(SKILL_FOCUS, SKILLMOD_DAMAGE, 0.05)
+GM:AddSkillModifier(SKILL_FOCUSII, SKILLMOD_DAMAGE, 0.09)
+GM:AddSkillModifier(SKILL_FOCUSIII, SKILLMOD_DAMAGE, 0.11)
 SKILL_ARSVOID = 238
 GM:AddSkill(SKILL_ARSVOID, trs("skill_ars_void"), GOOD..trs("skill_ars_void_d1")..GOOD.."+5%"..trs("b_damage")..BAD.."+12%"..trs("sale"),
 																6,			-4,					{SKILL_DELIBRATION}, TREE_GUNTREE)
@@ -1446,7 +1446,7 @@ GM:AddSkillModifier(SKILL_NFINGERS, SKILLMOD_RES_AMMO_MUL, -0.10)
 GM:AddSkillModifier(SKILL_SFINGERS, SKILLMOD_RES_AMMO_MUL, -0.25)
 GM:AddSkill(SKILL_D_FINGERS, trs("skill_dfingers"), BAD..trs("skill_dfingers_d1"),
 																9,			-6,					{SKILL_SFINGERS}, TREE_GUNTREE)
-GM:AddSkillModifier(SKILL_D_FINGERS, SKILLMOD_DAMAGE, 0.45)
+GM:AddSkillModifier(SKILL_D_FINGERS, SKILLMOD_DAMAGE, 1)
 
 -- Melee Tree
 GM:AddSkill(SKILL_WORTHINESS2, trs("worthness").."II", GOOD.."+10"..trs("worth")..BAD.."-3"..trs("start_points"),
@@ -1770,9 +1770,9 @@ GM:AddSkill(SKILL_DEATH, "Morieris", PURPLE.."Better medicine\n" ..BAD.."+20% Me
 GM:AddSkill(SKILL_HELPLIFER, "Chance", PURPLE.."Can save from fatal hit\n10% Chance\nOn upgrade chance is 50%",
 										2,			-7,					{SKILL_EX2}, TREE_ANCIENTTREE,0)
 .CanUpgrade = 2
-GM:AddSkill(SKILL_INF_POWER, "Dozei Core", PURPLE.."-50% Damage.\nExtra-damage for every skills you activated\n+0.6% damage per skill and maximum +50% damage!",
+GM:AddSkill(SKILL_INF_POWER, "Dozei Core", PURPLE.."-50% Damage.\nExtra-damage for every skills you activated\n+0.6% damage per skill and maximum +100% damage!",
 										4,			-5,					{SKILL_HELPLIFER}, TREE_ANCIENTTREE)
-GM:AddSkill(SKILL_SOUL_TRADE, "[TRADE]Soul", PURPLE.."Sell Your Soul For Toy.\n"..PURPLE.."+10% Point Mul",
+GM:AddSkill(SKILL_SOUL_TRADE, "[TRADE]Soul", PURPLE.."Sell Your Soul For Toy.\n"..PURPLE.."+66.6% Point Mul",
 										4,			-7,					{SKILL_HELPLIFER}, TREE_ANCIENTTREE)
 GM:AddSkill(SKILL_SEEAURA, "Ancient vision", PURPLE.."You can see zombie aura",
 										2,			-8.5,					{SKILL_HELPLIFER}, TREE_ANCIENTTREE)
@@ -2975,7 +2975,7 @@ GM:AddSkillModifier(SKILL_AGILEII, SKILLMOD_SPEED, -3)
 GM:AddSkillModifier(SKILL_AGILEIII, SKILLMOD_JUMPPOWER_MUL, 0.06)
 GM:AddSkillModifier(SKILL_AGILEIII, SKILLMOD_SPEED, -4)
 
-GM:AddSkillModifier(SKILL_SOUL_TRADE, SKILLMOD_POINT_MULTIPLIER, 0.1)
+GM:AddSkillModifier(SKILL_SOUL_TRADE, SKILLMOD_POINT_MULTIPLIER, 0.666)
 
 GM:AddSkillModifier(SKILL_SOFTDET, SKILLMOD_EXP_DAMAGE_RADIUS, 0.10)
 GM:AddSkillModifier(SKILL_SOFTDET, SKILLMOD_EXP_DAMAGE_TAKEN_MUL, -0.4)

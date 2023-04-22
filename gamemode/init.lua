@@ -1754,7 +1754,7 @@ local function DoDropStart(pl)
 end
 
 function GM:PlayerSwitchWeapon(pl, old, new)--
-	if pl:HasTrinket("autoreload") and old and !self.Food[old:GetClass()] then
+	if pl:HasTrinket("autoreload") and old and old.GetClass and !self.Food[old:GetClass()] then
 		pl.NextAutomatedReload = CurTime() + 2.5
 		pl.OldWeaponToReload = old
 	end

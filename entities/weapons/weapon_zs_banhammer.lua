@@ -29,6 +29,6 @@ SWEP.WorldModel = "models/weapons/w_hammer.mdl"
 
 SWEP.AllowQualityWeapons = true
 
-GAMEMODE:SetPrimaryWeaponModifier(SWEP, WEAPON_MODIFIER_FIRE_DELAY, -0.19)
+GAMEMODE:SetPrimaryWeaponModifier(SWEP, WEAPON_MODIFIER_FIRE_DELAY, -1)
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_MELEE_RANGE, 3, 0.9)
 SWEP.MaxStock = 1

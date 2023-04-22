@@ -93,7 +93,7 @@ function meta:ProcessDamage(dmginfo)
 			return
 		end
 		if attacker:IsPlayer()and attacker.RedeemedOnce and attacker:IsSkillActive(SKILL_PHOENIX) then
-			dmginfo:SetDamage(dmginfo:GetDamage() * 0.7)
+			dmginfo:SetDamage(dmginfo:GetDamage() * 0.94)
 		end
 		if attacker:IsPlayer()and attacker:HasTrinket("soul_lime") and attacker:GetModel() == "models/ultrakill/v1_pm.mdl" then
 			dmginfo:SetDamage(dmginfo:GetDamage() * 1.2)
@@ -233,7 +233,8 @@ function meta:ProcessDamage(dmginfo)
 				end
 			end
 			if attacker:IsSkillActive(SKILL_INF_POWER) then
-				dmginfo:ScaleDamage(math.min(0.5 + #attacker:GetDesiredActiveSkills() * 0.006,1.5))
+				local m = attacker:HasTrinket("toykasoul") and (0.5 + #attacker:GetUnlockedSkills() * 0.006) or math.min(0.5 + #attacker:GetDesiredActiveSkills() * 0.006,1.5)
+				dmginfo:ScaleDamage(m)
 			end
 			if damage >= 10000 then
 				attacker:GiveAchievement("opm")
