@@ -2,6 +2,10 @@ AddCSLuaFile()
 DEFINE_BASECLASS( "weapon_zs_basemelee" )
 SWEP.Base 			= 	"weapon_zs_basemelee"
 
+
+SWEP.PrintName 		= 	translate.Get("wep_abyssaxe")
+SWEP.Description 	= 	translate.Get("wep_d_abyssaxe")
+
 SWEP.Hidden = true
 
 SWEP.Secondary.ClipSize 		= 	0
@@ -97,7 +101,6 @@ SWEP.WalkSpeed 					= 	SPEED_FAST
 SWEP.AllowQualityWeapons 		= 	true
 
 GAMEMODE:AttachWeaponModifier( SWEP, WEAPON_MODIFIER_FIRE_DELAY, -0.05 )
-GAMEMODE:AttachWeaponModifier( SWEP, WEAPON_MODIFIER_STAMINA_EFFECTIVE, -0.03 )
 
 function SWEP:SetHitStacks( stacks )
 	self:SetDTFloat( 11, stacks )
@@ -131,10 +134,10 @@ end
 
 function SWEP:SecondaryAttack()
     local owner = self:GetOwner()
-    	if owner:KeyDown(IN_ATTACK2) and self.AllowBlockMelee then
+    	if owner:KeyDown(IN_ATTACK2) and self.BlockTrue then
 		owner:GiveStatus("meleeblock", 1)
 	end
-	if owner:KeyDown(IN_ATTACK2) and self.AllowBlockMelee and self:GetHitStacks() >= 1 then
+	if owner:KeyDown(IN_ATTACK2) and self.BlockTrue and self:GetHitStacks() >= 1 then
 		self.Secondary.Automatic = false
 	    owner:EmitSound("npc/metropolice/pain1.wav", 75, 45, 1)
 	    owner:EmitSound("npc/manhack/grind1.wav", 75, 45, 1)
@@ -500,7 +503,7 @@ end
 
 function SWEP:Draw2DHUD()
 	local ablicolor = Color( 75 * math.max(self:GetHitStacks(), 0.1), 15 * math.max(self:GetHitStacks(), 0.5), 255 * math.min(self:GetHitStacks(), 0.65) )
-	self:Draw2DFeature( self:GetHitStacks(), nil, nil, "weapon_ability_abyssaxe_2d", "ZSSHUD4Font_20", ablicolor )
+	self:Draw2DFeature( self:GetHitStacks(), nil, nil, "weapon_ability_abyssaxe_2d", "ZSHUDFontSmallest", ablicolor )
 end
 
 function SWEP:Draw3DHUD(vm, pos, ang)
@@ -509,6 +512,6 @@ function SWEP:Draw3DHUD(vm, pos, ang)
 	local ablicolor = Color( 75 * math.max(self:GetHitStacks(), 0.1), 15 * math.max(self:GetHitStacks(), 0.5), 255 * math.min(self:GetHitStacks(), 0.65) )
 
 	cam.Start3D2D( pos, ang, self.HUD3DScale / 6 )
-			self:Draw3DFeatureHorizontal( vm, pos, ang, self:GetHitStacks(), nil, nil, "weapon_ability_abyssaxe_3d", "ZSSHUD4Font_50", ablicolor )
+			self:Draw3DFeatureHorizontal( vm, pos, ang, self:GetHitStacks(), nil, nil, "weapon_ability_abyssaxe_3d", "ZSHUDFont", ablicolor )
 	cam.End3D2D()
 end

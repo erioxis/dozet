@@ -1200,6 +1200,8 @@ LANGUAGE.qual_5 = "Dull "
 LANGUAGE.qual_0 = ""
 --Sin weapon
 --melee
+LANGUAGE.wep_abyssaxe = "Darkness of Abyss" -- даркек беездны))
+LANGUAGE.wep_d_abyssaxe	= "A strong axe, straight from the unknown abyss. Nothing is known about this strange world, but sometimes strange creatures come out with these axes. Has the ability to JERK the ABYSS, tossing the player up and scattering the shells of the abyss."
 LANGUAGE.wep_ice_nail		= "'Dice' Cold Nail"
 LANGUAGE.wep_d_ice_nail		= "Slow enemy.\nDeal a ice damage."
 LANGUAGE.wep_lowers		= "'Lowers' Knife"
@@ -1623,6 +1625,7 @@ LANGUAGE.class_o_stoney						= "Giga-host"
 LANGUAGE.class_zdreams						= "Zombie of dreams"
 LANGUAGE.class_zdreams2						= "Hater Of Magic"
 LANGUAGE.class_sigil				= "Sigil Cringe"
+LANGUAGE.class_abysstyrant = "Abyss Tyrant"
 LANGUAGE.vgui_open_class				= "Open Normal Class Selection"
 LANGUAGE.vgui_open_class_b				= "Open Boss Class Selection"
 LANGUAGE.vgui_open_class_db				= "Open DemiBoss Class Selection"
@@ -1634,7 +1637,7 @@ LANGUAGE.description_tim				= "Nightmare for melee.\nHave mega-giga-weapon.\nDon
 LANGUAGE.description_slime				= "Smaller version of Minos Prime.\nWeak."
 LANGUAGE.description_skeleton				= "Animated skeletons have a lot of health but they take minimal damage from bullets."
 LANGUAGE.description_ipukepus						= "The rotting body of the Ice Puke Pus is comprised entirely of organs used for the generation of poison and ice cubes.\nHe corrupt reality for hide\nIt's capable of vomiting gallons of poison puke at a time making it extremely dangerous."
-
+LANGUAGE.description_abysstyrant = "An unprecedented creature that came out of the abyss itself. A terrifying intelligent humanoid armed with the axe of the abyss. This creature has been seen more than once and successfully killed by cutting out abnormal organs from its body, used in the Abyss Devourer, the Abyss Necklace, Otherworldly Essence, Void Amulet and Chaos Implant, and turning weapons into the Darkness of the Abyss. The very embodiment of destruction, capable of destroying all of humanity."
 LANGUAGE.description_zombie							= "The basic zombie is very durable and has powerful claws.\nIt's hard to keep down, especially if not shot in the head."
 LANGUAGE.description_zombie_gore_blaster			= "Gore Blaster Zombies send viscera in all direction when killed which can cause minor harm.\nTheir claws can also inflict bleeding and full delete blood armor."
 LANGUAGE.description_zombie_gore_blaster_demi			= "Gore Explosive Zombies send viscera in all direction when killed which can cause minor harm.\nTheir claws can also inflict bleeding and full delete blood armor."
@@ -1780,6 +1783,7 @@ LANGUAGE.controls_tim							= "> PRIMARY: Giga-Attack\n> SECONDARY: Block\nEvery
 LANGUAGE.controls_slime							= "> PRIMARY: Attack(+9% Damage for player if you attacked him)"
 LANGUAGE.controls_extinctioncrab					= "> PRIMARY: Leap Attack\n> SECONDARY: Extinction Spore"
 LANGUAGE.controls_god					= "> PRIMARY: DEADLY ATTACK\n> SECONDARY: Extinction Spore"
+LANGUAGE.controls_abysstyrant = "> PRIMARY: Axe of the Abyss\n> SECONDARY: Jerk of the Abyss (accumulates from damage to the tyrant ) \n> RECHARGE: Singularity of the Abyss\n> SHIFT: Jump of the Abyss"
 --Всякая мелоч 
 LANGUAGE.duck_for_remove = "Duck for camera-effect"
 LANGUAGE.pshop_w = "Weapons"
@@ -3267,3 +3271,8 @@ LANGUAGE.tab_person = "%s"
 LANGUAGE.givedpoints_for = "%s Give for you %s points!"
 LANGUAGE.inv_dont_have_s = "You don't have the item to craft this with."
 LANGUAGE.inv_dont_have_w = "You don't have the weapon to craft this with."
+
+LANGUAGE.weapon_ability_abyss_2d = "SINGULARITY OF ABYSS"
+LANGUAGE.weapon_ability_abyss_3d = "SINGULARITY"
+LANGUAGE.weapon_ability_abyssaxe_2d = "DASH OF ABYSS"
+LANGUAGE.weapon_ability_abyssaxe_3d = "DASH OF ABYSS"
