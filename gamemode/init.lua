@@ -1754,7 +1754,7 @@ local function DoDropStart(pl)
 end
 
 function GM:PlayerSwitchWeapon(pl, old, new)--
-	if pl:HasTrinket("autoreload") and old and old.GetClass and !self.Food[old:GetClass()] then
+	if pl:HasTrinket("autoreload") and old  then
 		pl.NextAutomatedReload = CurTime() + 2.5
 		pl.OldWeaponToReload = old
 	end
@@ -5442,9 +5442,9 @@ function GM:PlayerSpawn(pl)
 						pl:Give(class)
 					end
 				else
-					if self:GetWave() > 7 then
+					if self:GetWave() > 7 and  self:GetWave() <= 8 then
 						pl:Give("weapon_zs_redeemers_q5")
-						pl:Give("weapon_zs_loy_q5")
+						pl:Give("weapon_zs_axe_q5")
 					elseif self:GetWave() > 9 then
 						pl:Give("weapon_zs_smorning_q5")
 						pl:Give("weapon_zs_loy_q5")

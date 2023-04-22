@@ -118,7 +118,9 @@ local function ItemPanelDoClick(self)
 					break
 				end
 			end
-			input.SelectWeapon(ent)
+			if ent and ent:IsValid() then
+				input.SelectWeapon(ent)
+			end
 			GAMEMODE.InventoryMenu.SelInv = nil
 		end
 		GAMEMODE.InventoryMenu.Category = category

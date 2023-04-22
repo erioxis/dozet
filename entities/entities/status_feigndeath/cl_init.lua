@@ -3,13 +3,14 @@ INC_CLIENT()
 ENT.RenderGroup = RENDERGROUP_TRANSLUCENT
 
 function ENT:OnInitialize()
+	
 	hook.Add("Move", self, self.Move)
 	hook.Add("CreateMove", self, self.CreateMove)
 	hook.Add("ShouldDrawLocalPlayer", self, self.ShouldDrawLocalPlayer)
-
+	local owner = self:GetOwner()
+	if owner:IsValid() and owner:GetZombieClassTable().CanFeignDeath then self:Remove() return end
 	self:SetRenderBounds(Vector(-40, -40, -18), Vector(40, 40, 80))
 
-	local owner = self:GetOwner()
 	if owner:IsValid() then
 		owner.FeignDeath = self
 		owner.NoCollideAll = true

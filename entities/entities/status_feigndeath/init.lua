@@ -9,13 +9,17 @@ function ENT:OnInitialize()
 end
 
 function ENT:PlayerSet(pPlayer, bExists)
+	if !pPlayer:GetZombieClassTable().CanFeignDeath then self:Remove() return end
 	pPlayer.FeignDeath = self
 	pPlayer:SetCollisionGroup(COLLISION_GROUP_DEBRIS_TRIGGER)
-	pPlayer:AnimResetGestureSlot(GESTURE_SLOT_ATTACK_AND_RELOAD)
+
 	self.OldMaterial = pPlayer:GetMaterial()
 --	self.OldModel = pPlayer:GetModel()
-	pPlayer:CreateRagdoll()
-	pPlayer:DrawShadow( false )
+	if !pPlayer:GetZombieClassTable().BaraCat then
+		pPlayer:CreateRagdoll()
+		pPlayer:DrawShadow( false )
+		pPlayer:AnimResetGestureSlot(GESTURE_SLOT_ATTACK_AND_RELOAD)
+	end
 
 	if pPlayer:KeyDown(IN_BACK) then
 		self:SetDirection(DIR_BACK)

@@ -704,6 +704,7 @@ GM:AddAPointShopItem("world_card",			ITEMCAT_OTHER,			125,				nil,							transla
 GM:AddAPointShopItem("devil_card",			ITEMCAT_OTHER,			205,				nil,							translate.Get("s_devil"),			translate.Get("s_devil_d"),									"status_death",					function(pl) pl:GiveStatus("resnya",30) end)
 GM:AddAPointShopItem("hint_doset",			ITEMCAT_OTHER,			25,				nil,							translate.Get("ahint"),			translate.Get("ahint"),									"weapon_zs_special_trinket",					function(pl) pl:CenterNotify(COLOR_GREEN, translate.ClientGet(pl,table.Random(GAMEMODE.HintsFromASigil))) end)
 
+GM:AddAPointShopItem("antivirus_anti",		ITEMCAT_OTHER,			3000,				"weapon_zs_redeemrayv2")
 
 GM:AddAPointShopItem("speedx22",			ITEMCAT_MELEE,			8000,			"weapon_zs_speed")
 GM:AddAPointShopItem("bannahuyx222",			ITEMCAT_TOOLS,			4500,			"weapon_zs_banhammer")
