@@ -2896,7 +2896,7 @@ function GM:PlayerInitialSpawnRound(pl)
 
 	pl.LegDamage = 0
 	pl.ArmDamage = 0
-
+	pl.BuffedArmor = 0
 	pl.NextTransThink = 0
 
 	pl.DamageDealt = {}

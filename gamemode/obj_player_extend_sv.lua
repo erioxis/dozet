@@ -905,7 +905,13 @@ function meta:ProcessDamage(dmginfo)
 			dmginfo:SetDamage(damage - absorb)
 			self:SetBloodArmor(self:GetBloodArmor() - absorb)
 			self.BloodDead = absorb
-
+			local who = self.WhoBuffed
+			if (self.BuffedArmor or 0) > 0 and who and who:IsValidLivingHuman() then
+				local hpperpoint = GAMEMODE.MedkitPointsPerHealth
+				local points = absorb / hpperpoint
+				who.PointQueue = who.PointQueue + points
+				self.BuffedArmor = math.max((self.BuffedArmor or 0)-absorb*2,0)
+			end
 			if attacker:IsValid() and attacker:IsPlayer() and absorb >= 1 then
 				local myteam = attacker:Team()
 				local otherteam = P_Team(self)

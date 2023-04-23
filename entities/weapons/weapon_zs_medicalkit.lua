@@ -87,7 +87,7 @@ function SWEP:PrimaryAttack()
 	local ent
 	for _, tr in pairs(trtbl) do
 		local test = tr.Entity
-		if test and test:IsValidLivingHuman() and gamemode.Call("PlayerCanBeHealed", test) then
+		if test and test:IsValidLivingHuman() and (!self.BloodHeal and gamemode.Call("PlayerCanBeHealed", test) or self.BloodHeal and test:GetBloodArmor()< (test.MaxBloodArmor or 35)+100) then
 			ent = test
 
 			break
@@ -98,8 +98,10 @@ function SWEP:PrimaryAttack()
 
 	local multiplier = self.MedicHealMul or 1
 	local cooldownmultiplier = self.MedicCooldownMul or 1
-
-	local healed = owner:HealPlayer(ent, owner:HasTrinket("pr_bloodpack") and self.Heal * math.max(1, self.Combo / 3) or math.min(self:GetCombinedPrimaryAmmo(), self.Heal * math.max(1, self.Combo / 3)))
+	local healed = 15
+	if !self.BloodHeal then
+		 healed = owner:HealPlayer(ent, owner:HasTrinket("pr_bloodpack") and self.Heal * math.max(1, self.Combo / 3) or math.min(self:GetCombinedPrimaryAmmo(), self.Heal * math.max(1, self.Combo / 3)))
+	end
 		timer.Create("ComboReset", 15, 1, function() 
 			self.Combo = 0
 		end)
@@ -120,7 +122,7 @@ function SWEP:PrimaryAttack()
 		if owner:IsSkillActive(SKILL_COMBOHEAL) and self.Combo ~= 26 then
 		   self.Combo = self.Combo + 1
 		end
-		if owner:HasTrinket("mediiii") and math.random(5) == 5 and SERVER then
+		if owner:HasTrinket("mediiii") and math.random(5) == 5 and SERVER and !self.BloodHeal then
 			ent:AddPoisonDamage(math.random(12), owner)
 		end
 		if owner:HasTrinket("pr_barapaw") and math.random(3) == 3 and SERVER then
@@ -133,10 +135,12 @@ function SWEP:PrimaryAttack()
 		local cursed = ent:GetStatus("cursed")
 		if (cursed) and SERVER then 
 			ent:AddCursed(self:GetOwner(), cursed.DieTime - CurTime() - 5)
-			owner:AddPoints(3)
+			owner:AddPoints(2)
 		end
 		if self.BloodHeal == true and SERVER then
 			ent:SetBloodArmor(math.min(ent.MaxBloodArmor + 100, ent:GetBloodArmor() + self.Heal * 3))
+			ent.BuffedArmor = math.min(ent.MaxBloodArmor + 100, (ent.BuffedArmor or 1) + self.Heal * 3)
+			ent.WhoBuffed = owner
 		end
 		if not owner:IsSkillActive(SKILL_DUALHEAL) then
 		self:SetNextCharge(CurTime() + self.Primary.Delay * math.min(1, healed / self.Heal) * cooldownmultiplier)
@@ -147,7 +151,7 @@ function SWEP:PrimaryAttack()
 			self:SetNextCharge(0)
 			self.UltraDa = 1
 		end
-		if owner:IsSkillActive(SKILL_WYRDREC) then
+		if owner:IsSkillActive(SKILL_WYRDREC) and !self.BloodHeal  then
 			timer.Simple( 0.1, function() owner:HealPlayer(ent, math.random(1,13)) end)
 		end
 		owner.NextMedKitUse = self:GetNextCharge()

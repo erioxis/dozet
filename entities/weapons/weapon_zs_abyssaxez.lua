@@ -187,7 +187,7 @@ end
 
 function SWEP:SecondaryAttack()
     local owner = self:GetOwner()
-	if owner:KeyDown(IN_ATTACK2) and self.AllowBlockMelee and self:GetHitStacks() >= 1 then
+	if owner:KeyDown(IN_ATTACK2) and self.BlockTrue and self:GetHitStacks() >= 1 then
 		self.Secondary.Automatic = false
 	    owner:EmitSound("npc/metropolice/pain1.wav", 75, 45, 0.8)
 	    owner:EmitSound( "zombies/pound_wall.wav", 100, 60 )
@@ -484,7 +484,7 @@ end
 
 function SWEP:Draw2DHUD()
 	local ablicolor = Color( 75 * math.max(self:GetHitStacks(), 0.1), 15 * math.max(self:GetHitStacks(), 0.5), 255 * math.min(self:GetHitStacks(), 0.65) )
-	self:Draw2DFeature( self:GetHitStacks(), nil, nil, "weapon_ability_abyssaxe_2d", "ZSSHUD4Font_20", ablicolor )
+	self:Draw2DFeature( self:GetHitStacks(), nil, nil, "weapon_ability_abyssaxe_2d", "ZSHUDFontSmallest", ablicolor )
 end
 
 function SWEP:Draw3DHUD(vm, pos, ang)
@@ -493,7 +493,7 @@ function SWEP:Draw3DHUD(vm, pos, ang)
 	local ablicolor = Color( 75 * math.max(self:GetHitStacks(), 0.1), 15 * math.max(self:GetHitStacks(), 0.5), 255 * math.min(self:GetHitStacks(), 0.65) )
 
 	cam.Start3D2D( pos, ang, self.HUD3DScale / 6 )
-			self:Draw3DFeatureHorizontal( vm, pos, ang, self:GetHitStacks(), nil, nil, "weapon_ability_abyssaxe_3d", "ZSSHUD4Font_50", ablicolor )
+			self:Draw3DFeatureHorizontal( vm, pos, ang, self:GetHitStacks(), nil, nil, "weapon_ability_abyssaxe_3d", "ZSHUDFont", ablicolor )
 	cam.End3D2D()
 end
 
@@ -516,7 +516,7 @@ function SWEP:DrawHUD()
 	local nextpuk = self.NextReload - CurTime()
 	local nextpuke = math.ceil( self.NextReload - CurTime() )
 	if nextpuke > 0 then
-		draw.SimpleText( nextpuke, "ZSSHUDFont_20", x + wid - ScrW() * 0.008, y - hei + 10, color, TEXT_ALIGN_RIGHT, TEXT_ALIGN_RIGHT )
+		draw.SimpleText( nextpuke, "ZSHUDFontSmallest", x + wid - ScrW() * 0.008, y - hei + 10, color, TEXT_ALIGN_RIGHT, TEXT_ALIGN_RIGHT )
 	end
 
 	local widx = math.Clamp( wid * nextpuk / 50, 0, wid )
@@ -532,7 +532,7 @@ function SWEP:DrawHUD()
 	color = Color( 145 - ( self.ShiftTime - CurTime() ) * 10, 45 + ( self.ShiftTime - CurTime() ) * 13, ( self.ShiftTime - CurTime() ) * 30, 255 )
 
 	if nextpuke > 0 then
-		draw.SimpleText( nextpuke, "ZSSHUDFont_20", x + wid - ScrW() * 0.008, y - hei + 50, color, TEXT_ALIGN_RIGHT, TEXT_ALIGN_RIGHT )
+		draw.SimpleText( nextpuke, "ZSHUDFontSmallest", x + wid - ScrW() * 0.008, y - hei + 50, color, TEXT_ALIGN_RIGHT, TEXT_ALIGN_RIGHT )
 	end
 
 	surface.SetDrawColor( 0, 0, 0, 70 )

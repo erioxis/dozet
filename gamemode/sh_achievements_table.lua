@@ -633,3 +633,10 @@ GM.Statuses["bloodysickness"] = {
 	Max = 15,
 	Icon = Material("zombiesurvival/sickness.png")
 }
+GM.Statuses["chains"] = {
+	Color = Color(54, 73, 220),
+	Name = "chains",
+	ValFunc = statusValueFunction("chains"),
+	Max = 10,
+	Icon = Material("zombiesurvival/defense.png")
+}

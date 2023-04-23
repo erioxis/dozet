@@ -58,7 +58,7 @@ local math_ceil = math.ceil
 local CurTime = CurTime
 
 function CLASS:CalculateGiveStack( dmg )
-	return dmg / ( self.Health * 0.1 * GAMEMODE.ZombieAtrocity )
+	return dmg / ( self.Health * 0.1 * GAMEMODE:GetBalance() )
 end
 
 function CLASS:ProcessDamage( pl, dmginfo )

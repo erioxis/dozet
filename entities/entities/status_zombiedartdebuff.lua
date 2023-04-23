@@ -19,7 +19,7 @@ function ENT:EntityTakeDamage(ent, dmginfo)
 
 	if attacker:IsValid() and attacker:IsPlayer() and attacker:Team() == TEAM_UNDEAD then
 		local dmg = dmginfo:GetDamage()
-		dmginfo:SetDamage(dmg * 3)
+		dmginfo:SetDamage(dmg * 1.3)
 		
 	end
 end
