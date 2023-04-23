@@ -19,5 +19,6 @@ function ENT:EntityTakeDamage(ent, dmginfo)
 
 	if attacker:IsValidZombie() then
 		dmginfo:SetDamage( 0 )
+		GAMEMODE:BlockFloater(attacker, ent, dmginfo:GetDamagePosition())
 	end
 end

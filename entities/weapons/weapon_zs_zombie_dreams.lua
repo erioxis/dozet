@@ -53,7 +53,9 @@ function SWEP:ApplyMeleeDamage(ent, trace, damage)
 		if ent:IsSkillActive(SKILL_MAGIC) then
 			damage = damage * 6
 		end
-		ent:GiveStatus("portal",1)
+		if math.random(1,6) == 2 then
+			ent:GiveStatus("portal",1)
+		end
 	end
 	self.BaseClass.ApplyMeleeDamage(self, ent, trace, damage)
 end

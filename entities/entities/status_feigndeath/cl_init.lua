@@ -8,7 +8,6 @@ function ENT:OnInitialize()
 	hook.Add("CreateMove", self, self.CreateMove)
 	hook.Add("ShouldDrawLocalPlayer", self, self.ShouldDrawLocalPlayer)
 	local owner = self:GetOwner()
-	if owner:IsValid() and !owner:GetZombieClassTable().CanFeignDeath then self:Remove() return end
 	self:SetRenderBounds(Vector(-40, -40, -18), Vector(40, 40, 80))
 
 	if owner:IsValid() then

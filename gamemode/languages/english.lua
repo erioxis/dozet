@@ -1200,6 +1200,8 @@ LANGUAGE.qual_5 = "Dull "
 LANGUAGE.qual_0 = ""
 --Sin weapon
 --melee
+LANGUAGE.wep_nuclearsword = "Nuclear Sword"
+LANGUAGE.wep_d_nuclearsword = "Powerful weapon, specified for crowds of zombies. Can do a nuclear dash and explode. Don't hurt a owner."
 LANGUAGE.wep_abyssaxe = "Darkness of Abyss" -- даркек беездны))
 LANGUAGE.wep_d_abyssaxe	= "A strong axe, straight from the unknown abyss. Nothing is known about this strange world, but sometimes strange creatures come out with these axes. Has the ability to JERK the ABYSS, tossing the player up and scattering the shells of the abyss."
 LANGUAGE.wep_ice_nail		= "'Dice' Cold Nail"

@@ -167,6 +167,7 @@ function GM:CreateASigils(secondtry, rearrange)
 		if #self.ProfilerNodesAnti <= 0 then
 			for _, node in pairs(self.ProfilerNodes) do
 				-- Check to see if this node is stuck in something.
+				if istable(node) then continue  end
 				validity_trace.start:Set(node)
 				validity_trace.start.z = node.z + 1
 				validity_trace.endpos:Set(node)
@@ -183,6 +184,7 @@ function GM:CreateASigils(secondtry, rearrange)
 		else
 			for _, node in pairs(self.ProfilerNodesAnti) do
 				-- Check to see if this node is stuck in something.
+				if istable(node) then continue  end
 				validity_trace.start:Set(node)
 				validity_trace.start.z = node.z + 1
 				validity_trace.endpos:Set(node)

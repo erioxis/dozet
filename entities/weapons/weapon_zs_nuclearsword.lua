@@ -2,8 +2,8 @@ AddCSLuaFile()
 DEFINE_BASECLASS( "weapon_zs_basemelee" )
 SWEP.Base 			= 	"weapon_zs_basemelee"
 
-SWEP.PrintName 		= 	""
-SWEP.Description 	= 	""
+SWEP.PrintName 		= 	translate.Get("wep_nuclearsword")
+SWEP.Description 	= 	translate.Get("wep_d_nuclearsword")
 
 SWEP.Slot 			= 	0
 SWEP.SlotPos 		= 	0
@@ -99,7 +99,7 @@ SWEP.WElements = {
 
 end
 
-SWEP.Tier = 8
+SWEP.Tier = 7
 
 SWEP.MeleeType = "sword"
 
@@ -121,7 +121,6 @@ SWEP.WalkSpeed = SPEED_FAST
 SWEP.AllowQualityWeapons = true
 
 GAMEMODE:AttachWeaponModifier( SWEP, WEAPON_MODIFIER_FIRE_DELAY, -0.05 )
-GAMEMODE:AttachWeaponModifier( SWEP, WEAPON_MODIFIER_STAMINA_EFFECTIVE, -0.03 )
 
 function SWEP:SetHitStacks( stacks )
 	self:SetDTFloat( 11, stacks )
@@ -144,7 +143,7 @@ end
 
 function SWEP:PlayHitSound()
 	self:GetOwner():EmitSound( "ambient/machines/slicer" .. math.random( 4 ) .. ".wav", 65 )
-	self:GetOwner():EmitSound( "zombies/punch.wav", 75, math.random( 140,150 ) )
+	self:GetOwner():EmitSound( "zombiesurvival/zombies/punch.wav", 75, math.random( 140,150 ) )
 end
 
 function SWEP:ExplodeSelf( self, owner )
@@ -157,7 +156,7 @@ function SWEP:ExplodeSelf( self, owner )
 	util.BlastDamageEx( self, owner, pos, 255, 10650 * ( owner.AblityDamageMul or 1 ), DMG_ALWAYSGIB )
 	for _, ent in pairs( ents.FindInBoxRadius( pos, 255 )) do
 		if ent:IsValid() and ent:IsValidLivingZombie() then
-			ent:AddLegDamageExt( 25, owner, source, SLOWTYPE_ACID )
+			--ent:AddLegDamageExt( 25, owner, source, SLOWTYPE_ACID )
 			ent:GiveStatus( "slow", 5, owner )
 			ent:GiveStatus( "numbness", 2, owner )
 			ent:GiveStatus( "dimvision_unknown", 5, owner )
@@ -295,6 +294,7 @@ function SWEP:Think()
 		self:StopSwinging()
 		self:MeleeSwing()
 	end
+	self.BaseClass.Think(self)
 end	
 
 function SWEP:SetChargeStart(time)

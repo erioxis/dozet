@@ -201,7 +201,7 @@ function GM:SupplyItemViewerDetail(viewer, sweptable, shoptbl, from)
 			desctext = desctext ..translate.Get("nodismantled")
 		end
 		if GAMEMODE.Breakdowns[shoptbl.SWEP] then
-			bruh = bruh ..translate.Get("on_dismantle_give")..GAMEMODE.ZSInventoryItemData[GAMEMODE.Breakdowns[shoptbl.SWEP].Result].PrintName
+			bruh = bruh ..translate.Get("on_dismantle_give")..self.ZSInventoryItemData[GAMEMODE.Breakdowns[shoptbl.SWEP].Result].PrintName
 		end
 		viewer.m_Bruh:MoveBelow(viewer.m_VBG, 328)
 		viewer.m_Bruh:SetFont("ZSBodyTextFontBig")
@@ -219,7 +219,6 @@ function GM:SupplyItemViewerDetail(viewer, sweptable, shoptbl, from)
 		viewer.m_Bruh:MoveBelow(viewer.m_Title, 20)
 		viewer.m_Bruh:SetFont("ZSBodyTextFontBig")
 	end
-
 	viewer.m_Desc:SetText(desctext)
 	viewer.m_Bruh:SetText(bruh)
 	if from then

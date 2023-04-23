@@ -14,14 +14,12 @@ SWEP.OriginalMeleeDamage = SWEP.MeleeDamage
 
 SWEP.Slot 			= 	0
 SWEP.SlotPos 		= 	0
-
+if CLIENT then
 SWEP.HUD3DBone = "ValveBiped.Bip01_R_Hand"
 SWEP.HUD3DPos = Vector(0, -1, -7)
 SWEP.HUD3DAng = Angle(180, -90, 90)
 SWEP.HUD3DScale = 0.065
 
-SWEP.ViewModel 		= 	"models/weapons/c_crowbar.mdl"
-SWEP.WorldModel 	= 	"models/weapons/w_crowbar.mdl"
 SWEP.UseHands 		= 	true
 
 SWEP.HoldType 		= 	"melee2"
@@ -96,7 +94,9 @@ SWEP.WElements = {
 	["new+++++++++++++++"] = { type = "Model", model = "models/props_lab/teleportgate.mdl", bone = "ValveBiped.Bip01_L_Forearm", rel = "", pos = Vector(4.977, 0.712, 0), angle = Angle(180, 90.89, 0.791), size = Vector(0.126, 0.126, 0.126), color = Color(140, 0, 255, 255), surpresslightning = false, material = "models/shadertest/envball_3", skin = 0, bodygroup = {} },
 	["element_name++++++++++"] = { type = "Model", model = "models/effects/splode.mdl", bone = "ValveBiped.Bip01_Spine4", rel = "", pos = Vector(-0.532, -3.046, 0.05), angle = Angle(79.583, -76.738, 90), size = Vector(0.014, 0.014, 0.014), color = Color(140, 0, 255, 218), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
 }
-
+end
+SWEP.ViewModel 		= 	"models/weapons/c_crowbar.mdl"
+SWEP.WorldModel 	= 	"models/weapons/w_crowbar.mdl"
 SWEP.Tier = 7
 
 SWEP.MeleeType 					=	"axe"

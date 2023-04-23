@@ -1,4 +1,4 @@
-CLASS.Base = "nightmare"
+CLASS.Base = "boss_nightmare"
 
 CLASS.Name = "Abyss Tyrant"
 CLASS.TranslationName = "class_abysstyrant"
@@ -136,8 +136,8 @@ if SERVER then
 			ent.NeverRemove = true
 			ent:SetAngles( AngleRand() )
 
-			if inv then ent:SetInventoryItemType( drop ); else
-				ent:SetWeaponType( drop );
+			if inv then ent:SetInventoryItemType( drop ) else
+				ent:SetWeaponType( drop )
 			end
 
 			ent:Spawn()
