@@ -200,7 +200,9 @@ function GM:SaveWinRate()
 		ZSRage = math.floor(self:GetRage() or 0),
 		Da = (#DaData <= 1200 and DaData or {"mmm", "what", "yes", "ммм", "да", "что", "obed", "обед", "уютненько", "Я", "I", "you", "ты", "амням", "санбой", "пророк"}),
 		DailySecs = math.floor(self.DailySecs or os.time() +86400),
+		WeeklySecs = math.floor(self.WeeklySecs or os.time() +86400*7),
 		DailyNum = math.floor(self.DailyNum or 1),
+		Weekly = math.floor(self.Weekly or 1),
 		LastDaily = (self.LastDaily or 1)
 	}
 	num = math.max(1,(self.DailyNum or 1)%7)
@@ -208,6 +210,10 @@ function GM:SaveWinRate()
 		tosave.LastDaily = num
 		tosave.DailyNum = math.floor(self.DailyNum or 1) + 1
 		tosave.DailySecs = os.time() + 86400
+	end
+	if self.WeeklySecs and os.time() > self.WeeklySecs then
+		tosave.Weekly = math.floor(self.Weekly or 1) + 1
+		tosave.WeeklySecs = os.time() + 86400*7
 	end
 
 	local filename = "system_balance.txt"
@@ -256,6 +262,13 @@ function GM:LoadWinRate()
 				if contents.DailyNum then
 					self.DailyNum = contents.DailyNum or 1
 					SetGlobalInt("dailynum", self.DailyNum)
+				end
+				if contents.WeeklySecs then
+					self.WeeklySecs = contents.WeeklySecs or 0
+				end
+				if contents.Weekly then
+					self.Weekly = contents.Weekly or 1
+					SetGlobalInt("weekly", self.Weekly)
 				end
 				
 			end

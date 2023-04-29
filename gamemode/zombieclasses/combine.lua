@@ -26,6 +26,7 @@ function CLASS:ProcessDamage(pl, dmginfo)
 			GAMEMODE:BlockFloater(attacker, pl, dmginfo:GetDamagePosition())
 		end
 	end
+	return dmginfo
 end
 function CLASS:OnKilled(pl, attacker, inflictor, suicide, headshot, dmginfo)
 	if math.random(1,5) == 5  then

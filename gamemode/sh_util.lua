@@ -649,3 +649,17 @@ function util.CreatePulseImpactEffect(hitpos, hitnormal)
 	pulseeffect:SetNormal(hitnormal)
 	util.Effect("cball_bounce", pulseeffect)
 end
+function ents.FindInBoxRadius(pos, radius)
+	local min = pos - Vector(radius, radius, radius)
+	local max = pos + Vector(radius, radius, radius)
+	local all = ents.FindInBox(min, max)
+	local entis = {}
+	for _, ent in pairs(all) do
+	  if ent:GetPos():Distance(pos) <= radius then
+		table.insert(entis, ent)
+	  end
+	end
+	return entis
+end
+
+  

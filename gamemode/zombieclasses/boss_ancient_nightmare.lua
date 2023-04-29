@@ -52,6 +52,7 @@ if SERVER then
 		if dmginfo:GetInflictor().IsMelee then
 			dmginfo:ScaleDamage(0.34)
 		end
+		return dmginfo
 	end
 end
 function CLASS:GetAlpha(pl)

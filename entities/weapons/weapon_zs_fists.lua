@@ -299,7 +299,26 @@ function SWEP:Deploy()
 	self:GetOwner().Hooking = false
 	return true
 end
-
+function SWEP:CheckHook()
+	if (self.NextHooking or 1 ) >= CurTime() then return end
+	local owner = self:GetOwner()
+	owner:LagCompensation(true)
+	local trace = owner:GetEyeTrace()
+	local ent = trace.Entity
+	local p = ent and ent:IsValid() and (ent:IsValidLivingZombie() or ent:GetClass() == "prop_physics" or ent:GetClass() == "projectile_rl" or ent:GetClass() == "projectile_markcoin" )
+	if ent and ent ~= owner and owner:KeyDown(IN_RELOAD) and p then
+		self.HookedOn = true
+		self.LastENT = ent
+		self.NextHooking = CurTime()+0.3
+		self:EmitSound("npc/barnacle/barnacle_bark"..math.random(2)..".wav",100,50)
+	elseif !p then
+		self.LastENT = NULL
+		self.HookedOn = false
+	end
+	owner:LagCompensation(false)
+end
+local needtbl = {"func_physbox","prop_physics"}
+local sectbl = {"projectile_rl","projectile_markcoin"}
 function SWEP:Think()
 	local idletime = self:GetNextIdle()
 	local idle_holdtype_time = self:GetNextIdleHoldType()
@@ -332,6 +351,8 @@ function SWEP:Think()
 	if !owner.Sisus then return end
 		if  owner:KeyDown(IN_SPEED) then
 			owner.Hooking = false
+			self:SetHookedEnt(self.LastENT)
+			self.HookedOn = false
 		end
 		if self.HookedOn and !owner:KeyDown(IN_RELOAD) and self.LastENT then
 			self:EmitSound("npc/barnacle/barnacle_bark"..math.random(2)..".wav",100,150)
@@ -348,31 +369,34 @@ function SWEP:Think()
 				self:GetHookedEnt(NULL)
 				owner.Hooking = false
 				self.HookedOn = false
+				
 				return
 			end
 			local entclass = target:GetClass()
-			local targetpos = target:LocalToWorld(target:OBBCenter()) 
-			local direction = (targetpos - owner:GetPos()):GetNormal() * 2
-			local aimangles = owner:EyeAngles() 
 			local p = target:IsPlayer() and target:IsValidLivingZombie()
-			local mul = ((owner.SkillSpeedAdd or 1)+225)/225
-			if owner:KeyDown(IN_MOVERIGHT) then
-				direction = direction  + aimangles:Right()  * mul
-			end
-			if owner:KeyDown(IN_MOVELEFT) then
-				direction = direction  - aimangles:Right()  * mul
-			end
-			self.Direction = direction
-			if (entclass == "prop_physics" or entclass == "func_physbox" or target.HumanHoldable and target:HumanHoldable(pl)) and not target:IsNailed() and target:GetMoveType() == MOVETYPE_VPHYSICS and target:GetPhysicsObject():IsValid() and target:GetPhysicsObject():GetMass() <= 1200 and target:GetPhysicsObject():IsMoveable() and target:OBBMins():Length() + target:OBBMaxs():Length() <= 200 or p
-			or entclass == "projectile_rl" or  entclass == "projectile_markcoin"
+			local need = table.HasValue(needtbl,entclass)
+			local secondneed = table.HasValue(sectbl,entclass)
+			if (need or target.HumanHoldable and target:HumanHoldable(owner)) and not target:IsNailed() and target:GetMoveType() == MOVETYPE_VPHYSICS and target:GetPhysicsObject():IsValid() and target:GetPhysicsObject():GetMass() <= 1200 and target:GetPhysicsObject():IsMoveable() and target:OBBMins():Length() + target:OBBMaxs():Length() <= 200 or p
+			or secondneed
 			then
+				local aimangles = owner:EyeAngles() 
+				local mul = ((owner.SkillSpeedAdd or 1)+225)/225
+				local targetpos = target:LocalToWorld(target:OBBCenter()) 
+				local direction = (targetpos - owner:GetPos()):GetNormal()  * 2
+				if owner:KeyDown(IN_MOVERIGHT) then
+					direction = direction  + aimangles:Right()  * mul
+				end
+				if owner:KeyDown(IN_MOVELEFT) then
+					direction = direction  - aimangles:Right()  * mul
+				end
 					--owner:SetLocalVelocity(direction*300)
-					if target:GetPhysicsObject():GetMass() <= 100 or p and (target:GetZombieClassTable().Weight or 1) < 1 then
+					local weight = p and (target:GetZombieClassTable().Weight or 1) or 1
+					if target:GetPhysicsObject():GetMass() <= 100 or p and weight < 1 then
 						if !p then
 							target:GetPhysicsObject():SetVelocityInstantaneous(-direction*600)
 							target:SetPhysicsAttacker(owner,2)
 						else
-							target:SetLocalVelocity(direction*-800)
+							target:SetLocalVelocity(direction*-400/math.max(0.1,weight))
 						end
 					else
 						owner:SetLocalVelocity(direction*300)
@@ -381,6 +405,7 @@ function SWEP:Think()
 					self.NextCheck = CurTime() + 0.1
 					if !WorldVisible(owner:LocalToWorld(Vector(0,0,40)),target:LocalToWorld(Vector(0,0,40))) then
 						owner.Hooking = false 
+						self.HookedOn =  false
 						self:SetHookedEnt(NULL)
 					end
 					for k,v in pairs(ents.FindInSphere(owner:GetPos(),100)) do
@@ -391,30 +416,17 @@ function SWEP:Think()
 								target:GetPhysicsObject():SetVelocityInstantaneous(Vector(0,0,10))
 							end
 							owner.Hooking = false 
+							self.HookedOn =  false
 							self:SetHookedEnt(NULL)
 						end
 					end
 				end
 			end
+		
 		end
-		if (self.NextHooking or 1 ) >= CurTime() then return end
-		owner:LagCompensation(true)
-		local trace = owner:GetEyeTrace()
-		local ent = trace.Entity
-		local p = ent and ent:IsValid() and (ent:IsPlayer() or ent:GetClass() == "prop_physics" or ent:GetClass() == "projectile_rl" or ent:GetClass() == "projectile_markcoin" )
-		if ent and ent ~= owner and owner:KeyDown(IN_RELOAD) and p then
-			self.HookedOn = true
-			self.LastENT = ent
-			self.NextHooking = CurTime()+0.3
-			self:EmitSound("npc/barnacle/barnacle_bark"..math.random(2)..".wav",100,50)
-		elseif !p then
-			self.LastENT = NULL
-			self.HookedOn = false
-		end
-		owner:LagCompensation(false)
-
+		self:CheckHook()
+		
 end
-
 function SWEP:TranslateActivity( act )
 	return self.ActivityTranslate and self.ActivityTranslate[act] or -1
 end
@@ -436,8 +448,8 @@ function SWEP:GetViewModelPosition(pos, ang)
 end
 local beamcol, matBeam = Color(0, 0, 0), Material("effects/bloodstream")
 function SWEP:PostDrawViewModel(vm, pl, wep)
-	local owner = self:GetOwner()
 	if !(MySelf:KeyDown(IN_RELOAD) or self:GetHookedEnt() and self:GetHookedEnt():IsValid()) or !MySelf.Sisus then return end
+		local owner = self:GetOwner()
 	local trg = self:GetHookedEnt()
 	
 	local trace = owner:GetEyeTraceNoCursor()
@@ -445,7 +457,7 @@ function SWEP:PostDrawViewModel(vm, pl, wep)
 
 	render.SetMaterial(matBeam)
 	if owner.Hooking and trg and trg:IsValid() then
-	   render.DrawBeam(owner:LocalToWorld(Vector(0,0,20)), trg:WorldSpaceCenter(),24,42, 42, beamcol)
+	   render.DrawBeam(owner:LocalToWorld(Vector(0,0,20)),  trg:LocalToWorld(trg:OBBCenter()) ,24,42, 42, beamcol)
 	else
 		render.DrawBeam(owner:LocalToWorld(Vector(0,0,20)), hitpos,34,42, 42, beamcol)
 	end

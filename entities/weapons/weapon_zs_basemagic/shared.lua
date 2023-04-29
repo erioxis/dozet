@@ -22,7 +22,7 @@ SWEP.Secondary.Automatic = false
 SWEP.Secondary.Ammo = "dummy"
 
 SWEP.Magic = true
-
+SWEP.PointsMultiplier = 0.33
 SWEP.WalkSpeed = SPEED_NORMAL
 
 SWEP.HoldType = "pistol"
@@ -82,15 +82,15 @@ function SWEP:PrimaryAttack()
 	
 	    self:EmitFireSound()
 		if SERVER then
-			owner:SetBloodArmor(math.min(owner:GetBloodArmor() - self.Primary.ArmorBleed * (owner.MagicDamage or 1)))
-			self:ShootBullets(math.min(self.Primary.Damage + (owner:GetBloodArmor() * 2.5) * (owner.MagicDamage or 1),1920), self.Primary.NumShots, self:GetCone())
+			owner:SetBloodArmor(owner:GetBloodArmor() - self.Primary.ArmorBleed * (owner.MagicDamage or 1) - owner:GetBloodArmor()*0.12)
+			self:ShootBullets(self.Primary.Damage + owner:GetBloodArmor() * (owner.MagicDamage or 1), self.Primary.NumShots, self:GetCone())
 			self.IdleAnimation = CurTime() + self:SequenceDuration()
 		end
 		elseif owner:GetBloodArmor() < self.Primary.ArmorBleed then
 			self:SetNextPrimaryFire(CurTime() + self:GetFireDelay())
 
 			self:EmitFireSound()
-			self:ShootBullets(math.min(self.Primary.Damage + (owner:GetBloodArmor() * 2.5) * (owner.MagicDamage or 1),1920), self.Primary.NumShots, self:GetCone())
+			self:ShootBullets(self.Primary.Damage , self.Primary.NumShots, self:GetCone())
 			self.IdleAnimation = CurTime() + self:SequenceDuration()
 			if SERVER then
 				owner:TakeDamage(self.Primary.ArmorBleed)

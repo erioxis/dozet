@@ -65,6 +65,7 @@ if SERVER then
 		if pl.DeadXD then
 			dmginfo:SetDamage(0)
 		end
+		return dmginfo
 	end
 end
 if not CLIENT then return end

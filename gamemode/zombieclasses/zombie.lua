@@ -28,14 +28,6 @@ CLASS.PainSounds = {"npc/zombie/zombie_pain1.wav", "npc/zombie/zombie_pain2.wav"
 CLASS.DeathSounds = {"npc/zombie/zombie_die1.wav", "npc/zombie/zombie_die2.wav", "npc/zombie/zombie_die3.wav"}
 
 CLASS.VoicePitch = 0.65
-if SERVER then
-function CLASS:ProcessDamage(pl, dmginfo)
-	if dmginfo:GetInflictor().IsMelee then
-		dmginfo:SetDamage(dmginfo:GetDamage() / 1.3)
-	end
-end
-end
-
 
 CLASS.CanFeignDeath = true
 
@@ -244,7 +236,7 @@ if SERVER then
 			status:SetReviveHeal(10)
 		end
 
-		return true
+		return dmginfo
 	end
 
 	function CLASS:ReviveCallback(pl, attacker, dmginfo)

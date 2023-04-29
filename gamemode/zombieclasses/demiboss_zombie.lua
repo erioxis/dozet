@@ -238,8 +238,7 @@ if SERVER then
 			status:SetReviveTime(CurTime() + 2.25)
 			status:SetReviveHeal(10)
 		end
-
-		return true
+		return dmginfo
 	end
 
 	function CLASS:ReviveCallback(pl, attacker, dmginfo)

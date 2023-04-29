@@ -177,6 +177,7 @@ function CLASS:ProcessDamage(pl, dmginfo)
 		end
 		dmginfo:SetDamage(((attacker:IsValidLivingHuman() and attacker:IsSkillActive(SKILL_AMULET_12) or attacker:IsValidLivingHuman() and attacker:GetActiveWeapon().ResistDamage) and 0 or 5))
 	end
+	return dmginfo
 end
 end
 

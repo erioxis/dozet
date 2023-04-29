@@ -17,13 +17,7 @@ CLASS.SWEP = "weapon_zs_howler"
 
 CLASS.Model = Model("models/player/zombie_classic_hbfix.mdl")
 CLASS.OverrideModel = Model("models/player/zombie_lacerator2.mdl")
-if SERVER then
-function CLASS:ProcessDamage(pl, dmginfo)
-	if dmginfo:GetInflictor().IsMelee then
-		dmginfo:SetDamage(dmginfo:GetDamage() / 5)
-	end
-end
-end
+
 
 
 CLASS.Health = 2750
@@ -138,6 +132,7 @@ if SERVER then
 		if wep:IsValid() and wep.GetBattlecry and wep:GetBattlecry() > CurTime() then
 			dmginfo:SetDamage(dmginfo:GetDamage() * 0.5)
 		end
+		return dmginfo
 	end
 
 	function CLASS:OnKilled(pl, attacker, inflictor, suicide, headshot, dmginfo)

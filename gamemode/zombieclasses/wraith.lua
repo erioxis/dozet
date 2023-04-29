@@ -97,6 +97,7 @@ if SERVER then
 			dmginfo:SetDamage(dmginfo:GetDamage() / 2)
 		end
 	end
+	return dmginfo
 end
 function CLASS:DoAnimationEvent(pl, event, data)
 	if event == PLAYERANIMEVENT_ATTACK_PRIMARY then

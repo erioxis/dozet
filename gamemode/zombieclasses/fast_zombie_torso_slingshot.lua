@@ -69,6 +69,7 @@ if SERVER then
 				pl:SetLocalVelocity(pl:GetVelocity() * 0.9)
 			end
 		end
+		return dmginfo
 	end
 end
 

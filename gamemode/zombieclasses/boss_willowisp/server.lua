@@ -23,4 +23,5 @@ function CLASS:ProcessDamage(pl, dmginfo)
 	if  atk and  atk:IsPlayer() then
 		atk:SendLua("util.WhiteOut("..math.min(12,dmginfo:GetDamage()/10)..")")
 	end
+	return dmginfo
 end

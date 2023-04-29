@@ -25,7 +25,7 @@ function PLAYER:ProcessAchievements()
 
     -- Get from SQL
     for id, ach in pairs(GAMEMODE.Achievements) do
-        local result = sql.Query("SELECT * FROM zs_achievements_" .. (ach.Goal and "progress" or "onetime") .. " WHERE SteamID = '" .. self:SteamID() .. "' AND AchievementID = '" .. id..(ach.DailyCount and ach.DailyCount or "") .. "'")
+        local result = sql.Query("SELECT * FROM zs_achievements_" .. (ach.Goal and "progress" or "onetime") .. " WHERE SteamID = '" .. self:SteamID() .. "' AND AchievementID = '" .. id..(ach.DailyCount and ach.DailyCount or ach.WeekCount and ach.WeekCount or "") .. "'")
 
         -- Result will return nil if there's no sql entry
         if result then
@@ -77,9 +77,9 @@ function PLAYER:GiveAchievementProgress(id, count)
 
     -- Update or insert values
     if self.Achs[id] > 0 then
-        sql.Query("UPDATE zs_achievements_progress SET SteamID = SteamID, AchievementID = AchievementID, Progress = " .. math.Clamp(self.Achs[id] + count, 0, GAMEMODE.Achievements[id].Goal) .. " WHERE SteamID = '" .. self:SteamID() .. "' AND AchievementID = '" .. id..(GAMEMODE.Achievements[id].DailyCount and GAMEMODE.Achievements[id].DailyCount or "") .. "'")
+        sql.Query("UPDATE zs_achievements_progress SET SteamID = SteamID, AchievementID = AchievementID, Progress = " .. math.Clamp(self.Achs[id] + count, 0, GAMEMODE.Achievements[id].Goal) .. " WHERE SteamID = '" .. self:SteamID() .. "' AND AchievementID = '" .. id..(GAMEMODE.Achievements[id].DailyCount and GAMEMODE.Achievements[id].DailyCount or GAMEMODE.Achievements[id].WeekCount and GAMEMODE.Achievements[id].WeekCount or "") .. "'")
     else
-        sql.Query("INSERT INTO zs_achievements_progress VALUES('" .. self:SteamID() .. "', '" .. id..(GAMEMODE.Achievements[id].DailyCount and GAMEMODE.Achievements[id].DailyCount or "") .. "', " .. math.Clamp(count, 0, GAMEMODE.Achievements[id].Goal) .. ")")
+        sql.Query("INSERT INTO zs_achievements_progress VALUES('" .. self:SteamID() .. "', '" .. id..(GAMEMODE.Achievements[id].DailyCount and GAMEMODE.Achievements[id].DailyCount or GAMEMODE.Achievements[id].WeekCount and GAMEMODE.Achievements[id].WeekCount or "") .. "', " .. math.Clamp(count, 0, GAMEMODE.Achievements[id].Goal) .. ")")
     end
 
     -- Cache

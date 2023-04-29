@@ -240,7 +240,7 @@ if SERVER then
 		end
 
 
-		return true
+		return dmginfo
 	end
 
 	function CLASS:OnSpawned(pl)

@@ -41,6 +41,7 @@ if SERVER then
 		if dmginfo:GetAttacker():IsPlayer() and dmginfo:GetInflictor().Magic then
 			dmginfo:ScaleDamage(0)
 		end
+		return dmginfo
 	end
 end
 

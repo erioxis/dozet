@@ -5,9 +5,10 @@ GM.Website	=	"https://github.com/erioxis/dozet"
 
 -- No, adding a gun doesn't make your name worth being here.
 GM.Credits = {
-	{"Version", "", "7.9.5"}, -- Привет.
-	{"Season of ", "zombie buffs and code optimisation", "XD"},
+	{"Version", "", "8.0.0"}, -- Ого,8.0.0???
+	{"Season of ", "skill buffs,zombie debuff and MORE OPTIMIZATION", "maybe"},
 	{"erioxis", "Phantom coder", "dead"},
+	{"Холодное Молочко(M-I-L-K-Y)", "Not a Phantom coder", "Alive"},
 	{"Nullted", "", "RU-ENG Translation"},
 	{"Bro 3", "", "Some models"}
 
@@ -971,6 +972,9 @@ end
 function GM:GetDaily()
 	return GetGlobalInt("dailynum", self.DailyNum)
 end
+function GM:GetWeekly()
+	return GetGlobalInt("weekly", self.Weekly)
+end
 function GM:GetLDaily()
 	return GetGlobalInt("daily_num_last", self.LastDaily)
 end
@@ -1048,8 +1052,15 @@ local dailyreward = {["Daily1"] = {Goal = 100, Reward = 2500},
 ["Daily6"] = {Goal = 2, Reward = 8500}
 
 }
+local weekreward = {["w1"] = {Goal = 10000, Reward = 52500},
+["w2"] = {Goal = 1000000, Reward = 16500},
+["w3"] = {Goal = 4, Reward = 100000}
+
+}
 local num = 1
 local tbl = {Goal = 100, Reward = 2500}
+local numw = 1
+local tblw = {Goal = 100, Reward = 2500}
 local translate = translate.Get
 function GM:DoAchievements()
     local daily = self:GetDaily()
@@ -1072,4 +1083,15 @@ function GM:DoAchievements()
 	self.Achievements["daily_post"].DailyCount = daily
 	self.Achievements["daily_post"].Reward = tbl.Reward
     --PrintTable(self.Achievements["daily"..(daily or 1)]) print("daily"..(daily or 1))
+
+	local week = self:GetWeekly()
+    tblw = weekreward["w"..math.max(1,(week or 1)%4)]
+ 	numw =  math.max(1,(week or 1)%4)
+
+	 self.Achievements["week_post"].Name = translate("challenge_week"..numw)
+	 self.Achievements["week_post"].Desc = translate("challenge_week_d"..numw)
+	 self.Achievements["week_post"].Goal = tblw.Goal
+	 self.Achievements["week_post"].Weekly = true
+	 self.Achievements["week_post"].WeekCount = week
+	 self.Achievements["week_post"].Reward = tblw.Reward
 end

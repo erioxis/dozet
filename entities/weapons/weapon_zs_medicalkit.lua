@@ -128,8 +128,9 @@ function SWEP:PrimaryAttack()
 		if owner:HasTrinket("pr_barapaw") and math.random(3) == 3 and SERVER then
 			ent:GiveStatus("knockdown", 1.5)
 		end
-		if owner:IsSkillActive(SKILL_WYRDREC) and SERVER and math.random(100) < (60 * ((ent.BleedDamageTakenMul or 1) * (ent.BleedSpeedMul or 1))) then
-			ent:AddBleedDamage(math.random(15,30), ent)
+		if owner:IsSkillActive(SKILL_WYRDREC) and SERVER and math.random(500) < (60 * ((ent.BleedDamageTakenMul or 1) / (ent.BleedSpeedMul or 1)))  and (ent.NextBleedWyrd or 1) < CurTime() then
+			ent.NextBleedWyrd = CurTime() + 10
+			ent:AddBleedDamage(math.random(1,15), ent)
 		end
 	
 		local cursed = ent:GetStatus("cursed")
@@ -142,16 +143,16 @@ function SWEP:PrimaryAttack()
 			ent.BuffedArmor = math.min(ent.MaxBloodArmor + 100, (ent.BuffedArmor or 1) + self.Heal * 3)
 			ent.WhoBuffed = owner
 		end
-		if not owner:IsSkillActive(SKILL_DUALHEAL) then
 		self:SetNextCharge(CurTime() + self.Primary.Delay * math.min(1, healed / self.Heal) * cooldownmultiplier)
-		elseif owner:IsSkillActive(SKILL_DUALHEAL) and self.UltraDa ~= 2 then
-		self:SetNextCharge(CurTime() + self.Primary.Delay * math.min(1, healed / self.Heal) * cooldownmultiplier)
-			self.UltraDa = 2
-		elseif owner:IsSkillActive(SKILL_DUALHEAL) and self.UltraDa ~= 1 then
-			self:SetNextCharge(0)
-			self.UltraDa = 1
+		if owner:IsSkillActive(SKILL_DUALHEAL) then
+			self.UltraDa = (self.UltraDa or 1) + 1
+			if self.UltraDa > 1 then
+				self:SetNextCharge(0)
+				self.UltraDa = 1
+			end
 		end
-		if owner:IsSkillActive(SKILL_WYRDREC) and !self.BloodHeal  then
+		if owner:IsSkillActive(SKILL_WYRDREC) and !self.BloodHeal and (ent.NextBleedWyrd or 1) < CurTime()  then
+			ent.NextBleedWyrd = CurTime() + 10
 			timer.Simple( 0.1, function() owner:HealPlayer(ent, math.random(1,13)) end)
 		end
 		owner.NextMedKitUse = self:GetNextCharge()

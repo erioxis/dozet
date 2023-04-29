@@ -444,6 +444,7 @@ function GM:AddResources()
 	resource.AddFile("sound/"..tostring(self.DeathSound))
 end
 local numofdaily = 1
+local numofweek = 1
 function GM:Initialize()
 	self:FixSkillConnections()
 	self:RegisterPlayerSpawnEntities()
@@ -491,6 +492,8 @@ function GM:Initialize()
 
 	numofdaily = math.max(1,(self:GetDaily() or 1)%7)
 	print(numofdaily)
+	numofweek = math.max(1,(self:GetWeekly() or 1)%4)
+	print(numofweek)
 
 
 	self:SetPantsMode(self.PantsMode, true)
@@ -1224,7 +1227,54 @@ function GM:ShouldRestartRound()
 
 	return true
 end
-
+local trade_da = {
+	"trinket_altjudassoul",  -- 2
+	"trinket_altsamsonsoul",  -- 3
+	"trinket_altevesoul",  -- 4
+	"trinket_jacobsoul",  -- 5
+	"trinket_altisaacsoul",  -- 6
+	"trinket_altmagdalenesoul",  -- 7
+	"trinket_altlilithsoul",  -- 8
+	"trinket_alteriosoul", -- 10 
+	"trinket_altaposoul",  --14
+	"trinket_altbetsoul",  --15
+	"trinket_altlostsoul",  --16
+	"trinket_altgreedsoul",  --17
+	"trinket_altcainsoul",   --18
+	"trinket_altlazarussoul",	-- 19
+	"trinket_altforsoul", -- 20
+	"trinket_altsoul",-- 21
+	"trinket_soulalteden", -- 22
+	"trinket_altchayok", --23
+	"trinket_altdarksoul", -- 24
+	"trinket_bleaksoul",  -- 1
+	"trinket_spiritess",  -- 2
+	"trinket_samsonsoul",  -- 3
+	"trinket_evesoul",  -- 4
+	"trinket_jacobjesausoul",  -- 5
+	"trinket_isaacsoul",  -- 6
+	"trinket_magdalenesoul",  -- 7
+	"trinket_lilithsoul",  -- 8
+	"trinket_whysoul",  -- 9
+	"trinket_blanksoul", -- 10
+	"trinket_classixsoul",  -- 11
+	"trinket_darksoul",  --12
+	"trinket_eriosoul",  --13
+	"trinket_aposoul",  --14
+	"trinket_betsoul",  --15
+	"trinket_lostsoul",  --16
+	"trinket_greedsoul",  --17
+	"trinket_cainsoul",   --18
+	"trinket_lazarussoul",	-- 19
+	"trinket_forsoul",  -- 20
+	"trinket_starsoul",  -- 21
+	"trinket_teasoul",  -- 22
+	"trinket_sugersoul",  -- 23
+	"trinket_nulledsoul",  -- 24
+	"trinket_soulmedical",  -- 25
+	"trinket_lampsoul",  -- 26
+	"trinket_lehasoul"  -- 26
+}
 local NextTick = 0
 local NextTick1 = 0
 function GM:Think()
@@ -1321,60 +1371,23 @@ function GM:Think()
 				if pl:WaterLevel() >= 3 and not (pl.status_drown and pl.status_drown:IsValid()) then
 					pl:GiveStatus("drown")
 				end
-				if (pl:GetActiveWeapon().Tier or 1) >= 4 and pl:HasTrinket("sin_pride") and pl:GetActiveWeapon() then
+				if pl:GetActiveWeapon() and (pl:GetActiveWeapon().Tier or 1) >= 4 and pl:HasTrinket("sin_pride") and pl:GetActiveWeapon() then
 					pl:StripWeapon(pl:GetActiveWeapon():GetClass())
 				end
-				local bossdrops2 = {
-					"altjudassoul",  -- 2
-					"altsamsonsoul",  -- 3
-					"altevesoul",  -- 4
-					"jacobsoul",  -- 5
-					"altisaacsoul",  -- 6
-					"altmagdalenesoul",  -- 7
-					"altlilithsoul",  -- 8
-					"alteriosoul", -- 10 
-					"altaposoul",  --14
-					"altbetsoul",  --15
-					"altlostsoul",  --16
-					"altgreedsoul",  --17
-					"altcainsoul",   --18
-					"altlazarussoul",	-- 19
-					"altforsoul", -- 20
-					"altsoul",-- 21
-					"soulalteden", -- 22
-					"altchayok", --23
-					"altdarksoul", -- 24
-					"bleaksoul",  -- 1
-					"spiritess",  -- 2
-					"samsonsoul",  -- 3
-					"evesoul",  -- 4
-					"jacobjesausoul",  -- 5
-					"isaacsoul",  -- 6
-					"magdalenesoul",  -- 7
-					"lilithsoul",  -- 8
-					"whysoul",  -- 9
-					"blanksoul", -- 10
-					"classixsoul",  -- 11
-					"darksoul",  --12
-					"eriosoul",  --13
-					"aposoul",  --14
-					"betsoul",  --15
-					"lostsoul",  --16
-					"greedsoul",  --17
-					"cainsoul",   --18
-					"lazarussoul",	-- 19
-					"forsoul",  -- 20
-					"starsoul",  -- 21
-					"teasoul",  -- 22
-					"sugersoul",  -- 23
-					"nulledsoul",  -- 24
-					"soulmedical",  -- 25
-					"lampsoul",  -- 26
-					"lehasoul"  -- 26
-				}
-				local d = table.Random(bossdrops2)
-				if pl:HasTrinket(d) and pl:IsSkillActive(SKILL_SOUL_TRADE) and not pl:HasTrinket("toysoul") and not pl:SteamID64() == "76561198813932012" then
-					pl:Kill()
+				if (pl.NextThinkAboutTrade or 1) < time and pl:IsSkillActive(SKILL_SOUL_TRADE) then
+					pl.NextThinkAboutTrade = time + 10
+					local kill = false 
+					for k,v in pairs(pl:GetInventoryItems()) do
+						if pl:HasTrinket("toysoul") or pl:SteamID64() == "76561198813932012" then break end
+						if table.HasValue(trade_da,k) then
+							kill = true
+							break
+						end
+						--print(k)
+					end
+					if kill then
+						pl:Kill()
+					end
 				end
 				if pl:GetActiveWeapon() and (pl:GetActiveWeapon().Tier or 1) <= 4 and pl:HasTrinket("sin_envy") and pl:GetActiveWeapon():GetClass() ~= "weapon_zs_fists" then
 					pl:StripWeapon(pl:GetActiveWeapon():GetClass())
@@ -1623,7 +1636,7 @@ function GM:Think()
 
 				if pl:HasTrinket("autoreload") and pl.OldWeaponToReload and time > (pl.NextAutomatedReload or 0) then
 					local mywep = pl.OldWeaponToReload
-					if mywep and mywep:IsValid() and mywep.FinishReload then
+					if mywep and mywep:IsValid() and mywep.FinishReload and mywep.GetPrimaryClipSize then
 						local max1 = mywep:GetPrimaryClipSize()
 
 						if max1 > 0 then
@@ -4570,6 +4583,9 @@ function GM:HumanKilledZombie(pl, attacker, inflictor, dmginfo, headshot, suicid
 	-- Simply distributes based on damage but also do some stuff for assists.
 	if numofdaily == 1 then
 		attacker:GiveAchievementProgress("daily_post", 1)
+	end
+	if numofweek == 1 then
+		attacker:GiveAchievementProgress("week_post", 1)
 	end
 	
 	if numofdaily == 4 and pl:GetZombieClassTable().Boss then

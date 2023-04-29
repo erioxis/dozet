@@ -28,6 +28,7 @@ if SERVER then
 				dmginfo:SetDamage(dmginfo:GetDamage()*0.1)
 			end
 		end
+		return dmginfo
 	end
 end
 

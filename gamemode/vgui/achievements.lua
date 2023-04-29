@@ -8,20 +8,19 @@ local dailyreward = {["Daily1"] = {Goal = 100, Reward = 2500},
 
 }
 local num = 1
-local tbl = {Goal = 100, Reward = 2500}
+local weekreward = {["w1"] = {Goal = 10000, Reward = 52500},
+["w2"] = {Goal = 100000, Reward = 16500},
+["w3"] = {Goal = 4, Reward = 100000}
+
+}
+local wnum = 1
+local tblw = {Goal = 10000, Reward = 52500}
 local function DoAchievements()
     local daily = GAMEMODE:GetDaily()
     tbl = dailyreward["Daily"..math.max(1,daily%7)]
     num = math.max(1,daily%7)
         
 
-   --[[self.Achievements["daily"..daily] = {
-        Name = translate("challenge_daily"..num),
-        Desc = translate("challenge_daily_d"..num),
-        Goal = tbl.Goal,
-    --    Daily = true,
-        Reward = tbl.Reward
-    }]]
 	GAMEMODE.Achievements["daily_post"].Name = translate.Get("challenge_daily"..num)
 	GAMEMODE.Achievements["daily_post"].Desc = translate.Get("challenge_daily_d"..num)
 	GAMEMODE.Achievements["daily_post"].Goal = tbl.Goal
@@ -30,6 +29,17 @@ local function DoAchievements()
     GAMEMODE.Achievements["oof"].Daily = true
 	GAMEMODE.Achievements["oof"].DailyCount = daily
 	GAMEMODE.Achievements["daily_post"].Reward = tbl.Reward
+    local week = GAMEMODE:GetWeekly()
+    tblw = weekreward["w"..math.max(1,week%4)]
+    num = math.max(1,week%4)
+        
+
+	GAMEMODE.Achievements["week_post"].Name = translate.Get("challenge_week"..num)
+	GAMEMODE.Achievements["week_post"].Desc = translate.Get("challenge_week_d"..num)
+	GAMEMODE.Achievements["week_post"].Goal = tblw.Goal
+	GAMEMODE.Achievements["week_post"].Weekly = true
+	GAMEMODE.Achievements["week_post"].WeekCount = week
+	GAMEMODE.Achievements["week_post"].Reward = tblw.Reward
     --PrintTable(self.Achievements["daily"..(daily or 1)]) print("daily"..(daily or 1))
 end
 
@@ -103,7 +113,7 @@ function PANEL:Init()
             end
 
             -- Texts
-            self:ShadowedText(ach.Name:upper().." -"..translate.Get("xp")..(ach.Reward or ""), "ZSHUDFontTiny", 8, 7, ach.Daily and Color(178, 192, 53) or self:GetTheme(3), TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP)
+            self:ShadowedText(ach.Name:upper().." -"..translate.Get("xp")..(ach.Reward or ""), "ZSHUDFontTiny", 8, 7, ach.Daily and Color(178, 192, 53) or ach.Weekly and Color(79,8,115) or self:GetTheme(3), TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP)
             self:ShadowedText(ach.Desc, "ZSHUDFontTiniest", 8, 25, self:GetTheme(3), TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP)
 
             -- Bars

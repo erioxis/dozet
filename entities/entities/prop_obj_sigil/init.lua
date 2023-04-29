@@ -144,4 +144,20 @@ function ENT:Think()
 			ent:GiveStatus("corruptsigildef", 2)
 		end
 	end
+	for _, ent in pairs(ents.FindInSphere(self:GetPos(), 128)) do
+		if ent and table.HasValue({"prop_physics","prop_physics_multiplayer"},ent:GetClass()) and ent ~= self then
+			local targetpos = self:LocalToWorld(self:OBBCenter())
+			local direction = (targetpos - ent:GetPos()):GetNormal()
+			local phys = ent.GetPhysicsObject and ent:GetPhysicsObject() or ent
+			if phys:IsValid() then
+				phys:SetVelocity(direction * -50)
+			end
+		end
+	end
 end
+function ENT:OnRemove()
+	local efc = EffectData()
+	efc:SetOrigin(self:GetPos())
+	util.Effect("sigildestruction",efc)
+end
+

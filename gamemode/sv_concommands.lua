@@ -610,7 +610,7 @@ concommand.Add("zsdropweapon", function(sender, command, arguments)
 		sender:TakeInventoryItem("curse_dropping")
 		
 	end
-	if sender:HasTrinket("curse_point") then
+	if sender:HasTrinket("curse_point") and sender:GetPoints() > 0 then
 		sender:SetPoints(sender:GetPoints() * 0.75)
 		sender:TakeInventoryItem("trinket_curse_point")
 		return
@@ -818,7 +818,7 @@ concommand.Add("zsgiveweapon", function(sender, command, arguments)
 		sender:TakeInventoryItem("curse_dropping")
 		return
 	end
-	if sender:HasTrinket("curse_point") then
+	if sender:HasTrinket("curse_point") and sender:GetPoints() > 0 then
 		sender:SetPoints(sender:GetPoints() * 0.75)
 		sender:TakeInventoryItem("curse_point")
 		return
@@ -915,7 +915,7 @@ concommand.Add("zsgiveweaponclip", function(sender, command, arguments)
 	if sender:HasTrinket("curse_dropping") then
 		sender:Kill()
 	end
-	if sender:HasTrinket("curse_point") then
+	if sender:HasTrinket("curse_point") and sender:GetPoints() > 0 then
 		sender:SetPoints(sender:GetPoints() * 0.75)
 		sender:TakeInventoryItem("curse_point")
 		return

@@ -7,6 +7,13 @@ GM.Achievements["daily_post"] = {
   --  Daily = true,
     Reward = 1
 }
+GM.Achievements["week_post"] = {
+    Name = translate("challenge_week1"),
+    Desc = translate("challenge_week_d1"),
+    Goal = 1,
+  --  Daily = true,
+    Reward = 1
+}
 
 GM.Achievements["elementarno"] = {
     Name = translate("challenge_fullofelements"),

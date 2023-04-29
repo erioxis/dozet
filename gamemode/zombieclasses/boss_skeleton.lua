@@ -13,7 +13,7 @@ CLASS.Speed = 150
 CLASS.Points = 60
 
 CLASS.CanTaunt = true
-CLASS.Weight = 0
+CLASS.Weight = 0.99
 CLASS.Points = CLASS.Health/GM.SkeletonPointRatio
 
 CLASS.SWEP = "weapon_zs_skeleton"
@@ -160,6 +160,7 @@ if SERVER then
 		elseif bit_band(dmginfo:GetDamageType(), DMG_SLASH) == 0 and bit_band(dmginfo:GetDamageType(), DMG_CLUB) == 0 then
 			dmginfo:SetDamage(1)
 		end
+		return dmginfo
 	end
 end
 

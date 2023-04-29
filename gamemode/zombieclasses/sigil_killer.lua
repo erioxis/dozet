@@ -23,6 +23,7 @@ function CLASS:ProcessDamage(pl, dmginfo)
 		net.Start("zs_damageblock")
 		net.Send(pl)
 	end
+	return dmginfo
 end
 end
 

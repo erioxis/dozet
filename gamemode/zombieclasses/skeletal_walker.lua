@@ -13,7 +13,7 @@ CLASS.Original = true
 CLASS.CanTaunt = true
 
 CLASS.Points = CLASS.Health/GM.SkeletonPointRatio
-CLASS.Weight = 0
+CLASS.Weight = 0.7
 CLASS.SWEP = "weapon_zs_skeleton"
 
 
@@ -166,6 +166,7 @@ if SERVER then
 				dmginfo:ScaleDamage(0.1)
 			end
 		end
+		return dmginfo
 	end
 end
 

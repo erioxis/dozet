@@ -88,6 +88,7 @@ function CLASS:ProcessDamage(pl, dmginfo)
 	if dmginfo:GetInflictor().IsMelee then
 		dmginfo:SetDamage(0)
 	end
+	return dmginfo
 end
 
 function CLASS:OnKilled(pl, attacker, inflictor, suicide, headshot, dmginfo, assister)

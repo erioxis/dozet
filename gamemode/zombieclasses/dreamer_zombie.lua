@@ -72,6 +72,7 @@ if SERVER then
 		if dmginfo:GetAttacker():IsPlayer() and dmginfo:GetAttacker():IsSkillActive(SKILL_MAGIC) then
 			dmginfo:ScaleDamage(0)
 		end
+		return dmginfo
 	end
 end
 if CLIENT then

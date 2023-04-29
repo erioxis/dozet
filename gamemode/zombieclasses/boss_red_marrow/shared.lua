@@ -149,4 +149,5 @@ function CLASS:ProcessDamage(pl, dmginfo)
 		util.BlastDamageEx(pl, pl, pl:GetPos(), 55, 7, DMG_CLUB)
 		pl:GodDisable()
 	end
+	return dmginfo
 end

@@ -55,6 +55,7 @@ function CLASS:ProcessDamage(pl, dmginfo)
 			end
 		end)
 	end
+	return dmginfo
 end
 
 if not CLIENT then return end

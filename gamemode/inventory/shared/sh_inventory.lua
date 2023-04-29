@@ -409,7 +409,7 @@ GM:AddInventoryItemData("cons_timer",		trs("c_timer"),			trs("c_timer_d"),						
 		(gamemode.Call( "GetWaveActive" )  and gamemode.Call( "GetWaveEnd" ) or  gamemode.Call( "GetWaveStart" )) + (math.random(1,5) == 5 and -25 or 25)
 	)
 end,6)
-
+GM:AddInventoryItemData("comp_key",		trs("c_key"),			trs("c_key_d"),								"models/props_c17/trappropeller_lever.mdl",6)
 GM:AddInventoryItemData("comp_modbarrel",		trs("c_modbarrel"),			trs("c_modbarrel_d"),								"models/props_c17/trappropeller_lever.mdl")
 GM:AddInventoryItemData("comp_burstmech",		trs("c_burstmech"),			trs("c_burstmech_d"),										"models/props_c17/trappropeller_lever.mdl")
 GM:AddInventoryItemData("comp_basicecore",		trs("c_basicecore"),		trs("c_basicecore_d"),	"models/Items/combine_rifle_cartridge01.mdl")
@@ -535,8 +535,11 @@ GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, 10)
 GM:AddSkillModifier(trinket, SKILLMOD_HEALING_RECEIVED, 0.09)
 trinketwep.PermitDismantle = true
 
-trinket, trinketwep = GM:AddTrinket(trs("t_bloodgrass"), "bloodgrass", false, hpveles, hpweles, 4, trs("t_d_bloodgrass"), nil, nil, "weapon_zs_defence_trinket_d")
-trinket, trinketwep = GM:AddTrinket(trs("t_antidevo"), "antidevo", false, hpveles, hpweles, 2, trs("t_d_antidevo"), nil, nil, "weapon_zs_defence_trinket_d")
+GM:AddTrinket(trs("t_bloodgrass"), "bloodgrass", false, hpveles, hpweles, 4, trs("t_d_bloodgrass"), nil, nil, "weapon_zs_defence_trinket_d")
+GM:AddTrinket(trs("t_antidevo"), "antidevo", false, hpveles, hpweles, 2, trs("t_d_antidevo"), nil, nil, "weapon_zs_defence_trinket_d")
+
+
+GM:AddTrinket(trs("t_acum"), "acum", false, nil, "models/items/car_battery01.mdl", 5, trs("t_d_acum"), nil, nil, "weapon_zs_special_trinket")
 
 trinket = GM:AddTrinket(trs("t_vbank"), "vitpackageii", false, hpveles, hpweles, 2, trs("t_d_vbank"), nil, nil, "weapon_zs_defence_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, 20)

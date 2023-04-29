@@ -11,7 +11,7 @@ CLASS.Original = false
 CLASS.Variations = {}
 CLASS.Hull = {Vector(-16, -16, 0), Vector(16, 16, 22)}
 CLASS.HullDuck = {Vector(-16, -16, 0), Vector(16, 16, 22)}
-CLASS.Weight = 0
+CLASS.Weight = 0.6
 CLASS.SWEP = "weapon_zs_skeletallurker"
 
 CLASS.Wave = 2 / 6
@@ -93,6 +93,7 @@ function CLASS:ProcessDamage(pl, dmginfo)
 	elseif bit_band(dmginfo:GetDamageType(), DMG_SLASH) == 0 and bit_band(dmginfo:GetDamageType(), DMG_CLUB) == 0 then
 		dmginfo:SetDamage(0)
 	end
+	return dmginfo
 end
 
 function CLASS:OnKilled(pl, attacker, inflictor, suicide, headshot, dmginfo, assister)

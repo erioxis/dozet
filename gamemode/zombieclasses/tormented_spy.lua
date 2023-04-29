@@ -64,6 +64,7 @@ if SERVER then
 
 			activ:SetTormented(CurTime())
 		end
+		return dmginfo
 	end
 end
 
@@ -80,12 +81,6 @@ function CLASS:PrePlayerDraw(pl)
 	render.SetColorModulation(0.025, 0.15, 0.065)
 	render.SuppressEngineLighting(true)
 end
-if SERVER then
-	function CLASS:ProcessDamage(pl, dmginfo)
-		if dmginfo:GetInflictor().IsMelee then
-			dmginfo:SetDamage(dmginfo:GetDamage() / 30)
-		end
-	end
-	end
+
 
 

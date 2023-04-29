@@ -70,6 +70,14 @@ LANGUAGE.challenge_daily_hehe_d = "Пройти 31 ежедневных зада
 LANGUAGE.challenge_oof = "ЕЖЕДНЕВНОЕ:Пожалуйста!"
 LANGUAGE.challenge_oof_d = "Дать 300 поинтов."
 
+
+LANGUAGE.challenge_week1 = "ЕЖЕНЕДЕЛЬНОЕ:Истребитель баланса"
+LANGUAGE.challenge_week_d1 = "Убить 10000 зомби."
+LANGUAGE.challenge_week2 = "ЕЖЕНЕДЕЛЬНОЕ:Высший мыслитель"
+LANGUAGE.challenge_week_d2 = "Получить 1000000 поинтов."
+LANGUAGE.challenge_week3 = "ЕЖЕНЕДЕЛЬНОЕ:Хватит ли вы сам сил?"
+LANGUAGE.challenge_week_d3 = "Сделать реморт 4 раза."
+
 LANGUAGE.scram_rem = " Скрапа"
 
 LANGUAGE.challenge_anti_sigil_d = "Создай анти-сигил."
@@ -382,6 +390,8 @@ LANGUAGE.droped_x							= "%s Выкинуто с инвентаря!"
 --Компоненты
 LANGUAGE.c_modbarrel                                        = "Модульный ствол"
 LANGUAGE.c_modbarrel_d                                        = "Модульный ствол подходит для совмещения с другим стволом."
+LANGUAGE.c_key                                        = "Ключ"
+LANGUAGE.c_key_d                                        = "Для кейса?"
 LANGUAGE.c_burstmech                                        = "Механизм Серийного огня"
 LANGUAGE.c_burstmech_d                                        = "Механизм сделанный для создания оружия с серийным огнем."
 LANGUAGE.c_basicecore                                        = "Базовое энерго-ядро"
@@ -449,6 +459,8 @@ LANGUAGE.c_bhole                                        = "Черная дыра
 LANGUAGE.c_bhole_d                                        = "Создает мини-черную дыру наносящую 25% урона оружия выстрелами(Множители урона от выстрелов НЕ РАБОТАЮТ НА НЕЕ)."
 LANGUAGE.c_dust                                        = "Пыль..."
 LANGUAGE.c_dust_d                                        = "Дает 10 секунд разлома!"
+LANGUAGE.t_acum                                  = "Аккумулятор"
+LANGUAGE.t_d_acum                                  = "Двойное использование активок!"
 LANGUAGE.charges_active                                       = "Зарядов: "
 -- тринкеты
 LANGUAGE.t_ass                                        = "Забытая аскорбинка"
@@ -926,6 +938,10 @@ LANGUAGE.wep_m_boom = "'Вжух' Магия взрыва"
 LANGUAGE.wep_d_m_boom = "При попадание тратит 80% брони и взрывает врага.\nНе регенит броню."
 LANGUAGE.wep_m_heal = "'Расточитель' Магия лечения"
 LANGUAGE.wep_d_m_heal = "Используй ВТОРУЮ АТАКУ чтобы восстановить немного кровавой брони и здоровья,забери 20 проклятья\nПЕРВАЯ АТАКА Восстановит ближайшим союзнам 30 здоровья за счет кровавой брони."
+LANGUAGE.wep_m_electro = "'ПШПШПШШПШППШПШПШПШ' Магия электричества"
+LANGUAGE.wep_d_m_electro  = "Атака стреляет эл.аркой!\nВТОРАЯ АТАКА Заэлектреизует зомби которые находились рядом."
+LANGUAGE.wep_m_wind = "'Свободен' Магия ветра"
+LANGUAGE.wep_d_m_wind = "Вторая атака жрет всю кровь и отталкивает зомби которые находились рядом\nПервая атака просто стреляет веетром."
 LANGUAGE.wep_zeus  = "'Зевс' Вольт-Арбалет"
 LANGUAGE.wep_d_zeus = "Стреляет нулевыми стрелами,которые убивают любое лечение или восстание.Имеет длинную цепочку но без попаданий в голову."
 LANGUAGE.wep_waraxe		= "'Варакс' Улучшенная пушка"

@@ -118,6 +118,7 @@ if SERVER then
 			dmginfo:SetDamage(0)
 		end
 	end
+	return dmginfo
 end
 
 if not CLIENT then return end

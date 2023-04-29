@@ -126,7 +126,7 @@ function SWEP:OnMeleeHit(hitent, hitflesh, tr)
 	end
 	if ent:IsPlayer() and SERVER then
 		ent:AddBleedDamage(self.MeleeDamage * 0.12, own)
-		own:SetHealth(math.min(own:Health() + self.MeleeDamage *0.05,own:GetMaxHealth()))
+		own:SetHealth(math.min(own:Health() + self.MeleeDamage *0.05 * (self.HealthSteal and 0.3 or 1),own:GetMaxHealth()))
 	end
 end
 function SWEP:SecondaryAttack()

@@ -8,7 +8,7 @@ CLASS.Help = "ctrl_abysstyrant"
 CLASS.SuperBoss = true
 
 CLASS.Hidden = true
-CLASS.Boss = false
+CLASS.Boss = true
 
 CLASS.Variations = {}
 
@@ -19,7 +19,7 @@ CLASS.NoFallDamage = true
 CLASS.NoFallSlowdown = true
 
 CLASS.SWEP = "weapon_zs_abyssaxez"
-CLASS.Health = 10000
+CLASS.Health = 4500
 CLASS.Speed = 135
 CLASS.Points = 600
 CLASS.Wave = 8 / 8
@@ -62,11 +62,7 @@ function CLASS:CalculateGiveStack( dmg )
 end
 
 function CLASS:ProcessDamage( pl, dmginfo )
-	wep = pl:GetActiveWeapon()
 
-	if pl:IsValid() then
-		wep:SetHitStacks( math_min( wep:GetHitStacks() + ( self:CalculateGiveStack( dmginfo:GetDamage() ) ), 1 ) )
-	end
 
 	if SERVER then
 		if bit.band( dmginfo:GetDamageType(), DMG_ALWAYSGIB ) ~= 0 then
@@ -79,7 +75,7 @@ function CLASS:ProcessDamage( pl, dmginfo )
 			dmginfo:SetDamage( 0 )
 		end
 	end
-
+	return dmginfo
 end
 
 function CLASS:PlayDeathSound(pl)
@@ -126,7 +122,7 @@ end
 
 if SERVER then
 
-	local function DropBossWeapon( self, inv )
+	local function DropBossWeapon( self, drop )
 		local inv = string.sub( drop, 1, 4 ) ~= "weap"
 
 		local pos = self:LocalToWorld( self:OBBCenter() )
@@ -173,9 +169,9 @@ if SERVER then
 		for _, inf in ipairs( ents.FindInBoxRadius( vPos, self.OnDeathDistance ) ) do
 			if inf and inf:IsValidLivingHuman() and WorldVisible( vPos, inf:NearestPoint( vPos ) ) then
 				inf:SetBloodArmor( 0 )
-				inf:GiveStatus( "dimvision", 3, inflictor )
-				inf:GiveStatus( "frightened", 7, inflictor )
-				inf:GiveStatus( "bloodysickness", 9, inflictor )
+				inf:GiveStatus( "dimvision", 3 )
+				inf:GiveStatus( "frightened", 7 )
+				inf:GiveStatus( "bloodysickness", 9 )
 				--inf:SetBloodArmor(inf.MaxBloodArmor)
 			end
 		end

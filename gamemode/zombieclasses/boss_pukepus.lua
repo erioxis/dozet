@@ -20,13 +20,6 @@ CLASS.Points = 40
 CLASS.PainSounds = {"NPC_PoisonZombie.Pain"}
 CLASS.DeathSounds = {Sound("npc/zombie_poison/pz_call1.wav")}
 
-if SERVER then
-function CLASS:ProcessDamage(pl, dmginfo)
-	if dmginfo:GetInflictor().IsMelee then
-		dmginfo:SetDamage(dmginfo:GetDamage() / 30)
-	end
-end
-end
 
 
 CLASS.VoicePitch = 0.5
@@ -183,6 +176,7 @@ function CLASS:ProcessDamage(pl, dmginfo)
 			end
 		end)
 	end
+	return dmginfo
 end
 
 if SERVER then

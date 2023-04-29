@@ -32,6 +32,7 @@ if SERVER then
 				dmginfo:ScaleDamage(2)
 			end
 		end
+		return dmginfo
 	end
 end
 

@@ -9,7 +9,7 @@ CLASS.OverrideModel = Model("models/player/catpants.mdl")
 CLASS.BetterVersion = "Baragat"
 CLASS.Variations = false
 
-CLASS.Weight = 0
+CLASS.Weight = 0.6
 CLASS.Wave = 3 / 6
 
 

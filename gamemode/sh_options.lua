@@ -350,6 +350,8 @@ GM:AddStartingItem("resupplypack",		ITEMCAT_TRINKETS,		25,				"trinket_resupplyp
 
 GM:AddStartingItem("m_w_damager",				ITEMCAT_MAGIC,			75,				"weapon_zs_m_damage")
 GM:AddStartingItem("m_w_heal",				ITEMCAT_MAGIC,			75,				"weapon_zs_m_heal")
+GM:AddStartingItem("m_w_electro",				ITEMCAT_MAGIC,			100,				"weapon_zs_m_electro")
+GM:AddStartingItem("m_w_wind",				ITEMCAT_MAGIC,			75,				"weapon_zs_m_wind")
 GM:AddStartingItem("m_w_boom",				ITEMCAT_MAGIC,			75,				"weapon_zs_m_boom")
 GM:AddStartingItem("stone",				ITEMCAT_OTHER,			5,				"weapon_zs_stone")
 GM:AddStartingItem("grenade",			ITEMCAT_OTHER,			20,				"weapon_zs_grenade")
@@ -381,10 +383,13 @@ GM:AddStartingItem("bloodshot",			ITEMCAT_OTHER,			35,				"weapon_zs_bloodshotbo
 ------------
 --Magic
 GM:AddPointShopItem("magicheal",			ITEMCAT_MAGIC,			400,				"weapon_zs_m_heal")
+GM:AddPointShopItem("magicelectro",			ITEMCAT_MAGIC,			740,				"weapon_zs_m_electro")
+GM:AddPointShopItem("magicwind",			ITEMCAT_MAGIC,			400,				"weapon_zs_m_wind")
 GM:AddPointShopItem("magicdamage",			ITEMCAT_MAGIC,			400,				"weapon_zs_m_damage")
 GM:AddPointShopItem("magicboom",			ITEMCAT_MAGIC,			400,				"weapon_zs_m_boom")
 
 -- Tier 1
+
 GM:AddPointShopItem("pshtr",			ITEMCAT_GUNS,			35,				"weapon_zs_peashooter", nil, nil, nil, function(pl) pl:GiveEmptyWeapon("weapon_zs_peashooter") end)
 GM:AddPointShopItem("btlax",			ITEMCAT_GUNS,			35,				"weapon_zs_battleaxe", nil, nil, nil, function(pl) pl:GiveEmptyWeapon("weapon_zs_battleaxe") end)
 GM:AddPointShopItem("owens",			ITEMCAT_GUNS,			35,				"weapon_zs_owens", nil, nil, nil, function(pl) pl:GiveEmptyWeapon("weapon_zs_owens") end)
@@ -497,7 +502,6 @@ item =
 GM:AddPointShopItem("scrap",				ITEMCAT_AMMO,			40,				nil,							translate.Get("ammo_scrap").." (x20)",							"Scrap but is have x15.",					"ammo_scrap",						function(pl) pl:GiveAmmo(20, "Scrap", true) end)
 item.DontScrap = true
 -- Tier 1
-GM:AddPointShopItem("brassknuckles",	ITEMCAT_MELEE,			25,				"weapon_zs_brassknuckles").Model = "models/props_c17/utilityconnecter005.mdl"
 GM:AddPointShopItem("knife",			ITEMCAT_MELEE,			25,				"weapon_zs_swissarmyknife")
 GM:AddPointShopItem("zpplnk",			ITEMCAT_MELEE,			25,				"weapon_zs_plank")
 GM:AddPointShopItem("axe",				ITEMCAT_MELEE,			25,				"weapon_zs_axe")
@@ -508,6 +512,7 @@ GM:AddPointShopItem("pipe",				ITEMCAT_MELEE,			25,				"weapon_zs_pipe")
 GM:AddPointShopItem("stunbaton",		ITEMCAT_MELEE,			25,				"weapon_zs_stunbaton")
 GM:AddPointShopItem("hook",				ITEMCAT_MELEE,			25,				"weapon_zs_hook")
 GM:AddPointShopItem("syx",				ITEMCAT_MELEE,			25,				"weapon_zs_syx")
+GM:AddPointShopItem("brassknuckles",	ITEMCAT_MELEE,			25,				"weapon_zs_brassknuckles").Model = "models/props_c17/utilityconnecter005.mdl"
 -- Tier 2
 GM:AddPointShopItem("broom",			ITEMCAT_MELEE,			55,				"weapon_zs_pushbroom")
 GM:AddPointShopItem("shovel",			ITEMCAT_MELEE,			55,				"weapon_zs_shovel")

@@ -210,7 +210,7 @@ if SERVER then
 			pl.EradiVived = true
 		end
 
-		return true
+		return dmginfo
 	end
 
 	function CLASS:OnSpawned(pl)

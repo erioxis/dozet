@@ -12,7 +12,7 @@ CLASS.Variations = {}
 CLASS.CanTaunt = true
 
 CLASS.Points = CLASS.Health/GM.SkeletonPointRatio
-CLASS.Weight = 0
+CLASS.Weight = 0.5
 CLASS.SWEP = "weapon_zs_skelesham"
 
 CLASS.Model = Model("models/player/skeleton.mdl")
@@ -194,7 +194,7 @@ if SERVER then
 			status:SetReviveHeal(10)
 		end
 
-		return true
+		return dmginfo
 	end
 end
 

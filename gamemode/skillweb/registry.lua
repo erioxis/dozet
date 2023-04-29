@@ -1771,7 +1771,7 @@ GM:AddSkill(SKILL_DEATH, "Morieris", PURPLE.."Better medicine\n" ..BAD.."+20% Me
 GM:AddSkill(SKILL_HELPLIFER, "Chance", PURPLE.."Can save from fatal hit\n10% Chance\nOn upgrade chance is 50%",
 										2,			-7,					{SKILL_EX2}, TREE_ANCIENTTREE,0)
 .CanUpgrade = 2
-GM:AddSkill(SKILL_INF_POWER, "Dozei Core", PURPLE.."-50% Damage.\nExtra-damage for every skills you activated\n+0.6% damage per skill",
+GM:AddSkill(SKILL_INF_POWER, "Dozei Core", PURPLE.."-50% Damage.\nExtra-damage for every skills you activated\n+0.55% damage per skill",
 										4,			-5,					{SKILL_NO_BALANCE,SKILL_HELPLIFER}, TREE_ANCIENTTREE).SPUse = 29
 GM:AddSkill(SKILL_NO_BALANCE, "Balancium", PURPLE.."+0.5% Damage for every your remort!\nPower costs a moreee SKILL POINTS",
 										2.5,			-4,					{}, TREE_ANCIENTTREE).SPUse = 29

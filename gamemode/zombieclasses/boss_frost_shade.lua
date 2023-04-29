@@ -67,6 +67,7 @@ if SERVER then
 				status:SetLastDamaged(CurTime())
 			end
 		end
+		return dmginfo
 	end
 
 	function CLASS:ShadeShield(pl)

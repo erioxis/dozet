@@ -23,6 +23,7 @@ if SERVER then
 		if dmginfo:GetAttacker():IsPlayer() then
 			dmginfo:SetDamage(math.min(dmginfo:GetDamage(),60))
 		end
+		return dmginfo
 	end
 	function CLASS:PostOnKilled(pl, attacker, inflictor, suicide, headshot, dmginfo)
 		pl:SetZombieClass(GAMEMODE.DefaultZombieClass)

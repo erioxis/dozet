@@ -19,6 +19,7 @@ function CLASS:ProcessDamage(pl, dmginfo)
 	if dmginfo:GetInflictor().IsMelee then
 		dmginfo:SetDamage(dmginfo:GetDamage() / 4)
 	end
+	return dmginfo
 end
 end
 

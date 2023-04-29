@@ -128,6 +128,7 @@ if SERVER then
 				pl:EmitSound(Sound("zombiesurvival/mp_weak.ogg"))
 			end
 		end
+		return dmginfo
 	end
 
 	function CLASS:OnKilled(pl, attacker, inflictor, suicide, headshot, dmginfo)

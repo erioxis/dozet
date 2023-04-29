@@ -104,20 +104,25 @@ net.Receive("zs_trygetitem", function(len, pl)
 
 	pl:TryTakeItem(component)
 end)
+local function UseActive(pl,trin,uses,callback)
+		callback(pl)
+		if GAMEMODE.ZSInventoryItemData[trin].BountyNeed ~= 0 then
+			pl.LastCall = trin
+		end
+end
 net.Receive("zs_activate_trinket", function(len, pl)
 	local trinket = net.ReadString()
 	local pl = net.ReadEntity()
 	local callback = GAMEMODE.ZSInventoryItemData[trinket].Bounty
 	local uses = GAMEMODE.ZSInventoryItemData[trinket].BountyNeed*(pl.ChargesUse or 1)
 	if pl:HasInventoryItem(trinket) and callback and uses <= pl:GetChargesActive() or pl:HasInventoryItem(trinket) and callback and GAMEMODE.ZSInventoryItemData[trinket].BountyNeed == 0 then
-		callback(pl)
-		if GAMEMODE.ZSInventoryItemData[trinket].BountyNeed ~= 0 then
-			pl.LastCall = trinket
-		end
 		if pl:IsSkillActive(SKILL_DOUBLE) and math.random(1,4) == 1 then
 			uses = 0
 		end
 		pl:SetChargesActive(pl:GetChargesActive()-uses)
+		for i=1,(pl:HasTrinket("acum") and 2 or 1) do
+			UseActive(pl,trinket,uses,callback)
+		end
 	end
 end)
 

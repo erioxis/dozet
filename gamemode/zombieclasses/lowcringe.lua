@@ -134,6 +134,7 @@ if SERVER then
 		if bit_band(dmginfo:GetDamageType(), DMG_BULLET) ~= 0 then
 			dmginfo:SetDamage(0)
 		end
+		return dmginfo
 	end
 end
 

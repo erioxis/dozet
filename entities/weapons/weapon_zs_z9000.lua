@@ -1,7 +1,7 @@
 AddCSLuaFile()
 
-SWEP.PrintName = ""..translate.Get("wep_z9000")
-SWEP.Description = ""..translate.Get("wep_d_z9000")
+SWEP.PrintName = translate.Get("wep_z9000")
+SWEP.Description = translate.Get("wep_d_z9000")
 SWEP.Slot = 1
 SWEP.SlotPos = 0
 

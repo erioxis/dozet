@@ -80,7 +80,7 @@ if SERVER then
 
 
 
-
+		return dmginfo
 	end
 end
 

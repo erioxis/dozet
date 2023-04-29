@@ -15,6 +15,7 @@ local function GetTaper(pl, str, mul, sep)
 	end
 	return taper
 end
+local tbl = {"headshoter", "ind_buffer",  "ultra_at", "pearl","broken_world","altevesoul"}
 function meta:ProcessDamage(dmginfo)
 	if not self:IsValidLivingPlayer() then return end --??? Apparently player was null sometimes on server?
 	
@@ -65,6 +66,7 @@ function meta:ProcessDamage(dmginfo)
 	end
 
 	if P_Team(self) == TEAM_UNDEAD then
+		dmginfo = self:CallZombieFunction1("ProcessDamage", dmginfo) and self:CallZombieFunction1("ProcessDamage", dmginfo) or dmginfo
 		if self:GetChampion() == CHAMP_ETERNAL then
 			dmginfo:ScaleDamage(0.5)
 			if math.random(1,4) == 4 then
@@ -233,7 +235,7 @@ function meta:ProcessDamage(dmginfo)
 				end
 			end
 			if attacker:IsSkillActive(SKILL_INF_POWER) then
-				local m = 0.5 + #attacker:GetUnlockedSkills() * 0.006
+				local m = 0.5 + #attacker:GetUnlockedSkills() * 0.0055
 				dmginfo:ScaleDamage(m)
 			end
 			if damage >= 10000 then
@@ -242,10 +244,10 @@ function meta:ProcessDamage(dmginfo)
 			if attacker:HasTrinket("fire_at") and math.randomr(1,6,5,attacker) == 5 then
 				attacker:SetProgress(attacker:GetProgress('fprog')+damage, 'fprog')
 			end
-			if (attacker:IsSkillActive(SKILL_BOUNTYKILLER) or self:GetZombieClassTable().Boss or self:GetZombieClassTable().DemiBoss) and !self:GetZombieClassTable().CrowDa and !self:GetZombieClassTable().Skeletal then
+			if (attacker:IsSkillActive(SKILL_BOUNTYKILLER) or self:GetZombieClassTable().Boss or self:GetZombieClassTable().DemiBoss) and !self:GetZombieClassTable().CrowDa  then
 				local mul = ((attacker:IsSkillActive(SKILL_BOUNTYKILLER) and 0.15 or 0) + (self:GetZombieClassTable().DemiBoss and 0.05 or self:GetZombieClassTable().Boss and 0.1 or 0))
 				attacker:SetProgress(attacker:GetProgress('bprog')+(math.min(dmginfo:GetDamage()*mul,self:GetMaxHealth()*mul)), 'bprog')
-				local tbl = {"headshoter", "ind_buffer",  "ultra_at", "pearl","broken_world","altevesoul"}
+
 				local hm = table.Random(tbl)
 				if attacker:GetProgress('bprog') >= 1500 * (attacker:GetProgress('bprogmul')+1) and !attacker:HasTrinket(hm) then
 					attacker:SetProgress(0, 'bprog')
@@ -413,7 +415,7 @@ function meta:ProcessDamage(dmginfo)
 		net.Start("zs_holymantle")
 		net.Send(self)
 		self.HolyMantle = self.HolyMantle - 1
-		self:GiveStatus("hshield", 3, true)
+		self:GiveStatus("hshield", 3, nil,true)
 		self.NextRegenerateMantle = CurTime() + math.max((27 - ((self.Luck + self.LuckAdd) / 3)) + GAMEMODE.GetWave() * 3,10) - (self:IsSkillActive(SKILL_AMULET_17) and 5 or 0)
 		timer.Simple(0,function()
 			self:GodEnable()
@@ -1588,7 +1590,7 @@ function meta:GetStatus(sType)
 	if ent and ent:IsValid() and ent:GetOwner() == self then return ent end
 end
 
-function meta:GiveStatus(sType, fDie, ignoredouble)
+function meta:GiveStatus(sType, fDie, applier, ignoredouble)
 	local resistable = table.HasValue(GAMEMODE.ResistableStatuses, sType)
 	local lox = (self:IsSkillActive(SKILL_LOX) and not ignoredouble)
 	local fDie = (fDie or 1) * (ignoredouble and 1 or self.AdditionalStatusTime or 1)
@@ -1609,6 +1611,9 @@ function meta:GiveStatus(sType, fDie, ignoredouble)
 			cur:SetDie(fDie)
 		end
 		cur:SetPlayer(self, true)
+		if applier then
+			cur.Applier = cur.Applier or applier
+		end
 		return cur
 	else
 		local ent = ents.Create("status_"..sType)
@@ -1618,6 +1623,9 @@ function meta:GiveStatus(sType, fDie, ignoredouble)
 				ent:SetDie(fDie)
 			end
 			ent:SetPlayer(self)
+			if applier then
+				ent.Applier = applier
+			end
 			return ent
 		end
 	end
@@ -1949,6 +1957,9 @@ function meta:AddPoints(points, floatingscoreobject, fmtype, nomul)
 			self:AddZSXP((xp * (self.RedeemBonus and 1.15 or 1)) * 1.5)
 		else
 			self:AddZSXP(xp)
+		end
+		if GAMEMODE:GetWeekly()%4 == 2 then
+			self:AddAchievementProgress("week_post", wholepoints)
 		end
 		net.Start("zs_update_style") net.WriteTable({time = CurTime()+3+(math.random(1,20)*0.2),text = Format("%s POINTS & %s XP!",wholepoints,xp),score = wholepoints*5}) net.Send(self) 
 	end

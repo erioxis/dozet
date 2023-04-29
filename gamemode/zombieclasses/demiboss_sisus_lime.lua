@@ -106,6 +106,7 @@ if SERVER then
 		if dmginfo:GetAttacker() and dmginfo:GetAttacker():IsPlayer() and dmginfo:GetAttacker():GetActiveWeapon().IsMelee then
 			dmginfo:ScaleDamage(0)
 		end
+		return dmginfo
 	end
 
 	function CLASS:OnKilled(pl, attacker, inflictor, suicide, headshot, dmginfo)
