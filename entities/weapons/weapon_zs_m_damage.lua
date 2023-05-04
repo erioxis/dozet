@@ -52,9 +52,9 @@ SWEP.SwingHoldType = "melee"
 SWEP.Tier = 2
 SWEP.HitDecal = "Manhackcut"
 SWEP.Primary.Delay = 0.5
-SWEP.Primary.Damage = 66
+SWEP.Primary.Damage = 121
 SWEP.ArmorRegen = 2
-SWEP.Primary.ArmorBleed = 34
+SWEP.Primary.ArmorBleed = 11
 
 SWEP.AllowQualityWeapons = true
 

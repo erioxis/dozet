@@ -38,11 +38,14 @@ end
 local matExpert = Material("zombiesurvival/padlock.png")
 local matHeart = Material("icon16/heart.png")
 local matWhite = Material("models/debug/debugwhite")
+local matDef = Material("zombiesurvival/defense.png")
 local colNail = Color(0, 0, 5, 220)
 local colText = Color(240, 240, 240, 105)
 local colDead = Color(230, 80, 80, 95)
+local colDef = Color(90, 49, 252, 255)
 function ENT:DrawTranslucent()--[[
 ]]
+
 	local cader = false
 	local parent = self:GetParent()
 	if not parent:IsValid() or RealTime() == parent.LastNailInfoDraw then
@@ -243,6 +246,38 @@ function ENT:DrawTranslucent()--[[
 					draw.SimpleText(math.floor(nhp) .. "/" .. math.floor(self:GetMaxNailHealth()), (scale and "ZS3D2DUnstyleSmaller" or "ZS3D2DUnstyleNail"), x + 25, y - 30,  COLOR_RPINK, TEXT_ALIGN_CENTER)
 					draw.SimpleText(math.floor(repairs) .. "/" .. math.floor(mrps), (scale and "ZS3D2DUnstyleSmaller" or  "ZS3D2DUnstyleNail"), x + 25, y - 50, COLOR_CYAN, TEXT_ALIGN_CENTER)
 				end
+			end
+			if self:GetDTBool(12) then
+				surface.SetMaterial(matDef)
+				surface.SetDrawColor(33, 33, 166)
+				surface.DrawTexturedRect(
+					x - 100,
+					y - 64,
+					64,
+					64
+				)
+				x = x - 64
+			end
+			if self:GetDTBool(13) then
+				surface.SetMaterial(matDef)
+				surface.SetDrawColor(205, 104, 235)
+				surface.DrawTexturedRect(
+					x - 100,
+					y - 64,
+					64,
+					64
+				)
+				x = x - 64
+			end
+			if self:GetDTBool(14) then
+				surface.SetMaterial(matDef)
+				surface.SetDrawColor(160, 25, 25)
+				surface.DrawTexturedRect(
+					x - 100,
+					y - 64,
+					64,
+					64
+				)
 			end
 		cam.End3D2D()
 

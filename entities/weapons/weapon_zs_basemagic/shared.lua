@@ -22,7 +22,7 @@ SWEP.Secondary.Automatic = false
 SWEP.Secondary.Ammo = "dummy"
 
 SWEP.Magic = true
-SWEP.PointsMultiplier = 0.33
+SWEP.PointsMultiplier = 1.5
 SWEP.WalkSpeed = SPEED_NORMAL
 
 SWEP.HoldType = "pistol"
@@ -82,7 +82,7 @@ function SWEP:PrimaryAttack()
 	
 	    self:EmitFireSound()
 		if SERVER then
-			owner:SetBloodArmor(owner:GetBloodArmor() - self.Primary.ArmorBleed * (owner.MagicDamage or 1) - owner:GetBloodArmor()*0.12)
+			owner:SetBloodArmor(math.max(1,owner:GetBloodArmor() - self.Primary.ArmorBleed * (owner.MagicDamage or 1) - owner:GetBloodArmor()*0.12))
 			self:ShootBullets(self.Primary.Damage + owner:GetBloodArmor() * (owner.MagicDamage or 1), self.Primary.NumShots, self:GetCone())
 			self.IdleAnimation = CurTime() + self:SequenceDuration()
 		end
@@ -331,6 +331,9 @@ function SWEP:GetFireDelay()
 end
 
 function SWEP:ShootBullets(dmg, numbul, cone)
+	if GAMEMODE.ObjectiveMap  then
+		self.PointsMultiplier = 0
+	end
 	local owner = self:GetOwner()
 	self:SendWeaponAnimation()
 	owner:DoAttackEvent()

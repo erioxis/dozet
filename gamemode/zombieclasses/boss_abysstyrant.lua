@@ -10,7 +10,7 @@ CLASS.SuperBoss = true
 CLASS.Hidden = true
 CLASS.Boss = true
 
-CLASS.Variations = {}
+
 
 CLASS.Model = Model( "models/player/skeleton.mdl" )
 CLASS.OverrideModel = false
@@ -19,10 +19,10 @@ CLASS.NoFallDamage = true
 CLASS.NoFallSlowdown = true
 
 CLASS.SWEP = "weapon_zs_abyssaxez"
-CLASS.Health = 4500
+CLASS.Health = 24500
 CLASS.Speed = 135
-CLASS.Points = 600
-CLASS.Wave = 8 / 8
+CLASS.Points = 100
+CLASS.Wave = 11 / 12
 
 CLASS.CanTaunt = true
 
@@ -176,7 +176,7 @@ if SERVER then
 			end
 		end
 
-		DropBossWeapon( self, "weapon_zs_abyssaxe" )
+		DropBossWeapon( pl, "weapon_zs_abyssaxe" )
 		
 		return true
 	end

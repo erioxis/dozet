@@ -19,24 +19,7 @@ GM.ZombieEscapeWeaponsSecondary = {
 	"weapon_zs_zeglock",
 	"weapon_zs_zetempest"
 }
-GM.HintsFromASigil = {
-	"ahint_1",
-	"ahint_2",
-	"ahint_3",
-	"ahint_4",
-	"ahint_5",
-	"ahint_6",
-	"ahint_7",
-	"ahint_8",
-	"ahint_9",
-	"ahint_10",
-	"ahint_11",
-	"ahint_12",
-	"ahint_13",
-	"ahint_14",
-	"ahint_15",
-	"ahint_16",
-}
+
 
 -- Change this if you plan to alter the cost of items or you severely change how Worth works.
 -- Having separate cart files allows people to have separate loadouts for different servers.
@@ -707,7 +690,7 @@ GM:AddAPointShopItem("soul_of_slight_soul",			ITEMCAT_TRINKETS,			600,			"trinke
 
 GM:AddAPointShopItem("world_card",			ITEMCAT_OTHER,			125,				nil,							translate.Get("s_world"),			translate.Get("s_world_d"),									"status_dim_vision",					function(pl) pl:GiveStatus("world",30) end)
 GM:AddAPointShopItem("devil_card",			ITEMCAT_OTHER,			205,				nil,							translate.Get("s_devil"),			translate.Get("s_devil_d"),									"status_death",					function(pl) pl:GiveStatus("resnya",30) end)
-GM:AddAPointShopItem("hint_doset",			ITEMCAT_OTHER,			25,				nil,							translate.Get("ahint"),			translate.Get("ahint"),									"weapon_zs_special_trinket",					function(pl) pl:CenterNotify(COLOR_GREEN, translate.ClientGet(pl,table.Random(GAMEMODE.HintsFromASigil))) end)
+GM:AddAPointShopItem("hint_doset",			ITEMCAT_OTHER,			25,				nil,							translate.Get("ahint"),			translate.Get("ahint"),									"weapon_zs_special_trinket",					function(pl) pl:CenterNotify(COLOR_GREEN, translate.ClientGet(pl,"ahint_"..math.random(1,16))) end)
 
 GM:AddAPointShopItem("antivirus_anti",		ITEMCAT_OTHER,			3000,				"weapon_zs_redeemrayv2")
 

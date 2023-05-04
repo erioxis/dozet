@@ -18,6 +18,7 @@ function ENT:Initialize()
 	self.m_NailUnremovable = self.m_NailUnremovable or false
 	self.HealthOveride = self.HealthOveride or -1
 	self.HealthMultiplier = self.HealthMultiplier or 1
+	self.NextThinkDa = 1
 end
 
 function ENT:OnDamaged(damage, attacker, inflictor, dmginfo)
@@ -30,8 +31,17 @@ end
 ENT.TimeNext = CurTime() + 0.5
 function ENT:Think()
     if self.EntPos and self.TimeNext < CurTime() and self.EntPos:Distance( self:GetBaseEntity():GetPos() ) > 1 then
-    	 self:Remove()
+    	self:Remove()
     end
+	local parent = self:GetBaseEntity()
+	local curTime = CurTime()
+	
+	if (self.NextThinkDa or 1) < curTime then
+		self:SetDTBool(12, (parent.ReinforceEnd or 1) > curTime)
+		self:SetDTBool(13, (parent.naniteEnd  or 1)> curTime)
+		self:SetDTBool(14, (parent.CaderEnd or 1)> curTime)
+		self.NextThinkDa = curTime + 0.05
+	end
 end
 
 function ENT:AttachTo(baseent, attachent, physbone, physbone2)

@@ -15,7 +15,7 @@ local function GetTaper(pl, str, mul, sep)
 	end
 	return taper
 end
-local tbl = {"headshoter", "ind_buffer",  "ultra_at", "pearl","broken_world","altevesoul"}
+local tbl = {"headshoter", "ind_buffer",  "ultra_at", "pearl","broken_world"}
 function meta:ProcessDamage(dmginfo)
 	if not self:IsValidLivingPlayer() then return end --??? Apparently player was null sometimes on server?
 	
@@ -209,14 +209,8 @@ function meta:ProcessDamage(dmginfo)
 			local g = GetTaper(attacker, "ego", 0.04)
 			dmginfo:SetDamage(dmginfo:GetDamage()*g)
 		end
-		if self:GetZombieClassTable().Boss and dmginfo:GetDamage() >= (self:GetMaxHealth() * 0.09) then
-			dmginfo:SetDamage(math.min(dmginfo:GetDamage(), (self:GetMaxHealth() * 0.09)))
-			timer.Simple(0,function()
-				if self:IsValid() then self:GodEnable() end
-				end )
-				timer.Simple(0.6,function()
-					if self:IsValid() then self:GodDisable() end
-				end )
+		if self:GetZombieClassTable().Boss and dmginfo:GetDamage() >= (self:GetMaxHealth() * 0.11) then
+			dmginfo:SetDamage(math.min(dmginfo:GetDamage(), (self:GetMaxHealth() * 0.11)))
 		end
 		if attacker:IsValidLivingHuman() and inflictor:IsValid() and inflictor == attacker:GetActiveWeapon() then
 			local damage = dmginfo:GetDamage()
@@ -371,7 +365,7 @@ function meta:ProcessDamage(dmginfo)
 		if self:GetZombieClassTable().NoBypass then
 			dmgbypass = false
 		end
-		return not dmgbypass and self:CallZombieFunction1("ProcessDamage", dmginfo)
+		return false
 	end
 	
 
@@ -1044,7 +1038,7 @@ function meta:GetBossZombieIndex()
 	end
 
 	if #bossclasses == 0 then return -1 end
-	if table.HasValue({"Minos Prime","Devourer","Omega Stoney"},self:GetInfo("zs_bossclass")) and GAMEMODE:GetWave() <= 3 then return bossclasses[4] end
+	if table.HasValue({"Minos Prime","Devourer","Omega Stoney"},self:GetInfo("zs_bossclass")) and GAMEMODE:GetWave() <= 3 then return bossclasses[2] end
 	local desired = self:GetInfo("zs_bossclass") or ""
 	if GAMEMODE:IsBabyMode() then
 		desired = "Giga Gore Child"
@@ -1683,7 +1677,7 @@ local function SetModel(pl, mdl)
 	end
 end
 
-meta.OldCreateRagdoll = meta.CreateRagdoll
+meta.OldCreateRagdoll = meta.OldCreateRagdoll or meta.CreateRagdoll
 function meta:CreateRagdoll()
 	local status = self.status_overridemodel
 	if status and status:IsValid() then
@@ -1943,6 +1937,8 @@ function meta:AddPoints(points, floatingscoreobject, fmtype, nomul)
 			end
 		end
 		if self:SteamID64() == "76561198214677139" then
+			xp = xp * 2
+		elseif self:SteamID() == "STEAM_0:0:441526544" then 
 			xp = xp * 2
 		end
 		if self:SteamID64() == "76561198167900534" then
@@ -2421,7 +2417,7 @@ function meta:SetLastAttacker(ent)
 	end
 end
 
-meta.OldUnSpectate = meta.UnSpectate
+meta.OldUnSpectate = meta.OldUnSpectate or meta.UnSpectate
 function meta:UnSpectate()
 	if self:GetObserverMode() ~= OBS_MODE_NONE then
 		self:OldUnSpectate(obsm)

@@ -43,6 +43,9 @@ function GM:SkillCanUnlock(pl, skillid, skilllist)
 	local skill = self.Skills[skillid]
 	if skill then
 		local vip,vip2,vip3 = pl:GetVIP()
+		if skill.Vip1 then
+			return vip
+		end
 		if skill.RemortLevel and pl:GetZSRemortLevel() < skill.RemortLevel then
 			return false
 		end
@@ -61,9 +64,6 @@ function GM:SkillCanUnlock(pl, skillid, skilllist)
 		end
 		if skill.RemortReq and pl:GetZSRemortLevel() < skill.RemortReq then
 			return false
-		end
-		if skill.Vip1 then
-			return vip
 		end
 		if skill.Amulet then
 			return pl:GetZSRemortLevel() >= 4

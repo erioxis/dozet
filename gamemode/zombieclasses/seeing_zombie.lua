@@ -39,7 +39,7 @@ if SERVER then
 
 	function CLASS:ProcessDamage(pl, dmginfo)
 		if dmginfo:GetAttacker():IsPlayer() and dmginfo:GetInflictor().Magic then
-			dmginfo:ScaleDamage(0)
+			dmginfo:ScaleDamage(0.35)
 		end
 		return dmginfo
 	end

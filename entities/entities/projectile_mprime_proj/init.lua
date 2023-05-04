@@ -44,13 +44,13 @@ function ENT:Hit(vHitPos, vHitNormal, eHitEntity)
 
 	vHitPos = vHitPos or self:GetPos()
 	vHitNormal = vHitNormal or Vector(0, 0, 1)
-	if owner:IsValid() then
+	if owner:IsValid() and owner:IsPlayer() then
 		util.BlastDamagePlayer(self, owner, vHitPos + vHitNormal, 60, 40, DMG_DISSOLVE)
 		if eHitEntity:IsPlayer() and owner:IsValidLivingZombie() then
 			eHitEntity:AddLegDamage(53, owner,self)
 		end
 	end
-	if eHitEntity and eHitEntity:GetClass() == "prop_manhack*" then
+	if eHitEntity and eHitEntity:IsValid() and eHitEntity:GetClass() == "prop_manhack*" then
 		eHitEntity:TakeDamage(250,owner,self)
 	end
 

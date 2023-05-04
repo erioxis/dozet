@@ -50,7 +50,7 @@ function SWEP:EmitFireSound()
 end
 
 SWEP.ArmorRegen = 3
-SWEP.Primary.ArmorBleed = 66
+SWEP.Primary.ArmorBleed = 21
 local function FindZapperTarget(pos, attacker)
 	local target
 	local targethealth = 99999
@@ -128,7 +128,7 @@ function SWEP:SecondaryAttack()
 	local owner = self:GetOwner()
 	if not owner:IsSkillActive(SKILL_MAGIC) then return end
 	if self.Primary.ArmorBleed < owner:GetBloodArmor() and IsFirstTimePredicted() then
-		for k,v in pairs(ents.FindInBoxRadius(pos,300)) do
+		for k,v in pairs(ents.FindInBoxRadius(owner:GetPos(),300)) do
 			if v:IsValidLivingZombie() then
 				DoArc(owner,self,v,44+attacker:GetBloodArmor()*0.5)
 			end

@@ -187,7 +187,7 @@ cvars.AddChangeCallback("zs_bg_col_g", function(cvar, oldvalue, newvalue)
 end)
 GM.BG_B = math.Clamp(CreateClientConVar("zs_bg_col_b", 0, true, false):GetFloat(), 0, 255)
 cvars.AddChangeCallback("zs_bg_col_b", function(cvar, oldvalue, newvalue)
-	GAMEMODE.BG_b = math.Clamp(tonumber(newvalue) or 0, 0, 255)
+	GAMEMODE.BG_B = math.Clamp(tonumber(newvalue) or 0, 0, 255)
 end)
 
 GM.ThirdPersonKnockdown = CreateClientConVar("zs_thirdpersonknockdown", "1", true, false):GetBool()

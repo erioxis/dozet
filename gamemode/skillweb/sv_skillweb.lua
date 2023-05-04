@@ -80,7 +80,7 @@ net.Receive("zs_skills_remort", function(length, pl)
 	if pl:CanSkillsRemort() then
 		pl:SkillsRemort()
 		pl:GiveAchievement("remorting")
-		if self:GetWeekly()%4 == 3 then
+		if GAMEMODE:GetWeekly()%4 == 3 then
 			pl:GiveAchievementProgress("week_post",1)
 		end
 	end

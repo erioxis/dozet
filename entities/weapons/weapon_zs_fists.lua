@@ -305,7 +305,7 @@ function SWEP:CheckHook()
 	owner:LagCompensation(true)
 	local trace = owner:GetEyeTrace()
 	local ent = trace.Entity
-	local p = ent and ent:IsValid() and (ent:IsValidLivingZombie() or ent:GetClass() == "prop_physics" or ent:GetClass() == "projectile_rl" or ent:GetClass() == "projectile_markcoin" )
+	local p = ent and ent:IsValid() and (ent:IsValidLivingZombie() or ent:GetClass() == "prop_physics" or ent:GetClass() == "projectile_rl" or ent:GetClass() == "projectile_markcoin" or ent:GetClass() == "prop_obj_sigil")
 	if ent and ent ~= owner and owner:KeyDown(IN_RELOAD) and p then
 		self.HookedOn = true
 		self.LastENT = ent
@@ -318,7 +318,7 @@ function SWEP:CheckHook()
 	owner:LagCompensation(false)
 end
 local needtbl = {"func_physbox","prop_physics"}
-local sectbl = {"projectile_rl","projectile_markcoin"}
+local sectbl = {"projectile_rl","projectile_markcoin","prop_obj_sigil"}
 function SWEP:Think()
 	local idletime = self:GetNextIdle()
 	local idle_holdtype_time = self:GetNextIdleHoldType()
@@ -373,7 +373,7 @@ function SWEP:Think()
 				return
 			end
 			local entclass = target:GetClass()
-			local p = target:IsPlayer() and target:IsValidLivingZombie()
+			local p = target:IsPlayer() and target:IsValidLivingZombie() or entclass == "prop_obj_sigil"
 			local need = table.HasValue(needtbl,entclass)
 			local secondneed = table.HasValue(sectbl,entclass)
 			if (need or target.HumanHoldable and target:HumanHoldable(owner)) and not target:IsNailed() and target:GetMoveType() == MOVETYPE_VPHYSICS and target:GetPhysicsObject():IsValid() and target:GetPhysicsObject():GetMass() <= 1200 and target:GetPhysicsObject():IsMoveable() and target:OBBMins():Length() + target:OBBMaxs():Length() <= 200 or p
@@ -390,7 +390,7 @@ function SWEP:Think()
 					direction = direction  - aimangles:Right()  * mul
 				end
 					--owner:SetLocalVelocity(direction*300)
-					local weight = p and (target:GetZombieClassTable().Weight or 1) or 1
+					local weight = p and target:IsPlayer() and (target:GetZombieClassTable().Weight or 1) or 1
 					if target:GetPhysicsObject():GetMass() <= 100 or p and weight < 1 then
 						if !p then
 							target:GetPhysicsObject():SetVelocityInstantaneous(-direction*600)

@@ -239,6 +239,7 @@ if SERVER then
 		return dmginfo
 	end
 
+
 	function CLASS:ReviveCallback(pl, attacker, dmginfo)
 		if not pl:ShouldReviveFrom(dmginfo) then return false end
 

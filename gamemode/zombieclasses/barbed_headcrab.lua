@@ -4,7 +4,8 @@ CLASS.Name = "Barbed Headcrab"
 CLASS.TranslationName = "class_barbed_headcrab"
 CLASS.Description = "description_barbed_headcrab"
 CLASS.Help = "controls_barbed_headcrab"
-
+CLASS.Variations = {}
+CLASS.Original = false
 CLASS.Health = 100
 CLASS.Points = CLASS.Health/GM.HeadcrabZombiePointRatio
 CLASS.Speed = 210

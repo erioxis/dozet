@@ -3,14 +3,15 @@ CLASS.TranslationName = "class_fast_headcrab"
 CLASS.Description = "description_fast_headcrab"
 CLASS.Help = "controls_fast_headcrab"
 
-CLASS.BetterVersion = "Bloodsucker Headcrab"
+
 
 CLASS.Model = Model("models/headcrab.mdl")
 
 CLASS.Wave = 2 / 6
 
 CLASS.SWEP = "weapon_zs_fastheadcrab"
-
+CLASS.Variations = {}
+CLASS.Original = false
 CLASS.Health = 20
 CLASS.Speed = 400
 CLASS.JumpPower = 250

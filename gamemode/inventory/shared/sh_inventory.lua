@@ -49,7 +49,7 @@ end
 function GM:AddWeaponBreakdownRecipe(weapon, result)
 	local datatab = {Result = result, Index = index}
 	self.Breakdowns[weapon] = datatab
-	for i = 1, 3 do
+	for i = 1, 5 do
 		self.Breakdowns[self:GetWeaponClassOfQuality(weapon, i)] = datatab
 		self.Breakdowns[self:GetWeaponClassOfQuality(weapon, i, 1)] = datatab
 	end
@@ -250,6 +250,11 @@ GM:AddInventoryItemData("cons_grandma_vase",		trs("c_grandma"),			trs("c_grandma
 			droped.DamageToDeal = 350
 			droped:SetOwner(pl)
 		end
+	end
+end,1)
+GM:AddInventoryItemData("cons_devolver",		trs("c_devo"),			trs("c_devo_d"),								"models/props_c17/trappropeller_lever.mdl", 8, nil, nil, function(pl) 
+	for k,v in pairs(ents.FindInBoxRadius(pl:GetPos(),100)) do
+		
 	end
 end,1)
 GM:AddInventoryItemData("cons_black_hole",		trs("c_bhole"),			trs("c_bhole_d"),								"models/props_c17/trappropeller_lever.mdl", 3, nil, nil, function(pl) 

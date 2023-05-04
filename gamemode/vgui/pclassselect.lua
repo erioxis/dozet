@@ -94,7 +94,9 @@ function PANEL:Init()
 
 			local ok
 			if bossmode then
-				ok = classtab.Boss and not classtab.Hidden
+				ok = classtab.Boss and (!classtab.Hidden or GAMEMODE:GetWave()>= (classtab.Wave and classtab.Wave or 32) )
+				print((classtab.Wave and classtab.Wave or 1)..GAMEMODE:GetWave().."_"..classtab.Name.."_")
+				
 			
 			elseif demiboss and not bossmode then
 				ok = classtab.DemiBoss and not classtab.Hidden
@@ -128,7 +130,7 @@ function PANEL:Init()
 				
 							local ok
 							if bossmode then
-								ok = classtab2.Boss and not classtab2.Hidden
+								ok = classtab2.Boss and classtab2.Hidden
 							
 							elseif demiboss and not bossmode then
 								ok = classtab2.DemiBoss and not classtab2.Hidden
@@ -309,11 +311,11 @@ end
 
 function PANEL:Think()
 	if not self.ClassTable then return end
-
+	
 	local enabled
 	if MySelf:GetZombieClass() == self.ClassTable.Index then
 		enabled = 2
-	elseif self.ClassTable.Boss and !self.ClassTable.Hidden or gamemode.Call("IsClassUnlocked", self.ClassTable.Index) or self.ClassTable.DemiBoss then
+	elseif (self.ClassTable.Boss and !self.ClassTable.Hidden) or gamemode.Call("IsClassUnlocked", self.ClassTable.Index) or self.ClassTable.DemiBoss then
 		enabled = 1
 	else
 		enabled = 0

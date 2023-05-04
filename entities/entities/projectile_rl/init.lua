@@ -21,6 +21,16 @@ function ENT:Think()
 	if self.ExplodeTime <= CurTime() then
 		self:Explode(self:GetPos())
 	end
+	local owner = self:GetOwner() 
+	if self:GetDTInt(5) == 1 and owner and owner:IsPlayer() and owner:KeyDown(IN_ATTACK2) and !self.Vel then
+		self.Vel = self:GetPhysicsObject():GetVelocity()
+		self:GetPhysicsObject():SetVelocity(Vector(0,0,0))
+	end
+	if self:GetDTInt(5) == 1 and self.Vel and owner and owner:IsPlayer() and !owner:KeyDown(IN_ATTACK2) then
+		local vel = self.Vel
+		timer.Simple(0.5, function() self:GetPhysicsObject():SetVelocity(vel) end)
+		self.Vel = nil
+	end
 	if self.PhysicsData then
 		if self.Bounces <= 0 or self.PhysicsData.HitEntity:IsPlayer() or self.PhysicsData.HitEntity.ZombieConstruction then
 			self:Explode(self.PhysicsData.HitPos, self.PhysicsData.HitNormal, self.PhysicsData.HitEntity)
@@ -37,7 +47,6 @@ function ENT:Think()
 		end
 		self.PhysicsData = nil
 	end
-
 	self:NextThink(CurTime())
 	return true
 end
@@ -51,7 +60,7 @@ function ENT:Explode(hitpos, hitnormal, hitent, boom)
 	if owner:IsValidLivingHuman() then
 		local source = self:ProjectileDamageSource()
 		for k,v in pairs(ents.FindInSphere(self:GetPos(),120)) do
-			if self:GetDTInt(6) >= 1 or v == owner then jump = true owner:SetVelocity(v:GetVelocity()+Vector(0,0,310)) break end
+			if v == owner then jump = true owner:SetVelocity(v:GetVelocity()+Vector(0,0,310)) break end
 			if v:IsPlayer() and v ~= owner and v:Team() == TEAM_UNDEAD then
 				v:SetVelocity(v:GetVelocity()+Vector(0,0,330))
 				v:AddLegDamage(55)
@@ -61,32 +70,7 @@ function ENT:Explode(hitpos, hitnormal, hitent, boom)
 				used = true
 			end
 		end
-		if self:GetDTInt(5) == 1 then
-			local old = self:GetPos()
-			local ange = self:GetAngles()
-			local dmg = self.ProjDamage
-			for i=1,2 do
-				local mr = ents.Create(self:GetClass())
-				timer.Simple(0.05*i, function() 
-					if mr:IsValid() then
-						local ang = Angle(0,ange.y + 180*i+90,0)
-	
-						mr:SetPos(old+Vector(0,0,60))
-						mr:SetOwner(owner)
-						mr.ProjDamage = dmg * 0.5
-						mr:SetAngles(ang)
-						mr:Spawn()
-						local phys = mr:GetPhysicsObject()
-						if phys:IsValid() then
-							phys:Wake()
-							phys:SetVelocityInstantaneous(mr:GetAngles():Forward()*1100)
-						end
-						mr:SetDTInt(6,1)
-						mr.Bounces = 3
-					end
-				end)
-			end
-		end
+
 		if !jump then
 			util.BlastDamagePlayer(source, owner, hitpos, 81 * (hitent and hitent:OnGround() and 1 or 3), (self.ProjDamage or 29) * (hitent and hitent:OnGround() and 1 or 3), DMG_ALWAYSGIB, 0.95)
 			if (hitent and hitent:IsPlayer() and !hitent:OnGround() or boom) and self:GetDTInt(6) < 1 then

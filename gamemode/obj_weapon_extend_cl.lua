@@ -96,18 +96,18 @@ local text = {
 	"COOL!",
 	"Bloody!",
 	"Agent of Style",
-	"SUPEER",
+	"Salut",
 	"Supreme Style",
-	"SSSHitStorm",
+	"SSSHitstorm",
 	"GOD OF ZS"
 }
+local colHealth = Color(1,1,1,255)
 function meta:DrawStyle()
+	if !GAMEMODE.NoStyle then return end
 	local screenscale = BetterScreenScale()
 	local wid, hei = 110*screenscale , 150 *screenscale 
 	local x, y = ScrW() - wid - screenscale * 180 , ScrH() - hei - screenscale * 500
 	local col  = Color(0,0,0)
-	local colHealth = Color(1,1,1,255)
-		if !GAMEMODE.NoStyle then return end
 		colHealth.r = math.abs(math.sin(CurTime() * 0.5 *  math.pi )) * 120
 		colHealth.g = math.abs(math.sin(CurTime() * 0.5 *math.pi)) * 120
 		colHealth.b = math.abs(math.sin(CurTime() * 0.5 *math.pi)) * 120
@@ -189,9 +189,7 @@ function meta:DrawCrosshairCross()
 	local firedelay = MySelf:GetActiveWeapon():GetNextPrimaryFire() - CurTime() 
 		local scrW1 = ScrW()
 		local scrH1 = ScrH()
-		local width1 = 200
-		local height1 = 20
-		local x1, y1 = ScrW() * 0.5 , ScrH() * 0.5
+		local x1, y1 = scrW1 * 0.5 , scrH1 * 0.5
 		local screenscale = BetterScreenScale()
 		local lp = MySelf
 		local ratio = (MySelf:GetActiveWeapon().Primary.Delay or 1) / firedelay

@@ -3019,8 +3019,7 @@ function GM:PlayerInitialSpawnRound(pl)
 		"76561198956039967"
 	}
 	local michtbl ={
-		"STEAM_0:0:103817403",
-		"STEAM_0:1:434267757"
+		"STEAM_0:0:103817403"
 	}
 	local queprotbl ={
 		"76561198185649305",
@@ -3692,7 +3691,7 @@ function GM:EntityTakeDamage(ent, dmginfo)
 									CurseAttach(attacker)
 								end
 							end
-
+							 
 
 							local pos = ent:GetPos()
 							pos.z = pos.z + 32

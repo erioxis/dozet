@@ -8,7 +8,7 @@ function EFFECT:Init(effectdata)
 
 	self.Pos = pos
 	self.Normal = normal
-	self.DieTime = CurTime() + self.LifeTime
+	self.DieTime = CurTime() + self.LifeTime 
 
 	local particle
 
@@ -34,16 +34,16 @@ function EFFECT:Init(effectdata)
 	end
 	local ringstart = pos + normal * -3
 	for i=1, 10 do
-		particle = emitter2:Add("effects/select_ring", ringstart - Vector(0,0,21) + Vector(0,0,3) * i  )
-		particle:SetDieTime(0.1 + i * 0.1)
+		particle = emitter2:Add("effects/select_ring", ringstart - Vector(0,0,21) + Vector(0,0,3) * i%5  )
+		particle:SetDieTime(0.1 + i%5 * 0.1)
 		particle:SetColor(222, 22, 22)
 		particle:SetStartAlpha(185)
 		particle:SetEndAlpha(0)
 		particle:SetStartSize(0)
 		particle:SetEndSize(110)
 		particle:SetAngles(normal:Angle())
-		particle = emitter2:Add("effects/select_ring", ringstart - Vector(0,0,21)  + Vector(0,0,7) * i )
-		particle:SetDieTime(0.2 + i * 0.1)
+		particle = emitter2:Add("effects/select_ring", ringstart - Vector(0,0,21)  + Vector(0,0,7) * i%5 )
+		particle:SetDieTime(0.2 + i%5 * 0.1)
 		particle:SetColor(192, 22, 22)
 		particle:SetStartAlpha(185)
 		particle:SetEndAlpha(0)
@@ -65,7 +65,7 @@ local matGlow = Material("sprites/glow04_noz")
 local colGlow = Color(192, 22, 22)
 function EFFECT:Render()
 	local delta = (self.DieTime - CurTime()) / self.LifeTime
-	local basesize = 48
+	local basesize = 64
 	basesize = basesize + basesize ^ (1.5 - delta)
 
 	local pos = self.Pos

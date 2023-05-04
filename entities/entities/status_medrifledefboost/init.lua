@@ -18,7 +18,7 @@ function ENT:EntityTakeDamage(ent, dmginfo)
 	if ent ~= self:GetOwner() then return end
 
 	if attacker:IsPlayer() and attacker:IsValidZombie() then
-		local protect = 0.66
+		local protect = 0.25
 
 		local dmgfraction = dmginfo:GetDamage() * protect
 		dmginfo:SetDamage(dmginfo:GetDamage() * (1 - protect))
