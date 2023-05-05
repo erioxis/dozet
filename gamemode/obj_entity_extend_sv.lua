@@ -471,13 +471,19 @@ function meta:DamageNails(attacker, inflictor, damage, dmginfo)
 		end
 		if attacker.Zban then
 			dmginfo:SetDamage(0)
-			damaga = 0
+			damage = 0
 		end
 		if attacker.m_PropCurse then
-			dmginfo:SetDamage(damage * 1.35)
+			damage = damage * 1.35
+			dmginfo:SetDamage(damage)
 		end
 		if attacker.m_Zmain then
-			dmginfo:SetDamage(damage * 1.50)
+			damage = damage * 1.5
+			dmginfo:SetDamage(damage)
+		end
+		if attacker:GetZombieClassTable().CanPiz and attacker:GetZombieClassTable().SWEP ~= inflictor:GetClass() then
+			damage = damage*0.1/(inflictor.Tier and inflictor.Tier or 1)
+			dmginfo:SetDamage(damage)
 		end
 		if self:GetOwner() ~= attacker then
 			attacker:AddTokens(math.ceil((damage or 2) * 0.15))

@@ -134,9 +134,6 @@ end
 
 function SWEP:SecondaryAttack()
     local owner = self:GetOwner()
-    	if owner:KeyDown(IN_ATTACK2) and self.BlockTrue then
-		owner:GiveStatus("meleeblock", 1)
-	end
 	if owner:KeyDown(IN_ATTACK2) and self.BlockTrue and self:GetHitStacks() >= 1 then
 		self.Secondary.Automatic = false
 	    owner:EmitSound("npc/metropolice/pain1.wav", 75, 45, 1)

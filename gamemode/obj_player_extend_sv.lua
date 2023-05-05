@@ -66,7 +66,7 @@ function meta:ProcessDamage(dmginfo)
 	end
 
 	if P_Team(self) == TEAM_UNDEAD then
-		dmginfo = self:CallZombieFunction1("ProcessDamage", dmginfo) and self:CallZombieFunction1("ProcessDamage", dmginfo) or dmginfo
+		dmginfo = self:CallZombieFunction1("ProcessDamage", dmginfo) or dmginfo
 		if self:GetChampion() == CHAMP_ETERNAL then
 			dmginfo:ScaleDamage(0.5)
 			if math.random(1,4) == 4 then
@@ -553,6 +553,9 @@ function meta:ProcessDamage(dmginfo)
 		if attacker.Zmainer then
 			dmginfo:ScaleDamage(0.67)
 		end
+		if attacker:GetZombieClassTable().CanPiz and attacker:GetZombieClassTable().SWEP ~= inflictor:GetClass() then
+			dmginfo:ScaleDamage(0.1/(inflictor.Tier and inflictor.Tier or 1))
+		end
 
 
 		if inflictor == attacker:GetActiveWeapon() then
@@ -1032,13 +1035,13 @@ local bosses = {
 function meta:GetBossZombieIndex()
 	local bossclasses = {}
 	for _, classtable in pairs(GAMEMODE.ZombieClasses) do
-		if classtable.Boss then
+		if classtable.Boss and GAMEMODE:GetWave() >= (classtable.Wave and classtable.Wave or 0) then
 			table.insert(bossclasses, classtable.Index)
 		end
 	end
 
 	if #bossclasses == 0 then return -1 end
-	if table.HasValue({"Minos Prime","Devourer","Omega Stoney"},self:GetInfo("zs_bossclass")) and GAMEMODE:GetWave() <= 3 then return bossclasses[2] end
+	if table.HasValue({"Minos Prime","Devourer","Omega Stoney"},self:GetInfo("zs_bossclass")) and GAMEMODE:GetWave() <= 3 then return bossclasses[1] end
 	local desired = self:GetInfo("zs_bossclass") or ""
 	if GAMEMODE:IsBabyMode() then
 		desired = "Giga Gore Child"
@@ -1955,7 +1958,7 @@ function meta:AddPoints(points, floatingscoreobject, fmtype, nomul)
 			self:AddZSXP(xp)
 		end
 		if GAMEMODE:GetWeekly()%4 == 2 then
-			self:AddAchievementProgress("week_post", wholepoints)
+			self:GiveAchievementProgress("week_post", wholepoints)
 		end
 		net.Start("zs_update_style") net.WriteTable({time = CurTime()+3+(math.random(1,20)*0.2),text = Format("%s POINTS & %s XP!",wholepoints,xp),score = wholepoints*5}) net.Send(self) 
 	end

@@ -2,8 +2,8 @@ CLASS.Base = "boss_nightmare"
 
 CLASS.Name = "Abyss Tyrant"
 CLASS.TranslationName = "class_abysstyrant"
-CLASS.Description = "desc_abysstyrant"
-CLASS.Help = "ctrl_abysstyrant"
+CLASS.Description = "description_abysstyrant"
+CLASS.Help = "controls_abysstyrant"
 
 CLASS.SuperBoss = true
 
@@ -262,7 +262,7 @@ function CLASS:BuildBonePositions( pl, event )
 end
 
 if CLIENT then
-	CLASS.Icon = "zombiesurvival/killicons/terrormare"
+	CLASS.Icon = "zombiesurvival/killicons/skeletal_walker"
 	CLASS.PrevImage = "zombiesurvival/previos/terrormare"
 
 	local render_ModelMaterialOverride = render.ModelMaterialOverride

@@ -95,7 +95,6 @@ function PANEL:Init()
 			local ok
 			if bossmode then
 				ok = classtab.Boss and (!classtab.Hidden or GAMEMODE:GetWave()>= (classtab.Wave and classtab.Wave or 32) )
-				print((classtab.Wave and classtab.Wave or 1)..GAMEMODE:GetWave().."_"..classtab.Name.."_")
 				
 			
 			elseif demiboss and not bossmode then

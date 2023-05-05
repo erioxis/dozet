@@ -125,6 +125,7 @@ GM.Assemblies["trinket_mysteryticket"] 						= {"comp_ticket",	"trinket_greedsou
 GM.Assemblies["trinket_soulrepairman"] 						= {"trinket_soulmedical",	"weapon_zs_hammer"}
 GM.Assemblies["trinket_soulmedical"] 						= {"trinket_curse_dropping",	"trinket_altisaacsoul"}
 GM.Assemblies["trinket_toykasoul"] 						= {"trinket_toysoul",	"weapon_zs_loy_q4"}
+GM.Assemblies["weapon_zs_envy_hammer"] 						= {"trinket_sin_envy",	"weapon_zs_singurhammer"}
 --Собирание душ из осколков
 GM.Assemblies["trinket_soulrepairman"] 						= {"comp_soul_dosei",	"comp_soul_alt_h"}
 GM.Assemblies["trinket_soulmedical"] 						= {"comp_soul_dosei",	"comp_soul_health"}
@@ -134,11 +135,11 @@ GM.Assemblies["trinket_aposoul"] 						= {"comp_soul_hack",	"comp_soul_status"}
 GM.Assemblies["trinket_lilithsoul"] 						= {"comp_soul_status",	"comp_soul_hack"}
 GM.Assemblies["trinket_whysoul"] 						= {"comp_soul_godlike",	"comp_soul_dosei"}
 GM.Assemblies["trinket_darksoul"] 						= {"comp_soul_dd",	"comp_soul_booms"}
+GM.Assemblies["trinket_eriosoul"] 						= {"comp_soul_dd",	"comp_soul_melee"}
 GM.Assemblies["comp_soul_emm"] 						= {"comp_soul_dd",	"weapon_zs_sigilfragment"}
 GM.Assemblies["comp_soul_emm2"] 						= {"comp_soul_dosei",	"comp_soul_godlike"}
 GM.Assemblies["comp_soul_emm3"] 						= {"comp_soul_emm2",	"comp_soul_emm"}
 GM.Assemblies["weapon_zs_sigil_port_a"] 						= {"trinket_altcainsoul","comp_soul_emm3"}
-GM.Assemblies["weapon_zs_envy_hammer"] 						= {"trinket_sin_envy",	"weapon_zs_singurhammer"}
 
 local trs = translate.Get
 local function funcofvoid(pl, nouse)

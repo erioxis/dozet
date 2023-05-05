@@ -5151,7 +5151,7 @@ function GM:PlayerCanPickupWeapon(pl, ent)
 	if pl:IsSkillActive(SKILL_JEW) then
 		pl:SetPoints(pl:GetPoints() - ((self:GetWave() * 5) - self:GetWave() * 2))
 		GAMEMODE:ConCommandErrorMessage(pl, translate.ClientGet(pl, "jewmoment"))
-		pl:GiveAchievementProgress("greatgreed", (self:GetWave() == 0 and 0 or (3 + (self:GetWave() * 2) + self:GetWave()) * 0.12))
+		pl:GiveAchievementProgress("greatgreed", ((self:GetWave() * 5) - self:GetWave() * 2))
 	end
 
 
