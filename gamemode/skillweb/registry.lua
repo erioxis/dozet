@@ -800,7 +800,7 @@ GM:AddSkill(SKILL_AGILEIII, trs("skill_agile").."III", GOOD.."+6%"..trs("jump").
 																4,			-2,					{SKILL_SAFEFALL, SKILL_ULTRANIMBLE, SKILL_SURESTEP, SKILL_INTREPID, SKILL_VKID, SKILL_NOSEE}, TREE_SPEEDTREE)
 GM:AddSkill(SKILL_VKID, trs("skill_vkid"), GOOD.."+30%"..trs("jump")..GOOD.."+60"..trs("speed")..GOOD..trs("skill_vkid_d")..BAD.."-50"..trs("health"),
 																4,			-3,					{SKILL_VKID2}, TREE_SPEEDTREE)
-GM:AddSkill(SKILL_VKID2, trs("skill_vkid2"), GOOD.."+30%"..trs("jump")..GOOD.."+15"..trs("speed")..GOOD..trs("skill_vkid_d")..BAD.."-25"..trs("health"),
+GM:AddSkill(SKILL_VKID2, trs("skill_vkid2"), GOOD.."+30%"..trs("jump")..GOOD.."+15"..trs("speed")..GOOD..trs("skill_vkid_d")..BAD.."-65"..trs("health"),
 																4,			-4,					{}, TREE_SPEEDTREE)
 GM:AddSkill(SKILL_D_SLOW, trs("skill_slow"), GOOD..trs("skill_slow_d1")..GOOD..trs("skill_slow_d2")..BAD..trs("skill_slow_d3")..BAD..trs("skill_slow_d4"),
 																0,			-4,					{}, TREE_SPEEDTREE)
@@ -2060,9 +2060,9 @@ GM:AddSkill(SKILL_HELPFORPROJECT, "Donate", GOOD.."Donate if you want to get new
 				                                                            	20,			20,					{}, TREE_DONATETREE)
 GM:AddSkillModifier(SKILL_HELPFORPROJECT, SKILLMOD_BLOODARMOR, 1)
 SKILL_DONATE3 = 206
-GM:AddSkill(SKILL_DONATE3, "Donate III", GOOD.."+50% For XP\n"..BAD.."THX Chayok",
+GM:AddSkill(SKILL_DONATE3, "Donate III", GOOD.."+10% For XP\n"..BAD.."THX Chayok",
 				                                                            	20,			22,					{SKILL_DONATE2}, TREE_DONATETREE)
-GM:AddSkillModifier(SKILL_DONATE3, SKILLMOD_XP, 0.50)
+GM:AddSkillModifier(SKILL_DONATE3, SKILLMOD_XP, 0.10) -- Донат должен давать лишь маленькое премущество 
 SKILL_DONATE4 = 207
 GM:AddSkill(SKILL_DONATE4, "Donate IV", GOOD.."+10% Reload Speed\n"..BAD.."THX cheetus and null",
 				                                                            	21,			23,					{SKILL_DONATE3}, TREE_DONATETREE)
@@ -3113,7 +3113,7 @@ GM:AddSkillModifier(SKILL_VKID, SKILLMOD_HEALTH, -50)
 
 GM:AddSkillModifier(SKILL_VKID2, SKILLMOD_JUMPPOWER_MUL, 0.30)
 GM:AddSkillModifier(SKILL_VKID2, SKILLMOD_SPEED, 15)
-GM:AddSkillModifier(SKILL_VKID2, SKILLMOD_HEALTH, -25)
+GM:AddSkillModifier(SKILL_VKID2, SKILLMOD_HEALTH, -65)
 
 GM:AddSkillModifier(SKILL_CURSEDHEALTH, SKILLMOD_CURSEM, -0.25)
 GM:AddSkillModifier(SKILL_CRESCENDO1, SKILLMOD_HP_PER_WAVE, 4)

@@ -1640,8 +1640,10 @@ function meta:UnSpectateAndSpawn()
 		self:SetZombieClass(GAMEMODE.ZombieClasses["Crow"].Index)
 		self:DoHulls(GAMEMODE.ZombieClasses["Crow"].Index, TEAM_UNDEAD)
 	end
-	self:UnSpectate()
-	self:Spawn()
+	timer.Simple(0, function()
+		self:UnSpectate()
+		self:Spawn()
+	end)
 end
 
 function meta:SecondWind(pl)

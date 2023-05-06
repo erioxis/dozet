@@ -164,6 +164,7 @@ GM.AmmoCache["spotlamp"]					= 1
 GM.AmmoCache["manhack"]						= 1
 GM.AmmoCache["repairfield"]					= 1
 GM.AmmoCache["medstation"]					= 1
+GM.AmmoCache["fridge"]					= 1
 GM.AmmoCache["zapper"]						= 1
 GM.AmmoCache["pulse"]						= 50
 GM.AmmoCache["impactmine"]					= 5
@@ -246,6 +247,8 @@ GM:AddStartingItem("antidoteshot",		ITEMCAT_TOOLS,			40,				"weapon_zs_antidotes
 item.SkillRequirement = SKILL_U_ANTITODESHOT
 GM:AddStartingItem("resupplybox",		ITEMCAT_DEPLOYABLES,			25,				"weapon_zs_resupplybox")
 .Countables = "prop_resupplybox"
+GM:AddStartingItem("fridge",		ITEMCAT_DEPLOYABLES,			45,				"weapon_zs_fridge")
+.Countables = "prop_fridge"
 GM:AddStartingItem("remantler",			ITEMCAT_DEPLOYABLES,			20,				"weapon_zs_remantler")
 .Countables = "prop_remantler"
 item =
@@ -560,6 +563,7 @@ GM:AddPointShopItem("antibcat",			ITEMCAT_TRINKETS,		350,				"trinket_antibaraca
 GM:AddPointShopItem("crphmr",			ITEMCAT_TOOLS,			25,				"weapon_zs_hammer",			nil,							nil,									nil,											function(pl) pl:GiveEmptyWeapon("weapon_zs_hammer") pl:GiveAmmo(5, "GaussEnergy") end)
 GM:AddPointShopItem("wrench",			ITEMCAT_TOOLS,			20,				"weapon_zs_wrench").NoClassicMode = true
 GM:AddPointShopItem("resupplybox",		ITEMCAT_DEPLOYABLES,			30,				"weapon_zs_resupplybox").Countables = "prop_resupplybox"
+GM:AddPointShopItem("fridge",		ITEMCAT_DEPLOYABLES,			45,				"weapon_zs_fridge").Countables = "prop_fridge"
 GM:AddPointShopItem("remantler",		ITEMCAT_DEPLOYABLES,			30,				"weapon_zs_remantler").Countables = "prop_remantler"
 GM:AddPointShopItem("msgbeacon",		ITEMCAT_DEPLOYABLES,			0,				"weapon_zs_messagebeacon").Countables = "prop_messagebeacon"
 GM:AddPointShopItem("camera",			ITEMCAT_DEPLOYABLES,			15,				"weapon_zs_camera").Countables = "prop_camera"
@@ -924,6 +928,7 @@ GM:AddDeployableInfo("prop_gunturret_rocket",	"Rocket Turret",	 	"weapon_zs_gunt
 GM:AddDeployableInfo("prop_gunturret_super",	"Super Turret",	 	"weapon_zs_gunturret_super")
 GM:AddDeployableInfo("prop_repairfield",		"Repair Field Emitter",	"weapon_zs_repairfield")
 GM:AddDeployableInfo("prop_medstation",		"Medical Station",	"weapon_zs_medstation")
+GM:AddDeployableInfo("prop_fridge",		"Fridge",	"weapon_zs_fridge")
 GM:AddDeployableInfo("prop_zapper",				"Zapper",				"weapon_zs_zapper")
 GM:AddDeployableInfo("prop_zapper_arc",			"Arc Zapper",			"weapon_zs_zapper_arc")
 GM:AddDeployableInfo("prop_ffemitter",			"Force Field Emitter",	"weapon_zs_ffemitter")

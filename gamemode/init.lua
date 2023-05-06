@@ -1655,7 +1655,19 @@ function GM:Think()
 					pl.NextAutomatedReload = math.huge
 					pl.OldWeaponToReload = nil
 				end
+				if time > (pl.NextFridgeUse or 0) then
+					pl.NextFridgeUse = time + 85
+					pl.FridgeCaches = (pl.FridgeCaches or 0) + 1
 
+					net.Start("zs_nextfridgeuse")
+						net.WriteFloat(pl.NextFridgeUse)
+					net.Send(pl)
+
+					net.Start("zs_fridgecaches")
+						net.WriteInt(pl.FridgeCaches, 12)
+						net.WriteBool(true)
+					net.Send(pl)
+				end
 				if time > (pl.NextResupplyUse or 0) then
 					local stockpiling = pl:IsSkillActive(SKILL_STOCKPILE)
 
@@ -1810,7 +1822,7 @@ function GM:CalculateNextBoss()
 		if ent:GetZombieClassTable().Boss and ent:Alive() then
 			livingbosses = livingbosses + 1
 		else
-			if ent:GetInfo("zs_nobosspick") == "0" then
+			if ent:GetInfo("zs_nobosspick") == "0" and !ent.Zban then
 				table.insert(zombies, ent)
 			end
 		end
@@ -2027,7 +2039,7 @@ function GM:PlayerRepairedObject(pl, other, health, wep)
 	if numofdaily == 2 then
 		pl:GiveAchievementProgress("daily_post", math.Round(health))
 	end
-	net.Start("zs_update_style") net.WriteTable({time = CurTime()+2+(math.random(10,20)*0.2),text = "REPAIRED PROP FOR "..health,score = health,color = Color(23,69,194)}) net.Send(pl) 
+	net.Start("zs_update_style") net.WriteTable({time = CurTime()+2+(math.random(10,20)*0.2),text = "REPAIRED PROP FOR "..math.Round(health),score = health,color = Color(23,69,194)}) net.Send(pl) 
 
 	local hpperpoint = self.RepairPointsPerHealth
 	if hpperpoint <= 0 then return end

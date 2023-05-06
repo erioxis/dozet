@@ -79,7 +79,7 @@ function CLASS:ProcessDamage( pl, dmginfo )
 end
 
 function CLASS:PlayDeathSound(pl)
-		local sndname = "zombies/bully_attack"..math.random(7)..".wav"
+		local sndname = "zombie/bully_attack"..math.random(7)..".wav"
 		for i = 1, 10 do
 			timer.Simple(0.02 * i,
 				function() if pl:IsValid() then pl:EmitSound(sndname, 100, 55 - i*4, 1, CHAN_AUTO) end
@@ -93,7 +93,7 @@ function CLASS:PlayDeathSound(pl)
 			end)
 		end
 
-		local sndname2 = "zombies/archangel_fly"..math.random(2)..".wav"
+		local sndname2 = "zombie/archangel_fly"..math.random(2)..".wav"
 		for i = 1, 10 do
 			timer.Simple(0.01 * i,
 				function() if pl:IsValid() then pl:EmitSound(sndname2, 100, 55 - i*3, 1, CHAN_AUTO) end
@@ -103,7 +103,7 @@ function CLASS:PlayDeathSound(pl)
 end
 
 function CLASS:PlayPainSound(pl)
-	local sndname = "zombies/archangel_pain_0"..math.random(6)..".wav"
+	local sndname = "zombie/archangel_pain_0"..math.random(6)..".wav"
 		for i = 1, 4 do
 			timer.Simple(0.03 * i,
 				function() if pl:IsValid() then pl:EmitSound(sndname, 100, math.random(55, 65) + i*6, 0.8, CHAN_AUTO) end

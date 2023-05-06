@@ -30,8 +30,13 @@
 	util.AddNetworkString("zs_dohulls")
 	util.AddNetworkString("zs_penalty")
 	util.AddNetworkString("zs_add_p")
+
 	util.AddNetworkString("zs_nextresupplyuse")
 	util.AddNetworkString("zs_stowagecaches")
+	util.AddNetworkString("zs_nextfridgeuse")
+	util.AddNetworkString("zs_fridgecaches")
+
+
 	util.AddNetworkString("zs_lifestats")
 	util.AddNetworkString("zs_lifestatsbd")
 	util.AddNetworkString("zs_lifestatshd")

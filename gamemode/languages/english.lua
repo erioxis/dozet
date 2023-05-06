@@ -1420,6 +1420,8 @@ LANGUAGE.right_click_to_hammer_nail					= "Right click to hammer in a nail."
 LANGUAGE.nails_x									= "Nails: %d"
 LANGUAGE.resupply_box								= "Resupply Box"
 LANGUAGE.resupply_box_d								="Allows survivors to get ammunition for their current weapon. Each person can only use the box once every so often.\nPress PRIMARY ATTACK to deploy the box.\nPress SECONDARY ATTACK and RELOAD to rotate the box."
+LANGUAGE.fridge								= "Fridge"
+LANGUAGE.fridge_d								="Allows survivors to get food. Each person can only use the box once every so often.\nPress PRIMARY ATTACK to deploy the fridge.\nPress SECONDARY ATTACK and RELOAD to rotate the fridge."
 LANGUAGE.purchase_now								= "Purchase now!"
 LANGUAGE.integrity_x								= "Integrity: %d%%"
 LANGUAGE.empty										= "EMPTY"
@@ -1815,6 +1817,7 @@ LANGUAGE.pshop_magic = "Magic"
 
 
 LANGUAGE.caches_x_ready = "You have %s caches in resupply box!"
+LANGUAGE.caches_f_x_ready = "You have %s caches in fridge!"
 --модификаторы
 LANGUAGE.p_mul = " point mul\n"
 LANGUAGE.exp_r = " explosive damage radius\n"

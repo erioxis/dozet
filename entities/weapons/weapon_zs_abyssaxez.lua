@@ -163,7 +163,7 @@ function SWEP:PrimaryAttack()
 		self:MeleeSwing()
 	else
 		self:StartSwinging()
-		local sndname = "zombies/archangel_attack"..math.random(4)..".wav"
+		local sndname = "zombie/archangel_attack"..math.random(4)..".wav"
 		local sndname2 = "npc/zombie_poison/pz_throw3.wav"
 		for i = 1, 5 do
 			timer.Simple(0.02 * i,
@@ -182,7 +182,7 @@ end
 function SWEP:PlayHitSound()
 	self:GetOwner():EmitSound( "ambient/machines/slicer" .. math.random( 4 ) .. ".wav", 75, math.random(20,35) )
 	self:GetOwner():EmitSound( "weapons/melee/golf club/golf_hit-0" .. math.random( 4 ) .. ".ogg", 100, 30 )
-	self:GetOwner():EmitSound( "zombies/punch.wav", 100, 110 )
+	self:GetOwner():EmitSound( "zombie/punch.wav", 100, 110 )
 end
 
 function SWEP:SecondaryAttack()
@@ -190,8 +190,8 @@ function SWEP:SecondaryAttack()
 	if owner:KeyDown(IN_ATTACK2) and self.BlockTrue and self:GetHitStacks() >= 1 then
 		self.Secondary.Automatic = false
 	    owner:EmitSound("npc/metropolice/pain1.wav", 75, 45, 0.8)
-	    owner:EmitSound( "zombies/pound_wall.wav", 100, 60 )
-	    owner:EmitSound( "zombies/pound_wall.wav", 100, 10 )
+	    owner:EmitSound( "zombie/pound_wall.wav", 100, 60 )
+	    owner:EmitSound( "zombie/pound_wall.wav", 100, 10 )
 	    owner:EmitSound("physics/concrete/boulder_impact_hard"..math.random(1, 4)..".wav", 100, math.random(60, 80))
 	    owner:EmitSound("ambient/alarms/klaxon1.wav", 75, 45, 0.7)
 		self.ChargeSound:PlayEx( 1, 255 ) 
@@ -207,7 +207,7 @@ function SWEP:SecondaryAttack()
 		self:StartSwinging(true)
 		self:SetHitStacks( 0 )
 
-		local sndname = "zombies/archangel_fly"..math.random(2)..".wav"
+		local sndname = "zombie/archangel_fly"..math.random(2)..".wav"
 			for i = 1, 4 do
 				timer.Simple(0.02 * i,
 					function() if owner:IsValid() then owner:EmitSound(sndname, 100, math.random(65, 75) - i*6, 0.6, CHAN_AUTO) end
@@ -318,8 +318,8 @@ function SWEP:Reload()
 	local owner = self:GetOwner()
 
 	owner:DoAnimationEvent(ACT_HL2MP_GESTURE_RANGE_ATTACK_GRENADE)
-	owner:EmitSound("zombies/toxicshade_death.wav", 100, math.random(105,100))
-	local sndname = "zombies/archangel_attack"..math.random(4)..".wav"
+	owner:EmitSound("zombie/toxicshade_death.wav", 100, math.random(105,100))
+	local sndname = "zombie/archangel_attack"..math.random(4)..".wav"
 	local sndname2 = "npc/zombie_poison/pz_throw3.wav"
 	for i = 1, 15 do
 		timer.Simple(0.02 * i,

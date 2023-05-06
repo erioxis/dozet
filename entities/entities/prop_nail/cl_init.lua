@@ -43,7 +43,7 @@ local colNail = Color(0, 0, 5, 220)
 local colText = Color(240, 240, 240, 105)
 local colDead = Color(230, 80, 80, 95)
 local colDef = Color(90, 49, 252, 255)
-function ENT:DrawTranslucent()--[[
+function ENT:Draw()--[[
 ]]
 
 	local cader = false
@@ -74,8 +74,6 @@ function ENT:DrawTranslucent()--[[
 			drawinfo = GAMEMODE.TraceTargetNoPlayers == self:GetParent()
 		end
 	end
-
-
 	if myteam == TEAM_HUMAN then
 		render.ModelMaterialOverride(matWhite)
 		render.SetColorModulation(0.016, 1, 0)
@@ -84,6 +82,7 @@ function ENT:DrawTranslucent()--[[
 		render.SuppressEngineLighting(false)
 		render.ModelMaterialOverride(nil)
 	end
+
 	local nhp = self:GetNailHealth()
 	local mnhp = self:GetMaxNailHealth()
 
@@ -153,7 +152,7 @@ function ENT:DrawTranslucent()--[[
 		ang:RotateAroundAxis(ang:Up(), -90)
 		ang:RotateAroundAxis(ang:Forward(), 90)
 
-		local nearest = parent:WorldSpaceCenter()
+		local nearest = parent:WorldSpaceCenter() 
 		local norm = nearest - eyepos
 		norm:Normalize()
 		local dot = EyeVector():Dot(norm)
@@ -283,6 +282,8 @@ function ENT:DrawTranslucent()--[[
 
 		cam.IgnoreZ(false)
 	end
+	
+
 end
 function ENT:Think()
 end

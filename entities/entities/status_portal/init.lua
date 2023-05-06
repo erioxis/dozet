@@ -19,5 +19,5 @@ function ENT:Think()
 end
 function ENT:OnRemove()
 	self.BaseClass.OnRemove(self)
-	self:GetOwner():SetPos(self:GetDTVector(1)-Vector(0,0,(self:GetOwner():KeyDown(IN_DUCK) and 5 or 0)))
+	self:GetOwner():SetPos(self:GetDTVector(1)-Vector(0,0,(self:GetOwner():KeyDown(IN_DUCK) and !self:GetOwner():OnGround() and 10 or 0)))
 end
