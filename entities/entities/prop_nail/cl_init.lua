@@ -280,7 +280,7 @@ function ENT:Draw()--[[
 			end
 		cam.End3D2D()
 
-		cam.IgnoreZ(false)
+		cam.IgnoreZ(true)
 	end
 	
 

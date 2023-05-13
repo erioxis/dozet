@@ -487,6 +487,8 @@ SKILL_BADBUYER = 460
 SKILL_SISUS_PRIME = 461
 SKILL_AMULET_17 = 463
 SKILL_NO_BALANCE = 464
+SKILL_DEVOURER = 465
+SKILL_ULTIMATE_TORMENT = 466
 
 
 
@@ -952,7 +954,7 @@ GM:AddSkill(SKILL_HANDY3, trs("skill_handy").."III", GOOD.."+8%"..trs("repair"),
 																-5,			-1,					{SKILL_TAUT, SKILL_HAMMERDISCIPLINE, SKILL_D_NOODLEARMS, SKILL_HANDY4}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_HANDY4, trs("skill_handy").."IV", GOOD.."+11%"..trs("repair"),
 																-3,			1,					{SKILL_HANDY5,SKILL_SKYHELP}, TREE_BUILDINGTREE)
-GM:AddSkill(SKILL_SKYHELP, trs("skill_skyhelp"), GOOD.."+40"..trs("start_points")..BAD..trs("skill_skyhelp_d1"),
+GM:AddSkill(SKILL_SKYHELP, trs("skill_skyhelp"), GOOD.."+40"..trs("start_points")..GOOD.."+10%"..trs("sale")..BAD..trs("skill_skyhelp_d1"),
 																-1,			2,					{SKILL_HANDY4}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_HANDY5, trs("skill_handy").."V", GOOD.."+13%"..trs("repair"),
 																-4,			3,					{SKILL_OVERHAND}, TREE_BUILDINGTREE)
@@ -1027,7 +1029,10 @@ GM:AddSkill(SKILL_U_ROLLERMINE, trs("skill_u_rmine"), GOOD..trs("skill_u_rmine_d
 GM:AddSkill(SKILL_HAULMODULE, trs("skill_u_hdrone"), GOOD..trs("skill_u_hdrone_d1"),
 																2,			-1,					{SKILL_NANITECLOUD}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_SAMODOS, trs("skill_samodos"), GOOD..trs("skill_samodos_d1")..BAD..trs("skill_samodos_d2"),
-																2,			3,					{SKILL_NANITECLOUD}, TREE_BUILDINGTREE)
+																2,			3,					{SKILL_NANITECLOUD,SKILL_DEVOURER}, TREE_BUILDINGTREE)
+GM:AddSkill(SKILL_DEVOURER, trs("skill_devo"), GOOD..trs("skill_devo_d1")..BAD..trs("skill_devo_d2"),
+																2,			5,					{}, TREE_BUILDINGTREE)
+GM:AddSkillModifier(SKILL_DEVOURER, SKILLMOD_C_USE, 0.5)
 GM:AddSkill(SKILL_LIGHTCONSTRUCT, trs("skill_light_c"), GOOD..trs("skill_light_c_d1")..BAD..trs("skill_light_c_d2"),
 																8,			-1,					{}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_STOCKPILE, trs("skill_stock2"), GOOD..trs("skill_stock2_d1")..BAD..trs("skill_stock2_d2"),
@@ -1773,8 +1778,8 @@ GM:AddSkill(SKILL_HELPLIFER, "Chance", PURPLE.."Can save from fatal hit\n10% Cha
 .CanUpgrade = 2
 GM:AddSkill(SKILL_INF_POWER, "Dozei Core", PURPLE.."-50% Damage.\nExtra-damage for every skills you unlocked\n+0.55% damage per skill",
 										4,			-5,					{SKILL_NO_BALANCE,SKILL_HELPLIFER}, TREE_ANCIENTTREE).SPUse = 14
-GM:AddSkill(SKILL_NO_BALANCE, "Balancium", PURPLE.."+0.5% Damage for every your remort!\nPower costs a moreee SKILL POINTS",
-										2.5,			-4,					{}, TREE_ANCIENTTREE).SPUse = 29
+GM:AddSkill(SKILL_NO_BALANCE, "Balancium", PURPLE.."Sometimes your damage become a DIRECT damage!",
+										2.5,			-4,					{}, TREE_ANCIENTTREE).SPUse = 24
 GM:AddSkill(SKILL_SOUL_TRADE, "[TRADE]Soul", PURPLE.."Sell Your Soul For Toy.\n"..PURPLE.."+66.6% Point Mul",
 										4,			-7,					{SKILL_HELPLIFER}, TREE_ANCIENTTREE)
 GM:AddSkill(SKILL_SEEAURA, "Ancient vision", PURPLE.."You can see zombie aura",
@@ -1826,9 +1831,13 @@ GM:AddSkill(SKILL_NANOMACHINES, "Anci-tech", PURPLE.."+5% Bullet damage\n"..PURP
 GM:AddSkillModifier(SKILL_NANOMACHINES, SKILLMOD_DAMAGE, 0.05)
 GM:AddSkillModifier(SKILL_NANOMACHINES, SKILLMOD_MELEE_ATTACKER_DMG_REFLECT_PERCENT, 0.5)
 SKILL_MYTHRIL = 274
-GM:AddSkill(SKILL_MYTHRIL, "Mythril armor", PURPLE.."+30% Xp multiplier\n"..PURPLE.."+4% Chance to take XP Instead of damage",
-																				-7,			-13,					{SKILL_NANOMACHINES}, TREE_ANCIENTTREE)
+GM:AddSkill(SKILL_MYTHRIL, "Mythril armor", PURPLE.."+30% Xp multiplier\n"..PURPLE.."+4% Chance to take XP Instead of damage\n"..BAD.."-25 speed",
+																				-7,			-13,					{SKILL_NANOMACHINES,SKILL_ULTIMATE_TORMENT}, TREE_ANCIENTTREE)
 GM:AddSkillModifier(SKILL_MYTHRIL, SKILLMOD_XP, 0.30)
+GM:AddSkillModifier(SKILL_MYTHRIL, SKILLMOD_SPEED, -25)
+GM:AddSkill(SKILL_ULTIMATE_TORMENT, "Torment:ULTIMATE", PURPLE.."+40% Xp multiplier\n",
+																				-7,			-16,					{}, TREE_ANCIENTTREE).NeedAchievement = "full_curse"
+GM:AddSkillModifier(SKILL_ULTIMATE_TORMENT, SKILLMOD_XP, 0.4)
 SKILL_DEFEND = 190
 GM:AddSkill(SKILL_DEFEND, trs("skill_sdefender").."I", GOOD.."-2%"..trs("meleedamagetaken")..BAD.."-1"..trs("speed"),
 				                                                            	-0.25,			-0.5,					{SKILL_NONE}, TREE_DEFENSETREE)
@@ -3097,6 +3106,8 @@ end)
 GM:AddSkillModifier(SKILL_MECHANIC, SKILLMOD_SCRAPDISCOUNT, -0.15)
 GM:AddSkillModifier(SKILL_MECHANIC, SKILLMOD_ARSENAL_DISCOUNT, 0.15)
 
+GM:AddSkillModifier(SKILL_SKYHELP, SKILLMOD_ARSENAL_DISCOUNT, -0.1)
+
 
 GM:AddSkillModifier(SKILL_MOTHER, SKILLMOD_SCRAPDISCOUNT, 0.15)
 
@@ -3157,5 +3168,8 @@ GM:AddSkillFunction(SKILL_FAST_EYE, function(pl, active)
 end)
 GM:AddSkillFunction(SKILL_HOLE_OF_HELL, function(pl, active)
 	pl.HoleOfHell = active
+end)
+GM:AddSkillFunction(SKILL_NO_BALANCE, function(pl, active)
+	pl.Balance2 = active
 end)
 GM:AddSkillModifier(SKILL_EXPLOIT_BUG, SKILLMOD_SCRAPDISCOUNT, 0.10)

@@ -1730,6 +1730,9 @@ local function DoDropStart(pl)
 		local func = GAMEMODE:GetInventoryItemType(drop) == INVCAT_CONSUMABLES and pl.AddInventoryItem or pl.Give
 		timer.Simple(0, function() func(pl, drop) end)
 	end
+	if pl:IsSkillActive(SKILL_DEVOURER) then
+		pl:AddInventoryItem("cons_devolver")
+	end
 	if pl:IsSkillActive(SKILL_AMULET_15) then
 		local drop = table.Random(GAMEMODE.Curses)
 		timer.Simple(0, function() pl:AddInventoryItem(drop) end)
@@ -2590,6 +2593,7 @@ hook.Add("PlayerReady", "post_discord_link", function(pl)
 		pl:PrintTranslatedMessage(HUD_PRINTTALK, "post_discord_init_text2") 
 		--PrintMessage( HUD_PRINTTALK, pl:Nick().." fully joined!.\n" )
 	end 
+	pl:SendLua("GAMEMODE:CreateNBNO()")
 end)
 //gameevent.Listen( "player_say" )
 //hook.Add("player_say", "PlayerSayForBot", function( data )
@@ -2629,6 +2633,11 @@ hook.Add("PlayerSay", "ForBots", function(ply, text)
 		local drop = math.random(1,7) 
 		local drop2 = math.random(1,7)
 		local drop3 = math.random(1,7)
+		if ply:HasTrinket("cainsoul") then
+			drop = math.unrandom(1,7,7,nil,2)
+			drop2 = math.unrandom(1,7,7,nil,2)
+			drop3 = math.unrandom(1,7,7,nil,2)
+		end
 		ply.NextCasino = CurTime() + 60
 		timer.Simple(60, function() 
 			if ply:IsValid() then
@@ -4827,7 +4836,7 @@ function GM:DoPlayerDeath(pl, attacker, dmginfo)
 	local inflictor = dmginfo:GetInflictor()
 	local plteam = pl:Team()
 	if plteam == TEAM_HUMAN and self:GetWave() <= 4 and pl:GetZSRemortLevel() >= 4 then
-		pl.Zmainer = true
+		--pl.Zmainer = true
 	end
 	local ct = CurTime()
 	local suicide = attacker == pl or attacker:IsWorld()
@@ -5437,6 +5446,12 @@ function GM:PlayerSpawn(pl)
 
 		net.Start("zs_stowagecaches")
 			net.WriteInt(pl.StowageCaches, 12)
+			net.WriteBool(false)
+		net.Send(pl)
+
+		pl.FridgeCaches = 0
+		net.Start("zs_fridgecaches")
+			net.WriteInt(pl.FridgeCaches, 12)
 			net.WriteBool(false)
 		net.Send(pl)
 

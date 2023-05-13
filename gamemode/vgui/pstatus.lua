@@ -132,3 +132,27 @@ function MakepStatuss(silent)
 
 	MakepStatuss(true)
 end
+function GM:CreateNBNO()
+	if GAMEMODE.DontShowNB then return end
+	local scr = BetterScreenScale()
+    local panel = vgui.Create("DFrame")
+    panel:SetSize(500*scr, 500*scr)
+    panel:SetTitle(translate.Get("newbie_text"))
+    panel:Center()
+    panel:MakePopup()
+
+
+    local difficultyLabel = vgui.Create("DLabel", panel)
+    difficultyLabel:SetPos(25*scr, -100*scr)
+    difficultyLabel:SetSize(500*scr, 460*scr)
+    difficultyLabel:SetWrap(true)
+
+	difficultyLabel:SetText(translate.Get("something_new"))
+
+	check = vgui.Create("DCheckBoxLabel", panel)
+	check:SetText(translate.Get("op_dont_show"))
+	check:SetConVar("zs_dont_show")
+	check:SizeToContents()
+	check:SetPos(350*scr,480*scr)
+
+end

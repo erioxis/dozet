@@ -73,9 +73,9 @@ if SERVER then
 			dmginfo:SetDamage(dmginfo:GetDamage() / 2.5)
 		end
 		if bit_band(dmginfo:GetDamageType(), DMG_BULLET) ~= 0 then
-			dmginfo:SetDamage(dmginfo:GetDamage() * 0.45)
+			dmginfo:SetDamage(dmginfo:GetDamage() * 0.5)
 		elseif bit_band(dmginfo:GetDamageType(), DMG_SLASH) == 0 and bit_band(dmginfo:GetDamageType(), DMG_CLUB) == 0 then
-			dmginfo:SetDamage(dmginfo:GetDamage() * 0.45)
+			dmginfo:SetDamage(dmginfo:GetDamage() * 0.5)
 		end
 
 

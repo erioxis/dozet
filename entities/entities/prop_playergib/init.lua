@@ -83,8 +83,8 @@ function ENT:Use(activator, caller)
 		self:TakeDamage(6)
 		self:GetPhysicsObject():SetVelocity(VectorRand(50,320))
 		self.NextUse = CurTime()+ 0.8
-
-		activator:SetHealth(math.min(activator:GetMaxHealth(), activator:Health() + 6))
+		local mp = activator:IsSkillActive(SKILL_D_FRAIL) and math.floor(activator:GetMaxHealth() * 0.44) or activator:IsSkillActive(SKILL_ABUSE) and math.floor(activator:GetMaxHealth() * 0.25) or activator:GetMaxHealth()
+		activator:SetHealth(math.min(mp, activator:Health() + 6))
 		local cursed = activator:GetStatus("cursed")
 		if (cursed) and activator:IsSkillActive(SKILL_RESNYA) then
 			activator:AddCursed(activator, cursed.DieTime - CurTime() - 2)

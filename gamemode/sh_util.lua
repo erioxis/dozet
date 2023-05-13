@@ -93,6 +93,22 @@ function math.randomr(min, max, need, pl, chances)
 
 	return rand
 end
+function math.unrandom(min, max, need, inv, chances)
+	local ch = chances or 1
+	local rand = min
+	for i=1,ch do
+		local random = math.random(min,max)
+		if not inv and random >= need or inv and random <= need then
+			rand = random
+			break
+		else
+			rand = random
+		end
+	end
+
+	return rand
+end
+
 function FindItem(id)
 	if not id then return false end
 	return GAMEMODE.Items[id]

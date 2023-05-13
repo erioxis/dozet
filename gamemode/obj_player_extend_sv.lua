@@ -66,7 +66,11 @@ function meta:ProcessDamage(dmginfo)
 	end
 
 	if P_Team(self) == TEAM_UNDEAD then
-		dmginfo = self:CallZombieFunction1("ProcessDamage", dmginfo) or dmginfo
+		if attacker.Balance2 and math.random(1,10) == 1 then
+			dmginfo:SetDamageType(DMG_DIRECT)
+			dmgbypass = true
+		end
+		dmginfo = !dmgbypass and self:CallZombieFunction1("ProcessDamage", dmginfo) or dmginfo
 		if self:GetChampion() == CHAMP_ETERNAL then
 			dmginfo:ScaleDamage(0.5)
 			if math.random(1,4) == 4 then
@@ -94,6 +98,7 @@ function meta:ProcessDamage(dmginfo)
 			net.Send(self)
 			return
 		end
+		
 		if attacker:IsPlayer()and attacker.RedeemedOnce and attacker:IsSkillActive(SKILL_PHOENIX) then
 			dmginfo:SetDamage(dmginfo:GetDamage() * 0.94)
 		end
@@ -110,11 +115,9 @@ function meta:ProcessDamage(dmginfo)
 		if attacker.ClanPrime then
 			dmginfo:SetDamage(dmginfo:GetDamage() * (1 - GAMEMODE:GetWave() * 0.034))
 		end
+
 		if self.m_Zmain then
 			dmginfo:SetDamage(dmginfo:GetDamage() * 2)
-		end
-		if attacker.r_return then
-			dmginfo:SetDamage(dmginfo:GetDamage() * 0.9)
 		end
 		if attacker:IsPlayer() and attacker:SteamID64() == "76561198291605212" then
 			dmginfo:SetDamage(dmginfo:GetDamage() * 1.07)
@@ -1878,7 +1881,12 @@ function meta:PointCashOut(ent, fmtype)
 		self:AddPoints(points, ent or self.LastDamageDealtPos or vector_origin, fmtype)
 	end
 end
-
+function meta:AddDCoins(c)
+	self:SetDCoins(self:GetDCoins() + c)
+end
+function meta:SetDCoins(c)
+	self:SetDTFloat(DT_PLAYER_FLOAT_DOSET_COINS, c)
+end
 function meta:AddPoints(points, floatingscoreobject, fmtype, nomul)
 	if gamemode.Call("IsEscapeDoorOpen") then return end
 	if points > 0 then

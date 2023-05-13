@@ -14,7 +14,7 @@ function PANEL:Init()
 	self:SetBorderRadius(8)
 	self:SetCurve(true)
 
-	self:SetColor(Color(10, 10, 10, 120))
+	self:SetColor(Color(0, 0, 0, 120))
 end
 
 function PANEL:SetCurve(curve)

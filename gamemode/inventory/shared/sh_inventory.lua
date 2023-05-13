@@ -255,9 +255,19 @@ GM:AddInventoryItemData("cons_grandma_vase",		trs("c_grandma"),			trs("c_grandma
 end,1)
 GM:AddInventoryItemData("cons_devolver",		trs("c_devo"),			trs("c_devo_d"),								"models/props_c17/trappropeller_lever.mdl", 8, nil, nil, function(pl) 
 	for k,v in pairs(ents.FindInBoxRadius(pl:GetPos(),100)) do
-		
+		if v:IsValid() and v:GetClass() == "prop_invitem" then
+			local inv = v:GetInventoryItemType()
+			local tbl = GAMEMODE.ZSInventoryItemData[inv]
+			local d = string.Explode(" " ,string.lower(tbl.PrintName))
+			if table.HasValue(d, "soul") then
+				if tbl.Tier then
+					pl:SetPoints(pl:GetPoints()+30*(tbl.Tier or 1))
+				end
+				v:Remove()
+			end
+		end
 	end
-end,1)
+end,8)
 GM:AddInventoryItemData("cons_black_hole",		trs("c_bhole"),			trs("c_bhole_d"),								"models/props_c17/trappropeller_lever.mdl", 3, nil, nil, function(pl) 
 	local droped = ents.Create("projectile_succubus_test")
 	droped:SetPos(pl:GetPos()+Vector(0,0,70))
@@ -1853,9 +1863,8 @@ trinket = GM:AddTrinket("Soul of Cain", "cainsoul", false, nil, {
 	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 7.697, y = 7.697 }, color = Color(9, 155, 9, 55), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core_2+"] = { type = "Sprite", sprite = "effects/splashwake1", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 10, y = 10 }, color = Color(125, 0, 255, 100), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 2, 0), angle = Angle(0, 0, 0), size = Vector(0.349, 0.349, 0.349), color = Color(55, 0, 255, 155), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} }
-}, 2, "Ускоряет амуницию на 5%,и дает 2 удачи\n-5% Ressuply Delay,+2 Luck\n Q:1", nil, nil, "weapon_zs_soul")
+}, 2, "Ускоряет амуницию на 5% и дает удачу в казино\n-5% Ressuply Delay and give luck in casino\n Q:1", nil, nil, "weapon_zs_soul")
 GM:AddSkillModifier(trinket, SKILLMOD_RESUPPLY_DELAY_MUL, -0.05)
-GM:AddSkillModifier(trinket, SKILLMOD_LUCK, 2)
 trinket = GM:AddTrinket("Soul of Lazarus", "lazarussoul", false, nil, {
 	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 7.697, y = 7.697 }, color = Color(9, 0, 0, 195), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core_2+"] = { type = "Sprite", sprite = "effects/splashwake1", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 10, y = 10 }, color = Color(125, 0, 255, 0), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
@@ -2035,7 +2044,7 @@ trinket, soul = GM:AddTrinket("Soul of Jacob", "jacobsoul", false, nil, {
 	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 10.697, y = 10.697 }, color = Color(255, 0, 0, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core_2+"] = { type = "Sprite", sprite = "effects/splashwake1", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 30, y = 30 }, color = Color(0, 5, 255, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 2, 0), angle = Angle(0, 0, 0), size = Vector(0.349, 0.349, 0.349), color = Color(255, 0, 255, 255), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} }
-}, 1,"Брат предал тебя,отходи от сигила он тебя убьет.\nSigil kill you instead defend\n Q:5", nil, nil, "weapon_zs_soulalt")
+}, 1,"Инвертирует проклятье сигила.\nSigil kill you instead defend\n Q:5", nil, nil, "weapon_zs_soulalt")
 
 trinket, soul = GM:AddTrinket("Soul of Alt Isaac", "altisaacsoul", false, nil, {
 	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 10.697, y = 10.697 }, color = Color(34, 120, 255, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},

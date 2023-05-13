@@ -251,7 +251,21 @@ LANGUAGE.op_nb_mode = "Newbie mode"
 LANGUAGE.press_z_or_b = "Press Z or %s for phase!"
 LANGUAGE.repair_this_nb = "Repair this prop!"
 LANGUAGE.run_danger_nb = "Run! This prop in danger!"
+
+LANGUAGE.newbie_text = "This server NOT FOR NEWBIES"
+LANGUAGE.something_new = [[Этот ZS отличается от остальных,играть тут намного сложнее.
+Возможно вы мало чего поймете так что готовьтесь думать!
+Подсказки которые вам помогут
+1 - Подсказки могут быть во время игры!
+2 - Инвентарь на альт(ALT) или кнопку медленной ходьбы! (Если не работает то в консоль пропишите bind alt +walk)
+3 - Часть зомби имеют иммунитет к некоторым видам атак (Белые скелеты к пулям,черные соответственно к ближнему оружию.) и если вы не наносите урон зомби то значит он имеет иммунитет либо ваши тринкеты убирают урон с опр.вида оружия
+4 - Если вы получили неизвестный статус то можете прочитать о нем в F1 в статусах
+
+Так же мы делаем другой ЗС(Упрощенный Дозет) и его будет намного легче понимать!
+Когда он появится,то тут появится его IP!
+]]
 --
+LANGUAGE.op_dont_show = "Don't show"
 LANGUAGE.op_mge = "MGE Phrases on kill(on russian only :(. )!"
 LANGUAGE.op_rgb_hp = "RGB Health (:bruh:)"
 LANGUAGE.op_voice = "Hear and talk only in your team"
@@ -452,6 +466,8 @@ LANGUAGE.c_bhole_d                                        = "Create Mini-hole sh
 LANGUAGE.c_grandma_d                                        = "Summon soul dealing 350 damage  from purgatory\nHave chance to summon 9 additional souls! "
 LANGUAGE.c_dust                                        = "Dust..."
 LANGUAGE.c_dust_d                                        = "Give 10 seconds of portal!"
+LANGUAGE.c_devo                                        = "Soul of Devourer"
+LANGUAGE.c_devo_d                                        = "On use eat all nearest souls and give 30 points(MULTIPLE BY QUALITY OF SOUL)"
 LANGUAGE.t_acum                                  = "Car Battery"
 LANGUAGE.t_d_acum                                  = "Double use for active items!"
 --trinkets
@@ -993,7 +1009,7 @@ LANGUAGE.wep_d_charon = "A rapid firing crossbow with no other unique properties
 LANGUAGE.wep_classixx = "CLASSIXXXXX"
 LANGUAGE.wep_d_classixx = "A fresh stream of shit flies at you."
 LANGUAGE.wep_gaeagle  = "'Gauss Eagle'"
-LANGUAGE.wep_d_gaeagle  = "Big damage for first shoot but less damage for lasts shots"
+LANGUAGE.wep_d_gaeagle  = "Big damage for first shoot but less damage for lasts shots\nNeed 30 pulse ammo for shooting"
 LANGUAGE.wep_gluon  = "'Helios' Gluon Gun"
 LANGUAGE.wep_d_gluon  = "Projects a stream of gluons at the target, causing immense damage. Hard to wield and aim, and builds up heat over time."
 LANGUAGE.wep_crossbow = "'Impaler' Crossbow"
@@ -2327,6 +2343,9 @@ LANGUAGE.skill_genius_d2 = "+50% Nail delay\n"
 LANGUAGE.skill_samodos = "No More Loots"
 LANGUAGE.skill_samodos_d1 = "+25% Scrap discount\n"
 LANGUAGE.skill_samodos_d2 = "NO MORE LOOT\n"
+LANGUAGE.skill_devo = "Soul Devourer"
+LANGUAGE.skill_devo_d1 = "Give special usable trinket\n"
+LANGUAGE.skill_devo_d2 = "+50% Charges use\n"
 -- Skills defence
 LANGUAGE.skill_shine_hit = "Shinning hit"
 LANGUAGE.skill_shine_hit_d1 = "+40% Melee damage vs attacking zombie!\n"
@@ -2598,6 +2617,11 @@ LANGUAGE.skill_madness_d2 = "Screen in madness!!!"
 LANGUAGE.skill_gir = "Gier II"
 LANGUAGE.skill_gir_d1 = "On dash give debuff on 2 secs(-50% speed)\n"
 LANGUAGE.skill_gir_d2 = "You can dash on shift!\n"
+
+
+--Скиллы за достиги
+LANGUAGE.skill_omg = "Torment ULTIMATE"
+
 
 -- The help file... Quite big! I wouldn't blame you if you didn't translate this part.
 LANGUAGE.help_cat_introduction						= "Introduction"
@@ -2930,6 +2954,7 @@ LANGUAGE.s_act = " activated."
 LANGUAGE.s_unl_act = " unlocked and activated!"
 
 LANGUAGE.s_need_l = "Need Level: "
+LANGUAGE.s_need_ach = "Need Achievement: "
 LANGUAGE.s_need_r = "Need Skill points: "
 LANGUAGE.s_need_am = "Need Cells: "
 LANGUAGE.s_give_am = "Give Cells: "
@@ -3299,3 +3324,6 @@ LANGUAGE.weapon_ability_abyss_2d = "SINGULARITY OF ABYSS"
 LANGUAGE.weapon_ability_abyss_3d = "SINGULARITY"
 LANGUAGE.weapon_ability_abyssaxe_2d = "DASH OF ABYSS"
 LANGUAGE.weapon_ability_abyssaxe_3d = "DASH OF ABYSS"
+
+LANGUAGE.wep_gaegle_d2 = "CAN SHOOT???"
+LANGUAGE.wep_gaegle_d3 = "CAN SHOOT???"

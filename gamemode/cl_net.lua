@@ -168,6 +168,7 @@ net.Receive("zs_block_number", function(length)
 end)
 net.Receive("HNS.AchievementsProgress", function()
 	local p = util.JSONToTable(net.ReadString())
+	local completed = net.ReadInt(9)
     GAMEMODE.AchievementsProgress =  p
 
 
@@ -175,7 +176,7 @@ net.Receive("HNS.AchievementsProgress", function()
     for id, progress in pairs(p) do
         if isnumber(progress)   then
             GAMEMODE.AchievementsProgress[id] = math.Clamp(progress, 0, GAMEMODE.Achievements[id].Goal or 1)
-			--print(GAMEMODE.AchievementsProgress["daily5"])
+
         end
     end
 end)

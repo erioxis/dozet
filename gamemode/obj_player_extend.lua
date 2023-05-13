@@ -453,9 +453,7 @@ end
 function meta:GetDCoins()
 	return self:GetDTFloat(DT_PLAYER_FLOAT_DOSET_COINS)
 end
-function meta:SetDCoins(c)
-	self:SetDTFloat(DT_PLAYER_FLOAT_DOSET_COINS, c)
-end
+
 function meta:SetEntityAvatar(ent)
 	self:SetDTEntity(3, ent)
 end
@@ -463,9 +461,7 @@ function meta:GetEntityAvatar()
 	if !self:IsBot() then return self end 
 	return self:GetDTEntity(3)
 end
-function meta:AddDCoins(c)
-	self:SetDCoins(self:GetDCoins() + c)
-end
+
 function meta:GetZArmor()
 	return self:GetDTInt(DT_PLAYER_INT_ZOMBIEARMOR)
 end

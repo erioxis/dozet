@@ -1455,7 +1455,7 @@ end
 
 local fontsizeadd = 8
 local fontweight = 0
-local standard = (GM.FontPL == "" and "Open Sans Condensed" or GM.FontPL == "Open Sans Condensed" and "Open Sans Condensed" or GM.FontPL == "Ghoulish Fright" and "Ghoulish Fright AOE Regular" or "Open Sans Condensed")
+local standard = (GM.FontPL == "" and "Open Sans Condensed" or GM.FontPL == "Open Sans Condensed" and "Open Sans Condensed" or GM.FontPL == "Ghoulish Fright" and "Ghoulish Fright AOE Regular" or GM.FontPL == "PixelMplus10" and "PixelMplus10 Regular" or "Open Sans Condensed")
 local fontfamily = standard
 local fontfamilysm = standard
 local fontfamily3d = standard

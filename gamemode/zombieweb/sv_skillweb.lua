@@ -21,6 +21,7 @@ net.Receive("zs_skills_desired", function(length, pl)
 end)
 net.Receive("zs_xp_ach", function(length, pl)
 	local xp = net.ReadFloat()
+	if xp > pl:GetDCoins() then return end
 	pl:AddZSXP(xp)
 	pl:SetDCoins(pl:GetDCoins() - xp)
 end)
