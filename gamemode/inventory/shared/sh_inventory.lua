@@ -188,9 +188,10 @@ local function funcofd1(pl, nouse)
 	
 	local gived = table.Random(use2)
 	if table.HasValue(string.Explode("_",toeat), "curse") then
-		pl:AddInventoryItem(GAMEMODE.Curses[math.random(1,#GAMEMODE.Curses)])
+		local g = GAMEMODE.Curses[math.random(1,#GAMEMODE.Curses)]
+		pl:AddInventoryItem(g)
 		net.Start("zs_invitem")
-			net.WriteString(toeat)
+			net.WriteString(g)
 		net.Send(pl)
 	elseif math.random(1,10) ~= 1 then
 		pl:AddInventoryItem(toeat)
@@ -208,6 +209,11 @@ end
 GM:AddInventoryItemData("cons_void",		trs("c_void"),			trs("c_void_d"),								"models/props_c17/trappropeller_lever.mdl", 3, nil, nil, function(pl) 
 	funcofvoid(pl, "cons_void")
 end,3)
+GM:AddInventoryItemData("cons_xmas_goodness",		trs("c_new_year"),			trs("c_new_year_d"),								"models/props_c17/trappropeller_lever.mdl", 3, nil, nil, function(pl) 
+	local droped = ents.Create("prop_gift")
+	droped:SetPos(pl:GetPos()+Vector(0,0,70))
+	droped:Spawn()
+end,1)
 GM:AddInventoryItemData("cons_wildcard",		trs("c_wildcard"),			trs("c_wildcard_d"),								"models/props_c17/trappropeller_lever.mdl", 4, nil, nil, function(pl) 
 	local lcall = pl.LastCall or "cons_void"
 	local callback = GAMEMODE.ZSInventoryItemData[lcall].Bounty
@@ -398,7 +404,7 @@ GM:AddInventoryItemData("cons_pill_unk",		trs("c_pill"),			trs("c_pill_d"),					
 end,2)
 GM:AddInventoryItemData("cons_mantle",		trs("c_mantle"),			trs("c_mantle_d"),								"models/props_c17/trappropeller_lever.mdl", 2, nil, nil, function(pl) 
 	pl.HolyMantle = pl.HolyMantle+1
-end,5)
+end,3)
 GM:AddInventoryItemData("cons_necronomicon",		trs("c_necronomicon"),			trs("c_necronomicon_d"),								"models/props_c17/trappropeller_lever.mdl", 2, nil, nil, function(pl) 
 	for k,v in pairs(team.GetPlayers(TEAM_UNDEAD)) do
 		timer.Simple(0.3, function() v:TakeSpecialDamage(250,DMG_DIRECT,pl,pl) end)
@@ -765,7 +771,7 @@ GM:AddSkillModifier(trinket, SKILLMOD_MELEE_MOVEMENTSPEED_ON_KILL, -280)
 
 GM:AddSkillModifier(GM:AddTrinket(trs("t_gaunt"), "powergauntlet", false, mveles, mweles, 3, trs("t_d_gaunt"), nil, nil, "weapon_zs_melee_trinket"), SKILLMOD_MELEE_POWERATTACK_MUL, 0.45)
 
-GM:AddTrinket(trs("t_fkit"), "sharpkit", false, mveles, mweles, 2, trs("t_d_fkit"), nil, nil, "weapon_zs_melee_trinket")
+GM:AddSkillModifier(GM:AddTrinket(trs("t_fkit"), "sharpkit", false, mveles, mweles, 2, trs("t_d_fkit"), nil, nil, "weapon_zs_melee_trinket"), SKILLMOD_MELEE_DAMAGE_MUL, 0.05)
 
 
 GM:AddTrinket(trs("t_skit"), "sharpstone", false, mveles, mweles, 3, trs("t_d_skit"), nil, nil, "weapon_zs_melee_trinket")
@@ -1564,9 +1570,9 @@ trinket = GM:AddTrinket(trs("t_voidheart"), "voidheart", false, supveles, supwel
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_MUL, 0.15)
 GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, -20)
 trinket = GM:AddTrinket(trs("t_kheart"), "kheart", false, supveles, supweles, 4, trs("t_d_kheart"))
-GM:AddSkillModifier(trinket, SKILLMOD_POINT_MULTIPLIER, 0.25)
+GM:AddSkillModifier(trinket, SKILLMOD_POINT_MULTIPLIER, 0.1)
 GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, -15)
-GM:AddSkillModifier(trinket, SKILLMOD_DMG_TAKEN, 0.5)
+GM:AddSkillModifier(trinket, SKILLMOD_DMG_TAKEN, 0.1)
 
 local d = math.Round(util.SharedRandom("d1",1,5, SysTime()))
 local skill1 =  util.SharedRandom("skill1",-0.2,0.5, SysTime())

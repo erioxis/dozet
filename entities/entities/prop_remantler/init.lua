@@ -132,11 +132,18 @@ function ENT:Use(activator, caller)
 		self.NextUse[uid] = CurTime() + 0.05
 		return
 	end
-
+	
+	if activator:KeyDown(IN_SPEED) then 
+		local s2 = string.sub(currentwepclass,#currentwepclass,#currentwepclass)
+		local str = tonumber(s2)
+		for i=1,((isnumber(str) or str == nil) and activator:KeyDown(IN_DUCK) and 5-(str==nil and 0 or str) or 1) do 
+			activator:SendLua("RunConsoleCommand('zs_upgrade')")
+		end 
+		return 
+	end
 	if (heldtbl.AllowQualityWeapons or heldtbl.PermitDismantle) then
 		activator:SendLua("surface.PlaySound(\"ambient/misc/shutter1.wav\")")
 	end
-
 	activator:SendLua("GAMEMODE:OpenRemantlerMenu(MySelf:NearestRemantler())")
 end
 

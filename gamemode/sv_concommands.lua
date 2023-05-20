@@ -8,7 +8,7 @@ concommand.Add("zs_pointsshopbuy", function(sender, command, arguments)
 	local usescrap = arguments[2]
 
 	local midwave = GAMEMODE:GetWave() < GAMEMODE:GetNumberOfWaves() / 2 or GAMEMODE:GetWave() == GAMEMODE:GetNumberOfWaves() / 2 and GAMEMODE:GetWaveActive() and CurTime() < GAMEMODE:GetWaveEnd() - (GAMEMODE:GetWaveEnd() - GAMEMODE:GetWaveStart()) / 2
-	if sender:IsSkillActive(SKILL_D_LATEBUYER) and not usescrap and midwave or GAMEMODE.ObjectiveMap and sender:IsSkillActive(SKILL_D_LATEBUYER) and not usescrap then
+	if sender:IsSkillActive(SKILL_D_LATEBUYER) and not usescrap and midwave then
 		GAMEMODE:ConCommandErrorMessage(sender, translate.ClientGet(sender, "late_buyer_warning"))
 		return
 	end
@@ -420,7 +420,9 @@ concommand.Add("zs_dismantle", function(sender, command, arguments)
 			sender:SendLua("surface.PlaySound(\"buttons/button10.wav\")")
 			return
 		end
-
+		--if sender:IsSkillActive(SKILL_COPPER) and math.random(1,10) == 1 and GAMEMODE:GetItemStocks(id) ~= -1 then
+		--	GAMEMODE:AddItemStocks(id, 1)
+		--end
 		potinv = GAMEMODE.Breakdowns[contents]
 	else
 		itypecat = GAMEMODE:GetInventoryItemType(invitem)
@@ -433,6 +435,10 @@ concommand.Add("zs_dismantle", function(sender, command, arguments)
 	end
 
 	local scrap = GAMEMODE:GetDismantleScrap(wtbl or GAMEMODE.ZSInventoryItemData[invitem], invitem,sender)
+	if sender:IsSkillActive(SKILL_COPPER) then
+		sender:SetPoints(sender:GetPoints()+scrap*0.4)
+		scrap = scrap * 0.6
+	end
 	net.Start("zs_ammopickup")
 		net.WriteUInt(scrap, 16)
 		net.WriteString("scrap")

@@ -13,7 +13,9 @@ function ENT:Initialize()
 
 	if SERVER then
 		self:EmitSound("physics/glass/glass_impact_bullet"..math.random(4)..".wav", 70, 85)
+		hook.Add("EntityTakeDamage", self, self.EntityTakeDamage)
 	end
+	
 
 	if CLIENT then
 		hook.Add("PrePlayerDraw", self, self.PrePlayerDraw)

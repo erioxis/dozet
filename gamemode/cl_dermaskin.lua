@@ -136,16 +136,18 @@ function SKIN:PaintButton(panel)
 end]]
 
 SKIN.Colours = {}
-
+SKIN.colButtonText				= Color( 255, 255, 255, 255 )
 SKIN.Colours.Window = {}
 SKIN.Colours.Window.TitleActive			= GWEN.TextureColor( 4 + 8 * 0, 508 );
 SKIN.Colours.Window.TitleInactive		= GWEN.TextureColor( 4 + 8 * 1, 508 );
 
 SKIN.Colours.Button = {}
-SKIN.Colours.Button.Normal				= Color(200, 200, 200, 220)
+SKIN.Colours.Button.Normal				= GWEN.TextureColor( 4 + 8 * 2, 508 )
 SKIN.Colours.Button.Hover				= Color(255, 255, 255, 220)
 SKIN.Colours.Button.Down				= Color(255, 255, 255, 255)
 SKIN.Colours.Button.Disabled			= Color(160, 160, 160, 220)
+
+
 
 SKIN.Colours.Tab = {}
 SKIN.Colours.Tab.Active = {}

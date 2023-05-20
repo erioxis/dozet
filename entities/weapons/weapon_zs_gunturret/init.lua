@@ -84,6 +84,10 @@ function SWEP:PrimaryAttack()
 		ent.Damage = self.Primary.Damage
 		ent.Spread = self.TurretSpread
 		ent.SWEP = self:GetClass()
+		if isnumber(tonumber(string.sub(self:GetClass(),#self:GetClass(),#self:GetClass()))) then
+			ent:SetDTInt(11,tonumber(string.sub(self:GetClass(),#self:GetClass(),#self:GetClass())))
+		end
+	
 
 		if not owner:HasWeapon("weapon_zs_gunturretcontrol") then
 			owner:Give("weapon_zs_gunturretcontrol")

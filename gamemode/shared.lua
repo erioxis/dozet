@@ -5,7 +5,7 @@ GM.Website	=	"https://github.com/erioxis/dozet"
 
 -- No, adding a gun doesn't make your name worth being here.
 GM.Credits = {
-	{"Version", "", "8.1.3"}, -- Ого, УЖЕЕЕЕ 8.1.3???
+	{"Version", "", "8.1.7"}, -- Балансw
 	{"Season of ", "skill buffs,zombie debuff and MORE OPTIMIZATION", "maybe"},
 	{"erioxis", "Phantom coder", "dead"},
 	{"Холодное Молочко(M-I-L-K-Y)", "Not a Phantom coder", "Alive"},
@@ -883,9 +883,6 @@ function GM:PlayerNoClip(pl, on)
 	if pl:IsAdmin() then
 		if SERVER then
 			PrintMessage(HUD_PRINTCONSOLE, translate.Format(on and "x_turned_on_noclip" or "x_turned_off_noclip", pl:Name()))
-		end
-
-		if SERVER then
 			pl:MarkAsBadProfile()
 		end
 

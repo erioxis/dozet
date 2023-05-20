@@ -7,7 +7,6 @@ CLASS.Help = "controls_abysstyrant"
 
 CLASS.SuperBoss = true
 
-CLASS.Hidden = true
 CLASS.Boss = true
 
 
@@ -23,6 +22,7 @@ CLASS.Health = 24500
 CLASS.Speed = 135
 CLASS.Points = 100
 CLASS.Wave = 11 / 12
+CLASS.Hidden = true
 
 CLASS.CanTaunt = true
 

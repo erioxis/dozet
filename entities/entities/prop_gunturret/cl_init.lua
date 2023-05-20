@@ -51,6 +51,7 @@ local cam_Start3D2D = cam.Start3D2D
 local cam_End3D2D = cam.End3D2D
 local smokegravity = Vector(0, 0, 200)
 local aScreen = Angle(0, 270, 60)
+local matBeam2 = Material("Effects/laser1", "smooth")
 function ENT:Draw()
 	self:CalculatePoseAngles()
 	self:SetPoseParameter("aim_yaw", self.PoseYaw)
@@ -60,12 +61,30 @@ function ENT:Draw()
 
 	if owner == MySelf and self:GetManualControl() then return end
 
+
 	local alpha = self:TransAlphaToMe()
 
 	render.SetBlend(alpha)
 	self:DrawModel()
 	render.SetBlend(1)
+	local swep = self:GetDTInt(11)
+	if swep and swep ~= 0 then
+		local ang = Angle( 0, 0, 0 )
+		local up = Vector( 0, 0, 1 )
+		local ringpos = self:GetPos()+Vector(0,0,3)
+		local frametime = FrameTime() * 500
+		local ringsize = 22
+		local col = GAMEMODE.WeaponQualityColors[swep][1]
 
+		render.SetMaterial( matBeam2 )
+		render.StartBeam( 20 )
+		for i=1, 20 do
+			render.AddBeam( ringpos + ang:Forward() * ringsize, 10, 10, col )
+			ang:RotateAroundAxis( up, 20 )
+		end
+			
+		render.EndBeam()
+	end
 	local healthpercent = self:GetObjectHealth() / self:GetMaxObjectHealth()
 
 	if healthpercent <= 0.5 and CurTime() >= self.NextEmit then
@@ -137,6 +156,7 @@ function ENT:Draw()
 end
 
 local matBeam = Material("trails/laser")
+
 local matGlow = Material("sprites/glow04_noz")
 function ENT:DrawTranslucent()
 	if self:GetMaterial() ~= "" then return end

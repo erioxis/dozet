@@ -103,7 +103,7 @@ local text = {
 }
 local colHealth = Color(1,1,1,255)
 function meta:DrawStyle()
-	if !GAMEMODE.NoStyle then return end
+	if !GAMEMODE.NoStyle or MySelf.StyleMoment and #MySelf.StyleMoment < 0 then return end
 	local screenscale = BetterScreenScale()
 	local wid, hei = 110*screenscale , 150 *screenscale 
 	local x, y = ScrW() - wid - screenscale * 180 , ScrH() - hei - screenscale * 500

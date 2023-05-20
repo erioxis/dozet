@@ -284,7 +284,7 @@ function SWEP:MeleeSwing()
 		end
 	end
 	if owner:IsSkillActive(SKILL_CURSE_OF_MISS) and math.random(1,3) == 1 and SERVER then
-		GAMEMODE:BlockFloater(owner, NULL, tr.HitPos, true)
+		GAMEMODE:BlockFloater(owner, NULL, tr.HitPos, 1)
 		self:SetPowerCombo(0)
 		owner.MissTimes = (owner.MissTimes or 0) + 1
 		if owner.MissTimes >= 10 then

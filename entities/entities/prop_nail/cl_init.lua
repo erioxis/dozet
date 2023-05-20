@@ -190,7 +190,7 @@ function ENT:Draw()--[[
 			end
 			if GAMEMODE.NewbieMode and myteam ~= TEAM_UNDEAD and self:GetNailHealth() < self:GetMaxNailHealth() * 0.5 then
 				for k,v in pairs(MySelf:GetWeapons()) do
-					if v.HealStrength and v.HealStrength > 0.8 then
+					if v.HealStrength and v.HealStrength > 0.8 and self:GetRepairs() > 10 then
 						cader = true
 					end
 				end
@@ -280,7 +280,7 @@ function ENT:Draw()--[[
 			end
 		cam.End3D2D()
 
-		cam.IgnoreZ(true)
+		cam.IgnoreZ(false)
 	end
 	
 

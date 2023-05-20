@@ -88,6 +88,8 @@ AddCSLuaFile("vgui/pendboard.lua")
 AddCSLuaFile("vgui/pworth.lua")
 
 AddCSLuaFile("vgui/parsenal.lua")
+AddCSLuaFile("vgui/dbutton_fix.lua")
+AddCSLuaFile("vgui/dcombobox_fix.lua")
 AddCSLuaFile("vgui/parsenal_anti.lua")
 AddCSLuaFile("vgui/premantle.lua")
 AddCSLuaFile("vgui/zshealtharea.lua")
@@ -1273,7 +1275,8 @@ local trade_da = {
 	"trinket_nulledsoul",  -- 24
 	"trinket_soulmedical",  -- 25
 	"trinket_lampsoul",  -- 26
-	"trinket_lehasoul"  -- 26
+	"trinket_lehasoul",  -- 26
+	"trinket_troyaksoul"
 }
 local NextTick = 0
 local NextTick1 = 0
@@ -1656,7 +1659,7 @@ function GM:Think()
 					pl.OldWeaponToReload = nil
 				end
 				if time > (pl.NextFridgeUse or 0) then
-					pl.NextFridgeUse = time + 85
+					pl.NextFridgeUse = time + 145
 					pl.FridgeCaches = (pl.FridgeCaches or 0) + 1
 
 					net.Start("zs_nextfridgeuse")
@@ -2629,28 +2632,36 @@ hook.Add("PlayerSay", "ForBots", function(ply, text)
 		if ply:GetPoints() <  tonumber(playerInput[2]) then
 			ply:PrintTranslatedMessage( HUD_PRINTTALK, "casino_p")
 			return
+			
 		end
+		local cain = ply:HasTrinket("cainsoul")
 		local drop = math.random(1,7) 
 		local drop2 = math.random(1,7)
 		local drop3 = math.random(1,7)
-		if ply:HasTrinket("cainsoul") then
+		if cain then
 			drop = math.unrandom(1,7,7,nil,2)
 			drop2 = math.unrandom(1,7,7,nil,2)
 			drop3 = math.unrandom(1,7,7,nil,2)
 		end
-		ply.NextCasino = CurTime() + 60
-		timer.Simple(60, function() 
+		ply.NextCasino = CurTime() + 60 - (cain and 25 or 0)
+		timer.Simple(60 - (cain and 25 or 0), function() 
 			if ply:IsValid() then
 				ply:PrintTranslatedMessage( HUD_PRINTTALK, "casino_ready" )
 			end
 		end)
+		local all = drop == drop2 and drop2 == drop3
 		local jackpot = false
-		if (drop+drop2+drop3) >= 18 and (drop+drop2+drop3) ~= 21 then
+		if (drop+drop2+drop3) >= 18  - (cain and 1 or 0) and (drop+drop2+drop3) ~= 21 and !all then
 			PrintTranslatedMessage( HUD_PRINTTALK, "casino_jack",tonumber(playerInput[2])*3,ply:Nick() )
 			ply:SetPoints(ply:GetPoints()+tonumber(playerInput[2])*3)
 			jackpot = true
 		end
-		if (drop+drop2+drop3) >= 14 and (drop+drop2+drop3) < 18 then
+		if all  and (drop+drop2+drop3) ~= 21 and drop ~= 1 then
+			PrintTranslatedMessage( HUD_PRINTTALK, "casino_jack",tonumber(playerInput[2])*1.7,ply:Nick() )
+			ply:SetPoints(ply:GetPoints()+tonumber(playerInput[2])*1.7)
+			jackpot = true
+		end
+		if (drop+drop2+drop3) >= 14 - (cain and 1 or 0) and (drop+drop2+drop3) < 18 - (cain and 1 or 0) and !all then
 			PrintTranslatedMessage( HUD_PRINTTALK, "casino_jack",tonumber(playerInput[2])*1.5,ply:Nick() )
 			ply:SetPoints(ply:GetPoints()+tonumber(playerInput[2])*1.5)
 			jackpot = true
@@ -3987,9 +3998,11 @@ end
 function GM:BlockFloater(attacker, victim, dmgpos, bool)
 	if attacker == victim then return end
 	if dmgpos == vector_origin and victim:IsValid() then dmgpos = Vector(0,0,0) end
-
+	if !bool then
+		bool = 0
+	end
 	net.Start("zs_block_number")
-		net.WriteBool(bool)
+		net.WriteUInt(bool,4)
 		net.WriteVector((dmgpos or Vector(0,0,0)))
 	net.Send(attacker)
 end

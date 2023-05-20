@@ -1,7 +1,7 @@
-CLASS.Name = "Minos Prime"
-CLASS.TranslationName = "class_mprime"
-CLASS.Description = "description_mprime"
-CLASS.Help = "controls_mprime"
+CLASS.Name = "Sisyphis Prime"
+CLASS.TranslationName = "class_sprime"
+CLASS.Description = "description_sprime"
+CLASS.Help = "controls_sprime"
 
 CLASS.Boss = true
 
@@ -11,16 +11,14 @@ CLASS.FearPerInstance = 1
 
 CLASS.CanTaunt = true
 
-CLASS.Wave = 6 / 12
 CLASS.Hidden = true
-
 CLASS.HealthMax = 750
 
 CLASS.Points = 40
 
-CLASS.SWEP = "weapon_zs_mprime"
+CLASS.SWEP = "weapon_zs_sis_prime"
 
-CLASS.Model = Model("models/minosprime1/minosprime1.mdl")
+CLASS.Model = Model("models/ultrakill/enemies/sisyphusprime/sisyphusprimepm.mdl")
 
 
 CLASS.Health = 1300

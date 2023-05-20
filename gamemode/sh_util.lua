@@ -306,11 +306,12 @@ function util.BlastDamageElemental(inflictor, attacker, epicenter, radius, damag
 				if ent:IsValidLivingHuman() and bool then
 					ent:GiveStatus("holly", 5)
 				end
+				
 				if !bool then
-					ent:AttachmentDamage((((radius - nearest:Distance(epicenter)) / radius) * basedmg), attacker, inflictor,element)
+					ent:AttachmentDamage(basedmg, attacker, inflictor,element)
 				else
 					for i=1,4 do
-						ent:AttachmentDamage((((radius - nearest:Distance(epicenter)) / radius) * basedmg), attacker, inflictor,i)
+						ent:AttachmentDamage(basedmg, attacker, inflictor,i)
 					end
 				end
 

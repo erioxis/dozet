@@ -4,8 +4,8 @@ SWEP.Base = "weapon_zs_baseshotgun"
 
 --SWEP.PrintName = "DoomStick"
 --SWEP.Description = "Ancient weapon,heaven for boomstickers,can burn zombie but less damage."
-SWEP.PrintName = ""..translate.Get("wep_doomstick")
-SWEP.Description = ""..translate.Get("wep_d_doomstick")
+SWEP.PrintName = translate.Get("wep_doomstick")
+SWEP.Description = translate.Get("wep_d_doomstick")
 
 if CLIENT then
 	SWEP.VElements = {
@@ -59,7 +59,7 @@ SWEP.ReloadSound = Sound("Weapon_Shotgun.Reload")
 
 GAMEMODE:SetPrimaryWeaponModifier(SWEP, WEAPON_MODIFIER_RELOAD_SPEED, 0.07)
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_CLIP_SIZE, 1)
-GAMEMODE:AddNewRemantleBranch(SWEP, 1, ""..translate.Get("wep_doomstick_r1"), ""..translate.Get("wep_d_doomstick_r1"), function(wept)
+GAMEMODE:AddNewRemantleBranch(SWEP, 1, translate.Get("wep_doomstick_r1"), translate.Get("wep_d_doomstick_r1"), function(wept)
 	wept.Primary.Damage = wept.Primary.Damage * 20
 	wept.ReloadSpeed = wept.ReloadSpeed * 1.9
 	wept.Primary.Delay = wept.Primary.Delay * 1.5
@@ -71,14 +71,14 @@ GAMEMODE:AddNewRemantleBranch(SWEP, 1, ""..translate.Get("wep_doomstick_r1"), ""
 	wept.Primary.ClipSize = 1
 end)
 
-branch = GAMEMODE:AddNewRemantleBranch(SWEP, 2, ""..translate.Get("wep_doomstick_f1"), ""..translate.Get("wep_d_doomstick_f1"), function(wept)
+branch = GAMEMODE:AddNewRemantleBranch(SWEP, 2, translate.Get("wep_doomstick_f1"), translate.Get("wep_d_doomstick_f1"), function(wept)
 	wept.Primary.Damage = wept.Primary.Damage * 2
 	wept.Primary.NumShots = 6
 	wept.Primary.Delay = 0.29
 	wept.Knockback = wept.Knockback * 1.1
 	wept.FireAnimSpeed = 0.55
 end)
-branch.Colors = {Color(50, 160, 255), Color(50, 130, 215), Color(40, 115, 175), Color(40, 0, 175)}
+branch.Colors = {Color(50, 160, 255), Color(50, 130, 215), Color(40, 115, 175), Color(40, 0, 175), Color(23, 191, 26)}
 branch.NewNames = {"Clocker", "Brocker", "Mlocker", "Krelocker", "Lochet"}
 
 function SWEP:PrimaryAttack()
@@ -105,13 +105,6 @@ end
 SWEP.BulletCallback = function(attacker, tr, dmginfo)
 	local ent = tr.Entity
 	if SERVER and math.random(100) == 1 and ent:IsValidLivingZombie() then
-		ent:Ignite(120)
-		for __, fire in pairs(ents.FindByClass("entityflame")) do
-			if fire:IsValid() and fire:GetParent() == ent then
-				fire:SetOwner(attacker)
-				fire:SetPhysicsAttacker(attacker)
-				fire.AttackerForward = attacker
-			end
-		end
+		ent:AddBurn(attacker,15)
 	end
 end

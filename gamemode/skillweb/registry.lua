@@ -489,6 +489,9 @@ SKILL_AMULET_17 = 463
 SKILL_NO_BALANCE = 464
 SKILL_DEVOURER = 465
 SKILL_ULTIMATE_TORMENT = 466
+SKILL_LIVER_TRUE = 467
+SKILL_COPPER = 468
+SKILL_WORTHINESS5 = 469
 
 
 
@@ -732,10 +735,15 @@ GM:AddSkill(SKILL_TANKER, trs("skill_tanker_0"), GOOD..trs("skill_tanker_d1")..B
 GM:AddSkill(SKILL_ABSOLUTE, trs("skill_abs"), trs("skill_abs_d"),
 																-5,			3,					{SKILL_TANKER}, TREE_HEALTHTREE)
 GM:AddSkill(SKILL_LIVER,  trs("skill_curse_0"), BAD..trs("skill_curse_d1")..GOOD..trs("skill_curse_d2")..GOOD..trs("skill_curse_d3")..GOOD.."+30"..trs("worth"),
-																-5,			5,					{SKILL_TANKER}, TREE_HEALTHTREE)
+																-5,			5,					{}, TREE_HEALTHTREE)
 GM:AddSkillModifier(SKILL_LIVER, SKILLMOD_SPEED, 60)
 GM:AddSkillModifier(SKILL_LIVER, SKILLMOD_HEALTH, 30)
 GM:AddSkillModifier(SKILL_LIVER, SKILLMOD_WORTH, 30)
+GM:AddSkill(SKILL_LIVER_TRUE,  trs("skill_live"), BAD.."-65"..trs("health")..GOOD..trs("skill_live_d2"),
+																-5,			6,					{SKILL_LIVER}, TREE_HEALTHTREE)
+GM:AddSkillModifier(SKILL_LIVER_TRUE, SKILLMOD_HP_PER_WAVE,15)
+GM:AddSkillModifier(SKILL_LIVER_TRUE, SKILLMOD_HEALTH,-65)
+
 GM:AddSkill(SKILL_FORAGER, trs("skill_f_0"), GOOD..trs("skill_f_d1")..BAD..trs("skill_f_d2"),
 																5,			-2,					{SKILL_GOURMET}, TREE_HEALTHTREE)
 GM:AddSkill(SKILL_JUSTICE, trs("skill_justice"), GOOD.."-8%"..trs("res_delay"),
@@ -865,7 +873,7 @@ GM:AddSkill(SKILL_ULTRANIMBLE, trs("skill_salostealer"), GOOD.."+30"..trs("speed
 GM:AddSkill(SKILL_POGO, trs("skill_pogo"), trs("skill_pogo_d1")..GOOD..trs("skill_pogo_d2")..BAD.."-45%"..trs("jump"),
 																0,			-7,					{SKILL_ULTRANIMBLE}, TREE_SPEEDTREE)
 GM:AddSkillModifier(SKILL_POGO, SKILLMOD_JUMPPOWER_MUL, -0.45)
-GM:AddSkill(SKILL_WORTHINESS3, trs("worthness").."III", GOOD.."+10"..trs("worth")..BAD.."-3"..trs("start_points"),
+GM:AddSkill(SKILL_WORTHINESS3, trs("worthness").."III", GOOD.."+10"..trs("worth")..BAD.."-6"..trs("start_points"),
 																6,			2,					{}, TREE_SPEEDTREE)
 GM:AddSkill(SKILL_SURESTEP, trs("skill_step_0"), GOOD..trs("skill_step_d0")..BAD.."-4"..trs("speed"),
 																6,			0,					{}, TREE_SPEEDTREE)
@@ -924,7 +932,7 @@ GM:AddSkill(SKILL_RECLAIMSOL, trs("skill_rec_sol"), GOOD..trs("skill_rec_sol_d1"
 																0,			4,					{SKILL_SMARTTARGETING}, TREE_SUPPORTTREE)
 GM:AddSkill(SKILL_U_STRENGTHSHOT, trs("skill_sshot"), GOOD..trs("skill_sshot_d1"),
 																0,			0,					{SKILL_SMARTTARGETING}, TREE_SUPPORTTREE)
-GM:AddSkill(SKILL_WORTHINESS4, trs("worthness").."IV", GOOD.."+10"..trs("worth")..BAD.."-3"..trs("start_points"),
+GM:AddSkill(SKILL_WORTHINESS4, trs("worthness").."IV", GOOD.."+10"..trs("worth")..BAD.."-6"..trs("start_points"),
 																-5,			2,					{}, TREE_SUPPORTTREE)
 GM:AddSkill(SKILL_U_ANTITODESHOT, trs("skill_u_antidote"), GOOD..trs("skill_u_antidote_d1"),
 																4,			-2,					{SKILL_PREMIUM}, TREE_SUPPORTTREE)
@@ -1030,6 +1038,9 @@ GM:AddSkill(SKILL_HAULMODULE, trs("skill_u_hdrone"), GOOD..trs("skill_u_hdrone_d
 																2,			-1,					{SKILL_NANITECLOUD}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_SAMODOS, trs("skill_samodos"), GOOD..trs("skill_samodos_d1")..BAD..trs("skill_samodos_d2"),
 																2,			3,					{SKILL_NANITECLOUD,SKILL_DEVOURER}, TREE_BUILDINGTREE)
+GM:AddSkill(SKILL_COPPER, trs("skill_copper"), GOOD..trs("skill_copper_d1")..BAD.."+9%"..trs("sale"),
+																4,			5,					{SKILL_DEVOURER}, TREE_BUILDINGTREE)
+GM:AddSkillModifier(SKILL_COPPER, SKILLMOD_ARSENAL_DISCOUNT, 0.09)
 GM:AddSkill(SKILL_DEVOURER, trs("skill_devo"), GOOD..trs("skill_devo_d1")..BAD..trs("skill_devo_d2"),
 																2,			5,					{}, TREE_BUILDINGTREE)
 GM:AddSkillModifier(SKILL_DEVOURER, SKILLMOD_C_USE, 0.5)
@@ -1052,12 +1063,12 @@ GM:AddSkill(SKILL_INSIGHT, trs("skill_vision_ar"), BAD.."+2%"..trs("sale")..GOOD
 GM:AddSkill(SKILL_U_ZAPPER_ARC, trs("skill_u_arc_z"), GOOD..trs("skill_u_arc_z_d1"),
 																6,			2,					{SKILL_FIELDAMP, SKILL_TECHNICIAN}, TREE_BUILDINGTREE)
 .AlwaysActive = true
-GM:AddSkill(SKILL_D_LATEBUYER, trs("skill_d_lbuyer"), GOOD.."+30"..trs("worth")..GOOD.."-13%"..trs("sale")..BAD..trs("skill_d_lbuyer_d1"),
+GM:AddSkill(SKILL_D_LATEBUYER, trs("skill_d_lbuyer"), GOOD.."+30"..trs("worth")..GOOD.."-10%"..trs("sale")..BAD..trs("skill_d_lbuyer_d1"),
 																8,			1,					{SKILL_HAMMERDOOR}, TREE_BUILDINGTREE)
-GM:AddSkill(SKILL_BADBUYER, trs("skill_bbuyer"), GOOD.."+100"..trs("worth")..GOOD.."-15%"..trs("sale")..BAD.."-900"..trs("start_points"),
+GM:AddSkill(SKILL_BADBUYER, trs("skill_bbuyer"), GOOD.."+100"..trs("worth")..GOOD.."-9%"..trs("sale")..BAD.."-900"..trs("start_points"),
 																9,			0,					{SKILL_D_LATEBUYER}, TREE_BUILDINGTREE)
 GM:AddSkillModifier(SKILL_BADBUYER, SKILLMOD_WORTH, 100)
-GM:AddSkillModifier(SKILL_BADBUYER, SKILLMOD_ARSENAL_DISCOUNT, -0.15)
+GM:AddSkillModifier(SKILL_BADBUYER, SKILLMOD_ARSENAL_DISCOUNT, -0.09)
 GM:AddSkill(SKILL_HAMMERDOOR, trs("skill_dd_3"), GOOD..trs("skill_dd_3_d1")..BAD.."+10%"..trs("hammerd"),
 																8,			3,					{SKILL_D_LATEBUYER}, TREE_BUILDINGTREE)
 GM:AddSkillModifier(SKILL_HAMMERDOOR, SKILLMOD_HAMMER_SWING_DELAY_MUL, 0.10)
@@ -1424,7 +1435,7 @@ GM:AddSkill(SKILL_MOB_II, trs("skill_mobile2"), GOOD.. trs("skill_mobile2_d1")..
 GM:AddSkill(SKILL_ACTIVATE_THIS, trs("skill_acrftt"), GOOD.. trs("skill_acrftt_d1")..BAD.."-2"..trs("luck"),
 																-7,			3,					{SKILL_MOBILIZED}, TREE_GUNTREE)
 GM:AddSkillModifier(SKILL_ACTIVATE_THIS, SKILLMOD_LUCK, -2)
-GM:AddSkill(SKILL_WORTHINESS1, trs("worthness"), GOOD.."+10"..trs("worth")..BAD.."-3"..trs("start_points"),
+GM:AddSkill(SKILL_WORTHINESS1, trs("worthness"), GOOD.."+10"..trs("worth")..BAD.."-6"..trs("start_points"),
 																-4,			-3,					{}, TREE_GUNTREE)
 GM:AddSkill(SKILL_CANNONBALL, trs("skill_cannonball"), trs("skill_cannonball_d1")..GOOD..trs("skill_cannonball_d2"),
 																-2,			-3,					{}, TREE_GUNTREE)
@@ -1455,7 +1466,7 @@ GM:AddSkill(SKILL_D_FINGERS, trs("skill_dfingers"), BAD..trs("skill_dfingers_d1"
 GM:AddSkillModifier(SKILL_D_FINGERS, SKILLMOD_DAMAGE, 1)
 
 -- Melee Tree
-GM:AddSkill(SKILL_WORTHINESS2, trs("worthness").."II", GOOD.."+10"..trs("worth")..BAD.."-3"..trs("start_points"),
+GM:AddSkill(SKILL_WORTHINESS2, trs("worthness").."II", GOOD.."+10"..trs("worth")..BAD.."-6"..trs("start_points"),
 																4,			0,					{}, TREE_MELEETREE)
 
 GM:AddSkill(SKILL_AVOID_BLOCK, trs("skill_xpdamage"), GOOD..trs("skill_xpdamage_d1")..BAD.."-25%"..trs("b_mul"),
@@ -1709,9 +1720,9 @@ GM:AddSkillModifier(SKILL_SCAM, SKILLMOD_POINT_MULTIPLIER, 0.01)
 GM:AddSkill(SKILL_SCAM, "Scam", GOOD.."+1%"..trs("p_mul")..BAD.. "On kill curses with 1.5% chance(GIVE SPECIAL CURSE)",
 			3,			-8,					{SKILL_BADTRIP}, TREE_POINTTREE)
 SKILL_SOLARUZ = 169
-GM:AddSkillModifier(SKILL_SOLARUZ, SKILLMOD_POINT_MULTIPLIER, 0.50)
-GM:AddSkillModifier(SKILL_SOLARUZ, SKILLMOD_DMG_TAKEN, 1)
-GM:AddSkill(SKILL_SOLARUZ, "Debuff:Deadly Fortuna", PURPLE.."+50% Points Multiplicator \n" ..BAD.. "+100% damage taken",
+GM:AddSkillModifier(SKILL_SOLARUZ, SKILLMOD_POINT_MULTIPLIER, 0.35)
+GM:AddSkillModifier(SKILL_SOLARUZ, SKILLMOD_DMG_TAKEN, 0.5)
+GM:AddSkill(SKILL_SOLARUZ, "Debuff:Deadly Fortuna", PURPLE.."+35% Points Multiplicator \n" ..BAD.. "+50% damage taken",
 				3,			-9,					{SKILL_SCAM}, TREE_POINTTREE)
 SKILL_ANCK = 170
 GM:AddSkill(SKILL_ANCK, "Ancient knowledge", PURPLE.."Learn The Ancient knowledge \n" ..BAD.. "The cost of knowledge",
@@ -1778,8 +1789,8 @@ GM:AddSkill(SKILL_HELPLIFER, "Chance", PURPLE.."Can save from fatal hit\n10% Cha
 .CanUpgrade = 2
 GM:AddSkill(SKILL_INF_POWER, "Dozei Core", PURPLE.."-50% Damage.\nExtra-damage for every skills you unlocked\n+0.55% damage per skill",
 										4,			-5,					{SKILL_NO_BALANCE,SKILL_HELPLIFER}, TREE_ANCIENTTREE).SPUse = 14
-GM:AddSkill(SKILL_NO_BALANCE, "Balancium", PURPLE.."Sometimes your damage become a DIRECT damage!",
-										2.5,			-4,					{}, TREE_ANCIENTTREE).SPUse = 24
+GM:AddSkill(SKILL_NO_BALANCE, "Silver bullets", PURPLE.."Sometimes your damage become a DIRECT damage!\n7% Chance",
+										2.5,			-3.5,					{}, TREE_ANCIENTTREE).SPUse = 24
 GM:AddSkill(SKILL_SOUL_TRADE, "[TRADE]Soul", PURPLE.."Sell Your Soul For Toy.\n"..PURPLE.."+66.6% Point Mul",
 										4,			-7,					{SKILL_HELPLIFER}, TREE_ANCIENTTREE)
 GM:AddSkill(SKILL_SEEAURA, "Ancient vision", PURPLE.."You can see zombie aura",
@@ -1825,6 +1836,8 @@ GM:AddSkill(SKILL_TRUEPOWER, "Future Knowledge Vol.3", PURPLE.."Cost Of Knowledg
 																														SKILL_HEARTS = 202
 GM:AddSkill(SKILL_HEARTS, "Ancient Hearts", PURPLE.."Unlock Heart Trinkets",
 																				-5,			-11,					{SKILL_TRUEPOWER,SKILL_NANOMACHINES}, TREE_ANCIENTTREE)
+GM:AddSkill(SKILL_WORTHINESS5, "Worthiness V", PURPLE.."+10 worth\n"..BAD.."-6 points",
+																				-5,			-13,					{SKILL_HEARTS}, TREE_ANCIENTTREE)
 SKILL_NANOMACHINES = 239
 GM:AddSkill(SKILL_NANOMACHINES, "Anci-tech", PURPLE.."+5% Bullet damage\n"..PURPLE.."+50% DMG reflect",
 																				-6,			-12,					{SKILL_HEARTS}, TREE_ANCIENTTREE)
@@ -2894,7 +2907,7 @@ GM:AddSkillFunction(SKILL_D_HEMOPHILIA, function(pl, active)
 end)
 
 GM:AddSkillModifier(SKILL_D_LATEBUYER, SKILLMOD_WORTH, 30)
-GM:AddSkillModifier(SKILL_D_LATEBUYER, SKILLMOD_ARSENAL_DISCOUNT, -0.13)
+GM:AddSkillModifier(SKILL_D_LATEBUYER, SKILLMOD_ARSENAL_DISCOUNT, -0.10)
 
 GM:AddSkillModifier(SKILL_STOCKPILE, SKILLMOD_RES_AMMO_MUL, 0.50)
 
@@ -2944,6 +2957,7 @@ GM:AddSkillModifier(SKILL_WORTHINESS1, SKILLMOD_WORTH, 10)
 GM:AddSkillModifier(SKILL_WORTHINESS2, SKILLMOD_WORTH, 10)
 GM:AddSkillModifier(SKILL_WORTHINESS3, SKILLMOD_WORTH, 10)
 GM:AddSkillModifier(SKILL_WORTHINESS4, SKILLMOD_WORTH, 10)
+GM:AddSkillModifier(SKILL_WORTHINESS5, SKILLMOD_WORTH, 10)
 
 GM:AddSkillModifier(SKILL_KNUCKLEMASTER, SKILLMOD_UNARMED_SWING_DELAY_MUL, 0.35)
 GM:AddSkillModifier(SKILL_KNUCKLEMASTER, SKILLMOD_UNARMED_DAMAGE_MUL, 0.75)

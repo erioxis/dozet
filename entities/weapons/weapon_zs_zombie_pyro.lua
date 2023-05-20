@@ -45,17 +45,6 @@ function SWEP:ApplyMeleeDamage(ent, trace, damage)
 			ent:Kill()
 		end
 	end
-	if SERVER and !ent:IsPlayer() and math.random(1,9) == 3 then
-		ent:Ignite(10)
-		local attacker = self:GetOwner()
-		for __, fire in pairs(ents.FindByClass("entityflame")) do
-			if fire:IsValid() and fire:GetParent() == ent then
-				fire:SetOwner(attacker)
-				fire:SetPhysicsAttacker(attacker)
-				fire.AttackerForward = attacker
-			end
-		end
-	end
 	self.BaseClass.ApplyMeleeDamage(self, ent, trace, damage)
 end
 

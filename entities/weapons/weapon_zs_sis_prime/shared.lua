@@ -3,7 +3,7 @@ AddCSLuaFile()
 SWEP.PrintName = "A visitor?"
 
 SWEP.Base = "weapon_zs_basemelee"
-
+--SWEP.ViewModel = "models/ultrakill/enemies/sisyphusprime/sisyphusprimepm_arms.mdl"
 SWEP.ViewModel = "models/weapons/c_arms_citizen.mdl"
 SWEP.WorldModel	= ""
 

@@ -369,7 +369,7 @@ function meta:ResetLastBarricadeAttacker(attacker, dmginfo)
 	end
 end
 
-meta.OldSetPhysicsAttacker = meta.SetPhysicsAttacker
+meta.OldSetPhysicsAttacker = meta.OldSetPhysicsAttacker or meta.SetPhysicsAttacker
 function meta:SetPhysicsAttacker(ent)
 	if string.sub(self:GetClass(), 1, 12) == "func_physbox" and ent:IsValid() then
 		self.PBAttacker = ent

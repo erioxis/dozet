@@ -335,7 +335,7 @@ function GM:OpenAArsenalMenu()
 	local topspace = vgui.Create("DPanel", frame)
 	topspace:SetWide(wid - 16)
 
-	local title = EasyLabel(topspace, ""..translate.Get("pointshop1"), "ZSHUDFontSmall", COLOR_WHITE)
+	local title = EasyLabel(topspace, translate.Get("pointshop1"), "ZSHUDFontSmall", COLOR_WHITE)
 	title:CenterHorizontal()
 	local subtitle = EasyLabel(topspace, "Your little world", "ZSHUDFontTiny", COLOR_WHITE)
 	subtitle:CenterHorizontal()
@@ -346,12 +346,6 @@ function GM:OpenAArsenalMenu()
 	topspace:AlignTop(8)
 	topspace:CenterHorizontal()
 
-	local wsb = EasyButton(topspace, ""..translate.Get("worthshop1"), 8, 4)
-	wsb:SetFont("ZSHUDFontSmaller")
-	wsb:SizeToContents()
-	wsb:AlignRight(8)
-	wsb:AlignTop(8)
-	wsb.DoClick = worthmenuDoClick
 
 	local bottomspace = vgui.Create("DPanel", frame)
 	bottomspace:SetWide(topspace:GetWide())

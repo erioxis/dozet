@@ -70,8 +70,9 @@ function GM:SkillCanUnlock(pl, skillid, skilllist)
 		end
 
 		local connections = skill.Connections
+		local n = skill.NeedAchievement
 		if skill.NeedAchievement then
-			local ach = CLIENT and GAMEMODE.AchievementsProgress[skill.NeedAchievement] or pl.Achs[skill.NeedAchievement]
+			local ach = CLIENT and GAMEMODE.AchievementsProgress[skill.NeedAchievement] or SERVER and pl.Achs[skill.NeedAchievement]
 			if ach and isnumber(ach) and GAMEMODE.Achievements[skill.NeedAchievement].Goal < ach or !ach then
 				return false
 			end

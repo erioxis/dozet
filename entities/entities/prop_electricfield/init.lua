@@ -38,6 +38,10 @@ function ENT:Think()
 		self:EmitSound("ambient/energy/zap"..math.random(5, 9)..".wav", 75, math.Rand(90, 110))
 		self.NextHurt = CurTime() + 0.11
 	end
+
+	self:EmitSound("ambient/energy/zap"..math.random(5, 9)..".wav", 75, math.Rand(90, 110))
+	self.NextHurt = CurTime() + 0.11
+
 	if CurTime() >= self.NextEffect then
 		local effectdata = EffectData()
 			effectdata:SetEntity(self)
@@ -52,7 +56,8 @@ function ENT:Think()
 	
 	local pos = self:GetPos()
 	
-	for _, ent in pairs(ents.FindInSphere(pos, 200 * self:GetModelScale())) do
+	for _, ent in pairs(ents.FindInSphere(pos, 133 * self:GetModelScale())) do
+
 		local class = ent:GetClass()
 		local ownsitem = not ent.NoPickupsOwner or ent.NoPickupsOwner == owner
 		local droppedrecent = not ent.DroppedTime or ent.DroppedTime + 4 < CurTime()
@@ -64,7 +69,7 @@ function ENT:Think()
 			ent:SetPhysicsAttacker(owner, 4)
 
 		end
-		if ent:IsPlayer() and ent:Team() == TEAM_UNDEAD then
+		if ent:IsPlayer() and ent:Team() == TEAM_UNDEAD or ent == owner then
 			if not ent:GetZombieClassTable().Boss or ent == owner then
 				if ent:Health() < 120 * GAMEMODE:GetWave() then
 					local dir = (pos - ent:NearestPoint(pos)):GetNormalized()

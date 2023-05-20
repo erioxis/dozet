@@ -49,6 +49,8 @@ include("vgui/pendboard.lua")
 include("vgui/pworth.lua")
 
 include("vgui/parsenal.lua")
+include("vgui/dbutton_fix.lua")
+include("vgui/dcombobox_fix.lua")
 include("vgui/parsenal_anti.lua")
 include("vgui/premantle.lua")
 include("vgui/dpingmeter.lua")

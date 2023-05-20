@@ -23,21 +23,24 @@ function ENT:RenderInfo(pos, ang, owner)
 			draw.SimpleText(owner:ClippedName(), "ZS3D2DFont2", 0, 160, owner == MySelf and COLOR_LBLUE or COLOR_GRAY, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 		end
 		self:Draw3DHealthBar(math.Clamp(self:GetObjectHealth() / self:GetMaxObjectHealth(), 0, 1), nil, 570, 0.85)
-
-		--[[if self.Contents then
-			local contents = self.Contents
-			if #contents > 32 then
-				contents = string.sub(contents, 1, 30)..".."
+		local wep = MySelf:GetActiveWeapon()
+		--isnumber(tonumber(string.sub(wep:GetClass(),#wep:GetClass(),#wep:GetClass())))
+		local number = wep and tonumber(string.sub(wep:GetClass(),#wep:GetClass(),#wep:GetClass())) or 0
+		if wep and GAMEMODE:GetUpgradeScrap(wep, number+1) and number ~= 5 then
+			local scost = math.floor(GAMEMODE:GetUpgradeScrap(wep, number+1) * (MySelf.ScrapDiscount or 1))
+			if  MySelf:KeyDown(IN_DUCK) and MySelf:KeyDown(IN_SPEED) then
+				local plc = 0
+				for i=number,5 do
+					plc = plc + math.floor(GAMEMODE:GetUpgradeScrap(wep, i) * (MySelf.ScrapDiscount or 1))
+				end
+				scost = plc
 			end
-			draw.SimpleText(contents, "ZS3D2DFont2Small", 0, 235, contents == "EMPTY" and COLOR_RED or COLOR_WHITE, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
-		end]]
+			draw.SimpleText(translate.Get("scrap_for_upg")..scost, "ZS3D2DFont2Small", 0, 260, scost <= MySelf:GetAmmoCount("scrap") and COLOR_BLUE or COLOR_RED, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+		end
+
 
 		if owner == MySelf then
 			draw.SimpleText(self:GetScraps() .. translate.Get("scram_rem"), "ZS3D2DFont2Big", 0, 290, COLOR_GRAY, TEXT_ALIGN_CENTER)
-			--[[local ammotype = MySelf:GetResupplyAmmoType()
-			ammotype = GAMEMODE.AmmoNames[ammotype] or ammotype
-
-			draw.SimpleText("["..ammotype.."]", "ZS3D2DFont2Small", 0, 360, COLOR_GRAY, TEXT_ALIGN_CENTER)]]
 		end
 	cam.End3D2D()
 end

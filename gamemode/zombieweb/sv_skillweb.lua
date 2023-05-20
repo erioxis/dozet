@@ -64,7 +64,7 @@ net.Receive("zs_skill_is_unlocked", function(length, pl)
 	if skill and not pl:IsSkillUnlocked(skillid) and (pl:GetZSSPRemaining() >= 1 or GAMEMODE.Skills[skillid].Amulet) and pl:SkillCanUnlock(skillid) and not skill.Disabled then
 		pl:SetSkillUnlocked(skillid, true)
 
-		local msg = translate.Get("skill_discover")..skill.Name
+		local msg = translate.ClientGet(pl,"skill_discover")..skill.Name
 		pl:CenterNotify(msg)
 		pl:PrintMessage(HUD_PRINTTALK, msg)
 

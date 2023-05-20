@@ -370,7 +370,7 @@ function MakepOptions()
 
 
 	list3:AddItem(EasyLabel(Window, "Weapon HUD display style", "DefaultFontSmall", color_white))
-	local dropdown = vgui.Create("DComboBox", Window)
+	local dropdown = vgui.Create("DComboBox_fix", Window)
 	dropdown:SetMouseInputEnabled(true)
 	dropdown:AddChoice("Display in 3D")
 	dropdown:AddChoice("Display in 2D")
@@ -383,7 +383,7 @@ function MakepOptions()
 	list3:AddItem(dropdown)
 
 	list3:AddItem(EasyLabel(Window, "Health target display style", "DefaultFontSmall", color_white))
-	dropdown = vgui.Create("DComboBox", Window)
+	dropdown = vgui.Create("DComboBox_fix", Window)
 	dropdown:SetMouseInputEnabled(true)
 	dropdown:AddChoice("Health|Max Health")
 	dropdown:AddChoice("Health amount")
@@ -396,7 +396,7 @@ function MakepOptions()
 	list3:AddItem(dropdown)
 
 	list3:AddItem(EasyLabel(Window, "ULTRAKILL Style meter(In developing!)", "DefaultFontSmall", color_white))
-	dropdown = vgui.Create("DComboBox", Window)
+	dropdown = vgui.Create("DComboBox_fix", Window)
 	dropdown:SetMouseInputEnabled(true)
 	dropdown:AddChoice("None")
 	dropdown:AddChoice("YES!")
@@ -410,7 +410,7 @@ function MakepOptions()
 
 
 	list3:AddItem(EasyLabel(Window, "Font", "DefaultFontSmall", color_white))
-	dropdown = vgui.Create("DComboBox", Window)
+	dropdown = vgui.Create("DComboBox_fix", Window)
 	dropdown:SetMouseInputEnabled(true)
 	dropdown:AddChoice("Open Sans Condensed")
 	dropdown:AddChoice("Ghoulish Fright")
@@ -423,7 +423,7 @@ function MakepOptions()
 	list3:AddItem(dropdown)
 
 	list:AddItem(EasyLabel(Window, "Prop rotation snap angle", "DefaultFontSmall", color_white))
-	dropdown = vgui.Create("DComboBox", Window)
+	dropdown = vgui.Create("DComboBox_fix", Window)
 	dropdown:SetMouseInputEnabled(true)
 	dropdown:AddChoice(translate.Get("op_deg_no"))
 	dropdown:AddChoice("15"..translate.Get("op_deg"))
@@ -442,7 +442,7 @@ function MakepOptions()
 	list:AddItem(dropdown)
 
 	list3:AddItem(EasyLabel(Window, "Human ambient beat set", "DefaultFontSmall", color_white))
-	dropdown = vgui.Create("DComboBox", Window)
+	dropdown = vgui.Create("DComboBox_fix", Window)
 	dropdown:SetMouseInputEnabled(true)
 	for setname in pairs(GAMEMODE.Beats) do
 		if setname ~= GAMEMODE.BeatSetHumanDefualt then
@@ -459,7 +459,7 @@ function MakepOptions()
 	list3:AddItem(dropdown)
 
 	list3:AddItem(EasyLabel(Window, "Zombie ambient beat set", "DefaultFontSmall", color_white))
-	dropdown = vgui.Create("DComboBox", Window)
+	dropdown = vgui.Create("DComboBox_fix", Window)
 	dropdown:SetMouseInputEnabled(true)
 	for setname in pairs(GAMEMODE.Beats) do
 		if setname ~= GAMEMODE.BeatSetZombieDefualt then

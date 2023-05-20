@@ -8,7 +8,7 @@ function SWEP:DrawHUD()
 	if !self:GetJudge() then
 		draw.SimpleText(translate.Get("wep_j_sis"), "ZSHUDFontSmall", x + wid, texty - 25, COLOR_RED, TEXT_ALIGN_CENTER)
 	else
-		draw.SimpleText(translate.Get("wep_j_v"), "ZSHUDFontSmall", x + wid, texty - 25, COLOR_GREEN, TEXT_ALIGN_CENTER)
+		draw.SimpleText(translate.Get("wep_j_sis"), "ZSHUDFontSmall", x + wid, texty - 25, COLOR_GREEN, TEXT_ALIGN_CENTER)
 	end
 	if !self:GetDiePower() then
 		draw.SimpleText(translate.Get("wep_d_sis"), "ZSHUDFontSmall", x + wid, texty - 55, COLOR_RED, TEXT_ALIGN_CENTER)
@@ -31,10 +31,10 @@ end
 
 function SWEP:PreDrawViewModel(vm)
 	render.ModelMaterialOverride(matSkin)
-	render.SetColorModulation(0.894, 0.78, 0.329)
+	render.SetColorModulation(0.894, 0.384, 0.329)
 	render.SetBlend(math.max(0.5,math.abs(math.sin(CurTime() * math.pi))))
 end
 
-SWEP.UseHands = false
+SWEP.UseHands = true
 SWEP.ViewModelFOV = 50
 SWEP.BobScale = 2
