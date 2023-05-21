@@ -1,4 +1,4 @@
-﻿GM.Skills = {}
+GM.Skills = {}
 GM.SkillModifiers = {}
 GM.SkillFunctions = {}
 GM.SkillModifierFunctions = {}
@@ -1720,9 +1720,9 @@ GM:AddSkillModifier(SKILL_SCAM, SKILLMOD_POINT_MULTIPLIER, 0.01)
 GM:AddSkill(SKILL_SCAM, "Scam", GOOD.."+1%"..trs("p_mul")..BAD.. "On kill curses with 1.5% chance(GIVE SPECIAL CURSE)",
 			3,			-8,					{SKILL_BADTRIP}, TREE_POINTTREE)
 SKILL_SOLARUZ = 169
-GM:AddSkillModifier(SKILL_SOLARUZ, SKILLMOD_POINT_MULTIPLIER, 0.35)
+GM:AddSkillModifier(SKILL_SOLARUZ, SKILLMOD_POINT_MULTIPLIER, 0.15)
 GM:AddSkillModifier(SKILL_SOLARUZ, SKILLMOD_DMG_TAKEN, 0.5)
-GM:AddSkill(SKILL_SOLARUZ, "Debuff:Deadly Fortuna", PURPLE.."+35% Points Multiplicator \n" ..BAD.. "+50% damage taken",
+GM:AddSkill(SKILL_SOLARUZ, "Debuff:Deadly Fortuna", PURPLE.."+15% Points Multiplicator \n" ..BAD.. "+50% damage taken",
 				3,			-9,					{SKILL_SCAM}, TREE_POINTTREE)
 SKILL_ANCK = 170
 GM:AddSkill(SKILL_ANCK, "Ancient knowledge", PURPLE.."Learn The Ancient knowledge \n" ..BAD.. "The cost of knowledge",
@@ -1791,7 +1791,7 @@ GM:AddSkill(SKILL_INF_POWER, "Dozei Core", PURPLE.."-50% Damage.\nExtra-damage f
 										4,			-5,					{SKILL_NO_BALANCE,SKILL_HELPLIFER}, TREE_ANCIENTTREE).SPUse = 14
 GM:AddSkill(SKILL_NO_BALANCE, "Silver bullets", PURPLE.."Sometimes your damage become a DIRECT damage!\n7% Chance",
 										2.5,			-3.5,					{}, TREE_ANCIENTTREE).SPUse = 24
-GM:AddSkill(SKILL_SOUL_TRADE, "[TRADE]Soul", PURPLE.."Sell Your Soul For Toy.\n"..PURPLE.."+66.6% Point Mul",
+GM:AddSkill(SKILL_SOUL_TRADE, "[TRADE]Soul", PURPLE.."Sell Your Soul For Toy.\n"..PURPLE.."+33.3% Point Mul",
 										4,			-7,					{SKILL_HELPLIFER}, TREE_ANCIENTTREE)
 GM:AddSkill(SKILL_SEEAURA, "Ancient vision", PURPLE.."You can see zombie aura",
 										2,			-8.5,					{SKILL_HELPLIFER}, TREE_ANCIENTTREE)
@@ -2169,9 +2169,9 @@ GM:AddSkill(SKILL_USELESS_2, "Useless 2", GOOD.."+5 Health",
 				                                                            	0,			1,					{SKILL_USELESS_1}, TREE_USELESSTREE)
 GM:AddSkillModifier(SKILL_USELESS_2, SKILLMOD_HEALTH, 5)
 SKILL_USELESS_3 = 502
-GM:AddSkill(SKILL_USELESS_3, "Useless 3", GOOD.."+2% Arsenal discount",
+GM:AddSkill(SKILL_USELESS_3, "Useless 3", GOOD.."+1% Arsenal discount",
 				                                                            	1,			2,					{SKILL_USELESS_2}, TREE_USELESSTREE)
-GM:AddSkillModifier(SKILL_USELESS_3, SKILLMOD_ARSENAL_DISCOUNT, -0.02)
+GM:AddSkillModifier(SKILL_USELESS_3, SKILLMOD_ARSENAL_DISCOUNT, -0.01)
 SKILL_USELESS_4 = 503
 GM:AddSkill(SKILL_USELESS_4, "Useless 4", GOOD.."+5 speed",
 				                                                            	2,			2,					{SKILL_USELESS_3}, TREE_USELESSTREE)
@@ -2241,9 +2241,9 @@ GM:AddSkill(SKILL_USELESS_20, "Useless 20", GOOD.."+2 spoints",
 				                                                            	-4,		    -0,					{SKILL_USELESS_19}, TREE_USELESSTREE)
 GM:AddSkillModifier(SKILL_USELESS_20, SKILLMOD_SPOINT, 2)
 SKILL_USELESS_21 = 520
-GM:AddSkill(SKILL_USELESS_21, "Useless 21", GOOD.."+4% Sale",
+GM:AddSkill(SKILL_USELESS_21, "Useless 21", GOOD.."+1% Sale",
 				                                                            	-4,		    1,					{SKILL_USELESS_20}, TREE_USELESSTREE)
-GM:AddSkillModifier(SKILL_USELESS_21, SKILLMOD_ARSENAL_DISCOUNT, -0.04)
+GM:AddSkillModifier(SKILL_USELESS_21, SKILLMOD_ARSENAL_DISCOUNT, -0.01)
 SKILL_USELESS_22 = 521
 GM:AddSkill(SKILL_USELESS_22, "Useless 22", GOOD.."-4% Damage taken",
 				                                                            	-5,		    1,					{SKILL_USELESS_21}, TREE_USELESSTREE)
@@ -3001,7 +3001,7 @@ GM:AddSkillModifier(SKILL_AGILEII, SKILLMOD_SPEED, -3)
 GM:AddSkillModifier(SKILL_AGILEIII, SKILLMOD_JUMPPOWER_MUL, 0.06)
 GM:AddSkillModifier(SKILL_AGILEIII, SKILLMOD_SPEED, -4)
 
-GM:AddSkillModifier(SKILL_SOUL_TRADE, SKILLMOD_POINT_MULTIPLIER, 0.666)
+GM:AddSkillModifier(SKILL_SOUL_TRADE, SKILLMOD_POINT_MULTIPLIER, 0.333)
 
 GM:AddSkillModifier(SKILL_SOFTDET, SKILLMOD_EXP_DAMAGE_RADIUS, 0.10)
 GM:AddSkillModifier(SKILL_SOFTDET, SKILLMOD_EXP_DAMAGE_TAKEN_MUL, -0.4)
@@ -3130,7 +3130,7 @@ GM:AddSkillModifier(SKILL_CURSECURE, SKILLMOD_CURSEM, 0.20)
 GM:AddSkillModifier(SKILL_CURSECURE, SKILLMOD_MELEE_DAMAGE_MUL, -0.15)
 
 GM:AddSkillModifier(SKILL_INSIGHT, SKILLMOD_ARSENAL_DISCOUNT, 0.02)
-GM:AddSkillModifier(SKILL_ACUITY, SKILLMOD_ARSENAL_DISCOUNT, -0.03)
+GM:AddSkillModifier(SKILL_ACUITY, SKILLMOD_ARSENAL_DISCOUNT, -0.02)
 
 GM:AddSkillModifier(SKILL_VKID, SKILLMOD_JUMPPOWER_MUL, 0.30)
 GM:AddSkillModifier(SKILL_VKID, SKILLMOD_SPEED, 60)

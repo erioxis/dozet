@@ -25,7 +25,7 @@ function ENT:RenderInfo(pos, ang, owner)
 		self:Draw3DHealthBar(math.Clamp(self:GetObjectHealth() / self:GetMaxObjectHealth(), 0, 1), nil, 570, 0.85)
 		local wep = MySelf:GetActiveWeapon()
 		--isnumber(tonumber(string.sub(wep:GetClass(),#wep:GetClass(),#wep:GetClass())))
-		local number = wep and tonumber(string.sub(wep:GetClass(),#wep:GetClass(),#wep:GetClass())) or 0
+		local number =  wep and wep:IsValid() and tonumber(string.sub(wep:GetClass(),#wep:GetClass(),#wep:GetClass())) or 0
 		if wep and GAMEMODE:GetUpgradeScrap(wep, number+1) and number ~= 5 then
 			local scost = math.floor(GAMEMODE:GetUpgradeScrap(wep, number+1) * (MySelf.ScrapDiscount or 1))
 			if  MySelf:KeyDown(IN_DUCK) and MySelf:KeyDown(IN_SPEED) then

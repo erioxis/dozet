@@ -33,7 +33,7 @@ SWEP.RemoveOnGive = true
 
 SWEP.Tier = 7
 
-local branch = GAMEMODE:AddNewRemantleBranch(SWEP, 1, ""..translate.Get("wep_tau_f1"), ""..translate.Get("wep_d_tau_f1"), function(wept)
+local branch = GAMEMODE:AddNewRemantleBranch(SWEP, 1, translate.Get("wep_tau_f1"), translate.Get("wep_d_tau_f1"), function(wept)
 	wept.Primary.Delay = wept.Primary.Delay * 2.6
 	wept.Primary.Damage = wept.Primary.Damage * 2
 	wept.BulletCallback = function(attacker, tr, dmginfo)
