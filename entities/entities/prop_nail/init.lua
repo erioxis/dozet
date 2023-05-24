@@ -30,11 +30,11 @@ end
 
 ENT.TimeNext = CurTime() + 0.5
 function ENT:Think()
-    if self.EntPos and self.TimeNext < CurTime() and self.EntPos:Distance( self:GetBaseEntity():GetPos() ) > 1 then
-    	self:Remove()
-    end
 	local parent = self:GetBaseEntity()
 	local curTime = CurTime()
+    if self.EntPos and self.TimeNext < curTime and self.EntPos:Distance( parent:GetPos() ) > 1 then
+    	self:Remove()
+    end
 	
 	if (self.NextThinkDa or 1) < curTime then
 		self:SetDTBool(12, (parent.ReinforceEnd or 1) > curTime)

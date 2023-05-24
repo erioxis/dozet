@@ -46,3 +46,5 @@ local bossdrops2 = {
     "soulmedical",  -- 25
     "lampsoul"  -- 26
 }
+
+

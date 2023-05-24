@@ -36,7 +36,31 @@ function ENT:Think()
 			end
 		end
 		self:EmitSound("ambient/energy/zap"..math.random(5, 9)..".wav", 75, math.Rand(90, 110))
-		self.NextHurt = CurTime() + 0.11
+		local pos = self:GetPos()
+	
+		for _, ent in pairs(ents.FindInSphere(pos, 133 * self:GetModelScale())) do
+	
+			local class = ent:GetClass()
+			local ownsitem = not ent.NoPickupsOwner or ent.NoPickupsOwner == owner
+			local droppedrecent = not ent.DroppedTime or ent.DroppedTime + 4 < CurTime()
+	
+			if ent and ent:IsValid() and self.Classes[class] and WorldVisible(pos, ent:NearestPoint(pos)) and droppedrecent and ownsitem then
+				local phys = ent:GetPhysicsObject()
+				local dir = (pos - ent:NearestPoint(pos)):GetNormalized()
+				phys:ApplyForceCenter((phys and phys:IsValid() and phys:GetMass() or 1) * self.Force * dir)
+				ent:SetPhysicsAttacker(owner, 4)
+	
+			end
+			if ent:IsPlayer() and ent:Team() == TEAM_UNDEAD or ent == owner then
+				if not ent:GetZombieClassTable().Boss or ent == owner then
+					if ent:Health() < 120 * GAMEMODE:GetWave() then
+						local dir = (pos - ent:NearestPoint(pos)):GetNormalized()
+						   ent:SetVelocity(self.Force * dir * 0.45 * (ent == owner and 0.2 or 1))
+						ent:SetPhysicsAttacker(owner, 4)
+					end
+				end
+			end
+		end
 	end
 
 	self:EmitSound("ambient/energy/zap"..math.random(5, 9)..".wav", 75, math.Rand(90, 110))
@@ -52,32 +76,6 @@ function ENT:Think()
 	end
 	if self.DieTime >= 0 and self.DieTime <= CurTime() or self.TotalHurt <= 0 then
 		self:Remove()
-	end
-	
-	local pos = self:GetPos()
-	
-	for _, ent in pairs(ents.FindInSphere(pos, 133 * self:GetModelScale())) do
-
-		local class = ent:GetClass()
-		local ownsitem = not ent.NoPickupsOwner or ent.NoPickupsOwner == owner
-		local droppedrecent = not ent.DroppedTime or ent.DroppedTime + 4 < CurTime()
-
-		if ent and ent:IsValid() and self.Classes[class] and WorldVisible(pos, ent:NearestPoint(pos)) and droppedrecent and ownsitem then
-			local phys = ent:GetPhysicsObject()
-			local dir = (pos - ent:NearestPoint(pos)):GetNormalized()
-			phys:ApplyForceCenter((phys and phys:IsValid() and phys:GetMass() or 1) * self.Force * dir)
-			ent:SetPhysicsAttacker(owner, 4)
-
-		end
-		if ent:IsPlayer() and ent:Team() == TEAM_UNDEAD or ent == owner then
-			if not ent:GetZombieClassTable().Boss or ent == owner then
-				if ent:Health() < 120 * GAMEMODE:GetWave() then
-					local dir = (pos - ent:NearestPoint(pos)):GetNormalized()
-			  	 	ent:SetVelocity(self.Force * dir * 0.45 * (ent == owner and 0.2 or 1))
-					ent:SetPhysicsAttacker(owner, 4)
-				end
-			end
-		end
 	end
 	self:NextThink(CurTime() + self.ForceDelay)
 end

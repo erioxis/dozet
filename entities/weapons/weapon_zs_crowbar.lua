@@ -1,5 +1,5 @@
 SWEP.PrintName = "Crowbaror"
-SWEP.Description = "STONE!!!."
+SWEP.Description = "You don't see this,ok?"
 
 SWEP.Base = "weapon_zs_basemelee"
 
@@ -20,4 +20,3 @@ SWEP.MeleeDamage = 45
 SWEP.MeleeRange = 48
 SWEP.MeleeSize = 0.875
 SWEP.Primary.Delay = 0.5
-

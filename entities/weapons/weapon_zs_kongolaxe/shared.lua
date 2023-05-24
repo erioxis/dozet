@@ -52,7 +52,15 @@ function SWEP:GetPerc()
 end
 
 
-
+function SWEP:DamageThink(dmginfo) 
+	if self:GetPerc() > 0 then
+		dmginfo:SetDamage(dmginfo:GetDamage() / self:GetPerc())
+		self:SetPerc(self:GetPerc() - 1)
+	end
+end
+function SWEP:DealThink(dmginfo) 
+	self:SetPerc(self:GetPerc() + 1)
+end
 function SWEP:PlaySwingSound()
 	self:EmitSound("weapons/iceaxe/iceaxe_swing1.wav", 75, math.random(40, 45))
 end

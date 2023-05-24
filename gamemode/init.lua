@@ -1595,12 +1595,12 @@ function GM:Think()
 					pl.NextBloodArmorRegen = time + 8
 					pl:SetBloodArmor(math.min(pl.MaxBloodArmor, pl:GetBloodArmor() + (1 * pl.BloodarmorGainMul)))
 				end
-				if pl:IsSkillActive(SKILL_BLOODMARY) and pl.MaxBloodArmor > 0 and time >= pl.NextBloodArmorRegen and pl:GetBloodArmor() < pl.MaxBloodArmor then
-					pl.NextBloodArmorRegen = time + 2
+				if pl:IsSkillActive(SKILL_BLOODMARY) and pl.MaxBloodArmor > 0 and time >= pl.NextBloodArmorRegen2 and pl:GetBloodArmor() < pl.MaxBloodArmor then
+					pl.NextBloodArmorRegen2 = time + 2
 					pl:SetBloodArmor(math.min(pl.MaxBloodArmor, pl:GetBloodArmor() + (5 * pl.BloodarmorGainMul)))
 				end
-				if pl:IsSkillActive(SKILL_BLOODLOST) and pl.EndWavePointsExtra > 0 and time >= pl.NextBloodArmorRegen and pl:GetBloodArmor() < pl.MaxBloodArmor then
-					pl.NextBloodArmorRegen = time + 3
+				if pl:IsSkillActive(SKILL_BLOODLOST) and pl.MaxBloodArmor > 0 and time >= pl.NextBloodArmorRegen3 and pl:GetBloodArmor() < pl.MaxBloodArmor then
+					pl.NextBloodArmorRegen3 = time + 3
 					pl:SetBloodArmor(math.min(pl.MaxBloodArmor, pl:GetBloodArmor() + (5 * pl.BloodarmorGainMul)))
 				end
 				damaged = math.random(1,250)
@@ -2965,6 +2965,8 @@ function GM:PlayerInitialSpawnRound(pl)
 	pl.NextRegenerate = 0
 	pl.NextRegenerateClan = 0
 	pl.NextBloodArmorRegen = 0
+	pl.NextBloodArmorRegen2 = 0
+	pl.NextBloodArmorRegen3 = 0
 	pl.NextRegenTrinket = 0
 	pl.NextDash = 0
 	pl.LateBuyerMessage = nil
@@ -5744,7 +5746,7 @@ function GM:WaveStateChanged(newstate, pl)
 		if self.EndWavePointsBonus > 0 then
 			pointsbonus = self.EndWavePointsBonus + (self:GetWave() - 1) * self.EndWavePointsBonusPerWave
 		end
-		if self:GetWave() == 1 then 
+		if self:GetWave() == 2 then 
 			gamemode.Call("CreateASigils")
 		end
 		for _, pl in pairs(player.GetAll()) do
@@ -5773,9 +5775,7 @@ function GM:WaveStateChanged(newstate, pl)
 				if pl:IsSkillActive(SKILL_SECONDCHANCE) and pl.LetalSave and self:GetWave() >= 5 and pl:IsValidLivingHuman() then
 					pl:GiveAchievement("thisisbeeasy")
 				end
-				if pl:IsSkillActive(SKILL_SECONDCHANCE) and not pl.LetalSave then
-					pl.LetalSave = true
-				end
+				pl.LetalSave = true
 				if pl:IsSkillActive(SKILL_XPMULGOOD) then
 				   pl.AddXPMulti = (pl.AddXPMulti or 1) + 0.20
 				end
@@ -5790,85 +5790,63 @@ function GM:WaveStateChanged(newstate, pl)
 					pl:GiveAchievement("hehiha")
 				end
 
-
-			
-
-			
-				
-				if pointsbonus then
-					local pointsreward = pointsbonus + (pl.EndWavePointsExtra or 0)
-
-						if pl:HasTrinket("lotteryticket")  then 
-							local lucky1 = math.randomr(1,6,1,pl)
-							local charge = math.randomr(1,6,2,pl)
-							if lucky1 == 1 then 
-								pl:AddPoints(120)
-								if not charge == 1  then
-									pl:TakeInventoryItem("trinket_lotteryticket")
-									net.Start("zs_trinketconsumed")
-										net.WriteString("Lottery ticket")
-									net.Send(pl)
-								end
-							end
-					  	end
-					local blyat = math.randomr(1,10,6,pl)
-					if pl:IsSkillActive(SKILL_DEADINSIDE) and blyat < 3 then
-						pl:TakeDamage(20000)
-					elseif pl:IsSkillActive(SKILL_DEADINSIDE) and blyat > 3 then
-						pl:AddPoints(50)
-					end
-
-					if pl:HasTrinket("mysteryticket")  then 
-						local lucky2 = math.randomr(1,15,1,pl)
-					
-						
-						local charge = math.randomr(1,25,1,pl)
-					
-						if lucky2 == 1 then 
-
-							pl:AddZSXP(1000)
-
-							if not charge == 1 then
-								pl:TakeInventoryItem("trinket_mysteryticket")
-								net.Start("zs_trinketconsumed")
-									net.WriteString("Mystery ticket")
-								net.Send(pl)
-							end
-						end 
-					end 
-						
-						if pl:IsSkillActive(SKILL_LIVER)  then 
-							pl:AddInventoryItem(GAMEMODE.Curses[math.random(#GAMEMODE.Curses)])
-								net.Start("zs_getacurse")
-							net.Send(pl)
-						end
-						if pl:IsSkillActive(SKILL_ABUSE)  then 
-							local lucky5 = math.randomr(1,8,1,pl)
-							if lucky5 == 1 then 
-							pl:AddPoints(pointsreward, nil, nil, true)
-							net.Start("zs_pointsdoubled")
+				if pl:HasTrinket("mysteryticket")  then 
+					local lucky2 = math.randomr(1,15,1,pl)
+					if lucky2 == 1 then 
+						pl:AddZSXP(1000)
+						pl:TakeInventoryItem("trinket_mysteryticket")
+						net.Start("zs_trinketconsumed")
+							net.WriteString("Mystery ticket")
 						net.Send(pl)
-							
-							end end
-							if pl:IsSkillActive(SKILL_POINTD)  then 
-								local lucky5 = math.randomr(1,8,1,pl)
-								if lucky5 == 1 then 
-		
-								pl:AddPoints(pointsreward, nil, nil, true)
-	
-								net.Start("zs_pointsdoubled")
-							net.Send(pl)
-								
-							end end
-							if pl:IsSkillActive(SKILL_SCOURER) then
-								pl:GiveAmmo(math.ceil(pointsreward), "scrap")
-								pointsreward = 0
-							end
-						pl:AddPoints(pointsreward, nil, nil, true)
-						net.Start("zs_luck")
-						net.WriteString(lucktrue )
+					end 
+				end 
+				if pl:HasTrinket("lotteryticket") then 
+					local lucky1 = math.randomr(1,6,1,pl)
+					if lucky1 == 1 then 
+						pl:AddPoints(120)
+						pl:TakeInventoryItem("trinket_lotteryticket")
+						net.Start("zs_trinketconsumed")
+						net.WriteString("Lottery ticket")
+						net.Send(pl)
+					end
+				end
+				if pl:IsSkillActive(SKILL_LIVER)  then 
+					pl:AddInventoryItem(GAMEMODE.Curses[math.random(#GAMEMODE.Curses)])
+						net.Start("zs_getacurse")
 					net.Send(pl)
+				end
+				local blyat = math.randomr(1,10,6,pl)
+				if pl:IsSkillActive(SKILL_DEADINSIDE) and blyat < 3 then
+					pl:TakeDamage(20000)
+				elseif pl:IsSkillActive(SKILL_DEADINSIDE) and blyat > 3 then
+					pl:AddPoints(50)
+				end
+				if pointsbonus then
+					local double = 1
+					if pl:IsSkillActive(SKILL_ABUSE)  then 
+						local lucky5 = math.randomr(1,8,1,pl)
+						if lucky5 == 1 then 
+							net.Start("zs_pointsdoubled")
+							net.Send(pl)
+							double = double * 2
+						end 
+					end
+					if pl:IsSkillActive(SKILL_POINTD)  then 
+						local lucky5 = math.randomr(1,8,1,pl)
+						if lucky5 == 1 then 
+							net.Start("zs_pointsdoubled")
+							net.Send(pl)
+							double = double * 2
+						end 
+					end
+					local pointsreward = pointsbonus + (pl.EndWavePointsExtra or 0) * double
+					
 
+					if pl:IsSkillActive(SKILL_SCOURER) then
+						pl:GiveAmmo(math.ceil(pointsreward), "scrap")
+						pointsreward = 0
+					end
+					pl:AddPoints(pointsreward, nil, nil, true)
 				end
 				if pl:IsSkillActive(SKILL_ARSVOID)  then 
 					local weapon = {
@@ -5916,6 +5894,9 @@ function GM:WaveStateChanged(newstate, pl)
 						net.Send(pl)	
 					end 
 				end
+				net.Start("zs_luck")
+					net.WriteString(lucktrue)
+				net.Send(pl)
 			elseif pl:Team() == TEAM_UNDEAD and not pl:Alive() and not pl.Revive then
 				local curclass = pl.DeathClass or pl:GetZombieClass()
 				local crowindex = GAMEMODE.ZombieClasses["Crow"].Index

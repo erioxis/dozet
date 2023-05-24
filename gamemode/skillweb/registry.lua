@@ -623,6 +623,7 @@ SKILLMOD_STAMINA_USE = 124
 SKILLMOD_C_USE = 125
 SKILLMOD_RES_EFFECTIVNESS = 126
 SKILLMOD_THROWER_DAMAGE = 127
+SKILLMOD_DEBUFF_TIME = 128
 
 local GOOD = "^"..COLORID_GREEN
 local BAD = "^"..COLORID_RED
@@ -2658,6 +2659,7 @@ GM:SetSkillModifierFunction(SKILLMOD_PROJECTILE_DAMAGE_MUL, GM:MkGenericMod("Pro
 GM:SetSkillModifierFunction(SKILLMOD_TURRET_RANGE_MUL, GM:MkGenericMod("TurretRangeMul"))
 GM:SetSkillModifierFunction(SKILLMOD_AIM_SHAKE_MUL, GM:MkGenericMod("AimShakeMul"))
 GM:SetSkillModifierFunction(SKILLMOD_THROWER_DAMAGE, GM:MkGenericMod("ThrowDamageMul"))
+GM:SetSkillModifierFunction(SKILLMOD_DEBUFF_TIME, GM:MkGenericMod("AdditionalDebuffTime"))
 
 GM:AddSkillModifier(SKILL_PITCHER2, SKILLMOD_PROJECTILE_DAMAGE_MUL, 0.30)
 

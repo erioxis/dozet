@@ -144,7 +144,7 @@ function meta:ProcessDamage(dmginfo)
 		end
 
 		self.ShouldFlinch = true
-		if self:GetZArmor() > 0 then
+		if self:GetZArmor() > 0 and self:GetMaxHealth() >= 150 then
 			local damage = dmginfo:GetDamage()
 			if damage > 0 then
 	
@@ -161,9 +161,7 @@ function meta:ProcessDamage(dmginfo)
 					if self.PointsMultiplier then
 						points = points * self.PointsMultiplier
 					end
-					if self:GetMaxHealth() >= 150 then
-						attacker.PointQueue = attacker.PointQueue + points/15
-					end
+					attacker.PointQueue = attacker.PointQueue + points/15
 					GAMEMODE:DamageFloater(attacker, self, dmginfo:GetDamagePosition() - Vector(0,0,-5), absorb, true)
 				end
 				if damage > 20 and damage - absorb <= 0 then
@@ -219,7 +217,9 @@ function meta:ProcessDamage(dmginfo)
 			if attacker:IsSkillActive(SKILL_AMULET_16) then 
 				dmginfo:ScaleDamage(math.random(1,250)/100)
 			end
-			
+			if wep:IsValid() and wep.DealThink then
+				wep:DealThink(dmginfo)
+			end
 			--attacker.dpsmeter = damage
 			if attacker:IsSkillActive(SKILL_VAMPIRISM) then
 				attacker:SetNWFloat("vampirism_progress", attacker:GetNWFloat("vampirism_progress",value)+damage*0.09)
@@ -293,9 +293,6 @@ function meta:ProcessDamage(dmginfo)
 					if (not rot) then 
 						attacker:AddBloodlust(attacker:GetOwner(), dmginfo:GetDamage() * 0.09)
 					end
-				end
-				if attacker:GetActiveWeapon().CanDefend and attacker:GetActiveWeapon():GetPerc() < 11 then
-					attacker:GetActiveWeapon():SetPerc((attacker:GetActiveWeapon():GetPerc() or 0) + 1)
 				end
 
 
@@ -561,6 +558,7 @@ function meta:ProcessDamage(dmginfo)
 
 
 		if inflictor == attacker:GetActiveWeapon() then
+			if !dmgbypass and mywep.DamageThink and mywep:DamageThink(dmginfo) then return end
 			if (GAMEMODE:GetBalance() * 0.05) >= 0.1 then
 				dmginfo:SetDamage(dmginfo:GetDamage() * (1 + (math.Clamp(GAMEMODE:GetBalance() * 0.05,0.5,1.5))))
 			end
@@ -656,10 +654,7 @@ function meta:ProcessDamage(dmginfo)
 					dmginfo:ScaleDamage(0.65)
 				end
 
-				if mywep.CanDefend and math.min(10,mywep:GetPerc()) > 0 and !dmgbypass then
-					dmginfo:SetDamage(dmginfo:GetDamage() / mywep:GetPerc())
-					mywep:SetPerc(mywep:GetPerc() - 1)
-				end
+
 				if mywep.ResistDamage then
 					if math.abs(self:GetForward():Angle().yaw - attacker:GetForward():Angle().yaw) >= 90 and attacker:GetActiveWeapon() == inflictor then
 						dmginfo:SetDamage((dmginfo:GetDamage() * 0.3) - (mywep.MeleeDamage * 0.3))
@@ -1600,8 +1595,8 @@ end
 
 function meta:GiveStatus(sType, fDie, applier, ignoredouble)
 	local resistable = table.HasValue(GAMEMODE.ResistableStatuses, sType)
-	local lox = (self:IsSkillActive(SKILL_LOX) and not ignoredouble)
-	local fDie = (fDie or 1) * (ignoredouble and 1 or self.AdditionalStatusTime or 1)
+	local fDie = (fDie or 1) * (ignoredouble and 1 or self.AdditionalStatusTime or 1) * (GAMEMODE.Statuses[sType] and GAMEMODE.Statuses[sType].Debuff and self.AdditionalDebuffTime or 1)
+
 	local fDie2 = fDie / math.max(1 + (self.BloodArmorDamageReductionAdd or 1),1)
 	if resistable and self:IsSkillActive(SKILL_HAEMOSTASIS) and self:GetBloodArmor() >= 2 * fDie2 then
 		self:SetBloodArmor(self:GetBloodArmor() - 2 * fDie2)

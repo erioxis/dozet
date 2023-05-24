@@ -1829,6 +1829,7 @@ function GM:DoAltSelectedItemUpdate()
 	end
 end
 
+GM.AmmoButtons = {}
 function GM:HumanMenu()
 	if self.ZombieEscape then return end
 
@@ -1910,32 +1911,43 @@ function GM:HumanMenu()
 	gwbtn:CenterHorizontal()
 	gwbtn.DoClick = DismantleWeapon
 	panel:AddItem(gwbtn)
-
 	panel:AddItem(EasyLabel(panel, "Resupply Ammo Selection", "DefaultFont", color_white))
-	local dropdown = vgui.Create("DComboBox", panel)
-	dropdown:SetMouseInputEnabled(true)
-	dropdown:AddChoice("Resupply Held Weapon")
+	--local x = 0
 	for k,v in pairs(self.AmmoResupply) do
-		dropdown:AddChoice(self.AmmoNames[k])
-	end
-	dropdown.OnSelect = function(me, index, value, data)
-		if value == "Resupply Held Weapon" then
-			MySelf.ResupplyChoice = nil
-			RunConsoleCommand("zs_resupplyammotype", "default")
-			return
-		end
-
-		for k,v in pairs(self.AmmoNames) do
-			if value == v then
+		local ki = killicon.Get(self.AmmoIcons[k])
+		if !ki then continue end
+		local checkbutton = vgui.Create("DImageButton",panel)
+		checkbutton:SetImage(ki[1])
+		if ki[2] then checkbutton:SetColor(MySelf.ResupplyChoice == k and Color(197,167,16) or ki[2]) end
+		checkbutton:SizeToContents()
+		checkbutton:SetSize(panel:GetWide() + 222 * screenscale, hei - 16 * screenscale)
+		checkbutton:CenterHorizontal()
+		checkbutton:SetTooltip(self.AmmoNames[k])
+		--x = x - checkbutton:GetWide() - 8
+		checkbutton.DoClick = function(me)
+			if MySelf.ResupplyChoice == k then
+				MySelf.ResupplyChoice = nil
+				RunConsoleCommand("zs_resupplyammotype", nil)
+			else
 				MySelf.ResupplyChoice = k
 				RunConsoleCommand("zs_resupplyammotype", k)
-				break
+				
 			end
+			local col = Color(249,236,93)
+			if MySelf.ResupplyChoice ~= k then
+				col =  ki[2]
+			end
+			for k,v in pairs(self.AmmoButtons) do 
+				v:SetColor(killicon.Get(self.AmmoIcons[k])[2])
+			end
+			me:SetColor(col)
 		end
+		if !self.AmmoButtons[k] then
+			self.AmmoButtons[k] = checkbutton
+		end
+		
+		panel:AddItem(checkbutton)
 	end
-	dropdown:SetText("Resupply Held Weapon")
-	dropdown:SetTextColor(color_black)
-	panel:AddItem(dropdown)
 
 	self.HumanMenuSupplyChoice = dropdown
 
@@ -1988,7 +2000,7 @@ function GM:PlayerBindPress(pl, bind, wasin)
     elseif bind == "gm_showspare1" then
         if pl:Team() == TEAM_UNDEAD and not input.IsShiftDown() then
             if self:ShouldUseAlternateDynamicSpawn() then
-                pl:CenterNotify(COLOR_RED, translate.ClientGet(pl, "no_class_switch_in_this_mode"))
+                pl:CenterNotify(COLOR_RED, translate.Get("no_class_switch_in_this_mode"))
             else
                 GAMEMODE:OpenClassSelect()
             end

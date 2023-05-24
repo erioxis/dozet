@@ -21,7 +21,7 @@ CLASS.SWEP = "weapon_zs_sis_prime"
 CLASS.Model = Model("models/ultrakill/enemies/sisyphusprime/sisyphusprimepm.mdl")
 
 
-CLASS.Health = 1300
+CLASS.Health = 2000
 CLASS.Speed = 175
 
 CLASS.VoicePitch = 0.65

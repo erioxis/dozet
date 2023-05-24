@@ -3264,6 +3264,7 @@ LANGUAGE.skillmod_n124 = "%s Stamina use"
 LANGUAGE.skillmod_n125 = "%s Charges use"
 LANGUAGE.skillmod_n126 = "%s Your ressuply effectivness"
 LANGUAGE.skillmod_n127 = "%s Thrower Damage multiplier"
+LANGUAGE.skillmod_n128 = "%s Additional debuff time"
 LANGUAGE.c_for_use = " Charges use\n"
 --СП
 LANGUAGE.toyka_sp = "Creater\nHehe"

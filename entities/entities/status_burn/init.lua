@@ -12,13 +12,13 @@ end
 
 
 function ENT:Think()
-	if self:GetOwner():GetZombieClassTable().FireBuff then return end
-	if self:GetOwner():GetZombieClassTable().ResistFrost  then self:Remove() end
+	local p = self:GetOwner():GetZombieClassTable()
+	if  p.FireBuff or p.ResistFrost then self:Remove() return end
 	local owner = self:GetOwner()
 	local lox = owner:IsSkillActive(SKILL_LOX)
 
 	local dmg = math.Clamp(owner:GetMaxHealth() * (lox and 2 or 1) / 150, 1, 50)
-	owner:TakeSpecialDamage(dmg, DMG_BURN, self.Damager and self.Damager:IsValid() and self.Damager:IsPlayer() and self.Damager or owner, self, nil,0)
+	owner:TakeSpecialDamage(dmg, DMG_BURN, self.Damager and self.Damager:IsValidLivingPlayer() and self.Damager or owner, self, nil,0)
 	self:AddDamage(-dmg)
 	owner:AddLegDamageExt(dmg, owner, owner, SLOWTYPE_FLAME)
 	owner:SetBloodArmor(owner:GetBloodArmor()-dmg)

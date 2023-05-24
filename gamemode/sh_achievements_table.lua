@@ -381,7 +381,8 @@ GM.Statuses["poison"] = {
 		return lp:GetPoisonDamage()
 	end,
 	Max = GM.MaxPoisonDamage or 1000,
-	Icon = Material("zombiesurvival/poison.png")
+	Icon = Material("zombiesurvival/poison.png"),
+    Debuff = true
 }
 GM.Statuses["bleed"] = {
 	Color = Color(220, 0, 0),
@@ -393,21 +394,24 @@ GM.Statuses["bleed"] = {
 		return (lp:GetBleedDamage() * 0.01 >= 1 and lp:GetBleedDamage() * 0.01 or 1)
 	end,
 	Max = GM.MaxBleedDamage or 50,
-	Icon = Material("zombiesurvival/bleed.png")
+	Icon = Material("zombiesurvival/bleed.png"),
+    Debuff = true
 }
 GM.Statuses["enfeeble"] = {
 	Color = Color(255, 50, 50),
 	Name = "enfeeb",
 	ValFunc = statusValueFunction("enfeeble"),
 	Max = 10,
-	Icon = Material("zombiesurvival/infeeble.png")
+	Icon = Material("zombiesurvival/infeeble.png"),
+    Debuff = true
 }
 GM.Statuses["dimvision"] = {
 	Color = Color(90, 90, 90),
 	Name = "dim_vision",
 	ValFunc = statusValueFunction("dimvision"),
 	Max = 10,
-	Icon = Material("zombiesurvival/dim_vision.png")
+	Icon = Material("zombiesurvival/dim_vision.png"),
+    Debuff = true
 }
 GM.Statuses["world"] = {
 	Color = Color(112, 247, 108),
@@ -435,28 +439,32 @@ GM.Statuses["frost"] = {
 	Name = "frost",
 	ValFunc = statusValueFunction("frost"),
 	Max = 9,
-	Icon = Material("zombiesurvival/frost.png")
+	Icon = Material("zombiesurvival/frost.png"),
+    Debuff = true
 }
 GM.Statuses["frightened"] = {
 	Color = Color(155, 0, 255),
 	Name = "frightened",
 	ValFunc = statusValueFunction("frightened"),
 	Max = 10,
-	Icon = Material("zombiesurvival/tremors.png")
+	Icon = Material("zombiesurvival/tremors.png"),
+    Debuff = true
 }
 GM.Statuses["sickness"] = {
 	Color = Color(255, 120, 0),
 	Name = "sickness",
 	ValFunc = statusValueFunction("sickness"),
 	Max = 15,
-	Icon = Material("zombiesurvival/sickness.png")
+	Icon = Material("zombiesurvival/sickness.png"),
+    Debuff = true
 }
 GM.Statuses["burn"] =  {
 	Color = Color(255, 120, 0),
 	Name = "burned",
 	ValFunc = statusValueFunction("burn"),
 	Max = 600,
-	Icon = Material("zombiesurvival/burn.png")
+	Icon = Material("zombiesurvival/burn.png"),
+    Debuff = true
 }
 GM.Statuses["knockdown"] =  {
 	Color = Color(157, 75, 20),
@@ -540,7 +548,8 @@ GM.Statuses["parasitoid"] = {
 	Name = "parasitoid",
 	ValFunc = statusValueFunction("parasitoid"),
 	Max = 14,
-	Icon = Material("zombiesurvival/reaper.png")
+	Icon = Material("zombiesurvival/reaper.png"),
+    Debuff = true
 }
 GM.Statuses["renegade"] = {
 	Color = Color(235, 160, 40),
@@ -568,21 +577,24 @@ GM.Statuses["cursed"] =  {
 	Name = "curse",
 	ValFunc = statusValueFunction("cursed"),
 	Max = GM.MaxCurse or 100,
-	Icon = Material("zombiesurvival/cursed.png")
+	Icon = Material("zombiesurvival/cursed.png"),
+    Debuff = true
 }
 GM.Statuses["rot"] = {
 	Color = Color(255, 150, 150),
 	Name = "rot",
 	ValFunc = statusValueFunction("rot"),
 	Max = GM.MaxRotDamage or 100,
-	Icon = Material("zombiesurvival/rot.png")
+	Icon = Material("zombiesurvival/rot.png"),
+    Debuff = true
 }
 GM.Statuses["hollowing"] = {
 	Color = Color(100, 100, 100),
 	Name = "hollowing",
 	ValFunc = statusValueFunction("hollowing"),
 	Max = 1000,
-	Icon = Material("zombiesurvival/hallow.png")
+	Icon = Material("zombiesurvival/hallow.png"),
+    Debuff = true
 }
 GM.Statuses["hshield"] =	{
 	Color = Color(255, 255, 255),
@@ -603,7 +615,8 @@ GM.Statuses["death"] =	{
 	Name = "death",
 	ValFunc = statusValueFunction("death"),
 	Max = 100,
-	Icon = Material("zombiesurvival/reaper.png")
+	Icon = Material("zombiesurvival/reaper.png"),
+    Debuff = true
 }
 GM.Statuses["unreal"] =	{
 	Color = Color(247, 228, 63),
@@ -617,7 +630,8 @@ GM.Statuses["flimsy"] =	{
 	Name = "flimsy",
 	ValFunc = statusValueFunction("flimsy"),
 	Max = 25,
-	Icon = Material("zombiesurvival/sickness.png")
+	Icon = Material("zombiesurvival/sickness.png"),
+    Debuff = true
 }
 GM.Statuses["portal"] =	{
 	Color = Color(156, 40, 209),
@@ -632,13 +646,15 @@ GM.Statuses["dimvision_unknown"] = {
 	ValFunc = statusValueFunction("dimvision_unknown"),
 	Max = 14,
 	Icon = Material("zombiesurvival/dim_vision.png"),
+    Debuff = true
 }
 GM.Statuses["bloodysickness"] = {
 	Color = Color(255, 0, 0),
 	Name = "bloodysickness",
 	ValFunc = statusValueFunction("bloodysickness"),
 	Max = 15,
-	Icon = Material("zombiesurvival/sickness.png")
+	Icon = Material("zombiesurvival/sickness.png"),
+    Debuff = true
 }
 GM.Statuses["chains"] = {
 	Color = Color(54, 73, 220),

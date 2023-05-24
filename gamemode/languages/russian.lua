@@ -3127,6 +3127,7 @@ LANGUAGE.skillmod_n124 = "%s Использование стамины"
 LANGUAGE.skillmod_n125 = "%s к трате зарядов"
 LANGUAGE.skillmod_n126 = "%s к эффективности вашей аммуниции"
 LANGUAGE.skillmod_n127 = "%s к урону бросательного оружия"
+LANGUAGE.skillmod_n127 = "%s к дополнительному времени дебаффов"
 --СП
 LANGUAGE.toyka_sp = "Создатель\nЫ"
 LANGUAGE.normal_sp = "Нормальный кот?"
