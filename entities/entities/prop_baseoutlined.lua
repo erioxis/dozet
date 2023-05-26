@@ -10,7 +10,7 @@ ENT.ColorModulation = Color(1, 0.5, 1)
 ENT.Seed = 0
 
 function ENT:Initialize()
-	self.Seed = math.Rand(0, 10)
+	self.Seed = math.Rand(-10, 10)
 end
 
 function ENT:DrawPreciseModel(ble, cmod)

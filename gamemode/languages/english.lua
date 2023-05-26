@@ -37,6 +37,7 @@ LANGUAGE.g2p_skills			= "Skills (ZS)"
 LANGUAGE.g2p_lm			= "Legacy Menu"
 LANGUAGE.g2p_disc			= "Disconnect"
 LANGUAGE.g2p_mm			= "Main Menu"
+LANGUAGE.res_ammo_sel			= "Resupply Ammo Selection"
 LANGUAGE.golden_appeared			= "GOLDEN ZOMBIE HAS APPEARED!!!"
 
 LANGUAGE.w_cost = "Worth: "

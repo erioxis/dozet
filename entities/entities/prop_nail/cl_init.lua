@@ -85,7 +85,7 @@ function ENT:Draw()--[[
 
 	local nhp = self:GetNailHealth()
 	local mnhp = self:GetMaxNailHealth()
-
+	parent:SetNoDraw(true)
 	if nhp/mnhp < 0.35 and CurTime() > self.NextEmit then
 		local normal = self:GetForward() * -1
 		local epos = self:GetPos() + normal
@@ -160,7 +160,7 @@ function ENT:Draw()--[[
 		local dotsq = dot * dot
 		local vis = math.Clamp((dotsq * dotsq) - 0.1, 0, 1)
 
-		if vis < 0.01 then return end
+		if vis < 0.01 then 	parent:SetNoDraw(false) return end
 
 		cam.IgnoreZ(true)
 
@@ -240,9 +240,9 @@ function ENT:Draw()--[[
 						x = x * 3
 						y = y * 2
 					end
-
+					colNail.r = 255 - green
 					draw.SimpleText(displayowner, "ZS3D2DUnstyleSmallest", 0, y + 20, col, TEXT_ALIGN_CENTER)
-					draw.SimpleText(math.floor(nhp) .. "/" .. math.floor(self:GetMaxNailHealth()), (scale and "ZS3D2DUnstyleSmaller" or "ZS3D2DUnstyleNail"), x + 25, y - 30,  COLOR_RPINK, TEXT_ALIGN_CENTER)
+					draw.SimpleText(math.floor(nhp) .. "/" .. math.floor(self:GetMaxNailHealth()), (scale and "ZS3D2DUnstyleSmaller" or "ZS3D2DUnstyleNail"), x + 25, y - 30,  colNail, TEXT_ALIGN_CENTER)
 					draw.SimpleText(math.floor(repairs) .. "/" .. math.floor(mrps), (scale and "ZS3D2DUnstyleSmaller" or  "ZS3D2DUnstyleNail"), x + 25, y - 50, COLOR_CYAN, TEXT_ALIGN_CENTER)
 				end
 			end
@@ -282,7 +282,7 @@ function ENT:Draw()--[[
 
 		cam.IgnoreZ(false)
 	end
-	
+	parent:SetNoDraw(false)
 
 end
 function ENT:Think()

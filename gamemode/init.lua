@@ -5839,7 +5839,7 @@ function GM:WaveStateChanged(newstate, pl)
 							double = double * 2
 						end 
 					end
-					local pointsreward = pointsbonus + (pl.EndWavePointsExtra or 0) * double
+					local pointsreward = (pointsbonus + (pl.EndWavePointsExtra or 0)) * double
 					
 
 					if pl:IsSkillActive(SKILL_SCOURER) then

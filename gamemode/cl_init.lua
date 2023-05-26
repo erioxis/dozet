@@ -1828,7 +1828,17 @@ function GM:DoAltSelectedItemUpdate()
 		timer.Simple(0.25, AltSelItemUpd)
 	end
 end
+local function GetTargetEntIndex()
+	return GAMEMODE.HumanMenuLockOn and GAMEMODE.HumanMenuLockOn:IsValid() and GAMEMODE.HumanMenuLockOn:EntIndex() or 0
+end
 
+local function DropDoClick(self)
+	RunConsoleCommand("zsdropammo", self.Ammotype)
+end
+
+local function GiveDoClick(self)
+	RunConsoleCommand("zsgiveammo", self.Ammotype, GetTargetEntIndex())
+end
 GM.AmmoButtons = {}
 function GM:HumanMenu()
 	if self.ZombieEscape then return end
@@ -1854,12 +1864,12 @@ function GM:HumanMenu()
 	self.HumanMenuPanel = panel
 
 	local screenscale = BetterScreenScale()
-	for k, v in pairs(self.AmmoNames) do
-		local b = vgui.Create("DAmmoCounter", panel)
-		b:SetAmmoType(k)
-		b:SetTall(math.max(32, screenscale * 36))
-		panel:AddItem(b)
-	end
+	--for k, v in pairs(self.AmmoNames) do
+		--local b = vgui.Create("DAmmoCounter", panel)
+		--b:SetAmmoType(k)
+		--b:SetTall(math.max(32, screenscale * 36))
+		--panel:AddItem(b)
+	--end
 
 	local hei = draw_GetFontHeight("ZSHUDFontSmall")
 
@@ -1911,7 +1921,7 @@ function GM:HumanMenu()
 	gwbtn:CenterHorizontal()
 	gwbtn.DoClick = DismantleWeapon
 	panel:AddItem(gwbtn)
-	panel:AddItem(EasyLabel(panel, "Resupply Ammo Selection", "DefaultFont", color_white))
+	panel:AddItem(EasyLabel(panel, translate.Get("res_ammo_sel"), "DefaultFont", color_white))
 	--local x = 0
 	for k,v in pairs(self.AmmoResupply) do
 		local ki = killicon.Get(self.AmmoIcons[k])
@@ -1919,10 +1929,33 @@ function GM:HumanMenu()
 		local checkbutton = vgui.Create("DImageButton",panel)
 		checkbutton:SetImage(ki[1])
 		if ki[2] then checkbutton:SetColor(MySelf.ResupplyChoice == k and Color(197,167,16) or ki[2]) end
-		checkbutton:SizeToContents()
-		checkbutton:SetSize(panel:GetWide() + 222 * screenscale, hei - 16 * screenscale)
-		checkbutton:CenterHorizontal()
+		--x = x + 1
+		checkbutton:SetSize(48* screenscale,48* screenscale)
 		checkbutton:SetTooltip(self.AmmoNames[k])
+		checkbutton.NoWide = true
+		checkbutton.DoMove = 3 * screenscale
+		local sel =  vgui.Create("DEXChangingLabel", checkbutton)
+		sel:SetChangeFunction(function()
+			return MySelf:GetAmmoCount(k)
+		end, true)
+		sel:SetFont("ZSHUDFontTiniest")
+		timer.Simple(0, function() sel:SetPos(0,checkbutton:GetY()) end)
+		sel.DoMove = 23 * screenscale
+		sel.DoMoveY = 12 * screenscale
+		sel.DontCount = true
+		panel:AddItem(sel)
+		for i=1,2 do
+			local gb = vgui.Create("DImageButton",panel)
+			gb:SetImage((i == 1  and "icon16/user_go.png" or "icon16/box.png"))
+			gb:SizeToContents()
+			gb.DoClick = i == 1 and GiveDoClick or DropDoClick
+			gb.AmmoType = k
+			gb.DoMove = 64 * screenscale
+			gb.DoMoveY = 16*i * screenscale
+			gb.DontCount = true
+			gb.NoWide = true
+			panel:AddItem(gb)
+		end
 		--x = x - checkbutton:GetWide() - 8
 		checkbutton.DoClick = function(me)
 			if MySelf.ResupplyChoice == k then

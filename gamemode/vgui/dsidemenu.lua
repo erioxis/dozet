@@ -63,7 +63,9 @@ end
 
 function PANEL:AddItem(item)
 	item:SetParent(self)
-	item:SetWide(self:GetWide() - 16)
+	if !item.NoWide then
+		item:SetWide(self:GetWide() - 16 )
+	end
 
 	table.insert(self.Items, item)
 
@@ -107,15 +109,18 @@ function PANEL:PerformLayout()
 	local y = ScrH() / 2
 	for k, item in ipairs(self.Items) do
 		if item and item:IsValid() and item:IsVisible() then
+			if item.NoPos or item.DontCount then continue end
 			y = y - (item:GetTall() + self.Spacing) / 2
 		end
 	end
 
 	for k, item in ipairs(self.Items) do
-		if item and item:IsValid() and item:IsVisible() then
-			item:SetPos(0, y)
-			item:CenterHorizontal()
-			y = y + item:GetTall() + self.Spacing
+		if item and item:IsValid() and item:IsVisible() and !item.NoPos then
+			item:SetPos(0+(item.DoMove or 0), y + (item.DoMoveY or 0))
+			if !item.DoMove then
+				item:CenterHorizontal()
+			end
+			y = !item.DontCount and y + item:GetTall() + self.Spacing or y
 		end
 	end
 end

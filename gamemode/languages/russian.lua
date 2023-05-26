@@ -23,6 +23,7 @@ LANGUAGE.g2p_m_m			= "Меню мутаций (ЗС)"
 LANGUAGE.g2p_disc			= "Отключиться"
 LANGUAGE.g2p_lm			= "Стандартное Меню"
 LANGUAGE.g2p_mm			= "Главное меню"
+LANGUAGE.res_ammo_sel			= "Выбор патрон для амуниции"
 LANGUAGE.golden_appeared			= "ЗОЛОТОЙ ЗОМБИ ПОЯВИЛСЯ!!!"
 
 LANGUAGE.g2p_promo			= "Ввести промокод"
