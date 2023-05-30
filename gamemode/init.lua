@@ -1413,12 +1413,13 @@ function GM:Think()
 					end
 					
 				end
-				if !pl:OnGround() and not (pl:GetVelocity():LengthSqr() > 7600) then
+				local vele = pl:GetVelocity()
+				if !pl:OnGround() and not (vele:LengthSqr() > 7600) then
 					pl.StuckedInProp = true
 				else
 					pl.StuckedInProp = nil
 				end
-				if !pl:OnGround() and pl:GetVelocity():LengthSqr() < 7600 or pl:GetVelocity():LengthSqr() < 7600 then
+				if !pl:OnGround() and vele:LengthSqr() < 7600 or vele:LengthSqr() < 7600 then
 					pl.Stuckedtrue = true
 				else
 					pl.Stuckedtrue = nil
@@ -1441,7 +1442,7 @@ function GM:Think()
 
 
 				local healmax = pl:IsSkillActive(SKILL_D_FRAIL) and math.floor(pl:GetMaxHealth() * 0.44) or pl:IsSkillActive(SKILL_ABUSE) and math.floor(pl:GetMaxHealth() * 0.25)  or pl:GetMaxHealth()
-                if pl:GetVelocity():LengthSqr() >= 5636052 then
+                if vele:LengthSqr() >= 5636052 then
 					pl:GiveAchievement("highvel")
 				end
 				if (pl.ClanQuePro or pl:IsSkillActive(SKILL_SAUL_GOODMAN)) and time >= pl.NextRegenerateClan then

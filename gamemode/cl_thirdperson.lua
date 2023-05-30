@@ -94,11 +94,11 @@ function GM:CalcViewOTS(pl, origin, angles, fov, znear, zfar)
 
 	-- Don't face away more than a certain amount of degrees
 	desired_angles.yaw = math.ApproachAngle(otscameraangles.yaw, desired_angles.yaw, maxdiff)
-
-	pl:SetEyeAngles(desired_angles)
 	if pl:IsSkillActive(SKILL_MADNESS) then
-		otscameraangles = otscameraangles * 2
+		angles.roll = angles.roll + math.sin(CurTime() * 0.7) * 42
+		angles.pitch = angles.pitch + math.sin(CurTime() * 0.7) * 42
 	end
+	pl:SetEyeAngles(desired_angles)
 
 	origin:Set(camPos)
 	angles:Set(otscameraangles)

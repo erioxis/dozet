@@ -2628,7 +2628,7 @@ LANGUAGE.skill_bhealth_0 = "Bad Health"
 LANGUAGE.skill_bhealth_d1 = "+50 maximum health\n"
 LANGUAGE.skill_bhealth_d2 = "Can take random damage in any time"
 
-LANGUAGE.skill_madness = "Madness"
+LANGUAGE.skill_madness = "Chronic Alcoholism"
 LANGUAGE.skill_madness_d1 = "+15% blood armor damage absorption\n"
 LANGUAGE.skill_madness_d2 = "Screen in madness!!!"
 

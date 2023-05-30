@@ -2509,7 +2509,7 @@ LANGUAGE.skill_agen_d2 = "-3 макс хп"
 LANGUAGE.skill_bhealth_0 = "Плохое здоровье"
 LANGUAGE.skill_bhealth_d1 = "+50 максимум здоровья\n"
 LANGUAGE.skill_bhealth_d2 = "Вы можете получить урон в любое время"
-LANGUAGE.skill_madness = "Безумие"
+LANGUAGE.skill_madness = "Хронический Алкоголизм"
 LANGUAGE.skill_madness_d1 = "+15% защиты кровавой брони\n"
 LANGUAGE.skill_madness_d2 = "Экран в безумии!!!"
 --У меня идейный кризис так что оставлю это тут

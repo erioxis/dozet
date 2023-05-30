@@ -1832,13 +1832,6 @@ local function GetTargetEntIndex()
 	return GAMEMODE.HumanMenuLockOn and GAMEMODE.HumanMenuLockOn:IsValid() and GAMEMODE.HumanMenuLockOn:EntIndex() or 0
 end
 
-local function DropDoClick(self)
-	RunConsoleCommand("zsdropammo", self.Ammotype)
-end
-
-local function GiveDoClick(self)
-	RunConsoleCommand("zsgiveammo", self.Ammotype, GetTargetEntIndex())
-end
 GM.AmmoButtons = {}
 function GM:HumanMenu()
 	if self.ZombieEscape then return end
@@ -1922,36 +1915,45 @@ function GM:HumanMenu()
 	gwbtn.DoClick = DismantleWeapon
 	panel:AddItem(gwbtn)
 	panel:AddItem(EasyLabel(panel, translate.Get("res_ammo_sel"), "DefaultFont", color_white))
-	--local x = 0
+	local xd = 0
 	for k,v in pairs(self.AmmoResupply) do
 		local ki = killicon.Get(self.AmmoIcons[k])
 		if !ki then continue end
 		local checkbutton = vgui.Create("DImageButton",panel)
 		checkbutton:SetImage(ki[1])
 		if ki[2] then checkbutton:SetColor(MySelf.ResupplyChoice == k and Color(197,167,16) or ki[2]) end
-		--x = x + 1
+		xd = xd + 1
 		checkbutton:SetSize(48* screenscale,48* screenscale)
 		checkbutton:SetTooltip(self.AmmoNames[k])
 		checkbutton.NoWide = true
-		checkbutton.DoMove = 3 * screenscale
+		checkbutton.DoMove = 3 * screenscale --* (xd > 6 and 32 or 1)
+		--if xd > 6 then
+		--	checkbutton.DoMoveY = -32 * screenscale * xd
+			--checkbutton.DontCount = true
+		--end
 		local sel =  vgui.Create("DEXChangingLabel", checkbutton)
 		sel:SetChangeFunction(function()
 			return MySelf:GetAmmoCount(k)
 		end, true)
 		sel:SetFont("ZSHUDFontTiniest")
 		timer.Simple(0, function() sel:SetPos(0,checkbutton:GetY()) end)
-		sel.DoMove = 23 * screenscale
-		sel.DoMoveY = 12 * screenscale
+		sel.DoMove = 23 * screenscale --* (xd > 6 and 32 or 1)
+		sel.DoMoveY = 12 * screenscale 
 		sel.DontCount = true
 		panel:AddItem(sel)
 		for i=1,2 do
 			local gb = vgui.Create("DImageButton",panel)
 			gb:SetImage((i == 1  and "icon16/user_go.png" or "icon16/box.png"))
 			gb:SizeToContents()
-			gb.DoClick = i == 1 and GiveDoClick or DropDoClick
-			gb.AmmoType = k
-			gb.DoMove = 64 * screenscale
-			gb.DoMoveY = 16*i * screenscale
+			gb.DoClick = function(me)
+				if i == 1 then
+					RunConsoleCommand("zsgiveammo", k, GetTargetEntIndex())
+				else
+					RunConsoleCommand("zsdropammo", k)
+				end
+			end
+			gb.DoMove = 64 * screenscale --* (xd > 6 and 16 or 1)
+			gb.DoMoveY = 16* i * screenscale 
 			gb.DontCount = true
 			gb.NoWide = true
 			panel:AddItem(gb)
@@ -2074,7 +2076,9 @@ function GM:_CalcView(pl, origin, angles, fov, znear, zfar)
 		pl.Confusion:CalcView(pl, origin, angles, fov, znear, zfar)
 	end
 	if pl:IsSkillActive(SKILL_MADNESS) then
-		angles = angles * 2
+		angles.roll = angles.roll + math.sin(CurTime() * 0.7) * 22
+		angles.pitch = angles.pitch + math.sin(CurTime() * 1.7) * 22
+		angles.yaw  = angles.yaw  + math.sin(CurTime() * 0.2) * 11
 	end
 	local gp = (((pl:GetZSRemortLevel() / 4) or 0) + (pl.AmuletPiece or 0)) < 0 and pl:Team() == TEAM_HUMAN
 	if gp then
