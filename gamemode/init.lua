@@ -1454,16 +1454,16 @@ function GM:Think()
 					pl.NextRegenerate = time + 6
 					pl:SetHealth(math.min(healmax, pl:Health() + 1))
 				end
-				if pl:IsSkillActive(SKILL_NULLED) and time >= pl.NextRegenerate and pl:Health() < math.min(healmax, pl:GetMaxHealth() * 1) then
-					pl.NextRegenerate = time + 5
+				if pl:IsSkillActive(SKILL_NULLED) and time >= pl.NextRegenerateNull and pl:Health() < math.min(healmax, pl:GetMaxHealth() * 1) then
+					pl.NextRegenerateNull = time + 5
 					pl:SetHealth(math.min(healmax, pl:Health() + 3))
 				end
-				if pl:HasTrinket("lazarussoul") and time >= pl.NextRegenerate and pl:Health() < math.min(healmax, pl:GetMaxHealth() * 0.10) then
-					pl.NextRegenerate = time + 160
+				if pl:HasTrinket("lazarussoul") and time >= pl.NextRegenerateLazarus and pl:Health() < math.min(healmax, pl:GetMaxHealth() * 0.10) then
+					pl.NextRegenerateLazarus = time + 160
 					pl:SetHealth(math.min(healmax, pl:Health() + 500))
 				end
-				if pl:HasTrinket("hurt_curse") and time >= pl.NextRegenerate then
-					pl.NextRegenerate = time + 20
+				if pl:HasTrinket("hurt_curse") and time >= pl.NextCurseRegenerate then
+					pl.NextCurseRegenerate = time + 20
 					pl:TakeDamage(pl:Health() * 0.25)
 				end
 				
@@ -1500,12 +1500,12 @@ function GM:Think()
 					pl.NextEnergy = time + 45
 					pl:SetChargesActive(pl:GetChargesActive()+1)
 				end
-				if pl:HasTrinket("altlazarussoul") and time >= pl.NextRegenerate and pl:Health() < math.min(healmax, pl:GetMaxHealth() * 0.10) then
-					pl.NextRegenerate = time + 60
+				if pl:HasTrinket("altlazarussoul") and time >= pl.NextRegenerateAltLazarus and pl:Health() < math.min(healmax, pl:GetMaxHealth() * 0.10) then
+					pl.NextRegenerateAltLazarus = time + 60
 					pl:SetHealth(math.min(healmax, pl:Health() + 500))
 				end
-				if pl:HasTrinket("altjudassoul") and time >= pl.NextRegenerate and pl:Health() < math.min(healmax, pl:GetMaxHealth() * 0.20) then
-					pl.NextRegenerate = time + 1
+				if pl:HasTrinket("altjudassoul") and time >= pl.NextRegenerateJudas and pl:Health() < math.min(healmax, pl:GetMaxHealth() * 0.20) then
+					pl.NextRegenerateJudas = time + 1
 					pl:GiveStatus("holly", 1.45)
 					pl:GiveStatus("strengthdartboost", 1.3)
 					pl:GiveStatus("medrifledefboost", 1.3)
@@ -1524,12 +1524,12 @@ function GM:Think()
 				end
 
 				if pl:IsSkillActive(SKILL_GIGACHAD) and not self.ObjectiveMap then
-					pl:SetModelScale(math.Clamp(math.min(math.max(0.5, pl:GetMaxHealth() * 0.01),2.5) * (pl.ScaleModel or 1),0.2, 5))
+					pl:SetModelScale(math.Clamp(math.min(math.max(0.5, healmax * 0.01),2.5) * (pl.ScaleModel or 1),0.2, 5))
 					pl:SetViewOffset(Vector(0, 0, 64 * pl:GetModelScale()))
 					pl:SetViewOffsetDucked(Vector(0, 0, 32 * pl:GetModelScale()))
 				end
-				local cursed5 = pl:GetStatus("hollowing")
 				if pl.MasteryHollowing > 800 and pl:IsSkillActive(SKILL_UPLOAD) then
+					local cursed5 = pl:GetStatus("hollowing")
 					pl:Kill()
 					pl:AddHallow(pl:GetOwner(),cursed5.DieTime - (CurTime() + cursed5.DieTime))
 					print(" Уебало "..pl:Nick()..(" "..pl.MasteryHollowing))
@@ -1547,8 +1547,8 @@ function GM:Think()
 				end
 
 
-				if pl:HasTrinket("adrenaline") and time >= pl.NextRegenerate and pl:Health() < math.min(healmax, pl:GetMaxHealth() * 0.85) then
-					pl.NextRegenerate = time + 60
+				if pl:HasTrinket("adrenaline") and time >= pl.NextRegenerateAdr and pl:Health() < math.min(healmax, pl:GetMaxHealth() * 0.85) then
+					pl.NextRegenerateAdr = time + 60
 					pl:GiveStatus("strengthdartboost", 20)
 				end
 				if pl:HasTrinket("sin_sloth") and (pl:GetVelocity():Length() <= 0) then
@@ -1564,20 +1564,16 @@ function GM:Think()
 					pl.NextRegenTrinket = time + 7
 					pl:SetHealth(math.min(healmax, pl:Health() + 7))
 				end
-				if pl:HasTrinket("altmagdalenesoul") and time >= pl.NextRegenTrinket and pl:Health() > pl:GetMaxHealth() * 0.25 then
-					pl.NextRegenTrinket = time + 10
+				if pl:HasTrinket("altmagdalenesoul") and time >= pl.NextRegenTrinket2 and pl:Health() > pl:GetMaxHealth() * 0.25 then
+					pl.NextRegenTrinket2 = time + 10
 					pl:TakeDamage(pl:GetMaxHealth() * 0.1, lastattacker, lastattacker)
 				end
-				if pl:HasTrinket("nulledher") and time >= pl.NextRegenTrinket and pl:Health() < healmax then
-					pl.NextRegenTrinket = time + 3
+				if pl:HasTrinket("nulledher") and time >= pl.NextRegenTrinket3 and pl:Health() < healmax then
+					pl.NextRegenTrinket3 = time + 3
 					pl:SetHealth(math.min(healmax, pl:Health() - 2))
 				end
-				if pl:HasTrinket("kheart") and time >= pl.NextRegenerate and pl:Health() < math.min(healmax, pl:GetMaxHealth() * 0.15) then
-					pl.NextRegenerate = time + 200
-					pl:SetHealth(math.min(healmax, pl:Health() + 500))
-				end
-				if pl:IsSkillActive(SKILL_TRIP) and time >= pl.NextRegenerate and not self:GetWave() == 0 then
-					pl.NextRegenerate = time + 0.8
+				if pl:IsSkillActive(SKILL_TRIP) and time >= pl.NextRegenerate5 and not self:GetWave() == 0 then
+					pl.NextRegenerate5 = time + 1
 					local cursed = pl:GetStatus("cursed")
 					if (not cursed) then 
 						pl:AddCursed(pl:GetOwner(), 1)
@@ -2965,6 +2961,16 @@ function GM:PlayerInitialSpawnRound(pl)
 	pl.RepairedThisRound = 0
 	pl.NextRegenerate = 0
 	pl.NextRegenerateClan = 0
+	pl.NextCurseRegenerate = 0
+	pl.NextRegenerateLazarus = 0
+	pl.NextRegenerateNull = 0
+	pl.NextRegenerateAltLazarus = 0
+	pl.NextRegenerateJudas = 0
+	pl.NextRegenerateAdr = 0
+	pl.NextRegenTrinket2 = 0
+	pl.NextRegenTrinket3 = 0
+	pl.NextRegenerate4 = 0
+	pl.NextRegenerate5 = 0
 	pl.NextBloodArmorRegen = 0
 	pl.NextBloodArmorRegen2 = 0
 	pl.NextBloodArmorRegen3 = 0
