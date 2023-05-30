@@ -41,8 +41,8 @@ concommand.Add("zs_pointsshopbuy", function(sender, command, arguments, count)
 	if usescrap and not (itemcat == ITEMCAT_TRINKETS or itemcat == ITEMCAT_AMMO) and not itemtab.CanMakeFromScrap then return end
 
 	local points = usescrap and sender:GetAmmoCount("scrap") or sender:GetPoints()
-	local cost = itemtab.Price
-
+	local count_or_nil = count and count or 1
+	local cost = itemtab.Price * count_or_nil
 	if GAMEMODE:IsClassicMode() and itemtab.NoClassicMode then
 		GAMEMODE:ConCommandErrorMessage(sender, translate.ClientFormat(sender, "cant_use_x_in_classic", itemtab.Name))
 		return
@@ -70,13 +70,13 @@ concommand.Add("zs_pointsshopbuy", function(sender, command, arguments, count)
 	local arsd = (sender.ArsenalDiscount or 1)
 	cost = usescrap and math.ceil(GAMEMODE:PointsToScrap(cost * (sender.ScrapDiscount or 1))) or math.ceil(cost * arsd)
 
-	if points < cost * ( count and count or 1 ) then
+	if points < cost then
 		timer.Create("buy"..itemtab.Name.."WARNING", 0.01,1, function()GAMEMODE:ConCommandErrorMessage(sender, translate.ClientGet(sender, usescrap and "need_to_have_enough_scrap" or "dont_have_enough_points")) end)
 		return
 	end
 
 	if itemtab.Callback then
-		itemtab.Callback( sender, count and count or 1 )
+		itemtab.Callback( sender, count_or_nil )
 	elseif itemtab.SWEP then
 		if string.sub(itemtab.SWEP, 1, 6) ~= "weapon" then
 			if GAMEMODE:GetInventoryItemType(itemtab.SWEP) == INVCAT_TRINKETS and sender:HasInventoryItem(itemtab.SWEP) then
@@ -123,14 +123,11 @@ concommand.Add("zs_pointsshopbuy", function(sender, command, arguments, count)
     local scrapd = sender.ScrapDiscount or 1
 	local buy = translate.ClientGet(sender,"ba_chat")
 	if usescrap then
-		sender:RemoveAmmo(math.ceil(cost), "scrap")
+		sender:RemoveAmmo(math.ceil( cost ), "scrap")
 		sender:SendLua("surface.PlaySound(\"buttons/lever"..math.random(5)..".wav\")")
 		timer.Create(buy..itemtab.Name, 0.01,1, function() sender:PrintTranslatedMessage(HUD_PRINTTALK, usescrap and "created_x_for_y_scrap" ,itemtab.Name, math.ceil(cost)) end)
 	else
-		sender:TakePoints(cost)
-		if sender:IsSkillActive(SKILL_CASHBACK) then
-			sender:GiveAmmo(math.ceil(cost*0.2), "scrap")
-		end
+		sender:TakePoints( cost )
 		sender:SendLua("surface.PlaySound(\"ambient/levels/labs/coinslot1.wav\")")
 		timer.Create(buy..itemtab.Name, 0.01,1, function() sender:PrintTranslatedMessage(HUD_PRINTTALK, "purchased_x_for_y_points", itemtab.Name, cost) end)
 	end
