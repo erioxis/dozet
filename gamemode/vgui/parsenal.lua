@@ -396,11 +396,12 @@ function GM:AddShopItem(list, i, tab, issub, nopointshop)
 			end
 			local ammo = (MySelf:GetInfo("zs_ammoslider") or 1)
 			if MySelf:GetPoints( )>= (math.ceil(MySelf:GetPoints() / (tab.Price * (MySelf.ArsenalDiscount or 1)))) then
-				menu:AddOption(translate.Get("buy").." x"..ammo, function()  timer.Create("ammobuyx"..ammo,0, 1, function() 
-					for i=1, ammo do
-					if (MySelf:GetPoints( )< math.ceil(MySelf:GetPoints() / (tab.Price * (MySelf.ArsenalDiscount or 1)))) then return end
-					RunConsoleCommand("zs_pointsshopbuy", itempan.ID, itempan.NoPoints and "scrap") 
-					end end) end)
+				menu:AddOption(translate.Get("buy").." x"..ammo, function()  timer.Create( "ammobuyx"..ammo, 0, 1, function() 
+					
+					if MySelf:GetPoints( ) < math.ceil( MySelf:GetPoints() / ( tab.Price * ( MySelf.ArsenalDiscount or 1 ) * ammo ) ) then return end
+						RunConsoleCommand( "zs_pointsshopbuy", itempan.ID, itempan.NoPoints and "scrap", ammo ) 
+					 end) 
+				end)
 			end
 		end
 		menu:Open()

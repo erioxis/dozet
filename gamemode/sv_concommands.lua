@@ -3,7 +3,7 @@ function GM:ConCommandErrorMessage(pl, message)
 	pl:SendLua("surface.PlaySound(\"buttons/button10.wav\")")
 end
 
-concommand.Add("zs_pointsshopbuy", function(sender, command, arguments)
+concommand.Add("zs_pointsshopbuy", function(sender, command, arguments, count)
 	if not (sender:IsValid() and sender:IsConnected() and sender:IsValidLivingHuman()) or #arguments == 0 then return end
 	local usescrap = arguments[2]
 
@@ -19,21 +19,21 @@ concommand.Add("zs_pointsshopbuy", function(sender, command, arguments)
 	local id = arguments[1]
 	id = tonumber(id) or id
 	local itemtab = FindItem(id)
+
 	if sender:HasTrinket("sin_envy") and (FindItem(id).Tier and FindItem(id).Tier or 1) <= 4 then
 		GAMEMODE:ConCommandErrorMessage(sender, translate.ClientGet(sender, "envy_taken"))
 		return
 	end
+
 	if sender:HasTrinket("sin_pride") and ((FindItem(id).Tier and FindItem(id).Tier or 1) >= 4) then
 		GAMEMODE:ConCommandErrorMessage(sender, translate.ClientGet(sender, "pride_taken"))
 		return
 	end
 
-
 	if not (usescrap or gamemode.Call("PlayerCanPurchase", sender)) then
 		GAMEMODE:ConCommandErrorMessage(sender, translate.ClientGet(sender, "cant_purchase_right_now"))
 		return
 	end
-
 	
 	if not itemtab or not itemtab.PointShop then return end
 	if usescrap and itemtab.DontScrap then return end
@@ -76,7 +76,7 @@ concommand.Add("zs_pointsshopbuy", function(sender, command, arguments)
 	end
 
 	if itemtab.Callback then
-		itemtab.Callback(sender)
+		itemtab.Callback( sender, count and count or 1 )
 	elseif itemtab.SWEP then
 		if string.sub(itemtab.SWEP, 1, 6) ~= "weapon" then
 			if GAMEMODE:GetInventoryItemType(itemtab.SWEP) == INVCAT_TRINKETS and sender:HasInventoryItem(itemtab.SWEP) then
