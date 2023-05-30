@@ -492,6 +492,7 @@ SKILL_ULTIMATE_TORMENT = 466
 SKILL_LIVER_TRUE = 467
 SKILL_COPPER = 468
 SKILL_WORTHINESS5 = 469
+SKILL_CASHBACK = 470
 
 
 
@@ -963,8 +964,11 @@ GM:AddSkill(SKILL_HANDY3, trs("skill_handy").."III", GOOD.."+8%"..trs("repair"),
 																-5,			-1,					{SKILL_TAUT, SKILL_HAMMERDISCIPLINE, SKILL_D_NOODLEARMS, SKILL_HANDY4}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_HANDY4, trs("skill_handy").."IV", GOOD.."+11%"..trs("repair"),
 																-3,			1,					{SKILL_HANDY5,SKILL_SKYHELP}, TREE_BUILDINGTREE)
-GM:AddSkill(SKILL_SKYHELP, trs("skill_skyhelp"), GOOD.."+40"..trs("start_points")..GOOD.."+10%"..trs("sale")..BAD..trs("skill_skyhelp_d1"),
+GM:AddSkill(SKILL_SKYHELP, trs("skill_skyhelp"), GOOD.."+40"..trs("start_points")..GOOD.."-10%"..trs("sale")..BAD..trs("skill_skyhelp_d1"),
 																-1,			2,					{SKILL_HANDY4}, TREE_BUILDINGTREE)
+GM:AddSkill(SKILL_CASHBACK, trs("skill_cashback"), GOOD..trs("skill_cashback_d1")..BAD.."+20%"..trs("sale"),
+																-1,			3,					{SKILL_SKYHELP}, TREE_BUILDINGTREE)
+GM:AddSkillModifier(SKILL_CASHBACK, SKILLMOD_ARSENAL_DISCOUNT, 0.20)
 GM:AddSkill(SKILL_HANDY5, trs("skill_handy").."V", GOOD.."+13%"..trs("repair"),
 																-4,			3,					{SKILL_OVERHAND}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_OVERHAND, trs("skill_ohandy"), GOOD.."+25%"..trs("repair")..BAD.."+15%"..trs("hammerd"),

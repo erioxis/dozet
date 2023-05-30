@@ -128,6 +128,9 @@ concommand.Add("zs_pointsshopbuy", function(sender, command, arguments, count)
 		timer.Create(buy..itemtab.Name, 0.01,1, function() sender:PrintTranslatedMessage(HUD_PRINTTALK, usescrap and "created_x_for_y_scrap" ,itemtab.Name, math.ceil(cost)) end)
 	else
 		sender:TakePoints(cost)
+		if sender:IsSkillActive(SKILL_CASHBACK) then
+			sender:GiveAmmo(math.ceil(cost*0.2), "scrap")
+		end
 		sender:SendLua("surface.PlaySound(\"ambient/levels/labs/coinslot1.wav\")")
 		timer.Create(buy..itemtab.Name, 0.01,1, function() sender:PrintTranslatedMessage(HUD_PRINTTALK, "purchased_x_for_y_points", itemtab.Name, cost) end)
 	end
