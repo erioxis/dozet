@@ -70,7 +70,7 @@ concommand.Add("zs_pointsshopbuy", function(sender, command, arguments, count)
 	local arsd = (sender.ArsenalDiscount or 1)
 	cost = usescrap and math.ceil(GAMEMODE:PointsToScrap(cost * (sender.ScrapDiscount or 1))) or math.ceil(cost * arsd)
 
-	if points < cost then
+	if points < cost * ( count and count or 1 ) then
 		timer.Create("buy"..itemtab.Name.."WARNING", 0.01,1, function()GAMEMODE:ConCommandErrorMessage(sender, translate.ClientGet(sender, usescrap and "need_to_have_enough_scrap" or "dont_have_enough_points")) end)
 		return
 	end
