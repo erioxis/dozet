@@ -254,7 +254,7 @@ local function ItemPanelDoClick(self)
 	local sweptable = GAMEMODE.ZSInventoryItemData[shoptbl.SWEP] or weapons.Get(shoptbl.SWEP)
 
 	if not sweptable or GAMEMODE.AlwaysQuickBuy then
-		RunConsoleCommand("zs_pointsshopbuy", self.ID, self.NoPoints and "scrap")
+		RunConsoleCommand("zs_pointsshopbuy", self.ID, nil,self.NoPoints and "scrap")
 		return
 	end
 
@@ -271,7 +271,7 @@ local function ItemPanelDoClick(self)
 	local purb = viewer.m_PurchaseB
 	purb.ID = self.ID
 
-	purb.DoClick = function() RunConsoleCommand("zs_pointsshopbuy", self.ID, self.NoPoints and "scrap") end
+	purb.DoClick = function() RunConsoleCommand("zs_pointsshopbuy", self.ID, nil,self.NoPoints and "scrap") end
 	purb:SetPos(canammo and viewer:GetWide() / 4 - viewer:GetWide() / 8 - 20 or viewer:GetWide() / 4, viewer:GetTall() - 64 * screenscale)
 	purb:SetVisible(true)
 
@@ -388,18 +388,18 @@ function GM:AddShopItem(list, i, tab, issub, nopointshop)
 	itempan.DoClick = ItemPanelDoClick
 	itempan.DoRightClick = function()
 		local menu = DermaMenu(itempan)
-		menu:AddOption(translate.Get("buy"), function() RunConsoleCommand("zs_pointsshopbuy", itempan.ID, itempan.NoPoints and "scrap") end)
+		menu:AddOption(translate.Get("buy"), function() RunConsoleCommand("zs_pointsshopbuy", itempan.ID,  nil,itempan.NoPoints and "scrap") end)
 		if tab.Category == ITEMCAT_AMMO and MySelf:IsValid() and MySelf:GetPoints() >= math.ceil((tab.Price * (MySelf.ArsenalDiscount or 1)) * 2) then
-			menu:AddOption(translate.Get("buy").." x2", function() timer.Create("x2ammobuy",0, 2, function() RunConsoleCommand("zs_pointsshopbuy", itempan.ID, itempan.NoPoints and "scrap") end) end)
+			menu:AddOption(translate.Get("buy").." x2", function() timer.Create("x2ammobuy",0, 2, function() RunConsoleCommand("zs_pointsshopbuy", itempan.ID,  nil,itempan.NoPoints and "scrap") end) end)
 			if MySelf:GetPoints() >= math.ceil((tab.Price * (MySelf.ArsenalDiscount or 1)) * 10) then
-				menu:AddOption(translate.Get("buy").." x10", function()  timer.Create("x10ammobuy",0, 10, function() RunConsoleCommand("zs_pointsshopbuy", itempan.ID, itempan.NoPoints and "scrap") end) end)
+				menu:AddOption(translate.Get("buy").." x10", function()  timer.Create("x10ammobuy",0, 10, function() RunConsoleCommand("zs_pointsshopbuy", itempan.ID, nil,itempan.NoPoints and "scrap") end) end)
 			end
 			local ammo = (MySelf:GetInfo("zs_ammoslider") or 1)
 			if MySelf:GetPoints( )>= (math.ceil(MySelf:GetPoints() / (tab.Price * (MySelf.ArsenalDiscount or 1)))) then
 				menu:AddOption(translate.Get("buy").." x"..ammo, function()  timer.Create( "ammobuyx"..ammo, 0, 1, function() 
 					
 					if MySelf:GetPoints( ) < math.ceil( MySelf:GetPoints() / ( tab.Price * ( MySelf.ArsenalDiscount or 1 ) * ammo ) ) then return end
-						RunConsoleCommand( "zs_pointsshopbuy", itempan.ID, itempan.NoPoints and "scrap", ammo ) 
+						RunConsoleCommand( "zs_pointsshopbuy", itempan.ID,ammo,itempan.NoPoints and "scrap" or false ) 
 					 end) 
 				end)
 			end

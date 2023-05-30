@@ -3,10 +3,10 @@ function GM:ConCommandErrorMessage(pl, message)
 	pl:SendLua("surface.PlaySound(\"buttons/button10.wav\")")
 end
 
-concommand.Add("zs_pointsshopbuy", function(sender, command, arguments, count)
+concommand.Add("zs_pointsshopbuy", function(sender, command, arguments)
 	if not (sender:IsValid() and sender:IsConnected() and sender:IsValidLivingHuman()) or #arguments == 0 then return end
-	local usescrap = arguments[2]
-
+	local usescrap = arguments[3]
+	PrintTable(arguments)
 	local midwave = GAMEMODE:GetWave() < GAMEMODE:GetNumberOfWaves() / 2 or GAMEMODE:GetWave() == GAMEMODE:GetNumberOfWaves() / 2 and GAMEMODE:GetWaveActive() and CurTime() < GAMEMODE:GetWaveEnd() - (GAMEMODE:GetWaveEnd() - GAMEMODE:GetWaveStart()) / 2
 	if sender:IsSkillActive(SKILL_D_LATEBUYER) and not usescrap and midwave then
 		GAMEMODE:ConCommandErrorMessage(sender, translate.ClientGet(sender, "late_buyer_warning"))
@@ -41,7 +41,7 @@ concommand.Add("zs_pointsshopbuy", function(sender, command, arguments, count)
 	if usescrap and not (itemcat == ITEMCAT_TRINKETS or itemcat == ITEMCAT_AMMO) and not itemtab.CanMakeFromScrap then return end
 
 	local points = usescrap and sender:GetAmmoCount("scrap") or sender:GetPoints()
-	local count_or_nil = count and count or 1
+	local count_or_nil = arguments[2] or 1
 	local cost = itemtab.Price * count_or_nil
 	if GAMEMODE:IsClassicMode() and itemtab.NoClassicMode then
 		GAMEMODE:ConCommandErrorMessage(sender, translate.ClientFormat(sender, "cant_use_x_in_classic", itemtab.Name))
@@ -128,6 +128,9 @@ concommand.Add("zs_pointsshopbuy", function(sender, command, arguments, count)
 		timer.Create(buy..itemtab.Name, 0.01,1, function() sender:PrintTranslatedMessage(HUD_PRINTTALK, usescrap and "created_x_for_y_scrap" ,itemtab.Name, math.ceil(cost)) end)
 	else
 		sender:TakePoints( cost )
+		if sender:IsSkillActive(SKILL_CASHBACK) then
+			sender:GiveAmmo(math.ceil(cost*0.2), "scrap")
+		end
 		sender:SendLua("surface.PlaySound(\"ambient/levels/labs/coinslot1.wav\")")
 		timer.Create(buy..itemtab.Name, 0.01,1, function() sender:PrintTranslatedMessage(HUD_PRINTTALK, "purchased_x_for_y_points", itemtab.Name, cost) end)
 	end

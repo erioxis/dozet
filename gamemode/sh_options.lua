@@ -471,7 +471,7 @@ GM:AddAPointShopItem("zenith2",		ITEMCAT_GUNS,			2150,			"weapon_zs_zenithmega")
 GM:AddAPointShopItem("flamethrower",		ITEMCAT_GUNS,			2150,			"weapon_zs_flamethrower")
 
 
-GM:AddPointShopItem("pistolammo",		ITEMCAT_AMMO,			8,				nil,							translate.Get("ammo_pistol").." (x24)",					nil,									"ammo_pistol",						function( pl, count ) pl:GiveAmmo( 25 * count, "pistol", true ) end)
+GM:AddPointShopItem("pistolammo",		ITEMCAT_AMMO,			8,				nil,							translate.Get("ammo_pistol").." (x24)",					nil,									"ammo_pistol",						function( pl, count ) pl:GiveAmmo( 24 * count, "pistol", true ) end)
 GM:AddPointShopItem("shotgunammo",		ITEMCAT_AMMO,			8,				nil,							translate.Get("ammo_buckshot").." (x14)",				nil,									"ammo_shotgun",						function( pl, count ) pl:GiveAmmo( 14 * count, "buckshot", true ) end)
 GM:AddPointShopItem("smgammo",			ITEMCAT_AMMO,			8,				nil,							translate.Get("ammo_smg").." (x55)",					nil,									"ammo_smg",							function( pl, count ) pl:GiveAmmo( 55 * count, "smg1", true ) end)
 GM:AddPointShopItem("rifleammo",		ITEMCAT_AMMO,			8,				nil,							translate.Get("ammo_rifle").." (x12)",					nil,									"ammo_rifle",						function( pl, count ) pl:GiveAmmo( 12 * count, "357", true ) end)
@@ -481,13 +481,13 @@ GM:AddPointShopItem("pulseammo",		ITEMCAT_AMMO,			8,				nil,							translate.Get
 GM:AddPointShopItem("impactmine",		ITEMCAT_AMMO,			8,				nil,							translate.Get("ammo_explosives").." (x5)",				nil,									"ammo_explosive",					function( pl, count ) pl:GiveAmmo( 5 * count, "impactmine", true ) end)
 GM:AddPointShopItem("chemical",			ITEMCAT_AMMO,			8,				nil,							translate.Get("ammo_chemicals").." (x35)",				nil,									"ammo_chemical",					function( pl, count ) pl:GiveAmmo( 35 * count, "chemical", true ) end)
 item =
-GM:AddPointShopItem("100mkit",			ITEMCAT_AMMO,			9,				nil,							translate.Get("ammo_medicalsupplies").." (x50)",			"50 extra power for the Medical Kit.",	"ammo_medpower",					function(pl) pl:GiveAmmo(50, "Battery", true) end)
+GM:AddPointShopItem("100mkit",			ITEMCAT_AMMO,			9,				nil,							translate.Get("ammo_medicalsupplies").." (x50)",			"50 extra power for the Medical Kit.",	"ammo_medpower",					function(pl, count) pl:GiveAmmo(50 * count, "Battery", true) end)
 item.CanMakeFromScrap = true
 GM:AddPointShopItem("nailsz",			ITEMCAT_AMMO,			4,				nil,			translate.Get("ammo_nails").." (x8)",						nil, 		"ammo_nail", 			function(pl) pl:GiveAmmo(8, "GaussEnergy", true) end)
 
 item.NoClassicMode = true
 item =
-GM:AddPointShopItem("scrap",				ITEMCAT_AMMO,			35,				nil,							translate.Get("ammo_scrap").." (x20)",							"Scrap but is have x15.",					"ammo_scrap",						function(pl) pl:GiveAmmo(20, "Scrap", true) end)
+GM:AddPointShopItem("scrap",				ITEMCAT_AMMO,			35,				nil,							translate.Get("ammo_scrap").." (x20)",							"Scrap but is have x15.",					"ammo_scrap",						function(pl, count) pl:GiveAmmo(20 * count, "Scrap", true) end)
 item.DontScrap = true
 -- Tier 1
 GM:AddPointShopItem("knife",			ITEMCAT_MELEE,			25,				"weapon_zs_swissarmyknife")
