@@ -295,14 +295,11 @@ function util.BlastDamagePlayer(inf, att, center, radius, damage, damagetype, ta
 	util.BlastDamageEx(inf, att, center, radius * (att.ExpDamageRadiusMul or 1), damage * (att.ExplosiveDamageMul or 1), damagetype, taperfactor, doinddamage)
 end
 function util.BlastDamageElemental(inflictor, attacker, epicenter, radius, damage, element, taperfactor, bool)
-	local basedmg = damage
-
-	for _, ent in pairs(ents.FindInSphere(epicenter, radius)) do
-		if ent:IsValid() and ent:IsPlayer() then
-			local nearest = ent:NearestPoint(epicenter)
-			if TrueVisibleFilters(epicenter, nearest, inflictor, attacker, ent)
-				or TrueVisibleFilters(epicenter, ent:EyePos(), inflictor, attacker, ent)
-				or TrueVisibleFilters(epicenter, ent:WorldSpaceCenter(), inflictor, attacker, ent) then
+	local tbl = ents.FindInBoxRadius(epicenter, radius)
+	local basedmg = damage / #tbl
+	for _, ent in pairs(tbl) do
+		if ent:IsValidLivingPlayer() then
+			if  WorldVisible(epicenter, ent:NearestPoint(epicenter))  then
 				if ent:IsValidLivingHuman() and bool then
 					ent:GiveStatus("holly", 5)
 				end
@@ -314,7 +311,7 @@ function util.BlastDamageElemental(inflictor, attacker, epicenter, radius, damag
 						ent:AttachmentDamage(basedmg, attacker, inflictor,i)
 					end
 				end
-
+				
 				if taperfactor and ent:IsPlayer() then
 					basedmg = basedmg * taperfactor
 				end
@@ -343,24 +340,17 @@ end
 		end
 	end
 end]]
-function util.BlastDamageEx(inflictor, attacker, epicenter, radius, damage, damagetype, taperfactor, bool) -- Clyde V
-    local basedmg = damage
-    local entList = ents.FindInSphere(epicenter, radius)
-
+function util.BlastDamageEx(inflictor, attacker, epicenter, radius, damage, damagetype, taperfactor, bool)
+    local entList = ents.FindInBoxRadius(epicenter, radius)
+	local basedmg = damage / #entList
     for _, ent in pairs(entList) do
         if ent:IsValid() then
-            local entPos, eyePos, centerPos = ent:GetPos(), ent:EyePos(), ent:WorldSpaceCenter()
-            local nearest = entPos + (epicenter - entPos):GetNormalized() * entPos:Distance(epicenter)
-
-            if TrueVisibleFilters(epicenter, nearest, inflictor, attacker, ent)
-                or TrueVisibleFilters(epicenter, eyePos, inflictor, attacker, ent)
-                or TrueVisibleFilters(epicenter, centerPos, inflictor, attacker, ent) then
-
-                local specialDamage = ((radius - nearest:Distance(epicenter)) / radius) * basedmg
+			local specialDamage = 1
+            if WorldVisible(epicenter, ent:NearestPoint(epicenter))  then
                 if ent == attacker and bool then
                     specialDamage = specialDamage * (ent.IndDamageTaken or 1)
                 end
-                ent:TakeSpecialDamage(specialDamage, damagetype, attacker, inflictor, nearest)
+                ent:TakeSpecialDamage(basedmg * specialDamage, damagetype, attacker, inflictor, nearest)
 
                 if taperfactor and ent:IsPlayer() then
                     basedmg = basedmg * taperfactor

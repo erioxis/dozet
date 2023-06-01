@@ -79,11 +79,11 @@ function ENT:Think()
 			if endtime - 0.65 <= ct then
 				local delta = math.max(0.01, endtime - ct)
 				for i = 0, rag:GetPhysicsObjectCount() do
-					local translate = owner:TranslatePhysBoneToBone(i%3)
+					local translate = owner:TranslatePhysBoneToBone(i%4)
 					if translate and 0 < translate then
 						local pos, ang = owner:GetBonePosition(translate)
 						if pos and ang then
-							local phys = rag:GetPhysicsObjectNum(i%3)
+							local phys = rag:GetPhysicsObjectNum(i%4)
 							if phys and phys:IsValid() then
 								phys:Wake()
 								phys:ComputeShadowControl({secondstoarrive = delta, pos = pos, angle = ang, maxangular = 1000, maxangulardamp = 10000, maxspeed = 5000, maxspeeddamp = 1000, dampfactor = 0.85, teleportdistance = 100, deltatime = FrameTime()})

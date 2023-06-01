@@ -254,7 +254,7 @@ local function ItemPanelDoClick(self)
 	local sweptable = GAMEMODE.ZSInventoryItemData[shoptbl.SWEP] or weapons.Get(shoptbl.SWEP)
 
 	if not sweptable or GAMEMODE.AlwaysQuickBuy then
-		RunConsoleCommand("zs_pointsshopbuy", self.ID, nil,self.NoPoints and "scrap")
+		RunConsoleCommand("zs_pointsshopbuy", self.ID, 1,self.NoPoints and "scrap")
 		return
 	end
 
@@ -271,7 +271,7 @@ local function ItemPanelDoClick(self)
 	local purb = viewer.m_PurchaseB
 	purb.ID = self.ID
 
-	purb.DoClick = function() RunConsoleCommand("zs_pointsshopbuy", self.ID, nil,self.NoPoints and "scrap") end
+	purb.DoClick = function() RunConsoleCommand("zs_pointsshopbuy", self.ID, 1,self.NoPoints and "scrap") end
 	purb:SetPos(canammo and viewer:GetWide() / 4 - viewer:GetWide() / 8 - 20 or viewer:GetWide() / 4, viewer:GetTall() - 64 * screenscale)
 	purb:SetVisible(true)
 

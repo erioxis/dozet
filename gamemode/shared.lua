@@ -190,6 +190,7 @@ function GM:AddCustomAmmo()
 	game.AddAmmoType({name = "foodpill"})
 	game.AddAmmoType({name = "foodtakeout"})
 	game.AddAmmoType({name = "foodwater"})
+	game.AddAmmoType({name = "foodsolyanka"})
 end
 
 GM.Food = {}
