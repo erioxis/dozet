@@ -677,9 +677,9 @@ function GM:InitPostEntity()
 		ErrorNoHalt("Lmao why you use dozet")
 	end
 	local v = self.Credits[1]
-	if GetConVar("hostname"):GetString() ~= "Дозет["..v[3]..v[2].."|ДОСТИЖЕНИЯ|СКИЛЛЫ]" then
+	if GetConVar("hostname"):GetString() ~= "Дозет["..v[3]..v[2].."|ДОСТИЖЕНИЯ|500+ СКИЛЛОВ]" then
 
-		RunConsoleCommand("hostname", "Дозет["..v[3]..v[2].."|ДОСТИЖЕНИЯ|СКИЛЛЫ]")
+		RunConsoleCommand("hostname", "Дозет["..v[3]..v[2].."|ДОСТИЖЕНИЯ|500+ СКИЛЛОВ]")
 
 	end
 end
@@ -3031,7 +3031,6 @@ function GM:PlayerInitialSpawnRound(pl)
 		"76561198291605212",
 		"76561199226152985",
 		"76561199040548917",
-		"76561199124299400",
 		"76561198819916837",
 		"76561198236924140",
 		"76561198811927576"
@@ -3042,6 +3041,7 @@ function GM:PlayerInitialSpawnRound(pl)
 		"76561199124580085",
 	}
     local avanguardtbl ={
+		"76561199124299400",
 		"76561198874285897",
 		"76561199081762080",
 		"76561198036866965",

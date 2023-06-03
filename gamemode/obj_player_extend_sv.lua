@@ -62,6 +62,7 @@ function meta:ProcessDamage(dmginfo)
 	end
 
 	if P_Team(self) == TEAM_UNDEAD then
+		local classtable = self:GetZombieClassTable()
 		if attacker.Balance2 and math.random(1,100) < 8 then
 			dmginfo:SetDamageType(DMG_DIRECT)
 			dmgbypass = true
@@ -94,13 +95,6 @@ function meta:ProcessDamage(dmginfo)
 			net.Send(self)
 			return
 		end
-		
-		if attacker:IsPlayer()and attacker.RedeemedOnce and attacker:IsSkillActive(SKILL_PHOENIX) then
-			dmginfo:SetDamage(dmginfo:GetDamage() * 0.94)
-		end
-		if attacker:IsPlayer()and attacker:HasTrinket("soul_lime") and attacker:GetModel() == "models/ultrakill/v1_pm.mdl" then
-			dmginfo:SetDamage(dmginfo:GetDamage() * 1.2)
-		end
 		dmginfo:SetDamage(dmginfo:GetDamage() * (1 - (math.Clamp(GAMEMODE:GetBalance() * 0.01,-2.5,0.7))))
 		if self.m_zombiedef then
 			dmginfo:SetDamage(dmginfo:GetDamage() * 0.75)
@@ -115,9 +109,6 @@ function meta:ProcessDamage(dmginfo)
 		if self.m_Zmain then
 			dmginfo:SetDamage(dmginfo:GetDamage() * 2)
 		end
-		if attacker:IsPlayer() and attacker:SteamID64() == "76561198291605212" then
-			dmginfo:SetDamage(dmginfo:GetDamage() * 1.07)
-		end
 		local corrosion = self.Corrosion and self.Corrosion + 2 > CurTime()
 		if self ~= attacker and not corrosion and not dmgbypass then
 			dmginfo:SetDamage(dmginfo:GetDamage() * GAMEMODE:GetZombieDamageScale(dmginfo:GetDamagePosition(), self))
@@ -128,19 +119,9 @@ function meta:ProcessDamage(dmginfo)
 				attacker:TakeDamage(dmginfo:GetDamage() * 0.05)
 			end
 		end]]
-		if attacker.IsLastHuman and attacker.ClanAnsableRevolution then
-			dmginfo:ScaleDamage(1.70)
-		end
-		if attacker:IsPlayer() and attacker.IsLastHuman and attacker:IsSkillActive(SKILL_LAST_MAN) then
-			dmginfo:ScaleDamage(1.15)
-		elseif	attacker:IsPlayer() and !attacker.IsLastHuman and attacker:IsSkillActive(SKILL_LAST_MAN) then
-			dmginfo:ScaleDamage(0.85)
-		end
+
 		if GAMEMODE.ObjectiveMap then
 			dmginfo:ScaleDamage(0.5)
-		end
-		if attacker:IsPlayer() and attacker:IsSkillActive(SKILL_AMULET_2) and (attacker:Health() <= (attacker:GetMaxHealth() * 0.35) or (attacker.MaxBloodArmor * 0.1 >= attacker:GetBloodArmor()) and attacker:Health() <= 15) then
-			dmginfo:ScaleDamage(2)
 		end
 
 		self.ShouldFlinch = true
@@ -154,7 +135,7 @@ function meta:ProcessDamage(dmginfo)
 				self:SetZArmor(self:GetZArmor() - absorb)
 				self.BloodDead = absorb
 				if attacker:IsPlayer() then
-					local points = damage / self:GetMaxHealth() * self:GetZombieClassTable().Points
+					local points = damage / self:GetMaxHealth() * classtable.Points
 					if POINTSMULTIPLIER then
 						points = points * POINTSMULTIPLIER
 					end
@@ -176,6 +157,28 @@ function meta:ProcessDamage(dmginfo)
 				dmginfo:SetDamage(dmginfo:GetDamage()*g)
 				--print(dmginfo:GetDamage())
 			end
+			if attacker.RedeemedOnce and attacker:IsSkillActive(SKILL_PHOENIX) then
+				dmginfo:SetDamage(dmginfo:GetDamage() * 0.94)
+			end
+			if  attacker:HasTrinket("soul_lime") and attacker:GetModel() == "models/ultrakill/v1_pm.mdl" then
+				dmginfo:SetDamage(dmginfo:GetDamage() * 1.2)
+			end
+			if attacker:SteamID64() == "76561198291605212" then
+				dmginfo:SetDamage(dmginfo:GetDamage() * 1.07)
+			end
+			if attacker.IsLastHuman then
+				if attacker:IsSkillActive(SKILL_LAST_MAN) then
+					dmginfo:ScaleDamage(1.15)
+				elseif attacker:IsSkillActive(SKILL_LAST_MAN) then
+					dmginfo:ScaleDamage(0.85)
+				end
+				if attacker.ClanAnsableRevolution then
+					dmginfo:ScaleDamage(1.70)
+				end
+			end
+			if attacker:IsSkillActive(SKILL_AMULET_2) and (attacker:Health() <= (attacker:GetMaxHealth() * 0.35) or (attacker.MaxBloodArmor * 0.1 >= attacker:GetBloodArmor()) and attacker:Health() <= 15) then
+				dmginfo:ScaleDamage(2)
+			end
 
 			if attacker:HasTrinket("sin_ego") then 
 				local g = GetTaper(attacker, "ego", 0.04)
@@ -184,12 +187,14 @@ function meta:ProcessDamage(dmginfo)
 			if attacker:IsSkillActive(SKILL_AMULET_11) and attacker:Health() >= attacker:GetMaxHealth() then
 				dmginfo:ScaleDamage(1.45)
 			end
-			if attacker:HasTrinket("antibaracat") and self:GetZombieClassTable().BaraCat then
-				dmginfo:ScaleDamage(1.2)
-			end
-			if attacker:HasTrinket("cham_at") and self:GetZombieClassTable().BaraCat then
-				dmginfo:ScaleDamage(1.2)
-				self:AttachmentDamage(dmginfo:GetDamage(), attacker, inflictor, 4)
+			if classtable.BaraCat then
+				if attacker:HasTrinket("antibaracat") then
+					dmginfo:ScaleDamage(1.2)
+				end
+				if attacker:HasTrinket("cham_at") then
+					dmginfo:ScaleDamage(1.2)
+					self:AttachmentDamage(dmginfo:GetDamage(), attacker, inflictor, 4)
+				end
 			end
 			if attacker:IsSkillActive(SKILL_SIGILIBERATOR) then
 				dmginfo:ScaleDamage(1.45)
@@ -207,7 +212,7 @@ function meta:ProcessDamage(dmginfo)
 				end
 			end
 		end
-		if self:GetZombieClassTable().Boss and dmginfo:GetDamage() >= (self:GetMaxHealth() * 0.11) then
+		if classtable.Boss and dmginfo:GetDamage() >= (self:GetMaxHealth() * 0.11) then
 			dmginfo:SetDamage(math.min(dmginfo:GetDamage(), (self:GetMaxHealth() * 0.11)))
 		end
 		if attacker:IsValidLivingHuman() and inflictor:IsValid() and inflictor == attacker:GetActiveWeapon() then
@@ -238,8 +243,8 @@ function meta:ProcessDamage(dmginfo)
 			if attacker:HasTrinket("fire_at") and math.randomr(1,6,5,attacker) == 5 then
 				attacker:SetProgress(attacker:GetProgress('fprog')+damage, 'fprog')
 			end
-			if (attacker:IsSkillActive(SKILL_BOUNTYKILLER) or self:GetZombieClassTable().Boss or self:GetZombieClassTable().DemiBoss) and !self:GetZombieClassTable().CrowDa  then
-				local mul = ((attacker:IsSkillActive(SKILL_BOUNTYKILLER) and 0.15 or 0) + (self:GetZombieClassTable().DemiBoss and 0.05 or self:GetZombieClassTable().Boss and 0.1 or 0))
+			if (attacker:IsSkillActive(SKILL_BOUNTYKILLER) or classtable.Boss or classtable.DemiBoss) and !classtable.CrowDa  then
+				local mul = ((attacker:IsSkillActive(SKILL_BOUNTYKILLER) and 0.15 or 0) + (classtable.DemiBoss and 0.05 or classtable.Boss and 0.1 or 0))
 				attacker:SetProgress(attacker:GetProgress('bprog')+(math.min(dmginfo:GetDamage()*mul,self:GetMaxHealth()*mul)), 'bprog')
 
 				local hm = table.Random(tbl)
@@ -301,7 +306,7 @@ function meta:ProcessDamage(dmginfo)
 				end
 
 
-				if attacker:IsSkillActive(SKILL_HEAVYSTRIKES) and not self:GetZombieClassTable().Boss and (wep.IsFistWeapon and attacker:IsSkillActive(SKILL_CRITICALKNUCKLE) or wep.MeleeKnockBack > 0) then
+				if attacker:IsSkillActive(SKILL_HEAVYSTRIKES) and not classtable.Boss and (wep.IsFistWeapon and attacker:IsSkillActive(SKILL_CRITICALKNUCKLE) or wep.MeleeKnockBack > 0) then
 					self.FallDamageHS = damage*0.45
 					self.FallAttacker = attacker
 				end
@@ -360,9 +365,6 @@ function meta:ProcessDamage(dmginfo)
 			attacker:SetDPS(attacker:GetDPS() + damage)
 			timer.Simple(1, function() if attacker:IsValid() then attacker:SetDPS(attacker:GetDPS() - damage1) end end)
 		end
-		if self:GetZombieClassTable().NoBypass then
-			dmgbypass = false
-		end
 		return false
 	end
 	
@@ -375,10 +377,8 @@ function meta:ProcessDamage(dmginfo)
 	end
 
 
-    truedogder = 30 - (self:GetWalkSpeed() / 15)
-	rngdogde = math.max(0,math.random(1,math.max(truedogder,2)))
- 
-	if self:IsSkillActive(SKILL_DODGE) and rngdogde == 1 and !dmgbypass then
+
+	if self:IsSkillActive(SKILL_DODGE) and math.max(0,math.random(1,math.max(30 - (self:GetWalkSpeed() / 15),2))) == 1 and !dmgbypass then
 		if attacker:IsPlayer() then
 			GAMEMODE:BlockFloater(attacker, self, dmginfo:GetDamagePosition())
 		end

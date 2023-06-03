@@ -574,9 +574,7 @@ concommand.Add("worthcheckout", function(sender, command, arguments)
 			hasalready[id] = true
 		end
 	end
-
 	if cost > GAMEMODE.StartingWorth + (sender.ExtraStartingWorth or 0) then return end
-
 	hasalready = {}
 
 	for _, id in pairs(arguments) do

@@ -55,15 +55,17 @@ function meta:HealPlayer(pl, amount, pointmul, nobymsg, poisononly)
 		healed = healed + rmv
 		amount = amount - rmv
 	end
-	if self:IsPlayer() then
-		self:GiveAchievementProgress("best_medicine", (healed or 1))
-	end
 
 	pointmul = (pointmul or 1) / (math.max(healed, regamount) / regamount)
 
 	if healed > 0 and self:IsPlayer() then
 		gamemode.Call("PlayerHealedTeamMember", self, pl, healed, self:GetActiveWeapon(), pointmul, nobymsg, healed >= 10)
 		pl:SetPhantomHealth(math.max(0, pl:GetPhantomHealth() - healed))
+		self:GiveAchievementProgress("best_medicine", (healed or 1))
+		if self:IsSkillActive(SKILL_M_CHAINS) then
+			local chain = pl:GiveStatus("chains",15)
+			chain:SetDTEntity(11,self)
+		end
 	end
 
 	return healed

@@ -707,3 +707,44 @@ function util.WhiteOut(time, fadeouttime)
 
 	hook.Add("RenderScreenspaceEffects", "WhiteOut", RenderWhiteOut)
 end
+
+
+local CModBlackOut = {
+	["$pp_colour_addr"] = 1,
+	["$pp_colour_addg"] = 1,
+	["$pp_colour_addb"] = 1,
+	["$pp_colour_brightness"] = 0,
+	["$pp_colour_contrast"] = 1,
+	["$pp_colour_colour"] = 0,
+	["$pp_colour_mulr"] = 255,
+	["$pp_colour_mulg"] = 255,
+	["$pp_colour_mulb"] = 255
+}
+local BlackOutEnd
+local BlackOutFadeTime
+local function RenderBlackOut()
+	local dt = math_max(BlackOutEnd - CurTime(), 0) / BlackOutFadeTime
+	if dt <= 0 then
+		BlackOutEnd = nil
+		BlackOutFadeTime = nil
+		hook.Remove("RenderScreenspaceEffects", "BlackOut")
+	else
+		local size = 5 + dt * 10
+		CModBlackOut["$pp_colour_contrast"] = dt ^ 2
+		DrawBloom(1 - dt, dt * 3, size, size, 1, 1, 1, 1, 1)
+		CModBlackOut["$pp_colour_mulr"] = dt ^ 2
+		CModBlackOut["$pp_colour_mulg"] = dt ^ 3
+		CModBlackOut["$pp_colour_mulb"] = dt  / 2
+		DrawColorModify(CModBlackOut)
+	end
+end
+
+function util.BlackOut(time, fadeouttime)
+	time = time or 1
+
+	BlackOutEnd = math_max(CurTime() + time, BlackOutEnd or 0)
+	BlackOutFadeTime = math_max(fadeouttime or time, BlackOutFadeTime or 0)
+
+	hook.Add("RenderScreenspaceEffects", "BlackOut", RenderBlackOut)
+end
+

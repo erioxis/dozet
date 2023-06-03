@@ -23,7 +23,7 @@ function ENT:Draw()
 	local emitter = ParticleEmitter(pos)
 	emitter:SetNearClip(16, 24)
 	local pos2 = who:LocalToWorld(who:OBBCenter())
-	local direction = (pos2 - self:GetPos()):GetNormal()
+	local direction = (pos2 - owner:WorldSpaceCenter()):GetNormal()
 	for i = 1, 2 do
 		particle = emitter:Add("sprites/light_glow02_add", pos + VectorRand() * 12)
 		if particle then

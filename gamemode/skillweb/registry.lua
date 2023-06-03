@@ -493,6 +493,7 @@ SKILL_LIVER_TRUE = 467
 SKILL_COPPER = 468
 SKILL_WORTHINESS5 = 469
 SKILL_CASHBACK = 470
+SKILL_M_CHAINS = 471
 
 
 
@@ -921,6 +922,8 @@ GM:AddSkill(SKILL_D_FRAIL,  trs("skill_frail"), GOOD.."-33%"..trs("med_cool")..G
 																-4,			-2,					{}, TREE_SUPPORTTREE)
 GM:AddSkill(SKILL_MEDICBOOSTER,  trs("skill_boostermed"), BAD.."+33%"..trs("med_cool")..GOOD..trs("skill_boostermed_d1"),
 																-4,			-3,					{SKILL_D_FRAIL}, TREE_SUPPORTTREE)
+GM:AddSkill(SKILL_M_CHAINS,  trs("skill_medchains"), BAD.."+25%"..trs("med_cool")..GOOD..trs("skill_medchains_d1"),
+																-4,			-4,					{SKILL_MEDICBOOSTER}, TREE_SUPPORTTREE)
 GM:AddSkill(SKILL_U_MEDICCLOUD, trs("skill_u_medcloud"), GOOD..trs("skill_u_medcloud_d1"),
 																0,			-2,					{SKILL_DISPERSION}, TREE_SUPPORTTREE)
 .AlwaysActive = true
@@ -2993,6 +2996,7 @@ GM:AddSkillFunction(SKILL_D_FRAIL, function(pl, active)
 	pl:SetDTBool(DT_PLAYER_BOOL_FRAIL, active)
 end)
 GM:AddSkillModifier(SKILL_MEDICBOOSTER, SKILLMOD_MEDKIT_COOLDOWN_MUL, 0.33)
+GM:AddSkillModifier(SKILL_M_CHAINS, SKILLMOD_MEDKIT_COOLDOWN_MUL, 0.25)
 
 GM:AddSkillModifier(SKILL_MASTERCHEF, SKILLMOD_MELEE_DAMAGE_MUL, -0.10)
 

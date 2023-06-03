@@ -296,7 +296,7 @@ function MakepWorth()
 		--local priceall = translate.Get("w_cost")..priceall
 		names = string.sub(names,0, string.len(names)-1)
 		
-		local cartname = savetab[1].." - "..translate.Get("w_cost")..priceall
+		local cartname = savetab[1]
 
 		local x = 8
 		local limitedscale = math.Clamp(screenscale, 1, 1.5)
@@ -313,7 +313,7 @@ function MakepWorth()
 			lol = defimage:GetWide()
 		end
 
-		local cartnamelabel = EasyLabel(cartpan, cartname, panfont)
+		local cartnamelabel = EasyLabel(cartpan, cartname.." - "..translate.Get("w_cost")..priceall, panfont)
 		cartnamelabel:SetPos(x, cartpan:GetTall() * 0.3 - cartnamelabel:GetTall() * 0.5)
 		local cartnamelabel2 = EasyLabel(cartpan, names, nil, Color(238,255,87))
 		cartnamelabel2:SetPos(x - (defaultcart == cartname and lol + 4 or 0), cartpan:GetTall() * 0.76 - cartnamelabel2:GetTall() * 0.2)
