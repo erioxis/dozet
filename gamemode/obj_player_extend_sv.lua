@@ -53,10 +53,6 @@ function meta:ProcessDamage(dmginfo)
 			dmginfo:SetDamage(0)
 		end
 	end
-	if table.HasValue({"prop_physics", "prop_physics_multiplier"}, (inflictor and inflictor:IsValid() and inflictor:GetClass() or "s")) and !inflictor:GetPhysicsAttacker(10) then
-		dmginfo:ScaleDamage(0)
-		return
-	end
 	if attacker.PBAttacker and attacker.PBAttacker:IsValid() then
 		attacker = attacker.PBAttacker
 	end
@@ -199,7 +195,7 @@ function meta:ProcessDamage(dmginfo)
 			if attacker:IsSkillActive(SKILL_SIGILIBERATOR) then
 				dmginfo:ScaleDamage(1.45)
 			end
-			if attacker:HasTrinket("a_flower") and (attacker:GetStatus("cursed")) then
+			if (attacker:GetStatus("cursed"))  and attacker:HasTrinket("a_flower") then
 				dmginfo:ScaleDamage(0.1)
 			end
 			if attacker:IsSkillActive(SKILL_AMULET_12) then
@@ -440,11 +436,11 @@ function meta:ProcessDamage(dmginfo)
 		dmginfo:SetDamage(dmginfo:GetDamage() * self.FireDamageTakenMul)
 	end
 
-
+	local classtablea = attacker:IsPlayer() and attacker:GetZombieClassTable() or {}
 	if inflictor:IsValid() and (inflictor:IsPhysicsModel() or inflictor.IsPhysbox) and self:IsValidLivingHuman() then
 		local damage = dmginfo:GetDamage()
 		local forcedamp = self:HasTrinket("forcedamp")
-		local noadj = attacker:IsValidLivingZombie() and attacker:GetZombieClassTable().NoAdjustPhysDamage
+		local noadj = attacker:IsValidLivingZombie() and classtablea.NoAdjustPhysDamage
 
 		if forcedamp or (attacker:IsValidLivingZombie() and not noadj) then
 			damage = math.max(5, (math.log10(damage) * 26)-5)
@@ -540,7 +536,7 @@ function meta:ProcessDamage(dmginfo)
 	local takedbl = 0
 
 	if attacker:IsValid() and attacker:IsPlayer() and inflictor:IsValid() and attacker:Team() == TEAM_UNDEAD then
-		if attacker:GetZombieClassTable().HealthMax and self:HasTrinket("soul_lime") then
+		if classtablea.HealthMax and self:HasTrinket("soul_lime") then
 			dmginfo:SetDamage(dmginfo:GetDamage() * 0.5)
 		end
 		if attacker.Zban then
@@ -552,7 +548,7 @@ function meta:ProcessDamage(dmginfo)
 		if attacker.Zmainer then
 			dmginfo:ScaleDamage(0.67)
 		end
-		if attacker:GetZombieClassTable().CanPiz and attacker:GetZombieClassTable().SWEP ~= inflictor:GetClass() then
+		if classtablea.CanPiz and classtablea.SWEP ~= inflictor:GetClass() then
 			dmginfo:ScaleDamage(0.1/(inflictor.Tier and inflictor.Tier or 1))
 		end
 
@@ -673,21 +669,6 @@ function meta:ProcessDamage(dmginfo)
 					attacker:TakeSpecialDamage(damage * self.BarbedArmorPercent, DMG_SLASH, self, self)
 				end
 
-				if self:HasTrinket("lazarussoul") and (not self.LastReactiveFlash or self.LastReactiveFlash + 40 < CurTime()) then
-					attacker:ScreenFade(SCREENFADE.IN, nil, 1, 1)
-					attacker:SetDSP(36)
-					attacker:GiveStatus("disorientation", 1)
-					attacker:GiveStatus("dimvision", 1)
-
-					self:EmitSound("weapons/flashbang/flashbang_explode2.wav")
-
-					local effectdata = EffectData()
-						effectdata:SetOrigin(self:GetPos())
-					util.Effect("HelicopterMegaBomb", effectdata)
-				end
-
-					self.LastReactiveFlash = CurTime()
-					self.ReactiveFlashMessage = nil
 				if self:HasTrinket("reactiveflasher") and (not self.LastReactiveFlash or self.LastReactiveFlash + 10 < CurTime()) then
 					attacker:ScreenFade(SCREENFADE.IN, nil, 1, 1)
 					attacker:SetDSP(36)
@@ -713,16 +694,9 @@ function meta:ProcessDamage(dmginfo)
 					self.LastBleakSoul = CurTime()
 					self.BleakSoulMessage = nil
 				end
-				if self:HasTrinket("eriosoul") and (not self.LastBleakSoul or self.LastBleakSoul + 2 < CurTime()) then
-					attacker:GiveStatus("dimvision", 1)
-					attacker:SetGroundEntity(nil)
-					self.LastBleakSoul = CurTime()
-					self.BleakSoulMessage = nil
-				end
 
-				local chance = math.randomr(1,100,5,self)
 
-				if self:IsSkillActive(SKILL_TTIMES) and chance <= 5 then
+				if self:IsSkillActive(SKILL_TTIMES) and math.randomr(1,100,5,self) <= 5 then
 					attacker:GiveStatus("dimvision", 1)
 					net.Start("zs_damageblock")
 					net.Send(self)
@@ -736,8 +710,7 @@ function meta:ProcessDamage(dmginfo)
 				end
 
 
-				local trinkett = math.randomr(1,100,8,self)
-				if self:HasTrinket("ttimes") and trinkett <= 9 then
+				if self:HasTrinket("ttimes") and  math.randomr(1,100,8,self) <= 9 then
 					attacker:GiveStatus("dimvision", 1)
 					net.Start("zs_damageblock")
 					net.Send(self)
@@ -749,8 +722,8 @@ function meta:ProcessDamage(dmginfo)
 					end
 					return
 				end
-				local slavec = math.randomr(1,10,1,self)
-				if self:IsSkillActive(SKILL_SLAVEC) and slavec == 1 then
+
+				if self:IsSkillActive(SKILL_SLAVEC) and math.randomr(1,10,1,self) == 1 then
 					attacker:GiveStatus("dimvision", 5)
 
 					self:EmitSound("ambient/creatures/town_child_scream1.wav", 20, 10)
@@ -777,9 +750,6 @@ function meta:ProcessDamage(dmginfo)
 					if boost and boost:IsValid() then
 						boost:SetSpeed(55)
 					end
-				end
-				if self:IsSkillActive(SKILL_BLOODLOST) then
-					self:GiveStatus("bloodrage", 6)
 				end
 				if self:HasTrinket("cursedtrinket")  then
 					local cursed = self:GetStatus("cursed")
@@ -809,7 +779,6 @@ function meta:ProcessDamage(dmginfo)
 					net.Send(self)
 					self:GiveAchievementProgress("haha_lox", 1)
 					if attacker:IsPlayer() then
-						
 						GAMEMODE:BlockFloater(attacker, self, dmginfo:GetDamagePosition())
 					end
 					return
@@ -828,7 +797,7 @@ function meta:ProcessDamage(dmginfo)
 
 
 				if self.MeleeDamageTakenMul and not dmgbypass then
-					if attacker:GetZombieClassTable().GigaTim then
+					if classtablea.GigaTim then
 						dmginfo:SetDamage(dmginfo:GetDamage() / self.MeleeDamageTakenMul)
 					else
 						dmginfo:SetDamage(dmginfo:GetDamage() * self.MeleeDamageTakenMul)
@@ -865,17 +834,18 @@ function meta:ProcessDamage(dmginfo)
 					end
 				end
 			end
-			
-			if attacker:IsPlayer() and attacker.m_DeathClaws and !self:IsSkillActive(SKILL_DEFENDBLOOD) then
-				local bleed = self:GiveStatus("bleed")
-				if bleed and bleed:IsValid() then
-					bleed:AddDamage((damage * 0.25) * (self:IsSkillActive(SKILL_LOX) and 2 or 1))
-					if attacker:IsValid() and attacker:IsPlayer() then
-						bleed.Damager = attacker
+			if  attacker.m_DeathClaws then
+				if !self:IsSkillActive(SKILL_DEFENDBLOOD) then
+					local bleed = self:GiveStatus("bleed")
+					if bleed and bleed:IsValid() then
+						bleed:AddDamage((damage * 0.25) * (self:IsSkillActive(SKILL_LOX) and 2 or 1))
+						if attacker:IsValid() and attacker:IsPlayer() then
+							bleed.Damager = attacker
+						end
 					end
+				elseif self:IsSkillActive(SKILL_DEFENDBLOOD) then
+					dmginfo:ScaleDamage(2)
 				end
-			elseif  attacker:IsPlayer() and attacker.m_DeathClaws and self:IsSkillActive(SKILL_DEFENDBLOOD) then
-				dmginfo:ScaleDamage(2)
 			end
 		elseif inflictor:IsProjectile() then
 			if self.ProjDamageTakenMul and not dmgbypass then
@@ -2691,7 +2661,6 @@ end
 function meta:MakeBossDrop(killer)
 	if math.random(1,3) == 1 then return end
 	local drop = table.Random(bossdrops)
-	local rand = math.random(1,50)
 	if drop == "trinket_clownsoul" then
 		drop = table.Random(bossdrops)
 	end

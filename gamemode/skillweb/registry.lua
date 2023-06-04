@@ -1799,7 +1799,7 @@ GM:AddSkill(SKILL_INF_POWER, "Dozei Core", PURPLE.."-50% Damage.\nExtra-damage f
 										4,			-5,					{SKILL_NO_BALANCE,SKILL_HELPLIFER}, TREE_ANCIENTTREE).SPUse = 14
 GM:AddSkill(SKILL_NO_BALANCE, "Silver bullets", PURPLE.."Sometimes your damage become a DIRECT damage!\n7% Chance",
 										2.5,			-3.5,					{}, TREE_ANCIENTTREE).SPUse = 24
-GM:AddSkill(SKILL_SOUL_TRADE, "[TRADE]Soul", PURPLE.."Sell Your Soul For Toy.\n"..PURPLE.."+33.3% Point Mul",
+GM:AddSkill(SKILL_SOUL_TRADE, "[TRADE]Soul", PURPLE.."Sell Your Soul For Toy and now ALL SOULS KILL YOU.\n"..PURPLE.."+66.6% Point Mul",
 										4,			-7,					{SKILL_HELPLIFER}, TREE_ANCIENTTREE)
 GM:AddSkill(SKILL_SEEAURA, "Ancient vision", PURPLE.."You can see zombie aura",
 										2,			-8.5,					{SKILL_HELPLIFER}, TREE_ANCIENTTREE)
@@ -3011,7 +3011,7 @@ GM:AddSkillModifier(SKILL_AGILEII, SKILLMOD_SPEED, -3)
 GM:AddSkillModifier(SKILL_AGILEIII, SKILLMOD_JUMPPOWER_MUL, 0.06)
 GM:AddSkillModifier(SKILL_AGILEIII, SKILLMOD_SPEED, -4)
 
-GM:AddSkillModifier(SKILL_SOUL_TRADE, SKILLMOD_POINT_MULTIPLIER, 0.333)
+GM:AddSkillModifier(SKILL_SOUL_TRADE, SKILLMOD_POINT_MULTIPLIER, 0.666)
 
 GM:AddSkillModifier(SKILL_SOFTDET, SKILLMOD_EXP_DAMAGE_RADIUS, 0.10)
 GM:AddSkillModifier(SKILL_SOFTDET, SKILLMOD_EXP_DAMAGE_TAKEN_MUL, -0.4)

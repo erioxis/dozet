@@ -104,6 +104,7 @@ local function Some(tbl,upd)
 	return false
 end
 net.Receive("zs_update_style", function(length)
+	if !GAMEMODE.NoStyle then return end
 	local tbl = net.ReadTable()
 	if Some(tbl) then return end
 	MySelf.StyleMoment[#MySelf.StyleMoment+1] = tbl

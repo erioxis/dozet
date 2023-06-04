@@ -176,11 +176,11 @@ function meta:FireBulletsLua(src, dir, spread, num, damage, attacker, force_mul,
 				end
 				if SERVER then
 					ent:SetLastHitGroup(bullet_tr.HitGroup)
-					if attacker:IsValidPlayer() then
-						net.Start("zs_update_style") net.WriteTable({time = CurTime()+1.5+(math.random(10,20)*0.2),text = "HEADSHOT",score = 5}) net.Send(attacker) 
-					end
 					if bullet_tr.HitGroup == HITGROUP_HEAD then
 						ent:SetWasHitInHead()
+						if attacker:IsValidPlayer() then
+							net.Start("zs_update_style") net.WriteTable({time = CurTime()+1.5+(math.random(10,20)*0.2),text = "HEADSHOT",score = 5}) net.Send(attacker) 
+						end
 					end
 				end
 			elseif attacker:IsValidPlayer() then
@@ -193,7 +193,7 @@ function meta:FireBulletsLua(src, dir, spread, num, damage, attacker, force_mul,
 			ent:DispatchTraceAttack(damageinfo, bullet_tr, dir)
 		elseif !E_IsValid(ent) and attacker_player and (attacker.FastEye or attacker.BirdEye) then
 			local die = false
-			attacker.Luls = (attacker.Luls or 0) + 1
+			attacker.Luls = attacker.Luls + 1
 			if math.random(1,4) == 1 then
 				inflictor.DamageEyeMul = math.max(1,(inflictor.DamageEyeMul or 1))/2  
 				die = true

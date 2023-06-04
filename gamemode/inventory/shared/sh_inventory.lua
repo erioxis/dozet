@@ -346,29 +346,42 @@ GM:AddInventoryItemData("cons_sack_of_trinkets",		trs("c_sack_of_trinkets"),			t
 	net.Send(pl)
 end,10)
 GM:AddInventoryItemData("cons_friendship",		trs("c_friendship"),			trs("c_friendship_d"),								"models/props_c17/trappropeller_lever.mdl", 1, nil, nil, function(pl) 
+	local humans = team.GetPlayers(TEAM_HUMAN)
 	local tabled = {}
-	for k,v in pairs(team.GetPlayers(TEAM_HUMAN)) do
-		if v:Health() < v:GetMaxHealth() then
-			tabled[v] = v
-		end
+	local count = 0
+	
+	for i = 1, #humans do
+	  local human = humans[i]
+	  if human:Health() < human:GetMaxHealth() then
+		tabled[count] = human
+		count = count + 1
+	  end
 	end
-	if table.Count(tabled) < 1 then return end
+	
+	if count < 1 then return end
+	
 	local healed = NULL
-	for i=1,2 do
-		local heal = table.Random(tabled)
-		if healed == heal then
-			tabled[heal] = nil
-			heal = table.Random(tabled)
-			--PrintTable(tabled)
+	for i = 1, 2 do
+	  local index = math.random(count)
+	  local heal = tabled[index]
+	
+	  if healed == heal then
+		tabled[index] = tabled[count]
+		tabled[count] = nil
+		count = count - 1
+	
+		index = math.random(count)
+		heal = tabled[index]
+	  end
+	
+	  if heal and heal:IsValid() then
+		healed = heal
+		pl:HealPlayer(heal, 20)
+		heal:SetBloodArmor(heal.MaxBloodArmor + 20)
+		if pl ~= heal then
+		  pl:AddPoints(2)
 		end
-		if heal and heal:IsValid() then
-			healed = heal
-			pl:HealPlayer(heal,20)
-			heal:SetBloodArmor(heal.MaxBloodArmor+20)
-			if pl ~= heal then
-				pl:AddPoints(2)
-			end
-		end
+	  end
 	end
 end,2)
 GM:AddInventoryItemData("cons_chaos",		trs("c_chaos"),			trs("c_chaos_d"),								"models/props_c17/trappropeller_lever.mdl", 3, nil, nil, function(pl) 

@@ -1,4 +1,4 @@
---[[
+ --[[
 
 Zombie Survival
 by William "JetBoom" Moodhe
@@ -1392,7 +1392,7 @@ function GM:Think()
 						pl:Kill()
 					end
 				end
-				if pl:GetActiveWeapon() and (pl:GetActiveWeapon().Tier or 1) <= 4 and pl:HasTrinket("sin_envy") and pl:GetActiveWeapon():GetClass() ~= "weapon_zs_fists" then
+				if pl:HasTrinket("sin_envy") and pl:GetActiveWeapon() and (pl:GetActiveWeapon().Tier or 1) <= 4 and pl:GetActiveWeapon():GetClass() ~= "weapon_zs_fists" then
 					pl:StripWeapon(pl:GetActiveWeapon():GetClass())
 				end
 				local barac = pl:IsSkillActive(SKILL_BARA_CURSED)
@@ -1414,14 +1414,11 @@ function GM:Think()
 					
 				end
 				local vele = pl:GetVelocity()
-				if !pl:OnGround() and not (vele:LengthSqr() > 7600) then
+				if !pl:OnGround() and vele:LengthSqr() < 7600 then
 					pl.StuckedInProp = true
-				else
-					pl.StuckedInProp = nil
-				end
-				if !pl:OnGround() and vele:LengthSqr() < 7600 or vele:LengthSqr() < 7600 then
 					pl.Stuckedtrue = true
 				else
+					pl.StuckedInProp = nil
 					pl.Stuckedtrue = nil
 					pl.Stuckedtrue_C = CurTime() + 3
 				end
@@ -1454,7 +1451,7 @@ function GM:Think()
 					pl.NextRegenerate = time + 6
 					pl:SetHealth(math.min(healmax, pl:Health() + 1))
 				end
-				if pl:IsSkillActive(SKILL_NULLED) and time >= pl.NextRegenerateNull and pl:Health() < math.min(healmax, pl:GetMaxHealth() * 1) then
+				if pl:IsSkillActive(SKILL_NULLED) and time >= pl.NextRegenerateNull and pl:Health() < math.min(healmax, pl:GetMaxHealth()) then
 					pl.NextRegenerateNull = time + 5
 					pl:SetHealth(math.min(healmax, pl:Health() + 3))
 				end
@@ -1496,7 +1493,7 @@ function GM:Think()
 						end
 					end
 				end
-				if pl:IsSkillActive(SKILL_PACIFISMIUM) and time >= (pl.NextEnergy or 1) then
+				if pl:IsSkillActive(SKILL_PACIFISMIUM) and time >= pl.NextEnergy then
 					pl.NextEnergy = time + 45
 					pl:SetChargesActive(pl:GetChargesActive()+1)
 				end
@@ -1523,7 +1520,7 @@ function GM:Think()
                     pl:GiveStatus("dimvision", 10, true)
 				end
 
-				if pl:IsSkillActive(SKILL_GIGACHAD) and not self.ObjectiveMap then
+				if !self.ObjectiveMap and pl:IsSkillActive(SKILL_GIGACHAD) then
 					pl:SetModelScale(math.Clamp(math.min(math.max(0.5, healmax * 0.01),2.5) * (pl.ScaleModel or 1),0.2, 5))
 					pl:SetViewOffset(Vector(0, 0, 64 * pl:GetModelScale()))
 					pl:SetViewOffsetDucked(Vector(0, 0, 32 * pl:GetModelScale()))
@@ -1535,18 +1532,10 @@ function GM:Think()
 					print(" Уебало "..pl:Nick()..(" "..pl.MasteryHollowing))
 					PrintMessage(HUD_PRINTCONSOLE," Уебало "..pl:Nick()..(" "..pl.MasteryHollowing))
 				end
-				if pl:HasTrinket("curse_ponos") and math.random(9500) == 200 then
+				if pl:HasTrinket("curse_ponos") and math.random(2500) == 200 then
 					pl:SetVelocity(VectorRand() * math.random(700,3700))
 					pl:EmitSound("ambient/water/water_spray3.wav",120,45, 122)
 				end
-
-				if pl:GetModel() == "models/player/catpants.mdl" and self.NoBaracursed then
-				--	pl:Kill()
-				--	print("BARACAT!!!")
-					--PrintMessage(HUD_PRINTCONSOLE,"Ты еблан? "..pl:Nick())
-				end
-
-
 				if pl:HasTrinket("adrenaline") and time >= pl.NextRegenerateAdr and pl:Health() < math.min(healmax, pl:GetMaxHealth() * 0.85) then
 					pl.NextRegenerateAdr = time + 60
 					pl:GiveStatus("strengthdartboost", 20)
@@ -1600,8 +1589,7 @@ function GM:Think()
 					pl.NextBloodArmorRegen3 = time + 3
 					pl:SetBloodArmor(math.min(pl.MaxBloodArmor, pl:GetBloodArmor() + (5 * pl.BloodarmorGainMul)))
 				end
-				damaged = math.random(1,250)
-				if pl:IsSkillActive(SKILL_DAMAGER) and damaged == 1 then
+				if pl:IsSkillActive(SKILL_DAMAGER) and math.random(1,250) == 1 then
                    pl:TakeDamage((pl:GetMaxHealth() * 0.10) + 1)
 				end
 
@@ -2033,16 +2021,17 @@ end
 function GM:PlayerRepairedObject(pl, other, health, wep)
 	health = health - other:RemoveUselessDamage(health)
 	if self:GetWave() == 0 or health <= 0 then return end
+	health = math.Round(health*10)/10
 	pl.NextChargeRepair = (pl.NextChargeRepair or 0) + health
-	if (pl.NextChargeRepair or 0) >= 200 then
+	if pl.NextChargeRepair >= 200 then
 		pl:SetChargesActive(pl:GetChargesActive()+1)
 		pl.NextChargeRepair = 0
 	end
 	pl.RepairedThisRound = pl.RepairedThisRound + health
 	if numofdaily == 2 then
-		pl:GiveAchievementProgress("daily_post", math.Round(health))
+		pl:GiveAchievementProgress("daily_post", health)
 	end
-	net.Start("zs_update_style") net.WriteTable({time = CurTime()+2+(math.random(10,20)*0.2),text = "REPAIRED PROP FOR "..math.Round(health),score = health,color = Color(23,69,194)}) net.Send(pl) 
+	net.Start("zs_update_style") net.WriteTable({time = CurTime()+2+(math.random(10,20)*0.2),text = "REPAIRED PROP FOR "..health,score = health,color = Color(23,69,194)}) net.Send(pl) 
 
 	local hpperpoint = self.RepairPointsPerHealth
 	if hpperpoint <= 0 then return end
@@ -2956,6 +2945,7 @@ function GM:PlayerInitialSpawnRound(pl)
 
 	pl.PointQueue = 0
 	pl.LastDamageDealtTime = 0
+	pl.NextEnergy = 0
 
 	pl.HealedThisRound = 0
 	pl.RepairedThisRound = 0
@@ -3006,6 +2996,7 @@ function GM:PlayerInitialSpawnRound(pl)
 	pl.m_ZArmor3 = nil
 	pl.LastHealedFocus = 0
 	pl.AddXPMulti = 1
+	pl.Luls = 0
 	pl.StyleMoment = {}
 
 	-- Boss Mutations (Z-Shop)
@@ -5021,7 +5012,7 @@ function GM:DoPlayerDeath(pl, attacker, dmginfo)
 					pl:Make1BossDrop(attacker)
 				end)
 			end
-            if attacker:IsValidLivingHuman() and not attacker:HasTrinket("altcainsoul") then
+
 			timer.Simple(0, function()
 				pl:MakeBossDrop(attacker)
 			end)
@@ -5029,14 +5020,7 @@ function GM:DoPlayerDeath(pl, attacker, dmginfo)
 			timer.Simple(0, function()
 				pl:Make2BossDrop(attacker)
 			end)
-		    elseif attacker:IsValidLivingHuman() and attacker:HasTrinket("altcainsoul") then
-				timer.Simple(0, function()
-					pl:Make2BossDrop(attacker)
-				end)
-				timer.Simple(1, function()
-					pl:Make2BossDrop(attacker)
-				end)
-			end
+
 
 			pl.BossDeathNotification = nil
 		end
