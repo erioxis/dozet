@@ -1728,9 +1728,10 @@ GM:AddSkillModifier(SKILL_SCAM, SKILLMOD_POINT_MULTIPLIER, 0.01)
 GM:AddSkill(SKILL_SCAM, "Scam", GOOD.."+1%"..trs("p_mul")..BAD.. "On kill curses with 1.5% chance(GIVE SPECIAL CURSE)",
 			3,			-8,					{SKILL_BADTRIP}, TREE_POINTTREE)
 SKILL_SOLARUZ = 169
-GM:AddSkillModifier(SKILL_SOLARUZ, SKILLMOD_POINT_MULTIPLIER, 0.15)
+GM:AddSkillModifier(SKILL_SOLARUZ, SKILLMOD_POINT_MULTIPLIER, 0.25)
+GM:AddSkillModifier(SKILL_SOLARUZ, SKILLMOD_LUCK, 3)
 GM:AddSkillModifier(SKILL_SOLARUZ, SKILLMOD_DMG_TAKEN, 0.5)
-GM:AddSkill(SKILL_SOLARUZ, "Debuff:Deadly Fortuna", PURPLE.."+15% Points Multiplicator \n" ..BAD.. "+50% damage taken",
+GM:AddSkill(SKILL_SOLARUZ, "Debuff:Deadly Fortuna", PURPLE.."+25% Points Multiplicator and +3 luck\n" ..BAD.. "+65% damage taken",
 				3,			-9,					{SKILL_SCAM}, TREE_POINTTREE)
 SKILL_ANCK = 170
 GM:AddSkill(SKILL_ANCK, "Ancient knowledge", PURPLE.."Learn The Ancient knowledge \n" ..BAD.. "The cost of knowledge",

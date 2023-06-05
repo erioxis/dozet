@@ -339,6 +339,7 @@ GM:AddStartingItem("m_w_heal",				ITEMCAT_MAGIC,			75,				"weapon_zs_m_heal")
 GM:AddStartingItem("m_w_electro",				ITEMCAT_MAGIC,			100,				"weapon_zs_m_electro")
 GM:AddStartingItem("m_w_wind",				ITEMCAT_MAGIC,			75,				"weapon_zs_m_wind")
 GM:AddStartingItem("m_w_boom",				ITEMCAT_MAGIC,			75,				"weapon_zs_m_boom")
+GM:AddStartingItem("m_w_magic_proj",				ITEMCAT_MAGIC,			100,				"weapon_zs_magicwand")
 GM:AddStartingItem("stone",				ITEMCAT_OTHER,			5,				"weapon_zs_stone")
 GM:AddStartingItem("grenade",			ITEMCAT_OTHER,			20,				"weapon_zs_grenade")
 GM:AddStartingItem("h_o_l_y_grenade",			ITEMCAT_OTHER,			45,				"weapon_zs_holy_grenade")
@@ -375,6 +376,7 @@ GM:AddPointShopItem("magicelectro",			ITEMCAT_MAGIC,			740,				"weapon_zs_m_elec
 GM:AddPointShopItem("magicwind",			ITEMCAT_MAGIC,			400,				"weapon_zs_m_wind")
 GM:AddPointShopItem("magicdamage",			ITEMCAT_MAGIC,			400,				"weapon_zs_m_damage")
 GM:AddPointShopItem("magicboom",			ITEMCAT_MAGIC,			400,				"weapon_zs_m_boom")
+GM:AddPointShopItem("magicproj",			ITEMCAT_MAGIC,			800,				"weapon_zs_magicwand")
 
 -- Tier 1
 

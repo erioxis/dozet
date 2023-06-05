@@ -98,7 +98,7 @@ function math.unrandom(min, max, need, inv, chances)
 	local rand = min
 	for i=1,ch do
 		local random = math.random(min,max)
-		if not inv and random >= need or inv and random <= need then
+		if not inv and random >= need or random <= need then
 			rand = random
 			break
 		else

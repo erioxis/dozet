@@ -279,7 +279,7 @@ function meta:ProcessDamage(dmginfo)
 			if attacker:IsSkillActive(SKILL_BARA_CURSED) and GAMEMODE:GetWave() >= 6 then
 				dmginfo:ScaleDamage(1.45)
 			end
-			if attacker:GetTimerBERS() >= CurTime() and attacker:IsSkillActive(SKILL_BERSERK) then
+			if attacker:IsSkillActive(SKILL_BERSERK) and attacker:GetTimerBERS() >= CurTime() then
 				dmginfo:ScaleDamage(5)
 			end
 			if wep.IsMelee then
@@ -365,31 +365,42 @@ function meta:ProcessDamage(dmginfo)
 	end
 	
 	local mywep = self:GetActiveWeapon()
-	if self:IsSkillActive(SKILL_BLESSEDROD) and dmginfo:GetDamage() >= 30 and !dmgbypass then
-		dmginfo:SetDamage(dmginfo:GetDamage() - 12)
-	end
-	if (((self:GetZSRemortLevel() / 4) or 0) + (self.AmuletPiece or 0)) < 0 then
-		dmginfo:ScaleDamage(2 + ((self:GetZSRemortLevel() / 4) - (self.AmuletPiece or 0)))
-	end
-
-
-
-	if self:IsSkillActive(SKILL_DODGE) and math.max(0,math.random(1,math.max(30 - (self:GetWalkSpeed() / 15),2))) == 1 and !dmgbypass then
-		if attacker:IsPlayer() then
-			GAMEMODE:BlockFloater(attacker, self, dmginfo:GetDamagePosition())
+	if !dmgbypass then
+		if self:IsSkillActive(SKILL_BLESSEDROD) and dmginfo:GetDamage() >= 30 then
+			dmginfo:SetDamage(dmginfo:GetDamage() - 12)
 		end
-		dmginfo:SetDamage(0)
-		net.Start("zs_damageblock")
-		net.Send(self)
-		return
-    end
-	if self:IsSkillActive(SKILL_HELPLIFER) and math.random(1,10) == 1 and dmginfo:GetDamage() >= self:Health() and !dmgbypass then
-		dmginfo:SetDamage(0)
-		if attacker:IsPlayer() then
-			GAMEMODE:BlockFloater(attacker, self, dmginfo:GetDamagePosition())
+		if (((self:GetZSRemortLevel() / 4) or 0) + (self.AmuletPiece or 0)) < 0 then
+			dmginfo:ScaleDamage(2 + ((self:GetZSRemortLevel() / 4) - (self.AmuletPiece or 0)))
 		end
-		return
-    end
+
+
+
+		if self:IsSkillActive(SKILL_DODGE) and math.max(0,math.random(1,math.max(30 - (self:GetWalkSpeed() / 15),2))) == 1  then
+			if attacker:IsPlayer() then
+				GAMEMODE:BlockFloater(attacker, self, dmginfo:GetDamagePosition())
+			end
+			dmginfo:SetDamage(0)
+			net.Start("zs_damageblock")
+			net.Send(self)
+			return
+		end
+		if self:IsSkillActive(SKILL_HELPLIFER) and math.random(1,10) == 1 and dmginfo:GetDamage() >= self:Health() then
+			dmginfo:SetDamage(0)
+			if attacker:IsPlayer() then
+				GAMEMODE:BlockFloater(attacker, self, dmginfo:GetDamagePosition())
+			end
+			return
+		end
+		if self:IsSkillActive(SKILL_AMULET_14) then
+			dmginfo:ScaleDamage(math.Clamp(self:Health()/self:GetMaxHealth(),2,0.55))
+		end
+		if self:IsSkillActive(SKILL_GODHEART) then
+			dmginfo:SetDamage(0)
+		end
+		if self.DamageTakenMul then
+			dmginfo:SetDamage(dmginfo:GetDamage() * self.DamageTakenMul)
+		end
+	end
 	if self:IsSkillActive(SKILL_SKYHELP) then
 		self:SetVelocity(VectorRand() * math.random(200,1700))
     end
@@ -417,17 +428,11 @@ function meta:ProcessDamage(dmginfo)
 			end
 		return
     end
-	if self:IsSkillActive(SKILL_AMULET_14) then
-		dmginfo:ScaleDamage(math.Clamp(self:Health()/self:GetMaxHealth(),2,0.55))
-	end
 
 	-- Opted for multiplicative.
 
 	if attacker == self and dmgtype ~= DMG_CRUSH and dmgtype ~= DMG_FALL and self.SelfDamageMul then
 		dmginfo:SetDamage(dmginfo:GetDamage() * self.SelfDamageMul)
-	end
-	if !dmgbypass and self:IsSkillActive(SKILL_GODHEART) then
-		dmginfo:SetDamage(0)
 	end
 	if bit.band(dmgtype, DMG_ALWAYSGIB) ~= 0 and self.ExplosiveDamageTakenMul then
 		dmginfo:SetDamage(dmginfo:GetDamage() * self.ExplosiveDamageTakenMul)
@@ -495,9 +500,6 @@ function meta:ProcessDamage(dmginfo)
 		return
 	end
 
-	if self.DamageTakenMul and !dmgbypass then
-		dmginfo:SetDamage(dmginfo:GetDamage() * self.DamageTakenMul)
-	end
 	if self:IsSkillActive(SKILL_DOSETHELP) then
 		dmginfo:SetDamage(dmginfo:GetDamage() * (1 - GAMEMODE:GetWave() * 0.02))
 	end
