@@ -23,7 +23,23 @@ function math.MoveTowards(current, target, maxDelta)
 
 	return current + math.Sign(target - current) * maxDelta
 end
+function string.Random( length )
 
+	local length = tonumber( length )
+
+    if length < 1 then return end
+
+    local result = {}
+
+    for i = 1, length do
+
+        result[i] = string.char( math.random(32, 126) )
+
+    end
+
+    return table.concat(result)
+
+end
 function math.Sign(num)  
 	if num > 0 then
 		num = 1

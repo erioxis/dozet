@@ -214,6 +214,26 @@ GM:AddInventoryItemData("cons_xmas_goodness",		trs("c_new_year"),			trs("c_new_y
 	droped:SetPos(pl:GetPos()+Vector(0,0,70))
 	droped:Spawn()
 end,1)
+GM:AddInventoryItemData("cons_bounty",		trs("c_bounty"),			trs("c_bounty_d"),								"models/props_c17/trappropeller_lever.mdl", 3, nil, nil, function(pl) 
+	local tbl = {"headshoter", "ind_buffer", "ultra_at", "pearl","broken_world","whysoul","altevesoul"} 
+	if pl.MedicalBounty then
+		tbl = GAMEMODE.MedPremium
+	end
+	local need = pl.SeededBounty or {}
+	while #need < 3 do
+		local item = tbl[math.random(1,#tbl)]
+		if !table.HasValue(need,item) then 
+			need[#need+1] = item
+		end
+		if #need > 2 then
+			break
+		end
+	end
+	pl.SeededBounty = need
+	net.Start("zs_upgradeitem")
+	net.WriteTable(need)
+	net.Send(pl)
+end,0)
 GM:AddInventoryItemData("cons_wildcard",		trs("c_wildcard"),			trs("c_wildcard_d"),								"models/props_c17/trappropeller_lever.mdl", 4, nil, nil, function(pl) 
 	local lcall = pl.LastCall or "cons_void"
 	local callback = GAMEMODE.ZSInventoryItemData[lcall].Bounty

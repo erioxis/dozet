@@ -38,22 +38,7 @@ function meta:AddInventoryItem(item)
 
 	return true
 end
-function meta:UpgradeInventoryItem(item)
-	if not GAMEMODE:IsInventoryItem(item) then return false end
 
-	self.ZSInventory[item] = self.ZSInventory[item] and self.ZSInventory[item] + 1 or 1
-
-	if GAMEMODE:GetInventoryItemType(item) == INVCAT_TRINKETS then
-		self:ApplyTrinkets()
-	end
-
-	net.Start("zs_upgradeitem")
-		net.WriteString(item)
-		net.WriteInt(self.ZSInventory[item], 5)
-	net.Send(self)
-
-	return true
-end
 
 function meta:TakeInventoryItem(item)
 	if not self:HasInventoryItem(item) then return false end
@@ -99,6 +84,19 @@ net.Receive("zs_trycraft", function(len, pl)
 
 	pl:TryAssembleItem(component, weapon)
 end)
+net.Receive("zs_bounty_add", function(len, pl)
+	if !pl.GetBounty then return end
+	local item = net.ReadString()
+	pl:AddInventoryItem(item)
+	pl.GetBounty = nil
+	pl.MedicalBounty = nil
+	pl.SeededBounty = nil
+	pl:TakeInventoryItem("cons_bounty")
+	net.Start("zs_invitem")
+	net.WriteString(item)
+net.Send(pl)
+end)
+
 net.Receive("zs_trygetitem", function(len, pl)
 	local component = net:ReadString()
 

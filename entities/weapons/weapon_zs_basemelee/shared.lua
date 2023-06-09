@@ -278,7 +278,7 @@ function SWEP:MeleeSwing()
 			damagemultiplier = damagemultiplier * 0.85
 		end
 	end
-	if owner:IsSkillActive(SKILL_SAHA) and owner.StaminaHAHA then
+	if owner.StaminaHAHA and owner:IsSkillActive(SKILL_SAHA) then
 		if owner:GetStamina() <= 50 then
 			damagemultiplier = damagemultiplier * 1.33
 		end
@@ -340,20 +340,21 @@ end
 function SWEP:OnMeleeHit(hitent, hitflesh, tr)
 	local ent = hitent
 	if IsFirstTimePredicted() then
-		if self:GetOwner().StaminaHAHA then
-			self:GetOwner():AddStamina(-(self.StaminaUse or 13)*0.3)
+		local owner = self:GetOwner()
+		if owner.StaminaHAHA then
+			owner:AddStamina(-(self.StaminaUse or 13)*0.3)
 		end
-		if ent:IsPlayer() and SERVER and self:GetOwner():IsSkillActive(SKILL_CURSECURE) then
+		if owner:IsSkillActive(SKILL_CURSECURE) and ent:IsPlayer() and SERVER  then
 			local count = 0
 			for _, ent in pairs(ents.FindInSphere(tr.HitPos, 97)) do
-				if ent:IsValid() and ent:IsPlayer() and ent ~= self:GetOwner() and ent:IsValidLivingZombie() then
+				if ent:IsValid() and ent:IsPlayer() and ent ~= owner and ent:IsValidLivingZombie() then
 					count = count + 1
 				end
 			end
 			for i = 1, math.random(3) do
 				for _, ent in pairs(ents.FindInSphere(tr.HitPos, 97)) do
-					if ent:IsValid() and ent:IsPlayer() and ent ~= self:GetOwner() and ent:IsValidLivingZombie() then
-						ent:TakeDamage((self.MeleeDamage*0.35*(self:GetOwner().MeleeDamageMultiplier or 1))/count, self:GetOwner(), self)
+					if ent:IsValid() and ent:IsPlayer() and ent ~= owner and ent:IsValidLivingZombie() then
+						ent:TakeDamage((self.MeleeDamage*0.35*(owner.MeleeDamageMultiplier or 1))/count, owner, self)
 					end
 				end
 			end
@@ -361,14 +362,9 @@ function SWEP:OnMeleeHit(hitent, hitflesh, tr)
 	end
 end
 function SWEP:PlayerHitUtil(owner, damage, hitent, dmginfo)
-	--[[if self.Block == 1 then 
-	
-
-		return 
-false
-	end]]
-	local damage = self:GetBlockState() and (damage * 0.4) or damage
-	if owner:IsSkillActive(SKILL_PARASITOID) and SERVER and not self:GetBlockState() and not self.NoParasits then
+	local block = self:GetBlockState()
+	local damage = block and damage * 0.4 or damage
+	if owner:IsSkillActive(SKILL_PARASITOID) and SERVER and not block and not self.NoParasits then
 		local parasite = hitent:GiveStatus("parasitoid", 3)
 		if parasite and parasite:IsValid() then
 			parasite:AddDamage(6, owner)
@@ -377,7 +373,7 @@ false
 			net.Start("zs_update_style") net.WriteTable({time = CurTime()+3+(math.random(10,20)*0.2),text = Format("PARASITED A %s!",hitent:Nick()),score = 10,color = Color(177,34,177)}) net.Send(owner) 
 		end
 	end
-	if owner:IsSkillActive(SKILL_HELPER) and SERVER and self:GetBlockState() and owner.BulletMul <= 1 then
+	if owner:IsSkillActive(SKILL_HELPER) and SERVER and block and owner.BulletMul <= 1 then
 		hitent:GiveStatus("target", 10)
 	end
 	if owner.MeleePowerAttackMul and owner.MeleePowerAttackMul > 1 then
@@ -411,13 +407,12 @@ function SWEP:OnZombieKilled()
 	end
 end
 
-
+local tierscale = {["0tier"] = 1,["1tier"] = 1.05,["2tier"] = 1.09,["3tier"] = 1.15,["4tier"] = 1.12, ["5tier"] = 1.09, ["6tier"] = 1.05, ["7tier"] = 1}
 function SWEP:PostHitUtil(owner, hitent, dmginfo, tr, vel)
 	if self.PointsMultiplier then
 		POINTSMULTIPLIER = self.PointsMultiplier
 	end
 	if owner:IsSkillActive(SKILL_RESNYA2) then
-		local tierscale = {["0tier"] = 1,["1tier"] = 1.05,["2tier"] = 1.09,["3tier"] = 1.15,["4tier"] = 1.12, ["5tier"] = 1.09, ["6tier"] = 1.05, ["7tier"] = 1}
 		dmginfo:ScaleDamage(tierscale[tostring((self.Tier or 1)).."tier"])
 	end
 	hitent:DispatchTraceAttack(dmginfo, tr, owner:GetAimVector())
@@ -466,18 +461,16 @@ function SWEP:MeleeHitEntity(tr, hitent, damagemultiplier)
 	local owner = self:GetOwner()
 
 	if SERVER then
-		if hitent:IsPlayer() and hitent:GetActiveWeapon() and hitent:GetActiveWeapon().IsSwinging and hitent:GetActiveWeapon():IsSwinging() then
-			hitent.IdealHit = true 
-			timer.Create("Parry_a_"..hitent:Nick(),5,1,function() if hitent:IsValid() then hitent.IdealHit = false end end)
-		end
-		if hitent:IsPlayer() and owner:IsSkillActive(SKILL_GLASSWEAPONS) then
-			damagemultiplier = damagemultiplier * 3.5
-			owner.GlassWeaponShouldBreak = not owner.GlassWeaponShouldBreak
-		end
-
-		if hitent:IsPlayer() and owner:IsSkillActive(SKILL_SOULNET) then
-			damagemultiplier = damagemultiplier * 1.06
-
+		if hitent:IsPlayer() then
+			local wep = hitent:GetActiveWeapon() 
+			if wep and wep.IsSwinging and wep:IsSwinging() then
+				hitent.IdealHit = true 
+				timer.Create("Parry_a_"..hitent:Nick(),5,1,function() if hitent:IsValid() then hitent.IdealHit = false end end)
+			end
+			if owner:IsSkillActive(SKILL_GLASSWEAPONS) then
+				damagemultiplier = damagemultiplier * 3.5
+				owner.GlassWeaponShouldBreak = not owner.GlassWeaponShouldBreak
+			end
 		end
 		if owner.ShineAndHit and hitent.IdealHit then
 			damagemultiplier = damagemultiplier * 1.4

@@ -494,6 +494,7 @@ SKILL_COPPER = 468
 SKILL_WORTHINESS5 = 469
 SKILL_CASHBACK = 470
 SKILL_M_CHAINS = 471
+SKILL_VIP_2 = 472
 
 
 
@@ -626,6 +627,7 @@ SKILLMOD_C_USE = 125
 SKILLMOD_RES_EFFECTIVNESS = 126
 SKILLMOD_THROWER_DAMAGE = 127
 SKILLMOD_DEBUFF_TIME = 128
+SKILLMOD_DAMAGE_ALL = 129
 
 local GOOD = "^"..COLORID_GREEN
 local BAD = "^"..COLORID_RED
@@ -1300,10 +1302,16 @@ local d = GM:AddSkill(SKILL_VIP, trs("skill_vip"), GOOD..trs("skill_vip_d1"),
 				                                                            	-14,			14,					{}, TREE_DONATETREE)								
 GM:AddSkillModifier(SKILL_VIP, SKILLMOD_SPOINT, 1)
 GM:AddSkillModifier(SKILL_VIP, SKILLMOD_XP, 0.25)
-
 d.AlwaysActive = true
 d.Amulet = true	
 d.Vip1 = true
+local d = GM:AddSkill(SKILL_VIP_2, trs("skill_vip2"), GOOD..trs("skill_vip2_d1"),
+				                                                            	-16,			14,					{}, TREE_DONATETREE)								
+GM:AddSkillModifier(SKILL_VIP_2, SKILLMOD_SPOINT, 1)
+GM:AddSkillModifier(SKILL_VIP_2, SKILLMOD_XP, 0.75)
+d.AlwaysActive = true
+d.Amulet = true	
+d.Vip2 = true
 GM:AddSkillModifier(SKILL_SECRET_VI, SKILLMOD_SPOINT, 5)
 GM:AddSkillModifier(SKILL_SECRET_VII, SKILLMOD_SPOINT, 5)
 GM:AddSkill(SKILL_TRIGGER_DISCIPLINE1, trs("skill_t_d").."I", GOOD.."+2%"..trs("r_speed")..GOOD.."+3%"..trs("b_damage")..GOOD.."+2%"..trs("w_draw")..BAD.."-9%"..trs("meleedamage"),
@@ -1730,7 +1738,7 @@ GM:AddSkill(SKILL_SCAM, "Scam", GOOD.."+1%"..trs("p_mul")..BAD.. "On kill curses
 SKILL_SOLARUZ = 169
 GM:AddSkillModifier(SKILL_SOLARUZ, SKILLMOD_POINT_MULTIPLIER, 0.25)
 GM:AddSkillModifier(SKILL_SOLARUZ, SKILLMOD_LUCK, 3)
-GM:AddSkillModifier(SKILL_SOLARUZ, SKILLMOD_DMG_TAKEN, 0.5)
+GM:AddSkillModifier(SKILL_SOLARUZ, SKILLMOD_DMG_TAKEN, 0.65)
 GM:AddSkill(SKILL_SOLARUZ, "Debuff:Deadly Fortuna", PURPLE.."+25% Points Multiplicator and +3 luck\n" ..BAD.. "+65% damage taken",
 				3,			-9,					{SKILL_SCAM}, TREE_POINTTREE)
 SKILL_ANCK = 170
@@ -1786,6 +1794,7 @@ GM:AddSkill(SKILL_ANIMA, "Fines de anima", PURPLE.."+5% melee damage\n" ..BAD.."
 										-6,			-7,					{SKILL_MERCUS}, TREE_ANCIENTTREE)
 SKILL_SIGILIBERATOR = 180	
 GM:AddSkillModifier(SKILL_SIGILIBERATOR, SKILLMOD_DMG_TAKEN, 0.5)		
+GM:AddSkillModifier(SKILL_SIGILIBERATOR, SKILLMOD_DAMAGE_ALL, 0.45)	
 GM:AddSkill(SKILL_SIGILIBERATOR, "Liberator", PURPLE.."x1.45 damage\n" ..BAD.."+50% damage taken",
 										-3,			-8.3,					{SKILL_EX2}, TREE_ANCIENTTREE)
 										SKILL_DEATH = 181	
@@ -1796,7 +1805,7 @@ GM:AddSkill(SKILL_DEATH, "Morieris", PURPLE.."Better medicine\n" ..BAD.."+20% Me
 GM:AddSkill(SKILL_HELPLIFER, "Chance", PURPLE.."Can save from fatal hit\n10% Chance\nOn upgrade chance is 50%",
 										2,			-7,					{SKILL_EX2}, TREE_ANCIENTTREE,0)
 .CanUpgrade = 2
-GM:AddSkill(SKILL_INF_POWER, "Dozei Core", PURPLE.."-50% Damage.\nExtra-damage for every skills you unlocked\n+0.55% damage per skill",
+GM:AddSkill(SKILL_INF_POWER, "Dozei Core", PURPLE.."-33% Damage.\nExtra-damage for every skills you unlocked\n+0.45% damage per skill",
 										4,			-5,					{SKILL_NO_BALANCE,SKILL_HELPLIFER}, TREE_ANCIENTTREE).SPUse = 14
 GM:AddSkill(SKILL_NO_BALANCE, "Silver bullets", PURPLE.."Sometimes your damage become a DIRECT damage!\n7% Chance",
 										2.5,			-3.5,					{}, TREE_ANCIENTTREE).SPUse = 24
@@ -2313,7 +2322,7 @@ GM:AddSkillModifier(SKILL_FOREVERALONE, SKILLMOD_MEDKIT_EFFECTIVENESS_MUL, 0.66)
 GM:AddSkillModifier(SKILL_DUALHEAL, SKILLMOD_MEDKIT_COOLDOWN_MUL, 0.5)
 
 GM:SetSkillModifierFunction(SKILLMOD_MEDKIT_COOLDOWN_MUL, function(pl, amount)
-	pl.MedicCooldownMul = math.Clamp(amount + 1.0, 0.0, 1000.0)
+	pl.MedicCooldownMul = math.Clamp(amount + 1.0, 0.15, 1000.0)
 end)
 GM:SetSkillModifierFunction(SKILLMOD_M_REG, function(pl, amount)
 	pl.MagicRegen = math.Clamp(amount + 1.0, 0.0, 1000.0)
@@ -2355,6 +2364,22 @@ GM:SetSkillModifierFunction(SKILLMOD_JUMPPOWER_MUL, function(pl, amount)
 end)
 GM:SetSkillModifierFunction(SKILLMOD_DAMAGE, function(pl, amount)
 	pl.BulletMul = math.Clamp(amount + 1.0, 0.0, 100.0)
+end)
+
+GM:SetSkillModifierFunction(SKILLMOD_DAMAGE_ALL, function(pl, amount)
+	local damagemul = 1
+	if pl.ClanPrime then
+		damagemul = damagemul - GAMEMODE:GetWave() * 0.034
+	elseif pl.ClanMich then
+		damagemul = 0.8
+	end
+	if pl:SteamID64() == "76561198291605212" then
+		damagemul = damagemul * 1.07
+	end
+	if pl:HasTrinket("soul_lime") and pl:GetModel() == "models/ultrakill/v1_pm.mdl" then
+		damagemul = damagemul * 1.2
+	end
+	pl.DamageAll = math.Clamp(amount + 1.0, 0.0, 100.0) * damagemul
 end)
 GM:SetSkillModifierFunction(SKILLMOD_RES_EFFECTIVNESS, function(pl, amount)
 	pl.RessuplyEff = math.Clamp(amount + 1.0, 0.0, 100.0)

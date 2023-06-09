@@ -623,7 +623,7 @@ GM.Statuses["unreal"] =	{
 	Name = "unreal",
 	ValFunc = statusValueFunction("unreal"),
 	Max = 14,
-	Icon = Material("zombiesurvival/reaper.png")
+	Icon = Material("zombiesurvival/firerate.png")
 }
 GM.Statuses["flimsy"] =	{
 	Color = Color(39, 8, 124),

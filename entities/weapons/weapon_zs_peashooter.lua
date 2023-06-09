@@ -27,7 +27,7 @@ SWEP.WorldModel = "models/weapons/w_pist_p228.mdl"
 SWEP.UseHands = true
 --models/weapons/w_pist_p228.mdl
 SWEP.Primary.Sound = Sound("Weapon_P228.Single")
-SWEP.Primary.Damage = 9.5
+SWEP.Primary.Damage = 10.5
 SWEP.Primary.NumShots = 1
 SWEP.Primary.Delay = 0.14
 
@@ -41,7 +41,7 @@ SWEP.ConeMax = 4
 SWEP.ConeMin = 0.75
 
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_CLIP_SIZE, 1)
-GAMEMODE:AddNewRemantleBranch(SWEP, 1, ""..translate.Get("wep_pshooter_r1"), ""..translate.Get("wep_d_pshooter_r1"), function(wept)
+GAMEMODE:AddNewRemantleBranch(SWEP, 1, translate.Get("wep_pshooter_r1"), translate.Get("wep_d_pshooter_r1"), function(wept)
 	wept.Primary.Delay = 0.11
 	wept.Primary.Damage = wept.Primary.Damage * 0.8
 	wept.Primary.Automatic = true

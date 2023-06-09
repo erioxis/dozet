@@ -52,7 +52,7 @@ function meta:GetMaxHealthEx()
 	return self:GetMaxHealth()
 end
 function meta:GetVIP()
-	return (self:IsUserGroup("vip_1") or self:IsUserGroup("vip_1_nav") or self:GetZSRemortLevel() >= 64),(self:IsUserGroup("vip_2") or self:IsUserGroup("vip_2_nav")),(self:IsUserGroup("vip_3") or self:IsUserGroup("vip_3_nav"))
+	return (self:IsUserGroup("vip_1") or self:IsUserGroup("vip_1_nav") or self:IsUserGroup("vip_1_new") or self:GetZSRemortLevel() >= 64),(self:IsUserGroup("vip_2") or self:IsUserGroup("vip_2_nav")),(self:IsUserGroup("vip_3") or self:IsUserGroup("vip_3_nav"))
 end
 function meta:SetChampion(id)
 	self:SetNW2Int("champion", id)
@@ -516,6 +516,7 @@ function meta:AttachmentDamage(damage, attacker, inflictor, type)
 			damage = 0
 		end
 		if SERVER and attacker:HasTrinket("fire_ind") and not attacker:GetActiveWeapon().AntiInd and (attacker.NextInductors or 1) < CurTime() then
+			attacker:SetProgress(attacker:GetProgress('fprog') + damage, 'fprog')
 			self:FireInduction(attacker, inflictor, damage)
 		end
 		if SERVER then

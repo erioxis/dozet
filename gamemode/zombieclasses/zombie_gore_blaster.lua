@@ -8,7 +8,7 @@ CLASS.Help = "controls_zombie_gore_blaster"
 CLASS.Wave = 0
 CLASS.Unlocked = true
 
-CLASS.Health = 280
+CLASS.Health = 170
 CLASS.Speed = 180
 CLASS.Revives = false
 CLASS.Original = false

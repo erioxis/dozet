@@ -11,7 +11,7 @@ local function GetTaper(pl, str, mul)
 	end
 	return taper
 end
-local tbl = {"headshoter", "ind_buffer",  "ultra_at", "pearl","broken_world"}
+
 function meta:ProcessDamage(dmginfo)
 	if not self:IsValidLivingPlayer() then return end --??? Apparently player was null sometimes on server?
 	
@@ -25,10 +25,11 @@ function meta:ProcessDamage(dmginfo)
 	if self.DamageVulnerability and not dmgbypass then
 		dmginfo:SetDamage(dmginfo:GetDamage() * self.DamageVulnerability)
 	end
+	local time = CurTime()
 	if P_Team(self) == TEAM_HUMAN and attacker:IsValidLivingZombie() then
 		self:GiveAchievementProgress("tanked", math.Round((dmginfo:GetDamage() or 1)))
-		self:SetProgress(CurTime() + 0.5, "parasite_prog")
-		self.NextMedStation = CurTime() + 0.9
+		self:SetProgress(time + 0.5, "parasite_prog")
+		self.NextMedStation = time + 0.9
 		if !(self:GetStatus("flimsy")) and self:IsSkillActive(SKILL_FLIMSY) then
 			self:GiveStatus("flimsy",1)
 		end
@@ -98,14 +99,11 @@ function meta:ProcessDamage(dmginfo)
 		if self.m_Zombie_Bara1 then
 				dmginfo:SetDamage(dmginfo:GetDamage() * 1.5)
 		end
-		if attacker.ClanPrime then
-			dmginfo:SetDamage(dmginfo:GetDamage() * (1 - GAMEMODE:GetWave() * 0.034))
-		end
 
 		if self.m_Zmain then
 			dmginfo:SetDamage(dmginfo:GetDamage() * 2)
 		end
-		local corrosion = self.Corrosion and self.Corrosion + 2 > CurTime()
+		local corrosion = self.Corrosion and self.Corrosion + 2 > time
 		if self ~= attacker and not corrosion and not dmgbypass then
 			dmginfo:SetDamage(dmginfo:GetDamage() * GAMEMODE:GetZombieDamageScale(dmginfo:GetDamagePosition(), self))
 		end
@@ -147,6 +145,9 @@ function meta:ProcessDamage(dmginfo)
 			end
 		end
 		if attacker:IsValidLivingHuman() then
+			if attacker.DamageAll then
+				dmginfo:ScaleDamage(attacker.DamageAll)
+			end
 			if attacker:IsSkillActive(SKILL_AMULET_15) then 
 				--print(dmginfo:GetDamage())
 				local g = GetTaper(attacker, "curse", 0.06)
@@ -155,12 +156,6 @@ function meta:ProcessDamage(dmginfo)
 			end
 			if attacker.RedeemedOnce and attacker:IsSkillActive(SKILL_PHOENIX) then
 				dmginfo:SetDamage(dmginfo:GetDamage() * 0.94)
-			end
-			if  attacker:HasTrinket("soul_lime") and attacker:GetModel() == "models/ultrakill/v1_pm.mdl" then
-				dmginfo:SetDamage(dmginfo:GetDamage() * 1.2)
-			end
-			if attacker:SteamID64() == "76561198291605212" then
-				dmginfo:SetDamage(dmginfo:GetDamage() * 1.07)
 			end
 			if attacker.IsLastHuman then
 				if attacker:IsSkillActive(SKILL_LAST_MAN) then
@@ -180,7 +175,7 @@ function meta:ProcessDamage(dmginfo)
 				local g = GetTaper(attacker, "ego", 0.04)
 				dmginfo:SetDamage(dmginfo:GetDamage()*g)
 			end
-			if attacker:IsSkillActive(SKILL_AMULET_11) and attacker:Health() >= attacker:GetMaxHealth() then
+			if attacker:IsSkillActive(SKILL_AMULET_11) and attacker:Health() > attacker:GetMaxHealth() then
 				dmginfo:ScaleDamage(1.45)
 			end
 			if classtable.BaraCat then
@@ -191,9 +186,6 @@ function meta:ProcessDamage(dmginfo)
 					dmginfo:ScaleDamage(1.2)
 					self:AttachmentDamage(dmginfo:GetDamage(), attacker, inflictor, 4)
 				end
-			end
-			if attacker:IsSkillActive(SKILL_SIGILIBERATOR) then
-				dmginfo:ScaleDamage(1.45)
 			end
 			if (attacker:GetStatus("cursed"))  and attacker:HasTrinket("a_flower") then
 				dmginfo:ScaleDamage(0.1)
@@ -230,35 +222,30 @@ function meta:ProcessDamage(dmginfo)
 				end
 			end
 			if attacker:IsSkillActive(SKILL_INF_POWER) then
-				local m = 0.5 + #attacker:GetUnlockedSkills() * 0.0055
+				local m = 0.66 + #attacker:GetUnlockedSkills() * 0.0045
 				dmginfo:ScaleDamage(m)
 			end
 			if damage >= 10000 then
 				attacker:GiveAchievement("opm")
 			end
-			if attacker:HasTrinket("fire_at") and math.randomr(1,6,5,attacker) == 5 then
-				attacker:SetProgress(attacker:GetProgress('fprog')+damage, 'fprog')
-			end
+
 			if (attacker:IsSkillActive(SKILL_BOUNTYKILLER) or classtable.Boss or classtable.DemiBoss) and !classtable.CrowDa  then
 				local mul = ((attacker:IsSkillActive(SKILL_BOUNTYKILLER) and 0.15 or 0) + (classtable.DemiBoss and 0.05 or classtable.Boss and 0.1 or 0))
 				attacker:SetProgress(attacker:GetProgress('bprog')+(math.min(dmginfo:GetDamage()*mul,self:GetMaxHealth()*mul)), 'bprog')
 
-				local hm = table.Random(tbl)
-				if attacker:GetProgress('bprog') >= 1500 * (attacker:GetProgress('bprogmul')+1) and !attacker:HasTrinket(hm) then
+				if attacker:GetProgress('bprog') >= 1500 * (attacker:GetProgress('bprogmul')+1) and !attacker:HasTrinket("cons_bounty") then
+					attacker.GetBounty = true
 					attacker:SetProgress(0, 'bprog')
 					attacker:SetProgress(attacker:GetProgress('bprogmul')+1,'bprogmul') 
-					local itype = "trinket_"..hm
-					attacker:AddInventoryItem(itype)
+					attacker:AddInventoryItem("cons_bounty")
 					net.Start("zs_invitem")
-					net.WriteString(itype)
+					net.WriteString("cons_bounty")
 				net.Send(attacker)
 					attacker:SetPoints(attacker:GetPoints() + 50)
 				end
 			end
 			if !attacker.ClanMich then
 				dmginfo:SetDamage(dmginfo:GetDamage() * math.Clamp(attacker:GetModelScale() * attacker:GetModelScale(), 0.05, 5))
-			else
-				dmginfo:ScaleDamage(0.8)
 			end
 			if attacker:HasTrinket("soulalteden") then
 				attacker.RandomDamage = attacker.RandomDamage + math.random(1,5)
@@ -279,7 +266,7 @@ function meta:ProcessDamage(dmginfo)
 			if attacker:IsSkillActive(SKILL_BARA_CURSED) and GAMEMODE:GetWave() >= 6 then
 				dmginfo:ScaleDamage(1.45)
 			end
-			if attacker:IsSkillActive(SKILL_BERSERK) and attacker:GetTimerBERS() >= CurTime() then
+			if attacker:IsSkillActive(SKILL_BERSERK) and attacker:GetTimerBERS() >= time then
 				dmginfo:ScaleDamage(5)
 			end
 			if wep.IsMelee then
@@ -289,7 +276,7 @@ function meta:ProcessDamage(dmginfo)
 				if attacker:HasTrinket("altsamsonsoul")  then
 					local rot = attacker:GetStatus("strengthdartboost")
 					if (rot) then 
-						attacker:AddBloodlust(attacker:GetOwner(), rot.DieTime - CurTime() + dmginfo:GetDamage() * 0.05)
+						attacker:AddBloodlust(attacker:GetOwner(), rot.DieTime - time + dmginfo:GetDamage() * 0.05)
 					end
 					if (not rot) then 
 						attacker:AddBloodlust(attacker:GetOwner(), dmginfo:GetDamage() * 0.09)
@@ -328,16 +315,11 @@ function meta:ProcessDamage(dmginfo)
 				if attacker:IsSkillActive(SKILL_BLOODLIFE) then
 					dmginfo:SetDamage(dmginfo:GetDamage() + (attacker:GetBloodArmor() * 0.05))
 				end
-
-				if attacker:IsSkillActive(SKILL_PILLUCK) and math.random(1,10,1,attacker) == 1 then
-					self.LuckFromKillYesOwner = attacker
-					self.LuckFromKillYes = CurTime() + 0.5
-				end
 				
 
 				if wep.Culinary and attacker:IsSkillActive(SKILL_MASTERCHEF) and math.random(1,5,1,attacker) == 1 then
 					self.ChefMarkOwner = attacker
-					self.ChefMarkTime = CurTime() + 1
+					self.ChefMarkTime = time + 1
 				end
 				if attacker:IsSkillActive(SKILL_RESNYATOST) or attacker:HasTrinket("sin_wrath") then
 					local double = attacker:IsSkillActive(SKILL_RESNYATOST) and attacker:HasTrinket("sin_wrath")
@@ -415,7 +397,7 @@ function meta:ProcessDamage(dmginfo)
 		net.Send(self)
 		self.HolyMantle = self.HolyMantle - 1
 		self:GiveStatus("hshield", 1.5, nil,true)
-		self.NextRegenerateMantle = CurTime() + math.max((27 - ((self.Luck + self.LuckAdd) / 3)) + GAMEMODE.GetWave() * 3,10) - (self:IsSkillActive(SKILL_AMULET_17) and 5 or 0)
+		self.NextRegenerateMantle = time + math.max((27 - ((self.Luck + self.LuckAdd) / 3)) + GAMEMODE.GetWave() * 3,10) - (self:IsSkillActive(SKILL_AMULET_17) and 5 or 0)
 		timer.Simple(0,function()
 			self:GodEnable()
 			end )
@@ -471,12 +453,12 @@ function meta:ProcessDamage(dmginfo)
 		if self:IsSkillActive(SKILL_TRUEBLOCK) and mywep.ParryTiming then 
            dmginfo:ScaleDamage(0.25)
 			self:EmitSound("npc/strider/fire.wav", 120, 40)
-			self:UpdateStyle({time = CurTime()+4+(math.random(1,20)*0.1),text = "PARRY!", Color(241,221,36),score = 15})
+			self:UpdateStyle({time = time+4+(math.random(1,20)*0.1),text = "PARRY!", Color(241,221,36),score = 15})
 				self:AddStamina(15)
 			if attacker.IdealHit then
 				attacker:TakeSpecialDamage(1000,DMG_DIRECT,self,mywep)
 				self:GiveAchievementProgress("ideal_p",1)
-				self:UpdateStyle({time = CurTime()+4+(math.random(1,20)*0.1),text = "IDEAL PARRY!",Color(169,139,253),score = 50})
+				self:UpdateStyle({time = time+4+(math.random(1,20)*0.1),text = "IDEAL PARRY!",Color(169,139,253),score = 50})
 				self:AddStamina(50)
 			end
 			GAMEMODE:BlockFloater(attacker, self, dmginfo:GetDamagePosition(),2)
@@ -515,13 +497,13 @@ function meta:ProcessDamage(dmginfo)
 	if self:IsSkillActive(SKILL_BERSERK) and self.BerserkerCharge and dmginfo:GetDamage() >= (self:Health() + (self:GetBloodArmor() * math.max(0.5 + self.BloodArmorDamageReductionAdd + (self:IsSkillActive(SKILL_IRONBLOOD) and self:Health() <= self:GetMaxHealth() * 0.5 and 0.25 or 0),(attacker:IsPlayer() and -1 or 0.05)))) then
 		
 		dmginfo:SetDamage(0)
-		self:SetTimerBERS(CurTime())
+		self:SetTimerBERS(time)
 		self.BerserkerCharge = false
 		if attacker:IsPlayer() then
 			GAMEMODE:BlockFloater(attacker, self, dmginfo:GetDamagePosition())
 		end
 	end
-	if self:GetTimerBERS() >= CurTime() and self:IsSkillActive(SKILL_BERSERK) then
+	if self:GetTimerBERS() >= time and self:IsSkillActive(SKILL_BERSERK) then
 		dmginfo:SetDamage(0)
 		if attacker:IsPlayer() then
 			GAMEMODE:BlockFloater(attacker, self, dmginfo:GetDamagePosition())
@@ -543,6 +525,7 @@ function meta:ProcessDamage(dmginfo)
 		end
 		if attacker.Zban then
 			dmginfo:SetDamage(0)
+			return
 		end
 		if attacker.Zmainer and self:IsSkillActive(SKILL_DOSET1) then
 			dmginfo:ScaleDamage(0.75)
@@ -572,14 +555,14 @@ function meta:ProcessDamage(dmginfo)
 				if damage >= 45 or scale > 1 then
 					local dolegdamage = true
 					if inflictor.SlowDownImmunityTime then
-						if CurTime() < (self.SlowDownImmunityTime or 0) then
+						if time < (self.SlowDownImmunityTime or 0) then
 							dolegdamage = false
 						else
-							self.SlowDownImmunityTime = CurTime() + inflictor.SlowDownImmunityTime
+							self.SlowDownImmunityTime = time + inflictor.SlowDownImmunityTime
 						end
 					end
 					if dolegdamage then
-						self:RawCapLegDamage(self:GetLegDamage() + CurTime() + damage * 0.04 * (inflictor.SlowDownScale or 1) * (self.SlowEffTakenMul or 1))
+						self:RawCapLegDamage(self:GetLegDamage() + time + damage * 0.04 * (inflictor.SlowDownScale or 1) * (self.SlowEffTakenMul or 1))
 					end
 				end
 			end
@@ -624,15 +607,15 @@ function meta:ProcessDamage(dmginfo)
 				if self:HasTrinket("altsamsonsoul")  then
 					local rot = self:GetStatus("strengthdartboost")
 					if (rot) then 
-						self:AddBloodlust(attacker, rot.DieTime - CurTime() + dmginfo:GetDamage() * 0.1)
+						self:AddBloodlust(attacker, rot.DieTime - time + dmginfo:GetDamage() * 0.1)
 					end
 					if (not rot) then 
 						self:AddBloodlust(attacker, dmginfo:GetDamage() * 0.3)
 					end
 				end
-				if attacker.m_Zombie_Bara and not self:IsSkillActive(SKILL_BARA_CURSED) and CurTime() >= (self.NextKnockdown or 0) then
+				if attacker.m_Zombie_Bara and not self:IsSkillActive(SKILL_BARA_CURSED) and time >= (self.NextKnockdown or 0) then
 					self:GiveStatus("knockdown",1)
-					self.NextKnockdown = CurTime() + 1
+					self.NextKnockdown = time + 1
 					local vel = self:GetPos() - self:GetPos()
 					vel.z = 0
 					vel:Normalize()
@@ -647,31 +630,13 @@ function meta:ProcessDamage(dmginfo)
                    dmginfo:SetDamage(dmginfo:GetDamage() * 1.12)
 				end
 					
-		
-				if attacker:IsBot() and self:GetZSRemortLevel() <= 4 then
-					dmginfo:ScaleDamage(0.65)
-				end
-
-
-				if mywep.ResistDamage then
-					if math.abs(self:GetForward():Angle().yaw - attacker:GetForward():Angle().yaw) >= 90 and attacker:GetActiveWeapon() == inflictor then
-						dmginfo:SetDamage((dmginfo:GetDamage() * 0.3) - (mywep.MeleeDamage * 0.3))
-						attacker:TakeDamage(mywep.MeleeDamage * 15, self, mywep)
-						local cursed = self:GetStatus("cursed")
-						if (cursed) then 
-							self:AddCursed(self, cursed.DieTime - CurTime() - 5)
-						end
-					else
-						dmginfo:ScaleDamage(3)
-					end
-				end
 				
 
 				if self.BarbedArmorPercent and self.BarbedArmorPercent > 0 then
 					attacker:TakeSpecialDamage(damage * self.BarbedArmorPercent, DMG_SLASH, self, self)
 				end
 
-				if self:HasTrinket("reactiveflasher") and (not self.LastReactiveFlash or self.LastReactiveFlash + 10 < CurTime()) then
+				if self:HasTrinket("reactiveflasher") and (not self.LastReactiveFlash or self.LastReactiveFlash + 10 < time) then
 					attacker:ScreenFade(SCREENFADE.IN, nil, 1, 1)
 					attacker:SetDSP(36)
 					attacker:GiveStatus("disorientation", 2)
@@ -682,10 +647,10 @@ function meta:ProcessDamage(dmginfo)
 						effectdata:SetOrigin(self:GetPos())
 					util.Effect("HelicopterMegaBomb", effectdata)
 
-					self.LastReactiveFlash = CurTime()
+					self.LastReactiveFlash = time
 					self.ReactiveFlashMessage = nil
 				elseif
-				self:HasTrinket("bleaksoul") and (not self.LastBleakSoul or self.LastBleakSoul + 15 < CurTime()) then
+				self:HasTrinket("bleaksoul") and (not self.LastBleakSoul or self.LastBleakSoul + 15 < time) then
 					attacker:GiveStatus("dimvision", 7)
 					attacker:SetGroundEntity(nil)
 					attacker:SetLocalVelocity((attacker:GetPos() - self:GetPos()):GetNormalized() * 450 + Vector(0, 0, 140))
@@ -693,7 +658,7 @@ function meta:ProcessDamage(dmginfo)
 					self:EmitSound("ambient/creatures/town_child_scream1.wav", 70, 60)
 					self:EmitSound("npc/stalker/go_alert2a.wav", 70, 45, 0.25)
 
-					self.LastBleakSoul = CurTime()
+					self.LastBleakSoul = time
 					self.BleakSoulMessage = nil
 				end
 
@@ -732,7 +697,7 @@ function meta:ProcessDamage(dmginfo)
 					self:GiveStatus("medrifledefboost", 10)
 
 				end
-		        if self:HasTrinket("lazarussoul") and (not self.LastBleakSoul or self.LastBleakSoul + 30 < CurTime()) then
+		        if self:HasTrinket("lazarussoul") and (not self.LastBleakSoul or self.LastBleakSoul + 30 < time) then
 					local g =attacker:GiveStatus("bleed")
 					g:AddDamage(50, self)
 					attacker:SetGroundEntity(nil)
@@ -741,7 +706,7 @@ function meta:ProcessDamage(dmginfo)
 					self:EmitSound("ambient/creatures/town_child_scream1.wav", 70, 60)
 					self:EmitSound("npc/stalker/go_alert2a.wav", 70, 45, 0.25)
 
-					self.LastBleakSoul = CurTime()
+					self.LastBleakSoul = time
 					self.BleakSoulMessage = nil
 				end
 				if self:HasTrinket("adrenaline") then
@@ -756,14 +721,14 @@ function meta:ProcessDamage(dmginfo)
 				if self:HasTrinket("cursedtrinket")  then
 					local cursed = self:GetStatus("cursed")
 					if (cursed) then 
-						self:AddCursed(attacker, cursed.DieTime - CurTime() + 5)
+						self:AddCursed(attacker, cursed.DieTime - time + 5)
 					end
 				end
 				if attacker.m_Rot_Claws then
 					dmginfo:SetDamage(dmginfo:GetDamage()/2)
 					local rot = self:GetStatus("rot")
 					if (rot) then 
-						self:AddRot(attacker, rot.DieTime - CurTime() + 2)
+						self:AddRot(attacker, rot.DieTime - time + 2)
 					end
 					if (not rot) then 
 						self:AddRot(attacker, 2)
@@ -786,14 +751,14 @@ function meta:ProcessDamage(dmginfo)
 					return
 				end
 
-				if self:HasTrinket("iceburst") and (not self.LastIceBurst or self.LastIceBurst + 40 < CurTime()) then
+				if self:HasTrinket("iceburst") and (not self.LastIceBurst or self.LastIceBurst + 40 < time) then
 					attacker:AddLegDamageExt(41, attacker, attacker, SLOWTYPE_COLD)
 
 					local effectdata = EffectData()
 						effectdata:SetOrigin(self:GetPos())
 					util.Effect("explosion_cold", effectdata)
 
-					self.LastIceBurst = CurTime()
+					self.LastIceBurst = time
 					self.IceBurstMessage = nil
 				end
 
@@ -815,7 +780,7 @@ function meta:ProcessDamage(dmginfo)
 					
 				local cursed5 = self:GetStatus("hollowing")
 				if (cursed5) then 
-					self:AddHallow(attacker,cursed5.DieTime - CurTime() + (dmginfo:GetDamage() * 1.5))
+					self:AddHallow(attacker,cursed5.DieTime - time + (dmginfo:GetDamage() * 1.5))
 					self.MasteryHollowing = self.MasteryHollowing + dmginfo:GetDamage()
 				end
 				if (not cursed5) then 
@@ -855,7 +820,7 @@ function meta:ProcessDamage(dmginfo)
 			end
 		end
 	end
-	self.NextBloodArmorRegen = CurTime() + 3
+	self.NextBloodArmorRegen = time + 3
 	if self:GetBloodArmor() > 0 then
 		local damage = dmginfo:GetDamage()
 		if damage > 0 then
@@ -904,7 +869,7 @@ function meta:ProcessDamage(dmginfo)
 	end
 
 	if dmginfo:GetDamage() > 0 then
-		self.NextRegenTrinket = CurTime() + 12
+		self.NextRegenTrinket = time + 12
 
 		self.ShouldFlinch = true
 	end
@@ -920,28 +885,28 @@ function meta:ProcessDamage(dmginfo)
 			droped:SetBA(takedbl*0.5)
 		end
 		droped:SetOwner(self)
-		droped:SetTime(4.5+CurTime())
-		droped.DieTime = CurTime() + 4.5
+		droped:SetTime(4.5+time)
+		droped.DieTime = time + 4.5
 		timer.Simple(0.1, function() droped:GetPhysicsObject():SetVelocity(VectorRand(-500,500)) end )
 	end
-	if self.Purgatory and (self.NextPRG or 1) <= CurTime() and (dmginfo:GetDamage() >= 4 or (takedbl or 1) >= 10) and !self:IsSkillActive(SKILL_GIER_II) then
-		self.NextPRG = CurTime() + 0.3
+	if self.Purgatory and (self.NextPRG or 1) <= time and (dmginfo:GetDamage() >= 4 or (takedbl or 1) >= 10) and !self:IsSkillActive(SKILL_GIER_II) then
+		self.NextPRG = time + 0.3
 		self:GiveStatus("portal",1)
 		for i=1,3 do
 			local droped = ents.Create("projectile_purgatory_soul")
 			droped:SetPos(self:GetPos()+Vector(0,0,30*i))
 			droped:Spawn()
-			timer.Simple(0, function() droped.TimeToDash = CurTime() + 1 + (0.1 * i) end)
+			timer.Simple(0, function() droped.TimeToDash = time + 1 + (0.1 * i) end)
 			droped.DamageToDeal = dmginfo:GetDamage() * 2.5 + ((takedbl and takedbl or 0) * 1.5)
 			droped:SetOwner(self)
 		end
 	end
-	if dmginfo:GetDamage() >= 1 then
-		self:UpdateStyle({time = CurTime()+1+(math.random(1,20)*0.1),text = Format("TAKED %s DAMAGE ",math.Round(dmginfo:GetDamage())),Color(247,97,97),score = -math.Round(dmginfo:GetDamage())})
-		if attacker and attacker:IsPlayer() then
-			self:UpdateStyle({time = CurTime()+3+(math.random(1,20)*0.1),text = Format("DAMAGE DEALED %s ",math.Round(dmginfo:GetDamage())),Color(247,97,97),score = math.Round(dmginfo:GetDamage())})
-		end
-	end
+	--if dmginfo:GetDamage() >= 1 then
+	--	self:UpdateStyle({time = time+1+(math.random(1,20)*0.1),text = Format("TAKED %s DAMAGE ",math.Round(dmginfo:GetDamage())),Color(247,97,97),score = -math.Round(dmginfo:GetDamage())})
+	--	if attacker and attacker:IsPlayer() then
+	--		attacker:UpdateStyle({time = time+3+(math.random(1,20)*0.1),text = Format("DAMAGE DEALED %s ",math.Round(dmginfo:GetDamage())),Color(247,97,97),score = math.Round(dmginfo:GetDamage())})
+	--	end
+	--end
 end
 
 
@@ -1498,6 +1463,7 @@ local function SendUpdate(self, ...)
 end
   
 function meta:UpdateStyle(...)
+	if self:GetInfo("zs_ultrakill_style") == "1" then return end
 	SendUpdate(self, ...)
 end
 

@@ -34,23 +34,8 @@ net.Receive("zs_inventoryitem", function()
 	end
 end)
 net.Receive("zs_upgradeitem", function()
-	local item = net.ReadString()
-	local count = net.ReadInt(5)
-	local prevcount = GAMEMODE.ZSInventory[item] or 0
-
-	GAMEMODE.ZSInventory[item] = count
-
-	if GAMEMODE.InventoryMenu and GAMEMODE.InventoryMenu:IsValid() then
-		if count > prevcount then
-			GAMEMODE:InventoryAddGridItem(item, GAMEMODE:GetInventoryItemType(item))
-		else
-			GAMEMODE:InventoryRemoveGridItem(item)
-		end
-	end
-
-	if MySelf and MySelf:IsValid() then
-		MySelf:ApplyTrinkets()
-	end
+	local items = net.ReadTable()
+	GAMEMODE:OpenBounty(items)
 end)
 
 
@@ -494,7 +479,7 @@ function GM:OpenInventory()
 	end )
 
 	for item, count in pairs( self.ZSInventory ) do
-		if count > 0 then
+		if count > 0 and MySelf:HasInventoryItem(item) then
 			for i = 1, count do
 				self:InventoryAddGridItem( item, self:GetInventoryItemType( item ) )
 			end

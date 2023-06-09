@@ -1414,11 +1414,14 @@ function GM:Think()
 					
 				end
 				local vele = pl:GetVelocity()
-				if !pl:OnGround() and vele:LengthSqr() < 7600 then
+				if !pl:OnGround() and not (vele:LengthSqr() > 7600) then
 					pl.StuckedInProp = true
-					pl.Stuckedtrue = true
 				else
 					pl.StuckedInProp = nil
+				end
+				if !pl:OnGround() and vele:LengthSqr() < 7600 or vele:LengthSqr() < 7600 then
+					pl.Stuckedtrue = true
+				else
 					pl.Stuckedtrue = nil
 					pl.Stuckedtrue_C = CurTime() + 3
 				end
@@ -1977,14 +1980,16 @@ function GM:PlayerHealedTeamMember(pl, other, health, wep, pointmul, nobymsg, fl
 
 	pl.HealedThisRound = pl.HealedThisRound + health
 	pl:SetProgress(math.Round(pl:GetProgress('mprog')+health), 'mprog')
-	local premium = table.Random(GAMEMODE.MedPremium)
+	local premium = "cons_bounty"
 	if pl:IsSkillActive(SKILL_PREMIUM) and pl:GetProgress('mprog') >= 1800 and !pl:HasInventoryItem(premium) then
 		pl:AddInventoryItem(premium)
+		pl.MedicalBounty = true 
+		pl.GetBounty = true
 		net.Start("zs_medpremium")
 			net.WriteString(premium)
 			net.Send(pl)
 		pl:GiveAchievement("premium")
-		pl:AddPoints(50)
+		pl:AddPoints(80)
 		pl:SetProgress(math.Round(pl:GetProgress('mprog')-1800), 'mprog')
 	end
 	pl.NextChargeHeal = (pl.NextChargeHeal or 0) + health
@@ -2916,6 +2921,8 @@ function GM:PlayerInitialSpawnRound(pl)
 	pl.WaveJoined = self:GetWave()
 
 	pl.CrowKills = 0
+	pl.GetBounty = nil
+	pl.MedicalBounty = nil
 	pl.DefenceDamage = 0
 	pl.StrengthBoostDamage = 0
 
@@ -2991,6 +2998,7 @@ function GM:PlayerInitialSpawnRound(pl)
 	pl.m_EasySpeed = nil
 	pl.m_Rot_Claws = nil
 	pl.m_DeathClaws = nil
+	pl.Mobiliz = nil
 	pl.m_ZArmor = nil
 	pl.m_ZArmor2 = nil
 	pl.m_ZArmor3 = nil
@@ -3559,7 +3567,7 @@ local function CurseAttach(pl)
 end
 function GM:EntityTakeDamage(ent, dmginfo)
 	local attacker, inflictor = dmginfo:GetAttacker(), dmginfo:GetInflictor()
-
+	
 	if attacker == inflictor and attacker:IsProjectile() and dmginfo:GetDamageType() == DMG_CRUSH then -- Fixes projectiles doing physics-based damage.
 		dmginfo:SetDamage(0)
 		dmginfo:ScaleDamage(0)
@@ -3688,37 +3696,33 @@ function GM:EntityTakeDamage(ent, dmginfo)
 							if numofdaily == 3 then
 								attacker:GiveAchievementProgress("daily_post", math.Round(math.min(damage, ent:Health())))
 							end
-							local chnc = (attacker.AttChance or 1)
-							local fireatt = 5 * chnc
-							local iceatt = 5* chnc
-							local pulseatt = 7* chnc
-							local debuffatt = 12* chnc
-							local damage2 = (damage * (attacker.ElementalMul or 1)) * (ent:GetZombieClassTable().ElementalDebuff or 1)
 							
 							if !attacker:HasTrinket("cham_at") then
-								if attacker:HasTrinket("fire_at") and (math.max(math.random(1,fireatt),1) == 1 or attacker:IsSkillActive(SKILL_100_PERC) and (attacker.NextFireAtt or 0) < CurTime() ) then
+								local chnc = (attacker.AttChance or 1)
+								local damage2 = (damage * (attacker.ElementalMul or 1)) * (ent:GetZombieClassTable().ElementalDebuff or 1)
+								if attacker:HasTrinket("fire_at") and (math.max(math.random(1,5 * chnc),1) == 1 or attacker:IsSkillActive(SKILL_100_PERC) and (attacker.NextFireAtt or 0) < time ) then
 									ent:AttachmentDamage(damage2, attacker, attacker, SLOWTYPE_FLAME)
 									CurseAttach(attacker)
-									attacker.NextFireAtt = CurTime() + 2
+									attacker.NextFireAtt = time + 2
 								end
-								if attacker:HasTrinket("pulse_at") and (math.max(math.random(1,pulseatt),1) == 1 or attacker:IsSkillActive(SKILL_100_PERC) and (attacker.NextPulseAtt or 0) < CurTime())  then
+								if attacker:HasTrinket("pulse_at") and (math.max(math.random(1,7* chnc),1) == 1 or attacker:IsSkillActive(SKILL_100_PERC) and (attacker.NextPulseAtt or 0) < time)  then
 									ent:AttachmentDamage(damage2, attacker, attacker, SLOWTYPE_PULSE)
 									CurseAttach(attacker)
-									attacker.NextPulseAtt = CurTime() + 1
+									attacker.NextPulseAtt = time + 1
 								end
-								if attacker:HasTrinket("acid_at") and (math.max(math.random(1,iceatt),1) == 1  or attacker:IsSkillActive(SKILL_100_PERC) and (attacker.NextIceAtt or 0) < CurTime()) then
+								if attacker:HasTrinket("acid_at") and (math.max(math.random(1,5* chnc),1) == 1  or attacker:IsSkillActive(SKILL_100_PERC) and (attacker.NextIceAtt or 0) < time) then
 									ent:AttachmentDamage(damage2, attacker, attacker, SLOWTYPE_COLD)
 									if math.random(1,4) == 1 then
 										ent:GiveStatus("frost",math.random(1,7))
 									end
 									CurseAttach(attacker)
-									attacker.NextIceAtt = CurTime() + 3
+									attacker.NextIceAtt = time + 3
 								end
 								local debuffed = ent:GetStatus("zombiestrdebuff")
-								if attacker:HasTrinket("ultra_at") and math.max(1,math.random(debuffatt)) == 1 then
+								if attacker:HasTrinket("ultra_at") and math.max(1,math.random(12* chnc)) == 1 then
 									ent:GiveStatus("zombiestrdebuff",math.random(1,7))
 									CurseAttach(attacker)
-								elseif attacker:HasTrinket("ultra_at") and (debuffed) and math.random(debuffatt) == 1 then
+								elseif attacker:HasTrinket("ultra_at") and (debuffed) and math.random(12* chnc) == 1 then
 									ent:GiveStatus("zombiestrdebuff",math.random(7,14))
 									CurseAttach(attacker)
 								end
@@ -4614,6 +4618,7 @@ end
 function GM:HumanKilledZombie(pl, attacker, inflictor, dmginfo, headshot, suicide)
 	if (pl:GetZombieClassTable().Points or 0) == 0 or self.RoundEnded then return end
 	-- Simply distributes based on damage but also do some stuff for assists.
+	local class = pl:GetZombieClassTable()
 	if numofdaily == 1 then
 		attacker:GiveAchievementProgress("daily_post", 1)
 	end
@@ -4621,7 +4626,7 @@ function GM:HumanKilledZombie(pl, attacker, inflictor, dmginfo, headshot, suicid
 		attacker:GiveAchievementProgress("week_post", 1)
 	end
 	
-	if numofdaily == 4 and pl:GetZombieClassTable().Boss then
+	if numofdaily == 4 and class.Boss then
 		attacker:GiveAchievementProgress("daily_post", 1)
 	end
 	if numofdaily == 5 and inflictor.IsShadeGrabbable then
@@ -4636,29 +4641,12 @@ function GM:HumanKilledZombie(pl, attacker, inflictor, dmginfo, headshot, suicid
 		attacker:SetChargesActive(attacker:GetChargesActive()+1)
 	end
 	pl:GiveAchievementProgress("goodtime", 1)
-	if pl:GetZombieClassTable().BaraCat then
+	if class.BaraCat then
 		attacker:GiveAchievementProgress("antibaracat", 1)		
 	end
-	if attacker:IsSkillActive(SKILL_NFINGERS) and inflictor == attacker:GetActiveWeapon() and !inflictor.IsMelee then
-		attacker:GiveAmmo(1, attacker:GetResupplyAmmoType())
-	elseif attacker:IsSkillActive(SKILL_NFINGERS) and inflictor == attacker:GetActiveWeapon() and inflictor.IsMelee and math.random(1,10) == 1 then
-		attacker:GiveAmmo(1, "scrap")
-	end
-	if attacker:IsSkillActive(SKILL_NFINGERS) and inflictor == attacker:GetActiveWeapon() and inflictor.Magic then
-		attacker:SetBloodArmor(attacker:GetBloodArmor() + 25)
-	end
-	if attacker:IsSkillActive(SKILL_SFINGERS) and inflictor == attacker:GetActiveWeapon() and !inflictor.IsMelee then
-		local inflictor2 = inflictor
-		timer.Simple(0, function() inflictor2.Eater = true end)
-		timer.Simple(1.9, function() inflictor2.Eater = nil end)
-	end
-	if attacker:IsSkillActive(SKILL_SFINGERS) and inflictor == attacker:GetActiveWeapon() and inflictor.HaloAmmo then
-		local inflictor2 = inflictor
-		timer.Simple(0, function() inflictor2.Eater = true end)
-		timer.Simple(0.9, function() inflictor2.Eater = nil end)
-	end
-	if self.NewYear and (math.random(100-math.min(50,(attacker.Luck or 1))) == 50 or pl:GetZombieClassTable().Boss or pl:GetZombieClassTable().DemiBoss) then
-		for i=1,(pl:GetZombieClassTable().Boss and 2 or 1) do
+
+	if self.NewYear and (math.random(100-math.min(50,(attacker.Luck or 1))) == 50 or class.Boss or class.DemiBoss) then
+		for i=1,(class.Boss and 2 or 1) do
 			local d = ents.Create("prop_gift")
 			if d:IsValid() then
 				d:SetPos(pl:GetPos() + Vector(0,0,15))
@@ -4759,6 +4747,9 @@ function GM:HumanKilledZombie(pl, attacker, inflictor, dmginfo, headshot, suicid
 
 		if pl:WasHitInHead() then
 			attacker.Headshots = (attacker.Headshots or 0) + 1
+			if owner:IsValidPlayer() then
+				net.Start("zs_update_style") net.WriteTable({time = CurTime()+1.5+(math.random(10,20)*0.2),text = "HEADSHOT",score = 5}) net.Send(owner) 
+			end
 		end
 		if attacker:IsSkillActive(SKILL_PILLUCK) and pl.LuckFromKillYes >= CurTime() then
 			attacker.LuckAdd = attacker.LuckAdd + 0.05
@@ -4768,6 +4759,26 @@ function GM:HumanKilledZombie(pl, attacker, inflictor, dmginfo, headshot, suicid
 		if wep.OnZombieKilled then
 			wep:OnZombieKilled(pl, totaldamage, dmginfo)
 			
+		end
+		if attacker:IsSkillActive(SKILL_NFINGERS) then
+			if !inflictor.IsMelee then
+				attacker:GiveAmmo(1, attacker:GetResupplyAmmoType())
+			elseif inflictor.IsMelee and math.random(1,10) == 1 then
+				attacker:GiveAmmo(1, "scrap")
+			end
+		end
+		if attacker:IsSkillActive(SKILL_NFINGERS)  and inflictor.Magic then
+			attacker:SetBloodArmor(attacker:GetBloodArmor() + 25)
+		end
+		if attacker:IsSkillActive(SKILL_SFINGERS)  and !inflictor.IsMelee then
+			local inflictor2 = inflictor
+			timer.Simple(0, function() inflictor2.Eater = true end)
+			timer.Simple(1.9, function() inflictor2.Eater = nil end)
+		end
+		if attacker:IsSkillActive(SKILL_SFINGERS)  and inflictor.HaloAmmo then
+			local inflictor2 = inflictor
+			timer.Simple(0, function() inflictor2.Eater = true end)
+			timer.Simple(0.9, function() inflictor2.Eater = nil end)
 		end
 	end
 
@@ -5214,6 +5225,7 @@ end
 -- Again, don't bother overriding anything due to above.
 function GM:PlayerFootstep(pl, vPos, iFoot, strSoundName, fVolume, pFilter)
 end
+
 
 local VoiceSetTranslate = {}
 VoiceSetTranslate["models/player/alyx.mdl"] = VOICESET_ALYX

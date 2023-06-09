@@ -6,7 +6,7 @@ CLASS.Description = "description_zombie_gore_blaster_demi"
 CLASS.Help = "controls_zombie_gore_blaster"
 
 
-CLASS.Health = 1290
+CLASS.Health = 600
 CLASS.Speed = 255
 CLASS.Revives = false
 CLASS.DemiBoss = true

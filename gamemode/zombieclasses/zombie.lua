@@ -8,7 +8,7 @@ CLASS.Unlocked = true
 CLASS.IsDefault = true
 CLASS.Order = 0
 
-CLASS.Health = 320
+CLASS.Health = 200
 CLASS.Speed = 195
 CLASS.Revives = true
 CLASS.Variations = {"Pyro", "Gore Blaster Zombie", "Chem Burster", "Eraditor", "Eradicator", "Zombie Legs", "Zombie Dreams", "Dreaming Zombie","Stoney"}

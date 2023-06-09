@@ -5,7 +5,7 @@ GM.Website	=	"https://github.com/erioxis/dozet"
 
 -- No, adding a gun doesn't make your name worth being here.
 GM.Credits = {
-	{"Version", "", "8.2.0"}, -- ммммм
+	{"Version", "", "8.2.3"}, -- ммммм
 	{"Season of ", "skill buffs,zombie debuff and MORE OPTIMIZATION", "maybe"},
 	{"erioxis", "Phantom coder", "dead"},
 	{"Холодное Молочко(M-I-L-K-Y)", "Not a Phantom coder", "Alive"},
@@ -26,23 +26,7 @@ end
 function GM:GetWaveOneLength()
 	return GetGlobalBool("classicmode") and self.WaveOneLengthClassic or self.WaveOneLength
 end
-function GM:stringRandom( length )
 
-	local length = tonumber( length )
-
-    if length < 1 then return end
-
-    local result = {}
-
-    for i = 1, length do
-
-        result[i] = string.char( math.random(32, 126) )
-
-    end
-
-    return table.concat(result)
-
-end
 include("obj_vector_extend.lua")
 include("obj_entity_extend.lua")
 include("obj_player_extend.lua")
@@ -929,7 +913,7 @@ function GM:IsSpecialPerson(pl, image, returns)
 	elseif pl:IsBot() then
 		img = "icon16/wrench_orange.png"
 		tooltip = trs("bot_sp")
-	elseif pl:IsUserGroup("vip_1") or pl:IsUserGroup("vip_1_nav") then
+	elseif pl:IsUserGroup("vip_1") or pl:IsUserGroup("vip_1_nav") or pl:IsUserGroup("vip_2") then
 		img = "noxiousnet/noxicon.png"
 		tooltip = trs("vip_sp")
 	end

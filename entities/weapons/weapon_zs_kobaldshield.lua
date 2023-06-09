@@ -65,3 +65,19 @@ SWEP.AllowQualityWeapons = true
 function SWEP:CanPrimaryAttack() 
 	return false
 end
+
+function SWEP:DamageThink(dmginfo) 
+	local attacker = dmginfo:GetDamage()
+	local owner = self:GetOwner()
+	if math.abs(owner:GetForward():Angle().yaw - attacker:GetForward():Angle().yaw) >= 90 and attacker:GetActiveWeapon() == dmginfo:GetInflictor() then
+		dmginfo:SetDamage((dmginfo:GetDamage() * 0.3) - (self.MeleeDamage * 0.3))
+		attacker:TakeDamage(self.MeleeDamage * 15, owner, self)
+		local cursed = owner:GetStatus("cursed")
+		if (cursed) then 
+			owner:AddCursed(owner, cursed.DieTime - CurTime() - 5)
+		end
+	else
+		dmginfo:ScaleDamage(3)
+	end
+	return false
+end

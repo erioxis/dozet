@@ -128,17 +128,12 @@ function SWEP:PrimaryAttack()
 		if owner:HasTrinket("pr_barapaw") and math.random(3) == 3 and SERVER then
 			ent:GiveStatus("knockdown", 1.5)
 		end
-		if owner:IsSkillActive(SKILL_WYRDREC) and SERVER and math.random(500) < (60 * ((ent.BleedDamageTakenMul or 1) / (ent.BleedSpeedMul or 1)))  and (ent.NextBleedWyrd or 1) < CurTime() then
-			ent.NextBleedWyrd = CurTime() + 10
-			ent:AddBleedDamage(math.random(1,15), ent)
-		end
-	
 		local cursed = ent:GetStatus("cursed")
 		if (cursed) and SERVER then 
 			ent:AddCursed(self:GetOwner(), cursed.DieTime - CurTime() - 5)
 			owner:AddPoints(2)
 		end
-		if self.BloodHeal == true and SERVER then
+		if self.BloodHeal and SERVER then
 			ent:SetBloodArmor(math.min(ent.MaxBloodArmor + 100, ent:GetBloodArmor() + self.Heal * 3))
 			ent.BuffedArmor = math.min(ent.MaxBloodArmor + 100, (ent.BuffedArmor or 1) + self.Heal * 3)
 			ent.WhoBuffed = owner
@@ -152,17 +147,21 @@ function SWEP:PrimaryAttack()
 			end
 		end
 		if owner:IsSkillActive(SKILL_WYRDREC) and !self.BloodHeal and (ent.NextBleedWyrd or 1) < CurTime()  then
-			ent.NextBleedWyrd = CurTime() + 10
+			ent.NextBleedWyrd = CurTime() + 3
 			timer.Simple( 0.1, function() owner:HealPlayer(ent, math.random(1,13)) end)
+			if math.random(500) < (60 * ((ent.BleedDamageTakenMul or 1) / (ent.BleedSpeedMul or 1))) and SERVER then
+				ent:AddBleedDamage(math.random(1,15), ent)
+			end
 		end
 		owner.NextMedKitUse = self:GetNextCharge()
-		if not owner:HasTrinket("pr_bloodpack") or self:GetPrimaryAmmoCount() >= 1 then
-			self:TakeCombinedPrimaryAmmo(totake)
-		elseif self:GetPrimaryAmmoCount() <= 0 and owner:HasTrinket("pr_bloodpack") and SERVER then
-			owner:TakeDamage(totake)
-		elseif self:GetPrimaryAmmoCount() >= 1 and owner:HasTrinket("pr_bloodpack") then
+		if owner:HasTrinket("pr_bloodpack") and self:GetPrimaryAmmoCount() < 1 then
+			if SERVER then
+				owner:TakeDamage(totake)
+			end
+		else
 			self:TakeCombinedPrimaryAmmo(totake)
 		end
+
 
 		self:EmitSound("items/medshot4.wav")
 

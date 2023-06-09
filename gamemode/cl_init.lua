@@ -541,6 +541,7 @@ function GM:LocalPlayerFound()
 
 	LocalPlayer().LegDamage = 0
 	LocalPlayer().ArmDamage = 0
+	LocalPlayer().Luls = 0
 
 	if render.GetDXLevel() >= 80 then
 		self.RenderScreenspaceEffects = self._RenderScreenspaceEffects
@@ -1962,7 +1963,7 @@ function GM:HumanMenu()
 		checkbutton.DoClick = function(me)
 			if MySelf.ResupplyChoice == k then
 				MySelf.ResupplyChoice = nil
-				RunConsoleCommand("zs_resupplyammotype", nil)
+				RunConsoleCommand("zs_resupplyammotype", "default")
 			else
 				MySelf.ResupplyChoice = k
 				RunConsoleCommand("zs_resupplyammotype", k)

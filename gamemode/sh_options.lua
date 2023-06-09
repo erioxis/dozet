@@ -858,6 +858,7 @@ GM:AddMutationItem("m_dxp", translate.Get("zshop_dxp"), translate.Get("zshop_dxp
 GM:AddMutationItem("m_hreg", translate.Get("zshop_hreg"), translate.Get("zshop_hreg_d1"), ITEMCAT_MUTATIONS, 700, nil, function(pl) pl.m_HealthRegen = true end, "models/player/zombie_classic.mdl")
 GM:AddMutationItem("m_dclaws", translate.Get("zshop_dclaws"), translate.Get("zshop_dclaws_d1"), ITEMCAT_MUTATIONS, 950, nil, function(pl) pl.m_DeathClaws = true end, "models/player/zombie_classic.mdl")
 GM:AddMutationItem("m_zarmor3", translate.Get("zshop_zarmor3"), translate.Get("zshop_zarmor3_d1"), ITEMCAT_MUTATIONS, 500, nil, function(pl) pl.m_ZArmor2 = true end, "models/player/zombie_classic.mdl")
+GM:AddMutationItem("m_mob", translate.Get("zshop_mob"), translate.Get("zshop_mob_d1"), ITEMCAT_MUTATIONS, 1500, nil, function(pl) pl.Mobiliz = true end, "models/player/zombie_classic.mdl")
 
 -- Boss Mutagen
 GM:AddMutationItem("m_zombie_health2", translate.Get("zshop_godestzomb"), translate.Get("zshop_godestzomb2"), ITEMCAT_MUTATIONS_BOSS, 1000, nil, function(pl) pl.m_HealthMulZS = pl.m_HealthMulZS + 0.5 end, "models/items/healthkit.mdl")

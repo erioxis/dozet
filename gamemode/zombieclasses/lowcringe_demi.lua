@@ -8,7 +8,7 @@ CLASS.KnockbackScale = 0
 
 CLASS.DemiBoss = true
 
-CLASS.Health = 1200
+CLASS.Health = 700
 CLASS.Speed = 120
 CLASS.Hidden = false
 

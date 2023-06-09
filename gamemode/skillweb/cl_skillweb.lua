@@ -563,7 +563,7 @@ function PANEL:Init()
 		local bottom1 = vgui.Create("DLabel", self)
 		bottom1:SetSize(1200 * screenscale, math.Clamp(84 * screenscale, 40, 125))
 		bottom1:SetPos(0 * screenscale, -24 * screenscale)
-		local d = #MySelf:GetDesiredActiveSkills()*0.55-50
+		local d = #MySelf:GetDesiredActiveSkills()*0.45-33
 		local txt = translate.Get("u_s")..#MySelf:GetDesiredActiveSkills()..": "..(d < 0 and "" or "+")..d.."% dmg"
 		bottom1:SetFont("ZSHUDFontSmall")
 		bottom1:SetText(txt)
@@ -1350,7 +1350,12 @@ function PANEL:Paint(w, h)
 
 	return true
 end
-
+local quetbl = {
+	"76561198185649305",
+	"76561198813932012",
+	"76561198017105716",
+	"76561198834667136"
+}
 function PANEL:OnMousePressed(mc)
 	if mc == MOUSE_LEFT then
 		local contextmenu = self.ContextMenu
@@ -1393,11 +1398,6 @@ function PANEL:OnMousePressed(mc)
 	
 					return
 				end
-				local quetbl = {
-				"76561198185649305",
-				"76561198813932012",
-				"76561198017105716",
-				"76561198834667136"}
 				if GAMEMODE.Skills[hoveredskill].QuePro and !table.HasValue(quetbl, MySelf:SteamID64()) then
 					self:DisplayMessage("FOR QUE PRO!!!!!!!", COLOR_RED)
 					surface.PlaySound("buttons/button8.wav")
