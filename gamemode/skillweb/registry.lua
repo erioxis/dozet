@@ -96,6 +96,8 @@ TREE_RESNYA = 13
 TREE_DOSET = 14
 TREE_OLD_GOD = 15
 
+TREE_SINTREE = 16
+
 -- Dummy skill used for "connecting" to their trees.
 SKILL_NONE = 0
 
@@ -495,6 +497,14 @@ SKILL_WORTHINESS5 = 469
 SKILL_CASHBACK = 470
 SKILL_M_CHAINS = 471
 SKILL_VIP_2 = 472
+SKILL_MIDAS_TOUCH = 473
+SKILL_SISYS_ROCK = 474
+SKILL_MIDAS_CURSE = 475
+SKILL_MIDAS_HIHI = 476
+SKILL_GREEDSIN = 477
+SKILL_SINS_2 = 478
+SKILL_MIDAS_SLOW = 479
+SKILL_CHEETUS_F = 480
 
 
 
@@ -1209,6 +1219,8 @@ GM:AddSkillModifier(SKILL_AMULET_12, SKILLMOD_MEDKIT_EFFECTIVENESS_MUL, 0.5)
 GM:AddSkillModifier(SKILL_AMULET_12, SKILLMOD_REPAIRRATE_MUL, 0.33)									
 GM:AddSkillModifier(SKILL_AMULET_12, SKILLMOD_SPOINT, 5)
 GM:AddSkillModifier(SKILL_AMULET_12, SKILLMOD_PIECE_OF_AMULET, 5)
+GM:AddSkillModifier(SKILL_AMULET_12, SKILLMOD_DAMAGE_ALL,-10)
+
 local d = GM:AddSkill(SKILL_AMULET_13, trs("skill_amulet_13"),  GOOD..trs("skill_amulet_13_d1"),
 																-23,			-13,					{SKILL_NONE}, TREE_GUNTREE)
 d.Amulet = true				
@@ -1729,8 +1741,36 @@ GM:AddSkill(SKILL_DUDEE, trs("skill_toyluck"), GOOD.."+2"..trs("luck"),
 	GM:AddSkill(SKILL_BADTRIP, trs("skill_badtrip"), GOOD.."+1%"..trs("p_mul"),
 		2,			-6,					{SKILL_DUDEE}, TREE_POINTTREE)
 	GM:AddSkill(SKILL_SINS, trs("skill_sins"), GOOD..trs("skill_sins_d1"),
-		1,			-6,					{SKILL_BADTRIP}, TREE_POINTTREE)
+		0,			0,					{SKILL_BADTRIP}, TREE_SINTREE)
 .RemortReq = 6
+GM:AddSkill(SKILL_MIDAS_TOUCH, trs("skill_mtouch"), GOOD..trs("skill_mtouch_d1"),
+-1,			1,					{SKILL_SINS}, TREE_SINTREE)
+.RemortReq = 12
+GM:AddSkill(SKILL_SISYS_ROCK, trs("skill_srock"), GOOD..trs("skill_srock_d1"),
+-1,			-1,					{SKILL_SINS}, TREE_SINTREE)
+.RemortReq = 16
+GM:AddSkill(SKILL_MIDAS_CURSE, trs("skill_midaso"), GOOD..trs("skill_midaso_d1"),
+-2,			-0.5,					{SKILL_MIDAS_TOUCH}, TREE_SINTREE)
+
+.RemortReq = 26
+GM:AddSkill(SKILL_MIDAS_HIHI, trs("skill_midash"), GOOD..trs("skill_midash_d1"),
+-2,			-2,					{SKILL_MIDAS_CURSE}, TREE_SINTREE)
+
+.RemortReq = 34
+GM:AddSkill(SKILL_GREEDSIN, trs("skill_greedsin"), GOOD..trs("skill_greedsin_d1"),
+-1,			-2.5,					{SKILL_SISYS_ROCK}, TREE_SINTREE)
+
+.RemortReq = 22
+GM:AddSkill(SKILL_SINS_2, trs("skill_sins_2"), GOOD..trs("skill_sins_2_d1"),
+0,			-1.5,					{SKILL_SINS}, TREE_SINTREE)
+.RemortReq = 12
+GM:AddSkill(SKILL_MIDAS_SLOW, trs("skill_mslow"), GOOD..trs("skill_mslow_d1")..BAD..trs("skill_mslow_d2"),
+0,			-3,					{SKILL_SINS_2}, TREE_SINTREE)
+.RemortReq = 34
+GM:AddSkill(SKILL_CHEETUS_F, trs("skill_cfriend"), GOOD..trs("skill_cfriend_d1")..BAD.."-999"..trs("luck"),
+0,			-4,					{SKILL_MIDAS_SLOW}, TREE_SINTREE)
+.RemortReq = 46
+GM:AddSkillModifier(SKILL_CHEETUS_F, SKILLMOD_LUCK, -999)
 SKILL_SCAM = 168
 GM:AddSkillModifier(SKILL_SCAM, SKILLMOD_POINT_MULTIPLIER, 0.01)
 GM:AddSkill(SKILL_SCAM, "Scam", GOOD.."+1%"..trs("p_mul")..BAD.. "On kill curses with 1.5% chance(GIVE SPECIAL CURSE)",
@@ -2365,7 +2405,15 @@ end)
 GM:SetSkillModifierFunction(SKILLMOD_DAMAGE, function(pl, amount)
 	pl.BulletMul = math.Clamp(amount + 1.0, 0.0, 100.0)
 end)
-
+local function GetTaper(pl, str, mul)
+	local taper = 1
+	for item,v in pairs(pl:GetInventoryItems()) do
+		if string.find(item, str, 1, true) then
+			taper = taper + mul * v
+		end
+	end
+	return taper
+end
 GM:SetSkillModifierFunction(SKILLMOD_DAMAGE_ALL, function(pl, amount)
 	local damagemul = 1
 	if pl.ClanPrime then
@@ -2378,6 +2426,27 @@ GM:SetSkillModifierFunction(SKILLMOD_DAMAGE_ALL, function(pl, amount)
 	end
 	if pl:HasTrinket("soul_lime") and pl:GetModel() == "models/ultrakill/v1_pm.mdl" then
 		damagemul = damagemul * 1.2
+	end
+	if pl:IsSkillActive(SKILL_AMULET_15) then 
+		local g = GetTaper(pl, "curse", 0.06)
+		damagemul = damagemul *g
+	end
+	if pl:HasTrinket("sin_ego") then 
+		local g = GetTaper(pl, "ego", 0.04)
+		damagemul = damagemul *g
+	end
+	if GAMEMODE.ObjectiveMap then
+		damagemul = damagemul * 0.5
+	end
+	if pl.IsLastHuman then
+		if pl:IsSkillActive(SKILL_LAST_MAN) then
+			dmginfo:ScaleDamage(1.15)
+		elseif pl:IsSkillActive(SKILL_LAST_MAN) then
+			dmginfo:ScaleDamage(0.85)
+		end
+		if pl.ClanAnsableRevolution then
+			dmginfo:ScaleDamage(1.70)
+		end
 	end
 	pl.DamageAll = math.Clamp(amount + 1.0, 0.0, 100.0) * damagemul
 end)

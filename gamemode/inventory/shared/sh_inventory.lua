@@ -216,6 +216,17 @@ GM:AddInventoryItemData("cons_xmas_goodness",		trs("c_new_year"),			trs("c_new_y
 end,1)
 GM:AddInventoryItemData("cons_bounty",		trs("c_bounty"),			trs("c_bounty_d"),								"models/props_c17/trappropeller_lever.mdl", 3, nil, nil, function(pl) 
 	local tbl = {"headshoter", "ind_buffer", "ultra_at", "pearl","broken_world","whysoul","altevesoul"} 
+	if pl:IsSkillActive(SKILL_SINS_2) then
+		tbl = {"headshoter", "ind_buffer", "ultra_at", "pearl","broken_world","whysoul","altevesoul","sin_greed",
+		"sin_wrath",
+	"sin_gluttony",
+	"sin_sloth",
+	"sin_envy",
+	"sin_pride",
+	"sin_ego",
+    "sin_lust"
+	} 
+	end
 	if pl.MedicalBounty then
 		tbl = GAMEMODE.MedPremium
 	end
@@ -285,7 +296,7 @@ GM:AddInventoryItemData("cons_devolver",		trs("c_devo"),			trs("c_devo_d"),					
 			local inv = v:GetInventoryItemType()
 			local tbl = GAMEMODE.ZSInventoryItemData[inv]
 			local d = string.Explode(" " ,string.lower(tbl.PrintName))
-			if table.HasValue(d, "soul") then
+			if (table.HasValue(d, "soul") or pl:IsSkillActive(SKILL_SISYS_ROCK) and table.HasValue(d, "sin")) then
 				if tbl.Tier then
 					pl:SetPoints(pl:GetPoints()+30*(tbl.Tier or 1))
 				end
@@ -1463,7 +1474,7 @@ GM:AddSkillModifier(trinket, SKILLMOD_EXP_DAMAGE_TAKEN_MUL, -0.4)
 GM:AddSkillModifier(trinket, SKILLMOD_EXP_DAMAGE_RADIUS, 1.8)
 -- Super Trinkets
 trinket = GM:AddTrinket(trs("t_smanifest"), "sman", false, supveles, supweles, 5, trs("t_d_smanifest"))
-GM:AddSkillModifier(trinket, SKILLMOD_RESUPPLY_DELAY_MUL, -0.10)
+GM:AddSkillModifier(trinket, SKILLMOD_RESUPPLY_DELAY_MUL, -0.16)
 trinket = GM:AddTrinket(trs("t_protutor"), "stutor", false, book, bookw, 5, trs("t_d_protutor"))
 GM:AddSkillModifier(trinket, SKILLMOD_POINT_MULTIPLIER, 0.10)
 trinket = GM:AddTrinket(trs("t_gstore"), "gstore", false, supveles, supweles, 5, trs("t_d_gstore"))
@@ -1471,9 +1482,9 @@ GM:AddSkillModifier(trinket, SKILLMOD_ARSENAL_DISCOUNT, -0.15)
 trinket = GM:AddTrinket(trs("t_fblueprints"), "futureblu", false, supveles, supweles, 5, trs("t_d_fblueprints"))
 GM:AddSkillModifier(trinket, SKILLMOD_REPAIRRATE_MUL, 0.30)
 trinket = GM:AddTrinket(trs("t_kbook"), "knowbook", false, book, bookw, 5, trs("t_d_kbook"))
-GM:AddSkillModifier(trinket, SKILLMOD_POINT_MULTIPLIER, 0.05)
-GM:AddSkillModifier(trinket, SKILLMOD_RELOADSPEED_MUL, 0.05)
-GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_MUL, 0.05)
+GM:AddSkillModifier(trinket,  SKILLMOD_RESUPPLY_DELAY_MUL, -0.1)
+GM:AddSkillModifier(trinket, SKILLMOD_RELOADSPEED_MUL, 0.15)
+GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_MUL, 0.15)
 trinket = GM:AddTrinket(trs("t_bloodlust"), "bloodlust", false, book, bookw, 5, trs("t_d_bloodlust"))
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_POWERATTACK_MUL, 0.50)
 GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, -10)

@@ -83,7 +83,10 @@ function SWEP:PrimaryAttack()
 	if owner:HasTrinket("supasm") and (self.Tier or 1) <= 2  then
 		extramulti = 1.25
 	end
- 	local dmg = (self:GetPrimaryClipSize() >= 12 and owner:IsSkillActive(SKILL_LAST_AMMO) and 0.75 or self:GetPrimaryClipSize() <= 11 and owner:IsSkillActive(SKILL_LAST_AMMO) and 1.5 + ((self:GetPrimaryClipSize()) * 0.01) or 1) * (extramulti or 1)
+	if owner:IsSkillActive(SKILL_LAST_AMMO) then
+		extramulti = extramulti - (self:GetPrimaryClipSize() >= 12 and 0.25 or -0.5)
+	end
+ 	local dmg = 1 * (extramulti or 1)
 	--DamageEyeMul
 	if owner.BirdEye then
 		dmg = dmg + math.min(dmg*1.5,dmg * ((self.DamageEyeMul or 1)/100))
@@ -365,7 +368,8 @@ local function DoRicochet(attacker, hitpos, hitnormal, normal, damage)
 	end
 end
 function SWEP.BulletCallback(attacker, tr, dmginfo)
-	if attacker:IsSkillActive(SKILL_PARASITE) and (attacker:GetActiveWeapon().Primary.NumShots or 1) <= 3 and (attacker:GetActiveWeapon().Tier or 0)< 5 then
+	local wep = attacker:GetActiveWeapon()
+	if attacker:IsSkillActive(SKILL_PARASITE) and (wep.Primary.NumShots or 1) <= 3 and (wep.Tier or 0)< 5 then
 		if attacker:IsSkillActive(SKILL_AUTOAIM) then
 			local target = NULL
 			for _, ent in pairs(ents.FindInSphere(tr.HitPos, 1048)) do
@@ -377,7 +381,7 @@ function SWEP.BulletCallback(attacker, tr, dmginfo)
 			if target:IsValid() then
 				local targetpos = target:LocalToWorld(target:OBBCenter())
 				local direction = (targetpos - tr.HitPos):GetNormal()
-				timer.Simple(0, function()attacker:FireBulletsLua(tr.HitPos, direction, 0, 1, dmginfo:GetDamage()*0.33, nil, nil, "tracer_rico", nil, nil, nil, nil, nil, attacker:GetActiveWeapon()) end)
+				timer.Simple(0, function()attacker:FireBulletsLua(tr.HitPos, direction, 0, 1, dmginfo:GetDamage()*0.33, nil, nil, "tracer_rico", nil, nil, nil, nil, nil, wep) end)
 			end
 		end
 		local ent = tr.Entity

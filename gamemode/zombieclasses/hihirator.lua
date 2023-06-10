@@ -159,7 +159,7 @@ end
 if SERVER then
 	local weapon = {}
 	for _, wep in pairs(weapons.GetList()) do
-		if !wep.ZombieOnly and !wep.NoMobilized and wep.Primary.DefaultClip and wep.Primary.DefaultClip < 9999 and (wep.Tier or 1) < 4 then
+		if !wep.ZombieOnly and !wep.NoMobilized and (wep.Primary.DefaultClip and wep.Primary.DefaultClip < 9999 or wep.IsMelee) and (wep.Tier or 1) < 4 then
 			weapon[#weapon+1] = wep.ClassName 
 		end
 	end

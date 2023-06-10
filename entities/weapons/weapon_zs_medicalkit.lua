@@ -102,9 +102,6 @@ function SWEP:PrimaryAttack()
 	if !self.BloodHeal then
 		 healed = owner:HealPlayer(ent, owner:HasTrinket("pr_bloodpack") and self.Heal * math.max(1, self.Combo / 3) or math.min(self:GetCombinedPrimaryAmmo(), self.Heal * math.max(1, self.Combo / 3)))
 	end
-		timer.Create("ComboReset", 15, 1, function() 
-			self.Combo = 0
-		end)
 
 
 	local totake = self.FixUsage and 15 or math.ceil(healed / multiplier)
@@ -121,17 +118,15 @@ function SWEP:PrimaryAttack()
 	    end
 		if owner:IsSkillActive(SKILL_COMBOHEAL) and self.Combo ~= 26 then
 		   self.Combo = self.Combo + 1
+		   timer.Create("ComboReset", 15, 1, function() 
+				self.Combo = 0
+			end)
 		end
 		if owner:HasTrinket("mediiii") and math.random(5) == 5 and SERVER and !self.BloodHeal then
 			ent:AddPoisonDamage(math.random(12), owner)
 		end
 		if owner:HasTrinket("pr_barapaw") and math.random(3) == 3 and SERVER then
 			ent:GiveStatus("knockdown", 1.5)
-		end
-		local cursed = ent:GetStatus("cursed")
-		if (cursed) and SERVER then 
-			ent:AddCursed(self:GetOwner(), cursed.DieTime - CurTime() - 5)
-			owner:AddPoints(2)
 		end
 		if self.BloodHeal and SERVER then
 			ent:SetBloodArmor(math.min(ent.MaxBloodArmor + 100, ent:GetBloodArmor() + self.Heal * 3))
@@ -140,10 +135,10 @@ function SWEP:PrimaryAttack()
 		end
 		self:SetNextCharge(CurTime() + self.Primary.Delay * math.min(1, healed / self.Heal) * cooldownmultiplier)
 		if owner:IsSkillActive(SKILL_DUALHEAL) then
-			self.UltraDa = (self.UltraDa or 1) + 1
+			self.UltraDa = (self.UltraDa or 0) + 1
 			if self.UltraDa > 1 then
 				self:SetNextCharge(0)
-				self.UltraDa = 1
+				self.UltraDa = 0
 			end
 		end
 		if owner:IsSkillActive(SKILL_WYRDREC) and !self.BloodHeal and (ent.NextBleedWyrd or 1) < CurTime()  then

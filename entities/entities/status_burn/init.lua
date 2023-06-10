@@ -18,7 +18,7 @@ function ENT:Think()
 
 	local dmg = math.Clamp(owner:GetMaxHealth() * (owner:IsSkillActive(SKILL_LOX) and 2 or 1) / 50, 1, 250)
 	owner:TakeSpecialDamage(dmg, DMG_BURN, self.Damager and self.Damager:IsValidLivingPlayer() and self.Damager or owner, self, nil,0)
-	self:AddDamage(-dmg)
+	--self:AddDamage(-dmg)
 	owner:AddLegDamageExt(dmg, owner, owner, SLOWTYPE_FLAME)
 	owner:SetBloodArmor(owner:GetBloodArmor()-dmg)
 

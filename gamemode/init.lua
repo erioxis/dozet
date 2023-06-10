@@ -1488,11 +1488,17 @@ function GM:Think()
 						else
 							pl:TakeInventoryItem(take)
 							pl:AddInventoryItem("trinket_sin_ego")
-							pl.NextConsumeEgo = time + 60
+							pl.NextConsumeEgo = time + 60 - (pl:IsSkillActive(SKILL_MIDAS_SLOW) and 26-(pl.ZSInventory["trinket_sin_ego"] or 1) or 0)
 							net.Start("zs_trinketcorrupt")
 								net.WriteString(take)
 								net.WriteString("trinket_sin_ego")
 							net.Send(pl)
+							if pl:IsSkillActive(SKILL_MIDAS_CURSE) and math.random(1,5) == 1 then
+								pl:AddInventoryItem("trinket_sin_ego")
+								net.Start("zs_invitem")
+									net.WriteString("trinket_sin_ego")
+								net.Send(pl)
+							end
 						end
 					end
 				end
@@ -1769,6 +1775,9 @@ local function DoDropStart(pl)
 		end
 		local drop = table.Random(weapon)
 		pl:Give(drop)
+	end
+	if pl:IsSkillActive(SKILL_MIDAS_TOUCH) then
+		pl:AddInventoryItem("trinket_sin_ego")
 	end
 end
 
@@ -2630,9 +2639,12 @@ hook.Add("PlayerSay", "ForBots", function(ply, text)
 		local drop2 = math.random(1,7)
 		local drop3 = math.random(1,7)
 		if cain then
-			drop = math.unrandom(1,7,7,nil,2)
-			drop2 = math.unrandom(1,7,7,nil,2)
-			drop3 = math.unrandom(1,7,7,nil,2)
+			drop = math.unrandom(1,7,5,nil,2)
+			drop2 = math.unrandom(1,7,5,nil,2)
+			drop3 = math.unrandom(1,7,5,nil,2)
+		end
+		if ply:IsSkillActive(SKILL_VIP_2) then
+			drop2 = math.unrandom(1,7,5,nil,3)
 		end
 		ply.NextCasino = CurTime() + 60 - (cain and 25 or 0)
 		timer.Simple(60 - (cain and 25 or 0), function() 
@@ -3028,7 +3040,6 @@ function GM:PlayerInitialSpawnRound(pl)
 	
 	local prime ={
 		"76561198291605212",
-		"76561199226152985",
 		"76561199040548917",
 		"76561198819916837",
 		"76561198236924140",
@@ -3040,7 +3051,6 @@ function GM:PlayerInitialSpawnRound(pl)
 		"76561199124580085",
 	}
     local avanguardtbl ={
-		"76561199124299400",
 		"76561198874285897",
 		"76561199081762080",
 		"76561198036866965",
@@ -3062,10 +3072,12 @@ function GM:PlayerInitialSpawnRound(pl)
 		"STEAM_0:0:103817403"
 	}
 	local queprotbl ={
+		"76561199124299400",
 		"76561198185649305",
 		"76561198813932012",
 		"76561198017105716",
-		"76561198834667136"
+		"76561198834667136",
+		"76561199226152985"
 	}
 	local ansamblrevotbl ={
 		"76561198302617262",
@@ -4747,8 +4759,8 @@ function GM:HumanKilledZombie(pl, attacker, inflictor, dmginfo, headshot, suicid
 
 		if pl:WasHitInHead() then
 			attacker.Headshots = (attacker.Headshots or 0) + 1
-			if owner:IsValidPlayer() then
-				net.Start("zs_update_style") net.WriteTable({time = CurTime()+1.5+(math.random(10,20)*0.2),text = "HEADSHOT",score = 5}) net.Send(owner) 
+			if pl:IsValidPlayer() then
+				net.Start("zs_update_style") net.WriteTable({time = CurTime()+1.5+(math.random(10,20)*0.2),text = "HEADSHOT",score = 5}) net.Send(pl) 
 			end
 		end
 		if attacker:IsSkillActive(SKILL_PILLUCK) and pl.LuckFromKillYes >= CurTime() then
@@ -5363,14 +5375,14 @@ function GM:PlayerSpawn(pl)
 		end
 
 		if classtab.Boss then
-			pl:SetHealth(classtab.Health + (((self:GetWave() * 250)) * math.max(1,team.NumPlayers(TEAM_HUMAN)/2 - (team.NumPlayers(TEAM_UNDEAD)/3)))* (classtab.DynamicHealth or 1))
+			pl:SetHealth(classtab.Health + (((self:GetWave() * 120)) * math.max(1,team.NumPlayers(TEAM_HUMAN)/2 - (team.NumPlayers(TEAM_UNDEAD)/3)))* (classtab.DynamicHealth or 1))
 		elseif classtab.DemiBoss then
-			pl:SetHealth(classtab.Health + (((self:GetWave() * 80)) * team.NumPlayers(TEAM_HUMAN)) * (classtab.DynamicHealth or 1))
+			pl:SetHealth(classtab.Health + (((self:GetWave() * 30)) * team.NumPlayers(TEAM_HUMAN)) * (classtab.DynamicHealth or 1))
 		else
 			local lowundead = team.NumPlayers(TEAM_UNDEAD) < 4
-			local healthmulti = (self.ObjectiveMap or self.ZombieEscape) and 1 or lowundead and 1.5 or 1
+			local healthmulti = (self.ObjectiveMap or self.ZombieEscape) and 1 or lowundead and 0.85 or 1
 			healthmulti = healthmulti * (pl:IsChampion() and ((champion == CHAMP_SMOL or champion == CHAMP_GRAY) and 0.5 or champion == CHAMP_BIG and 2 or 1.5) or 1)
-			pl:SetHealth((classtab.Health * healthmulti) + ((self:GetWave() * 45) * (classtab.DynamicHealth or 1)) )
+			pl:SetHealth((classtab.Health * healthmulti) + ((self:GetWave() * 15) * (classtab.DynamicHealth or 1)) )
 		end
 
 		if classtab.SWEP then
