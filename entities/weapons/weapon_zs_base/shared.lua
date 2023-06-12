@@ -81,7 +81,7 @@ function SWEP:PrimaryAttack()
 	self:SetNextPrimaryFire(CurTime() + self:GetFireDelay() )
 	local extramulti = 1
 	if owner:HasTrinket("supasm") and (self.Tier or 1) <= 2  then
-		extramulti = 1.25
+		extramulti = 1.1
 	end
 	if owner:IsSkillActive(SKILL_LAST_AMMO) then
 		extramulti = extramulti - (self:GetPrimaryClipSize() >= 12 and 0.25 or -0.5)

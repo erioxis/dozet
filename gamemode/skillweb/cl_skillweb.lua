@@ -1353,10 +1353,12 @@ function PANEL:Paint(w, h)
 	return true
 end
 local quetbl = {
+	"76561199124299400",
 	"76561198185649305",
 	"76561198813932012",
 	"76561198017105716",
-	"76561198834667136"
+	"76561198834667136",
+	"76561199226152985"
 }
 function PANEL:OnMousePressed(mc)
 	if mc == MOUSE_LEFT then

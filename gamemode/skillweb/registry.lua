@@ -1647,9 +1647,9 @@ GM:AddSkillModifier(SKILL_OPM, SKILLMOD_MELEE_DAMAGE_MUL, -0.35)
 
 
 SKILL_POINTI = 157
-GM:AddSkillModifier(SKILL_POINTI, SKILLMOD_POINT_MULTIPLIER, 0.02)
+GM:AddSkillModifier(SKILL_POINTI, SKILLMOD_POINT_MULTIPLIER, 0.01)
 GM:AddSkillModifier(SKILL_POINTI, SKILLMOD_LUCK, 0.15)
-GM:AddSkill(SKILL_POINTI, trs("skill_point").."I", GOOD.."+0.15"..trs("luck")..GOOD.."+2%"..trs("p_mul"),
+GM:AddSkill(SKILL_POINTI, trs("skill_point").."I", GOOD.."+0.15"..trs("luck")..GOOD.."+1%"..trs("p_mul"),
 																0,			0,					{SKILL_NONE}, TREE_POINTTREE)
 SKILL_POINTII = 158
 GM:AddSkillModifier(SKILL_POINTII, SKILLMOD_POINT_MULTIPLIER, 0.02)
@@ -1657,32 +1657,31 @@ GM:AddSkillModifier(SKILL_POINTII, SKILLMOD_LUCK, 0.15)
 GM:AddSkill(SKILL_POINTII, trs("skill_point").."II", GOOD.."+0.15"..trs("luck")..GOOD.."+2%"..trs("p_mul"),
 																-0.5,			-1,					{SKILL_POINTI}, TREE_POINTTREE)
 SKILL_POINTIII = 159
-GM:AddSkillModifier(SKILL_POINTIII, SKILLMOD_POINT_MULTIPLIER, 0.03)
+GM:AddSkillModifier(SKILL_POINTIII, SKILLMOD_POINT_MULTIPLIER, 0.02)
 GM:AddSkillModifier(SKILL_POINTIII, SKILLMOD_LUCK, 0.15)
-GM:AddSkill(SKILL_POINTIII, trs("skill_point").."III", NEUTRAL.."+0.15"..trs("luck")..GOOD.."+3%"..trs("p_mul"),
+GM:AddSkill(SKILL_POINTIII, trs("skill_point").."III", NEUTRAL.."+0.15"..trs("luck")..GOOD.."+2%"..trs("p_mul"),
 																-1,			-2,					{SKILL_POINTII}, TREE_POINTTREE)
 SKILL_POINTIIII = 160
-	GM:AddSkillModifier(SKILL_POINTIIII, SKILLMOD_POINT_MULTIPLIER, 0.04)
+	GM:AddSkillModifier(SKILL_POINTIIII, SKILLMOD_POINT_MULTIPLIER, 0.03)
 	GM:AddSkillModifier(SKILL_POINTIIII, SKILLMOD_LUCK, 0.40)
-GM:AddSkill(SKILL_POINTIIII, trs("skill_point").."IV", NEUTRAL.."+0.40"..trs("luck")..GOOD.."+4%"..trs("p_mul") ..GOOD.. "+5"..trs("start_points"),
+GM:AddSkill(SKILL_POINTIIII, trs("skill_point").."IV", NEUTRAL.."+0.40"..trs("luck")..GOOD.."+3%"..trs("p_mul") ..GOOD.. "+5"..trs("start_points"),
 																-2,			-3,					{SKILL_POINTIII}, TREE_POINTTREE)
 SKILL_POINTD = 248
-GM:AddSkillModifier(SKILL_POINTD, SKILLMOD_POINT_MULTIPLIER, -0.10)
+GM:AddSkillModifier(SKILL_POINTD, SKILLMOD_POINT_MULTIPLIER, -0.06)
 GM:AddSkillModifier(SKILL_POINTD, SKILLMOD_LUCK, -0.9)
-GM:AddSkill(SKILL_POINTD, trs("skill_dtrouble"), BAD.."-0.9"..trs("luck")..GOOD..trs("skill_lastabuse_d1") ..BAD.. "-10%"..trs("p_mul"),
+GM:AddSkill(SKILL_POINTD, trs("skill_dtrouble"), BAD.."-0.9"..trs("luck")..GOOD..trs("skill_lastabuse_d1") ..BAD.. "-6%"..trs("p_mul"),
 																-3.5,			-3,					{SKILL_POINTIIII}, TREE_POINTTREE)
 	SKILL_POINTFUL = 219
-	GM:AddSkillModifier(SKILL_POINTFUL, SKILLMOD_POINT_MULTIPLIER, 0.1)
-	GM:AddSkillModifier(SKILL_POINTFUL, SKILLMOD_XP, -0.25)
+	GM:AddSkillModifier(SKILL_POINTFUL, SKILLMOD_POINT_MULTIPLIER, 0.05)
+	GM:AddSkillModifier(SKILL_POINTFUL, SKILLMOD_XP, -0.1)
 	GM:AddSkillModifier(SKILL_POINTFUL, SKILLMOD_WORTH, -25)
 	GM:AddSkillModifier(SKILL_QUE_PRO, SKILLMOD_XP, -100)
-GM:AddSkill(SKILL_POINTFUL, trs("skill_pointful"), BAD.."-25%"..trs("xpmul")..BAD.."-25"..trs("worth")..GOOD.."+10%"..trs("p_mul") ..GOOD.. "+10"..trs("start_points"),
+GM:AddSkill(SKILL_POINTFUL, trs("skill_pointful"), BAD.."-1%"..trs("xpmul")..BAD.."-25"..trs("worth")..GOOD.."+5%"..trs("p_mul") ..GOOD.. "+40"..trs("start_points"),
 																-2,			0,					{SKILL_POINTIII}, TREE_POINTTREE)
 SKILL_POINTMEGA = 242
-GM:AddSkillModifier(SKILL_POINTMEGA, SKILLMOD_POINT_MULTIPLIER, -0.1)
-GM:AddSkillModifier(SKILL_POINTMEGA, SKILLMOD_XP, -0.05)
+GM:AddSkillModifier(SKILL_POINTMEGA, SKILLMOD_POINT_MULTIPLIER, -0.05)
 GM:AddSkillModifier(SKILL_POINTMEGA, SKILLMOD_WORTH, 25)
-GM:AddSkill(SKILL_POINTMEGA,  trs("skill_megapoint"), BAD.."-5%"..trs("xpmul")..GOOD.."+25"..trs("worth")..BAD.."-10%"..trs("p_mul") ..GOOD.. "+50"..trs("start_points"),
+GM:AddSkill(SKILL_POINTMEGA,  trs("skill_megapoint"), GOOD.."+25"..trs("worth")..BAD.."-5%"..trs("p_mul") ..GOOD.. "+50"..trs("start_points"),
 																-2,			1,					{SKILL_POINTFUL}, TREE_POINTTREE)
 	SKILL_LUCK = 161
 	GM:AddSkillModifier(SKILL_LUCK, SKILLMOD_LUCK, 0.5)
@@ -1709,8 +1708,8 @@ GM:AddSkill(SKILL_XPHUNTER, trs("skill_bonusxp"), GOOD..trs("skill_bonusxp_d1"),
 SKILL_ULUCK = 247
 GM:AddSkillModifier(SKILL_ULUCK, SKILLMOD_LUCK, 5)
 GM:AddSkillModifier(SKILL_ULUCK, SKILLMOD_RESUPPLY_DELAY_MUL, 0.15)
-GM:AddSkillModifier(SKILL_ULUCK, SKILLMOD_POINT_MULTIPLIER, -0.15)
-GM:AddSkill(SKILL_ULUCK, trs("skill_ultraluck"), GOOD.."+5"..trs("luck")..BAD.."-15%"..trs("p_mul")..BAD.."+15%"..trs("res_delay"),
+GM:AddSkillModifier(SKILL_ULUCK, SKILLMOD_POINT_MULTIPLIER, -0.07)
+GM:AddSkill(SKILL_ULUCK, trs("skill_ultraluck"), GOOD.."+5"..trs("luck")..BAD.."-7%"..trs("p_mul")..BAD.."+15%"..trs("res_delay"),
 																-4,			-6,					{SKILL_LUCK4}, TREE_POINTTREE)														
 SKILL_LUCKE = 162
 GM:AddSkillModifier(SKILL_LUCKE, SKILLMOD_POINT_MULTIPLIER, -0.1)
@@ -1778,8 +1777,7 @@ GM:AddSkill(SKILL_SCAM, "Scam", GOOD.."+1%"..trs("p_mul")..BAD.. "On kill curses
 SKILL_SOLARUZ = 169
 GM:AddSkillModifier(SKILL_SOLARUZ, SKILLMOD_POINT_MULTIPLIER, 0.25)
 GM:AddSkillModifier(SKILL_SOLARUZ, SKILLMOD_LUCK, 3)
-GM:AddSkillModifier(SKILL_SOLARUZ, SKILLMOD_DMG_TAKEN, 0.65)
-GM:AddSkill(SKILL_SOLARUZ, "Debuff:Deadly Fortuna", PURPLE.."+25% Points Multiplicator and +3 luck\n" ..BAD.. "+65% damage taken",
+GM:AddSkill(SKILL_SOLARUZ, "Debuff:Deadly Fortuna", PURPLE.."+25% Points Multiplicator and +3 luck\n" ..BAD.. "-1% Points mul for every 150 SCORE",
 				3,			-9,					{SKILL_SCAM}, TREE_POINTTREE)
 SKILL_ANCK = 170
 GM:AddSkill(SKILL_ANCK, "Ancient knowledge", PURPLE.."Learn The Ancient knowledge \n" ..BAD.. "The cost of knowledge",
@@ -2671,7 +2669,7 @@ GM:SetSkillModifierFunction(SKILLMOD_DIMVISION_EFF_MUL, function(pl, amount)
 end)
 
 GM:SetSkillModifierFunction(SKILLMOD_XP, function(pl, amount)
-	pl.XPMulti = math.Clamp(amount + 1.0, 0.0, 1000.0)
+	pl.XPMulti = math.Clamp(amount + 1.0, -1.0, 1000.0)
 end)
 GM:SetSkillModifierFunction(SKILLMOD_PROP_CARRY_SLOW_MUL, function(pl, amount)
 	pl.PropCarrySlowMul = math.Clamp(amount + 1.0, 0.0, 1000.0)

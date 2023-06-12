@@ -2459,12 +2459,20 @@ function GM:OnPlayerWin(pl)
 		and pl:IsSkillActive(SKILL_NOSEE) and  pl:IsSkillActive(SKILL_D_CURSEDTRUE) and pl:IsSkillActive(SKILL_BARA_CURSED) and pl:IsSkillActive(SKILL_CURSE_OF_MISS) and pl:IsSkillActive(SKILL_LIVER) and pl:IsSkillActive(SKILL_TRIP) then
 			pl:GiveAchievement("full_curse")
 		end
+		if pl:IsSkillUnlocked(SKILL_SECRET) and pl:IsSkillUnlocked(SKILL_SECRET2) and pl:IsSkillUnlocked(SKILL_TORMENT3) and pl:IsSkillUnlocked(SKILL_SECRET_VII) and pl:IsSkillUnlocked(SKILL_SECRET_VI) and pl:IsSkillUnlocked(SKILL_SKILLFORGODS) and pl:IsSkillUnlocked(SKILL_SECRET_VIII) then
+			pl:GiveAchievement("ancient_secret")
+		end
+		if pl:IsSkillUnlocked(SKILL_HAHA) and pl:IsSkillUnlocked(SKILL_HIHI) and pl:IsSkillUnlocked(SKILL_HEHE) and pl:IsSkillUnlocked(SKILL_SOUL_TRADE) and pl:IsSkillUnlocked(SKILL_CHEESE) and pl:IsSkillUnlocked(SKILL_CHEESE2) and pl:IsSkillUnlocked(SKILL_SKYHELP) and pl:IsSkillUnlocked(SKILL_NULLED)
+		and pl:IsSkillUnlocked(SKILL_CHEESE3) and pl:IsSkillUnlocked(SKILL_CHEESE_PIE) then
+			pl:GiveAchievement("hehiha")
+		end
+
 	end
 end
 
 function GM:OnPlayerLose(pl)
 	pl:GiveAchievementProgress("ruinto10", 1)
-	self:SetRage(math.max(0,self:GetRage() - 150))
+	self:SetRage(self:GetRage()/2)
 	self:SetWinRate(math.max(1,self:GetWinRate() - 1))
 end
 
@@ -4715,8 +4723,8 @@ function GM:HumanKilledZombie(pl, attacker, inflictor, dmginfo, headshot, suicid
 	end
 
 	attacker.ZombiesKilled = attacker.ZombiesKilled + 1
-	attacker.RageMul = attacker.RageMul + 0.1
-	self:SetRage(math.Round(self:GetRage() + (1 * (attacker.RageMul or 1)) * self:GetWinRate()))
+	attacker.RageMul = attacker.RageMul + 0.15
+	self:SetRage(math.Round(self:GetRage() + (3 * (attacker.RageMul or 1)) * self:GetWinRate()))
 	timer.Create("rage"..attacker:Nick(),5,1, function() if attacker:IsValid() then		attacker.RageMul = 1 end end)
 	attacker:AddZSXP(1)
 	if pl:IsChampion() then
@@ -5755,7 +5763,7 @@ function GM:WaveStateChanged(newstate, pl)
 			net.WriteInt(self:GetWave(), 16)
 			net.WriteFloat(self:GetWaveStart())
 		net.Broadcast()
-		self:SetRage(self:GetRage() + 20 * #team.GetPlayers(TEAM_HUMAN))
+		self:SetRage(self:GetRage() + 40 * self:GetWave() * #team.GetPlayers(TEAM_HUMAN))
        
 		local pointsbonus
 		if self.EndWavePointsBonus > 0 then
@@ -5768,15 +5776,15 @@ function GM:WaveStateChanged(newstate, pl)
 			if pl:Team() == TEAM_HUMAN and pl:Alive() then
 				pl.UsesChaosCard = false
 				pl:SetChargesActive(pl:GetChargesActive()+3)
-				local lucktrue  = (pl.Luck or 1) + pl.LuckAdd + ((pl:IsSkillActive(SKILL_LUCKY_UNLIVER) and self:GetWave() or 0) * 2)
+				local lucktrue  = (pl.Luck or 1) + pl.LuckAdd 
+				if pl:IsSkillActive(SKILL_LUCKY_UNLIVER) then
+					lucktrue = lucktrue + self:GetWave() * 2
+				end
 				if self.EndWaveHealthBonus > 0 and !pl:HasTrinket("lehasoul") then
 					pl:SetHealth(math.min(pl:GetMaxHealth(), pl:Health() + self.EndWaveHealthBonus))
 				end
 				if pl:IsSkillActive(SKILL_XPHUNTER) then
 					pl:AddZSXP(5 + self.GetWave() * 10)
-				end
-				if pl:IsSkillActive(SKILL_BERSERK) then
-					pl.BerserkerCharge = true
 				end
 				if pl:IsSkillActive(SKILL_CREDIT) then
 					net.Start("zs_credit_takepoints")
@@ -5784,25 +5792,16 @@ function GM:WaveStateChanged(newstate, pl)
 					net.Send(pl)
 					pl:SetPoints(pl:GetPoints() * 0.7)
 				end
-				if pl:HasTrinket("vir_pat") then
-					pl.CanBuy = true
-				end
 				if pl:IsSkillActive(SKILL_SECONDCHANCE) and pl.LetalSave and self:GetWave() >= 5 and pl:IsValidLivingHuman() then
 					pl:GiveAchievement("thisisbeeasy")
 				end
 				pl.LetalSave = true
+				pl.BerserkerCharge = true
 				if pl:IsSkillActive(SKILL_XPMULGOOD) then
 				   pl.AddXPMulti = (pl.AddXPMulti or 1) + 0.20
 				end
 				if pl:Frags() == 1024 then
 					pl:GiveAchievement("bitbat")
-				end
-				if pl:IsSkillUnlocked(SKILL_SECRET) and pl:IsSkillUnlocked(SKILL_SECRET2) and pl:IsSkillUnlocked(SKILL_TORMENT3) and pl:IsSkillUnlocked(SKILL_SECRET_VII) and pl:IsSkillUnlocked(SKILL_SECRET_VI) and pl:IsSkillUnlocked(SKILL_SKILLFORGODS) and pl:IsSkillUnlocked(SKILL_SECRET_VIII) then
-					pl:GiveAchievement("ancient_secret")
-				end
-				if pl:IsSkillUnlocked(SKILL_HAHA) and pl:IsSkillUnlocked(SKILL_HIHI) and pl:IsSkillUnlocked(SKILL_HEHE) and pl:IsSkillUnlocked(SKILL_SOUL_TRADE) and pl:IsSkillUnlocked(SKILL_CHEESE) and pl:IsSkillUnlocked(SKILL_CHEESE2) and pl:IsSkillUnlocked(SKILL_SKYHELP) and pl:IsSkillUnlocked(SKILL_NULLED)
-				and pl:IsSkillUnlocked(SKILL_CHEESE3) and pl:IsSkillUnlocked(SKILL_CHEESE_PIE) then
-					pl:GiveAchievement("hehiha")
 				end
 
 				if pl:HasTrinket("mysteryticket")  then 

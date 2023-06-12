@@ -67,7 +67,7 @@ function SWEP:CanPrimaryAttack()
 end
 function SWEP:DamageThink(dmginfo) 
 	local inf = dmginfo:GetInflictor()
-	local attacker = dmginfo:GetDamage()
+	local attacker = dmginfo:GetAttacker()
 	local owner = self:GetOwner()
 	if  bit.band(dmginfo:GetDamageType(), DMG_SLASH) == 0 or !inf.IsMelee then return end
 	if math.abs(owner:GetForward():Angle().yaw - attacker:GetForward():Angle().yaw) >= 90 and attacker:GetActiveWeapon() == inf  then

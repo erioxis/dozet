@@ -67,7 +67,7 @@ function SWEP:CanPrimaryAttack()
 end
 
 function SWEP:DamageThink(dmginfo) 
-	local attacker = dmginfo:GetDamage()
+	local attacker = dmginfo:GetAttacker()
 	local owner = self:GetOwner()
 	if math.abs(owner:GetForward():Angle().yaw - attacker:GetForward():Angle().yaw) >= 90 and attacker:GetActiveWeapon() == dmginfo:GetInflictor() then
 		dmginfo:SetDamage((dmginfo:GetDamage() * 0.3) - (self.MeleeDamage * 0.3))

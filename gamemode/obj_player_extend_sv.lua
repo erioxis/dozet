@@ -93,7 +93,9 @@ function meta:ProcessDamage(dmginfo)
 			net.Send(self)
 			return true
 		end
-		damage = damage  * (1 - (math.Clamp(GAMEMODE:GetBalance() * 0.01,-2.5,0.7)))
+		if attacker:IsPlayer() and attacker:GetZSRemortLevel() > 13 then
+			damage = damage  * (1 - (math.Clamp(GAMEMODE:GetBalance() * 0.01,-2.5,0.8)))
+		end
 		if self.m_zombiedef then
 			damage = damage * 0.75
 		end
@@ -179,7 +181,7 @@ function meta:ProcessDamage(dmginfo)
 			local wep = attacker:GetActiveWeapon()
 			local attackermaxhp = math.floor(attacker:GetMaxHealth() * ((attacker:IsSkillActive(SKILL_D_FRAIL) or attacker:IsSkillActive(SKILL_ABUSE)) and 0.44 or 1))
 			if attacker:IsSkillActive(SKILL_AMULET_16) then 
-				damage = damage * math.random(1,250)/100
+				damage = damage * math.random(50,175)/100
 			end
 			if wep:IsValid() and wep.DealThink then
 				wep:DealThink(dmginfo)
@@ -337,7 +339,7 @@ function meta:ProcessDamage(dmginfo)
 			net.Send(self)
 			return true
 		end
-		if self:IsSkillActive(SKILL_HELPLIFER) and math.random(1,10) == 1 and dmginfo:GetDamage() >= self:Health() then
+		if self:IsSkillActive(SKILL_HELPLIFER) and math.random(1,10) == 1 and damage >= self:Health() then
 			dmginfo:SetDamage(0)
 			if attacker:IsPlayer() then
 				GAMEMODE:BlockFloater(attacker, self, dmginfo:GetDamagePosition())
@@ -1798,18 +1800,22 @@ end
 function meta:AddPoints(points, floatingscoreobject, fmtype, nomul)
 	if gamemode.Call("IsEscapeDoorOpen") then return end
 	if points > 0 then
-		points = points * (0.95+0.05 *self:GetStyle())
+		local mul = 1 * (0.95+0.05 *self:GetStyle())
 		if not nomul and self.PointIncomeMul then
-			points = points * self.PointIncomeMul
+			mul = mul * self.PointIncomeMul
 		end
 		if  self:HasTrinket("curse_point") then
 			local taper = GetTaper(self,"point",0.02)
-			points = points * taper
+			mul = mul * taper
 		end
 		if  self:IsSkillActive(SKILL_MIDAS_HIHI) and self:HasTrinket("sin_ego") then
 			local taper = GetTaper(self,"sin_ego",0.005)
-			points = points * taper
+			mul = mul * taper
 		end
+		if self:IsSkillActive(SKILL_SOLARUZ) then
+			mul = mul * (1-self:GetMScore()/15000)
+		end
+		points = points * mul
 	
 	end
 	-- This lets us add partial amounts of points (floats)
