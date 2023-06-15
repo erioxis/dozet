@@ -22,7 +22,7 @@ SWEP.Secondary.Automatic = false
 SWEP.Secondary.Ammo = "dummy"
 
 SWEP.Magic = true
-SWEP.PointsMultiplier = 1.5
+SWEP.PointsMultiplier = 1
 SWEP.WalkSpeed = SPEED_NORMAL
 
 SWEP.HoldType = "pistol"

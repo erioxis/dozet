@@ -39,6 +39,7 @@ LANGUAGE.g2p_disc			= "Disconnect"
 LANGUAGE.g2p_mm			= "Main Menu"
 LANGUAGE.res_ammo_sel			= "Resupply Ammo Selection"
 LANGUAGE.golden_appeared			= "GOLDEN ZOMBIE HAS APPEARED!!!"
+LANGUAGE.need_for_achiev			= "Skills,trinkets needed for achievement."
 
 LANGUAGE.w_cost = "Worth: "
 
@@ -3385,3 +3386,23 @@ LANGUAGE.wep_gaegle_d2 = "CAN SHOOT???"
 LANGUAGE.wep_gaegle_d3 = "CAN SHOOT???"
 
 LANGUAGE.w_random_c = "Random Curse"
+
+
+LANGUAGE.survival_name = "Survival"
+LANGUAGE.survival_desc = "Skill for surviving,good for start."
+
+LANGUAGE.gunnery_name = "Gunnery"
+LANGUAGE.gunnery_desc = "Ideal skill tree for start.\nSkills for guns,projectile's and throwing"
+
+LANGUAGE.speed_name = "Speed"
+LANGUAGE.speed_desc = "Skill tree for agility.\nDon't good for start"
+
+LANGUAGE.support_name = "Support"
+LANGUAGE.support_desc = "Skill tree for medics and have good synergy with speed tree.\nGood for newbies"
+
+
+LANGUAGE.building_name = "Building"
+LANGUAGE.building_desc = "Skill tree for repairs,caders and deployables.\nGood for newbies"
+
+LANGUAGE.melee_name = "Melee"
+LANGUAGE.melee_desc = "Skill tree for melee's.\nVery bad choice for newbies"

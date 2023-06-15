@@ -251,6 +251,27 @@ function GM:Stats()
 	end
 	MakepStats()
 end
+local curse = {
+	"trinket_curse_dropping",
+	"trinket_hurt_curse",
+	"trinket_un_curse",
+	"trinket_curse_faster",
+	"trinket_curse_slow",
+	"trinket_curse_ponos",
+	"trinket_curse_heart",
+	"trinket_curse_unknown",
+	"trinket_curse_fragility",
+	"trinket_cursedtrinket",
+}
+local curses_skills = {
+	SKILL_D_CURSEDTRUE,
+	SKILL_NOSEE,
+	SKILL_BARA_CURSED,
+	SKILL_CURSE_OF_MISS,
+	SKILL_ATTACHMENT_CURSE,
+	SKILL_LIVER,
+	SKILL_TRIP,
+}
 local function DoStats(self, list, neg)
 	for k,v in pairs(list:GetItems()) do 
 		v:Remove()
@@ -301,6 +322,36 @@ local function DoStats(self, list, neg)
 		if table.HasValue(notbl,i) then
 			d:Remove()
 		end
+	end
+	--if GAMEMODE.AchievementsProgress["full_curse"] then return end
+	local d = vgui.Create("DEXChangingLabel", bottom)
+	d:SetFont("DefaultFont")
+	d:SetText(translate.Get("need_for_achiev"))
+	list:AddItem(d) 
+	for i=1,#curse do
+	
+		local d = vgui.Create("DEXChangingLabel", bottom)
+		d:SetFont("DefaultFont")
+		d:SetText(GAMEMODE.ZSInventoryItemData[curse[i]].PrintName)
+
+		if !MySelf:HasInventoryItem(curse[i]) then
+			d:SetTextColor(Color(238,37,37))
+		else
+			d:SetTextColor( Color(71,231,119))
+		end
+		list:AddItem(d) 
+	end
+	for i=1,#curses_skills do
+		local d = vgui.Create("DEXChangingLabel", bottom)
+		d:SetFont("DefaultFont")
+		d:SetText(GAMEMODE.Skills[curses_skills[i]].Name)
+
+		if !MySelf:IsSkillActive(curses_skills[i]) then
+			d:SetTextColor(Color(238,37,37))
+		else
+			d:SetTextColor( Color(71,231,119))
+		end
+		list:AddItem(d) 
 	end
 end
 function MakepStats()

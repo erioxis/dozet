@@ -2458,6 +2458,7 @@ function GM:OnPlayerWin(pl)
 		and pl:HasTrinket("curse_ponos") and pl:HasTrinket("curse_unknown") and pl:GetStatus("cursed") and pl:IsSkillActive(SKILL_ATTACHMENT_CURSE) and pl:HasTrinket("cursedtrinket") 
 		and pl:IsSkillActive(SKILL_NOSEE) and  pl:IsSkillActive(SKILL_D_CURSEDTRUE) and pl:IsSkillActive(SKILL_BARA_CURSED) and pl:IsSkillActive(SKILL_CURSE_OF_MISS) and pl:IsSkillActive(SKILL_LIVER) and pl:IsSkillActive(SKILL_TRIP) then
 			pl:GiveAchievement("full_curse")
+			print("huy")
 		end
 		if pl:IsSkillUnlocked(SKILL_SECRET) and pl:IsSkillUnlocked(SKILL_SECRET2) and pl:IsSkillUnlocked(SKILL_TORMENT3) and pl:IsSkillUnlocked(SKILL_SECRET_VII) and pl:IsSkillUnlocked(SKILL_SECRET_VI) and pl:IsSkillUnlocked(SKILL_SKILLFORGODS) and pl:IsSkillUnlocked(SKILL_SECRET_VIII) then
 			pl:GiveAchievement("ancient_secret")

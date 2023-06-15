@@ -941,3 +941,50 @@ LANGUAGE.skillmod_n126 = "%s к эффективности вашей аммун
 LANGUAGE.skillmod_n127 = "%s к урону бросательного оружия"
 LANGUAGE.skillmod_n129 = "%s к дополнительному времени дебаффов"
 LANGUAGE.skillmod_n129 = "%s к дополнительному урону"
+
+LANGUAGE.survival_name = "Выживание"
+LANGUAGE.survival_desc = "Тут собраны навыки для выживания,для начала эта ветка хороша."
+
+LANGUAGE.gunnery_name = "Стрелок"
+LANGUAGE.gunnery_desc = "Идеальная ветка навыков для начала.\nНавыки для пушек,проджектайлов пушек и бросания"
+
+LANGUAGE.speed_name = "Скорость"
+LANGUAGE.speed_desc = "Ветка навыков для скорости.\nВетка не для новичков"
+
+LANGUAGE.support_name = "Помощь"
+LANGUAGE.support_desc = "Ветка навыков для медиков,больше подходит для ветки скорости.\nВетка хорошая для новичков"
+
+LANGUAGE.building_name = "Баррикадирование"
+LANGUAGE.building_desc = "Ветка навыков для построек,кейдеров и починки.\nНеплохая ветка для старта."
+
+LANGUAGE.melee_name = "Ближний бой"
+LANGUAGE.melee_desc = "Ветка навыков для ближнего боя.\nОчень плохой выбор для новичков"
+
+
+LANGUAGE.point_name = "Ветка Поинтов"
+LANGUAGE.point_desc = "Ветка навыков для улучшения получения поинтов и удачи.\nСоветую качать это первее!\nАмулеты открываются на 6 реморте!"
+
+
+LANGUAGE.ancient_name = "Древние Знания"
+LANGUAGE.ancient_desc = "Ветка навыков которая...сложна в изучении.\nКрайне не рекомендуется для новичков!"
+
+LANGUAGE.defense_name = "Защита"
+LANGUAGE.defense_desc = "Ветка навыков для защитов которая зачастую убирает скорость.\nНекоторые скиллы стоят того."
+
+LANGUAGE.donate_name = "Ветка донатов"
+LANGUAGE.donate_desc = "Ветка навыков от игроков.\nСтоит вкачивать."
+
+LANGUAGE.useless_name = "Бесполезная ветка"
+LANGUAGE.useless_desc = "Может стоит прокачаться прежде чем качать эту ветку?"
+
+
+LANGUAGE.god_1_name = "Бог 'Резни'"
+LANGUAGE.god_1_desc = "Что?"
+
+LANGUAGE.god_2_name = "Боги досета"
+LANGUAGE.god_2_desc = "Что?"
+
+LANGUAGE.god_3_name = "Боги древности"
+LANGUAGE.god_3_desc = "Что?"
+
+LANGUAGE.need_for_achiev			= "Скиллы,тринкеты нужные для достижения."

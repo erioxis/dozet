@@ -41,7 +41,7 @@ SWEP.SwingTime = 0.71
 SWEP.SwingRotation = Angle(0, -20, -40)
 SWEP.SwingOffset = Vector(10, 0, 0)
 SWEP.SwingHoldType = "melee"
-SWEP.PointsMultiplier = 0.6
+SWEP.PointsMultiplier = 1
 SWEP.HitDecal = "Manhackcut"
 
 SWEP.AllowQualityWeapons = true

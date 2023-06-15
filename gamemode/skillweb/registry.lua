@@ -84,19 +84,19 @@ TREE_SUPPORTTREE = 3
 TREE_BUILDINGTREE = 4
 TREE_MELEETREE = 5
 TREE_GUNTREE = 6
+TREE_BRANCH_ELEMENTS = 6
 TREE_POINTTREE = 7
+TREE_SINTREE = 7
 TREE_ANCIENTTREE = 8
 TREE_DEFENSETREE = 9
 TREE_DONATETREE = 10
 TREE_USELESSTREE = 11
-TREE_BRANCH_ELEMENTS = 12
 
 
-TREE_RESNYA = 13
-TREE_DOSET = 14
-TREE_OLD_GOD = 15
+TREE_RESNYA = 12
+TREE_DOSET = 13
+TREE_OLD_GOD = 14
 
-TREE_SINTREE = 16
 
 -- Dummy skill used for "connecting" to their trees.
 SKILL_NONE = 0
@@ -645,17 +645,17 @@ local NEUTRAL = "^"..COLORID_GRAY
 local PURPLE = "^"..COLORID_PURPLE
 --
 local d = GM:AddSkill(SKILL_RESNYA, trs("skill_resnya"), GOOD..trs("skill_resnya_d1")..GOOD..trs("skill_resnya_d2"),
-																22,			-6,					{SKILL_NONE}, TREE_RESNYA)
+																0,			-2,					{SKILL_NONE}, TREE_RESNYA)
 GM:AddSkillModifier(SKILL_RESNYA, SKILLMOD_MELEE_DAMAGE_MUL, 0.15)
 d.DontUnlock = SKILL_OLD_GOD
 d.DontUnlock2 = SKILL_DOSET
 local d = GM:AddSkill(SKILL_DOSET, trs("skill_doset"), GOOD..trs("skill_doset_d1")..GOOD..trs("skill_doset_d2"),
-																22,			-4,					{SKILL_NONE}, TREE_DOSET)
+																0,			-2,					{SKILL_NONE}, TREE_DOSET)
 GM:AddSkillModifier(SKILL_DOSET, SKILLMOD_LUCK, 1)
 d.DontUnlock = SKILL_OLD_GOD
 d.DontUnlock2 = SKILL_RESNYA
 local d = GM:AddSkill(SKILL_OLD_GOD, trs("skill_old_g"), GOOD..trs("skill_old_g_d1")..GOOD..trs("skill_old_g_d2"),
-																22,			-2,					{SKILL_NONE}, TREE_OLD_GOD)
+																0,			-2,					{SKILL_NONE}, TREE_OLD_GOD)
 GM:AddSkillModifier(SKILL_OLD_GOD, SKILLMOD_M_DMG, 0.3)
 GM:AddSkillModifier(SKILL_OLD_GOD, SKILLMOD_M_REG, 0.3)
 d.DontUnlock = SKILL_DOSET
@@ -663,22 +663,22 @@ d.DontUnlock2 = SKILL_RESNYA
 
 
 GM:AddSkill(SKILL_RESNYA1, trs("skill_resnya1"), GOOD..trs("skill_resnya1_d1")..GOOD..trs("skill_resnya1_d2"),
-																24,			-6,					{SKILL_RESNYA}, TREE_RESNYA)
+																0,			-4,					{SKILL_RESNYA}, TREE_RESNYA)
 GM:AddSkill(SKILL_DOSET1, trs("skill_doset1"), GOOD..trs("skill_doset1_d1")..GOOD..trs("skill_doset1_d2"),
-																24,			-4,					{SKILL_DOSET}, TREE_DOSET)
+																0,			-4,					{SKILL_DOSET}, TREE_DOSET)
 GM:AddSkillModifier(SKILL_DOSET1, SKILLMOD_ELEMENTAL_MUL, 0.1)
 GM:AddSkill(SKILL_OLD_GOD1, trs("skill_old1_g"), GOOD..trs("skill_old_g1_d1")..GOOD..trs("skill_old_g1_d2"),
-																24,			-2,					{SKILL_OLD_GOD}, TREE_OLD_GOD)
+																0,			-4,					{SKILL_OLD_GOD}, TREE_OLD_GOD)
 
 GM:AddSkill(SKILL_RESNYA2, trs("skill_resnya2"), GOOD..trs("skill_resnya2_d1")..BAD..trs("skill_resnya2_d2"),
-																26,			-6,					{SKILL_RESNYA1}, TREE_RESNYA)
+																0,			-6,					{SKILL_RESNYA1}, TREE_RESNYA)
 GM:AddSkillModifier(SKILL_RESNYA2, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 0.2)
 GM:AddSkill(SKILL_DOSET2, trs("skill_doset2"), GOOD..trs("skill_doset2_d1")..BAD..trs("skill_doset2_d2"),
-																26,			-4,					{SKILL_DOSET1}, TREE_DOSET)
+																0,			-6,					{SKILL_DOSET1}, TREE_DOSET)
 GM:AddSkillModifier(SKILL_DOSET2, SKILLMOD_MELEE_DAMAGE_MUL, -0.2)
 GM:AddSkillModifier(SKILL_DOSET2, SKILLMOD_DMG_TAKEN, -0.1)
 GM:AddSkill(SKILL_OLD_GOD2, trs("skill_old_g2"), GOOD..trs("skill_old_g2_d1")..BAD..trs("skill_old_g2_d2"),
-																26,			-2,					{SKILL_OLD_GOD1}, TREE_OLD_GOD)
+																0,			-6,					{SKILL_OLD_GOD1}, TREE_OLD_GOD)
 GM:AddSkillModifier(SKILL_OLD_GOD2, SKILLMOD_DAMAGE, -0.25)
 -- Health Tree
 GM:AddSkill(SKILL_STOIC1, trs("skill_stoici_0"), GOOD..trs("skill_stoici_d1")..BAD..trs("skill_stoici_d2"),
@@ -713,7 +713,6 @@ GM:AddSkill(SKILL_REGENERATOR, trs("skill_regen_0"), GOOD..trs("skill_regen_d1")
 																-5,			-2,					{}, TREE_HEALTHTREE)
 GM:AddSkill(SKILL_NULLED, trs("skill_regen1_0"), GOOD..trs("skill_regen1_d1"),
 			                                                   	-5,			0,					{SKILL_REGENERATOR}, TREE_HEALTHTREE)
-.Hidden = true	
 GM:AddSkill(SKILL_BLOODARMOR, trs("skill_bloodarmor_0"), GOOD..trs("skill_bloodarmor_d1") ..BAD..trs("skill_bloodarmor_d2"),
 																2,			2,					{SKILL_IRONBLOOD, SKILL_BLOODLETTER, SKILL_D_HEMOPHILIA}, TREE_HEALTHTREE)
 GM:AddSkill(SKILL_IRONBLOOD, trs("skill_ironblood_0"), GOOD..trs("skill_ironblood_d1") ..GOOD..trs("skill_ironblood_d2") ..BAD..trs("skill_ironblood_d3"),
@@ -1124,95 +1123,95 @@ GM:AddSkill(SKILL_GIGACHAD, trs("skill_gigachad"), GOOD..trs("skill_gigachad_d1"
 
 -- Gunnery Tree
 GM:AddSkill(SKILL_FREESKILL, trs("skill_freeskill"), GOOD.."+3"..trs("spoint"),
-																-9,			10,					{SKILL_NONE}, TREE_GUNTREE)
+																-9,			10,					{SKILL_NONE}, TREE_POINTTREE)
 .RemortReq = 8
 GM:AddSkillModifier(SKILL_FREESKILL, SKILLMOD_SPOINT, 4)
 GM:AddSkill(SKILL_FREESKILL1, trs("skill_freeskill"), GOOD.."+5"..trs("spoint"),
-																-9,			9,					{SKILL_NONE}, TREE_GUNTREE)
+																-9,			9,					{SKILL_NONE}, TREE_POINTTREE)
 .RemortReq = 24
 GM:AddSkillModifier(SKILL_FREESKILL1, SKILLMOD_SPOINT, 6)
 GM:AddSkill(SKILL_FREESKILL2, trs("skill_freeskill"), GOOD.."+8"..trs("spoint"),
-																-9,			8,					{SKILL_NONE}, TREE_GUNTREE)
+																-9,			8,					{SKILL_NONE}, TREE_POINTTREE)
 .RemortReq = 80
 GM:AddSkillModifier(SKILL_FREESKILL2, SKILLMOD_SPOINT, 8)
 GM:AddSkill(SKILL_SKILLFORGODS, "SECRET I", GOOD.."You find this!Reward is free 3 skill points!",
-																-70,			65,					{SKILL_NONE}, TREE_GUNTREE)
+																-70,			65,					{SKILL_NONE}, TREE_POINTTREE)
 GM:AddSkillModifier(SKILL_SKILLFORGODS, SKILLMOD_SPOINT, 4)
 GM:AddSkillModifier(SKILL_SECRET, SKILLMOD_SPOINT, 7)
 GM:AddSkillModifier(SKILL_SECRET2, SKILLMOD_SPOINT, 4)
 
 local d = GM:AddSkill(SKILL_AMULET_1, trs("skill_amulet_1"), GOOD.. trs("skill_amulet_1_d1"),
-																-20,			-9,					{SKILL_NONE}, TREE_GUNTREE)
+																-10,			1,					{SKILL_NONE}, TREE_POINTTREE)
 d.Amulet = true		
 d.AmuletCost = 3												
 GM:AddSkillModifier(SKILL_AMULET_1, SKILLMOD_SPOINT, 1)
 GM:AddSkillModifier(SKILL_AMULET_1, SKILLMOD_PIECE_OF_AMULET, -3)
 local d = GM:AddSkill(SKILL_AMULET_2, trs("skill_amulet_2"), GOOD.. trs("skill_amulet_2_d1"),
-																-20,			-8,					{SKILL_NONE}, TREE_GUNTREE)
+																-10,			2,					{SKILL_NONE}, TREE_POINTTREE)
 d.Amulet = true		
 d.AmuletCost = 4													
 GM:AddSkillModifier(SKILL_AMULET_2, SKILLMOD_SPOINT, 1)
 GM:AddSkillModifier(SKILL_AMULET_2, SKILLMOD_PIECE_OF_AMULET, -4)
 local d = GM:AddSkill(SKILL_AMULET_3, trs("skill_amulet_3"), BAD.. trs("skill_amulet_3_d1"),
-																-20,			-10,					{SKILL_NONE}, TREE_GUNTREE)
+																-10,			0,					{SKILL_NONE}, TREE_POINTTREE)
 d.Amulet = true		
 d.AmuletCost = -3													
 GM:AddSkillModifier(SKILL_AMULET_3, SKILLMOD_SPOINT, -3)
 GM:AddSkillModifier(SKILL_AMULET_3, SKILLMOD_PIECE_OF_AMULET, 3)
 local d = GM:AddSkill(SKILL_AMULET_4, trs("skill_amulet_4"), GOOD.. trs("skill_amulet_4_d1"),
-																-20,			-12,					{SKILL_NONE}, TREE_GUNTREE)
+																-10,			-2,					{SKILL_NONE}, TREE_POINTTREE)
 d.Amulet = true		
 d.AmuletCost = 3													
 GM:AddSkillModifier(SKILL_AMULET_4, SKILLMOD_SPOINT, 1)
 GM:AddSkillModifier(SKILL_AMULET_4, SKILLMOD_PIECE_OF_AMULET, -3)
 local d = GM:AddSkill(SKILL_AMULET_5, trs("skill_amulet_5"), GOOD.. trs("skill_amulet_5_d1"),
-																-20,			-13,					{SKILL_NONE}, TREE_GUNTREE)
+																-10,			-3,					{SKILL_NONE}, TREE_POINTTREE)
 d.Amulet = true			
 d.AmuletCost = 2												
 GM:AddSkillModifier(SKILL_AMULET_5, SKILLMOD_SPOINT, 1)
 GM:AddSkillModifier(SKILL_AMULET_5, SKILLMOD_PIECE_OF_AMULET, -2)
 local d = GM:AddSkill(SKILL_AMULET_6, trs("skill_amulet_6"), GOOD.. trs("skill_amulet_6_d1"),
-																-20,			-14,					{SKILL_NONE}, TREE_GUNTREE)
+																-10,			-4,					{SKILL_NONE}, TREE_POINTTREE)
 d.Amulet = true				
 d.AmuletCost = 1											
 GM:AddSkillModifier(SKILL_AMULET_6, SKILLMOD_SPOINT, 1)
 GM:AddSkillModifier(SKILL_AMULET_6, SKILLMOD_LUCK, 2.5)
 GM:AddSkillModifier(SKILL_AMULET_6, SKILLMOD_PIECE_OF_AMULET, -1)
 local d = GM:AddSkill(SKILL_AMULET_7, trs("skill_amulet_7"), GOOD.. trs("skill_amulet_7_d1"),
-																-23,			-7,					{SKILL_NONE}, TREE_GUNTREE)
+																-13,			3,					{SKILL_NONE}, TREE_POINTTREE)
 d.Amulet = true				
 d.AmuletCost = 3											
 GM:AddSkillModifier(SKILL_AMULET_7, SKILLMOD_SPOINT, 1)
 GM:AddSkillModifier(SKILL_AMULET_7, SKILLMOD_MELEE_DAMAGE_MUL, 0.25)
 GM:AddSkillModifier(SKILL_AMULET_7, SKILLMOD_PIECE_OF_AMULET, -3)
 local d = GM:AddSkill(SKILL_AMULET_8, trs("skill_amulet_8"), GOOD.. trs("skill_amulet_8_d1"),
-																-23,			-8,					{SKILL_NONE}, TREE_GUNTREE)
+																-13,			2,					{SKILL_NONE}, TREE_POINTTREE)
 d.Amulet = true				
 d.AmuletCost = 2											
 GM:AddSkillModifier(SKILL_AMULET_8, SKILLMOD_SPOINT, 1)
 GM:AddSkillModifier(SKILL_AMULET_8, SKILLMOD_HEALTH, 20)
 GM:AddSkillModifier(SKILL_AMULET_8, SKILLMOD_PIECE_OF_AMULET, -2)
 local d = GM:AddSkill(SKILL_AMULET_9, trs("skill_amulet_9"), GOOD.. trs("skill_amulet_9_d1"),
-																-23,			-9,					{SKILL_NONE}, TREE_GUNTREE)
+																-13,			1,					{SKILL_NONE}, TREE_POINTTREE)
 d.Amulet = true				
 d.AmuletCost = 2											
 GM:AddSkillModifier(SKILL_AMULET_9, SKILLMOD_SPOINT, 1)
 GM:AddSkillModifier(SKILL_AMULET_9, SKILLMOD_BLOODARMOR, 35)
 GM:AddSkillModifier(SKILL_AMULET_9, SKILLMOD_PIECE_OF_AMULET, -2)
 local d = GM:AddSkill(SKILL_AMULET_10, trs("skill_amulet_10"), BAD.. trs("skill_amulet_10_d1"),
-																-23,			-10,					{SKILL_NONE}, TREE_GUNTREE)
+																-13,			-0,					{SKILL_NONE}, TREE_POINTTREE)
 d.Amulet = true				
 d.AmuletCost = -5											
 GM:AddSkillModifier(SKILL_AMULET_10, SKILLMOD_SPOINT, -7)
 GM:AddSkillModifier(SKILL_AMULET_10, SKILLMOD_PIECE_OF_AMULET, 5)
 local d = GM:AddSkill(SKILL_AMULET_11, trs("skill_amulet_11"), GOOD.. trs("skill_amulet_11_d1"),
-																-23,			-11,					{SKILL_NONE}, TREE_GUNTREE)
+																-13,			-1,					{SKILL_NONE},TREE_POINTTREE)
 d.Amulet = true				
 d.AmuletCost = 5											
 GM:AddSkillModifier(SKILL_AMULET_11, SKILLMOD_SPOINT, 1)
 GM:AddSkillModifier(SKILL_AMULET_11, SKILLMOD_PIECE_OF_AMULET, -5)
 local d = GM:AddSkill(SKILL_AMULET_12, trs("skill_amulet_12"), GOOD..trs("skill_amulet_12_d2") ..BAD..trs("skill_amulet_12_d1"),
-																-23,			-12,					{SKILL_NONE}, TREE_GUNTREE)
+																-13,			-2,					{SKILL_NONE}, TREE_POINTTREE)
 d.Amulet = true				
 d.AmuletCost = -5		
 GM:AddSkillModifier(SKILL_AMULET_12, SKILLMOD_MEDKIT_EFFECTIVENESS_MUL, 0.5)
@@ -1222,32 +1221,32 @@ GM:AddSkillModifier(SKILL_AMULET_12, SKILLMOD_PIECE_OF_AMULET, 5)
 GM:AddSkillModifier(SKILL_AMULET_12, SKILLMOD_DAMAGE_ALL,-10)
 
 local d = GM:AddSkill(SKILL_AMULET_13, trs("skill_amulet_13"),  GOOD..trs("skill_amulet_13_d1"),
-																-23,			-13,					{SKILL_NONE}, TREE_GUNTREE)
+																-13,			-3,					{SKILL_NONE}, TREE_POINTTREE)
 d.Amulet = true				
 d.AmuletCost = 2
 GM:AddSkillModifier(SKILL_AMULET_13, SKILLMOD_POISON_DAMAGE_TAKEN_MUL, -0.33)									
 GM:AddSkillModifier(SKILL_AMULET_13, SKILLMOD_PIECE_OF_AMULET, -2)
 GM:AddSkillModifier(SKILL_AMULET_13, SKILLMOD_SPOINT, 1)
 local d = GM:AddSkill(SKILL_AMULET_14, trs("skill_amulet_14"),  GOOD..trs("skill_amulet_14_d1"),
-																-23,			-14,					{SKILL_NONE}, TREE_GUNTREE)
+																-13,			-4,					{SKILL_NONE}, TREE_POINTTREE)
 d.Amulet = true				
 d.AmuletCost = 5								
 GM:AddSkillModifier(SKILL_AMULET_14, SKILLMOD_PIECE_OF_AMULET, -5)
 GM:AddSkillModifier(SKILL_AMULET_14, SKILLMOD_SPOINT, 1)
 local d = GM:AddSkill(SKILL_AMULET_15, trs("skill_amulet_15"),  GOOD..trs("skill_amulet_15_d1"),
-																-23,			-15,					{SKILL_NONE}, TREE_GUNTREE)
+																-13,			-5,					{SKILL_NONE}, TREE_POINTTREE)
 d.Amulet = true				
 d.AmuletCost = 2				
 GM:AddSkillModifier(SKILL_AMULET_15, SKILLMOD_PIECE_OF_AMULET, -2)
 GM:AddSkillModifier(SKILL_AMULET_15, SKILLMOD_SPOINT, 1)
 local d = GM:AddSkill(SKILL_AMULET_16, trs("skill_amulet_16"),  GOOD..trs("skill_amulet_16_d1"),
-																-20,			-15,					{SKILL_NONE}, TREE_GUNTREE)
+																-10,			-5,					{SKILL_NONE}, TREE_POINTTREE)
 d.Amulet = true				
 d.AmuletCost = 3				
 GM:AddSkillModifier(SKILL_AMULET_16, SKILLMOD_PIECE_OF_AMULET, -3)
 GM:AddSkillModifier(SKILL_AMULET_16, SKILLMOD_SPOINT, 1)
 local d = GM:AddSkill(SKILL_AMULET_17, trs("skill_amulet_17"),  GOOD..trs("skill_amulet_17_d1"),
-																-20,			-16,					{SKILL_NONE}, TREE_GUNTREE)
+																-10,			-6,					{SKILL_NONE}, TREE_POINTTREE)
 d.Amulet = true				
 d.AmuletCost = 3				
 GM:AddSkillModifier(SKILL_AMULET_17, SKILLMOD_PIECE_OF_AMULET, -3)
@@ -1257,7 +1256,7 @@ GM:AddSkillModifier(SKILL_AMULET_17, SKILLMOD_SPOINT, 1)
 
 
 GM:AddSkill(SKILL_QUE_PRO, trs("skill_quepro"), GOOD.."-10000%"..trs("xpmul"),
-																-40,			-10,					{SKILL_NONE}, TREE_GUNTREE)
+																-30,			-10,					{SKILL_NONE}, TREE_POINTTREE)
 .QuePro = true														
 
 
@@ -1293,17 +1292,17 @@ GM:AddSkillModifier(SKILL_SECRET_9, SKILLMOD_SPOINT, 21)
 d.Hidden = true	
 d.Hidden1 = true
 local d = GM:AddSkill(SKILL_SECRET_VII, "ᅠ ᅠ ᅠ", GOOD.."+5 Skill Points\nSecret VII",
-				                                                            	25,			20.1,					{SKILL_NONE}, TREE_DONATETREE)
+				                                                            	5,			0.1,					{SKILL_NONE}, TREE_DONATETREE)
 d.Hidden = true	
 d.Hidden1 = true	
 
 local d = GM:AddSkill(SKILL_GOD_HEART, trs("skill_godheart"), GOOD..trs("skill_godheart_d1"),
-				                                                            	-14,			16,					{SKILL_NONE}, TREE_DONATETREE)
+				                                                            	-4,			6,					{SKILL_NONE}, TREE_DONATETREE)
 d.RemortReq = 64
 d.AmuletCost = -4	
 GM:AddSkillModifier(SKILL_GOD_HEART, SKILLMOD_PIECE_OF_AMULET, 4)	
 local d = GM:AddSkill(SKILL_GODHEART, trs("skill_godheart"), GOOD..trs("skill_godheart2_d1"),
-				                                                            	-14,			99,					{SKILL_NONE}, TREE_DONATETREE)
+				                                                            	-14,			39,					{SKILL_NONE}, TREE_DONATETREE)
 d.RemortReq = 128
 d.AmuletCost = 4					
 GM:AddSkillModifier(SKILL_GODHEART, SKILLMOD_SPOINT, -4)
@@ -1311,14 +1310,14 @@ GM:AddSkillModifier(SKILL_GODHEART, SKILLMOD_CURSEM, -99)
 d.AlwaysActive = true
 d.Hidden = true	
 local d = GM:AddSkill(SKILL_VIP, trs("skill_vip"), GOOD..trs("skill_vip_d1"),
-				                                                            	-14,			14,					{}, TREE_DONATETREE)								
+				                                                            	-14,			4,					{}, TREE_DONATETREE)								
 GM:AddSkillModifier(SKILL_VIP, SKILLMOD_SPOINT, 1)
 GM:AddSkillModifier(SKILL_VIP, SKILLMOD_XP, 0.25)
 d.AlwaysActive = true
 d.Amulet = true	
 d.Vip1 = true
 local d = GM:AddSkill(SKILL_VIP_2, trs("skill_vip2"), GOOD..trs("skill_vip2_d1"),
-				                                                            	-16,			14,					{}, TREE_DONATETREE)								
+				                                                            	-6,			4,					{}, TREE_DONATETREE)								
 GM:AddSkillModifier(SKILL_VIP_2, SKILLMOD_SPOINT, 1)
 GM:AddSkillModifier(SKILL_VIP_2, SKILLMOD_XP, 0.75)
 d.AlwaysActive = true
@@ -1369,7 +1368,6 @@ GM:AddSkill(SKILL_VAMPIRISM, trs("skill_vampirism"), GOOD..trs("skill_vampirism_
 																1,		    7,					{SKILL_BOUNTYKILLER, SKILL_LOX}, TREE_GUNTREE)
 GM:AddSkill(SKILL_LOX, trs("skill_lox"), GOOD..trs("skill_lox_d1")..BAD..trs("skill_lox_d2"),
 																2,		    6,					{SKILL_VAMPIRISM}, TREE_GUNTREE)
-.Hidden = true
 GM:AddSkillModifier(SKILL_LOX, SKILLMOD_ADD_STATUS, 1)
 GM:AddSkillModifier(SKILL_ABSOLUTE, SKILLMOD_ADD_STATUS, -0.05)
 GM:AddSkillModifier(SKILL_VAMPIRISM, SKILLMOD_DAMAGE, -0.25)
@@ -1740,34 +1738,34 @@ GM:AddSkill(SKILL_DUDEE, trs("skill_toyluck"), GOOD.."+2"..trs("luck"),
 	GM:AddSkill(SKILL_BADTRIP, trs("skill_badtrip"), GOOD.."+1%"..trs("p_mul"),
 		2,			-6,					{SKILL_DUDEE}, TREE_POINTTREE)
 	GM:AddSkill(SKILL_SINS, trs("skill_sins"), GOOD..trs("skill_sins_d1"),
-		0,			0,					{SKILL_BADTRIP}, TREE_SINTREE)
+		1,			-6,					{SKILL_BADTRIP}, TREE_SINTREE)
 .RemortReq = 6
 GM:AddSkill(SKILL_MIDAS_TOUCH, trs("skill_mtouch"), GOOD..trs("skill_mtouch_d1"),
--1,			1,					{SKILL_SINS}, TREE_SINTREE)
+0,			-5,					{SKILL_SINS}, TREE_SINTREE)
 .RemortReq = 12
 GM:AddSkill(SKILL_SISYS_ROCK, trs("skill_srock"), GOOD..trs("skill_srock_d1"),
--1,			-1,					{SKILL_SINS}, TREE_SINTREE)
+0,			-7,					{SKILL_SINS}, TREE_SINTREE)
 .RemortReq = 16
 GM:AddSkill(SKILL_MIDAS_CURSE, trs("skill_midaso"), GOOD..trs("skill_midaso_d1"),
--2,			-0.5,					{SKILL_MIDAS_TOUCH}, TREE_SINTREE)
+-1,			-6.5,					{SKILL_MIDAS_TOUCH}, TREE_SINTREE)
 
 .RemortReq = 26
 GM:AddSkill(SKILL_MIDAS_HIHI, trs("skill_midash"), GOOD..trs("skill_midash_d1"),
--2,			-2,					{SKILL_MIDAS_CURSE}, TREE_SINTREE)
+-1,			-8,					{SKILL_MIDAS_CURSE}, TREE_SINTREE)
 
 .RemortReq = 34
 GM:AddSkill(SKILL_GREEDSIN, trs("skill_greedsin"), GOOD..trs("skill_greedsin_d1"),
--1,			-2.5,					{SKILL_SISYS_ROCK}, TREE_SINTREE)
+0,			-8.5,					{SKILL_SISYS_ROCK}, TREE_SINTREE)
 
 .RemortReq = 22
 GM:AddSkill(SKILL_SINS_2, trs("skill_sins_2"), GOOD..trs("skill_sins_2_d1"),
-0,			-1.5,					{SKILL_SINS}, TREE_SINTREE)
+1,			-7.5,					{SKILL_SINS}, TREE_SINTREE)
 .RemortReq = 12
 GM:AddSkill(SKILL_MIDAS_SLOW, trs("skill_mslow"), GOOD..trs("skill_mslow_d1")..BAD..trs("skill_mslow_d2"),
-0,			-3,					{SKILL_SINS_2}, TREE_SINTREE)
+1,			-9,					{SKILL_SINS_2}, TREE_SINTREE)
 .RemortReq = 34
 GM:AddSkill(SKILL_CHEETUS_F, trs("skill_cfriend"), GOOD..trs("skill_cfriend_d1")..BAD.."-999"..trs("luck"),
-0,			-4,					{SKILL_MIDAS_SLOW}, TREE_SINTREE)
+1,			-10,					{SKILL_MIDAS_SLOW}, TREE_SINTREE)
 .RemortReq = 46
 GM:AddSkillModifier(SKILL_CHEETUS_F, SKILLMOD_LUCK, -999)
 SKILL_SCAM = 168
@@ -1781,7 +1779,7 @@ GM:AddSkill(SKILL_SOLARUZ, "Debuff:Deadly Fortuna", PURPLE.."+25% Points Multipl
 				3,			-9,					{SKILL_SCAM}, TREE_POINTTREE)
 SKILL_ANCK = 170
 GM:AddSkill(SKILL_ANCK, "Ancient knowledge", PURPLE.."Learn The Ancient knowledge \n" ..BAD.. "The cost of knowledge",
-					0,			0,					{SKILL_SOLARUZ}, TREE_ANCIENTTREE)
+					0,			0,					{SKILL_NONE}, TREE_ANCIENTTREE)
 .LevelReq = 50
 SKILL_ANCK1 = 171
 GM:AddSkill(SKILL_ANCK1, "Ancient Volume 1", PURPLE.."Learn The Ancient knowledge\n You know only 50%",
@@ -2120,7 +2118,7 @@ GM:AddSkillModifier(SKILL_MERIS, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.10)
 GM:AddSkillModifier(SKILL_MERIS, SKILLMOD_MELEE_DAMAGE_MUL, -0.15)
 GM:AddSkillModifier(SKILL_MERIS, SKILLMOD_DAMAGE, -0.12)
 GM:AddSkill(SKILL_DONATE1, "Donate I", GOOD.."-3% Damage taken\n"..GOOD.."+2% Melee damage! Thank Null\n",
-				                                                            	21,			20,					{SKILL_NONE}, TREE_DONATETREE)
+				                                                            	1,			0,					{SKILL_NONE}, TREE_DONATETREE)
 
 GM:AddSkillModifier(SKILL_DONATE1, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.03)
 GM:AddSkillModifier(SKILL_DONATE1, SKILLMOD_MELEE_DAMAGE_MUL, 0.02)
@@ -2129,87 +2127,87 @@ GM:AddSkillModifier(SKILL_DONATE1, SKILLMOD_MELEE_DAMAGE_MUL, 0.02)
 
 SKILL_DONATE2 = 204
 GM:AddSkill(SKILL_DONATE2, "Donate II", GOOD.."+5 Blood armor\n"..GOOD.."-5% Poison Speed!Thank Null",
-				                                                            	20,			21,					{SKILL_DONATE1}, TREE_DONATETREE)
+				                                                            	0,			1,					{SKILL_DONATE1}, TREE_DONATETREE)
 
 GM:AddSkillModifier(SKILL_DONATE2, SKILLMOD_BLOODARMOR, 5)
 GM:AddSkillModifier(SKILL_DONATE2, SKILLMOD_POISON_SPEED_MUL, -0.05)
 SKILL_HELPFORPROJECT = 205
 GM:AddSkill(SKILL_HELPFORPROJECT, "Donate", GOOD.."Donate if you want to get new skills\n"..BAD.."+1 skill for every donate",
-				                                                            	20,			20,					{}, TREE_DONATETREE)
+				                                                            	0,			0,					{}, TREE_DONATETREE)
 GM:AddSkillModifier(SKILL_HELPFORPROJECT, SKILLMOD_BLOODARMOR, 1)
 SKILL_DONATE3 = 206
 GM:AddSkill(SKILL_DONATE3, "Donate III", GOOD.."+10% For XP\n"..BAD.."THX Chayok",
-				                                                            	20,			22,					{SKILL_DONATE2}, TREE_DONATETREE)
+				                                                            	0,			2,					{SKILL_DONATE2}, TREE_DONATETREE)
 GM:AddSkillModifier(SKILL_DONATE3, SKILLMOD_XP, 0.10) -- Донат должен давать лишь маленькое премущество 
 SKILL_DONATE4 = 207
 GM:AddSkill(SKILL_DONATE4, "Donate IV", GOOD.."+10% Reload Speed\n"..BAD.."THX cheetus and null",
-				                                                            	21,			23,					{SKILL_DONATE3}, TREE_DONATETREE)
+				                                                            	1,			3,					{SKILL_DONATE3}, TREE_DONATETREE)
 GM:AddSkillModifier(SKILL_DONATE4, SKILLMOD_RELOADSPEED_MUL, 0.10)
 SKILL_DONATE5 = 208
 GM:AddSkill(SKILL_DONATE5, "Donate V", GOOD.."Sale by 3%\n"..BAD.."Thx ivan36099",
-				                                                            	22,			23,					{SKILL_DONATE4}, TREE_DONATETREE)
+				                                                            	2,			3,					{SKILL_DONATE4}, TREE_DONATETREE)
 GM:AddSkillModifier(SKILL_DONATE5, SKILLMOD_ARSENAL_DISCOUNT, -0.03)
 SKILL_DONATE6 = 209
 GM:AddSkill(SKILL_DONATE6, "Donate VI", GOOD.."+15% To blood armor convert\n"..BAD.."THX Null",
-				                                                            	22,			24,					{SKILL_DONATE5}, TREE_DONATETREE)
+				                                                            	2,			4,					{SKILL_DONATE5}, TREE_DONATETREE)
 GM:AddSkillModifier(SKILL_DONATE6, SKILLMOD_MELEE_DAMAGE_TO_BLOODARMOR_MUL, 0.15)
 SKILL_DONATE7 = 211
 GM:AddSkill(SKILL_DONATE7, "Donate VII", GOOD.."+20% Hammer repair mul\n"..BAD.."THX chayok01 and null",
-				                                                            	21,			24,					{SKILL_DONATE6}, TREE_DONATETREE)
+				                                                            	1,			4,					{SKILL_DONATE6}, TREE_DONATETREE)
 GM:AddSkillModifier(SKILL_DONATE7, SKILLMOD_REPAIRRATE_MUL, 0.20)
 SKILL_DONATE8 = 212
 GM:AddSkill(SKILL_DONATE8, "Donate VIII", GOOD.."+21% Reload speed\n"..GOOD.."thx shepard",
-				                                                            	21,			25,					{SKILL_DONATE7}, TREE_DONATETREE)
+				                                                            	1,			5,					{SKILL_DONATE7}, TREE_DONATETREE)
 GM:AddSkillModifier(SKILL_DONATE8, SKILLMOD_RELOADSPEED_MUL, 0.21)
 SKILL_DONATE9 = 213
 GM:AddSkill(SKILL_DONATE9, "Donate IX", GOOD.."+15 Health\n"..GOOD.."thx shepard",
-				                                                            	20,			25,					{SKILL_DONATE8}, TREE_DONATETREE)
+				                                                            	0,			5,					{SKILL_DONATE8}, TREE_DONATETREE)
 GM:AddSkillModifier(SKILL_DONATE9, SKILLMOD_HEALTH, 15)
 SKILL_DONATE10 = 214
 GM:AddSkill(SKILL_DONATE10, "Donate X", GOOD.."+20 Worth\n"..GOOD.."thx shepard",
-				                                                            	21,			26,					{SKILL_DONATE9}, TREE_DONATETREE)
+				                                                            	1,			6,					{SKILL_DONATE9}, TREE_DONATETREE)
 GM:AddSkillModifier(SKILL_DONATE10, SKILLMOD_WORTH, 20)
 SKILL_DONATE11 = 268
 GM:AddSkill(SKILL_DONATE11, "Donate XI", GOOD.."+30% Max curse\n"..GOOD.."THX for Bro3!",
-				                                                            	23,			27,					{SKILL_DONATE10}, TREE_DONATETREE)
+				                                                            	3,			7,					{SKILL_DONATE10}, TREE_DONATETREE)
 GM:AddSkillModifier(SKILL_DONATE11, SKILLMOD_CURSEM, 0.3)
 SKILL_DONATE12 = 269
 GM:AddSkill(SKILL_DONATE12, "Donate XII", GOOD.."+10% Bullet damage\n"..GOOD.."Thx TTo3oR!",
-				                                                            	22,			28,					{SKILL_DONATE11}, TREE_DONATETREE)
+				                                                            	2,			8,					{SKILL_DONATE11}, TREE_DONATETREE)
 GM:AddSkillModifier(SKILL_DONATE12, SKILLMOD_DAMAGE, 0.10)
 GM:AddSkill(SKILL_DONATE13, "Donate XIII", GOOD.."-35% Scale model\n"..GOOD.."Thx chayok",
-				                                                            	23,			29,					{SKILL_DONATE12}, TREE_DONATETREE)
+				                                                            	3,			9,					{SKILL_DONATE12}, TREE_DONATETREE)
 GM:AddSkillModifier(SKILL_DONATE13, SKILLMOD_SCALEMODEL, -0.35)
 GM:AddSkill(SKILL_DONATE14, "Donate XIV", GOOD.."+6% Magic Damage and +5% blood armor regen from magic\n"..GOOD.."Thx for Белый Рыцарь",
-				                                                            	23,			30,					{SKILL_DONATE13}, TREE_DONATETREE)
+				                                                            	3,			10,					{SKILL_DONATE13}, TREE_DONATETREE)
 GM:AddSkillModifier(SKILL_DONATE14, SKILLMOD_M_DMG, 0.06)
 GM:AddSkillModifier(SKILL_DONATE14, SKILLMOD_M_REG, 0.05)
 GM:AddSkill(SKILL_DONATE15, "Donate XV", GOOD.."+10 speed\n"..GOOD.."Thx for normal gay",
-				                                                            	21,			28,					{SKILL_DONATE14}, TREE_DONATETREE)
+				                                                            	1,			8,					{SKILL_DONATE14}, TREE_DONATETREE)
 GM:AddSkillModifier(SKILL_DONATE15, SKILLMOD_SPEED, 10)
 GM:AddSkill(SKILL_DONATE16, "Donate XVI", GOOD.."+5% Bullet Damage\n"..GOOD.."Thx for MarioL",
-				                                                            	20,			26,					{SKILL_DONATE15}, TREE_DONATETREE)
+				                                                            	0,			6,					{SKILL_DONATE15}, TREE_DONATETREE)
 GM:AddSkillModifier(SKILL_DONATE16, SKILLMOD_DAMAGE, 0.05)
 GM:AddSkill(SKILL_DONATE17, "Donate XVII", GOOD.."-2% Damage taken\n"..GOOD.."Thx for Добрый",
-				                                                            	18,			25,					{SKILL_DONATE16}, TREE_DONATETREE)
+				                                                            	-1,			5,					{SKILL_DONATE16}, TREE_DONATETREE)
 GM:AddSkillModifier(SKILL_DONATE17, SKILLMOD_DMG_TAKEN, -0.02)
 GM:AddSkill(SKILL_DONATE18, "Donate XVIII", GOOD.."+2.5 luck\n"..GOOD.."Thx for Добрый",
-				                                                            	19,			24,					{SKILL_DONATE17}, TREE_DONATETREE)
+				                                                            	-2,			4,					{SKILL_DONATE17}, TREE_DONATETREE)
 GM:AddSkillModifier(SKILL_DONATE18, SKILLMOD_LUCK, 2.5)
 
 
 SKILL_CHALLENGER1 = 215
 GM:AddSkill(SKILL_CHALLENGER1, "Challenger I", GOOD.."+20 Health,+1 luck, help for challenges!\n"..GOOD.."Can use in any challenge",
-				                                                            	25,			26,					{SKILL_NONE, SKILL_CHALLENGER2}, TREE_DONATETREE)
+				                                                            	5,			6,					{SKILL_NONE, SKILL_CHALLENGER2}, TREE_DONATETREE)
 GM:AddSkillModifier(SKILL_CHALLENGER1, SKILLMOD_LUCK, 1)																				
 GM:AddSkillModifier(SKILL_CHALLENGER1, SKILLMOD_HEALTH, 10)
 SKILL_CHALLENGER2 = 216
 GM:AddSkill(SKILL_CHALLENGER2, "Challenger II", GOOD.."+20% Reload speed\n"..GOOD.."Can use in any challenge",
-				                                                            	25,			24,					{SKILL_CHALLENGER1}, TREE_DONATETREE)
+				                                                            	5,			4,					{SKILL_CHALLENGER1}, TREE_DONATETREE)
 GM:AddSkillModifier(SKILL_CHALLENGER2, SKILLMOD_RELOADSPEED_MUL, 0.2)
 SKILL_CHALLENGER3 = 217
 GM:AddSkill(SKILL_CHALLENGER3, "Challenger III", GOOD.."+100% XP Multiplier\n"..GOOD.."Can use in any challenge",
-				                                                            	25,			20,					{}, TREE_DONATETREE)
+				                                                            	5,			0,					{}, TREE_DONATETREE)
 GM:AddSkillModifier(SKILL_CHALLENGER3, SKILLMOD_XP, 1)
 --Skill for high-remort
 GM:AddSkill(SKILL_SECRET2, "Secret V", GOOD.."Good thing, +3 spoints",
