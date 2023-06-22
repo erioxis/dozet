@@ -2,8 +2,8 @@ AddCSLuaFile()
 
 --SWEP.PrintName = "'Classic' Rifle"
 --SWEP.Description = "Хаха классика."
-SWEP.PrintName = translate.Get("wep_classic")
-SWEP.Description = translate.Get("wep_d_classic")
+SWEP.PrintName = translate.Get("wep_ricosic")
+SWEP.Description = translate.Get("wep_d_ricosic")
 SWEP.Slot = 3
 SWEP.SlotPos = 0
 
@@ -38,8 +38,8 @@ SWEP.UseHands = true
 
 SWEP.ReloadSound = Sound("Weapon_AWP.ClipOut")
 SWEP.Primary.Sound = Sound("Weapon_Hunter.Single")
-SWEP.Primary.Damage = 177
-SWEP.Primary.NumShots = 2
+SWEP.Primary.Damage = 65
+SWEP.Primary.NumShots = 1
 SWEP.Primary.Delay = 0.78
 SWEP.ReloadDelay = SWEP.Primary.Delay
 
@@ -51,20 +51,20 @@ SWEP.Primary.DefaultClip = 30
 SWEP.Primary.Gesture = ACT_HL2MP_GESTURE_RANGE_ATTACK_CROSSBOW
 SWEP.ReloadGesture = ACT_HL2MP_GESTURE_RELOAD_SHOTGUN
 
-SWEP.ConeMax = 0
-SWEP.ConeMin = 0
+SWEP.ConeMax = 1
+SWEP.ConeMin = 1
 
 SWEP.IronSightsPos = Vector(5.015, -8, 2.52)
 SWEP.IronSightsAng = Vector(0, 0, 0)
 
 SWEP.WalkSpeed = SPEED_SLOWER
 
-SWEP.Tier = 6
+SWEP.Tier = 5
 
 SWEP.TracerName = "AR2Tracer"
 
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_RELOAD_SPEED, 0.3)
-GAMEMODE:AddNewRemantleBranch(SWEP, 1, translate.Get("wep_classic_r1"), translate.Get("wep_d_classic_r1"), function(wept)
+GAMEMODE:AddNewRemantleBranch(SWEP, 1, translate.Get("wep_ricosic_r1"), translate.Get("wep_d_ricosic_r1"), function(wept)
 	wept.Primary.ClipSize = 4
 	wept.Primary.NumShots = 1
 	wept.Primary.Damage = wept.Primary.Damage * 2.5
@@ -72,19 +72,15 @@ GAMEMODE:AddNewRemantleBranch(SWEP, 1, translate.Get("wep_classic_r1"), translat
 	wept.RequiredClip = 4
 	wept.ReloadSpeed = 0.6
 
-	wept.OnZombieKilled = function(self, zombie, total, dmginfo)
-		local killer = self:GetOwner()
-		local minushp = -zombie:Health()
-		if killer:IsValid() and minushp > 10 then
-			local pos = zombie:GetPos()
-
-			timer.Simple(0.15, function()
-				util.BlastDamagePlayer(killer:GetActiveWeapon(), killer, pos, 72, minushp, DMG_ALWAYSGIB, 0.94)
-			end)
-
-			local effectdata = EffectData()
-				effectdata:SetOrigin(pos)
-			util.Effect("Explosion", effectdata, true, true)
+	wept.BulletCallback = function(attacker, tr, dmginfo)
+		local effectdata = EffectData()
+			effectdata:SetOrigin(tr.HitPos)
+			effectdata:SetNormal(tr.HitNormal)
+		util.Effect("hit_hunter", effectdata)
+		if CLIENT or tr.HitSky then return end
+		local me = attacker:GetActiveWeapon()
+		for i=1,7 do
+			timer.Simple(0.1, function() me:FireBulletsLua(tr.HitPos+Vector(0,0,5), (tr.StartPos - tr.HitPos):GetNormal(), 10*i, 1, me.Primary.Damage*0.6, attacker, 1, "tracer_rico", nil, nil, nil, 1028, nil) end)
 		end
 	end
 end)
@@ -148,8 +144,28 @@ function SWEP.BulletCallback(attacker, tr, dmginfo)
 		effectdata:SetOrigin(tr.HitPos)
 		effectdata:SetNormal(tr.HitNormal)
 	util.Effect("hit_hunter", effectdata)
+	if CLIENT or tr.HitSky then return end
+	local me = attacker:GetActiveWeapon()
+	for i=1,7 do
+		timer.Simple(0.11*i, function() me:FireBulletsLua(tr.HitPos+Vector(0,0,5), (tr.StartPos - tr.HitPos):GetNormal(), 10*i, 1, me.Primary.Damage*0.6, attacker, 1, "tracer_rico", nil, nil, nil, 1028, nil) end)
+	end
 end
 
+--[[[ Рикошееты - рандом
+	function SWEP.BulletCallback(attacker, tr, dmginfo)
+	local effectdata = EffectData()
+		effectdata:SetOrigin(tr.HitPos)
+		effectdata:SetNormal(tr.HitNormal)
+	util.Effect("hit_hunter", effectdata)
+	if CLIENT then return end
+	local ent = ents.Create("projectile_placeholder")
+	ent:Spawn()
+	ent:SetPos(tr.HitPos+Vector(0,0,10))
+	for i=1,9 do
+		timer.Simple(0.05*i, function() ent:FireBulletsLua(ent:GetPos(), VectorRand(-1000,5000), 0, 1, dmginfo:GetDamage(), attacker, 1, "AR2Tracer", nil, 1, nil, 1028, nil, attacker:GetActiveWeapon()) end)
+	end
+end
+]]
 if CLIENT then
 	SWEP.IronsightsMultiplier = 0.25
 

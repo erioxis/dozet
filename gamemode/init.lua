@@ -1392,6 +1392,11 @@ function GM:Think()
 						pl:Kill()
 					end
 				end
+				pl.AntiFarmTimer = pl.AntiFarmTimer + 1
+				if pl.AntiFarmTimer >= 6200 then
+					pl:Kill()
+					print("ULTRA-FARMER IS DEAD")
+				end
 				if pl:HasTrinket("sin_envy") and pl:GetActiveWeapon() and (pl:GetActiveWeapon().Tier or 1) <= 4 and pl:GetActiveWeapon():GetClass() ~= "weapon_zs_fists" then
 					pl:StripWeapon(pl:GetActiveWeapon():GetClass())
 				end
@@ -1739,7 +1744,9 @@ local function DoDropStart(pl)
 		local func = GAMEMODE:GetInventoryItemType(start) == INVCAT_TRINKETS and pl.AddInventoryItem or pl.Give
 		timer.Simple(0, function() func(pl, start) end)
 	end
-	local start1 = pl:GetRandomStartingItem1()
+	if pl:IsSkillActive(SKILL_SOULNET) then
+		pl:AddInventoryItem("cons_soul_picka")
+	end
 	--local d = string.Explode(" " ,string.lower(self.ZSInventoryItemData[start1].PrintName))
 --[[	if pl:IsSkillActive(SKILL_SOUL_TRADE) and table.HasValue(d, "soul") and not pl:HasTrinket("toysoul") and not pl:SteamID64() == "76561198813932012" then
 		pl:Kill()
@@ -1778,6 +1785,9 @@ local function DoDropStart(pl)
 	end
 	if pl:IsSkillActive(SKILL_MIDAS_TOUCH) then
 		pl:AddInventoryItem("trinket_sin_ego")
+	end
+	if pl:IsSkillActive(SKILL_GOOD_BOUNTY) then
+		pl:AddInventoryItem("cons_bounty")
 	end
 end
 
@@ -2006,7 +2016,10 @@ function GM:PlayerHealedTeamMember(pl, other, health, wep, pointmul, nobymsg, fl
 		pl:SetChargesActive(pl:GetChargesActive()+1)
 		pl.NextChargeHeal = 0
 	end
-	net.Start("zs_update_style") net.WriteTable({time = CurTime()+7+(math.random(10,20)*0.2),text = "HEALED PLAYER FOR "..health,score = health,color = Color(37,194,23)}) net.Send(pl) 
+	if other:IsSkillActive(SKILL_SOME_YES) then
+		other:GiveStatus("regeneration"):AddDamage(health*0.1)
+	end
+	--net.Start("zs_update_style") net.WriteTable({time = CurTime()+7+(math.random(10,20)*0.2),text = "HEALED PLAYER FOR "..health,score = health,color = Color(37,194,23)}) net.Send(pl) 
 	if pointmul ~= 0 then
 		local hpperpoint = self.MedkitPointsPerHealth
 		if hpperpoint <= 0 then return end
@@ -2045,7 +2058,10 @@ function GM:PlayerRepairedObject(pl, other, health, wep)
 	if numofdaily == 2 then
 		pl:GiveAchievementProgress("daily_post", health)
 	end
-	net.Start("zs_update_style") net.WriteTable({time = CurTime()+2+(math.random(10,20)*0.2),text = "REPAIRED PROP FOR "..health,score = health,color = Color(23,69,194)}) net.Send(pl) 
+	if pl:IsSkillActive(SKILL_SPICY_CADES) then
+		pl:TakeDamage(math.random(1,15),pl,pl)
+	end
+	--net.Start("zs_update_style") net.WriteTable({time = CurTime()+2+(math.random(10,20)*0.2),text = "REPAIRED PROP FOR "..health,score = health,color = Color(23,69,194)}) net.Send(pl) 
 
 	local hpperpoint = self.RepairPointsPerHealth
 	if hpperpoint <= 0 then return end
@@ -3033,6 +3049,7 @@ function GM:PlayerInitialSpawnRound(pl)
 	pl.m_Shade_Force = nil
 	pl.m_Zombie_CursedHealth = nil
 	pl.LuckAdd = 0
+	pl.AntiFarmTimer = 0
 
 	pl.ZSInventory = {}
 	pl.IsLastHuman = nil
@@ -3100,13 +3117,6 @@ function GM:PlayerInitialSpawnRound(pl)
 		pl.ClanMelee = true
 	end
 	local uniqueid = pl:UniqueID()
-	if pl:SteamID64() == "76561198086333703" or pl:SteamID64() == "76561198974292374" then
-		pl:SetPoints(pl:GetPoints() + 10)
-	elseif pl:SteamID64() == "76561198831972014" then
-		pl:SetPoints(pl:GetPoints() + 20)
-	elseif pl:SteamID64() == "76561198394385289" then
-		pl:SetPoints(pl:GetPoints() + 20)
-	end
 	if table.HasValue(avanguardtbl, pl:SteamID64()) then 
 		pl.ClanAvanguard = true
 	end
@@ -3586,6 +3596,47 @@ local function CurseAttach(pl)
 		end
 	end
 end
+local function DoAttachmenttDamage(attacker,ent,damage,time)
+	if !attacker:HasTrinket("cham_at") then
+		local chnc = (attacker.AttChance or 1)
+		local damage2 = (damage * (attacker.ElementalMul or 1)) * (ent:GetZombieClassTable().ElementalDebuff or 1)
+		if attacker:HasTrinket("fire_at") then
+			if (math.max(math.random(1,5 * chnc),1) == 1 or attacker:IsSkillActive(SKILL_100_PERC) and (attacker.NextFireAtt or 0) < time ) then
+				ent:AttachmentDamage(damage2, attacker, attacker, SLOWTYPE_FLAME)
+				CurseAttach(attacker)
+				attacker.NextFireAtt = time + 2
+			end
+			return
+		end
+		if attacker:HasTrinket("pulse_at")  then
+			if (math.max(math.random(1,7* chnc),1) == 1 or attacker:IsSkillActive(SKILL_100_PERC) and (attacker.NextPulseAtt or 0) < time)  then
+				ent:AttachmentDamage(damage2, attacker, attacker, SLOWTYPE_PULSE)
+				CurseAttach(attacker)
+				attacker.NextPulseAtt = time + 1
+			end
+			return
+		end
+		if attacker:HasTrinket("acid_at") then 
+			if (math.max(math.random(1,5* chnc),1) == 1  or attacker:IsSkillActive(SKILL_100_PERC) and (attacker.NextIceAtt or 0) < time) then
+				ent:AttachmentDamage(damage2, attacker, attacker, SLOWTYPE_COLD)
+				if math.random(1,4) == 1 then
+					ent:GiveStatus("frost",math.random(1,7))
+				end
+				CurseAttach(attacker)
+				attacker.NextIceAtt = time + 3
+			end
+			return
+		end
+		local debuffed = ent:GetStatus("zombiestrdebuff")
+		if attacker:HasTrinket("ultra_at") and math.max(1,math.random(12* chnc)) == 1 then
+			ent:GiveStatus("zombiestrdebuff",math.random(1,7))
+			CurseAttach(attacker)
+		elseif attacker:HasTrinket("ultra_at") and (debuffed) and math.random(12* chnc) == 1 then
+			ent:GiveStatus("zombiestrdebuff",math.random(7,14))
+			CurseAttach(attacker)
+		end
+	end
+end
 function GM:EntityTakeDamage(ent, dmginfo)
 	local attacker, inflictor = dmginfo:GetAttacker(), dmginfo:GetInflictor()
 	
@@ -3718,36 +3769,7 @@ function GM:EntityTakeDamage(ent, dmginfo)
 								attacker:GiveAchievementProgress("daily_post", math.Round(math.min(damage, ent:Health())))
 							end
 							
-							if !attacker:HasTrinket("cham_at") then
-								local chnc = (attacker.AttChance or 1)
-								local damage2 = (damage * (attacker.ElementalMul or 1)) * (ent:GetZombieClassTable().ElementalDebuff or 1)
-								if attacker:HasTrinket("fire_at") and (math.max(math.random(1,5 * chnc),1) == 1 or attacker:IsSkillActive(SKILL_100_PERC) and (attacker.NextFireAtt or 0) < time ) then
-									ent:AttachmentDamage(damage2, attacker, attacker, SLOWTYPE_FLAME)
-									CurseAttach(attacker)
-									attacker.NextFireAtt = time + 2
-								end
-								if attacker:HasTrinket("pulse_at") and (math.max(math.random(1,7* chnc),1) == 1 or attacker:IsSkillActive(SKILL_100_PERC) and (attacker.NextPulseAtt or 0) < time)  then
-									ent:AttachmentDamage(damage2, attacker, attacker, SLOWTYPE_PULSE)
-									CurseAttach(attacker)
-									attacker.NextPulseAtt = time + 1
-								end
-								if attacker:HasTrinket("acid_at") and (math.max(math.random(1,5* chnc),1) == 1  or attacker:IsSkillActive(SKILL_100_PERC) and (attacker.NextIceAtt or 0) < time) then
-									ent:AttachmentDamage(damage2, attacker, attacker, SLOWTYPE_COLD)
-									if math.random(1,4) == 1 then
-										ent:GiveStatus("frost",math.random(1,7))
-									end
-									CurseAttach(attacker)
-									attacker.NextIceAtt = time + 3
-								end
-								local debuffed = ent:GetStatus("zombiestrdebuff")
-								if attacker:HasTrinket("ultra_at") and math.max(1,math.random(12* chnc)) == 1 then
-									ent:GiveStatus("zombiestrdebuff",math.random(1,7))
-									CurseAttach(attacker)
-								elseif attacker:HasTrinket("ultra_at") and (debuffed) and math.random(12* chnc) == 1 then
-									ent:GiveStatus("zombiestrdebuff",math.random(7,14))
-									CurseAttach(attacker)
-								end
-							end
+							DoAttachmenttDamage(attacker,ent,damage,time)
 							 
 
 							local pos = ent:GetPos()
@@ -4781,25 +4803,34 @@ function GM:HumanKilledZombie(pl, attacker, inflictor, dmginfo, headshot, suicid
 			wep:OnZombieKilled(pl, totaldamage, dmginfo)
 			
 		end
-		if attacker:IsSkillActive(SKILL_NFINGERS) then
+		local nf = attacker:IsSkillActive(SKILL_NFINGERS)
+		local sf = attacker:IsSkillActive(SKILL_SFINGERS)
+		if nf  then
 			if !inflictor.IsMelee then
 				attacker:GiveAmmo(1, attacker:GetResupplyAmmoType())
 			elseif inflictor.IsMelee and math.random(1,10) == 1 then
 				attacker:GiveAmmo(1, "scrap")
 			end
 		end
-		if attacker:IsSkillActive(SKILL_NFINGERS)  and inflictor.Magic then
+		if nf  and inflictor.Magic then
 			attacker:SetBloodArmor(attacker:GetBloodArmor() + 25)
 		end
-		if attacker:IsSkillActive(SKILL_SFINGERS)  and !inflictor.IsMelee then
+		if sf  and !inflictor.IsMelee then
 			local inflictor2 = inflictor
 			timer.Simple(0, function() inflictor2.Eater = true end)
 			timer.Simple(1.9, function() inflictor2.Eater = nil end)
 		end
-		if attacker:IsSkillActive(SKILL_SFINGERS)  and inflictor.HaloAmmo then
+		if sf  and inflictor.HaloAmmo then
 			local inflictor2 = inflictor
 			timer.Simple(0, function() inflictor2.Eater = true end)
 			timer.Simple(0.9, function() inflictor2.Eater = nil end)
+		end
+		if attacker:IsSkillActive(SKILL_ABFINGES) and math.random(1,10) == 1 then
+			local reaperstatus = attacker:GiveStatus("reaper", 14)
+			if reaperstatus and reaperstatus:IsValid() then
+				reaperstatus:SetDTInt(1, math.min(reaperstatus:GetDTInt(1) + 1, 50))
+				attacker:EmitSound("hl1/ambience/particle_suck1.wav", 55, 150 + reaperstatus:GetDTInt(1) * 30, 0.45)
+			end
 		end
 	end
 
@@ -5782,7 +5813,7 @@ function GM:WaveStateChanged(newstate, pl)
 					lucktrue = lucktrue + self:GetWave() * 2
 				end
 				if self.EndWaveHealthBonus > 0 and !pl:HasTrinket("lehasoul") then
-					pl:SetHealth(math.min(pl:GetMaxHealth(), pl:Health() + self.EndWaveHealthBonus))
+					pl:GiveStatus("regeneration"):AddDamage(self.EndWaveHealthBonus)
 				end
 				if pl:IsSkillActive(SKILL_XPHUNTER) then
 					pl:AddZSXP(5 + self.GetWave() * 10)

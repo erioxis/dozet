@@ -176,7 +176,7 @@ local function TrinketPanelPaint( self, w, h )
 	end
 
 	if self.SWEP then
-		draw.SimpleText( self.SWEP.PrintName, "ZSHUDFontTiny", w/2, h/4, Color( 255, 255, 255 ), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER )	
+		draw.SimpleText( self.SWEP.PrintName, "ZSHUDFontTiny", w/2, h/6, Color( 255, 255, 255 ), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER )	
 		--local txt = self.SWEP.Description 
 
 		--draw.DrawText( txt, "ZSBodyTextFontBig", w/2.2, h/3, Color( 255, 255, 255 ), TEXT_ALIGN_CENTER)	

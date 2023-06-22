@@ -58,17 +58,17 @@ function meta:SetChampion(id)
 	self:SetNW2Int("champion", id)
 end
 function meta:GetChampion()
-	return self:GetNW2Int("champion", 0)
+	return P_Team(self) == TEAM_UNDEAD and self:GetNW2Int("champion", 0) or 0
 end
 function meta:IsChampion()
 	return (P_Team(self) == TEAM_UNDEAD and self:GetChampion() ~= 0)
 end
 function meta:GetChampionColor(id)
 	local color = nil
+	if !self:IsChampion() then return color end
 	if !id then
 		id = self:GetChampion()
 	end
-	if !self:IsChampion() then return color end
 	if id == CHAMP_RED then
 		color = Color(143,5,5)
 	elseif id == CHAMP_WHITE then
@@ -87,7 +87,7 @@ function meta:GetChampionColor(id)
 	return color
 end
 function meta:GetChampTable()
-	return {Type = self:GetChampion(),Color = self:GetChampionColor(),ValidChamp = self:IsChampion()}
+	return {Type = self:GetChampion(),Color = self:GetChampionColor()}
 end
 
 function meta:Dismember(dismembermenttype)
@@ -482,7 +482,16 @@ function meta:AttachmentDamage(damage, attacker, inflictor, type)
 	if attacker:IsSkillActive(SKILL_DOUBLE_ISSUE) and math.random(1,6) == 1 then
 		damage = damage * 2
 	end
+	local zclass =  self:GetZombieClassTable()
+	local valid = self:IsValidLivingZombie()
 	if type == SLOWTYPE_PULSE then
+		local legdmg = damage * (attacker.PulseWeaponSlowMul or 1)
+		local startleg = self:GetFlatLegDamage()
+		
+		self:AddLegDamage(legdmg)
+		if attacker.PulseImpedance then
+			self:AddArmDamage(legdmg)
+		end
 		if SERVER and attacker:HasTrinket("resonance") then
 			attacker:SetProgress(attacker:GetProgress('pprog') + damage, 'pprog')
 
@@ -495,9 +504,9 @@ function meta:AttachmentDamage(damage, attacker, inflictor, type)
 			GAMEMODE:DamageAtFloater(attacker, self, self:NearestPoint(attacker:EyePos()), damage,type)
 		end
 	elseif type == SLOWTYPE_COLD then
-		if self:IsValidLivingZombie() and self:GetZombieClassTable().ResistFrost then return end
-		if self:IsValidLivingZombie() and self:GetZombieClassTable().Boss then return end
-		if self:GetZombieClassTable().FireBuff then
+		if valid and zclass.ResistFrost then return end
+		if valid and zclass.Boss then return end
+		if zclass.FireBuff then
 			damage = damage * 2
 		end
 
@@ -509,10 +518,10 @@ function meta:AttachmentDamage(damage, attacker, inflictor, type)
 			GAMEMODE:DamageAtFloater(attacker, self, self:NearestPoint(attacker:EyePos()), damage, type)
 		end
 	elseif type == SLOWTYPE_FLAME then
-		if self:IsValidLivingZombie() and self:GetZombieClassTable().ResistFrost then
+		if valid and zclass.ResistFrost then
 			damage = damage * 2
 		end
-		if self:GetZombieClassTable().FireBuff then
+		if zclass.FireBuff then
 			damage = 0
 		end
 		if SERVER and attacker:HasTrinket("fire_ind") and not attacker:GetActiveWeapon().AntiInd and (attacker.NextInductors or 1) < CurTime() then
@@ -537,9 +546,8 @@ function meta:AttachmentDamage(damage, attacker, inflictor, type)
 end
 function meta:AddLegDamageExt(damage, attacker, inflictor, type)
 	inflictor = inflictor or attacker
-	if attacker:IsSkillActive(SKILL_DOUBLE_ISSUE) and math.random(1,12) == 1 then
-		damage = damage * 2
-	end
+	local zclass =  self:GetZombieClassTable()
+	local valid = self:IsValidLivingZombie()
 	if type == SLOWTYPE_PULSE then
 		local legdmg = damage * (attacker.PulseWeaponSlowMul or 1)
 		local startleg = self:GetFlatLegDamage()
@@ -561,9 +569,9 @@ function meta:AddLegDamageExt(damage, attacker, inflictor, type)
 			GAMEMODE:DamageAtFloater(attacker, self, self:NearestPoint(attacker:EyePos()), legdmg,type)
 		end
 	elseif type == SLOWTYPE_COLD then
-		if self:IsValidLivingZombie() and self:GetZombieClassTable().ResistFrost then return end
-				if self:IsValidLivingZombie() and self:GetZombieClassTable().Boss then return end
-		if self:GetZombieClassTable().FireBuff then
+		if valid and zclass.ResistFrost then return end
+		if valid and zclass.Boss then return end
+		if zclass.FireBuff then
 			damage = damage * 2
 		end
 		self:AddLegDamage(damage)
@@ -577,13 +585,13 @@ function meta:AddLegDamageExt(damage, attacker, inflictor, type)
 			GAMEMODE:DamageAtFloater(attacker, self, self:NearestPoint(attacker:EyePos()), damage, type)
 		end
 	elseif type == SLOWTYPE_FLAME then
-		if self:IsValidLivingZombie() and self:GetZombieClassTable().ResistFrost then
+		if valid and zclass.ResistFrost then
 			damage = damage * 2
 		end
-		if self:GetZombieClassTable().FireBuff then
+		if zclass.FireBuff then
 			damage = 0
 		end
-		if SERVER and attacker:HasTrinket("fire_ind") and not attacker:GetActiveWeapon().AntiInd and !self:GetZombieClassTable().FireBuff and (attacker.NextInductors or 1) < CurTime() then
+		if SERVER and attacker:HasTrinket("fire_ind") and not attacker:GetActiveWeapon().AntiInd and !zclass.FireBuff and (attacker.NextInductors or 1) < CurTime() then
 			self:FireInduction(attacker, inflictor, damage)
 
 		end
@@ -591,16 +599,13 @@ function meta:AddLegDamageExt(damage, attacker, inflictor, type)
 			GAMEMODE:DamageAtFloater(attacker, self, self:NearestPoint(attacker:EyePos()), damage, type)
 		end
 	elseif type == SLOWTYPE_CHAM then
-		if SERVER and attacker:HasTrinket("cham_storm") and self:GetZombieClassTable().BaraCat and (attacker.NextInductors or 1) < CurTime() then
+		if SERVER and attacker:HasTrinket("cham_storm") and zclass.BaraCat and (attacker.NextInductors or 1) < CurTime() then
 			attacker:SetProgress(attacker:GetProgress('cprog') + damage, 'cprog')
 			self:ChamStorm(attacker, inflictor, damage)
 		end
 		if SERVER then
 			GAMEMODE:DamageAtFloater(attacker, self, self:NearestPoint(attacker:EyePos()), damage, type)
 		end
-	end
-	if SERVER then
-		attacker:GiveAchievementProgress("elementarno",math.Round(damage))
 	end
 end
 

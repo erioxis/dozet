@@ -107,11 +107,9 @@ function SWEP:SecondaryAttack()
 
 	local count = 0
 	for _, nail in pairs(trent:GetNails()) do
-		if nail:GetDeployer() == owner then
-			count = count + 1
-			if count >= GAMEMODE.MaxNails then
-				return
-			end
+		count = count + 1
+		if count >= GAMEMODE.MaxNails then
+			return
 		end
 	end
 

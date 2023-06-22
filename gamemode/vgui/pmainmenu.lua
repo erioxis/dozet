@@ -323,7 +323,7 @@ local function DoStats(self, list, neg)
 			d:Remove()
 		end
 	end
-	--if GAMEMODE.AchievementsProgress["full_curse"] then return end
+	if GAMEMODE.AchievementsProgress["full_curse"] then return end
 	local d = vgui.Create("DEXChangingLabel", bottom)
 	d:SetFont("DefaultFont")
 	d:SetText(translate.Get("need_for_achiev"))

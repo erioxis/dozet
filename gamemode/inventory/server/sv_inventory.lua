@@ -85,17 +85,22 @@ net.Receive("zs_trycraft", function(len, pl)
 	pl:TryAssembleItem(component, weapon)
 end)
 net.Receive("zs_bounty_add", function(len, pl)
-	if !pl.GetBounty then return end
+	if !pl:HasInventoryItem(pl.LastUsedTrinket) then return end
 	local item = net.ReadString()
 	pl:AddInventoryItem(item)
 	pl.GetBounty = nil
 	pl.MedicalBounty = nil
 	pl.SeededBounty = nil
-	pl:TakeInventoryItem("cons_bounty")
+	pl.SeededSouls = nil
+	pl.pl.NextThinkAboutTrade = pl.NextThinkAboutTrade + 10
+	pl:TakeInventoryItem(pl.LastUsedTrinket)
 	net.Start("zs_invitem")
 	net.WriteString(item)
 net.Send(pl)
 end)
+function GM:OnTrinketActivate(trinket, pl) 
+	pl.LastUsedTrinket = trinket
+end
 
 net.Receive("zs_trygetitem", function(len, pl)
 	local component = net:ReadString()
@@ -122,6 +127,7 @@ net.Receive("zs_activate_trinket", function(len, pl)
 			UseActive(pl,trinket,uses,callback)
 		end
 	end
+	gamemode.Call("OnTrinketActivate", trinket, pl)
 end)
 
 function meta:TryAssembleItem(component, heldclass)

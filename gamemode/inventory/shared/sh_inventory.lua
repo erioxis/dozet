@@ -209,6 +209,9 @@ end
 GM:AddInventoryItemData("cons_void",		trs("c_void"),			trs("c_void_d"),								"models/props_c17/trappropeller_lever.mdl", 3, nil, nil, function(pl) 
 	funcofvoid(pl, "cons_void")
 end,3)
+GM:AddInventoryItemData("cons_idol",		trs("c_idol"),			trs("c_idol_d").." I",								"models/props_c17/trappropeller_lever.mdl", 3, nil, nil, function(pl) 
+	print(":)")
+end,5)
 GM:AddInventoryItemData("cons_xmas_goodness",		trs("c_new_year"),			trs("c_new_year_d"),								"models/props_c17/trappropeller_lever.mdl", 3, nil, nil, function(pl) 
 	local droped = ents.Create("prop_gift")
 	droped:SetPos(pl:GetPos()+Vector(0,0,70))
@@ -228,7 +231,11 @@ GM:AddInventoryItemData("cons_bounty",		trs("c_bounty"),			trs("c_bounty_d"),			
 	} 
 	end
 	if pl.MedicalBounty then
-		tbl = GAMEMODE.MedPremium
+		tbl = {	"pr_gold",
+		"pr_barapaw",
+		"pr_chamomile",
+		"pr_bloodpack",
+		"soulmedical"}
 	end
 	local need = pl.SeededBounty or {}
 	while #need < 3 do
@@ -241,6 +248,72 @@ GM:AddInventoryItemData("cons_bounty",		trs("c_bounty"),			trs("c_bounty_d"),			
 		end
 	end
 	pl.SeededBounty = need
+	net.Start("zs_upgradeitem")
+	net.WriteTable(need)
+	net.Send(pl)
+end,0)
+local pick =  {
+	"altjudassoul",  -- 2
+	"altsamsonsoul",  -- 3
+	"altevesoul",  -- 4
+	"jacobsoul",  -- 5
+	"altisaacsoul",  -- 6
+	"altmagdalenesoul",  -- 7
+	"altlilithsoul",  -- 8
+	"alteriosoul", -- 10 
+	"altaposoul",  --14
+	"altbetsoul",  --15
+	"altlostsoul",  --16
+	"altgreedsoul",  --17
+	"altcainsoul",   --18
+	"altlazarussoul",	-- 19
+	"altforsoul", -- 20
+	"altsoul",-- 21
+	"soulalteden", -- 22
+	"altchayok", --23
+	"altdarksoul", -- 24
+	"bleaksoul",  -- 1
+	"spiritess",  -- 2
+	"samsonsoul",  -- 3
+	"evesoul",  -- 4
+	"jacobjesausoul",  -- 5
+	"isaacsoul",  -- 6
+	"magdalenesoul",  -- 7
+	"lilithsoul",  -- 8
+	"whysoul",  -- 9
+	"blanksoul", -- 10
+	"classixsoul",  -- 11
+	"darksoul",  --12
+	"eriosoul",  --13
+	"aposoul",  --14
+	"betsoul",  --15
+	"lostsoul",  --16
+	"greedsoul",  --17
+	"cainsoul",   --18
+	"lazarussoul",	-- 19
+	"forsoul",  -- 20
+	"starsoul",  -- 21
+	"teasoul",  -- 22
+	"sugersoul",  -- 23
+	"nulledsoul",  -- 24
+	"soulmedical",  -- 25
+	"lampsoul",  -- 26
+	"lehasoul",  -- 26
+	"troyaksoul"
+}
+GM:AddInventoryItemData("cons_soul_picka",		trs("c_soul_picka"),			trs("c_soul_picka_d"),								"models/props_c17/trappropeller_lever.mdl", 3, nil, nil, function(pl) 
+
+	local need = pl.SeededSouls or {}
+	while #need < 3 do
+		local item = pick[math.random(1,#pick)]
+		if !table.HasValue(need,item) then 
+			need[#need+1] = item
+		end
+		if #need > 2 then
+			break
+		end
+	end
+	pl.SeededSouls = need
 	net.Start("zs_upgradeitem")
 	net.WriteTable(need)
 	net.Send(pl)

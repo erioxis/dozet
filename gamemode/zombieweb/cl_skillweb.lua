@@ -963,9 +963,7 @@ local nodecolors = {
 	[TREE_DONATETREE] = {2, 0, 5},
 	[TREE_USELESSTREE] = {2.3, 3, 9},
 	[TREE_BRANCH_ELEMENTS] = {212.3, 2, 4},
-	[TREE_RESNYA] = {0, 25,120},
-	[TREE_DOSET] = {255, 255,255},
-	[TREE_OLD_GOD] = {125, 0.2,0.5}
+	[TREE_RESNYA] = {0, 25,120}
 }
 
 

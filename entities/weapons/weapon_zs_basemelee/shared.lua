@@ -402,7 +402,7 @@ function SWEP:OnZombieKilled()
 	if owner:IsSkillActive(SKILL_BLOODLOST) then
 		local reaperstatus1 = owner:GiveStatus("reaper", 10)
 		if reaperstatus1 and reaperstatus1:IsValid() then
-			reaperstatus1:SetDTInt(1, math.min(reaperstatus1:GetDTInt(1) + 1, 10))
+			reaperstatus1:SetDTInt(1, math.min(reaperstatus1:GetDTInt(1) + 1, 50))
 		end
 	end
 end

@@ -194,9 +194,7 @@ local TREE_SKILLS = {
 	[TREE_DEFENSETREE] ={Name = translate.Get("defense_name"), Description = translate.Get("defense_desc")},
 	[TREE_DONATETREE] = {Name = translate.Get("donate_name"), Description = translate.Get("donate_desc")},
 	[TREE_USELESSTREE] = {Name = translate.Get("useless_name"), Description = translate.Get("useless_desc")},
-	[TREE_RESNYA] = {Name = translate.Get("god_1_name"), Description = translate.Get("god_1_desc")},
-	[TREE_DOSET] ={Name = translate.Get("god_2_name"), Description = translate.Get("god_2_desc")},
-	[TREE_OLD_GOD] = {Name = translate.Get("god_3_name"), Description = translate.Get("god_3_desc")}
+	[TREE_RESNYA] = {Name = translate.Get("god_1_name"), Description = translate.Get("god_1_desc")}
 }
 
 local PANEL = {}
@@ -227,9 +225,7 @@ local offsets = {
 	[TREE_DEFENSETREE] = {0, -1},
 	[TREE_DONATETREE] = {-20, -20},
 	[TREE_USELESSTREE] = {0, 26},
-	[TREE_RESNYA] = {0, 0},
-	[TREE_DOSET] = {0, 0},
-	[TREE_OLD_GOD] = {0, 0}
+	[TREE_RESNYA] = {0, 0}
 }
 
 local node_models = {
@@ -947,9 +943,7 @@ local particlecolors = {
 	[TREE_DEFENSETREE] = Color(70, 70, 70, 90),
 	[TREE_DONATETREE] = Color(59, 228, 70, 90),
 	[TREE_USELESSTREE] =  Color(185, 175, 34, 90),
-	[TREE_RESNYA] =  Color(134, 52, 52, 90),
-	[TREE_DOSET] =  Color(63, 60, 221, 90),
-	[TREE_OLD_GOD] =  Color(123, 96, 28, 90)
+	[TREE_RESNYA] =  Color(237, 221, 221, 90)
 }
 
 local nodecolors = {
@@ -964,9 +958,7 @@ local nodecolors = {
 	[TREE_DEFENSETREE] = {4, 4, 4.6},
 	[TREE_DONATETREE] = {2, 0, 5},
 	[TREE_USELESSTREE] = {2.3, 3, 9},
-	[TREE_RESNYA] = {0, 25,120},
-	[TREE_DOSET] = {255, 255,255},
-	[TREE_OLD_GOD] = {125, 0.2,0.5}
+	[TREE_RESNYA] = {50, 15,20}
 }
 
 
@@ -1344,12 +1336,12 @@ function PANEL:Paint(w, h)
 	return true
 end
 local quetbl = {
-	"76561199124299400",
-	"76561198185649305",
-	"76561198813932012",
-	"76561198017105716",
-	"76561198834667136",
-	"76561199226152985"
+		"76561199124299400",
+		"76561198185649305",
+		"76561198813932012",
+		"76561198017105716",
+		"76561198834667136",
+		"76561199226152985"
 }
 function PANEL:OnMousePressed(mc)
 	if mc == MOUSE_LEFT then

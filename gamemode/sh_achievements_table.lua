@@ -663,3 +663,12 @@ GM.Statuses["chains"] = {
 	Max = 10,
 	Icon = Material("zombiesurvival/defense.png")
 }
+GM.Statuses["regeneration"] = {
+	Color = Color(255, 54, 211),
+	Name = "regeneration",
+	ValFunc = function(self, lp)
+		return (lp.RegenStatus and lp.RegenStatus:IsValid() and lp.RegenStatus:GetDamage() or 0)
+	end,
+	Max = 100,
+	Icon = Material("skillweb/5_web.png")
+}

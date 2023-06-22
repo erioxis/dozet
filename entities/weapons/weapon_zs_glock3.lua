@@ -55,7 +55,7 @@ GAMEMODE:AddNewRemantleBranch(SWEP, 1, ""..translate.Get("wep_glock_r1"), ""..tr
 		if SERVER and tr.Entity:IsValidLivingZombie() and math.random(20) == 1 then
 			local status = attacker:GiveStatus("reaper", 14)
 			if status and status:IsValid() then
-				status:SetDTInt(1, math.min(status:GetDTInt(1) + 1, 3))
+				status:SetDTInt(1, math.min(status:GetDTInt(1) + 1, 50))
 				attacker:EmitSound("hl1/ambience/particle_suck1.wav", 55, 150 + status:GetDTInt(1) * 30, 0.45)
 			end
 		end

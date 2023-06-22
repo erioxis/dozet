@@ -60,11 +60,11 @@ function meta:ProcessDamage(dmginfo)
 
 	if P_Team(self) == TEAM_UNDEAD then
 		local classtable = self:GetZombieClassTable()
+		dmginfo = !dmgbypass and self:CallZombieFunction1("ProcessDamage", dmginfo) or dmginfo
 		if attacker.Balance2 and math.random(1,100) < 8 then
 			dmginfo:SetDamageType(DMG_DIRECT)
 			dmgbypass = true
 		end
-		dmginfo = !dmgbypass and self:CallZombieFunction1("ProcessDamage", dmginfo) or dmginfo
 		local damage = dmginfo:GetDamage()
 		if self:GetChampion() == CHAMP_ETERNAL then
 			damage = damage * 0.5
@@ -93,9 +93,7 @@ function meta:ProcessDamage(dmginfo)
 			net.Send(self)
 			return true
 		end
-		if attacker:IsPlayer() and attacker:GetZSRemortLevel() > 13 then
-			damage = damage  * (1 - (math.Clamp(GAMEMODE:GetBalance() * 0.01,-2.5,0.8)))
-		end
+		damage = damage  * (1 - (math.Clamp(GAMEMODE:GetBalance() * 0.01,-2.5,0.65)))
 		if self.m_zombiedef then
 			damage = damage * 0.75
 		end
@@ -118,17 +116,18 @@ function meta:ProcessDamage(dmginfo)
 		end]]
 
 		self.ShouldFlinch = true
-		if self:GetZArmor() > 0 and self:GetMaxHealth() >= 150 then
+		local mxap = self:GetMaxHealth()
+		if self:GetZArmor() > 0 and mxap >= 150 then
 			
 			if damage > 0 then
-	
+				local armor = self:GetZArmor()
 				local ratio = 1
-				local absorb = math.min(self:GetZArmor(), damage * ratio)
+				local absorb = math.min(armor, damage * ratio)
 				damage = damage - absorb
-				self:SetZArmor(self:GetZArmor() - absorb)
+				self:SetZArmor(armor - absorb)
 				self.BloodDead = absorb
 				if attacker:IsPlayer() then
-					local points = damage / self:GetMaxHealth() * classtable.Points
+					local points = damage / mxap * classtable.Points
 					if POINTSMULTIPLIER then
 						points = points * POINTSMULTIPLIER
 					end
@@ -143,16 +142,32 @@ function meta:ProcessDamage(dmginfo)
 				end
 			end
 		end
-		if attacker:IsValidLivingHuman() then
-			if attacker.DamageAll then
-				damage = damage * attacker.DamageAll
+		if attacker.DamageAll then
+			damage = damage * attacker.DamageAll
+		end
+		if classtable.Boss and damage >= (mxap * 0.11) then
+			damage = math.min(damage, (mxap * 0.11))
+		end
+		if attacker:IsValidLivingHuman() and inflictor:IsValid() and inflictor == attacker:GetActiveWeapon() then
+			local wep = attacker:GetActiveWeapon()
+			local attackermaxhp = math.floor(attacker:GetMaxHealth() * ((attacker:IsSkillActive(SKILL_D_FRAIL) or attacker:IsSkillActive(SKILL_ABUSE)) and 0.44 or 1))
+			if attacker:IsSkillActive(SKILL_AMULET_16) then 
+				damage = damage * math.random(50,175)/100
 			end
-
-			if attacker:IsSkillActive(SKILL_AMULET_2) and (attacker:Health() <= (attacker:GetMaxHealth() * 0.35) or (attacker.MaxBloodArmor * 0.1 >= attacker:GetBloodArmor()) and attacker:Health() <= 15) then
+			if wep:IsValid() and wep.DealThink then
+				wep:DealThink(dmginfo)
+			end
+			if attacker.ClanAvanguard and inflictor.Unarmed then
+				damage = damage * 1.25
+				if inflictor.IsMelee then
+					damage = damage * 1.25
+				end
+			end
+			if attacker:IsSkillActive(SKILL_AMULET_2) and (attacker:Health() <= (attackermaxhp * 0.35) or (attacker.MaxBloodArmor * 0.1 >= attacker:GetBloodArmor()) and attacker:Health() <= 15) then
 				damage = damage * 2
 			end
 
-			if attacker:IsSkillActive(SKILL_AMULET_11) and attacker:Health() > attacker:GetMaxHealth() then
+			if attacker:IsSkillActive(SKILL_AMULET_11) and attacker:Health() > attackermaxhp then
 				damage = damage * 1.45
 			end
 			if classtable.BaraCat then
@@ -167,30 +182,11 @@ function meta:ProcessDamage(dmginfo)
 			if (attacker:GetStatus("cursed"))  and attacker:HasTrinket("a_flower") then
 				damage = damage * 0.1
 			end
-			if attacker.ClanAvanguard and inflictor.Unarmed then
-				damage = damage * 1.25
-				if inflictor.IsMelee then
-					damage = damage * 1.25
-				end
-			end
-		end
-		if classtable.Boss and damage >= (self:GetMaxHealth() * 0.11) then
-			damage = math.min(damage, (self:GetMaxHealth() * 0.11))
-		end
-		if attacker:IsValidLivingHuman() and inflictor:IsValid() and inflictor == attacker:GetActiveWeapon() then
-			local wep = attacker:GetActiveWeapon()
-			local attackermaxhp = math.floor(attacker:GetMaxHealth() * ((attacker:IsSkillActive(SKILL_D_FRAIL) or attacker:IsSkillActive(SKILL_ABUSE)) and 0.44 or 1))
-			if attacker:IsSkillActive(SKILL_AMULET_16) then 
-				damage = damage * math.random(50,175)/100
-			end
-			if wep:IsValid() and wep.DealThink then
-				wep:DealThink(dmginfo)
-			end
 			--attacker.dpsmeter = damage
 			if attacker:IsSkillActive(SKILL_VAMPIRISM) then
 				attacker:SetNWFloat("vampirism_progress", attacker:GetNWFloat("vampirism_progress",value)+damage*0.09)
 				if attacker:GetNWFloat("vampirism_progress",value) >= 620 then
-					attacker:SetHealth(math.min(attacker:GetMaxHealth(),attacker:Health() + attacker:GetMaxHealth()*0.09))
+					attacker:SetHealth(math.min(attackermaxhp,attacker:Health() + attackermaxhp*0.09))
 					attacker:SetNWFloat("vampirism_progress", 0)
 				end
 			end
@@ -202,11 +198,11 @@ function meta:ProcessDamage(dmginfo)
 				attacker:GiveAchievement("opm")
 			end
 
-			if (attacker:IsSkillActive(SKILL_BOUNTYKILLER) or classtable.Boss or classtable.DemiBoss) and !classtable.CrowDa  then
+			if (attacker:IsSkillActive(SKILL_BOUNTYKILLER) or classtable.Boss or classtable.DemiBoss) and classtable.Health >= 260  then
 				local mul = ((attacker:IsSkillActive(SKILL_BOUNTYKILLER) and 0.15 or 0) + (classtable.DemiBoss and 0.05 or classtable.Boss and 0.1 or 0))
 				attacker:SetProgress(attacker:GetProgress('bprog')+(math.min(damage*mul,self:GetMaxHealth()*mul)), 'bprog')
 
-				if attacker:GetProgress('bprog') >= 1500 * (attacker:GetProgress('bprogmul')+1) and !attacker:HasTrinket("cons_bounty") then
+				if attacker:GetProgress('bprog') >= 1500 * (attacker:GetProgress('bprogmul')+1) then
 					attacker.GetBounty = true
 					attacker:SetProgress(0, 'bprog')
 					attacker:SetProgress(attacker:GetProgress('bprogmul')+1,'bprogmul') 
@@ -225,7 +221,7 @@ function meta:ProcessDamage(dmginfo)
 
 				if attacker.RandomDamage >= 100 then
 					attacker.RandomDamage = 0
-					attacker:GiveRandomStatus(math.random(10,50), {"death","hollowing","cursed","bleed","poison"})
+					attacker:GiveRandomStatus(math.random(10,50), {"death","hollowing","cursed","bleed","poison","rot","knockdown"})
 				end
 			end
 			if attacker:IsSkillActive(SKILL_OLD_GOD1) then
@@ -1189,19 +1185,19 @@ function meta:AddPoisonDamage(damage, attacker)
 	if damage > 0 then
 		local status = self:GiveStatus("poison")
 		if status and status:IsValid() then
-			status:AddDamage(damage * (self:IsSkillActive(SKILL_LOX) and 2 or 1), attacker)
+			status:AddDamage(damage, attacker)
 		end
 	else
 		local status = self:GetStatus("poison")
 		if status and status:IsValid() then
-			status:AddDamage(damage * (self:IsSkillActive(SKILL_LOX) and 2 or 1))
+			status:AddDamage(damage)
 		end
 	end
 end
 
 function meta:AddCursed(attacker, count)
 	--damage = math.ceil(damage)
-	self:GiveStatus("cursed", count)
+	self:GiveStatus("cursed", count).Inflictor = attacker
 end
 
 function meta:AddHallow(attacker, count)
@@ -1504,7 +1500,7 @@ end
 
 function meta:GiveStatus(sType, fDie, applier, ignoredouble)
 	local resistable = table.HasValue(GAMEMODE.ResistableStatuses, sType)
-	local fDie = (fDie or 1) * (ignoredouble and 1 or self.AdditionalStatusTime or 1) * (GAMEMODE.Statuses[sType] and GAMEMODE.Statuses[sType].Debuff and self.AdditionalDebuffTime or 1)
+	local fDie = (fDie or 1) * (ignoredouble and 1 or self.AdditionalStatusTime or 1) * (GAMEMODE.Statuses[sType] and GAMEMODE.Statuses[sType].Debuff and self.AdditionalDebuffTime or self.AdditionalBuffTime or 1)
 
 	local fDie2 = fDie / math.max(1 + (self.BloodArmorDamageReductionAdd or 1),1)
 	if resistable and self:IsSkillActive(SKILL_HAEMOSTASIS) and self:GetBloodArmor() >= 2 * fDie2 then
@@ -2525,8 +2521,8 @@ local bossdrops = {
 	"trinket_barasoul",  -- 27
 	"trinket_troyaksoul",  -- 28
 	"trinket_clownsoul",  -- 29
-	"trinket_slight_soul"  -- 30
-	--"trinket_lehasoul"  -- 31
+	"trinket_slight_soul",  -- 30
+	"trinket_lehasoul"  -- 31
 }
 local demiboss = {
 	"comp_soul_alt_h",
@@ -2763,19 +2759,7 @@ function meta:GetRandomFood()
 	end
 
 end
-function meta:GetRandomStartingItem1()
-	local pool2 = {}
-	if self:IsSkillActive(SKILL_SOULNET) then
-		pool2[#pool2 + 1] = GAMEMODE.StarterSoul[math.random(#GAMEMODE.StarterSoul)]
-	end
 
-
-	if #pool2 > 0 then
-		return pool2[math.random(#pool2)]
-	end
-	
-
-end
 function meta:GetRandomStartingItem2()
 	local pool3 = {}
 

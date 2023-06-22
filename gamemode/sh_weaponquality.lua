@@ -319,7 +319,7 @@ function GM:GetDismantleScrap(wtbl, invitem,pl)
 	local basicvalue = baseval * GAMEMODE.DismantleMultipliers[qu] - ((quatier or itier) and 0 or 1)
 	local mul = 1
 	if pl then
-		mul = pl.ScrapDiscount and (pl.ScrapDiscount * pl.ScrapDiscount) or mul
+		mul = pl.ScrapDiscount or 1
 	end
 	return math.floor((basicvalue * (wtbl.IsMelee and 0.6 or 1)) / (wtbl.DismantleDiv or dismantlediv)) * mul
 end

@@ -157,12 +157,6 @@ function CLASS:PlayDeathSound(pl)
 end
 
 if SERVER then
-	local weapon = {}
-	for _, wep in pairs(weapons.GetList()) do
-		if !wep.ZombieOnly and !wep.NoMobilized and (wep.Primary.DefaultClip and wep.Primary.DefaultClip < 9999 or wep.IsMelee) and (wep.Tier or 1) < 4 then
-			weapon[#weapon+1] = wep.ClassName 
-		end
-	end
 	function CLASS:OnKilled(pl, attacker, inflictor, suicide, headshot, dmginfo)
 		pl:FakeDeath(pl:LookupSequence("death_0"..math_random(4)), self.ModelScale)
 
@@ -177,6 +171,12 @@ if SERVER then
 		local oldhands = pl:GetHands()
 		if IsValid(oldhands) then
 			oldhands:Remove()
+		end
+		local weapon = {}
+		for _, wep in pairs(weapons.GetList()) do
+			if !wep.ZombieOnly and !wep.NoMobilized and (wep.Primary.DefaultClip and wep.Primary.DefaultClip < 9999 or wep.IsMelee) and (wep.Tier or 1) < 4 then
+				weapon[#weapon+1] = wep.ClassName 
+			end
 		end
 		if pl.Mobiliz then
 			pl:Give(weapon[math.random(1,#weapon)])

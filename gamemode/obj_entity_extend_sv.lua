@@ -436,12 +436,9 @@ function meta:DamageNails(attacker, inflictor, damage, dmginfo)
 	if self.BrokendEnd and CurTime() < self.BrokendEnd and self.BrokendApplier and self.BrokendApplier:IsValidLivingZombie() then
 		local applier = self.BrokendApplier
 		local multi = 3
-		local dmgbefore = damage / 0.20
 
 		dmginfo:SetDamage(dmginfo:GetDamage() * multi)
 		damage = damage * multi
-
-		applier.PropDef = (applier.PropDef or 0) + dmgbefore
 
 	end
 	if self.CaderEnd and CurTime() < self.CaderEnd and self.CaderApplier and self.CaderApplier:IsValidLivingHuman() then

@@ -455,6 +455,7 @@ GM:AddPointShopItem("smelter",			ITEMCAT_GUNS,			500,			"weapon_zs_smelter")
 GM:AddPointShopItem("hyena",			ITEMCAT_GUNS,			500,				"weapon_zs_hyena")
 GM:AddPointShopItem("boomstick",		ITEMCAT_GUNS,			500,			"weapon_zs_boomstick")
 GM:AddPointShopItem("bulldog",		ITEMCAT_GUNS,			500,			"weapon_zs_bulldog")
+GM:AddPointShopItem("clastix",			ITEMCAT_GUNS,			500,			"weapon_zs_clastix")
 -- Tier 6 beta
 GM:AddPointShopItem("zeus",				ITEMCAT_GUNS,			1500,			"weapon_zs_zeus")
 GM:AddPointShopItem("balance_t6",				ITEMCAT_GUNS,			1500,			"weapon_zs_balance")

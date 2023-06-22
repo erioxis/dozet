@@ -94,8 +94,8 @@ TREE_USELESSTREE = 11
 
 
 TREE_RESNYA = 12
-TREE_DOSET = 13
-TREE_OLD_GOD = 14
+TREE_DOSET = 12
+TREE_OLD_GOD = 12
 
 
 -- Dummy skill used for "connecting" to their trees.
@@ -505,7 +505,10 @@ SKILL_GREEDSIN = 477
 SKILL_SINS_2 = 478
 SKILL_MIDAS_SLOW = 479
 SKILL_CHEETUS_F = 480
-
+SKILL_GOOD_BOUNTY = 481
+SKILL_SPICY_CADES = 482
+SKILL_ABFINGERS = 483
+SKILL_SOME_YES = 484
 
 
 
@@ -638,6 +641,8 @@ SKILLMOD_RES_EFFECTIVNESS = 126
 SKILLMOD_THROWER_DAMAGE = 127
 SKILLMOD_DEBUFF_TIME = 128
 SKILLMOD_DAMAGE_ALL = 129
+SKILLMOD_BUFF_TIME = 130
+SKILLMOD_REGEN_SPEED = 131
 
 local GOOD = "^"..COLORID_GREEN
 local BAD = "^"..COLORID_RED
@@ -650,12 +655,12 @@ GM:AddSkillModifier(SKILL_RESNYA, SKILLMOD_MELEE_DAMAGE_MUL, 0.15)
 d.DontUnlock = SKILL_OLD_GOD
 d.DontUnlock2 = SKILL_DOSET
 local d = GM:AddSkill(SKILL_DOSET, trs("skill_doset"), GOOD..trs("skill_doset_d1")..GOOD..trs("skill_doset_d2"),
-																0,			-2,					{SKILL_NONE}, TREE_DOSET)
+																2,			-2,					{SKILL_NONE}, TREE_DOSET)
 GM:AddSkillModifier(SKILL_DOSET, SKILLMOD_LUCK, 1)
 d.DontUnlock = SKILL_OLD_GOD
 d.DontUnlock2 = SKILL_RESNYA
 local d = GM:AddSkill(SKILL_OLD_GOD, trs("skill_old_g"), GOOD..trs("skill_old_g_d1")..GOOD..trs("skill_old_g_d2"),
-																0,			-2,					{SKILL_NONE}, TREE_OLD_GOD)
+																4,			-2,					{SKILL_NONE}, TREE_OLD_GOD)
 GM:AddSkillModifier(SKILL_OLD_GOD, SKILLMOD_M_DMG, 0.3)
 GM:AddSkillModifier(SKILL_OLD_GOD, SKILLMOD_M_REG, 0.3)
 d.DontUnlock = SKILL_DOSET
@@ -665,20 +670,20 @@ d.DontUnlock2 = SKILL_RESNYA
 GM:AddSkill(SKILL_RESNYA1, trs("skill_resnya1"), GOOD..trs("skill_resnya1_d1")..GOOD..trs("skill_resnya1_d2"),
 																0,			-4,					{SKILL_RESNYA}, TREE_RESNYA)
 GM:AddSkill(SKILL_DOSET1, trs("skill_doset1"), GOOD..trs("skill_doset1_d1")..GOOD..trs("skill_doset1_d2"),
-																0,			-4,					{SKILL_DOSET}, TREE_DOSET)
+																2,			-4,					{SKILL_DOSET}, TREE_DOSET)
 GM:AddSkillModifier(SKILL_DOSET1, SKILLMOD_ELEMENTAL_MUL, 0.1)
 GM:AddSkill(SKILL_OLD_GOD1, trs("skill_old1_g"), GOOD..trs("skill_old_g1_d1")..GOOD..trs("skill_old_g1_d2"),
-																0,			-4,					{SKILL_OLD_GOD}, TREE_OLD_GOD)
+																4,			-4,					{SKILL_OLD_GOD}, TREE_OLD_GOD)
 
 GM:AddSkill(SKILL_RESNYA2, trs("skill_resnya2"), GOOD..trs("skill_resnya2_d1")..BAD..trs("skill_resnya2_d2"),
 																0,			-6,					{SKILL_RESNYA1}, TREE_RESNYA)
 GM:AddSkillModifier(SKILL_RESNYA2, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 0.2)
 GM:AddSkill(SKILL_DOSET2, trs("skill_doset2"), GOOD..trs("skill_doset2_d1")..BAD..trs("skill_doset2_d2"),
-																0,			-6,					{SKILL_DOSET1}, TREE_DOSET)
+																2,			-6,					{SKILL_DOSET1}, TREE_DOSET)
 GM:AddSkillModifier(SKILL_DOSET2, SKILLMOD_MELEE_DAMAGE_MUL, -0.2)
 GM:AddSkillModifier(SKILL_DOSET2, SKILLMOD_DMG_TAKEN, -0.1)
 GM:AddSkill(SKILL_OLD_GOD2, trs("skill_old_g2"), GOOD..trs("skill_old_g2_d1")..BAD..trs("skill_old_g2_d2"),
-																0,			-6,					{SKILL_OLD_GOD1}, TREE_OLD_GOD)
+																4,			-6,					{SKILL_OLD_GOD1}, TREE_OLD_GOD)
 GM:AddSkillModifier(SKILL_OLD_GOD2, SKILLMOD_DAMAGE, -0.25)
 -- Health Tree
 GM:AddSkill(SKILL_STOIC1, trs("skill_stoici_0"), GOOD..trs("skill_stoici_d1")..BAD..trs("skill_stoici_d2"),
@@ -771,11 +776,11 @@ GM:AddSkill(SKILL_SUGARRUSH, trs("skill_srush_0"), GOOD..trs("skill_srush_d1")..
 																4,			0,					{SKILL_GOURMET,SKILL_HYPERCOAGULATION}, TREE_HEALTHTREE)
 GM:AddSkill(SKILL_HYPERCOAGULATION, trs("skill_hp_cog"), GOOD..trs("skill_hp_cog_d1")..BAD..trs("skill_hp_cog_d2"),
 																4,			1,					{}, TREE_HEALTHTREE)
-GM:AddSkill(SKILL_CIRCULATION, trs("skill_cir_0"), GOOD..trs("skill_cir_d1"),
+GM:AddSkill(SKILL_CIRCULATION, trs("skill_cir_0"), GOOD..trs("skill_cir_d1")..BAD..translate.Format("skillmod_n131","-2%"),
 																4,			4,					{SKILL_SANGUINE}, TREE_HEALTHTREE)
-GM:AddSkill(SKILL_CIRCULATION1, trs("skill_cir_0").." II", GOOD.."+3"..trs("barmor"),
+GM:AddSkill(SKILL_CIRCULATION1, trs("skill_cir_0").." II", GOOD.."+3"..trs("barmor")..BAD..translate.Format("skillmod_n131","-4%"),
 																6,			6,					{SKILL_CIRCULATION,SKILL_CIRCULATION2}, TREE_HEALTHTREE)
-GM:AddSkill(SKILL_CIRCULATION2, trs("skill_cir_0").." III", GOOD.."+3"..trs("barmor"),
+GM:AddSkill(SKILL_CIRCULATION2, trs("skill_cir_0").." III", GOOD.."+3"..trs("barmor")..BAD..translate.Format("skillmod_n131","-6%"),
 																4,			8,					{}, TREE_HEALTHTREE)
 GM:AddSkill(SKILL_SANGUINE, trs("skill_san_0"), GOOD..trs("skill_san_d1")..BAD..trs("skill_san_d2"),
 																6,			2,					{}, TREE_HEALTHTREE)
@@ -783,12 +788,16 @@ GM:AddSkill(SKILL_BLOODYMAN, trs("skill_bloodyman"), GOOD.."+130"..trs("barmor")
 																7,			3,					{SKILL_SANGUINE}, TREE_HEALTHTREE)
 GM:AddSkill(SKILL_MADNESS, trs("skill_madness"), GOOD..trs("skill_madness_d1")..BAD..trs("skill_madness_d2"),
 																7,			4,					{SKILL_BLOODYMAN}, TREE_HEALTHTREE)
-GM:AddSkill(SKILL_GIER_II, trs("skill_gir"), GOOD..trs("skill_gir_d2")..BAD..trs("skill_gir_d1"),
+GM:AddSkill(SKILL_GIER_II, trs("skill_gir"), GOOD..trs("skill_gir_d2")..BAD..trs("skill_gir_d1").."\n"..BAD..translate.Format("skillmod_n131","-25%"),
 																7,			5,					{SKILL_MADNESS}, TREE_HEALTHTREE)
 GM:AddSkill(SKILL_ANTIGEN, trs("skill_agen_0"), GOOD..trs("skill_agen_d1")..BAD..trs("skill_agen_d2"),
 																-2,			4,					{}, TREE_HEALTHTREE)
 GM:AddSkill(SKILL_DAMAGER, trs("skill_bhealth_0"), GOOD..trs("skill_bhealth_d1")..BAD..trs("skill_bhealth_d2"),
 																-2,			5,					{SKILL_ANTIGEN}, TREE_HEALTHTREE)
+GM:AddSkill(SKILL_SOME_YES, trs("skill_yes_reg"), GOOD..trs("skill_yes_reg_d1")..GOOD..translate.Format("skillmod_n131","+6%").."\n"..BAD..trs("skill_yes_reg_d2"),
+																-3.5,			5,					{SKILL_DAMAGER}, TREE_HEALTHTREE)
+GM:AddSkillModifier(SKILL_SOME_YES, SKILLMOD_HEALING_RECEIVED, -0.11)
+GM:AddSkillModifier(SKILL_SOME_YES, SKILLMOD_REGEN_SPEED, 0.06)
 GM:AddSkill(SKILL_BLOODLIFE, trs("skill_blife_0"), GOOD.."+50"..trs("barmor")..BAD.."-60"..trs("health")..NEUTRAL..trs("skill_blife_d1"),
 																-2,			6,					{SKILL_DAMAGER}, TREE_HEALTHTREE)
 GM:AddSkillModifier(SKILL_BLOODLIFE, SKILLMOD_HEALTH, -60)
@@ -1097,7 +1106,11 @@ GM:AddSkill(SKILL_U_CRAFTINGPACK, trs("skill_u_craftpack"), GOOD..trs("skill_u_c
 																4,			-1,					{}, TREE_BUILDINGTREE)
 .AlwaysActive = true
 GM:AddSkill(SKILL_TAUT, trs("skill_taut"), GOOD.. trs("skill_taut_d1")..BAD.. trs("skill_taut_d2"),
-																-5,			3,					{}, TREE_BUILDINGTREE)
+																-5,			3,					{SKILL_SPICY_CADES}, TREE_BUILDINGTREE)
+GM:AddSkill(SKILL_SPICY_CADES, trs("skill_spicy_cades"), GOOD.. trs("skill_spicy_cades_d1")..BAD.. trs("skill_spicy_cades_d2"),
+																-5,			4,					{}, TREE_BUILDINGTREE)
+GM:AddSkillModifier(SKILL_SPICY_CADES, SKILLMOD_REPAIRRATE_MUL, -0.10)
+GM:AddSkillModifier(SKILL_SPICY_CADES, SKILLMOD_HEALTH, -10)
 GM:AddSkill(SKILL_D_NOODLEARMS, trs("skill_noodle"), GOOD.."+10"..trs("worth")..GOOD..trs("skill_noodle_d1")..GOOD.."+35%"..trs("repair")..BAD..trs("skill_noodle_d2"),
 																-7,			2,					{}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_INSTRUMENTS, trs("skill_instruments"), GOOD..trs("skill_instruments_d1"),
@@ -1135,7 +1148,7 @@ GM:AddSkill(SKILL_FREESKILL2, trs("skill_freeskill"), GOOD.."+8"..trs("spoint"),
 .RemortReq = 80
 GM:AddSkillModifier(SKILL_FREESKILL2, SKILLMOD_SPOINT, 8)
 GM:AddSkill(SKILL_SKILLFORGODS, "SECRET I", GOOD.."You find this!Reward is free 3 skill points!",
-																-70,			65,					{SKILL_NONE}, TREE_POINTTREE)
+																-50,			35,					{SKILL_NONE}, TREE_POINTTREE)
 GM:AddSkillModifier(SKILL_SKILLFORGODS, SKILLMOD_SPOINT, 4)
 GM:AddSkillModifier(SKILL_SECRET, SKILLMOD_SPOINT, 7)
 GM:AddSkillModifier(SKILL_SECRET2, SKILLMOD_SPOINT, 4)
@@ -1302,13 +1315,11 @@ d.RemortReq = 64
 d.AmuletCost = -4	
 GM:AddSkillModifier(SKILL_GOD_HEART, SKILLMOD_PIECE_OF_AMULET, 4)	
 local d = GM:AddSkill(SKILL_GODHEART, trs("skill_godheart"), GOOD..trs("skill_godheart2_d1"),
-				                                                            	-14,			39,					{SKILL_NONE}, TREE_DONATETREE)
+				                                                            	-14,			50,					{SKILL_NONE}, TREE_DONATETREE)
 d.RemortReq = 128
 d.AmuletCost = 4					
 GM:AddSkillModifier(SKILL_GODHEART, SKILLMOD_SPOINT, -4)
 GM:AddSkillModifier(SKILL_GODHEART, SKILLMOD_CURSEM, -99)
-d.AlwaysActive = true
-d.Hidden = true	
 local d = GM:AddSkill(SKILL_VIP, trs("skill_vip"), GOOD..trs("skill_vip_d1"),
 				                                                            	-14,			4,					{}, TREE_DONATETREE)								
 GM:AddSkillModifier(SKILL_VIP, SKILLMOD_SPOINT, 1)
@@ -1354,6 +1365,8 @@ GM:AddSkill(SKILL_ARSVOID, trs("skill_ars_void"), GOOD..trs("skill_ars_void_d1")
 																6,			-4,					{SKILL_DELIBRATION}, TREE_GUNTREE)
 GM:AddSkillModifier(SKILL_ARSVOID, SKILLMOD_DAMAGE, 0.05)
 GM:AddSkillModifier(SKILL_ARSVOID, SKILLMOD_ARSENAL_DISCOUNT, 0.12)
+GM:AddSkill(SKILL_GOOD_BOUNTY, trs("skill_bounty_free"), GOOD..trs("skill_bounty_free_d1")..BAD..trs("skill_bounty_free_d2"),
+																6,			-5,					{SKILL_ARSVOID}, TREE_GUNTREE).NeedAchievement = "dzs"
 SKILL_GUNSLINGER = 252
 GM:AddSkill(SKILL_GUNSLINGER, trs("skill_gunslinger"), GOOD.."+10%"..trs("w_ac")..GOOD.."+15%"..trs("b_damage")..BAD.."-30%"..trs("meleedamage")..BAD.."-50%"..trs("m_range"),
 																0,			5,					{SKILL_D_PALSY, SKILL_PHOENIX}, TREE_GUNTREE)
@@ -1487,6 +1500,9 @@ GM:AddSkill(SKILL_SFINGERS, trs("skill_sfingers"), GOOD..trs("skill_sfingers_d1"
 																8,			-5,					{SKILL_NFINGERS}, TREE_GUNTREE)
 GM:AddSkillModifier(SKILL_NFINGERS, SKILLMOD_RES_AMMO_MUL, -0.10)
 GM:AddSkillModifier(SKILL_SFINGERS, SKILLMOD_RES_AMMO_MUL, -0.25)
+GM:AddSkill(SKILL_ABFINGERS, trs("skill_abfingers"), GOOD..trs("skill_abfingers_d1")..BAD..translate.Format("skillmod_n130","-6%"),
+																9,			-4,					{SKILL_NFINGERS}, TREE_GUNTREE)
+GM:AddSkillModifier(SKILL_ABFINGERS, SKILLMOD_BUFF_TIME, -0.06)
 GM:AddSkill(SKILL_D_FINGERS, trs("skill_dfingers"), BAD..trs("skill_dfingers_d1"),
 																9,			-6,					{SKILL_SFINGERS}, TREE_GUNTREE)
 GM:AddSkillModifier(SKILL_D_FINGERS, SKILLMOD_DAMAGE, 1)
@@ -2211,7 +2227,7 @@ GM:AddSkill(SKILL_CHALLENGER3, "Challenger III", GOOD.."+100% XP Multiplier\n"..
 GM:AddSkillModifier(SKILL_CHALLENGER3, SKILLMOD_XP, 1)
 --Skill for high-remort
 GM:AddSkill(SKILL_SECRET2, "Secret V", GOOD.."Good thing, +3 spoints",
-				                                                            	-22,			-53,					{SKILL_NONE}, TREE_MELEETREE)
+				                                                            	-22,			-33,					{SKILL_NONE}, TREE_MELEETREE)
 .HiddenU = true
 SKILL_USELESS_1 = 500
 GM:AddSkill(SKILL_USELESS_1, "Useless 1", GOOD.."+5% XP MUL",
@@ -2431,17 +2447,18 @@ GM:SetSkillModifierFunction(SKILLMOD_DAMAGE_ALL, function(pl, amount)
 		local g = GetTaper(pl, "ego", 0.04)
 		damagemul = damagemul *g
 	end
+
 	if GAMEMODE.ObjectiveMap then
 		damagemul = damagemul * 0.5
 	end
 	if pl.IsLastHuman then
 		if pl:IsSkillActive(SKILL_LAST_MAN) then
-			dmginfo:ScaleDamage(1.15)
+			damagemul = damagemul * 1.15
 		elseif pl:IsSkillActive(SKILL_LAST_MAN) then
-			dmginfo:ScaleDamage(0.85)
+			damagemul = damagemul * 0.85
 		end
 		if pl.ClanAnsableRevolution then
-			dmginfo:ScaleDamage(1.70)
+			damagemul = damagemul * 1.7
 		end
 	end
 	pl.DamageAll = math.Clamp(amount + 1.0, 0.0, 100.0) * damagemul
@@ -2758,6 +2775,9 @@ GM:SetSkillModifierFunction(SKILLMOD_TURRET_RANGE_MUL, GM:MkGenericMod("TurretRa
 GM:SetSkillModifierFunction(SKILLMOD_AIM_SHAKE_MUL, GM:MkGenericMod("AimShakeMul"))
 GM:SetSkillModifierFunction(SKILLMOD_THROWER_DAMAGE, GM:MkGenericMod("ThrowDamageMul"))
 GM:SetSkillModifierFunction(SKILLMOD_DEBUFF_TIME, GM:MkGenericMod("AdditionalDebuffTime"))
+GM:SetSkillModifierFunction(SKILLMOD_BUFF_TIME, GM:MkGenericMod("AdditionalBuffTime"))
+GM:SetSkillModifierFunction(SKILLMOD_REGEN_SPEED, GM:MkGenericMod("RegenFastingMul"))
+
 
 GM:AddSkillModifier(SKILL_PITCHER2, SKILLMOD_PROJECTILE_DAMAGE_MUL, 0.30)
 
@@ -3187,6 +3207,13 @@ GM:AddSkillModifier(SKILL_THREE_IN_ONE, SKILLMOD_MELEE_SWING_DELAY_MUL, -0.16)
 GM:AddSkillModifier(SKILL_CIRCULATION, SKILLMOD_BLOODARMOR, 1)
 GM:AddSkillModifier(SKILL_CIRCULATION1, SKILLMOD_BLOODARMOR, 3)
 GM:AddSkillModifier(SKILL_CIRCULATION2, SKILLMOD_BLOODARMOR, 3)
+
+
+GM:AddSkillModifier(SKILL_CIRCULATION, SKILLMOD_REGEN_SPEED, -0.02)
+GM:AddSkillModifier(SKILL_CIRCULATION1, SKILLMOD_REGEN_SPEED, -0.04)
+GM:AddSkillModifier(SKILL_CIRCULATION2, SKILLMOD_REGEN_SPEED, -0.06)
+
+GM:AddSkillModifier(SKILL_GIER_II, SKILLMOD_REGEN_SPEED, -0.25)
 
 GM:AddSkillModifier(SKILL_SANGUINE, SKILLMOD_BLOODARMOR, 11)
 GM:AddSkillModifier(SKILL_SANGUINE, SKILLMOD_HEALTH, -9)

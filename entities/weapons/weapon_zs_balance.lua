@@ -72,8 +72,10 @@ function SWEP:FinishReload()
 		local current = self:Clip1()
 
 		self:SetClip1(math.min(100,current + 25))
+		local gum = self:Clip1() - current
+		--print(gum)
 		if SERVER then
-			owner:RemoveAmmo(25, ammotype)
+			owner:RemoveAmmo(gum, ammotype)
 		end
 	end
 end
