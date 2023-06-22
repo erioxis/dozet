@@ -92,7 +92,7 @@ net.Receive("zs_bounty_add", function(len, pl)
 	pl.MedicalBounty = nil
 	pl.SeededBounty = nil
 	pl.SeededSouls = nil
-	pl.pl.NextThinkAboutTrade = pl.NextThinkAboutTrade + 10
+	pl.NextThinkAboutTrade = (pl.NextThinkAboutTrade or 1) + 10
 	pl:TakeInventoryItem(pl.LastUsedTrinket)
 	net.Start("zs_invitem")
 	net.WriteString(item)
