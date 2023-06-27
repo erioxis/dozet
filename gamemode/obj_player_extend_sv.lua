@@ -66,7 +66,7 @@ function meta:ProcessDamage(dmginfo)
 			dmgbypass = true
 		end
 		local damage = dmginfo:GetDamage()
-		if self:GetChampion() == CHAMP_ETERNAL then
+		if self:GetChampion() == CHAMP_ETERNAL and !dmgbypass then
 			damage = damage * 0.5
 			if math.random(1,4) == 4 then
 				if attacker:IsPlayer() then
@@ -84,7 +84,7 @@ function meta:ProcessDamage(dmginfo)
 			dmginfo:SetDamageForce(vector_origin)
 			return 
 		end
-		if self.m_Evo and math.random(3) == 1 then
+		if self.m_Evo and math.random(3) == 1  and !dmgbypass then
 			if attacker:IsPlayer() then
 				GAMEMODE:BlockFloater(attacker, self, dmginfo:GetDamagePosition())
 			end
@@ -93,15 +93,17 @@ function meta:ProcessDamage(dmginfo)
 			net.Send(self)
 			return true
 		end
-		damage = damage  * (1 - (math.Clamp(GAMEMODE:GetBalance() * 0.01,-2.5,0.65)))
-		if self.m_zombiedef then
+		if !dmgbypass then
+			damage = damage  * (1 - (math.Clamp(GAMEMODE:GetBalance() * 0.01,-2.5,0.65)))
+		end
+		if self.m_zombiedef and !dmgbypass then
 			damage = damage * 0.75
 		end
-		if self.m_Zombie_Bara1 then
+		if self.m_Zombie_Bara1 and !dmgbypass  then
 			damage = damage  * 1.5
 		end
 
-		if self.m_Zmain then
+		if self.m_Zmain and !dmgbypass then
 			damage = damage *2
 		end
 		local corrosion = self.Corrosion and self.Corrosion + 2 > time
@@ -117,7 +119,7 @@ function meta:ProcessDamage(dmginfo)
 
 		self.ShouldFlinch = true
 		local mxap = self:GetMaxHealth()
-		if self:GetZArmor() > 0 and mxap >= 150 then
+		if self:GetZArmor() > 0 and mxap >= 150 and !dmgbypass  then
 			
 			if damage > 0 then
 				local armor = self:GetZArmor()
@@ -2491,39 +2493,7 @@ function meta:DoSigilTeleport(target, from, corrupted)
 	end
 end
 
-local bossdrops = {
-	"trinket_bleaksoul",  -- 1
-	"trinket_spiritess",  -- 2
-	"trinket_samsonsoul",  -- 3
-	"trinket_evesoul",  -- 4
-    "trinket_jacobjesausoul",  -- 5
-    "trinket_isaacsoul",  -- 6
-    "trinket_magdalenesoul",  -- 7
-    "trinket_lilithsoul",  -- 8
-    "trinket_whysoul",  -- 9
-    "trinket_blanksoul", -- 10
-    "trinket_classixsoul",  -- 11
-	"trinket_darksoul",  --12
-	"trinket_eriosoul",  --13
-	"trinket_aposoul",  --14
-	"trinket_betsoul",  --15
-	"trinket_lostsoul",  --16
-	"trinket_greedsoul",  --17
-	"trinket_cainsoul",   --18
-	"trinket_lazarussoul",	-- 19
-	"trinket_forsoul",  -- 20
-	"trinket_starsoul",  -- 21
-	"trinket_teasoul",  -- 22
-	"trinket_sugersoul",  -- 23
-	"trinket_nulledsoul",  -- 24
-	"trinket_soulmedical",  -- 25
-	"trinket_lampsoul",  -- 26
-	"trinket_barasoul",  -- 27
-	"trinket_troyaksoul",  -- 28
-	"trinket_clownsoul",  -- 29
-	"trinket_slight_soul",  -- 30
-	"trinket_lehasoul"  -- 31
-}
+
 local demiboss = {
 	"comp_soul_alt_h",
 	"comp_soul_health",
@@ -2545,32 +2515,6 @@ local bossdrops1 = {
 	"trinket_sin_pride",
 	"trinket_sin_ego",
     "trinket_sin_lust"
-}
-local bossdrops2 = {
-	--"weapon_zs_plank_q5",  -- 1
-	"trinket_altjudassoul",  -- 2
-	"trinket_altsamsonsoul",  -- 3
-	"trinket_altevesoul",  -- 4
-    "trinket_jacobsoul",  -- 5
-    "trinket_altisaacsoul",  -- 6
-    "trinket_altmagdalenesoul",  -- 7
-    "trinket_altlilithsoul",  -- 8
-    "trinket_alteriosoul", -- 10 
-	"trinket_altaposoul",  --14
-	"trinket_altbetsoul",  --15
-	"trinket_altlostsoul",  --16
-	"trinket_altgreedsoul",  --17
-	"trinket_altcainsoul","trinket_altcainsoul",   --18
-	"trinket_altlazarussoul",	-- 19
-	"trinket_altforsoul", -- 20
-	"trinket_altsoul",-- 21
-	"trinket_soulalteden", -- 22
-	"trinket_altchayok", --23
-	"trinket_altdarksoul", -- 24
-	"trinket_soul_lime" --25
-	
-	
-	
 }
 
 function meta:MakeDemiBossDrop(killer)
@@ -2603,13 +2547,9 @@ function meta:MakeDemiBossDrop(killer)
 end
 function meta:MakeBossDrop(killer)
 	if math.random(1,3) == 1 then return end
-	local drop = table.Random(bossdrops)
-	if drop == "trinket_clownsoul" then
-		drop = table.Random(bossdrops)
-	end
-	local inv = string.sub(drop, 1, 4) ~= "weap"
+	local drop = "cons_soul_picka"
 	local pos = self:LocalToWorld(self:OBBCenter())
-	local ent = ents.Create(inv and "prop_invitem" or "prop_weapon")
+	local ent = ents.Create("prop_invitem")
 	if ent:IsValid() then
 		ent:SetPos(pos)
 		ent:SetAngles(AngleRand())
@@ -2660,32 +2600,7 @@ function meta:Make1BossDrop(killer)
 		end
 	end
 end
-function meta:Make2BossDrop(killer)
-	if math.random(1,3) == 1 then return end
-	local drop = table.Random(bossdrops2)
-	local inv = string.sub(drop, 1, 4) ~= "weap"
-	local pos = self:LocalToWorld(self:OBBCenter())
-	local ent = ents.Create(inv and "prop_invitem" or "prop_weapon")
-	if ent:IsValid() then
-		ent:SetPos(pos)
-		ent:SetAngles(AngleRand())
-		if inv then
-			ent:SetInventoryItemType(drop)
-		else
-			ent:SetWeaponType(drop)
-		end
-		if killer and killer:IsValidLivingHuman() then
-			ent:SetOwner(killer)
-		end
-		ent:Spawn()
-		local phys = ent:GetPhysicsObject()
-		if phys:IsValid() then
-			phys:Wake()
-			phys:SetVelocityInstantaneous(VectorRand():GetNormalized() * math.Rand(24, 100))
-			phys:AddAngleVelocity(VectorRand() * 200)
-		end
-	end
-end
+
 
 function meta:UpdateAltSelectedWeapon()
 	net.Start("zs_updatealtselwep")

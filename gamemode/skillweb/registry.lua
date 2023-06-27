@@ -1505,7 +1505,6 @@ GM:AddSkill(SKILL_ABFINGERS, trs("skill_abfingers"), GOOD..trs("skill_abfingers_
 GM:AddSkillModifier(SKILL_ABFINGERS, SKILLMOD_BUFF_TIME, -0.06)
 GM:AddSkill(SKILL_D_FINGERS, trs("skill_dfingers"), BAD..trs("skill_dfingers_d1"),
 																9,			-6,					{SKILL_SFINGERS}, TREE_GUNTREE)
-GM:AddSkillModifier(SKILL_D_FINGERS, SKILLMOD_DAMAGE, 1)
 
 -- Melee Tree
 GM:AddSkill(SKILL_WORTHINESS2, trs("worthness").."II", GOOD.."+10"..trs("worth")..BAD.."-6"..trs("start_points"),
@@ -1860,7 +1859,7 @@ GM:AddSkill(SKILL_HELPLIFER, "Chance", PURPLE.."Can save from fatal hit\n10% Cha
 GM:AddSkill(SKILL_INF_POWER, "Dozei Core", PURPLE.."-33% Damage.\nExtra-damage for every skills you unlocked\n+0.45% damage per skill",
 										4,			-5,					{SKILL_NO_BALANCE,SKILL_HELPLIFER}, TREE_ANCIENTTREE).SPUse = 14
 GM:AddSkill(SKILL_NO_BALANCE, "Silver bullets", PURPLE.."Sometimes your damage become a DIRECT damage!\n7% Chance",
-										2.5,			-3.5,					{}, TREE_ANCIENTTREE).SPUse = 24
+										2.5,			-3.5,					{}, TREE_ANCIENTTREE).SPUse = 6
 GM:AddSkill(SKILL_SOUL_TRADE, "[TRADE]Soul", PURPLE.."Sell Your Soul For Toy and now ALL SOULS KILL YOU.\n"..PURPLE.."+66.6% Point Mul",
 										4,			-7,					{SKILL_HELPLIFER}, TREE_ANCIENTTREE)
 GM:AddSkill(SKILL_SEEAURA, "Ancient vision", PURPLE.."You can see zombie aura",

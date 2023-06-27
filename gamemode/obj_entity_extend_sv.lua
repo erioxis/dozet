@@ -460,6 +460,7 @@ function meta:DamageNails(attacker, inflictor, damage, dmginfo)
 
 	if attacker:IsPlayer() then
 		-- :O)
+		local owner = self:GetOwner()
 		if attacker.SpawnProtection then
 			damage = damage * 5
 			dmginfo:SetDamage(damage)
@@ -481,11 +482,16 @@ function meta:DamageNails(attacker, inflictor, damage, dmginfo)
 			damage = damage*0.1/(inflictor.Tier and inflictor.Tier or 1)
 			dmginfo:SetDamage(damage)
 		end
-		if self:GetOwner() ~= attacker then
+		if owner ~= attacker then
 			attacker:AddTokens(math.ceil((damage or 2) * 0.15))
 			if attacker.m_DoubleXP then
 				attacker:AddTokens(math.ceil((damage or 2) * 0.15))
 			end
+		end
+		local live = nails[math.random(1,#nails)]
+		local lowler = live:GetOwner()
+		if lowler and lowler:IsValid() and lowler:IsSkillActive(SKILL_SPICY_CADES) then 
+			attacker:TakeSpecialDamage(damage*2,DMG_GENERIC,lowler,live,dmginfo:GetDamagePosition(),0)
 		end
 		damage = dmginfo:GetDamage()
 		GAMEMODE:DamageFloater(attacker, self, dmginfo:GetDamagePosition(), dmginfo:GetDamage())

@@ -26,10 +26,6 @@ function ENT:OnDamaged(damage, attacker, inflictor, dmginfo)
 		self.m_NextStrainSound = CurTime() + math.min(damage * 0.025, 1)
 		self:EmitSound("physics/metal/metal_box_impact_hard"..math.random(3)..".wav", math.Clamp(damage * 2.5, 60, 80), math.min(255, 150 + (1 - (self:GetNailHealth() / self:GetMaxNailHealth())) * 100))
 	end
-	local owner = self:GetOwner()
-	if owner:IsSkillActive(SKILL_SPICY_CADES) then
-		attacker:TakeDamage(damage*2,owner,self)
-	end
 end
 
 ENT.TimeNext = CurTime() + 0.5

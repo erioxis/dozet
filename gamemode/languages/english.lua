@@ -2124,7 +2124,7 @@ LANGUAGE.skill_helper_d1 = "When blocking you give status TARGET on zombie\nHe t
 LANGUAGE.skill_helper_d2 = "TARGETET Zombie take x0.1 damage from melee"
 --shooter
 LANGUAGE.skill_dfingers = "Deep Fingers"
-LANGUAGE.skill_dfingers_d1 = "x2 Ammo use.\nx2 Damage for shooting damage.\nOpen a thrower skillweb"
+LANGUAGE.skill_dfingers_d1 = "x2 Ammo use.\nHave chance to not use a ammo(75%).\nOpen a thrower skillweb"
 LANGUAGE.skill_sfingers = "Super Fingers"
 LANGUAGE.skill_sfingers_d1 = "Kill give buff for non-use ammo for 1.5 secs.\n"
 LANGUAGE.skill_nfingers = "Nimble Fingers"

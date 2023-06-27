@@ -28,7 +28,7 @@ function ENT:Think()
 	if (cursed.DieTime >= time + 1200) then kill(owner,self) end
 	if not owner:HasTrinket("a_flower") then
 		if not (holly) then
-			if (cursed) and not owner:IsSkillActive(SKILL_UPLOAD) then
+			if (cursed) then
 				if (cursed.DieTime >= time + 100 * (owner.CurseMultiplier or 1) +(owner.ClanMelee and 50 or 0)) and not owner:IsSkillActive(SKILL_CURSEDHEALTH) then
 					kill(owner,self)
 				elseif (cursed.DieTime >= time + (owner:GetMaxHealth() * 2) * (owner.CurseMultiplier or 1) +(owner.ClanMelee and 50 or 0)) and owner:IsSkillActive(SKILL_CURSEDHEALTH) then

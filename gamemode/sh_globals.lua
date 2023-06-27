@@ -152,7 +152,7 @@ GM.TorsoZombiePointRatio = 55
 GM.LegsZombiePointRatio = 66
 GM.SkeletonPointRatio = GM.HumanoidZombiePointRatio/1.5
 
-SPEED_NORMAL = 215
+SPEED_NORMAL = 195
 SPEED_SLOWEST = SPEED_NORMAL * 0.5
 SPEED_SLOWER = SPEED_NORMAL * 0.75
 SPEED_SLOW = SPEED_NORMAL * 0.9

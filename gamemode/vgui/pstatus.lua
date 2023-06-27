@@ -251,7 +251,7 @@ function GM:OpenBounty(table2)
 	if !table2 then
 		table2 = d 
 	end
-	for i=1,3 do
+	for i=1,#table2 do
 		InventoryAdd("trinket_"..table2[i],INVCAT_TRINKETS,i,panel)
 	end
 

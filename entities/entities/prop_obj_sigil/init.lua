@@ -92,9 +92,9 @@ end
 
 function ENT:OnTakeDamage(dmginfo)
 	if self:GetSigilHealth() <= 0 or dmginfo:GetDamage() <= 0 then return end
-	if dmginfo:GetAttacker():IsPlayer() and dmginfo:GetAttacker():GetZombieClassTable().BaraCat then return end
-
 	local attacker = dmginfo:GetAttacker()
+	if  attacker:IsPlayer() and  attacker:GetZombieClassTable().BaraCat or dmginfo:GetInflictor() and dmginfo:GetInflictor():GetClass() == "weapon_zs_fistz"  then return end
+
 	if attacker:IsValid() and attacker:IsPlayer() and dmginfo:GetDamage() > 2 and CurTime() >= self.HealthLock then
 		if self:CanBeDamagedByTeam(attacker:Team()) then
 			if attacker:Team() == TEAM_HUMAN then

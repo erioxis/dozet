@@ -260,6 +260,7 @@ function GM:AddResources()
 	resource.AddFile("resource/fonts/ghoulfriaoe.ttf")
 	resource.AddFile("resource/fonts/remingtonnoiseless.ttf")
 	resource.AddFile("resource/fonts/clearsans-medium.ttf")
+	resource.AddFile("resource/fonts/ghoulfriaoe_upd.ttf")
 
 	resource.AddFile("particles/vman_explosion.pcf")
 
@@ -1781,13 +1782,13 @@ local function DoDropStart(pl)
 			end
 		end
 		local drop = table.Random(weapon)
-		pl:Give(drop)
+		timer.Simple(20, function()	pl:Give(drop) end)
 	end
 	if pl:IsSkillActive(SKILL_MIDAS_TOUCH) then
-		pl:AddInventoryItem("trinket_sin_ego")
+		timer.Simple(0, function() pl:AddInventoryItem("trinket_sin_ego") end)
 	end
 	if pl:IsSkillActive(SKILL_GOOD_BOUNTY) then
-		pl:AddInventoryItem("cons_bounty")
+		timer.Simple(0, function() pl:AddInventoryItem("cons_bounty") end)
 	end
 end
 
@@ -2017,7 +2018,7 @@ function GM:PlayerHealedTeamMember(pl, other, health, wep, pointmul, nobymsg, fl
 		pl.NextChargeHeal = 0
 	end
 	if other:IsSkillActive(SKILL_SOME_YES) then
-		other:GiveStatus("regeneration"):AddDamage(health*0.1)
+		other:GiveStatus("regeneration",nil,pl):AddDamage(health*0.1)
 	end
 	--net.Start("zs_update_style") net.WriteTable({time = CurTime()+7+(math.random(10,20)*0.2),text = "HEALED PLAYER FOR "..health,score = health,color = Color(37,194,23)}) net.Send(pl) 
 	if pointmul ~= 0 then
@@ -5080,9 +5081,6 @@ function GM:DoPlayerDeath(pl, attacker, dmginfo)
 				pl:MakeBossDrop(attacker)
 			end)
 
-			timer.Simple(0, function()
-				pl:Make2BossDrop(attacker)
-			end)
 
 
 			pl.BossDeathNotification = nil

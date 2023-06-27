@@ -630,7 +630,7 @@ net.Receive("zs_trinketconsumed", function(length)
 end)
 net.Receive("zs_trinketcorrupt", function(length)
 	local trinket = (GAMEMODE.ZSInventoryItemData[net.ReadString()].PrintName or "?")
-	local trinket2 = (GAMEMODE.ZSInventoryItemData[net.ReadString()].PrintName or "?")
+	local trinket2 = (GAMEMODE.ZSInventoryItemData[net.ReadString()] and GAMEMODE.ZSInventoryItemData[net.ReadString()].PrintName or "?")
 	MySelf:EmitSound("buttons/button3.wav", 75, 50)
 
 	GAMEMODE:CenterNotify({killicon = "weapon_zs_trinket"}, " ", COLOR_RED, translate.Format("trinket_dead", trinket, trinket2))
