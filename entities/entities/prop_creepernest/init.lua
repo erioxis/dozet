@@ -68,11 +68,11 @@ function ENT:OnTakeDamage(dmginfo)
 	end
 	if attacker:IsValid() and attacker:IsPlayer() and attacker:Team() == TEAM_UNDEAD then
 		local owner = self:GetNestOwner()
-		if attacker:GetZombieClassTable().Name ~= "Flesh Creeper" then
+		if !(attacker:GetZombieClassTable().Name == "Flesh Creeper" or attacker:GetZombieClassTable().Name == "Glitch Creeper")  then
 			return
 		end
 
-		if owner and owner:IsValidZombie() and owner ~= attacker and not attacker:IsAdmin() and owner:GetZombieClassTable().Name == "Flesh Creeper" and owner:Alive() and owner:GetPos():DistToSqr(self:GetPos()) <= 589824 then --768^2
+		if owner and owner:IsValidZombie() and owner ~= attacker and not attacker:IsAdmin() and (attacker:GetZombieClassTable().Name == "Flesh Creeper" or attacker:GetZombieClassTable().Name == "Glitch Creeper")  and owner:Alive() and owner:GetPos():DistToSqr(self:GetPos()) <= 589824 then --768^2
 			attacker:CenterNotify(COLOR_RED, translate.ClientFormat(attacker, "x_has_built_this_nest_and_is_still_around", owner:Name()))
 			return
 		end

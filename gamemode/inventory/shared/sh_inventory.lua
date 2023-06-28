@@ -304,9 +304,9 @@ local pick =  {
 }
 GM:AddInventoryItemData("cons_soul_picka",		trs("c_soul_picka"),			trs("c_soul_picka_d"),								"models/props_c17/trappropeller_lever.mdl", 3, nil, nil, function(pl) 
 
-	local need = {}
+	local need = pl.SeededSouls or {}
 	local tries = 0
-	if !pl.SeededSouls or #pl.SeededSouls < 3 then
+	if #need < 2 then
 		while #need < 3 or tries < 50 do
 			local item = pick[math.random(1,#pick)]
 			if !table.HasValue(need,item) and !pl:HasTrinket(item) then 

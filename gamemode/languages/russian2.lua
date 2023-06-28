@@ -1,4 +1,9 @@
 translate.AddLanguage("ru", "Russian")
+
+local GOOD = "^"..3
+local BAD = "^"..2
+local NEUTRAL = "^"..8
+local PURPLE = "^"..6
 LANGUAGE.p_mul = " к поинтым\n"
 LANGUAGE.exp_r = " радиуса взрыва\n"
 LANGUAGE.exp_damage_t = " взрывного урона по себе\n"
@@ -64,14 +69,14 @@ LANGUAGE.skill_toy_d = "Если победить с ним то даст доп
 LANGUAGE.skill_schance = "Второй шанс"
 LANGUAGE.skill_schance_d1 = "Вы можете пережить летальный удар(один раз на волну) и восстановить 50% здоровья.\n"
 LANGUAGE.skill_moredamage = "Урон?"
-LANGUAGE.skill_moredamage_d1 = "+25% К защите кровавой брони.\n"
+LANGUAGE.skill_moredamage_d1 = "Максимальный получаемый урон - 30.\nКроме прямого)\n"
 LANGUAGE.skill_adevo = "Тощий"
 LANGUAGE.skill_adevo_d1 = "Крюк пожирателя вас не видит .\n"
 LANGUAGE.skill_adevo_d2 = "-7% К защите кровавой брони и +25% получаемого мили урона.\n"
 LANGUAGE.skill_scoach = "Тугодум"
 LANGUAGE.skill_scoach_d1 = "+3 Скорости за волну.\n"
 LANGUAGE.skill_ancientsave = "Время древних"
-LANGUAGE.skill_ancientsave_d1 = "Можно видеть духов с большого расстояния!\n"
+LANGUAGE.skill_ancientsave_d1 = "Древний кошмар вас не убьет с 1 удара...Но?\n"
 LANGUAGE.skill_sss = "Стильный человек"
 LANGUAGE.skill_sss_d1 = "Чем больше стиля,тем больше боезапас!\n1 Стиль = 33% к боезапасу!\n"
 LANGUAGE.skill_sss_d2 = "-30% К боезапасу сначала"
@@ -549,6 +554,15 @@ LANGUAGE.skill_devo_d1 = "Дает специальный активируемы
 LANGUAGE.skill_devo_d2 = "+50% К использованию зарядов\n"
 LANGUAGE.skill_cader_r = "Шиткейдер"
 LANGUAGE.skill_cader_buff = "Пропы которые вы полечили на 4 секунды получают в 2.5x больше урона!\n"
+LANGUAGE.skill_engi = "Инжир"
+LANGUAGE.skill_engi_d1 = "+50% К скорости сканирования туррели\n"..GOOD.."+50% К радиусу туррели\n"..GOOD.."+50% К здоровью туррели\n"..BAD.."-25% к урону мили оружием и -25% к урону от пуль"
+LANGUAGE.skill_mew = "Разум будущего"
+LANGUAGE.skill_mew_d1 = "+75% к урону туррели\n"..BAD.."-25% к урону мили оружием и -25% к урону от пуль и -999% Урона магии"
+LANGUAGE.skill_flesh_motor = "Мотор из плоти"
+LANGUAGE.skill_flesh_motor_d = "Туррель тратит вашу кровавую броню при стрельбе\n"..GOOD.."Иногда она выстреливает дополнительный выстрел и наносит на 10% больше урона\n"..BAD.."-10% Защита кровавой брони"
+LANGUAGE.skill_pipis_d = "Когда туррель получает урон то он наносится и вам(33%) но туррель получает на 67% меньше урона!"
+LANGUAGE.skill_hair = "Крутая туррель"
+LANGUAGE.skill_hair_d = "+5% к урону туррели\nТуррель становится крутой."
 --Скиллы на деф
 LANGUAGE.skill_ultra_r = "Берсерк"
 LANGUAGE.skill_ultra_r_d1 = "Получение фатального урона вас не убьет\nОдин раз на волну.\n"
@@ -954,6 +968,7 @@ LANGUAGE.skillmod_n128 = "%s к дополнительному времени д
 LANGUAGE.skillmod_n129 = "%s к дополнительному урону"
 LANGUAGE.skillmod_n130 = "%s к дополнительному времени баффов"
 LANGUAGE.skillmod_n131 = "%s к скорости регенерации(статус)"
+LANGUAGE.skillmod_n132 = "%s к урону туррелей"
 
 LANGUAGE.survival_name = "Выживание"
 LANGUAGE.survival_desc = "Тут собраны навыки для выживания,для начала эта ветка хороша."
@@ -996,3 +1011,5 @@ LANGUAGE.god_1_desc = "Выбери кому будешь поклоняться
 
 
 LANGUAGE.need_for_achiev			= "Скиллы,тринкеты нужные для достижения."
+
+LANGUAGE.evolves_in_to_x_on_wave_y					= "Эволюционирует в %s на %d волне."

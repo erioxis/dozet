@@ -5,7 +5,7 @@ local beamcol, matBeam = Color(237, 140, 140), Material("effects/bloodstream")
 function ENT:Draw()
 	local owner = self:GetOwner()
 	local who = self:GetDTEntity(11)
-	if not owner:IsValid() or owner == MySelf and not owner:ShouldDrawLocalPlayer() or !who:IsValid() or who:Team() ~= owner:Team() then return end
+	if not owner:IsValid() or owner == MySelf and not owner:ShouldDrawLocalPlayer() or !who:IsValid() or who == owner or who:Team() ~= owner:Team() then return end
 	if owner:GetZombieClassTable().IgnoreTargetAssist then return end
 
 	local ang = Angle( 0, 0, 0 )

@@ -41,7 +41,7 @@ function SWEP:BuildingThink()
 	local uid = owner:UniqueID()
 	local count = 0
 	local personal_count = 0
-	for _, ent in pairs(ents.FindByClass("prop_creepernest")) do
+	for _, ent in pairs(ents.FindByClass("prop_glitchnest")) do
 		if ent.OwnerUID == uid then
 			personal_count = personal_count + 1
 		end
@@ -145,7 +145,7 @@ function SWEP:BuildingThink()
 		return
 	end
 
-	local ent = ents.Create("prop_creepernest")
+	local ent = ents.Create("prop_glitchnest")
 	if ent:IsValid() then
 		nestang = hitnormal:Angle()
 		nestang:RotateAroundAxis(nestang:Right(), 270)
@@ -163,7 +163,7 @@ function SWEP:BuildingThink()
 
 		ent:SetNestOwner(owner)
 
-		owner.NextNestSpawn = CurTime() + 3
+		owner.NextNestSpawn = CurTime() + 10
 	end
 end
 

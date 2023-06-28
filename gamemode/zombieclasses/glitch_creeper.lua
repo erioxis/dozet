@@ -1,21 +1,19 @@
-CLASS.Name = "Flesh Creeper"
-CLASS.TranslationName = "class_flesh_creeper"
-CLASS.Description = "description_flesh_creeper"
-CLASS.Help = "controls_flesh_creeper"
+CLASS.Name = "Glitch Creeper"
+CLASS.TranslationName = "class_glitch_creeper"
+CLASS.Description = "description_glitch_creeper"
+CLASS.Help = "controls_glitch_creeper"
 
-CLASS.Wave = 0
-CLASS.Hidden = true
-CLASS.Unlocked = true
+CLASS.Wave = 5 / 12
+CLASS.Unlocked = false
 CLASS.NotRandomStart = true
-CLASS.BetterVersion = "Glitch Creeper"
 
-CLASS.Health = 30
-CLASS.SWEP = "weapon_zs_fleshcreeper"
+CLASS.Health = 320
+CLASS.SWEP = "weapon_zs_glitchcreeper"
 CLASS.Model = Model("models/antlion.mdl")
-CLASS.Speed = 190
-CLASS.JumpPower = 320
+CLASS.Speed = 210
+CLASS.JumpPower = 420
 
-CLASS.Points = CLASS.Health/GM.NoHeadboxZombiePointRatio
+CLASS.Points = CLASS.Health/GM.NoHeadboxZombiePointRatio/2
 
 CLASS.VoicePitch = 0.55
 
@@ -121,7 +119,7 @@ function CLASS:UpdateAnimation(pl, velocity, maxseqgroundspeed)
 		if dir:Dot(aimdir) >= 0.5 then
 			pl:SetPlaybackRate(pl:GetPlaybackRate() / self.ModelScale / 2)
 		else]]
-			pl:SetPlaybackRate(pl:GetPlaybackRate() / self.ModelScale)
+			pl:SetPlaybackRate(pl:GetPlaybackRate() * math.Rand(1,5) / self.ModelScale)
 		--end
 
 		--[[if pl:Crouching() then
@@ -179,14 +177,17 @@ end
 if not CLIENT then return end
 
 CLASS.Icon = "zombiesurvival/killicons/fleshcreeper"
+CLASS.IconColor = Color(22,22,22)
 
 local matFlesh = Material("models/flesh")
 function CLASS:PrePlayerDraw(pl)
 	render.ModelMaterialOverride(matFlesh)
+	render.SetColorModulation(0.02, 0.125, 0.282)
 end
 
 function CLASS:PostPlayerDraw(pl)
 	render.ModelMaterialOverride()
+	render.SetColorModulation(1, 1, 1)
 end
 
 function CLASS:ShouldDrawLocalPlayer()

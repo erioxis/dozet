@@ -414,7 +414,7 @@ function PANEL:CreateDescLabels()
 	if classtable.BetterVersion then
 		local betterclasstable = GAMEMODE.ZombieClasses[classtable.BetterVersion]
 		if betterclasstable then
-			table.insert(lines, translate.Format("evolves_in_to_x_on_wave_y", betterclasstable.Name, betterclasstable.Wave))
+			table.insert(lines, translate.Format("evolves_in_to_x_on_wave_y", translate.Get(betterclasstable.TranslationName), betterclasstable.Wave))
 		end
 	end
 

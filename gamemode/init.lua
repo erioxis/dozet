@@ -972,8 +972,11 @@ function GM:PlayerSelectSpawn(pl)
 				if dyn then -- We were spectating an entity.
 					pl.ForceDynamicSpawn = nil
 					if self:DynamicSpawnIsValid(dyn) then
-						if dyn:GetClass() == "prop_creepernest" then -- For honorable mentions
+						if dyn:GetClass() == "prop_creepernest" or dyn:GetClass() == "prop_glitchnest" then -- For honorable mentions
 							local owner = dyn:GetOwner()
+							if dyn.OnSpawnInMe then
+								dyn:OnSpawnInMe(pl)
+							end
 							if owner and owner:IsValid() and owner:Team() == TEAM_UNDEAD then
 								owner.NestSpawns = owner.NestSpawns + 1
 							end
@@ -2437,7 +2440,15 @@ local function EndRoundSetupPlayerVisibility(pl)
 		hook.Remove("SetupPlayerVisibility", "EndRoundSetupPlayerVisibility")
 	end
 end
-
+local function GetTaper(pl, str, mul)
+	local taper = 1
+	for item,v in pairs(pl:GetInventoryItems()) do
+		if string.find(item, str, 1, true) then
+			taper = taper + mul * v
+		end
+	end
+	return taper
+end
 function GM:OnPlayerWin(pl)
 	local xp = math.Clamp(#player.GetAll() * 120, 300, 4000) * (GAMEMODE.WinXPMulti or 1)
 	if self.ZombieEscape then
@@ -2470,6 +2481,9 @@ function GM:OnPlayerWin(pl)
 		end
 		if pl:HasTrinket("flower") and not self.ObjectiveMap then
 			pl:GiveAchievement("flower")	
+		end
+		if GetTaper(pl,"sin_ego",1) > 100 then
+			pl:GiveAchievement("midas_forever")	
 		end
 		if pl:HasTrinket("curse_dropping") and pl:HasTrinket("hurt_curse") and pl:HasTrinket("un_curse") and pl:HasTrinket("curse_faster") and pl:HasTrinket("curse_slow") and pl:HasTrinket("curse_heart") and pl:HasTrinket("curse_fragility")
 		and pl:HasTrinket("curse_ponos") and pl:HasTrinket("curse_unknown") and pl:GetStatus("cursed") and pl:IsSkillActive(SKILL_ATTACHMENT_CURSE) and pl:HasTrinket("cursedtrinket") 
@@ -5992,7 +6006,7 @@ end
 
 function GM:OnZEWeaponPickup(pl, wep)
 end
-
+local spawn = {"info_player_zombie", "prop_creepernest", "prop_glitchnest", "info_player_undead", "prop_obj_sigil"}
 net.Receive("zs_changeclass", function(len, sender)
 	if sender:Team() ~= TEAM_UNDEAD or sender.Revive or GAMEMODE.PantsMode or GAMEMODE:IsClassicMode() or GAMEMODE:IsBabyMode() or GAMEMODE.ZombieEscape then return end
 
@@ -6009,7 +6023,6 @@ net.Receive("zs_changeclass", function(len, sender)
 		sender.DeathClass = classtab.Index
 		sender:CenterNotify(translate.ClientFormat(sender, "you_will_spawn_as_a_x", translate.ClientGet(sender, classtab.TranslationName)))
 		local nest = NULL
-		local spawn = {"info_player_zombie", "prop_creepernest", "info_player_undead", "prop_obj_sigil"}
 		for _, ent in pairs(ents.FindInSphere(sender:GetPos(), 320)) do 
 			if ent and IsValid(ent) and table.HasValue(spawn,ent:GetClass()) and !IsValid(nest) then
 				if ent:GetClass() == "prop_obj_sigil" then

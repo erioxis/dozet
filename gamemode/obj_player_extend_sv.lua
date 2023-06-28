@@ -841,7 +841,7 @@ function meta:ProcessDamage(dmginfo)
 
 		self.ShouldFlinch = true
 	end
-	if self:HasTrinket("clownsoul") and damage > 30 then
+	if self:IsSkillActive(SKILL_MOREDAMAGE) and damage > 30 and !dmgbypass then
 		damage = 30
 	end
     if self.HyperCoagulation and math.random(1,2) == 2 then
@@ -2546,18 +2546,13 @@ function meta:MakeDemiBossDrop(killer)
 	end
 end
 function meta:MakeBossDrop(killer)
-	if math.random(1,3) == 1 then return end
 	local drop = "cons_soul_picka"
 	local pos = self:LocalToWorld(self:OBBCenter())
 	local ent = ents.Create("prop_invitem")
 	if ent:IsValid() then
 		ent:SetPos(pos)
 		ent:SetAngles(AngleRand())
-		if inv then
-			ent:SetInventoryItemType(drop)
-		else
-			ent:SetWeaponType(drop)
-		end 
+		ent:SetInventoryItemType(drop)
 		if killer and killer:IsValidLivingHuman() then
 			ent:SetOwner(killer)
 		end

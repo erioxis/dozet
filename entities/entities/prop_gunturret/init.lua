@@ -58,14 +58,17 @@ function ENT:SetupPlayerSkills()
 	local owner = self:GetObjectOwner()
 	local scanspeed = 1
 	local scanangle = 1
+	local damagemul = 1
 
 	if owner:IsValid() then
 		scanspeed = scanspeed * (owner.TurretScanSpeedMul or 1)
 		scanangle = scanangle * (owner.TurretScanAngleMul or 1)
+		damagemul = damagemul * (owner.TurretDamageMul or 1)
 	end
 
 	self:SetScanSpeed(scanspeed)
 	self:SetScanMaxAngle(scanangle)
+	self.Damage = self.Damage * damagemul
 
 	self:SetupDeployableSkillHealth("TurretHealthMul")
 end
@@ -157,13 +160,17 @@ end
 
 function ENT:FireTurret(src, dir)
 	if self:GetNextFire() <= CurTime() then
-		local curammo = self:GetAmmo()
+		local mot = owner:IsSkillActive(SKILL_FLESH_MOTOR)
+		local curammo = mot and owner:GetBloodArmor() > 0 and owner:GetBloodArmor() or self:GetAmmo()
 		local owner = self:GetObjectOwner()
 		local twinvolley = self:GetManualControl() and owner:IsSkillActive(SKILL_TWINVOLLEY)
 		if curammo > (twinvolley and 1 or 0) then
 			self:SetNextFire(CurTime() + self.FireDelay * (twinvolley and 1.5 or 1))
-			self:SetAmmo(curammo - (twinvolley and 2 or 1))
-
+			if mot and owner:GetBloodArmor() > 0 then
+				owner:SetBloodArmor(math.max(0,curammo - (twinvolley and 2 or 1)))
+			else
+				self:SetAmmo(curammo - (twinvolley and 2 or 1))
+			end
 			if self:GetAmmo() == 0 then
 				owner:SendDeployableOutOfAmmoMessage(self)
 			end
@@ -171,7 +178,7 @@ function ENT:FireTurret(src, dir)
 			self:PlayShootSound()
 
 			TEMPTURRET = self
-			self:FireBulletsLua(src, dir, self.Spread, self.NumShots * (twinvolley and 2 or 1), self.Damage, self:GetObjectOwner(), nil, nil, BulletCallback, nil, nil, nil, nil, self)
+			self:FireBulletsLua(src, dir, self.Spread, self.NumShots * (twinvolley and 2 or 1) + (mot and math.random(1,5) == 1 and 1 or 0), self.Damage, self:GetObjectOwner(), nil, nil, BulletCallback, nil, nil, nil, nil, self)
 		else
 			self:SetNextFire(CurTime() + 2)
 			self:EmitSound("npc/turret_floor/die.wav")
@@ -281,6 +288,11 @@ function ENT:OnTakeDamage(dmginfo)
 	local attacker = dmginfo:GetAttacker()
 	if not (attacker:IsValid() and attacker:IsPlayer() and attacker:Team() == TEAM_HUMAN) then
 		self:ResetLastBarricadeAttacker(attacker, dmginfo)
+		local owner =self:GetObjectOwner()
+		if owner:IsValid() and owner:IsSkillActive(SKILL_PIPIS) then
+			owner:TakeDamage(dmginfo:GetDamage()*0.33)
+			dmginfo:ScaleDamage(0.33)
+		end
 		self:SetObjectHealth(self:GetObjectHealth() - dmginfo:GetDamage())
 	end
 end

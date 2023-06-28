@@ -509,6 +509,11 @@ SKILL_GOOD_BOUNTY = 481
 SKILL_SPICY_CADES = 482
 SKILL_ABFINGERS = 483
 SKILL_SOME_YES = 484
+SKILL_ENGI = 485
+SKILL_MIND_FOOT = 486
+SKILL_FLESH_MOTOR = 487
+SKILL_PIPIS = 488
+SKILL_HAIR = 489
 
 
 
@@ -643,6 +648,7 @@ SKILLMOD_DEBUFF_TIME = 128
 SKILLMOD_DAMAGE_ALL = 129
 SKILLMOD_BUFF_TIME = 130
 SKILLMOD_REGEN_SPEED = 131
+SKILLMOD_TURRET_DAMAGE = 132
 
 local GOOD = "^"..COLORID_GREEN
 local BAD = "^"..COLORID_RED
@@ -1114,7 +1120,17 @@ GM:AddSkillModifier(SKILL_SPICY_CADES, SKILLMOD_HEALTH, -10)
 GM:AddSkill(SKILL_D_NOODLEARMS, trs("skill_noodle"), GOOD.."+10"..trs("worth")..GOOD..trs("skill_noodle_d1")..GOOD.."+35%"..trs("repair")..BAD..trs("skill_noodle_d2"),
 																-7,			2,					{}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_INSTRUMENTS, trs("skill_instruments"), GOOD..trs("skill_instruments_d1"),
-																-10,		-3,					{}, TREE_BUILDINGTREE)
+																-10,		-3,					{SKILL_ENGI}, TREE_BUILDINGTREE)
+GM:AddSkill(SKILL_ENGI, trs("skill_engi"), GOOD..trs("skill_engi_d1"),
+																-10,		-2,					{}, TREE_BUILDINGTREE)
+GM:AddSkill(SKILL_MIND_FOOT, trs("skill_mew"), GOOD..trs("skill_mew_d1"),
+																-11,		-3,					{SKILL_INSTRUMENTS}, TREE_BUILDINGTREE)
+GM:AddSkill(SKILL_FLESH_MOTOR, trs("skill_flesh_motor"), BAD..trs("skill_flesh_motor_d"),
+																-12,		-2,					{SKILL_MIND_FOOT,SKILL_PIPIS}, TREE_BUILDINGTREE)
+GM:AddSkill(SKILL_PIPIS, "P I P I S", trs("skill_pipis_d"),
+																-12,		-1,					{}, TREE_BUILDINGTREE)		
+GM:AddSkill(SKILL_HAIR, trs("skill_hair"), GOOD..trs("skill_hair_d"),
+																-10,		-1,					{SKILL_ENGI}, TREE_BUILDINGTREE)		
 GM:AddSkill(SKILL_STOWAGE, 	trs("skill_stowage"), GOOD..trs("skill_stowage_d1")..BAD..trs("skill_stowage_d2"),
 																4,			-3,					{SKILL_NANITES}, TREE_BUILDINGTREE)
 SKILL_NANITES = 241
@@ -1351,11 +1367,11 @@ GM:AddSkill(SKILL_LEVELHEADED, trs("skill_l_headed"), GOOD..trs("skill_l_headed_
 																-2,			2,					{}, TREE_GUNTREE)
 GM:AddSkill(SKILL_QUICKDRAW, trs("skill_quick_d"), GOOD.."+65%"..trs("w_draw")..BAD.."-15%"..trs("r_speed"),
 																0,			1,					{}, TREE_GUNTREE)
-GM:AddSkill(SKILL_FOCUS, trs("skill_focus").."I", GOOD.."+11%"..trs("w_ac")..GOOD.."+5%"..trs("b_damage")..BAD.."-3%"..trs("r_speed"),
+GM:AddSkill(SKILL_FOCUS, trs("skill_focus").."I", GOOD.."+3%"..trs("w_ac")..GOOD.."+5%"..trs("b_damage")..BAD.."-3%"..trs("r_speed"),
 																5,			6,					{SKILL_NONE, SKILL_FOCUSII}, TREE_GUNTREE)
-GM:AddSkill(SKILL_FOCUSII, trs("skill_focus").."II", GOOD.."+9%"..trs("w_ac")..GOOD.."+9%"..trs("b_damage")..BAD.."-7%"..trs("r_speed"),
+GM:AddSkill(SKILL_FOCUSII, trs("skill_focus").."II", GOOD.."+4%"..trs("w_ac")..GOOD.."+9%"..trs("b_damage")..BAD.."-7%"..trs("r_speed"),
 																4,			3,					{SKILL_FOCUSIII, SKILL_SCAVENGER, SKILL_D_PALSY, SKILL_PITCHER}, TREE_GUNTREE)
-GM:AddSkill(SKILL_FOCUSIII, trs("skill_focus").."III", GOOD.."+12%"..trs("w_ac")..GOOD.."+11%"..trs("b_damage")..BAD.."-6%"..trs("r_speed"),
+GM:AddSkill(SKILL_FOCUSIII, trs("skill_focus").."III", GOOD.."+6%"..trs("w_ac")..GOOD.."+11%"..trs("b_damage")..BAD.."-6%"..trs("r_speed"),
 																3,			0,					{SKILL_EGOCENTRIC, SKILL_WOOISM, SKILL_ORPHICFOCUS, SKILL_SCOURER}, TREE_GUNTREE)
 GM:AddSkillModifier(SKILL_FOCUS, SKILLMOD_DAMAGE, 0.05)
 GM:AddSkillModifier(SKILL_FOCUSII, SKILLMOD_DAMAGE, 0.09)
@@ -1371,7 +1387,7 @@ SKILL_GUNSLINGER = 252
 GM:AddSkill(SKILL_GUNSLINGER, trs("skill_gunslinger"), GOOD.."+10%"..trs("w_ac")..GOOD.."+15%"..trs("b_damage")..BAD.."-30%"..trs("meleedamage")..BAD.."-50%"..trs("m_range"),
 																0,			5,					{SKILL_D_PALSY, SKILL_PHOENIX}, TREE_GUNTREE)
 GM:AddSkillModifier(SKILL_GUNSLINGER, SKILLMOD_DAMAGE, 0.10)
-GM:AddSkillModifier(SKILL_GUNSLINGER, SKILLMOD_AIMSPREAD_MUL, -0.15)
+GM:AddSkillModifier(SKILL_GUNSLINGER, SKILLMOD_AIMSPREAD_MUL, -0.1)
 GM:AddSkillModifier(SKILL_GUNSLINGER, SKILLMOD_MELEE_DAMAGE_MUL, -0.30)
 GM:AddSkillModifier(SKILL_GUNSLINGER, SKILLMOD_MELEE_RANGE_MUL, -0.50)
 GM:AddSkill(SKILL_BOUNTYKILLER, trs("skill_bounty"), GOOD..trs("skill_bounty_d1")..BAD.."-15%"..trs("b_damage"),
@@ -2101,7 +2117,7 @@ GM:AddSkill(SKILL_SELFSAVER, trs("skill_selfsaver"), GOOD..trs("skill_selfsaver_
 GM:AddSkill(SKILL_BLOODYFISTS, trs("skill_bloodyfists"), GOOD..trs("skill_bloodyfists_d1")..BAD..trs("skill_bloodyfists_d2"),
 				                                                            	-5,			4,					{SKILL_SELFSAVER}, TREE_DEFENSETREE)
 GM:AddSkillModifier(SKILL_BLOODYFISTS, SKILLMOD_UNARMED_DAMAGE_MUL, -0.20)
-GM:AddSkill(SKILL_ASAVE, trs("skill_ancientsave"), GOOD..trs("skill_ancientsave_d1")..BAD.."-15"..trs("speed"),
+GM:AddSkill(SKILL_ASAVE, trs("skill_ancientsave"), GOOD..trs("skill_ancientsave_d1")..BAD.."-32"..trs("speed"),
 				                                                            	-4,			5,					{SKILL_SELFSAVER}, TREE_DEFENSETREE)
 GM:AddSkill(SKILL_SSS, trs("skill_sss"), GOOD..trs("skill_sss_d1")..BAD..trs("skill_sss_d2"),
 				                                                            	-4,			7,					{SKILL_ASAVE}, TREE_DEFENSETREE)
@@ -2115,7 +2131,6 @@ GM:AddSkill(SKILL_ANTINEGR, trs("skill_antinegr"), GOOD..trs("skill_antinegr_d1"
 GM:AddSkill(SKILL_MOREDAMAGE, trs("skill_moredamage"), GOOD..trs("skill_moredamage_d1")..BAD.."+35%"..trs("meleedamagetaken"),
 				                                                            	0,			7,					{SKILL_ANTINEGR}, TREE_DEFENSETREE)
 GM:AddSkillModifier(SKILL_MOREDAMAGE, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 0.35)
-GM:AddSkillModifier(SKILL_MOREDAMAGE, SKILLMOD_BLOODARMOR_DMG_REDUCTION, 0.25)
 GM:AddSkill(SKILL_ANTI_DEVO, trs("skill_adevo"), GOOD..trs("skill_adevo_d1")..BAD..trs("skill_adevo_d2"),
 				                                                            	1,			7,					{SKILL_MOREDAMAGE}, TREE_DEFENSETREE)
 GM:AddSkillModifier(SKILL_ANTI_DEVO, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 0.25)
@@ -2771,6 +2786,7 @@ GM:SetSkillModifierFunction(SKILLMOD_CLOUD_TIME, GM:MkGenericMod("CloudTime"))
 GM:SetSkillModifierFunction(SKILLMOD_EXP_DAMAGE_MUL, GM:MkGenericMod("ExplosiveDamageMul"))
 GM:SetSkillModifierFunction(SKILLMOD_PROJECTILE_DAMAGE_MUL, GM:MkGenericMod("ProjectileDamageMul"))
 GM:SetSkillModifierFunction(SKILLMOD_TURRET_RANGE_MUL, GM:MkGenericMod("TurretRangeMul"))
+GM:SetSkillModifierFunction(SKILLMOD_TURRET_DAMAGE, GM:MkGenericMod("TurretDamageMul"))
 GM:SetSkillModifierFunction(SKILLMOD_AIM_SHAKE_MUL, GM:MkGenericMod("AimShakeMul"))
 GM:SetSkillModifierFunction(SKILLMOD_THROWER_DAMAGE, GM:MkGenericMod("ThrowDamageMul"))
 GM:SetSkillModifierFunction(SKILLMOD_DEBUFF_TIME, GM:MkGenericMod("AdditionalDebuffTime"))
@@ -2845,13 +2861,13 @@ GM:AddSkillModifier(SKILL_MOTIONI, SKILLMOD_SPEED, 5)
 GM:AddSkillModifier(SKILL_MOTIONII, SKILLMOD_SPEED, 5)
 GM:AddSkillModifier(SKILL_MOTIONIII, SKILLMOD_SPEED, 5)
 
-GM:AddSkillModifier(SKILL_FOCUS, SKILLMOD_AIMSPREAD_MUL, -0.11)
+GM:AddSkillModifier(SKILL_FOCUS, SKILLMOD_AIMSPREAD_MUL, -0.03)
 GM:AddSkillModifier(SKILL_FOCUS, SKILLMOD_RELOADSPEED_MUL, -0.03)
 
-GM:AddSkillModifier(SKILL_FOCUSII, SKILLMOD_AIMSPREAD_MUL, -0.09)
+GM:AddSkillModifier(SKILL_FOCUSII, SKILLMOD_AIMSPREAD_MUL, -0.04)
 GM:AddSkillModifier(SKILL_FOCUSII, SKILLMOD_RELOADSPEED_MUL, -0.07)
 
-GM:AddSkillModifier(SKILL_FOCUSIII, SKILLMOD_AIMSPREAD_MUL, -0.12)
+GM:AddSkillModifier(SKILL_FOCUSIII, SKILLMOD_AIMSPREAD_MUL, -0.06)
 GM:AddSkillModifier(SKILL_FOCUSIII, SKILLMOD_RELOADSPEED_MUL, -0.06)
 
 GM:AddSkillModifier(SKILL_ORPHICFOCUS, SKILLMOD_RELOADSPEED_MUL, -0.06)
@@ -2878,7 +2894,7 @@ GM:AddSkillModifier(SKILL_EGOCENTRIC, SKILLMOD_HEALTH, -5)
 GM:AddSkillModifier(SKILL_SELFSAVER, SKILLMOD_SELF_DAMAGE_MUL, -0.25)
 GM:AddSkillModifier(SKILL_SELFSAVER, SKILLMOD_SPEED, -35)
 
-GM:AddSkillModifier(SKILL_ASAVE, SKILLMOD_SPEED, -15)
+GM:AddSkillModifier(SKILL_ASAVE, SKILLMOD_SPEED, -32)
 
 GM:AddSkillModifier(SKILL_BLASTPROOF, SKILLMOD_SELF_DAMAGE_MUL, -0.40)
 GM:AddSkillModifier(SKILL_BLASTPROOF, SKILLMOD_RELOADSPEED_MUL, -0.10)
@@ -3233,6 +3249,27 @@ GM:AddSkillModifier(SKILL_ROBUST, SKILLMOD_WEAPON_WEIGHT_SLOW_MUL, -0.06)
 GM:AddSkillModifier(SKILL_TAUT, SKILLMOD_PROP_CARRY_SLOW_MUL, 0.4)
 
 GM:AddSkillModifier(SKILL_TURRETOVERLOAD, SKILLMOD_TURRET_RANGE_MUL, -0.3)
+
+GM:AddSkillModifier(SKILL_ENGI, SKILLMOD_TURRET_RANGE_MUL, 0.5)
+GM:AddSkillModifier(SKILL_ENGI, SKILLMOD_TURRET_HEALTH_MUL, 0.5)
+GM:AddSkillModifier(SKILL_ENGI, SKILLMOD_TURRET_SCANSPEED_MUL, 0.5)
+GM:AddSkillModifier(SKILL_ENGI, SKILLMOD_MELEE_DAMAGE_MUL, -0.25)
+GM:AddSkillModifier(SKILL_ENGI, SKILLMOD_DAMAGE, -0.25)
+
+
+GM:AddSkillModifier(SKILL_MIND_FOOT, SKILLMOD_MELEE_DAMAGE_MUL, -0.25)
+GM:AddSkillModifier(SKILL_MIND_FOOT, SKILLMOD_DAMAGE, -0.25)
+GM:AddSkillModifier(SKILL_MIND_FOOT, SKILLMOD_M_DMG, -999)
+GM:AddSkillModifier(SKILL_MIND_FOOT, SKILLMOD_TURRET_DAMAGE, 0.75)
+
+GM:AddSkillModifier(SKILL_HAIR, SKILLMOD_TURRET_DAMAGE, 0.05)
+
+
+GM:AddSkillModifier(SKILL_FLESH_MOTOR, SKILLMOD_TURRET_DAMAGE, 0.1)
+
+
+GM:AddSkillModifier(SKILL_FLESH_MOTOR, SKILLMOD_BLOODARMOR_DMG_REDUCTION, -0.1)
+
 
 GM:AddSkillModifier(SKILL_STOWAGE, SKILLMOD_RES_AMMO_MUL, -0.15)
 GM:AddSkillFunction(SKILL_STOWAGE, function(pl, active)

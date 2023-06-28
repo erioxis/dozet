@@ -5,7 +5,7 @@ GM.Website	=	"https://github.com/erioxis/dozet"
 
 -- No, adding a gun doesn't make your name worth being here.
 GM.Credits = {
-	{"Version", "", "8.3.7"}, -- дайте пофармить новичкам!
+	{"Version", "", "8.3.9"}, -- дайте пофармить новичкам!
 	{"Season of ", "skill buffs,zombie debuff and MORE OPTIMIZATION", "maybe"},
 	{"erioxis", "Phantom coder", "dead"},
 	{"Холодное Молочко(M-I-L-K-Y)", "Not a Phantom coder", "Alive"},
@@ -399,7 +399,7 @@ function GM:DynamicSpawnIsValid(ent, humans, allplayers)
 	if not allplayers then allplayers = player.GetAll() end
 
 	local pos = ent:GetPos() + Vector(0, 0, 1)
-	local is_nest = ent:GetClass() == "prop_creepernest"
+	local is_nest = ent:GetClass() == "prop_creepernest" or ent:GetClass() == "prop_glitchnest"
 	local required_distance = is_nest and self.CreeperNestDist or self.DynamicSpawnDist -- Nests have a shorter distance and no visibility requirement.
 
 	--if ent.GetNestBuilt and ent:GetNestBuilt() and not util.TraceHull({start = pos, endpos = pos + playerheight, mins = playermins, maxs = playermaxs, mask = MASK_SOLID_BRUSHONLY}).Hit then
