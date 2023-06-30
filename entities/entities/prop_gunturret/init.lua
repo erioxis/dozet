@@ -160,9 +160,9 @@ end
 
 function ENT:FireTurret(src, dir)
 	if self:GetNextFire() <= CurTime() then
-		local mot = owner:IsSkillActive(SKILL_FLESH_MOTOR)
 		local curammo = mot and owner:GetBloodArmor() > 0 and owner:GetBloodArmor() or self:GetAmmo()
 		local owner = self:GetObjectOwner()
+		local mot = owner:IsSkillActive(SKILL_FLESH_MOTOR)
 		local twinvolley = self:GetManualControl() and owner:IsSkillActive(SKILL_TWINVOLLEY)
 		if curammo > (twinvolley and 1 or 0) then
 			self:SetNextFire(CurTime() + self.FireDelay * (twinvolley and 1.5 or 1))

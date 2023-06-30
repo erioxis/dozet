@@ -48,10 +48,10 @@ function SWEP:Think()
 				for _, ent in pairs(ents.FindInSphere(center, 120)) do
 					if ent:IsValidLivingZombie() and WorldVisible(ent:WorldSpaceCenter(), center)then
 						ent:GiveStatus("zombie_battlecry", 1)
-					end
-					local chains = ent:GiveStatus("chains",3)
-					if chains and chains:IsValid() and pl ~= owner then
-						chains:SetDTEntity(11,owner)
+						local chains = ent:GiveStatus("chains",3)
+						if chains and chains:IsValid() and pl ~= owner then
+							chains:SetDTEntity(11,owner)
+						end
 					end
 				end
 

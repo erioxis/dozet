@@ -268,7 +268,7 @@ function SWEP:TakeAmmo()
 	if self.Eater then return  end
 	local own = self:GetOwner():IsSkillActive(SKILL_D_FINGERS)
 	for i=1, (own and 2 or 1) do
-		if own and math.random(1,4) ~= 1 then continue  end
+		if own and math.random(1,3) ~= 1 then continue  end
 		if self.AmmoUse then
 			self.AU = self.AU + self.AmmoUse
 			if self.AU >= 1 then

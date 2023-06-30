@@ -4,23 +4,18 @@ INC_SERVER()
 ENT.Created = 0
 ENT.trg = NULL
 function ENT:Initialize()
-	self:SetModel("models/gibs/HGIBS_rib.mdl")
-	self:PhysicsInitSphere(2)
+	self:SetModel("models/headcrabclassic.mdl")
 	self:SetSolid(SOLID_VPHYSICS)
 	self:SetModelScale(0.1, 0)
-	self:SetupGenericProjectile(false)
+	self:PhysicsInit(SOLID_VPHYSICS)
 
-
+	local phys = self:GetPhysicsObject()
+	if phys:IsValid() then
+		phys:EnableMotion(true)
+		phys:Wake()
+	end
 	self.DieTime = CurTime() + 8
 	self.LastPhysicsUpdate = UnPredictedCurTime()
-end
-ENT.LastPhysicsUpdate = 0
-function ENT:PhysicsUpdate(phys)
-	if not self.InitVelocity then self.InitVelocity = self:GetVelocity() end
-
-	local dt = (UnPredictedCurTime() - self.LastPhysicsUpdate)
-	self.LastPhysicsUpdate = UnPredictedCurTime()
-
 end
 function compare(a,b)
 	return a.Health < b.Health
@@ -72,7 +67,7 @@ function ENT:Think()
 		
 		direction.z = 0
 		--phys:SetVelocityInstantaneous(phys:GetVelocity()+direction * 190)
-		phys:AddVelocity(direction * 300 + (math.random(1,250) == 1 and Vector(0,0,500) or Vector(0,0,0)))
+		phys:SetVelocity(direction * 300 + (math.random(1,250) == 1 and Vector(0,0,500) or Vector(0,0,0)))
 	end
 	self:NextThink(CurTime()+0.1)
 	return true

@@ -472,6 +472,11 @@ function GM:GetDynamicSpawns(pl)
 			table.insert(tab, nest)
 		end
 	end
+	for _, nest in pairs(ents.FindByClass("prop_glitchnest")) do
+		if self:DynamicSpawnIsValid(nest, humans) then
+			table.insert(tab, nest)
+		end
+	end
 
 	return tab
 end

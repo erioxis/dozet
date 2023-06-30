@@ -173,7 +173,7 @@ function SWEP:BuildNest(ent)
 	ent.LastBuild = CurTime()
 	ent.LastBuilder = self:GetOwner()
 
-	if not ent:GetNestBuilt() and ent:GetNestHealth() == ent:GetNestMaxHealth() then
+	if not ent:GetNestBuilt() and ent:GetNestHealth() >= ent:GetNestMaxHealth() then
 		ent:SetNestBuilt(true)
 		ent:EmitSound("physics/flesh/flesh_bloody_break.wav")
 

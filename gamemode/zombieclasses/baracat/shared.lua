@@ -17,7 +17,9 @@ CLASS.Wave = 3 / 6
 CLASS.KnockbackScale = 0
 CLASS.BaraCat = true
 CLASS.FearPerInstance = 1
-
+CLASS.NoFallDamage = true
+CLASS.NoFallSlowdown = true
+CLASS.NoSlowdown = true
 
 CLASS.Points = 3
 

@@ -33,7 +33,7 @@ function ENT:Think()
 	local parent = self:GetBaseEntity()
 	local curTime = CurTime()
     if self.EntPos and self.TimeNext < curTime and self.EntPos:Distance( parent:GetPos() ) > 1 then
-    	self:Remove()
+    --	self:Remove()
     end
 	
 	if (self.NextThinkDa or 1) < curTime then

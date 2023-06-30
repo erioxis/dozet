@@ -6006,7 +6006,7 @@ end
 
 function GM:OnZEWeaponPickup(pl, wep)
 end
-local spawn = {"info_player_zombie", "prop_creepernest", "prop_glitchnest", "info_player_undead", "prop_obj_sigil"}
+local spawn = {"info_player_zombie", "", "prop_glitchnest", "info_player_undead", "prop_obj_sigil"}
 net.Receive("zs_changeclass", function(len, sender)
 	if sender:Team() ~= TEAM_UNDEAD or sender.Revive or GAMEMODE.PantsMode or GAMEMODE:IsClassicMode() or GAMEMODE:IsBabyMode() or GAMEMODE.ZombieEscape then return end
 

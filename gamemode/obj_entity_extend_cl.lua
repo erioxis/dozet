@@ -201,6 +201,7 @@ timer.Create("CachedNests", 0.5, 0, function()
 
 	local nests = {}
 	table.Add(nests, ents.FindByClass("prop_creepernest"))
+	table.Add(nests, ents.FindByClass("prop_glitchnest"))
 
 	GAMEMODE.CachedNests = nests
 end)
