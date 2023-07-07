@@ -61,7 +61,7 @@ function ENT:GiveToActivator(activator, caller)
 		activator:CenterNotify(COLOR_RED, translate.ClientGet(activator, "samodosa"))
 		return
 	end
-	if itypecat == INVCAT_TRINKETS and activator:HasInventoryItem(itype) then
+	if itypecat == INVCAT_TRINKETS and activator:HasInventoryItem(itype) and itype ~= "trinket_sin_ego" then
 		activator:CenterNotify(COLOR_RED, translate.ClientGet(activator, "you_already_have_this_trinket"))
 		return
 	end

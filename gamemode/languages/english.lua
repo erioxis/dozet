@@ -818,6 +818,14 @@ LANGUAGE.press_left_and_right_to_cycle_targets		= "Press STRAFE LEFT and STRAFE 
 --weapon
 --LANGUAGE.wep_		= ""
 --LANGUAGE.wep_d_		= ""
+
+
+LANGUAGE.nest_name_l1		= "Nest"
+LANGUAGE.nest_name_l2		= "Old Nest"
+
+
+LANGUAGE.wep_arikus		= "B-441 'Arikus' Spectral Pistol"
+LANGUAGE.wep_d_arikus		= "Can pierce zombie.\nBullet create projectile on hit anything(and do this after pierce!)."
 LANGUAGE.wep_ricosic		= "'Echorico' Sniper rifle"
 LANGUAGE.wep_d_ricosic		= "Shoots a SUPER-RICO BULLET.\nThis bullet can ricoshets from zombies."
 LANGUAGE.wep_flamethrower = "'Hagbzer' Flamethrower"
@@ -944,6 +952,8 @@ LANGUAGE.wep_larm	= "'Long Arm' Handgun"
 LANGUAGE.wep_d_larm	= "A heavy handgun that consumes 2 pistol rounds that spread into shrapnel on walls."
 LANGUAGE.wep_jugger	= "'Juggernaut' M249"
 LANGUAGE.wep_d_jugger	= "A light machine gun capable of immense firepower, firing additional red projectiles as it fires."
+LANGUAGE.wep_autor	= "'Astrohack' M249?"
+LANGUAGE.wep_d_autor	= "A light machine gun capable of immense firepower, can transform into manhack on secondary attack."
 LANGUAGE.wep_jackhammer	= "'Jackhammer' Drum Shotgun"
 LANGUAGE.wep_d_jackhammer	= "An automatic drum shotgun with a large clip size."
 LANGUAGE.wep_inner	= "'Innervator' Voltgun"
@@ -1871,6 +1881,7 @@ LANGUAGE.pshop_dep = "Deployables"
 LANGUAGE.pshop_trinkets = "Trinkets"
 LANGUAGE.pshop_other = "Other"
 LANGUAGE.pshop_magic = "Magic"
+LANGUAGE.pshop_modules = "Modules"
 --конец мелочи
 
 
@@ -2206,7 +2217,7 @@ LANGUAGE.skill_cryo_laser_d2 = "+35% Req for inductor working.\n"
 LANGUAGE.skill_cryo_laser_d1 = "Instead of Cascade Resonance work a Cryogenic Arc.\n"
 LANGUAGE.skill_hellhole = "Honor of hell"
 LANGUAGE.skill_hellhole_d2 = "-25% Elemental damage.\n"
-LANGUAGE.skill_hellhole_d1 = "Instead of Fire inductor work a Hole of hell.\n"
+LANGUAGE.skill_hellhole_d1 = "Instead of Fire Accumulator work a Hole of hell.\n"
 LANGUAGE.skill_at_curse = "Curse of attachment"
 LANGUAGE.skill_at_curse_d1 = "Every attachment proc give 1 curse.\n"
 LANGUAGE.skill_at_curse_d2 = "+15% Elemental damage.\n"
@@ -2674,7 +2685,7 @@ LANGUAGE.skill_live = "Old times"
 LANGUAGE.skill_live_d2 = "+15 HP per wave.\n"
 LANGUAGE.skill_f_0 = "Forager"
 LANGUAGE.skill_f_d1 = "25% chance to collect food from resupply boxes\n"
-LANGUAGE.skill_f_d2 = "+20% Ressuply delay\n"
+LANGUAGE.skill_f_d2 = "+6% Ressuply delay\n"
 LANGUAGE.skill_srush_0 = "Sugar rush"
 LANGUAGE.skill_srush_d1 = "+35 speed boost from food for 14 seconds\n"
 LANGUAGE.skill_srush_d2 = "-35% recovery from food\n"
@@ -2900,7 +2911,13 @@ LANGUAGE.arsvoid = "Arsenal void generated weapon:"
 
 LANGUAGE.post_discord_init_text						= "Hey there! This server has an Discord.\nYou can be part of it by following this link - \nhttps://discord.gg/QVCxXBqrgj"
 LANGUAGE.post_discord_init_text2					= "You can disable this message with the console command\nzs_nodiscord 1"
-
+LANGUAGE.current_skill_rand					= "Current random skill: %s"
+LANGUAGE.skill_vec = "ENDLESS?"
+LANGUAGE.skill_vec_d1 = "Copy random skill?"
+LANGUAGE.skill_vec1 = "9*21-189"
+LANGUAGE.skill_vec1_d1 = "Copy random skill"
+LANGUAGE.skill_lastt = "Nuclear Dad"
+LANGUAGE.skill_lastt_d1 = "+0.05% Damage deal for every wave"
 
 LANGUAGE.t_subcat_def = "Defensive"
 LANGUAGE.t_subcat_off = "Offensive"
@@ -3172,11 +3189,15 @@ LANGUAGE.rem_q_first =  "You must upgrade your weapon to the correct quality fir
 
 LANGUAGE.rem_title_d =  "Dismantle weapons into scrap and use scrap to upgrade weapons!"
 
+
+LANGUAGE.rem_drones_d =  "Upgrade your drone and give them a modules!"
+
 LANGUAGE.rep_dis_we =  "Disassembling your weapons cannot be reversed!"
 
 
 LANGUAGE.rem_t_remling =  "Remantling"
 LANGUAGE.rem_t_trink =  "Trinkets"
+LANGUAGE.rem_t_modules =  "Modules"
 LANGUAGE.rem_t_ammo =  "Ammunition"
 
 LANGUAGE.rem_dismantle =  "Dismantle Weapon"
@@ -3189,7 +3210,7 @@ LANGUAGE.killed_by_suicide =  " killed themself"
 
 LANGUAGE.dn_killed =  " killed "
 
-LANGUAGE.fi_hud = "Fire Inductor: "
+LANGUAGE.fi_hud = "Fire Accumulator: "
 LANGUAGE.hell_hud = "Hole of Hell: "
 LANGUAGE.cham_hud = "Chamomile Storm: "
 LANGUAGE.ca_hud = "Cryogenic Arc: "
@@ -3380,6 +3401,11 @@ LANGUAGE.skill_old_g1_d1 = "+25% Damage vs zmainers\n"
 LANGUAGE.skill_old_g1_d2 = "+75% Damage on last human."
 
 
+LANGUAGE.skill_corrupt = "Baragod corruption"
+LANGUAGE.skill_corrupt_d1 = "Projectiles have chance to corrupt (Based on wave)\nOn corrupt projectile have a homing!\n"..BAD.."-25% damage on corrupting"
+LANGUAGE.skill_who_i_am = "Who i am?"
+LANGUAGE.skill_who_i_am_d1 = "Projectiles have chance to corrupt (Based on wave)\nOn corrupt projectile on remove create a yourself copy\n"..BAD.."-30% damage on corrupting"
+
 LANGUAGE.skill_resnya2 = "Massacre"
 LANGUAGE.skill_resnya2_d1 = "Increase melee damage based on tiers.\n"
 LANGUAGE.skill_resnya2_d2 = "+20% Melee damage taken."
@@ -3449,3 +3475,9 @@ LANGUAGE.building_desc = "Skill tree for repairs,caders and deployables.\nGood f
 
 LANGUAGE.melee_name = "Melee"
 LANGUAGE.melee_desc = "Skill tree for melee's.\nVery bad choice for newbies"
+
+LANGUAGE.activate_inv = "Activate"
+LANGUAGE.weapon_drone_station = "Station for Drone Upgrade"
+LANGUAGE.drop_item = "Drop item"
+LANGUAGE.give_item = "Give item"
+LANGUAGE.something_cool_is_here		= "Spawned 2 corrupted sigils!Uncorrupt them for loots!"

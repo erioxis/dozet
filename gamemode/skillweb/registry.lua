@@ -78,24 +78,24 @@ function GM:MkGenericMod(modifiername)
 end
 local trs = translate.Get
 -- These are used for position on the screen
-TREE_HEALTHTREE = 1
-TREE_SPEEDTREE = 2
-TREE_SUPPORTTREE = 3
-TREE_BUILDINGTREE = 4
-TREE_MELEETREE = 5
-TREE_GUNTREE = 6
-TREE_BRANCH_ELEMENTS = 6
+TREE_SPEEDTREE =4
+TREE_SUPPORTTREE = 5
+TREE_BUILDINGTREE = 8
+TREE_MELEETREE = 2
+TREE_GUNTREE = 3
+TREE_BRANCH_ELEMENTS = 3
 TREE_POINTTREE = 7
 TREE_SINTREE = 7
-TREE_ANCIENTTREE = 8
-TREE_DEFENSETREE = 9
-TREE_DONATETREE = 10
+TREE_ANCIENTTREE = 6
+TREE_DONATETREE = 1
+TREE_HEALTHTREE = 9
 TREE_USELESSTREE = 11
+TREE_RESNYA = 10
+TREE_DOSET = 10
+TREE_OLD_GOD = 10
+TREE_DEFENSETREE = 12
 
 
-TREE_RESNYA = 12
-TREE_DOSET = 12
-TREE_OLD_GOD = 12
 
 
 -- Dummy skill used for "connecting" to their trees.
@@ -514,6 +514,11 @@ SKILL_MIND_FOOT = 486
 SKILL_FLESH_MOTOR = 487
 SKILL_PIPIS = 488
 SKILL_HAIR = 489
+SKILL_SOMETHING_WRONG = 490
+SKILL_WHO_AM_I = 491
+SKILL_VEC = 492
+SKILL_VEC2 = 493
+SKILL_NUCLEAR_DAD = 494
 
 
 
@@ -672,6 +677,17 @@ GM:AddSkillModifier(SKILL_OLD_GOD, SKILLMOD_M_REG, 0.3)
 d.DontUnlock = SKILL_DOSET
 d.DontUnlock2 = SKILL_RESNYA
 
+GM:AddSkill(SKILL_SOMETHING_WRONG, trs("skill_corrupt"), GOOD..trs("skill_corrupt_d1"),
+																0,			2,					{SKILL_NONE}, TREE_RESNYA)
+GM:AddSkill(SKILL_WHO_AM_I, trs("skill_who_i_am"), GOOD..trs("skill_who_i_am_d1"),
+																0,			3,					{SKILL_SOMETHING_WRONG}, TREE_RESNYA)
+GM:AddSkill(SKILL_VEC, trs("skill_vec"), GOOD..trs("skill_vec_d1"),
+																0,			4,					{SKILL_WHO_AM_I}, TREE_RESNYA)
+GM:AddSkill(SKILL_VEC2, trs("skill_vec1"), GOOD..trs("skill_vec1_d1"),
+																0,			5,					{SKILL_VEC}, TREE_RESNYA)
+GM:AddSkill(SKILL_NUCLEAR_DAD, trs("skill_lastt"), GOOD..trs("skill_lastt_d1"),
+																0,			6,					{SKILL_VEC2}, TREE_RESNYA)
+																
 
 GM:AddSkill(SKILL_RESNYA1, trs("skill_resnya1"), GOOD..trs("skill_resnya1_d1")..GOOD..trs("skill_resnya1_d2"),
 																0,			-4,					{SKILL_RESNYA}, TREE_RESNYA)
@@ -3308,13 +3324,10 @@ GM:AddSkillModifier(SKILL_CURSEDHEALTH, SKILLMOD_CURSEM, -0.25)
 GM:AddSkillModifier(SKILL_CRESCENDO1, SKILLMOD_HP_PER_WAVE, 4)
 GM:AddSkillModifier(SKILL_CRESCENDO2, SKILLMOD_HP_PER_WAVE, 4)
 GM:AddSkillModifier(SKILL_CRESCENDO3, SKILLMOD_HP_PER_WAVE, 4)
-
 GM:AddSkillModifier(SKILL_CRESCENDO1, SKILLMOD_SP_PER_WAVE, -3)
 GM:AddSkillModifier(SKILL_CRESCENDO2, SKILLMOD_SP_PER_WAVE, -4)
 GM:AddSkillModifier(SKILL_CRESCENDO3, SKILLMOD_SP_PER_WAVE, -2)
-
 GM:AddSkillModifier(SKILL_SLOWCOACH, SKILLMOD_SP_PER_WAVE, 3)
-
 GM:AddSkillModifier(SKILL_LUCKY_UNLIVER, SKILLMOD_HP_PER_WAVE, -5)
 
 

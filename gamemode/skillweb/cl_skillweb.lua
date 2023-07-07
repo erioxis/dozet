@@ -191,11 +191,18 @@ local TREE_SKILLS = {
 	[TREE_SUPPORTTREE] = {Name = translate.Get("support_name"), Description = translate.Get("support_desc")},
 	[TREE_POINTTREE] = {Name = translate.Get("point_name"), Description = translate.Get("point_desc")},
 	[TREE_ANCIENTTREE] = {Name = translate.Get("ancient_name"), Description = translate.Get("ancient_desc")},
+	--[TREE_DEFENSETREE] ={Name = translate.Get("defense_name"), Description = translate.Get("defense_desc")},
+	[TREE_DONATETREE] = {Name = translate.Get("donate_name"), Description = translate.Get("donate_desc")}
+	--[TREE_USELESSTREE] = {Name = translate.Get("useless_name"), Description = translate.Get("useless_desc")},
+}
+local QUETREE_SKILLS = {
+
 	[TREE_DEFENSETREE] ={Name = translate.Get("defense_name"), Description = translate.Get("defense_desc")},
-	[TREE_DONATETREE] = {Name = translate.Get("donate_name"), Description = translate.Get("donate_desc")},
 	[TREE_USELESSTREE] = {Name = translate.Get("useless_name"), Description = translate.Get("useless_desc")},
 	[TREE_RESNYA] = {Name = translate.Get("god_1_name"), Description = translate.Get("god_1_desc")}
+
 }
+
 
 local PANEL = {}
 local exlude = {8,6,16,22,27,30,31,34,118,114,113,101,40,41,43,92,117,116,56,59,63,65,66,98,72,73,79,88,78,120,57,58,124,125,128}
@@ -289,7 +296,7 @@ function PANEL:Init()
 	self:SetDirectionalLight( BOX_FRONT, color_white )
 	self.SkillNodes = {}
 	
-	for i = 0, #TREE_SKILLS do
+	for i = 0, 12 do
 		self.SkillNodes[i] = {}
 	end
 	
@@ -324,23 +331,55 @@ function PANEL:Init()
 		node.SkillID = -1  
 		self.SkillNodes[0][-1] = node  
 	end
-	
 	for tree, treenode in pairs(TREE_SKILLS) do
 		node = ClientsideModel("models/Gibs/HGIBS.mdl", RENDER_GROUP_OPAQUE_ENTITY)
 		
 		if IsValid(node) then
-			local rads = (2*math.pi)*((tree-1)/#TREE_SKILLS)
+			
+			local rads = (2*math.pi)*((tree)/(#TREE_SKILLS))
 			
 			node:SetNoDraw(true)
-			node:SetPos(Vector(0, math.sin(rads) * 200, math.cos(rads) * 80 + 20))
+			node:SetPos(Vector(0, math.sin(rads) * 180, math.cos(rads) * 180))
 			node:SetAngles(Angle(0, 0, -rads * 180/math.pi))
 			node:SetModelScale(5, 0)
+
 			--node:SetModel(node_models[tree])
 			node.Skill = treenode
 			node.SkillID = -tree - 1
 			self.SkillNodes[0][node.SkillID] = node
 		end
 	end
+	for tree, treenode in pairs(QUETREE_SKILLS) do
+		node = ClientsideModel("models/Gibs/HGIBS.mdl", RENDER_GROUP_OPAQUE_ENTITY)
+		
+		if IsValid(node) then
+			if tree == TREE_USELESSTREE and MySelf:GetZSRemortLevel() < 15 then continue  end
+			
+			local rads = (2*math.pi)*((tree)/(#TREE_SKILLS))
+			
+			node:SetNoDraw(true)
+			node:SetPos(Vector(0, math.sin(rads) * 180, math.cos(rads) * 180))
+			node:SetAngles(Angle(0, 0, -rads * 180/math.pi))
+			node:SetModelScale(5, 0)
+			if tree == TREE_DEFENSETREE then
+				node:SetPos(Vector(0, 0, -20))
+				node:SetAngles(Angle(0, 0, 0))
+				node:SetModelScale(1, 0)
+			elseif tree == TREE_USELESSTREE then
+				node:SetPos(Vector(0, 0, 340))
+				node:SetAngles(Angle(0, 0, 0))
+				node:SetModelScale(1, 0)
+			elseif tree == TREE_RESNYA then
+				node:SetPos(Vector(0, 250, -150))
+				node:SetAngles(Angle(0, 0, 0))
+			end
+			--node:SetModel(node_models[tree])
+			node.Skill = treenode
+			node.SkillID = -tree - 1
+			self.SkillNodes[0][node.SkillID] = node
+		end
+	end
+	
 	
 	local top = vgui.Create("Panel", self)  top:SetSize(ScrW(), 256)
 	
@@ -1294,7 +1333,7 @@ function PANEL:Paint(w, h)
 	if oldskill ~= hoveredskill then
 		self.Top:Stop()
 		if hoveredskill then
-			skill = hoveredskill < -1 and TREE_SKILLS[-hoveredskill - 1] or hoveredskill == -1 and REMORT_SKILL or GAMEMODE.Skills[hoveredskill]
+			skill = hoveredskill < -1 and (TREE_SKILLS[-hoveredskill - 1] or QUETREE_SKILLS[-hoveredskill - 1])or hoveredskill == -1 and REMORT_SKILL or GAMEMODE.Skills[hoveredskill]
 			self.SkillName:SetText(skill.Name)
 			self.SkillName:SizeToContents()
 			desc = string.Explode("\n", skill.Description)

@@ -128,24 +128,6 @@ function meta:TransAlphaToMe()
 	return 1
 end
 
-GM.CachedArsenalEntities = {}
-timer.Create("CacheArsenalEntities", 0.5, 0, function()
-	if not GAMEMODE then return end
-	GAMEMODE.CachedArsenalEntities = {}
-
-	local arseents = {}
-	table.Add(arseents, ents.FindByClass("prop_arsenalcrate"))
-	table.Add(arseents, ents.FindByClass("status_arsenalpack"))
-
-	for _, v in pairs(player.GetAll()) do
-		if v ~= MySelf and not v:HasTrinket("arsenalpack") and v:HasWeapon("weapon_zs_arsenalcrate") then
-			table.insert(arseents, v)
-		end
-	end
-
-	GAMEMODE.CachedArsenalEntities = arseents
-end)
-
 GM.CachedGiftEntities = {}
 timer.Create("CacheGiftEntities", 0.5, 0, function()
 	if not GAMEMODE then return end

@@ -164,7 +164,26 @@ function meta:ApplySkills(override)
 			end
 		end
 	end
-
+	if table.HasValue(desired,492) then
+		local g = math.random(1,493)
+		desired_assoc[g] = true
+		current_active[g] = true
+		print(g)
+		self:PrintTranslatedMessage(HUD_PRINTTALK, "current_skill_rand",GAMEMODE.Skills[g].Name) 
+	end
+	if table.HasValue(desired,493) then
+		local g = math.random(1,493)
+		while current_active[g] do
+			g = math.random(1,493)
+			if !current_active[g] then
+				break
+			end
+		end
+		desired_assoc[g] = true
+		current_active[g] = true
+		print(g)
+		self:PrintTranslatedMessage(HUD_PRINTTALK, "current_skill_rand",GAMEMODE.Skills[g].Name) 
+	end
 	self:ApplyAssocModifiers(desired_assoc)
 
 	-- All skill function states can easily be kept track of.

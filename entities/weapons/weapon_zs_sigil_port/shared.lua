@@ -25,7 +25,7 @@ SWEP.FullWalkSpeed = SPEED_SLOW
 
 SWEP.NoDeploySpeedChange = true
 
-SWEP.MaxStock = 3
+SWEP.MaxStock = 1
 
 function SWEP:Initialize()
 	self:SetWeaponHoldType("slam")

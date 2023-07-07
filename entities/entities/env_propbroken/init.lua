@@ -26,6 +26,19 @@ function ENT:AttachTo(ent)
 		self:Fire("kill", "", 1)
 	end
 end
+local function BackwardsEnums( enumname ) -- Helper function to build our table of values.
+	local backenums = {}
+
+	for k, v in pairs( _G ) do
+		if isstring(k) and string.find( k, "^" .. enumname ) then
+			backenums[ v ] = k
+		end
+	end
+
+	return backenums
+end
+
+local MAT = BackwardsEnums( "MAT_" )
 
 function ENT:Think()
 	if CurTime() >= self.DieTime and not self.Broken then
@@ -45,5 +58,24 @@ function ENT:Think()
 		end
 
 		self:Remove()
+	end
+--	print(MAT[self:GetParent():GetMaterialType()] )
+
+end
+--[[
+				local ent = ents.Create("env_propbroken")
+				if ent:IsValid() then
+					ent:Spawn()
+					ent:AttachTo(table.Random(ents.FindByClass("prop_physics")))
+				end
+
+]]
+function ENT:OnRemove()
+	if MAT[self:GetParent():GetMaterialType()] == "MAT_METAL" then
+		local g = ents.Create("prop_ammo")
+		g:SetPos(self:GetPos())
+		g:Spawn()
+		g:SetAmmoType("scrap")
+		g:SetAmmo(math.random(1,25))
 	end
 end

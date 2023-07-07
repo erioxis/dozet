@@ -10,7 +10,8 @@ GM.ItemCategoryIcons = {
 	[ITEMCAT_OTHER] = "icon16/world.png",
 	[ITEMCAT_TRINKETS] = "icon16/ruby.png", 
 	[ITEMCAT_SPECIAL] = "icon16/user_delete.png",
-	[ITEMCAT_MAGIC] = "icon16/user_delete.png"
+	[ITEMCAT_MAGIC] = "icon16/user_delete.png",
+	[ITEMCAT_MODULES] = "icon16/ruby.png",
 }
 
 GM.RemortColors = {

@@ -21,7 +21,7 @@ CLASS.SWEP = "weapon_zs_sis_prime"
 CLASS.Model = Model("models/ultrakill/enemies/sisyphusprime/sisyphusprimepm.mdl")
 
 
-CLASS.Health = 2000
+CLASS.Health = 9000
 CLASS.Speed = 175
 
 CLASS.VoicePitch = 0.65
@@ -77,13 +77,6 @@ end
 
 function CLASS:PlayDeathSound(pl)
 	--pl:EmitSound("zombiesurvival/mp_dead.wav", 100, 100)
-	local r = math.random(100)
-	if r == 1 then
-		MySelf:EmitSound("zombiesurvival/mp_outro.wav")
-		timer.Simple(15, function() 	MySelf:EmitSound("zombiesurvival/mp_dead.wav", 100, 100) end)
-	else
-		MySelf:EmitSound("zombiesurvival/mp_dead.wav", 100, 100)
-	end
 	return true
 end
 
@@ -110,24 +103,7 @@ end
 
 if SERVER then
 	function CLASS:ProcessDamage(pl, dmginfo)
-		if dmginfo:GetDamage() >= 100 and dmginfo:GetAttacker():IsPlayer() then
-			pl:EmitSound(Sound("zombiesurvival/mp_useless.wav"))
-		end
-		local wep = pl:GetActiveWeapon()
-		dmginfo:SetDamage(dmginfo:GetDamage() / 2.5)
-		if wep:IsValid() and wep.GetBattlecry and wep:GetBattlecry() > CurTime() then
-			dmginfo:SetDamage(dmginfo:GetDamage() * 0.25)
-		end
-		if pl.HealthMax >= pl:Health() and pl.OneTime and pl:IsValidLivingZombie() then
-			pl.OneTime = false
-			for _, ply  in pairs(player.GetAll()) do
-				if ply:IsValid() and ply:IsPlayer() and ply ~= pl and ply:IsValidLivingHuman() then
-					ply:TakeDamage(ply:Health() * 0.45, pl, wep)
-					ply:EmitSound(Sound("zombiesurvival/mp_weak.ogg"))
-				end
-				pl:EmitSound(Sound("zombiesurvival/mp_weak.ogg"))
-			end
-		end
+		dmginfo:SetDamage(dmginfo:GetDamage() / 4)
 		return dmginfo
 	end
 

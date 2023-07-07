@@ -35,8 +35,74 @@ function SWEP:ShootBullets(damage, numshots, cone)
 			ent.Team = owner:Team()
 
 			self:EntModify(ent)
-			ent:Spawn()
+			if owner:IsSkillActive(SKILL_SOMETHING_WRONG) and math.random(1,math.max(1,150-GAMEMODE:GetWave())) == 1 then
+				ent._Think = ent.Think
+				ent.trg = NULL
+				ent.ProjDamage = ent.ProjDamage * 0.75
+				ent.Think = function(selfy)
+					if !ent.trg:IsValid() then
+						local targets = {}
+						for _, enemy in pairs(ents.FindInSphere(ent:GetPos(), 1048)) do
+							if !enemy:IsValid() then continue end
+							target = enemy
+							if WorldVisible(ent:LocalToWorld(Vector(0, 0, 30)), enemy:NearestPoint(ent:LocalToWorld(Vector(0, 0, 30))))  then
+								if target:IsValidLivingZombie() then 
+									targets[(#targets or 0) + 1] = {Health = enemy:Health(), trg = target}
+								end
+							end
+						end
+						for k, target1 in pairs(targets) do
+							target = target1.trg
+							--print( target1.Health)
+							if target and target:IsValidLivingZombie() then
+								ent.trg = target
+								break
+							end
+						end
+					else
+						local target = ent.trg
+						local targetpos = target:LocalToWorld(target:OBBCenter())
+						local direction = (targetpos - ent:GetPos()):GetNormal()
+						ent:SetAngles(direction:Angle())
+						local phys = ent:GetPhysicsObject()
+						phys:SetVelocityInstantaneous(direction * 700 + target:GetVelocity())
+						ent.NextHook = CurTime() + 0.11
+					end
+					ent:_Think()
+				end
+			end
 
+
+			if owner:IsSkillActive(SKILL_WHO_AM_I) and math.random(1,math.max(1,50-GAMEMODE:GetWave())) == 1 then
+				ent._OnRemove = ent.OnRemove
+				ent.ProjDamage = ent.ProjDamage * 0.7
+				ent.OnRemove = function()
+					local ent1 = ents.Create(self.Primary.Projectile)
+					if ent1:IsValid() then
+						ent1:SetPos(ent:GetPos()+Vector(0,0,5))
+						ent1:SetAngles(owner:EyeAngles())
+						ent1:SetOwner(owner)
+						ent1.ProjDamage = ent.ProjDamage * 0.7
+						ent1.ProjSource = ent
+						ent1.Team = owner:Team()
+			
+						self:EntModify(ent1)
+
+						ent1:Spawn()
+						local phys = ent1:GetPhysicsObject()
+						if phys:IsValid() then
+							phys:Wake()
+			
+							ent1.PreVel = Angle(math.Rand(-360, -70), math.Rand(0, 360), 0):Forward() * self.Primary.ProjVelocity * (owner.ProjectileSpeedMul or 1) * 0.2
+							phys:SetVelocityInstantaneous(ent1.PreVel)
+			
+							self:PhysModify(phys)
+						end
+					end
+					ent:_OnRemove()
+				end
+			end
+			ent:Spawn()
 			local phys = ent:GetPhysicsObject()
 			if phys:IsValid() then
 				phys:Wake()

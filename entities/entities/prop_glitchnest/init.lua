@@ -77,7 +77,7 @@ function ENT:ShootGovnom(pl)
 		if self.Crabs < 1 then return end
 		local ent = ents.Create("prop_glitch_crab")
 		if ent:IsValid() then
-			ent:SetOwner(owner)
+			ent:SetOwner(table.Random(team.GetPlayers(TEAM_UNDEAD)))
 			ent:Activate()
 			ent:Spawn()
 			ent:SetPos(pos+Vector(0,0,10))
@@ -157,7 +157,8 @@ function ENT:OnTakeDamage(dmginfo)
 	end
 	if attacker:IsValid() and attacker:IsPlayer() and attacker:Team() == TEAM_UNDEAD then
 		local owner = self:GetNestOwner()
-		if !(attacker:GetZombieClassTable().Name == "Flesh Creeper" or attacker:GetZombieClassTable().Name == "Glitch Creeper")  then
+		local ps =  attacker:GetZombieClassTable()
+		if ps.Name ~= "Glitch Creeper" or dmginfo:GetInflictor():GetClass() ~= ps.SWEP then
 			return
 		end
 

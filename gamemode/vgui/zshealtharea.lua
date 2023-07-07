@@ -18,6 +18,7 @@ local function ContentsPaint(self, w, h)
 		if oldh2 <= thealth - 50 or  oldh2 <= thealth + 500 or  oldh <= thealth -100 then
 			fast = true
 		end
+		local sin = math.sin(CurTime() * 3)
 		local health = math_Apr(oldh,math.Clamp(thealth, 1,lp:GetMaxHealthEx()),1.2 * (lp:Team() ~= TEAM_HUMAN and 20 or 1) * (fast and 40 or 1))
 		local healthperc = math.Clamp(health / lp:GetMaxHealthEx(), 0, 1)
 		
@@ -32,18 +33,16 @@ local function ContentsPaint(self, w, h)
 
 		local x = 18 * screenscale
 		local y = 115 * screenscale
-		local c = false
 		local subwidth = healthperc * wid
 		if thealth > lp:GetMaxHealthEx() then
 			health2 = " (+"..math.Round(math_Apr(oldh2,math.Round(thealth-lp:GetMaxHealthEx()),1.5* (fast and 40 or 1)))..")"
 			oldh2 = math_Apr(oldh2,math.Round(thealth-lp:GetMaxHealthEx()),1.5* (fast and 40 or 1))
 		end
 		if lp:HasTrinket("curse_unknown") then
-			health = "?"
-			subwidth = wid
-			c = true
+			health = health * sin
+			subwidth = wid * sin
 		end
-		local txt = (c and "?" or math.Round(health))..(health2 ~= 0 and health2 or "")..(gp and " x"..((((lp:GetZSRemortLevel() / 4) or 0) + (lp.AmuletPiece or 0))-2)*-1 or "")
+		local txt = math.Round(health)..(health2 ~= 0 and health2 or "")..(gp and " x"..((((lp:GetZSRemortLevel() / 4) or 0) + (lp.AmuletPiece or 0))-2)*-1 or "")
 		draw.SimpleTextBlurry(txt, ((gp or string.len(txt)>= 10) and "ZSHUDFontSmall"or"ZSHUDFont"), x + wid + 18 * screenscale, y + 8 * screenscale, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 
 		surface.SetDrawColor(0, 0, 0, 230)
@@ -100,8 +99,8 @@ local function ContentsPaint(self, w, h)
 
 				subwidth = healthperc * wid
 				if lp:HasTrinket("curse_unknown") then
-					bloodarmor = "?"
-					subwidth = wid
+					bloodarmor = bloodarmor * sin
+					subwidth = math.Clamp(bloodarmor / (math.Round(lp.MaxBloodArmor) or 25), 0, 1) * sin
 				end
 				draw.SimpleTextBlurry(bloodarmor.."/"..math.Round(lp.MaxBloodArmor), "ZSHUDFontSmall", x + wid + 12 * screenscale, y + 8 * screenscale, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 

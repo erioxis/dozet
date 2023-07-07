@@ -92,6 +92,7 @@ AddCSLuaFile("vgui/dbutton_fix.lua")
 AddCSLuaFile("vgui/dcombobox_fix.lua")
 AddCSLuaFile("vgui/parsenal_anti.lua")
 AddCSLuaFile("vgui/premantle.lua")
+AddCSLuaFile("vgui/pdrones.lua")
 AddCSLuaFile("vgui/zshealtharea.lua")
 AddCSLuaFile("vgui/zsstatusarea.lua")
 AddCSLuaFile("vgui/pstatus.lua")
@@ -1484,7 +1485,7 @@ function GM:Think()
 						end
 					end
 					if #use < 1 then
-						pl.NextConsumeEgo = time + 10
+						pl:Kill()
 					else
 						local take = table.Random(use)
 						if take == "trinket_flower" then  
@@ -1492,9 +1493,9 @@ function GM:Think()
 							pl:AddInventoryItem("trinket_flower_g")
 							pl.NextConsumeEgo = time + 60
 							net.Start("zs_trinketcorrupt")
-							net.WriteString(take)
-						net.Send(pl)
-						else
+								net.WriteString(take)
+							net.Send(pl)
+						elseif take ~= "trinket_flower_g" then
 							pl:TakeInventoryItem(take)
 							pl:AddInventoryItem("trinket_sin_ego")
 							pl.NextConsumeEgo = time + 60 - (pl:IsSkillActive(SKILL_MIDAS_SLOW) and 26-(pl.ZSInventory["trinket_sin_ego"] or 1) or 0)
@@ -5693,7 +5694,13 @@ function GM:WaveStateChanged(newstate, pl)
 		local prevwave = self:GetWave()
 
 		if self:GetUseSigils() and prevwave >= self:GetNumberOfWaves() then return end
-
+		if prevwave == 6 then 
+			for k,v in pairs(ents.FindByClass("prop_obj_sigil")) do
+				if v:GetSigilCorrupted() then
+					v:Remove()
+				end
+			end
+		end
 		gamemode.Call("SetWave", prevwave + 1)
 		gamemode.Call("SetWaveStart", CurTime())
 		if self.ZombieEscape then
@@ -5813,8 +5820,15 @@ function GM:WaveStateChanged(newstate, pl)
 		if self.EndWavePointsBonus > 0 then
 			pointsbonus = self.EndWavePointsBonus + (self:GetWave() - 1) * self.EndWavePointsBonusPerWave
 		end
-		if self:GetWave() == 2 then 
+		if self:GetWave() == 4 then 
 			gamemode.Call("CreateASigils")
+		elseif self:GetWave() == 6 then 
+			gamemode.Call("CreateSigils",nil,nil,true)
+			for _, pl in pairs(player.GetAll()) do
+				if pl then
+					pl:CenterNotify(COLOR_GREEN,{killicon = "headshot"},{font = "ZSHUDFontSmall"},translate.ClientGet(pl,"something_cool_is_here"),{killicon = "headshot"})
+				end
+			end
 		end
 		for _, pl in pairs(player.GetAll()) do
 			if pl:Team() == TEAM_HUMAN and pl:Alive() then
@@ -6006,7 +6020,7 @@ end
 
 function GM:OnZEWeaponPickup(pl, wep)
 end
-local spawn = {"info_player_zombie", "", "prop_glitchnest", "info_player_undead", "prop_obj_sigil"}
+local spawn = {"info_player_zombie", "prop_creepernest", "prop_glitchnest", "info_player_undead", "prop_obj_sigil"}
 net.Receive("zs_changeclass", function(len, sender)
 	if sender:Team() ~= TEAM_UNDEAD or sender.Revive or GAMEMODE.PantsMode or GAMEMODE:IsClassicMode() or GAMEMODE:IsBabyMode() or GAMEMODE.ZombieEscape then return end
 

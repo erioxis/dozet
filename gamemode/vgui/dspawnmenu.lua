@@ -82,7 +82,7 @@ function PANEL:RefreshContents()
 		occurs[nown] = (occurs[nown] or 0) + 1
 		local ownname = nown:IsValidZombie() and nown:ClippedName() or ""
 
-		local item = EasyButton(self, "Nest (" .. ownname .. " - " .. occurs[nown] .. ")", 8, 4)
+		local item = EasyButton(self, (nest.NestName or "Nest").." (" .. ownname .. " - " .. occurs[nown] .. ")", 8, 4)
 		item:SetFont("ZSHUDFontSmall")
 		item:SizeToContents()
 		item.DoClick = function()

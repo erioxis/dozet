@@ -89,7 +89,12 @@ function ENT:Use(pl)
 		end
 	end
 end
-
+local weapon = {}
+for _, wep in pairs(weapons.GetList()) do
+	if (wep.Tier or 1) < 6  and !wep.ZombieOnly and !wep.NoMobilized and wep.Primary.DefaultClip and wep.Primary.DefaultClip < 9999 and (wep.Tier or 1) > 3 then
+		table.insert( weapon, wep.ClassName )
+	end
+end
 function ENT:OnTakeDamage(dmginfo)
 	if self:GetSigilHealth() <= 0 or dmginfo:GetDamage() <= 0 then return end
 	local attacker = dmginfo:GetAttacker()
@@ -106,6 +111,7 @@ function ENT:OnTakeDamage(dmginfo)
 					return
 				end
 			end
+			if attacker.NoLootsFromSigil and  GAMEMODE:GetWave() == 6 then return end
 
 			local oldhealth = self:GetSigilHealth()
 			self:SetSigilLastDamaged(CurTime())
@@ -118,6 +124,15 @@ function ENT:OnTakeDamage(dmginfo)
 					self:SetSigilLastDamaged(0)
 					gamemode.Call("OnSigilUncorrupted", self, dmginfo)
 					attacker:GiveAchievementProgress("cleaner", 1)
+					if GAMEMODE:GetWave() == 6 and !GAMEMODE:GetWaveActive() and !self.NoMoreLoots  then
+						attacker:AddPoints(60)
+						local wep = weapon[math.random(1,#weapon)]
+						local g = weapons.Get(wep).PrintName
+						print(string.format("[ZS SIGIL] Player %s (%s) earned gift of  %s!", attacker:Name(), attacker:SteamID(), g))
+						attacker:Give(wep)
+						self.NoMoreLoots = true
+						attacker.NoLootsFromSigil = true
+					end
 				else
 					gamemode.Call("PreOnSigilCorrupted", self, dmginfo)
 					self.HealthLock = CurTime() + 4

@@ -2,8 +2,8 @@ AddCSLuaFile()
 
 --SWEP.PrintName = "'Juggernaut' M249"
 --SWEP.Description = "A light machine gun capable of immense firepower, firing additional red projectiles as it fires."
-SWEP.PrintName = ""..translate.Get("wep_jugger")
-SWEP.Description = ""..translate.Get("wep_d_jugger")
+SWEP.PrintName = translate.Get("wep_autor")
+SWEP.Description = translate.Get("wep_d_autor")
 SWEP.Slot = 3
 SWEP.SlotPos = 0
 
@@ -141,6 +141,14 @@ SWEP.Primary.Sound = Sound("weapons/m249/m249-1.wav")
 SWEP.Primary.Damage = 10
 SWEP.Primary.NumShots = 1
 SWEP.Primary.Delay = 0.08
+SWEP.TracerName = "tracer_lasergun"
+SWEP.HeatBuildShort = 0.10
+SWEP.HeatBuildLong = 0.045
+SWEP.HeatVentShort = 0.16
+SWEP.HeatVentLong = 0.13
+SWEP.HeatDecayShort = 0.1
+SWEP.HeatDecayLong = 0.01
+SWEP.HeatInitialLong = 0.05
 
 SWEP.Primary.ClipSize = 90
 SWEP.Primary.Automatic = true
@@ -158,7 +166,7 @@ SWEP.ConeMin = 2.4
 SWEP.WalkSpeed = SPEED_SLOWEST
 SWEP.ControlWeapon = "weapon_zs_manhackcontrol"
 
-SWEP.Tier = 4
+SWEP.Tier = 5
 SWEP.MaxStock = 2
 
 SWEP.IronSightsAng = Vector(-1, -1, 0)
@@ -173,13 +181,131 @@ function SWEP:CanPrimaryAttack()
 end
 function SWEP:PrimaryAttack()
 	if not self:CanPrimaryAttack() then return end
-
 	self:SetNextPrimaryFire(CurTime() + self:GetFireDelay())
 
-	self:EmitFireSound()
-	self:TakeAmmo()
+	-- Move this to DT vars because predicted at high pings
+	local altuse = self:GetAltUsage()
+	if altuse then
+		self:TakeCombinedPrimaryAmmo(1)
+	end
+	self:SetAltUsage(not altuse)
+
 	self:ShootBullets(self.Primary.Damage, self.Primary.NumShots, self:GetCone())
 	self.IdleAnimation = CurTime() + self:SequenceDuration()
+
+	if self:GetGunState() ~= 1 then
+		if IsFirstTimePredicted() then
+			self:EmitFireSound()
+			self:GetOwner():ViewPunch(Angle(math.Rand(-2, 2), math.Rand(-2, 2), math.Rand(-5, 5)))
+		end
+
+		-- We prevent a bit of tapping fire by doing this.
+		self:SetLongHeat(math.min(self:GetLongHeat() + self.HeatInitialLong, 1))
+		self:SetGunState(1)
+	end
+end
+function SWEP:Think()
+	self.BaseClass.Think(self)
+
+	local overheat = self:GetShortHeat() + self:GetLongHeat() >= 1
+	if self:GetGunState() == 1 and CurTime() >= self:GetNextPrimaryFire() + 0.1 or overheat then
+		self:SetGunState(overheat and 2 or 0)
+		self:SetNextPrimaryFire(CurTime() + 0.15)
+
+		if overheat then
+			if self.Overheat then
+				self:GetOwner():TakeSpecialDamage(15, DMG_BURN, self:GetOwner(), self)
+			end
+			self:EmitSound("npc/scanner/scanner_siren1.wav", 75)
+		end
+		self:EmitSound("weapons/zs_gluon/egon_off1.wav", 75, 115, 0.9, CHAN_WEAPON + 20)
+	end
+
+	self:ManageHeat()
+end
+function SWEP:StopGluonSounds()
+	self.FiringSound:Stop()
+	if CLIENT then self.VentingSound:Stop() end
+end
+
+function SWEP:EndGluonState()
+	local owner = self.PostOwner or self:GetOwner()
+	if owner:IsValid() then
+		owner.ShortGluonHeat = self:GetShortHeat()
+		owner.LongGluonHeat = self:GetLongHeat()
+		owner.GluonInactiveTime = CurTime()
+		owner.GunSway = false
+	end
+
+	self:StopGluonSounds()
+end
+function SWEP:SetGunState(state)
+	self:SetDTInt(1, state)
+end
+
+function SWEP:GetGunState(state)
+	return self:GetDTInt(1)
+end
+
+function SWEP:SetAltUsage(usage)
+	self:SetDTBool(1, usage)
+end
+
+function SWEP:GetAltUsage()
+	return self:GetDTBool(1)
+end
+
+function SWEP:SetShortHeat(heat)
+	self:SetDTFloat(8, heat)
+end
+
+function SWEP:GetShortHeat()
+	return self:GetDTFloat(8)
+end
+
+function SWEP:SetLongHeat(heat)
+	self:SetDTFloat(9, heat)
+end
+
+function SWEP:GetLongHeat()
+	return self:GetDTFloat(9)
+end
+function SWEP:ManageHeat()
+	local owner = self:GetOwner()
+	if owner and owner:IsValid() then
+		local frametime = FrameTime()
+		if self:GetGunState() == 1 then
+			self:SetShortHeat(math.min(self:GetShortHeat() + frametime * self.HeatBuildShort, 1))
+			self:SetLongHeat(math.min(self:GetLongHeat() + frametime * self.HeatBuildLong, 1))
+
+			if CLIENT then owner.GunSway = true end
+		elseif self:GetGunState() == 2 then
+			if CLIENT then
+				owner.GunSway = false
+			end
+
+			local frametimeadj = frametime * self:GetReloadSpeedMultiplier()
+
+			self:SetShortHeat(math.max(self:GetShortHeat() - frametimeadj * self.HeatVentShort, 0))
+			self:SetLongHeat(math.max(self:GetLongHeat() - frametimeadj * self.HeatVentLong, 0))
+			self:SetNextPrimaryFire(CurTime() + 0.25)
+
+			if self:GetLongHeat() == 0 and self:GetShortHeat() < self.HeatBuildShort then
+				self:SetGunState(0)
+				self:EmitSound("npc/scanner/combat_scan3.wav", 65, 90)
+			end
+		else
+			owner.GunSway = false
+			self:SetShortHeat(math.max(self:GetShortHeat() - frametime * self.HeatDecayShort, 0))
+			self:SetLongHeat(math.max(self:GetLongHeat() - frametime * self.HeatDecayLong, 0))
+		end
+	end
+end
+function SWEP:Reload()
+	if self:GetGunState() == 0 and self:GetLongHeat() ~= 0 then
+		self:SetGunState(2)
+		self:EmitSound("npc/scanner/scanner_siren1.wav")
+	end
 end
 function SWEP:SecondaryAttack()
 	if !self:CanPrimaryAttack() or CLIENT then return end
@@ -228,6 +354,7 @@ function SWEP:ShootBullets(dmg, numbul, cone)
 
 	self:SendWeaponAnimation()
 	owner:DoAttackEvent()
+	self:EmitFireSound()
 
 	if SERVER and self:GetOwner():GetAmmoCount(self.Primary.Ammo) % 10 == 1 then
 		for i = 1, 2 do
@@ -263,3 +390,72 @@ function SWEP:ShootBullets(dmg, numbul, cone)
 	owner:FireBulletsLua(owner:GetShootPos(), owner:GetAimVector(), cone, numbul, dmg / 1, nil, self.Primary.KnockbackScale, self.TracerName, self.BulletCallback, self.Primary.HullSize, nil, self.Primary.MaxDistance, nil, self)
 	owner:LagCompensation(false)
 end
+if SERVER then return end
+local colBG = Color(16, 16, 16, 90)
+local colRed = Color(220, 0, 0, 230)
+local colWhite = Color(220, 220, 220, 230)
+
+local function DrawHeatBar(self, x, y, wid, hei, is3d)
+	local heatcolor = (1 - (self:GetShortHeat() + self:GetLongHeat())) * 220
+	colWhite.g = heatcolor
+	colWhite.b = heatcolor
+	colWhite.a = 230
+
+
+	local shortdiv = self:GetShortHeat()
+	local longdiv = self:GetLongHeat()
+	local barheight = 20
+	local bary = y + hei * 0.6
+	local barshortwid = math.max(wid * shortdiv - 8, 0)
+	local barlongwid = math.max(wid * longdiv - 8, 0)
+
+	surface.SetDrawColor(0, 0, 0, 220)
+	surface.DrawRect(x, bary, wid - 8, barheight)
+	surface.SetDrawColor(255, 30, 10, 220)
+	surface.DrawRect(x + 4, bary + 4, barlongwid, barheight - 8)
+	surface.SetDrawColor(255, 190, 0, 220)
+	surface.DrawRect(x + 4 + barlongwid, bary + 4, barshortwid, barheight - 8)
+	surface.SetDrawColor(100, 0, 0, 255)
+	surface.DrawRect(x - 12 + wid, bary - 4, 4, barheight + 8)
+
+	if self:GetGunState() == 2 then
+		colWhite.b = 0
+		colWhite.g = 0
+		if ((CurTime() * 4) % 2) > 1 then
+			colWhite.a = 0
+		else
+			draw.SimpleTextBlurry("VENTING", is3d and "ZS3D2DFontSmaller" or "ZSHUDFontSmaller", x + wid/2, bary + hei * 0.15, colRed, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+		end
+	end
+end
+
+function SWEP:Draw2DHUD()
+	local screenscale = BetterScreenScale()
+
+	local wid, hei = 180 * screenscale, 64 * screenscale
+	local x, y = ScrW() - wid - screenscale * 128, ScrH() - hei - screenscale * 72
+	local spare = self:GetPrimaryAmmoCount()
+
+	local yy = ScrH() - hei * 2 - screenscale * 84
+
+	DrawHeatBar(self, x + wid * 0.25 - wid/4, yy + hei * 0.2, wid, hei)
+
+	draw.RoundedBox(16, x, y, wid, hei, colBG)
+	draw.SimpleTextBlurry(spare, spare >= 1000 and "ZSHUDFont" or "ZSHUDFontBig", x + wid * 0.5, y + hei * 0.5, spare == 0 and colRed or colWhite, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+	draw.SimpleTextBlurry("Heat", "ZSHUDFont", x + wid * 0.5, yy + hei * 0.45, colRed, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+end
+
+function SWEP:Draw3DHUD(vm, pos, ang)
+	local wid, hei = 180, 64
+	local x, y = wid * -0.6, hei * -0.5
+	local spare = self:GetPrimaryAmmoCount()
+
+	cam.Start3D2D(pos, ang, self.HUD3DScale / 2)
+		DrawHeatBar(self, x + wid * 0.25 - wid/4, y - hei * 1, wid, hei, true)
+
+		draw.RoundedBoxEx(32, x, y, wid, hei, colBG, true, false, true, false)
+		draw.SimpleTextBlurry(spare, spare >= 1000 and "ZS3D2DFontSmall" or "ZS3D2DFont", x + wid * 0.5, y + hei * 0.5, spare == 0 and colRed or colWhite, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+		draw.SimpleTextBlurry("Heat", "ZS3D2DFontSmall", x + wid * 0.5, y - hei * 1, colRed, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+	cam.End3D2D()
+end
+

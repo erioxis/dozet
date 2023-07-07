@@ -16,7 +16,7 @@ end
 
 net.Receive("zs_inventoryitem", function()
 	local item = net.ReadString()
-	local count = net.ReadInt(5)
+	local count = net.ReadInt(8)
 	local prevcount = GAMEMODE.ZSInventory[item] or 0
 
 	GAMEMODE.ZSInventory[item] = count
@@ -63,9 +63,10 @@ end
 local function ActivateTrinket(me, pl)
 	net.Start("zs_activate_trinket")
 		net.WriteString(me.Item)
-		net.WriteEntity(pl)
+		net.WriteEntity(MySelf)
 	net.SendToServer()
 end
+
 local function ItemPanelDoClick(self)
 	local item = self.Item
 	if not item then return end
@@ -119,6 +120,8 @@ local function ItemPanelDoClick(self)
 		crab:SetVisible( false )
 		cral:SetVisible( false )
 	end
+	viewer.m_ActivateButton[1]:SetVisible(false)
+	viewer.m_ActivateButton[2]:SetVisible(false)
 
 	local assembles = {}
 	for k,v in pairs( GAMEMODE.Assemblies ) do
@@ -155,12 +158,23 @@ local function ItemPanelDoClick(self)
 	else
 		viewer.m_CraftWith:SetVisible( false )
 	end
-
 	if category == INVCAT_CONSUMABLES and MySelf:GetChargesActive() >= (item.BountyNeed or 0) then
+		local activatebu = viewer.m_ActivateButton
+		local g,bl = activatebu[1],activatebu[2]
 		viewer.m_Activate.Item = item
+		g.Item = item
+		g:SetPos( viewer:GetWide() / 2 - g:GetWide() / 2, ( viewer:GetTall() - 66 * screenscale ) )
+		g.DoClick = ActivateTrinket
+		g:SetVisible(true)
+
+		bl:SetText( translate.Get("activate_inv") )
+		bl:SetPos( g:GetWide() / 2 - bl:GetWide() / 2, ( g:GetTall() * 0.5 - bl:GetTall() * 0.5 ) )
+		bl:SetContentAlignment( 5 )
+		bl:SetVisible( true )
 		if input.IsMouseDown(MOUSE_RIGHT) then
 			viewer.m_Activate.DoClick = ActivateTrinket(viewer.m_Activate,MySelf)
 		end
+		
 		viewer.m_Activate:SetVisible(false)
 	end
 	if category == INVCAT_WEAPONS then
@@ -239,6 +253,17 @@ function GM:CreateInventoryElements()
 	viewer.m_CraftBtns = craftbtns
 	viewer.m_ItemBtns = itembtns
 
+	local activate = vgui.Create( "DButton", viewer )
+	activate:SetText( "" )
+	activate:SetSize( viewer:GetWide() / 1.15, 27 * screenscale )
+	activate:SetVisible(false)
+
+	local namelab = EasyLabel( activate, "Activate", "ZSBodyTextFont", COLOR_WHITE )
+	namelab:SetWide( activate:GetWide() )
+	namelab:SetVisible( false )
+
+	viewer.m_ActivateButton = {activate,namelab}
+
 	local craftwith = EasyLabel( viewer, "Craft With...", "ZSBodyTextFontBig", COLOR_WHITE )
 	craftwith:SetSize( viewer:GetWide() / 1.15, 27 * screenscale )
 	craftwith:SetVisible( false )
@@ -274,6 +299,66 @@ function GM:InventoryAddGridItem( item, category )
 			itempan.SWEP =  self.ZSInventoryItemData[ item ]
 		end
 		itempan.DoClick = ItemPanelDoClick
+		itempan.DoRightClick = function()
+			local menu = DermaMenu(itempan)
+			menu:AddOption(translate.Get("drop_item"), function() 
+				if category == INVCAT_WEAPONS then
+					local ent
+					for k,v in pairs(MySelf:GetWeapons()) do
+						if item == v:GetClass() then
+							ent = v
+							break
+						end
+					end
+					if ent and ent:IsValid() then
+						input.SelectWeapon(ent)
+					end
+					GAMEMODE.InventoryMenu.SelInv = nil
+					timer.Simple(0, function()	RunConsoleCommand("zsdropweapon")  end)
+					return 
+				end  
+				RunConsoleCommand("zsdropweapon",  item) 
+			end)
+			menu:AddOption(translate.Get("give_item"), function() 
+				if category == INVCAT_WEAPONS then 
+
+						local ent
+						for k,v in pairs(MySelf:GetWeapons()) do
+							if item == v:GetClass() then
+								ent = v
+								break
+							end
+						end
+						if ent and ent:IsValid() then
+							input.SelectWeapon(ent)
+						end
+						GAMEMODE.InventoryMenu.SelInv = nil
+					timer.Simple(0, function()	RunConsoleCommand("zsgiveweapon")  end)
+					return 
+				end  
+				RunConsoleCommand("zsgiveweapon",  item) 
+			end)
+			menu:AddOption(translate.Get("di_hud"), function() 
+				if category == INVCAT_WEAPONS then 
+
+						local ent
+						for k,v in pairs(MySelf:GetWeapons()) do
+							if item == v:GetClass() then
+								ent = v
+								break
+							end
+						end
+						if ent and ent:IsValid() then
+							input.SelectWeapon(ent)
+						end
+						GAMEMODE.InventoryMenu.SelInv = nil
+					timer.Simple(0, function()	RunConsoleCommand("zs_dismantle")  end)
+					return 
+				end  
+				RunConsoleCommand("zs_dismantle",  item) 
+			end)
+			menu:Open()
+		end
 		itempan.Category = category
 	--itempan.Name = itempan.SWEP.PrintName or "AAA"
 
@@ -371,25 +456,29 @@ end
 
 local NextRefresh = 0
 local RefreshTime = 0.1
-
+local function GetTargetEntIndex()
+	return GAMEMODE.HumanMenuLockOn and GAMEMODE.HumanMenuLockOn:IsValid() and GAMEMODE.HumanMenuLockOn:EntIndex() or 0
+end
 
 function GM:OpenInventory()
 	if self.InventoryMenu and self.InventoryMenu:IsValid() then
 		self.InventoryMenu:SetVisible( true )
-
+	--	self.InventoryMenu:Remove()
 		if self.Inv_NearestFrame and self.Inv_NearestFrame:IsValid() then
 			self.Inv_NearestFrame:SetVisible( true )
+			--self.Inv_NearestFrame:Remove()
 		end
 
 		if self.m_InvViewer and self.m_InvViewer:IsValid() and self.InventoryMenu.SelInv then
 			self.m_InvViewer:SetVisible( true )
+			--self.m_InvViewer:Remove()
 		end
 		
 		return
 	end
 
 	local screenscale = BetterScreenScale()
-	local w, h = 700 * screenscale, 700 * screenscale
+	local w, h =800 * screenscale, 700 * screenscale
 
 	local frame = vgui.Create( "DFrame" )
 	frame:SetSize( w, h )
@@ -489,4 +578,62 @@ function GM:OpenInventory()
 
 	self:CreateItemInfoViewer( frame, invprop, topspace, bottomspace )
 	self:CreateInventoryElements()
+	local xd = 0
+	for k,v in pairs(self.AmmoResupply) do
+		local ki = killicon.Get(self.AmmoIcons[k])
+		if !ki then continue end
+		local checkbutton = vgui.Create("DImageButton",frame)
+		checkbutton:SetImage(ki[1])
+		if ki[2] then checkbutton:SetColor(MySelf.ResupplyChoice == k and Color(197,167,16) or ki[2]) end
+		xd = xd + 1
+		checkbutton:SetSize(32* screenscale,32* screenscale)
+		checkbutton:SetTooltip(self.AmmoNames[k])
+		checkbutton:SetPos( 16 *  screenscale+ 440* screenscale,48 * xd  * screenscale+60* screenscale)
+
+		local sel =  vgui.Create("DEXChangingLabel", frame)
+		sel:SetChangeFunction(function()
+			return MySelf:GetAmmoCount(k)
+		end, true)
+		sel:SetContentAlignment(5)
+		sel:SetFont("ZSHUDFontTiniest")
+		sel:SetPos( 16 * screenscale+ 452* screenscale, 48 * xd  * screenscale+63* screenscale)
+		for i=1,2 do
+			local gb = vgui.Create("DImageButton",frame)
+			gb:SetImage((i == 1  and "icon16/user_go.png" or "icon16/box.png"))
+			gb:SizeToContents()
+			gb.DoClick = function(me)
+				if i == 1 then
+					RunConsoleCommand("zsgiveammo", k, GetTargetEntIndex())
+				else
+					RunConsoleCommand("zsdropammo", k)
+				end
+			end
+			gb:SetPos( 16 * i * screenscale+ 440* screenscale,48 * xd  * screenscale+93* screenscale)
+			gb.DontCount = true
+			gb.NoWide = true
+		end
+		--x = x - checkbutton:GetWide() - 8
+		checkbutton.DoClick = function(me)
+			if MySelf.ResupplyChoice == k then
+				MySelf.ResupplyChoice = nil
+				RunConsoleCommand("zs_resupplyammotype", "default")
+			else
+				MySelf.ResupplyChoice = k
+				RunConsoleCommand("zs_resupplyammotype", k)
+				
+			end
+			local col = Color(249,236,93)
+			if MySelf.ResupplyChoice ~= k then
+				col =  ki[2]
+			end
+			for k,v in pairs(self.AmmoButtons) do 
+				v:SetColor(killicon.Get(self.AmmoIcons[k])[2])
+			end
+			me:SetColor(col)
+		end
+		if !self.AmmoButtons[k] then
+			self.AmmoButtons[k] = checkbutton
+		end
+		
+	end
 end

@@ -53,6 +53,7 @@ include("vgui/dbutton_fix.lua")
 include("vgui/dcombobox_fix.lua")
 include("vgui/parsenal_anti.lua")
 include("vgui/premantle.lua")
+include("vgui/pdrones.lua")
 include("vgui/dpingmeter.lua")
 include("vgui/dsidemenu.lua")
 include("vgui/dspawnmenu.lua")
@@ -1060,7 +1061,7 @@ function GM:ZombieObserverHUD(obsmode)
 			end
 
 			if target.IsCreeperNest or target.MinionSpawn then
-				local txt = target.IsCreeperNest and "Nest" or "Gore Child"
+				local txt = target.IsCreeperNest and (nest.NestName or "Nest") or "Gore Child"
 
 				draw_SimpleTextBlur(translate.Format("observing_x_simple", txt), "ZSHUDFontSmall", w * 0.5, h * 0.75 - texh - 32, COLOR_DARKRED, TEXT_ALIGN_CENTER)
 			end
@@ -1163,7 +1164,6 @@ function GM:_PostDrawTranslucentRenderables()
 		self:DrawPointWorldHints()
 		self:DrawWorldHints()
 		self:DrawSigilIndicators()
-		self:DrawCrateIndicators()
 		self:DrawResupplyIndicators()
 		self:DrawRemantlerIndicators()
 		self:DrawGiftIndicators()
@@ -1174,41 +1174,6 @@ function GM:_PostDrawTranslucentRenderables()
 	end
 end
 
-function GM:DrawCrateIndicators()
-	if P_Team(MySelf) ~= TEAM_HUMAN then return end
-
-	local pos, distance, ang, deployable, alpha
-	local eyepos = EyePos()
-
-	surface_SetMaterial(matArsenal)
-
-	for i, arsenal in pairs(GAMEMODE.CachedArsenalEntities) do
-		if not arsenal:IsValid() then continue end
-		deployable = arsenal.GetObjectOwner
-
-		pos = arsenal:GetPos()
-		pos.z = pos.z + (arsenal:IsPlayer() and 32 or (deployable and 12 or -8))
-		distance = eyepos:DistToSqr(pos)
-
-		if (distance >= 6400 and distance <= 1048576) and (not deployable or not WorldVisible(eyepos, pos)) then -- Limited to Scavenger's Eyes distance.
-			ang = (eyepos - pos):Angle()
-			ang:RotateAroundAxis(ang:Right(), 270)
-			ang:RotateAroundAxis(ang:Up(), 90)
-			alpha = math.min(220, math.sqrt(distance / 4))
-
-			cam_IgnoreZ(true)
-			cam_Start3D2D(pos, ang, math.max(250, math.sqrt(distance)) / 5000)
-
-			surface_SetDrawColor(255, 255, 255, alpha)
-			surface_DrawTexturedRect(-123, -113, 248, 228)
-
-			draw_SimpleTextBlurry("Arsenal Crate", "ZS3D2DFont2Big", 0, 128, COLOR_GRAY, TEXT_ALIGN_CENTER)
-
-			cam_End3D2D()
-			cam_IgnoreZ(false)
-		end
-	end
-end
 
 function GM:DrawResupplyIndicators()
 	if P_Team(MySelf) ~= TEAM_HUMAN then return end
@@ -1350,7 +1315,7 @@ function GM:DrawNestIndicators()
 		surface_SetDrawColor(255, 255, 255, alpha)
 		surface_DrawTexturedRect(-128, -128, 256, 256)
 
-		draw_SimpleTextBlurry("Nest", "ZS3D2DFont2Big", 0, 128, COLOR_GRAY, TEXT_ALIGN_CENTER)
+		draw_SimpleTextBlurry((nest.NestName or "Nest"), "ZS3D2DFont2Big", 0, 128, COLOR_GRAY, TEXT_ALIGN_CENTER)
 
 		if distance < 80000 then
 			local nown = nest:GetNestOwner()
@@ -1908,6 +1873,7 @@ function GM:HumanMenu()
 	gwbtn.DoClick = EmptyClip
 	panel:AddItem(gwbtn)
 
+	
 	gwbtn = vgui.Create("DButton")
 	gwbtn:SetFont("ZSHUDFontSmaller")
 	gwbtn:SetText(translate.Get("di_hud"))
@@ -1915,79 +1881,11 @@ function GM:HumanMenu()
 	gwbtn:CenterHorizontal()
 	gwbtn.DoClick = DismantleWeapon
 	panel:AddItem(gwbtn)
-	panel:AddItem(EasyLabel(panel, translate.Get("res_ammo_sel"), "DefaultFont", color_white))
-	local xd = 0
-	for k,v in pairs(self.AmmoResupply) do
-		local ki = killicon.Get(self.AmmoIcons[k])
-		if !ki then continue end
-		local checkbutton = vgui.Create("DImageButton",panel)
-		checkbutton:SetImage(ki[1])
-		if ki[2] then checkbutton:SetColor(MySelf.ResupplyChoice == k and Color(197,167,16) or ki[2]) end
-		xd = xd + 1
-		checkbutton:SetSize(48* screenscale,48* screenscale)
-		checkbutton:SetTooltip(self.AmmoNames[k])
-		checkbutton.NoWide = true
-		checkbutton.DoMove = 3 * screenscale --* (xd > 6 and 32 or 1)
-		--if xd > 6 then
-		--	checkbutton.DoMoveY = -32 * screenscale * xd
-			--checkbutton.DontCount = true
-		--end
-		local sel =  vgui.Create("DEXChangingLabel", checkbutton)
-		sel:SetChangeFunction(function()
-			return MySelf:GetAmmoCount(k)
-		end, true)
-		sel:SetFont("ZSHUDFontTiniest")
-		timer.Simple(0, function() sel:SetPos(0,checkbutton:GetY()) end)
-		sel.DoMove = 23 * screenscale --* (xd > 6 and 32 or 1)
-		sel.DoMoveY = 12 * screenscale 
-		sel.DontCount = true
-		panel:AddItem(sel)
-		for i=1,2 do
-			local gb = vgui.Create("DImageButton",panel)
-			gb:SetImage((i == 1  and "icon16/user_go.png" or "icon16/box.png"))
-			gb:SizeToContents()
-			gb.DoClick = function(me)
-				if i == 1 then
-					RunConsoleCommand("zsgiveammo", k, GetTargetEntIndex())
-				else
-					RunConsoleCommand("zsdropammo", k)
-				end
-			end
-			gb.DoMove = 64 * screenscale --* (xd > 6 and 16 or 1)
-			gb.DoMoveY = 16* i * screenscale 
-			gb.DontCount = true
-			gb.NoWide = true
-			panel:AddItem(gb)
-		end
-		--x = x - checkbutton:GetWide() - 8
-		checkbutton.DoClick = function(me)
-			if MySelf.ResupplyChoice == k then
-				MySelf.ResupplyChoice = nil
-				RunConsoleCommand("zs_resupplyammotype", "default")
-			else
-				MySelf.ResupplyChoice = k
-				RunConsoleCommand("zs_resupplyammotype", k)
-				
-			end
-			local col = Color(249,236,93)
-			if MySelf.ResupplyChoice ~= k then
-				col =  ki[2]
-			end
-			for k,v in pairs(self.AmmoButtons) do 
-				v:SetColor(killicon.Get(self.AmmoIcons[k])[2])
-			end
-			me:SetColor(col)
-		end
-		if !self.AmmoButtons[k] then
-			self.AmmoButtons[k] = checkbutton
-		end
-		
-		panel:AddItem(checkbutton)
-	end
 
 	self.HumanMenuSupplyChoice = dropdown
 
 	panel:OpenMenu()
+
 end
 
 function GM:ZombieSpawnMenu()

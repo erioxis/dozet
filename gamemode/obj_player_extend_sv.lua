@@ -151,6 +151,9 @@ function meta:ProcessDamage(dmginfo)
 			damage = math.min(damage, (mxap * 0.11))
 		end
 		if attacker:IsValidLivingHuman() and inflictor:IsValid() and inflictor == attacker:GetActiveWeapon() then
+			if attacker:IsSkillActive(SKILL_NUCLEAR_DAD) then
+				damage = damage + damage * GAMEMODE:GetWave()*0.0005
+			end
 			local wep = attacker:GetActiveWeapon()
 			local attackermaxhp = math.floor(attacker:GetMaxHealth() * ((attacker:IsSkillActive(SKILL_D_FRAIL) or attacker:IsSkillActive(SKILL_ABUSE)) and 0.44 or 1))
 			if attacker:IsSkillActive(SKILL_AMULET_16) then 

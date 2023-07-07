@@ -85,6 +85,7 @@
 	util.AddNetworkString("zs_zsfriend")
 	util.AddNetworkString("zs_zsfriendadded")
 	util.AddNetworkString("zs_remantleconf")
+	util.AddNetworkString("zs_remantleconf_v2")
 	util.AddNetworkString("zs_nestbuilt")
 	util.AddNetworkString("zs_nestspec")
 	util.AddNetworkString("zs_tvcamera")

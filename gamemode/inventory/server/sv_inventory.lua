@@ -33,7 +33,7 @@ function meta:AddInventoryItem(item)
 
 	net.Start("zs_inventoryitem")
 		net.WriteString(item)
-		net.WriteInt(self.ZSInventory[item], 5)
+		net.WriteInt(self.ZSInventory[item], 8)
 	net.Send(self)
 
 	return true
@@ -62,7 +62,7 @@ function meta:TakeInventoryItem(item)
 
 	net.Start("zs_inventoryitem")
 		net.WriteString(item)
-		net.WriteInt(self.ZSInventory[item] or 0, 5)
+		net.WriteInt(self.ZSInventory[item] or 0, 8)
 	net.Send(self)
 
 	return true -- Return true aka item was taken

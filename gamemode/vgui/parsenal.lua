@@ -248,7 +248,7 @@ end
 
 local function ItemPanelDoClick(self)
 	local shoptbl = self.ShopTabl
-	local viewer = self.NoPoints and GAMEMODE.RemantlerInterface.TrinketsFrame.Viewer or GAMEMODE.ArsenalInterface.Viewer
+	local viewer = self.NoPoints and (GAMEMODE.RemantlerInterface and GAMEMODE.RemantlerInterface:IsValid() and GAMEMODE.RemantlerInterface.TrinketsFrame.Viewer or GAMEMODE.DronesMenu.TrinketsFrame.Viewer) or GAMEMODE.ArsenalInterface.Viewer
 
 	if not shoptbl then return end
 	local sweptable = GAMEMODE.ZSInventoryItemData[shoptbl.SWEP] or weapons.Get(shoptbl.SWEP)
@@ -373,7 +373,7 @@ end
 function GM:AddShopItem(list, i, tab, issub, nopointshop)
 	local screenscale = BetterScreenScale()
 
-	local nottrinkets = tab.Category ~= ITEMCAT_TRINKETS
+	local nottrinkets = tab.Category ~= ITEMCAT_TRINKETS and tab.Category ~= ITEMCAT_MODULES
 	local missing_skill = tab.SkillRequirement and not MySelf:IsSkillActive(tab.SkillRequirement)
 	local wid = 280
 
@@ -809,8 +809,8 @@ function GM:OpenArsenalMenu()
 			tabpane.Grids = {}
 			tabpane.Buttons = {}
 
-			local usecats = catid == ITEMCAT_GUNS or catid == ITEMCAT_MELEE or catid == ITEMCAT_TRINKETS
-			local trinkets = catid == ITEMCAT_TRINKETS
+			local usecats = catid == ITEMCAT_GUNS or catid == ITEMCAT_MELEE or catid == ITEMCAT_TRINKETS or catid == ITEMCAT_MODULES
+			local trinkets = catid == ITEMCAT_TRINKETS or catid == ITEMCAT_MODULES
 			local offset = 84 * screenscale
 
 			local itemframe = vgui.Create("DScrollPanel", tabpane)

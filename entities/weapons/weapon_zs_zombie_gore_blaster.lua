@@ -42,9 +42,8 @@ function SWEP:ApplyMeleeDamage(ent, trace, damage)
 			bleed.Damager = self:GetOwner()
 		end
 		if ent:GetBloodArmor() >= 1 then
-			ent:SetBloodArmor(ent:GetBloodArmor() * 0.5)
-			self:GetOwner():SetHealth(self:GetOwner():Health() + ent:GetBloodArmor())
 			self:GetOwner():SetZArmor(ent:GetBloodArmor() * 0.5 + self:GetOwner():GetZArmor())
+			ent:SetBloodArmor(0)
 			self.MeleeDamage = self.MeleeDamage + ent:GetBloodArmor() *0.2
 		end
 	end

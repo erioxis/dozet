@@ -87,7 +87,7 @@ function ENT:SetObjectHealth(health)
 				if ent:IsValid() and ent:IsPlayer() and ent ~= owner and ent:IsValidLivingZombie() then
 					ent:TakeDamage(250, owner, self)
 				elseif ent:IsValid() and ent:IsPlayer() and ent == owner then
-					ent:Kill()
+					ent:TakeDamage(250, owner, self)
 				end
 			end
 			if owner:IsSkillActive(SKILL_EXPLOIT) and math.random(1,4) == 1 then

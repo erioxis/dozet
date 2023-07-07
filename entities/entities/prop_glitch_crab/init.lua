@@ -4,9 +4,9 @@ INC_SERVER()
 ENT.Created = 0
 ENT.trg = NULL
 function ENT:Initialize()
-	self:SetModel("models/headcrabclassic.mdl")
+	self:SetModel("models/hunter/blocks/cube025x025x025.mdl")
 	self:SetSolid(SOLID_VPHYSICS)
-	self:SetModelScale(0.1, 0)
+	self:SetModelScale(1, 0)
 	self:PhysicsInit(SOLID_VPHYSICS)
 
 	local phys = self:GetPhysicsObject()

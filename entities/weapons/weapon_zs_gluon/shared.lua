@@ -1,7 +1,7 @@
 --SWEP.PrintName = "'Helios' Gluon Gun"
 --SWEP.Description = "Projects a stream of gluons at the target, causing immense damage. Hard to wield and aim, and builds up heat over time."
-SWEP.PrintName = " "..translate.Get("wep_gluon")
-SWEP.Description = " "..translate.Get("wep_d_gluon")
+SWEP.PrintName = translate.Get("wep_gluon")
+SWEP.Description = translate.Get("wep_d_gluon")
 SWEP.Base = "weapon_zs_base"
 
 SWEP.HoldType = "physgun"

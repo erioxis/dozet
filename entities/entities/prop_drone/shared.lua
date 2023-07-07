@@ -19,6 +19,7 @@ ENT.HoverHeight = 92
 ENT.HoverForce = 128
 ENT.TurnSpeed = 55
 ENT.IdleDrag = 0.25
+ENT.Inventory = {}
 
 ENT.MaxHealth = 190
 ENT.GunRange = 275
@@ -159,4 +160,17 @@ end
 
 function ENT:GetRedLightPos()
 	return self:LocalToWorld(Vector(3, 0, 13.75))
+end
+function ENT:GetTrinkets()
+	return self.Inventory
+end
+
+function ENT:SetTrinkets(sbl)
+	self.Inventory = sbl
+end
+function ENT:HasTrinket(some)
+	return self.Inventory["trinket_"..some]
+end
+function ENT:AddTrinkets(some)
+	self.Inventory[#self.Inventory+1] = some
 end

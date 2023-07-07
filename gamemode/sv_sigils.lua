@@ -23,7 +23,7 @@ end
 local validity_trace = {
 	start = Vector(0, 0, 0), endpos = Vector(0, 0, 0), mins = Vector(-18, -18, 0), maxs = Vector(18, 18, 2), mask = MASK_SOLID_BRUSHONLY
 }
-function GM:CreateSigils(secondtry, rearrange)
+function GM:CreateSigils(secondtry, rearrange,corrupted)
 	local alreadycreated = self:NumSigils()
 
 	if self.ZombieEscape or self.ObjectiveMap
@@ -32,7 +32,7 @@ function GM:CreateSigils(secondtry, rearrange)
 		return
 	end
 
-	if alreadycreated >= self.MaxSigils and not rearrange then return end
+	if alreadycreated >= self.MaxSigils and not rearrange and not corrupted then return end
 
 	local nodes = {}
 
@@ -80,7 +80,7 @@ function GM:CreateSigils(secondtry, rearrange)
 	end]]
 
 	local spawns = team.GetSpawnPoint(TEAM_UNDEAD)
-	for i = 1 + (rearrange and 0 or alreadycreated), self.MaxSigils do
+	for i = 1 + ((rearrange or corrupted) and 0 or alreadycreated), self.MaxSigils do
 		local id
 		local sigs = ents.FindByClass("prop_obj_sigil")
 		local numsigs = #sigs
@@ -136,6 +136,7 @@ function GM:CreateSigils(secondtry, rearrange)
 				if not rearrange then
 					ent:Spawn()
 				end
+				ent:SetSigilCorrupted(corrupted)
 				ent.NodePos = point
 			end
 		end

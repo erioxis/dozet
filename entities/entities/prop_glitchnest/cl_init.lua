@@ -3,7 +3,7 @@ INC_CLIENT()
 ENT.Seed = 0
 ENT.Tall = 0
 ENT.Blocked = false
-
+ENT.NestName = translate.Get("nest_name_l2")
 function ENT:Initialize()
 	local dist = math.max(16, GAMEMODE.CreeperNestDist) * 2
 

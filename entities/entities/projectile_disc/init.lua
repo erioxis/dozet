@@ -50,7 +50,7 @@ function ENT:OnRemove()
 			backvel.z = backvel.z + 0.001 * i
 			backvel = backvel:GetNormalized()
 
-			self:FireBulletsLua(pos, -backvel, 1, 1, dmg/2, owner, 0.01, "tracer_fusor", BulletCallback, nil, nil, nil, nil, me)
+		if self:IsValid() then	self:FireBulletsLua(pos, -backvel, 1, 1, dmg/2, owner, 0.01, "tracer_fusor", BulletCallback, nil, nil, nil, nil, me) end
 		end)
 	end
 end

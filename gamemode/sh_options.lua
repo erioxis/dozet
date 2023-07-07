@@ -37,6 +37,7 @@ ITEMCAT_TRINKETS = 6
 ITEMCAT_OTHER = 7
 ITEMCAT_SPECIAL = 8
 ITEMCAT_MAGIC = 9
+ITEMCAT_MODULES = 10
 
 ITEMCAT_MUTATIONS = 1
 ITEMCAT_MUTATIONS_BOSS = 2
@@ -63,7 +64,8 @@ GM.ItemCategories = {
 	[ITEMCAT_TRINKETS] = translate.Get("pshop_trinkets"),
 	[ITEMCAT_OTHER] = translate.Get("pshop_other"),
 	[ITEMCAT_SPECIAL] = translate.Get("skill_lul"),
-	[ITEMCAT_MAGIC]	= translate.Get("pshop_magic")
+	[ITEMCAT_MAGIC]	= translate.Get("pshop_magic"),
+	[ITEMCAT_MODULES]	= translate.Get("pshop_modules")
 
 
 }
@@ -456,6 +458,7 @@ GM:AddPointShopItem("hyena",			ITEMCAT_GUNS,			500,				"weapon_zs_hyena")
 GM:AddPointShopItem("boomstick",		ITEMCAT_GUNS,			500,			"weapon_zs_boomstick")
 GM:AddPointShopItem("bulldog",		ITEMCAT_GUNS,			500,			"weapon_zs_bulldog")
 GM:AddPointShopItem("clastix",			ITEMCAT_GUNS,			500,			"weapon_zs_clastix")
+GM:AddPointShopItem("autorgun",		ITEMCAT_GUNS,		    500,			"weapon_zs_auto_turret")
 -- Tier 6 beta
 GM:AddPointShopItem("zeus",				ITEMCAT_GUNS,			1500,			"weapon_zs_zeus")
 GM:AddPointShopItem("balance_t6",				ITEMCAT_GUNS,			1500,			"weapon_zs_balance")
@@ -807,7 +810,7 @@ GM:AddPointShopItem("ttimes",	        ITEMCAT_TRINKETS,		70,				"trinket_ttimes"
 GM:AddPointShopItem("toysite2",		ITEMCAT_TRINKETS,		150,				"trinket_toysite").SubCategory =								ITEMSUBCAT_TRINKETS_DEFENSIVE
 GM:AddPointShopItem("bloodgrass",		ITEMCAT_TRINKETS,		150,				"trinket_bloodgrass").SubCategory =								ITEMSUBCAT_TRINKETS_DEFENSIVE
 -- GM:AddPointShopItem("void",	        ITEMCAT_TRINKETS,		70,				"trinket_void").SubCategory =							  ITEMSUBCAT_TRINKETS_OFFENSIVE
-
+GM:AddPointShopItem("bloodgrass",		ITEMCAT_MODULES,		150,				"trinket_bloodgrass").SubCategory =								ITEMSUBCAT_TRINKETS_DEFENSIVE
 
   
 GM:AddPointShopItem("flashbomb",		ITEMCAT_OTHER,			25,				"weapon_zs_flashbomb")
@@ -948,6 +951,7 @@ GM:AddDeployableInfo("prop_rollermine",			"Rollermine",			"weapon_zs_rollermine"
 GM:AddDeployableInfo("prop_tv",                   	 "TV",                    	"weapon_zs_tv")
 GM:AddDeployableInfo("prop_obj_sigil",                   	 "Sigil",                    	"weapon_zs_sigil_port")
 GM:AddDeployableInfo("prop_xmas_tree",                   	 "X-mas Tree",                    	"weapon_zs_xmas_tree")
+GM:AddDeployableInfo("prop_drone_station",                   	 "Drone Station",                    	"weapon_zs_xmas_tree")
 
 GM.MaxSigils = 2
 

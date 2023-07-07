@@ -229,7 +229,39 @@ hook.Add("PostDrawTranslucentRenderables", "ZFullBright", GM.FullBrightOn)
 hook.Add("PreDrawViewModel", "ZFullBright", GM.FullBrightOff)
 hook.Add("RenderScreenspaceEffects", "ZFullBright", GM.FullBrightOff)
 local function DoProgressBar(lp, progress, ptype, color, formula)
-	if lp:IsValid() then
+	if cham > 0 and chamt >= CurTime() then
+		if lp:IsValid() then
+
+			local colHealth = Color(247,229,132)
+			local screenscale = BetterScreenScale()
+			local health = cham
+			local formula = 350* (lp:GetIndChance() or 1)
+			local healthperc = math.Clamp(health / formula, 0.01, 1)
+
+			local wid, hei = 150 * screenscale, 20 * screenscale
+	 
+			
+	
+			local subwidth = healthperc * wid
+			local fraction = (chamt-CurTime())/2
+			local form = math.Clamp( fraction, 0, 1 )
+			colHealth.a = form *255
+			surface.SetDrawColor(0, 0, 0, colHealth.a)
+			surface.DrawRect(x, y, wid, hei)
+
+			
+			surface.SetDrawColor(colHealth.r * 1, colHealth.g * 0.2, colHealth.b, 40)
+			surface.SetTexture(texDownEdge)
+			surface.DrawTexturedRect(x + 2, y + 1, subwidth - 4, hei - 2)
+			surface.SetDrawColor(colHealth.r * 0.6, colHealth.g * 0.6, colHealth.b, 30)
+			surface.DrawRect(x + 2, y + 1, subwidth - 4, hei - 2)
+	
+			surface.SetMaterial(matGlow)
+			surface.SetDrawColor(255, 255, 255, colHealth.a)
+			surface.DrawTexturedRect(x + 2 + subwidth - 6, y + 1 - hei/2, 4, hei * 2)
+			draw.SimpleTextBlurry(translate.Get("cham_hud")..math.Round(cham).."/"..math.Round(formula) , "ZSHUDFontTiny", x, y - 12, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM)
+			y = y + ScrH() * 0.07
+		end
 	end
 end
 local matGlow = Material("sprites/glow04_noz")

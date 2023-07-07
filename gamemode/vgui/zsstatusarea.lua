@@ -178,9 +178,9 @@ function PANEL:Paint(w, h)
 	--end
 	local nm = self:GetMemberName()
 	local stat = lp:GetStatus(self.CodeName)
-	draw.SimpleText(t1..(stat and stat:IsValid() and stat:GetDTInt(1) ~= 0 and "|"..stat:GetDTInt(1) or ""), ((stat and stat:IsValid() and stat:GetDTInt(1) ~= 0)  and "ZSHUDFontSmaller" or t1 >= 10000 and "ZSHUDFontSmallest" or "ZSHUDFontSmall"), w / 2, y + h / 2.5 - boxsize/2 + 5, color_white_alpha230, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+	draw.SimpleText(t1..(stat and stat:IsValid() and stat:GetDTInt(1) ~= 0 and "|"..stat:GetDTInt(1) or ""), ((stat and stat:IsValid() and stat:GetDTInt(1) ~= 0)  and "ZSHUDFontSmaller" or t1 >= 10000 and "ZSHUDFontSmallest" or "ZSHUDFontSmall"), w / 2, y + h / 2.85 - boxsize/2 + 5, color_white_alpha230, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 	if nm then
-		draw.SimpleText(nm, (string.len(nm) >= 8 and "ZSHUDFontTiniestStatus2" or "ZSHUDFontTiniestStatus"), w / 2, y + h / 3 - boxsize/2 + 5, color_white_alpha230, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+		draw.SimpleText(nm, (string.len(nm) >= 8 and "ZSHUDFontTiniestStatus2" or "ZSHUDFontTiniestStatus"), w / 2, y + h / 2.5 - boxsize/2 + 5, color_white_alpha230, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 	end
 end
 
