@@ -24,6 +24,7 @@ function meta:HasWon()
 	return self:Team() == TEAM_HUMAN and self:GetObserverMode() == OBS_MODE_ROAMING
 end
 
+
 function meta:GetStatus(sType)	
 	local ent = self["status_"..sType]
 	if ent and ent:IsValid() and ent:GetOwner() == self then return ent end

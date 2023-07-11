@@ -131,7 +131,7 @@ SWEP.UseHands = true
 SWEP.ShowViewModel = false
 SWEP.ReloadSound = Sound("Weapon_AWP.ClipOut")
 SWEP.Primary.Sound = Sound("Weapon_357.Single")
-SWEP.Primary.Damage = 81
+SWEP.Primary.Damage = 45
 SWEP.Primary.NumShots = 1
 SWEP.Primary.Delay = 0.5
 
@@ -364,7 +364,7 @@ function SWEP:Think()
 				self.TracerName = "tracer_comsniper"
 				self:TakeAmmo()
 				self:EmitFireSound()
-				self:ShootBullets((self.Ricoshot and (self.Primary.Damage*math.Clamp(self:GetChargePerc(), 0, 1)) * 5 or (self.Primary.Damage*math.Clamp(self:GetChargePerc(), 0, 2) * 3)), self.Primary.NumShots, self:GetCone())
+				self:ShootBullets((self.Ricoshot and (self.Primary.Damage*math.Clamp(self:GetChargePerc()+0.2, 0, 3)) * 5 or (self.Primary.Damage*math.Clamp(self:GetChargePerc()+0.5, 0, 3) * 3)), self.Primary.NumShots, self:GetCone())
 				nextshotdelay = self.Primary.Delay
 			end
 			self:SetChargePerc(0)

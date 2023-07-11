@@ -111,7 +111,8 @@ LANGUAGE.challenge_oof_d = "Give 300 points."
 
 LANGUAGE.scram_rem = " Scrap"
 
-
+LANGUAGE.challenge_dataminer = "Dataminer"
+LANGUAGE.challenge_dataminer_d = "Break 50 data-barrels."
 LANGUAGE.challenge_anti_sigil_d = "Craft anti-sigil."
 LANGUAGE.challenge_koso = "Sniper"
 LANGUAGE.challenge_koso_d = "Miss 10+ times."
@@ -702,8 +703,8 @@ LANGUAGE.t_d_adbat                                 = "+33% Reload Speed For Puls
 LANGUAGE.t_d_bloodlust                                 = "-10 HP,+50% Damage per attack(Reset if miss)."
 LANGUAGE.t_d_kbook                                 = "-10% resupply delay time,+15% Reload Speed.+15% Melee damage."
 LANGUAGE.t_d_fblueprints                                 = "+30% Repair rate"
-LANGUAGE.t_gasmask                            = "Gasmask"
-LANGUAGE.t_d_gasmask                            = "Give immune vs poison damage in zgas.\n-10% Poison damage taken."
+LANGUAGE.t_gasmask                            = "Strange Gasmask"
+LANGUAGE.t_d_gasmask                            = "Give immune vs poison damage in zgas but only on wave 5 or higher.\n-10% Poison damage taken."
 LANGUAGE.t_d_gstore                                 = "+15% Arsenal Discount"
 LANGUAGE.t_d_protutor                                 = "+10% Points Multiplier"
 LANGUAGE.t_d_smanifest                                 = "-16% Ressuply Delay"
@@ -1872,7 +1873,7 @@ LANGUAGE.controls_extinctioncrab					= "> PRIMARY: Leap Attack\n> SECONDARY: Ext
 LANGUAGE.controls_god					= "> PRIMARY: DEADLY ATTACK\n> SECONDARY: Extinction Spore"
 LANGUAGE.controls_abysstyrant = "> PRIMARY: Axe of the Abyss\n> SECONDARY: Dash of the Abyss (accumulates from damage to the tyrant ) \n> RECHARGE: Singularity of the Abyss\n> SHIFT: Jump of the Abyss"
 --Всякая мелоч 
-LANGUAGE.duck_for_remove = "Duck for camera-effect"
+LANGUAGE.duck_for_remove = "Press ALT for camera-effect"
 LANGUAGE.pshop_w = "Weapons"
 LANGUAGE.pshop_melee = "Melee"
 LANGUAGE.pshop_ammo = "Ammunition"
@@ -3128,7 +3129,7 @@ LANGUAGE.hud_lvl_max = "Level MAX // Remort "
 LANGUAGE.power_god = "POWER OF BARAGOD: "
 LANGUAGE.dosei_inf = "DOSEI INFECTION: "
 
-LANGUAGE.sboard_points_x_score_x_dps_x = "Points: %d Score: %d DPS: %d "
+LANGUAGE.sboard_points_x_score_x_dps_x = "Score: %d DPS: %d Points: %d "
 
 LANGUAGE.on_dismantle_give = "\nOn dismantle give: "
 
@@ -3481,3 +3482,11 @@ LANGUAGE.weapon_drone_station = "Station for Drone Upgrade"
 LANGUAGE.drop_item = "Drop item"
 LANGUAGE.give_item = "Give item"
 LANGUAGE.something_cool_is_here		= "Spawned 2 corrupted sigils!Uncorrupt them for loots!"
+
+LANGUAGE.fix_item_hammer = "Hold SHIFT for fix a prop!"
+LANGUAGE.rmb_item_hammer = "Press RMB for nail a prop!"
+LANGUAGE.alt_item_hammer = "Hold ALT for rotate a prop!"
+
+LANGUAGE.something_cool_is_here_2		= "Spawned 3 weapons on random pos!"
+LANGUAGE.databox_start		= "Spawned some data-barrels!"
+LANGUAGE.break_me_hehe = "Break me!Go to sigil with me!"

@@ -8,9 +8,10 @@ local PANEL  = {}
 function PANEL:Init()
 	self.Align = self:GetParent():GetAlign()
 	self:DockPadding( 8, 2, 8, 2 )
+	self:DockMargin( 0, 2, 0, 0 )
 
-	self:SetKeyboardInputEnabled(false)
-	self:SetMouseInputEnabled(false)
+	self:SetKeyboardInputEnabled( false )
+	self:SetMouseInputEnabled( false )
 end
 
 local matGrad = Material( "VGUI/gradient-r" )
@@ -29,7 +30,7 @@ function PANEL:Paint( w, h )
 		surface.DrawTexturedRect(self:GetWide() * 0.25, 0, self:GetWide(), self:GetTall())
 	elseif align == CENTER then
 		surface.DrawTexturedRect(self:GetWide() * 0.25, 0, self:GetWide() * 0.25, self:GetTall())
-		surface.DrawTexturedRectRotated(self:GetWide() * 0.625, self:GetTall() / 2, self:GetWide() * 0.25, self:GetTall(), 180)
+		surface.DrawTexturedRectRotated(self:GetWide() * 0.625, self:GetTall() / 1.9, self:GetWide() * 0.25, self:GetTall(), 180)
 	else
 		surface.DrawTexturedRectRotated(self:GetWide() * 0.25, self:GetTall() / 2, self:GetWide() / 2, self:GetTall(), 180)
 	end

@@ -33,6 +33,7 @@ SKIN.color_frame_border = Color(0, 80, 0, 255)
 SKIN.colTextEntryText = Color(200, 200, 200)
 SKIN.colTextEntryTextHighlight = Color(30, 255, 0)
 SKIN.colTextEntryTextBorder = Color(70, 90, 70, 255)
+SKIN.colButtonText = Color( 255, 255, 255, 255 )
 
 SKIN.colPropertySheet = Color(30, 30, 30, 255)
 SKIN.colTab = SKIN.colPropertySheet
@@ -142,7 +143,7 @@ SKIN.Colours.Window.TitleActive			= GWEN.TextureColor( 4 + 8 * 0, 508 );
 SKIN.Colours.Window.TitleInactive		= GWEN.TextureColor( 4 + 8 * 1, 508 );
 
 SKIN.Colours.Button = {}
-SKIN.Colours.Button.Normal				= GWEN.TextureColor( 4 + 8 * 2, 508 )
+SKIN.Colours.Button.Normal				= Color(200, 200, 200, 220)
 SKIN.Colours.Button.Hover				= Color(255, 255, 255, 220)
 SKIN.Colours.Button.Down				= Color(255, 255, 255, 255)
 SKIN.Colours.Button.Disabled			= Color(160, 160, 160, 220)
@@ -229,7 +230,38 @@ function SKIN:PaintButton(panel, w, h)
 	surface.DrawTexturedRect(w - edgesize, 0, edgesize, h)
 	surface.DrawTexturedRectRotated(math.ceil(edgesize * 0.5), math.ceil(h * 0.5), edgesize, h, 180)
 end
+function SKIN:PaintMenuOption( panel, w, h )
 
+	if ( panel.m_bBackground && !panel:IsEnabled() ) then
+		surface.SetDrawColor( Color( 0, 0, 0, 50 ) )
+		surface.DrawRect( 0, 0, w, h )
+	end
+
+	if not panel.m_bBackground then return end
+
+	local outlinecol
+	if panel:GetDisabled() then
+		outlinecol = Color(5, 5, 5, 90)
+	elseif panel:GetChecked() then
+		outlinecol = COLOR_LIMEGREEN
+	elseif panel.Hovered || panel.Highlight then
+		outlinecol = COLOR_DARKGREEN
+	else
+		outlinecol = COLOR_DARKGRAY
+	end
+
+	local selectcol = color_black
+
+	if ( panel:GetChecked() ) then
+		selectcol = COLOR_GRAY
+	end
+
+	surface.SetDrawColor(outlinecol)
+	surface.DrawRect(0, 0, w , h)
+
+	surface.SetDrawColor(selectcol)
+	surface.DrawRect(4, 4, w-8 , h-8)
+end
 function SKIN:PaintComboDownArrowClassSel(panel, w, h)
 	local y = math.sin(UnPredictedCurTime() * 3) * 5 * (w/15) - 1
 

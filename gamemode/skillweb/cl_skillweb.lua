@@ -854,6 +854,19 @@ function PANEL:Think()
 				end
 			end
 		end
+		for tree, _ in pairs(QUETREE_SKILLS) do
+			for i, j in pairs(active) do
+				local skillinf = GAMEMODE.Skills[j]
+					
+				if not skillinf or not skillinf.Tree then
+					continue
+				end
+					
+				if skillinf.Tree == tree then
+					self.Progress[tree] = (self.Progress[tree] or 0) + 1
+				end
+			end
+		end
 	end
 		
 	if time < self.NextWarningThink then return end

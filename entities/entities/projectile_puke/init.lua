@@ -38,7 +38,7 @@ function ENT:Explode(vHitPos, vHitNormal, eHitEntity)
 		local rot = eHitEntity:GetStatus("burn")
 		eHitEntity:AddLegDamage(5)
 		eHitEntity:AddLegDamageExt(2, owner, owner, SLOWTYPE_FLAME)
-		eHitEntity:TakeSpecialDamage((self.ProjDamage or 3) / (eHitEntity:WaterLevel() == 0 and 1 or eHitEntity:WaterLevel()),DMG_BURN, owner, owner:GetActiveWeapon(), vHitPos)
+		eHitEntity:TakeSpecialDamage((self.ProjDamage or 3) / (eHitEntity:WaterLevel() == 0 and 1.5 or eHitEntity:WaterLevel()),DMG_BURN, owner, owner:GetActiveWeapon(), vHitPos)
 		if (rot) then 
 			eHitEntity:AddBurn(self:GetOwner(), rot.DieTime - CurTime() + 1)
 		end

@@ -25,8 +25,10 @@ function ENT:EntityTakeDamage(ent, dmginfo)
 		end
 		local drop = table.Random(use)
 		local droped = owner:DropInventoryItemByType(drop)
-		droped:SetPos(owner:GetPos()+Vector(0,0,30))
-		timer.Simple(0.1, function() droped:GetPhysicsObject():SetVelocity(VectorRand(-500,500)) end )
-		owner:CenterNotify(COLOR_RED, translate.ClientFormat(owner, "droped_x", GAMEMODE.ZSInventoryItemData[drop].PrintName))
+		if droped:IsValid() then
+			droped:SetPos(owner:GetPos()+Vector(0,0,30))
+			timer.Simple(0.1, function() droped:GetPhysicsObject():SetVelocity(VectorRand(-500,500)) end )
+			owner:CenterNotify(COLOR_RED, translate.ClientFormat(owner, "droped_x", GAMEMODE.ZSInventoryItemData[drop].PrintName))
+		end
 	end
 end

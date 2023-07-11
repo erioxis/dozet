@@ -1892,8 +1892,9 @@ GM:AddSkill(SKILL_INF_POWER, "Dozei Core", PURPLE.."-33% Damage.\nExtra-damage f
 										4,			-5,					{SKILL_NO_BALANCE,SKILL_HELPLIFER}, TREE_ANCIENTTREE).SPUse = 14
 GM:AddSkill(SKILL_NO_BALANCE, "Silver bullets", PURPLE.."Sometimes your damage become a DIRECT damage!\n7% Chance",
 										2.5,			-3.5,					{}, TREE_ANCIENTTREE).SPUse = 6
-GM:AddSkill(SKILL_SOUL_TRADE, "[TRADE]Soul", PURPLE.."Sell Your Soul For Toy and now ALL SOULS KILL YOU.\n"..PURPLE.."+66.6% Point Mul",
+GM:AddSkill(SKILL_SOUL_TRADE, "[TRADE]Soul", PURPLE.."Sell Your Soul For Toy and now ALL SOULS KILL YOU.\n"..PURPLE.."+66.6% Point Mul\n"..BAD.."The dosei is stronger...-25% Damage",
 										4,			-7,					{SKILL_HELPLIFER}, TREE_ANCIENTTREE)
+GM:AddSkillModifier(SKILL_SOUL_TRADE, SKILLMOD_DAMAGE_ALL, -0.25)	
 GM:AddSkill(SKILL_SEEAURA, "Ancient vision", PURPLE.."You can see zombie aura",
 										2,			-8.5,					{SKILL_HELPLIFER}, TREE_ANCIENTTREE)
 GM:AddSkill(SKILL_INVISIBLE_MAN, "Anti-Vision", PURPLE.."Zombie can't see you aura",

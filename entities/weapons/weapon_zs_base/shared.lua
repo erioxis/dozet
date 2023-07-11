@@ -133,7 +133,7 @@ function SWEP:GetPrimaryClipSize()
 	local owner = self:GetOwner()
 	local multi = self.Primary.ClipSize/self.RequiredClip >= 8 and owner:HasTrinket("extendedmag") and 1.15 or 1 
 
-	return math.floor(self:GetMaxClip1() * multi * (owner:IsSkillActive(SKILL_SSS) and math.max(0.7,owner:GetStyle()/3) or 1))
+	return math.floor(self:GetMaxClip1() * multi)-- * (owner:IsSkillActive(SKILL_SSS) and math.max(0.7,owner:GetStyle()/3) or 1))
 end
 
 function SWEP:FinishReload()

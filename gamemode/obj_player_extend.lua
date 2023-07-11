@@ -375,7 +375,12 @@ end
 function meta:AddXPPerRound(xp)
 	self:SetNWInt('xpperround', self:GetXPPerRound() + xp)	
 end	
-
+function meta:GetAddedPoints()
+	return self:GetDTInt(DT_PLAYER_INT_ADDEDPOINTS)
+end
+function meta:GetAddedPointsTime()
+	return self:GetDTFloat(DT_PLAYER_FLOAT_ADDEDPOINTS)
+end
 function meta:GetStyle()
 	local pable = self.StyleMoment
 	local style = 0

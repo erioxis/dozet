@@ -1040,3 +1040,11 @@ LANGUAGE.nest_name_l1		= "Гнездо"
 LANGUAGE.nest_name_l2		= "Старое Гнездо"
 
 LANGUAGE.something_cool_is_here		= "Появилось 2 зараженных сигила!Почини их чтобы получить оружие 4-5 тира!"
+
+LANGUAGE.something_cool_is_here_2		= "Появилось 3 оружия на случайных позициях!"
+LANGUAGE.databox_start		= "Появилось несколько бочек с информацией!"
+
+LANGUAGE.fix_item_hammer = "Зажми ШИФТ чтобы зафиксировать предмет!"
+LANGUAGE.rmb_item_hammer = "Нажми ПКМ чтобы поставить гвоздь!"
+LANGUAGE.alt_item_hammer = "Зажми АЛЬТ чтобы вращать предмет!"
+LANGUAGE.break_me_hehe = "Сломай меня!Отнеси меня к сигилу!"

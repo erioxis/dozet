@@ -88,7 +88,6 @@ AddCSLuaFile("vgui/pendboard.lua")
 AddCSLuaFile("vgui/pworth.lua")
 
 AddCSLuaFile("vgui/parsenal.lua")
-AddCSLuaFile("vgui/dbutton_fix.lua")
 AddCSLuaFile("vgui/dcombobox_fix.lua")
 AddCSLuaFile("vgui/parsenal_anti.lua")
 AddCSLuaFile("vgui/premantle.lua")
@@ -1366,10 +1365,9 @@ function GM:Think()
 
 		for _, pl in pairs(allplayers) do
 			if P_Team(pl) == TEAM_HUMAN and P_Alive(pl) then
-				if pl.StaminaHAHA and (pl.StaminaUsed or 0) <= CurTime() then
-					pl:AddStamina(7)
-				end
+
 				plpos = pl:GetPos()
+				local wep = pl:GetActiveWeapon()
 				if doafk then
 					if pl.LastAFKPosition and (pl.LastAFKPosition.x ~= plpos.x or pl.LastAFKPosition.y ~= plpos.y) then
 						pl.LastNotAFK = time
@@ -1379,8 +1377,8 @@ function GM:Think()
 				if pl:WaterLevel() >= 3 and not (pl.status_drown and pl.status_drown:IsValid()) then
 					pl:GiveStatus("drown")
 				end
-				if pl:GetActiveWeapon() and (pl:GetActiveWeapon().Tier or 1) >= 4 and pl:HasTrinket("sin_pride") and pl:GetActiveWeapon() then
-					pl:StripWeapon(pl:GetActiveWeapon():GetClass())
+				if pl:HasTrinket("sin_pride")  and wep and (wep.Tier or 1) >= 4 and  wep then
+					pl:StripWeapon(wep:GetClass())
 				end
 				if (pl.NextThinkAboutTrade or 1) < time and pl:IsSkillActive(SKILL_SOUL_TRADE) then
 					pl.NextThinkAboutTrade = time + 10
@@ -1402,8 +1400,8 @@ function GM:Think()
 					pl:Kill()
 					print("ULTRA-FARMER IS DEAD")
 				end
-				if pl:HasTrinket("sin_envy") and pl:GetActiveWeapon() and (pl:GetActiveWeapon().Tier or 1) <= 4 and pl:GetActiveWeapon():GetClass() ~= "weapon_zs_fists" then
-					pl:StripWeapon(pl:GetActiveWeapon():GetClass())
+				if pl:HasTrinket("sin_envy") and wep and (wep.Tier or 1) <= 4 and wep:GetClass() ~= "weapon_zs_fists" then
+					pl:StripWeapon(wep:GetClass())
 				end
 				local barac = pl:IsSkillActive(SKILL_BARA_CURSED)
 				local baracurse = false
@@ -1422,6 +1420,9 @@ function GM:Think()
 						pl:Kill()
 					end
 					
+				end
+				if pl:GetAddedPoints() ~= 0  and ((pl:GetAddedPointsTime()-CurTime()+3)/3) < 0 then
+					pl:SetDTInt(DT_PLAYER_INT_ADDEDPOINTS,0) 
 				end
 				local vele = pl:GetVelocity()
 				if !pl:OnGround() and not (vele:LengthSqr() > 7600) then
@@ -1509,16 +1510,14 @@ function GM:Think()
 									net.WriteString("trinket_sin_ego")
 								net.Send(pl)
 							end
+						else
+							pl:Kill()
 						end
 					end
 				end
 				if pl:IsSkillActive(SKILL_PACIFISMIUM) and time >= pl.NextEnergy then
 					pl.NextEnergy = time + 45
 					pl:SetChargesActive(pl:GetChargesActive()+1)
-				end
-				if pl:HasTrinket("altlazarussoul") and time >= pl.NextRegenerateAltLazarus and pl:Health() < math.min(healmax, pl:GetMaxHealth() * 0.10) then
-					pl.NextRegenerateAltLazarus = time + 60
-					pl:SetHealth(math.min(healmax, pl:Health() + 500))
 				end
 				if pl:HasTrinket("altjudassoul") and time >= pl.NextRegenerateJudas and pl:Health() < math.min(healmax, pl:GetMaxHealth() * 0.20) then
 					pl.NextRegenerateJudas = time + 1
@@ -1616,8 +1615,8 @@ function GM:Think()
 				if pl:KeyDown(IN_SPEED) and pl:GetVelocity() ~= vector_origin and pl:IsSkillActive(SKILL_CARDIOTONIC) then
 					if (pl.StaminaHAHA and pl:GetStamina() or pl:GetBloodArmor())  > 0 then
 						local get = pl.StaminaHAHA and pl:GetStamina() or pl:GetBloodArmor()
-						local set = pl.StaminaHAHA and pl.AddStamina or pl.AddBloodArmor
-						set(pl,-(pl.StaminaHAHA and 6.5 or 1))
+						local set = pl.StaminaHAHA and pl.SetStamina or pl.SetBloodArmor
+						set(pl,get-(pl.StaminaHAHA and 6.5 or 1))
 						if get == 0 and pl:IsSkillActive(SKILL_BLOODLETTER) then
 							local bleed = pl:GiveStatus("bleed")
 							if bleed and bleed:IsValid() then
@@ -1737,9 +1736,6 @@ local function DoDropStart(pl)
 		local func = GAMEMODE:GetInventoryItemType(drop) == INVCAT_CONSUMABLES and pl.AddInventoryItem or pl.Give
 		timer.Simple(0, function() func(pl, drop) end)
 	end
-	if pl:IsSkillActive(SKILL_DEVOURER) then
-		pl:AddInventoryItem("cons_devolver")
-	end
 	if pl:IsSkillActive(SKILL_AMULET_15) then
 		local drop = table.Random(GAMEMODE.Curses)
 		timer.Simple(0, function() pl:AddInventoryItem(drop) end)
@@ -1749,8 +1745,14 @@ local function DoDropStart(pl)
 		local func = GAMEMODE:GetInventoryItemType(start) == INVCAT_TRINKETS and pl.AddInventoryItem or pl.Give
 		timer.Simple(0, function() func(pl, start) end)
 	end
-	if pl:IsSkillActive(SKILL_SOULNET) then
-		pl:AddInventoryItem("cons_soul_picka")
+	if pl:GetSoulPicker() then
+		timer.Simple(0, function() pl:AddInventoryItem("cons_soul_picka") end)
+	end
+	if pl:GetDevoPicker() then
+		timer.Simple(0, function() pl:AddInventoryItem("cons_devolver") end)
+	end
+	if pl:GetBountyPicker() then
+		timer.Simple(0, function() pl:AddInventoryItem("cons_bounty") end)
 	end
 	--local d = string.Explode(" " ,string.lower(self.ZSInventoryItemData[start1].PrintName))
 --[[	if pl:IsSkillActive(SKILL_SOUL_TRADE) and table.HasValue(d, "soul") and not pl:HasTrinket("toysoul") and not pl:SteamID64() == "76561198813932012" then
@@ -1788,11 +1790,10 @@ local function DoDropStart(pl)
 		local drop = table.Random(weapon)
 		timer.Simple(20, function()	pl:Give(drop) end)
 	end
-	if pl:IsSkillActive(SKILL_MIDAS_TOUCH) then
-		timer.Simple(0, function() pl:AddInventoryItem("trinket_sin_ego") end)
-	end
-	if pl:IsSkillActive(SKILL_GOOD_BOUNTY) then
-		timer.Simple(0, function() pl:AddInventoryItem("cons_bounty") end)
+	local midas = pl:GetFuckingMidas()
+	if midas then
+		local huy = GAMEMODE:GetInventoryItemType(midas) == INVCAT_TRINKETS and pl.AddInventoryItem or pl.Give
+		timer.Simple(0, function() huy(pl, midas) end)
 	end
 end
 
@@ -2518,7 +2519,7 @@ function GM:EndRound(winner)
 
 	if self.OverrideEndSlomo == nil or self.OverrideEndSlomo then
 		game.SetTimeScale(0.25)
-		timer.Simple(2, function() game.SetTimeScale(1) end)
+		timer.Simple(4, function() game.SetTimeScale(1) end)
 	end
 
 	hook.Add("PlayerCanHearPlayersVoice", "EndRoundCanHearPlayersVoice", function() return true, false end)
@@ -2646,15 +2647,8 @@ end)
 local cubes = {"/dice","!dice","!куб","!кбу","!dcie","куб","cube","/cube","re,","сгиу","кб","dice","/dcie","/icde","/diec","кбу","/куб","/кбу"}
 local promos = {"/promo", "промо","промокод","/promocode","/промокод","!промокод","!promo","!promocode","!промо"}
 local casino = {"/rtd", "rtd","ртд","казино","!rtd","!казино","!casino","/casino","!ртд"}
-local wepf_c = {}
-for _, wep in pairs(weapons.GetList()) do
-	if (wep.Tier or 1) == 7 and !wep.ZombieOnly and !wep.NoMobilized and wep.Primary.DefaultClip and wep.Primary.DefaultClip < 9999 then
-		table.insert( wepf_c, wep.ClassName )
-	end
-end
 hook.Add("PlayerSay", "ForBots", function(ply, text)
     local playerInput = string.Explode( " ", text )
-	
 	if ( table.HasValue(cubes,string.lower( playerInput[1] )) and playerInput[2] and tonumber(playerInput[2]) and tonumber(playerInput[2]) >= 2) and (ply.NextDiceDrop or 1) <= CurTime() then
 		local drop = math.random(1,tonumber(playerInput[2]) )
 		ply.NextDiceDrop = CurTime() + 1.5
@@ -2719,6 +2713,12 @@ hook.Add("PlayerSay", "ForBots", function(ply, text)
 			PrintTranslatedMessage( HUD_PRINTTALK, "casino_gg" )
 			PrintTranslatedMessage( HUD_PRINTTALK, "casino_jack",tonumber(playerInput[2])*6,ply:Nick() )
 			ply:SetPoints(ply:GetPoints()+tonumber(playerInput[2])*6)
+			local wepf_c = {}
+			for _, wep in pairs(weapons.GetList()) do
+				if (wep.Tier or 1) == 7 and !wep.ZombieOnly and !wep.NoMobilized and wep.Primary.DefaultClip and wep.Primary.DefaultClip < 9999 then
+					table.insert( wepf_c, wep.ClassName )
+				end
+			end
 			if tonumber(playerInput[2]) >= 200 then
 				ply:Give(table.Random(wepf_c))
 			end
@@ -4436,11 +4436,12 @@ function GM:KeyPress(pl, key)
 				pl:CallZombieFunction0("AltUse")
 			end
 		end
-			if pl:GetActiveWeapon().CanDefend and pl:GetActiveWeapon():GetPerc() >= 10 then
-				pl:GetActiveWeapon():SetPerc(0)
+		local wep = pl:GetActiveWeapon()
+			if wep.CanDefend and wep:GetPerc() >= 10 then
+				wep:SetPerc(0)
 				pl:GodEnable()
-				pl:GetActiveWeapon().GodMode = true
-				timer.Simple(4, function() pl:GodDisable() pl:GetActiveWeapon().GodMode = false end)
+				wep.GodMode = true
+				timer.Simple(4, function() pl:GodDisable() wep.GodMode = false end)
 			end
 
 	elseif key == IN_ZOOM then
@@ -4767,12 +4768,12 @@ function GM:HumanKilledZombie(pl, attacker, inflictor, dmginfo, headshot, suicid
 	timer.Create("rage"..attacker:Nick(),5,1, function() if attacker:IsValid() then		attacker.RageMul = 1 end end)
 	attacker:AddZSXP(1)
 	if pl:IsChampion() then
-		net.Start("zs_update_style") net.WriteTable({time = CurTime()+2.5+(math.random(10,20)*0.2),text = "CHAMPION KILL",color = pl:GetChampionColor(),score = 100}) net.Send(attacker) 
+	--	net.Start("zs_update_style") net.WriteTable({time = CurTime()+2.5+(math.random(10,20)*0.2),text = "CHAMPION KILL",color = pl:GetChampionColor(),score = 100}) net.Send(attacker) 
 	else
-		net.Start("zs_update_style") net.WriteTable({time = CurTime()+4+(math.random(1,20)*0.1),text = "KILL!",color = Color(250,21,21),score = 10}) net.Send(attacker) 
+		--net.Start("zs_update_style") net.WriteTable({time = CurTime()+4+(math.random(1,20)*0.1),text = "KILL!",color = Color(250,21,21),score = 10}) net.Send(attacker) 
 	end
 	if !attacker:OnGround() then
-		net.Start("zs_update_style") net.WriteTable({time = CurTime()+4+(math.random(10,20)*0.2),text = "AIRKILL!",score = 50,color = Color(1161,161,161)}) net.Send(attacker) 
+		--net.Start("zs_update_style") net.WriteTable({time = CurTime()+4+(math.random(10,20)*0.2),text = "AIRKILL!",score = 50,color = Color(1161,161,161)}) net.Send(attacker) 
 	end
 
 	
@@ -4807,7 +4808,7 @@ function GM:HumanKilledZombie(pl, attacker, inflictor, dmginfo, headshot, suicid
 		if pl:WasHitInHead() then
 			attacker.Headshots = (attacker.Headshots or 0) + 1
 			if pl:IsValidPlayer() then
-				net.Start("zs_update_style") net.WriteTable({time = CurTime()+1.5+(math.random(10,20)*0.2),text = "HEADSHOT",score = 5}) net.Send(pl) 
+				--net.Start("zs_update_style") net.WriteTable({time = CurTime()+1.5+(math.random(10,20)*0.2),text = "HEADSHOT",score = 5}) net.Send(pl) 
 			end
 		end
 		if attacker:IsSkillActive(SKILL_PILLUCK) and pl.LuckFromKillYes >= CurTime() then
@@ -5040,9 +5041,6 @@ function GM:DoPlayerDeath(pl, attacker, dmginfo)
 
 	if not pl:CallZombieFunction5("OnKilled", attacker, inflictor, suicide, headshot, dmginfo) then
 		if pl:Health() <= -70 and not pl.NoGibs and not self.ZombieEscape then
-			if attacker:IsValidLivingHuman() then
-				net.Start("zs_update_style") net.WriteTable({time = CurTime()+4+(math.random(1,20)*0.2),text = "OVERKILL!",score = 30}) net.Send(attacker) 
-			end
 			pl:Gib(dmginfo)
 		elseif not pl.KnockedDown then
 			pl:CreateRagdoll()
@@ -5074,7 +5072,7 @@ function GM:DoPlayerDeath(pl, attacker, dmginfo)
 				pl:MakeDemiBossDrop(attacker)
 			end
 			if attacker:IsValidLivingHuman() then
-				net.Start("zs_update_style") net.WriteTable({time = CurTime()+2+(math.random(1,20)*0.2),text = "DEMI-BOSS KILLED!",score = 150}) net.Send(attacker) 
+				--net.Start("zs_update_style") net.WriteTable({time = CurTime()+2+(math.random(1,20)*0.2),text = "DEMI-BOSS KILLED!",score = 150}) net.Send(attacker) 
 			end
 		end)
 		end
@@ -5084,7 +5082,7 @@ function GM:DoPlayerDeath(pl, attacker, dmginfo)
 				net.WriteUInt(classtable.Index, 8)
 			net.Broadcast()
 			if attacker:IsValidLivingHuman() then
-				net.Start("zs_update_style") net.WriteTable({time = CurTime()+8+(math.random(1,20)*0.2),text = "BOSS KILLED!",score = 350}) net.Send(attacker) 
+				--net.Start("zs_update_style") net.WriteTable({time = CurTime()+8+(math.random(1,20)*0.2),text = "BOSS KILLED!",score = 350}) net.Send(attacker) 
 			end
 			if attacker:IsValidLivingHuman() and attacker:IsSkillActive(SKILL_SINS) then
 				timer.Simple(0, function()
@@ -5134,9 +5132,10 @@ function GM:DoPlayerDeath(pl, attacker, dmginfo)
 
 		pl:CallZombieFunction5("PostOnKilled", attacker, inflictor, suicide, headshot, dmginfo)
 	elseif plteam == TEAM_HUMAN then
-		if pl:IsSkillActive(SKILL_PHOENIX) and pl.RedeemedOnce then 
+		if pl:IsSkillActive(SKILL_PHOENIX) and pl.RedeemedOnce or pl:HasTrinket("altlazarussoul")  then 
 			local oldw = {}
 			local oldt = {}
+			pl:TakeInventoryItem("trinket_altlazarussoul")
 			for _, wep in pairs(pl:GetWeapons()) do
 				if wep:IsValid() then
 					table.insert(oldw,#oldw+1,wep:GetClass())
@@ -5667,6 +5666,80 @@ function GM:SetWave(wave)
 end
 
 GM.NextEscapeDamage = 0
+local weaponars = {
+	"weapon_zs_pushbroom",
+	"weapon_zs_shovel",
+	"weapon_zs_pulserifle",
+	"weapon_zs_toxicshooter",
+	"weapon_zs_zenith",
+	"weapon_zs_zenith_q2",
+	"weapon_zs_m4",
+	"weapon_zs_pollutor",
+	"weapon_zs_sawedoff",
+	"weapon_zs_minelayer",
+	"weapon_zs_relsous",
+	"weapon_zs_quasar",
+	"weapon_zs_inferno",
+	"weapon_zs_binocle",
+	"weapon_zs_keyboard",
+	"weapon_zs_icelux",
+	"weapon_zs_scythe",
+	"weapon_zs_plank_q1",
+	"weapon_zs_pushbroom_q1",
+	"weapon_zs_shovel_q1",
+	"weapon_zs_pulserifle_q1",
+	"weapon_zs_toxicshooter_q2",
+	"weapon_zs_toxicshooter_r2",
+	"weapon_zs_m4_q1",
+	"weapon_zs_pollutor_q1",
+	"weapon_zs_sawedoff_q1",
+	"weapon_zs_minelayer_q1",
+	"weapon_zs_relsous_q1",
+	"weapon_zs_quasar_q1",
+	"weapon_zs_inferno_q1",
+	"weapon_zs_binocle_q1",
+	"weapon_zs_keyboard_q1",
+	"weapon_zs_scythe_q1"
+}
+function GM:EventStart(wave)
+	if wave == 4 then 
+		gamemode.Call("CreateRandomObjectPos", "prop_obj_anti_sigil")
+		return
+	elseif wave == 6 then 
+		gamemode.Call("CreateSigils",nil,nil,true)
+		for _, pl in pairs(player.GetAll()) do
+			if pl then
+				pl:CenterNotify(COLOR_GREEN,{killicon = "headshot"},{font = "ZSHUDFontSmall"},translate.ClientGet(pl,"something_cool_is_here"),{killicon = "headshot"})
+			end
+		end
+		return
+	end
+	if math.random(1,2) == 1  then
+		gamemode.Call("CreateRandomObjectPos", "prop_databox",math.random(3,6))
+		for _, pl in pairs(player.GetAll()) do
+			if pl then
+				pl:CenterNotify(COLOR_GREEN,{killicon = "headshot"},{font = "ZSHUDFontSmall"},translate.ClientGet(pl,"databox_start"),{killicon = "headshot"})
+			end
+		end
+	end
+	if math.random(1,3) == 1  then
+		local wepf_c = {}
+		for _, wep in pairs(weapons.GetList()) do
+			if (wep.Tier or 1) == math.Round(math.Clamp(wave/2,1,6)) and !wep.ZombieOnly and !wep.NoMobilized and wep.Primary.DefaultClip and wep.Primary.DefaultClip < 9999 then
+				table.insert( wepf_c, wep.ClassName )
+			end
+		end
+		for i=1,3 do
+			gamemode.Call("CreateRandomObjectPos", "prop_weapon",1, wepf_c[math.random(1,#wepf_c)])
+		end
+		for _, pl in pairs(player.GetAll()) do
+			if pl then
+				pl:CenterNotify(COLOR_GREEN,{killicon = "headshot"},{font = "ZSHUDFontSmall"},translate.ClientGet(pl,"something_cool_is_here_2"),{killicon = "headshot"})
+			end
+		end
+		return
+	end
+end
 function GM:WaveStateChanged(newstate, pl)
 	if newstate then
 		
@@ -5695,9 +5768,16 @@ function GM:WaveStateChanged(newstate, pl)
 
 		if self:GetUseSigils() and prevwave >= self:GetNumberOfWaves() then return end
 		if prevwave == 6 then 
+			local removed = false
 			for k,v in pairs(ents.FindByClass("prop_obj_sigil")) do
 				if v:GetSigilCorrupted() then
 					v:Remove()
+					removed = true
+				end
+			end
+			if !removed then
+				for k,v in pairs(player.GetAll()) do
+					v:AddPoints(120)
 				end
 			end
 		end
@@ -5730,9 +5810,7 @@ function GM:WaveStateChanged(newstate, pl)
 		for _, pl in pairs(player.GetAll()) do
 			pl.WaveBarricadeDamage = 0
 			pl.WaveHumanDamage = 0
-			if pl:HasTrinket("vir_pat") then
-				pl.CanBuy = false
-			end
+			pl.CanBuy = false
 		end
 
 		local curwave = self:GetWave()
@@ -5809,40 +5887,31 @@ function GM:WaveStateChanged(newstate, pl)
 		end
 	else
 		gamemode.Call("SetWaveStart", CurTime() + (GetGlobalBool("classicmode") and self.WaveIntermissionLengthClassic or self.WaveIntermissionLength))
-
+		local whywave = self:GetWave()
 		net.Start("zs_waveend")
-			net.WriteInt(self:GetWave(), 16)
+			net.WriteInt(whywave, 16)
 			net.WriteFloat(self:GetWaveStart())
 		net.Broadcast()
-		self:SetRage(self:GetRage() + 40 * self:GetWave() * #team.GetPlayers(TEAM_HUMAN))
+		self:SetRage(self:GetRage() + 40 * whywave * #team.GetPlayers(TEAM_HUMAN))
        
 		local pointsbonus
 		if self.EndWavePointsBonus > 0 then
-			pointsbonus = self.EndWavePointsBonus + (self:GetWave() - 1) * self.EndWavePointsBonusPerWave
+			pointsbonus = self.EndWavePointsBonus + (whywave - 1) * self.EndWavePointsBonusPerWave
 		end
-		if self:GetWave() == 4 then 
-			gamemode.Call("CreateASigils")
-		elseif self:GetWave() == 6 then 
-			gamemode.Call("CreateSigils",nil,nil,true)
-			for _, pl in pairs(player.GetAll()) do
-				if pl then
-					pl:CenterNotify(COLOR_GREEN,{killicon = "headshot"},{font = "ZSHUDFontSmall"},translate.ClientGet(pl,"something_cool_is_here"),{killicon = "headshot"})
-				end
-			end
-		end
+		gamemode.Call("EventStart",whywave)
 		for _, pl in pairs(player.GetAll()) do
 			if pl:Team() == TEAM_HUMAN and pl:Alive() then
 				pl.UsesChaosCard = false
 				pl:SetChargesActive(pl:GetChargesActive()+3)
 				local lucktrue  = (pl.Luck or 1) + pl.LuckAdd 
 				if pl:IsSkillActive(SKILL_LUCKY_UNLIVER) then
-					lucktrue = lucktrue + self:GetWave() * 2
+					lucktrue = lucktrue + whywave * 2
 				end
 				if self.EndWaveHealthBonus > 0 and !pl:HasTrinket("lehasoul") then
 					pl:GiveStatus("regeneration"):AddDamage(self.EndWaveHealthBonus)
 				end
 				if pl:IsSkillActive(SKILL_XPHUNTER) then
-					pl:AddZSXP(5 + self.GetWave() * 10)
+					pl:AddZSXP(5 + whywave * 10)
 				end
 				if pl:IsSkillActive(SKILL_CREDIT) then
 					net.Start("zs_credit_takepoints")
@@ -5850,7 +5919,7 @@ function GM:WaveStateChanged(newstate, pl)
 					net.Send(pl)
 					pl:SetPoints(pl:GetPoints() * 0.7)
 				end
-				if pl:IsSkillActive(SKILL_SECONDCHANCE) and pl.LetalSave and self:GetWave() >= 5 and pl:IsValidLivingHuman() then
+				if pl:IsSkillActive(SKILL_SECONDCHANCE) and pl.LetalSave and whywave >= 5 and pl:IsValidLivingHuman() then
 					pl:GiveAchievement("thisisbeeasy")
 				end
 				pl.LetalSave = true
@@ -5921,42 +5990,7 @@ function GM:WaveStateChanged(newstate, pl)
 					pl:AddPoints(pointsreward, nil, nil, true)
 				end
 				if pl:IsSkillActive(SKILL_ARSVOID)  then 
-					local weapon = {
-						"weapon_zs_pushbroom",
-						"weapon_zs_shovel",
-						"weapon_zs_pulserifle",
-						"weapon_zs_toxicshooter",
-						"weapon_zs_zenith",
-						"weapon_zs_zenith_q2",
-						"weapon_zs_m4",
-						"weapon_zs_pollutor",
-						"weapon_zs_sawedoff",
-						"weapon_zs_minelayer",
-						"weapon_zs_relsous",
-						"weapon_zs_quasar",
-						"weapon_zs_inferno",
-						"weapon_zs_binocle",
-						"weapon_zs_keyboard",
-						"weapon_zs_icelux",
-						"weapon_zs_scythe",
-						"weapon_zs_plank_q1",
-						"weapon_zs_pushbroom_q1",
-						"weapon_zs_shovel_q1",
-						"weapon_zs_pulserifle_q1",
-						"weapon_zs_toxicshooter_q2",
-						"weapon_zs_toxicshooter_r2",
-						"weapon_zs_m4_q1",
-						"weapon_zs_pollutor_q1",
-						"weapon_zs_sawedoff_q1",
-						"weapon_zs_minelayer_q1",
-						"weapon_zs_relsous_q1",
-						"weapon_zs_quasar_q1",
-						"weapon_zs_inferno_q1",
-						"weapon_zs_binocle_q1",
-						"weapon_zs_keyboard_q1",
-						"weapon_zs_scythe_q1"
-					}
-					local drop = table.Random(weapon)
+					local drop = table.Random(weaponars)
 					local lucky2 = math.randomr(1,9,1,pl)
 					if lucky2 == 1 then 
 						pl:Give(drop)
@@ -5979,7 +6013,7 @@ function GM:WaveStateChanged(newstate, pl)
 				pl.DeathClass = curclass
 			end
 			if pl:Team() == TEAM_UNDEAD then
-				pl:AddTokens(math.ceil(self:GetWave() * 90) + 120)
+				pl:AddTokens(math.ceil(whywave* 90) + 120)
 			end
 
 			pl.SkipCrow = nil

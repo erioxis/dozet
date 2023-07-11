@@ -10,6 +10,7 @@ SWEP.MeleeDamage = 55
 SWEP.MeleeDamageShielded = 1700
 SWEP.MeleeDelay = 0.74
 SWEP.MeleeDamageVsProps = 43
+SWEP.MeleeDamageType = DMG_DIRECT
 
 function SWEP:MeleeHit(ent, trace, damage, forcescale)
 	local owner = self:GetOwner()

@@ -115,7 +115,12 @@ net.Receive("zs_update_style", function(length)
 		net.WriteTable(MySelf.StyleMoment)
 	net.SendToServer()
 end)
-
+net.Receive("zs_last_points", function(length)
+	local count = net.ReadInt(8)
+	MySelf.LastAddedPoints = count
+	MySelf.LastCheckPoints = CurTime() + 2.7
+	timer.Simple(3, function() MySelf.LastAddedPoints = MySelf.LastAddedPoints - count end)
+end)
 net.Receive("zs_zvols", function(length)
 	local volunteers = {}
 	local count = net.ReadUInt(8)

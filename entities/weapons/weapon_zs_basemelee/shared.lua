@@ -370,7 +370,7 @@ function SWEP:PlayerHitUtil(owner, damage, hitent, dmginfo)
 			parasite:AddDamage(6, owner)
 			parasite.Damage = self.MeleeDamage*0.05*(owner.MeleeDamageMultiplier or 1)
 			parasite:SetDTInt(1,parasite:GetDTInt(1)+1)
-			net.Start("zs_update_style") net.WriteTable({time = CurTime()+3+(math.random(10,20)*0.2),text = Format("PARASITED A %s!",hitent:Nick()),score = 10,color = Color(177,34,177)}) net.Send(owner) 
+			--net.Start("zs_update_style") net.WriteTable({time = CurTime()+3+(math.random(10,20)*0.2),text = Format("PARASITED A %s!",hitent:Nick()),score = 10,color = Color(177,34,177)}) net.Send(owner) 
 		end
 	end
 	if owner:IsSkillActive(SKILL_HELPER) and SERVER and block and owner.BulletMul <= 1 then

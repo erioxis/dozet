@@ -67,7 +67,7 @@ function ENT:Think()
 			POINTSMULTIPLIER = self.PointsMultiplier
 		end
 		self:DealProjectileTraceDamage(self.ProjDamage or 77, tr, owner)
-		net.Start("zs_update_style") net.WriteTable({time = CurTime()+0.3+(math.random(2,10)*0.1),text = "BOUNCE PROJECTILE",score = 3,color = Color(50,163,60)}) net.Send(self:GetOwner()) 
+		--net.Start("zs_update_style") net.WriteTable({time = CurTime()+0.3+(math.random(2,10)*0.1),text = "BOUNCE PROJECTILE",score = 3,color = Color(50,163,60)}) net.Send(self:GetOwner()) 
 		if tr.Entity:IsPlayer() then
 			tr.Entity:AddLegDamageExt(5.5, owner, source, SLOWTYPE_PULSE)
 		end

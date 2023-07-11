@@ -1,7 +1,7 @@
 --SWEP.PrintName = "'Nomer' Pulse Revolver"
 --SWEP.Description = "STONE."
-SWEP.PrintName = ""..translate.Get("wep_nome")
-SWEP.Description = ""..translate.Get("wep_d_nome")
+SWEP.PrintName = translate.Get("wep_nome")
+SWEP.Description = translate.Get("wep_d_nome")
 
 SWEP.Base = "weapon_zs_baseproj"
 
@@ -17,15 +17,15 @@ SWEP.CSMuzzleFlashes = false
 
 SWEP.Primary.Sound = Sound("Weapon_357.Single")
 SWEP.Primary.Delay = 0.9
-SWEP.Primary.Damage = 40
+SWEP.Primary.Damage = 100
 SWEP.Primary.NumShots = 1
 
-SWEP.Primary.ClipSize = 35
+SWEP.Primary.ClipSize = 15
 SWEP.Primary.Automatic = false
 SWEP.Primary.Ammo = "pulse"
-SWEP.Primary.DefaultClip = 35
+SWEP.Primary.DefaultClip = 15
 
-SWEP.RequiredClip = 35
+SWEP.RequiredClip = 15
 
 SWEP.ConeMax = 3.5
 SWEP.ConeMin = 1.75

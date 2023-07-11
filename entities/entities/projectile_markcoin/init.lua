@@ -481,9 +481,9 @@ function ENT:OnRemove()
 
           
                         if self.dmg:GetDamage() * 3 <= 300 then
-                          net.Start("zs_update_style") net.WriteTable({time = CurTime()+4+(math.random(10,20)*0.2),text = "RICOSHOT",score = 50,color = Color(70,181,255)}) net.Send(ply) 
+                    --      net.Start("zs_update_style") net.WriteTable({time = CurTime()+4+(math.random(10,20)*0.2),text = "RICOSHOT",score = 50,color = Color(70,181,255)}) net.Send(ply) 
                        else
-                           net.Start("zs_update_style") net.WriteTable({time = CurTime()+4+(math.random(10,20)*0.2),text = "ULTRARICOSHOT",score = 150,color = Color(51,122,168)}) net.Send(ply) 
+                      --     net.Start("zs_update_style") net.WriteTable({time = CurTime()+4+(math.random(10,20)*0.2),text = "ULTRARICOSHOT",score = 150,color = Color(51,122,168)}) net.Send(ply) 
                        end
                     self:FireBulletsLua(self:GetPos(),Vec,0,1,self.dmg:GetDamage() * 2,ply,20,"GaussTracer",nil,1 )
                     
@@ -661,9 +661,9 @@ function ENT:OnRemove()
 
                     util.Effect("HL1GaussBeamReflect",gd)
                     if self.dmg:GetDamage() * 3 <= 300 then
-                     net.Start("zs_update_style") net.WriteTable({time = CurTime()+4+(math.random(10,20)*0.2),text = "PROJECTILE BOOM!",score = 35,color = Color(255,70,70)}) net.Send(ply) 
+                   --  net.Start("zs_update_style") net.WriteTable({time = CurTime()+4+(math.random(10,20)*0.2),text = "PROJECTILE BOOM!",score = 35,color = Color(255,70,70)}) net.Send(ply) 
                     else
-                        net.Start("zs_update_style") net.WriteTable({time = CurTime()+4+(math.random(10,20)*0.2),text = "ULTRA-BOOM!!!",score = 250,color = Color(168,51,152)}) net.Send(ply) 
+                   --     net.Start("zs_update_style") net.WriteTable({time = CurTime()+4+(math.random(10,20)*0.2),text = "ULTRA-BOOM!!!",score = 250,color = Color(168,51,152)}) net.Send(ply) 
                     end
                     self:FireBulletsLua(self:GetPos(),Vec,0,1,self.dmg:GetDamage() * 3,ply,20,"GaussTracer",nil,1 )
                     util.BlastDamage(self,self:GetOwner(),e1:GetPos(),250,(e1.ProjectileDamage or e1.Damage or e1.ProjDamage or 300) * (self.Chain / 2 + 1))
@@ -683,9 +683,9 @@ function ENT:OnRemove()
 
                     util.Effect("HL1GaussBeamReflect",gd)
                     if self.dmg:GetDamage() * 3 <= 300 then
-                     net.Start("zs_update_style") net.WriteTable({time = CurTime()+4+(math.random(10,20)*0.2),text = "RICOSHOT",score = 50,color = Color(70,181,255)}) net.Send(ply) 
+                  --   net.Start("zs_update_style") net.WriteTable({time = CurTime()+4+(math.random(10,20)*0.2),text = "RICOSHOT",score = 50,color = Color(70,181,255)}) net.Send(ply) 
                     else
-                        net.Start("zs_update_style") net.WriteTable({time = CurTime()+4+(math.random(10,20)*0.2),text = "ULTRARICOSHOT",score = 150,color = Color(51,122,168)}) net.Send(ply) 
+                     --   net.Start("zs_update_style") net.WriteTable({time = CurTime()+4+(math.random(10,20)*0.2),text = "ULTRARICOSHOT",score = 150,color = Color(51,122,168)}) net.Send(ply) 
                     end
                     self:FireBulletsLua(self:GetPos(),Vec,0,1,self.dmg:GetDamage() * 3,ply,20,"GaussTracer",nil,1 )
 

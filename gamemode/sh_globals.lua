@@ -47,6 +47,8 @@ DT_PLAYER_INT_GUNNER = 12
 DT_PLAYER_INT_MEDIC = 13
 DT_PLAYER_INT_CADER = 14
 
+DT_PLAYER_INT_ADDEDPOINTS = 15
+
 DT_PLAYER_BOOL_BARRICADEEXPERT = 6
 DT_PLAYER_BOOL_NECRO = 7
 DT_PLAYER_BOOL_FRAIL = 8
@@ -55,6 +57,7 @@ DT_PLAYER_FLOAT_WIDELOAD = 5
 DT_PLAYER_FLOAT_PHANTOMHEALTH = 6
 DT_PLAYER_FLOAT_DOSET_COINS = 7
 DT_PLAYER_FLOAT_STAMINA = 8
+DT_PLAYER_FLOAT_ADDEDPOINTS = 9
 
 CHAMP_NONE = 0
 CHAMP_RED = 1
@@ -130,6 +133,7 @@ GM.MaxArmDamage = 20
 
 GM.UtilityKey = IN_SPEED
 GM.MenuKey = IN_WALK -- I would use the spawn menu but it has no IN_ key assignment.
+GM.SpecialAbilityKey = KEY_Q -- Мб добавлю абилки оружкам
 
 GM.ArsenalCrateCommission = 0.45
 
@@ -141,16 +145,16 @@ GM.MaxNails = 4
 -- Moved from options to globals because the game is now balanced around it being static. The gamemode will BREAK if this is not 6!!
 GM.NumberOfWaves = 12
 
-GM.PulsePointsMultiplier = 1.5
+GM.PulsePointsMultiplier = 1.75
 
 -- The amount of damage you need to inflict to a zombie type to get a point
-GM.HumanoidZombiePointRatio = 55
-GM.PoisonZombiePointRatio = 76 -- Has an enormous head hitbox
-GM.HeadcrabZombiePointRatio = 55
-GM.NoHeadboxZombiePointRatio = 34
-GM.TorsoZombiePointRatio = 55
-GM.LegsZombiePointRatio = 66
-GM.SkeletonPointRatio = GM.HumanoidZombiePointRatio/1.5
+GM.HumanoidZombiePointRatio = 65
+GM.PoisonZombiePointRatio = 86 -- Has an enormous head hitbox
+GM.HeadcrabZombiePointRatio = 75
+GM.NoHeadboxZombiePointRatio = 54
+GM.TorsoZombiePointRatio = 85
+GM.LegsZombiePointRatio = 76
+GM.SkeletonPointRatio = GM.HumanoidZombiePointRatio/2
 
 SPEED_NORMAL = 195
 SPEED_SLOWEST = SPEED_NORMAL * 0.5

@@ -35,7 +35,8 @@ function ENT:AcceptInput(name, activator, caller, arg)
 				end
 			elseif GAMEMODE:GetWave() ~= 0 then
 				ent:GiveStatus("spawnslow", self.TickTime + 0.1)
-				if (ent.NextPoisonZGAS or 1) <= CurTime() and !ent:HasTrinket("gasmask") then
+				if ent:HasTrinket("gasmask") and GAMEMODE:GetWave() > 4 then return end
+				if (ent.NextPoisonZGAS or 1) <= CurTime()  then
 					local p = ent:GiveStatus("poison")
 					if p and p:IsValid() then
 						p:AddDamage(8)

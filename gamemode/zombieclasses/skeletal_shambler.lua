@@ -163,16 +163,17 @@ if SERVER then
 	end
 
 	function CLASS:ProcessDamage(pl, dmginfo)
-		if bit_band(dmginfo:GetDamageType(), DMG_BULLET) ~= 0 then
+		local inflictor = dmginfo:GetInflictor()
+		if bit_band(dmginfo:GetDamageType(), DMG_BULLET) ~= 0 and !inflictor:IsProjectile() then
 			dmginfo:SetDamage(0)
-		elseif bit_band(dmginfo:GetDamageType(), DMG_SLASH) == 0 and bit_band(dmginfo:GetDamageType(), DMG_CLUB) == 0 then
+		elseif bit_band(dmginfo:GetDamageType(), DMG_SLASH) == 0 and bit_band(dmginfo:GetDamageType(), DMG_CLUB) == 0 and !inflictor:IsProjectile()  then
 			dmginfo:SetDamage(0)
 		end
 
 		local damage = dmginfo:GetDamage()
 		if damage >= 70 or damage < pl:Health() then return end
 
-		local attacker, inflictor = dmginfo:GetAttacker(), dmginfo:GetInflictor()
+		local attacker = dmginfo:GetAttacker()
 		if attacker == pl or not attacker:IsPlayer() or inflictor.IsMelee or inflictor.NoReviveFromKills then return end
 
 		if pl:WasHitInHead() or pl:GetStatus("shockdebuff") then return end

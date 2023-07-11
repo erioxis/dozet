@@ -153,13 +153,14 @@ if SERVER then
 	end
 
 	function CLASS:ProcessDamage(pl, dmginfo)
-		if dmginfo:GetAttacker():IsPlayer() and !dmginfo:GetAttacker():HasTrinket("flower") then
+		
+		if dmginfo:GetAttacker():IsPlayer() and !dmginfo:GetAttacker():HasTrinket("flower") and !inflictor:IsProjectile() then
 			if bit_band(dmginfo:GetDamageType(), DMG_BULLET) ~= 0 then
 				dmginfo:SetDamage((dmginfo:GetInflictor().IgnoreResist2 and 20 or 0))
 			elseif bit_band(dmginfo:GetDamageType(), DMG_SLASH) == 0 and bit_band(dmginfo:GetDamageType(), DMG_CLUB) == 0 then
 				dmginfo:SetDamage((dmginfo:GetInflictor().IgnoreResist2 and 20 or 0))
 			end
-		elseif dmginfo:GetAttacker():IsPlayer() and dmginfo:GetAttacker():HasTrinket("flower") then
+		elseif dmginfo:GetAttacker():IsPlayer() and dmginfo:GetAttacker():HasTrinket("flower") and !inflictor:IsProjectile() then
 			if bit_band(dmginfo:GetDamageType(), DMG_BULLET) ~= 0 then
 				dmginfo:ScaleDamage(0.1)
 			elseif bit_band(dmginfo:GetDamageType(), DMG_SLASH) == 0 and bit_band(dmginfo:GetDamageType(), DMG_CLUB) == 0 then

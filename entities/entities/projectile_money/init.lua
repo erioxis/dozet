@@ -45,12 +45,12 @@ function ENT:DoRicoShot(ent, pos, melee, dmginfo, attacker)
 				util.SpriteTrail( self, 0, Color( 61,252,109), false, 15, 1, 4, 1 / ( 15 + 1 ) * 0.5, "trails/plasma" )
 				timer.Simple(0.05, function() self:SetPos(pos) end)
 				if dmginfo <= 300 then
-					net.Start("zs_update_style") net.WriteTable({time = CurTime()+4+(math.random(10,20)*0.2),text = "RICOSHOT",score = 50}) net.Send(attacker) 
+					--net.Start("zs_update_style") net.WriteTable({time = CurTime()+4+(math.random(10,20)*0.2),text = "RICOSHOT",score = 50}) net.Send(attacker) 
 				else
-					net.Start("zs_update_style") net.WriteTable({time = CurTime()+4+(math.random(10,20)*0.2),text = "ULTRARICOSHOT",score = 150,color = Color(139,26,133)}) net.Send(attacker) 
+					--net.Start("zs_update_style") net.WriteTable({time = CurTime()+4+(math.random(10,20)*0.2),text = "ULTRARICOSHOT",score = 150,color = Color(139,26,133)}) net.Send(attacker) 
 				end
 			elseif melee then
-				net.Start("zs_update_style") net.WriteTable({time = CurTime()+4+(math.random(10,20)*0.2),text = "FISTFUL OF DOLLAR",score = 50,color = Color(70,181,255)}) net.Send(attacker) 
+				--net.Start("zs_update_style") net.WriteTable({time = CurTime()+4+(math.random(10,20)*0.2),text = "FISTFUL OF DOLLAR",score = 50,color = Color(70,181,255)}) net.Send(attacker) 
 				self:SetPos(pos)
 				pos.z = 5
 				timer.Simple(0.05, function()  self:SetPos(pos) end)

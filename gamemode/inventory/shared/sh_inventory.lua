@@ -944,13 +944,13 @@ GM:AddSkillModifier(trinket, SKILLMOD_POINT_MULTIPLIER, -0.05)
 GM:AddSkillModifier(trinket, SKILLMOD_REPAIRRATE_MUL,  0.10)
 
 trinket = GM:AddTrinket(trs("t_flower"), "flower", false, pveles, pweles, 3, trs("t_d_flower"), nil, nil, "weapon_zs_special_trinket")
-GM:AddSkillModifier(trinket, SKILLMOD_POINT_MULTIPLIER, 0.50)
+GM:AddSkillModifier(trinket, SKILLMOD_POINT_MULTIPLIER, 0.75)
 GM:AddSkillModifier(trinket, SKILLMOD_MEDKIT_COOLDOWN_MUL, -0.5)
 GM:AddSkillModifier(trinket, SKILLMOD_MEDKIT_EFFECTIVENESS_MUL, 0.5)
 
 
 trinket = GM:AddTrinket(trs("t_flower_g"), "flower_g", false, pveles, pweles, 3, trs("t_d_flower_g"), nil, nil, "weapon_zs_special_trinket")
-GM:AddSkillModifier(trinket, SKILLMOD_POINT_MULTIPLIER, 1)
+GM:AddSkillModifier(trinket, SKILLMOD_POINT_MULTIPLIER, 1.25)
 
 -- Special Trinkets
 GM:AddTrinket(trs("t_otank"), "oxygentank", true, nil, {
@@ -2251,11 +2251,9 @@ trinket, soul = GM:AddTrinket("Soul of Alt Keeper", "altgreedsoul", false, nil, 
 	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 10.697, y = 10.697 }, color = Color(21, 255, 1, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core_2+"] = { type = "Sprite", sprite = "effects/splashwake1", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 30, y = 30 }, color = Color(120, 0, 255, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 2, 0), angle = Angle(0, 0, 0), size = Vector(0.349, 0.349, 0.349), color = Color(55, 0, 255, 255), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} }
-}, 4, "Ваша жадность дает 10% скидку и -25% к поинтам,+2 удачи\n Sale by 10%,scrap discount +10%,-25% Point Multiplier,+2 luck\n Q:5", nil, nil, "weapon_zs_soulalt")
-GM:AddSkillModifier(trinket, SKILLMOD_ARSENAL_DISCOUNT, -0.10)
-GM:AddSkillModifier(trinket, SKILLMOD_SCRAPDISCOUNT, -0.10)
-GM:AddSkillModifier(trinket, SKILLMOD_POINT_MULTIPLIER, -0.25)
-GM:AddSkillModifier(trinket, SKILLMOD_LUCK, 2.0)
+}, 4, "Ваша жадность дае 25% к поинтам и -20 удачи\n+25% Point Multiplier,-20 luck\n Q:5", nil, nil, "weapon_zs_soulalt")
+GM:AddSkillModifier(trinket, SKILLMOD_POINT_MULTIPLIER, 0.25)
+GM:AddSkillModifier(trinket, SKILLMOD_LUCK, -20)
 
 trinket, soul = GM:AddTrinket("Soul of Alt Cain", "altcainsoul", false, nil, {
 	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 10.697, y = 10.697 }, color = Color(9, 155, 9, 55), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
@@ -2267,7 +2265,7 @@ trinket, soul = GM:AddTrinket("Soul of Alt Lazarus", "altlazarussoul", false, ni
 	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 10.697, y = 10.697 }, color = Color(9, 0, 0, 195), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core_2+"] = { type = "Sprite", sprite = "effects/splashwake1", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 30, y = 30 }, color = Color(125, 0, 255, 0), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 2, 0), angle = Angle(0, 0, 0), size = Vector(0.349, 0.349, 0.349), color = Color(55, 0, 5, 255), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} }
-}, 2, "Спасает вас!\nSave You!\n Q:Alt", nil, nil, "weapon_zs_soulalt")
+}, 2, "Возрождает вас 1 раз!\nRedeem you once.\n Q:Alt", nil, nil, "weapon_zs_soulalt")
 
 trinket, soul = GM:AddTrinket("Soul of Alt Forgotten", "altforsoul", false, nil, {
 	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 10.697, y = 10.697 }, color = Color(2, 0, 61), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},

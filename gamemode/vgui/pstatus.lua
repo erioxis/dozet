@@ -140,6 +140,8 @@ function GM:CreateNBNO()
     panel:SetTitle(translate.Get("newbie_text"))
     panel:Center()
     panel:MakePopup()
+	panel:ShowCloseButton(false)
+	timer.Simple(11,function() panel:ShowCloseButton(true) end)
 
 
     local difficultyLabel = vgui.Create("DLabel", panel)

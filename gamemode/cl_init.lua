@@ -49,7 +49,6 @@ include("vgui/pendboard.lua")
 include("vgui/pworth.lua")
 
 include("vgui/parsenal.lua")
-include("vgui/dbutton_fix.lua")
 include("vgui/dcombobox_fix.lua")
 include("vgui/parsenal_anti.lua")
 include("vgui/premantle.lua")
@@ -88,10 +87,8 @@ hook.Add("InitPostEntity", "GetLocal", function()
 	RunConsoleCommand("initpostentity")
 
 	MySelf:ApplySkills()
-	MySelf.StyleMoment = {}
-	net.Start("zs_sync_style")
-		net.WriteTable(MySelf.StyleMoment)
-	net.SendToServer()
+	MySelf.LastAddedPoints = 0
+	MySelf.LastCheckPoints = 0
 end)
 
 -- Remove when model decal crash is fixed.
@@ -1061,7 +1058,7 @@ function GM:ZombieObserverHUD(obsmode)
 			end
 
 			if target.IsCreeperNest or target.MinionSpawn then
-				local txt = target.IsCreeperNest and (nest.NestName or "Nest") or "Gore Child"
+				local txt = target.IsCreeperNest and (target.NestName or "Nest") or "Gore Child"
 
 				draw_SimpleTextBlur(translate.Format("observing_x_simple", txt), "ZSHUDFontSmall", w * 0.5, h * 0.75 - texh - 32, COLOR_DARKRED, TEXT_ALIGN_CENTER)
 			end
@@ -1800,7 +1797,7 @@ end
 
 GM.AmmoButtons = {}
 function GM:HumanMenu()
-	if self.ZombieEscape then return end
+	if self.ZombieEscape or MySelf.SigilTeleport then return end
 
 	local ent = MySelf:MeleeTrace(48, 2, nil, nil, true).Entity
 	if self:ValidMenuLockOnTarget(MySelf, ent) then
@@ -1974,14 +1971,15 @@ function GM:_CalcView(pl, origin, angles, fov, znear, zfar)
 	if pl.Confusion and pl.Confusion:IsValid() then
 		pl.Confusion:CalcView(pl, origin, angles, fov, znear, zfar)
 	end
+	local time = CurTime()
 	if pl:IsSkillActive(SKILL_MADNESS) then
-		angles.roll = angles.roll + math.sin(CurTime() * 0.7) * 22
-		angles.pitch = angles.pitch + math.sin(CurTime() * 1.7) * 22
-		angles.yaw  = angles.yaw  + math.sin(CurTime() * 0.2) * 11
+		angles.roll = angles.roll + math.sin(time * 0.7) * 22
+		angles.pitch = angles.pitch + math.sin(time * 1.7) * 22
+		angles.yaw  = angles.yaw  + math.sin(time * 0.2) * 11
 	end
 	local gp = (((pl:GetZSRemortLevel() / 4) or 0) + (pl.AmuletPiece or 0)) < 0 and pl:Team() == TEAM_HUMAN
 	if gp then
-		fov = fov + ((CurTime()/2)%30)
+		fov = fov + ((time/2)%30)
 	end
 	--[[if MySelf:KeyDown(IN_DUCK) then
 		--local add = MySelf:GetNW2Float("b_man",0)
@@ -2045,7 +2043,7 @@ function GM:_CalcView(pl, origin, angles, fov, znear, zfar)
 	end
 
 	if pl:WaterLevel() >= 3 then
-		targetroll = targetroll + math.sin(CurTime()) * 7
+		targetroll = targetroll + math.sin(time) * 7
 	end
 
 	roll = math.Approach(roll, targetroll, math.max(0.25, math.sqrt(math.abs(roll))) * 30 * FrameTime())
@@ -2060,15 +2058,15 @@ function GM:_CalcView(pl, origin, angles, fov, znear, zfar)
 		local lasttarget = self.LastObserverTarget
 		if lasttarget and lasttarget:IsValid() and target ~= lasttarget then
 			if self.LastObserverTargetLerp then
-				if CurTime() >= self.LastObserverTargetLerp then
+				if time >= self.LastObserverTargetLerp then
 					self.LastObserverTarget = nil
 					self.LastObserverTargetLerp = nil
 				else
-					local delta = math.Clamp((self.LastObserverTargetLerp - CurTime()) / 0.3333, 0, 1) ^ 0.5
+					local delta = math.Clamp((self.LastObserverTargetLerp - time) / 0.3333, 0, 1) ^ 0.5
 					origin:Set(self.LastObserverTargetPos * delta + origin * (1 - delta))
 				end
 			else
-				self.LastObserverTargetLerp = CurTime() + 0.3333
+				self.LastObserverTargetLerp = time + 0.3333
 			end
 		else
 			self.LastObserverTarget = target
@@ -2356,7 +2354,7 @@ function GM:KeyPress(pl, key)
 	if key == self.MenuKey then
 		local team = P_Team(pl)
 		local d = pl:GetStatus("sigilteleport")
-		if team == TEAM_HUMAN and pl:Alive() and not pl:IsHolding() and (not d) then
+		if team == TEAM_HUMAN and pl:Alive() and not pl:IsHolding()then
 			gamemode.Call("HumanMenu")
 		elseif team == TEAM_ZOMBIE and not pl:Alive() then
 			gamemode.Call("ZombieSpawnMenu")

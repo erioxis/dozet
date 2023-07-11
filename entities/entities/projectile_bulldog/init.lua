@@ -63,7 +63,7 @@ function ENT:Hit(vHitPos, vHitNormal, ent)
 		if owner:IsPlayer() then
 			if ent:IsValidLivingZombie() then
 				self.Exploded = true
-				ent:TakeSpecialDamage(self.ProjDamage+ (ent:GetZombieClassTable().Boss and ent:Health() * 0.03 or ent:Health() * 0.07),DMG_GENERIC ,self:GetOwner(), self:GetOwner():GetActiveWeapon())
+				ent:TakeSpecialDamage(self.ProjDamage,DMG_GENERIC ,self:GetOwner(), self:GetOwner():GetActiveWeapon())
 			end
 		end
 	end

@@ -178,9 +178,6 @@ function meta:FireBulletsLua(src, dir, spread, num, damage, attacker, force_mul,
 					ent:SetLastHitGroup(bullet_tr.HitGroup)
 					if bullet_tr.HitGroup == HITGROUP_HEAD then
 						ent:SetWasHitInHead()
-						if attacker:IsValidPlayer() then
-							net.Start("zs_update_style") net.WriteTable({time = CurTime()+1.5+(math.random(10,20)*0.2),text = "HEADSHOT",score = 5}) net.Send(attacker) 
-						end
 					end
 				end
 			elseif attacker:IsValidPlayer() then

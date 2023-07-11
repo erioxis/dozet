@@ -74,13 +74,13 @@ function ENT:Explode(hitpos, hitnormal, hitent, boom)
 		if !jump then
 			util.BlastDamagePlayer(source, owner, hitpos, 81 * (hitent and hitent:OnGround() and 1 or 3), (self.ProjDamage or 29) * (hitent and hitent:OnGround() and 1 or 3), DMG_ALWAYSGIB, 0.95)
 			if (hitent and hitent:IsPlayer() and !hitent:OnGround() or boom) and self:GetDTInt(6) < 1 then
-				net.Start("zs_update_style") net.WriteTable({time = CurTime()+4+(math.random(10,20)*0.2),text = "AIRBOOM!",score = 90,color = Color(196,196,196)}) net.Send(owner) 
+				--net.Start("zs_update_style") net.WriteTable({time = CurTime()+4+(math.random(10,20)*0.2),text = "AIRBOOM!",score = 90,color = Color(196,196,196)}) net.Send(owner) 
 				local edata = EffectData()
 				edata:SetOrigin(self:GetPos())
 				edata:SetNormal(Vector(0,0,5))
 				util.Effect("explosion_airboom",edata)
 				if boom then
-					net.Start("zs_update_style") net.WriteTable({time = CurTime()+4+(math.random(10,20)*0.2),text = "AUTO-BOOM!",score = 200,color = Color(247,218,53)}) net.Send(owner) 
+					--net.Start("zs_update_style") net.WriteTable({time = CurTime()+4+(math.random(10,20)*0.2),text = "AUTO-BOOM!",score = 200,color = Color(247,218,53)}) net.Send(owner) 
 				end
 			end
 		end

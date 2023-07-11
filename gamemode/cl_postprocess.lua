@@ -1,6 +1,7 @@
 function GM:RenderScreenspaceEffects()
 end
-
+local math_Clamp = math.Clamp
+local math_Round = math.Round
 GM.PostProcessingEnabled = CreateClientConVar("zs_postprocessing", 1, true, false):GetBool()
 cvars.AddChangeCallback("zs_postprocessing", function(cvar, oldvalue, newvalue)
 	GAMEMODE.PostProcessingEnabled = tonumber(newvalue) == 1
@@ -13,7 +14,7 @@ end)
 
 GM.FilmGrainOpacity = CreateClientConVar("zs_filmgrainopacity", 50, true, false):GetInt()
 cvars.AddChangeCallback("zs_filmgrainopacity", function(cvar, oldvalue, newvalue)
-	GAMEMODE.FilmGrainOpacity = math.Clamp(tonumber(newvalue) or 0, 0, 255)
+	GAMEMODE.FilmGrainOpacity = math_Clamp(tonumber(newvalue) or 0, 0, 255)
 end)
 
 GM.ColorModEnabled = CreateClientConVar("zs_colormod", "1", true, false):GetBool()
@@ -30,27 +31,27 @@ GM.AuraColorEmpty = Color(CreateClientConVar("zs_auracolor_empty_r", 255, true, 
 GM.AuraColorFull = Color(CreateClientConVar("zs_auracolor_full_r", 20, true, false):GetInt(), CreateClientConVar("zs_auracolor_full_g", 255, true, false):GetInt(), CreateClientConVar("zs_auracolor_full_b", 20, true, false):GetInt(), 255)
 
 cvars.AddChangeCallback("zs_auracolor_empty_r", function(cvar, oldvalue, newvalue)
-	GAMEMODE.AuraColorEmpty.r = math.Clamp(math.ceil(tonumber(newvalue) or 0), 0, 255)
+	GAMEMODE.AuraColorEmpty.r = math_Clamp(math.ceil(tonumber(newvalue) or 0), 0, 255)
 end)
 
 cvars.AddChangeCallback("zs_auracolor_empty_g", function(cvar, oldvalue, newvalue)
-	GAMEMODE.AuraColorEmpty.g = math.Clamp(math.ceil(tonumber(newvalue) or 0), 0, 255)
+	GAMEMODE.AuraColorEmpty.g = math_Clamp(math.ceil(tonumber(newvalue) or 0), 0, 255)
 end)
 
 cvars.AddChangeCallback("zs_auracolor_empty_b", function(cvar, oldvalue, newvalue)
-	GAMEMODE.AuraColorEmpty.b = math.Clamp(math.ceil(tonumber(newvalue) or 0), 0, 255)
+	GAMEMODE.AuraColorEmpty.b = math_Clamp(math.ceil(tonumber(newvalue) or 0), 0, 255)
 end)
 
 cvars.AddChangeCallback("zs_auracolor_full_r", function(cvar, oldvalue, newvalue)
-	GAMEMODE.AuraColorFull.r = math.Clamp(math.ceil(tonumber(newvalue) or 0), 0, 255)
+	GAMEMODE.AuraColorFull.r = math_Clamp(math.ceil(tonumber(newvalue) or 0), 0, 255)
 end)
 
 cvars.AddChangeCallback("zs_auracolor_full_g", function(cvar, oldvalue, newvalue)
-	GAMEMODE.AuraColorFull.g = math.Clamp(math.ceil(tonumber(newvalue) or 0), 0, 255)
+	GAMEMODE.AuraColorFull.g = math_Clamp(math.ceil(tonumber(newvalue) or 0), 0, 255)
 end)
 
 cvars.AddChangeCallback("zs_auracolor_full_b", function(cvar, oldvalue, newvalue)
-	GAMEMODE.AuraColorFull.b = math.Clamp(math.ceil(tonumber(newvalue) or 0), 0, 255)
+	GAMEMODE.AuraColorFull.b = math_Clamp(math.ceil(tonumber(newvalue) or 0), 0, 255)
 end)
 
 
@@ -152,9 +153,10 @@ function GM:_RenderScreenspaceEffects()
 	end
 
 	fear = math_Approach(fear, self:CachedFearPower(), FrameTime())
-	if MySelf:GetTimerBERS() >= CurTime() and MySelf:IsSkillActive(SKILL_BERSERK) then
-		tColorModBers["$pp_colour_addr"] = (0.015 + math_abs(math_sin(CurTime() * 2)) * 0.09) * ((MySelf:GetTimerBERS() - CurTime())/10)
-		tColorModBers["$pp_colour_brightness"] = math.min(((MySelf:GetTimerBERS() - CurTime())/10) - 0.3,0.32)
+	local bers = MySelf:GetTimerBERS()
+	if bers >= CurTime() and MySelf:IsSkillActive(SKILL_BERSERK) then
+		tColorModBers["$pp_colour_addr"] = (0.015 + math_abs(math_sin(CurTime() * 2)) * 0.09) * ((bers - CurTime())/10)
+		tColorModBers["$pp_colour_brightness"] = math_min(((bers - CurTime())/10) - 0.3,0.32)
 		DrawColorModify(tColorModBers)
 	end
 	if not self.PostProcessingEnabled then return end
@@ -228,42 +230,12 @@ hook.Add("PreDrawTranslucentRenderables", "ZFullBright", GM.FullBrightOff)
 hook.Add("PostDrawTranslucentRenderables", "ZFullBright", GM.FullBrightOn)
 hook.Add("PreDrawViewModel", "ZFullBright", GM.FullBrightOff)
 hook.Add("RenderScreenspaceEffects", "ZFullBright", GM.FullBrightOff)
-local function DoProgressBar(lp, progress, ptype, color, formula)
-	if cham > 0 and chamt >= CurTime() then
-		if lp:IsValid() then
+local surface_SetDrawColor = surface.SetDrawColor
+local surface_DrawRect = surface.DrawRect
+local surface_SetTexture = surface.SetTexture
+local surface_SetMaterial = surface.SetMaterial
+local surface_DrawTexturedRect = surface.DrawTexturedRect
 
-			local colHealth = Color(247,229,132)
-			local screenscale = BetterScreenScale()
-			local health = cham
-			local formula = 350* (lp:GetIndChance() or 1)
-			local healthperc = math.Clamp(health / formula, 0.01, 1)
-
-			local wid, hei = 150 * screenscale, 20 * screenscale
-	 
-			
-	
-			local subwidth = healthperc * wid
-			local fraction = (chamt-CurTime())/2
-			local form = math.Clamp( fraction, 0, 1 )
-			colHealth.a = form *255
-			surface.SetDrawColor(0, 0, 0, colHealth.a)
-			surface.DrawRect(x, y, wid, hei)
-
-			
-			surface.SetDrawColor(colHealth.r * 1, colHealth.g * 0.2, colHealth.b, 40)
-			surface.SetTexture(texDownEdge)
-			surface.DrawTexturedRect(x + 2, y + 1, subwidth - 4, hei - 2)
-			surface.SetDrawColor(colHealth.r * 0.6, colHealth.g * 0.6, colHealth.b, 30)
-			surface.DrawRect(x + 2, y + 1, subwidth - 4, hei - 2)
-	
-			surface.SetMaterial(matGlow)
-			surface.SetDrawColor(255, 255, 255, colHealth.a)
-			surface.DrawTexturedRect(x + 2 + subwidth - 6, y + 1 - hei/2, 4, hei * 2)
-			draw.SimpleTextBlurry(translate.Get("cham_hud")..math.Round(cham).."/"..math.Round(formula) , "ZSHUDFontTiny", x, y - 12, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM)
-			y = y + ScrH() * 0.07
-		end
-	end
-end
 local matGlow = Material("sprites/glow04_noz")
 local texDownEdge = surface.GetTextureID("gui/gradient_down")
 function GM:DrawInductorIndicators()
@@ -272,30 +244,28 @@ function GM:DrawInductorIndicators()
 	--local base = ScrH() * 0.07
 
 	local lp = MySelf
-	local medp = lp:GetProgress('mprog')
-	local fired =lp:GetProgress('fprog')
-	local pulsed =lp:GetProgress('pprog')
-	local bountyd =lp:GetProgress('bprog')
-	local icep =lp:GetProgress('iprog')
-	local cham =lp:GetProgress('cprog')
-	local resnyad =lp:GetProgress('rprog')
-
-	local medt = lp:GetPTime('mprog')
-	local firet =lp:GetPTime('fprog')
-	local pulset =lp:GetPTime('pprog')
-	local bountyt =lp:GetPTime('bprog')
-	local icet =lp:GetPTime('iprog')
-	local chamt =lp:GetPTime('cprog')
-	local resnyat =lp:GetPTime('rprog')
-
-	if cham > 0 and chamt >= CurTime() then
-		if lp:IsValid() then
-
+	if lp:IsValid() then
+		local medp = lp:GetProgress('mprog')
+		local fired =lp:GetProgress('fprog')
+		local pulsed =lp:GetProgress('pprog')
+		local bountyd =lp:GetProgress('bprog')
+		local icep =lp:GetProgress('iprog')
+		local cham =lp:GetProgress('cprog')
+		local resnyad =lp:GetProgress('rprog')
+	
+		local medt = lp:GetPTime('mprog')
+		local firet =lp:GetPTime('fprog')
+		local pulset =lp:GetPTime('pprog')
+		local bountyt =lp:GetPTime('bprog')
+		local icet =lp:GetPTime('iprog')
+		local chamt =lp:GetPTime('cprog')
+		local resnyat =lp:GetPTime('rprog')
+		if cham > 0 and chamt >= CurTime() then
 			local colHealth = Color(247,229,132)
 			local screenscale = BetterScreenScale()
 			local health = cham
 			local formula = 350* (lp:GetIndChance() or 1)
-			local healthperc = math.Clamp(health / formula, 0.01, 1)
+			local healthperc = math_Clamp(health / formula, 0.01, 1)
 
 			local wid, hei = 150 * screenscale, 20 * screenscale
 	 
@@ -303,34 +273,31 @@ function GM:DrawInductorIndicators()
 	
 			local subwidth = healthperc * wid
 			local fraction = (chamt-CurTime())/2
-			local form = math.Clamp( fraction, 0, 1 )
+			local form = math_Clamp( fraction, 0, 1 )
 			colHealth.a = form *255
-			surface.SetDrawColor(0, 0, 0, colHealth.a)
-			surface.DrawRect(x, y, wid, hei)
+			surface_SetDrawColor(0, 0, 0, colHealth.a)
+			surface_DrawRect(x, y, wid, hei)
 
 			
-			surface.SetDrawColor(colHealth.r * 1, colHealth.g * 0.2, colHealth.b, 40)
-			surface.SetTexture(texDownEdge)
-			surface.DrawTexturedRect(x + 2, y + 1, subwidth - 4, hei - 2)
-			surface.SetDrawColor(colHealth.r * 0.6, colHealth.g * 0.6, colHealth.b, 30)
-			surface.DrawRect(x + 2, y + 1, subwidth - 4, hei - 2)
+			surface_SetDrawColor(colHealth.r * 1, colHealth.g * 0.2, colHealth.b, 40)
+			surface_SetTexture(texDownEdge)
+			surface_DrawTexturedRect(x + 2, y + 1, subwidth - 4, hei - 2)
+			surface_SetDrawColor(colHealth.r * 0.6, colHealth.g * 0.6, colHealth.b, 30)
+			surface_DrawRect(x + 2, y + 1, subwidth - 4, hei - 2)
 	
-			surface.SetMaterial(matGlow)
-			surface.SetDrawColor(255, 255, 255, colHealth.a)
-			surface.DrawTexturedRect(x + 2 + subwidth - 6, y + 1 - hei/2, 4, hei * 2)
-			draw.SimpleTextBlurry(translate.Get("cham_hud")..math.Round(cham).."/"..math.Round(formula) , "ZSHUDFontTiny", x, y - 12, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM)
+			surface_SetMaterial(matGlow)
+			surface_SetDrawColor(255, 255, 255, colHealth.a)
+			surface_DrawTexturedRect(x + 2 + subwidth - 6, y + 1 - hei/2, 4, hei * 2)
+			draw.SimpleTextBlurry(translate.Get("cham_hud")..math_Round(cham).."/"..math_Round(formula) , "ZSHUDFontTiny", x, y - 12, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM)
 			y = y + ScrH() * 0.07
 		end
-	end
-	if fired > 0 and lp:HasTrinket("fire_ind") and firet >= CurTime() then
-		if lp:IsValid() then
-
+		if fired > 0 and lp:HasTrinket("fire_ind") and firet >= CurTime() then
 			local colHealth = lp.HoleOfHell  and Color(65,12,2) or Color(226,62,33)
 			local screenscale = BetterScreenScale()
 			local health = fired
 			local formula = 15 * ((lp:GetActiveWeapon() and (lp:GetActiveWeapon().Tier or 1))+1)
 			local formula = formula * (lp:GetIndChance() or 1)
-			local healthperc = math.Clamp(health / formula, 0.01, 1)
+			local healthperc = math_Clamp(health / formula, 0.01, 1)
 
 			local wid, hei = 150 * screenscale, 20 * screenscale
 	 
@@ -338,187 +305,178 @@ function GM:DrawInductorIndicators()
 	
 			local subwidth = healthperc * wid
 			local fraction = (firet-CurTime())/2
-			local form = math.Clamp( fraction, 0, 1 )
+			local form = math_Clamp( fraction, 0, 1 )
 			colHealth.a = form *255
-			surface.SetDrawColor(0, 0, 0, colHealth.a)
-			surface.DrawRect(x, y, wid, hei)
+			surface_SetDrawColor(0, 0, 0, colHealth.a)
+			surface_DrawRect(x, y, wid, hei)
 
 			
-			surface.SetDrawColor(colHealth.r * 1, colHealth.g * 0.2, colHealth.b, 40)
-			surface.SetTexture(texDownEdge)
-			surface.DrawTexturedRect(x + 2, y + 1, subwidth - 4, hei - 2)
-			surface.SetDrawColor(colHealth.r * 0.6, colHealth.g * 0.6, colHealth.b, 30)
-			surface.DrawRect(x + 2, y + 1, subwidth - 4, hei - 2)
+			surface_SetDrawColor(colHealth.r * 1, colHealth.g * 0.2, colHealth.b, 40)
+			surface_SetTexture(texDownEdge)
+			surface_DrawTexturedRect(x + 2, y + 1, subwidth - 4, hei - 2)
+			surface_SetDrawColor(colHealth.r * 0.6, colHealth.g * 0.6, colHealth.b, 30)
+			surface_DrawRect(x + 2, y + 1, subwidth - 4, hei - 2)
 	
-			surface.SetMaterial(matGlow)
-			surface.SetDrawColor(255, 255, 255, colHealth.a)
-			surface.DrawTexturedRect(x + 2 + subwidth - 6, y + 1 - hei/2, 4, hei * 2)
-			draw.SimpleTextBlurry((lp.HoleOfHell and translate.Get("hell_hud") or translate.Get("fi_hud"))..math.Round(fired).."/"..math.Round(formula) , "ZSHUDFontTiny", x, y - 12, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM)
+			surface_SetMaterial(matGlow)
+			surface_SetDrawColor(255, 255, 255, colHealth.a)
+			surface_DrawTexturedRect(x + 2 + subwidth - 6, y + 1 - hei/2, 4, hei * 2)
+			draw.SimpleTextBlurry((lp.HoleOfHell and translate.Get("hell_hud") or translate.Get("fi_hud"))..math_Round(fired).."/"..math_Round(formula) , "ZSHUDFontTiny", x, y - 12, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM)
 			y = y + ScrH() * 0.07
 		end
-	end
-	if lp:GetProgress('mprog') > 0 and lp:IsSkillActive(SKILL_PREMIUM) and medt >= CurTime() then
-		if lp:IsValid() then
+		if lp:GetProgress('mprog') > 0 and lp:IsSkillActive(SKILL_PREMIUM) and medt >= CurTime() then
 
 			local colHealth = Color(33,226,43)
 			local screenscale = BetterScreenScale()
 			local medprogress = 1800
-			local healthperc = math.Clamp(medp / medprogress, 0.01, 1)
+			local healthperc = math_Clamp(medp / medprogress, 0.01, 1)
 			local wid, hei = 150 * screenscale, 20 * screenscale
 	 
 			
 	
 			local subwidth = healthperc * wid
 			local fraction = (medt-CurTime())/2
-			local form = math.Clamp( fraction, 0, 1 )
+			local form = math_Clamp( fraction, 0, 1 )
 			colHealth.a = form *255
-			surface.SetDrawColor(0, 0, 0, colHealth.a)
-			surface.DrawRect(x, y, wid, hei)
+			surface_SetDrawColor(0, 0, 0, colHealth.a)
+			surface_DrawRect(x, y, wid, hei)
 
 			
-			surface.SetDrawColor(colHealth.r * 1, colHealth.g * 0.2, colHealth.b, 40)
-			surface.SetTexture(texDownEdge)
-			surface.DrawTexturedRect(x + 2, y + 1, subwidth - 4, hei - 2)
-			surface.SetDrawColor(colHealth.r * 0.6, colHealth.g * 0.6, colHealth.b, 30)
-			surface.DrawRect(x + 2, y + 1, subwidth - 4, hei - 2)
+			surface_SetDrawColor(colHealth.r * 1, colHealth.g * 0.2, colHealth.b, 40)
+			surface_SetTexture(texDownEdge)
+			surface_DrawTexturedRect(x + 2, y + 1, subwidth - 4, hei - 2)
+			surface_SetDrawColor(colHealth.r * 0.6, colHealth.g * 0.6, colHealth.b, 30)
+			surface_DrawRect(x + 2, y + 1, subwidth - 4, hei - 2)
 	
-			surface.SetMaterial(matGlow)
-			surface.SetDrawColor(255, 255, 255, colHealth.a)
-			surface.DrawTexturedRect(x + 2 + subwidth - 6, y + 1 - hei/2, 4, hei * 2)
-			draw.SimpleTextBlurry(translate.Get("mg_hud")..math.Round(medp).."/"..medprogress , "ZSHUDFontTiny", x, y - 12, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM)
+			surface_SetMaterial(matGlow)
+			surface_SetDrawColor(255, 255, 255, colHealth.a)
+			surface_DrawTexturedRect(x + 2 + subwidth - 6, y + 1 - hei/2, 4, hei * 2)
+			draw.SimpleTextBlurry(translate.Get("mg_hud")..math_Round(medp).."/"..medprogress , "ZSHUDFontTiny", x, y - 12, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM)
 			y = y + ScrH() * 0.07
 		end
-	end
-	if icep > 0 and icet >= CurTime() then
-		if lp:IsValid() then
+		if icep > 0 and icet >= CurTime() then
 
 			local colHealth = Color(21,213,226)
 			local screenscale = BetterScreenScale()
 			local health = icep
 			local progress = 165 + (35 * ((lp:GetActiveWeapon() and (lp:GetActiveWeapon().Tier or 1))-1) * (lp:GetActiveWeapon().Tier or 1)) * (lp:GetIndChance() or 1)
 			local progress = progress * (lp:GetIndChance() or 1)
-			local healthperc = math.Clamp(health / progress, 0.01, 1)
+			local healthperc = math_Clamp(health / progress, 0.01, 1)
 			local wid, hei = 150 * screenscale, 20 * screenscale
 	 
 			
 	
 			local subwidth = healthperc * wid
 			local fraction = (icet-CurTime())/2
-			local form = math.Clamp( fraction, 0, 1 )
+			local form = math_Clamp( fraction, 0, 1 )
 			colHealth.a = form *255
-			surface.SetDrawColor(0, 0, 0, colHealth.a)
-			surface.DrawRect(x, y, wid, hei)
+			surface_SetDrawColor(0, 0, 0, colHealth.a)
+			surface_DrawRect(x, y, wid, hei)
 
 			
-			surface.SetDrawColor(colHealth.r * 1, colHealth.g * 0.2, colHealth.b, 40)
-			surface.SetTexture(texDownEdge)
-			surface.DrawTexturedRect(x + 2, y + 1, subwidth - 4, hei - 2)
-			surface.SetDrawColor(colHealth.r * 0.6, colHealth.g * 0.6, colHealth.b, 30)
-			surface.DrawRect(x + 2, y + 1, subwidth - 4, hei - 2)
+			surface_SetDrawColor(colHealth.r * 1, colHealth.g * 0.2, colHealth.b, 40)
+			surface_SetTexture(texDownEdge)
+			surface_DrawTexturedRect(x + 2, y + 1, subwidth - 4, hei - 2)
+			surface_SetDrawColor(colHealth.r * 0.6, colHealth.g * 0.6, colHealth.b, 30)
+			surface_DrawRect(x + 2, y + 1, subwidth - 4, hei - 2)
 	
-			surface.SetMaterial(matGlow)
-			surface.SetDrawColor(255, 255, 255, colHealth.a)
-			surface.DrawTexturedRect(x + 2 + subwidth - 6, y + 1 - hei/2, 4, hei * 2)
-			draw.SimpleTextBlurry(translate.Get("ii_hud")..math.Round(icep).."/"..math.Round(progress) , "ZSHUDFontTiny", x, y - 12, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM)
+			surface_SetMaterial(matGlow)
+			surface_SetDrawColor(255, 255, 255, colHealth.a)
+			surface_DrawTexturedRect(x + 2 + subwidth - 6, y + 1 - hei/2, 4, hei * 2)
+			draw.SimpleTextBlurry(translate.Get("ii_hud")..math_Round(icep).."/"..math_Round(progress) , "ZSHUDFontTiny", x, y - 12, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM)
 			y = y + ScrH() * 0.07
 		end
-	end
-	if pulsed > 0 and lp:HasTrinket("resonance") and pulset >= CurTime() then
-		if lp:IsValid() then
+		if pulsed > 0 and lp:HasTrinket("resonance") and pulset >= CurTime() then
 
 			local colHealth = lp:IsSkillActive(SKILL_CRYO_LASER) and Color(27,105,207) or Color(61,5,192)
 			local screenscale = BetterScreenScale()
 			local health = pulsed
 			local progress = 20 * GAMEMODE:GetWave() * (lp:GetIndChance() or 1)
-			local healthperc = math.Clamp(health / progress, 0.01, 1)
+			local healthperc = math_Clamp(health / progress, 0.01, 1)
 			local wid, hei = 150 * screenscale, 20 * screenscale
 	 
 			
 	
 			local subwidth = healthperc * wid
 			local fraction = (pulset-CurTime())/2
-			local form = math.Clamp( fraction, 0, 1 )
+			local form = math_Clamp( fraction, 0, 1 )
 			colHealth.a = form *255
-			surface.SetDrawColor(0, 0, 0, colHealth.a)
-			surface.DrawRect(x, y, wid, hei)
+			surface_SetDrawColor(0, 0, 0, colHealth.a)
+			surface_DrawRect(x, y, wid, hei)
 
 			
-			surface.SetDrawColor(colHealth.r * 1, colHealth.g * 0.2, colHealth.b, 40)
-			surface.SetTexture(texDownEdge)
-			surface.DrawTexturedRect(x + 2, y + 1, subwidth - 4, hei - 2)
-			surface.SetDrawColor(colHealth.r * 0.6, colHealth.g * 0.6, colHealth.b, 30)
-			surface.DrawRect(x + 2, y + 1, subwidth - 4, hei - 2)
+			surface_SetDrawColor(colHealth.r * 1, colHealth.g * 0.2, colHealth.b, 40)
+			surface_SetTexture(texDownEdge)
+			surface_DrawTexturedRect(x + 2, y + 1, subwidth - 4, hei - 2)
+			surface_SetDrawColor(colHealth.r * 0.6, colHealth.g * 0.6, colHealth.b, 30)
+			surface_DrawRect(x + 2, y + 1, subwidth - 4, hei - 2)
 	
-			surface.SetMaterial(matGlow)
-			surface.SetDrawColor(255, 255, 255, colHealth.a)
-			surface.DrawTexturedRect(x + 2 + subwidth - 6, y + 1 - hei/2, 4, hei * 2)
-			draw.SimpleTextBlurry((lp:IsSkillActive(SKILL_CRYO_LASER) and translate.Get("ca_hud") or translate.Get("pc_hud"))..math.Round(pulsed).."/"..math.Round(progress) , "ZSHUDFontTiny", x, y - 12, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM)
+			surface_SetMaterial(matGlow)
+			surface_SetDrawColor(255, 255, 255, colHealth.a)
+			surface_DrawTexturedRect(x + 2 + subwidth - 6, y + 1 - hei/2, 4, hei * 2)
+			draw.SimpleTextBlurry((lp:IsSkillActive(SKILL_CRYO_LASER) and translate.Get("ca_hud") or translate.Get("pc_hud"))..math_Round(pulsed).."/"..math_Round(progress) , "ZSHUDFontTiny", x, y - 12, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM)
 			y = y + ScrH() * 0.07
+
 		end
-	end
-	if bountyd > 0 and bountyt >= CurTime() then
-		if lp:IsValid() then
+		if bountyd > 0 and bountyt >= CurTime() then
 
 			local colHealth = Color(97,255,24)
 			local screenscale = BetterScreenScale()
 			local health = bountyd
 			local progress = 1500 * (MySelf:GetProgress('bprogmul')+1)
-			local healthperc = math.Clamp(health / progress, 0.01, 1)
+			local healthperc = math_Clamp(health / progress, 0.01, 1)
 			local wid, hei = 150 * screenscale, 20 * screenscale
 	 
 			
 	
 			local subwidth = healthperc * wid
 			local fraction = (bountyt-CurTime())/2
-			local form = math.Clamp( fraction, 0, 1 )
+			local form = math_Clamp( fraction, 0, 1 )
 			colHealth.a = form *255
-			surface.SetDrawColor(0, 0, 0, colHealth.a)
-			surface.DrawRect(x, y, wid, hei)
+			surface_SetDrawColor(0, 0, 0, colHealth.a)
+			surface_DrawRect(x, y, wid, hei)
 
 			
-			surface.SetDrawColor(colHealth.r * 1, colHealth.g * 0.2, colHealth.b, 40)
-			surface.SetTexture(texDownEdge)
-			surface.DrawTexturedRect(x + 2, y + 1, subwidth - 4, hei - 2)
-			surface.SetDrawColor(colHealth.r * 0.6, colHealth.g * 0.6, colHealth.b, 30)
-			surface.DrawRect(x + 2, y + 1, subwidth - 4, hei - 2)
+			surface_SetDrawColor(colHealth.r * 1, colHealth.g * 0.2, colHealth.b, 40)
+			surface_SetTexture(texDownEdge)
+			surface_DrawTexturedRect(x + 2, y + 1, subwidth - 4, hei - 2)
+			surface_SetDrawColor(colHealth.r * 0.6, colHealth.g * 0.6, colHealth.b, 30)
+			surface_DrawRect(x + 2, y + 1, subwidth - 4, hei - 2)
 	
-			surface.SetMaterial(matGlow)
-			surface.SetDrawColor(255, 255, 255, colHealth.a)
-			surface.DrawTexturedRect(x + 2 + subwidth - 6, y + 1 - hei/2, 4, hei * 2)
-			draw.SimpleTextBlurry(translate.Get("bp_hud")..math.Round(bountyd).."/"..progress , "ZSHUDFontTiny", x, y - 12, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM)
+			surface_SetMaterial(matGlow)
+			surface_SetDrawColor(255, 255, 255, colHealth.a)
+			surface_DrawTexturedRect(x + 2 + subwidth - 6, y + 1 - hei/2, 4, hei * 2)
+			draw.SimpleTextBlurry(translate.Get("bp_hud")..math_Round(bountyd).."/"..progress , "ZSHUDFontTiny", x, y - 12, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM)
 			y = y + ScrH() * 0.07
 		end
-	end
-	if resnyad > 0 and resnyat >= CurTime() then
-		if lp:IsValid() then
+		if resnyad > 0 and resnyat >= CurTime() then
 
 			local colHealth = Color(145,9,9)
 			local screenscale = BetterScreenScale()
 			local health = resnyad
 			local progress = 1000
-			local healthperc = math.Clamp(health / progress, 0.01, 1)
+			local healthperc = math_Clamp(health / progress, 0.01, 1)
 			local wid, hei = 150 * screenscale, 20 * screenscale
 	 
 			
 	
 			local subwidth = healthperc * wid
 			local fraction = (resnyat-CurTime())/2
-			local form = math.Clamp( fraction, 0, 1 )
+			local form = math_Clamp( fraction, 0, 1 )
 			colHealth.a = form *255
-			surface.SetDrawColor(0, 0, 0, colHealth.a)
-			surface.DrawRect(x, y, wid, hei)
+			surface_SetDrawColor(0, 0, 0, colHealth.a)
+			surface_DrawRect(x, y, wid, hei)
 
 			
-			surface.SetDrawColor(colHealth.r * 1, colHealth.g * 0.2, colHealth.b, 40)
-			surface.SetTexture(texDownEdge)
-			surface.DrawTexturedRect(x + 2, y + 1, subwidth - 4, hei - 2)
-			surface.SetDrawColor(colHealth.r * 0.6, colHealth.g * 0.6, colHealth.b, 30)
-			surface.DrawRect(x + 2, y + 1, subwidth - 4, hei - 2)
+			surface_SetDrawColor(colHealth.r * 1, colHealth.g * 0.2, colHealth.b, 40)
+			surface_SetTexture(texDownEdge)
+			surface_DrawTexturedRect(x + 2, y + 1, subwidth - 4, hei - 2)
+			surface_SetDrawColor(colHealth.r * 0.6, colHealth.g * 0.6, colHealth.b, 30)
+			surface_DrawRect(x + 2, y + 1, subwidth - 4, hei - 2)
 	
-			surface.SetMaterial(matGlow)
-			surface.SetDrawColor(255, 255, 255, colHealth.a)
-			surface.DrawTexturedRect(x + 2 + subwidth - 6, y + 1 - hei/2, 4, hei * 2)
-			draw.SimpleTextBlurry(translate.Get("resnya_hud")..math.Round(resnyad).."/"..progress , "ZSHUDFontTiny", x, y - 12, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM)
+			surface_SetMaterial(matGlow)
+			surface_SetDrawColor(255, 255, 255, colHealth.a)
+			surface_DrawTexturedRect(x + 2 + subwidth - 6, y + 1 - hei/2, 4, hei * 2)
+			draw.SimpleTextBlurry(translate.Get("resnya_hud")..math_Round(resnyad).."/"..progress , "ZSHUDFontTiny", x, y - 12, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM)
 			y = y + ScrH() * 0.07
 		end
 	end
@@ -563,7 +521,7 @@ function GM:DrawZombieIndicators()
 	local range, dist, healthfrac, pos, size
 	for _, pl in pairs(team_GetPlayers(TEAM_UNDEAD)) do
 		if pl:GetStatus("feigndeath") then continue end
-		range = pl:GetAuraRangeSqr()/4 * (MySelf:IsSkillActive(SKILL_OLD_GOD2) and 2.5 or 1) * ((MySelf:IsUserGroup("vip_1_nav") or MySelf:IsUserGroup("vip_1")) and 1.1 or 1)
+		range = pl:GetAuraRangeSqr()/4 * (MySelf:IsSkillActive(SKILL_OLD_GOD2) and 2.5 or 1)
 		dist = pl:GetPos():DistToSqr(eyepos)
 		if pl:GetRenderMode() == RENDERMODE_TRANSALPHA then continue end
 		local lp = pl
@@ -584,14 +542,14 @@ function GM:DrawZombieIndicators()
 		norm:Normalize()
 		local dot = EyeVector():Dot(norm)
 		local dotsq = dot * dot
-		local vis = math.Clamp((dotsq * dotsq) - 0.1, 0, 1)
+		local vis = math_Clamp((dotsq * dotsq) - 0.1, 0, 1)
 		local wid, hei = 150, 6
 		local x, y = wid * -0.5 + 2, 0
 				cam.IgnoreZ(true)
 				cam.Start3D2D(nearest, ang, 0.1)
 				local screenscale = BetterScreenScale()
 				local health = lp:Health()
-				local healthperc = math.Clamp(health / lp:GetMaxHealthEx(), 0, 1)
+				local healthperc = math_Clamp(health / lp:GetMaxHealthEx(), 0, 1)
 				local wid, hei = 300 * screenscale, 18 * screenscale
 		 
 				colHealth.r = (lp:GetInfo("zs_rhealth") + healthperc) * 100
@@ -608,32 +566,32 @@ function GM:DrawZombieIndicators()
 					draw.SimpleTextBlurry(lp:GetName(), "ZSHUDFont", x * screenscale, y - 96 * screenscale, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 				end
 		
-				surface.SetDrawColor(0, 0, 0, 230)
-				surface.DrawRect(x, y, wid, hei)
+				surface_SetDrawColor(0, 0, 0, 230)
+				surface_DrawRect(x, y, wid, hei)
 		
-				surface.SetDrawColor(colHealth.r * 1, colHealth.g * 0.2, colHealth.b, 40)
-				surface.SetTexture(texDownEdge)
-				surface.DrawTexturedRect(x + 2, y + 1, subwidth - 4, hei - 2)
-				surface.SetDrawColor(colHealth.r * 0.6, colHealth.g * 0.6, colHealth.b, 30)
-				surface.DrawRect(x + 2, y + 1, subwidth - 4, hei - 2)
+				surface_SetDrawColor(colHealth.r * 1, colHealth.g * 0.2, colHealth.b, 40)
+				surface_SetTexture(texDownEdge)
+				surface_DrawTexturedRect(x + 2, y + 1, subwidth - 4, hei - 2)
+				surface_SetDrawColor(colHealth.r * 0.6, colHealth.g * 0.6, colHealth.b, 30)
+				surface_DrawRect(x + 2, y + 1, subwidth - 4, hei - 2)
 		
-				surface.SetMaterial(matGlow)
-				surface.SetDrawColor(255, 255, 255, 255)
-				surface.DrawTexturedRect(x + 2 + subwidth - 6, y + 1 - hei/2, 4, hei * 2)
+				surface_SetMaterial(matGlow)
+				surface_SetDrawColor(255, 255, 255, 255)
+				surface_DrawTexturedRect(x + 2 + subwidth - 6, y + 1 - hei/2, 4, hei * 2)
 		
 				local phantomhealth = math.max(lp:GetPhantomHealth(), 0)
-				healthperc = math.Clamp(phantomhealth / lp:GetMaxHealthEx(), 0, 1)
+				healthperc = math_Clamp(phantomhealth / lp:GetMaxHealthEx(), 0, 1)
 		
 				colHealth.r = 100
 				colHealth.g = 50
 				colHealth.b = 70
 				local phantomwidth = healthperc * wid
 		
-				surface.SetDrawColor(colHealth.r, colHealth.g, colHealth.b, 40)
-				surface.SetTexture(texDownEdge)
-				surface.DrawTexturedRect(x + 2 + subwidth - 4, y + 1, phantomwidth, hei - 2)
-				surface.SetDrawColor(colHealth.r, colHealth.g, colHealth.b, 30)
-				surface.DrawRect(x + 2 + subwidth - 4, y + 1, phantomwidth, hei - 2)
+				surface_SetDrawColor(colHealth.r, colHealth.g, colHealth.b, 40)
+				surface_SetTexture(texDownEdge)
+				surface_DrawTexturedRect(x + 2 + subwidth - 4, y + 1, phantomwidth, hei - 2)
+				surface_SetDrawColor(colHealth.r, colHealth.g, colHealth.b, 30)
+				surface_DrawRect(x + 2 + subwidth - 4, y + 1, phantomwidth, hei - 2)
 						y = y + hei + 3
 						hei = 8
 						x = wid * -0.5 + 2
@@ -658,18 +616,18 @@ function GM:DrawZombieIndicators()
 				
 								draw.SimpleTextBlurry(bloodarmor, "ZSHUDFontSmall", x + wid + 12 * screenscale, y + 8 * screenscale, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 				
-								surface.SetDrawColor(0, 0, 0, 230)
-								surface.DrawRect(x, y, wid, hei)
+								surface_SetDrawColor(0, 0, 0, 230)
+								surface_DrawRect(x, y, wid, hei)
 				
-								surface.SetDrawColor(colHealth.r * 0.6, colHealth.g * 0.6, colHealth.b, 160)
-								surface.SetTexture(texDownEdge)
-								surface.DrawTexturedRect(x + 2, y + 1, subwidth - 4, hei - 2)
-								surface.SetDrawColor(colHealth.r * 0.5, colHealth.g * 0.5, colHealth.b, 30)
-								surface.DrawRect(x + 2, y + 1, subwidth - 4, hei - 2)
+								surface_SetDrawColor(colHealth.r * 0.6, colHealth.g * 0.6, colHealth.b, 160)
+								surface_SetTexture(texDownEdge)
+								surface_DrawTexturedRect(x + 2, y + 1, subwidth - 4, hei - 2)
+								surface_SetDrawColor(colHealth.r * 0.5, colHealth.g * 0.5, colHealth.b, 30)
+								surface_DrawRect(x + 2, y + 1, subwidth - 4, hei - 2)
 				
-								surface.SetMaterial(matGlow)
-								surface.SetDrawColor(255, 255, 255, 255)
-								surface.DrawTexturedRect(x + 2 + subwidth - 6, y + 1 - hei/2, 4, hei * 2)
+								surface_SetMaterial(matGlow)
+								surface_SetDrawColor(255, 255, 255, 255)
+								surface_DrawTexturedRect(x + 2 + subwidth - 6, y + 1 - hei/2, 4, hei * 2)
 							end
 						end
 							

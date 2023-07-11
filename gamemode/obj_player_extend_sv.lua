@@ -1429,9 +1429,9 @@ function meta:UpdateLegDamage()
 	net.Send(self)
 end
 local function SendUpdate(self, ...)
-	net.Start("zs_update_style")
-	net.WriteTable(...)
-	net.Send(self)
+	--net.Start("zs_update_style")
+	--net.WriteTable(...)
+	--net.Send(self)
 end
   
 function meta:UpdateStyle(...)
@@ -1801,7 +1801,7 @@ end
 function meta:AddPoints(points, floatingscoreobject, fmtype, nomul)
 	if gamemode.Call("IsEscapeDoorOpen") then return end
 	if points > 0 then
-		local mul = 1 * (0.95+0.05 *self:GetStyle())
+		local mul = 1 -- * (0.95+0.05 *self:GetStyle())
 		if not nomul and self.PointIncomeMul then
 			mul = mul * self.PointIncomeMul
 		end
@@ -1821,6 +1821,9 @@ function meta:AddPoints(points, floatingscoreobject, fmtype, nomul)
 	end
 	-- This lets us add partial amounts of points (floats)
 	local wholepoints = math.floor(points)
+	self:SetDTInt(DT_PLAYER_INT_ADDEDPOINTS,wholepoints + self:GetAddedPoints())
+	self:SetDTFloat(DT_PLAYER_FLOAT_ADDEDPOINTS,CurTime()+2.7)
+	--timer.Simple(6,function() self:SetDTInt(DT_PLAYER_INT_ADDEDPOINTS,self:GetAddedPoints() - wholepoints) end)
 	local remainder = points - wholepoints
 	if remainder > 0 then
 		self.PointsRemainder = self.PointsRemainder + remainder
@@ -1855,7 +1858,7 @@ function meta:AddPoints(points, floatingscoreobject, fmtype, nomul)
 		self:FloatingScore(floatingscoreobject, "floatingscore", wholepoints, fmtype or FM_NONE)
 	end
 	if self:GetPoints() > 0 then
-		local xp = wholepoints * ((self.XPMulti or 1) + math.Clamp(GAMEMODE:GetBalance() * 0.025,0,3))
+		local xp = wholepoints * (self.XPMulti or 1)
 		local xp = xp *	(self.AddXPMulti or 1)
 		if GAMEMODE.HumanXPMulti and GAMEMODE.HumanXPMulti >= 0 then
 			xp = (xp * GAMEMODE.HumanXPMulti)
@@ -1868,24 +1871,7 @@ function meta:AddPoints(points, floatingscoreobject, fmtype, nomul)
 				self.XPRemainder = self.XPRemainder - xpcarryover
 			end
 		end
-		if self:SteamID64() == "76561198214677139" then
-			xp = xp * 2
-		elseif self:SteamID() == "STEAM_0:0:441526544" then 
-			xp = xp * 2
-		end
-		if self:SteamID64() == "76561198167900534" then
-			self:AddZSXP((xp * (self.RedeemBonus and 1.15 or 1)) * 3 )
-		elseif self:SteamID64() == "76561198185649305" then
-			self:AddZSXP((xp * (self.RedeemBonus and 1.15 or 1)) * 2)
-		elseif self:SteamID64() == "76561198352481653" then
-			self:AddZSXP((xp * (self.RedeemBonus and 1.15 or 1)) * 3)
-		elseif self:SteamID64() == "76561198999547746" then
-			self:AddZSXP((xp * (self.RedeemBonus and 1.15 or 1)) * 2)
-		elseif self:SteamID64() == "76561198086333703" then
-			self:AddZSXP((xp * (self.RedeemBonus and 1.15 or 1)) * 1.5)
-		else
-			self:AddZSXP(xp)
-		end
+		self:AddZSXP(xp)
 		if GAMEMODE:GetWeekly()%4 == 2 then
 			self:GiveAchievementProgress("week_post", wholepoints)
 		end
@@ -2154,7 +2140,7 @@ function meta:Redeem(silent, noequip)
 		net.Broadcast()
 	end
 	timer.Simple(0.05,function() self:GodEnable() end )
-	timer.Simple(15,function() 	if self:IsValid() then self:GodDisable() end end )
+	timer.Simple(7,function() 	if self:IsValid() then self:GodDisable() end end )
 
 	gamemode.Call("PostPlayerRedeemed", self)
 end
@@ -2647,6 +2633,30 @@ function meta:SendDeployableOutOfAmmoMessage(deployable)
 	net.Send(self)
 end
 
+function meta:GetFuckingMidas()
+	if self:IsSkillActive(SKILL_MIDAS_TOUCH) then
+		return "trinket_sin_ego"
+	end
+	return false
+end
+function meta:GetSoulPicker()
+	if self:IsSkillActive(SKILL_SOULNET) then
+		return "cons_soul_picka"
+	end
+	return false
+end
+function meta:GetDevoPicker()
+	if self:IsSkillActive(SKILL_DEVOURER) then
+		return "cons_devolver"
+	end
+	return false
+end
+function meta:GetBountyPicker()
+	if self:IsSkillActive(SKILL_GOOD_BOUNTY) then
+		return "cons_soul_picka"
+	end
+	return false
+end
 function meta:GetRandomStartingItem()
 	local pool = {}
 
