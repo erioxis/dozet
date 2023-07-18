@@ -156,7 +156,7 @@ function PANEL:Text3Paint()
 		else
 			local balance = GAMEMODE:GetBalance()
 			--draw.SimpleText(translate.Format("points_x", MySelf:GetPoints().." / "..MySelf:Frags()), self.Font, 0, 0, COLOR_DARKRED)
-			draw.SimpleText(translate.Format("sboard_points_x_score_x_dps_x", math.Round(MySelf:GetDPS()), MySelf:GetMScore(),MySelf:GetPoints()), self.Font, 0, -7, COLOR_SOFTRED)
+			draw.SimpleText(translate.Format("sboard_points_x_score_x_dps_x", MySelf:GetMScore(),math.Round(MySelf:GetDPS()),MySelf:GetPoints()), self.Font, 0, -7, COLOR_SOFTRED)
 		--print(MySelf:GetAddedPoints())
 			draw.SimpleText((MySelf:GetAddedPoints()>0 and "+" or "")..MySelf:GetAddedPoints(), self.Font, 300+(MySelf:GetMScore()>99 and MySelf:GetMScore() < 999 and 20 or MySelf:GetMScore()>999 and 40 or 0), -7, Color(255,255,255,255*((MySelf:GetAddedPointsTime()-CurTime()+3)/3)))
 			local god = false

@@ -170,10 +170,10 @@ function meta:DoHulls(classid, teamid)
 	else
 		self:SetIK(true)
 
-		self:SetModelScale(DEFAULT_MODELSCALE * (self.ScaleModel or 1), 0)
 		self:ResetHull()
-		self:SetViewOffset(DEFAULT_VIEW_OFFSET)
-		self:SetViewOffsetDucked(DEFAULT_VIEW_OFFSET_DUCKED)
+		self:SetViewOffset(Vector(0, 0, 64 * (GAMEMODE.ObjectiveMap and 1 or (self.ScaleModel or 1))))
+		self:SetViewOffsetDucked(Vector(0, 0, 32 * (GAMEMODE.ObjectiveMap and 1 or (self.ScaleModel or 1))))
+		self:SetModelScale(1 * (GAMEMODE.ObjectiveMap and 1 or (self.ScaleModel or 1))) 
 		self:SetStepSize(DEFAULT_STEP_SIZE)
 		self:SetJumpPower(DEFAULT_JUMP_POWER)
 		self:SetGravity(1)

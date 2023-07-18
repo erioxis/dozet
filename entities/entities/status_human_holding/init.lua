@@ -72,7 +72,9 @@ function ENT:Initialize()
 				self.OldOwner = object:GetOwner()
 			end
 			object:SetOwner(owner)
-			object:SetCollisionGroup(COLLISION_GROUP_WEAPON)
+			if object:GetCollisionGroup() ~= COLLISION_GROUP_WORLD then
+				object:SetCollisionGroup(COLLISION_GROUP_WEAPON)
+			end
 			object:SetRenderMode(RENDERMODE_TRANSALPHA)
 			object:SetAlpha(180)
 
@@ -238,12 +240,14 @@ function ENT:Think()
 			ent1:SetVelocity(vel)
 		end
 	end
-	if ent2:IsValid() and ent2:IsPlayer() and ent2:Team() == TEAM_UNDEAD and owner:Team() == TEAM_HUMAN then
-		object:SetCollisionGroup(COLLISION_GROUP_NONE)
-		object:CollisionRulesChanged()
-	else
-		object:SetCollisionGroup(COLLISION_GROUP_WEAPON)
-		object:CollisionRulesChanged()
+	if object:GetCollisionGroup() ~= COLLISION_GROUP_WORLD then
+		if ent2:IsValid() and ent2:IsPlayer() and ent2:Team() == TEAM_UNDEAD and owner:Team() == TEAM_HUMAN then
+			object:SetCollisionGroup(COLLISION_GROUP_NONE)
+			object:CollisionRulesChanged()
+		else
+			object:SetCollisionGroup(COLLISION_GROUP_WEAPON)
+			object:CollisionRulesChanged()
+		end
 	end
 
 	if self:GetIsHeavy() then

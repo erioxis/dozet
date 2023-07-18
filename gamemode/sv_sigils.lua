@@ -179,6 +179,7 @@ function GM:CreateRandomObjectPos(class, numbers,wep)
 			end
 			ent:SetPos(Vector(pos.X,pos.Y,pos.Z+4))
 		--	Entity(1):SetPos(Vector(pos.X,pos.Y,pos.Z))
+			ent.SpawnedOnWave = self:GetWave()
 			ent:Spawn()
 		end
 	end

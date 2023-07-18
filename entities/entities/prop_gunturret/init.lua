@@ -90,7 +90,7 @@ function ENT:SetObjectHealth(health)
 					ent:TakeDamage(250, owner, self)
 				end
 			end
-			if owner:IsSkillActive(SKILL_EXPLOIT) and math.random(1,4) == 1 then
+			if owner and owner:IsValidLivingHuman() and owner:IsSkillActive(SKILL_EXPLOIT) and math.random(1,4) == 1 then
 				owner:Give("weapon_zs_gunturret")
 			end
 			local ent = ents.Create("prop_drone_exp")
@@ -178,7 +178,7 @@ function ENT:FireTurret(src, dir)
 			self:PlayShootSound()
 
 			TEMPTURRET = self
-			self:FireBulletsLua(src, dir, self.Spread, self.NumShots * (twinvolley and 2 or 1) + (mot and math.random(1,5) == 1 and 1 or 0), self.Damage, self:GetObjectOwner(), nil, nil, BulletCallback, nil, nil, nil, nil, self)
+			self:FireBulletsLua(src, dir, self.Spread, self.NumShots * (twinvolley and 2 or 1) + (mot and math.random(1,5) == 1 and 1 or 0), self.Damage * owner.BulletMul, owner, nil, nil, BulletCallback, nil, nil, nil, nil, self)
 		else
 			self:SetNextFire(CurTime() + 2)
 			self:EmitSound("npc/turret_floor/die.wav")

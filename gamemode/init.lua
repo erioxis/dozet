@@ -9,6 +9,7 @@ Further credits displayed by pressing F1 in-game.
 This was my first ever gamemode. A lot of stuff is from years ago and some stuff is very recent.
 
 ]]
+GM.NewYear = false
 AddCSLuaFile("cl_init.lua")
 AddCSLuaFile("shared.lua")
 AddCSLuaFile("sh_stamina.lua")
@@ -528,7 +529,6 @@ end
 GM.CenterNotify = GM.CenterNotifyAll
 GM.NoBaracursed = true
 GM.DamageLock = false 
-GM.NewYear = false
 
 function GM:TopNotifyAll(...)
 	net.Start("zs_topnotify")
@@ -2989,6 +2989,7 @@ function GM:PlayerInitialSpawnRound(pl)
 	pl.ArmDamage = 0
 	pl.BuffedArmor = 0
 	pl.NextTransThink = 0
+	pl.InbalanceMoment = 0
 
 	pl.DamageDealt = {}
 	pl.DamageDealt[TEAM_UNDEAD] = 0
@@ -3030,6 +3031,7 @@ function GM:PlayerInitialSpawnRound(pl)
 	pl.NestsDestroyed = 0
 	pl.NestSpawns = 0
 	pl.LastRevive = 0
+	pl.LastZGas = 0
 
 	--Return
 	pl.r_return = nil
@@ -4589,7 +4591,8 @@ end
 
 function GM:PlayerDeath(pl, inflictor, attacker)
 	pl:SetChampion(0)
-	if pl:IsSkillActive(SKILL_PHOENIX) and pl.RedeemedOnce then
+	if pl:IsSkillActive(SKILL_PHOENIX) and pl.RedeemedOnce or pl:HasTrinket("altlazarussoul") then
+		pl:TakeInventoryItem("trinket_altlazarussoul")
 		local dpos = pl:GetPos()
 		local eyepos = pl:EyeAngles()
 		timer.Simple(0.005, function()
@@ -4679,17 +4682,16 @@ function GM:HumanKilledZombie(pl, attacker, inflictor, dmginfo, headshot, suicid
 	if (pl:GetZombieClassTable().Points or 0) == 0 or self.RoundEnded then return end
 	-- Simply distributes based on damage but also do some stuff for assists.
 	local class = pl:GetZombieClassTable()
-	if numofdaily == 1 then
-		attacker:GiveAchievementProgress("daily_post", 1)
-	end
+
 	if numofweek == 1 then
 		attacker:GiveAchievementProgress("week_post", 1)
 	end
 	
 	if numofdaily == 4 and class.Boss then
 		attacker:GiveAchievementProgress("daily_post", 1)
-	end
-	if numofdaily == 5 and inflictor.IsShadeGrabbable then
+	elseif numofdaily == 5 and inflictor.IsShadeGrabbable then
+		attacker:GiveAchievementProgress("daily_post", 1)
+	elseif numofdaily == 1 then
 		attacker:GiveAchievementProgress("daily_post", 1)
 	end
 	if attacker:IsSkillActive(SKILL_SCAM) and math.randomr(1,100,1,attacker) == 1 then
@@ -4704,7 +4706,17 @@ function GM:HumanKilledZombie(pl, attacker, inflictor, dmginfo, headshot, suicid
 	if class.BaraCat then
 		attacker:GiveAchievementProgress("antibaracat", 1)		
 	end
-
+	if pl.LastZGas > CurTime() then
+		attacker.InbalanceMoment = 	attacker.InbalanceMoment +1
+		if attacker.InbalanceMoment > 12 then
+			for k,v in pairs(ents.FindByClass("prop_gunturret*")) do
+				if v:GetObjectOwner() == attacker then
+					v:Remove()
+				end
+			end
+			attacker.InbalanceMoment = -9999
+		end
+	end
 	if self.NewYear and (math.random(100-math.min(50,(attacker.Luck or 1))) == 50 or class.Boss or class.DemiBoss) then
 		for i=1,(class.Boss and 2 or 1) do
 			local d = ents.Create("prop_gift")
@@ -4751,6 +4763,7 @@ function GM:HumanKilledZombie(pl, attacker, inflictor, dmginfo, headshot, suicid
 			totaldamage = totaldamage + dmg
 		end
 	end
+	
 
 	local mostassistdamage = 0
 	local halftotaldamage = totaldamage / 2
@@ -4767,14 +4780,9 @@ function GM:HumanKilledZombie(pl, attacker, inflictor, dmginfo, headshot, suicid
 	self:SetRage(math.Round(self:GetRage() + (3 * (attacker.RageMul or 1)) * self:GetWinRate()))
 	timer.Create("rage"..attacker:Nick(),5,1, function() if attacker:IsValid() then		attacker.RageMul = 1 end end)
 	attacker:AddZSXP(1)
-	if pl:IsChampion() then
 	--	net.Start("zs_update_style") net.WriteTable({time = CurTime()+2.5+(math.random(10,20)*0.2),text = "CHAMPION KILL",color = pl:GetChampionColor(),score = 100}) net.Send(attacker) 
-	else
 		--net.Start("zs_update_style") net.WriteTable({time = CurTime()+4+(math.random(1,20)*0.1),text = "KILL!",color = Color(250,21,21),score = 10}) net.Send(attacker) 
-	end
-	if !attacker:OnGround() then
 		--net.Start("zs_update_style") net.WriteTable({time = CurTime()+4+(math.random(10,20)*0.2),text = "AIRKILL!",score = 50,color = Color(1161,161,161)}) net.Send(attacker) 
-	end
 
 	
 
@@ -5541,9 +5549,9 @@ function GM:PlayerSpawn(pl)
 		pl:ResetJumpPower()
 		pl:SetCrouchedWalkSpeed(0.45)
 
-		timer.Simple(3, function() pl:SetViewOffset(Vector(0, 0, 64 * (self.ObjectiveMap and 1 or (pl.ScaleModel or 1))))
-		pl:SetViewOffsetDucked(Vector(0, 0, 32 * (self.ObjectiveMap and 1 or (pl.ScaleModel or 1))))
-		pl:SetModelScale(1 * (self.ObjectiveMap and 1 or (pl.ScaleModel or 1))) end)
+		pl:SetViewOffset(Vector(0, 0, 64 * pl.ScaleModel))
+		pl:SetViewOffsetDucked(Vector(0, 0, 32 * pl.ScaleModel))
+		pl:SetModelScale(1) 
 
 		
 		pl:Give("weapon_zs_fists")
@@ -5715,11 +5723,23 @@ function GM:EventStart(wave)
 		return
 	end
 	if math.random(1,2) == 1  then
-		gamemode.Call("CreateRandomObjectPos", "prop_databox",math.random(3,6))
-		for _, pl in pairs(player.GetAll()) do
-			if pl then
-				pl:CenterNotify(COLOR_GREEN,{killicon = "headshot"},{font = "ZSHUDFontSmall"},translate.ClientGet(pl,"databox_start"),{killicon = "headshot"})
+		local rand =  math.random(1,10) 
+		gamemode.Call("CreateRandomObjectPos", "prop_databox",math.random(3,6)+(rand == 1 and 4 or 0))
+		if rand ~= 1 then
+			for _, pl in pairs(player.GetAll()) do
+				if pl then
+					pl:CenterNotify(COLOR_GREEN,{killicon = "headshot"},{font = "ZSHUDFontSmall"},translate.ClientGet(pl,"databox_start"),{killicon = "headshot"})
+				end
 			end
+		end
+		if rand == 1 then
+			gamemode.Call("CreateRandomObjectPos", "prop_databox_mega",1)
+			for _, pl in pairs(player.GetAll()) do
+				if pl then
+					pl:CenterNotify(COLOR_RED,{killicon = "headshot"},{font = "ZSHUDFontSmall"},translate.ClientGet(pl,"datagod_start"),{killicon = "headshot"})
+				end
+			end
+			return
 		end
 	end
 	if math.random(1,3) == 1  then

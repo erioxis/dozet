@@ -81,7 +81,7 @@ cvars.AddChangeCallback("zs_maxpropsinbarricade", function(cvar, oldvalue, newva
 	GAMEMODE.MaxPropsInBarricade = tonumber(newvalue) or 8
 end)
 
-GM.MaxDroppedItems = 20--[[CreateConVar("zs_maxdroppeditems", "48", FCVAR_ARCHIVE + FCVAR_NOTIFY, "Maximum amount of dropped items. Prevents spam or lag when lots of people die."):GetInt()
+GM.MaxDroppedItems = 40--[[CreateConVar("zs_maxdroppeditems", "48", FCVAR_ARCHIVE + FCVAR_NOTIFY, "Maximum amount of dropped items. Prevents spam or lag when lots of people die."):GetInt()
 cvars.AddChangeCallback("zs_maxdroppeditems", function(cvar, oldvalue, newvalue)
 	GAMEMODE.MaxDroppedItems = tonumber(newvalue) or 48
 end)]]

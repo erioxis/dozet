@@ -45,7 +45,7 @@ function ENT:Hit(vHitPos, vHitNormal, eHitEntity)
 	vHitPos = vHitPos or self:GetPos()
 	vHitNormal = vHitNormal or Vector(0, 0, 1)
 	if owner:IsValid() and owner:IsPlayer() then
-		util.BlastDamagePlayer(self, owner, vHitPos + vHitNormal, 60, 40, DMG_DISSOLVE)
+		util.BlastDamagePlayer(self, owner, vHitPos + vHitNormal, 60, 40, DMG_DIRECT)
 		if eHitEntity:IsPlayer() and owner:IsValidLivingZombie() then
 			eHitEntity:AddLegDamage(53, owner,self)
 		end

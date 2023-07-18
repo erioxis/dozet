@@ -4,7 +4,7 @@ ENT.RenderGroup = RENDERGROUP_TRANSLUCENT
 ENT.m_NoNailUnfreeze = true
 ENT.NoNails = true
 
-ENT.WrenchRepairMultiplier = 23
+ENT.WrenchRepairMultiplier = 1
 
 ENT.Model = "models/manhack.mdl"
 ENT.HitBoxSize = 21

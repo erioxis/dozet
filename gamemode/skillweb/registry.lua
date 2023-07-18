@@ -1545,17 +1545,17 @@ GM:AddSkill(SKILL_WORTHINESS2, trs("worthness").."II", GOOD.."+10"..trs("worth")
 GM:AddSkill(SKILL_AVOID_BLOCK, trs("skill_xpdamage"), GOOD..trs("skill_xpdamage_d1")..BAD.."-25%"..trs("b_mul"),
 																5,			1,					{SKILL_WORTHINESS2}, TREE_MELEETREE)
 GM:AddSkillModifier(SKILL_AVOID_BLOCK, SKILLMOD_BLOCKMULTIPLIER, 0.25)
-GM:AddSkill(SKILL_BATTLER1, trs("skill_battler").."I", GOOD.."+3%"..trs("meleedamage")..BAD.."-2%"..trs("r_speed"),
+GM:AddSkill(SKILL_BATTLER1, trs("skill_battler").."I", GOOD.."+3%"..trs("meleedamage")..BAD.."-2%"..trs("b_damage"),
 																-6,			-6,					{SKILL_BATTLER2, SKILL_NONE}, TREE_MELEETREE)
-GM:AddSkill(SKILL_BATTLER2, trs("skill_battler").."II", GOOD.."+6%"..trs("meleedamage")..BAD.."-4%"..trs("r_speed"),
+GM:AddSkill(SKILL_BATTLER2, trs("skill_battler").."II", GOOD.."+6%"..trs("meleedamage")..BAD.."-4%"..trs("b_damage"),
 																-6,			-4,					{SKILL_BATTLER3, SKILL_LIGHTWEIGHT}, TREE_MELEETREE)
-GM:AddSkill(SKILL_BATTLER3, trs("skill_battler").."III", GOOD.."+8%"..trs("meleedamage")..BAD.."-9%"..trs("r_speed"),
+GM:AddSkill(SKILL_BATTLER3, trs("skill_battler").."III", GOOD.."+8%"..trs("meleedamage")..BAD.."-9%"..trs("b_damage"),
 																-4,			-2,					{SKILL_BATTLER4, SKILL_LANKY, SKILL_FOUR_IN_ONE}, TREE_MELEETREE)
-GM:AddSkill(SKILL_BATTLER4, trs("skill_battler").."IV", GOOD.."+9%"..trs("meleedamage")..BAD.."-13%"..trs("r_speed"),
+GM:AddSkill(SKILL_BATTLER4, trs("skill_battler").."IV", GOOD.."+9%"..trs("meleedamage")..BAD.."-13%"..trs("b_damage"),
 																-2,			0,					{SKILL_BATTLER5, SKILL_MASTERCHEF, SKILL_D_CLUMSY}, TREE_MELEETREE)
-GM:AddSkill(SKILL_BATTLER5, trs("skill_battler").."V", GOOD.."+13%"..trs("meleedamage")..BAD.."-16%"..trs("r_speed"),
+GM:AddSkill(SKILL_BATTLER5, trs("skill_battler").."V", GOOD.."+13%"..trs("meleedamage")..BAD.."-16%"..trs("b_damage"),
 																0,			2,					{SKILL_GLASSWEAPONS, SKILL_BLOODLUST}, TREE_MELEETREE)
-GM:AddSkill(SKILL_BATTLER6, trs("skill_battler").."VI", GOOD.."+16%"..trs("meleedamage")..BAD.."-33%"..trs("r_speed"),
+GM:AddSkill(SKILL_BATTLER6, trs("skill_battler").."VI", GOOD.."+16%"..trs("meleedamage")..BAD.."-33%"..trs("b_damage"),
 																0,			0,					{SKILL_BATTLER5}, TREE_MELEETREE)
 GM:AddSkill(SKILL_LASTSTAND, trs("skill_laststand"), GOOD..trs("skill_laststand_d1")..BAD..trs("skill_laststand_d2"),
 																0,			6,					{SKILL_ABUSE}, TREE_MELEETREE)
@@ -1692,24 +1692,20 @@ GM:AddSkillModifier(SKILL_OPM, SKILLMOD_MELEE_DAMAGE_MUL, -0.35)
 
 
 SKILL_POINTI = 157
-GM:AddSkillModifier(SKILL_POINTI, SKILLMOD_POINT_MULTIPLIER, 0.01)
 GM:AddSkillModifier(SKILL_POINTI, SKILLMOD_LUCK, 0.15)
-GM:AddSkill(SKILL_POINTI, trs("skill_point").."I", GOOD.."+0.15"..trs("luck")..GOOD.."+1%"..trs("p_mul"),
+GM:AddSkill(SKILL_POINTI, trs("skill_point").."I", GOOD.."+0.15"..trs("luck")..GOOD.. "+1"..trs("start_points"),
 																0,			0,					{SKILL_NONE}, TREE_POINTTREE)
 SKILL_POINTII = 158
-GM:AddSkillModifier(SKILL_POINTII, SKILLMOD_POINT_MULTIPLIER, 0.02)
 GM:AddSkillModifier(SKILL_POINTII, SKILLMOD_LUCK, 0.15)
-GM:AddSkill(SKILL_POINTII, trs("skill_point").."II", GOOD.."+0.15"..trs("luck")..GOOD.."+2%"..trs("p_mul"),
+GM:AddSkill(SKILL_POINTII, trs("skill_point").."II", GOOD.."+0.15"..trs("luck")..GOOD.. "+2"..trs("start_points"),
 																-0.5,			-1,					{SKILL_POINTI}, TREE_POINTTREE)
 SKILL_POINTIII = 159
-GM:AddSkillModifier(SKILL_POINTIII, SKILLMOD_POINT_MULTIPLIER, 0.02)
 GM:AddSkillModifier(SKILL_POINTIII, SKILLMOD_LUCK, 0.15)
-GM:AddSkill(SKILL_POINTIII, trs("skill_point").."III", NEUTRAL.."+0.15"..trs("luck")..GOOD.."+2%"..trs("p_mul"),
+GM:AddSkill(SKILL_POINTIII, trs("skill_point").."III", NEUTRAL.."+0.15"..trs("luck") ..GOOD.. "+3"..trs("start_points"),
 																-1,			-2,					{SKILL_POINTII}, TREE_POINTTREE)
 SKILL_POINTIIII = 160
-	GM:AddSkillModifier(SKILL_POINTIIII, SKILLMOD_POINT_MULTIPLIER, 0.03)
 	GM:AddSkillModifier(SKILL_POINTIIII, SKILLMOD_LUCK, 0.40)
-GM:AddSkill(SKILL_POINTIIII, trs("skill_point").."IV", NEUTRAL.."+0.40"..trs("luck")..GOOD.."+3%"..trs("p_mul") ..GOOD.. "+5"..trs("start_points"),
+GM:AddSkill(SKILL_POINTIIII, trs("skill_point").."IV", NEUTRAL.."+0.40"..trs("luck") ..GOOD.. "+5"..trs("start_points"),
 																-2,			-3,					{SKILL_POINTIII}, TREE_POINTTREE)
 SKILL_POINTD = 248
 GM:AddSkillModifier(SKILL_POINTD, SKILLMOD_POINT_MULTIPLIER, -0.06)
@@ -1848,6 +1844,7 @@ SKILL_PIGNUS = 175
 GM:AddSkillModifier(SKILL_PIGNUS, SKILLMOD_TURRET_SCANSPEED_MUL, 0.33)
 GM:AddSkillModifier(SKILL_PIGNUS, SKILLMOD_TURRET_HEALTH_MUL, 0.33)
 GM:AddSkillModifier(SKILL_PIGNUS, SKILLMOD_TURRET_RANGE_MUL, 0.33)
+GM:AddSkillModifier(SKILL_PIGNUS, SKILLMOD_TURRET_DAMAGE, 0.33)
 GM:AddSkill(SKILL_PIGNUS, "Pignus", PURPLE.."Better turrets!All stats up by 33%",
 					-1,			-5,					{SKILL_VERUS}, TREE_ANCIENTTREE)
 SKILL_STRENGHT = 176
@@ -2661,7 +2658,7 @@ GM:SetSkillModifierFunction(SKILLMOD_MELEE_DAMAGE_TO_BLOODARMOR_MUL, function(pl
 end)
 
 GM:SetSkillModifierFunction(SKILLMOD_MELEE_MOVEMENTSPEED_ON_KILL, function(pl, amount)
-	pl.MeleeMovementSpeedOnKill = math.Clamp(amount, -15, 1000.0)
+	pl.MeleeMovementSpeedOnKill = math.Clamp(amount, -9999, 1000.0)
 end)
 
 GM:SetSkillModifierFunction(SKILLMOD_MELEE_POWERATTACK_MUL, function(pl, amount)
@@ -2752,6 +2749,9 @@ GM:SetSkillModifierFunction(SKILLMOD_POISON_SPEED_MUL, function(pl, amount)
 end)
 GM:SetSkillModifierFunction(SKILLMOD_SCALEMODEL, function(pl, amount)
 	pl.ScaleModel = math.Clamp(amount + 1.0 - (pl.ClanMich and 0.25 or 0), 0.06, 1000.0)
+	pl:SetViewOffset(Vector(0, 0, 64 * (GAMEMODE.ObjectiveMap and 1 or (pl.ScaleModel or 1))))
+	pl:SetViewOffsetDucked(Vector(0, 0, 32 * (GAMEMODE.ObjectiveMap and 1 or (pl.ScaleModel or 1))))
+	pl:SetModelScale(1 * (GAMEMODE.ObjectiveMap and 1 or (pl.ScaleModel or 1))) 
 end)
 
 
@@ -2960,12 +2960,12 @@ GM:AddSkillModifier(SKILL_BATTLER5, SKILLMOD_MELEE_DAMAGE_MUL, 0.13)
 GM:AddSkillModifier(SKILL_BATTLER6, SKILLMOD_MELEE_DAMAGE_MUL, 0.16)
 GM:AddSkillModifier(SKILL_SOULNET, SKILLMOD_MELEE_DAMAGE_MUL, -0.10)
 
-GM:AddSkillModifier(SKILL_BATTLER1, SKILLMOD_RELOADSPEED_MUL, -0.02)
-GM:AddSkillModifier(SKILL_BATTLER2, SKILLMOD_RELOADSPEED_MUL, -0.04)
-GM:AddSkillModifier(SKILL_BATTLER3, SKILLMOD_RELOADSPEED_MUL, -0.09)
-GM:AddSkillModifier(SKILL_BATTLER4, SKILLMOD_RELOADSPEED_MUL, -0.13)
-GM:AddSkillModifier(SKILL_BATTLER5, SKILLMOD_RELOADSPEED_MUL, -0.16)
-GM:AddSkillModifier(SKILL_BATTLER6, SKILLMOD_RELOADSPEED_MUL, -0.33)
+GM:AddSkillModifier(SKILL_BATTLER1, SKILLMOD_DAMAGE, -0.02)
+GM:AddSkillModifier(SKILL_BATTLER2, SKILLMOD_DAMAGE, -0.04)
+GM:AddSkillModifier(SKILL_BATTLER3, SKILLMOD_DAMAGE, -0.09)
+GM:AddSkillModifier(SKILL_BATTLER4, SKILLMOD_DAMAGE, -0.13)
+GM:AddSkillModifier(SKILL_BATTLER5, SKILLMOD_DAMAGE, -0.16)
+GM:AddSkillModifier(SKILL_BATTLER6, SKILLMOD_DAMAGE, -0.33)
 
 GM:AddSkillModifier(SKILL_GLASSMAN, SKILLMOD_MELEE_DAMAGE_MUL, 2.3)
 GM:AddSkillModifier(SKILL_GLASSMAN, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 2)
@@ -3271,7 +3271,7 @@ GM:AddSkillModifier(SKILL_ENGI, SKILLMOD_TURRET_RANGE_MUL, 0.5)
 GM:AddSkillModifier(SKILL_ENGI, SKILLMOD_TURRET_HEALTH_MUL, 0.5)
 GM:AddSkillModifier(SKILL_ENGI, SKILLMOD_TURRET_SCANSPEED_MUL, 0.5)
 GM:AddSkillModifier(SKILL_ENGI, SKILLMOD_MELEE_DAMAGE_MUL, -0.25)
-GM:AddSkillModifier(SKILL_ENGI, SKILLMOD_DAMAGE, -0.25)
+GM:AddSkillModifier(SKILL_ENGI, SKILLMOD_M_DMG, -0.99)
 
 
 GM:AddSkillModifier(SKILL_MIND_FOOT, SKILLMOD_MELEE_DAMAGE_MUL, -0.25)

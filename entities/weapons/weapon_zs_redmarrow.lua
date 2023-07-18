@@ -6,10 +6,10 @@ end
 
 SWEP.Base = "weapon_zs_zombie"
 
-SWEP.MeleeDamage = 55
+SWEP.MeleeDamage = 41
 SWEP.MeleeDamageShielded = 1700
 SWEP.MeleeDelay = 0.74
-SWEP.MeleeDamageVsProps = 43
+SWEP.MeleeDamageVsProps = 33
 SWEP.MeleeDamageType = DMG_DIRECT
 
 function SWEP:MeleeHit(ent, trace, damage, forcescale)
@@ -23,7 +23,7 @@ function SWEP:MeleeHit(ent, trace, damage, forcescale)
 	if not ent:IsPlayer() then
 		damage = self.MeleeDamageVsProps
 	else
-		ent:GiveStatus("flimsy", 6)
+		ent:GiveStatus("bloodysickness", 6)
 	end
 	self.BaseClass.MeleeHit(self, ent, trace, damage, forcescale)
 end

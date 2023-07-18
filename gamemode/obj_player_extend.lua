@@ -861,7 +861,7 @@ function meta:ResetSpeed(noset, health)
 			speed = speed * 1.15
 		end
 		if wep.SwingingTrue then
-			speed = speed * 0.7
+			speed = speed * 0.85
 		end
 	end
 

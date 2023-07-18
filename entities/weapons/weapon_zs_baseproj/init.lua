@@ -35,7 +35,7 @@ function SWEP:ShootBullets(damage, numshots, cone)
 			ent.Team = owner:Team()
 
 			self:EntModify(ent)
-			if owner:IsSkillActive(SKILL_SOMETHING_WRONG) and math.random(1,math.max(1,150-GAMEMODE:GetWave())) == 1 then
+			if owner:IsSkillActive(SKILL_SOMETHING_WRONG) and math.random(1,math.max(1,20-GAMEMODE:GetWave())) == 1 then
 				ent._Think = ent.Think
 				ent.trg = NULL
 				ent.ProjDamage = ent.ProjDamage * 0.75
@@ -73,7 +73,7 @@ function SWEP:ShootBullets(damage, numshots, cone)
 			end
 
 
-			if owner:IsSkillActive(SKILL_WHO_AM_I) and math.random(1,math.max(1,50-GAMEMODE:GetWave())) == 1 then
+			if owner:IsSkillActive(SKILL_WHO_AM_I) and math.random(1,math.max(1,12-GAMEMODE:GetWave())) == 1 then
 				ent._OnRemove = ent.OnRemove
 				ent.ProjDamage = ent.ProjDamage * 0.7
 				ent.OnRemove = function()

@@ -40,7 +40,8 @@ local function compare(a,b)
 	return a > b
 end
 function CLASS:ProcessDamage(pl, dmginfo)
-	if #player.GetHumans() < 5 then return false end
+	local attacker = dmginfo:GetAttacker()
+	if #player.GetHumans() < 5 or !attacker:IsPlayer() then return false end
 	local top = {}
 	for k,v in pairs(team.GetPlayers(TEAM_HUMAN)) do
 		if v and v:IsValid() then
@@ -48,11 +49,13 @@ function CLASS:ProcessDamage(pl, dmginfo)
 		end
 	end
 	table.sort(top,compare)
-	local attacker = dmginfo:GetAttacker():GetMScore() 
-	if attacker == top[1] then
-		dmginfo:ScaleDamage(0.1)
-	elseif attacker == top[2] then
+	local attackerscore = attacker:GetMScore() 
+	local dmg = dmginfo:GetDamage()
+	if attackerscore == top[1] then
+		dmginfo:SetDamage(math.min(50,dmg))
+	elseif attackerscore == top[2] then
 		dmginfo:ScaleDamage(0.25)
+		dmginfo:SetDamage(math.min(150,dmg))
 	else
 		dmginfo:ScaleDamage(2)
 	end

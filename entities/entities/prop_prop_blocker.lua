@@ -11,9 +11,6 @@ function ENT:Initialize()
 	self:DrawShadow(false)
 	self:SetNoDraw(true)
 
-	if SERVER then
-		self:PhysicsInitBox(Vector(-5, -5, 0), Vector(5, 5, 5))
-	end
 
 	self:SetCustomCollisionCheck(true)
 	self:CollisionRulesChanged()
@@ -28,5 +25,5 @@ function ENT:Initialize()
 end
 
 function ENT:ShouldNotCollide(ent)
-	return --[[ent:GetCollisionGroup() ~= COLLISION_GROUP_NONE or]] ent:IsPlayer() or ent:IsProjectile()
+	return true
 end
