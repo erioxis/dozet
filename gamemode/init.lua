@@ -4350,14 +4350,6 @@ function GM:PlayerHurt(victim, attacker, healthremaining, damage)
 			net.WriteString("Lottery ticket")
 		net.Send(victim)
 		end
-			if healthremaining < victim:GetMaxHealth() * 0.12 and victim:GetBloodArmor() < victim.MaxBloodArmor + 60 and victim:HasTrinket("altlazarusoul") then
-				victim:SetBloodArmor(math.min(victim:GetBloodArmor() + (200 * victim.BloodarmorGainMul), victim.MaxBloodArmor + (70 * victim.MaxBloodArmorMul)))
-				victim:TakeInventoryItem("trinket_altlazarussoul")
-
-			net.Start("zs_trinketconsumed")
-				net.WriteString("Lazarus Soul")
-			net.Send(victim)
-		end
 	else
 		victim:PlayZombiePainSound()
 	end
@@ -4592,9 +4584,9 @@ end
 function GM:PlayerDeath(pl, inflictor, attacker)
 	pl:SetChampion(0)
 	if pl:IsSkillActive(SKILL_PHOENIX) and pl.RedeemedOnce or pl:HasTrinket("altlazarussoul") then
-		pl:TakeInventoryItem("trinket_altlazarussoul")
 		local dpos = pl:GetPos()
 		local eyepos = pl:EyeAngles()
+
 		timer.Simple(0.005, function()
 			if pl:IsValid() then
 				pl.RedeemedOnce = false
@@ -5143,13 +5135,13 @@ function GM:DoPlayerDeath(pl, attacker, dmginfo)
 		if pl:IsSkillActive(SKILL_PHOENIX) and pl.RedeemedOnce or pl:HasTrinket("altlazarussoul")  then 
 			local oldw = {}
 			local oldt = {}
-			pl:TakeInventoryItem("trinket_altlazarussoul")
 			for _, wep in pairs(pl:GetWeapons()) do
 				if wep:IsValid() then
 					table.insert(oldw,#oldw+1,wep:GetClass())
 				end
 			end
 			for invitem, count in pairs(pl:GetInventoryItems()) do
+				if invitem == "trinket_altlazarussoul" then continue  end
 				for i = 1, count do
 					table.insert(oldt, #oldt+1,invitem)
 				end
@@ -5549,8 +5541,8 @@ function GM:PlayerSpawn(pl)
 		pl:ResetJumpPower()
 		pl:SetCrouchedWalkSpeed(0.45)
 
-		pl:SetViewOffset(Vector(0, 0, 64 * pl.ScaleModel))
-		pl:SetViewOffsetDucked(Vector(0, 0, 32 * pl.ScaleModel))
+		pl:SetViewOffset(Vector(0, 0, 64))
+		pl:SetViewOffsetDucked(Vector(0, 0, 32))
 		pl:SetModelScale(1) 
 
 		
@@ -5778,7 +5770,10 @@ function GM:WaveStateChanged(newstate, pl)
 			for _, pl in pairs(humans) do
 				if pl.PlayerReady then -- There's a chance they might not be ready to send their desired cart yet.
 					gamemode.Call("GiveDefaultOrRandomEquipment", pl)
-				end
+				end 
+				pl:SetModelScale(1 * (GAMEMODE.ObjectiveMap and 1 or (pl.ScaleModel or 1))) 
+				pl:SetViewOffset(Vector(0, 0, 64 * (GAMEMODE.ObjectiveMap and 1 or (pl.ScaleModel or 1))))
+				pl:SetViewOffsetDucked(Vector(0, 0, 32 * (GAMEMODE.ObjectiveMap and 1 or (pl.ScaleModel or 1))))
 			end
 
 			-- We should spawn a crate in a random spawn point if no one has any.

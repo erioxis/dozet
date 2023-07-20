@@ -21,13 +21,13 @@ function SWEP:ToDie(damage, numshots, cone)
 		local pushvel = owner:GetEyeTrace().Normal * 0 + (owner:GetAngles():Forward()*4500)
 		owner:SetGroundEntity(nil)
 		owner:SetLocalVelocity( pushvel)
-		self:GetOwner():SetGravity(0.6)
-		self:GetOwner():SetFriction(0.5)
+		owner:SetGravity(0.6)
+		owner:SetFriction(0.5)
 		timer.Simple( 0.25, function() 
-			if self:IsValid() and self:GetOwner():IsValid() and self:GetOwner():IsPlayer() and self:GetOwner():Alive() then 
+			if self:IsValid() and owner:IsValid() and owner:IsPlayer() and owner:Alive() then 
 				owner:SetLocalVelocity(Vector(0,0,0))
-				self:GetOwner():SetGravity(1)
-				self:GetOwner():SetFriction(1)
+				owner:SetGravity(1)
+				owner:SetFriction(1)
 				if owner:IsValid() then
 					util.BlastDamagePlayer(self, owner, owner:GetPos(), 126, 80, DMG_ALWAYSGIB)
 				end
@@ -35,8 +35,8 @@ function SWEP:ToDie(damage, numshots, cone)
 				effectdata:SetOrigin(owner:GetPos())
 				effectdata:SetNormal(self:GetUp() * -1)
 			util.Effect("decal_scorch", effectdata)
-				--self:GetOwner():SetMoveType(MOVETYPE_NONE)
-				--self:GetOwner():SetLocalVelocity(Vector(0,0,0))
+				--owner:SetMoveType(MOVETYPE_NONE)
+				--owner:SetLocalVelocity(Vector(0,0,0))
 				for i=1, 2 do
 					ParticleEffect("dusty_explosion_rockets", owner:GetPos(), angle_zero)
 				end

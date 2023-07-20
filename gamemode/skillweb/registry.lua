@@ -2749,9 +2749,6 @@ GM:SetSkillModifierFunction(SKILLMOD_POISON_SPEED_MUL, function(pl, amount)
 end)
 GM:SetSkillModifierFunction(SKILLMOD_SCALEMODEL, function(pl, amount)
 	pl.ScaleModel = math.Clamp(amount + 1.0 - (pl.ClanMich and 0.25 or 0), 0.06, 1000.0)
-	pl:SetViewOffset(Vector(0, 0, 64 * (GAMEMODE.ObjectiveMap and 1 or (pl.ScaleModel or 1))))
-	pl:SetViewOffsetDucked(Vector(0, 0, 32 * (GAMEMODE.ObjectiveMap and 1 or (pl.ScaleModel or 1))))
-	pl:SetModelScale(1 * (GAMEMODE.ObjectiveMap and 1 or (pl.ScaleModel or 1))) 
 end)
 
 

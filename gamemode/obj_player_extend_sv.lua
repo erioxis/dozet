@@ -203,7 +203,7 @@ function meta:ProcessDamage(dmginfo)
 				attacker:GiveAchievement("opm")
 			end
 
-			if (attacker:IsSkillActive(SKILL_BOUNTYKILLER) or classtable.Boss or classtable.DemiBoss) and classtable.Health >= 260  then
+			if (attacker:IsSkillActive(SKILL_BOUNTYKILLER) or classtable.Boss or classtable.DemiBoss) and classtable.Health >= 50  then
 				local mul = ((attacker:IsSkillActive(SKILL_BOUNTYKILLER) and 0.15 or 0) + (classtable.DemiBoss and 0.05 or classtable.Boss and 0.1 or 0))
 				attacker:SetProgress(attacker:GetProgress('bprog')+(math.min(damage*mul,self:GetMaxHealth()*mul)), 'bprog')
 

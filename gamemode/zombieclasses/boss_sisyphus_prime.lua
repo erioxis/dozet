@@ -35,17 +35,11 @@ CLASS.StepSize = 25
 CLASS.Mass = DEFAULT_MASS * CLASS.ModelScale
 
 local math_random = math.random
+--local math_ceil = math.ceil
 local math_min = math.min
-local math_ceil = math.ceil
-local CurTime = CurTime
-
-local DIR_BACK = DIR_BACK
-local ACT_INVALID = ACT_INVALID
-local ACT_HL2MP_SWIM_PISTOL = ACT_HL2MP_SWIM_PISTOL
-local ACT_HL2MP_IDLE_CROUCH_ZOMBIE = ACT_HL2MP_IDLE_CROUCH_ZOMBIE
-local ACT_HL2MP_WALK_CROUCH_ZOMBIE_01 = ACT_HL2MP_WALK_CROUCH_ZOMBIE_01
-local ACT_HL2MP_RUN_ZOMBIE = ACT_HL2MP_RUN_ZOMBIE
-local ACT_GMOD_GESTURE_TAUNT_ZOMBIE = ACT_GMOD_GESTURE_TAUNT_ZOMBIE
+local math_max = math.max
+local string_format = string.format
+local bit_band = bit.band
 local DMG_BULLET = DMG_BULLET
 local ACT_HL2MP_ZOMBIE_SLUMP_RISE = ACT_HL2MP_ZOMBIE_SLUMP_RISE
 local ACT_HL2MP_SWIM_PISTOL = ACT_HL2MP_SWIM_PISTOL
@@ -100,7 +94,50 @@ end
 
 
 
+function CLASS:CalcMainActivity(pl, velocity)
+	if pl:WaterLevel() >= 3 then
+		return ACT_VM_PICKUP, -1
+	end
 
+	if pl:Crouching() and pl:OnGround() then
+		return ACT_HL2MP_WALK_CROUCH_KNIFE, -1 --ACT_HL2MP_WALK_CROUCH_ZOMBIE_01 - 1 + math_ceil((CurTime() / 4 + pl:EntIndex()) % 3)
+	end
+
+	return ACT_DUCK_DODGE, -1 --ACT_HL2MP_WALK_ZOMBIE_01 - 1 + math_ceil((CurTime() / 4 + pl:EntIndex()) % 3)
+end
+
+function CLASS:UpdateAnimation(pl, velocity, maxseqgroundspeed)
+	local feign = pl.FeignDeath
+	if feign and feign:IsValid() then
+		if feign:GetState() == 1 then
+			pl:SetCycle(1 - math_max(feign:GetStateEndTime() - CurTime(), 0) * 0.666)
+		else
+			pl:SetCycle(math_max(feign:GetStateEndTime() - CurTime(), 0) * 0.666)
+		end
+		pl:SetPlaybackRate(0)
+		return true
+	end
+
+	local len = velocity:Length()
+	if len > 1 then
+		--pl:SetPlaybackRate(math_min(len / maxseqgroundspeed * 0.666, 3))
+		pl:SetPlaybackRate(math_min(len / maxseqgroundspeed, 3))
+	else
+		pl:SetPlaybackRate(1)
+	end
+
+	return true
+end
+
+function CLASS:DoAnimationEvent(pl, event, data)
+	if event == PLAYERANIMEVENT_ATTACK_PRIMARY then
+		pl:DoZombieAttackAnim(data)
+		return ACT_INVALID
+	elseif event == PLAYERANIMEVENT_RELOAD then
+		pl:AnimRestartGesture(GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_GMOD_GESTURE_TAUNT_ZOMBIE, true)
+		return ACT_INVALID
+	end
+end
 if SERVER then
 	function CLASS:ProcessDamage(pl, dmginfo)
 		dmginfo:SetDamage(dmginfo:GetDamage() / 4)
