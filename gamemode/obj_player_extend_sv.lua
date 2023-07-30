@@ -204,7 +204,7 @@ function meta:ProcessDamage(dmginfo)
 			end
 
 			if (attacker:IsSkillActive(SKILL_BOUNTYKILLER) or classtable.Boss or classtable.DemiBoss) and classtable.Health >= 50  then
-				local mul = ((attacker:IsSkillActive(SKILL_BOUNTYKILLER) and 0.15 or 0) + (classtable.DemiBoss and 0.05 or classtable.Boss and 0.1 or 0))
+				local mul = ((attacker:IsSkillActive(SKILL_BOUNTYKILLER) and 0.15 or 0) + (classtable.DemiBoss and 0.25 or classtable.Boss and 0.5 or 0))
 				attacker:SetProgress(attacker:GetProgress('bprog')+(math.min(damage*mul,self:GetMaxHealth()*mul)), 'bprog')
 
 				if attacker:GetProgress('bprog') >= 1500 * (attacker:GetProgress('bprogmul')+1) then
@@ -324,9 +324,6 @@ function meta:ProcessDamage(dmginfo)
 	if !dmgbypass then
 		if self:IsSkillActive(SKILL_BLESSEDROD) and damage >= 30 then
 			damage = damage - 12
-		end
-		if (((self:GetZSRemortLevel() / 4) or 0) + (self.AmuletPiece or 0)) < 0 then
-			damage = damage * 2 + ((self:GetZSRemortLevel() / 4) - (self.AmuletPiece or 0))
 		end
 
 
@@ -846,6 +843,9 @@ function meta:ProcessDamage(dmginfo)
 	end
 	if self:IsSkillActive(SKILL_MOREDAMAGE) and damage > 30 and !dmgbypass then
 		damage = 30
+	end
+	if (((self:GetZSRemortLevel() / 4) or 0) + (self.AmuletPiece or 0)) < 0 then
+		damage = damage * 2 + ((self:GetZSRemortLevel() / 4) - (self.AmuletPiece or 0))
 	end
     if self.HyperCoagulation and math.random(1,2) == 2 then
 		local droped = ents.Create("prop_hp")

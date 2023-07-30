@@ -29,7 +29,7 @@ if not killicon.GetFont then
 		return killicon.GetFont(sClass) or killicon.GetIcon(sClass)
 	end
 
-	function killicon.GetFont(sClass)
+	function killicon.GetFont(sClass) 
 		return storedfonts[sClass]
 	end
 

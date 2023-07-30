@@ -4343,13 +4343,6 @@ function GM:PlayerHurt(victim, attacker, healthremaining, damage)
 				net.WriteString("Blood Transfusion Pack")
 			net.Send(victim)
 		end
-		if healthremaining < victim:GetMaxHealth() * 0.12 and victim:GetBloodArmor() < victim.MaxBloodArmor + 60 and victim:HasTrinket("damage222") then
-			victim:AddPoints(45)
-			victim:TakeInventoryItem("trinket_damage222")
-			net.Start("zs_trinketconsumed")
-			net.WriteString("Lottery ticket")
-		net.Send(victim)
-		end
 	else
 		victim:PlayZombiePainSound()
 	end
@@ -5791,7 +5784,7 @@ function GM:WaveStateChanged(newstate, pl)
 				end
 			end
 			if !removed then
-				for k,v in pairs(player.GetAll()) do
+				for k,v in pairs(team.GetPlayers(TEAM_HUMAN)) do
 					v:AddPoints(120)
 				end
 			end

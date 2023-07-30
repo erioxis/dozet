@@ -38,7 +38,7 @@ function SWEP:ShootBullets(damage, numshots, cone)
 			if owner:IsSkillActive(SKILL_SOMETHING_WRONG) and math.random(1,math.max(1,20-GAMEMODE:GetWave())) == 1 then
 				ent._Think = ent.Think
 				ent.trg = NULL
-				ent.ProjDamage = ent.ProjDamage * 0.75
+				ent.ProjDamage = ent.ProjDamage * 0.9
 				ent.Think = function(selfy)
 					if !ent.trg:IsValid() then
 						local targets = {}
@@ -75,7 +75,7 @@ function SWEP:ShootBullets(damage, numshots, cone)
 
 			if owner:IsSkillActive(SKILL_WHO_AM_I) and math.random(1,math.max(1,12-GAMEMODE:GetWave())) == 1 then
 				ent._OnRemove = ent.OnRemove
-				ent.ProjDamage = ent.ProjDamage * 0.7
+				ent.ProjDamage = ent.ProjDamage * 0.9
 				ent.OnRemove = function()
 					local ent1 = ents.Create(self.Primary.Projectile)
 					if ent1:IsValid() then

@@ -16,9 +16,9 @@ SWEP.ViewModel = "models/weapons/cstrike/c_snip_g3sg1.mdl"
 SWEP.WorldModel = "models/weapons/w_snip_scout.mdl"
 SWEP.UseHands = true
 SWEP.BlockTrue = false
-SWEP.Primary.Damage = 73
+SWEP.Primary.Damage = 53
 SWEP.Primary.NumShots = 1
-SWEP.Primary.Delay = 0.31
+SWEP.Primary.Delay = 0.61
 
 SWEP.Primary.ClipSize = 8
 SWEP.Primary.Automatic = false

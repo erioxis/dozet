@@ -74,6 +74,7 @@ function CLASS:ProcessDamage( pl, dmginfo )
 		elseif bit.band( dmginfo:GetDamageType(), DMG_BURN ) ~= 0 then 
 			dmginfo:SetDamage( 0 )
 		end
+		dmginfo:ScaleDamage(0.25 )
 	end
 	return dmginfo
 end

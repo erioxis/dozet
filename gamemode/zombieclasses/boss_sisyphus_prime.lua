@@ -12,6 +12,7 @@ CLASS.FearPerInstance = 1
 CLASS.CanTaunt = true
 
 CLASS.Hidden = true
+CLASS.Wave = 8 / 12
 CLASS.HealthMax = 750
 
 CLASS.Points = 40
@@ -55,12 +56,9 @@ function CLASS:ScalePlayerDamage(pl, hitgroup, dmginfo)
 end
 if SERVER then
 	function CLASS:OnSpawned(pl)
-		pl:CreateAmbience("minosprime_amb")
-		pl.HealthMax = pl:Health() * 0.5
-		pl.OneTime = true
-		if math.random(1,100) == 20 then
-			timer.Simple(0.5, function() pl:EmitSound("zombiesurvival/mp_intro2.wav") end)
-		end
+		--pl:CreateAmbience("minosprime_amb")
+		pl.NoOneShot = true
+		timer.Simple(20, function() if pl:IsValid() then pl.NoOneShot = false end end)
 	end
 end
 
@@ -93,60 +91,32 @@ function CLASS:PlayerFootstep(pl, vFootPos, iFoot, strSoundName, fVolume, pFilte
 end
 
 
-
-function CLASS:CalcMainActivity(pl, velocity)
-	if pl:WaterLevel() >= 3 then
-		return ACT_VM_PICKUP, -1
-	end
-
-	if pl:Crouching() and pl:OnGround() then
-		return ACT_HL2MP_WALK_CROUCH_KNIFE, -1 --ACT_HL2MP_WALK_CROUCH_ZOMBIE_01 - 1 + math_ceil((CurTime() / 4 + pl:EntIndex()) % 3)
-	end
-
-	return ACT_DUCK_DODGE, -1 --ACT_HL2MP_WALK_ZOMBIE_01 - 1 + math_ceil((CurTime() / 4 + pl:EntIndex()) % 3)
-end
-
-function CLASS:UpdateAnimation(pl, velocity, maxseqgroundspeed)
-	local feign = pl.FeignDeath
-	if feign and feign:IsValid() then
-		if feign:GetState() == 1 then
-			pl:SetCycle(1 - math_max(feign:GetStateEndTime() - CurTime(), 0) * 0.666)
-		else
-			pl:SetCycle(math_max(feign:GetStateEndTime() - CurTime(), 0) * 0.666)
-		end
-		pl:SetPlaybackRate(0)
-		return true
-	end
-
-	local len = velocity:Length()
-	if len > 1 then
-		--pl:SetPlaybackRate(math_min(len / maxseqgroundspeed * 0.666, 3))
-		pl:SetPlaybackRate(math_min(len / maxseqgroundspeed, 3))
-	else
-		pl:SetPlaybackRate(1)
-	end
-
-	return true
-end
-
-function CLASS:DoAnimationEvent(pl, event, data)
-	if event == PLAYERANIMEVENT_ATTACK_PRIMARY then
-		pl:DoZombieAttackAnim(data)
-		return ACT_INVALID
-	elseif event == PLAYERANIMEVENT_RELOAD then
-		pl:AnimRestartGesture(GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_GMOD_GESTURE_TAUNT_ZOMBIE, true)
-		return ACT_INVALID
-	end
-end
 if SERVER then
 	function CLASS:ProcessDamage(pl, dmginfo)
-		dmginfo:SetDamage(dmginfo:GetDamage() / 4)
+		dmginfo:SetDamage(dmginfo:GetDamage())
 		return dmginfo
 	end
 
 	function CLASS:OnKilled(pl, attacker, inflictor, suicide, headshot, dmginfo)
 		local fakedeath = pl:FakeDeath(234, self.ModelScale)
+		if pl.NoOneShot then
+			local pos = pl:GetPos()
+			if attacker and attacker:IsValid() and attacker ~= pl then
+				attacker:TakeDamage(5000,pl,pl:GetActiveWeapon())
+				attacker:Kill()
+				timer.Simple(0.5, function() attacker:TakeDamage(5000,pl,pl:GetActiveWeapon()) attacker:Kill()  end)
+			end
+			timer.Simple(0.5, function()
+			
+				pl:SetZombieClass(GAMEMODE.ZombieClasses["Sisyphis Prime"].Index)
+				pl:DoHulls(GAMEMODE.ZombieClasses["Sisyphis Prime"].Index, TEAM_UNDEAD)
+				pl:EmitSound(Sound("zombiesurvival/sp_nicetry"..(math.random(1,2) == 2 and 2 or "")..".wav"))
+				pl.DeathClass = nil
+				pl:UnSpectateAndSpawn()
+				pl:SetPos(pos)
+			end)
 
+		end
 		return true
 	end
 end

@@ -35,7 +35,7 @@ function ENT:Think()
 
 		local phys = self:GetPhysicsObject()
 		phys:SetVelocityInstantaneous(direction * 440)
-		trg:TakeSpecialDamage(self.ProjDamage*0.05,DMG_GENERIC ,self:GetOwner(), self)
+		--trg:TakeSpecialDamage(self.ProjDamage*0.05,DMG_GENERIC ,self:GetOwner(), self)
 	end
 
 end

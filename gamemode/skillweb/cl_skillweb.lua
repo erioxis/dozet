@@ -1473,9 +1473,20 @@ function PANEL:OnMousePressed(mc)
 	
 					return
 				end
-				if MySelf:GetZSSPRemaining() >= 1 then
-					if GAMEMODE.OneClickSkill  then UnlockSkill(self, hoveredskill) return end
-					contextmenu.Button:SetText("Unlock")
+				if MySelf:GetZSSPRemaining() >= (GAMEMODE.Skills[hoveredskill].SPUse or 1) or GAMEMODE.Skills[hoveredskill].Amulet then
+				    if GAMEMODE.Skills[hoveredskill].HiddenU and math.random(20) == 20 then
+						if GAMEMODE.OneClickSkill then UnlockSkill(self, hoveredskill) return end
+						contextmenu.Button:SetText("Unlock")
+					elseif not GAMEMODE.Skills[hoveredskill].HiddenU then
+						if GAMEMODE.OneClickSkill then UnlockSkill(self, hoveredskill) return end
+						contextmenu.Button:SetText("Unlock")
+					if GAMEMODE.Skills[hoveredskill].Amulet and (MySelf:GetZSRemortLevel() / 4 > MySelf.AmuletPiece or MySelf:GetZSRemortLevel() == 0) then
+						self:DisplayMessage("You take x2 damage if don't have enought amulet cells!", COLOR_RED)
+							surface.PlaySound("buttons/button8.wav")
+						end
+					else
+					    return
+					end
 				else
 					self:DisplayMessage("You need SP to unlock this skill!", COLOR_RED)
 					surface.PlaySound("buttons/button8.wav")

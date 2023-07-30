@@ -88,7 +88,7 @@ function SWEP:PrimaryAttack(right, sec)
 	vm:SendViewModelMatchingSequence( vm:LookupSequence( anim ) )
 
 	self:EmitSound( self.SwingSound )
-	owner:EmitSound( (sec and Sound("zombiesurvival/sp_destroy"..(math.random(1,2) == 2 and 2 or "")..".wav") or Sound("zombiesurvival/sp_nicetry"..(math.random(1,2) == 2 and 2 or "")..".wav")))
+	owner:EmitSound(Sound("zombiesurvival/sp_destroy"..(math.random(1,2) == 2 and 2 or "")..".wav"))
 
 	self:UpdateNextIdle()
 
