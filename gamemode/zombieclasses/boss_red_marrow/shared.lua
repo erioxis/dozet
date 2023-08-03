@@ -20,7 +20,7 @@ CLASS.VoicePitch = 0.65
 CLASS.SWEP = "weapon_zs_redmarrow"
 
 CLASS.Health = 2200
-CLASS.Speed = 165
+CLASS.Speed = 215
 
 CLASS.Skeletal = true
 
@@ -116,7 +116,7 @@ function CLASS:ProcessDamage(pl, dmginfo)
 	end
 
 
-	local numthreshold = math_Clamp(math_ceil(hp / 250), 1, 15)
+	local numthreshold = math_Clamp(math_ceil(hp / 250), 1, 5)
 	local dmgthreshold = math_Clamp(numthreshold * 250 - 100, 1, 4500)
 
 	local newhp = hp - dmg
@@ -134,7 +134,7 @@ function CLASS:ProcessDamage(pl, dmginfo)
 	if newhp <= dmgthreshold and pl["bloodth"..numthreshold] then
 		pl["bloodth"..numthreshold] = false
 		dmginfo:SetDamage(dmg - nulldmg)
-		pl:GiveStatus("redmarrow", 2 + (GAMEMODE:GetWave()*0.6))
+		pl:GiveStatus("redmarrow", 2 + (GAMEMODE:GetWave()*0.5))
 		for _, ent in pairs(ents.FindInSphere(pl:GetPos(), 438)) do
 			if ent:IsValidLivingZombie() and pl ~= ent then
 				ent:SetZArmor(ent:GetZArmor() + (pl:Health()/10) * (GAMEMODE:GetWave() /4))

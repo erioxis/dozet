@@ -22,6 +22,7 @@ INC_CLIENT()
 		["base2+"] = { type = "Model", model = "models/props_phx/construct/metal_angle180.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "base", pos = Vector(0, 15.064, -1), angle = Angle(0, 180, 0), size = Vector(0.2, 0.2, 0.5), color = Color(255, 255, 255, 255), surpresslightning = false, material = "models/props_c17/chairchrome01", skin = 0, bodygroup = {} }
 	}
 
+	SWEP.ArchiveV = SWEP.VElements
 	function SWEP:DrawWeaponSelection(x, y, w, h, alpha)
 		self:BaseDrawWeaponSelection(x, y, w, h, alpha)
 	end
@@ -32,14 +33,16 @@ INC_CLIENT()
 		local x, y = ScrW() - wid - 32, ScrH() - hei - 72
 		local texty = y - 4 - draw.GetFontHeight("ZSHUDFontSmall")
 
-		defleft = (self:GetPerc() or 0)
+		local defleft = !self:GetDTBool(6) and (self:GetPerc() or 0) or math.Round(self:GetDTFloat(11)-CurTime())
 			surface.SetDrawColor(5, 5, 115, 180)
 		surface.DrawRect(x, y, wid, hei)
-	if self.GodMode then
+	if self:GetDTBool(6) then
 
-		surface.SetDrawColor(math.random(0,255), math.random(0,55), math.random(0,155), 180)
+		surface.SetDrawColor(61, 230, 49, 180)
 		surface.SetTexture(surface.GetTextureID("VGUI/gradient_down"))
-		surface.DrawTexturedRect(x, y, math.min(defleft * 0.1,1) * wid, hei)
+		surface.DrawTexturedRect(x, y, math.min((self:GetDTFloat(11)-CurTime()) * 0.1,1) * wid, hei)
+		draw.SimpleText("GOD!", "ZSHUDFontSmall", x, texty-32, COLOR_GREEN, TEXT_ALIGN_LEFT)
+		
 	else
 		surface.SetDrawColor(250, 55, 0, 180)
 		surface.SetTexture(surface.GetTextureID("VGUI/gradient_down"))
@@ -50,8 +53,28 @@ INC_CLIENT()
 			surface.DrawOutlinedRect(x, y, wid, hei)
 	
 		draw.SimpleText(math.min(10,defleft), "ZSHUDFontSmall", x, texty, COLOR_GREEN, TEXT_ALIGN_LEFT)
+		if defleft >= 10 then
+			local binded = input.LookupBinding("+menu")
+			draw.SimpleText((binded or translate.Format("no_find_x_bind","+menu")), "ZSHUDFontSmall", x+384/2-(binded and 0 or 170), y-24-(binded and 0 or 100), COLOR_GREEN, TEXT_ALIGN_CENTER)
+		end
 		if GetConVar("crosshair"):GetInt() == 1 then
 			self:DrawCrosshairDot()
 		end
 	end
-
+	function SWEP:PostDrawViewModel(vm, pl, wep)
+		if  self:GetDTBool(6) then
+			local bruh = 3
+			local veles = self.VElements
+			for k,v in pairs(self.VElements) do
+					local clr = Color(veles[k].color.r *bruh,veles[k].color.g * bruh,veles[k].color.b *bruh)
+					veles[k].color = clr
+			end
+		else
+			local veles = self.VElements
+			local archive = self.ArchiveV
+			for k,v in pairs(self.VElements) do
+					local clr = archive[k].color
+					veles[k].color = clr
+			end
+		end
+	end

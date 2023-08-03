@@ -323,7 +323,7 @@ GM:AddInventoryItemData("cons_soul_picka",		trs("c_soul_picka"),			trs("c_soul_p
 	end
 	pl.SeededSouls = need
 	net.Start("zs_upgradeitem")
-	net.WriteTable(need)
+		net.WriteTable(need)
 	net.Send(pl)
 end,0)
 GM:AddInventoryItemData("cons_wildcard",		trs("c_wildcard"),			trs("c_wildcard_d"),								"models/props_c17/trappropeller_lever.mdl", 4, nil, nil, function(pl) 
@@ -1779,7 +1779,7 @@ GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, 20)
 
 
 GM:AddSkillModifier(GM:AddTrinket(trs("t_headshoter"), "headshoter", false, supveles, supweles, 2, trs("t_d_headshoter"), nil, nil, "weapon_zs_help_trinket"), SKILLMOD_HEADSHOT_MUL, 0.3)
-GM:AddSkillModifier(GM:AddTrinket(trs("t_pearl"), "pearl", false, supveles, supweles, 3, trs("t_d_pearl"), nil, nil, "weapon_zs_help_trinket"), SKILLMOD_ADD_STATUS, 0.09)
+GM:AddSkillModifier(GM:AddTrinket(trs("t_pearl"), "pearl", false, supveles, supweles, 3, trs("t_d_pearl"), nil, nil, "weapon_zs_help_trinket"), SKILLMOD_BUFF_TIME, 0.1)
 GM:AddTrinket(trs("t_broken_world"), "broken_world", false, supveles, supweles, 3, trs("t_d_broken_world"), nil, nil, "weapon_zs_help_trinket")
 GM:AddSkillModifier(GM:AddTrinket(trs("t_ind_buffer"), "ind_buffer", false, {
 	["base"] = { type = "Model", model = "models/props_junk/glassjug01.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3.381, 2.617, 2.062), angle = Angle(180, 12.243, 0), size = Vector(0.6, 0.6, 0.6), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
@@ -2168,9 +2168,12 @@ trinket, soul = GM:AddTrinket("Soul of Alt Eve", "altevesoul", false, nil, {
 	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 10.697, y = 10.697 }, color = Color(0, 0, 0, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core_2+"] = { type = "Sprite", sprite = "effects/splashwake1", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 30, y = 30 }, color = Color(0, 0, 0, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 2, 0), angle = Angle(0, 0, 0), size = Vector(0.349, 0.349, 0.349), color = Color(0, 0, 0, 255), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} }
-}, 4,"Дополнительный выстрел для всего(КРОМЕ СНАРЯДОВ),+15% к задержке выстрелов.\nAdditional bullet for ricochets or shoots,+15% fire delay\n Q:4", nil, nil, "weapon_zs_soulalt")
-GM:AddSkillModifier(trinket, SKILLMOD_FIRE_DELAY, 0.15)
+}, 4,"Удваивает кол-во выстрелов,+34% к задержке выстрелов.\nDouble bullets for ricochets or shoots,+15% fire delay\n Q:4", nil, nil, "weapon_zs_soulalt")
+GM:AddSkillModifier(trinket, SKILLMOD_FIRE_DELAY, 0.34)
 GM:AddSkillModifier(trinket, SKILLMOD_AIMSPREAD_MUL, 0.50)
+GM:AddSkillFunction(trinket, function(pl, active)
+	pl.AltEve = active
+end)
 
 trinket, soul = GM:AddTrinket("Soul of Jacob", "jacobsoul", false, nil, {
 	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 10.697, y = 10.697 }, color = Color(255, 0, 0, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},

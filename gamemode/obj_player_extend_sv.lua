@@ -66,50 +66,77 @@ function meta:ProcessDamage(dmginfo)
 			dmgbypass = true
 		end
 		local damage = dmginfo:GetDamage()
-		if self:GetChampion() == CHAMP_ETERNAL and !dmgbypass then
-			damage = damage * 0.5
-			if math.random(1,4) == 4 then
-				if attacker:IsPlayer() then
-					GAMEMODE:BlockFloater(attacker, self, dmginfo:GetDamagePosition())
-				end
-				net.Start("zs_damageblock")
-				net.Send(self)
-				dmginfo:SetDamage(0)
-				return true
-			end
-		end
 		if self.SpawnProtection then
 			dmginfo:SetDamage(1)
 			dmginfo:ScaleDamage(0.1)
 			dmginfo:SetDamageForce(vector_origin)
 			return 
 		end
-		if self.m_Evo and math.random(3) == 1  and !dmgbypass then
-			if attacker:IsPlayer() then
-				GAMEMODE:BlockFloater(attacker, self, dmginfo:GetDamagePosition())
-			end
-			dmginfo:SetDamage(0)
-			net.Start("zs_damageblock")
-			net.Send(self)
-			return true
-		end
+		local mxap = self:GetMaxHealth()
 		if !dmgbypass then
+			if self:GetChampion() == CHAMP_ETERNAL then
+				damage = damage * 0.5
+				if math.random(1,4) == 4 then
+					if attacker:IsPlayer() then
+						GAMEMODE:BlockFloater(attacker, self, dmginfo:GetDamagePosition())
+					end
+					net.Start("zs_damageblock")
+					net.Send(self)
+					dmginfo:SetDamage(0)
+					return true
+				end
+			end
+			if self.m_Evo and math.random(3) == 1 then
+				if attacker:IsPlayer() then
+					GAMEMODE:BlockFloater(attacker, self, dmginfo:GetDamagePosition())
+				end
+				dmginfo:SetDamage(0)
+				net.Start("zs_damageblock")
+				net.Send(self)
+				return true
+			end
 			damage = damage  * (1 - (math.Clamp(GAMEMODE:GetBalance() * 0.01,-2.5,0.65)))
-		end
-		if self.m_zombiedef and !dmgbypass then
-			damage = damage * 0.75
-		end
-		if self.m_Zombie_Bara1 and !dmgbypass  then
-			damage = damage  * 1.5
+			if self.m_zombiedef then
+				damage = damage * 0.75
+			end
+			if self.m_Zombie_Bara1  then
+				damage = damage  * 1.5
+			end
+	
+			if self.m_Zmain  then
+				damage = damage *2
+			end
+			if self ~= attacker and not corrosion then
+				damage = damage  * GAMEMODE:GetZombieDamageScale(dmginfo:GetDamagePosition(), self)
+			end
+			if self:GetZArmor() > 0 and mxap >= 150  then
+				
+				if damage > 0 then
+					local armor = self:GetZArmor()
+					local ratio = 1
+					local absorb = math.min(armor, damage * ratio)
+					damage = damage - absorb
+					self:SetZArmor(armor - absorb)
+					self.BloodDead = absorb
+					if attacker:IsPlayer() then
+						local points = damage / mxap * classtable.Points
+						if POINTSMULTIPLIER then
+							points = points * POINTSMULTIPLIER
+						end
+						if self.PointsMultiplier then
+							points = points * self.PointsMultiplier
+						end
+						attacker.PointQueue = attacker.PointQueue + points/15
+						GAMEMODE:DamageFloater(attacker, self, dmginfo:GetDamagePosition() - Vector(0,0,-5), absorb, true)
+					end
+					if damage > 20 and damage - absorb <= 0 then
+						self:EmitSound("physics/flesh/flesh_strider_impact_bullet3.wav", 55)
+					end
+				end
+			end
 		end
 
-		if self.m_Zmain and !dmgbypass then
-			damage = damage *2
-		end
 		local corrosion = self.Corrosion and self.Corrosion + 2 > time
-		if self ~= attacker and not corrosion and not dmgbypass then
-			damage = damage  * GAMEMODE:GetZombieDamageScale(dmginfo:GetDamagePosition(), self)
-		end
 		--[[if attacker:IsValidLivingHuman() and inflictor == attacker:GetActiveWeapon() and inflictor.Tier <= 4 then
             dmginfo:ScaleDamage(0.65)
 			if dmginfo:GetDamage() > self:Health() * 1.2 then
@@ -118,32 +145,6 @@ function meta:ProcessDamage(dmginfo)
 		end]]
 
 		self.ShouldFlinch = true
-		local mxap = self:GetMaxHealth()
-		if self:GetZArmor() > 0 and mxap >= 150 and !dmgbypass  then
-			
-			if damage > 0 then
-				local armor = self:GetZArmor()
-				local ratio = 1
-				local absorb = math.min(armor, damage * ratio)
-				damage = damage - absorb
-				self:SetZArmor(armor - absorb)
-				self.BloodDead = absorb
-				if attacker:IsPlayer() then
-					local points = damage / mxap * classtable.Points
-					if POINTSMULTIPLIER then
-						points = points * POINTSMULTIPLIER
-					end
-					if self.PointsMultiplier then
-						points = points * self.PointsMultiplier
-					end
-					attacker.PointQueue = attacker.PointQueue + points/15
-					GAMEMODE:DamageFloater(attacker, self, dmginfo:GetDamagePosition() - Vector(0,0,-5), absorb, true)
-				end
-				if damage > 20 and damage - absorb <= 0 then
-					self:EmitSound("physics/flesh/flesh_strider_impact_bullet3.wav", 55)
-				end
-			end
-		end
 		if attacker.DamageAll then
 			damage = damage * attacker.DamageAll
 		end
@@ -204,13 +205,13 @@ function meta:ProcessDamage(dmginfo)
 			end
 
 			if (attacker:IsSkillActive(SKILL_BOUNTYKILLER) or classtable.Boss or classtable.DemiBoss) and classtable.Health >= 50  then
-				local mul = ((attacker:IsSkillActive(SKILL_BOUNTYKILLER) and 0.15 or 0) + (classtable.DemiBoss and 0.25 or classtable.Boss and 0.5 or 0))
+				local mul = ((attacker:IsSkillActive(SKILL_BOUNTYKILLER) and 0.15 or 0) + (classtable.DemiBoss and 0.15 or classtable.Boss and 0.4 or 0))
 				attacker:SetProgress(attacker:GetProgress('bprog')+(math.min(damage*mul,self:GetMaxHealth()*mul)), 'bprog')
 
-				if attacker:GetProgress('bprog') >= 1500 * (attacker:GetProgress('bprogmul')+1) then
+				if attacker:GetProgress('bprog') >= 2500 * (attacker:GetProgress('bprogmul')+1) then
 					attacker.GetBounty = true
 					attacker:SetProgress(0, 'bprog')
-					attacker:SetProgress(attacker:GetProgress('bprogmul')+1,'bprogmul') 
+					attacker:SetProgress(attacker:GetProgress('bprogmul')+1.6,'bprogmul') 
 					attacker:AddInventoryItem("cons_bounty")
 					net.Start("zs_invitem")
 					net.WriteString("cons_bounty")
@@ -421,18 +422,18 @@ function meta:ProcessDamage(dmginfo)
 		end
 		if self:IsSkillActive(SKILL_TRUEBLOCK) and mywep.ParryTiming then 
 			damage = damage * 0.25
-			self:EmitSound("npc/strider/fire.wav", 120, 40)
-			self:UpdateStyle({time = time+4+(math.random(1,20)*0.1),text = "PARRY!", Color(241,221,36),score = 15})
+			self:SendLua("self:EmitSound('npc/strider/fire.wav', 120, 40)")
+			--self:UpdateStyle({time = time+4+(math.random(1,20)*0.1),text = "PARRY!", Color(241,221,36),score = 15})
 				self:AddStamina(15)
 			if attacker.IdealHit then
 				attacker:TakeSpecialDamage(1000,DMG_DIRECT,self,mywep)
 				self:GiveAchievementProgress("ideal_p",1)
-				self:UpdateStyle({time = time+4+(math.random(1,20)*0.1),text = "IDEAL PARRY!",Color(169,139,253),score = 50})
+			--	self:UpdateStyle({time = time+4+(math.random(1,20)*0.1),text = "IDEAL PARRY!",Color(169,139,253),score = 50})
 				self:AddStamina(50)
 			end
 			GAMEMODE:BlockFloater(attacker, self, dmginfo:GetDamagePosition(),2)
 	    elseif self:IsSkillActive(SKILL_TRUEBLOCK) and not mywep.ParryTiming then
-			self:EmitSound("npc/turret_floor/active.wav", 120, 40)
+			self:SendLua("LocalPlayer():EmitSound('npc/turret_floor/active.wav', 120, 40)")
 			self:AddStamina(-6)
 		end
 	end
@@ -619,7 +620,7 @@ function meta:ProcessDamage(dmginfo)
 					self.LastReactiveFlash = time
 					self.ReactiveFlashMessage = nil
 				elseif
-				self:HasTrinket("bleaksoul") and (not self.LastBleakSoul or self.LastBleakSoul + 15 < time) then
+						self:HasTrinket("bleaksoul") and (not self.LastBleakSoul or self.LastBleakSoul + 15 < time) then
 					attacker:GiveStatus("dimvision", 7)
 					attacker:SetGroundEntity(nil)
 					attacker:SetLocalVelocity((attacker:GetPos() - self:GetPos()):GetNormalized() * 450 + Vector(0, 0, 140))
@@ -862,7 +863,7 @@ function meta:ProcessDamage(dmginfo)
 	end
 	if self.Purgatory and (self.NextPRG or 1) <= time and (damage >= 4 or (takedbl or 1) >= 10) and !self:IsSkillActive(SKILL_GIER_II) then
 		self.NextPRG = time + 0.3
-		self:GiveStatus("portal",1)
+		--self:GiveStatus("portal",1)
 		for i=1,3 do
 			local droped = ents.Create("projectile_purgatory_soul")
 			droped:SetPos(self:GetPos()+Vector(0,0,30*i))

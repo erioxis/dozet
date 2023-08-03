@@ -1940,6 +1940,13 @@ function GM:PlayerBindPress(pl, bind, wasin)
         end
     elseif bind == "gm_showspare2" then
         MakepOptions()
+	elseif bind == "+menu" then
+		local wep =  pl:GetActiveWeapon()
+		if wep and wep.HaveAbility then
+        	net.Start("zs_ability_weapon")
+			net.WriteEntity(wep)
+			net.SendToServer()
+		end
     end
 end
 

@@ -96,14 +96,18 @@ end
 function math.randomr(min, max, need, pl, chances)
 	local ch = chances
 	local rand = min
+	local best = min
 	if pl then ch = math.Round(math.max(((pl.Luck or 1)/(pl:IsSkillActive(SKILL_BLUCK) and 3 or 5) or 1),1)) end
 	for i=1,ch do
 		local random = math.random(min,max)
+		if random > best then
+			best = random
+		end
 		if random == need then
 			rand = need
 			break
 		else
-			rand = random
+			rand = best
 		end
 	end
 
@@ -112,13 +116,17 @@ end
 function math.unrandom(min, max, need, inv, chances)
 	local ch = chances or 1
 	local rand = min
+	local best = min
 	for i=1,ch do
 		local random = math.random(min,max)
+		if random > best then
+			best = random
+		end
 		if not inv and random >= need or random <= need then
 			rand = random
 			break
 		else
-			rand = random
+			rand = best
 		end
 	end
 

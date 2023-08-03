@@ -43,7 +43,7 @@ function ENT:GiveToActivator(activator, caller)
 
 		return
 	end
-	if activator:IsSkillActive(SKILL_SAMODOS) and not activator:HasTrinket("toysoul") and self:GetOwner() ~= activator then activator:CenterNotify(COLOR_RED, translate.ClientGet(activator, "samodos")) return end
+	if activator:IsSkillActive(SKILL_SAMODOS) and self:GetOwner() ~= activator then activator:CenterNotify(COLOR_RED, translate.ClientGet(activator, "samodos")) return end
 	if self:GetOwner() and self:GetOwner():IsValid() and self:GetOwner():IsPlayer() and self:GetOwner():IsSkillActive(SKILL_SAMODOS) and self:GetOwner() ~= activator then activator:CenterNotify(COLOR_RED, translate.ClientGet(activator, "samodosa")) return end
 
 	local itype = self:GetInventoryItemType()
@@ -52,11 +52,6 @@ function ENT:GiveToActivator(activator, caller)
 	end
 
 	local itypecat = GAMEMODE:GetInventoryItemType(itype)
-	local d = string.Explode(" " ,string.lower(GAMEMODE.ZSInventoryItemData[itype].PrintName))
-	if activator:IsSkillActive(SKILL_SOUL_TRADE) and table.HasValue(d, "soul") and not activator:HasTrinket("toysoul") and not activator:SteamID64() == "76561198813932012" then
-		activator:Kill()
-		return
-	end
 	if activator:GetZSRemortLevel() <= 4 and string.sub(itype, 1,11) == "trinket_sin" then
 		activator:CenterNotify(COLOR_RED, translate.ClientGet(activator, "samodosa"))
 		return

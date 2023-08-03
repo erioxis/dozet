@@ -109,10 +109,14 @@ function meta:FireBulletsLua(src, dir, spread, num, damage, attacker, force_mul,
 
 	base_ang = dir:Angle()
 	temp_has_spread = spread > 0
-
+	if attacker.AltEve then
+		num = num * 2
+	end
 	if SERVER and num > 1 and attacker_player then attacker:StartDamageNumberSession() end
 
-	for i=0, num - (attacker_player and attacker:HasTrinket("altevesoul") and 0 or 1) do
+
+
+	for i=1, num do
 		if temp_has_spread then
 			temp_angle:Set(base_ang)
 			temp_angle:RotateAroundAxis(
@@ -129,7 +133,9 @@ function meta:FireBulletsLua(src, dir, spread, num, damage, attacker, force_mul,
 
 		bullet_trace.endpos = src + dir * max_distance
 		bullet_tr = method_to_use(bullet_trace)
-		--print(bullet_tr.HitGroup)
+		--print(bullet_tr.HitTexture)
+		--self:SetMaterial(bullet_tr.HitTexture)
+		--surface.SetTexture(surface.GetTextureID(bullet_tr.HitTexture))
 		CheckFHB(bullet_tr)
 
 		local hitwater

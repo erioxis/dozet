@@ -88,7 +88,7 @@ function ENT:Hit(vHitPos, vHitNormal, ent)
 				self.Exploded = true
 
 
-				ent:TakeSpecialDamage((math.random(12) == 12 and 69 or 23), DMG_GENERIC, owner, self)
+				ent:TakeSpecialDamage((math.random(12) == 12 and 69 or 23), (math.random(3) == 3 and DMG_DIRECT or DMG_GENERIC), owner, self)
 				ent:KnockDown()
 				ent:SetVelocity(Vector(0,0,350))
 				if !ent:GetActiveWeapon().ResistDamage then

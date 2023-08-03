@@ -1382,17 +1382,13 @@ function GM:Think()
 				end
 				if (pl.NextThinkAboutTrade or 1) < time and pl:IsSkillActive(SKILL_SOUL_TRADE) then
 					pl.NextThinkAboutTrade = time + 10
-					local kill = false 
 					for k,v in pairs(pl:GetInventoryItems()) do
 						if pl:HasTrinket("toysoul") or pl:SteamID64() == "76561198813932012" then break end
 						if table.HasValue(trade_da,k) then
-							kill = true
+							pl:Kill()
 							break
 						end
 						--print(k)
-					end
-					if kill then
-						pl:Kill()
 					end
 				end
 				pl.AntiFarmTimer = pl.AntiFarmTimer + 1
@@ -1590,7 +1586,9 @@ function GM:Think()
 					end
 				end
 
-
+				if pl.StaminaHAHA and (pl.StaminaUsed or 0) <= CurTime() then
+					pl:AddStamina(16)
+				end
 		
 
 
@@ -1711,23 +1709,23 @@ function GM:Think()
 			end
 		end
 	end
-	if NextTick1 <= time then
-		NextTick1 = time + 0.05
+--	if NextTick1 <= time then
+	--	NextTick1 = time + 0.05
 
 
-		for _, pl in pairs(allplayers) do
-			if P_Team(pl) == TEAM_HUMAN and P_Alive(pl) then
-				if pl.StaminaHAHA and (pl.StaminaUsed or 0) <= CurTime() then
-					pl:AddStamina(0.1)
-				end
+	--	for _, pl in pairs(allplayers) do
+	--		if P_Team(pl) == TEAM_HUMAN and P_Alive(pl) then
+		--		if pl.StaminaHAHA and (pl.StaminaUsed or 0) <= CurTime() then
+				--	pl:AddStamina(0.1)
+		--		end
 				--if pl:KeyDown(IN_DUCK) then
 				--	pl:SetNW2Float("b_man",pl:GetNW2Float("b_man")+0.05)
 				--else
 					--pl:SetNW2Float("b_man",math.max(0,pl:GetNW2Float("b_man",0)-0.1))
 				--end
-			end
-		end
-	end
+		--	end
+		--end
+	--end
 end
 local function DoDropStart(pl)	
 	if !pl:IsValid() then return end
@@ -2735,6 +2733,13 @@ hook.Add("PlayerSay", "ForBots", function(ply, text)
 		return false
 	end
 	if not ply:IsBot() and string.len(text) <= 45 then
+		for k,v in pairs(playerInput) do
+			--print(v)
+			if string.find(v,"!") or v == "^" then
+				playerInput[k] = nil
+				--PrintTable(playerInput)
+			end
+		end
 		table.insert( GAMEMODE.Da, (#GAMEMODE.Da or 0) + 1 ,playerInput[math.random(1, #playerInput)] )
    		--table.Add(GAMEMODE.Da, playerInput)
 	end
@@ -4419,18 +4424,35 @@ function GM:KeyPress(pl, key)
 					end
 					pl:ResetSpeed()
 				end
+				if not pl:IsCarrying() and pl.NextDash <= CurTime() and (pl.ClanAvanguard or pl:IsSkillActive(SKILL_GIER_II)) and !pl:GetBarricadeGhosting() then
+					if pl:IsSkillActive(SKILL_GIER_II) and pl:IsSkillActive(SKILL_STAMINA) and pl:GetStamina() <= 33 then return end
+						local pos = pl:GetPos()
+						local pushvel = pl:GetEyeTrace().Normal * 0 + (pl:GetAngles():Forward()*(pl:OnGround() and 1600 or 500))
+						pl:SetVelocity(pushvel)
+						pl.NextDash = CurTime() + 4 - (pl.ClanAvanguard and pl:IsSkillActive(SKILL_GIER_II) and 2 or 0)
+						if pl:IsSkillActive(SKILL_GIER_II) and !pl:IsSkillActive(SKILL_STAMINA) then
+							pl.Gear2_Used = CurTime() + 2
+							pl:ResetSpeed()
+							timer.Simple(2.2, function() pl:ResetSpeed() end)
+						elseif  pl:IsSkillActive(SKILL_GIER_II) and pl:IsSkillActive(SKILL_STAMINA) then
+							pl:AddStamina(-33)
+						end
+						if pl.Purgatory and (pl.NextPRG or 1) <= CurTime() and pl:IsSkillActive(SKILL_GIER_II) then
+							pl.NextPRG = CurTime() + 5
+							local droped = ents.Create("projectile_purgatory_soul")
+							if droped:IsValid() then
+								droped:SetPos(pl:GetPos()+Vector(0,0,100))
+								droped:Spawn()
+								timer.Simple(0, function() droped.TimeToDash = CurTime() + 2.5 end)
+								droped.DamageToDeal = 150
+								droped:SetOwner(pl)
+							end
+						end
+				end 
 			elseif pl:Team() == TEAM_UNDEAD then
 				pl:CallZombieFunction0("AltUse")
 			end
 		end
-		local wep = pl:GetActiveWeapon()
-			if wep.CanDefend and wep:GetPerc() >= 10 then
-				wep:SetPerc(0)
-				pl:GodEnable()
-				wep.GodMode = true
-				timer.Simple(4, function() pl:GodDisable() wep.GodMode = false end)
-			end
-
 	elseif key == IN_ZOOM then
 		if pl:Team() == TEAM_HUMAN and pl:Alive() and not self.ZombieEscape then
 			if pl:IsOnGround() or pl:GetMoveType() == MOVETYPE_LADDER then
@@ -4459,31 +4481,6 @@ function GM:KeyPress(pl, key)
 		end
 
 	end
-	if pl:KeyPressed(IN_SPEED) and key == IN_SPEED and not pl:IsCarrying() and pl:Team() ~= TEAM_UNDEAD and pl.NextDash <= CurTime() and (pl.ClanAvanguard or pl:IsSkillActive(SKILL_GIER_II)) and !pl:GetBarricadeGhosting() then
-		if pl:IsSkillActive(SKILL_GIER_II) and pl:IsSkillActive(SKILL_STAMINA) and pl:GetStamina() <= 33 then return end
-			local pos = pl:GetPos()
-			local pushvel = pl:GetEyeTrace().Normal * 0 + (pl:GetAngles():Forward()*(pl:OnGround() and 1600 or 500))
-			pl:SetVelocity(pushvel)
-			pl.NextDash = CurTime() + 4 - (pl.ClanAvanguard and pl:IsSkillActive(SKILL_GIER_II) and 2 or 0)
-			if pl:IsSkillActive(SKILL_GIER_II) and !pl:IsSkillActive(SKILL_STAMINA) then
-				pl.Gear2_Used = CurTime() + 2
-				pl:ResetSpeed()
-				timer.Simple(2.2, function() pl:ResetSpeed() end)
-			elseif  pl:IsSkillActive(SKILL_GIER_II) and pl:IsSkillActive(SKILL_STAMINA) then
-				pl:AddStamina(-33)
-			end
-			if pl.Purgatory and (pl.NextPRG or 1) <= CurTime() and pl:IsSkillActive(SKILL_GIER_II) then
-				pl.NextPRG = CurTime() + 5
-				local droped = ents.Create("projectile_purgatory_soul")
-				if droped:IsValid() then
-					droped:SetPos(pl:GetPos()+Vector(0,0,100))
-					droped:Spawn()
-					timer.Simple(0, function() droped.TimeToDash = CurTime() + 2.5 end)
-					droped.DamageToDeal = 150
-					droped:SetOwner(pl)
-				end
-			end
-	end 
 	if key == IN_SPEED and pl:Team() == TEAM_HUMAN and pl:KeyDown(IN_USE) then 
 		for _, ent in pairs(ents.FindInSphere(pl:GetPos(), 26)) do
 			if ent:IsPlayer() and ent:GetZombieClassTable().CrowDa then
@@ -4921,9 +4918,6 @@ function GM:DoPlayerDeath(pl, attacker, dmginfo)
 
 	local inflictor = dmginfo:GetInflictor()
 	local plteam = pl:Team()
-	if plteam == TEAM_HUMAN and self:GetWave() <= 4 and pl:GetZSRemortLevel() >= 4 then
-		--pl.Zmainer = true
-	end
 	local ct = CurTime()
 	local suicide = attacker == pl or attacker:IsWorld()
 
@@ -4956,81 +4950,83 @@ function GM:DoPlayerDeath(pl, attacker, dmginfo)
 			effectdata:SetEntity(pl)
 		util.Effect("headshot", effectdata, true, true)
 	end
-	local champ = pl:GetChampion()
-	local pos = pl:LocalToWorld(pl:OBBCenter())
-	if champ == CHAMP_BLUE then
-		local effectdata = EffectData()
-			effectdata:SetOrigin(pos)
-		util.Effect("explosion_chem", effectdata, true)
-	
-		if BLUE_BOMB:IsValid() then
-			BLUE_BOMB:SetPos(pos)
-		end
-		util.PoisonBlastDamage(BLUE_BOMB, pl, pos, 222, 65, true)
+	if pl:IsChampion() then
+		local champ = pl:GetChampion()
+		local pos = pl:LocalToWorld(pl:OBBCenter())
+		if champ == CHAMP_BLUE then
+			local effectdata = EffectData()
+					effectdata:SetOrigin(pos)
+				util.Effect("explosion_chem", effectdata, true)
 		
-		pl:CheckRedeem()
-		if math.random(1,3) == 1 then
-			local d = ents.Create("prop_hp")
-			if d:IsValid() then
+			if BLUE_BOMB:IsValid() then
+				BLUE_BOMB:SetPos(pos)
+			end
+			util.PoisonBlastDamage(BLUE_BOMB, pl, pos, 222, 65, true)
+			
+			pl:CheckRedeem()
+			if math.random(1,3) == 1 then
+				local d = ents.Create("prop_hp")
+				if d:IsValid() then
+					if !attacker then
+						attacker = pl
+					end
+					d:SetPos(pos + Vector(0,0,80))
+					d:Spawn()
+					d:SetOwner(attacker)
+					d:SetHP(attacker:GetMaxHealth()*0.1)
+					d:SetTime(CurTime()+10.5)
+					d.DieTime = CurTime() + 10.5
+					timer.Simple(0.1, function() d:GetPhysicsObject():SetVelocity(Vector(0,0,0)) end )
+				end
+			end
+		elseif champ == CHAMP_YELLOW then
+			if math.random(1,3) == 1 then
+				local d = ents.Create("prop_money")
+				if d:IsValid() then
+					if !attacker then
+						attacker = pl
+					end
+					d:SetPos(pos + Vector(0,0,80))
+					d:Spawn()
+					d:SetOwner(attacker)
+					d:SetHP((math.random(1,5) == 1 and 10 or 5))
+					d:SetTime(CurTime()+20.5)
+					d.DieTime = CurTime() + 20.5
+					timer.Simple(0.1, function() d:GetPhysicsObject():SetVelocity(Vector(0,0,0)) end )
+				end
+			end
+		elseif champ == CHAMP_GRAY then
+			if math.random(1,3) == 1 then
 				if !attacker then
 					attacker = pl
 				end
-				d:SetPos(pos + Vector(0,0,80))
-				d:Spawn()
-				d:SetOwner(attacker)
-				d:SetHP(attacker:GetMaxHealth()*0.1)
-				d:SetTime(CurTime()+10.5)
-				d.DieTime = CurTime() + 10.5
-				timer.Simple(0.1, function() d:GetPhysicsObject():SetVelocity(Vector(0,0,0)) end )
+				attacker:AddChargesActive(5)
 			end
-		end
-	elseif champ == CHAMP_YELLOW then
-		if math.random(1,3) == 1 then
-			local d = ents.Create("prop_money")
-			if d:IsValid() then
-				if !attacker then
-					attacker = pl
+		elseif champ == CHAMP_ETERNAL then
+			if math.random(1,10) == 1 then
+				local ent = ents.Create("prop_invitem")
+				if ent:IsValid() then
+					ent:SetInventoryItemType("trinket_hp_up")
+					ent:Spawn()
+					ent:SetPos(pos)
+					ent.DroppedTime = CurTime()
 				end
-				d:SetPos(pos + Vector(0,0,80))
-				d:Spawn()
-				d:SetOwner(attacker)
-				d:SetHP((math.random(1,5) == 1 and 10 or 5))
-				d:SetTime(CurTime()+20.5)
-				d.DieTime = CurTime() + 20.5
-				timer.Simple(0.1, function() d:GetPhysicsObject():SetVelocity(Vector(0,0,0)) end )
+			end
+		elseif champ == CHAMP_RED then
+			if math.random(1,3) == 1 then
+				local d = ents.Create("prop_hp")
+				if d:IsValid() then
+					d:SetPos(pos + Vector(0,0,80))
+					d:Spawn()
+					d:SetHP((math.random(1,5) == 1 and 10 or 5))
+					d:SetTime(CurTime()+20.5)
+					d.DieTime = CurTime() + 20.5
+					timer.Simple(0.1, function() d:GetPhysicsObject():SetVelocity(Vector(0,0,0)) end )
+				end
 			end
 		end
-	elseif champ == CHAMP_GRAY then
-		if math.random(1,3) == 1 then
-			if !attacker then
-				attacker = pl
-			end
-			attacker:AddChargesActive(5)
-		end
-	elseif champ == CHAMP_ETERNAL then
-		if math.random(1,10) == 1 then
-			local ent = ents.Create("prop_invitem")
-			if ent:IsValid() then
-				ent:SetInventoryItemType("trinket_hp_up")
-				ent:Spawn()
-				ent:SetPos(pos)
-				ent.DroppedTime = CurTime()
-			end
-		end
-	elseif champ == CHAMP_RED then
-		if math.random(1,3) == 1 then
-			local d = ents.Create("prop_hp")
-			if d:IsValid() then
-				d:SetPos(pos + Vector(0,0,80))
-				d:Spawn()
-				d:SetHP((math.random(1,5) == 1 and 10 or 5))
-				d:SetTime(CurTime()+20.5)
-				d.DieTime = CurTime() + 20.5
-				timer.Simple(0.1, function() d:GetPhysicsObject():SetVelocity(Vector(0,0,0)) end )
-			end
-		end
+		pl:SetChampion(0)
 	end
-
 
 	if not pl:CallZombieFunction5("OnKilled", attacker, inflictor, suicide, headshot, dmginfo) then
 		if pl:Health() <= -70 and not pl.NoGibs and not self.ZombieEscape then
@@ -5044,7 +5040,6 @@ function GM:DoPlayerDeath(pl, attacker, dmginfo)
 
 	local revive = false
 	local assistpl
-	pl:SetChampion(0)
 	if plteam == TEAM_UNDEAD then
 		if GAMEMODE.ZombieEscape then
 			local zewep = pl:GetWeapon("weapon_knife")
@@ -5064,9 +5059,9 @@ function GM:DoPlayerDeath(pl, attacker, dmginfo)
 			for i=1,3 do
 				pl:MakeDemiBossDrop(attacker)
 			end
-			if attacker:IsValidLivingHuman() then
+			--if attacker:IsValidLivingHuman() then
 				--net.Start("zs_update_style") net.WriteTable({time = CurTime()+2+(math.random(1,20)*0.2),text = "DEMI-BOSS KILLED!",score = 150}) net.Send(attacker) 
-			end
+			--end
 		end)
 		end
 		if classtable.Boss and not self.ObjectiveMap and pl.BossDeathNotification then
@@ -5074,9 +5069,9 @@ function GM:DoPlayerDeath(pl, attacker, dmginfo)
 				net.WriteEntity(pl)
 				net.WriteUInt(classtable.Index, 8)
 			net.Broadcast()
-			if attacker:IsValidLivingHuman() then
+	--		if attacker:IsValidLivingHuman() then
 				--net.Start("zs_update_style") net.WriteTable({time = CurTime()+8+(math.random(1,20)*0.2),text = "BOSS KILLED!",score = 350}) net.Send(attacker) 
-			end
+		--	end
 			if attacker:IsValidLivingHuman() and attacker:IsSkillActive(SKILL_SINS) then
 				timer.Simple(0, function()
 					pl:Make1BossDrop(attacker)
@@ -6100,8 +6095,6 @@ net.Receive("zs_changeclass", function(len, sender)
 	end
 end)
 net.Receive("zs_sync_style", function(len, sender)
-	if !sender:IsValid() then return end
-	sender.StyleMoment = net.ReadTable()
 end)
 net.Receive("zs_add_p", function(len, sender)
 	local points = net.ReadInt(12)
@@ -6123,7 +6116,12 @@ net.Receive("zs_add_p", function(len, sender)
 		sender:PlayGiveAmmoSound()
 	end
 end)
-
+net.Receive("zs_ability_weapon", function(len, sender)
+	local ent = net.ReadEntity()
+	if ent and ent:IsValid() and ent.HaveAbility and ent == sender:GetActiveWeapon() then
+		ent:HaveAbility()
+	end
+end)
 net.Receive("zs_zsfriend", function(len, sender)
 	local zsfriendid = net:ReadString()
 	local zsfriendent = player.GetBySteamID(zsfriendid)

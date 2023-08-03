@@ -645,11 +645,12 @@ function PANEL:Init()
 	savebtn:SetTall(savebtn:GetTall())
 	savebtn.DoClick = function(me)
 		surface.PlaySound("zombiesurvival/ui/misc1.ogg")
-		local frame = Derma_StringRequest(translate.ClientGet(MySelf ,"add_xp"), "Here XP!.", "XP",
+		local frame = Derma_StringRequest(translate.ClientGet(MySelf ,"add_xp"), "Here XP!", "",
 		function(xp)
 			if tonumber(xp) == nil then return end
-			xp = tonumber(xp)
-			if xp <= 0 then
+			xp = math.min(tonumber(xp),GAMEMODE.MaxXP-MySelf:GetZSXP())
+			print(GAMEMODE.MaxXP-MySelf:GetZSXP())
+			if xp < 0 then
 				xp = 1
 			end
 			if MySelf:GetDCoins() - xp + 1 <= 0 then self:DisplayMessage(translate.ClientGet(MySelf ,"no_ach_xp"), COLOR_GREEN)  return end 

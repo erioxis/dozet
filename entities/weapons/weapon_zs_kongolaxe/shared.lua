@@ -61,6 +61,21 @@ end
 function SWEP:DealThink(dmginfo) 
 	self:SetPerc(self:GetPerc() + 1)
 end
+function SWEP:HaveAbility()
+	if self:GetPerc() >= 10 then
+		local pl = self:GetOwner()
+		self:SetPerc(0)
+		pl:GodEnable()
+		self:SetDTBool(6,true)
+		self:SetDTFloat(11,CurTime()+10)
+		timer.Simple(10, function()
+			if self:IsValid() then
+				self:SetDTBool(6,false)
+				pl:GodDisable()
+			end
+		end)
+	end
+end
 function SWEP:PlaySwingSound()
 	self:EmitSound("weapons/iceaxe/iceaxe_swing1.wav", 75, math.random(40, 45))
 end

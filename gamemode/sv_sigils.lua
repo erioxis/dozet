@@ -145,6 +145,7 @@ function GM:CreateSigils(secondtry, rearrange,corrupted)
 	self:SetUseSigils(self:NumSigils() > 0)
 end
 function GM:CreateRandomObjectPos(class, numbers,wep)
+	if !D3bot.MapNavMesh then return end
 	for i=1,(numbers or 1) do
 		local pos = Vector(0,0,0)
 		local safenum = 0
@@ -168,7 +169,7 @@ function GM:CreateRandomObjectPos(class, numbers,wep)
 				ent:SetWeaponType(wep)
 				ent.NoLootsForTop = true
 			end
-			if node.HasArea then
+			if node and node.HasArea then
 				local params = node.Params
 				if params.AreaYMin then
 					pos.Y = pos.Y + math.random(params.AreaYMin-pos.Y,params.AreaYMax-pos.Y)
