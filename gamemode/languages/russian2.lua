@@ -1034,6 +1034,8 @@ LANGUAGE.give_item = "Отдать предмет"
 
 LANGUAGE.wep_arikus		= "B-441 'Арикус' Спектральный пистолет"
 LANGUAGE.wep_d_arikus		= "Пронзает зомби.\nПули создают снаряды которые отскакивают в зомби."
+LANGUAGE.wep_dual_uzi	= "'Парадигм' Дуальное узи"
+LANGUAGE.wep_d_dual_uzi	= "Хороший урон с хорошей скорострельностью."
 
 
 LANGUAGE.nest_name_l1		= "Гнездо"

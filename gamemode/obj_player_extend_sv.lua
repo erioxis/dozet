@@ -422,7 +422,7 @@ function meta:ProcessDamage(dmginfo)
 		end
 		if self:IsSkillActive(SKILL_TRUEBLOCK) and mywep.ParryTiming then 
 			damage = damage * 0.25
-			self:SendLua("self:EmitSound('npc/strider/fire.wav', 120, 40)")
+			self:SendLua("LocalPlayer():EmitSound('npc/strider/fire.wav', 120, 40)")
 			--self:UpdateStyle({time = time+4+(math.random(1,20)*0.1),text = "PARRY!", Color(241,221,36),score = 15})
 				self:AddStamina(15)
 			if attacker.IdealHit then

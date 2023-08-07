@@ -130,7 +130,6 @@ if SERVER then
 		local ent = ents.Create( inv and "prop_invitem" or "prop_weapon" )
 		if ent:IsValid() then
 			ent:SetPos( pos )
-			ent.NeverRemove = true
 			ent:SetAngles( AngleRand() )
 
 			if inv then ent:SetInventoryItemType( drop ) else

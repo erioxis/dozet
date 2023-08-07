@@ -842,7 +842,7 @@ function meta:ResetSpeed(noset, health)
 				speed = speed + self.SkillSpeedAdd
 			end
 			if self:HasTrinket("altchayok") then
-				speed = speed * math.max(1, GAMEMODE:GetWave() * 0.33 or 1)
+				speed = speed * math.max(1, 0.5+GAMEMODE:GetWave() * 0.11)
 			end
 			if self.SPPerWave then
 				speed = speed + (self.SPPerWave * (GAMEMODE:GetWave() or 1))

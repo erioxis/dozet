@@ -8,7 +8,8 @@ ENT.PackUpTime = 3
 ENT.IgnorePackTimeMul = true
 
 ENT.IsBarricadeObject = true
-
+ENT.IgnoreBullets = true
+ENT.IgnoreMeleeTeam = TEAM_HUMAN
 function ENT:GetObjectHealth()
 	return self:GetDTFloat(0)
 end

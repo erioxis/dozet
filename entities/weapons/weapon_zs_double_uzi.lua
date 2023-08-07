@@ -1,6 +1,4 @@
 AddCSLuaFile()
-
---SWEP.PrintName = "'Redeemers' Dual Handguns"
 SWEP.PrintName = translate.Get("wep_dual_uzi")
 SWEP.Description = translate.Get("wep_d_dual_uzi")
 

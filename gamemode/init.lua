@@ -1380,6 +1380,10 @@ function GM:Think()
 				if pl:HasTrinket("sin_pride")  and wep and (wep.Tier or 1) >= 4 and  wep then
 					pl:StripWeapon(wep:GetClass())
 				end
+				if wep and wep:IsValid() and !wep.AddedAmmo and pl:GetAmmoCount(wep.Primary.Ammo) <= 0 then
+					pl:GiveAmmo(1,wep.Primary.Ammo)
+					wep.AddedAmmo = true
+				end
 				if (pl.NextThinkAboutTrade or 1) < time and pl:IsSkillActive(SKILL_SOUL_TRADE) then
 					pl.NextThinkAboutTrade = time + 10
 					for k,v in pairs(pl:GetInventoryItems()) do
@@ -3176,8 +3180,10 @@ function GM:PlayerInitialSpawnRound(pl)
 		pl:ChangeTeam(TEAM_HUMAN)
 		if self.DynamicSpawning then
 			timer.Simple(1, function()
-				GAMEMODE:AttemptHumanDynamicSpawn(pl)
-				pl:SetBarricadeGhosting(true, true)
+				if IsValid(pl) and pl:Team() == TEAM_HUMAN then
+					GAMEMODE:AttemptHumanDynamicSpawn(pl)
+					pl:SetBarricadeGhosting(true, true)
+				end
 			end)
 		end
 	elseif self:GetNumberOfWaves() == -1 or self.NoNewHumansWave <= self:GetWave() or team.NumPlayers(TEAM_UNDEAD) == 0 and 1 <= team.NumPlayers(TEAM_HUMAN) then -- Joined during game, no zombies, some humans or joined past the deadline.
@@ -3188,8 +3194,10 @@ function GM:PlayerInitialSpawnRound(pl)
 		pl:ChangeTeam(TEAM_HUMAN)
 		if self.DynamicSpawning then
 			timer.Simple(0, function()
-				GAMEMODE:AttemptHumanDynamicSpawn(pl)
-				pl:SetBarricadeGhosting(true, true)
+				if IsValid(pl) and pl:Team() == TEAM_HUMAN then
+					GAMEMODE:AttemptHumanDynamicSpawn(pl)
+					pl:SetBarricadeGhosting(true, true)
+				end
 			end)
 		end
 	end
