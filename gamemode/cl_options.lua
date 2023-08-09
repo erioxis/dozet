@@ -97,7 +97,7 @@ CreateClientConVar("zs_nousetodeposit", "0", true, true)
 CreateClientConVar("zs_mge_phrases", "0", true, true)
 
 
-CreateClientConVar("zs_nopickupprops", "1", true, true)
+CreateClientConVar("zs_nopickupprops", "0", true, true)
 CreateClientConVar("zs_nopickuploot", "0", true, true)
 CreateClientConVar("zs_nodiscord", "0", true, true)
 CreateClientConVar("zs_nohperc", "0", true, true)

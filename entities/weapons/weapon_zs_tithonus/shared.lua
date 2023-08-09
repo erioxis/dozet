@@ -2,8 +2,8 @@ DEFINE_BASECLASS("weapon_zs_baseproj")
 
 --SWEP.PrintName = "'Tithonus' Charged Shotgun"
 --SWEP.Description = "Charges a up shotgun blast of pulse projectiles."
-SWEP.PrintName = " "..translate.Get("wep_tithonus")
-SWEP.Description = " "..translate.Get("wep_d_tithonus")
+SWEP.PrintName = translate.Get("wep_tithonus")
+SWEP.Description = translate.Get("wep_d_tithonus")
 SWEP.Base = "weapon_zs_baseproj"
 
 SWEP.HoldType = "shotgun"
@@ -55,7 +55,7 @@ GAMEMODE:AddNewRemantleBranch(SWEP, 1, translate.Get("wep_tit_r1"), translate.Ge
 	wept.Primary.Projectile = "projectile_drone_pulse"
 end)
 GAMEMODE:AddNewRemantleBranch(SWEP, 2, translate.Get("wep_tit_r2"), translate.Get("wep_d_tit_r2"), function(wept)
-	wept.Primary.Damage = wept.Primary.Damage * 0.33
+	wept.Primary.Damage = wept.Primary.Damage * 0.9
 	wept.Primary.ProjVelocity = 450
 	if SERVER then
 		wept.EntModify = function(self, ent)

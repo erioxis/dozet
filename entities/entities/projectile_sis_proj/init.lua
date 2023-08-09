@@ -51,7 +51,7 @@ function ENT:Hit(vHitPos, vHitNormal, eHitEntity)
 	vHitPos = vHitPos or self:GetPos()
 	vHitNormal = vHitNormal or Vector(0, 0, 1)
 	if owner:IsValid() then
-		util.BlastDamagePlayer(self, owner, vHitPos + vHitNormal, 60, 40, DMG_DISSOLVE)
+		util.BlastDamagePlayer(self, owner, vHitPos + vHitNormal, 60, 40, DMG_DIRECT)
 		if eHitEntity:IsPlayer() and owner:IsValidLivingZombie() then
 			eHitEntity:AddLegDamage(53, owner,self)
 		end
@@ -69,7 +69,7 @@ function ENT:Explode()
 	local vHitNormal = vHitNormal or Vector(0, 0, 1)
 	local owner = self:GetOwner()
 	if owner:IsValid() then
-		util.BlastDamagePlayer(self, owner, vHitPos + vHitNormal, 100, 50, DMG_DISSOLVE)
+		util.BlastDamagePlayer(self, owner, vHitPos + vHitNormal, 100, 50, DMG_DIRECT)
 	end
 	local effectdata = EffectData()
 		effectdata:SetOrigin(vHitPos)

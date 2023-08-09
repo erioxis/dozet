@@ -107,7 +107,7 @@ function SWEP:OnMeleeHit(hitent, hitflesh, tr)
 	local ent = tr.Entity
 	local owner = self:GetOwner()
 	if ent:IsPlayer() and SERVER then
-		ent:AttachmentDamage(self.MeleeDamage/1.7/(self:GetBlockState() and 2 or 1), owner, self, (self.FireNail and SLOWTYPE_FLAME or self.CNail and 4 or SLOWTYPE_COLD))
+		ent:AttachmentDamage(self.MeleeDamage/1.7, owner, self, (self.FireNail and SLOWTYPE_FLAME or self.CNail and 4 or SLOWTYPE_COLD))
 		if self:GetBlockState() then
 			owner:SetVelocity(owner:GetEyeTrace().Normal * 1 + (-owner:GetAngles():Forward()*190))
 		end

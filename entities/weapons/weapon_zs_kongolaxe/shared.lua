@@ -54,15 +54,15 @@ end
 
 function SWEP:DamageThink(dmginfo) 
 	if self:GetPerc() > 0 then
-		dmginfo:SetDamage(dmginfo:GetDamage() / self:GetPerc())
+		dmginfo:SetDamage(dmginfo:GetDamage() * math.max(0.1,1-self:GetPerc()*0.05))
 		self:SetPerc(self:GetPerc() - 1)
 	end
 end
 function SWEP:DealThink(dmginfo) 
-	self:SetPerc(self:GetPerc() + 1)
+	self:SetPerc(math.min(25,self:GetPerc() + 1))
 end
 function SWEP:HaveAbility()
-	if self:GetPerc() >= 10 then
+	if self:GetPerc() >= 25 then
 		local pl = self:GetOwner()
 		self:SetPerc(0)
 		pl:GodEnable()

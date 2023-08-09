@@ -269,6 +269,7 @@ local colBoun = Color(97,255,24)
 local colcham = Color(247,229,132)
 local colIce = Color(21,213,226)
 local colResnya = Color(145,9,9)
+local colAe =  Color(6,77,30)
 function GM:DrawInductorIndicators()
 	local x = ScrW() * 0.45
 	local y = ScrH() * 0.05
@@ -306,7 +307,8 @@ function GM:DrawInductorIndicators()
 			y = y + ScrH() * 0.07
 		end
 		if icep > 0 and icet >= CurTime() then
-			DrawIndicator(colIce,screenscale,icep,icet,"ii",165 + (35 * ((lp:GetActiveWeapon() and (lp:GetActiveWeapon().Tier or 1))-1) * (lp:GetActiveWeapon().Tier or 1)) * (lp:GetIndChance() or 1),x,y)
+			local nucl = lp:IsSkillActive(SKILL_COOL_NUCLEAR_SYN)
+			DrawIndicator(nucl and colAe or colIce,screenscale,icep,icet,nucl and "aboom" or "ii",165 + (35 * ((lp:GetActiveWeapon() and (lp:GetActiveWeapon().Tier or 1))-1) * (lp:GetActiveWeapon().Tier or 1)) * (lp:GetIndChance() or 1),x,y)
 			y = y + ScrH() * 0.07
 		end
 		if pulsed > 0 and lp:HasTrinket("resonance") and pulset >= CurTime() then

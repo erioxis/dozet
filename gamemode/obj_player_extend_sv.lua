@@ -161,7 +161,7 @@ function meta:ProcessDamage(dmginfo)
 				damage = damage * math.random(50,175)/100
 			end
 			if wep:IsValid() and wep.DealThink then
-				wep:DealThink(dmginfo)
+				damage = wep:DealThink(dmginfo) or damage
 			end
 			if attacker.ClanAvanguard and inflictor.Unarmed then
 				damage = damage * 1.25
@@ -204,10 +204,10 @@ function meta:ProcessDamage(dmginfo)
 				attacker:GiveAchievement("opm")
 			end
 
-			if (attacker:IsSkillActive(SKILL_BOUNTYKILLER) or classtable.Boss or classtable.DemiBoss) and classtable.Health >= 50  then
+			if (attacker:IsSkillActive(SKILL_BOUNTYKILLER) or classtable.Boss or classtable.DemiBoss or attacker.DamagedBounty) and classtable.Health >= 50  then
 				local mul = ((attacker:IsSkillActive(SKILL_BOUNTYKILLER) and 0.15 or 0) + (classtable.DemiBoss and 0.15 or classtable.Boss and 0.4 or 0))
 				attacker:SetProgress(attacker:GetProgress('bprog')+(math.min(damage*mul,self:GetMaxHealth()*mul)), 'bprog')
-
+				attacker.DamagedBounty = false
 				if attacker:GetProgress('bprog') >= 2500 * (attacker:GetProgress('bprogmul')+1) then
 					attacker.GetBounty = true
 					attacker:SetProgress(0, 'bprog')
@@ -464,7 +464,7 @@ function meta:ProcessDamage(dmginfo)
 		end
 		return true
 	end
-	if self:IsSkillActive(SKILL_BERSERK) and self.BerserkerCharge and damage >= (self:Health() + (self:GetBloodArmor() * math.max(0.5 + self.BloodArmorDamageReductionAdd + (self:IsSkillActive(SKILL_IRONBLOOD) and self:Health() <= self:GetMaxHealth() * 0.5 and 0.25 or 0),(attacker:IsPlayer() and -1 or 0.05)))) then
+	if self:IsSkillActive(SKILL_BERSERK) and self.BerserkerCharge and damage >= self:Health() then
 		
 		dmginfo:SetDamage(0)
 		self:SetTimerBERS(time)
@@ -2796,24 +2796,51 @@ function meta:CryogenicInduction(attacker, inflictor, damage)
 	attacker.NextInductors = CurTime() + 1.5
 	timer.Create("Cryogenic" .. attacker:UniqueID(), 0.06, 1, function()
 		if not attacker:IsValid() or not self:IsValid() then return end
-		local pos = self:WorldSpaceCenter()
-		pos.z = pos.z + 16
-		self:TakeSpecialDamage(self:Health() * 0.2 + 165 + attacker:GetProgress('iprog'), DMG_DIRECT, attacker, inflictor, pos)
-		attacker:SetProgress((attacker:GetProgress('iprog') -formula)*0.1,'iprog')
+		if !attacker:IsSkillActive(SKILL_COOL_NUCLEAR_SYN) then
+			local pos = self:WorldSpaceCenter()
+			pos.z = pos.z + 16
+			self:TakeSpecialDamage(self:Health() * 0.2 + 165 + attacker:GetProgress('iprog'), DMG_DIRECT, attacker, inflictor, pos)
+			attacker:SetProgress((attacker:GetProgress('iprog') -formula)*0.1,'iprog')
 
-		if attacker:IsValidLivingHuman() then
-			util.BlastDamagePlayer(inflictor, attacker, pos, 85 + 25 * (attacker.ExpDamageRadiusMul or 1), self:GetMaxHealthEx() * 0.2, DMG_DROWN, 0.83, true)
-			for _, ent in pairs(util.BlastAlloc(inflictor, attacker, pos, 100)) do
-				if ent:IsValidLivingPlayer() and gamemode.Call("PlayerShouldTakeDamage", ent, attacker) then
-					ent:AddLegDamageExt(6, attacker, inflictor, SLOWTYPE_COLD)
+			if attacker:IsValidLivingHuman() then
+				util.BlastDamagePlayer(inflictor, attacker, pos, 85 + 25 * (attacker.ExpDamageRadiusMul or 1), self:GetMaxHealthEx() * 0.2, DMG_DROWN, 0.83, true)
+				for _, ent in pairs(util.BlastAlloc(inflictor, attacker, pos, 100)) do
+					if ent:IsValidLivingPlayer() and gamemode.Call("PlayerShouldTakeDamage", ent, attacker) then
+						ent:AddLegDamageExt(6, attacker, inflictor, SLOWTYPE_COLD)
+					end
 				end
 			end
-		end
 
-		local effectdata = EffectData()
+			local effectdata = EffectData()
+				effectdata:SetOrigin(pos)
+				effectdata:SetNormal(attacker:GetShootPos())
+			util.Effect("hit_ice", effectdata)
+		else
+			attacker:GiveStatus("radiation",3):SetDTInt(1,2)
+			local pos = self:WorldSpaceCenter()
+			pos.z = pos.z + 16
+			attacker:SetProgress((attacker:GetProgress('iprog') -formula)*0.1,'iprog')
+			for _, ent in pairs(util.BlastAlloc(inflictor, attacker, pos, 200)) do
+				if ent:IsValidLivingPlayer() and gamemode.Call("PlayerShouldTakeDamage", ent, attacker) then
+					local sta = ent:GetStatus("radiation") 
+					if sta then
+						sta.DieTime = CurTime()+3
+						sta:SetDTInt(1,sta:GetDTInt(1)+2)
+						sta.Damager = attacker
+					else
+						local d = ent:GiveStatus("radiation",3)
+						d:SetDTInt(1,2)
+						d.Damager = attacker
+					end
+					ent:TakeSpecialDamage(ent:Health() * 0.2 + 555 + attacker:GetProgress('iprog'), DMG_DIRECT, attacker, inflictor, pos)
+				end
+			end
+
+			local effectdata = EffectData()
 			effectdata:SetOrigin(pos)
-			effectdata:SetNormal(attacker:GetShootPos())
-		util.Effect("hit_ice", effectdata)
+			effectdata:SetMagnitude(4)
+		util.Effect("explosion_chem", effectdata, true)
+		end
 	end)
 end
 function meta:FireInduction(attacker, inflictor, damage)

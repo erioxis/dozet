@@ -14,7 +14,7 @@ CLASS.SWEP = "weapon_zs_chemzombie"
 CLASS.Model = Model("models/Zombie/Poison.mdl")
 CLASS.Speed = 220
 
-CLASS.Points = 3
+CLASS.Points = 15
 
 CLASS.PainSounds = {Sound("npc/metropolice/knockout2.wav"), Sound("npc/metropolice/pain1.wav"), Sound("npc/metropolice/pain2.wav"), Sound("npc/metropolice/pain3.wav"), Sound("npc/metropolice/pain4.wav")}
 CLASS.DeathSounds = {Sound("ambient/fire/gascan_ignite1.wav")}

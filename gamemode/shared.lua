@@ -5,7 +5,7 @@ GM.Website	=	"https://github.com/erioxis/dozet"
 
 -- No, adding a gun doesn't make your name worth being here.
 GM.Credits = {
-	{"Version", "", "8.6.6"}, -- дайте пофармить новичкам!
+	{"Version", "", "8.7.0"}, -- дайте пофармить новичкам!
 	{"Season of ", "skill buffs,zombie debuff and MORE OPTIMIZATION", "maybe"},
 	{"erioxis", "Phantom coder", "dead"},
 	{"Холодное Молочко(M-I-L-K-Y)", "Not a Phantom coder", "Alive"},
@@ -573,7 +573,6 @@ function GM:OnPlayerHitGround(pl, inwater, hitfloater, speed)
 				return true
 			end
 		end
-		local groundent = pl:GetGroundEntity()
 		if groundent:IsValid() and groundent:IsPlayer() and PTeam(groundent) == TEAM_UNDEAD and pl:HasTrinket("toysite") then
 			if groundent:IsHeadcrab() then
 				groundent:TakeSpecialDamage(groundent:Health() + 200, DMG_DIRECT, pl, pl, pl:GetPos())
@@ -586,9 +585,8 @@ function GM:OnPlayerHitGround(pl, inwater, hitfloater, speed)
 				return true
 			end
 		end
-		local groundent = pl:GetGroundEntity()
 		if groundent:IsValid() and groundent:IsPlayer() and PTeam(groundent) == TEAM_HUMAN and groundent:GetModelScale() < 0.75 then
-			groundent:TakeSpecialDamage(300, DMG_CLUB, pl, pl, pl:GetPos())
+			groundent:TakeSpecialDamage(30110, DMG_DIRECT, pl, pl, pl:GetPos())
 			pl:GiveAchievement("mariotrue")
 			return true
 		end

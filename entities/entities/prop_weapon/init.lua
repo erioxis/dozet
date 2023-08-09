@@ -107,7 +107,7 @@ function ENT:GiveToActivator(activator, caller)
 		self:Input("OnPickupFailed", activator)
 		return
 	end
-	if self.NoLootsForTop and #team.GetPlayers(TEAM_HUMAN) > 2 then
+	if self.NoLootsForTop and #team.GetPlayers(TEAM_HUMAN) > 4 and activator:GetZSRemortLevel() >= 128 then
 		local top = {}
 		for k,v in pairs(team.GetPlayers(TEAM_HUMAN)) do
 			if v and v:IsValid() then

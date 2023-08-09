@@ -194,9 +194,38 @@ end
 
 function SWEP:EmitReloadFinishSound()
 end
+function SWEP:DealThink(dmginfo) 
+	if self.NoAbility then return end
+	self:SetDTFloat(6,self:GetDTFloat(6)+math.min(110,dmginfo:GetDamage()))
+end
+function SWEP:HaveAbility() 
+	if self:GetDTFloat(6)>320 then
+		self:SetDTFloat(6,0)
+		self:SetNextPrimaryFire(CurTime() + self:GetFireDelay())
 
+		self:EmitFireSound()
+		self.NoAbility = true
+		self:ShootBullets(self.Primary.Damage*20, self.Primary.NumShots, self:GetCone())
+		self.NoAbility = false
+		self.IdleAnimation = CurTime() + self:SequenceDuration()
+	end
+end
 function SWEP:EmitFireSound()
 	self:EmitSound("weapons/m4a1/m4a1_unsil-1.wav", 76, 45, 0.35)
 	self:EmitSound("weapons/zs_rail/rail.wav", 76, 100, 0.95, CHAN_WEAPON + 20)
 end
+if !CLIENT then return end
+	local ablicolor =  Color( 174,19,19)
+	function SWEP:Draw2DHUD()
+		self:Draw2DFeature( self:GetDTFloat(6)/330, nil, nil, "weapon_ability_relsous", "ZSHUDFontSmallest", ablicolor, "+menu" )
+		self.BaseClass.Draw2DHUD(self)
+	end
+	
+	function SWEP:Draw3DHUD(vm, pos, ang)
+	
+		cam.Start3D2D( pos, ang, self.HUD3DScale / 6 )
+				self:Draw3DFeatureHorizontal( vm, pos+Vector(0,0,1), ang, self:GetDTFloat(6)/330, nil, nil, "weapon_ability_relsous", "ZSHUDFont", ablicolor )
+		cam.End3D2D()
+		self.BaseClass.Draw3DHUD(self,vm, pos, ang)
+	end
 

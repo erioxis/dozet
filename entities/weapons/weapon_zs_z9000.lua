@@ -57,10 +57,37 @@ SWEP.PointsMultiplier = GAMEMODE.PulsePointsMultiplier
 function SWEP.BulletCallback(attacker, tr, dmginfo)
 	local ent = tr.Entity
 	if ent:IsValidZombie() then
-		ent:AddLegDamageExt(4.5, attacker, attacker:GetActiveWeapon(), SLOWTYPE_PULSE)
+		local wep = attacker:GetActiveWeapon()
+		ent:AddLegDamageExt(4.5, attacker,  wep, SLOWTYPE_PULSE)
+		local intd = wep:GetDTInt(6)
+		wep:SetDTInt(6,intd+1)
+		if intd >= 5 then
+			local dmg = dmginfo:GetDamage()
+			ent:AddLegDamageExt( dmg * 0.5, attacker,  wep, SLOWTYPE_PULSE)
+			if SERVER then
+				ent:TakeDamage( dmg * 3, attacker,  wep)
+			end
+			wep:SetDTInt(6,0)
+		end
 	end
 
 	if IsFirstTimePredicted() then
 		util.CreatePulseImpactEffect(tr.HitPos, tr.HitNormal)
 	end
 end
+
+if !CLIENT then return end
+	local ablicolor =  Color( 19,34,174)
+	function SWEP:Draw2DHUD()
+		self:Draw2DFeature(self:GetDTInt(6)/5, nil, nil, "weapon_ability_z9000", "ZSHUDFontSmallest", ablicolor )
+		self.BaseClass.Draw2DHUD(self)
+	end
+	
+	function SWEP:Draw3DHUD(vm, pos, ang)
+	
+		cam.Start3D2D( pos, ang, self.HUD3DScale / 6 )
+				self:Draw3DFeatureHorizontal( vm, pos+Vector(0,-1,1), ang, self:GetDTInt(6)/5, nil, nil, "weapon_ability_z9000", "ZSHUDFont", ablicolor )
+		cam.End3D2D()
+		self.BaseClass.Draw3DHUD(self,vm, pos, ang)
+	end
+	

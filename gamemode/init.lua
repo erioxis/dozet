@@ -1380,8 +1380,10 @@ function GM:Think()
 				if pl:HasTrinket("sin_pride")  and wep and (wep.Tier or 1) >= 4 and  wep then
 					pl:StripWeapon(wep:GetClass())
 				end
-				if wep and wep:IsValid() and !wep.AddedAmmo and pl:GetAmmoCount(wep.Primary.Ammo) <= 0 then
+				if wep and wep:IsValid() and !wep.AddedAmmo and pl:GetAmmoCount(wep.Primary.Ammo) < 0 then
 					pl:GiveAmmo(1,wep.Primary.Ammo)
+					wep.AddedAmmo = true
+				elseif wep and wep:IsValid() and !wep.AddedAmmo and pl:GetAmmoCount(wep.Primary.Ammo) > 0 then
 					wep.AddedAmmo = true
 				end
 				if (pl.NextThinkAboutTrade or 1) < time and pl:IsSkillActive(SKILL_SOUL_TRADE) then
@@ -4580,7 +4582,6 @@ end
 
 
 function GM:PlayerDeath(pl, inflictor, attacker)
-	pl:SetChampion(0)
 	if pl:IsSkillActive(SKILL_PHOENIX) and pl.RedeemedOnce or pl:HasTrinket("altlazarussoul") then
 		local dpos = pl:GetPos()
 		local eyepos = pl:EyeAngles()

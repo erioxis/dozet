@@ -409,7 +409,7 @@ end
 function util.BlastAlloc(inflictor, attacker, epicenter, radius)
 	local t = {}
 
-	for _, ent in pairs(ents.FindInSphere(epicenter, radius)) do
+	for _, ent in pairs(ents.FindInBoxRadius(epicenter, radius)) do
 		if ent:IsValid() then
 			local nearest = ent:NearestPoint(epicenter)
 			if TrueVisibleFilters(epicenter, nearest, inflictor, attacker, ent)

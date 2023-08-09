@@ -108,26 +108,30 @@ function SWEP:SetClip(d)
 	self:SetNWFloat(3, d)
 end
 function SWEP:OnMeleeHit(hitent, hitflesh, tr)
-	local ent = tr.Entity
-	local own = self:GetOwner()
-	local tbl = hitent:GetZombieClassTable()
-	if self.HealthSteal and hitent and hitent:IsPlayer() and SERVER and tbl and !tbl.Boss and !tbl.DemiBoss then
-		local d = ents.Create("prop_hp")
-		if d:IsValid() then
-			d:SetPos(hitent:GetPos() + Vector(0,0,80))
-			d:SetAngles(hitent:GetAngles())
-			d:Spawn()
-			d:SetOwner(own)
-			d:SetHP(hitent:Health()*0.03)
-			d:SetTime(CurTime()+4)
-			d.DieTime = CurTime() + 3.5
-			timer.Simple(0.1, function() d:GetPhysicsObject():SetVelocity(VectorRand(-300,300)) end )
-			hitent:SetHealth(hitent:Health()*0.94)
+	if SERVER then
+		local ent = tr.Entity
+		local own = self:GetOwner()
+		if hitent:IsPlayer() then
+			local tbl = hitent:GetZombieClassTable()
+			if self.HealthSteal and tbl and !tbl.Boss and !tbl.DemiBoss then
+				local d = ents.Create("prop_hp")
+				if d:IsValid() then
+					d:SetPos(hitent:GetPos() + Vector(0,0,80))
+					d:SetAngles(hitent:GetAngles())
+					d:Spawn()
+					d:SetOwner(own)
+					d:SetHP(hitent:Health()*0.03)
+					d:SetTime(CurTime()+4)
+					d.DieTime = CurTime() + 3.5
+					timer.Simple(0.1, function() d:GetPhysicsObject():SetVelocity(VectorRand(-300,300)) end )
+					hitent:SetHealth(hitent:Health()*0.94)
+				end
+			end
+			if tbl and !tbl.Boss and !tbl.DemiBoss then
+				ent:AddBleedDamage(self.MeleeDamage * 0.12, own)
+				own:SetHealth(math.min(own:Health() + self.MeleeDamage *0.05 * (self.HealthSteal and 0.3 or 1),own:GetMaxHealth()))
+			end
 		end
-	end
-	if ent:IsPlayer() and SERVER and tbl and !tbl.Boss and !tbl.DemiBoss then
-		ent:AddBleedDamage(self.MeleeDamage * 0.12, own)
-		own:SetHealth(math.min(own:Health() + self.MeleeDamage *0.05 * (self.HealthSteal and 0.3 or 1),own:GetMaxHealth()))
 	end
 end
 function SWEP:SecondaryAttack()

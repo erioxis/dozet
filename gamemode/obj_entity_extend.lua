@@ -116,7 +116,7 @@ function meta:FireBulletsLua(src, dir, spread, num, damage, attacker, force_mul,
 
 
 
-	for i=1, num do
+	for i=0, num-1 do
 		if temp_has_spread then
 			temp_angle:Set(base_ang)
 			temp_angle:RotateAroundAxis(

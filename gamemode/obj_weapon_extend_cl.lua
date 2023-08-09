@@ -420,8 +420,8 @@ function meta:Draw2DFeature( progress, remst, nexst, text, font, color, cenpress
 
 	if cenpress and progress >= 1 then
 		if clipif and ( self:Clip1() < self:GetMaxClip1() / 2 and ( remst and remst ~= 0 ) ) then return end
-			
-		local txt, font = translate.Format( "weapon_press_x", string.upper( input.LookupBinding( cenpress ) ) ), "ZSSHUD4Font_30"
+		local nobind = !input.LookupBinding( cenpress )
+		local txt, font = translate.Format(nobind and "no_find_x_bind" or "weapon_press_x", nobind and "+menu" or string.upper( input.LookupBinding( cenpress ) ) ), "ZSHUDFontSmallest"
 		surface.SetFont( font )
 		local wid, hei = surface.GetTextSize( txt )
 

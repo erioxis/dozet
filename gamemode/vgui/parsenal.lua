@@ -142,7 +142,7 @@ function GM:ViewerStatBarUpdate(viewer, display, sweptable)
 
 		local statnum, stattext = statshow[6] and sweptable[statshow[6]][statshow[1]] or sweptable[statshow[1]]
 		if statshow[1] == "Damage" and sweptable.Primary.NumShots and sweptable.Primary.NumShots > 1 then
-			stattext = statnum * (sweptable.IsMelee and MySelf.MeleeDamageMultiplier or MySelf.BulletMul or 1) .. " x " .. sweptable.Primary.NumShots-- .. " (" .. (statnum * sweptable.Primary.NumShots) .. ")"
+			stattext = statnum  .. " x " .. sweptable.Primary.NumShots-- .. " (" .. (statnum * sweptable.Primary.NumShots) .. ")"
 		elseif statshow[1] == "WalkSpeed" then
 			stattext = speedtotext[SPEED_NORMAL]
 			if speedtotext[sweptable[statshow[1]]] then
@@ -160,7 +160,7 @@ function GM:ViewerStatBarUpdate(viewer, display, sweptable)
 		viewer.ItemStatValues[i]:SetText(stattext)
 
 		if statshow[1] == "Damage" then
-			statnum = statnum * sweptable.Primary.NumShots * (sweptable.IsMelee and MySelf.MeleeDamageMultiplier or MySelf.BulletMul or 1)
+			statnum = statnum
 		elseif statshow[1] == "ClipSize" then
 			statnum = statnum / (sweptable.RequiredClip or 1)
 		end
@@ -203,13 +203,16 @@ function GM:SupplyItemViewerDetail(viewer, sweptable, shoptbl, from)
 		if GAMEMODE.Breakdowns[shoptbl.SWEP] then
 			bruh = bruh ..translate.Get("on_dismantle_give")..self.ZSInventoryItemData[GAMEMODE.Breakdowns[shoptbl.SWEP].Result].PrintName
 		end
+		if sweptable.HaveAbility then
+			desctext = desctext..translate.Get("have_ability")
+		end
 		viewer.m_Bruh:MoveBelow(viewer.m_VBG, 328)
 		viewer.m_Bruh:SetFont("ZSBodyTextFontBig")
 		viewer.m_Desc:MoveBelow(viewer.m_VBG, 8)
 		viewer.m_Desc:SetFont("ZSBodyTextFont")
 	else
 		if self.ZSInventoryItemData[shoptbl.SWEP].BountyNeed then
-			desctext = desctext..translate.Get("w_cost_a")..self.ZSInventoryItemData[shoptbl.SWEP].BountyNeed 
+			desctext = desctext..translate.Get("w_cost_a")..self.ZSInventoryItemData[shoptbl.SWEP].BountyNeed
 		end
 		viewer.ModelPanel:SetModel("")
 		viewer.m_VBG:SetVisible(false)

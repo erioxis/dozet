@@ -519,6 +519,8 @@ SKILL_WHO_AM_I = 491
 SKILL_VEC = 492
 SKILL_VEC2 = 493
 SKILL_NUCLEAR_DAD = 494
+SKILL_COOL_NUCLEAR_SYN = 495
+SKILL_AIMLESS = 496
 
 
 
@@ -1456,7 +1458,9 @@ GM:AddSkill(SKILL_HOLE_OF_HELL, trs("skill_hellhole"), GOOD..trs("skill_hellhole
 																0,			-12,					{}, TREE_BRANCH_ELEMENTS)
 																--SKILL_HOLE_OF_HELL
 GM:AddSkill(SKILL_CURSED_ALT, trs("skill_at_curse2"), GOOD..trs("skill_at_curse2_d1")..BAD..trs("skill_at_curse2_d2"),
-																2,			-10.5,					{}, TREE_BRANCH_ELEMENTS)
+																2,			-10.5,					{SKILL_COOL_NUCLEAR_SYN}, TREE_BRANCH_ELEMENTS)
+GM:AddSkill(SKILL_COOL_NUCLEAR_SYN, trs("skill_nuclear_syn"), GOOD..trs("skill_nuclear_syn_d1")..BAD..trs("skill_nuclear_syn_d2"),
+																2,			-11.5,					{}, TREE_BRANCH_ELEMENTS)
 GM:AddSkill(SKILL_ATTACHMENT_CURSE, trs("skill_at_curse"), BAD..trs("skill_at_curse_d1")..GOOD..trs("skill_at_curse_d2"),
 																-2.5,			-6,					{SKILL_HEHE, SKILL_CONISSUE}, TREE_BRANCH_ELEMENTS)
 GM:AddSkill(SKILL_CONISSUE, trs("skill_conissue"), GOOD..trs("skill_conissue_d1")..BAD..trs("skill_conissue_d2"),
@@ -1476,6 +1480,11 @@ GM:AddSkill(SKILL_HIHI, trs("skill_hihi"), GOOD..trs("skill_hihi_d1"),
 
 GM:AddSkill(SKILL_ORPHICFOCUS, trs("skill_orfocus"), GOOD..trs("skill_orfocus_d1")..GOOD.."+2%"..trs("w_ac")..BAD..trs("skill_orfocus_d2")..BAD.."-6%"..trs("r_speed"),
 																5,			-1,					{SKILL_DELIBRATION}, TREE_GUNTREE)
+															
+GM:AddSkill(SKILL_AIMLESS, trs("skill_unfocus"), GOOD.."+25%"..trs("b_damage")..BAD.."-50%"..trs("w_ac"),
+																5,			0,					{SKILL_ORPHICFOCUS}, TREE_GUNTREE)
+GM:AddSkillModifier(SKILL_AIMLESS, SKILLMOD_DAMAGE, 0.25)
+GM:AddSkillModifier(SKILL_AIMLESS, SKILLMOD_AIMSPREAD_MUL, 0.5)
 GM:AddSkill(SKILL_DELIBRATION, trs("skill_deli"), GOOD.."+3%"..trs("w_ac")..GOOD.."+1%"..trs("b_damage"),
 																6,			-3,					{}, TREE_GUNTREE)
 GM:AddSkillModifier(SKILL_DELIBRATION, SKILLMOD_DAMAGE, 0.01)

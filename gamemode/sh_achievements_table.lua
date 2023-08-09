@@ -395,6 +395,14 @@ GM.Statuses["poison"] = {
 	Icon = Material("zombiesurvival/poison.png"),
     Debuff = true
 }
+GM.Statuses["radiation"] = {
+	Color = Color(28, 112, 9),
+	Name = "radiation",
+	ValFunc = statusValueFunction("radiation"),
+	Max = 3,
+	Icon = Material("zombiesurvival/poison.png"),
+    Debuff = true
+}
 GM.Statuses["bleed"] = {
 	Color = Color(220, 0, 0),
 	Name = "bleed",

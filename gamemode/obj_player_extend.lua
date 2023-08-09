@@ -487,8 +487,6 @@ function meta:AttachmentDamage(damage, attacker, inflictor, type)
 	if attacker:IsSkillActive(SKILL_DOUBLE_ISSUE) and math.random(1,6) == 1 then
 		damage = damage * 2
 	end
-	local zclass =  self:GetZombieClassTable()
-	local valid = self:IsValidLivingZombie()
 	if type == SLOWTYPE_PULSE then
 		local legdmg = damage * (attacker.PulseWeaponSlowMul or 1)
 		local startleg = self:GetFlatLegDamage()
@@ -509,6 +507,8 @@ function meta:AttachmentDamage(damage, attacker, inflictor, type)
 			GAMEMODE:DamageAtFloater(attacker, self, self:NearestPoint(attacker:EyePos()), damage,type)
 		end
 	elseif type == SLOWTYPE_COLD then
+		local zclass =  self:GetZombieClassTable()
+		local valid = self:IsValidLivingZombie()
 		if valid and zclass.ResistFrost then return end
 		if valid and zclass.Boss then return end
 		if zclass.FireBuff then
@@ -523,6 +523,8 @@ function meta:AttachmentDamage(damage, attacker, inflictor, type)
 			GAMEMODE:DamageAtFloater(attacker, self, self:NearestPoint(attacker:EyePos()), damage, type)
 		end
 	elseif type == SLOWTYPE_FLAME then
+		local zclass =  self:GetZombieClassTable()
+		local valid = self:IsValidLivingZombie()
 		if valid and zclass.ResistFrost then
 			damage = damage * 2
 		end
@@ -551,8 +553,6 @@ function meta:AttachmentDamage(damage, attacker, inflictor, type)
 end
 function meta:AddLegDamageExt(damage, attacker, inflictor, type)
 	inflictor = inflictor or attacker
-	local zclass =  self:GetZombieClassTable()
-	local valid = self:IsValidLivingZombie()
 	if type == SLOWTYPE_PULSE then
 		local legdmg = damage * (attacker.PulseWeaponSlowMul or 1)
 		local startleg = self:GetFlatLegDamage()
@@ -574,6 +574,8 @@ function meta:AddLegDamageExt(damage, attacker, inflictor, type)
 			GAMEMODE:DamageAtFloater(attacker, self, self:NearestPoint(attacker:EyePos()), legdmg,type)
 		end
 	elseif type == SLOWTYPE_COLD then
+		local zclass =  self:GetZombieClassTable()
+		local valid = self:IsValidLivingZombie()
 		if valid and zclass.ResistFrost then return end
 		if valid and zclass.Boss then return end
 		if zclass.FireBuff then
@@ -590,6 +592,8 @@ function meta:AddLegDamageExt(damage, attacker, inflictor, type)
 			GAMEMODE:DamageAtFloater(attacker, self, self:NearestPoint(attacker:EyePos()), damage, type)
 		end
 	elseif type == SLOWTYPE_FLAME then
+		local zclass =  self:GetZombieClassTable()
+		local valid = self:IsValidLivingZombie()
 		if valid and zclass.ResistFrost then
 			damage = damage * 2
 		end

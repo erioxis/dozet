@@ -1,13 +1,11 @@
 AddCSLuaFile()
 DEFINE_BASECLASS("weapon_zs_base")
 
---SWEP.PrintName = "'Amigo' Assault Rifle"
---SWEP.Description = "The Amigo gets extra headshot damage, but has a slow fire rate for an assault rifle."
-SWEP.PrintName = ""..translate.Get("wep_amigo")
-SWEP.Description = ""..translate.Get("wep_d_amigo")
-
 SWEP.Slot = 2
 SWEP.SlotPos = 0
+
+SWEP.PrintName = translate.Get("wep_amigo")
+SWEP.Description = translate.Get("wep_d_amigo")
 
 if CLIENT then
 	SWEP.ViewModelFlip = false
@@ -29,20 +27,20 @@ SWEP.UseHands = true
 
 SWEP.ReloadSound = Sound("Weapon_SG552.Clipout")
 SWEP.Primary.Sound = Sound("Weapon_SG552.Single")
-SWEP.Primary.Damage = 34
-SWEP.Primary.NumShots = 2
-SWEP.Primary.Delay = 0.66
+SWEP.Primary.Damage = 23.5
+SWEP.Primary.NumShots = 1
+SWEP.Primary.Delay = 0.15
 
-SWEP.Primary.ClipSize = 10
+SWEP.Primary.ClipSize = 25
 SWEP.Primary.Automatic = true
 SWEP.Primary.Ammo = "ar2"
 GAMEMODE:SetupDefaultClip(SWEP.Primary)
 
-SWEP.ConeMax = 30
+SWEP.ConeMax = 2
 SWEP.ConeMin = 0.8
-SWEP.HeadshotMulti = 1.7
+SWEP.HeadshotMulti = 2.1
 
-SWEP.ReloadSpeed = 1.2
+SWEP.ReloadSpeed = 0.9
 
 SWEP.WalkSpeed = SPEED_SLOW
 
@@ -52,11 +50,11 @@ SWEP.IronSightsPos = Vector(-5, 1, 3)
 SWEP.IronSightsAng = Vector(0, 0, 0)
 
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_FIRE_DELAY, -0.01, 1)
-GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_HEADSHOT_MULTI, 0.1)
+GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_HEADSHOT_MULTI, 0.07)
 GAMEMODE:AddNewRemantleBranch(SWEP, 1, "'Comrade' Micronaut Rifle", "Reduced accuracy, damage but increased clip size and fires additional projectiles", function(wept)
 	wept.ConeMax = wept.ConeMax * 1.5
 	wept.ConeMin = wept.ConeMin * 1.5
-	wept.Primary.Damage = wept.Primary.Damage * 0.5
+	wept.Primary.Damage = wept.Primary.Damage * 0.8
 	wept.Primary.ClipSize = 35
 
 	wept.ShootBullets = function(self, dmg, numbul, cone)
@@ -198,7 +196,7 @@ local branch = GAMEMODE:AddNewRemantleBranch(SWEP, 2, "'Horizon' Battle Rifle", 
 	end
 end)
 branch.Colors = {Color(110, 160, 170), Color(90, 140, 150), Color(70, 120, 130)}
-branch.NewNames = {"Focused", "Transfixed", "Orphic"}
+branch.NewNames = {"Focused", "Transfixed", "Orphic", "Mixed", "Eagly"}
 branch.Killicon = "weapon_zs_battlerifle"
 
 function SWEP:IsScoped()

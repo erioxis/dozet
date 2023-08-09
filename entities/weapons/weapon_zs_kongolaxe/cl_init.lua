@@ -46,14 +46,14 @@ INC_CLIENT()
 	else
 		surface.SetDrawColor(250, 55, 0, 180)
 		surface.SetTexture(surface.GetTextureID("VGUI/gradient_down"))
-		surface.DrawTexturedRect(x, y, math.min(defleft * 0.1,1) * wid, hei)
+		surface.DrawTexturedRect(x, y, math.min(defleft/25,1) * wid, hei)
 	end
 
 			surface.SetDrawColor(50, 155, 50, 180)
 			surface.DrawOutlinedRect(x, y, wid, hei)
 	
 		draw.SimpleText(math.min(10,defleft), "ZSHUDFontSmall", x, texty, COLOR_GREEN, TEXT_ALIGN_LEFT)
-		if defleft >= 10 then
+		if defleft >= 25 then
 			local binded = input.LookupBinding("+menu")
 			draw.SimpleText((binded or translate.Format("no_find_x_bind","+menu")), "ZSHUDFontSmall", x+384/2-(binded and 0 or 170), y-24-(binded and 0 or 100), COLOR_GREEN, TEXT_ALIGN_CENTER)
 		end
