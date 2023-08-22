@@ -299,7 +299,8 @@ function GM:DrawInductorIndicators()
 		end
 		if fired > 0 and lp:HasTrinket("fire_ind") and firet >= CurTime() then
 			local hell = lp.HoleOfHell
-			DrawIndicator(hell  and Color(65,12,2) or Color(226,62,33),screenscale,fired,firet,hell and "hell" or "fi",(15 * ((lp:GetActiveWeapon() and (lp:GetActiveWeapon().Tier or 1))+1)) * (lp:GetIndChance() or 1),x,y)
+			local wep = lp:GetActiveWeapon()
+			DrawIndicator(hell  and Color(65,12,2) or Color(226,62,33),screenscale,fired,firet,hell and "hell" or "fi",(15 * ((wep and (wep.Tier or 1))+1)) * (lp:GetIndChance() or 1),x,y)
 			y = y + ScrH() * 0.07
 		end
 		if medp > 0 and lp:IsSkillActive(SKILL_PREMIUM) and medt >= CurTime() then
@@ -308,7 +309,8 @@ function GM:DrawInductorIndicators()
 		end
 		if icep > 0 and icet >= CurTime() then
 			local nucl = lp:IsSkillActive(SKILL_COOL_NUCLEAR_SYN)
-			DrawIndicator(nucl and colAe or colIce,screenscale,icep,icet,nucl and "aboom" or "ii",165 + (35 * ((lp:GetActiveWeapon() and (lp:GetActiveWeapon().Tier or 1))-1) * (lp:GetActiveWeapon().Tier or 1)) * (lp:GetIndChance() or 1),x,y)
+			local wep = lp:GetActiveWeapon()
+			DrawIndicator(nucl and colAe or colIce,screenscale,icep,icet,nucl and "aboom" or "ii",165 + (35 * ((wep and (wep.Tier or 1))-1) * (wep.Tier or 1)) * (lp:GetIndChance() or 1),x,y)
 			y = y + ScrH() * 0.07
 		end
 		if pulsed > 0 and lp:HasTrinket("resonance") and pulset >= CurTime() then

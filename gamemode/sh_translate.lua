@@ -88,6 +88,9 @@ if CLIENT then
 	function translate.Get(id)
 		return translateGet(id)
 	end
+	function translate.HasTranslate(id)
+		return  string.Explode("",translateGet(id))[1] ~= "@"
+	end
 	
 	function translate.ClientGet(_, ...)
 		return translateGet(...)

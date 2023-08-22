@@ -1043,7 +1043,7 @@ end
 
 
 function meta:SetBloodArmor( armor )
-	self:SetDTInt( DT_PLAYER_INT_BLOODARMOR, self:GetStatus( "bloodysickness" ) and 0 or armor )
+	self:SetDTInt( DT_PLAYER_INT_BLOODARMOR, math.max(self:GetStatus( "bloodysickness" ) and 0 or armor,0) )
 end
 function meta:AddBloodArmor( armor )
 	self:SetBloodArmor( self:GetBloodArmor() + armor )
@@ -2790,7 +2790,8 @@ function meta:PulseResonance(attacker, inflictor)
 end
 
 function meta:CryogenicInduction(attacker, inflictor, damage)
-	local formula = (165 + (35 * ((attacker:GetActiveWeapon() and (attacker:GetActiveWeapon().Tier or 1))-1) * (attacker:GetActiveWeapon().Tier or 1))) * (attacker:GetIndChance() or 1)
+	local wep = attacker:GetActiveWeapon()
+	local formula = (165 + (35 * ((wep and (wep.Tier or 1))-1) * (wep.Tier or 1))) * (attacker:GetIndChance() or 1)
 	if attacker:GetProgress('iprog') < formula then return end
 	if self:GetZombieClassTable().Boss then return end
 	attacker.NextInductors = CurTime() + 1.5
@@ -2816,7 +2817,7 @@ function meta:CryogenicInduction(attacker, inflictor, damage)
 				effectdata:SetNormal(attacker:GetShootPos())
 			util.Effect("hit_ice", effectdata)
 		else
-			attacker:GiveStatus("radiation",3):SetDTInt(1,2)
+			attacker:GiveStatus("radiation",3):SetDTInt(1,4)
 			local pos = self:WorldSpaceCenter()
 			pos.z = pos.z + 16
 			attacker:SetProgress((attacker:GetProgress('iprog') -formula)*0.1,'iprog')
@@ -2825,20 +2826,20 @@ function meta:CryogenicInduction(attacker, inflictor, damage)
 					local sta = ent:GetStatus("radiation") 
 					if sta then
 						sta.DieTime = CurTime()+3
-						sta:SetDTInt(1,sta:GetDTInt(1)+2)
+						sta:SetDTInt(1,sta:GetDTInt(1)+8)
 						sta.Damager = attacker
 					else
 						local d = ent:GiveStatus("radiation",3)
-						d:SetDTInt(1,2)
+						d:SetDTInt(1,7)
 						d.Damager = attacker
 					end
-					ent:TakeSpecialDamage(ent:Health() * 0.2 + 555 + attacker:GetProgress('iprog'), DMG_DIRECT, attacker, inflictor, pos)
+					ent:TakeSpecialDamage(ent:Health() * 0.2 + 9555 + attacker:GetProgress('iprog'), DMG_DIRECT, attacker, inflictor, pos)
 				end
 			end
 
 			local effectdata = EffectData()
 			effectdata:SetOrigin(pos)
-			effectdata:SetMagnitude(4)
+			effectdata:SetMagnitude(8)
 		util.Effect("explosion_chem", effectdata, true)
 		end
 	end)

@@ -14,7 +14,7 @@ CLASS.CanTaunt = true
 CLASS.Hidden = false
 CLASS.HealthMax = 750
 
-CLASS.Points = 40
+CLASS.Points = 20
 
 CLASS.SWEP = "weapon_zs_slime"
 

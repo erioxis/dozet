@@ -42,6 +42,7 @@ function ENT:AcceptInput(name, activator, caller, arg)
 					if p and p:IsValid() then
 						p:AddDamage(8)
 					end
+					ent:GiveAchievementProgress("toxicgases",1)
 					ent.NextPoisonZGAS = CurTime() + 3
 					ent:TakeSpecialDamage(12, DMG_DIRECT)
 				end

@@ -33,7 +33,7 @@ net.Receive("zs_inventoryitem", function()
 		MySelf:ApplyTrinkets()
 	end
 end)
-net.Receive("zs_upgradeitem", function()
+net.Receive("zs_openbounty", function()
 	local items = net.ReadTable()
 	GAMEMODE:OpenBounty(items)
 end)
@@ -120,8 +120,15 @@ local function ItemPanelDoClick(self)
 		crab:SetVisible( false )
 		cral:SetVisible( false )
 	end
-	viewer.m_ActivateButton[1]:SetVisible(false)
-	viewer.m_ActivateButton[2]:SetVisible(false)
+	local hihi = viewer.m_ActivateButton
+	hihi[1]:SetVisible(false)
+	hihi[2]:SetVisible(false)
+	local clip = viewer.m_ClipButton
+	clip[1]:SetVisible(false)
+	clip[2]:SetVisible(false)
+	local doubled = viewer.m_UpgradeButton
+	doubled[1]:SetVisible(false)
+	doubled[2]:SetVisible(false)
 
 	local assembles = {}
 	for k,v in pairs( GAMEMODE.Assemblies ) do
@@ -159,8 +166,7 @@ local function ItemPanelDoClick(self)
 		viewer.m_CraftWith:SetVisible( false )
 	end
 	if category == INVCAT_CONSUMABLES and MySelf:GetChargesActive() >= (item.BountyNeed or 0) then
-		local activatebu = viewer.m_ActivateButton
-		local g,bl = activatebu[1],activatebu[2]
+		local g,bl = hihi[1],hihi[2]
 		viewer.m_Activate.Item = item
 		g.Item = item
 		g:SetPos( viewer:GetWide() / 2 - g:GetWide() / 2, ( viewer:GetTall() - 66 * screenscale ) )
@@ -168,6 +174,18 @@ local function ItemPanelDoClick(self)
 		g:SetVisible(true)
 
 		bl:SetText( translate.Get("activate_inv") )
+		bl:SetPos( g:GetWide() / 2 - bl:GetWide() / 2, ( g:GetTall() * 0.5 - bl:GetTall() * 0.5 ) )
+		bl:SetContentAlignment( 5 )
+		bl:SetVisible( true )
+
+		local g,bl = clip[1],clip[2]
+		g:SetPos( viewer:GetWide() / 2 - g:GetWide() / 2, ( viewer:GetTall() - 33 * screenscale ) )
+		g.DoClick = function(arguments)
+			MySelf.LastClipedTrinket = 	item
+		end
+		g:SetVisible(true)
+
+		bl:SetText( translate.Get("clip_activate") )
 		bl:SetPos( g:GetWide() / 2 - bl:GetWide() / 2, ( g:GetTall() * 0.5 - bl:GetTall() * 0.5 ) )
 		bl:SetContentAlignment( 5 )
 		bl:SetVisible( true )
@@ -263,6 +281,29 @@ function GM:CreateInventoryElements()
 	namelab:SetVisible( false )
 
 	viewer.m_ActivateButton = {activate,namelab}
+
+	local activate = vgui.Create( "DButton", viewer )
+	activate:SetText( "" )
+	activate:SetSize( viewer:GetWide() / 1.15, 27 * screenscale )
+	activate:SetVisible(false)
+
+	local namelab = EasyLabel( activate, "Clip in Q", "ZSBodyTextFont", COLOR_WHITE )
+	namelab:SetWide( activate:GetWide() )
+	namelab:SetVisible( false )
+
+	viewer.m_ClipButton = {activate,namelab}
+
+	
+	local activate2 = vgui.Create( "DButton", viewer )
+	activate:SetText( "" )
+	activate:SetSize( viewer:GetWide() / 1.15, 27 * screenscale )
+	activate:SetVisible(false)
+
+	local namelab2 = EasyLabel( activate, "Upgrade", "ZSBodyTextFont", COLOR_WHITE )
+	namelab:SetWide( activate:GetWide() )
+	namelab:SetVisible( false )
+
+	viewer.m_UpgradeButton = {activate2,namelab2}
 
 	local craftwith = EasyLabel( viewer, "Craft With...", "ZSBodyTextFontBig", COLOR_WHITE )
 	craftwith:SetSize( viewer:GetWide() / 1.15, 27 * screenscale )

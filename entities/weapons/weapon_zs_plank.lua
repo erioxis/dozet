@@ -32,7 +32,6 @@ SWEP.MeleeDamage = 16
 SWEP.MeleeRange = 64
 SWEP.MeleeSize = 2
 SWEP.Primary.Delay = 0.28
-SWEP.IgnoreNiggers = true
 
 SWEP.WalkSpeed = SPEED_FASTER
 
@@ -59,9 +58,6 @@ end
 
 function SWEP:PostOnMeleeHit(hitent, hitflesh, tr)
 	if hitent:IsValid() and hitent:IsPlayer() then
-		if GAMEMODE:GetWave() >= 6 then
-			self.IgnoreNiggers = false
-		end
 		local combo = self:GetDTInt(2)
 		local owner = self:GetOwner()
 		local armdelay = owner:GetMeleeSpeedMul()

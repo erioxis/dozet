@@ -16,7 +16,7 @@ CLASS.DynamicHealth = 1.5
 
 CLASS.CanTaunt = true
 
-CLASS.Points = CLASS.Health/GM.HumanoidZombiePointRatio/2
+CLASS.Points = CLASS.Health/GM.HumanoidZombiePointRatio/6
 CLASS.ModelScale = 1.15
 
 CLASS.SWEP = "weapon_zs_dzombie"

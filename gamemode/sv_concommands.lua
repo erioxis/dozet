@@ -951,7 +951,7 @@ concommand.Add("zsgiveweaponclip", function(sender, command, arguments)
 end)
 concommand.Add("zs_stuck", function(sender, command, arguments)
 	if GAMEMODE.ZombieEscape then return end
-	if not sender:IsValid() or not sender:Alive() or sender:Team() ~= TEAM_HUMAN or CurTime() < (sender.NextStuckMoment or 0) or sender.Stuckedtrue_C + 3 >= CurTime() or sender:GetVelocity():LengthSqr() >= 900 or !sender.Stuckedtrue then print("useless")return end
+	if not sender:IsValid() or not sender:Alive() or sender:Team() ~= TEAM_HUMAN or CurTime() < (sender.NextStuckMoment or 0) or sender.Stuckedtrue_C + 3 >= CurTime() or sender:GetVelocity():LengthSqr() >= 900 or !sender.Stuckedtrue then print(sender:Nick().." useless!")return end
 	local ent = NULL
 	for _, ent1 in pairs(team.GetPlayers(TEAM_HUMAN)) do
 		if ent1:IsValid() and ent1:IsPlayer() and ent1 ~= sender and (ent1.CheckedForStuck or 0) <= CurTime() then
@@ -961,7 +961,7 @@ concommand.Add("zs_stuck", function(sender, command, arguments)
 		end
 	end
 	if ent == NULL then
-		for _, ent1 in pairs(ents.GetAll()) do
+		for _, ent1 in pairs(ents.FindByClass("prop_obj_sigil")) do
 			if ent1:GetClass() == "prop_obj_sigil" then
 				ent = ent1
 				break

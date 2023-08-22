@@ -218,6 +218,29 @@ VoiceSets[VOICESET_MINOS] = {
 		Sound("zombiesurvival/mp_die2.ogg")
 	}
 }
+VoiceSets[VOICESET_SISYPHIS] = {
+	[VOICELINE_GIVEAMMO] = {
+		Sound("zombiesurvival/sp_keepthemcoming.wav"),
+		Sound("zombiesurvival/sp_yesthatsit.wav")
+	},
+	[VOICELINE_PAIN_LIGHT] = {
+		Sound("zombiesurvival/sp_grunt.wav")
+	},
+	[VOICELINE_PAIN_MED] = {
+		Sound("zombiesurvival/sp_nicetry.wav"),
+		Sound("zombiesurvival/sp_nicetry.wav")
+	},
+	[VOICELINE_PAIN_HEAVY] = {
+		Sound("zombiesurvival/sp_thiswillhurt.wav")
+	},
+	[VOICELINE_DEATH] = {
+		Sound("zombiesurvival/sp_begone.wav"),
+		Sound("zombiesurvival/sp_begone2.wav")
+	},
+	[VOICELINE_EYEPAIN] = {
+		Sound("zombiesurvival/sp_thisprison.wav")
+	}
+}
 local meta = FindMetaTable("Player")
 if not meta then return end
 

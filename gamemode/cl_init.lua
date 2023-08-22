@@ -1946,6 +1946,13 @@ function GM:PlayerBindPress(pl, bind, wasin)
         	net.Start("zs_ability_weapon")
 			net.WriteEntity(wep)
 			net.SendToServer()
+			return
+		end
+		if MySelf.LastClipedTrinket then
+			net.Start("zs_activate_trinket")
+			net.WriteString(MySelf.LastClipedTrinket)
+			net.WriteEntity(MySelf)
+		net.SendToServer()
 		end
     end
 end
@@ -2132,6 +2139,7 @@ end
 
 local undo = false
 local matWhite = Material("models/debug/debugwhite")
+--local matWhite = Material("phoenix_storms/fender_white")
 local matSkin = Material("models/Zombie_Classic/Zombie_Classic_sheet.vtf")
 local lowhealthcolor = GM.AuraColorEmpty
 local fullhealthcolor = GM.AuraColorFull

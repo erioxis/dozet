@@ -111,7 +111,7 @@
 	util.AddNetworkString("zs_mutations_table")
 
 	util.AddNetworkString("zs_inventoryitem")
-	util.AddNetworkString("zs_upgradeitem")
+	util.AddNetworkString("zs_openbounty")
 	util.AddNetworkString("zs_trycraft")
 	util.AddNetworkString("zs_trygetitem")
 	util.AddNetworkString("zs_updatealtselwep")

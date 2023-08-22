@@ -52,7 +52,7 @@ SWEP.ShowWorldModel = false
 SWEP.ReloadDelay = 0.3
 
 SWEP.Primary.Sound = Sound(")weapons/zs_glad/gladshot4.wav")
-SWEP.Primary.Damage = 14
+SWEP.Primary.Damage = 33
 SWEP.Primary.NumShots = 16
 SWEP.Primary.Delay = 1.2
 

@@ -135,12 +135,8 @@ function ENT:Use(activator, caller)
 	local owner = self:GetObjectOwner()
 	local food = GAMEMODE.Food[math.random(1,#GAMEMODE.Food)]
 	local m = 0
-	while activator:HasWeapon(food) do
-		food =  GAMEMODE.Food[math.random(1,#GAMEMODE.Food)]
-		m = m + 1
-		if m == 10 then
-			break
-		end
+	if activator:HasWeapon(food) then
+		activator:GiveAmmo(1,activator:GetWeapon(food).Primary.Ammo)
 	end
 	activator.FridgeCaches = (activator.FridgeCaches or 1) - 1
 

@@ -16,18 +16,18 @@ SWEP.SCKMaterials = {"cs_assault/concretefloor026a",}
 
 SWEP.IronSightsPos = Vector(0.64, 0, 4.76)
 SWEP.IronSightsAng = Vector(0, 0, 0)
-qual = math.random(1,6)
+qual = math.Round(util.SharedRandom(SysTime(), 1, 6))
 if qual == 2 then
     dada = "qual_1"
-	SWEP.Primary.Delay = 0.28
-	SWEP.SwingTime = 0.07
-	SWEP.MeleeDamage = 66
+	SWEP.Primary.Delay = 0.3
+	SWEP.SwingTime = 0.11
+	SWEP.MeleeDamage = 56
 	SWEP.MeleeRange = 89
 elseif qual == 3 then
 dada = "qual_2"
 SWEP.Primary.Delay = 0.40
 SWEP.MeleeDamage = 52
-SWEP.SwingTime = 0.16
+SWEP.SwingTime = 0.2
 SWEP.MeleeRange = 77
 elseif qual == 4 then
 dada = "qual_3"
@@ -39,22 +39,22 @@ elseif qual == 5 then
 dada = "qual_4"
 SWEP.MeleeRange = 101
 SWEP.MeleeDamage = 66
-SWEP.Primary.Delay = 0.39
-SWEP.SwingTime = 0.12
+SWEP.Primary.Delay = 0.6
+SWEP.SwingTime = 0.2
 elseif qual == 6 then
 	dada = "qual_5"
-	SWEP.MeleeDamage = 44
+	SWEP.MeleeDamage = 33
 	SWEP.SwingTime = 0.09
 	SWEP.MeleeRange = 77
-	SWEP.Primary.Delay = 0.35
+	SWEP.Primary.Delay = 0.4
 else
 	dada = "qual_0"
-	SWEP.MeleeDamage = 76
-    SWEP.MeleeRange = 77
+	SWEP.MeleeDamage = 44
+    SWEP.MeleeRange = 55
 	SWEP.Primary.Delay = 0.35
-	SWEP.SwingTime = 0.09
+	SWEP.SwingTime = 0.1
 end
-
+--print(dada)
 SWEP.PrintName = translate.Get(dada)..translate.Get("wep_muramasa")
 SWEP.Description = translate.Get("wep_d_muramasa")..translate.Get(dada)
 if CLIENT then

@@ -3631,7 +3631,7 @@ local function CurseAttach(pl)
 end
 local function DoAttachmenttDamage(attacker,ent,damage,time)
 	if !attacker:HasTrinket("cham_at") then
-		local chnc = (attacker.AttChance or 1)
+		local chnc = attacker.AttChance or 1
 		local damage2 = (damage * (attacker.ElementalMul or 1)) * (ent:GetZombieClassTable().ElementalDebuff or 1)
 		if attacker:HasTrinket("fire_at") then
 			if (math.max(math.random(1,5 * chnc),1) == 1 or attacker:IsSkillActive(SKILL_100_PERC) and (attacker.NextFireAtt or 0) < time ) then
@@ -4810,8 +4810,8 @@ function GM:HumanKilledZombie(pl, attacker, inflictor, dmginfo, headshot, suicid
 				--net.Start("zs_update_style") net.WriteTable({time = CurTime()+1.5+(math.random(10,20)*0.2),text = "HEADSHOT",score = 5}) net.Send(pl) 
 			end
 		end
-		if attacker:IsSkillActive(SKILL_PILLUCK) and pl.LuckFromKillYes >= CurTime() then
-			attacker.LuckAdd = attacker.LuckAdd + 0.05
+		if attacker:IsSkillActive(SKILL_PILLUCK) then
+			attacker.LuckAdd = attacker.LuckAdd + 0.01
 		end
 
 
@@ -5313,6 +5313,7 @@ VoiceSetTranslate["models/jazzmcfly/kantai/yuudachi/yuudachi.mdl"] = VOICESET_FE
 VoiceSetTranslate["models/player/dewobedil/vocaloid/haku/bikini_p.mdl"] = VOICESET_FEMALE
 VoiceSetTranslate["models/player/dewobedil/touhou/junko/default_p.mdl"] = VOICESET_FEMALE
 VoiceSetTranslate["models/minosprime1/minosprime1.mdl"] = VOICESET_MINOS
+VoiceSetTranslate["models/ultrakill/enemies/sisyphusprime/sisyphusprimepm.mdl"] = VOICESET_SISYPHIS
 
 function GM:PlayerSpawn(pl)
 	pl:StripWeapons()

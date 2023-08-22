@@ -2256,11 +2256,11 @@ GM:AddSkillModifier(SKILL_CHALLENGER1, SKILLMOD_LUCK, 1)
 GM:AddSkillModifier(SKILL_CHALLENGER1, SKILLMOD_HEALTH, 10)
 SKILL_CHALLENGER2 = 216
 GM:AddSkill(SKILL_CHALLENGER2, "Challenger II", GOOD.."+20% Reload speed\n"..GOOD.."Can use in any challenge",
-				                                                            	5,			4,					{SKILL_CHALLENGER1}, TREE_DONATETREE)
+				                                                            	5,			4,					{SKILL_CHALLENGER1,SKILL_CHALLENGER3}, TREE_DONATETREE)
 GM:AddSkillModifier(SKILL_CHALLENGER2, SKILLMOD_RELOADSPEED_MUL, 0.2)
 SKILL_CHALLENGER3 = 217
 GM:AddSkill(SKILL_CHALLENGER3, "Challenger III", GOOD.."+100% XP Multiplier\n"..GOOD.."Can use in any challenge",
-				                                                            	5,			0,					{}, TREE_DONATETREE)
+				                                                            	5,			0,					{}, TREE_DONATETREE).NeedAchievement = "phantomwill"
 GM:AddSkillModifier(SKILL_CHALLENGER3, SKILLMOD_XP, 1)
 --Skill for high-remort
 GM:AddSkill(SKILL_SECRET2, "Secret V", GOOD.."Good thing, +3 spoints",
@@ -2366,6 +2366,18 @@ SKILL_USELESS_25 = 524
 GM:AddSkill(SKILL_USELESS_25, "Useless 25", GOOD.."+2% XP Multiplier",
 				                                                            	-5,		    -3,					{SKILL_USELESS_24}, TREE_USELESSTREE)
 GM:AddSkillModifier(SKILL_USELESS_25, SKILLMOD_XP, 0.02)
+SKILL_USELESS_26 = 525
+GM:AddSkill(SKILL_USELESS_26, "Useless 26", GOOD.."+1% Damage",
+				                                                            	-5,		    -4,					{SKILL_USELESS_25}, TREE_USELESSTREE)
+GM:AddSkillModifier(SKILL_USELESS_26, SKILLMOD_DAMAGE_ALL, 0.01)
+SKILL_USELESS_27 = 526
+GM:AddSkill(SKILL_USELESS_27, "Useless 27", GOOD.."+1% Max Curse",
+				                                                            	-6,		    -4,					{SKILL_USELESS_26}, TREE_USELESSTREE)
+GM:AddSkillModifier(SKILL_USELESS_27, SKILLMOD_CURSEM, 0.01)
+SKILL_USELESS_28 = 527
+GM:AddSkill(SKILL_USELESS_28, "Useless 28", GOOD.."+0.05 Luck",
+				                                                            	-5,		    -5,					{SKILL_USELESS_27}, TREE_USELESSTREE)
+GM:AddSkillModifier(SKILL_USELESS_28, SKILLMOD_LUCK, 0.05)
 
 
 

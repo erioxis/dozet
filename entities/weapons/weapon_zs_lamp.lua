@@ -75,7 +75,7 @@ function SWEP:DealThink(dmginfo)
 			self:SetDTFloat(6,0)
 			self.NoAbility = false
 		end
-		return self.MeleeDamage*3*(self:GetOwner().MeleeDamageMultiplier or 1)
+		return self.MeleeDamage*(self:GetOwner().MeleeDamageMultiplier or 1)
 	end
 end
 if not CLIENT then return end

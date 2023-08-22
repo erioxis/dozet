@@ -418,7 +418,7 @@ function meta:Draw2DFeature( progress, remst, nexst, text, font, color, cenpress
 
 	draw.SimpleText( translate.Get( text ), font, x + w, y - 120 - htxt / 2 + 12, col, TEXT_ALIGN_RIGHT )
 
-	if cenpress and progress >= 1 then
+	if GAMEMODE.NewbieMode and cenpress and progress >= 1 then
 		if clipif and ( self:Clip1() < self:GetMaxClip1() / 2 and ( remst and remst ~= 0 ) ) then return end
 		local nobind = !input.LookupBinding( cenpress )
 		local txt, font = translate.Format(nobind and "no_find_x_bind" or "weapon_press_x", nobind and "+menu" or string.upper( input.LookupBinding( cenpress ) ) ), "ZSHUDFontSmallest"

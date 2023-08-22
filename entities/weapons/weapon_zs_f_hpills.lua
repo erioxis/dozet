@@ -69,10 +69,11 @@ function SWEP:Eat()
 			droped:SetOwner(owner)
 			droped:SetTime(20.5+CurTime())
 			owner:SetHealth(owner:GetMaxHealth()*0.2)
-			owner:Say("hematemesis!!")
+			owner:Say("hematemesis!!!")
 			droped.DieTime = CurTime() + 40.5
 			timer.Simple(0.1, function() droped:GetPhysicsObject():SetVelocity(VectorRand(-500,500)) end )
 		end
+		owner:GiveAchievement("hematemesis")
 		return
 	end
 	owner:Kill()

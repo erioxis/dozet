@@ -255,6 +255,22 @@ GM.Achievements["goodtime"] = {
     Goal = 500,
     Reward = 6500
 }
+GM.Achievements["toxicgases"] = {
+    Name = translate("challenge_toxicgases"),
+    Desc = translate("challenge_toxicgases_d"),
+    Goal = 500,
+    Reward = 16500
+}
+GM.Achievements["hematemesis"] = {
+    Name = translate("challenge_hematemesis"),
+    Desc = translate("challenge_hematemesis_d"),
+    Reward = 56500
+}
+GM.Achievements["phantomwill"] = {
+    Name = translate("challenge_phantomwill"),
+    Desc = translate("challenge_phantomwill_d"),
+    Reward = -3230
+}
 GM.Achievements["best_medicine"] = {
     Name = translate("challenge_best_medicine"),
     Desc = translate("challenge_best_medicine_d"),

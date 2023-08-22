@@ -165,16 +165,25 @@ function meta:ApplySkills(override)
 		end
 	end
 	if table.HasValue(desired,492) then
-		local g = math.random(1,493)
+		local g = math.random(1,496)
 		desired_assoc[g] = true
 		current_active[g] = true
 		print(g)
+		if g == 217 then
+			pl:GiveAchievement("phantomwill")
+		end
 		self:PrintTranslatedMessage(HUD_PRINTTALK, "current_skill_rand",GAMEMODE.Skills[g].Name) 
 	end
 	if table.HasValue(desired,493) then
-		local g = math.random(1,493)
+		local g = math.random(1,496)
 		while current_active[g] do
-			g = math.random(1,493)
+			g = math.random(1,496)
+			if g == 217 then
+				g = math.random(1,496) 
+				if g == 217 then
+					pl:GiveAchievement("phantomwill")
+				end
+			end
 			if !current_active[g] then
 				break
 			end

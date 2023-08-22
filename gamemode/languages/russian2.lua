@@ -420,6 +420,9 @@ LANGUAGE.skill_hihi_d1 = "-6% Получаемого урона от накоп�
 LANGUAGE.skill_conissue = "Проблема концентрата"
 LANGUAGE.skill_conissue_d1 = "+45% Элементального урона.\n"
 LANGUAGE.skill_conissue_d2 = "-50% Шанс срабатывания модификаторов.\n"
+LANGUAGE.skill_ended_know = "Завершенный том"
+LANGUAGE.skill_ended_know_mag_d1 = "-25% Элементального урона.\n"
+LANGUAGE.skill_ended_know_mag_d2 = "Это того стоит!Все индукторы сливаются в 1 и работают рандомно!"
 LANGUAGE.skill_nature_fs = "Связь с природой"
 LANGUAGE.skill_nature_fs_d1 = "-33% Получаемого урона от накопителей\n"
 LANGUAGE.skill_nature_fs_d2 = "-25% Элементального урона.\n"
@@ -1031,6 +1034,7 @@ LANGUAGE.evolves_in_to_x_on_wave_y					= "Эволюционирует в %s н�
 
 
 LANGUAGE.activate_inv = "Использовать"
+LANGUAGE.clip_activate = "Закрепить на Q(+menu)"
 LANGUAGE.weapon_drone_station = "Станция Улучшения Дронов"
 LANGUAGE.rem_t_modules =  "Модули"
 LANGUAGE.drop_item = "Выкинуть предмет"

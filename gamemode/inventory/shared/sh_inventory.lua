@@ -248,7 +248,7 @@ GM:AddInventoryItemData("cons_bounty",		trs("c_bounty"),			trs("c_bounty_d"),			
 		end
 	end
 	pl.SeededBounty = need
-	net.Start("zs_upgradeitem")
+	net.Start("zs_openbounty")
 	net.WriteTable(need)
 	net.Send(pl)
 end,0)
@@ -322,7 +322,7 @@ GM:AddInventoryItemData("cons_soul_picka",		trs("c_soul_picka"),			trs("c_soul_p
 		end
 	end
 	pl.SeededSouls = need
-	net.Start("zs_upgradeitem")
+	net.Start("zs_openbounty")
 		net.WriteTable(need)
 	net.Send(pl)
 end,0)

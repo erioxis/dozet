@@ -95,6 +95,7 @@ SWEP.Primary.Sound = Sound("Weapon_MAC10.Single")
 SWEP.Primary.Damage = 33
 SWEP.Primary.NumShots = 1
 SWEP.Primary.Delay = 0.036
+SWEP.Tier = 4
 
 SWEP.Primary.ClipSize = 70
 SWEP.Primary.Automatic = true
