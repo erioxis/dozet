@@ -165,14 +165,19 @@ function meta:ApplySkills(override)
 		end
 	end
 	if table.HasValue(desired,492) then
+		
 		local g = math.random(1,496)
 		desired_assoc[g] = true
 		current_active[g] = true
 		print(g)
 		if g == 217 then
-			pl:GiveAchievement("phantomwill")
+			self:GiveAchievement("phantomwill")
 		end
-		self:PrintTranslatedMessage(HUD_PRINTTALK, "current_skill_rand",GAMEMODE.Skills[g].Name) 
+		timer.Simple(1, function() self:SendLua('MySelf:PrintMessage(HUD_PRINTTALK, translate.Format("current_skill_rand",GAMEMODE.Skills['..(g)..'].Name))') 
+			net.Start("zs_fuckluasend")
+			net.WriteInt(g,10)
+			net.Send(self)
+		end)
 	end
 	if table.HasValue(desired,493) then
 		local g = math.random(1,496)
@@ -181,7 +186,8 @@ function meta:ApplySkills(override)
 			if g == 217 then
 				g = math.random(1,496) 
 				if g == 217 then
-					pl:GiveAchievement("phantomwill")
+					self:GiveAchievement("phantomwill")
+					break
 				end
 			end
 			if !current_active[g] then
@@ -191,7 +197,11 @@ function meta:ApplySkills(override)
 		desired_assoc[g] = true
 		current_active[g] = true
 		print(g)
-		self:PrintTranslatedMessage(HUD_PRINTTALK, "current_skill_rand",GAMEMODE.Skills[g].Name) 
+		timer.Simple(1, function() self:SendLua('MySelf:PrintMessage(HUD_PRINTTALK, translate.Format("current_skill_rand",GAMEMODE.Skills['..(g)..'].Name))') 
+			net.Start("zs_fuckluasend")
+			net.WriteInt(g,10)
+			net.Send(self)
+		end)
 	end
 	self:ApplyAssocModifiers(desired_assoc)
 
@@ -358,3 +368,6 @@ function meta:GetTotalAdditiveModifier(...)
 	end
 	return totalmod
 end
+
+
+

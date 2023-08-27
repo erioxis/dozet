@@ -309,7 +309,7 @@ GM:AddInventoryItemData("cons_soul_picka",		trs("c_soul_picka"),			trs("c_soul_p
 	if #need < 2 then
 		while #need < 3 or tries < 50 do
 			local item = pick[math.random(1,#pick)]
-			if !table.HasValue(need,item) and !pl:HasTrinket(item) then 
+			if !table.HasValue(need,item) and !(pl:HasTrinket(item) or pl:HasInventoryItemQ("trinket_"..item)) then 
 				need[#need+1] = item
 			end
 			tries = tries + 1
@@ -447,7 +447,7 @@ GM:AddInventoryItemData("cons_sack_of_trinkets",		trs("c_sack_of_trinkets"),			t
 	local use2 = {} 
 	for item,v in pairs(GAMEMODE.ZSInventoryItemData) do
 		local g = table.HasValue(string.Explode("_",item), "curse")
-		if item ~= nouse and !pl:HasInventoryItem(item) and string.len(item) >= 5 and !g and  (GAMEMODE.ZSInventoryItemData[item].Tier or 1) <= 3 then
+		if item ~= nouse and !pl:HasInventoryItem(item) and string.len(item) >= 5 and !g and  (GAMEMODE.ZSInventoryItemData[item].Tier or 1) <= 3 and !pl:HasInventoryItemQ(item) then
 			table.insert(use2, #use2 + 1,item)
 		end
 	end
@@ -887,11 +887,12 @@ GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 0.07)
 GM:AddSkillModifier(trinket, SKILLMOD_SPEED, 55)
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_MOVEMENTSPEED_ON_KILL, 55)
 
-GM:AddSkillModifier(GM:AddTrinket(trs("t_hemoadii"), "hemoadrenaliii", false, mveles, mweles, 4, trs("t_d_hemoadii"), nil, nil, "weapon_zs_melee_trinket"), SKILLMOD_MELEE_DAMAGE_TO_BLOODARMOR_MUL, 0.22)
+trinket = GM:AddTrinket(trs("t_hemoadii"), "hemoadrenaliii", false, mveles, mweles, 4, trs("t_d_hemoadii"), nil, nil, "weapon_zs_melee_trinket")
+GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TO_BLOODARMOR_MUL, 0.22)
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 0.04)
-GM:AddSkillModifier(GM:AddTrinket(trs("t_athermia"), "sharpkt", false, mveles, mweles, 4, trs("t_d_athermia"), nil, nil, "weapon_zs_melee_trinket"), SKILLMOD_MELEE_DAMAGE_TO_BLOODARMOR_MUL, -0.09)
+trinket = GM:AddTrinket(trs("t_athermia"), "sharpkt", false, mveles, mweles, 4, trs("t_d_athermia"), nil, nil, "weapon_zs_melee_trinket")
+GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TO_BLOODARMOR_MUL, -0.09)
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.05)
-GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TO_BLOODARMOR_MUL, -0.08)
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_MOVEMENTSPEED_ON_KILL, -280)
 
 GM:AddSkillModifier(GM:AddTrinket(trs("t_gaunt"), "powergauntlet", false, mveles, mweles, 3, trs("t_d_gaunt"), nil, nil, "weapon_zs_melee_trinket"), SKILLMOD_MELEE_POWERATTACK_MUL, 0.45)
@@ -1314,7 +1315,31 @@ trinket = GM:AddTrinket(trs("t_defenderiii"), "composite", false, develes, dewel
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.06)
 GM:AddSkillModifier(trinket, SKILLMOD_PROJECTILE_DAMAGE_TAKEN_MUL, -0.16)
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TO_BLOODARMOR_MUL, -0.07)
-trinket = GM:AddTrinket(trs("t_ttimes"), "ttimes", false, develes, deweles, 5, trs("t_d_ttimes"), nil, nil, "weapon_zs_defence_trinket")
+
+trinket, trinketwep = GM:AddTrinket(trs("t_ttimes"), "ttimes", false, develes, deweles, 5, trs("t_d_ttimes"), nil, nil, "weapon_zs_defence_trinket")
+trinketwep.Upgradable = true
+GM:AddSkillFunction(trinket, function(pl, active) pl.TTimesHihi = active  end)
+GM:AddSkillModifier(trinket, SKILLMOD_DAMAGE_TAKEN_N, -1)
+trinket, trinketwep = GM:AddTrinket(trs("t_ttimes").."+1", "ttimes_q1", false, develes, deweles, 5, trs("t_d_ttimes_q1"), nil, nil, "weapon_zs_defence_trinket")
+trinketwep.Upgradable = true
+GM:AddSkillModifier(trinket, SKILLMOD_DAMAGE_TAKEN_N, -2)
+GM:AddSkillFunction(trinket, function(pl, active) pl.TTimesHihi = active   end)
+trinket, trinketwep = GM:AddTrinket(trs("t_ttimes").."+2", "ttimes_q2", false, develes, deweles, 5, trs("t_d_ttimes_q2"), nil, nil, "weapon_zs_defence_trinket")
+trinketwep.Upgradable = true
+GM:AddSkillModifier(trinket, SKILLMOD_DAMAGE_TAKEN_N, -3)
+GM:AddSkillFunction(trinket, function(pl, active) pl.TTimesHihi = active end)
+trinket, trinketwep = GM:AddTrinket(trs("t_ttimes").."+3", "ttimes_q3", false, develes, deweles, 5, trs("t_d_ttimes_q3"), nil, nil, "weapon_zs_defence_trinket")
+trinketwep.Upgradable = true
+GM:AddSkillModifier(trinket, SKILLMOD_DAMAGE_TAKEN_N, -4)
+GM:AddSkillFunction(trinket, function(pl, active) pl.TTimesHihi = active end)
+trinket, trinketwep = GM:AddTrinket(trs("t_ttimes").."+4", "ttimes_q4", false, develes, deweles, 5, trs("t_d_ttimes_q4"), nil, nil, "weapon_zs_defence_trinket")
+trinketwep.Upgradable = true
+trinketwep.NeedForUpgrade = "comp_soul_dd"
+GM:AddSkillModifier(trinket, SKILLMOD_DAMAGE_TAKEN_N, -5)
+GM:AddSkillFunction(trinket, function(pl, active) pl.TTimesHihi = active  end)
+trinket, trinketwep = GM:AddTrinket(trs("t_ttimes").."+5", "ttimes_q5", false, develes, deweles, 5, trs("t_d_ttimes_q5"), nil, nil, "weapon_zs_defence_trinket")
+GM:AddSkillFunction(trinket, function(pl, active) pl.TTimesHihi = active   end)
+GM:AddSkillModifier(trinket, SKILLMOD_DAMAGE_TAKEN_N, -6)
 
 
 

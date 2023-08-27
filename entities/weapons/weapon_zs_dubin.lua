@@ -70,14 +70,14 @@ end
 SWEP.Base = "weapon_zs_basemelee"
 
 SWEP.ViewModel = "models/melee_anims/c_crovel.mdl"
-SWEP.WorldModel = "models/melee_anims/c_crovel.mdl"
+SWEP.WorldModel = "models/weapons/w_crowbar.mdl"
 SWEP.UseHands = true
 
 SWEP.HoldType = "melee2"
 
 SWEP.DamageType = DMG_CLUB
 
-SWEP.Tier = 1
+SWEP.Tier = 4
 
 SWEP.MeleeDamage = 45
 SWEP.MeleeRange = 120
@@ -102,7 +102,7 @@ SWEP.Runn = false
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_FIRE_DELAY, -0.1)
 
 function SWEP:PlaySwingSound()
-	self:EmitSound("weapons/iceaxe/iceaxe_swing1.wav", 80, math.Rand(125, 370))
+	self:EmitSound("weapons/iceaxe/iceaxe_swing1.wav", 80, 25)
 end
 
 function SWEP:PlayHitSound()
@@ -110,7 +110,7 @@ function SWEP:PlayHitSound()
 end
 
 function SWEP:PlayHitFleshSound()
-	self:EmitSound("physics/body/body_medium_break"..math.random(2, 4)..".wav", 120, math.Rand(125, 370))
+	self:EmitSound("weapons/zs_power/power4.wav", 120, math.Rand(125, 220))
 end
 
 --function SWEP:MeleeSwing()
@@ -207,6 +207,11 @@ function SWEP:MeleeSwing()
 		self:ServerMeleePostHitEntity(tr, hitent, damagemultiplier)
 	end
 	if self.Runn then
-		timer.Simple(1,function() self:MeleeSwing() end)
+		timer.Simple(1,function() self:MeleeSwing() 
+			owner:ViewPunch(132 * Angle(math.Rand(-0.1, -0.1), math.Rand(-0.1, 0.1), 0))
+
+		owner:SetGroundEntity(NULL)
+		owner:SetVelocity(-90 * owner:GetAimVector())
+		end)
 	end
 end

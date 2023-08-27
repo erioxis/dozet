@@ -47,7 +47,9 @@ function ENT:Think()
 			if ent and ent:IsValid() and self.Classes[class] and WorldVisible(pos, ent:NearestPoint(pos)) and droppedrecent and ownsitem then
 				local phys = ent:GetPhysicsObject()
 				local dir = (pos - ent:NearestPoint(pos)):GetNormalized()
-				phys:ApplyForceCenter((phys and phys:IsValid() and phys:GetMass() or 1) * self.Force * dir)
+				if phys and phys:IsValid() then
+					phys:ApplyForceCenter(dir*phys:GetMass() or 1 * self.Force)
+				end
 				ent:SetPhysicsAttacker(owner, 4)
 	
 			end

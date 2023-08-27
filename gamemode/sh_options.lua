@@ -709,6 +709,7 @@ GM:AddAPointShopItem("hint_doset",			ITEMCAT_OTHER,			25,				nil,							translat
 GM:AddAPointShopItem("antivirus_anti",		ITEMCAT_OTHER,			3000,				"weapon_zs_redeemrayv2")
 
 GM:AddAPointShopItem("speedx22",			ITEMCAT_MELEE,			8000,			"weapon_zs_speed")
+GM:AddAPointShopItem("dubin",			ITEMCAT_MELEE,			350,			"weapon_zs_dubin")
 GM:AddAPointShopItem("bannahuyx222",			ITEMCAT_TOOLS,			4500,			"weapon_zs_banhammer")
 -- Tier 1
 GM:AddPointShopItem("cutlery",			ITEMCAT_TRINKETS,		10,				"trinket_cutlery").SubCategory =								ITEMSUBCAT_TRINKETS_DEFENSIVE

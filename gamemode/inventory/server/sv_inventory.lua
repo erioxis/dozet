@@ -129,6 +129,30 @@ net.Receive("zs_activate_trinket", function(len, pl)
 	end
 	gamemode.Call("OnTrinketActivate", trinket, pl)
 end)
+net.Receive("zs_upgrade_trinket", function(len, pl)
+	local item = net.ReadString()
+	local pl = net.ReadEntity()
+	local tbl = GAMEMODE.ZSInventoryItemData[item]
+	if  pl:HasInventoryItemQ(item) or !pl:HasInventoryItem(item) then pl:SendLua("surface.PlaySound(\"buttons/button10.wav\")") return end
+	local newi = ""
+	if  string.sub(item ,#item-1,#item-1) ~= "q" then
+		newi = item.."_q1"
+	else
+		newi = string.sub(item ,0,#item-1)..(tonumber(string.sub(item ,#item,#item))+1)
+	end
+--	print(newi)
+	local cost = GAMEMODE:GetUpgradeScrap(tbl,(tonumber(string.sub(item ,#item,#item)) and tonumber(string.sub(item ,#item,#item))+1 or 1))
+--	print(cost)
+	if cost > pl:GetAmmoCount("scrap") or tbl.NeedForUpgrade and !pl:HasInventoryItem(tbl.NeedForUpgrade) then 
+		GAMEMODE:ConCommandErrorMessage(pl, translate.ClientGet(pl, "need_to_have_enough_scrap"))
+		return 
+	end
+	pl:SendLua("surface.PlaySound(\"buttons/lever"..math.random(5)..".wav\")")
+	pl:RemoveAmmo(cost, "scrap")
+--	print(GAMEMODE:GetUpgradeScrap(GAMEMODE.ZSInventoryItemData[item],tonumber(string.sub(item ,#item,#item)) or 2))
+	pl:AddInventoryItem(newi)
+	pl:TakeInventoryItem(item)
+end)
 
 function meta:TryAssembleItem(component, heldclass)
 	local heldwep, desiassembly = self:GetWeapon(heldclass)
@@ -328,4 +352,26 @@ end
 
 function meta:HasInventoryItem(item)
 	return self.ZSInventory[item]
+end
+function meta:HasInventoryItemQ(item)
+	local newi = ""
+	local newi2 = ""
+	local newi3 = ""
+	local newi4 = ""
+	local newi5 = ""
+
+	if  string.sub(item ,#item-1,#item-1) ~= "q" then
+		newi = item.."_q1"
+		newi2 = item.."_q2"
+		newi3 = item.."_q3"
+		newi4 = item.."_q4"
+		newi5 = item.."_q5"
+	else
+		newi = string.sub(item ,0,#item-1)..(tonumber(string.sub(item ,#item,#item))+1)
+		newi2 = string.sub(item ,0,#item-1)..(tonumber(string.sub(item ,#item,#item))+2)
+		newi3 = string.sub(item ,0,#item-1)..(tonumber(string.sub(item ,#item,#item))+3)
+		newi4 = string.sub(item ,0,#item-1)..(tonumber(string.sub(item ,#item,#item))+4)
+		newi5 = string.sub(item ,0,#item-1)..(tonumber(string.sub(item ,#item,#item))+5)
+	end
+	return self.ZSInventory[newi] or  self.ZSInventory[newi2] or  self.ZSInventory[newi3] or  self.ZSInventory[newi4] or  self.ZSInventory[newi5]
 end

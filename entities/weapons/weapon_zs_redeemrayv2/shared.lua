@@ -21,6 +21,7 @@ GAMEMODE:SetupDefaultClip(SWEP.Primary)
 
 SWEP.ConeMax = 0
 SWEP.ConeMin = 0
+SWEP.Tier = 7
 
 
 SWEP.HealRange = 1200

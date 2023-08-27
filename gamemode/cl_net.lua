@@ -36,6 +36,16 @@ net.Receive("zs_deminextboss", function(length)
 
 	GAMEMODE.NextDemiBossZombieClass = net.ReadString()
 end)
+net.Receive("zs_fuckluasend", function(length)
+	local g = net.ReadInt(10)
+	for k,v in pairs(string.Explode("\n", GAMEMODE.Skills[g].Description)) do 
+		if v:sub(1, 1) == "^" then
+			local colid = tonumber(v:sub(2, 2)) or 0
+			local v = v:sub(3)
+			chat.AddText(util.ColorIDToColor(colid, COLOR_GRAY), v )
+		end
+	end
+end)
 local kill_sounds = {
     "mge/kill/6am.wav",
     "mge/kill/16-0.wav",

@@ -78,7 +78,7 @@ concommand.Add("zs_pointsshopbuy", function(sender, command, arguments)
 		itemtab.Callback( sender, count_or_nil )
 	elseif itemtab.SWEP then
 		if string.sub(itemtab.SWEP, 1, 6) ~= "weapon" then
-			if GAMEMODE:GetInventoryItemType(itemtab.SWEP) == INVCAT_TRINKETS and sender:HasInventoryItem(itemtab.SWEP) then
+			if GAMEMODE:GetInventoryItemType(itemtab.SWEP) == INVCAT_TRINKETS and (sender:HasInventoryItem(itemtab.SWEP) or sender:HasInventoryItemQ(itemtab.SWEP)) then
 				return
 			else
 				sender:AddInventoryItem(itemtab.SWEP)
@@ -236,7 +236,7 @@ concommand.Add("zs_anti_pointsshopbuy", function(sender, command, arguments)
 		itemtab.Callback(sender)
 	elseif itemtab.SWEP then
 		if string.sub(itemtab.SWEP, 1, 6) ~= "weapon" then
-			if GAMEMODE:GetInventoryItemType(itemtab.SWEP) == INVCAT_TRINKETS and sender:HasInventoryItem(itemtab.SWEP) then
+			if GAMEMODE:GetInventoryItemType(itemtab.SWEP) == INVCAT_TRINKETS and (sender:HasInventoryItem(itemtab.SWEP) or sender:HasInventoryItemQ(itemtab.SWEP)) then
 				return
 			else
 				sender:AddInventoryItem(itemtab.SWEP)

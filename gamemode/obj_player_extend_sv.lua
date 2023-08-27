@@ -152,6 +152,8 @@ function meta:ProcessDamage(dmginfo)
 			damage = math.min(damage, (mxap * 0.11))
 		end
 		if attacker:IsValidLivingHuman() and inflictor:IsValid() and inflictor == attacker:GetActiveWeapon() then
+			damage = damage * 0.75
+			
 			if attacker:IsSkillActive(SKILL_NUCLEAR_DAD) then
 				damage = damage + damage * GAMEMODE:GetWave()*0.0005
 			end
@@ -298,7 +300,7 @@ function meta:ProcessDamage(dmginfo)
 				end
 				if attacker:IsSkillActive(SKILL_RESNYATOST) or attacker:HasTrinket("sin_wrath") then
 					local double = attacker:IsSkillActive(SKILL_RESNYATOST) and attacker:HasTrinket("sin_wrath")
-					attacker:SetProgress(attacker:GetProgress("rprog") + math.min(100,dmginfo:GetDamage()*0.3*(double and 2 or 1)),"rprog")
+					attacker:SetProgress(attacker:GetProgress("rprog") + math.min(100,dmginfo:GetDamage()*0.3*(double and 2 or 1)) * (attacker:GetStatus("resnya") and 0.05),"rprog")
 					if attacker:GetProgress("rprog") >= 1000 then
 						attacker:SetProgress(0,"rprog")
 						attacker:GiveStatus("resnya",12)
@@ -568,8 +570,8 @@ function meta:ProcessDamage(dmginfo)
 					end)
 					dmginfo:SetDamage(0)
 				end]]
-				if self:HasTrinket("ttimes") then
-					damage = damage - 3
+				if self.DamageTakenInt then
+					damage = damage + self.DamageTakenInt
 				end
 				if self:IsSkillActive(SKILL_FOLGA) then
 					damage = damage - 1
@@ -647,7 +649,7 @@ function meta:ProcessDamage(dmginfo)
 				end
 
 
-				if self:HasTrinket("ttimes") and  math.randomr(1,100,8,self) <= 9 then
+				if self.TTimesHihi and  math.randomr(1,100,8,self) <= 9 then
 					attacker:GiveStatus("dimvision", 1)
 					net.Start("zs_damageblock")
 					net.Send(self)
@@ -1526,6 +1528,9 @@ function meta:GiveStatus(sType, fDie, applier, ignoredouble)
 		end
 		cur:SetPlayer(self, true)
 		if applier then
+			if cur.OnApplierChange then
+				cur:OnApplierChange(applier)
+			end
 			cur.Applier = cur.Applier or applier
 		end
 		return cur
@@ -1974,13 +1979,15 @@ function meta:DoHulls(classid, teamid)
 			end
 			if (math.random(1,25) == 1 or GAMEMODE:GetWave() == 12) and self:IsValid() then
 				self:SetChampion(math.random(1,9))
-				net.Start("zs_champion")
+				if GAMEMODE:GetWave() ~= 12 then
+					net.Start("zs_champion")
+						net.WriteUInt(classid, 8)
+					net.Send(self)
+					net.Start("zs_champion_all")
+					net.WriteEntity(self)
 					net.WriteUInt(classid, 8)
-				net.Send(self)
-				net.Start("zs_champion_all")
-				net.WriteEntity(self)
-				net.WriteUInt(classid, 8)
-				net.Broadcast()
+					net.Broadcast()
+				end
 			end
 			
 			local scale = (self:IsChampion() and (self:GetChampion() == CHAMP_SMOL and 0.75 or self:GetChampion() == CHAMP_BIG and 1.3 or 1.1) or 1)

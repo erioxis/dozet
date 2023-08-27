@@ -679,7 +679,6 @@ function GM:InitPostEntity()
 	end
 	local v = self.Credits[1]
 	if GetConVar("hostname"):GetString() ~= "Дозет["..v[3]..v[2].."|ДОСТИЖЕНИЯ|500+ СКИЛЛОВ]" then
-
 		RunConsoleCommand("hostname", "Дозет["..v[3]..v[2].."|ДОСТИЖЕНИЯ|500+ СКИЛЛОВ]")
 
 	end
@@ -1233,6 +1232,40 @@ function GM:ShouldRestartRound()
 
 	return true
 end
+local function ButMutagenBot(sender,id)
+	if  gamemode.Call("ZombieCanPurchase", sender) or sender:Team() == TEAM_HUMAN then
+		return
+	end
+	if id.Signature == "redeem_pshop" or id.Signature == "m_zombie_gigachad" then return end
+	local cost = id and id.Worth or 1000
+	local hasalready = {}
+	local tokens = sender:GetTokens()
+
+	if cost > tokens then return end
+	local num = tonumber(id)
+
+
+	local itemtab = id
+
+	if itemtab.Worth then
+	
+		local tokens = sender:GetTokens()
+		local cost = itemtab.Worth
+		
+		cost = math.ceil(cost)
+
+		if tokens < cost  then
+			sender:CenterNotify(COLOR_RED, translate.ClientGet(sender, "you_dont_have_enough_btokens"))
+			sender:SendLua("surface.PlaySound(\"buttons/button10.wav\")")
+			return
+		end
+		itemtab.Callback(sender)
+		sender:TakeTokens(cost)
+		sender.UsedMutations = sender.UsedMutations or { }
+		table.insert( sender.UsedMutations, itemtab.Signature )
+	end
+	print("Bot buyed a "..id.Signature)
+end
 local trade_da = {
 	"trinket_altjudassoul",  -- 2
 	"trinket_altsamsonsoul",  -- 3
@@ -1380,7 +1413,7 @@ function GM:Think()
 				if pl:HasTrinket("sin_pride")  and wep and (wep.Tier or 1) >= 4 and  wep then
 					pl:StripWeapon(wep:GetClass())
 				end
-				if wep and wep:IsValid() and !wep.AddedAmmo and pl:GetAmmoCount(wep.Primary.Ammo) < 0 then
+				if wep and wep:IsValid() and !wep.AddedAmmo and pl:GetAmmoCount(wep.Primary.Ammo) <= 0 then
 					pl:GiveAmmo(1,wep.Primary.Ammo)
 					wep.AddedAmmo = true
 				elseif wep and wep:IsValid() and !wep.AddedAmmo and pl:GetAmmoCount(wep.Primary.Ammo) > 0 then
@@ -1698,10 +1731,15 @@ function GM:Think()
 					pl.NextRegenerate = time + 5
 					pl:SetHealth(math.min(pl:GetMaxHealth(), pl:Health() + (pl:GetMaxHealth() * 0.05)))
 				end
-				if pl:GetZombieClassTable().SpeedUp and pl.GetSpeedUpTimer and pl.GetSpeedUpTimer + 1 >= CurTime() then
+				if pl:GetZombieClassTable().SpeedUp and pl.GetSpeedUpTimer and pl.GetSpeedUpTimer + 1 >= time then
 					pl:ResetSpeed()
 				end
-				
+				if pl:IsBot() and (pl.NextThinkMutagenBots or 1) < time then
+					pl.NextThinkMutagenBots = time + 15
+					if math.random(1,3) == 1 then
+						ButMutagenBot(pl,self.Mutations[math.random(1,#self.Mutations)])
+					end
+				end
 			end
 
 		end
@@ -5314,7 +5352,36 @@ VoiceSetTranslate["models/player/dewobedil/vocaloid/haku/bikini_p.mdl"] = VOICES
 VoiceSetTranslate["models/player/dewobedil/touhou/junko/default_p.mdl"] = VOICESET_FEMALE
 VoiceSetTranslate["models/minosprime1/minosprime1.mdl"] = VOICESET_MINOS
 VoiceSetTranslate["models/ultrakill/enemies/sisyphusprime/sisyphusprimepm.mdl"] = VOICESET_SISYPHIS
-
+local redeemload = { 
+	[0] = {"weapon_zs_redeemers","weapon_zs_swissarmyknife"},
+	{"weapon_zs_redeemers_q1","weapon_zs_swissarmyknife_q1"}, -- 1
+	{"weapon_zs_redeemers_q1","weapon_zs_swissarmyknife_q2"},
+	{"weapon_zs_redeemers_q2","weapon_zs_swissarmyknife_q4"},
+	{"weapon_zs_redeemers_q3","weapon_zs_swissarmyknife_q5"},
+	{"weapon_zs_redeemers_q4","weapon_zs_swissarmyknife_q5"},
+	{"weapon_zs_redeemers_q5","weapon_zs_harpoon"}, -- 6
+	{"weapon_zs_double_uzi","weapon_zs_harpoon_q1"},
+	{"weapon_zs_double_uzi_q1","weapon_zs_harpoon_q1"},
+	{"weapon_zs_double_uzi_q3","weapon_zs_harpoon_q2"}, -- 9
+	{"weapon_zs_double_uzi_q5","weapon_zs_pipemega_q2"},
+	{"weapon_zs_smorning","weapon_zs_pipemega_q3"},
+	{"weapon_zs_smorning_q5","weapon_zs_pipemega_q5"},
+	{"weapon_zs_smorning_q5","weapon_zs_pipemega_q5"}
+}
+local function DoRedeemLoadout(self,pl)
+	if self:GetWave() >= 9 then
+		pl:SetPoints(500)
+	end
+	if redeemload[self:GetWave()] then
+		for  k,v in pairs(redeemload[self:GetWave()]) do
+			pl:Give(v)
+		end
+	else
+		for  k,v in pairs({"weapon_zs_redeemers_q1","weapon_zs_swissarmyknife_q1"}) do
+			pl:Give(v)
+		end
+	end
+end
 function GM:PlayerSpawn(pl)
 	pl:StripWeapons()
 	pl:WipePlayerInventory()
@@ -5564,17 +5631,7 @@ function GM:PlayerSpawn(pl)
 						pl:Give(class)
 					end
 				else
-					if self:GetWave() > 7 and  self:GetWave() <= 8 then
-						pl:Give("weapon_zs_redeemers_q5")
-						pl:Give("weapon_zs_axe_q5")
-					elseif self:GetWave() > 9 then
-						pl:Give("weapon_zs_smorning_q5")
-						pl:Give("weapon_zs_loy_q5")
-						pl:SetPoints(1200)
-					else
-						pl:Give("weapon_zs_redeemers_q5")
-						pl:Give("weapon_zs_swissarmyknife_q5")
-					end
+					DoRedeemLoadout(self,pl)
 				end
 			end
 		end

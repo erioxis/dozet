@@ -22,6 +22,10 @@
 	util.AddNetworkString("zs_golden")
 	util.AddNetworkString("zs_ability_weapon")
 
+
+	util.AddNetworkString("zs_upgrade_trinket")
+	
+
 	util.AddNetworkString("zs_last_points")
 	
 	util.AddNetworkString("zs_classunlock")
@@ -95,6 +99,8 @@
 
 	util.AddNetworkString("zs_xp_ach")
 	util.AddNetworkString("zs_secret")
+
+	util.AddNetworkString("zs_fuckluasend")
 	
 	util.AddNetworkString("HNS.AchievementsProgress")
 	util.AddNetworkString("HNS.AchievementsGet")

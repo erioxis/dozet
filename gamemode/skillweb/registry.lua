@@ -656,6 +656,7 @@ SKILLMOD_DAMAGE_ALL = 129
 SKILLMOD_BUFF_TIME = 130
 SKILLMOD_REGEN_SPEED = 131
 SKILLMOD_TURRET_DAMAGE = 132
+SKILLMOD_DAMAGE_TAKEN_N = 133
 
 local GOOD = "^"..COLORID_GREEN
 local BAD = "^"..COLORID_RED
@@ -2255,10 +2256,10 @@ GM:AddSkill(SKILL_CHALLENGER1, "Challenger I", GOOD.."+20 Health,+1 luck, help f
 GM:AddSkillModifier(SKILL_CHALLENGER1, SKILLMOD_LUCK, 1)																				
 GM:AddSkillModifier(SKILL_CHALLENGER1, SKILLMOD_HEALTH, 10)
 SKILL_CHALLENGER2 = 216
+SKILL_CHALLENGER3 = 217
 GM:AddSkill(SKILL_CHALLENGER2, "Challenger II", GOOD.."+20% Reload speed\n"..GOOD.."Can use in any challenge",
 				                                                            	5,			4,					{SKILL_CHALLENGER1,SKILL_CHALLENGER3}, TREE_DONATETREE)
 GM:AddSkillModifier(SKILL_CHALLENGER2, SKILLMOD_RELOADSPEED_MUL, 0.2)
-SKILL_CHALLENGER3 = 217
 GM:AddSkill(SKILL_CHALLENGER3, "Challenger III", GOOD.."+100% XP Multiplier\n"..GOOD.."Can use in any challenge",
 				                                                            	5,			0,					{}, TREE_DONATETREE).NeedAchievement = "phantomwill"
 GM:AddSkillModifier(SKILL_CHALLENGER3, SKILLMOD_XP, 1)
@@ -2770,6 +2771,9 @@ GM:SetSkillModifierFunction(SKILLMOD_POISON_SPEED_MUL, function(pl, amount)
 end)
 GM:SetSkillModifierFunction(SKILLMOD_SCALEMODEL, function(pl, amount)
 	pl.ScaleModel = math.Clamp(amount + 1.0 - (pl.ClanMich and 0.25 or 0), 0.06, 1000.0)
+end)
+GM:SetSkillModifierFunction(SKILLMOD_DAMAGE_TAKEN_N, function(pl, amount)
+	pl.DamageTakenInt = math.Clamp(amount, -100, 1000)
 end)
 
 

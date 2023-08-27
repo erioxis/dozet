@@ -460,12 +460,23 @@ killicon.Add("weapon_zs_craftables", "zombiesurvival/killicons/weapon_zs_craftab
 killicon.Add("weapon_zs_craftingpack", "zombiesurvival/killicons/weapon_zs_craftables")
 killicon.Add("weapon_zs_camera", "zombiesurvival/killicons/weapon_zs_camera")
 killicon.Add("weapon_zs_f_dash", "zombiesurvival/speed_up.png")
+local colorsp = {
+	{Color(235, 110, 165), Color(172, 111, 105)},
+	{Color(120, 90, 175), Color(35, 110, 245)},
+	{Color(160, 3, 5), Color(0, 100, 100)},
+	{Color(180, 3, 5), Color(0, 166, 200)},
+	{Color(255, 0, 0), Color(30, 100, 200)}
+}
+for i=1,6 do
+	killicon.Add("weapon_zs_defence_trinket"..(colorsp[i] and "_q"..i or ""), "zombiesurvival/defense.png",colorsp[i] and colorsp[i][1])
+	killicon.Add("weapon_zs_special_trinket"..(colorsp[i] and "_q"..i or ""), "zombiesurvival/speed_up.png",colorsp[i] and colorsp[i][1])
+	killicon.Add("weapon_zs_melee_trinket"..(colorsp[i] and "_q"..i or ""), "zombiesurvival/reaper.png",colorsp[i] and colorsp[i][1])
+	killicon.Add("weapon_zs_shot_trinket"..(colorsp[i] and "_q"..i or ""), "zombiesurvival/bullet.png",colorsp[i] and colorsp[i][1])
+	killicon.Add("weapon_zs_help_trinket"..(colorsp[i] and "_q"..i or ""), "zombiesurvival/sickness.png",colorsp[i] and colorsp[i][1])
+end	
 
-killicon.Add("weapon_zs_defence_trinket", "zombiesurvival/defense.png")
-killicon.Add("weapon_zs_special_trinket", "zombiesurvival/speed_up.png")
-killicon.Add("weapon_zs_melee_trinket", "zombiesurvival/reaper.png")
-killicon.Add("weapon_zs_shot_trinket", "zombiesurvival/bullet.png")
-killicon.Add("weapon_zs_help_trinket", "zombiesurvival/sickness.png")
+
+
 
 killicon.Add("weapon_zs_soul", "zombiesurvival/money.png")
 

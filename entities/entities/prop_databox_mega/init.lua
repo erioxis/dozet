@@ -60,7 +60,7 @@ function ENT:OnBarrelDestroyed()
 			if wep:IsValid() then
 				wep:SetWeaponType(self.Weps[math.random(1,#self.Weps)])
 				wep.NoLootsForTop = true
-				wep:SetPos(self:GetPos())
+				wep:SetPos(self:GetPos()+Vector(0,0,25))
 				wep:Spawn()
 				local phys = wep:GetPhysicsObject()
 				if phys then

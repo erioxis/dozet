@@ -104,7 +104,7 @@ local function ItemPanelPaint(self, w, h)
 		draw.RoundedBox(8, 0, 0, w, h, outline)
 	end
 
-	if self.ShopTabl.SWEP and MySelf:HasInventoryItem(self.ShopTabl.SWEP) then
+	if self.ShopTabl.SWEP and MySelf:HasInventoryItem(self.ShopTabl.SWEP) or MySelf:HasInventoryItemQ(self.ShopTabl.SWEP) then
 		draw.RoundedBox(8, 2, 2, w - 4, h - 4, COLOR_RORANGE)
 	end
 
