@@ -295,7 +295,18 @@ function ENT:Think()
 			self.ObjectAngles = object:GetAngles()
 		end
 		if owner:KeyDown(IN_WALK) then
-			local xdiff = math.NormalizeAngle(self.StartX - (owner.InputMouseX or 0)) 
+			local xdiff = math.NormalizeAngle(self.StartX - (owner.InputMouseX or 0))
+			local ydiff = math.NormalizeAngle(self.StartY - (owner.InputMouseY or 0))
+			local sxdiff = xdiff * FrameTime() * 8
+			local sydiff = ydiff * FrameTime() * 8
+
+			self.ObjectAngles:RotateAroundAxis(owner:GetUp(), sxdiff)
+			self.ObjectAngles:RotateAroundAxis(owner:GetRight(), sydiff)
+
+			self.StartX = math.NormalizeAngle(self.StartX - (sxdiff))
+			self.StartY = math.NormalizeAngle(self.StartY - (sydiff))
+			--[[local xdiff = math.NormalizeAngle(se
+			lf.StartX - (owner.InputMouseX or 0)) 
 			local ydiff = math.NormalizeAngle(self.StartY - (owner.InputMouseY or 0))
 			local sxdiff = math.Round(math.Round(xdiff /  30) * 30) * FrameTime() * 24-- увеличить чувствительность в 2 раза, если зажата кнопка шифта
 			local sydiff = math.Round(math.Round(ydiff /  30) *  30) * FrameTime() * 24-- увеличить чувствительность в 2 раза, если зажата кнопка шифта
@@ -306,7 +317,7 @@ function ENT:Think()
 				self.NextX = ct + 2
 			end
 			self.StartX = math.NormalizeAngle(self.StartX - (sxdiff))
-			self.StartY = math.NormalizeAngle(self.StartY - (sydiff))
+			self.StartY = math.NormalizeAngle(self.StartY - (sydiff))]]
 		end
 
 		ShadowParams.pos = self.ObjectPosition 

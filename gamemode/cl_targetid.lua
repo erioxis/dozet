@@ -36,6 +36,23 @@ function GM:DrawTargetID(ent, fade)
 		draw.SimpleTextBlur(translate.Get("trg_bdarmor")..(ent:HasTrinket("curse_unknown") and "???" or math.floor(bloodarmor)), "ZSHUDFontSmaller", x, y, colTemp, TEXT_ALIGN_CENTER)
 		y = y + draw.GetFontHeight("ZSHUDFontSmaller") + 2
 	end
+	if self.MedicalAura and (MySelf:HasTrinket("processor_q4") or MySelf:HasTrinket("processor_q5")) then
+		local localy = y-90
+		for k,v in pairs(ent:GetStatuses()) do
+			local class = v:GetClass()
+			local ent = v:GetDTEntity(22)
+			local tab = GAMEMODE.Statuses[string.sub(class,8,#class)]
+			util.ColorCopy(tab.Debuff and COLOR_SOFTRED or COLOR_LIMEGREEN, colTemp)
+			draw.SimpleTextBlur(translate.Get("s_"..tab.Name).."(".. math.floor(math.max(v:GetStartTime() + v:GetDuration() - CurTime(), 0)) ..")", "ZSHUDFontTiny", x, localy, colTemp, TEXT_ALIGN_CENTER)
+			localy = localy - draw.GetFontHeight("ZSHUDFontTiny") - 2
+			if ent and ent:IsValidPlayer() then
+				util.ColorCopy(ent == MySelf and COLOR_LIMEGREEN or ent:Team() == TEAM_UNDEAD and COLOR_SOFTRED or color_white, colTemp)
+				draw.SimpleTextBlur(translate.Format("applier_x_status",ent:Name()), "ZSHUDFontTiny", x, localy, colTemp, TEXT_ALIGN_CENTER)
+				draw.SimpleTextBlur("+", "ZSHUDFontTiny", x, localy+18, colTemp, TEXT_ALIGN_CENTER)
+				localy = localy - draw.GetFontHeight("ZSHUDFontTiny") - 2
+			end
+		end
+	end
 	if healthfraction ~= 1 then
 
 		util.ColorCopy(0.75 <= healthfraction and COLOR_HEALTHY or 0.5 <= healthfraction and COLOR_SCRATCHED or 0.25 <= healthfraction and COLOR_HURT or COLOR_CRITICAL, colTemp)

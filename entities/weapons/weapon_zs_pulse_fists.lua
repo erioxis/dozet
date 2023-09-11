@@ -132,7 +132,7 @@ function SWEP:OnMeleeHit(hitent, hitflesh, tr)
 			hitent:AttachmentDamage(self.LegDamage*2, self:GetOwner(), self, SLOWTYPE_PULSE)
 			local cursed5 = hitent:GetStatus("hollowing")
 			if (cursed5) then 
-				hitent:AddHallow(self:GetOwner(),cursed5.DieTime - CurTime() + (self.LegDamage * 1.5))
+				hitent:AddHallow(self:GetOwner(), (self.LegDamage * 1.5),true)
 			end
 			if (not cursed5) then 
 				hitent:AddHallow(self:GetOwner(),self.LegDamage * 3)

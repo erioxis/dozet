@@ -33,3 +33,8 @@ SWEP.FoodHealth = -20
 SWEP.FoodEatTime = 1
 
 SWEP.WalkSpeed = 120
+function ENT:PostEat()
+	local owner = self:GetOwner()
+	owner:GiveStatus("death",30)
+	owner:GodEnable()
+end

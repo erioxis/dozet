@@ -59,5 +59,7 @@ function SWEP:Eat()
 	if self:GetPrimaryAmmoCount() <= 0 then
 		owner:StripWeapon(self:GetClass())
 	end
+	self:PostEat()
 end
-
+function ENT:PostEat()
+end

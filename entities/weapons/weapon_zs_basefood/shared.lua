@@ -69,7 +69,7 @@ function SWEP:SecondaryAttack()
 
 	local owner = self:GetOwner()
 
-	if owner:HasTrinket("processor") then
+	if owner:HasTrinket("processor_q3") or owner:HasTrinket("processor_q5") or owner:HasTrinket("processor_q4") then
 		owner:EmitSound("weapons/bugbait/bugbait_squeeze1.wav", 65, 150)
 
 		if SERVER then

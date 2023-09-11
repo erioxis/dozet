@@ -484,9 +484,11 @@ function meta:AddLegDamage(damage)
 end
 function meta:AttachmentDamage(damage, attacker, inflictor, type)
 	inflictor = inflictor or attacker
+	damage = damage * (attacker.ElementalMul or 1)
 	if attacker:IsSkillActive(SKILL_DOUBLE_ISSUE) and math.random(1,6) == 1 then
 		damage = damage * 2
 	end
+	
 	if type == SLOWTYPE_PULSE then
 		local legdmg = damage * (attacker.PulseWeaponSlowMul or 1)
 		local startleg = self:GetFlatLegDamage()

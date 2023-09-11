@@ -1527,12 +1527,31 @@ trinketwep.PermitDismantle = true
 GM:AddSkillModifier(GM:AddTrinket(trs("t_ablueprints"), "blueprintsii", false, supveles, supweles, 4, trs("t_d_ablueprints"), nil, nil, "weapon_zs_help_trinket"), SKILLMOD_REPAIRRATE_MUL, 0.20)
 
 trinket, trinketwep = GM:AddTrinket(trs("t_medi"), "processor", false, supveles, supweles, 2, trs("t_d_medi"), nil, nil, "weapon_zs_help_trinket")
-GM:AddSkillModifier(trinket, SKILLMOD_MEDKIT_COOLDOWN_MUL, -0.10)
-GM:AddSkillModifier(trinket, SKILLMOD_MEDGUN_FIRE_DELAY_MUL, -0.6)
+GM:AddSkillModifier(trinket, SKILLMOD_MEDKIT_COOLDOWN_MUL, -0.02)
+GM:AddSkillModifier(trinket, SKILLMOD_MEDGUN_FIRE_DELAY_MUL, -0.09)
+trinketwep.Upgradable = true
+trinket, trinketwep = GM:AddTrinket(trs("t_medi").."+1", "processor_q1", false, supveles, supweles, 2, trs("t_d_medi_q1"), nil, nil, "weapon_zs_help_trinket")
+trinketwep.Upgradable = true
+GM:AddSkillModifier(trinket, SKILLMOD_MEDKIT_COOLDOWN_MUL, -0.05)
+GM:AddSkillModifier(trinket, SKILLMOD_MEDGUN_FIRE_DELAY_MUL, -0.12)
+trinket, trinketwep = GM:AddTrinket(trs("t_medi").."+2", "processor_q2", false, supveles, supweles, 2, trs("t_d_medi_q2"), nil, nil, "weapon_zs_help_trinket")
+trinketwep.Upgradable = true
+GM:AddSkillModifier(trinket, SKILLMOD_MEDKIT_COOLDOWN_MUL, -0.09)
+GM:AddSkillModifier(trinket, SKILLMOD_MEDGUN_FIRE_DELAY_MUL, -0.22)
+trinket, trinketwep = GM:AddTrinket(trs("t_medi").."+3", "processor_q3", false, supveles, supweles, 2, trs("t_d_medi_q3"), nil, nil, "weapon_zs_help_trinket")
+trinketwep.Upgradable = true
+trinketwep.NeedForUpgrade = "comp_soul_health"
+GM:AddSkillModifier(trinket, SKILLMOD_MEDKIT_COOLDOWN_MUL, -0.09)
+GM:AddSkillModifier(trinket, SKILLMOD_MEDGUN_FIRE_DELAY_MUL, -0.30)
+trinket, trinketwep = GM:AddTrinket(trs("t_medi").."+4", "processor_q4", false, supveles, supweles, 2, trs("t_d_medi_q4"), nil, nil, "weapon_zs_help_trinket")
+trinketwep.Upgradable = true
+trinketwep.NeedForUpgrade = "comp_soul_dd"
+GM:AddSkillModifier(trinket, SKILLMOD_MEDKIT_COOLDOWN_MUL, -0.1)
+GM:AddSkillModifier(trinket, SKILLMOD_MEDGUN_FIRE_DELAY_MUL, -0.43)
+trinket, trinketwep = GM:AddTrinket(trs("t_medi").."+5", "processor_q5", false, supveles, supweles, 2, trs("t_d_medi_q5"), nil, nil, "weapon_zs_help_trinket")
+GM:AddSkillModifier(trinket, SKILLMOD_MEDKIT_COOLDOWN_MUL, -0.3)
+GM:AddSkillModifier(trinket, SKILLMOD_MEDGUN_FIRE_DELAY_MUL, -0.55)
 
-trinket = GM:AddTrinket(trs("t_medii"), "curativeii", false, supveles, supweles, 3, trs("t_d_medii"), nil, nil, "weapon_zs_help_trinket")
-GM:AddSkillModifier(trinket, SKILLMOD_MEDKIT_COOLDOWN_MUL, -0.20)
-GM:AddSkillModifier(trinket, SKILLMOD_MEDGUN_FIRE_DELAY_MUL, -0.15)
 
 trinket = GM:AddTrinket(trs("t_mediii"), "remedy", false, supveles, supweles, 3, trs("t_d_mediii"), nil, nil, "weapon_zs_help_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_MEDKIT_EFFECTIVENESS_MUL, 0.3)

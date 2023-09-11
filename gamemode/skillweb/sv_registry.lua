@@ -4,6 +4,11 @@ GM:SetSkillModifierFunction(SKILLMOD_HEALTH, function(pl, amount)
 	local new = 100 + math.Clamp(amount, -99, 1000)
 	pl:SetMaxHealth(new)
 	pl:SetHealth(math.Clamp(pl:Health() / current * new,1,pl:GetMaxHealth() ))
+	if !GAMEMODE.ObjectiveMap and pl:IsSkillActive(SKILL_GIGACHAD) then
+		pl:SetModelScale(math.Clamp(math.min(math.max(0.5, new * 0.01),2.5) * (pl.ScaleModel or 1),0.2, 5))
+		pl:SetViewOffset(Vector(0, 0, 64 * pl:GetModelScale()))
+		pl:SetViewOffsetDucked(Vector(0, 0, 32 * pl:GetModelScale()))
+	end
 end)
 
 GM:SetSkillModifierFunction(SKILLMOD_POINTS, function(pl, amount)

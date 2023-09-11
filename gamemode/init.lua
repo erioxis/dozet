@@ -1573,11 +1573,6 @@ function GM:Think()
                     pl:GiveStatus("dimvision", 10, true)
 				end
 
-				if !self.ObjectiveMap and pl:IsSkillActive(SKILL_GIGACHAD) then
-					pl:SetModelScale(math.Clamp(math.min(math.max(0.5, healmax * 0.01),2.5) * (pl.ScaleModel or 1),0.2, 5))
-					pl:SetViewOffset(Vector(0, 0, 64 * pl:GetModelScale()))
-					pl:SetViewOffsetDucked(Vector(0, 0, 32 * pl:GetModelScale()))
-				end
 				if pl.MasteryHollowing > 800 and pl:IsSkillActive(SKILL_UPLOAD) then
 					local cursed5 = pl:GetStatus("hollowing")
 					pl:Kill()
@@ -1621,7 +1616,7 @@ function GM:Think()
 						pl:AddCursed(pl:GetOwner(), 1)
 					end
 					if (cursed) then 
-						pl:AddCursed(pl:GetOwner(), cursed.DieTime - CurTime() + 1)
+						pl:AddCursed(pl:GetOwner(),  1,nil,nil,true)
 					end
 				end
 
@@ -1735,7 +1730,7 @@ function GM:Think()
 					pl:ResetSpeed()
 				end
 				if pl:IsBot() and (pl.NextThinkMutagenBots or 1) < time then
-					pl.NextThinkMutagenBots = time + 15
+					pl.NextThinkMutagenBots = time + 35
 					if math.random(1,3) == 1 then
 						ButMutagenBot(pl,self.Mutations[math.random(1,#self.Mutations)])
 					end
@@ -2542,6 +2537,9 @@ function GM:OnPlayerWin(pl)
 		and pl:IsSkillUnlocked(SKILL_CHEESE3) and pl:IsSkillUnlocked(SKILL_CHEESE_PIE) then
 			pl:GiveAchievement("hehiha")
 		end
+		if pl:IsSkillActive(SKILL_CHEETUS_F) then
+			pl:AddZSXP(5000)
+		end
 
 	end
 end
@@ -3056,6 +3054,8 @@ function GM:PlayerInitialSpawnRound(pl)
 	pl.PointQueue = 0
 	pl.LastDamageDealtTime = 0
 	pl.NextEnergy = 0
+
+	pl.NextWhiteOut = 0
 
 	pl.HealedThisRound = 0
 	pl.RepairedThisRound = 0
@@ -3654,7 +3654,7 @@ local function CurseAttach(pl)
 	if pl:IsValidLivingHuman() and pl:IsSkillActive(SKILL_ATTACHMENT_CURSE) then
 		local cursed = pl:GetStatus("cursed")
 		if (cursed) then 
-			pl:AddCursed(pl, cursed.DieTime - CurTime() + 1)
+			pl:AddCursed(pl, 1,nil,nil,true)
 		end
 		if (not cursed) then 
 			pl:AddCursed(pl, 1)
@@ -3663,14 +3663,14 @@ local function CurseAttach(pl)
 	if pl:IsValidLivingHuman() and pl:IsSkillActive(SKILL_CURSED_ALT) then
 		local cursed = pl:GetStatus("cursed")
 		if (cursed) then 
-			pl:AddCursed(pl, cursed.DieTime - CurTime() - 1)
+			pl:AddCursed(pl,  1,nil,nil,true)
 		end
 	end
 end
 local function DoAttachmenttDamage(attacker,ent,damage,time)
 	if !attacker:HasTrinket("cham_at") then
 		local chnc = attacker.AttChance or 1
-		local damage2 = (damage * (attacker.ElementalMul or 1)) * (ent:GetZombieClassTable().ElementalDebuff or 1)
+		local damage2 = damage * (ent:GetZombieClassTable().ElementalDebuff or 1)
 		if attacker:HasTrinket("fire_at") then
 			if (math.max(math.random(1,5 * chnc),1) == 1 or attacker:IsSkillActive(SKILL_100_PERC) and (attacker.NextFireAtt or 0) < time ) then
 				ent:AttachmentDamage(damage2, attacker, attacker, SLOWTYPE_FLAME)
@@ -6109,9 +6109,33 @@ function GM:PlayerSwitchFlashlight(pl, newstate)
 	if pl:Team() == TEAM_UNDEAD then
 		return false
 	end
-
-	if pl:Team() == TEAM_HUMAN then
-		pl.NextFlashlightSwitch = CurTime() + 0
+	local time = CurTime()
+	if pl:Team() == TEAM_HUMAN and pl.NextFlashlightSwitch < time then
+		pl.NextFlashlightSwitch = time + 0
+		local trace = pl:GetEyeTrace()
+		local trce =trace.Entity
+		if trce and trce:IsValidLivingZombie() and pl.NextWhiteOut < time and newstate and pl:IsSkillActive(SKILL_FLASHLIGHT_PLUS) and math.abs(pl:GetForward():Angle().yaw - trce:GetForward():Angle().yaw) >= 45 
+			and (trce:GetPos():Length()-pl:GetPos():Length()) < 3 and (trace.HitGroup == HITGROUP_HEAD or trace.HitGroup-1 == HITGROUP_HEAD)
+			then
+			pl:SendLua("util.WhiteOut(25)")
+			trce:SendLua("util.WhiteOut(45)")
+		--	pl:Flashlight()
+			pl.NextFlashlightSwitch =  time + 15
+			pl:TakeSpecialDamage(12,DMG_BURN,pl,pl)
+			trce:TakeSpecialDamage(12,DMG_BURN,pl,pl)
+			pl.NextWhiteOut = time + 15
+			local class = trce:GetZombieClassTable()
+			if (class.Name == "Shade" or class.Name == "Frost Shade") then
+				trce:TakeSpecialDamage(488,DMG_BURN,pl,pl)
+			end
+			if trce:IsBot() then
+				trce:Freeze(true)
+				timer.Simple(4,function()
+					trce:Freeze(false)
+				end)
+			end
+			return false
+		end
 		return true
 	end
 

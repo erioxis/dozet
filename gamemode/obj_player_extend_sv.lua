@@ -149,14 +149,9 @@ function meta:ProcessDamage(dmginfo)
 			damage = damage * attacker.DamageAll
 		end
 		if classtable.Boss and damage >= (mxap * 0.11) then
-			damage = math.min(damage, (mxap * 0.11))
+			damage = math.min(damage, (mxap * 0.06))
 		end
 		if attacker:IsValidLivingHuman() and inflictor:IsValid() and inflictor == attacker:GetActiveWeapon() then
-			damage = damage * 0.75
-			
-			if attacker:IsSkillActive(SKILL_NUCLEAR_DAD) then
-				damage = damage + damage * GAMEMODE:GetWave()*0.0005
-			end
 			local wep = attacker:GetActiveWeapon()
 			local attackermaxhp = math.floor(attacker:GetMaxHealth() * ((attacker:IsSkillActive(SKILL_D_FRAIL) or attacker:IsSkillActive(SKILL_ABUSE)) and 0.44 or 1))
 			if attacker:IsSkillActive(SKILL_AMULET_16) then 
@@ -167,9 +162,6 @@ function meta:ProcessDamage(dmginfo)
 			end
 			if attacker.ClanAvanguard and inflictor.Unarmed then
 				damage = damage * 1.25
-				if inflictor.IsMelee then
-					damage = damage * 1.25
-				end
 			end
 			if attacker:IsSkillActive(SKILL_AMULET_2) and (attacker:Health() <= (attackermaxhp * 0.35) or (attacker.MaxBloodArmor * 0.1 >= attacker:GetBloodArmor()) and attacker:Health() <= 15) then
 				damage = damage * 2
@@ -253,7 +245,7 @@ function meta:ProcessDamage(dmginfo)
 				if attacker:HasTrinket("altsamsonsoul")  then
 					local rot = attacker:GetStatus("strengthdartboost")
 					if (rot) then 
-						attacker:AddBloodlust(attacker:GetOwner(), rot.DieTime - time + damage * 0.05)
+						attacker:AddBloodlust(attacker:GetOwner(), damage * 0.05,true)
 					end
 					if (not rot) then 
 						attacker:AddBloodlust(attacker:GetOwner(), damage * 0.09)
@@ -300,7 +292,7 @@ function meta:ProcessDamage(dmginfo)
 				end
 				if attacker:IsSkillActive(SKILL_RESNYATOST) or attacker:HasTrinket("sin_wrath") then
 					local double = attacker:IsSkillActive(SKILL_RESNYATOST) and attacker:HasTrinket("sin_wrath")
-					attacker:SetProgress(attacker:GetProgress("rprog") + math.min(100,dmginfo:GetDamage()*0.3*(double and 2 or 1)) * (attacker:GetStatus("resnya") and 0.05),"rprog")
+					attacker:SetProgress(attacker:GetProgress("rprog") + math.min(100,dmginfo:GetDamage()*0.3*(double and 2 or 1)) * (attacker:GetStatus("resnya") and 0.05 or 1),"rprog")
 					if attacker:GetProgress("rprog") >= 1000 then
 						attacker:SetProgress(0,"rprog")
 						attacker:GiveStatus("resnya",12)
@@ -579,7 +571,7 @@ function meta:ProcessDamage(dmginfo)
 				if self:HasTrinket("altsamsonsoul")  then
 					local rot = self:GetStatus("strengthdartboost")
 					if (rot) then 
-						self:AddBloodlust(attacker, rot.DieTime - time + damage * 0.1)
+						self:AddBloodlust(attacker, damage * 0.1,true)
 					end
 					if (not rot) then 
 						self:AddBloodlust(attacker, damage * 0.3)
@@ -693,14 +685,14 @@ function meta:ProcessDamage(dmginfo)
 				if self:HasTrinket("cursedtrinket")  then
 					local cursed = self:GetStatus("cursed")
 					if (cursed) then 
-						self:AddCursed(attacker, cursed.DieTime - time + 5)
+						self:AddCursed(attacker,  5,nil,nil,true)
 					end
 				end
 				if attacker.m_Rot_Claws then
 					damage = damage/2
 					local rot = self:GetStatus("rot")
 					if (rot) then 
-						self:AddRot(attacker, rot.DieTime - time + 2)
+						self:AddRot(attacker,  2,true)
 					end
 					if (not rot) then 
 						self:AddRot(attacker, 2)
@@ -752,7 +744,7 @@ function meta:ProcessDamage(dmginfo)
 					
 				local cursed5 = self:GetStatus("hollowing")
 				if (cursed5) then 
-					self:AddHallow(attacker,cursed5.DieTime - time + (damage * 1.5))
+					self:AddHallow(attacker,(damage * 1.5),true)
 					self.MasteryHollowing = self.MasteryHollowing + damage
 				end
 				if (not cursed5) then 
@@ -1203,21 +1195,21 @@ function meta:AddPoisonDamage(damage, attacker)
 	end
 end
 
-function meta:AddCursed(attacker, count)
+function meta:AddCursed(attacker, count,bruh,bruh,yes)
 	--damage = math.ceil(damage)
-	self:GiveStatus("cursed", count).Inflictor = attacker
+	self:GiveStatus("cursed", count,nil,nil,yes).Inflictor = attacker
 end
 
-function meta:AddHallow(attacker, count)
-	local apl = self:GiveStatus("hollowing", count)
+function meta:AddHallow(attacker, count,yes)
+	local apl = self:GiveStatus("hollowing", count,nil,nil,yes)
 	apl.Applier = attacker
 end
 
-function meta:AddRot(attacker, count)
-	self:GiveStatus("rot", (count or 1))
+function meta:AddRot(attacker, count,yes)
+	self:GiveStatus("rot", (count or 1),nil,nil,yes)
 end
-function meta:AddBloodlust(attacker, count)
-	self:GiveStatus("strengthdartboost", count)
+function meta:AddBloodlust(attacker, count,yes)
+	self:GiveStatus("strengthdartboost", count,nil,nil,yes)
 end
 function meta:AddBurn(attacker, count)
 	local attackers = (attacker or self)
@@ -1506,10 +1498,26 @@ function meta:GetStatus(sType)
 	if ent and ent:IsValid() and ent:GetOwner() == self then return ent end
 end
 
-function meta:GiveStatus(sType, fDie, applier, ignoredouble)
-	local resistable = table.HasValue(GAMEMODE.ResistableStatuses, sType)
-	local fDie = (fDie or 1) * (ignoredouble and 1 or self.AdditionalStatusTime or 1) * (GAMEMODE.Statuses[sType] and GAMEMODE.Statuses[sType].Debuff and self.AdditionalDebuffTime or self.AdditionalBuffTime or 1)
+function meta:GetStatuses()
+	local statutes = {} 
+	
+	for k,v in pairs(GAMEMODE.Statuses) do
+		local ent = self["status_"..k]
+		if ent and ent:IsValid() and ent:GetOwner() == self then
+			statutes[#statutes+1] = ent
+		end
+	end
+	return statutes
+end
 
+
+function meta:GiveStatus(sType, fDie, applier, ignoredouble, adding)
+	local resistable = table.HasValue(GAMEMODE.ResistableStatuses, sType)
+	local unsDie = fDie
+	local op = GAMEMODE.Statuses[sType]
+	local formula =  (ignoredouble and 1 or self.AdditionalStatusTime or 1) * (op and op.Debuff and self.AdditionalDebuffTime or self.AdditionalBuffTime or 1)
+	local fDie = (fDie or 1) * formula
+	
 	local fDie2 = fDie / math.max(1 + (self.BloodArmorDamageReductionAdd or 1),1)
 	if resistable and self:IsSkillActive(SKILL_HAEMOSTASIS) and self:GetBloodArmor() >= 2 * fDie2 then
 		self:SetBloodArmor(self:GetBloodArmor() - 2 * fDie2)
@@ -1524,7 +1532,11 @@ function meta:GiveStatus(sType, fDie, applier, ignoredouble)
 	local cur = self:GetStatus(sType)
 	if cur then
 		if fDie then
-			cur:SetDie(fDie)
+			if adding then
+				cur:AddDie(fDie)
+			else
+				cur:SetDie(fDie)
+			end
 		end
 		cur:SetPlayer(self, true)
 		if applier then
@@ -1532,6 +1544,7 @@ function meta:GiveStatus(sType, fDie, applier, ignoredouble)
 				cur:OnApplierChange(applier)
 			end
 			cur.Applier = cur.Applier or applier
+			cur:SetDTEntity(22,applier)
 		end
 		return cur
 	else
@@ -1544,6 +1557,7 @@ function meta:GiveStatus(sType, fDie, applier, ignoredouble)
 			ent:SetPlayer(self)
 			if applier then
 				ent.Applier = applier
+				ent:SetDTEntity(22,applier)
 			end
 			return ent
 		end
@@ -2873,6 +2887,11 @@ function meta:FireInduction(attacker, inflictor, damage)
 
 					if attacker:IsValidLivingHuman() then
 						util.BlastDamagePlayer(inflictor, attacker, pos, 85 + 25 * (attacker.ExpDamageRadiusMul or 1), (self:Health() * 0.07) + damage, DMG_BURN, 0.83, true)
+						for _, ent in pairs(util.BlastAlloc(inflictor, attacker, pos, 100)) do
+							if ent:IsValidLivingPlayer() and gamemode.Call("PlayerShouldTakeDamage", ent, attacker) then
+								ent:GiveStatus("burn",6,attacker)
+							end
+						end
 					end
 				end
 

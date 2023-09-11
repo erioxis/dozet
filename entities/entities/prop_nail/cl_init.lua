@@ -51,7 +51,9 @@ function ENT:Draw()--[[
 	if not parent:IsValid() or RealTime() == parent.LastNailInfoDraw then
 		if MySelf:Team() == TEAM_HUMAN then
 			render.ModelMaterialOverride(matWhite)
-			render.SetColorModulation(0.016, 1, 0)
+			local mu = math.Clamp(self:GetNailHealth() / self:GetMaxNailHealth(), 0, 1)
+			local green = mu * 200
+			render.SetColorModulation((200 - green)/255, green/255, 0.05)
 			render.SuppressEngineLighting(true)
 			self:DrawModel()
 			render.SuppressEngineLighting(false)
@@ -76,7 +78,9 @@ function ENT:Draw()--[[
 	end
 	if myteam == TEAM_HUMAN then
 		render.ModelMaterialOverride(matWhite)
-		render.SetColorModulation(0.016, 1, 0)
+		local mu = math.Clamp(self:GetNailHealth() / self:GetMaxNailHealth(), 0, 1)
+		local green = mu * 200
+		render.SetColorModulation((200 - green)/255, green/255, 0.05)
 		render.SuppressEngineLighting(true)
 		self:DrawModel()
 		render.SuppressEngineLighting(false)
@@ -85,7 +89,6 @@ function ENT:Draw()--[[
 
 	local nhp = self:GetNailHealth()
 	local mnhp = self:GetMaxNailHealth()
-	parent:SetNoDraw(true)
 	if nhp/mnhp < 0.35 and CurTime() > self.NextEmit then
 		local normal = self:GetForward() * -1
 		local epos = self:GetPos() + normal
@@ -160,7 +163,7 @@ function ENT:Draw()--[[
 		local dotsq = dot * dot
 		local vis = math.Clamp((dotsq * dotsq) - 0.1, 0, 1)
 
-		if vis < 0.01 then 	parent:SetNoDraw(false) return end
+		if vis < 0.01 then return end
 
 		cam.IgnoreZ(true)
 
@@ -282,7 +285,6 @@ function ENT:Draw()--[[
 
 		cam.IgnoreZ(false)
 	end
-	parent:SetNoDraw(false)
 
 end
 function ENT:Think()

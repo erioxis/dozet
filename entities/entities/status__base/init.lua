@@ -50,6 +50,12 @@ end
 
 function ENT:OnRemove()
 end
+function ENT:AddDie(fTime)
+	self.DieTime = self.DieTime + fTime
+	if self.SetDuration then
+		self:SetDuration(self.DieTime-CurTime()  +fTime)
+	end
+end
 
 function ENT:SetDie(fTime)
 	if fTime == 0 or not fTime then

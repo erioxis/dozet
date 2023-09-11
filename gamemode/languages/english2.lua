@@ -85,7 +85,6 @@ LANGUAGE.t_exoskelet                                 = "Loading Exoskeleton"
 LANGUAGE.t_blueprints                                 = "Blueprints"
 LANGUAGE.t_ablueprints                                 = "Advanced Blueprints"
 LANGUAGE.t_medi                                 = "Medical Processor"
-LANGUAGE.t_medii                                 = "Curative Kit"
 LANGUAGE.t_mediii                                 = "Remedial Booster"
 LANGUAGE.t_mediiii                                 = "Poisoned booster"
 LANGUAGE.t_deploi                                 = "Maintenance Suite"
@@ -313,3 +312,13 @@ LANGUAGE.t_d_gaunt                            = "Charges your melee damage up to
 LANGUAGE.t_d_fkit                            = "Deal up to +32% melee damage to slowed zombies"
 LANGUAGE.t_d_skit                            = "+5% Melee damage"
 LANGUAGE.t_d_adrenaline                           = "Each hit on you gives 3 seconds of buffs\n Give every 60 seconds buff for damage."
+
+LANGUAGE.applier_x_status = "Applied by %s"
+
+
+LANGUAGE.t_d_medi                                 = "-2% medic kit cooldown\n-9% medic tool fire delay"
+LANGUAGE.t_d_medi_q1                                 = "-5% medic kit cooldown\n-12% medic tool fire delay"
+LANGUAGE.t_d_medi_q2                                = "-9% medic kit cooldown\n-22% medic tool fire delay"
+LANGUAGE.t_d_medi_q3                                = "-10% medic kit cooldown\n-30% medic tool fire delay\nReprocess food into medical ammo with right click"
+LANGUAGE.t_d_medi_q4                                 = "-15% medic kit cooldown\n-43% medic tool fire delay\nReprocess food into medical ammo with right click\nYou can see statuses of teammates"
+LANGUAGE.t_d_medi_q5                                 = "-30% medic kit cooldown\n-55% medic tool fire delay\nReprocess food into medical ammo with right click\nYou can see statuses of teammates"

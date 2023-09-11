@@ -521,6 +521,7 @@ SKILL_VEC2 = 493
 SKILL_NUCLEAR_DAD = 494
 SKILL_COOL_NUCLEAR_SYN = 495
 SKILL_AIMLESS = 496
+SKILL_FLASHLIGHT_PLUS = 497
 
 
 
@@ -1128,8 +1129,10 @@ GM:AddSkillModifier(SKILL_HAMMERDOOR, SKILLMOD_HAMMER_SWING_DELAY_MUL, 0.10)
 GM:AddSkill(SKILL_CARRIER, trs("skill_carrier"), GOOD..trs("skill_carrier_d1")..BAD..trs("skill_carrier_d2")..BAD..trs("skill_carrier_d3"),
 																9,			2,					{SKILL_D_LATEBUYER}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_U_CRAFTINGPACK, trs("skill_u_craftpack"), GOOD..trs("skill_u_craftpack_d1"),
-																4,			-1,					{}, TREE_BUILDINGTREE)
+																4,			-1,					{SKILL_FLASHLIGHT_PLUS}, TREE_BUILDINGTREE)
 .AlwaysActive = true
+GM:AddSkill(SKILL_FLASHLIGHT_PLUS, trs("skill_fl_plus"), GOOD..trs("skill_fl_plus_d1")..BAD..trs("skill_fl_plus_d2"),
+																4,			0,					{}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_TAUT, trs("skill_taut"), GOOD.. trs("skill_taut_d1")..BAD.. trs("skill_taut_d2"),
 																-5,			3,					{SKILL_SPICY_CADES}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_SPICY_CADES, trs("skill_spicy_cades"), GOOD.. trs("skill_spicy_cades_d1")..BAD.. trs("skill_spicy_cades_d2"),
@@ -2251,16 +2254,16 @@ GM:AddSkillModifier(SKILL_DONATE18, SKILLMOD_LUCK, 2.5)
 
 
 SKILL_CHALLENGER1 = 215
-GM:AddSkill(SKILL_CHALLENGER1, "Challenger I", GOOD.."+20 Health,+1 luck, help for challenges!\n"..GOOD.."Can use in any challenge",
+GM:AddSkill(SKILL_CHALLENGER1, trs("skill_challenger").."I", GOOD.."+3"..trs("health")..GOOD.."+1"..trs("luck"),
 				                                                            	5,			6,					{SKILL_NONE, SKILL_CHALLENGER2}, TREE_DONATETREE)
 GM:AddSkillModifier(SKILL_CHALLENGER1, SKILLMOD_LUCK, 1)																				
-GM:AddSkillModifier(SKILL_CHALLENGER1, SKILLMOD_HEALTH, 10)
+GM:AddSkillModifier(SKILL_CHALLENGER1, SKILLMOD_HEALTH, 3)
 SKILL_CHALLENGER2 = 216
 SKILL_CHALLENGER3 = 217
-GM:AddSkill(SKILL_CHALLENGER2, "Challenger II", GOOD.."+20% Reload speed\n"..GOOD.."Can use in any challenge",
+GM:AddSkill(SKILL_CHALLENGER2, trs("skill_challenger").."II", GOOD.."+3%"..trs("r_speed"),
 				                                                            	5,			4,					{SKILL_CHALLENGER1,SKILL_CHALLENGER3}, TREE_DONATETREE)
-GM:AddSkillModifier(SKILL_CHALLENGER2, SKILLMOD_RELOADSPEED_MUL, 0.2)
-GM:AddSkill(SKILL_CHALLENGER3, "Challenger III", GOOD.."+100% XP Multiplier\n"..GOOD.."Can use in any challenge",
+GM:AddSkillModifier(SKILL_CHALLENGER2, SKILLMOD_RELOADSPEED_MUL, 0.03)
+GM:AddSkill(SKILL_CHALLENGER3,trs("skill_challenger").."III", GOOD.."+100%"..trs("xpmul"),
 				                                                            	5,			0,					{}, TREE_DONATETREE).NeedAchievement = "phantomwill"
 GM:AddSkillModifier(SKILL_CHALLENGER3, SKILLMOD_XP, 1)
 --Skill for high-remort

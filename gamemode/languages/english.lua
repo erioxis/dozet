@@ -1986,6 +1986,9 @@ LANGUAGE.skill_nuclear_syn = "Cold fusion"
 LANGUAGE.skill_nuclear_syn_d2 = "You take radiation when nuclear boom activated.\nTaking 1% of max hp*stacks damage.\n"
 LANGUAGE.skill_nuclear_syn_d1 = "Instead cryogen inductor using a NUCLEAR BOOM.\n"
 --Skill repairsman
+LANGUAGE.skill_fl_plus = "Flashlight Overdrive"
+LANGUAGE.skill_fl_plus_d1 = "Flashlight can flash zombie vision.\n"
+LANGUAGE.skill_fl_plus_d2 = "Flashlight breaks on flash for 15 secs when you flash on zombie.\n"
 LANGUAGE.skill_engi = "Engi"
 LANGUAGE.skill_engi_d1 = "+50% Turret scan speed\n"..GOOD.."+50% Turret radius\n"..GOOD.."+50% Turret health\n"..BAD.."-25% damage for melee and -999% damage for magic"
 LANGUAGE.skill_mew = "Future Mind"
@@ -2424,6 +2427,8 @@ LANGUAGE.skill_gir_d2 = "You can dash on shift!\n"
 
 --Скиллы за достиги
 LANGUAGE.skill_omg = "Torment ULTIMATE"
+
+LANGUAGE.skill_challenger = "Challenger "
 
 
 -- The help file... Quite big! I wouldn't blame you if you didn't translate this part.

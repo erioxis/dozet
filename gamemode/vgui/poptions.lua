@@ -379,7 +379,7 @@ function MakepOptions()
 		RunConsoleCommand("zs_weaponhudmode", value == "Display both" and 2 or value == "Display in 2D" and 1 or 0)
 	end
 	dropdown:SetText(GAMEMODE.WeaponHUDMode == 2 and "Display both" or GAMEMODE.WeaponHUDMode == 1 and "Display in 2D" or "Display in 3D")
-	dropdown:SetTextColor(color_black)
+	dropdown:SetTextColor(color_white)
 	list3:AddItem(dropdown)
 
 	list3:AddItem(EasyLabel(Window, "Health target display style", "DefaultFontSmall", color_white))
@@ -392,7 +392,7 @@ function MakepOptions()
 		RunConsoleCommand("zs_healthtargetdisplay", value == "Health %" and 3 or value == "Health amount" and 1 or 2)
 	end
 	dropdown:SetText(GAMEMODE.HealthTargetDisplay == 1 and "Health amount" or GAMEMODE.HealthTargetDisplay == 3 and "Health %" or "% of health")
-	dropdown:SetTextColor(color_black)
+	dropdown:SetTextColor(color_white)
 	list3:AddItem(dropdown)
 
 	list3:AddItem(EasyLabel(Window, "ULTRAKILL Style meter(In developing!)", "DefaultFontSmall", color_white))
@@ -405,7 +405,7 @@ function MakepOptions()
 		RunConsoleCommand("zs_ultrakill_style", value == "YES!" and 1 or value == "In work..." and 1 or 0)
 	end
 	dropdown:SetText(GAMEMODE.NoStyle and "NO" or "YES")
-	dropdown:SetTextColor(color_black)
+	dropdown:SetTextColor(color_white)
 	list3:AddItem(dropdown)
 
 
@@ -419,26 +419,26 @@ function MakepOptions()
 		RunConsoleCommand("zs_font", value == "Open Sans Condensed" and "Open Sans Condensed" or value == "Ghoulish Fright" and "Ghoulish Fright" or value == "PixelMplus10" and "PixelMplus10" or "Open Sans Condensed")
 	end
 	dropdown:SetText(GAMEMODE.FontPL or "")
-	dropdown:SetTextColor(color_black)
+	dropdown:SetTextColor(color_white)
 	list3:AddItem(dropdown)
 
 	list:AddItem(EasyLabel(Window, "Prop rotation snap angle", "DefaultFontSmall", color_white))
 	dropdown = vgui.Create("DComboBoxEx", Window)
 	dropdown:SetMouseInputEnabled(true)
 	dropdown:AddChoice(translate.Get("op_deg_no"))
-	dropdown:AddChoice("15"..translate.Get("op_deg"))
-	dropdown:AddChoice("30"..translate.Get("op_deg"))
-	dropdown:AddChoice("45"..translate.Get("op_deg"))
-	dropdown:AddChoice("90"..translate.Get("op_deg"))
+	dropdown:AddChoice("15 angles")
+	dropdown:AddChoice("30 angles")
+	dropdown:AddChoice("45 angles")
+	dropdown:AddChoice("90 angles")
 	dropdown.OnSelect = function(me, index, value, data)
-		RunConsoleCommand("zs_proprotationsnap", value == "15"..translate.Get("op_deg") and 15 or value == "30"..translate.Get("op_deg") and 30 or value == "45"..translate.Get("op_deg") and 45 or value == "90" and 90 or value)
+		RunConsoleCommand("zs_proprotationsnap", value == "15 angles" and 15 or value == "30 angles" and 30 or value == "45 angles" and 45 or value == "90 angles" and 90 or value)
 	end
 	dropdown:SetText(GAMEMODE.PropRotationSnap == 15 and "15"..translate.Get("op_deg")
 		or GAMEMODE.PropRotationSnap == 30 and "30"..translate.Get("op_deg")
 		or GAMEMODE.PropRotationSnap == 45 and "45"..translate.Get("op_deg")
 		or GAMEMODE.PropRotationSnap == 90 and "90"..translate.Get("op_deg")
 		or translate.Get("op_deg_no"))
-	dropdown:SetTextColor(color_black)
+	dropdown:SetTextColor(color_white)
 	list:AddItem(dropdown)
 
 	list3:AddItem(EasyLabel(Window, "Human ambient beat set", "DefaultFontSmall", color_white))
@@ -455,7 +455,7 @@ function MakepOptions()
 		RunConsoleCommand("zs_beatset_human", value)
 	end
 	dropdown:SetText(GAMEMODE.BeatSetHuman == GAMEMODE.BeatSetHumanDefault and "default" or GAMEMODE.BeatSetHuman)
-	dropdown:SetTextColor(color_black)
+	dropdown:SetTextColor(color_white)
 	list3:AddItem(dropdown)
 
 	list3:AddItem(EasyLabel(Window, "Zombie ambient beat set", "DefaultFontSmall", color_white))
@@ -472,7 +472,7 @@ function MakepOptions()
 		RunConsoleCommand("zs_beatset_zombie", value)
 	end
 	dropdown:SetText(GAMEMODE.BeatSetZombie == GAMEMODE.BeatSetZombieDefault and "default" or GAMEMODE.BeatSetZombie)
-	dropdown:SetTextColor(color_black)
+	dropdown:SetTextColor(color_white)
 	list3:AddItem(dropdown)
 
 	local slider = vgui.Create("DNumSlider", Window)

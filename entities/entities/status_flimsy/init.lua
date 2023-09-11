@@ -13,7 +13,7 @@ end
 function ENT:EntityTakeDamage(ent, dmginfo)
 	local attacker = dmginfo:GetAttacker()
 	local owner = self:GetOwner()
-	if ent ~= owner then return end
+	if ent ~= owner and attacker:IsValidLivingZombie() then return end
 	
 	if math.random(10) == 5 and table.Count(owner:GetInventoryItems()) > 1  then
 		local use = {}

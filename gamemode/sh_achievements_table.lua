@@ -401,6 +401,7 @@ local function statusValueFunction(statusname)
 		return 0
 	end
 end
+
 GM.Statuses["poison"] = {
 	Color = Color(180, 200, 0),
 	Name = "poison",
