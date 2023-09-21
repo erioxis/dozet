@@ -32,6 +32,17 @@ end
 
 function meta:GiveStatus(sType, fDie)
 end
+function meta:GetStatuses()
+	local statutes = {} 
+	
+	for k,v in pairs(GAMEMODE.Statuses) do
+		local ent = self["status_"..k]
+		if ent and ent:IsValid() and ent:GetOwner() == self then
+			statutes[#statutes+1] = ent
+		end
+	end
+	return statutes
+end
 
 function meta:KnockDown(time)
 end

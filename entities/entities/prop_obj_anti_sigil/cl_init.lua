@@ -64,9 +64,6 @@ function ENT:DrawTranslucent()
 	local spritepos = self:GetPos() + up
 	local spritepos2 = self:WorldSpaceCenter()
 	local ColorD = HSVToColor(CurTime()*90 % 360, 0.7, 0.7)
-	if corrupt then
-		ColorD.g = 0.56
-	end
 
 	ColorD.r = ColorD.r/270 
 	ColorD.g = ColorD.g/270 

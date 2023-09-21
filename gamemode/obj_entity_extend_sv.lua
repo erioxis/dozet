@@ -27,6 +27,15 @@ function meta:HealPlayer(pl, amount, pointmul, nobymsg, poisononly)
 
 
 	-- Heal bleed first.
+	if self:HasTrinket("remedy_q4") or self:HasTrinket("remedy_q5") then
+		pl.UltraCharge = pl.UltraCharge+ 1
+		if pl.UltraCharge >= 32 - (self:HasTrinket("remedy_q5") and 10 or 0) then
+			pl:GiveStatus("strengthdartboost",30)
+			pl:GiveStatus("medrifledefboost",30)
+			pl:GiveStatus("holly",30)
+			pl.UltraCharge = 0
+		end
+	end
 	if not pl:IsSkillActive(SKILL_DEFENDBLOOD) then
 		if not poisononly and bleed > 0 then
 			rmv = math.min(amount, bleed)
@@ -47,6 +56,14 @@ function meta:HealPlayer(pl, amount, pointmul, nobymsg, poisononly)
 	-- Then heal missing health.
 	if not poisononly and missing_health > 0 and amount > 0 and !pl.ClanAvanguard then
 		rmv = math.min(amount, missing_health)
+		local sts = pl:GetStatus("dosei_inf")
+		if sts then
+			self:TakeSpecialDamage(rmv, DMG_DIRECT,sts.Applier,sts)
+			return
+		end
+		if self:IsSkillActive(SKILL_MEDICBOOSTER) then
+			pl:GiveStatus("regeneration",nil,self):AddDamage(rmv*0.1)
+		end
 		pl:SetHealth(health + rmv)
 		healed = healed + rmv
 		amount = amount - rmv
@@ -57,7 +74,7 @@ function meta:HealPlayer(pl, amount, pointmul, nobymsg, poisononly)
 	if healed > 0 and self:IsPlayer() then
 		gamemode.Call("PlayerHealedTeamMember", self, pl, healed, self:GetActiveWeapon(), pointmul, nobymsg, healed >= 10)
 		pl:SetPhantomHealth(math.max(0, pl:GetPhantomHealth() - healed))
-		self:GiveAchievementProgress("best_medicine", (healed or 1))
+		self:GiveAchievementProgress("best_medicine", healed)
 		if self:IsSkillActive(SKILL_M_CHAINS) then
 			local chain = pl:GiveStatus("chains",15)
 			chain:SetDTEntity(11,self)

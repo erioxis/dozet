@@ -56,19 +56,33 @@ function MakepOptions()
 	list2:SetSpacing(4)
 	gamemode.Call("AddExtraOptions", list2, Window)
 
+	local list4 = vgui.Create("DPanelList", pOptions)
+	list4:EnableVerticalScrollbar()
+	list4:EnableHorizontal(false)
+	list4:SetSize(wide - 24, tall - y - 12)
+	list4:SetPos(12, y)
+	list4:SetPadding(8)
+	list4:SetSpacing(4)
+	gamemode.Call("AddExtraOptions", list4, Window)
+
+
 		
 	
 	local panel2 = vgui.Create( "DPanel", sheet )
-	panel2.Paint = function( self, w, h ) list:SetVisible(true) list2:SetVisible(false)	 list3:SetVisible(false)end 
+	panel2.Paint = function( self, w, h ) list:SetVisible(true) list2:SetVisible(false)	 list3:SetVisible(false) list4:SetVisible(false) end 
 	sheet:AddSheet( translate.Get('old_op'), panel2, "icon16/ruby.png" )
 
 	local panel3 = vgui.Create( "DPanel", sheet )
-	panel3.Paint = function( self, w, h )  list:SetVisible(false) list2:SetVisible(false) list3:SetVisible(true)  end 
-	sheet:AddSheet( translate.Get('custom_op'), panel3, "icon16/wrench.png" )
+	panel3.Paint = function( self, w, h )  list:SetVisible(false) list2:SetVisible(false) list3:SetVisible(true) list4:SetVisible(false) end 
+	sheet:AddSheet( translate.Get('custom_op'), panel3, "icon16/wand.png" )
 
 	local panel1 = vgui.Create( "DPanel", sheet )
-	panel1.Paint = function( self, w, h )  list:SetVisible(false) list2:SetVisible(true) list3:SetVisible(false) end 
+	panel1.Paint = function( self, w, h )  list:SetVisible(false) list2:SetVisible(true) list3:SetVisible(false)  list4:SetVisible(false) end 
 	sheet:AddSheet( translate.Get('new_op'), panel1, "icon16/box.png" )
+
+	local panel4 = vgui.Create( "DPanel", sheet )
+	panel4.Paint = function( self, w, h )  list:SetVisible(false) list2:SetVisible(false) list3:SetVisible(false) list4:SetVisible(true)  end 
+	sheet:AddSheet( translate.Get('optim_op'), panel4, "icon16/wrench.png" )
 
 
 
@@ -78,6 +92,12 @@ function MakepOptions()
 	check:SetConVar("zs_alwaysshownails")
 	check:SizeToContents()
 	list:AddItem(check)
+
+	check = vgui.Create("DCheckBoxLabel", Window)
+	check:SetText(translate.Get("op_ozu"))
+	check:SetConVar("zs_fixthelag")
+	check:SizeToContents()
+	list4:AddItem(check)
 
 	check = vgui.Create("DCheckBoxLabel", Window)
 	check:SetText(translate.Get("op_knockdown_camera"))
@@ -251,7 +271,7 @@ function MakepOptions()
 	check:SetText(translate.Get("op_donthidefriends"))
 	check:SetConVar("zs_showfriends")
 	check:SizeToContents()
-	list:AddItem(check)
+	list4:AddItem(check)
 
 	check = vgui.Create("DCheckBoxLabel", Window)
 	check:SetText(translate.Get("op_drawscore"))
@@ -275,13 +295,13 @@ function MakepOptions()
 	check:SetText(translate.Get("op_postprocc"))
 	check:SetConVar("zs_postprocessing")
 	check:SizeToContents()
-	list:AddItem(check)
+	list4:AddItem(check)
 
 	check = vgui.Create("DCheckBoxLabel", Window)
 	check:SetText(translate.Get("op_filmgrain"))
 	check:SetConVar("zs_filmgrain")
 	check:SizeToContents()
-	list:AddItem(check)
+	list4:AddItem(check)
 
 	check = vgui.Create("DCheckBoxLabel", Window)
 	check:SetText(translate.Get("op_colormod"))
@@ -299,13 +319,13 @@ function MakepOptions()
 	check:SetText(translate.Get("op_fonteffect"))
 	check:SetConVar("zs_fonteffects")
 	check:SizeToContents()
-	list3:AddItem(check)
+	list4:AddItem(check)
 
 	check = vgui.Create("DCheckBoxLabel", Window)
 	check:SetText(translate.Get("op_humanaura"))
 	check:SetConVar("zs_auras")
 	check:SizeToContents()
-	list:AddItem(check)
+	list4:AddItem(check)
 
 	check = vgui.Create("DCheckBoxLabel", Window)
 	check:SetText(translate.Get("op_indicators"))
@@ -323,7 +343,7 @@ function MakepOptions()
 	check:SetText(translate.Get("op_beaconind"))
 	check:SetConVar("zs_messagebeaconshow")
 	check:SizeToContents()
-	list:AddItem(check)
+	list4:AddItem(check)
 
 	check = vgui.Create("DCheckBoxLabel", Window)
 	check:SetText(translate.Get("op_filmmod"))
@@ -335,7 +355,7 @@ function MakepOptions()
 	check:SetText(translate.Get("op_viewmodels"))
 	check:SetConVar("zs_hideviewmodels")
 	check:SizeToContents()
-	list:AddItem(check)
+	list4:AddItem(check)
 
 	check = vgui.Create("DCheckBoxLabel", Window)
 	check:SetText(translate.Get("op_noboss"))
@@ -347,18 +367,18 @@ function MakepOptions()
 	check:SetText(translate.Get("op_dmgindicator_wall"))
 	check:SetConVar("zs_damagefloaterswalls")
 	check:SizeToContents()
-	list3:AddItem(check)
+	list4:AddItem(check)
 	check = vgui.Create("DCheckBoxLabel", Window)
 	check:SetText(translate.Get("op_color_c"))
 	check:SetConVar("mat_colorcorrection")
 	check:SizeToContents()
-	list2:AddItem(check)
+	list4:AddItem(check)
 
 	check = vgui.Create("DCheckBoxLabel", Window)
 	check:SetText(translate.Get("op_mcore"))
 	check:SetConVar("gmod_mcore_test")
 	check:SizeToContents()
-	list:AddItem(check)
+	list4:AddItem(check)
 
 	check = vgui.Create("DCheckBoxLabel", Window)
 	check:SetText(translate.Get("op_1click"))

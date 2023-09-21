@@ -635,8 +635,8 @@ function GM:DrawFearMeter(power, screenscale)
 		end
 	end
 	local sigilsc = 0
-	for _, ent in pairs(ents.GetAll()) do 
-		if ent:GetClass() == "prop_obj_sigil" then
+	for _, ent in pairs(ents.FindByClass("prop_obj_sigil")) do 
+		if ent:IsValid() then
 			sigilsc = sigilsc + 1
 		end
 	end
@@ -1167,6 +1167,7 @@ function GM:_PostDrawTranslucentRenderables()
 		self:DrawHumanIndicators()
 		self:DrawZombieIndicators()
 		self:DrawNestIndicators()
+		self:DrawAntiSigilIndicators()
 
 	end
 end
@@ -1243,6 +1244,50 @@ function GM:DrawRemantlerIndicators()
 
 			draw_SimpleTextBlurry(translate.Get("weapon_remantler"), "ZS3D2DFont2Big", 0, 128, COLOR_GRAY, TEXT_ALIGN_CENTER)
 
+			cam_End3D2D()
+			cam_IgnoreZ(false)
+		end
+	end
+end
+
+function GM:DrawAntiSigilIndicators()
+	if P_Team(MySelf) ~= TEAM_HUMAN then return end
+
+	local pos, distance, ang, deployable, alpha
+	local eyepos = EyePos()
+
+	surface_SetMaterial(matSigil)
+
+	for i, remantler in pairs(GAMEMODE.CachedASigilEntities) do
+		if not remantler:IsValid() then continue end
+
+		
+
+		pos = remantler:GetPos()
+		pos.z = pos.z + 64
+		distance = eyepos:DistToSqr(pos)
+
+		if distance >= 6400 and distance <= 4048576 then -- Limited to Scavenger's Eyes distance.
+			ang = (eyepos - pos):Angle()
+			ang:RotateAroundAxis(ang:Right(), 270)
+			ang:RotateAroundAxis(ang:Up(), 90)
+			alpha = math.min(220, math.sqrt(distance / 4))
+			local ColorD = HSVToColor(CurTime()*90 % 360, 0.7, 0.7)
+		
+			ColorD.r = ColorD.r/270 
+			ColorD.g = ColorD.g/270 
+			ColorD.b = ColorD.b/270 
+			
+			cam_IgnoreZ(true)
+			cam_Start3D2D(pos, ang, math.max(250, math.sqrt(distance)) / 5000)
+			local oldfogmode = render_GetFogMode()
+			render_FogMode(0)
+			surface_SetDrawColor(ColorD.r, ColorD.g, ColorD.b, alpha)
+			surface_DrawTexturedRect(-64, -128, 128, 256)
+
+			draw_SimpleTextBlurry(translate.Get("sigil_nm_a"), "ZS3D2DFont2Big", 0, 128, COLOR_GRAY, TEXT_ALIGN_CENTER)
+
+			render_FogMode(oldfogmode)
 			cam_End3D2D()
 			cam_IgnoreZ(false)
 		end

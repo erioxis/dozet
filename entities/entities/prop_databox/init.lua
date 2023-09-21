@@ -32,7 +32,7 @@ function ENT:Think()
 	for _, ent in pairs(ents.FindInSphere(self:GetPos(), 148)) do
 
 		if ent and "prop_databox_mega" == ent:GetClass() and own:IsValidLivingHuman() then
-			own:AddZSXP(20 + 0.5 * own:GetZSLevel() + 3*(self.SpawnedOnWave or 1))
+			own:AddZSXP(5 + 0.55 * own:GetZSLevel() + 3*(self.SpawnedOnWave or 1))
 			local ef = EffectData()
 			ef:SetOrigin(self:LocalToWorld(Vector(0,0,25)))
 			ef:SetAttachment(1)
@@ -50,13 +50,18 @@ function ENT:Think()
 				ent:OnBarrelDestroyed()
 			end
 		elseif ent and "prop_obj_sigil" == ent:GetClass() and own:IsValidLivingHuman() then
-			own:AddZSXP(13 + 0.5 * own:GetZSLevel() + 2*(self.SpawnedOnWave or 1))
+			own:AddZSXP(5 + 0.43 * own:GetZSLevel() + 2*(self.SpawnedOnWave or 1))
 			local ef = EffectData()
 			ef:SetOrigin(self:LocalToWorld(Vector(0,0,25)))
 			ef:SetAttachment(1)
 			util.Effect("explosion_golden",ef)
 			if math.random(1,10) == 1 then
 				self:Remove()
+				if math.random(1,20-math.min(16,math.Round(GAMEMODE:GetBalance()/5))) == 1 then
+					own:TakeSpecialDamage(own:Health()*0.33,DMG_DIRECT,self,self)
+					own:SendLua("GAMEMODE:CenterNotify(COLOR_RED, translate.Format('trap_barrel',20-math.min(4,math.Round(GAMEMODE:GetBalance()/5))))")
+					return
+				end
 				own:AddZSXP(200 + 5 * own:GetZSLevel()+ 8*(self.SpawnedOnWave or 1))
 				local ef = EffectData()
 				ef:SetOrigin(self:LocalToWorld(Vector(0,0,25)))
@@ -66,5 +71,5 @@ function ENT:Think()
 			end
 		end
 	end
-	self.NextThinkA = CurTime() + 0.6
+	self.NextThinkA = CurTime() + 1.2
 end

@@ -20,7 +20,7 @@ function meta:ProcessDamage(dmginfo)
 	if not GAMEMODE:PlayerShouldTakeDamage(self, attacker) then return true end
 
 	local dmgbypass = bit.band(dmgtype, DMG_DIRECT) ~= 0
-	if  self:HasGodMode() then if attacker and attacker:IsValidLivingHuman() then dmginfo:SetDamage(0)  GAMEMODE:BlockFloater(attacker, self, dmginfo:GetDamagePosition())  end return true end
+	if  self:HasGodMode() and attacker and attacker:IsValidLivingHuman() then dmginfo:SetDamage(0)  GAMEMODE:BlockFloater(attacker, self, dmginfo:GetDamagePosition())  return true end
 
 	if self.DamageVulnerability and not dmgbypass then
 		dmginfo:SetDamage(dmginfo:GetDamage() * self.DamageVulnerability)
@@ -110,7 +110,9 @@ function meta:ProcessDamage(dmginfo)
 				damage = damage  * GAMEMODE:GetZombieDamageScale(dmginfo:GetDamagePosition(), self)
 			end
 			if self:GetZArmor() > 0 and mxap >= 150  then
-				
+				if inflictor.IgnoreNiggers then
+					damage = damage * 0.35
+				end
 				if damage > 0 then
 					local armor = self:GetZArmor()
 					local ratio = 1
@@ -156,6 +158,9 @@ function meta:ProcessDamage(dmginfo)
 			local attackermaxhp = math.floor(attacker:GetMaxHealth() * ((attacker:IsSkillActive(SKILL_D_FRAIL) or attacker:IsSkillActive(SKILL_ABUSE)) and 0.44 or 1))
 			if attacker:IsSkillActive(SKILL_AMULET_16) then 
 				damage = damage * math.random(50,175)/100
+			end
+			if attacker:HasTrinket("lucky_chance") and math.random(1,100) < 6 then
+				damage = damage * 1.8
 			end
 			if wep:IsValid() and wep.DealThink then
 				damage = wep:DealThink(dmginfo) or damage

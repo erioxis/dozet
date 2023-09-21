@@ -52,7 +52,7 @@ INC_CLIENT()
 			surface.SetDrawColor(50, 155, 50, 180)
 			surface.DrawOutlinedRect(x, y, wid, hei)
 	
-		draw.SimpleText(10, "ZSHUDFontSmall", x, texty, COLOR_GREEN, TEXT_ALIGN_LEFT)
+		draw.SimpleText(defleft, "ZSHUDFontSmall", x, texty, COLOR_GREEN, TEXT_ALIGN_LEFT)
 		if defleft >= 25 then
 			local binded = input.LookupBinding("+menu")
 			draw.SimpleText((binded or translate.Format("no_find_x_bind","+menu")), "ZSHUDFontSmall", x+384/2-(binded and 0 or 170), y-24-(binded and 0 or 100), COLOR_GREEN, TEXT_ALIGN_CENTER)

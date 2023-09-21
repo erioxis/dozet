@@ -162,7 +162,7 @@ function CLASS:ProcessDamage(pl, dmginfo)
 			attacker:TakeSpecialDamage(dmginfo:GetDamage() * 0.05, DMG_GENERIC, pl, pl)
 			local cursed = attacker:GetStatus("cursed")
 			if (cursed) then 
-				attacker:AddCursed(pl, cursed.DieTime - 5 + ((attacker:GetZSRemortLevel()+1) or 1)/6,nil,nil,true)
+				attacker:AddCursed(pl, 5 + ((attacker:GetZSRemortLevel()+1) or 1)/6,nil,nil,true)
 			else
 				attacker:AddCursed(pl, 5+ ((attacker:GetZSRemortLevel()+1) or 1)/6)
 			end

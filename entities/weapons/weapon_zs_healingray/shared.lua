@@ -68,9 +68,6 @@ function SWEP:PrimaryAttack()
 	end
 
 	if not ent or self:GetDTEntity(10):IsValid() then return end
-			if owner:HasTrinket("mediiii") and math.random(25) == 25 and SERVER then
-				ent:AddPoisonDamage(math.random(25), owner)
-			end
 			if  owner:IsSkillActive(SKILL_FOREVERALONE) then return end
 	self:SetDTEntity(10, ent)
 	self:SetNextPrimaryFire(CurTime() + 1)
@@ -115,9 +112,6 @@ function SWEP:CheckHealRay()
 		ent:WorldSpaceCenter():DistToSqr(owner:WorldSpaceCenter()) <= self.HealRange * self.HealRange and self:GetCombinedPrimaryAmmo() > 0 then
 
 		if CurTime() > self:GetDTFloat(10) then
-			if owner:HasTrinket("mediiii") and math.random(25) == 25 and SERVER then
-				ent:AddPoisonDamage(math.random(25), owner)
-			end
 			if owner:HasTrinket("pr_barapaw") and math.random(3) == 3 and SERVER then
 				ent:GiveStatus("knockdown", 1.5)
 			end

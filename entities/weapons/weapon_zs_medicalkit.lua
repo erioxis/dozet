@@ -107,23 +107,11 @@ function SWEP:PrimaryAttack()
 	local totake = self.FixUsage and 15 or math.ceil(healed / multiplier)
 
 	if totake > 0 then
-		if owner:IsSkillActive(SKILL_MEDICBOOSTER) then
-			self.UltraCharge = self.UltraCharge + 1
-		end
-		if self.UltraCharge >= 4 and owner:IsSkillActive(SKILL_MEDICBOOSTER) then
-		    ent:GiveStatus("strengthdartboost",30)
-			ent:GiveStatus("medrifledefboost",30)
-			ent:GiveStatus("holly",30)
-			self.UltraCharge = 0
-	    end
 		if owner:IsSkillActive(SKILL_COMBOHEAL) and self.Combo ~= 26 then
 		   self.Combo = self.Combo + 1
 		   timer.Create("ComboReset", 15, 1, function() 
 				self.Combo = 0
 			end)
-		end
-		if owner:HasTrinket("mediiii") and math.random(5) == 5 and SERVER and !self.BloodHeal then
-			ent:AddPoisonDamage(math.random(12), owner)
 		end
 		if owner:HasTrinket("pr_barapaw") and math.random(3) == 3 and SERVER then
 			ent:GiveStatus("knockdown", 1.5)

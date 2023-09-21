@@ -24,6 +24,7 @@ function SWEP:MeleeHit(ent, trace, damage, forcescale)
 		damage = self.MeleeDamageVsProps
 	else
 		ent:GiveStatus("bloodysickness", 6)
+		ent:GiveStatus("dosei_inf", 7,owner)
 	end
 	self.BaseClass.MeleeHit(self, ent, trace, damage, forcescale)
 end

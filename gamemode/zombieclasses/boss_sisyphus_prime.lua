@@ -117,6 +117,7 @@ if SERVER then
 			end)
 
 		end
+		pl:SetZombieClass(GAMEMODE.DefaultZombieClass)
 		return true
 	end
 end

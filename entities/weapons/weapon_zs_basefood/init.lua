@@ -61,5 +61,5 @@ function SWEP:Eat()
 	end
 	self:PostEat()
 end
-function ENT:PostEat()
+function SWEP:PostEat()
 end

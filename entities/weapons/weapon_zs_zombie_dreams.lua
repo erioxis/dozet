@@ -19,8 +19,8 @@ function SWEP:SecondaryAttack()
 		local ented = {} -- * (!ent:IsPlayer() and 10 or 1)
 		local taped = 1
 		for _, ent in pairs(ents.FindInSphere(self:GetOwner():GetPos(), 76)) do
-			if ent:IsValid() and ent ~= self:GetOwner() and !ented[ent] and taped <= 3 then
-				ent:TakeDamage(self.MeleeDamage * 0.5 * taped, self:GetOwner(), self)
+			if ent:IsValid() and ent ~= self:GetOwner() and !ented[ent]  then
+				ent:TakeSpecialDamage(self.MeleeDamage * 0.5,DMG_DIRECT, self:GetOwner(), self)
 				ented[ent] = true
 				taped = taped + 1
 			end

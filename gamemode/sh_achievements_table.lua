@@ -676,19 +676,20 @@ GM.Statuses["portal"] =	{
 	Max = 25,
 	Icon = Material("zombiesurvival/rot.png")
 }
-GM.Statuses["dimvision_unknown"] = {
-	Color = Color(255, 255, 255),
-	Name = "unknown",
-	ValFunc = statusValueFunction("dimvision_unknown"),
-	Max = 14,
-	Icon = Material("zombiesurvival/dim_vision.png"),
-    Debuff = true
-}
+
 GM.Statuses["bloodysickness"] = {
 	Color = Color(255, 0, 0),
 	Name = "bloodysickness",
 	ValFunc = statusValueFunction("bloodysickness"),
 	Max = 15,
+	Icon = Material("zombiesurvival/sickness.png"),
+    Debuff = true
+}
+GM.Statuses["dosei_inf"] = {
+	Color = Color(15, 188, 188),
+	Name = "dosei_inf",
+	ValFunc = statusValueFunction("dosei_inf"),
+	Max = 7,
 	Icon = Material("zombiesurvival/sickness.png"),
     Debuff = true
 }

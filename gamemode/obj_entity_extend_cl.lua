@@ -129,7 +129,7 @@ function meta:TransAlphaToMe()
 end
 
 GM.CachedGiftEntities = {}
-timer.Create("CacheGiftEntities", 0.5, 0, function()
+timer.Create("CacheGiftEntities", 3, 0, function()
 	if not GAMEMODE then return end
 	GAMEMODE.CachedGiftEntities = {}
 
@@ -139,7 +139,17 @@ timer.Create("CacheGiftEntities", 0.5, 0, function()
 
 	GAMEMODE.CachedGiftEntities = gifts
 end)
+GM.CachedASigilEntities = {}
+timer.Create("CacheASigil", 10, 0, function()
+	if not GAMEMODE then return end
+	GAMEMODE.CachedASigilEntities = {}
 
+	local asigil = {}
+	table.Add(asigil, ents.FindByClass("prop_obj_anti_sigil"))
+
+
+	GAMEMODE.CachedASigilEntities = asigil
+end)
 
 GM.CachedResupplyEntities = {}
 timer.Create("CachedResupplyEntities", 0.5, 0, function()

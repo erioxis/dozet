@@ -98,17 +98,26 @@ local function ItemPanelPaint(self, w, h)
 		if self.m_LastAbleToBuy then
 			outline = self.Depressed and COLOR_GREEN or COLOR_DARKGREEN
 		else
-			outline = self.Depressed and COLOR_RED or COLOR_DARKRED
+			outline =  self.Depressed and COLOR_RED  or COLOR_DARKRED
 		end
 
 		draw.RoundedBox(8, 0, 0, w, h, outline)
 	end
-
+	if self.ShopTabl.New and !self.Hovered  then
+		draw.RoundedBox(8, 0, 0, w, h, COLOR_DARKGREEN)
+		local label = vgui.Create("DLabel", self)
+		label:SetText(translate.Get("new_f2"))
+		label:SetTextColor(color_white)
+		label:SizeToContents()
+		label:SetContentAlignment(8)
+		label:DockMargin(0, label:GetTall() * 0.5, 0, 0)
+		label:Dock(FILL)
+	end
 	if self.ShopTabl.SWEP and (MySelf:HasInventoryItem(self.ShopTabl.SWEP) or MySelf:HasInventoryItemQ(self.ShopTabl.SWEP)) then
-		draw.RoundedBox(8, 2, 2, w - 4, h - 4, COLOR_RORANGE)
+		draw.RoundedBox(8, 2, 2, w - 4, h - 4,  COLOR_RORANGE)
 	end
 
-	draw.RoundedBox(2, 4, 4, w - 8, h - 8, colBG)
+	draw.RoundedBox(2, 4, 4, w - 8, h - 8,  colBG)
 
 	return true
 end
@@ -248,7 +257,12 @@ function GM:SupplyItemViewerDetail(viewer, sweptable, shoptbl, from)
 		viewer.m_AmmoIcon:SetVisible(false)
 	end
 end
-
+local function UpgradeTrinket(me, pl)
+	net.Start("zs_upgrade_trinket")
+		net.WriteString(me.Item2)
+		net.WriteEntity(MySelf)
+	net.SendToServer()
+end
 local function ItemPanelDoClick(self)
 	local shoptbl = self.ShopTabl
 	local viewer = self.NoPoints and (GAMEMODE.RemantlerInterface and GAMEMODE.RemantlerInterface:IsValid() and GAMEMODE.RemantlerInterface.TrinketsFrame.Viewer or GAMEMODE.DronesMenu.TrinketsFrame.Viewer) or GAMEMODE.ArsenalInterface.Viewer
@@ -281,7 +295,6 @@ local function ItemPanelDoClick(self)
 	local purl = viewer.m_PurchaseLabel
 	purl:SetPos(purb:GetWide() / 2 - purl:GetWide() / 2, purb:GetTall() * 0.35 - purl:GetTall() * 0.3)
 	purl:SetVisible(true)
-
 	local ppurbl = viewer.m_PurchasePrice
 	local price = self.NoPoints and math.ceil(GAMEMODE:PointsToScrap(shoptbl.Worth)) or math.ceil(shoptbl.Worth * (MySelf.ArsenalDiscount or 1))
 	ppurbl:SetText(price .. (self.NoPoints and " Scrap" or " Points"))
@@ -297,7 +310,28 @@ local function ItemPanelDoClick(self)
 		howto:SetPos(purb:GetWide() / 2 - ppurbl:GetWide() / 2, purb:GetTall() * 0.75 - ppurbl:GetTall() * 0.5)
 		howto:SetVisible(true)
 	end
-
+	local tblofp = shoptbl.SWEP
+	if (MySelf:HasInventoryItemQ(tblofp) or MySelf:HasInventoryItem(tblofp)) and sweptable.Upgradable and !MySelf:HasInventoryItem(tblofp.."_q5") then
+		purl:SetText(translate.Get("upgrade_just"))
+		purl:SizeToContents()
+		purb.Item2 = tblofp
+		purb.DoClick = UpgradeTrinket
+		local item = tblofp
+		if !sweptable.NeedForUpgrade then
+			ppurbl:SetText( translate.Format("upgrade_inv",GAMEMODE:GetUpgradeScrap(sweptable,(tonumber(string.sub(item ,#item,#item)) and tonumber(string.sub(item ,#item,#item))+1 or 1))))
+			ppurbl:SetFont("ZSBodyTextFont")
+			purb:SetSize(viewer:GetWide()/1.5, 34 * screenscale)
+		else
+			ppurbl:SetText( translate.Format("upgrade_inv_hard",GAMEMODE:GetUpgradeScrap(sweptable,(tonumber(string.sub(item ,#item,#item)) and tonumber(string.sub(item ,#item,#item))+1 or 1)),GAMEMODE.ZSInventoryItemData[sweptable.NeedForUpgrade].PrintName))
+			ppurbl:SetFont("ZS3D2DFontSuperTiny")
+			purb:SetSize(viewer:GetWide() / 0.5, 34 * screenscale)
+		end
+		ppurbl:SizeToContents()
+	else
+		purl:SetText(translate.Get("purchase"))
+		purl:SizeToContents()
+		purb:SetSize(viewer:GetWide() / 2, 34 * screenscale)
+	end
 	purb = viewer.m_AmmoB
 	if canammo then
 		purb.AmmoType = GAMEMODE.AmmoToPurchaseNames[sweptable.Primary.Ammo]
@@ -682,7 +716,7 @@ function GM:CreateItemInfoViewer(frame, propertysheet, topspace, bottomspace, me
 	purchaseb:SetVisible(false)
 	viewer.m_PurchaseB = purchaseb
 
-	local namelab = EasyLabel(purchaseb, ""..translate.Get("purchase"), "ZSBodyTextFontBig", COLOR_WHITE)
+	local namelab = EasyLabel(purchaseb, translate.Get("purchase"), "ZSBodyTextFontBig", COLOR_WHITE)
 	namelab:SetVisible(false)
 	viewer.m_PurchaseLabel = namelab
 

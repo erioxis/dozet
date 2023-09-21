@@ -104,7 +104,10 @@ CreateClientConVar("zs_nohperc", "0", true, true)
 CreateClientConVar("zs_voice_n", "0", true, true)
 
 CreateClientConVar("zs_ammoslider", 0, true, false)
-
+GM.FixTheLag = CreateClientConVar("zs_fixthelag", "0", true, false):GetBool()
+cvars.AddChangeCallback("zs_fixthelag", function(cvar, oldvalue, newvalue)
+	GAMEMODE.FixTheLag = tonumber(newvalue) == 1
+end)
 GM.DisableScopes = CreateClientConVar("zs_disablescopes", "0", true, false):GetBool()
 cvars.AddChangeCallback("zs_disablescopes", function(cvar, oldvalue, newvalue)
 	GAMEMODE.DisableScopes = tonumber(newvalue) == 1

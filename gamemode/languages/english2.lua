@@ -39,7 +39,6 @@ LANGUAGE.t_aframe                                  = "Acrobat Frame"
 LANGUAGE.t_nightglass                                  = "Night Vision Goggles"
 LANGUAGE.t_whole                                  = "Portable Weapons Satchel"
 LANGUAGE.t_agility                                  = "Agility Magnifier"
-LANGUAGE.t_credit                                 = "Credit card"
 LANGUAGE.t_store                                 = "Store"
 LANGUAGE.t_ustore                                 = "Upgraded Store"
 LANGUAGE.t_galvanka                                 = "Galvanizer Implant"
@@ -322,3 +321,66 @@ LANGUAGE.t_d_medi_q2                                = "-9% medic kit cooldown\n-
 LANGUAGE.t_d_medi_q3                                = "-10% medic kit cooldown\n-30% medic tool fire delay\nReprocess food into medical ammo with right click"
 LANGUAGE.t_d_medi_q4                                 = "-15% medic kit cooldown\n-43% medic tool fire delay\nReprocess food into medical ammo with right click\nYou can see statuses of teammates"
 LANGUAGE.t_d_medi_q5                                 = "-30% medic kit cooldown\n-55% medic tool fire delay\nReprocess food into medical ammo with right click\nYou can see statuses of teammates"
+
+LANGUAGE.t_remedy                                 = "Penicillin"
+LANGUAGE.t_remedy_q2                                 = "Penisllin"
+LANGUAGE.t_remedy_q3_5                                 = "Medical booster"
+LANGUAGE.t_d_remedy                                 = "+5% effectivness of medical tools"
+LANGUAGE.t_d_remedy_q1                                 = "+11% effectivness of medical tools"
+LANGUAGE.t_d_remedy_q2                                = "+25% effectivness of medical tools"
+LANGUAGE.t_d_remedy_q3                                = "+28% effectivness of medical tools"
+LANGUAGE.t_d_remedy_q4                                 = "+37% effectivness of medical tools\nEvery 32 heal buff target on 30 seconds"
+LANGUAGE.t_d_remedy_q5                                 = "+45% effectivness of medical tools\nEvery 32 heal buff target on 30 seconds"
+
+LANGUAGE.t_sale                                 = "Sale Card"
+LANGUAGE.t_d_sale                                 = "+3% arsenal discount"
+LANGUAGE.t_d_sale_q1                                 = "+7% arsenal discount"
+LANGUAGE.t_d_sale_q2                                = "+12% arsenal discount"
+LANGUAGE.t_d_sale_q3                                = "+18% arsenal discount"
+LANGUAGE.t_d_sale_q4                                 = "+22% arsenal discount"
+LANGUAGE.t_d_sale_q5                                 = "+30% arsenal discount\nYOU REALLY NEED SALES?"
+
+LANGUAGE.t_missluck                           = "Cube of luck"
+LANGUAGE.t_d_missluck                           = "Have chance do a CRIT damage (180%) with 5% chance!"
+
+LANGUAGE.new_f2                                 = "NEW!"
+LANGUAGE.trap_barrel = "BROKEN BARREL!Chance for spawn 1|%d"
+
+LANGUAGE.survival_name = "Survival"
+LANGUAGE.survival_desc = "Here skills for survival,good tree for start."
+
+LANGUAGE.gunnery_name = "Gunnery"
+LANGUAGE.gunnery_desc = "Ideal tree for start.\nSkill for guns"
+
+LANGUAGE.speed_name = "Agility"
+LANGUAGE.speed_desc = "Skill tree for agility and speed."
+
+LANGUAGE.support_name = "Support"
+LANGUAGE.support_desc = "Skill tree for medic and have good synergy with agility tree"
+
+LANGUAGE.building_name = "Building"
+LANGUAGE.building_desc = "Skill tree for deployables.\nGood tree for start."
+
+LANGUAGE.melee_name = "Melee"
+LANGUAGE.melee_desc = "Skill tree for melee.\nBad choice for newbies"
+
+
+LANGUAGE.point_name = "Luck"
+LANGUAGE.point_desc = "Skill tree for upgrade point gain and luck.\nHere a amulets on 6 remort)!"
+
+
+LANGUAGE.ancient_name = "Ancient knownledge"
+LANGUAGE.ancient_desc = "Hard work..."
+
+LANGUAGE.defense_name = "Defence"
+LANGUAGE.defense_desc = "Skill tree for defence and love take a speed.\nSome skills worth for it."
+
+LANGUAGE.donate_name = "Donate's"
+LANGUAGE.donate_desc = "Skill tree frokm players."
+
+LANGUAGE.useless_name = "USELESS"
+LANGUAGE.useless_desc = "USELESS!"
+
+
+LANGUAGE.god_1_name = "God"
+LANGUAGE.god_1_desc = "Choose a will"

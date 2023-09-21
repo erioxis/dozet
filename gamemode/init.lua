@@ -1413,10 +1413,10 @@ function GM:Think()
 				if pl:HasTrinket("sin_pride")  and wep and (wep.Tier or 1) >= 4 and  wep then
 					pl:StripWeapon(wep:GetClass())
 				end
-				if wep and wep:IsValid() and !wep.AddedAmmo and pl:GetAmmoCount(wep.Primary.Ammo) <= 0 then
+				if wep and wep:IsValid() and !wep.AddedAmmo and wep:GetCombinedPrimaryAmmo() <= 0 then
 					pl:GiveAmmo(1,wep.Primary.Ammo)
 					wep.AddedAmmo = true
-				elseif wep and wep:IsValid() and !wep.AddedAmmo and pl:GetAmmoCount(wep.Primary.Ammo) > 0 then
+				elseif wep and wep:IsValid() and !wep.AddedAmmo and wep:GetCombinedPrimaryAmmo() > 0 then
 					wep.AddedAmmo = true
 				end
 				if (pl.NextThinkAboutTrade or 1) < time and pl:IsSkillActive(SKILL_SOUL_TRADE) then
@@ -1566,11 +1566,11 @@ function GM:Think()
 					pl.HolyMantle = pl.HolyMantle + 1
 				end
 				if pl.HolyMantle >= 1 and pl:IsSkillActive(SKILL_HOLY_MANTLE) and pl:IsValid() and pl.MantleFix <= CurTime() then
-                    pl:GiveStatus("hshield", 1.3, true)
+                    pl:GiveStatus("hshield", 1.3)
 				end
 				if time >= pl.NextSleep and pl:IsSkillActive(SKILL_NOSEE) and self:GetWave() ~= 0 then
 					pl.NextSleep = time + 9
-                    pl:GiveStatus("dimvision", 10, true)
+                    pl:GiveStatus("dimvision", 10)
 				end
 
 				if pl.MasteryHollowing > 800 and pl:IsSkillActive(SKILL_UPLOAD) then
@@ -2054,8 +2054,8 @@ function GM:PlayerHealedTeamMember(pl, other, health, wep, pointmul, nobymsg, fl
 		pl:AddPoints(80)
 		pl:SetProgress(math.Round(pl:GetProgress('mprog')-1800), 'mprog')
 	end
-	pl.NextChargeHeal = (pl.NextChargeHeal or 0) + health
-	if (pl.NextChargeHeal or 0) >= 250 then
+	pl.NextChargeHeal = pl.NextChargeHeal + health
+	if pl.NextChargeHeal >= 450 then
 		pl:SetChargesActive(pl:GetChargesActive()+1)
 		pl.NextChargeHeal = 0
 	end
@@ -3009,6 +3009,7 @@ function GM:PlayerInitialSpawnRound(pl)
 	pl.BloodDead = 0
 
 	pl.CarefullMelody_DMG = 0
+	pl.UltraCharge = 0
 	
 	pl.StuckedInProp = nil
 	pl.Stuckedtrue = nil
@@ -3056,7 +3057,7 @@ function GM:PlayerInitialSpawnRound(pl)
 	pl.NextEnergy = 0
 
 	pl.NextWhiteOut = 0
-
+	pl.NextChargeHeal = 0
 	pl.HealedThisRound = 0
 	pl.RepairedThisRound = 0
 	pl.NextRegenerate = 0
