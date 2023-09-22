@@ -201,14 +201,14 @@ if SERVER then
 			net.Start("zs_damageblock")
 			net.Send(pl)
 		end
-		if inflictor.IgnoreNiggers then
+		local attacker, inflictor = dmginfo:GetAttacker(), dmginfo:GetInflictor()
+		if inflictor and inflictor.IgnoreNiggers then
 			dmginfo:ScaleDamage(0.1)
 		end
 		local damage = dmginfo:GetDamage()
 		
 		if damage >= 80 or damage < pl:Health() then return end
 
-		local attacker, inflictor = dmginfo:GetAttacker(), dmginfo:GetInflictor()
 		if attacker == pl or not attacker:IsPlayer() or inflictor.IsMelee or inflictor.NoReviveFromKills then return end
 		if pl:WasHitInHead() or pl:GetStatus("shockdebuff") then return end
 

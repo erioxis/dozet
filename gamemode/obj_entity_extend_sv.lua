@@ -30,9 +30,9 @@ function meta:HealPlayer(pl, amount, pointmul, nobymsg, poisononly)
 	if self:HasTrinket("remedy_q4") or self:HasTrinket("remedy_q5") then
 		pl.UltraCharge = pl.UltraCharge+ 1
 		if pl.UltraCharge >= 32 - (self:HasTrinket("remedy_q5") and 10 or 0) then
-			pl:GiveStatus("strengthdartboost",30)
-			pl:GiveStatus("medrifledefboost",30)
-			pl:GiveStatus("holly",30)
+			pl:GiveStatus("strengthdartboost",30,self)
+			pl:GiveStatus("medrifledefboost",30,self)
+			pl:GiveStatus("holly",30,self)
 			pl.UltraCharge = 0
 		end
 	end
