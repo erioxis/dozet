@@ -7,19 +7,23 @@ SWEP.Slot = 1
 SWEP.SlotPos = 0
 
 if CLIENT then
-	SWEP.ViewModelFlip = false
-	SWEP.ViewModelFOV = 50
+	SWEP.ViewModelFOV = 80
 
 	SWEP.HUD3DBone = "v_weapon.slide_right"
-	SWEP.HUD3DPos = Vector(1, 0.1, -1)
+	SWEP.HUD3DPos = Vector(2, 0.1, -1)
 	SWEP.HUD3DScale = 0.015
-	SWEP.HoldType = "pistol"
 	SWEP.ViewModelFlip = false
-	SWEP.ViewModelBoneMods = {}
+
+	SWEP.ViewModelBoneMods = {
+		["v_weapon.elite_left"] = { scale = Vector(0.104, 0.104, 0.104), pos = Vector(0, 0, 0), angle = Angle(0, 0, 0) },
+		["v_weapon.magazine_left"] = { scale = Vector(1.352, 1.352, 1.352), pos = Vector(0, 0, 0), angle = Angle(0, 0, 0) },
+		["v_weapon.slide_left"] = { scale = Vector(0.01, 0.01, 0.01), pos = Vector(0, 0, 0), angle = Angle(0, 0, 0) },
+		["v_weapon.trigger_left"] = { scale = Vector(0.01, 0.01, 0.01), pos = Vector(0, 0, 0), angle = Angle(0, 0, 0) }
+	}
 
 	SWEP.SCKMaterials = {}
 
-	SWEP.IronSightsPos = Vector(1.28, 0, 0.56)
+	--SWEP.IronSightsPos = Vector(1.28, 0, 0.56)
 	SWEP.IronSightsAng = Vector(0, 0, 0)
 
 	SWEP.VElements = {
@@ -81,13 +85,13 @@ if CLIENT then
 	
 
 end
-SWEP.ShowViewModel = false
+SWEP.ShowViewModel = true
 SWEP.ShowWorldModel = true
 SWEP.Base = "weapon_zs_base"
 
 SWEP.HoldType = "duel"
 
-SWEP.ViewModel = "models/weapons/cstrike/c_pist_elite.mdl"
+SWEP.ViewModel = "models/weapons/v_pist_elite.mdl"
 SWEP.WorldModel = "models/weapons/w_pist_elite.mdl"
 SWEP.UseHands = true
 

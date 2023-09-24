@@ -20,6 +20,6 @@ function ENT:Think()
 		end
 		self:SetDamage(self:GetDamage()-1)
 	end
-	self:NextThink(CurTime()+1/(owner.RegenFastingMul or 1))
+	self:NextThink(CurTime()+0.75/(owner.RegenFastingMul or 1))
 	return true
 end

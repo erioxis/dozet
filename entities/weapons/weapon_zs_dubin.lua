@@ -5,6 +5,7 @@ SWEP.Description = translate.Get("wep_d_dubin")
 if CLIENT then
 	SWEP.ViewModelFOV = 65
 	SWEP.ViewModelFlip = false
+	SWEP.HUD3DScale = 0.015
 
 	SWEP.ShowViewModel = false
 	SWEP.ShowWorldModel = false
@@ -79,21 +80,21 @@ SWEP.DamageType = DMG_CLUB
 
 SWEP.Tier = 4
 
-SWEP.MeleeDamage = 45
-SWEP.MeleeRange = 120
+SWEP.MeleeDamage = 163
+SWEP.MeleeRange = 66
 SWEP.MeleeSize = 1
 SWEP.BlockMultiplierWeapon = 0.5
 SWEP.IgnoreNiggers = true
-SWEP.Primary.Delay = 1.3
-SWEP.StartSwingAnimation =  ACT_VM_HITLEFT
+SWEP.Primary.Delay = 1.6
+SWEP.StartSwingAnimation =  ACT_VM_PRIMARYATTACK
 
 SWEP.WalkSpeed = SPEED_SLOW
 
-SWEP.SwingRotation = Angle(0, -90, -60)
-SWEP.SwingOffset = Vector(0, 30, -40)
-SWEP.SwingTime = 0.2
+--SWEP.SwingRotation = Angle(0, -90, -60)
+
+SWEP.SwingTime = 0.5
 SWEP.SwingHoldType = "melee"
-SWEP.HitAnim = ACT_VM_HITLEFT
+SWEP.HitAnim = ACT_VM_CRAWL
 SWEP.MissAnim = nil
 
 SWEP.AllowQualityWeapons = true
@@ -102,15 +103,15 @@ SWEP.Runn = false
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_FIRE_DELAY, -0.1)
 
 function SWEP:PlaySwingSound()
-	self:EmitSound("weapons/iceaxe/iceaxe_swing1.wav", 80, 25)
+	self:EmitSound("weapons/iceaxe/iceaxe_swing1.wav", 80, 75)
 end
 
 function SWEP:PlayHitSound()
-	self:EmitSound("physics/metal/metal_solid_impact_hard"..math.random(4, 5)..".wav", 120, math.Rand(125, 370))
+	self:EmitSound("physics/wood/wood_solid_impact_hard"..math.random(1, 3)..".wav", 60, math.Rand(100, 120))
 end
 
 function SWEP:PlayHitFleshSound()
-	self:EmitSound("weapons/zs_power/power4.wav", 120, math.Rand(125, 220))
+	self:EmitSound("weapons/zs_power/power4.wav", 60, math.Rand(125, 220))
 end
 
 --function SWEP:MeleeSwing()
@@ -121,93 +122,11 @@ GAMEMODE:AddNewRemantleBranch(SWEP, 1, translate.Get("wep_dubin2"), translate.Ge
 	wept.Runn = true
 	end)
 function SWEP:MeleeSwing()
-	
-	local owner = self:GetOwner()
-	if owner.StaminaHAHA then
-		owner:AddStamina(-(self.StaminaUse or 13)*0.4)
-	end
-	self.SwingingTrue = false
-	owner:ResetSpeed()
-	self:DoMeleeAttackAnim()
-
-	local tr = owner:CompensatedMeleeTrace(self.MeleeRange * (owner.MeleeRangeMul or 1), self.MeleeSize)
-
-	if not tr.Hit then
-		if self.MissAnim then
-			self:SendWeaponAnim(self.MissAnim)
-		end
-		self.IdleAnimation = CurTime() + self:SequenceDuration()-0.3
-		self:PlaySwingSound()
-
-		if owner.MeleePowerAttackMul and owner.MeleePowerAttackMul > 1 then
-			self:SetPowerCombo(0)
-		end
-
-		if self.PostOnMeleeMiss then self:PostOnMeleeMiss(tr) end
-
-		return
-	end
-
-	local damagemultiplier = owner:Team() == TEAM_HUMAN and owner.MeleeDamageMultiplier or 1 --(owner.BuffMuscular and owner:Team()==TEAM_HUMAN) and 1.2 or 1
-	if owner:IsSkillActive(SKILL_LASTSTAND) then
-		if owner:Health() <= owner:GetMaxHealth() * 0.25 then
-			damagemultiplier = damagemultiplier * 2
-		else
-			damagemultiplier = damagemultiplier * 0.85
-		end
-	end
-	if owner:IsSkillActive(SKILL_SAHA) and owner.StaminaHAHA then
-		if owner:GetStamina() <= 50 then
-			damagemultiplier = damagemultiplier * 1.33
-		end
-	end
-	if owner:IsSkillActive(SKILL_CURSE_OF_MISS) and math.random(1,3) == 1 and SERVER then
-		GAMEMODE:BlockFloater(owner, NULL, tr.HitPos, 1)
-		self:SetPowerCombo(0)
-		owner.MissTimes = (owner.MissTimes or 0) + 1
-		if owner.MissTimes >= 10 then
-			owner:GiveAchievement("koso")
-		end
-		return
-	end
-	owner.MissTimes = 0
-	 
-
-
-
-	local hitent = tr.Entity
-	local hitflesh = true
-
-	if self.HitAnim then
-		self:SendWeaponAnim(self.HitAnim)
-	end
-	self.IdleAnimation = CurTime() + self:SequenceDuration()
-
-	if hitflesh then
-		util.Decal(self.BloodDecal, tr.HitPos + tr.HitNormal, tr.HitPos - tr.HitNormal)
-		self:PlayHitFleshSound()
-	else
-		util.Decal(self.HitDecal, tr.HitPos + tr.HitNormal, tr.HitPos - tr.HitNormal)
-		self:PlayHitSound()
-	end
-
-	if self.OnMeleeHit and self:OnMeleeHit(hitent, hitflesh, tr) then
-		return
-	end
-
-	if SERVER then
-		self:ServerMeleeHitEntity(tr, hitent, damagemultiplier)
-	end
-
-	self:MeleeHitEntity(tr, hitent, damagemultiplier)
-
-	if self.PostOnMeleeHit then self:PostOnMeleeHit(hitent, hitflesh, tr) end
-
-	if SERVER then
-		self:ServerMeleePostHitEntity(tr, hitent, damagemultiplier)
-	end
+	self.BaseClass.MeleeSwing(self)
 	if self.Runn then
-		timer.Simple(1,function() self:MeleeSwing() 
+		timer.Simple(1,function() 
+			local owner = self:GetOwner()
+			--self:MeleeSwing() 
 			owner:ViewPunch(132 * Angle(math.Rand(-0.1, -0.1), math.Rand(-0.1, 0.1), 0))
 
 		owner:SetGroundEntity(NULL)
@@ -215,3 +134,42 @@ function SWEP:MeleeSwing()
 		end)
 	end
 end
+function SWEP:DealThink(dmginfo) 
+	if self.NoAbility then return end
+	self:SetDTFloat(6,self:GetDTFloat(6)+math.min(self.MeleeDamage*3,dmginfo:GetDamage()*0.4))
+end
+function SWEP:HaveAbility() 
+	if self:GetDTFloat(6)> 550 then
+		self.NoAbility = true
+		self:SetDTFloat(6,0)
+		self.MeleeDamage = self.MeleeDamage*10
+		self:StartSwinging()
+		timer.Simple(0.7, function()
+			self.MeleeDamage = self.MeleeDamage/10
+			local own  = self:GetOwner()
+			local pos = own:GetPos()
+			local pushvel = own:GetEyeTrace().Normal * 0 + (own:GetAngles():Forward()*(own:OnGround() and 3000 or 1000))
+			own:SetVelocity(pushvel)
+			for k,v in pairs(ents.FindInBoxRadius(self:GetPos(), 250)) do
+				if v:IsValidLivingZombie() then
+					v:TakeSpecialDamage(self.MeleeDamage*6,DMG_DISSOLVE,own,self)
+					
+					local worldspace = v:WorldSpaceCenter()
+					effectdata = EffectData()
+						effectdata:SetOrigin(worldspace)
+						effectdata:SetStart(pos)
+						effectdata:SetEntity(v)
+					util.Effect("tracer_zapper", effectdata)
+				end
+			end
+			self.NoAbility = false
+		end)
+	end
+end
+if !CLIENT then return end
+	local ablicolor =  Color( 93,144,246)
+	function SWEP:Draw2DHUD()
+		self:Draw2DFeature( self:GetDTFloat(6)/550, nil, nil, "weapon_ability_83_gramm", "ZSHUDFontSmallest", ablicolor, "+menu" )
+	end
+
+	

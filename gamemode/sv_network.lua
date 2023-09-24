@@ -20,6 +20,7 @@
 	util.AddNetworkString("zs_mge_phr")
 	util.AddNetworkString("zs_sync_style")
 	util.AddNetworkString("zs_golden")
+	util.AddNetworkString("zs_code_get")
 	util.AddNetworkString("zs_ability_weapon")
 
 

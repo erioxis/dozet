@@ -501,6 +501,7 @@ item.DontScrap = true
 GM:AddPointShopItem("knife",			ITEMCAT_MELEE,			25,				"weapon_zs_swissarmyknife")
 GM:AddPointShopItem("zpplnk",			ITEMCAT_MELEE,			25,				"weapon_zs_plank")
 GM:AddPointShopItem("axe",				ITEMCAT_MELEE,			25,				"weapon_zs_axe")
+GM:AddPointShopItem("nullified",				ITEMCAT_MELEE,			10,				"weapon_zs_null")
 GM:AddPointShopItem("zpfryp",			ITEMCAT_MELEE,			25,				"weapon_zs_fryingpan")
 GM:AddPointShopItem("zpcpot",			ITEMCAT_MELEE,			25,				"weapon_zs_pot")
 GM:AddPointShopItem("ladel",			ITEMCAT_MELEE,			25,				"weapon_zs_ladel")

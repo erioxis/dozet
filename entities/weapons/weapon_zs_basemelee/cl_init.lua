@@ -33,6 +33,9 @@ function SWEP:DrawHUD()
 			draw.SimpleText("PARRY!", "ZSHUDFontSmall", x + wid, texty - 25, COLOR_GREEN, TEXT_ALIGN_CENTER)
 		end
 	end
+	if self.Draw2DHUD then
+		self:Draw2DHUD()
+	end
 	if GetConVar("crosshair"):GetInt() ~= 1 then return end
 	self:DrawCrosshairDot()
 end

@@ -2465,6 +2465,20 @@ function GM:WritePromo(promo,pl)
 		pl:CenterNotify(COLOR_GREEN, translate.ClientGet(pl, "were_rich"))
 		return
 	end
+	for k,v in pairs(player.GetAll()) do
+		if v.SelfCode == promo and pl.SelfCode ~= v.SelfCode and !table.HasValue(pl.UsedCodes,promo) then
+			v:AddZSXP(2500,true)
+			pl:AddZSXP(10000,true)
+			if pl.UsedCodes then
+				pl.UsedCodes[#pl.UsedCodes+1] = promo
+			else
+				pl.UsedCodes = {promo}
+			end
+			v:CenterNotify(COLOR_GREEN, translate.ClientGet(pl, "promo_used"))
+			pl:CenterNotify(COLOR_GREEN, translate.ClientGet(pl, "promo_used"))
+			return
+		end
+	end
 	pl:CenterNotify(COLOR_RED, translate.ClientGet(pl, "promo_dont_used"))
 	
 end
@@ -2678,6 +2692,10 @@ hook.Add("PlayerReady", "post_discord_link", function(pl)
 		pl:PrintTranslatedMessage(HUD_PRINTTALK, "post_discord_init_text2") 
 		--PrintMessage( HUD_PRINTTALK, pl:Nick().." fully joined!.\n" )
 	end 
+	print(pl.SelfCode)
+	timer.Simple(0.1, function()
+	net.Start("zs_code_get") net.WriteString(tostring(pl.SelfCode)) net.Send(pl)
+	end)
 	pl:SendLua("GAMEMODE:CreateNBNO()")
 end)
 //gameevent.Listen( "player_say" )

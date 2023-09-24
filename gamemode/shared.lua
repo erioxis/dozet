@@ -5,7 +5,7 @@ GM.Website	=	"https://github.com/erioxis/dozet"
 
 -- No, adding a gun doesn't make your name worth being here.
 GM.Credits = {
-	{"Version", "", "8.9.0"}, -- дайте пофармить новичкам!
+	{"Version", "", "8.9.3"}, -- дайте пофармить новичкам!
 	{"Season of ", "skill buffs,zombie debuff and MORE OPTIMIZATION", "maybe"},
 	{"erioxis", "Phantom coder", "dead"},
 	{"Холодное Молочко(M-I-L-K-Y)", "Phantom coder", "dead"},
@@ -561,6 +561,11 @@ function GM:OnPlayerHitGround(pl, inwater, hitfloater, speed)
 
 	if SERVER then
 		local groundent = pl:GetGroundEntity()
+		local p = pl:IsSkillActive(SKILL_VKID2) and pl:IsSkillActive(SKILL_VKID)
+		if groundent:IsValid() and groundent:IsPlayer() and PTeam(groundent) == TEAM_UNDEAD and (pl:IsSkillActive(SKILL_VKID2) or pl:IsSkillActive(SKILL_VKID)) then
+			groundent:TakeSpecialDamage(160 * self:GetWave() * (p and 2.2 or 1), DMG_CLUB, pl, pl, pl:GetPos())
+			return true
+		end
 		if groundent:IsValid() and groundent:IsPlayer() and PTeam(groundent) == TEAM_UNDEAD and pl:HasTrinket("curbstompers") then
 			if groundent:IsHeadcrab() then
 				groundent:TakeSpecialDamage(groundent:Health() + 70, DMG_DIRECT, pl, pl, pl:GetPos())
@@ -573,36 +578,9 @@ function GM:OnPlayerHitGround(pl, inwater, hitfloater, speed)
 				return true
 			end
 		end
-		if groundent:IsValid() and groundent:IsPlayer() and PTeam(groundent) == TEAM_UNDEAD and pl:HasTrinket("toysite") then
-			if groundent:IsHeadcrab() then
-				groundent:TakeSpecialDamage(groundent:Health() + 200, DMG_DIRECT, pl, pl, pl:GetPos())
-			elseif groundent:IsTorso() then
-				groundent:TakeSpecialDamage(207, DMG_CLUB, pl, pl, pl:GetPos())
-			end
-
-			if math.floor(damage) > 0 then
-				groundent:TakeSpecialDamage(damage * 8, DMG_CLUB, pl, pl, pl:GetPos())
-				return true
-			end
-		end
 		if groundent:IsValid() and groundent:IsPlayer() and PTeam(groundent) == TEAM_HUMAN and groundent:GetModelScale() < 0.75 then
 			groundent:TakeSpecialDamage(30110, DMG_DIRECT, pl, pl, pl:GetPos())
 			pl:GiveAchievement("mariotrue")
-			return true
-		end
-		if groundent:IsValid() and groundent:IsPlayer() and PTeam(groundent) == TEAM_UNDEAD and pl:IsSkillActive(SKILL_VKID) then
-			if groundent:IsHeadcrab() then
-				groundent:TakeSpecialDamage(groundent:Health() + 1000, DMG_DIRECT, pl, pl, pl:GetPos())
-			elseif groundent:IsTorso() then
-				groundent:TakeSpecialDamage(4007, DMG_CLUB, pl, pl, pl:GetPos())
-			end
-		--	net.Start("zs_update_style") net.WriteTable({time = CurTime()+1+(math.random(1,20)*0.1),text = "COMPRESS!",score = 25}) net.Send(pl) 
-			groundent:TakeSpecialDamage((groundent:GetZombieClassTable().Skeletal and 10 or 120) * self:GetWave(), DMG_FALL, pl, pl, pl:GetPos())
-			return true
-		end
-		if groundent:IsValid() and groundent:IsPlayer() and PTeam(groundent) == TEAM_UNDEAD and pl:IsSkillActive(SKILL_VKID2) then
-			groundent:TakeSpecialDamage((groundent:GetZombieClassTable().Skeletal and 25 or 160) * self:GetWave(), DMG_FALL, pl, pl, pl:GetPos())
-		--	net.Start("zs_update_style") net.WriteTable({time = CurTime()+1+(math.random(1,20)*0.1),text = "COMPRESS!",score = 25}) net.Send(pl) 
 			return true
 		end
 	end

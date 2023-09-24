@@ -2028,5 +2028,7 @@ LANGUAGE.weapon_ability_nuclearsword_3d = "ЯДЕРНЫЙ ВЗРЫВ"
 LANGUAGE.wep_gaegle_d2 = "МОЖЕТ СТРЕЛЯТЬ???"
 LANGUAGE.wep_gaegle_d3 = "МОЖЕТ СТРЕЛЯТЬ??"
 
+LANGUAGE.weapon_ability_83_gramm = "Раскат грома 8 триграмм"
+
 
 LANGUAGE.w_random_c = "Случайное проклятье"

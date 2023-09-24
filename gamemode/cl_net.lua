@@ -23,6 +23,11 @@ end)
 net.Receive("zs_armdamage", function(length)
 	MySelf.ArmDamage = net.ReadFloat()
 end)
+net.Receive("zs_code_get", function(length)
+	MySelf.SelfCode = net.ReadString()
+	print(MySelf.SelfCode)
+end)
+
 
 
 net.Receive("zs_nextboss", function(length)

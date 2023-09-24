@@ -15,7 +15,8 @@ function ENT:Initialize()
 	end
 end
 function ENT:SetDamage(damage)
-	self:SetDTFloat(0, math.min(100, damage))
+	local own = self:GetOwner()
+	self:SetDTFloat(0, math.min(own:IsValidLivingPlayer() and own:GetMaxHealth()/2 or 100, damage))
 end
 
 function ENT:GetDamage()

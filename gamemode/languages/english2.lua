@@ -234,7 +234,7 @@ LANGUAGE.t_d_magnet                                 = "Slowly pulls ammo and wea
 LANGUAGE.t_d_smagnet                                 = "Pulls ammo and weapons towards you quickly\nMust be equipped to take effect"
 LANGUAGE.t_d_arspack                                 = "Allows humans to resupply from you\nPress LMB with the pack in your hand to resupply yourself."
 LANGUAGE.t_d_ammopack                                 = "Allows nearby humans to purchase from the arsenal menu."
-LANGUAGE.t_d_defenderiiii                                 = "You get 6% less damage, but the blood armor is ineffective, it is produced in 5%,you can stump headcrabs"
+LANGUAGE.t_d_defenderiiii                                 = "You get 6% less damage, but the blood armor is ineffective, it is produced in 5%"
 LANGUAGE.t_d_defenderiii                                 = "-6% melee damage taken\n-16% projectile damage taken and you take -7% blood armor convert"
 LANGUAGE.t_d_reactf                                 = "Blinds and disorients melee attacker for 2 seconds\nRecharges every 75 seconds"
 LANGUAGE.t_d_necro                                 = "Hides aura from zombies in close proximity"
@@ -384,3 +384,6 @@ LANGUAGE.useless_desc = "USELESS!"
 
 LANGUAGE.god_1_name = "God"
 LANGUAGE.god_1_desc = "Choose a will"
+
+LANGUAGE.promocode_added_in_cb = "Your promocode(%s) added in clipboard!"
+LANGUAGE.g2p_promo_self = "My promocode"

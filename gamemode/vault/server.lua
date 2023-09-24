@@ -96,6 +96,10 @@ function GM:LoadVault(pl)
 				if contents.Zban then
 					pl.Zban = contents.Zban
 				end
+				pl.SelfCode =  contents.SelfCode or string.Random(22)..string.sub(pl:SteamID64(),9,11)
+				if contents.UsedCodes then
+					pl.UsedCodes = contents.UsedCodes
+				end
 				if contents.AchXP then
 					pl:SetDCoins(contents.AchXP)
 				end
@@ -169,8 +173,11 @@ function GM:SaveVault(pl)
 		CaderMastery = pl:GetMastery("cadder"),
 		Zban = (pl.Zban or false),
 		AchXP = pl:GetDCoins(),
-		Season = self.DozetSeason
+		Season = self.DozetSeason,
+		SelfCode = pl.SelfCode or string.Random(32),
+		UsedCodes = pl.UsedCodes
 	}
+--	print(pl:SteamID64())
 	local tosavexp = {
 		AchXP = pl:GetDCoins()
 	}

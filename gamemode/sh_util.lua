@@ -33,7 +33,7 @@ function string.Random( length )
 
     for i = 1, length do
 
-        result[i] = string.char( math.random(32, 126) )
+        result[i] = string.char( math.random(97, 120) )
 
     end
 

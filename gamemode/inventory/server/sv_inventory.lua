@@ -326,7 +326,7 @@ function meta:GiveInventoryItemByType(itype, plyr)
 	if GAMEMODE.ZombieEscape then return end
 	if not self:HasInventoryItem(itype) then return end
 
-	if GAMEMODE:GetInventoryItemType(itype) == INVCAT_TRINKETS and plyr:HasInventoryItem(itype) then
+	if GAMEMODE:GetInventoryItemType(itype) == INVCAT_TRINKETS and (plyr:HasInventoryItem(itype) or plyr:HasInventoryItemQ(itype)) then
 		self:CenterNotify(COLOR_RED, translate.ClientGet(self, "they_already_have_this_trinket"))
 		return
 	end

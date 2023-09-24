@@ -60,6 +60,7 @@ end
 
 function SWEP:ApplyMeleeDamage(pl, trace, damage)
 	if SERVER and pl:IsPlayer() then
+		pl:GiveStatus("dosei_inf", 7,self:GetOwner())
 		local rot = pl:GetStatus("rot")
 		if (rot) then 
 			pl:AddRot(self:GetOwner(), 3,true)

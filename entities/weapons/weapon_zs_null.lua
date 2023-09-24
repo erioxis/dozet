@@ -24,7 +24,7 @@ SWEP.AutoSwitchFrom	= true
 SWEP.MeleeDamage = 21
 SWEP.MeleeRange = 81
 SWEP.MeleeSize = 0.875
-SWEP.Tier = 6
+SWEP.Tier = 1
 
 SWEP.WalkSpeed = SPEED_FASTEST
 
@@ -47,8 +47,9 @@ function SWEP:PlaySwingSound()
 end
 
 function SWEP:PlayHitSound()
-	self:GetOwner():EmitSound("npc/combine_soldier/die"..math.random(1,3)..".wav", 75, math.random(70,75), 0.5)
-	self:GetOwner():EmitSound("npc/combine_soldier/die"..math.random(1,3)..".wav", 75, math.random(78,90), 0.5)
+	local owner = self:GetOwner()
+	owner:EmitSound("npc/combine_soldier/die"..math.random(1,3)..".wav", 75, math.random(70,75), 0.5)
+	owner:EmitSound("npc/combine_soldier/die"..math.random(1,3)..".wav", 75, math.random(78,90), 0.5)
 end
 
 function SWEP:PlayHitFleshSound()

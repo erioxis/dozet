@@ -175,9 +175,9 @@ function meta:DrawCrosshairCross()
 		local ratio = (MySelf:GetActiveWeapon().Primary.Delay or 1) / firedelay
 		surface.DrawCircle(x1, y1, 38 * cone, 5, 35 * ratio * 0.5, 5, 255 * ratio * 0.4)
 		local ratio = ((CurTime()-((MySelf:GetActiveWeapon().Primary.Delay or 1) + MySelf:GetActiveWeapon():GetNextPrimaryFire() - MySelf:GetActiveWeapon():GetFireDelay()))) * 100
-		if ratio/100+0.11 <= 0 and MySelf:GetActiveWeapon() and !MySelf:GetActiveWeapon().IsMelee then
-			draw.SimpleTextBlurry(-math.Round(ratio)/100-0.11, "ZSHUDFontTiny",x1-70 * math.max(1.004,cone), y1+10 * math.max(1.004,cone), Color(255,255,255), TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-		end
+		--if ratio/100+0.11 <= 0 and MySelf:GetActiveWeapon() and !MySelf:GetActiveWeapon().IsMelee then
+			--draw.SimpleTextBlurry(-math.Round(ratio)/100-0.11, "ZSHUDFontTiny",x1-70 * math.max(1.004,cone), y1+10 * math.max(1.004,cone), Color(255,255,255), TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+	--	end
 		if MySelf:IsSkillActive(SKILL_VAMPIRISM) then
 			local screenscale = BetterScreenScale()
 			local prog = lp:GetNWFloat("vampirism_progress",value)
@@ -219,11 +219,19 @@ function meta:DrawCrosshairDot()
 	local x = ScrW() * 0.5
 	local y = ScrH() * 0.5
 	local thickness = GAMEMODE.CrosshairThickness
+	local screenscale = BetterScreenScale()
 	local size = 4 * thickness
 	local hsize = size/2
-	local firedelay = MySelf:GetActiveWeapon():GetNextPrimaryFire() - CurTime() 
-	local ratio = (MySelf:GetActiveWeapon().IsMelee and MySelf:GetActiveWeapon().MeleeDelay or 1) / firedelay
+	local wepi = MySelf:GetActiveWeapon()
+	local firedelay = wepi:GetNextPrimaryFire() - CurTime()-0.045
+	local ratio = (wepi.IsMelee and wepi.MeleeDelay or 1) / firedelay
 	surface.DrawCircle(x, y, 10, 5 * ratio * 0.2, 35 * ratio * 0.5, 5, 255 * ratio * 0.4)
+	if firedelay >= 0 then
+		draw.SimpleText(math.Round((firedelay)*100)/100 , "ZSHUDFontSmallest", x  * screenscale, y + 8 * screenscale, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+	end
+	if wepi:GetReloadFinish() ~= 0 then
+		draw.SimpleText(math.Round(wepi:GetReloadFinish()-CurTime(),2) , "ZSHUDFontSmallest", x-120 * screenscale, y + 8 * screenscale, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+	end
 	surface_SetDrawColor(GAMEMODE.CrosshairColor2)
 	surface_DrawRect(x - hsize, y - hsize, size, size)
 	surface_SetDrawColor(0, 0, 0, GAMEMODE.CrosshairColor2.a)
@@ -233,7 +241,7 @@ function meta:DrawCrosshairDot()
 		GAMEMODE:DrawCircle(x, y, 8, COLOR_RED)
 	end
 	if (MySelf:IsSkillActive(SKILL_PARASITOID) or MySelf:IsSkillActive(SKILL_CAN_EATER)) and MySelf:GetProgress("parasite_prog") > CurTime() then
-		local screenscale = BetterScreenScale()
+	
 		local wid, hei = 32 * screenscale, 32 * screenscale
 
 		colHealth.r = 255 

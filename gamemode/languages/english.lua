@@ -3177,6 +3177,8 @@ LANGUAGE.weapon_ability_spr = "Super-attack speed"
 LANGUAGE.weapon_ability_oberon = "Overdrive"
 LANGUAGE.weapon_ability_z9000 = "Energy spread"
 LANGUAGE.weapon_ability_lamp = "No-Resist hits"
+
+LANGUAGE.weapon_ability_83_gramm = "Raimei Hakke"
 LANGUAGE.have_ability = "\nHAVE ABILITY!"
 
 LANGUAGE.weapon_press_x = "Press %s!"

@@ -197,11 +197,11 @@ function meta:FireBulletsLua(src, dir, spread, num, damage, attacker, force_mul,
 		elseif !E_IsValid(ent) and attacker_player and (attacker.FastEye or attacker.BirdEye) then
 			local die = false
 			attacker.Luls = attacker.Luls + 1
-			if math.random(1,4) == 1 then
+			if math.random(1,4) == 1 and inflictor then
 				inflictor.DamageEyeMul = math.max(1,(inflictor.DamageEyeMul or 1))/2  
 				die = true
 			end
-			if attacker.FastEye and math.random(1,math.max(1,5-attacker.Luls)) == 1 then
+			if attacker.FastEye and math.random(1,math.max(1,5-attacker.Luls)) == 1 and inflictor then
 				inflictor.SpeedEyeMul = 1 
 				die = true
 			end
