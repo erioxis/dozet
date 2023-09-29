@@ -444,6 +444,15 @@ function GM:InventoryAddGridItem( item, category )
 				end  
 				RunConsoleCommand("zs_dismantle",  item) 
 			end)
+			if category == INVCAT_CONSUMABLES then
+				
+				menu:AddOption(translate.Get("s_activate"), function() 
+					net.Start("zs_activate_trinket")
+					net.WriteString(item)
+					net.WriteEntity(MySelf)
+				net.SendToServer()
+				end)
+			end
 			menu:Open()
 		end
 		itempan.Category = category

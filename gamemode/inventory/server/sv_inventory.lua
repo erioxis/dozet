@@ -84,16 +84,44 @@ net.Receive("zs_trycraft", function(len, pl)
 
 	pl:TryAssembleItem(component, weapon)
 end)
+local demiboss = {
+	"comp_soul_alt_h",
+	"comp_soul_health",
+	"comp_soul_status",
+	"comp_soul_melee", 
+	"comp_soul_hack",
+	"comp_soul_godlike","comp_soul_godlike",
+	"comp_soul_dd","comp_soul_dd",
+	"comp_soul_booms",
+	"comp_soul_dosei","comp_soul_dosei"
+
+}
 net.Receive("zs_bounty_add", function(len, pl)
 	if !pl:HasInventoryItem(pl.LastUsedTrinket) then return end
 	local item = net.ReadString()
-	pl:AddInventoryItem(item)
 	pl.GetBounty = nil
 	pl.MedicalBounty = nil
 	pl.SeededBounty = nil
 	pl.SeededSouls = nil
 	pl.NextThinkAboutTrade = (pl.NextThinkAboutTrade or 1) + 10
 	pl:TakeInventoryItem(pl.LastUsedTrinket)
+	if item == "1" then
+		pl:AddPoints(100)
+		return
+	elseif item == "2" then
+		for i=1,3 do
+			local p = demiboss[math.random(1,#demiboss)]
+			pl:AddInventoryItem(p)
+			net.Start("zs_invitem")
+			net.WriteString(p)
+		net.Send(pl)
+		end
+		return
+	elseif item == "3" then
+		pl:AddZSXP(600,true)
+		return
+	end
+	pl:AddInventoryItem(item)
 	net.Start("zs_invitem")
 	net.WriteString(item)
 net.Send(pl)

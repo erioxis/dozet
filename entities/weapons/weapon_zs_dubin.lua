@@ -80,11 +80,12 @@ SWEP.DamageType = DMG_CLUB
 
 SWEP.Tier = 4
 
-SWEP.MeleeDamage = 163
+SWEP.MeleeDamage = 97
 SWEP.MeleeRange = 66
 SWEP.MeleeSize = 1
 SWEP.BlockMultiplierWeapon = 0.5
 SWEP.IgnoreNiggers = true
+SWEP.MeleeKnockBack = 123
 SWEP.Primary.Delay = 1.6
 SWEP.StartSwingAnimation =  ACT_VM_PRIMARYATTACK
 
@@ -118,25 +119,39 @@ end
 	--self.BaseClass.MeleeSwing(self)
 --end
 GAMEMODE:AddNewRemantleBranch(SWEP, 1, translate.Get("wep_dubin2"), translate.Get("wep_d_dubin2"), function(wept)
-	wept.MeleeDamage = wept.MeleeDamage * 0.4
+	wept.MeleeDamage = wept.MeleeDamage * 0.76
 	wept.Runn = true
+	wept.DealThink = nil
+	wept.HaveAbility = nil
+	wept.Draw2DHUD = nil
 	end)
 function SWEP:MeleeSwing()
 	self.BaseClass.MeleeSwing(self)
 	if self.Runn then
-		timer.Simple(1,function() 
-			local owner = self:GetOwner()
-			--self:MeleeSwing() 
-			owner:ViewPunch(132 * Angle(math.Rand(-0.1, -0.1), math.Rand(-0.1, 0.1), 0))
+		local owner = self:GetOwner()
+		--self:MeleeSwing() 
+		owner:ViewPunch(132 * Angle(math.Rand(-0.1, -0.1), math.Rand(-0.1, 0.1), 0))
 
 		owner:SetGroundEntity(NULL)
 		owner:SetVelocity(-90 * owner:GetAimVector())
-		end)
 	end
+end
+function SWEP:PostHitUtil(owner, hitent, dmginfo, tr, vel)
+	if self.Runn then
+		if hitent:GetStatus("stunned") then
+			dmginfo:SetDamage(dmginfo:GetDamage()*2)
+			dmginfo:SetDamageType(DMG_DIRECT)
+		end
+		if hitent:IsValidLivingZombie() then
+			hitent:GiveStatus("stunned",2.1*(hitent:GetZombieClassTable().Boss and 0.3 or hitent:GetZombieClassTable().DemiBoss and 0.6 or 1))
+		end
+	end
+
+	self.BaseClass.PostHitUtil(self, owner, hitent, dmginfo, tr, vel)
 end
 function SWEP:DealThink(dmginfo) 
 	if self.NoAbility then return end
-	self:SetDTFloat(6,self:GetDTFloat(6)+math.min(self.MeleeDamage*3,dmginfo:GetDamage()*0.4))
+	self:SetDTFloat(6,self:GetDTFloat(6)+math.min(self.MeleeDamage*1.7,dmginfo:GetDamage()*0.6))
 end
 function SWEP:HaveAbility() 
 	if self:GetDTFloat(6)> 550 then
@@ -152,7 +167,7 @@ function SWEP:HaveAbility()
 			own:SetVelocity(pushvel)
 			for k,v in pairs(ents.FindInBoxRadius(self:GetPos(), 250)) do
 				if v:IsValidLivingZombie() then
-					v:TakeSpecialDamage(self.MeleeDamage*6,DMG_DISSOLVE,own,self)
+					v:TakeSpecialDamage(self.MeleeDamage*7,DMG_DISSOLVE,own,self)
 					
 					local worldspace = v:WorldSpaceCenter()
 					effectdata = EffectData()

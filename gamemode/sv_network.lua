@@ -29,6 +29,8 @@
 
 	util.AddNetworkString("zs_last_points")
 	
+	
+	util.AddNetworkString("zs_skill_is_destroyed")
 	util.AddNetworkString("zs_classunlock")
 	util.AddNetworkString("zs_sigilcorrupted")
 	util.AddNetworkString("zs_sigiluncorrupted")

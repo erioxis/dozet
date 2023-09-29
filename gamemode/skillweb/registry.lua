@@ -1164,6 +1164,7 @@ GM:AddSkillModifier(SKILL_NANITES, SKILLMOD_REPAIRRATE_MUL, -0.10)
 GM:AddSkillModifier(SKILL_THE_CADER, SKILLMOD_REPAIRRATE_MUL, 0.50)
 GM:AddSkill(SKILL_FOLGA, trs("skill_foil"), GOOD..trs("skill_foil_d1"),
 																4,			-5.5,					{SKILL_U_ROLLERMINE}, TREE_BUILDINGTREE)
+GM:AddSkillModifier(SKILL_FOLGA, SKILLMOD_DAMAGE_TAKEN_N, -1)
 GM:AddSkill(SKILL_BLESSEDROD, trs("skill_brod"), GOOD..trs("skill_brod_d1")..GOOD.."+15%"..trs("m_curse")..BAD.."+6%"..trs("meleedamagetaken"),
 																4,			-7,					{SKILL_FOLGA}, TREE_BUILDINGTREE)
 GM:AddSkillModifier(SKILL_BLESSEDROD, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 0.06)
@@ -2509,9 +2510,6 @@ GM:SetSkillModifierFunction(SKILLMOD_DAMAGE_ALL, function(pl, amount)
 			damagemul = damagemul * 1.15
 		elseif pl:IsSkillActive(SKILL_LAST_MAN) then
 			damagemul = damagemul * 0.85
-		end
-		if pl.ClanAnsableRevolution then
-			damagemul = damagemul * 1.7
 		end
 	end
 	pl.DamageAll = math.Clamp(amount + 1.0, 0.0, 100.0) * damagemul

@@ -208,6 +208,15 @@ end
 GM:AddInventoryItemData("cons_void",		trs("c_void"),			trs("c_void_d"),								"models/props_c17/trappropeller_lever.mdl", 3, nil, nil, function(pl) 
 	funcofvoid(pl, "cons_void")
 end,3)
+GM:AddInventoryItemData("cons_deadly_vit",		trs("c_deadly_vit"),			trs("c_deadly_vit_d"),								"models/props_c17/trappropeller_lever.mdl", 3, nil, nil, function(pl) 
+	for k,v in pairs(pl:GetStatuses()) do
+		local class = v:GetClass()
+		local tab = GAMEMODE.Statuses[string.sub(class,8,#class)]
+		if v and v:IsValid() then
+			v:AddDie(tab and tab.Debuff and -75 or -25)
+		end
+	end
+end,5)
 GM:AddInventoryItemData("cons_idol",		trs("c_idol"),			trs("c_idol_d").." I",								"models/props_c17/trappropeller_lever.mdl", 3, nil, nil, function(pl) 
 	print(":)")
 end,5)
@@ -236,19 +245,21 @@ GM:AddInventoryItemData("cons_bounty",		trs("c_bounty"),			trs("c_bounty_d"),			
 		"pr_bloodpack",
 		"soulmedical"}
 	end
+	local tries = 0
 	local need = pl.SeededBounty or {}
 	while #need < 3 do
 		local item = tbl[math.random(1,#tbl)]
-		if !table.HasValue(need,item) then 
+		if !table.HasValue(need,item)  and !(pl:HasTrinket(item) or pl:HasInventoryItemQ("trinket_"..item)) then 
 			need[#need+1] = item
 		end
-		if #need > 2 then
+		tries = tries + 1
+		if #need > 2 or tries > 20 then
 			break
 		end
 	end
-	pl.SeededBounty = need
+	pl.SeededBounty = #need > 0 and need or {math.random(1,9)}
 	net.Start("zs_openbounty")
-	net.WriteTable(need)
+	net.WriteTable(pl.SeededBounty)
 	net.Send(pl)
 end,0)
 local pick =  {
@@ -306,16 +317,13 @@ GM:AddInventoryItemData("cons_soul_picka",		trs("c_soul_picka"),			trs("c_soul_p
 	local need = pl.SeededSouls or {}
 	local tries = 0
 	if #need < 2 then
-		while #need < 3 or tries < 50 do
+		while #need < 3 or tries < 20 do
 			local item = pick[math.random(1,#pick)]
 			if !table.HasValue(need,item) and !(pl:HasTrinket(item) or pl:HasInventoryItemQ("trinket_"..item)) then 
 				need[#need+1] = item
 			end
 			tries = tries + 1
-			if tries > 10 then
-				break
-			end
-			if #need > 2 then
+			if #need > 2 or tries > 20 then
 				break
 			end
 		end

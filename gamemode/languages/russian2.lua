@@ -1050,8 +1050,8 @@ LANGUAGE.wep_dual_uzi	= "'Парадигм' Дуальное узи"
 LANGUAGE.wep_d_dual_uzi	= "Хороший урон с хорошей скорострельностью."
 LANGUAGE.wep_dubin	= "'Хассайкай' Деревянный канабо"
 LANGUAGE.wep_d_dubin	= "Пока что недоделано!."--Раскат грома 8.3 грамм
-LANGUAGE.wep_dubin2	= "'ВЕРОЯТНОСТЬ' ОШИБКА 3601"
-LANGUAGE.wep_d_dubin2	= "Невероятно.Разгон."
+LANGUAGE.wep_dubin2	= "Дубина"
+LANGUAGE.wep_d_dubin2	= "Дубина делать удар,дубина оглушать."
 LANGUAGE.wep_shredder2	= "'Крушитель' СМГ"
 LANGUAGE.wep_d_shredder2	= "Может наносить урон по скелетам,иногда толкает,но стреляет медленее."
 LANGUAGE.weapon_ability_blaster = "Сильный выстрел"
@@ -1456,3 +1456,9 @@ LANGUAGE.new_f2                                 = "НОВОЕ!"
 
 LANGUAGE.promocode_added_in_cb = "Твой промокод (%s) добавлен в буфер обмена!"
 LANGUAGE.g2p_promo_self = "Свой промокод"
+
+LANGUAGE.s_unl_destroy = " успешно заблокирован!"
+
+LANGUAGE.bounty_1 = "3 случайных осколка души"
+LANGUAGE.bounty_2 = "+100 Поинтов"
+LANGUAGE.bounty_3 = "+600 Опыта с достижений"

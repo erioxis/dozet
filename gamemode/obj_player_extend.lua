@@ -61,30 +61,21 @@ function meta:GetChampion()
 	return P_Team(self) == TEAM_UNDEAD and self:GetNW2Int("champion", 0) or 0
 end
 function meta:IsChampion()
-	return (P_Team(self) == TEAM_UNDEAD and self:GetChampion() ~= 0)
+	return self:GetChampion() ~= 0
 end
-function meta:GetChampionColor(id)
-	local color = nil
-	if !self:IsChampion() then return color end
-	if !id then
-		id = self:GetChampion()
-	end
-	if id == CHAMP_RED then
-		color = Color(143,5,5)
-	elseif id == CHAMP_WHITE then
-		color = Color(255,255,255)
-	elseif id == CHAMP_BLUE then
-		color = Color(0,53,114)
-	elseif id == CHAMP_YELLOW then
-		color = Color(191,194,23)
-	elseif id == CHAMP_ETERNAL then
-		color = Color(211,211,211)
-	elseif id == CHAMP_PINK then
-		color = Color(252,109,209)
-	elseif id == CHAMP_GRAY then
-		color = Color(173,173,173)
-	end
-	return color
+local colorschamp = {
+	CHAMP_RED = Color(143,5,5),
+	CHAMP_WHITE = Color(255,255,255),
+	CHAMP_BLUE =  Color(0,53,114),
+	CHAMP_YELLOW = Color(191,194,23),
+	CHAMP_ETERNAL = Color(211,211,211),
+	CHAMP_PINK = Color(252,109,209),
+	CHAMP_GRAY = Color(173,173,173)
+
+}
+function meta:GetChampionColor()
+	if !self:IsChampion() then return end
+	return colorschamp[self:GetChampion()]
 end
 function meta:GetChampTable()
 	return {Type = self:GetChampion(),Color = self:GetChampionColor()}
@@ -490,62 +481,39 @@ function meta:AttachmentDamage(damage, attacker, inflictor, type)
 	end
 	
 	if type == SLOWTYPE_PULSE then
-		local legdmg = damage * (attacker.PulseWeaponSlowMul or 1)
-		local startleg = self:GetFlatLegDamage()
-		
-		self:AddLegDamage(legdmg)
-		if attacker.PulseImpedance then
-			self:AddArmDamage(legdmg)
-		end
-		if SERVER and attacker:HasTrinket("resonance") then
-			attacker:SetProgress(attacker:GetProgress('pprog') + damage, 'pprog')
-
-			if attacker:GetProgress('pprog') > 20* GAMEMODE:GetWave() * (attacker:GetIndChance() or 1) and (attacker.NextInductors or 1) < CurTime() then
-				self:PulseResonance(attacker, inflictor)
-				attacker.NextInductors = CurTime() + 1.5
-			end
-		end
 		if SERVER then
+			if SERVER and attacker:HasTrinket("resonance") then
+				attacker:SetProgress(attacker:GetProgress('pprog') + damage, 'pprog')
+
+				if attacker:GetProgress('pprog') > 20* GAMEMODE:GetWave() * (attacker:GetIndChance() or 1) and (attacker.NextInductors or 1) < CurTime() then
+					self:PulseResonance(attacker, inflictor)
+					attacker.NextInductors = CurTime() + 1.5
+				end
+			end
 			GAMEMODE:DamageAtFloater(attacker, self, self:NearestPoint(attacker:EyePos()), damage,type)
 		end
 	elseif type == SLOWTYPE_COLD then
-		local zclass =  self:GetZombieClassTable()
-		local valid = self:IsValidLivingZombie()
-		if valid and zclass.ResistFrost then return end
-		if valid and zclass.Boss then return end
-		if zclass.FireBuff then
-			damage = damage * 2
-		end
-
-		if SERVER and attacker:HasTrinket("cryoindu") and not attacker:GetActiveWeapon().AntiInd and (attacker.NextInductors or 1) < CurTime()  then
-						attacker:SetProgress(attacker:GetProgress('iprog') + damage,'iprog')
-			self:CryogenicInduction(attacker, inflictor, damage)
-		end
 		if SERVER then
+			if  attacker:HasTrinket("cryoindu") and not attacker:GetActiveWeapon().AntiInd and (attacker.NextInductors or 1) < CurTime()  then
+				attacker:SetProgress(attacker:GetProgress('iprog') + damage,'iprog')
+				self:CryogenicInduction(attacker, inflictor, damage)
+			end
 			GAMEMODE:DamageAtFloater(attacker, self, self:NearestPoint(attacker:EyePos()), damage, type)
 		end
 	elseif type == SLOWTYPE_FLAME then
-		local zclass =  self:GetZombieClassTable()
-		local valid = self:IsValidLivingZombie()
-		if valid and zclass.ResistFrost then
-			damage = damage * 2
-		end
-		if zclass.FireBuff then
-			damage = 0
-		end
-		if SERVER and attacker:HasTrinket("fire_ind") and not attacker:GetActiveWeapon().AntiInd and (attacker.NextInductors or 1) < CurTime() then
-			attacker:SetProgress(attacker:GetProgress('fprog') + damage, 'fprog')
-			self:FireInduction(attacker, inflictor, damage)
-		end
-		if SERVER then
+		if SERVER then 
+			if  attacker:HasTrinket("fire_ind") and not attacker:GetActiveWeapon().AntiInd and (attacker.NextInductors or 1) < CurTime() then
+				attacker:SetProgress(attacker:GetProgress('fprog') + damage, 'fprog')
+				self:FireInduction(attacker, inflictor, damage)
+			end
 			GAMEMODE:DamageAtFloater(attacker, self, self:NearestPoint(attacker:EyePos()), damage, type)
 		end
 	elseif type == SLOWTYPE_CHAM then
-		if SERVER and attacker:HasTrinket("cham_storm") and self:GetZombieClassTable().BaraCat and (attacker.NextInductors or 1) < CurTime() then
-			attacker:SetProgress(attacker:GetProgress('cprog') + damage, 'cprog')
-			self:ChamStorm(attacker, inflictor, damage)
-		end
 		if SERVER then
+			if SERVER and attacker:HasTrinket("cham_storm") and self:GetZombieClassTable().BaraCat and (attacker.NextInductors or 1) < CurTime() then
+				attacker:SetProgress(attacker:GetProgress('cprog') + damage, 'cprog')
+				self:ChamStorm(attacker, inflictor, damage)
+			end
 			GAMEMODE:DamageAtFloater(attacker, self, self:NearestPoint(attacker:EyePos()), damage, type)
 		end
 	end
@@ -585,38 +553,6 @@ function meta:AddLegDamageExt(damage, attacker, inflictor, type)
 		end
 		self:AddLegDamage(damage)
 		self:AddArmDamage(damage)
-
-		if SERVER and attacker:HasTrinket("cryoindu") and not attacker:GetActiveWeapon().AntiInd and (attacker.NextInductors or 1) < CurTime()  then
-			attacker:SetProgress(attacker:GetProgress('iprog') + damage*2,'iprog')
-			self:CryogenicInduction(attacker, inflictor, damage)
-		end
-		if SERVER then
-			GAMEMODE:DamageAtFloater(attacker, self, self:NearestPoint(attacker:EyePos()), damage, type)
-		end
-	elseif type == SLOWTYPE_FLAME then
-		local zclass =  self:GetZombieClassTable()
-		local valid = self:IsValidLivingZombie()
-		if valid and zclass.ResistFrost then
-			damage = damage * 2
-		end
-		if zclass.FireBuff then
-			damage = 0
-		end
-		if SERVER and attacker:HasTrinket("fire_ind") and not attacker:GetActiveWeapon().AntiInd and !zclass.FireBuff and (attacker.NextInductors or 1) < CurTime() then
-			self:FireInduction(attacker, inflictor, damage)
-
-		end
-		if SERVER then
-			GAMEMODE:DamageAtFloater(attacker, self, self:NearestPoint(attacker:EyePos()), damage, type)
-		end
-	elseif type == SLOWTYPE_CHAM then
-		if SERVER and attacker:HasTrinket("cham_storm") and zclass.BaraCat and (attacker.NextInductors or 1) < CurTime() then
-			attacker:SetProgress(attacker:GetProgress('cprog') + damage, 'cprog')
-			self:ChamStorm(attacker, inflictor, damage)
-		end
-		if SERVER then
-			GAMEMODE:DamageAtFloater(attacker, self, self:NearestPoint(attacker:EyePos()), damage, type)
-		end
 	end
 end
 

@@ -193,7 +193,7 @@ local function ItemPanelDoClick(self)
 	self.Owner:Close()
 
 end
-local function InventoryAdd( item, category, i, self)
+local function InventoryAdd( item, category, i, self,custom)
 	local screenscale = BetterScreenScale()
 	local grid = GAMEMODE:GetInventoryItemType( item )
 
@@ -205,7 +205,7 @@ local function InventoryAdd( item, category, i, self)
 
 		itempan.Owner = self
 		itempan.Item = item
-		itempan.SWEP =  GAMEMODE.ZSInventoryItemData[ item ]
+		itempan.SWEP =  custom or GAMEMODE.ZSInventoryItemData[ item ]
 		itempan.DoClick = ItemPanelDoClick
 		itempan.Category = category
 		itempan:Center()
@@ -226,13 +226,13 @@ local function InventoryAdd( item, category, i, self)
 		mdlframe:SetMouseInputEnabled( false )
 		mdlframe.Paint = function() end
 
-		local trintier = EasyLabel( itempan, translate.Get("w_tier")..GAMEMODE.ZSInventoryItemData[item].Tier, "ZSHUDFontSmaller", COLOR_WHITE )
+		local trintier = EasyLabel( itempan, translate.Get("w_tier")..itempan.SWEP.Tier, "ZSHUDFontSmaller", COLOR_WHITE )
 		trintier:CenterHorizontal( 0.9 )
 		trintier:CenterVertical( 0.9 )
 		
 
 		
-		local icon = category == INVCAT_WEAPONS and item or GAMEMODE.ZSInventoryItemData[item].Icon or "weapon_zs_trinket"
+		local icon = category == INVCAT_WEAPONS and item or itempan.SWEP.Icon or "weapon_zs_trinket"
 		local kitbl = killicon.Get((category ~= INVCAT_COMPONENTS) and icon or "weapon_zs_craftables")
 		if kitbl then
 			GAMEMODE:AttachKillicon(kitbl, itempan, mdlframe)
@@ -252,6 +252,16 @@ function GM:OpenBounty(table2)
 
 	if !table2 then
 		table2 = d 
+	end
+	if isnumber(table2[1]) then
+		InventoryAdd("2",INVCAT_TRINKETS,1,panel,{Tier = 1,PrintName = translate.Get("bounty_1"),Description = ""})
+		if table2[1] > 4 then
+			InventoryAdd("1",INVCAT_TRINKETS,2,panel,{Tier = 2,PrintName = translate.Get("bounty_2"),Description = ""})
+			if table2[1] == 9 then
+				InventoryAdd("3",INVCAT_TRINKETS,3,panel,{Tier = 3,PrintName = translate.Get("bounty_3"),Description = ""})
+			end
+		end
+		return
 	end
 	for i=1,#table2 do
 		InventoryAdd("trinket_"..table2[i],INVCAT_TRINKETS,i,panel)

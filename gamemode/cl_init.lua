@@ -2217,7 +2217,7 @@ function GM:_PrePlayerDraw(pl)
 	end
 
 	pl.ShadowMan = shadowman
-	if pl:IsChampion() and pl:GetChampionColor() then
+	if pl:GetChampionColor() then
 		local col = pl:GetChampionColor()
 		local r = (col.r+1)/255
 		local g = (col.g+1)/255
@@ -2265,7 +2265,7 @@ function GM:_PostPlayerDraw(pl)
 		render_SetBlend(1)
 	end
 	pl:CallZombieFunction0("PostPlayerDraw")
-	if pl:IsChampion() and pl:GetChampionColor() then
+	if pl:GetChampionColor() then
 		render_ModelMaterialOverride()
 		render_SetColorModulation(1, 1, 1)
 	end

@@ -669,6 +669,14 @@ GM.Statuses["flimsy"] =	{
 	Icon = Material("zombiesurvival/sickness.png"),
     Debuff = true
 }
+GM.Statuses["stunned"] =	{
+	Color = Color(173, 29, 106),
+	Name = "stunned",
+	ValFunc = statusValueFunction("stunned"),
+	Max = 25,
+	Icon = Material("zombiesurvival/block.png"),
+    Debuff = true
+}
 GM.Statuses["portal"] =	{
 	Color = Color(156, 40, 209),
 	Name = "portal",

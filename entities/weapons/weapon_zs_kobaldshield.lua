@@ -70,6 +70,16 @@ function SWEP:DamageThink(dmginfo)
 	local attacker = dmginfo:GetAttacker()
 	local owner = self:GetOwner()
 	if math.abs(owner:GetForward():Angle().yaw - attacker:GetForward():Angle().yaw) >= 90 and attacker:GetActiveWeapon() == dmginfo:GetInflictor() then
+		local sta = self:GetDTFloat(6)
+		if !self.NoAbility then
+			self:SetDTFloat(6,sta+dmginfo:GetDamage()*5)
+		else
+			self:SetDTFloat(6,sta-dmginfo:GetDamage()*5)
+			if self:GetDTFloat(6) <= 0 then
+				self.MeleeDamage = self.MeleeDamage/1.5
+				self.NoAbility = false
+			end
+		end
 		dmginfo:SetDamage((dmginfo:GetDamage() * 0.3) - (self.MeleeDamage * 0.3))
 		attacker:TakeDamage(self.MeleeDamage * 15, owner, self)
 		local cursed = owner:GetStatus("cursed")
@@ -81,3 +91,15 @@ function SWEP:DamageThink(dmginfo)
 	end
 	return false
 end
+function SWEP:HaveAbility() 
+	if self:GetDTFloat(6)> 3000 then
+		self:SetDTFloat(6,2999)
+		self.NoAbility = true
+		self.MeleeDamage = self.MeleeDamage * 1.5
+	end
+end
+if !CLIENT then return end
+	local ablicolor =  Color( 110,36,20)
+	function SWEP:Draw2DHUD()
+		self:Draw2DFeature( self:GetDTFloat(6)/3000, nil, nil, "weapon_ability_defense", "ZSHUDFontSmallest", ablicolor, "+menu" )
+	end

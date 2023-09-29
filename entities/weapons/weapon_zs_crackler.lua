@@ -58,7 +58,7 @@ GAMEMODE:AddNewRemantleBranch(SWEP, 1, translate.Get("wep_cracker"), translate.G
 end)
 function SWEP:DealThink(dmginfo) 
 	if self.NoAbility then return end
-	self:SetDTFloat(6,math.min(302,self:GetDTFloat(6)+math.min(50,dmginfo:GetDamage()*0.4)))
+	self:SetDTFloat(6,math.min(302,self:GetDTFloat(6)+math.min(20,dmginfo:GetDamage()*0.2)))
 end
 function SWEP:HaveAbility() 
 	if self:GetDTFloat(6) >= 300 then
@@ -68,8 +68,8 @@ function SWEP:HaveAbility()
 		self.BulletCallback = function(attacker, tr, dmginfo)
 			local ent = tr.Entity
 			if ent and ent:IsValidLivingZombie() then
-				self:SetDTFloat(6,self:GetDTFloat(6)-40)
-				attacker:SetProgress(attacker:GetProgress('bprog')+dmginfo:GetDamage()*3, 'bprog')
+				self:SetDTFloat(6,self:GetDTFloat(6)-50)
+				attacker:SetProgress(attacker:GetProgress('bprog')+dmginfo:GetDamage()*2.5, 'bprog')
 				attacker.DamagedBounty = true
 				if self:GetDTFloat(6) < 0 then
 					self:SetDTFloat(6,0)

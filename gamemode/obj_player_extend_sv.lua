@@ -513,9 +513,6 @@ function meta:ProcessDamage(dmginfo)
 			if (GAMEMODE:GetBalance() * 0.05) >= 0.1 then
 				damage = damage *  (1 + (math.Clamp(GAMEMODE:GetBalance() * 0.05,0.5,1.5)))
 			end
-			if self.ClanAnsableRevolution then
-				damage = damage - 7
-			end
 
 			if self:IsBarricadeGhosting() then
 				self:SetLegDamage(21 * (self.SlowEffTakenMul or 1))
@@ -569,9 +566,6 @@ function meta:ProcessDamage(dmginfo)
 				end]]
 				if self.DamageTakenInt then
 					damage = damage + self.DamageTakenInt
-				end
-				if self:IsSkillActive(SKILL_FOLGA) then
-					damage = damage - 1
 				end
 				if self:HasTrinket("altsamsonsoul")  then
 					local rot = self:GetStatus("strengthdartboost")

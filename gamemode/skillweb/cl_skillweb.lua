@@ -281,6 +281,17 @@ local function UnlockSkill(self, skill)
 	self:DisplayMessage(name..translate.Get("s_unl_act"), COLOR_GREEN)
 
 end
+local function DestroySkill(self, skill) 
+	if !MySelf:SkillCanDeUnlock2(skill) and !MySelf:IsSkillUnlocked(skill) then return end
+	local name = GAMEMODE.Skills[skill].Name
+	net.Start("zs_skill_is_destroyed")
+	net.WriteUInt(skill, 16)
+	net.WriteBool(true)
+	net.SendToServer()
+	
+	self:DisplayMessage(name..translate.Get("s_unl_destroy"), COLOR_GREEN)
+
+end
 function PANEL:Init()
 	local allskills = GAMEMODE.Skills
 	local node
@@ -1530,6 +1541,8 @@ function PANEL:OnMousePressed(mc)
 				
 			MySelf:EmitSound("buttons/button24.wav", 60, 180)
 		end
+	elseif mc == MOUSE_RIGHT and hoveredskill then
+		DestroySkill(self, hoveredskill) 
 	end
 end
 	

@@ -93,6 +93,35 @@ function GM:SkillCanUnlock(pl, skillid, skilllist)
 
 	return false
 end
+local function GetConnectedSkills(pl,myskillid,connections)
+	local counted = 0
+	for k,v in pairs(pl:GetUnlockedSkills()) do
+		if connections[v] then
+			counted = counted + 1
+			if counted > 1 then
+				return false
+			end
+		end
+	end
+	return true
+end
+function GM:SkillCanDeUnlock(pl, skillid, skilllist)
+	local skill = self.Skills[skillid]
+	if skill then
+		local connections = skill.Connections
+
+		if connections[SKILL_NONE] then
+			return false
+		end
+		for _, myskillid in pairs(skilllist) do
+			if GetConnectedSkills(pl,myskillid,connections) then
+				return true
+			end
+		end
+	end
+
+	return false
+end
 
 local meta = FindMetaTable("Player")
 if not meta then return end
@@ -102,6 +131,9 @@ function meta:IsSkillUnlocked(skillid)
 end
 function meta:SkillCanUnlock(skillid)
 	return GAMEMODE:SkillCanUnlock(self, skillid, self:GetUnlockedSkills())
+end
+function meta:SkillCanDeUnlock2(skillid)
+	return GAMEMODE:SkillCanDeUnlock(self, skillid, self:GetUnlockedSkills())
 end
 
 function meta:IsSkillDesired(skillid)

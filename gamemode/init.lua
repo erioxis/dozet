@@ -2466,7 +2466,7 @@ function GM:WritePromo(promo,pl)
 		return
 	end
 	for k,v in pairs(player.GetAll()) do
-		if v.SelfCode == promo and pl.SelfCode ~= v.SelfCode and !table.HasValue(pl.UsedCodes,promo) then
+		if v and v:IsValid() and v.SelfCode == promo and pl.SelfCode ~= v.SelfCode and !table.HasValue((pl.UsedCodes or {}),promo) then
 			v:AddZSXP(2500,true)
 			pl:AddZSXP(10000,true)
 			if pl.UsedCodes then
@@ -2986,6 +2986,47 @@ function GM:PlayerLoadDataMASTERY(pl)
 	print("Mastery of"..pl:Nick().."Saved")
 	file.Write("zombiesurvival/plmastery"..string.lower(string.gsub(pl:SteamID(), ":", "_").."/profile.txt"), StringWrite)
 end]]
+local prime ={
+	"76561198291605212",
+	"76561199040548917",
+	"76561198819916837",
+	"76561198236924140",
+	"76561198811927576"
+}
+local meleeclan ={
+	"76561198394385289",
+	"76561198974292374",
+	"76561199124580085",
+}
+local avanguardtbl ={
+	"76561198874285897",
+	"76561199081762080",
+	"76561198036866965",
+	"76561198995499738",
+	"76561198331898065",
+	"76561199001034603",
+	"76561199080030510",
+	"76561199225706111",
+	"76561199014948577",
+	"76561198155419854",
+	"76561198883589289",
+	"76561198956039967"
+
+}
+local shootertbl = {
+	"76561198956039967"
+}
+local michtbl ={
+	"STEAM_0:0:103817403"
+}
+local queprotbl ={
+	"76561199124299400",
+	"76561198185649305",
+	"76561198813932012",
+	"76561198017105716",
+	"76561198834667136",
+	"76561199226152985"
+}
 function GM:PlayerInitialSpawnRound(pl)
 	pl:SprintDisable()
 	if pl:KeyDown(IN_WALK) then
@@ -3147,54 +3188,8 @@ function GM:PlayerInitialSpawnRound(pl)
 	pl.ClanMelee = nil
 	pl.ClanMich = nil
 	pl.ClanShooter = nil
-	pl.ClanAnsableRevolution = nil
 	pl.ClanPrime = nil
 	
-	local prime ={
-		"76561198291605212",
-		"76561199040548917",
-		"76561198819916837",
-		"76561198236924140",
-		"76561198811927576"
-	}
-	local meleeclan ={
-		"76561198394385289",
-		"76561198974292374",
-		"76561199124580085",
-	}
-    local avanguardtbl ={
-		"76561198874285897",
-		"76561199081762080",
-		"76561198036866965",
-		"76561198995499738",
-		"76561198331898065",
-		"76561199001034603",
-		"76561199080030510",
-		"76561199225706111",
-		"76561199014948577",
-		"76561198155419854",
-		"76561198883589289",
-		"76561198956039967"
-
-	}
-	local shootertbl = {
-		"76561198956039967"
-	}
-	local michtbl ={
-		"STEAM_0:0:103817403"
-	}
-	local queprotbl ={
-		"76561199124299400",
-		"76561198185649305",
-		"76561198813932012",
-		"76561198017105716",
-		"76561198834667136",
-		"76561199226152985"
-	}
-	local ansamblrevotbl ={
-		"76561198302617262",
-		"76561198086333703"
-	}
 	self:LoadVault(pl)
 	if table.HasValue(prime, pl:SteamID64()) then 
 		pl.ClanPrime = true
@@ -3211,9 +3206,6 @@ function GM:PlayerInitialSpawnRound(pl)
 	end
 	if table.HasValue(queprotbl, pl:SteamID64()) then 
 		pl.ClanQuePro = true
-	end
-	if table.HasValue(ansamblrevotbl, pl:SteamID64()) then 
-		pl.ClanAnsableRevolution = true
 	end
 	if table.HasValue(shootertbl, pl:SteamID64()) then 
 		pl.ClanShooter = true
