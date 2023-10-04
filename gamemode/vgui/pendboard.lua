@@ -57,7 +57,7 @@ function MakepEndBoard(winner)
 	xpadded:SetPos(wid * 0.5 - xpadded:GetWide() * 0.1, y)
 	y = y + xpadded:GetTall() + 2
 
-	local svpan = EasyLabel(frame, "Honorable Mentions", "ZSHUDFontSmall", COLOR_WHITE)
+	local svpan = EasyLabel(frame, translate.Get("hom_men"), "ZSHUDFontSmall", COLOR_WHITE)
 	svpan:SetPos(wid * 0.5 - svpan:GetWide() * 0.5, y)
 	y = y + svpan:GetTall() + 2
 

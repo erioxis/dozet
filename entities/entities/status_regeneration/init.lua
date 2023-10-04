@@ -13,7 +13,7 @@ function ENT:Think()
 	local mhp = owner:GetMaxHealth()
 	local hp = owner:Health()
 	if mhp > hp then
-		if !(applier and appier:IsValidLivingHuman()) then
+		if !(applier and applier:IsValidLivingHuman()) then
 			owner:SetHealth(math.min(mhp,hp+1))
 		else
 			applier:HealPlayer(owner,1)

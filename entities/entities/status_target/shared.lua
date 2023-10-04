@@ -14,6 +14,7 @@ function ENT:Initialize()
 
 	if SERVER then
 		hook.Add("EntityTakeDamage", self, self.EntityTakeDamage)
+		hook.Add("PlayerHurt", self, self.EntityTakeDamage)
 
 		self:SetDTInt(1, 0)
 	end

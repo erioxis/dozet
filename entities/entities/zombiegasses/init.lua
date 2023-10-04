@@ -32,7 +32,7 @@ function ENT:AcceptInput(name, activator, caller, arg)
 			if ent:Team() == TEAM_UNDEAD then
 				if CurTime() >= (ent.LastRangedAttack or 0) + 3 then
 					ent:GiveStatus("zombiespawnbuff", self.TickTime + 0.1)
-					ent.LastZGas = CurTime() + 1.1
+					ent.LastZGas = CurTime() + 1.9
 				end
 			elseif GAMEMODE:GetWave() ~= 0 then
 				ent:GiveStatus("spawnslow", self.TickTime + 0.1)

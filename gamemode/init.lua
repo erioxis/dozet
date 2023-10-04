@@ -1471,20 +1471,6 @@ function GM:Think()
 					pl.Stuckedtrue = nil
 					pl.Stuckedtrue_C = CurTime() + 3
 				end
-				if pl:IsSkillActive(SKILL_BERSERK) and !pl.BerserkerCharge and pl:GetTimerBERS() <= CurTime() and pl:Health() < pl:GetMaxHealth() * 0.1 then
-					pl:Kill()
-				end
-				if pl:OnGround() and pl:IsSkillActive(SKILL_POGO) and time >= pl.NextStuckThink then
-					timer.Create("pogojump", 0.001, 1, function()
-						local vel = pl:GetPos()
-						vel.x = 0
-						vel.y = 0
-						vel:Normalize()
-						vel.z = 650 * pl.JumpPowerMul
-						pl:SetVelocity(vel)
-					end)
-					pl.NextStuckThink = time + 0.002
-				end
 
 
 				local healmax = pl:IsSkillActive(SKILL_D_FRAIL) and math.floor(pl:GetMaxHealth() * 0.44) or pl:IsSkillActive(SKILL_ABUSE) and math.floor(pl:GetMaxHealth() * 0.25)  or pl:GetMaxHealth()
@@ -1580,7 +1566,7 @@ function GM:Think()
 					print(" Уебало "..pl:Nick()..(" "..pl.MasteryHollowing))
 					PrintMessage(HUD_PRINTCONSOLE," Уебало "..pl:Nick()..(" "..pl.MasteryHollowing))
 				end
-				if pl:HasTrinket("curse_ponos") and math.random(2500) == 200 then
+				if pl:HasTrinket("curse_ponos") and math.random(200) == 200 then
 					pl:SetVelocity(VectorRand() * math.random(700,3700))
 					pl:EmitSound("ambient/water/water_spray3.wav",120,45, 122)
 				end
@@ -1766,12 +1752,31 @@ function GM:Think()
 		--end
 	--end
 end
+local demiboss = {
+	"comp_soul_alt_h",
+	"comp_soul_health",
+	"comp_soul_status",
+	"comp_soul_melee", 
+	"comp_soul_hack",
+	"comp_soul_godlike","comp_soul_godlike",
+	"comp_soul_dd","comp_soul_dd",
+	"comp_soul_booms",
+	"comp_soul_dosei","comp_soul_dosei"
+
+}
 local function DoDropStart(pl)	
 	if !pl:IsValid() then return end
 	if pl:IsSkillActive(SKILL_ACTIVATE_THIS) then
 		local drop = table.Random(GAMEMODE.GetActiveTrinkets)
 		local func = GAMEMODE:GetInventoryItemType(drop) == INVCAT_CONSUMABLES and pl.AddInventoryItem or pl.Give
 		timer.Simple(0, function() func(pl, drop) end)
+	end
+	if pl:IsSkillActive(SKILL_AMULET_18) then
+		local func = pl.AddInventoryItem 
+		for i=1,3 do
+			local drop = demiboss[math.random(1,#demiboss)]
+			timer.Simple(0, function() func(pl, drop) end)
+		end
 	end
 	if pl:IsSkillActive(SKILL_AMULET_15) then
 		local drop = table.Random(GAMEMODE.Curses)
@@ -2042,13 +2047,12 @@ function GM:PlayerHealedTeamMember(pl, other, health, wep, pointmul, nobymsg, fl
 
 	pl.HealedThisRound = pl.HealedThisRound + health
 	pl:SetProgress(math.Round(pl:GetProgress('mprog')+health), 'mprog')
-	local premium = "cons_bounty"
-	if pl:IsSkillActive(SKILL_PREMIUM) and pl:GetProgress('mprog') >= 1800 and !pl:HasInventoryItem(premium) then
-		pl:AddInventoryItem(premium)
+	if pl:IsSkillActive(SKILL_PREMIUM) and pl:GetProgress('mprog') >= 1800 and !pl:HasInventoryItem("cons_bounty") then
+		pl:AddInventoryItem("cons_bounty")
 		pl.MedicalBounty = true 
 		pl.GetBounty = true
 		net.Start("zs_medpremium")
-			net.WriteString(premium)
+			net.WriteString("cons_bounty")
 			net.Send(pl)
 		pl:GiveAchievement("premium")
 		pl:AddPoints(80)
@@ -4754,7 +4758,7 @@ function GM:HumanKilledZombie(pl, attacker, inflictor, dmginfo, headshot, suicid
 					v:Remove()
 				end
 			end
-			attacker.InbalanceMoment = -9999
+			attacker.InbalanceMoment = -20
 		end
 	end
 	if self.NewYear and (math.random(100-math.min(50,(attacker.Luck or 1))) == 50 or class.Boss or class.DemiBoss) then
@@ -4882,12 +4886,12 @@ function GM:HumanKilledZombie(pl, attacker, inflictor, dmginfo, headshot, suicid
 		end
 		if sf  and !inflictor.IsMelee then
 			local inflictor2 = inflictor
-			timer.Simple(0, function() inflictor2.Eater = true end)
+			inflictor2.Eater = true 
 			timer.Simple(1.9, function() inflictor2.Eater = nil end)
 		end
 		if sf  and inflictor.HaloAmmo then
 			local inflictor2 = inflictor
-			timer.Simple(0, function() inflictor2.Eater = true end)
+			inflictor2.Eater = true
 			timer.Simple(0.9, function() inflictor2.Eater = nil end)
 		end
 		if attacker:IsSkillActive(SKILL_ABFINGES) and math.random(1,10) == 1 then
@@ -6003,7 +6007,9 @@ function GM:WaveStateChanged(newstate, pl)
 				if pl:IsSkillActive(SKILL_SECONDCHANCE) and pl.LetalSave and whywave >= 5 and pl:IsValidLivingHuman() then
 					pl:GiveAchievement("thisisbeeasy")
 				end
-				pl.LetalSave = true
+				if whywave%3 == 0 then
+					pl.LetalSave = true
+				end
 				pl.BerserkerCharge = true
 				if pl:IsSkillActive(SKILL_XPMULGOOD) then
 				   pl.AddXPMulti = (pl.AddXPMulti or 1) + 0.20

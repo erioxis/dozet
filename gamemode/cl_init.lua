@@ -2217,14 +2217,6 @@ function GM:_PrePlayerDraw(pl)
 	end
 
 	pl.ShadowMan = shadowman
-	if pl:GetChampionColor() then
-		local col = pl:GetChampionColor()
-		local r = (col.r+1)/255
-		local g = (col.g+1)/255
-		local b = (col.b+1)/255
-		render_ModelMaterialOverride(matSkin)
-		render_SetColorModulation(r, g, b)
-	end
 	if pl.FeignDeath then
 		render_SetBlend(0)
 	end
@@ -2265,10 +2257,6 @@ function GM:_PostPlayerDraw(pl)
 		render_SetBlend(1)
 	end
 	pl:CallZombieFunction0("PostPlayerDraw")
-	if pl:GetChampionColor() then
-		render_ModelMaterialOverride()
-		render_SetColorModulation(1, 1, 1)
-	end
 	if undo then
 		render_SetBlend(1)
 		render_ModelMaterialOverride()

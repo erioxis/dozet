@@ -74,8 +74,9 @@ local colorschamp = {
 
 }
 function meta:GetChampionColor()
-	if !self:IsChampion() then return end
-	return colorschamp[self:GetChampion()]
+	if self:IsChampion() then 
+		return colorschamp[self:GetChampion()]
+	end
 end
 function meta:GetChampTable()
 	return {Type = self:GetChampion(),Color = self:GetChampionColor()}
@@ -403,7 +404,7 @@ function meta:GetTimerBERS()
 end	
 
 function meta:SetTimerBERS(pts)
-	self:SetNWInt('b_timer', pts + 15)
+	self:SetNWInt('b_timer', pts + 10)
 end
 
 function meta:GetProgress(progress)

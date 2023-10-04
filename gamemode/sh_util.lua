@@ -93,7 +93,7 @@ function FindStartingItem(id)
 	local item = FindItem(id)
 	if item and item.WorthShop then return item end
 end
-function math.randomr(min, max, need, pl, chances)
+function math.randomr5(min, max, need, pl, chances)
 	local ch = chances
 	local rand = min
 	local best = min
@@ -112,6 +112,9 @@ function math.randomr(min, max, need, pl, chances)
 	end
 
 	return rand
+end
+function math.randomr(min, max)
+	return math.random(min,max)
 end
 function math.unrandom(min, max, need, inv, chances)
 	local ch = chances or 1

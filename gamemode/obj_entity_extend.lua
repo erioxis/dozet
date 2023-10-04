@@ -205,10 +205,8 @@ function meta:FireBulletsLua(src, dir, spread, num, damage, attacker, force_mul,
 				inflictor.SpeedEyeMul = 1 
 				die = true
 			end
-			if CLIENT and (attacker.FastEye or attacker.BirdEye) and die then
-				if attacker == MySelf then
-					MySelf:EmitSound("npc/fast_zombie/wake1.wav", 100,50)
-				end
+			if SERVER and die then
+				attacker:SendLua('MySelf:EmitSound("npc/fast_zombie/wake1.wav", 100,50)')
 			end
 		end
 
@@ -500,8 +498,10 @@ function meta:ThrowFromPositionSetZ(pos, force, zmul, noknockdown)
 
 	if self:IsPlayer() then
 		if self:ActiveBarricadeGhosting() or self.SpawnProtection then return false end
-
-		force = force * (self.KnockbackScale or 1)
+		force = force * (self.KnockbackScale or 1) * (self:IsSkillActive(SKILL_SSS) and 0.65)
+		if self:IsSkillActive(SKILL_SSS) and math.max(math.abs(force) * math.abs(zmul), math.abs(force)) < 342 then
+			return false
+		end
 	end
 
 	if self:GetMoveType() == MOVETYPE_VPHYSICS then

@@ -161,7 +161,7 @@ local function ItemPanelDoClick(self)
 	if sweptable.Upgradable then
 		local g,bl = doubled[1],doubled[2]
 		g.Item = item
-		g:SetPos( viewer:GetWide() / 2 - g:GetWide() / 2, ( viewer:GetTall() - 66 * screenscale ) )
+		g:SetPos( viewer:GetWide() / 2 - g:GetWide() / 2, ( viewer:GetTall() - 99 * screenscale ) )
 		g.DoClick = UpgradeTrinket
 		g:SetVisible(true)
 		if !sweptable.NeedForUpgrade then

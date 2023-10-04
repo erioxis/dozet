@@ -44,7 +44,7 @@ function SWEP:CanEat()
 
 	if owner:GetStatus("sickness") then return false end
 
-	if owner:IsSkillActive(SKILL_SUGARRUSH) then
+	if owner:IsSkillActive(SKILL_SUGARRUSH) or owner:IsSkillActive(SKILL_RUB_RUB_STOMACH) then
 		return true
 	end
 
@@ -85,7 +85,7 @@ end
 function SWEP:Think()
 	local owner = self:GetOwner()
 	if owner:IsSkillActive(SKILL_FOODHEALS) then
-		owner:GiveStatus("obed", 0.3)
+		owner:GiveStatus("obed", 1)
 	 end
 	if self:GetEatEndTime() > 0 then
 		local time = CurTime()

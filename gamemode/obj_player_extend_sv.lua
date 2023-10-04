@@ -308,10 +308,6 @@ function meta:ProcessDamage(dmginfo)
 		end
 		if attacker:IsValidLivingHuman() then
 			local wep = attacker:GetActiveWeapon()
-			--local midwave = GAMEMODE:GetWave() < GAMEMODE:GetNumberOfWaves() / 2 or GAMEMODE:GetWave() == GAMEMODE:GetNumberOfWaves() / 2 and GAMEMODE:GetWaveActive() and CurTime() < GAMEMODE:GetWaveEnd() - (GAMEMODE:GetWaveEnd() - GAMEMODE:GetWaveStart()) / 2
-			--if wep and (wep.Tier or 1) < 4 and damage >= ((wep.IsMelee and wep.MeleeDamage or wep.Primary.Damage or 1) * (wep.Tier or 1)) and (GAMEMODE.DamageLock or GAMEMODE:GetWave() >= 5) then
-			--	dmginfo:SetDamage(((wep.IsMelee and wep.MeleeDamage or wep.Primary.Damage or 1) * (wep.Tier or 1))/(!GAMEMODE.DamageLock and GAMEMODE:GetWave() * 0.5 or 1))
-			--end
 			local damage1 = damage
 			attacker:SetDPS(attacker:GetDPS() + damage)
 			timer.Simple(1, function() if attacker:IsValid() then attacker:SetDPS(attacker:GetDPS() - damage1) end end)
@@ -345,7 +341,7 @@ function meta:ProcessDamage(dmginfo)
 			return true
 		end
 		if self:IsSkillActive(SKILL_AMULET_14) then
-			damage = damage *math.Clamp(self:Health()/self:GetMaxHealth(),2,0.55)
+			damage = damage *math.max(self:Health()/self:GetMaxHealth(),0.3)
 		end
 		if self:IsSkillActive(SKILL_GODHEART) then
 			damage = 0

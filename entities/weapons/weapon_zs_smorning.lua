@@ -1,8 +1,8 @@
 AddCSLuaFile()
 
 --SWEP.PrintName = "'Redeemers' Dual Handguns"
-SWEP.PrintName = ""..translate.Get("wep_smorning")
-SWEP.Description = ""..translate.Get("wep_d_smorning")
+SWEP.PrintName = translate.Get("wep_smorning")
+SWEP.Description = translate.Get("wep_d_smorning")
 
 SWEP.Slot = 1
 SWEP.SlotPos = 0
@@ -143,8 +143,8 @@ GAMEMODE:AddNewRemantleBranch(SWEP, 1, translate.Get("wep_smorning_r1"), transla
 	wept.BulletCallback = function(attacker, tr, dmginfo)
 		local ent = tr.Entity
 		if SERVER and math.random(7) == 1 and ent:IsValidLivingZombie() then
-			ent:GiveStatus("hollowing",300)
-			attacker:SetHealth(math.min(attacker:GetMaxHealth(), attacker:Health() + (attacker:GetMaxHealth() * 1.11))) 
+			ent:GiveStatus("hollowing",33,attacker,false,true)
+			attacker:SetHealth(math.min(attacker:GetMaxHealth(), attacker:Health() + (attacker:GetMaxHealth() * 0.11))) 
 		end
 	end 
 	
@@ -175,11 +175,8 @@ function SWEP:PrimaryAttack()
 	self.IdleAnimation = CurTime() + self:SequenceDuration()
 	if SERVER then
 		self:TakeAmmo()
-		self:ShootBullets(self.Primary.Damage + (self.Primary.Damage * self.MultiplierOfShots / 4), self.Primary.NumShots, self:GetCone())
+		self:ShootBullets(self.Primary.Damage + (self.Primary.Damage * (self.MultiplierOfShots%5+1) / 4), self.Primary.NumShots, self:GetCone())
 		self.MultiplierOfShots = self.MultiplierOfShots + 1
-	end
-	if self.MultiplierOfShots >= 5 then
-		self.MultiplierOfShots = self.MultiplierOfShots - 4
 	end
 end
 

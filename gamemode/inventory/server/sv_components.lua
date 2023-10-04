@@ -13,7 +13,7 @@ GM.GetActiveTrinkets = {
 	"cons_pill_unk",
 	"cons_void",
 	"cons_mantle",
-	"cons_necronomicon",
+	"cons_necronomicon_q1",
 	"cons_chaos",
 	"cons_d4",
 	"cons_d1",

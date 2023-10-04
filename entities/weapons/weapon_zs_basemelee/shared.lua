@@ -373,8 +373,8 @@ function SWEP:PlayerHitUtil(owner, damage, hitent, dmginfo)
 			--net.Start("zs_update_style") net.WriteTable({time = CurTime()+3+(math.random(10,20)*0.2),text = Format("PARASITED A %s!",hitent:Nick()),score = 10,color = Color(177,34,177)}) net.Send(owner) 
 		end
 	end
-	if owner:IsSkillActive(SKILL_HELPER) and SERVER and block and owner.BulletMul <= 1 then
-		hitent:GiveStatus("target", 10)
+	if owner:IsSkillActive(SKILL_HELPER) and SERVER and block then
+		hitent:GiveStatus("target", 10,owner)
 	end
 	if owner.MeleePowerAttackMul and owner.MeleePowerAttackMul > 1 then
 		self:SetPowerCombo(self:GetPowerCombo() + 1)

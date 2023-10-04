@@ -137,12 +137,12 @@ function SWEP:MeleeSwing()
 	end
 end
 function SWEP:PostHitUtil(owner, hitent, dmginfo, tr, vel)
-	if self.Runn then
-		if hitent:GetStatus("stunned") then
+	if self.Runn and SERVER then
+		if hitent and hitent:IsValidLivingZombie() and hitent:GetStatus("stunned") then
 			dmginfo:SetDamage(dmginfo:GetDamage()*2)
 			dmginfo:SetDamageType(DMG_DIRECT)
 		end
-		if hitent:IsValidLivingZombie() then
+		if hitent and hitent:IsValidLivingZombie() then
 			hitent:GiveStatus("stunned",2.1*(hitent:GetZombieClassTable().Boss and 0.3 or hitent:GetZombieClassTable().DemiBoss and 0.6 or 1))
 		end
 	end

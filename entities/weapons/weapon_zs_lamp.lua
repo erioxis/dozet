@@ -68,14 +68,14 @@ function SWEP:HaveAbility()
 end
 function SWEP:DealThink(dmginfo) 
 	if !self.NoAbility then 
-		self:SetDTFloat(6,math.min(300,self:GetDTFloat(6)+math.min(50,dmginfo:GetDamage())))
+		self:SetDTFloat(6,math.min(300,self:GetDTFloat(6)+math.min(25,dmginfo:GetDamage()*0.25)))
 	else
 		self:SetDTFloat(6,self:GetDTFloat(6)-50)
 		if self:GetDTFloat(6) <= 0 then
 			self:SetDTFloat(6,0)
 			self.NoAbility = false
 		end
-		return self.MeleeDamage*(self:GetOwner().MeleeDamageMultiplier or 1)
+		return self.MeleeDamage
 	end
 end
 if not CLIENT then return end

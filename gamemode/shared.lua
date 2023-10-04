@@ -5,8 +5,8 @@ GM.Website	=	"https://github.com/erioxis/dozet"
 
 -- No, adding a gun doesn't make your name worth being here.
 GM.Credits = {
-	{"Version", "", "9.0.0"}, -- Если вы это читаете,то напишите мне хихи хаха(особенно краб хихи хаха)
-	{"Season of ", "skill buffs,zombie debuff and MORE OPTIMIZATION", "maybe"},
+	{"Version", "", "9.0.2"}, -- Если вы это читаете,то напишите мне хихи хаха(особенно краб хихи хаха)
+	{"Season of ", "", "Quality of Life"},
 	{"erioxis", "Phantom coder", "dead"},
 	{"Холодное Молочко(M-I-L-K-Y)", "Phantom coder", "dead"},
 	{"Bro 3", "Thanks!", "Some models"}
@@ -48,7 +48,7 @@ include("sh_channel.lua")
 include("sh_weaponquality.lua")
 include("sh_achievements_table.lua")
 
-include("noxapi/noxapi.lua")
+
 
 include("vault/shared.lua")
 
@@ -524,7 +524,7 @@ function GM:OnPlayerHitGround(pl, inwater, hitfloater, speed)
 	if inwater then return true end
 
 	if SERVER then
-		if pl.FallDamageHS and pl.FallDamageHS >= 1 then
+		if pl.FallDamageHS and pl.FallDamageHS > 0 then
 			pl:TakeDamage(pl.FallDamageHS, pl.FallAttacker and pl.FallAttacker:IsValid() and pl.FallAttacker or pl,pl.FallAttacker and  pl.FallAttacker:IsValid() and pl.FallAttacker:GetActiveWeapon() or pl)
 			pl.FallDamageHS = 0
 		end
@@ -558,8 +558,16 @@ function GM:OnPlayerHitGround(pl, inwater, hitfloater, speed)
 
 	local damage = (0.1 * (speed - 525 * threshold_mul)) ^ 1.45
 	if hitfloater then damage = damage / 2 end
-
+	local pogo = pl:IsSkillActive(SKILL_POGO)
 	if SERVER then
+		if pogo then
+			local vel = pl:GetPos()
+			vel.x = 0
+			vel.y = 0
+			vel:Normalize()
+			vel.z = 650 * pl.JumpPowerMul
+			pl:SetVelocity(vel)
+		end
 		local groundent = pl:GetGroundEntity()
 		local p = pl:IsSkillActive(SKILL_VKID2) and pl:IsSkillActive(SKILL_VKID)
 		if groundent:IsValid() and groundent:IsPlayer() and PTeam(groundent) == TEAM_UNDEAD and (pl:IsSkillActive(SKILL_VKID2) or pl:IsSkillActive(SKILL_VKID)) then
@@ -585,8 +593,7 @@ function GM:OnPlayerHitGround(pl, inwater, hitfloater, speed)
 		end
 	end
 
-
-	if math.floor(damage) > 0 and !pl:IsSkillActive(SKILL_POGO) then
+	if math.floor(damage) > 0 and !pogo then
 		if SERVER then
 			local h = pl:Health()
 			pl:TakeSpecialDamage(damage * damage_mul, DMG_FALL, game.GetWorld(), game.GetWorld(), pl:GetPos())

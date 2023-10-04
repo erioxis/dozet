@@ -522,6 +522,8 @@ SKILL_NUCLEAR_DAD = 494
 SKILL_COOL_NUCLEAR_SYN = 495
 SKILL_AIMLESS = 496
 SKILL_FLASHLIGHT_PLUS = 497
+SKILL_AMULET_18 = 498
+SKILL_RUB_RUB_STOMACH = 499
 
 
 
@@ -742,6 +744,10 @@ GM:AddSkill(SKILL_BLOODLETTER, trs("skill_bloodlet_0"), GOOD..trs("skill_bloodle
 																0,			4,					{SKILL_ANTIGEN}, TREE_HEALTHTREE)
 GM:AddSkill(SKILL_REGENERATOR, trs("skill_regen_0"), GOOD..trs("skill_regen_d1")..BAD..trs("skill_regen_d2"),
 																-5,			-2,					{}, TREE_HEALTHTREE)
+GM:AddSkill(SKILL_RUB_RUB_STOMACH, trs("skill_gomu_gomu_shel"), GOOD..trs("skill_gomu_gomu_shel_d1")..GOOD..trs("skill_gomu_gomu_shel_d2"),
+																-6,			-1,					{SKILL_REGENERATOR}, TREE_HEALTHTREE)
+GM:AddSkillModifier(SKILL_RUB_RUB_STOMACH, SKILLMOD_REGEN_SPEED, 0.33)
+															
 GM:AddSkill(SKILL_NULLED, trs("skill_regen1_0"), GOOD..trs("skill_regen1_d1"),
 			                                                   	-5,			0,					{SKILL_REGENERATOR}, TREE_HEALTHTREE)
 GM:AddSkill(SKILL_BLOODARMOR, trs("skill_bloodarmor_0"), GOOD..trs("skill_bloodarmor_d1") ..BAD..trs("skill_bloodarmor_d2"),
@@ -1173,17 +1179,16 @@ GM:AddSkill(SKILL_GIGACHAD, trs("skill_gigachad"), GOOD..trs("skill_gigachad_d1"
 																4,			-8,					{SKILL_BLESSEDROD}, TREE_BUILDINGTREE)
 
 
--- Gunnery Tree
 GM:AddSkill(SKILL_FREESKILL, trs("skill_freeskill"), GOOD.."+3"..trs("spoint"),
-																-9,			10,					{SKILL_NONE}, TREE_POINTTREE)
+																-9,			7,					{SKILL_NONE}, TREE_POINTTREE)
 .RemortReq = 8
 GM:AddSkillModifier(SKILL_FREESKILL, SKILLMOD_SPOINT, 4)
 GM:AddSkill(SKILL_FREESKILL1, trs("skill_freeskill"), GOOD.."+5"..trs("spoint"),
-																-9,			9,					{SKILL_NONE}, TREE_POINTTREE)
+																-9,			6,					{SKILL_NONE}, TREE_POINTTREE)
 .RemortReq = 24
 GM:AddSkillModifier(SKILL_FREESKILL1, SKILLMOD_SPOINT, 6)
 GM:AddSkill(SKILL_FREESKILL2, trs("skill_freeskill"), GOOD.."+8"..trs("spoint"),
-																-9,			8,					{SKILL_NONE}, TREE_POINTTREE)
+																-9,			5,					{SKILL_NONE}, TREE_POINTTREE)
 .RemortReq = 80
 GM:AddSkillModifier(SKILL_FREESKILL2, SKILLMOD_SPOINT, 8)
 GM:AddSkill(SKILL_SKILLFORGODS, "SECRET I", GOOD.."You find this!Reward is free 3 skill points!",
@@ -1303,6 +1308,12 @@ d.Amulet = true
 d.AmuletCost = 3				
 GM:AddSkillModifier(SKILL_AMULET_17, SKILLMOD_PIECE_OF_AMULET, -3)
 GM:AddSkillModifier(SKILL_AMULET_17, SKILLMOD_SPOINT, 1)
+local d = GM:AddSkill(SKILL_AMULET_18, trs("skill_amulet_18"),  GOOD..trs("skill_amulet_18_d1"),
+																-13,			-6,					{SKILL_NONE}, TREE_POINTTREE)
+d.Amulet = true				
+d.AmuletCost = 5				
+GM:AddSkillModifier(SKILL_AMULET_18, SKILLMOD_PIECE_OF_AMULET, -5)
+GM:AddSkillModifier(SKILL_AMULET_18, SKILLMOD_SPOINT, 1)
 
 
 
@@ -1994,9 +2005,8 @@ GM:AddSkillModifier(SKILL_SLAVEC, SKILLMOD_SPEED, 20)
 GM:AddSkill(SKILL_SHINNING_HIT, trs("skill_shine_hit"), GOOD..trs("skill_shine_hit_d1")..BAD.."-20%"..trs("meleedamage"),
 																				3,			6,					{SKILL_SLAVEC}, TREE_DEFENSETREE)
 GM:AddSkillModifier(SKILL_SHINNING_HIT, SKILLMOD_MELEE_DAMAGE_MUL, -0.2)
-GM:AddSkill(SKILL_BERSERK, trs("skill_ultra_r"), GOOD..trs("skill_ultra_r_d1")..BAD..trs("skill_ultra_r_d2")..BAD..trs("skill_ultra_r_d3"),
+GM:AddSkill(SKILL_BERSERK, trs("skill_ultra_r"), GOOD..trs("skill_ultra_r_d1")..GOOD..trs("skill_ultra_r_d2")..BAD..trs("skill_ultra_r_d3"),
 																				1.5,			6,					{}, TREE_DEFENSETREE)
-GM:AddSkillModifier(SKILL_BERSERK, SKILLMOD_DMG_TAKEN, 0.1)
 SKILL_TORMENT3 = 231
 GM:AddSkill(SKILL_TORMENT3, trs("skill_torment").."III", GOOD.."+15%"..trs("xpmul")..BAD.."+50%"..trs("res_delay")..BAD.."-5%"..trs("p_mul").."Secret III(+2 skill points)",
 				                                                            	1,			28,					{SKILL_TORMENT2}, TREE_ANCIENTTREE)
@@ -2079,7 +2089,7 @@ GM:AddSkill(SKILL_DEFEND2,trs("skill_sdefender").."III", GOOD.."-2%"..trs("melee
 
 GM:AddSkillModifier(SKILL_DEFEND2, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.02)
 GM:AddSkillModifier(SKILL_DEFEND2, SKILLMOD_SPEED, -3)
-GM:AddSkill(SKILL_DEFENDBLOOD,trs("skill_blooddefender"), GOOD..trs("skill_blooddefender_d1")..BAD..trs("skill_blooddefender_d2"),
+GM:AddSkill(SKILL_DEFENDBLOOD,trs("skill_blooddefender"), GOOD..trs("skill_blooddefender_d1")..BAD..trs("skill_blooddefender_d2")..BAD..trs("skill_blooddefender_d3"),
 				                                                            	3,			0,					{SKILL_DEFEND2, SKILL_DEATHCURSE}, TREE_DEFENSETREE)
 SKILL_DEFEND3 = 193
 GM:AddSkill(SKILL_DEFEND3, trs("skill_sdefender").." IV", GOOD.."-4%"..trs("meleedamagetaken")..BAD.."-6"..trs("speed"),
@@ -2149,6 +2159,7 @@ GM:AddSkill(SKILL_ASAVE, trs("skill_ancientsave"), GOOD..trs("skill_ancientsave_
 				                                                            	-4,			5,					{SKILL_SELFSAVER}, TREE_DEFENSETREE)
 GM:AddSkill(SKILL_SSS, trs("skill_sss"), GOOD..trs("skill_sss_d1")..BAD..trs("skill_sss_d2"),
 				                                                            	-4,			7,					{SKILL_ASAVE}, TREE_DEFENSETREE)
+GM:AddSkillModifier(SKILL_SSS, SKILLMOD_SPEED, -45)																			
 SKILL_MERIS = 199
 GM:AddSkill(SKILL_MERIS, trs("skill_meris"), GOOD.."-10%"..trs("meleedamagetaken")..BAD.."-15%"..trs("meleedamage")..BAD.."-12%"..trs("b_damage"),
 				                                                            	-1,			3.5,					{SKILL_TRIP}, TREE_DEFENSETREE)
@@ -3106,6 +3117,7 @@ GM:AddSkillModifier(SKILL_X_GEN, SKILLMOD_BLOODARMOR, 45)
 GM:AddSkillModifier(SKILL_STONEBLOOD, SKILLMOD_BLOODARMOR_DMG_REDUCTION, 0.03)
 
 GM:AddSkillModifier(SKILL_DEFENDBLOOD, SKILLMOD_BLOODARMOR_DMG_REDUCTION, -1)
+GM:AddSkillModifier(SKILL_DEFENDBLOOD, SKILLMOD_POISON_DAMAGE_TAKEN_MUL, 4.5)
 
 GM:AddSkillModifier(SKILL_REGENERATOR, SKILLMOD_HEALTH, -6)
 

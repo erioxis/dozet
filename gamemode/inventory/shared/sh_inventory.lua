@@ -42,6 +42,7 @@ function GM:AddInventoryItemData(intname, name, description, weles, tier, stocks
 	self.ZSInventoryItemData[index] = datatab
 
 	index = index + 1
+	return self.ZSInventoryItemData[intname]
 end
 
 
@@ -152,9 +153,10 @@ local function funcofvoid(pl, nouse)
 	if #use <= 1 then return end
 	local toeat = table.Random(use)
 	local use2 = {}
-	for item,v in pairs(GAMEMODE.ZSInventoryItemData) do
+	local data = GAMEMODE.ZSInventoryItemData
+	for item,v in pairs(data) do
 		local g = table.HasValue(string.Explode("_",item), "curse")
-		if item ~= nouse and (GAMEMODE.ZSInventoryItemData[item].Tier or 1) == (GAMEMODE.ZSInventoryItemData[toeat].Tier or 1) and string.len(item) >= 7 and !g then
+		if item ~= nouse and (data[item].Tier or 1) == (data[toeat].Tier or 1) and string.len(item) >= 7 and !g then
 			table.insert(use2, #use2 + 1,item)
 		end
 	end
@@ -178,8 +180,9 @@ local function funcofd1(pl, nouse)
 	if #use <= 1 then return end
 	local toeat = table.Random(use)
 	local use2 = {}
-	for item,v in pairs(GAMEMODE.ZSInventoryItemData) do
-		if item ~= nouse and (GAMEMODE.ZSInventoryItemData[item].Tier or 1) == (GAMEMODE.ZSInventoryItemData[toeat].Tier or 1) and string.len(item) >= 7 then
+	local data = GAMEMODE.ZSInventoryItemData
+	for item,v in pairs(data) do
+		if item ~= nouse and (data[item].Tier or 1) == (data[toeat].Tier or 1) and string.len(item) >= 7 then
 			table.insert(use2, #use2 + 1,item)
 		end
 	end
@@ -340,21 +343,21 @@ GM:AddInventoryItemData("cons_wildcard",		trs("c_wildcard"),			trs("c_wildcard_d
 	if math.random(1,20) == 5 then
 		n = 3
 	end
+	local uses = GAMEMODE.ZSInventoryItemData[lcall].BountyNeed*0.5*(pl.ChargesUse or 1)
 	for i=1,n do
 		timer.Simple(i*0.1, function()
-			local uses = GAMEMODE.ZSInventoryItemData[lcall].BountyNeed*0.5*(pl.ChargesUse or 1)
 			if pl:HasInventoryItem(lcall) and callback and uses <= pl:GetChargesActive() then
 				callback(pl)
 				if pl:IsSkillActive(SKILL_DOUBLE) and math.random(1,4) == 1 then
 					uses = 0
 				end
-				pl:SetChargesActive(pl:GetChargesActive()-uses)
 				if n == 2 then
 					pl:TakeInventoryItem("cons_wildcard")
 				end
 			end
 		end)
 	end
+	pl:SetChargesActive(pl:GetChargesActive()-uses)
 end,0)
 GM:AddInventoryItemData("cons_flame_p",		trs("c_flame_p"),			trs("c_flame_p_d"),								"models/props_c17/trappropeller_lever.mdl", 1, nil, nil, function(pl) 
 	if pl:HasWeapon("weapon_zs_molotov") then pl:GiveAmmo(1, "molotov") return end
@@ -452,9 +455,10 @@ GM:AddInventoryItemData("cons_gausscard",		trs("c_gausscard"),			trs("c_gausscar
 end,10)
 GM:AddInventoryItemData("cons_sack_of_trinkets",		trs("c_sack_of_trinkets"),			trs("c_sack_of_trinkets_d"),								"models/props_c17/trappropeller_lever.mdl", 3, nil, nil, function(pl)
 	local use2 = {} 
-	for item,v in pairs(GAMEMODE.ZSInventoryItemData) do
+	local data = GAMEMODE.ZSInventoryItemData
+	for item,v in pairs(data) do
 		local g = table.HasValue(string.Explode("_",item), "curse")
-		if item ~= nouse and !pl:HasInventoryItem(item) and string.len(item) >= 5 and !g and  (GAMEMODE.ZSInventoryItemData[item].Tier or 1) <= 3 and !pl:HasInventoryItemQ(item) then
+		if item ~= nouse and !pl:HasInventoryItem(item) and string.len(item) >= 5 and !g and  (data[item].Tier or 1) <= 3 and !pl:HasInventoryItemQ(item) then
 			table.insert(use2, #use2 + 1,item)
 		end
 	end
@@ -506,8 +510,9 @@ end,2)
 GM:AddInventoryItemData("cons_chaos",		trs("c_chaos"),			trs("c_chaos_d"),								"models/props_c17/trappropeller_lever.mdl", 3, nil, nil, function(pl) 
 	local use2 = {}
 	if pl.UsesChaosCard then pl:AddChargesActive(5) return end
-	for item,v in pairs(GAMEMODE.ZSInventoryItemData) do
-		if item ~= "cons_chaos" and item ~= "cons_wildcard" and GAMEMODE.ZSInventoryItemData[item].Bounty and GAMEMODE.ZSInventoryItemData[item].BountyNeed and string.len(item) >= 3 then
+	local data = GAMEMODE.ZSInventoryItemData
+	for item,v in pairs(data) do
+		if item ~= "cons_chaos" and item ~= "cons_wildcard" and data[item].Bounty and data[item].BountyNeed and string.len(item) >= 3 then
 			table.insert(use2, #use2 + 1,item)
 		end
 	end
@@ -517,7 +522,7 @@ GM:AddInventoryItemData("cons_chaos",		trs("c_chaos"),			trs("c_chaos_d"),						
 		net.Start("zs_t_activated")
 		net.WriteString(trinket)
 	net.Send(pl)
-		local callback = GAMEMODE.ZSInventoryItemData[trinket].Bounty
+		local callback = data[trinket].Bounty
 		callback(pl)
 		--print(trinket)
 	end
@@ -537,14 +542,14 @@ end,2)
 GM:AddInventoryItemData("cons_mantle",		trs("c_mantle"),			trs("c_mantle_d"),								"models/props_c17/trappropeller_lever.mdl", 2, nil, nil, function(pl) 
 	pl.HolyMantle = pl.HolyMantle+1
 end,3)
-GM:AddInventoryItemData("cons_necronomicon",		trs("c_necronomicon"),			trs("c_necronomicon_d"),								"models/props_c17/trappropeller_lever.mdl", 2, nil, nil, function(pl) 
+GM:AddInventoryItemData("cons_necronomicon_q1",		trs("c_necronomicon"),			trs("c_necronomicon_d"),								"models/props_c17/trappropeller_lever.mdl", 2, nil, nil, function(pl) 
 	for k,v in pairs(team.GetPlayers(TEAM_UNDEAD)) do
 		timer.Simple(0.3, function() v:TakeSpecialDamage(250,DMG_DIRECT,pl,pl) end)
 		pl:EmitSound("ambient/atmosphere/thunder1.wav", 50, 500, 0.5)
 	end
-	if math.random(1,100) <= 10 then pl:TakeInventoryItem("cons_necronomicon") pl:AddInventoryItem("cons_necronomicon_broke") end
+	if math.random(1,100) <= 10 then pl:TakeInventoryItem("cons_necronomicon_q1") pl:AddInventoryItem("cons_necronomicon") end
 end,2)
-GM:AddInventoryItemData("cons_necronomicon_broke",		trs("c_necronomicon"),			trs("c_necronomicon_broke_d"),								"models/props_c17/trappropeller_lever.mdl", 2, nil, nil, function(pl) 
+local dcad = GM:AddInventoryItemData("cons_necronomicon",		trs("c_necronomicon"),			trs("c_necronomicon_broke_d"),								"models/props_c17/trappropeller_lever.mdl", 2, nil, nil, function(pl) 
 	local z = 0
 	for k,v in pairs(team.GetPlayers(TEAM_UNDEAD)) do
 		if z >= 3 then break end
@@ -556,6 +561,10 @@ GM:AddInventoryItemData("cons_necronomicon_broke",		trs("c_necronomicon"),			trs
 	end
 	if math.random(1,100) <= 10 then pl:TakeInventoryItem("cons_necronomicon_broke") end
 end,1)
+dcad.Upgradable = true
+dcad.NeedForUpgrade = "comp_soul_dosei"
+dcad.Tier = 4
+
 GM:AddInventoryItemData("cons_timer",		trs("c_timer"),			trs("c_timer_d"),								"models/props_c17/trappropeller_lever.mdl", 3, nil, nil, function(pl) 
 	if GAMEMODE.ObjectiveMap then return end
 	gamemode.Call(

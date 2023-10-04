@@ -23,6 +23,7 @@ LANGUAGE.g2p_m_m			= "Меню мутаций (ЗС)"
 LANGUAGE.g2p_disc			= "Отключиться"
 LANGUAGE.g2p_lm			= "Стандартное Меню"
 LANGUAGE.g2p_mm			= "Главное меню"
+LANGUAGE.g2p_sure = "Уверен?"
 LANGUAGE.res_ammo_sel			= "Выбор патрон для амуниции"
 LANGUAGE.golden_appeared			= "ЗОЛОТОЙ ЗОМБИ ПОЯВИЛСЯ!!!"
 
@@ -318,6 +319,7 @@ LANGUAGE.op_lhmusic = "Включить музыку когда последни
 LANGUAGE.op_nolootpickup = "Отключить возможность брать лут"
 LANGUAGE.op_1click = "Активировать скиллы 1 нажатием"
 --Honorable Mentions
+LANGUAGE.hom_men = "Важные Упоминания"
 LANGUAGE.hm_mostkills  = "Защитник Дозета"
 LANGUAGE.hm_mostkills_desc  = "%s Убил %d зомби."
 LANGUAGE.hm_mostdmg  = "ДПС Чел"
