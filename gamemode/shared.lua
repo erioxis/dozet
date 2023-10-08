@@ -5,7 +5,7 @@ GM.Website	=	"https://github.com/erioxis/dozet"
 
 -- No, adding a gun doesn't make your name worth being here.
 GM.Credits = {
-	{"Version", "", "9.0.2"}, -- Если вы это читаете,то напишите мне хихи хаха(особенно краб хихи хаха)
+	{"Version", "", "9.0.7"}, -- Если вы это читаете,то напишите мне хихи хаха(особенно краб хихи хаха)
 	{"Season of ", "", "Quality of Life"},
 	{"erioxis", "Phantom coder", "dead"},
 	{"Холодное Молочко(M-I-L-K-Y)", "Phantom coder", "dead"},

@@ -1334,6 +1334,7 @@ LANGUAGE.vgui_open_class				= "Открыть Выбор Обычных клас
 LANGUAGE.vgui_open_class_b				= "Открыть Выбор Классов Босса"
 LANGUAGE.vgui_open_class_db				= "Открыть Выбор классов Мини-Босса"
 LANGUAGE.class_vile_bloated_zombie					= "Дикий Жирный Зомби"
+LANGUAGE.class_mimic_zombie             ="Мимик"
 -- Class descriptions
 LANGUAGE.description_flesh_creeper					= "Гнездовики способны создавать гнезда.\nС гнезд появляются зомби.\nНепонятно как они появляются но лучше уничтожить гнезда и гнездовиком быстрее."
 LANGUAGE.description_glitch_creeper					= "Как гнездовики они способны создавать гнезда но лучше и быстрее.\nС гнезд созданных старых гнездовиками зомби получают дополнительные силы.\nУничтожить.Их.Всех"
@@ -1404,8 +1405,9 @@ LANGUAGE.description_god					= "Всевышний баракот!\nОпасне
 LANGUAGE.description_god2					= "Всевышний Бог всевышних баракотов!\nСамое опасное существо во вселенной."
 LANGUAGE.description_fresh_dead						= "Эти зомби вернулись в мир сей совсем недавно.\nОни обладают меньшей прочностью и мощностью, чем те, которые сгнили, но компенсируют это скоростью."
 LANGUAGE.description_bloodsucker_cosmo				= "Не получает урона от топового игрока!\nx1.35 урон когда получает урон от обычных людей"
-
+LANGUAGE.description_mimic_zombie             ="Сильный зомби способный быть всем!"
 -- Class control schemes
+LANGUAGE.controls_mimic_zombie             ="КОГДА НОРМАЛЬНЫЙ:> ПЕРВИЧНЫЙ: Когти\n> ВТОРИЧНЫЙ: Мимикрия\nКОГДА МИМИКРИРОВАН:> ПЕРВИЧНЫЙ: Стать нормальным\n> ВТОРИЧНЫЙ: Крик\n>ТРЕТЬЕ ЛИЦО: Видеть глазами объекта"
 LANGUAGE.controls_flesh_creeper						= "> ПЕРВИЧНЫЙ: Удар когтем\n> ВТОРИЧНЫЙ: Гнездование\n> ПЕРЕЗАРЯДКА: Короткий полет"
 LANGUAGE.controls_glitch_creeper						= "> ПЕРВИЧНЫЙ: Удар когтем\n> ВТОРИЧНЫЙ: Создание улучшенного гнезда\n> ПЕРЕЗАРЯДКА: Короткий полет"
 LANGUAGE.controls_bloodsucker_headcrab				= "> ПЕРВИЧНЫЙ: Рывок на человека\n> ПРИ УДАРЕ: Нанесет кровоточащий удар человеку и небольшое лечение для себя"
@@ -1607,6 +1609,16 @@ LANGUAGE.zshop_ezspeed                             = "ЖВКИДА"
 LANGUAGE.zshop_ezspeed_d1                               = "Скорость X1.25"
 LANGUAGE.zshop_evo                             = "Арт эволюции"
 LANGUAGE.zshop_evo_d1                               = "33% Шанс Заблокировать урон"
+
+-- Boss Mutations
+LANGUAGE.zshop_bossphysicshazard                               = "Физическая опасность"
+LANGUAGE.zshop_bossphysicshazard2                               = "Для шейда:утроенна сила бросания."
+LANGUAGE.zshop_shademortir                               = "Усиленная хрупкость"
+LANGUAGE.zshop_shademortir_d1                               = "Для шейда:У камней есть шрапнель."
+LANGUAGE.zshop_tickleres                               = "Сложная защита"
+LANGUAGE.zshop_tickleres_d1                               = "Для Длиннорукого:Чем ближе вы к источнику урона,тем меньше получите урона."
+LANGUAGE.zshop_hollow_of_eyes                              = "Проклятые глаза"
+LANGUAGE.zshop_hollow_of_eyes_d1                               = "Для Души Смерти: Отключает древнее виденье людям."
 -- Чето
 LANGUAGE.worth_worth								= "Ворф: %s"
 LANGUAGE.worth_worth_cost							= "%s Ворфа"
@@ -1852,7 +1864,7 @@ LANGUAGE.p_speed3 = "Довольно медленная"
 LANGUAGE.p_speed4 = "Медленная"
 LANGUAGE.p_speed5 = "Быстрая"
 LANGUAGE.p_speed6 = "Довольно быстрая"
-LANGUAGE.p_speed7 = "Очень быстраяя"
+LANGUAGE.p_speed7 = "Очень быстрая"
 LANGUAGE.p_speed8 = "ЧЕЕЕЕЕЕЕЕЕЕЕЕл"
 LANGUAGE.p_speed9 = "Ультра-медленная"
 
@@ -1870,8 +1882,8 @@ LANGUAGE.p_max_spr = "Макс Разброс"
 LANGUAGE.p_msp = "Скорость Ходьбы"
 
 LANGUAGE.skill_lul = "Скилл"
-LANGUAGE.pshop_mut = "Мутаген"
-LANGUAGE.pshop_b_mut = "Мутаген Босса"
+LANGUAGE.pshop_mut = "Мутации"
+LANGUAGE.pshop_b_mut = "Мутации для боссов"
 
 
 LANGUAGE.rem_standart = "Стандарт"

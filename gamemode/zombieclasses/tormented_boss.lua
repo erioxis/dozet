@@ -27,6 +27,21 @@ function CLASS:Move(pl, move)
 		move:SetMaxClientSpeed(90)
 	end
 end
+function CLASS:OnSpawned(pl)
+	if pl.m_CursedEyes then
+		local plid = pl:SteamID()
+		timer.Create("fear_checking_"..plid,7,0,function()
+			for k,v in pairs(team.GetPlayers(TEAM_UNDEAD)) do
+				if v:IsValid() then
+					v:GiveStatus("curse_mutagen",10)
+				end
+			end
+			if pl:GetZombieClassTable().Name ~= "Soul Of Child" or pl:IsValidLivingHuman()  then
+				timer.Remove("fear_checking_"..plid)
+			end
+		end)
+	end
+end
 
 function CLASS:PlayDeathSound(pl)
 	for i=1, 4 do

@@ -128,7 +128,15 @@ if SERVER then
 	function CLASS:OnSpawned(pl)
 		pl:CreateAmbience("ticklemonsterambience")
 	end
-
+	function CLASS:ProcessDamage(pl, dmginfo)
+		if !pl.m_Tickle_Resist then
+			return dmginfo
+		end
+		local atc = dmginfo:GetAttacker() or pl
+		dmginfo:SetDamage(dmginfo:GetDamage()*math.min(1,(pl:GetPos()-atc:GetPos()):LengthSqr()/45000))
+	--	print(math.min(1,(pl:GetPos()-atc:GetPos()):LengthSqr()/45000))
+		return dmginfo
+	end
 end
 
 if not CLIENT then return end

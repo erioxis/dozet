@@ -359,15 +359,15 @@ function GM:DrawHumanIndicators()
 	end
 end
 function GM:DrawZombieIndicators()
-	if MySelf:Team() ~= TEAM_HUMAN or not (MySelf:IsSkillActive(SKILL_SEEAURA) or (MySelf:GetStatus("world"))) or MySelf:KeyDown(IN_SPEED) then return end
-	local world = ((MySelf:GetStatus("world")) or MySelf:HasTrinket("broken_world"))
+	if MySelf:Team() ~= TEAM_HUMAN or not (MySelf:IsSkillActive(SKILL_SEEAURA) or MySelf:GetStatus("world")) or MySelf:KeyDown(IN_SPEED) or MySelf:GetStatus("curse_mutagen") then return end
+	local world = (MySelf:GetStatus("world") or MySelf:HasTrinket("broken_world"))
 	local matGlow = Material("sprites/glow04_noz")
 	local texDownEdge = surface.GetTextureID("gui/gradient_down")
 	local colHealth = Color(0, 0, 0, 240)
 	local eyepos = EyePos()
 	local range, dist, healthfrac, pos, size
 	for _, pl in pairs(team_GetPlayers(TEAM_UNDEAD)) do
-		if pl:GetStatus("feigndeath") then continue end
+		if pl:GetStatus("feigndeath") or pl:GetStatus("mimic_q") then continue end
 		range = pl:GetAuraRangeSqr()/4 * (MySelf:IsSkillActive(SKILL_OLD_GOD2) and 2.5 or 1)
 		dist = pl:GetPos():DistToSqr(eyepos)
 		if pl:GetRenderMode() == RENDERMODE_TRANSALPHA then continue end

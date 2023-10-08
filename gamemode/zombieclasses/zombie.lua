@@ -11,7 +11,7 @@ CLASS.Order = 0
 CLASS.Health = 200
 CLASS.Speed = 195
 CLASS.Revives = true
-CLASS.Variations = {"Pyro", "Gore Blaster Zombie", "Chem Burster", "Eraditor", "Eradicator", "Zombie Legs", "Zombie Dreams", "Dreaming Zombie","Stoney","Cosmic Zombie"}
+CLASS.Variations = {"Pyro", "Gore Blaster Zombie", "Chem Burster", "Eraditor", "Eradicator", "Zombie Legs", "Zombie Dreams", "Dreaming Zombie","Stoney","Cosmic Zombie","Mimic Zombie"}
 CLASS.Original = true
 
 CLASS.DynamicHealth = 1

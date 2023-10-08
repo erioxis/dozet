@@ -2065,7 +2065,8 @@ function GM:_CalcView(pl, origin, angles, fov, znear, zfar)
 		fov =  fov + add 
 	end]]
 	if pl.Revive and pl.Revive:IsValid() and pl.Revive.GetRagdollEyes then
-		if self.ThirdPersonKnockdown or self.ZombieThirdPerson then
+		local posed = self:GetDTEntity(12)
+		if self.ThirdPersonKnockdown or self.ZombieThirdPerson or posed and posed:IsValid() then
 			origin = pl:GetThirdPersonCameraPos(origin, angles)
 		else
 			local rpos, rang = pl.Revive:GetRagdollEyes(pl)
@@ -2075,7 +2076,7 @@ function GM:_CalcView(pl, origin, angles, fov, znear, zfar)
 			end
 		end
 	elseif pl.KnockedDown and pl.KnockedDown:IsValid() then
-		if self.ThirdPersonKnockdown or self:UseOverTheShoulder() then
+		if self.ThirdPersonKnockdown or self:UseOverTheShoulder()  then
 			origin = pl:GetThirdPersonCameraPos(origin, angles)
 		else
 			local rpos, rang = self:GetRagdollEyes(pl)

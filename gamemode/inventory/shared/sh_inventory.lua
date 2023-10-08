@@ -511,8 +511,8 @@ GM:AddInventoryItemData("cons_chaos",		trs("c_chaos"),			trs("c_chaos_d"),						
 	local use2 = {}
 	if pl.UsesChaosCard then pl:AddChargesActive(5) return end
 	local data = GAMEMODE.ZSInventoryItemData
-	for item,v in pairs(data) do
-		if item ~= "cons_chaos" and item ~= "cons_wildcard" and data[item].Bounty and data[item].BountyNeed and string.len(item) >= 3 then
+	for item,v in pairs(GAMEMODE.GetActiveTrinkets) do
+		if item ~= "cons_chaos" and item ~= "cons_wildcard" and data[item].Bounty and data[item].BountyNeed then
 			table.insert(use2, #use2 + 1,item)
 		end
 	end

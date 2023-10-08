@@ -2105,13 +2105,13 @@ function GM:PlayerRepairedObject(pl, other, health, wep)
 	if numofdaily == 2 then
 		pl:GiveAchievementProgress("daily_post", health)
 	end
-	if pl:IsSkillActive(SKILL_SPICY_CADES) then
+	if pl:IsSkillActive(SKILL_SPICY_CADES) and wep:GetClass() == "prop_nail" then
 		pl:TakeDamage(math.random(1,15),pl,pl)
 	end
 	--net.Start("zs_update_style") net.WriteTable({time = CurTime()+2+(math.random(10,20)*0.2),text = "REPAIRED PROP FOR "..health,score = health,color = Color(23,69,194)}) net.Send(pl) 
 
 	local hpperpoint = self.RepairPointsPerHealth
-	if hpperpoint <= 0 then return end
+	if hpperpoint <= 0 or wep and wep.NoPointsFromSelfRepair and pl == other:GetOwner() then return end
 
 	local points = health / hpperpoint
 
@@ -3021,10 +3021,10 @@ local shootertbl = {
 	"76561198956039967"
 }
 local michtbl ={
-	"STEAM_0:0:103817403"
+	"STEAM_0:0:103817403",
+	"STEAM_0:0:582016836"
 }
 local queprotbl ={
-	"76561199124299400",
 	"76561198185649305",
 	"76561198813932012",
 	"76561198017105716",
@@ -3178,6 +3178,10 @@ function GM:PlayerInitialSpawnRound(pl)
 	-- Boss Mutations (Z-Shop)
 	pl.m_Evo = nil
 	pl.m_Shade_Force = nil
+	pl.m_Shade_Stone = nil
+	pl.m_Tickle_Resist = nil
+	pl.m_CursedEyes = nil
+
 	pl.m_Zombie_CursedHealth = nil
 	pl.LuckAdd = 0
 	pl.AntiFarmTimer = 0
@@ -3799,7 +3803,7 @@ function GM:EntityTakeDamage(ent, dmginfo)
 
 	local dispatchdamagedisplay = false
 	local entclass = ent:GetClass()
-	if !ent:IsPlayer() and attacker and attacker:IsPlayer() and !attacker.Zban  then
+	if !ent:IsPlayer() and attacker and attacker:IsPlayer() and !attacker.Zban and !ent.OnRemoveMimic  then
 		if ent:GetOwner() ~= attacker then
 			local damage = math.min(dmginfo:GetDamage(), ent:Health())
 			attacker:AddTokens(math.ceil((damage or 2) * 0.25))

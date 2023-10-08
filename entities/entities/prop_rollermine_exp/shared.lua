@@ -4,7 +4,7 @@ ENT.RenderGroup = RENDERGROUP_TRANSLUCENT
 ENT.m_NoNailUnfreeze = true
 ENT.NoNails = true
 
-ENT.WrenchRepairMultiplier = 0.6
+ENT.WrenchRepairMultiplier = 0
 
 ENT.Model = "models/roller.mdl"
 ENT.HitBoxSize = 13
@@ -12,7 +12,9 @@ ENT.Mass = 50
 ENT.WeaponClass = "weapon_zs_rollermine"
 ENT.ControllerClass = "weapon_zs_rollerminecontrol"
 ENT.AmmoType = "rollermine"
-
+function ENT:HitByWrench()
+	return true
+end
 ENT.Acceleration = 900
 ENT.MaxSpeed = 500
 ENT.TurnSpeed = 30

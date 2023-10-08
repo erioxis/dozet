@@ -37,15 +37,41 @@ function ENT:Hit(vHitPos, vHitNormal, ent)
 
 	if ent:IsValid() then
 		if not ent:IsPlayer() or (ent:IsPlayer() and ent:Team() ~= TEAM_UNDEAD) then
-			ent:TakeSpecialDamage(34 * (ent.PhysicsDamageTakenMul or 1), (ent:IsPlayer() and ent:GetActiveWeapon().IsMelee and DMG_DIRECT or DMG_GENERIC), owner, self)
+			ent:TakeSpecialDamage(34 * (ent.PhysicsDamageTakenMul or 1),DMG_DIRECT, owner, self)
 		end
 	end
-
-	local effectdata = EffectData()
+	if owner.m_Shade_Stone then
+		local pos = self:GetPos()
+		owner:LagCompensation(true)	
+		for i=1,17 do
+			local rand = (pos-owner:EyePos()):GetNormalized() +VectorRand()
+			if i%2 ~= 0 then
+				self:FireBulletsLua(pos, rand, 0, 1, math.random(3,9), owner, 0, "tracer_rico", self.BulletCallback, 1, nil, 128, nil, self)
+				self:FireBulletsLua(pos, rand, 0, 1, math.random(1,3), owner, 0, "", self.BulletCallback, 1, nil, 1028, nil, self)
+			else
+			timer.Simple(0, function()
+					local soke = ents.Create("projectile_stone")
+					soke:Spawn()
+					soke:SetPos(pos+Vector(0,0,10+4*i))
+					local phys = soke:GetPhysicsObject()
+					if phys:IsValid() then
+						phys:ApplyForceOffset(rand*math.random(290,400), pos)
+					end
+					soke.Damage = 12
+					soke:SetOwner(owner)
+					soke.Team = TEAM_UNDEAD
+				end)	
+			end
+		end
+		owner:LagCompensation(false)
+	end
+	if !owner.m_Shade_Stone then
+		local effectdata = EffectData()
 		effectdata:SetOrigin(vHitPos)
 		effectdata:SetNormal(vHitNormal)
 	util.Effect("hit_shadestone", effectdata)
-	util.Effect("hit_stone", effectdata)
+		util.Effect("hit_stone", effectdata)
+	end
 end
 
 function ENT:PhysicsCollide(data, phys)

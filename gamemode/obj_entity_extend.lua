@@ -498,7 +498,7 @@ function meta:ThrowFromPositionSetZ(pos, force, zmul, noknockdown)
 
 	if self:IsPlayer() then
 		if self:ActiveBarricadeGhosting() or self.SpawnProtection then return false end
-		force = force * (self.KnockbackScale or 1) * (self:IsSkillActive(SKILL_SSS) and 0.65)
+		force = force * (self.KnockbackScale or 1) * (self:IsSkillActive(SKILL_SSS) and 0.65 or 1)
 		if self:IsSkillActive(SKILL_SSS) and math.max(math.abs(force) * math.abs(zmul), math.abs(force)) < 342 then
 			return false
 		end

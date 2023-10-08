@@ -123,4 +123,4 @@ end
 
 if not CLIENT then return end
 
-CLASS.Icon = "zombiesurvival/killicons/prime_minos"
+CLASS.Icon = "zombiesurvival/killicons/giga_tim"

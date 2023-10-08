@@ -38,6 +38,7 @@ function ENT:GiveToActivator(activator, caller)
 		or activator:Team() ~= TEAM_HUMAN
 		or activator:GetInfo("zs_nopickuploot") == "1"
 		or self.Removing
+		or self.IgnoreUse
 		or (activator:KeyDown(GAMEMODE.UtilityKey) and not self.Forced)
 		or self.NoPickupsTime and CurTime() < self.NoPickupsTime and self.NoPickupsOwner ~= activator then
 
