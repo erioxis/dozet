@@ -62,11 +62,16 @@ end
 
 if not CLIENT then return end
 
-function SWEP:ViewModelDrawn()
-	render.ModelMaterialOverride(0)
+function SWEP:PreDrawViewModel(vm)
+	local owner = self:GetOwner()
+	if owner:IsValid() then
+		owner:CallZombieFunction1("PreRenderEffects", vm)
+	end
 end
 
-local matSheet = Material("Models/Charple/Charple1_sheet")
-function SWEP:PreDrawViewModel(vm)
-	render.ModelMaterialOverride(matSheet)
+function SWEP:PostDrawViewModel(vm)
+	local owner = self:GetOwner()
+	if owner:IsValid() then
+		owner:CallZombieFunction1("PostRenderEffects", vm)
+	end
 end

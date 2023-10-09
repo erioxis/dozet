@@ -252,7 +252,11 @@ local nodraw = false
 local matWhite = Material("models/debug/debugwhite")
 local matRefract = Material("models/spawn_effect")
 function CLASS:PreRenderEffects(pl)
-
+	if render.SupportsVertexShaders_2_0() then
+		local normal = pl:GetUp()
+		render.EnableClipping(true)
+		render.PushCustomClipPlane(normal, normal:Dot(pl:GetPos() + normal * 16))
+	end
 	if nodraw then return end
 
 	render.SetColorModulation(0.086, 0.702, 0.239)

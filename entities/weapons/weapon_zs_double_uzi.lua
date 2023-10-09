@@ -96,7 +96,7 @@ SWEP.WorldModel = "models/weapons/w_pist_elite.mdl"
 SWEP.UseHands = true
 
 SWEP.Primary.Sound = Sound("Weapon_MAC10.Single")
-SWEP.Primary.Damage = 33
+SWEP.Primary.Damage = 37
 SWEP.Primary.NumShots = 1
 SWEP.Primary.Delay = 0.036
 SWEP.Tier = 4
@@ -104,10 +104,10 @@ SWEP.Tier = 4
 SWEP.Primary.ClipSize = 70
 SWEP.Primary.Automatic = true
 SWEP.Primary.Ammo = "smg1"
-SWEP.Primary.DefaultClip = 140
+SWEP.Primary.DefaultClip = 70
 
-SWEP.ConeMax = 8
-SWEP.ConeMin = 4
+SWEP.ConeMax = 22
+SWEP.ConeMin = 7
 
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_RELOAD_SPEED, 0.1)
 function SWEP:PrimaryAttack()

@@ -20,7 +20,7 @@ function SWEP:SecondaryAttack()
 	local own = self:GetOwner()
 	local trc = own:GetEyeTrace()
 	local ent = trc.Entity
-	if ent and ent:IsValid() and !ent:IsValidLivingPlayer() and !table.HasValue(exlude,ent:GetClass()) and SERVER and !self.MissEnt then
+	if ent and ent:IsValid() and !ent:IsValidLivingPlayer() and !table.HasValue(exlude,ent:GetClass()) and SERVER and !self.MissEnt  then
 		local class = ent:GetClass()
 		local g = ents.Create(class)
 		if !exlude_m[class] then
@@ -50,6 +50,7 @@ function SWEP:SecondaryAttack()
 			if phys and phys:IsValid() then
 				phys:Wake()
 			end
+			g.OnPackedUp = nil
 			g.IgnoreUse = true
 			g.OnRemoveMimic = g.OnRemove
 			g.OnRemove = function()
@@ -90,15 +91,15 @@ function SWEP:PrimaryAttack()
 
 	local owner = self:GetOwner()
 	local armdelay = owner:GetMeleeSpeedMul()
-	local eda = self.MissEnt 
-	if eda and eda:IsValid() then
-		eda:Remove()
-	end
 	local sss = owner:GetStatus("mimic_q")
 	if sss and SERVER then
 		sss:SetStateEndTime(0)
 		sss:Remove()
 		owner:SetPos(owner:GetDTEntity(12):GetPos()+Vector(0,0,20))
+	end
+	local eda = owner:GetDTEntity(12)
+	if eda and eda:IsValid() and SERVER then
+		eda:Remove()
 	end
 	owner:SetModelScale(1)
 	owner:SetDTEntity(12,nil)
@@ -115,6 +116,13 @@ function SWEP:MeleeHit(ent, trace, damage, forcescale)
 	end
 
 	self.BaseClass.MeleeHit(self, ent, trace, damage, forcescale)
+end
+function SWEP:Holster()
+	local owner = self:GetOwner()
+	if owner:GetDTEntity(12) and owner:GetDTEntity(12):IsValid() and SERVER then
+		owner:GetDTEntity(12):Remove()
+	end
+	return self.BaseClass.Holster(self)
 end
 
 if not CLIENT then return end

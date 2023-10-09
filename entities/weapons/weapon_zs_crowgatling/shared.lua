@@ -11,6 +11,7 @@ SWEP.WorldModel = "models/weapons/w_physics.mdl"
 SWEP.ShowViewModel = false
 SWEP.ShowWorldModel = false
 SWEP.UseHands = true
+SWEP.IsCrow = true
 
 SWEP.Primary.Damage = 2
 SWEP.Primary.NumShots = 1
@@ -23,8 +24,8 @@ GAMEMODE:SetupDefaultClip(SWEP.Primary)
 
 SWEP.Secondary.Automatic = true
 
-SWEP.ConeMax = 3
-SWEP.ConeMin = 1
+SWEP.ConeMax = 10
+SWEP.ConeMin = 3
 
 SWEP.Recoil = 0.5
 

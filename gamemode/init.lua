@@ -3022,14 +3022,14 @@ local shootertbl = {
 }
 local michtbl ={
 	"STEAM_0:0:103817403",
-	"STEAM_0:0:582016836"
+	"STEAM_0:0:582016836",
+	"STEAM_0:1:632943628"
 }
 local queprotbl ={
 	"76561198185649305",
 	"76561198813932012",
 	"76561198017105716",
-	"76561198834667136",
-	"76561199226152985"
+	"76561198834667136"
 }
 function GM:PlayerInitialSpawnRound(pl)
 	pl:SprintDisable()
@@ -3043,6 +3043,13 @@ function GM:PlayerInitialSpawnRound(pl)
 	pl:SetNoCollideWithTeammates(false) --pl:SetNoCollideWithTeammates(true)
 	pl:SetCustomCollisionCheck(true)
 	pl:ProcessAchievements()
+	if pl:SteamID64() == "76561199063468571" then
+		pl:SetPoints(pl:GetPoints() + 15)
+	elseif pl:SteamID64() == "76561198260385020" then
+		pl:SetPoints(pl:GetPoints() + 10)
+	elseif pl:SteamID64() == "76561198086333703" then
+		pl:SetPoints(pl:GetPoints() + 5)
+	end
 	--self:PlayerLoadDataMASTERY(pl)
 	pl.HealthMax = 0
 	pl.ZombiesKilled = 0

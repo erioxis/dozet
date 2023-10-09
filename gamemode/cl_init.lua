@@ -2065,7 +2065,7 @@ function GM:_CalcView(pl, origin, angles, fov, znear, zfar)
 		fov =  fov + add 
 	end]]
 	if pl.Revive and pl.Revive:IsValid() and pl.Revive.GetRagdollEyes then
-		local posed = self:GetDTEntity(12)
+		local posed = pl and pl:GetDTEntity(12) or NULL
 		if self.ThirdPersonKnockdown or self.ZombieThirdPerson or posed and posed:IsValid() then
 			origin = pl:GetThirdPersonCameraPos(origin, angles)
 		else
@@ -2220,6 +2220,8 @@ function GM:_PrePlayerDraw(pl)
 	pl.ShadowMan = shadowman
 	if pl.FeignDeath then
 		render_SetBlend(0)
+		render_SuppressEngineLighting(true)
+		undo = true
 	end
 	if pl:CallZombieFunction0("PrePlayerDraw") then return true end
 
@@ -2254,9 +2256,6 @@ local colFriend = Color(10, 255, 10, 60)
 local matFriendRing = Material("SGM/playercircle")
 local matTargetTri = Material("gui/point.png")
 function GM:_PostPlayerDraw(pl)
-	if pl.FeignDeath then
-		render_SetBlend(1)
-	end
 	pl:CallZombieFunction0("PostPlayerDraw")
 	if undo then
 		render_SetBlend(1)
