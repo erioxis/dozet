@@ -524,7 +524,8 @@ SKILL_AIMLESS = 496
 SKILL_FLASHLIGHT_PLUS = 497
 SKILL_AMULET_18 = 498
 SKILL_RUB_RUB_STOMACH = 499
-
+SKILL_SECRET_10 = 528
+SKILL_VIP_ARMY = 529
 
 
 
@@ -1055,7 +1056,9 @@ GM:AddSkill(SKILL_REINFORCEDBLADES, trs("skill_r_blade"), GOOD..trs("skill_r_bla
 GM:AddSkill(SKILL_MECHANIC, trs("skill_mech"), GOOD.."-15%"..trs("s_cost")..BAD.."-15%"..trs("sale"),
 																0,			-6,					{SKILL_MOTHER}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_MOTHER, trs("skill_moab"), GOOD..trs("skill_moab_d1")..BAD.."+15%"..trs("s_cost"),
-																0,			-7,					{}, TREE_BUILDINGTREE)
+																0,			-7,					{SKILL_VIP_ARMY}, TREE_BUILDINGTREE)
+GM:AddSkill(SKILL_VIP_ARMY, trs("skill_vip_army"), GOOD..trs("skill_vip_army_d1")..BAD..trs("skill_vip_army_d2"),
+																1,			-8,					{}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_AVIATOR, trs("skill_avi"), GOOD..trs("skill_avi_d1")..BAD..trs("skill_avi_d2"),
 																-4,			-2,					{}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_U_BLASTTURRET, trs("skill_u_blast"), GOOD..trs("skill_u_blast_d1"),
@@ -1352,6 +1355,14 @@ local rand1 = math.random(-20,20)
 local d = GM:AddSkill(SKILL_SECRET_9, "Secret IX", GOOD.."+20 Skill Points\nAhh finded at last...",
 																rand2,			rand1,					{SKILL_NONE}, TREE_GUNTREE)
 GM:AddSkillModifier(SKILL_SECRET_9, SKILLMOD_SPOINT, 21)
+d.Hidden = true	
+d.Hidden1 = true
+rand2 = math.random(-20,20)
+rand1 = math.random(-20,20)
+local d = GM:AddSkill(SKILL_SECRET_10, "Secret X", GOOD.."+25 Skill Points and +300% XP Multiplicator\nEnd?",
+																rand2,			rand1,					{SKILL_NONE}, math.random(1,12))
+GM:AddSkillModifier(SKILL_SECRET_10, SKILLMOD_SPOINT, 26)
+GM:AddSkillModifier(SKILL_SECRET_10, SKILLMOD_XP, 3)
 d.Hidden = true	
 d.Hidden1 = true
 local d = GM:AddSkill(SKILL_SECRET_VII, "ᅠ ᅠ ᅠ", GOOD.."+5 Skill Points\nSecret VII",

@@ -53,8 +53,8 @@ local add = Vector(0,0,90)
 function meta:GetThirdPersonCameraPos(origin, angles)
 	local allplayers = player.GetAll()
 	local posed = self:GetDTEntity(12)
-	local tr = util.TraceHull({start = origin, endpos = posed and posed:IsValid() and posed:GetPos()+add or origin + angles:Forward() * -math.max(36, self:Team() == TEAM_UNDEAD and self:GetZombieClassTable().CameraDistance or self:BoundingRadius()), mask = MASK_SHOT, filter = allplayers, mins = ViewHullMins, maxs = ViewHullMaxs})
-	return tr.HitPos + tr.HitNormal * 3
+	local tr = util.TraceHull({start = origin, endpos = origin + angles:Forward() * -math.max(36, self:Team() == TEAM_UNDEAD and self:GetZombieClassTable().CameraDistance or self:BoundingRadius()), mask = MASK_SHOT, filter = allplayers, mins = ViewHullMins, maxs = ViewHullMaxs})
+	return posed and posed:IsValid() and posed:GetPos()+add or tr.HitPos + tr.HitNormal * 3 
 end
 
 function meta:IsFriend()

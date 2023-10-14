@@ -60,6 +60,10 @@ function ENT:SetupPlayerSkills()
 		maxspeed = maxspeed * (owner.ControllableSpeedMul or 1)
 		acceleration = acceleration * (owner.ControllableHandlingMul or 1)
 		loaded = owner:IsSkillActive(SKILL_LOADEDHULL)
+		self.EliteArmy = owner:IsSkillActive(SKILL_VIP_ARMY)
+		if self.EliteArmy then
+			owner.CounterBalls = owner.CounterBalls + 1
+		end
 		local owner = self:GetObjectOwner()
 	end
 
@@ -209,6 +213,9 @@ function ENT:Destroy()
 	util.Effect("sparks", effectdata)
 
 	local owner = self:GetObjectOwner()
+	if self.EliteArmy and owner:IsValidLivingHuman() then
+		owner.CounterBalls = owner.CounterBalls - 1
+	end
 	if owner:IsValidLivingHuman() and owner:IsSkillActive(SKILL_LOADEDHULL) then
 		effectdata = EffectData()
 			effectdata:SetOrigin(epicenter)
@@ -287,8 +294,8 @@ function ENT:Dash()
 		for _, ent in pairs(ents.FindInSphere(self:GetPos(), 1048)) do
 			if !ent:IsValid() then continue end
 			target = ent
-			if WorldVisible(self:LocalToWorld(Vector(0, 0, 10)), ent:NearestPoint(self:LocalToWorld(Vector(0, 0, 10))))  then
-				if target:IsValidLivingZombie() then 
+			if WorldVisible(self:LocalToWorld(Vector(0, 0, 10)), ent:NearestPoint(self:LocalToWorld(Vector(0, 0, 10))))   then
+				if target:IsValidLivingZombie() and !(target:GetZombieClassTable().CrowDa or target.SpawnProtection)  then 
 					targets[(#targets or 0) + 1] = {Health = ent:Health(), trg = target}
 				end
 			end

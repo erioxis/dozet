@@ -1230,7 +1230,7 @@ function PANEL:Paint(w, h)
 				notunlockable = true
 			end
 				
-			if skillid <= -2 and !skill.Hidden1 and !skill.Hidden then
+			if skillid <= -2 and !skill.Hidden1 and !skill.Hidden  then
 				render_ModelMaterialOverride()
 				render_SetBlend(0.95)
 				node:SetModelScale(3.7)

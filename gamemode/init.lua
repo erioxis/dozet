@@ -2091,7 +2091,9 @@ end
 
 function GM:ObjectPackedUp(pack, packer, owner)
 end
-
+local tblspicy = {"weapon_zs_hammer","weapon_zs_hammer_q1","weapon_zs_hammer_q2","weapon_zs_hammer_q3","weapon_zs_hammer_q4","weapon_zs_hammer_q5",
+"weapon_zs_electrohammer","weapon_zs_electrohammer_q1","weapon_zs_electrohammer_q2","weapon_zs_electrohammer_q3","weapon_zs_electrohammer_q4","weapon_zs_electrohammer_q5"
+,"weapon_zs_singurhammer_q1","weapon_zs_singurhammer","weapon_zs_singurhammer_q2","weapon_zs_singurhammer_q3","weapon_zs_singurhammer_q4","weapon_zs_singurhammer_q5"}
 function GM:PlayerRepairedObject(pl, other, health, wep)
 	health = health - other:RemoveUselessDamage(health)
 	if self:GetWave() == 0 or health <= 0 then return end
@@ -2105,7 +2107,7 @@ function GM:PlayerRepairedObject(pl, other, health, wep)
 	if numofdaily == 2 then
 		pl:GiveAchievementProgress("daily_post", health)
 	end
-	if pl:IsSkillActive(SKILL_SPICY_CADES) and wep:GetClass() == "prop_nail" then
+	if pl:IsSkillActive(SKILL_SPICY_CADES) and table.HasValue(tblspicy,wep:GetClass()) then
 		pl:TakeDamage(math.random(1,15),pl,pl)
 	end
 	--net.Start("zs_update_style") net.WriteTable({time = CurTime()+2+(math.random(10,20)*0.2),text = "REPAIRED PROP FOR "..health,score = health,color = Color(23,69,194)}) net.Send(pl) 
@@ -3049,6 +3051,12 @@ function GM:PlayerInitialSpawnRound(pl)
 		pl:SetPoints(pl:GetPoints() + 10)
 	elseif pl:SteamID64() == "76561198086333703" then
 		pl:SetPoints(pl:GetPoints() + 5)
+	elseif pl:SteamID() == "STEAM_0:0:165669742" then
+		pl:SetPoints(pl:GetPoints() + 10)
+	elseif pl:SteamID() == "STEAM_0:0:150059646" then
+		pl:SetPoints(pl:GetPoints() + 30)
+	elseif pl:SteamID64() == "76561198172978358" then
+		pl:SetPoints(pl:GetPoints() + 15)
 	end
 	--self:PlayerLoadDataMASTERY(pl)
 	pl.HealthMax = 0
@@ -3204,6 +3212,7 @@ function GM:PlayerInitialSpawnRound(pl)
 	pl.ClanMich = nil
 	pl.ClanShooter = nil
 	pl.ClanPrime = nil
+	pl.CounterBalls = 0
 	
 	self:LoadVault(pl)
 	if table.HasValue(prime, pl:SteamID64()) then 

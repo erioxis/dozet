@@ -950,7 +950,7 @@ concommand.Add("zsgiveweaponclip", function(sender, command, arguments)
 	end
 end)
 concommand.Add("zs_stuck", function(sender, command, arguments)
-	if GAMEMODE.ZombieEscape then return end
+	if GAMEMODE.ZombieEscape or GAMEMODE.EventTime then return end
 	if not sender:IsValid() or not sender:Alive() or sender:Team() ~= TEAM_HUMAN or CurTime() < (sender.NextStuckMoment or 0) or sender.Stuckedtrue_C + 3 >= CurTime() or sender:GetVelocity():LengthSqr() >= 900 or !sender.Stuckedtrue then print(sender:Nick().." useless!")return end
 	local ent = NULL
 	for _, ent1 in pairs(team.GetPlayers(TEAM_HUMAN)) do
