@@ -30,10 +30,10 @@ function ENT:Think()
 		self:Remove()
 	end
 	if CurTime() >= self.NextThink1 then 
-	for _, ent in pairs(ents.FindInSphere(self:GetPos(), 308)) do
+	for _, ent in pairs(ents.FindInSphere(self:GetPos(), 2308)) do
 		target = ent
 		if WorldVisible(self:LocalToWorld(Vector(0, 0, 30)), ent:NearestPoint(self:LocalToWorld(Vector(0, 0, 30)))) then
-			if target:IsValidLivingZombie() and target:Health() >= 500 and !target:GetZombieClassTable().Boss and !target:GetZombieClassTable().BaraCat then
+			if target:IsValidLivingZombie() and target:Health() >= 200 and !target:GetZombieClassTable().Boss and !target:GetZombieClassTable().BaraCat then
 				local targetpos = target:LocalToWorld(target:OBBCenter())
 				local direction = (targetpos - self:GetPos()):GetNormal()
 				
@@ -47,7 +47,7 @@ function ENT:Think()
 			end
 		end
 	end
-		self.NextThink1 = CurTime() + 1
+		self.NextThink1 = CurTime() + 0.05
 	end
 
 end

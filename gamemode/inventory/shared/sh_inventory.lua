@@ -945,6 +945,8 @@ trinket, trinketwep = GM:AddTrinket(trs("t_curse_un"), "curse_unknown", false, n
 trinketwep.PermitDismantle = true
 trinket, trinketwep = GM:AddTrinket(trs("t_curse_point"), "curse_point", false, nil, cursesoul, 3, trs("t_d_curse_point"), nil, nil, "weapon_zs_cursed")
 trinketwep.PermitDismantle = true
+trinket, trinketwep = GM:AddTrinket(trs("t_curse_ancient"), "curse_eye", false, nil, cursesoul, 3, trs("t_d_curse_ancient"), nil, nil, "weapon_zs_cursed")
+trinketwep.PermitDismantle = true
 
 --perfomance
 GM:AddSkillModifier(GM:AddTrinket( trs("t_adrenaline"), "adrenaline", false, pveles, pweles, nil, trs("t_d_adrenaline"), nil, nil, "weapon_zs_special_trinket"), SKILLMOD_JUMPPOWER_MUL, 0.01)
@@ -2271,7 +2273,8 @@ trinket, soul = GM:AddTrinket("Soul of Jacob", "jacobsoul", false, nil, {
 	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 10.697, y = 10.697 }, color = Color(255, 0, 0, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core_2+"] = { type = "Sprite", sprite = "effects/splashwake1", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 30, y = 30 }, color = Color(0, 5, 255, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 2, 0), angle = Angle(0, 0, 0), size = Vector(0.349, 0.349, 0.349), color = Color(255, 0, 255, 255), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} }
-}, 1,"Инвертирует проклятье сигила.\nSigil kill you instead defend\n Q:5", nil, nil, "weapon_zs_soulalt")
+}, 1,"Убирает лимит к регенерации и ускоряет ее когда вы у сигила,а если нет - убирает регенерацию\nNo Limit for regeneration and speed up them when near a sigil.If not - remove regen\n Q:5", nil, nil, "weapon_zs_soulalt")
+GM:AddSkillModifier(trinket, SKILLMOD_REGEN_SPEED, 0.5)
 
 trinket, soul = GM:AddTrinket("Soul of Alt Isaac", "altisaacsoul", false, nil, {
 	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 10.697, y = 10.697 }, color = Color(34, 120, 255, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},

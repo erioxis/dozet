@@ -1477,7 +1477,7 @@ function GM:Think()
                 if vele:LengthSqr() >= 5636052 then
 					pl:GiveAchievement("highvel")
 				end
-				if (pl.ClanQuePro or pl:IsSkillActive(SKILL_SAUL_GOODMAN)) and time >= pl.NextRegenerateClan then
+				if pl:IsSkillActive(SKILL_SAUL_GOODMAN) and time >= pl.NextRegenerateClan then
 					pl.NextRegenerateClan = time + 20
 					pl:AddZSXP(1)
 				end
@@ -1502,7 +1502,8 @@ function GM:Think()
 				if pl:HasTrinket("sin_ego") and time > (pl.NextConsumeEgo or 1) then
 					local use = {}
 					for item,v in pairs(pl:GetInventoryItems()) do
-						if item ~= "trinket_sin_ego" then
+						local g = table.HasValue(string.Explode("_",item), "curse")
+						if item ~= "trinket_sin_ego" and !g then
 							table.insert(use, #use + 1,item)
 						end
 					end
@@ -1695,7 +1696,7 @@ function GM:Think()
 				if time > (pl.NextResupplyUse or 0) then
 					local stockpiling = pl:IsSkillActive(SKILL_STOCKPILE)
 
-					pl.NextResupplyUse = time + math.max(15,self.ResupplyBoxCooldown * (pl.ResupplyDelayMul or 1) * (stockpiling and 2 or 1))* (pl.ClanPrime and 0.9 or 1)  - (pl:IsSkillActive(SKILL_STOWAGE) and math.max(0,self:GetBalance() / 4) or 0)
+					pl.NextResupplyUse = time + math.max(15,self.ResupplyBoxCooldown * (pl.ResupplyDelayMul or 1) * (stockpiling and 2 or 1))  - (pl:IsSkillActive(SKILL_STOWAGE) and math.max(0,self:GetBalance() / 4) or 0)
 					pl.StowageCaches = (pl.StowageCaches or 0) + (stockpiling and 2 or 1)
 
 					net.Start("zs_nextresupplyuse")
@@ -1777,6 +1778,11 @@ local function DoDropStart(pl)
 			local drop = demiboss[math.random(1,#demiboss)]
 			timer.Simple(0, function() func(pl, drop) end)
 		end
+	end
+	if pl:IsSkillActive(SKILL_ASAVE) then
+		local func = pl.AddInventoryItem 
+		local drop = "trinket_curse_eye"
+		timer.Simple(0, function() func(pl, drop) end)
 	end
 	if pl:IsSkillActive(SKILL_AMULET_15) then
 		local drop = table.Random(GAMEMODE.Curses)
@@ -2545,7 +2551,7 @@ function GM:OnPlayerWin(pl)
 			pl:GiveAchievement("midas_forever")	
 		end
 		if pl:HasTrinket("curse_dropping") and pl:HasTrinket("hurt_curse") and pl:HasTrinket("un_curse") and pl:HasTrinket("curse_faster") and pl:HasTrinket("curse_slow") and pl:HasTrinket("curse_heart") and pl:HasTrinket("curse_fragility")
-		and pl:HasTrinket("curse_ponos") and pl:HasTrinket("curse_unknown") and pl:GetStatus("cursed") and pl:IsSkillActive(SKILL_ATTACHMENT_CURSE) and pl:HasTrinket("cursedtrinket") 
+		and pl:HasTrinket("curse_ponos") and pl:HasTrinket("curse_unknown") and pl:GetStatus("cursed") and pl:IsSkillActive(SKILL_ATTACHMENT_CURSE) and pl:HasTrinket("cursedtrinket") and pl:HasTrinket("curse_eye") 
 		and pl:IsSkillActive(SKILL_NOSEE) and  pl:IsSkillActive(SKILL_D_CURSEDTRUE) and pl:IsSkillActive(SKILL_BARA_CURSED) and pl:IsSkillActive(SKILL_CURSE_OF_MISS) and pl:IsSkillActive(SKILL_LIVER) and pl:IsSkillActive(SKILL_TRIP) then
 			pl:GiveAchievement("full_curse")
 			print("huy")
@@ -3022,11 +3028,6 @@ local avanguardtbl ={
 local shootertbl = {
 	"76561198956039967"
 }
-local michtbl ={
-	"STEAM_0:0:103817403",
-	"STEAM_0:0:582016836",
-	"STEAM_0:1:632943628"
-}
 local queprotbl ={
 	"76561198185649305",
 	"76561198813932012",
@@ -3057,6 +3058,8 @@ function GM:PlayerInitialSpawnRound(pl)
 		pl:SetPoints(pl:GetPoints() + 30)
 	elseif pl:SteamID64() == "76561198172978358" then
 		pl:SetPoints(pl:GetPoints() + 15)
+	elseif pl:SteamID64() == "76561198979410689" then
+		pl:SetPoints(pl:GetPoints() + 5)
 	end
 	--self:PlayerLoadDataMASTERY(pl)
 	pl.HealthMax = 0
@@ -3207,34 +3210,10 @@ function GM:PlayerInitialSpawnRound(pl)
 	--local nosend = not pl.DidInitPostEntity
 	pl.DamageVulnerability = nil
 	pl.ClanQuePro = nil
-	pl.ClanAvanguard = nil
-	pl.ClanMelee = nil
-	pl.ClanMich = nil
-	pl.ClanShooter = nil
-	pl.ClanPrime = nil
 	pl.CounterBalls = 0
 	
 	self:LoadVault(pl)
-	if table.HasValue(prime, pl:SteamID64()) then 
-		pl.ClanPrime = true
-	end
-	if table.HasValue(meleeclan, pl:SteamID64()) then 
-		pl.ClanMelee = true
-	end
 	local uniqueid = pl:UniqueID()
-	if table.HasValue(avanguardtbl, pl:SteamID64()) then 
-		pl.ClanAvanguard = true
-	end
-	if table.HasValue(michtbl, pl:SteamID()) then 
-		pl.ClanMich = true
-	end
-	if table.HasValue(queprotbl, pl:SteamID64()) then 
-		pl.ClanQuePro = true
-	end
-	if table.HasValue(shootertbl, pl:SteamID64()) then 
-		pl.ClanShooter = true
-	end
-	
 	--[[if pl:SteamID() == "STEAM_1:1:497887119" then 
 		pl.ClanNigger = true
 	end
@@ -4507,12 +4486,12 @@ function GM:KeyPress(pl, key)
 					end
 					pl:ResetSpeed()
 				end
-				if not pl:IsCarrying() and pl.NextDash <= CurTime() and (pl.ClanAvanguard or pl:IsSkillActive(SKILL_GIER_II)) and !pl:GetBarricadeGhosting() then
+				if not pl:IsCarrying() and pl.NextDash <= CurTime() and pl:IsSkillActive(SKILL_GIER_II) and !pl:GetBarricadeGhosting() then
 					if pl:IsSkillActive(SKILL_GIER_II) and pl:IsSkillActive(SKILL_STAMINA) and pl:GetStamina() <= 33 then return end
 						local pos = pl:GetPos()
 						local pushvel = pl:GetEyeTrace().Normal * 0 + (pl:GetAngles():Forward()*(pl:OnGround() and 1600 or 500))
 						pl:SetVelocity(pushvel)
-						pl.NextDash = CurTime() + 4 - (pl.ClanAvanguard and pl:IsSkillActive(SKILL_GIER_II) and 2 or 0)
+						pl.NextDash = CurTime() + 4
 						if pl:IsSkillActive(SKILL_GIER_II) and !pl:IsSkillActive(SKILL_STAMINA) then
 							pl.Gear2_Used = CurTime() + 2
 							pl:ResetSpeed()

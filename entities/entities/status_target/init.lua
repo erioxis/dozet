@@ -16,7 +16,7 @@ function ENT:EntityTakeDamage(ent, dmginfo)
 	if ent ~= self:GetOwner() then return end
 
 	local attacker = dmginfo:GetAttacker()
-	if attacker:IsPlayer() and attacker:IsValid() and dmginfo:GetInflictor().IsMelee then
+	if attacker:IsValidHuman() and dmginfo:GetInflictor().IsMelee then
 		dmginfo:SetDamage(dmginfo:GetDamage() * 0.1)
 	else
 		dmginfo:SetDamage(dmginfo:GetDamage() * 2.2)

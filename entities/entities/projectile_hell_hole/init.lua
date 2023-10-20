@@ -68,7 +68,7 @@ function ENT:Think()
 	end
 	
 --	self:EmitSound("purg_ghostdash"..math.random(1,3)..".wav", 70, math.random(125, 135))
-	if self.Exploded or self.DieTime < CurTime() then
+	if self.Exploded or self.DieTime < CurTime() or !owner or !owner:IsValid() then
 		self:Remove()
 	end
 end

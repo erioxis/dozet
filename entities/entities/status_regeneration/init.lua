@@ -10,6 +10,11 @@ function ENT:Think()
 	end
 	local applier = self.Applier
 	local owner = self:GetOwner()
+	if owner:HasTrinket("jacobsoul") and !owner:GetStatus("sigildef") then
+		self:SetDamage(0)
+		self:Remove()
+		return 
+	end
 	local mhp = owner:GetMaxHealth()
 	local hp = owner:Health()
 	if mhp > hp then

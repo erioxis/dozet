@@ -124,6 +124,7 @@ GAMEMODE:AddNewRemantleBranch(SWEP, 1, translate.Get("wep_dubin2"), translate.Ge
 	wept.DealThink = nil
 	wept.HaveAbility = nil
 	wept.Draw2DHUD = nil
+	
 	end)
 function SWEP:MeleeSwing()
 	self.BaseClass.MeleeSwing(self)

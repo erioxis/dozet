@@ -157,6 +157,12 @@ GM.Achievements["glassman"] = {
     Desc = translate("challenge_glassman_d"),
     Reward = 5000
 }
+GM.Achievements["looter_bads"] = {
+    Name = translate("challenge_looter"),
+    Desc = translate("challenge_looter_d"),
+    Goal = 2500,
+    Reward = 12000
+}
 
 GM.Achievements["mariotrue"] = {
     Name = translate("challenge_mcmario"),
@@ -714,6 +720,8 @@ GM.Statuses["regeneration"] = {
 	ValFunc = function(self, lp)
 		return (lp.RegenStatus and lp.RegenStatus:IsValid() and lp.RegenStatus:GetDamage() or 0)
 	end,
-	Max = 100,
+	MaxValueFunc = function(self, lp)
+		return (lp.RegenStatus and lp.RegenStatus:IsValid() and lp.RegenStatus:GetMaxStacks(lp) or 100)
+	end,
 	Icon = Material("skillweb/5_web.png")
 }

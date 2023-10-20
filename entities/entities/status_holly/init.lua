@@ -11,7 +11,6 @@ function ENT:SetDie(fTime)
 	end
 end
 function ENT:Think()
-	if self:GetOwner().ClanLoxov then self:Remove() end 
 	if self.DieTime <= CurTime() then
 		self:Remove()
 	end

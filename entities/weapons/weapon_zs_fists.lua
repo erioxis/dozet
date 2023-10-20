@@ -376,12 +376,12 @@ function SWEP:Think()
 			local p = target:IsPlayer() and target:IsValidLivingZombie() or entclass == "prop_obj_sigil"
 			local need = table.HasValue(needtbl,entclass)
 			local secondneed = table.HasValue(sectbl,entclass)
-			if (need or target.HumanHoldable and target:HumanHoldable(owner)) and not target:IsNailed() and target:GetMoveType() == MOVETYPE_VPHYSICS and target:GetPhysicsObject():IsValid() and target:GetPhysicsObject():GetMass() <= 1200 and target:GetPhysicsObject():IsMoveable() and target:OBBMins():Length() + target:OBBMaxs():Length() <= 200 or p
+			if (need or target.HumanHoldable and target:HumanHoldable(owner)) and not target:IsNailed() and target:GetPhysicsObject():IsValid()  and target:GetPhysicsObject():GetMass() <= 1200  and target:OBBMins():Length() + target:OBBMaxs():Length() <= 200 or p
 			or secondneed
 			then
 				local aimangles = owner:EyeAngles() 
 				local mul = ((owner.SkillSpeedAdd or 1)+225)/225
-				local targetpos = target:LocalToWorld(target:OBBCenter()) 
+				local targetpos = target:GetPos()
 				local direction = (targetpos - owner:GetPos()):GetNormal()  * 2
 				if owner:KeyDown(IN_MOVERIGHT) then
 					direction = direction  + aimangles:Right()  * mul

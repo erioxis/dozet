@@ -158,7 +158,7 @@ function CLASS:ProcessDamage(pl, dmginfo)
 		dmginfo:SetDamage(math.min(dmginfo:GetDamage(),50))
 	end
 	if attacker and attacker ~= pl and dmginfo:GetInflictor() and dmginfo:GetInflictor().IsMelee and not dmginfo:GetInflictor().IgnoreNiggers then
-		if !attacker.ClanLoxov or attacker:IsValidLivingHuman() and !attacker:GetActiveWeapon().ResistDamage then
+		if attacker:IsValidLivingHuman() and !attacker:GetActiveWeapon().ResistDamage then
 			attacker:TakeSpecialDamage(dmginfo:GetDamage() * 0.05, DMG_GENERIC, pl, pl)
 			local cursed = attacker:GetStatus("cursed")
 			if (cursed) then 

@@ -613,7 +613,7 @@ concommand.Add("zsdropweapon", function(sender, command, arguments)
 	local currentwep = sender:GetActiveWeapon()
 	if sender:HasTrinket("curse_dropping") then
 		sender:Kill()
-		sender:TakeInventoryItem("curse_dropping")
+		sender:TakeInventoryItem("trinket_curse_dropping")
 		
 	end
 	if sender:HasTrinket("curse_point") and sender:GetPoints() > 0 then
@@ -623,29 +623,34 @@ concommand.Add("zsdropweapon", function(sender, command, arguments)
 	end
 	if sender:HasTrinket("hurt_curse") then
 		sender:TakeDamage(60)
-		sender:TakeInventoryItem("hurt_curse")
+		sender:TakeInventoryItem("trinket_hurt_curse")
 	end
 	if sender:HasTrinket("un_curse") then
 		sender:SetHealth(1)
-		sender:TakeInventoryItem("un_curse")
+		sender:TakeInventoryItem("trinket_un_curse")
 	end
 	if sender:HasTrinket("curse_faster") then
 		sender.zKills = sender.zKills + 50
-		sender:TakeInventoryItem("curse_faster")
+		sender:TakeInventoryItem("trinket_curse_faster")
 	end
 	if sender:HasTrinket("curse_slow") then
 		sender:TakeDamage(100)
-		sender:TakeInventoryItem("curse_slow")
+		sender:TakeInventoryItem("trinket_curse_slow")
 		
 	end
 	if sender:HasTrinket("curse_heart") then
 		sender:TakeDamage(sender:Health()  * 0.5)
-		sender:TakeInventoryItem("curse_heart")
+		sender:TakeInventoryItem("trinket_curse_heart")
 		
 	end
 	if sender:HasTrinket("curse_fragility") then
 		sender.LuckAdd = sender.LuckAdd - 6
-		sender:TakeInventoryItem("curse_fragility")
+		sender:TakeInventoryItem("trinket_curse_fragility")
+	end
+	if sender:HasTrinket("curse_eye") then
+		sender:ApplySkills({})
+		sender:TakeInventoryItem("trinket_curse_eye")
+		
 	end
 	if sender:HasTrinket("curse_unknown") then
 		local c = NULL
@@ -658,7 +663,7 @@ concommand.Add("zsdropweapon", function(sender, command, arguments)
 		timer.Simple(1, function() if c:IsValid() then sender:SetPos(c:GetPos())  end end)
 	end
 	if sender:HasTrinket("curse_ponos") then
-		sender:TakeInventoryItem("curse_ponos")
+		sender:TakeInventoryItem("trinket_curse_ponos")
 		timer.Create("ponosx10", 0.5, 10, function() sender:SetVelocity(VectorRand() * math.random(200,1700)) 
 			sender:EmitSound("ambient/water/water_spray3.wav",120,45, 122)
 		end)
@@ -821,44 +826,49 @@ concommand.Add("zsgiveweapon", function(sender, command, arguments)
 	if GAMEMODE.ZombieEscape then return end
 	if sender:HasTrinket("curse_dropping") then
 		sender:Kill()
-		sender:TakeInventoryItem("curse_dropping")
+		sender:TakeInventoryItem("trinket_curse_dropping")
 		return
 	end
 	if sender:HasTrinket("curse_point") and sender:GetPoints() > 0 then
 		sender:SetPoints(sender:GetPoints() * 0.75)
-		sender:TakeInventoryItem("curse_point")
+		sender:TakeInventoryItem("trinket_curse_point")
 		return
 	end
 	if sender:HasTrinket("hurt_curse") then
 		sender:TakeDamage(60)
-		sender:TakeInventoryItem("hurt_curse")
+		sender:TakeInventoryItem("trinket_hurt_curse")
 		return
 	end
 	if sender:HasTrinket("un_curse") then
 		sender:SetHealth(1)
-		sender:TakeInventoryItem("un_curse")
+		sender:TakeInventoryItem("trinket_un_curse")
 		return
 	end
 	if sender:HasTrinket("curse_faster") then
 		sender.zKills = sender.zKills + 50
-		sender:TakeInventoryItem("curse_faster")
+		sender:TakeInventoryItem("trinket_curse_faster")
 		return
 	end
 	if sender:HasTrinket("curse_slow") then
 		sender:TakeDamage(100)
-		sender:TakeInventoryItem("curse_slow")
+		sender:TakeInventoryItem("trinket_curse_slow")
 		return
 		
 	end
 		if sender:HasTrinket("curse_heart") then
 		sender:TakeDamage(sender:Health())
-		sender:TakeInventoryItem("curse_heart")
+		sender:TakeInventoryItem("trinket_curse_heart")
 		
 	end
 	if sender:HasTrinket("curse_ponos") then
-		sender:TakeInventoryItem("curse_ponos")
+		sender:TakeInventoryItem("trinket_curse_ponos")
 		timer.Create("ponosx10", 0.5, 10, function() sender:SetVelocity(VectorRand() * math.random(200,1700)) end)
 		sender:GiveAchievement("ponos")
+		return
+	end
+	if sender:HasTrinket("curse_eye") then
+		sender:ApplySkills({})
+		sender:TakeInventoryItem("trinket_curse_eye")
 		return
 	end
 	if sender:HasTrinket("curse_unknown") then

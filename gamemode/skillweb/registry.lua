@@ -1058,7 +1058,7 @@ GM:AddSkill(SKILL_MECHANIC, trs("skill_mech"), GOOD.."-15%"..trs("s_cost")..BAD.
 GM:AddSkill(SKILL_MOTHER, trs("skill_moab"), GOOD..trs("skill_moab_d1")..BAD.."+15%"..trs("s_cost"),
 																0,			-7,					{SKILL_VIP_ARMY}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_VIP_ARMY, trs("skill_vip_army"), GOOD..trs("skill_vip_army_d1")..BAD..trs("skill_vip_army_d2"),
-																1,			-8,					{}, TREE_BUILDINGTREE)
+																1,			-8,					{}, TREE_BUILDINGTREE).NewSkill = true
 GM:AddSkill(SKILL_AVIATOR, trs("skill_avi"), GOOD..trs("skill_avi_d1")..BAD..trs("skill_avi_d2"),
 																-4,			-2,					{}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_U_BLASTTURRET, trs("skill_u_blast"), GOOD..trs("skill_u_blast_d1"),
@@ -1617,7 +1617,7 @@ GM:AddSkill(SKILL_KNUCKLEMASTER, trs("skill_knuckmaster"), GOOD.."+75%"..trs("fi
 																6,			-6,					{SKILL_NONE, SKILL_COMBOKNUCKLE}, TREE_MELEETREE)
 GM:AddSkill(SKILL_COMBOKNUCKLE, trs("skill_combohits"), GOOD..trs("skill_combohits_d1")..BAD..trs("skill_combohits_d2"),
 																6,			-4,					{SKILL_CHEAPKNUCKLE, SKILL_CRITICALKNUCKLE}, TREE_MELEETREE)
-GM:AddSkill(SKILL_HEAVYSTRIKES, trs("skill_hknucke"), GOOD.."+90%"..trs("melee_knock")..GOOD..trs("skill_hknucke_d1")..BAD.."-50%"..trs("meleedamage"),
+GM:AddSkill(SKILL_HEAVYSTRIKES, trs("skill_hknucke"), GOOD.."+90%"..trs("melee_knock")..GOOD..trs("skill_hknucke_d1")..BAD.."-30%"..trs("meleedamage"),
 																2,			0,					{SKILL_BATTLER5, SKILL_JOUSTER}, TREE_MELEETREE)
 GM:AddSkill(SKILL_JOUSTER, trs("skill_jouster"), GOOD.."+15%"..trs("meleedamage")..BAD.."-90%"..trs("melee_knock")..BAD.."-50%"..trs("b_damage"),
 																2,			2,					{SKILL_BLOODLOST,SKILL_SOY}, TREE_MELEETREE)
@@ -2166,7 +2166,7 @@ GM:AddSkill(SKILL_SELFSAVER, trs("skill_selfsaver"), GOOD..trs("skill_selfsaver_
 GM:AddSkill(SKILL_BLOODYFISTS, trs("skill_bloodyfists"), GOOD..trs("skill_bloodyfists_d1")..BAD..trs("skill_bloodyfists_d2"),
 				                                                            	-5,			4,					{SKILL_SELFSAVER}, TREE_DEFENSETREE)
 GM:AddSkillModifier(SKILL_BLOODYFISTS, SKILLMOD_UNARMED_DAMAGE_MUL, -0.20)
-GM:AddSkill(SKILL_ASAVE, trs("skill_ancientsave"), GOOD..trs("skill_ancientsave_d1")..BAD.."-32"..trs("speed"),
+GM:AddSkill(SKILL_ASAVE, trs("skill_ancientsave"), GOOD..trs("skill_ancientsave_d1")..BAD..trs("skill_ancientsave_d2"),
 				                                                            	-4,			5,					{SKILL_SELFSAVER}, TREE_DEFENSETREE)
 GM:AddSkill(SKILL_SSS, trs("skill_sss"), GOOD..trs("skill_sss_d1")..BAD..trs("skill_sss_d2"),
 				                                                            	-4,			7,					{SKILL_ASAVE}, TREE_DEFENSETREE)
@@ -2504,11 +2504,6 @@ local function GetTaper(pl, str, mul)
 end
 GM:SetSkillModifierFunction(SKILLMOD_DAMAGE_ALL, function(pl, amount)
 	local damagemul = 1
-	if pl.ClanPrime then
-		damagemul = damagemul - GAMEMODE:GetWave() * 0.034
-	elseif pl.ClanMich then
-		damagemul = 0.8
-	end
 	if pl:SteamID64() == "76561198291605212" then
 		damagemul = damagemul * 1.07
 	end
@@ -2659,7 +2654,7 @@ GM:SetSkillModifierFunction(SKILLMOD_RELOADSPEED_RIFLE_MUL, function(pl, amount)
 	pl.ReloadSpeedMultiplier357 = math.Clamp(amount + 1.0, 0.0, 100.0)
 end)
 GM:SetSkillModifierFunction(SKILLMOD_DMG_TAKEN, function(pl, amount)
-	pl.DamageTakenMul = math.Clamp(amount + 1.0 - (pl.ClanMelee and 0.2 or 0), 0.05, 100.0) 
+	pl.DamageTakenMul = math.Clamp(amount + 1.0, 0.05, 100.0) 
 end)
 
 GM:SetSkillModifierFunction(SKILLMOD_RELOADSPEED_XBOW_MUL, function(pl, amount)
@@ -2793,7 +2788,7 @@ GM:SetSkillModifierFunction(SKILLMOD_POISON_SPEED_MUL, function(pl, amount)
 	pl.PoisonSpeedMul = math.Clamp(amount + 1.0, 0.1, 1000.0)
 end)
 GM:SetSkillModifierFunction(SKILLMOD_SCALEMODEL, function(pl, amount)
-	pl.ScaleModel = math.Clamp(amount + 1.0 - (pl.ClanMich and 0.25 or 0), 0.06, 1000.0)
+	pl.ScaleModel = math.Clamp(amount + 1.0, 0.06, 1000.0)
 end)
 GM:SetSkillModifierFunction(SKILLMOD_DAMAGE_TAKEN_N, function(pl, amount)
 	pl.DamageTakenInt = math.Clamp(amount, -100, 1000)
@@ -2956,7 +2951,6 @@ GM:AddSkillModifier(SKILL_EGOCENTRIC, SKILLMOD_HEALTH, -5)
 GM:AddSkillModifier(SKILL_SELFSAVER, SKILLMOD_SELF_DAMAGE_MUL, -0.25)
 GM:AddSkillModifier(SKILL_SELFSAVER, SKILLMOD_SPEED, -35)
 
-GM:AddSkillModifier(SKILL_ASAVE, SKILLMOD_SPEED, -32)
 
 GM:AddSkillModifier(SKILL_BLASTPROOF, SKILLMOD_SELF_DAMAGE_MUL, -0.40)
 GM:AddSkillModifier(SKILL_BLASTPROOF, SKILLMOD_RELOADSPEED_MUL, -0.10)
@@ -3254,6 +3248,7 @@ GM:AddSkillModifier(SKILL_UNBOUND, SKILLMOD_SPEED, -4)
 GM:AddSkillModifier(SKILL_CHEAPKNUCKLE, SKILLMOD_MELEE_RANGE_MUL, -0.1)
 
 GM:AddSkillModifier(SKILL_HEAVYSTRIKES, SKILLMOD_MELEE_KNOCKBACK_MUL, 0.9)
+GM:AddSkillModifier(SKILL_HEAVYSTRIKES, SKILLMOD_MELEE_DAMAGE_MUL, -0.3)
 
 GM:AddSkillModifier(SKILL_CANNONBALL, SKILLMOD_PROJ_SPEED, -0.25)
 GM:AddSkillModifier(SKILL_CANNONBALL, SKILLMOD_PROJECTILE_DAMAGE_MUL, 0.35)

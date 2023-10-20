@@ -14,9 +14,14 @@ function ENT:Initialize()
 		self:SetDTFloat(1, CurTime())
 	end
 end
+function ENT:GetMaxStacks(pl)
+	if pl:HasTrinket("jacobsoul") or !pl or !IsValid(pl) then
+		return 99999
+	end
+	return pl:GetMaxHealth()/2 
+end
 function ENT:SetDamage(damage)
-	local own = self:GetOwner()
-	self:SetDTFloat(0, math.min(own:IsValidLivingPlayer() and own:GetMaxHealth()/2 or 100, damage))
+	self:SetDTFloat(0, math.min(self:GetMaxStacks(self:GetOwner()), damage))
 end
 
 function ENT:GetDamage()

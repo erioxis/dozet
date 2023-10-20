@@ -28,9 +28,7 @@ function SWEP:ApplyMeleeDamage(pl, trace, damage)
 	if SERVER and pl:IsPlayer() and (not pl:GetStatus("hshield")) and pl:GetActiveWeapon() and !pl:GetActiveWeapon().ResistDamage and !pl:HasTrinket("toykasoul") and !pl:IsSkillActive(SKILL_ASAVE) then
 		local killer = self:GetOwner()
 		timer.Simple(0.15, function()
-			if pl:IsValid() and math.random(1,5) == 1 then
-				pl:Kill()
-			end
+			pl:Kill()
 		end)
         
 	end
@@ -47,24 +45,7 @@ function SWEP:PlayAttackSound()
 end
 
 
-function SWEP:Think()
-	local curTime = CurTime()
-	local moverate = math.Clamp(self:GetOwner():GetVelocity():Length() / self:GetOwner():GetWalkSpeed() * 0.66, 0,1)*-3+1
-	if curTime >= self.LastStealthMeterCheck+self.StealthMeterTick then
-		self:SetStealthMeter(math.Clamp(self:GetStealthMeter()+moverate,0,100))
-		self.LastStealthMeterCheck = curTime
-	end
-	self:SetStealthWepBlend(1-math.Clamp(self:GetStealthMeter()/100,0,1)*0.85)
-	self.BaseClass.Think(self)	
-end
 
-function SWEP:SetupDataTables()
-	self:NetworkVar("Float", 7, "StealthWepBlend")
-	self:NetworkVar("Float", 8, "StealthMeter")
-	if self.BaseClass.SetupDataTables then
-		self.BaseClass.SetupDataTables(self)
-	end
-end
 if not CLIENT then return end
 function SWEP:PreDrawViewModel(vm)
 	self:GetOwner():CallZombieFunction0("PrePlayerDraw")

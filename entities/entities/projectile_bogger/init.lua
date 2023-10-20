@@ -31,9 +31,9 @@ function ENT:Think()
 	end
 	local owner = self:GetOwner()
 	if CurTime() >= self.NextThink1 then 
-	for _, ent in pairs(ents.FindInSphere(self:GetPos(), 256)) do
+	for _, ent in pairs(ents.FindInSphere(self:GetPos(), 1256)) do
 		target = ent
-		if WorldVisible(self:LocalToWorld(Vector(0, 0, 10)), ent:NearestPoint(self:LocalToWorld(Vector(0, 0, 10)))) and (target:IsValidLivingZombie() and not (target:GetZombieClassTable().CrowDa or target.SpawnProtection) or target.CanRicoChet) then
+		if WorldVisible(self:LocalToWorld(Vector(0, 0, 10)), ent:NearestPoint(self:LocalToWorld(Vector(0, 0, 10)))) and (target:IsValidLivingZombie() and !(target:GetZombieClassTable().CrowDa or target.SpawnProtection) or target.CanRicoChet) then
 			if target:IsValidLivingZombie() or ent.AllowSelfRicoShot then
 				local targetpos = target:LocalToWorld(target:OBBCenter())
 				local direction = (targetpos - self:GetPos()):GetNormal()
@@ -41,7 +41,7 @@ function ENT:Think()
 
 				local phys = self:GetPhysicsObject()
 				phys:SetVelocityInstantaneous(direction * 1500)
-				target:TakeSpecialDamage((self.ProjDamage * 0.5 * (self.RageMode and 0.5 or math.max(0.5,GAMEMODE:GetWave() / 12))),DMG_BULLET , owner, owner:GetActiveWeapon())
+				target:TakeSpecialDamage(self.ProjDamage * 0.1,DMG_BULLET , owner, owner:GetActiveWeapon())
 				break
 			end
 		end
@@ -49,7 +49,7 @@ function ENT:Think()
 			ent:TakeDamage(1500, self:GetOwner(), self)
 		end
 	end
-		self.NextThink1 = CurTime() + 0.9
+		self.NextThink1 = CurTime() + 0.1
 	end
 	if self.HitData and not self.RageMode then
 		self:Explode(self.HitData.HitPos, self.HitData.HitNormal)
@@ -71,7 +71,7 @@ function ENT:Explode(hitpos, hitnormal)
 
 		if target:IsValidLivingZombie() and not target:GetZombieClassTable().NeverAlive then
 			self.Exploded = true
-			target:TakeSpecialDamage((self.ProjDamage * (self.RageMode and 0.5 or 1) or math.max(0.5,GAMEMODE:GetWave() / 6)), DMG_BULLET, owner, source, hitpos)
+			target:TakeSpecialDamage(self.ProjDamage, DMG_BULLET, owner, source, hitpos)
 		end
 	end
 

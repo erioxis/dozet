@@ -11,7 +11,7 @@ local function GetTaper(pl, str, mul)
 	end
 	return taper
 end
-
+local tableofstatus =  {"death","hollowing","cursed","bleed","poison","rot","knockdown","radiation","flimsy"}
 function meta:ProcessDamage(dmginfo)
 	if not self:IsValidLivingPlayer() then return end --??? Apparently player was null sometimes on server?
 	
@@ -95,7 +95,7 @@ function meta:ProcessDamage(dmginfo)
 				net.Send(self)
 				return true
 			end
-			damage = damage  * (1 - (math.Clamp(GAMEMODE:GetBalance() * 0.01,-2.5,0.65)))
+			damage = damage  * (1 - (math.min(GAMEMODE:GetBalance() * 0.01,0.65)))
 			if self.m_zombiedef then
 				damage = damage * 0.75
 			end
@@ -165,9 +165,6 @@ function meta:ProcessDamage(dmginfo)
 			if wep:IsValid() and wep.DealThink then
 				damage = wep:DealThink(dmginfo) or damage
 			end
-			if attacker.ClanAvanguard and inflictor.Unarmed then
-				damage = damage * 1.25
-			end
 			if attacker:IsSkillActive(SKILL_AMULET_2) and (attacker:Health() <= (attackermaxhp * 0.35) or (attacker.MaxBloodArmor * 0.1 >= attacker:GetBloodArmor()) and attacker:Health() <= 15) then
 				damage = damage * 2
 			end
@@ -218,15 +215,13 @@ function meta:ProcessDamage(dmginfo)
 					attacker:SetPoints(attacker:GetPoints() + 50)
 				end
 			end
-			if !attacker.ClanMich then
-				damage = damage * math.Clamp(attacker:GetModelScale() * attacker:GetModelScale(), 0.05, 5)
-			end
+			damage = damage * math.Clamp(attacker:GetModelScale() * attacker:GetModelScale(), 0.05, 5)
 			if attacker:HasTrinket("soulalteden") then
 				attacker.RandomDamage = attacker.RandomDamage + math.random(1,5)
 
 				if attacker.RandomDamage >= 100 then
 					attacker.RandomDamage = 0
-					attacker:GiveRandomStatus(math.random(10,50), {"death","hollowing","cursed","bleed","poison","rot","knockdown"})
+					attacker:GiveRandomStatus(math.random(10,50), tableofstatus)
 				end
 			end
 			if attacker:IsSkillActive(SKILL_OLD_GOD1) then
@@ -446,7 +441,10 @@ function meta:ProcessDamage(dmginfo)
 		end
 		return true
 	end
-
+	if self:HasTrinket("curse_eye") and math.random(1,100) < 12 then
+		damage = damage * 3
+		self:SetPos(GAMEMODE:GetRandomPosition(GAMEMODE:GetRandomPoint_Mesh()))
+	end
 	if self:IsSkillActive(SKILL_DOSETHELP) then
 		damage = damage * (1 - GAMEMODE:GetWave() * 0.02)
 	end
@@ -655,18 +653,6 @@ function meta:ProcessDamage(dmginfo)
 					self:EmitSound("ambient/creatures/town_child_scream1.wav", 20, 10)
 					self:GiveStatus("medrifledefboost", 10)
 
-				end
-		        if self:HasTrinket("lazarussoul") and (not self.LastBleakSoul or self.LastBleakSoul + 30 < time) then
-					local g =attacker:GiveStatus("bleed")
-					g:AddDamage(50, self)
-					attacker:SetGroundEntity(nil)
-					attacker:SetLocalVelocity((attacker:GetPos() - self:GetPos()):GetNormalized() * 450 + Vector(0, 0, 140))
-
-					self:EmitSound("ambient/creatures/town_child_scream1.wav", 70, 60)
-					self:EmitSound("npc/stalker/go_alert2a.wav", 70, 45, 0.25)
-
-					self.LastBleakSoul = time
-					self.BleakSoulMessage = nil
 				end
 				if self:HasTrinket("adrenaline") then
 					local boost = self:GiveStatus("adrenalineamp", 3)
@@ -1062,7 +1048,6 @@ function meta:WouldDieFrom(damage, hitpos)
 end
 
 function meta:KnockDown(time)
-	if self.ClanAvanguard and math.random(2) ~= 1 then return end
 	if P_Team(self) == TEAM_HUMAN then
 		self:GiveStatus("knockdown", time or 2)
 	end
@@ -1369,16 +1354,16 @@ function meta:Give(weptype, noammo)
 	local autoswitch = #weps == 1 and weps[1]:IsValid() and weps[1].AutoSwitchFrom
 
 	local ret = OldGive(self, weptype, noammo)
-	--[[if self:IsSkillActive(SKILL_EXPLOIT) then
-		local mes = string.sub(weptype,#weptype-1,#weptype-1)
-		local newtype = string.sub(weptype,1,#weptype-1)
-		local can = mes == "q" or mes == "r" or mes == "s"
+--[[	if weptype then
+		local mes = string.sub(weptype,#weptype-2,#weptype-1)
+		local newtype = weptype
+		local can = mes == "_q" or mes == "_r" or mes == "_s"
 		local q = 0
 		if can then
-			q = string.sub(weptype,#weptype,#weptype)
+			q = tonumber(string.sub(weptype,#weptype,#weptype))
 		end
-		if can and weapons.Get(weptype) and math.random(1,100) == 1  then
-			if weapons.Get(newtype..(q+1)) then
+		if can and weapons.Get(weptype) and math.random(1,1) == 1  then
+			if weapons.Get(newtype.."_"..(q+1)) then
 				return OldGive(self, newtype..(q+1), noammo)
 			end
 		end

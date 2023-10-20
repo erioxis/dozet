@@ -791,14 +791,8 @@ function meta:ResetSpeed(noset, health)
 				speed = speed + (self.SPPerWave * (GAMEMODE:GetWave() or 1))
 			end
 		end
-		if self.ClanQuePro  then 
-			speed = speed + 35
-		end
 		if (self.Gear2_Used or 0) >= CurTime()  then 
 			speed = speed *0.5
-		end
-		if self.ClanAvanguard then 
-			speed = speed + 25
 		end
 		if self:IsSkillActive(SKILL_LIGHTWEIGHT) and wep:IsValid() and wep.IsMelee then
 			speed = speed * 1.15

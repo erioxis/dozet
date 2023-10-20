@@ -29,6 +29,7 @@ function PANEL:Init()
 		if status.ValFunc2 then
 			status.GetMemberValue2 = statusdisp.ValFunc2
 		end
+		status.GetMemberMaxValue = statusdisp.MaxValueFunc
 		status.MemberMaxValue = statusdisp.Max
 		status.Icon = statusdisp.Icon
 		status.CodeName = statusdisp.Name

@@ -194,7 +194,7 @@ function meta:FireBulletsLua(src, dir, spread, num, damage, attacker, force_mul,
 			end
 
 			ent:DispatchTraceAttack(damageinfo, bullet_tr, dir)
-		elseif !E_IsValid(ent) and attacker_player and (attacker.FastEye or attacker.BirdEye) then
+		elseif !E_IsValid(ent) and SERVER and attacker_player and (attacker.FastEye or attacker.BirdEye) then
 			local die = false
 			attacker.Luls = attacker.Luls + 1
 			if math.random(1,4) == 1 and inflictor then
@@ -205,7 +205,7 @@ function meta:FireBulletsLua(src, dir, spread, num, damage, attacker, force_mul,
 				inflictor.SpeedEyeMul = 1 
 				die = true
 			end
-			if SERVER and die then
+			if die then
 				attacker:SendLua('MySelf:EmitSound("npc/fast_zombie/wake1.wav", 100,50)')
 			end
 		end

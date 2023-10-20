@@ -39,18 +39,10 @@ GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_RELOAD_SPEED, 0.075)
 GAMEMODE:AddNewRemantleBranch(SWEP, 1, translate.Get("wep_bogger_r1"), translate.Get("wep_d_bogger_r1"), function(wept)
 	wept.Primary.Delay = wept.Primary.Delay * 5
 	wept.Primary.Damage  = wept.Primary.Damage * 0.25
-	wept.PointsMultiplier = 0.8
+	wept.Primary.Projectile = "projectile_python_human"
 	if SERVER then
 		wept.EntModify = function(self, ent)
 			ent.RageMode = true
 		end
-	end
-
-	wept.OnZombieKilled = function(self, zombie, total, dmginfo)
-		local killer = self:GetOwner()
-        wept.RageModer = wept.RageModer + 1
-        timer.Create("ultrachad", 12, 1, function() 
-            wept.RageModer = 0
-        end)
 	end
 end)

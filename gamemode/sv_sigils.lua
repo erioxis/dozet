@@ -100,11 +100,11 @@ function GM:CreateSigils(secondtry, rearrange,corrupted)
 
 			if numsigs == 0 then
 				for __, spawn in pairs(spawns) do
-					n.d = math.min(n.d, n.v:Distance(spawn:GetPos()))
+					n.d = math.min(n.d, n.v:Distance(spawn:GetPos() or self:GetRandomPosition(self:GetRandomPoint_Mesh())))
 				end
 			else
 				for __, sig in pairs(sigs) do
-					n.d = math.min(n.d, n.v:Distance(sig.NodePos))
+					n.d = math.min(n.d, n.v:Distance(sig.NodePos or self:GetRandomPosition(self:GetRandomPoint_Mesh())))
 				end
 			end
 
@@ -144,39 +144,49 @@ function GM:CreateSigils(secondtry, rearrange,corrupted)
 
 	self:SetUseSigils(self:NumSigils() > 0)
 end
+function GM:GetRandomPoint_Mesh()
+	if !D3bot.MapNavMesh then return 1,Vector(0,0,0) end
+	local pos = Vector(0,0,0)
+	local safenum = 0
+	local saved = 1
+	while true do
+		local rand = math.random(1,#D3bot.MapNavMesh.NodeById)
+		safenum = safenum + 1
+		if D3bot.MapNavMesh.NodeById[rand] then
+			pos = D3bot.MapNavMesh.NodeById[rand].Pos
+			saved = rand
+			break
+		end
+		if safenum > 25 then
+			break
+		end
+	end
+	return saved, pos
+end
+function GM:GetRandomPosition(saved, pos)
+	if !D3bot.MapNavMesh then return Vector(0,0,0) end
+	local node = D3bot.MapNavMesh.NodeById[saved]
+	if node and node.HasArea then
+		local params = node.Params
+		if params.AreaYMin then
+			pos.Y = pos.Y + math.random(params.AreaYMin-pos.Y,params.AreaYMax-pos.Y)
+		end
+		if params.AreaXMin then
+			pos.X = pos.X + math.random(params.AreaXMin-pos.X,params.AreaXMax-pos.X)
+		end
+	end
+	return pos
+end
 function GM:CreateRandomObjectPos(class, numbers,wep)
 	if !D3bot.MapNavMesh then return end
 	for i=1,(numbers or 1) do
-		local pos = Vector(0,0,0)
-		local safenum = 0
-		local saved = 1
-		while true do
-			local rand = math.random(1,#D3bot.MapNavMesh.NodeById)
-			safenum = safenum + 1
-			if D3bot.MapNavMesh.NodeById[rand] then
-				pos = D3bot.MapNavMesh.NodeById[rand].Pos
-				saved = rand
-				break
-			end
-			if safenum > 25 then
-				break
-			end
-		end
+		local saved, pos = self:GetRandomPoint_Mesh()
 		local ent = ents.Create((class or "prop_obj_anti_sigil"))
 		if ent:IsValid() then
-			local node = D3bot.MapNavMesh.NodeById[saved]
+			local pos = self:GetRandomPosition(saved, pos)
 			if wep then
 				ent:SetWeaponType(wep)
 				ent.NoLootsForTop = true
-			end
-			if node and node.HasArea then
-				local params = node.Params
-				if params.AreaYMin then
-					pos.Y = pos.Y + math.random(params.AreaYMin-pos.Y,params.AreaYMax-pos.Y)
-				end
-				if params.AreaXMin then
-					pos.X = pos.X + math.random(params.AreaXMin-pos.X,params.AreaXMax-pos.X)
-				end
 			end
 			ent:SetPos(Vector(pos.X,pos.Y,pos.Z+4))
 		--	Entity(1):SetPos(Vector(pos.X,pos.Y,pos.Z))

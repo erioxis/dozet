@@ -262,6 +262,7 @@ local curse = {
 	"trinket_curse_unknown",
 	"trinket_curse_fragility",
 	"trinket_cursedtrinket",
+	"trinket_curse_eye",
 }
 local curses_skills = {
 	SKILL_D_CURSEDTRUE,

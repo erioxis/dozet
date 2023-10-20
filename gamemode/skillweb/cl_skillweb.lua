@@ -1183,7 +1183,7 @@ function PANEL:Paint(w, h)
 				
 			skillid = node.SkillID
 			skill = node.Skill
-			if ((skill.RemortReq or 0) > MySelf:GetZSRemortLevel() or skill.Tree == TREE_USELESSTREE and 16 > MySelf:GetZSRemortLevel() or skill.Amulet and 4 >= MySelf:GetZSRemortLevel()) then continue  end
+			if ( skill.Tree == TREE_USELESSTREE and 16 > MySelf:GetZSRemortLevel() or skill.Amulet and 4 >= MySelf:GetZSRemortLevel()) then continue  end
 			local sel_radius = skillid <= -2 and 300 or 36
 			selected = not skill.Disabled and intersectpos and nodepos:DistToSqr(intersectpos) <= sel_radius
 			local scale = skillid <= -2 and 0.08 or 0.09
@@ -1194,14 +1194,14 @@ function PANEL:Paint(w, h)
 			if selected then
 				hoveredskill = skillid
 --				hoveredskilltrue = skill
-				sat = 1 - math.abs(math.sin(realtime * math.pi)) * 0.25
+				sat = 1 - math.abs(math.sin(realtime * math.pi)) * 0.25 * (skill.NewSkill and 3 or 1)
 				if skill.Tree == TREE_ANCIENTTREE then
 					satscale = 0.66 - math.abs(math.sin(realtime * 2 * math.pi)) * 0.45
 				else
 					satscale = 0.8 - math.abs(math.sin(realtime * math.pi)) * 0.1
 				end
 			else
-				sat = 1
+				sat = 1 * (skill.NewSkill and 3 or 1)
 				if skill.Tree == TREE_ANCIENTTREE then
 					satscale = 0.8
 				else
@@ -1257,12 +1257,20 @@ function PANEL:Paint(w, h)
 				if skillid <= -2 and self.TreeCount[-skillid - 1] then
 					draw_SimpleText((self.Progress[-skillid - 1] or 0) ..  "/" .. self.TreeCount[-skillid - 1], "ZS3D2DFont2Big", 0, skill_text_y + 130, colo, TEXT_ALIGN_CENTER)
 				end
+				if skill.NewSkill  then
+					draw_SimpleText(translate.Get("s_need_new"),"ZS3D2DFontSmall", 0, xskill, colo, TEXT_ALIGN_CENTER)
+					xskill = xskill + 32 * screenscale
+				end
 				if skill.AlwaysActive then
 					draw_SimpleText(translate.Get("s_alw_act"),"ZS3D2DFontSmall", 0, xskill, colo, TEXT_ALIGN_CENTER)
 					xskill = xskill + 32 * screenscale
 				end
 				if skill.SPUse then
 					draw_SimpleText(translate.Get("s_need_r")..(skill.SPUse+1),"ZS3D2DFontSmall", 0, xskill, colo, TEXT_ALIGN_CENTER)
+					xskill = xskill + 32 * screenscale
+				end
+				if skill.RemortReq and MySelf:GetZSRemortLevel() < skill.RemortReq  then
+					draw_SimpleText(translate.Get("s_need_re")..skill.RemortReq,"ZS3D2DFontSmall", 0, xskill, colo, TEXT_ALIGN_CENTER)
 					xskill = xskill + 32 * screenscale
 				end
 				if skill.LevelReq then

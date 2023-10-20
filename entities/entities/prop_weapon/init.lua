@@ -152,6 +152,9 @@ function ENT:GiveToActivator(activator, caller)
 				wep:SetClip1(self:GetClip1())
 				wep:SetClip2(self:GetClip2())
 			end
+			if !self:GetOwner():IsValid() then
+				activator:GiveAchievementProgress("looter_bads",1)
+			end
 
 			if self.PlacedInMap and not self.IgnorePickupCount then
 				activator.WeaponPickups = (activator.WeaponPickups or 0) + 1
