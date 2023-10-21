@@ -338,9 +338,6 @@ function meta:ProcessDamage(dmginfo)
 		if self:IsSkillActive(SKILL_AMULET_14) then
 			damage = damage *math.max(self:Health()/self:GetMaxHealth(),0.3)
 		end
-		if self:IsSkillActive(SKILL_GODHEART) then
-			damage = 0
-		end
 		if self.DamageTakenMul then
 			damage = damage * self.DamageTakenMul
 		end
