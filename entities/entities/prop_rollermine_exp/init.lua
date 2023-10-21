@@ -287,6 +287,7 @@ function ENT:Think()
 		self.HitData = nil
 		self:ThreadSafePhysicsCollide(data)
 	end
+	self:NextThink(CurTime()+0.5)
 end
 function ENT:Dash()
 	if !self.trg:IsValidLivingZombie() or self.trg and self.trg:IsValid() and !WorldVisible(self:LocalToWorld(Vector(0, 0, 10)), self.trg:NearestPoint(self:LocalToWorld(Vector(0, 0, 10)))) then
