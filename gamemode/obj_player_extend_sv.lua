@@ -192,10 +192,6 @@ function meta:ProcessDamage(dmginfo)
 					attacker:SetNWFloat("vampirism_progress", 0)
 				end
 			end
-			if attacker:IsSkillActive(SKILL_INF_POWER) then
-				local m = 0.66 + #attacker:GetUnlockedSkills() * 0.0045
-				damage = damage * m
-			end
 			if damage >= 10000 then
 				attacker:GiveAchievement("opm")
 			end

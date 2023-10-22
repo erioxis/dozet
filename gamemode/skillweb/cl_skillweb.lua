@@ -627,14 +627,14 @@ function PANEL:Init()
 	bottom:SetSize(600 * screenscale, math.Clamp(84 * screenscale, 70, 125))
 	bottom:DockPadding(10, 10, 10, 10)
 	if MySelf:IsSkillUnlocked(SKILL_INF_POWER) then
-		local bottom1 = vgui.Create("DLabel", self)
-		bottom1:SetSize(1200 * screenscale, math.Clamp(84 * screenscale, 40, 125))
-		bottom1:SetPos(0 * screenscale, -24 * screenscale)
-		local d = #MySelf:GetDesiredActiveSkills()*0.45-33
-		local txt = translate.Get("u_s")..#MySelf:GetDesiredActiveSkills()..": "..(d < 0 and "" or "+")..d.."% dmg"
-		bottom1:SetFont("ZSHUDFontSmall")
-		bottom1:SetText(txt)
-		bottom1:DockPadding(0, 10, 0, 0)
+	--	local bottom1 = vgui.Create("DLabel", self)
+		--bottom1:SetSize(1200 * screenscale, math.Clamp(84 * screenscale, 40, 125))
+	--	bottom1:SetPos(0 * screenscale, -24 * screenscale)
+	--	local d = #MySelf:GetDesiredActiveSkills()*0.45-33
+	--	local txt = translate.Get("u_s")..#MySelf:GetDesiredActiveSkills()..": "..(d < 0 and "" or "+")..d.."% dmg"
+	--	bottom1:SetFont("ZSHUDFontSmall")
+	--	bottom1:SetText(txt)
+	--	bottom1:DockPadding(0, 10, 0, 0)
 	end
 	local bottom1 = vgui.Create("DLabel", self)
 	bottom1:SetSize(1200 * screenscale, math.Clamp(84 * screenscale, 40, 125))

@@ -1921,8 +1921,8 @@ GM:AddSkill(SKILL_DEATH, "Morieris", PURPLE.."Better medicine\n" ..BAD.."+20% Me
 GM:AddSkill(SKILL_HELPLIFER, "Chance", PURPLE.."Can save from fatal hit\n10% Chance\nOn upgrade chance is 50%",
 										2,			-7,					{SKILL_EX2}, TREE_ANCIENTTREE,0)
 .CanUpgrade = 2
-GM:AddSkill(SKILL_INF_POWER, "Dozei Core", PURPLE.."-33% Damage.\nExtra-damage for every skills you unlocked\n+0.45% damage per skill",
-										4,			-5,					{SKILL_NO_BALANCE,SKILL_HELPLIFER}, TREE_ANCIENTTREE).SPUse = 14
+GM:AddSkill(SKILL_INF_POWER, "Dozei Core", PURPLE.."Useless.",
+										4,			-5,					{SKILL_NO_BALANCE,SKILL_HELPLIFER}, TREE_ANCIENTTREE)
 GM:AddSkill(SKILL_NO_BALANCE, "Silver bullets", PURPLE.."Sometimes your damage become a DIRECT damage!\n7% Chance",
 										2.5,			-3.5,					{}, TREE_ANCIENTTREE).SPUse = 6
 GM:AddSkill(SKILL_SOUL_TRADE, "[TRADE]Soul", PURPLE.."Sell Your Soul For Toy and now ALL SOULS KILL YOU.\n"..PURPLE.."+66.6% Point Mul\n"..BAD.."The dosei is stronger...-25% Damage",
@@ -2835,7 +2835,7 @@ GM:SetSkillModifierFunction(SKILLMOD_ENDWAVE_POINTS, function(pl,amount)
 	pl.EndWavePointsExtra = math.Clamp(amount, 0.0, 1000.0)
 end)
 GM:SetSkillModifierFunction(SKILLMOD_ARSENAL_DISCOUNT, function(pl, amount)
-	pl.ArsenalDiscount = math.Clamp(amount + 1.0, 0.15, 1000.0)
+	pl.ArsenalDiscount = math.Clamp(amount + 1.0, 0, 1000.0)
 end)
 GM:SetSkillModifierFunction(SKILLMOD_SCRAPDISCOUNT, GM:MkGenericMod("ScrapDiscount"))
 GM:SetSkillModifierFunction(SKILLMOD_CLOUD_RADIUS, GM:MkGenericMod("CloudRadius"))
