@@ -678,8 +678,8 @@ function GM:InitPostEntity()
 		ErrorNoHalt("Lmao why you use dozet")
 	end
 	local v = self.Credits[1]
-	if GetConVar("hostname"):GetString() ~= "Дозет["..v[3]..v[2].."|ДОСТИЖЕНИЯ|500+ СКИЛЛОВ]" then
-		RunConsoleCommand("hostname", "Дозет["..v[3]..v[2].."|ДОСТИЖЕНИЯ|500+ СКИЛЛОВ]")
+	if GetConVar("hostname"):GetString() ~= "v["..v[3]..v[2].."] -  Zombie Survival" then
+		RunConsoleCommand("hostname", "Dozet["..v[3]..v[2].."] - Zombie Survival")
 
 	end
 end

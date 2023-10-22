@@ -165,9 +165,9 @@ if SERVER then
 	function CLASS:ProcessDamage(pl, dmginfo)
 		local inflictor = dmginfo:GetInflictor()
 		if bit_band(dmginfo:GetDamageType(), DMG_BULLET) ~= 0 and !inflictor:IsProjectile() then
-			dmginfo:SetDamage(0)
+			dmginfo:SetDamage(dmginfo:GetDamage()*0.5)
 		elseif bit_band(dmginfo:GetDamageType(), DMG_SLASH) == 0 and bit_band(dmginfo:GetDamageType(), DMG_CLUB) == 0 and !inflictor:IsProjectile()  then
-			dmginfo:SetDamage(0)
+			dmginfo:SetDamage(dmginfo:GetDamage()*0.5)
 		end
 
 		local damage = dmginfo:GetDamage()
