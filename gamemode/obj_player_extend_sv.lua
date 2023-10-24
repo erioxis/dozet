@@ -194,8 +194,7 @@ function meta:ProcessDamage(dmginfo)
 				end
 			end
 			if attacker:IsSkillActive(SKILL_INF_POWER) then
-				local m = 0.66 + #attacker:GetUnlockedSkills() * 0.0045
-				damage = damage * m
+				damage = damage * (1+attacker:GetMScore()/15000)
 			end
 			if damage >= 10000 then
 				attacker:GiveAchievement("opm")

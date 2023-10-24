@@ -104,7 +104,7 @@ end
 if SERVER then
 	function CLASS:ProcessDamage(pl, dmginfo)
 		if dmginfo:GetAttacker() and dmginfo:GetAttacker():IsPlayer() and dmginfo:GetAttacker():GetActiveWeapon().IsMelee then
-			dmginfo:ScaleDamage(0)
+			dmginfo:ScaleDamage(0.2)
 		end
 		return dmginfo
 	end

@@ -1423,7 +1423,7 @@ function GM:Think()
 					pl.NextThinkAboutTrade = time + 10
 					for k,v in pairs(pl:GetInventoryItems()) do
 						if pl:HasTrinket("toysoul") or pl:SteamID64() == "76561198813932012" then break end
-						if table.HasValue(trade_da,k) then
+						if pl:GetInventoryItems()[k] then
 							pl:Kill()
 							break
 						end
@@ -2104,7 +2104,7 @@ function GM:PlayerRepairedObject(pl, other, health, wep)
 	health = health - other:RemoveUselessDamage(health)
 	if self:GetWave() == 0 or health <= 0 then return end
 	health = math.Round(health*10)/10
-	pl.NextChargeRepair = (pl.NextChargeRepair or 0) + health
+	pl.NextChargeRepair = pl.NextChargeRepair + health
 	if pl.NextChargeRepair >= 200 then
 		pl:SetChargesActive(pl:GetChargesActive()+1)
 		pl.NextChargeRepair = 0
@@ -2113,7 +2113,7 @@ function GM:PlayerRepairedObject(pl, other, health, wep)
 	if numofdaily == 2 then
 		pl:GiveAchievementProgress("daily_post", health)
 	end
-	if pl:IsSkillActive(SKILL_SPICY_CADES) and table.HasValue(tblspicy,wep:GetClass()) then
+	if pl:IsSkillActive(SKILL_SPICY_CADES) and tblspicy[wep:GetClass()] then
 		pl:TakeDamage(math.random(1,15),pl,pl)
 	end
 	--net.Start("zs_update_style") net.WriteTable({time = CurTime()+2+(math.random(10,20)*0.2),text = "REPAIRED PROP FOR "..health,score = health,color = Color(23,69,194)}) net.Send(pl) 
@@ -3166,6 +3166,7 @@ function GM:PlayerInitialSpawnRound(pl)
 
 	--Return
 	pl.r_return = nil
+	pl.NextChargeRepair = 0
 
 
 	--Normal Mutations (Z-Shop)
@@ -4730,13 +4731,8 @@ function GM:HumanKilledZombie(pl, attacker, inflictor, dmginfo, headshot, suicid
 		attacker:GiveAchievementProgress("week_post", 1)
 	end
 	
-	if numofdaily == 4 and class.Boss then
-		attacker:GiveAchievementProgress("daily_post", 1)
-	elseif numofdaily == 5 and inflictor.IsShadeGrabbable then
-		attacker:GiveAchievementProgress("daily_post", 1)
-	elseif numofdaily == 1 then
-		attacker:GiveAchievementProgress("daily_post", 1)
-	end
+	attacker:GiveAchievementProgress("daily_post", (numofdaily == 1 or numofdaily == 5 and inflictor.IsShadeGrabbable or  numofdaily == 4 and class.Boss) and 1 or 0)
+
 	if attacker:IsSkillActive(SKILL_SCAM) and math.randomr(1,100,1,attacker) == 1 then
 		attacker:AddInventoryItem("trinket_curse_point")
 	end
@@ -4858,9 +4854,6 @@ function GM:HumanKilledZombie(pl, attacker, inflictor, dmginfo, headshot, suicid
 
 		if pl:WasHitInHead() then
 			attacker.Headshots = (attacker.Headshots or 0) + 1
-			if pl:IsValidPlayer() then
-				--net.Start("zs_update_style") net.WriteTable({time = CurTime()+1.5+(math.random(10,20)*0.2),text = "HEADSHOT",score = 5}) net.Send(pl) 
-			end
 		end
 		if attacker:IsSkillActive(SKILL_PILLUCK) then
 			attacker.LuckAdd = attacker.LuckAdd + 0.01
@@ -4869,29 +4862,28 @@ function GM:HumanKilledZombie(pl, attacker, inflictor, dmginfo, headshot, suicid
 
 		if wep.OnZombieKilled then
 			wep:OnZombieKilled(pl, totaldamage, dmginfo)
-			
 		end
-		local nf = attacker:IsSkillActive(SKILL_NFINGERS)
-		local sf = attacker:IsSkillActive(SKILL_SFINGERS)
-		if nf  then
+		if attacker:IsSkillActive(SKILL_NFINGERS)  then
 			if !inflictor.IsMelee then
 				attacker:GiveAmmo(1, attacker:GetResupplyAmmoType())
 			elseif inflictor.IsMelee and math.random(1,10) == 1 then
 				attacker:GiveAmmo(1, "scrap")
 			end
+			if inflictor.Magic then
+				attacker:SetBloodArmor(attacker:GetBloodArmor() + 25)
+			end
 		end
-		if nf  and inflictor.Magic then
-			attacker:SetBloodArmor(attacker:GetBloodArmor() + 25)
-		end
-		if sf  and !inflictor.IsMelee then
-			local inflictor2 = inflictor
-			inflictor2.Eater = true 
-			timer.Simple(1.9, function() inflictor2.Eater = nil end)
-		end
-		if sf  and inflictor.HaloAmmo then
-			local inflictor2 = inflictor
-			inflictor2.Eater = true
-			timer.Simple(0.9, function() inflictor2.Eater = nil end)
+		if attacker:IsSkillActive(SKILL_SFINGERS) then
+			if !inflictor.IsMelee then
+				local inflictor2 = inflictor
+				inflictor2.Eater = true 
+				timer.Simple(1.9, function() inflictor2.Eater = nil end)
+			end
+			if inflictor.HaloAmmo then
+				local inflictor2 = inflictor
+				inflictor2.Eater = true
+				timer.Simple(0.9, function() inflictor2.Eater = nil end)
+			end
 		end
 		if attacker:IsSkillActive(SKILL_ABFINGES) and math.random(1,10) == 1 then
 			local reaperstatus = attacker:GiveStatus("reaper", 14)

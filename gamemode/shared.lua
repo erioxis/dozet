@@ -571,7 +571,7 @@ function GM:OnPlayerHitGround(pl, inwater, hitfloater, speed)
 		local groundent = pl:GetGroundEntity()
 		local p = pl:IsSkillActive(SKILL_VKID2) and pl:IsSkillActive(SKILL_VKID)
 		if groundent:IsValid() and groundent:IsPlayer() and PTeam(groundent) == TEAM_UNDEAD and (pl:IsSkillActive(SKILL_VKID2) or pl:IsSkillActive(SKILL_VKID)) then
-			groundent:TakeSpecialDamage(160 * self:GetWave() * (p and 2.2 or 1), DMG_CLUB, pl, pl, pl:GetPos())
+			groundent:TakeSpecialDamage(160 * self:GetWave() * (p and 2.2 or 1) * pl:GetModelScale()^2, DMG_CLUB, pl, pl, pl:GetPos())
 			return true
 		end
 		if groundent:IsValid() and groundent:IsPlayer() and PTeam(groundent) == TEAM_UNDEAD and pl:HasTrinket("curbstompers") then
