@@ -425,6 +425,9 @@ end
 function meta:GetBloodArmor()
 	return self:GetDTInt(DT_PLAYER_INT_BLOODARMOR)
 end
+function meta:GetManaMagic()
+	return self:GetDTInt(DT_PLAYER_FLOAT_MAGIC)
+end
 function meta:GetChargesActive()
 	return self:GetDTInt(DT_PLAYER_INT_ACTIV)
 end

@@ -201,9 +201,10 @@ function meta:AddZSXP(xp, ach)
         self:AddDCoins(xp)
     else
         self.XPRemainder = self.XPRemainder + xp
-        self:AddXPPerRound(math.floor(self.XPRemainder))
-        self:SetZSXP(self:GetZSXP() + math.floor(self.XPRemainder))
-        self.XPRemainder = self.XPRemainder - math.floor(self.XPRemainder)
+		local floored = math.floor(self.XPRemainder)
+        self:AddXPPerRound(floored)
+        self:SetZSXP(self:GetZSXP() + floored)
+        self.XPRemainder = self.XPRemainder - floored
     end
 end
 

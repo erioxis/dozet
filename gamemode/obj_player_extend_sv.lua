@@ -155,6 +155,7 @@ function meta:ProcessDamage(dmginfo)
 		end
 		if attacker:IsValidLivingHuman() and inflictor:IsValid() and inflictor == attacker:GetActiveWeapon() then
 			local wep = attacker:GetActiveWeapon()
+			local health = attacker:Health()
 			local attackermaxhp = math.floor(attacker:GetMaxHealth() * ((attacker:IsSkillActive(SKILL_D_FRAIL) or attacker:IsSkillActive(SKILL_ABUSE)) and 0.44 or 1))
 			if attacker:IsSkillActive(SKILL_AMULET_16) then 
 				damage = damage * math.random(50,175)/100
@@ -165,11 +166,11 @@ function meta:ProcessDamage(dmginfo)
 			if wep:IsValid() and wep.DealThink then
 				damage = wep:DealThink(dmginfo) or damage
 			end
-			if attacker:IsSkillActive(SKILL_AMULET_2) and (attacker:Health() <= (attackermaxhp * 0.35) or (attacker.MaxBloodArmor * 0.1 >= attacker:GetBloodArmor()) and attacker:Health() <= 15) then
+			if attacker:IsSkillActive(SKILL_AMULET_2) and (health < (attackermaxhp * 0.35) or (attacker.MaxBloodArmor * 0.1 >= attacker:GetBloodArmor()) and health < 16) then
 				damage = damage * 2
 			end
 
-			if attacker:IsSkillActive(SKILL_AMULET_11) and attacker:Health() > attackermaxhp then
+			if attacker:IsSkillActive(SKILL_AMULET_11) and health > attackermaxhp then
 				damage = damage * 1.45
 			end
 			if classtable.BaraCat then
@@ -275,9 +276,9 @@ function meta:ProcessDamage(dmginfo)
 				end
 
 	
-				if attacker:IsSkillActive(SKILL_BLOODLUST) and attacker:GetPhantomHealth() > 0 and attacker:Health() < attackermaxhp then
+				if attacker:IsSkillActive(SKILL_BLOODLUST) and attacker:GetPhantomHealth() > 0 and health < attackermaxhp then
 					local toheal = math.min(attacker:GetPhantomHealth(), math.min(self:Health(), damage * 0.65))
-					attacker:SetHealth(math.min(attacker:Health() + toheal, attackermaxhp))
+					attacker:SetHealth(math.min(health + toheal, attackermaxhp))
 					attacker:SetPhantomHealth(attacker:GetPhantomHealth() - toheal)
 				end
 
@@ -313,7 +314,7 @@ function meta:ProcessDamage(dmginfo)
 	local damage = dmginfo:GetDamage()
 	local mywep = self:GetActiveWeapon()
 	if !dmgbypass then
-		if self:IsSkillActive(SKILL_BLESSEDROD) and damage >= 30 then
+		if self:IsSkillActive(SKILL_BLESSEDROD) and damage > 29 then
 			damage = damage - 12
 		end
 
@@ -338,7 +339,7 @@ function meta:ProcessDamage(dmginfo)
 		if self:IsSkillActive(SKILL_AMULET_14) then
 			damage = damage *math.max(self:Health()/self:GetMaxHealth(),0.3)
 		end
-		if self:IsSkillActive(SKILL_GODHEART) then
+		if self:IsSkillActive(SKILL_GODHEART) and !self:IsSkillActive(SKILL_UPLOAD) then
 			damage = 0
 		end
 		if self.DamageTakenMul then
@@ -353,7 +354,7 @@ function meta:ProcessDamage(dmginfo)
 
 
 
-	if self:IsSkillActive(SKILL_HOLY_MANTLE) and self.HolyMantle >= 1 then
+	if self:IsSkillActive(SKILL_HOLY_MANTLE) and self.HolyMantle > 0 then
 		dmginfo:SetDamage(0)
 		net.Start("zs_holymantle")
 		net.Send(self)
@@ -573,12 +574,7 @@ function meta:ProcessDamage(dmginfo)
 				if attacker.m_Zombie_Bara and not self:IsSkillActive(SKILL_BARA_CURSED) and time >= (self.NextKnockdown or 0) then
 					self:GiveStatus("knockdown",1)
 					self.NextKnockdown = time + 1
-					local vel = self:GetPos() - self:GetPos()
-					vel.z = 0
-					vel:Normalize()
-					vel = vel * 2800
-					vel.z = 1900
-					self:SetVelocity(vel)
+					self:SetVelocity(Vector(0,0,1900))
 				end
 				if attacker.m_Zombie_Bara1 then
 					damage = damage * 2
@@ -1022,6 +1018,12 @@ function meta:SetBloodArmor( armor )
 end
 function meta:AddBloodArmor( armor )
 	self:SetBloodArmor( self:GetBloodArmor() + armor )
+end
+function meta:SetManaMagic( armor )
+	self:SetDTInt( DT_PLAYER_FLOAT_MAGIC, math.max(armor,0) )
+end
+function meta:AddManaMagic( armor )
+	self:SetManaMagic( self:GetManaMagic() + armor )
 end
 function meta:SetChargesActive(charges)
 	self:SetDTInt(DT_PLAYER_INT_ACTIV, charges)
