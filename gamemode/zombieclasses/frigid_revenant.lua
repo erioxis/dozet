@@ -37,25 +37,8 @@ if SERVER then
 		if dmginfo:GetInflictor().IgnoreNiggers then
 			dmginfo:SetDamage(math.min(dmginfo:GetDamage(),50))
 		end
-		if attacker and attacker ~= pl and dmginfo:GetInflictor() and dmginfo:GetInflictor().IsMelee and not dmginfo:GetInflictor().IgnoreNiggers then
-			if attacker:IsValidLivingHuman() and !attacker:GetActiveWeapon().ResistDamage then
-				attacker:TakeSpecialDamage(dmginfo:GetDamage() * 0.05, DMG_GENERIC, pl, pl)
-				local cursed = attacker:GetStatus("cursed")
-				if (cursed) then 
-					attacker:AddCursed(pl, 5 + ((attacker:GetZSRemortLevel()+1) or 1)/6,nil,nil,true)
-				else
-					attacker:AddCursed(pl, 5+ ((attacker:GetZSRemortLevel()+1) or 1)/6)
-				end
-				if dmginfo:GetInflictor().OneTapDevo then
-					local cursed = attacker:GetStatus("cursed")
-					if (cursed) then 
-						attacker:AddCursed(pl,  50 ,nil,nil,true)
-					else
-						attacker:AddCursed(pl, 50)
-					end
-				end
-			end
-			dmginfo:SetDamage(((attacker:IsValidLivingHuman() and attacker:IsSkillActive(SKILL_AMULET_12) or attacker:IsValidLivingHuman() and attacker:GetActiveWeapon().ResistDamage) and 0 or 5))
+		if attacker and attacker ~= pl and dmginfo:GetInflictor() and dmginfo:GetInflictor().IsMelee then
+			dmginfo:SetDamage(dmginfo:GetDamage()*0.5)
 		end
 		if dmginfo:GetDamage() >= pl:Health() and !pl.DeadZombied then
 			pl.DeadZombied = true 

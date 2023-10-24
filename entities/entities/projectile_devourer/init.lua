@@ -50,7 +50,7 @@ function ENT:Think()
 		for k, target1 in pairs(targets) do
 			target = target1.trg
 			--print( target1.Health)
-			if target and target:IsValidLivingHuman() and !target:IsSkillActive(SKILL_ANTI_DEVO) and !self:GetOwner().Zmainer and self.NextHook <= CurTime() then
+			if target and target:IsValidLivingHuman() and self.NextHook <= CurTime() then
 				self.trg = target
 				break
 			end

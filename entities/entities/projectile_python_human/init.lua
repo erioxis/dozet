@@ -95,7 +95,7 @@ function ENT:Hit(vHitPos, vHitNormal, ent)
 				self.Exploded = true
 
 
-				ent:TakeSpecialDamage(self.ProjDamage*5*(owner.ProjectileDamageMul or 1), DMG_DIRECT, owner, self)
+				ent:TakeSpecialDamage(self.ProjDamage*3.2*(owner.ProjectileDamageMul or 1), DMG_CLUB, owner, self)
 				self:Remove()
 
 				self:GetPhysicsObject():SetVelocityInstantaneous(vector_origin)
