@@ -110,6 +110,9 @@ LANGUAGE.challenge_daily_hehe_d = "Complete 31 dailes."
 LANGUAGE.challenge_oof = "DAILY:Full free!"
 LANGUAGE.challenge_oof_d = "Give 300 points."
 
+LANGUAGE.challenge_hard_money = "Dozet Economy"
+LANGUAGE.challenge_hard_money_d = "Get 7 tier before 5 wave!"
+
 
 LANGUAGE.scram_rem = " Scrap"
 

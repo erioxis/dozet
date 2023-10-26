@@ -24,7 +24,7 @@ SWEP.ConeMin = 0
 
 SWEP.MaxStock = 3
 
-SWEP.Tier = 7
+SWEP.Tier = 6
 
 SWEP.HealRange = 1200
 SWEP.Heal = 20

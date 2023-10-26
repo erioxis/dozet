@@ -1269,6 +1269,8 @@ end
 local trade_da = {
 	"trinket_altjudassoul",  -- 2
 	"trinket_altsamsonsoul",  -- 3
+	"trinket_alt_slight_soul",
+	"trinket_slight_soul",
 	"trinket_altevesoul",  -- 4
 	"trinket_jacobsoul",  -- 5
 	"trinket_altisaacsoul",  -- 6
@@ -1297,6 +1299,7 @@ local trade_da = {
 	"trinket_whysoul",  -- 9
 	"trinket_blanksoul", -- 10
 	"trinket_classixsoul",  -- 11
+	"trinket_classixsoul_a",  -- 11
 	"trinket_darksoul",  --12
 	"trinket_eriosoul",  --13
 	"trinket_aposoul",  --14
@@ -1311,9 +1314,11 @@ local trade_da = {
 	"trinket_sugersoul",  -- 23
 	"trinket_nulledsoul",  -- 24
 	"trinket_soulmedical",  -- 25
+	"trinket_nulledsoul_alt",
 	"trinket_lampsoul",  -- 26
 	"trinket_lehasoul",  -- 26
-	"trinket_troyaksoul"
+	"trinket_troyaksoul",
+	"trinket_troyaksoul_a"
 }
 local NextTick = 0
 local NextTick1 = 0
@@ -1521,7 +1526,7 @@ function GM:Think()
 						elseif take ~= "trinket_flower_g" then
 							pl:TakeInventoryItem(take)
 							pl:AddInventoryItem("trinket_sin_ego")
-							pl.NextConsumeEgo = time + 60 - (pl:IsSkillActive(SKILL_MIDAS_SLOW) and 26-(pl.ZSInventory["trinket_sin_ego"] or 1) or 0)
+							pl.NextConsumeEgo = time + (60 - (pl:IsSkillActive(SKILL_MIDAS_SLOW) and 26-(pl.ZSInventory["trinket_sin_ego"] or 1) or 0)) * (pl:HasTrinket("lehasoul")  and 0.5 or 1)
 							net.Start("zs_trinketcorrupt")
 								net.WriteString(take)
 								net.WriteString("trinket_sin_ego")
@@ -3119,6 +3124,7 @@ function GM:PlayerInitialSpawnRound(pl)
 	pl.BuffedArmor = 0
 	pl.NextTransThink = 0
 	pl.InbalanceMoment = 0
+	pl.NextDJUMP = 0
 
 	pl.DamageDealt = {}
 	pl.DamageDealt[TEAM_UNDEAD] = 0
@@ -4551,6 +4557,10 @@ function GM:KeyPress(pl, key)
 			end
 		end
 	end
+	if key == IN_JUMP and pl:HasTrinket("troyaksoul_a") and pl.NextDJUMP < CurTime() and !pl:OnGround() then
+		pl.NextDJUMP = CurTime() + 4
+		pl:SetVelocity(pl:GetAngles():Forward()*70+Vector(0,0,1.6*pl:GetJumpPower()))
+	end
 	if key == IN_SPEED and pl:Team() == TEAM_UNDEAD and pl.CanMerge then 
 		local ent1 = NULL
 		for _, ent in pairs(ents.FindInSphere(pl:GetPos(), 256)) do
@@ -5292,9 +5302,10 @@ end
 
 function GM:PlayerCanPickupWeapon(pl, ent)
 	if pl:IsSkillActive(SKILL_JEW) then
-		pl:SetPoints(pl:GetPoints() - ((self:GetWave() * 5) - self:GetWave() * 2))
+		local bruhich = self:GetWave() * 5 - self:GetWave() * 2 * (pl:HasTrinket("alt_slight_soul") and 0.25 or 1)
+		pl:SetPoints(pl:GetPoints() - bruhich)
 		GAMEMODE:ConCommandErrorMessage(pl, translate.ClientGet(pl, "jewmoment"))
-		pl:GiveAchievementProgress("greatgreed", ((self:GetWave() * 5) - self:GetWave() * 2))
+		pl:GiveAchievementProgress("greatgreed", bruhich)
 	end
 
 
@@ -5983,7 +5994,7 @@ function GM:WaveStateChanged(newstate, pl)
 				if pl:IsSkillActive(SKILL_LUCKY_UNLIVER) then
 					lucktrue = lucktrue + whywave * 2
 				end
-				if self.EndWaveHealthBonus > 0 and !pl:HasTrinket("lehasoul") then
+				if self.EndWaveHealthBonus > 0 then
 					pl:GiveStatus("regeneration"):AddDamage(self.EndWaveHealthBonus)
 				end
 				if pl:IsSkillActive(SKILL_XPHUNTER) then
@@ -6007,6 +6018,13 @@ function GM:WaveStateChanged(newstate, pl)
 				end
 				if pl:Frags() == 1024 then
 					pl:GiveAchievement("bitbat")
+				end
+				if self:GetWave() <= 5 then
+					for k,v in pairs(pl:GetWeapons()) do
+						if v.Tier  == 7 then
+							pl:GiveAchievement('hard_money')
+						end
+					end
 				end
 
 				if pl:HasTrinket("mysteryticket")  then 

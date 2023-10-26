@@ -10,4 +10,4 @@ SWEP.ControlWeapon = "weapon_zs_manhackcontrol_saw"
 
 SWEP.Primary.Ammo = "manhack_saw"
 
-SWEP.Tier = 7
+SWEP.Tier = 6

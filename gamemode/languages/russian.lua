@@ -74,6 +74,9 @@ LANGUAGE.challenge_daily_hehe_d = "Пройти 31 ежедневных зада
 LANGUAGE.challenge_oof = "ЕЖЕДНЕВНОЕ:Пожалуйста!"
 LANGUAGE.challenge_oof_d = "Дать 300 поинтов."
 
+LANGUAGE.challenge_hard_money = "Экономика дозета"
+LANGUAGE.challenge_hard_money_d = "Получи 7 тир до 5 волны!"
+
 
 LANGUAGE.challenge_week1 = "ЕЖЕНЕДЕЛЬНОЕ:Истребитель баланса"
 LANGUAGE.challenge_week_d1 = "Убить 10000 зомби."

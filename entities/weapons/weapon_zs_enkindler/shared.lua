@@ -34,7 +34,7 @@ SWEP.UseHands = true
 
 SWEP.MaxMines = 5
 
-SWEP.Tier = 7
+SWEP.Tier = 6
 
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_MAXIMUM_MINES, 1)
 

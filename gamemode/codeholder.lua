@@ -2,6 +2,7 @@ local bossdrops2 = {
     --"weapon_zs_plank_q5",  -- 1
     "altjudassoul",  -- 2
     "altsamsonsoul",  -- 3
+    
     "altevesoul",  -- 4
     "jacobsoul",  -- 5
     "altisaacsoul",  -- 6

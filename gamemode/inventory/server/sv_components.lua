@@ -33,6 +33,8 @@ GM.StarterSoul = {
 	"trinket_bleaksoul",  -- 1
 	"trinket_spiritess",  -- 2
 	"trinket_samsonsoul",  -- 3
+	"trinket_alt_slight_soul",
+	"trinket_slight_soul",
 	"trinket_evesoul",  -- 4
     "trinket_jacobjesausoul",  -- 5
     "trinket_isaacsoul",  -- 6

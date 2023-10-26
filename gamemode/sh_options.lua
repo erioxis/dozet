@@ -703,8 +703,8 @@ GM:AddAPointShopItem("soul_of_troyaksoul",			ITEMCAT_TRINKETS,			320,			"trinket
 GM:AddAPointShopItem("soul_of_slight_soul",			ITEMCAT_TRINKETS,			600,			"trinket_slight_soul").SubCategory =								ITEMSUBCAT_TRINKETS_DEFENSIVE
 --GM:AddAPointShopItem("soul_of_lehasoul",			ITEMCAT_TRINKETS,			180,			"trinket_lehasoul").SubCategory =								ITEMSUBCAT_TRINKETS_SPECIAL
 
-GM:AddAPointShopItem("world_card",			ITEMCAT_OTHER,			125,				nil,							translate.Get("s_world"),			translate.Get("s_world_d"),									"status_dim_vision",					function(pl) pl:GiveStatus("world",30) end)
-GM:AddAPointShopItem("devil_card",			ITEMCAT_OTHER,			205,				nil,							translate.Get("s_devil"),			translate.Get("s_devil_d"),									"status_death",					function(pl) pl:GiveStatus("resnya",30) end)
+GM:AddAPointShopItem("world_card",			ITEMCAT_OTHER,			125,				nil,							translate.Get("s_world"),			translate.Get("s_world_d"),									"status_dim_vision",					function(pl) pl:GiveStatus("world",300) end)
+GM:AddAPointShopItem("devil_card",			ITEMCAT_OTHER,			205,				nil,							translate.Get("s_devil"),			translate.Get("s_devil_d"),									"status_death",					function(pl) pl:GiveStatus("resnya",300) end)
 GM:AddAPointShopItem("hint_doset",			ITEMCAT_OTHER,			25,				nil,							translate.Get("ahint"),			translate.Get("ahint"),									"weapon_zs_special_trinket",					function(pl) pl:CenterNotify(COLOR_GREEN, translate.ClientGet(pl,"ahint_"..math.random(1,16))) end)
 
 GM:AddAPointShopItem("antivirus_anti",		ITEMCAT_OTHER,			3000,				"weapon_zs_redeemrayv2")

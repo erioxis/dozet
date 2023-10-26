@@ -31,7 +31,7 @@ SWEP.HeadshotMulti = 1.5
 SWEP.ChargeDelay = 0.12
 SWEP.RemoveOnGive = true
 
-SWEP.Tier = 7
+SWEP.Tier = 6
 
 local branch = GAMEMODE:AddNewRemantleBranch(SWEP, 1, translate.Get("wep_tau_f1"), translate.Get("wep_d_tau_f1"), function(wept)
 	wept.Primary.Delay = wept.Primary.Delay * 2.6

@@ -15,7 +15,7 @@ SWEP.UseHands = true
 
 SWEP.HoldType = "melee2"
 SWEP.PointsMultiplier = 1.5
-SWEP.Tier = 7
+SWEP.Tier = 6
 SWEP.MaxStock = 1
 
 SWEP.ZombieCanPickup = true
