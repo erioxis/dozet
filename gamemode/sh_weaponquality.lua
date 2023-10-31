@@ -308,7 +308,7 @@ function GM:GetWeaponClassOfQuality(classname, quality, branch)
 	return classname.."_"..string.char(113 + (branch or 0))..quality
 end
 
-function GM:GetDismantleScrap(wtbl, invitem,pl)
+function GM:GetDismantleScrap(wtbl, invitem, pl)
 	local itier = wtbl.Tier
 	local quatier = wtbl.QualityTier
 

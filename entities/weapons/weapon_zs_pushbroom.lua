@@ -52,11 +52,14 @@ GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_MELEE_RANGE, 3, 1)
 function SWEP:MeleeSwing()
 	local owner = self:GetOwner()
 	local tr = owner:CompensatedMeleeTrace(self.MeleeRange * (owner.MeleeRangeMul or 1), self.MeleeSize)
-	if tr.Hit then
+	if tr.Hit and SERVER then
 		local pos = owner:GetPos()
 		local trpos = tr.HitPos
 		if math.floor(trpos.z) == math.floor(pos.z) and math.random(1,100) == 1 then
-			owner:Say("Ы")
+			local rand = math.random(1,7)
+			owner:SetPoints(owner:GetPoints()+rand)
+			owner:GiveAchievementProgress("hihi_cleaner",rand)
+			owner:SendLua('chat.AddText("Твоя зарплата! - '..rand..' за уборку территории!")')
 		end
 	end
 	self.BaseClass.MeleeSwing(self)

@@ -2211,7 +2211,7 @@ trinket = GM:AddTrinket("Soul of botyara(leha)", "lehasoul", false, nil, {
 	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 7.697, y = 7.697 }, color = Color(255, 255, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core_2+"] = { type = "Sprite", sprite = "effects/splashwake1", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 10, y = 10 }, color = Color(3, 26, 75), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 2, 0), angle = Angle(0, 0, 0), size = Vector(0.349, 0.349, 0.349), color = Color(226, 19, 19, 100), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} }
-}, 1, "Мидас ускорен на 50%!\nSpeed up midas corruption on 50%!\n Q:-1", nil, nil, "weapon_zs_soul")
+}, 1, "Мидас быстро заражает тринкеты пока не сожрут эту душу!\nMidas very fast corrupt trinkets while have this soul!\n Q:-1", nil, nil, "weapon_zs_soul")
 
 trinket, soul = GM:AddTrinket("Soul of Troy", "troyaksoul", false, nil, {
 	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 1.697, y = 1.697 }, color = Color(94, 94, 94), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},

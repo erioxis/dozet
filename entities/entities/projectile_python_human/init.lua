@@ -35,7 +35,7 @@ function ENT:Think()
 	if self.Exploded then
 		self:SetCollisionGroup(COLLISION_GROUP_WORLD)
 	elseif self.DieTime < CurTime() then
-		self:SetPos(self:GetOwner():GetPos())
+		self:SetPos(self:GetOwner() and self:GetOwner():IsValid() and self:GetOwner():GetPos() or Vector(0,0,0))
 		self.DieTime = 2222222 + CurTime()
 		timer.Simple(0.3,function()
 			self:Remove()

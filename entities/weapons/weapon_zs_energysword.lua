@@ -219,6 +219,8 @@ function SWEP:SecondaryAttack()
 		self:SetNextSecondaryFire(curtime + 0.5)
 		return false 
 	end
+	if self:GetOwner():GetAmmoCount("pulse") < 50 then return end
+	self:TakePrimaryAmmo(50)
 	if self:GetNextSecondaryFire() <= curtime then
 		self:SetNextSecondaryFire(curtime + self.Secondary.Delay)
 		self:EmitSound("npc/env_headcrabcanister/incoming.wav", 75, math.Rand(90, 110))

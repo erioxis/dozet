@@ -151,6 +151,9 @@ LANGUAGE.t_pearl                        = "Pearl of balance"
 LANGUAGE.t_broken_world                        = "Double World"
 LANGUAGE.t_ind_buffer                        = "Color Chemicals"
 -- virtues
+LANGUAGE.skill_steel_ass = "Steel ass"
+LANGUAGE.skill_steel_ass_d1 = "Baracats can't fall you!\n"
+LANGUAGE.skill_steel_ass_d2 = "+300% Damage taken from Miss ASS.\n"
 LANGUAGE.vir_pat_warning = "You can't buy!Wait a endwave!(don't drop)"
 LANGUAGE.t_vir_pat = "Virtue of patience"
 --trinket Descriptions

@@ -129,6 +129,7 @@ function meta:TransAlphaToMe()
 end
 
 GM.CachedGiftEntities = {}
+GM.CachedGift2Entities = {}
 timer.Create("CacheGiftEntities", 3, 0, function()
 	if not GAMEMODE then return end
 	GAMEMODE.CachedGiftEntities = {}
@@ -138,6 +139,14 @@ timer.Create("CacheGiftEntities", 3, 0, function()
 
 
 	GAMEMODE.CachedGiftEntities = gifts
+
+	GAMEMODE.CachedGift2Entities = {}
+
+	gifts = {}
+	table.Add(gifts, ents.FindByClass("prop_gift_h"))
+
+
+	GAMEMODE.CachedGift2Entities = gifts
 end)
 GM.CachedASigilEntities = {}
 timer.Create("CacheASigil", 10, 0, function()

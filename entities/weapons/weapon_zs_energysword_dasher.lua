@@ -35,6 +35,7 @@ SWEP.MeleeDamage = 119
 SWEP.MeleeRange = 99
 SWEP.MeleeSize = 2
 SWEP.Tier = 3
+SWEP.Primary.Ammo = "pulse"
 
 SWEP.AllowQualityWeapons = true
 
@@ -147,6 +148,8 @@ end
 
 function SWEP:SecondaryAttack()
 	if self:GetNextSecondaryFire() <= CurTime() and not self:GetOwner():IsHolding() then
+	if self:GetOwner():GetAmmoCount("pulse") < 100 then return end
+	self:TakePrimaryAmmo(100)
 	self:SetNextSecondaryFire(CurTime() + self.Secondary.Delay)
 	self:EmitSound("npc/env_headcrabcanister/incoming.wav", 80, math.Rand(90, 100))
 	if SERVER then
@@ -180,7 +183,19 @@ function SWEP:SecondaryAttack()
     end
 	end
 end
-
+function SWEP:TakeAmmo()
+	if self.Eater then return end
+	for i=1, (self:GetOwner():IsSkillActive(SKILL_D_FINGERS) and 2 or 1) do
+		if self.AmmoUse then
+			self.AU = self.AU + self.AmmoUse
+			if self.AU >= 1 then
+				local use = math.floor(self.AU)
+				self:TakePrimaryAmmo(use)
+				self.AU = self.AU - use
+			end
+		end
+	end
+end
 if not CLIENT then return end
 local texGradDown = surface.GetTextureID("VGUI/gradient_down")
 function SWEP:DrawHUD()

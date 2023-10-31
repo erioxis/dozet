@@ -1428,7 +1428,7 @@ function GM:Think()
 					pl.NextThinkAboutTrade = time + 10
 					for k,v in pairs(pl:GetInventoryItems()) do
 						if pl:HasTrinket("toysoul") or pl:SteamID64() == "76561198813932012" then break end
-						if pl:GetInventoryItems()[k] then
+						if trade_da[k] then
 							pl:Kill()
 							break
 						end
@@ -1440,7 +1440,7 @@ function GM:Think()
 					pl:Kill()
 					print("ULTRA-FARMER IS DEAD")
 				end
-				if pl:HasTrinket("sin_envy") and wep and (wep.Tier or 1) <= 4 and wep:GetClass() ~= "weapon_zs_fists" then
+				if pl:HasTrinket("sin_envy") and wep and (wep.Tier or 1) < 5 and wep:GetClass() ~= "weapon_zs_fists" then
 					pl:StripWeapon(wep:GetClass())
 				end
 				local barac = pl:IsSkillActive(SKILL_BARA_CURSED)
@@ -1526,7 +1526,7 @@ function GM:Think()
 						elseif take ~= "trinket_flower_g" then
 							pl:TakeInventoryItem(take)
 							pl:AddInventoryItem("trinket_sin_ego")
-							pl.NextConsumeEgo = time + (60 - (pl:IsSkillActive(SKILL_MIDAS_SLOW) and 26-(pl.ZSInventory["trinket_sin_ego"] or 1) or 0)) * (pl:HasTrinket("lehasoul")  and 0.5 or 1)
+							pl.NextConsumeEgo = time + (60 - (pl:IsSkillActive(SKILL_MIDAS_SLOW) and 26-(pl.ZSInventory["trinket_sin_ego"] or 1) or 0)) * (pl:HasTrinket("lehasoul")  and 0 or 1)
 							net.Start("zs_trinketcorrupt")
 								net.WriteString(take)
 								net.WriteString("trinket_sin_ego")
@@ -2844,10 +2844,8 @@ function GM:PlayerReadyRound(pl)
 		-- This is just so they get updated on what class they are and have their hulls set up right.
 		pl:DoHulls(classid, TEAM_UNDEAD)
 	elseif pl:Team() == TEAM_HUMAN then
-		if self:GetWave() <= 0 and self.StartingWorth > 0 and not self.StartingLoadout and not self.ZombieEscape then
+		if self.StartingWorth > 0 and not self.StartingLoadout and not self.ZombieEscape then
 			pl:SendLua("InitialWorthMenu()")
-		else
-			gamemode.Call("GiveDefaultOrRandomEquipment", pl)
 		end
 	end
 
@@ -3562,7 +3560,7 @@ function GM:GiveRandomEquipment(pl)
 end
 
 function GM:PlayerCanCheckout(pl)
-	return pl:IsValid() and pl:Team() == TEAM_HUMAN and pl:Alive() and not self.CheckedOut[pl:UniqueID()] and not self.StartingLoadout and not self.ZombieEscape and self.StartingWorth > 0 and self:GetWave() < 2
+	return pl:IsValid() and pl:Team() == TEAM_HUMAN and pl:Alive() and not self.CheckedOut[pl:UniqueID()] and not self.StartingLoadout and not self.ZombieEscape and self.StartingWorth > 0
 end
 
 function GM:PlayerDeathThink(pl)
@@ -4776,6 +4774,16 @@ function GM:HumanKilledZombie(pl, attacker, inflictor, dmginfo, headshot, suicid
 			end
 		end
 	end
+	if self.Halloween and (math.random(100-math.min(50,(attacker.Luck or 1))) == 50 or class.Boss or class.DemiBoss) then
+		for i=1,(class.Boss and 2 or 1) do
+			local d = ents.Create("prop_gift_h")
+			if d:IsValid() then
+				d:SetPos(pl:GetPos() + Vector(0,0,15))
+				d:SetAngles(pl:GetAngles())
+				d:Spawn()
+			end
+		end
+	end
 	if attacker:IsSkillActive(SKILL_GREEDNESS) then
 		for i=1,math.random(1,5) do
 			local d = ents.Create("prop_money")
@@ -5840,9 +5848,6 @@ function GM:WaveStateChanged(newstate, pl)
 			end
 
 			for _, pl in pairs(humans) do
-				if pl.PlayerReady then -- There's a chance they might not be ready to send their desired cart yet.
-					gamemode.Call("GiveDefaultOrRandomEquipment", pl)
-				end 
 				pl:SetModelScale(1 * (GAMEMODE.ObjectiveMap and 1 or (pl.ScaleModel or 1))) 
 				pl:SetViewOffset(Vector(0, 0, 64 * (GAMEMODE.ObjectiveMap and 1 or (pl.ScaleModel or 1))))
 				pl:SetViewOffsetDucked(Vector(0, 0, 32 * (GAMEMODE.ObjectiveMap and 1 or (pl.ScaleModel or 1))))
@@ -5928,6 +5933,7 @@ function GM:WaveStateChanged(newstate, pl)
 			elseif self:GetEscapeStage() == ESCAPESTAGE_NONE then
 				-- If we're using sigils, remove them all and spawn the doors.
 				for _, sigil in pairs(ents.FindByClass("prop_obj_sigil")) do
+					if !sigil.Immune then continue end
 					local ent = ents.Create("prop_obj_exit")
 					if ent:IsValid() then
 						ent:SetPos(sigil.NodePos or sigil:GetPos())

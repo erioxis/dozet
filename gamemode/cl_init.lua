@@ -224,7 +224,20 @@ function GM:GivePoints(pl)
 	if MySelf:Team() ~= TEAM_HUMAN then return end
 	surface.PlaySound("buttons/button15.wav")
 	local lp = MySelf
-    local menu = DermaMenu(true, self)
+    local menu = DermaMenu(true)
+	menu:AddOption(translate.Get("add_x_points_x"), function(me)
+		local frame = Derma_StringRequest("Points", "Here !", "",
+		function(xp)
+			
+			if tonumber(xp) == nil then return end
+			xp = math.max(xp,0)
+			if MySelf:GetPoints() - xp + 1 <= 0 then return end 
+			GiveP(pl,xp)
+		end,
+		function(xp) end,
+		"OK", "Cancel")
+		frame:GetChildren()[5]:GetChildren()[2]:SetTextColor(Color(30, 30, 30))
+	end) -- 20
     if pl:Team() == TEAM_HUMAN and lp:GetPoints() >= 50 then
         menu:AddOption(translate.Format("add_x_points", 50), function() GiveP(pl,50) end) -- 20
 		if lp:GetPoints() >= 100 then
@@ -237,17 +250,13 @@ function GM:GivePoints(pl)
 			menu:AddOption(translate.Format("add_x_points", 1500), function() GiveP(pl,1500) end) -- 3000
 		end
 		menu:AddOption(translate.Format("add_x_points", lp:GetPoints()), function() GiveP(pl,lp:GetPoints()) end) 
-	else
-	--	menu:Close()
-		--return
 	end
     menu:Open()
 end
 
 function GM:ClickedPlayerButton(pl, button)
 	surface.PlaySound("buttons/button15.wav")
-
-    local menu = DermaMenu(true, self)
+    local menu = DermaMenu(true)
     menu:AddOption(translate.Format("tab_name", pl:GetName()), function() end)
     if not pl:IsBot() then
         menu:AddOption(translate.Get("tab_steam"), function() pl:ShowProfile() end)
@@ -1325,6 +1334,35 @@ function GM:DrawGiftIndicators()
 			surface_DrawTexturedRect(-128, -128, 256, 256)
 
 			draw_SimpleTextBlurry(translate.Get("gift"), "ZS3D2DFont2Big", 0, 128, COLOR_GRAY, TEXT_ALIGN_CENTER)
+
+			cam_End3D2D()
+			cam_IgnoreZ(false)
+		end
+	end
+	
+	for i, gift in pairs(GAMEMODE.CachedGift2Entities) do
+		if not gift:IsValid() then continue end
+
+		
+
+		pos = gift:GetPos()
+		pos.z = pos.z + 24
+		distance = eyepos:DistToSqr(pos)
+
+		if (distance >= 6400 and distance <= 1048576)  then -- Limited to Scavenger's Eyes distance.
+			ang = (eyepos - pos):Angle()
+			ang:RotateAroundAxis(ang:Right(), 270)
+			ang:RotateAroundAxis(ang:Up(), 90)
+			alpha = math.min(220, math.sqrt(distance / 4))
+		
+
+			cam_IgnoreZ(true)
+			cam_Start3D2D(pos, ang, math.max(250, math.sqrt(distance)) / 5000)
+
+			surface_SetDrawColor(255, 255, 255, alpha)
+			surface_DrawTexturedRect(-128, -128, 256, 256)
+
+			draw_SimpleTextBlurry(translate.Get("gift_h"), "ZS3D2DFont2Big", 0, 128, COLOR_GRAY, TEXT_ALIGN_CENTER)
 
 			cam_End3D2D()
 			cam_IgnoreZ(false)
@@ -2472,7 +2510,7 @@ function GM:PlayerFootstep(pl, vFootPos, iFoot, strSoundName, fVolume)
 end
 
 function GM:PlayerCanCheckout(pl)
-	return pl:IsValid() and P_Team(pl) == TEAM_HUMAN and pl:Alive() and self:GetWave() <= 0
+	return pl:IsValid() and P_Team(pl) == TEAM_HUMAN and pl:Alive()
 end
 
 function GM:OpenWorth()

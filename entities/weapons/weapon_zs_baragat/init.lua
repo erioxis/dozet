@@ -12,7 +12,7 @@ function SWEP:ApplyMeleeDamage(ent, trace, damage)
 		ent:SetGroundEntity(NULL)
 		ent:SetVelocity(vel)]]
 		if ent:IsPlayer() then
-		if ent:HasTrinket("antibaracat") then ent:ThrowFromPositionSetZ(trace.StartPos, ent:IsPlayer() and 600 or 1600, nil, noknockdown) 	self.BaseClass.ApplyMeleeDamage(self, ent, trace, damage) return end
+		if ent:HasTrinket("antibaracat") then ent:ThrowFromPositionSetZ(trace.StartPos, ent:IsPlayer() and 600 or 1600, nil, ent:IsPlayer() and ent:IsSkillActive(SKILL_STEEL_ASS) or noknockdown) 	self.BaseClass.ApplyMeleeDamage(self, ent, trace, damage) return end
 			ent:GiveStatus("rot",3)
 		elseif math.random(1,12) == 1 and not ent:IsPlayer() and not ent:GetClass() == "prop_obj_sigil" then
 			ent:Remove()
@@ -22,7 +22,7 @@ function SWEP:ApplyMeleeDamage(ent, trace, damage)
 			noknockdown = false
 			ent.NextKnockdown = CurTime() + 2
 		end
-		ent:ThrowFromPositionSetZ(trace.StartPos, ent:IsPlayer() and 600 or 1600, nil, noknockdown)
+		ent:ThrowFromPositionSetZ(trace.StartPos, ent:IsPlayer() and 600 or 1600, nil, ent:IsPlayer() and ent:IsSkillActive(SKILL_STEEL_ASS) or noknockdown)
 	end
 
 	self.BaseClass.ApplyMeleeDamage(self, ent, trace, damage)

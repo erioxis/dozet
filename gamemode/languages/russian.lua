@@ -76,7 +76,8 @@ LANGUAGE.challenge_oof_d = "Дать 300 поинтов."
 
 LANGUAGE.challenge_hard_money = "Экономика дозета"
 LANGUAGE.challenge_hard_money_d = "Получи 7 тир до 5 волны!"
-
+LANGUAGE.challenge_hihi_cleaner = "Уборщик улиц"
+LANGUAGE.challenge_hihi_cleaner_d1 = "Получи 3000 поинтов с уборки."
 
 LANGUAGE.challenge_week1 = "ЕЖЕНЕДЕЛЬНОЕ:Истребитель баланса"
 LANGUAGE.challenge_week_d1 = "Убить 10000 зомби."
@@ -87,6 +88,10 @@ LANGUAGE.challenge_week_d3 = "Сделать реморт 4 раза."
 
 LANGUAGE.scram_rem = " Скрапа"
 
+LANGUAGE.challenge_jacksss = "Друзья Тоя"
+LANGUAGE.challenge_jacksss_d = "Собрать 300 светильников джека."
+LANGUAGE.challenge_last_pumpkin = "НЕ СМЕЙ ВЫПОЛНЯТЬ ЭТУ АЧИВКУ"
+LANGUAGE.challenge_last_pumpkin_d = "Собрать 1000 светильников джека."
 LANGUAGE.challenge_anti_sigil_d = "Создай анти-сигил."
 LANGUAGE.challenge_dataminer = "Копатель лага"
 LANGUAGE.challenge_dataminer_d = "Сломай 50 бочек с информацией."
@@ -345,7 +350,11 @@ LANGUAGE.mines_w = "Мин : "
 LANGUAGE.gift = "Подарок!"
 LANGUAGE.gift_s = "Подарок появился!"
 LANGUAGE.gift_r = "Подарок убрался!"
+LANGUAGE.gift_h = "Светильник Джека!"
+LANGUAGE.gift_h_s = "Светильник Джека появился!"
+LANGUAGE.gift_g_r = "Светильник Джека уничтожился!"
 LANGUAGE.gift_taken = "Игрок %s взял подарок с %s в количестве %d!"
+LANGUAGE.gift_h_taken = "Игрок %s взял тыкву с %s в количестве %d!"
 LANGUAGE.w_tier					= "Тир "
 LANGUAGE.you_ascended_to_level_x					= "Ты достиг %d уровня!"
 LANGUAGE.sigil_corrupted							= "Сигил был захвачен. Армия досея становится сильнее."
@@ -2036,6 +2045,7 @@ LANGUAGE.ahint_13 = "9119da899e2d66cba7f32b3a4ea4b0c9 - 30 сыров беспл
 LANGUAGE.ahint = "ПОДСКАЗКА!"
 
 LANGUAGE.add_x_points = "Дать игроку %s поинтов."
+LANGUAGE.add_x_points_x = "Дать игроку X поинтов."
 
 LANGUAGE.tab_name = "Имя: %s"
 LANGUAGE.tab_steam = "Посмотреть профиль стима"

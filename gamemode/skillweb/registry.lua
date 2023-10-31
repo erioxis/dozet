@@ -283,6 +283,7 @@ SKILL_HAMMERDISCIPLINE2 = 221
 SKILL_LANKYIII = 226
 SKILL_MECHANIC = 227
 SKILL_CURSECURE = 228
+SKILL_DEATHCURSE = 234
 SKILL_VKID = 235
 SKILL_SOY = 236
 SKILL_HAMMERDOOR = 240
@@ -526,6 +527,7 @@ SKILL_AMULET_18 = 498
 SKILL_RUB_RUB_STOMACH = 499
 SKILL_SECRET_10 = 528
 SKILL_VIP_ARMY = 529
+SKILL_STEEL_ASS = 530
 
 
 
@@ -1993,7 +1995,8 @@ GM:AddSkill(SKILL_DEFEND, trs("skill_sdefender").."I", GOOD.."-2%"..trs("meleeda
 
 GM:AddSkillModifier(SKILL_DEFEND, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.02)
 GM:AddSkillModifier(SKILL_DEFEND, SKILLMOD_SPEED, -1)
-
+GM:AddSkill(SKILL_STEEL_ASS, trs("skill_steel_ass"), GOOD..trs("skill_steel_ass_d1")..BAD..trs("skill_steel_ass_d2"),
+				                                                            	3,			-2,					{SKILL_DEATHCURSE}, TREE_DEFENSETREE)
 --Tormented SKill
 SKILL_TORMENT1 = 229
 GM:AddSkill(SKILL_TORMENT1, trs("skill_torment").."I", GOOD.."+5%"..trs("xpmul")..BAD.."-30"..trs("speed")..BAD.."-15%"..trs("b_damage"),
@@ -2047,7 +2050,6 @@ GM:AddSkill(SKILL_TORMENT6, trs("skill_torment").."VI", GOOD.."+10%"..trs("xpmul
 GM:AddSkillModifier(SKILL_TORMENT6, SKILLMOD_REPAIRRATE_MUL, -0.50)
 GM:AddSkillModifier(SKILL_TORMENT6, SKILLMOD_MEDKIT_EFFECTIVENESS_MUL, -0.50)
 GM:AddSkillModifier(SKILL_TORMENT6, SKILLMOD_XP, 0.10)
-SKILL_DEATHCURSE = 234
 GM:AddSkill(SKILL_DEATHCURSE, trs("skill_ccleaning"), GOOD.."+15%"..trs("xpmul")..GOOD..trs("skill_ccleaning_d1")..BAD.."-30%"..trs("m_curse")..BAD..trs("skill_ccleaning_d2"),
 				                                                            	3,			-1,					{SKILL_DEFENDBLOOD}, TREE_DEFENSETREE)		
 GM:AddSkillModifier(SKILL_DEATHCURSE, SKILLMOD_XP, 0.15)
@@ -2102,7 +2104,7 @@ GM:AddSkill(SKILL_DEFEND2,trs("skill_sdefender").."III", GOOD.."-2%"..trs("melee
 GM:AddSkillModifier(SKILL_DEFEND2, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.02)
 GM:AddSkillModifier(SKILL_DEFEND2, SKILLMOD_SPEED, -3)
 GM:AddSkill(SKILL_DEFENDBLOOD,trs("skill_blooddefender"), GOOD..trs("skill_blooddefender_d1")..BAD..trs("skill_blooddefender_d2")..BAD..trs("skill_blooddefender_d3"),
-				                                                            	3,			0,					{SKILL_DEFEND2, SKILL_DEATHCURSE}, TREE_DEFENSETREE)
+				                                                            	3,			0,					{SKILL_DEFEND2, 234}, TREE_DEFENSETREE)
 SKILL_DEFEND3 = 193
 GM:AddSkill(SKILL_DEFEND3, trs("skill_sdefender").." IV", GOOD.."-4%"..trs("meleedamagetaken")..BAD.."-6"..trs("speed"),
 				                                                            	1.5,			2,					{SKILL_DEFEND2}, TREE_DEFENSETREE)
@@ -2836,7 +2838,7 @@ GM:SetSkillModifierFunction(SKILLMOD_ENDWAVE_POINTS, function(pl,amount)
 	pl.EndWavePointsExtra = math.Clamp(amount, 0.0, 1000.0)
 end)
 GM:SetSkillModifierFunction(SKILLMOD_ARSENAL_DISCOUNT, function(pl, amount)
-	pl.ArsenalDiscount = math.Clamp(amount + 1.0, 0, 1000.0)
+	pl.ArsenalDiscount = math.Clamp(amount + 1.0, 0.05, 1000.0)
 end)
 GM:SetSkillModifierFunction(SKILLMOD_SCRAPDISCOUNT, GM:MkGenericMod("ScrapDiscount"))
 GM:SetSkillModifierFunction(SKILLMOD_CLOUD_RADIUS, GM:MkGenericMod("CloudRadius"))

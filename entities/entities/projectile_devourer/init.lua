@@ -35,6 +35,7 @@ function ENT:Think()
 	elseif self.DieTime < CurTime() then
 		self:Remove()
 	end
+	if GAMEMODE.ObjectiveMap then return end
 	if !self.trg:IsValid() then
 		local targets = {}
 		for _, ent in pairs(ents.FindInSphere(self:GetPos(), 1048)) do

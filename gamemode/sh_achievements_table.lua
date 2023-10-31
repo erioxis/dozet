@@ -27,6 +27,12 @@ GM.Achievements["dataminer"] = {
     Goal = 50,
     Reward = 10500
 }
+GM.Achievements["hihi_cleaner"] = {
+    Name = translate("challenge_hihi_cleaner"),
+    Desc = translate("challenge_hihi_cleaner_d1"),
+    Goal = 3000,
+    Reward = 23232
+}
 GM.Achievements["midas_forever"] = {
     Name = translate("challenge_midas_forever"),
     Desc = translate("challenge_midas_forever_d"),
@@ -43,6 +49,18 @@ GM.Achievements["oof"] = {
     Desc = translate("challenge_oof_d"),
     Goal = 300,
     Reward = 500
+}
+GM.Achievements["jacksss"] = {
+    Name = translate("challenge_jacksss"),
+    Desc = translate("challenge_jacksss_d"),
+    Goal = 300,
+    Reward = 50000
+}
+GM.Achievements["last_pumpkin"] = {
+    Name = translate("challenge_last_pumpkin"),
+    Desc = translate("challenge_last_pumpkin_d"),
+    Goal = 1000,
+    Reward = 70000
 }
 GM.Achievements["hard_money"] = {
     Name = translate("challenge_hard_money"),

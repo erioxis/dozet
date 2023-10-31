@@ -343,6 +343,10 @@ GM:AddStartingItem("m_w_wind",				ITEMCAT_MAGIC,			75,				"weapon_zs_m_wind")
 GM:AddStartingItem("m_w_boom",				ITEMCAT_MAGIC,			75,				"weapon_zs_m_boom")
 GM:AddStartingItem("m_w_magic_proj",				ITEMCAT_MAGIC,			100,				"weapon_zs_magicwand")
 GM:AddStartingItem("stone",				ITEMCAT_OTHER,			5,				"weapon_zs_stone")
+if GM.Halloween then
+	GM:AddStartingItem("pumpkin",				ITEMCAT_OTHER,			5,				"weapon_zs_pumkin")
+	GM:AddStartingItem("pumpkin_evil",				ITEMCAT_OTHER,			15,				"weapon_zs_pumkin_evil")
+end
 GM:AddStartingItem("grenade",			ITEMCAT_OTHER,			20,				"weapon_zs_grenade")
 GM:AddStartingItem("h_o_l_y_grenade",			ITEMCAT_OTHER,			45,				"weapon_zs_holy_grenade")
 GM:AddStartingItem("flashbomb",			ITEMCAT_OTHER,			15,				"weapon_zs_flashbomb")
@@ -461,6 +465,7 @@ GM:AddPointShopItem("boomstick",		ITEMCAT_GUNS,			500,			"weapon_zs_boomstick")
 GM:AddPointShopItem("bulldog",		ITEMCAT_GUNS,			500,			"weapon_zs_bulldog")
 GM:AddPointShopItem("clastix",			ITEMCAT_GUNS,			500,			"weapon_zs_clastix")
 GM:AddPointShopItem("autorgun",		ITEMCAT_GUNS,		    500,			"weapon_zs_auto_turret")
+GM:AddPointShopItem("pumpkinlayer",		ITEMCAT_GUNS,		    500,			"weapon_zs_pumpkinlayer")
 -- Tier 6 beta
 GM:AddPointShopItem("zeus",				ITEMCAT_GUNS,			1500,			"weapon_zs_zeus")
 GM:AddPointShopItem("balance_t6",				ITEMCAT_GUNS,			1500,			"weapon_zs_balance")

@@ -438,8 +438,9 @@ concommand.Add("zs_dismantle", function(sender, command, arguments)
 
 	local scrap = GAMEMODE:GetDismantleScrap(wtbl or GAMEMODE.ZSInventoryItemData[invitem], invitem,sender)
 	if sender:IsSkillActive(SKILL_COPPER) then
-		sender:SetPoints(sender:GetPoints()+scrap*0.4)
-		scrap = scrap * 0.6
+		local huhw = math.Clamp(GAMEMODE:GetWave()/10,0.05,0.7)
+		sender:SetPoints(sender:GetPoints()+scrap*huhw)
+		scrap = scrap * (1-huhw)
 	end
 	net.Start("zs_ammopickup")
 		net.WriteUInt(scrap, 16)
