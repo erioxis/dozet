@@ -156,6 +156,18 @@ function GM:DrawSigilTargetHint(ent, fade, anti)
 	draw.SimpleTextBlur(translate.Get("sigil_tp"..(anti and "_a" or "")), "ZSHUDFontTiny", x, y, colTemp, TEXT_ALIGN_CENTER)
 end
 
+function GM:DrawSigilZombieHint(ent, fade, anti)
+	fade = fade or 1
+	local pos = ent:GetPos()
+	pos.z = pos.z + 16
+	local ts = pos:ToScreen()
+	local x, y = ts.x, math.Clamp(ts.y, 0, ScrH() * 0.95)
+
+	colTemp.a = fade * 128
+	util.ColorCopy(color_white, colTemp)
+	draw.SimpleTextBlur("HP:"..math.Round(ent:GetSigilHealth()).."/"..ent:GetSigilMaxHealth(), "ZSHUDFont", x, y, colTemp, TEXT_ALIGN_CENTER)
+end
+
 GM.TraceTarget = NULL
 
 local function FuncFilterPlayers(ent)
@@ -197,6 +209,8 @@ function GM:HUDDrawTargetID(teamid)
 			else
 				self:DrawSigilTargetHint(ent, 1 - math.Clamp((CurTime() - time) / 0.5, 0, 1))	
 			end
+		elseif teamid == TEAM_UNDEAD and ent.Sigil and CurTime() < time + 0.5 and !ent.AntiSigil then
+			self:DrawSigilZombieHint(ent, 1 - math.Clamp((CurTime() - time) / 0.5, 0, 1))	
 		else
 			entitylist[ent] = nil
 		end

@@ -144,8 +144,8 @@ function ENT:Think()
 	end
 end
 function ENT:OnSpawnInMe(pl)
-	pl:GiveStatus("zomdefence",30)
-	pl:GiveStatus("chains",30)
+	pl:GiveStatus("zomdefence",8)
+	pl:GiveStatus("chains",8,self:GetNestOwner() and self:GetNestOwner():IsValid() or pl)
 	pl:SetHealth(pl:Health()*1.5)
 end
 function ENT:OnTakeDamage(dmginfo)
@@ -176,7 +176,7 @@ function ENT:OnTakeDamage(dmginfo)
 
 	local damage = dmginfo:GetDamage() * (dmginfo:GetInflictor().FlyingControllable and 0.05 or dmginfo:GetInflictor().IsMelee and 2 or 0.2)
 	if self:GetNestBuilt() and attacker:IsValid() and attacker:IsPlayer() and attacker:Team() == TEAM_HUMAN then
-		local points = damage / self:GetNestMaxHealth() * 8
+		local points = damage / self:GetNestMaxHealth() * 3
 
 		attacker.PointQueue = attacker.PointQueue + points
 

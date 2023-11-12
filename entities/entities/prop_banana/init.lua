@@ -10,12 +10,12 @@ function ENT:Initialize()
 	end
 
 
-	self:SetModel("models/props_trainstation/trainstation_clock001.mdl")
+	self:SetModel("models/props/cs_italy/bananna_bunch.mdl")
 	self:PhysicsInit(SOLID_VPHYSICS)
 	self:SetSolid(SOLID_VPHYSICS)
 	self:SetCollisionGroup(COLLISION_GROUP_DEBRIS_TRIGGER)
 	self:SetTrigger(true)
-	self:SetModelScale(0.7)
+	self:SetModelScale(3)
 	self:SetColor(Color(245, 227, 62))
 	self:SetTime(CurTime() + 3)
 	local phys = self:GetPhysicsObject()

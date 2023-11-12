@@ -21,6 +21,7 @@ SWEP.IgnoreNiggers = false
 SWEP.Move = true
 SWEP.ParryTiming = nil
 SWEP.StaminaUse = 13
+SWEP.BlockMultiplierWeapon = 0.3
 
 
 SWEP.Block = false

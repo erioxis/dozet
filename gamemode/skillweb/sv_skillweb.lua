@@ -4,6 +4,71 @@ net.Receive("zs_skill_is_desired", function(length, pl)
 
 	pl:SetSkillDesired(skillid, desired)
 end)
+
+local rememberedskills = {}
+local function  CycleDo(skillid,k,pl)
+	for k1,v1 in pairs(GAMEMODE.Skills[k].Connections) do
+	--	PrintTable(rememberedskills)
+		rememberedskills[k1] = true
+		if !rememberedskills[k1] or UnlockSkills(pl,k1,GAMEMODE.Skills[k1],true) then
+			
+		end
+		print(k1)
+	end
+end
+local function UnlockSkills(pl,skillid,skill,activate)
+	if skill and not pl:IsSkillUnlocked(skillid) and (pl:GetZSSPRemaining() >= 1 or GAMEMODE.Skills[skillid].Amulet) and pl:SkillCanUnlock(skillid) and not skill.Disabled then
+		pl:SetSkillUnlocked(skillid, true)
+
+		local msg = translate.Get("skill_discover")..skill.Name
+		pl:CenterNotify(msg)
+		pl:PrintMessage(HUD_PRINTTALK, msg)
+
+		if activate then
+			pl:SetSkillDesired(skillid, true)
+		end
+		return true
+	end
+	return false
+end
+local function BFS(graph, start,pl,k1)
+	local queue = {start}
+	local visited = {start}
+  
+	while #queue > 0 do
+	  local current = table.remove(queue, 1)
+	  print("Visiting node: " .. current)
+	  rememberedskills[current] = true
+	  for _, neighbor in ipairs(graph[current]) do
+		if not visited[neighbor] then
+		  table.insert(queue, neighbor)
+		  visited[neighbor] = true
+		end
+	  end
+	end
+  end
+net.Receive("zs_skills_active_branch", function(length, pl)
+	if 1 == 1 then return end
+	local skillid = net.ReadUInt(16)
+	local desired = net.ReadBool()
+	local skillsdree = {}
+	rememberedskills = {}
+	local skills = GAMEMODE.Skills
+	local apem = 0
+	for k,v in pairs(skills) do
+		if skills[k].Tree == skills[skillid].Tree then
+			skillsdree[k] = v
+		end
+	end
+	for k,v in pairs(skills[skillid].Connections) do
+		rememberedskills[k] = true
+		if !rememberedskills[k] or !UnlockSkills(pl,k,skills[k],true)then
+			--CycleDo(skillid,k,pl)
+			BFS(skillsdree,skillid,pl,skillid)
+		end
+	end
+	--pl:SetSkillDesired(skillid, desired)
+end)
 net.Receive("zs_repeat", function(length, pl)
 	local args = net.ReadTable()
 	pl:CenterNotify(args)
@@ -62,19 +127,7 @@ net.Receive("zs_skill_is_unlocked", function(length, pl)
 	local skillid = net.ReadUInt(16)
 	local activate = net.ReadBool()
 	local skill = GAMEMODE.Skills[skillid]
-
-	if skill and not pl:IsSkillUnlocked(skillid) and (pl:GetZSSPRemaining() >= 1 or GAMEMODE.Skills[skillid].Amulet) and pl:SkillCanUnlock(skillid) and not skill.Disabled then
-		pl:SetSkillUnlocked(skillid, true)
-
-		local msg = translate.Get("skill_discover")..skill.Name
-		pl:CenterNotify(msg)
-		pl:PrintMessage(HUD_PRINTTALK, msg)
-
-		if activate then
-			pl:SetSkillDesired(skillid, true)
-		end
-
-	end
+	UnlockSkills(pl,skillid,skill,activate)
 end)
 net.Receive("zs_skill_is_destroyed", function(length, pl)
 	local skillid = net.ReadUInt(16)

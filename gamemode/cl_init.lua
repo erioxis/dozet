@@ -1177,6 +1177,7 @@ function GM:_PostDrawTranslucentRenderables()
 		self:DrawZombieIndicators()
 		self:DrawNestIndicators()
 		self:DrawAntiSigilIndicators()
+		self:DrawZombieSpawnIndicators()
 
 	end
 end
@@ -1403,6 +1404,37 @@ function GM:DrawNestIndicators()
 
 			draw_SimpleTextBlurry(ownname, "ZS3D2DFont2", 0, 256, COLOR_GRAY, TEXT_ALIGN_CENTER)
 		end
+
+		cam_End3D2D()
+		cam_IgnoreZ(false)
+	end
+end
+local matSkull = Material("zombiesurvival/horderally")
+function GM:DrawZombieSpawnIndicators()
+	if P_Team(MySelf) == TEAM_ZOMBIE or GAMEMODE:GetWaveActive() then return end
+
+	local pos, distance, ang, alpha
+	local eyepos = EyePos()
+
+	surface_SetMaterial(matSkull)
+
+	for i, nest in pairs(GAMEMODE.CachedZSpawns) do
+		if not nest:IsValid() then continue end
+
+		pos = nest:GetPos()
+		pos.z = pos.z + math.abs(math.sin(CurTime() * math.pi)) * 23 + 32
+		distance = eyepos:DistToSqr(pos)
+
+		ang = (eyepos - pos):Angle()
+		ang:RotateAroundAxis(ang:Right(), 270)
+		ang:RotateAroundAxis(ang:Up(), 90)
+		alpha = math.min(220, math.sqrt(distance / 4))
+
+		cam_IgnoreZ(true)
+		cam_Start3D2D(pos, ang, math.max(250, math.sqrt(distance)) / 5000)
+
+		surface_SetDrawColor(25,107,10, alpha)
+		surface_DrawTexturedRect(-256, -256, 512, 512)
 
 		cam_End3D2D()
 		cam_IgnoreZ(false)
@@ -2025,7 +2057,7 @@ function GM:PlayerBindPress(pl, bind, wasin)
         MakepOptions()
 	elseif bind == "+menu" then
 		local wep =  pl:GetActiveWeapon()
-		if wep and wep.HaveAbility then
+		if wep and wep.HaveAbility and !pl:KeyDown(IN_SPEED) then
         	net.Start("zs_ability_weapon")
 			net.WriteEntity(wep)
 			net.SendToServer()

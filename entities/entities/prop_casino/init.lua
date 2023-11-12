@@ -1,13 +1,5 @@
 INC_SERVER()
-local function RefreshRemantlerOwners(pl)
-	for _, ent in pairs(ents.FindByClass("prop_drone_station")) do
-		if ent:IsValid() and ent:GetObjectOwner() == pl then
-			ent:SetObjectOwner(NULL)
-		end
-	end
-end
-hook.Add("PlayerDisconnected", "DroneStation.PlayerDisconnected", RefreshRemantlerOwners)
-hook.Add("OnPlayerChangedTeam", "DroneStation.OnPlayerChangedTeam", RefreshRemantlerOwners)
+
 
 function ENT:Initialize()
 	self.Contents = {}
@@ -69,29 +61,11 @@ function ENT:OnTakeDamage(dmginfo)
 	end
 end
 
-function ENT:AltUse(activator, tr)
-	self:PackUp(activator)
-end
 
-function ENT:OnPackedUp(pl)
-	pl:GiveEmptyWeapon("weapon_zs_remantler")
-	pl:GiveAmmo(1, "remantler")
-
-	pl:PushPackedItem(self:GetClass(), self:GetObjectHealth(), self:GetScraps())
-
-	self:Remove()
-end
 
 function ENT:Think()
 	if self.Destroyed then
 		self:Remove()
-	end
-	for k,v in pairs(ents.FindInBoxRadius(self:GetPos(),128)) do
-		if v:GetClass() == "prop_drone" and v:GetParent() ~= self and !self.DroneUsed and !self.DroneUsed:IsValid()  then
-			v:SetParent(self)
-			v:SetPos(self:GetForward()*30+Vector(0,0,12))
-			self.DroneUsed = v
-		end
 	end
 end
 
@@ -127,9 +101,18 @@ function ENT:Use(activator, caller)
 		self.NextUse[uid] = CurTime() + 0.05
 		return
 	end
+	
+	if activator:KeyDown(IN_SPEED) then 
+		local s2 = string.sub(currentwepclass,#currentwepclass,#currentwepclass)
+		local str = tonumber(s2)
+		for i=1,((isnumber(str) or str == nil) and activator:KeyDown(IN_DUCK) and 5-(str==nil and 0 or str) or 1) do 
+			activator:SendLua("RunConsoleCommand('zs_upgrade')")
+		end 
+		return 
+	end
 	if (heldtbl.AllowQualityWeapons or heldtbl.PermitDismantle) then
 		activator:SendLua("surface.PlaySound(\"ambient/misc/shutter1.wav\")")
 	end
-	activator:SendLua("GAMEMODE:OpenDroneMenu(MySelf:NearestDS())")
+	activator:SendLua("GAMEMODE:OpenRemantlerMenu(MySelf:NearestRemantler())")
 end
 

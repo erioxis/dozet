@@ -261,6 +261,15 @@ local function ActivateSkill(self, skill)
 	self:DisplayMessage(name..translate.Get("s_act"))
 
 end
+local function DoABranchSkill(self, skill) 
+	net.Start("zs_skills_active_branch")
+		net.WriteUInt(skill, 16)
+		net.WriteBool(true)
+	net.SendToServer()
+
+	print("TREE")
+
+end
 local function DeactivateSkill(self, skill) 
 	local name = GAMEMODE.Skills[skill].Name
 		net.Start("zs_skill_is_desired")
@@ -1473,7 +1482,7 @@ function PANEL:OnMousePressed(mc)
 				contextmenu.Button:SetText("Deactivate")
 					
 			elseif MySelf:IsSkillUnlocked(hoveredskill) then
-				if GAMEMODE.OneClickSkill  then ActivateSkill(self, hoveredskill) return end
+				if GAMEMODE.OneClickSkill  then  ActivateSkill(self, hoveredskill)return end
 				contextmenu.Button:SetText("Activate")
 			elseif MySelf:SkillCanUnlock(hoveredskill) then
 				if (GAMEMODE.Skills[hoveredskill].RemortReq or 0) > MySelf:GetZSRemortLevel() then
@@ -1512,6 +1521,7 @@ function PANEL:OnMousePressed(mc)
 					return
 				end
 			else
+				if MySelf:KeyDown(IN_SPEED) then DoABranchSkill(self, hoveredskill) return end
 				self:DisplayMessage("You need to unlock an adjacent skill and meet any listed requirements!", COLOR_RED)
 				surface.PlaySound("buttons/button8.wav")
 					

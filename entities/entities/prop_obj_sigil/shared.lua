@@ -1,8 +1,8 @@
 ENT.Type = "anim"
 
 ENT.MaxHealth = 260
-ENT.HealthRegen = 1
-ENT.RegenDelay = 0.3
+ENT.HealthRegen = 30
+ENT.RegenDelay =2
 
 ENT.Sigil = true
 

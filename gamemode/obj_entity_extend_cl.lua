@@ -195,6 +195,20 @@ timer.Create("CachedRemantlerEntities", 0.5, 0, function()
 	GAMEMODE.CachedRemantlerEntities = remanents
 end)
 
+GM.CachedZSpawns = {}
+GM.NextZThink = 0
+timer.Create("CachedZSSpawnEntities", 2, 0, function()
+	if not GAMEMODE then return end
+	GAMEMODE.CachedZSpawns = {}
+	local zsspawn = {}
+	table.Add(zsspawn, ents.FindByClass("zombiegasses"))
+
+	if GAMEMODE:GetWave() < 4 and !GAMEMODE:GetWaveActive() then
+		GAMEMODE.NextZThink = CurTime() + 7
+		GAMEMODE.CachedZSpawns= zsspawn
+	end
+end)
+
 GM.CachedNests = {}
 timer.Create("CachedNests", 0.5, 0, function()
 	if not GAMEMODE then return end

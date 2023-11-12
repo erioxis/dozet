@@ -229,17 +229,15 @@ GM:AddInventoryItemData("cons_xmas_goodness",		trs("c_new_year"),			trs("c_new_y
 	droped:Spawn()
 end,1)
 GM:AddInventoryItemData("cons_bounty",		trs("c_bounty"),			trs("c_bounty_d"),								"models/props_c17/trappropeller_lever.mdl", 3, nil, nil, function(pl) 
-	local tbl = {"headshoter", "ind_buffer", "ultra_at", "pearl","broken_world","whysoul","altevesoul","lucky_chance"} 
+	local tbl = {"headshoter", "ind_buffer", "ultra_at", "pearl","broken_world","whysoul","altevesoul","lucky_chance","acum","driller"} 
 	if pl:IsSkillActive(SKILL_SINS_2) then
-		tbl = {"headshoter", "ind_buffer", "ultra_at", "pearl","broken_world","whysoul","altevesoul","sin_greed","lucky_chance",
-		"sin_wrath",
-	"sin_gluttony",
-	"sin_sloth",
-	"sin_envy",
-	"sin_pride",
-	"sin_ego",
-    "sin_lust"
-	} 
+		table.Add(tbl,{	"sin_wrath",
+		"sin_gluttony",
+		"sin_sloth",
+		"sin_envy",
+		"sin_pride",
+		"sin_ego",
+		"sin_lust"})
 	end
 	if pl.MedicalBounty then
 		tbl = {	"pr_gold",
@@ -999,6 +997,25 @@ trinket = GM:AddTrinket(trs("t_whole"), "portablehole", false, pveles, pweles, n
 GM:AddSkillModifier(trinket, SKILLMOD_DEPLOYSPEED_MUL, 0.15)
 GM:AddSkillModifier(trinket, SKILLMOD_RELOADSPEED_MUL, 0.03)
 GM:AddSkillModifier(trinket, SKILLMOD_ARSENAL_DISCOUNT, -0.01)
+
+trinket, trinketwep = GM:AddTrinket(trs("t_driller"), "driller", false, pveles, pweles, 2, trs("t_d_driller"), nil, nil, "weapon_zs_special_trinket")
+GM:AddSkillModifier(trinket, SKILLMOD_DRILL_POWER_BARREL, 0.1)
+trinketwep.Upgradable = true
+trinket, trinketwep = GM:AddTrinket(trs("t_driller").."+1", "driller_q1", false, pveles, pweles, 2, trs("t_d_driller_2"), nil, nil, "weapon_zs_special_trinket")
+GM:AddSkillModifier(trinket, SKILLMOD_DRILL_POWER_BARREL, 0.17)
+trinketwep.Upgradable = true
+trinket, trinketwep = GM:AddTrinket(trs("t_driller").."+2", "driller_q2", false, pveles, pweles, 2, trs("t_d_driller_3"), nil, nil, "weapon_zs_special_trinket")
+GM:AddSkillModifier(trinket, SKILLMOD_DRILL_POWER_BARREL, 0.25)
+trinketwep.Upgradable = true
+trinket, trinketwep = GM:AddTrinket(trs("t_driller").."+3", "driller_q3", false, pveles, pweles, 2, trs("t_d_driller_4"), nil, nil, "weapon_zs_special_trinket")
+GM:AddSkillModifier(trinket, SKILLMOD_DRILL_POWER_BARREL, 0.45)
+trinketwep.Upgradable = true
+trinket, trinketwep = GM:AddTrinket(trs("t_driller").."+4", "driller_q4", false, pveles, pweles, 2, trs("t_d_driller_5"), nil, nil, "weapon_zs_special_trinket")
+GM:AddSkillModifier(trinket, SKILLMOD_DRILL_POWER_BARREL, 0.6)
+trinketwep.Upgradable = true
+trinket, trinketwep = GM:AddTrinket(trs("t_driller").."+5", "driller_q5", false, pveles, pweles, 2, trs("t_d_driller_6"), nil, nil, "weapon_zs_special_trinket")
+GM:AddSkillModifier(trinket, SKILLMOD_DRILL_POWER_BARREL, 0.7)
+
 
 trinket = GM:AddTrinket(trs("t_agility"), "pathfinder", false, pveles, pweles, 2, trs("t_d_agility"), nil, nil, "weapon_zs_special_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_BARRICADE_PHASE_SPEED_MUL, 0.55)

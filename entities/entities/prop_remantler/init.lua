@@ -15,26 +15,19 @@ function ENT:Initialize()
 	self.NextUse = {}
 
 	self:SetModel("models/props_lab/powerbox01a.mdl")
-	self:SetUseType(SIMPLE_USE)
-	
-	
 	self:PhysicsInit(SOLID_VPHYSICS)
-	self:SetSolid(SOLID_VPHYSICS)
-	self:SetCollisionGroup(COLLISION_GROUP_PROJECTILE)
-	self:SetCustomCollisionCheck(true)
+	self:SetUseType(SIMPLE_USE)
 
 	self:CollisionRulesChanged()
-		local phys = self:GetPhysicsObject()
-		if phys:IsValid() then
-			phys:EnableMotion(false)
-		end
 
-	self:CollisionRulesChanged()
+	local phys = self:GetPhysicsObject()
+	if phys:IsValid() then
+		phys:EnableMotion(false)
+	end
 
 	self:SetMaxObjectHealth(200)
 	self:SetObjectHealth(self:GetMaxObjectHealth())
 end
-
 function ENT:SetObjectHealth(health)
 	self:SetDTFloat(0, health)
 	if health <= 0 and not self.Destroyed then

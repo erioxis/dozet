@@ -509,7 +509,7 @@ vgui.Register("ZSRemantlePathDrones", PANEL, "Panel")
 
 function GM:OpenDroneMenu(remantler)
 	if not (remantler and remantler:IsValid()) or (self.DronesMenu and self.DronesMenu:IsVisible()) then return end
-	local mytarget = SelectedInv() or MySelf:GetActiveWeapon():GetClass()
+	local mytarget = remantler.DroneUsed
 
 	if self.DronesMenu and self.DronesMenu:IsValid() and self.DronesMenu.m_WepClass == mytarget then
 		self.DronesMenu:SetVisible(true)
@@ -536,18 +536,9 @@ function GM:OpenDroneMenu(remantler)
 	frame.m_Remantler = remantler
 	frame.m_WepClass = mytarget
 
-	if not SelectedInv() then
-		self.GunTab = weapons.Get(frame.m_WepClass)
-	else
-		self.GunTab = GAMEMODE.ZSInventoryItemData[frame.m_WepClass]
-	end
 
-	local gtbl = self.GunTab
-	if not SelectedInv() and not (gtbl.AllowQualityWeapons or gtbl.PermitDismantle) then
-		frame.m_WepClass, gtbl = nil, nil
-	elseif SelectedInv() and ((gtbl.PermitDismantle ~= nil and not gtbl.PermitDismantle) or (self:GetInventoryItemType(mytarget) ~= INVCAT_TRINKETS)) then
-		frame.m_WepClass, gtbl = nil, nil
-	end
+	local gtbl = remantler.DroneUsed.GunTab
+
 
 	local topspace = vgui.Create("DPanel", frame)
 	topspace:SetWide(wid - 16)
@@ -669,7 +660,7 @@ function GM:OpenDroneMenu(remantler)
 
 	self:ConfigureMenuTabs(tabs, tabhei)
 
-	local contents = EasyLabel(remantleframe, gtbl and gtbl.PrintName or "EMPTY", "ZSHUDFontSmall", COLOR_WHITE)
+	local contents = EasyLabel(remantleframe, "Drone", "ZSHUDFontSmall", COLOR_WHITE)
 	contents:AlignTop(16 * screenscale)
 	contents:CenterHorizontal()
 	frame.m_ContentsLabel = contents
@@ -681,38 +672,7 @@ function GM:OpenDroneMenu(remantler)
 
 	frame.RemantlePath = vgui.Create("ZSRemantlePathDrones", upgpathf)
 
-	local disabtn = EasyButton(remantleframe, translate.Get("rem_dismantle"), 8, 4)
-	disabtn:SetFont("ZSHUDFont")
-	disabtn:SizeToContents()
-	disabtn:MoveBelow(upgpathf, 32 * screenscale)
-	disabtn:CenterHorizontal()
-	disabtn.DoClick = DismantleClick
-	if not gtbl then
-		disabtn:SetDisabled(true)
-	else
-		disabtn:SetDisabled(gtbl.NoDismantle)
-	end
-	disabtn:SetTextColor(gtbl and gtbl.NoDismantle and COLOR_DARKGRAY or gtbl and COLOR_WHITE or COLOR_DARKGRAY)
-	frame.m_DisaButton = disabtn
 
-	local disscraptxt = ""
-	if gtbl then
-		local retscrap = self:GetDismantleScrap(gtbl, SelectedInv(),MySelf)
-		disscraptxt = gtbl.NoDismantle and translate.Get("rem_nodism") or translate.Format("rem_dis_for",retscrap)
-	end
-
-	local disscrap = EasyLabel(remantleframe, disscraptxt, "ZSHUDFontSmaller", COLOR_WHITE)
-	disscrap:MoveBelow(disabtn, 4 * screenscale)
-	disscrap:CenterHorizontal()
-	frame.m_Dismantle = disscrap
-
-	local breakdowns = self.Breakdowns[frame.m_WepClass]
-	local compdistxt = breakdowns and self.ZSInventoryItemData[breakdowns.Result].PrintName or ""
-
-	local compdisl = EasyLabel(remantleframe, compdistxt, "ZSHUDFontSmaller", COLOR_WHITE)
-	compdisl:MoveBelow(disscrap, 4 * screenscale)
-	compdisl:CenterHorizontal()
-	frame.m_ComponentDis = compdisl
 	frame:MakePopup()
 	frame:CenterMouse()
 end

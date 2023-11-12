@@ -971,7 +971,7 @@ function GM:PlayerSelectSpawn(pl)
 				if dyn then -- We were spectating an entity.
 					pl.ForceDynamicSpawn = nil
 					if self:DynamicSpawnIsValid(dyn) then
-						if dyn:GetClass() == "prop_creepernest" or dyn:GetClass() == "prop_glitchnest" then -- For honorable mentions
+						if dyn:GetClass() == "prop_creepernest" or dyn:GetClass() == "prop_glitchnest" or dyn.CanSpawnInMe then -- For honorable mentions
 							local owner = dyn:GetOwner()
 							if dyn.OnSpawnInMe then
 								dyn:OnSpawnInMe(pl)
@@ -3745,8 +3745,9 @@ function GM:EntityTakeDamage(ent, dmginfo)
 	end
 
 	-- Props about to be broken props take 3x damage from anything except zombies
+	local damage = dmginfo:GetDamage()
 	if ent._BARRICADEBROKEN and not (attacker:IsPlayer() and attacker:Team() == TEAM_UNDEAD) then
-		dmginfo:SetDamage(dmginfo:GetDamage() * 3)
+		damage = damage * 3
 	end
 
 	if ent.GetObjectHealth and not (attacker:IsPlayer() and attacker:Team() == TEAM_HUMAN) then
@@ -3754,17 +3755,18 @@ function GM:EntityTakeDamage(ent, dmginfo)
 	end
 	if attacker:IsPlayer() and attacker:IsChampion() then
 		if ent:IsPlayer() then
-			dmginfo:ScaleDamage(1.25)
+			damage = damage * 1.25
 		else
-			dmginfo:ScaleDamage(1.5)
+			damage = damage * 1.5
 		end
 	end
 	if attacker.DeadXD then
-		dmginfo:ScaleDamage(2)
+		damage = damage * 2
 	end
 	if !ent:IsPlayer() and (attacker:IsPlayer() and attacker:Team() == TEAM_UNDEAD) then
-		dmginfo:ScaleDamage(1 + math.Clamp(GAMEMODE:GetBalance()/100,0,3))
+		damage = damage * (1 + math.Clamp(GAMEMODE:GetBalance()/100,0,3))
 	end
+	dmginfo:SetDamage(damage)
 	if ent.ProcessDamage and ent:ProcessDamage(dmginfo) then return end
 	attacker, inflictor = dmginfo:GetAttacker(), dmginfo:GetInflictor()
 
@@ -5310,7 +5312,7 @@ end
 
 function GM:PlayerCanPickupWeapon(pl, ent)
 	if pl:IsSkillActive(SKILL_JEW) then
-		local bruhich = self:GetWave() * 5 - self:GetWave() * 2 * (pl:HasTrinket("alt_slight_soul") and 0.25 or 1)
+		local bruhich = (self:GetWave() * 5 - self:GetWave() * 2) * (pl:HasTrinket("alt_slight_soul") and 0.25 or 1)
 		pl:SetPoints(pl:GetPoints() - bruhich)
 		GAMEMODE:ConCommandErrorMessage(pl, translate.ClientGet(pl, "jewmoment"))
 		pl:GiveAchievementProgress("greatgreed", bruhich)
@@ -5812,6 +5814,14 @@ function GM:EventStart(wave)
 				end
 			end
 			return
+		end
+	end
+	if math.random(1,5) == 5 then
+		gamemode.Call("CreateRandomObjectPos", "prop_banana_farm",2)
+		for _, pl in pairs(player.GetAll()) do
+			if pl then
+				pl:CenterNotify(COLOR_GREEN,{killicon = "headshot"},{font = "ZSHUDFontSmall"},translate.ClientGet(pl,"farm_banana_here"),{killicon = "headshot"})
+			end
 		end
 	end
 	if math.random(1,3) == 1  then

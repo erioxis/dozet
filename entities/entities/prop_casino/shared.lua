@@ -4,11 +4,11 @@ ENT.RenderGroup = RENDERGROUP_OPAQUE
 ENT.m_NoNailUnfreeze = true
 ENT.NoNails = true
 
-ENT.CanPackUp = true
+ENT.CanPackUp = false
 
-ENT.IsBarricadeObject = true
-ENT.AlwaysGhostable = true
---ENT.IgnoreBullets = true
+ENT.IsBarricadeObject = false
+ENT.AlwaysGhostable = false
+ENT.IgnoreBullets = true
 
 function ENT:SetObjectHealth(health)
 	self:SetDTFloat(0, health)

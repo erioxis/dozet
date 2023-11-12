@@ -57,7 +57,7 @@ function ENT:Think()
 			util.Effect("explosion_golden",ef)
 			if math.random(1,10) == 1 then
 				self:Remove()
-				if math.random(1,20-math.min(16,math.Round(GAMEMODE:GetBalance()/5))) == 1 then
+				if !own:HasTrinket("driller_q5") and math.random(1,20*(own:HasTrinket("driller_q3") and 1.5 or own:HasTrinket("driller_q4") and 2.2 or 1)-math.min(16,math.Round(GAMEMODE:GetBalance()/5))) == 1 then
 					own:TakeSpecialDamage(own:Health()*0.33,DMG_DIRECT,self,self)
 					own:SendLua("GAMEMODE:CenterNotify(COLOR_RED, translate.Format('trap_barrel',20-math.min(4,math.Round(GAMEMODE:GetBalance()/5))))")
 					return
@@ -71,5 +71,5 @@ function ENT:Think()
 			end
 		end
 	end
-	self.NextThinkA = CurTime() + 1.2
+	self.NextThinkA = CurTime() + 0.8 /(own.DrillPowerBarrel or 1)
 end

@@ -125,7 +125,7 @@ end
 function GM:ViewerStatBarUpdate(viewer, display, sweptable)
 	local done, statshow = {}
 	local speedtotext = GAMEMODE.SpeedToText
-	for i = 1, 5 do
+	for i = 1, 6 do
 		if display then
 			viewer.ItemStats[i]:SetText("")
 			viewer.ItemStatValues[i]:SetText("")
@@ -150,6 +150,10 @@ function GM:ViewerStatBarUpdate(viewer, display, sweptable)
 		end
 
 		local statnum, stattext = statshow[6] and sweptable[statshow[6]][statshow[1]] or sweptable[statshow[1]]
+		local oldnum = statnum
+		if tonumber(statnum) and statnum < 5 and !(statshow[1] == "Damage" or statshow[1] == "ConeMin" or statshow[1] == "ConeMax")  then
+			statnum = (statnum*100).."%"
+		end
 		if statshow[1] == "Damage" and sweptable.Primary.NumShots and sweptable.Primary.NumShots > 1 then
 			stattext = statnum  .. " x " .. sweptable.Primary.NumShots-- .. " (" .. (statnum * sweptable.Primary.NumShots) .. ")"
 		elseif statshow[1] == "WalkSpeed" then
@@ -160,10 +164,14 @@ function GM:ViewerStatBarUpdate(viewer, display, sweptable)
 				stattext = speedtotext[-1]
 			end
 		elseif statshow[1] == "ClipSize" then
-			stattext = statnum / (sweptable.RequiredClip or 1)
+			stattext = oldnum / (sweptable.RequiredClip or 1)
+		elseif statshow[1] == "ReloadSpeed" then
+			--PrintTable(sweptable)
+			stattext = math.Round(2 / oldnum,2).."s"
 		else
 			stattext = statnum
 		end
+
 
 		viewer.ItemStats[i]:SetText(statshow[2])
 		viewer.ItemStatValues[i]:SetText(stattext)
@@ -171,10 +179,10 @@ function GM:ViewerStatBarUpdate(viewer, display, sweptable)
 		if statshow[1] == "Damage" then
 			statnum = statnum
 		elseif statshow[1] == "ClipSize" then
-			statnum = statnum / (sweptable.RequiredClip or 1)
+			statnum = oldnum / (sweptable.RequiredClip or 1)
 		end
 
-		viewer.ItemStatBars[i].Stat = statnum
+		viewer.ItemStatBars[i].Stat = oldnum
 		viewer.ItemStatBars[i].StatMin = statshow[3]
 		viewer.ItemStatBars[i].StatMax = statshow[4]
 		viewer.ItemStatBars[i].BadHigh = statshow[5]

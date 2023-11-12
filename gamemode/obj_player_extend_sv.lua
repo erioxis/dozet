@@ -403,7 +403,7 @@ function meta:ProcessDamage(dmginfo)
 	end
 	if attacker:IsValid() and attacker:IsPlayer() and inflictor:IsValid() and mywep.IsMelee and mywep.Block then
 		local xpadded = math.Clamp(damage * 0.25,0.05,10)
-		damage = damage * ((0.50 * (self.BlockMultiplier or 1)) * ( mywep.BlockMultiplierWeapon or 1))
+		damage = damage * ((0.90 * (self.BlockMultiplier or 1)) * (1-( mywep.BlockMultiplierWeapon or 0.3)))
 		if self:IsSkillActive(SKILL_AVOID_BLOCK) then
 			net.Start("zs_xp_damage")
 			net.WriteString(xpadded)

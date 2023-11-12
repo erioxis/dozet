@@ -446,7 +446,7 @@ GM:AddPointShopItem("scar",				ITEMCAT_GUNS,			170,			"weapon_zs_scar")
 GM:AddPointShopItem("juggernaut",		ITEMCAT_GUNS,		    170,			"weapon_zs_juggernaut")
 GM:AddPointShopItem("zenith",		ITEMCAT_GUNS,			170,			"weapon_zs_zenith")
 GM:AddPointShopItem("rail_gun",			ITEMCAT_GUNS,			170,			"weapon_zs_rgun")
-GM:AddPointShopItem("double_uzi",			ITEMCAT_GUNS,			170,			"weapon_zs_double_uzi").New = true
+GM:AddPointShopItem("double_uzi",			ITEMCAT_GUNS,			170,			"weapon_zs_double_uzi")
 -- Tier 5
 GM:AddPointShopItem("piercer",			ITEMCAT_GUNS,			500,				"weapon_zs_piercer")
 GM:AddPointShopItem("slugrifle",		ITEMCAT_GUNS,			500,			"weapon_zs_slugrifle")
@@ -465,7 +465,7 @@ GM:AddPointShopItem("boomstick",		ITEMCAT_GUNS,			500,			"weapon_zs_boomstick")
 GM:AddPointShopItem("bulldog",		ITEMCAT_GUNS,			500,			"weapon_zs_bulldog")
 GM:AddPointShopItem("clastix",			ITEMCAT_GUNS,			500,			"weapon_zs_clastix")
 GM:AddPointShopItem("autorgun",		ITEMCAT_GUNS,		    500,			"weapon_zs_auto_turret")
-GM:AddPointShopItem("pumpkinlayer",		ITEMCAT_GUNS,		    500,			"weapon_zs_pumpkinlayer")
+GM:AddPointShopItem("pumpkinlayer",		ITEMCAT_GUNS,		    500,			"weapon_zs_pumpkinlayer").New = true
 -- Tier 6 beta
 GM:AddPointShopItem("zeus",				ITEMCAT_GUNS,			1500,			"weapon_zs_zeus")
 GM:AddPointShopItem("balance_t6",				ITEMCAT_GUNS,			1500,			"weapon_zs_balance")

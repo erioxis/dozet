@@ -663,6 +663,7 @@ SKILLMOD_BUFF_TIME = 130
 SKILLMOD_REGEN_SPEED = 131
 SKILLMOD_TURRET_DAMAGE = 132
 SKILLMOD_DAMAGE_TAKEN_N = 133
+SKILLMOD_DRILL_POWER_BARREL = 134
 
 local GOOD = "^"..COLORID_GREEN
 local BAD = "^"..COLORID_RED
@@ -2795,6 +2796,9 @@ GM:SetSkillModifierFunction(SKILLMOD_SCALEMODEL, function(pl, amount)
 end)
 GM:SetSkillModifierFunction(SKILLMOD_DAMAGE_TAKEN_N, function(pl, amount)
 	pl.DamageTakenInt = math.Clamp(amount, -100, 1000)
+end)
+GM:SetSkillModifierFunction(SKILLMOD_DRILL_POWER_BARREL, function(pl, amount)
+	pl.DrillPowerBarrel = math.Clamp(1+amount, -1, 1000)
 end)
 
 

@@ -9,10 +9,6 @@ ENT.PushRamp = 2.5
 
 ENT.PushPeak = 0
 
-function ENT:ShouldNotCollide(ent)
-	return ent:IsPlayer() and ent:Team() == TEAM_HUMAN or ent:IsProjectile()
-end
-
 function ENT:Initialize()
 	self.PushPeak = CurTime() + self.PushRamp
 
@@ -47,8 +43,7 @@ function ENT:SetProp(ent)
 	self.OldMaterial = ent:GetMaterial()
 	ent.PreHoldCollisionGroup = ent.PreHoldCollisionGroup or ent:GetCollisionGroup()
 
-	
-
+	ent:SetCollisionGroup(COLLISION_GROUP_WEAPON)
 	ent:SetMaterial("models/spawn_effect")
 end
 
@@ -77,7 +72,6 @@ function ENT:Think()
 		self:Remove()
 		return
 	end
-	
 
 	local pushout = false
 	local timeout = self:GetTimeOut() > 0 and CurTime() >= self:GetTimeOut()
@@ -116,5 +110,3 @@ function ENT:Think()
 	self:NextThink(CurTime())
 	return true
 end
-
-

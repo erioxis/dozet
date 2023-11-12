@@ -1004,6 +1004,7 @@ LANGUAGE.skillmod_n130 = "%s к дополнительному времени б
 LANGUAGE.skillmod_n131 = "%s к скорости регенерации(статус)"
 LANGUAGE.skillmod_n132 = "%s к урону туррелей"
 LANGUAGE.skillmod_n133 = "%s Получаемого урона"
+LANGUAGE.skillmod_n134 = "%s к скорости добычи бочки."
 
 LANGUAGE.survival_name = "Выживание"
 LANGUAGE.survival_desc = "Тут собраны навыки для выживания,для начала эта ветка хороша."
@@ -1084,6 +1085,7 @@ LANGUAGE.something_cool_is_here		= "Появилось 2 зараженных с
 
 LANGUAGE.something_cool_is_here_2		= "Появилось 3 оружия на случайных позициях!"
 LANGUAGE.databox_start		= "Появилось несколько бочек с информацией!"
+LANGUAGE.farm_banana_here		= "Ферма бананов появилась!"
 LANGUAGE.datagod_start		= "Появилась мега бочка с информацией!!!"
 
 LANGUAGE.fix_item_hammer = "Зажми ШИФТ чтобы зафиксировать предмет!"
@@ -1346,6 +1348,14 @@ LANGUAGE.t_d_sale_q2                                = "+12% к скидке"
 LANGUAGE.t_d_sale_q3                                = "+18% к скидке"
 LANGUAGE.t_d_sale_q4                                 = "+22% К скидке"
 LANGUAGE.t_d_sale_q5                                 = "+30% К скидке\nВам так НУЖНЫ СКИДКИ?"
+
+LANGUAGE.t_driller                                  = "Дрель хехе"
+LANGUAGE.t_d_driller                                  = "+10% к скорости добычи бочки."
+LANGUAGE.t_d_driller_2                                  = "+17% к скорости добычи бочки"
+LANGUAGE.t_d_driller_3                                  = "+25% к скорости добычи бочки"
+LANGUAGE.t_d_driller_4                                  = "+45% к скорости добычи бочки\n-30% К шансу плохой бочки."
+LANGUAGE.t_d_driller_5                                  = "+60% к скорости добычи бочки\n-50% К шансу плохой бочки."
+LANGUAGE.t_d_driller_6                                  = "+70% к скорости добычи бочки\nНикаких плохих бочек!"
 
 LANGUAGE.trap_barrel = "СЛОМАННАЯ БОЧКА!Шанс к появлению 1|%d"
 LANGUAGE.t_d_ass                                        = "+6 хп,-2% к аккуратности стрельбы"

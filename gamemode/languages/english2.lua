@@ -150,6 +150,15 @@ LANGUAGE.t_headshoter                        = "Book about anotomy"
 LANGUAGE.t_pearl                        = "Pearl of balance"
 LANGUAGE.t_broken_world                        = "Double World"
 LANGUAGE.t_ind_buffer                        = "Color Chemicals"
+
+
+LANGUAGE.t_driller                                  = "Drill of hehe"
+LANGUAGE.t_d_driller                                  = "+10% Drill power for databarrel"
+LANGUAGE.t_d_driller_2                                  = "+17% Drill power for databarrel"
+LANGUAGE.t_d_driller_3                                  = "+25% Drill power for databarrel."
+LANGUAGE.t_d_driller_4                                  = "+45% Drill power for databarrel\n-30% Chance for bad barrel."
+LANGUAGE.t_d_driller_5                                  = "+60% Drill power for databarrel\n-50% Chance for bad barrel."
+LANGUAGE.t_d_driller_6                                  = "+70% Drill power for databarrel\nNo bad barrels!"
 -- virtues
 LANGUAGE.skill_steel_ass = "Steel ass"
 LANGUAGE.skill_steel_ass_d1 = "Baracats can't fall you!\n"

@@ -139,7 +139,6 @@ function ENT:DrawTranslucent()
 	if self.Rotation >= 360 then
 		self.Rotation = self.Rotation - 360
 	end
-
 	cDraw.r = r * 255
 	cDraw.g = g * 255
 	cDraw.b = b * 255
@@ -155,7 +154,6 @@ function ENT:DrawTranslucent()
 	render_DrawQuadEasy(spritepos, up, radius, radius, cDraw, self.Rotation)
 	render_DrawQuadEasy(spritepos, up * -1, radius, radius, cDraw, self.Rotation)
 	render_DrawSprite(spritepos2, radius, radius * 2, cDraw)
-
 	if curtime < self.NextEmit then return end
 	self.NextEmit = curtime + 0.05
 

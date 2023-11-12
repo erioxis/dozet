@@ -62,6 +62,8 @@ GM.WeaponStatBarVals = {
 
 	{"ConeMin",  trs("p_min_spr"), 0, 5, true},
 	{"ConeMax",  trs("p_max_spr"), 1, 7, true},
+	{"ReloadSpeed", trs("p_r_speed"), 0.05, 3, true, "Primary"},
+	{"BlockMultiplierWeapon",trs("p_block_m"),0,1,false},
 	{"WalkSpeed", trs("p_msp"), 200, 350, false}
 }
 

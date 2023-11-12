@@ -746,5 +746,5 @@ GM.Statuses["regeneration"] = {
 	MaxValueFunc = function(self, lp)
 		return (lp.RegenStatus and lp.RegenStatus:IsValid() and lp.RegenStatus:GetMaxStacks(lp) or 100)
 	end,
-	Icon = Material("skillweb/5_web.png")
+	Icon = Material("zombiesurvival/regeneration.png")
 }
