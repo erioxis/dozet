@@ -402,15 +402,15 @@ function meta:ProcessDamage(dmginfo)
 
 	end
 	if attacker:IsValid() and attacker:IsPlayer() and inflictor:IsValid() and mywep.IsMelee and mywep.Block then
-		local xpadded = math.Clamp(damage * 0.25,0.05,10)
 		damage = damage * ((0.90 * (self.BlockMultiplier or 1)) * (1-( mywep.BlockMultiplierWeapon or 0.3)))
-		if self:IsSkillActive(SKILL_AVOID_BLOCK) then
-			net.Start("zs_xp_damage")
-			net.WriteString(xpadded)
-			net.Send(self)
-			self:AddZSXP(xpadded)
-		end
 		if self:IsSkillActive(SKILL_TRUEBLOCK) and mywep.ParryTiming then 
+			if self:IsSkillActive(SKILL_AVOID_BLOCK) then
+				local xpadded = math.Clamp(damage * 0.25,1,50)
+				net.Start("zs_xp_damage")
+				net.WriteString(xpadded)
+				net.Send(self)
+				self:AddZSXP(xpadded)
+			end
 			damage = damage * 0.25
 			self:SendLua("LocalPlayer():EmitSound('npc/strider/fire.wav', 120, 40)")
 			--self:UpdateStyle({time = time+4+(math.random(1,20)*0.1),text = "PARRY!", Color(241,221,36),score = 15})
@@ -1620,6 +1620,9 @@ function meta:DropWeaponByType(class)
 			ent:SetWeaponType(class)
 			ent:Spawn()
 			ent:SetOwner(self)
+			if wep.OnDropDo then
+				wep:OnDropDo()
+			end
 
 			if wep.AmmoIfHas then
 				local ammocount = wep:GetPrimaryAmmoCount()

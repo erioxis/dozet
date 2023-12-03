@@ -176,6 +176,14 @@ GM.Alpha_P = math.Clamp(CreateClientConVar("zs_alpha_p", 90, true, false):GetFlo
 cvars.AddChangeCallback("zs_alpha_p", function(cvar, oldvalue, newvalue)
 	GAMEMODE.Alpha_P = math.Clamp(tonumber(newvalue) or 1, 0, 1)
 end)
+GM.SoundVolume = math.Clamp(CreateClientConVar("zs_sound_volume_wep", 1, true, true):GetFloat(), 0, 1)
+cvars.AddChangeCallback("zs_sound_volume_wep", function(cvar, oldvalue, newvalue)
+	GAMEMODE.SoundVolume = math.Clamp(tonumber(newvalue) or 1, 0, 1)
+	net.Start("zs_soundbruh")
+		net.WriteFloat(GAMEMODE.SoundVolume)
+	net.SendToServer()
+end)
+
 
 GM.Alpha_B = math.Clamp(CreateClientConVar("zs_alpha_b", 30, true, false):GetFloat(), 0, 255)
 cvars.AddChangeCallback("zs_alpha_b", function(cvar, oldvalue, newvalue)

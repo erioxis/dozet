@@ -495,6 +495,15 @@ function MakepOptions()
 	dropdown:SetTextColor(color_white)
 	list3:AddItem(dropdown)
 
+	
+	local slider = vgui.Create("DNumSlider", Window)
+	slider:SetDecimals(2)
+	slider:SetMinMax(0, 1)
+	slider:SetConVar("zs_sound_volume_wep")
+	slider:SetText(translate.Get("op_svolume"))
+	slider:SizeToContents()
+	list3:AddItem(slider)
+	
 	local slider = vgui.Create("DNumSlider", Window)
 	slider:SetDecimals(0)
 	slider:SetMinMax(2, 8)

@@ -5,7 +5,7 @@ GM.Website	=	"https://github.com/erioxis/dozet"
 
 -- No, adding a gun doesn't make your name worth being here.
 GM.Credits = {
-	{"Version", "", "9.2.3"},
+	{"Version", "", "9.2.4"},
 	{"Season of ", "", "Quality of Life"},
 	{"erioxis", "Phantom coder", "dead"},
 	{"Холодное Молочко(M-I-L-K-Y)", "Phantom coder", "dead"},
@@ -863,7 +863,23 @@ function GM:PlayerNoClip(pl, on)
 
 	return false
 end
-
+function GM:EntityEmitSound(t)
+	--PrintTable(t)
+	
+	local p = t.Volume
+	local who = t.Entity
+	local tbl = {t.SoundName,t.OriginalSoundName}
+	--PrintTable(string.Explode("/",string.lower(tbl[1])))
+	local wep = who and who:IsValidPlayer() and who:GetActiveWeapon()
+	local pathhasweapon = string.Explode("/",string.lower(tbl[1]))
+	
+	if who and who:IsValidPlayer()  and (table.HasValue(tbl,wep.Primary.Sound) or table.HasValue(tbl,wep.ReloadFinishSound) or table.HasValue(tbl,wep.ReloadSound) 
+	or table.HasValue(string.Explode("/",string.lower(tbl[2])),"weapon") 
+	or table.HasValue(pathhasweapon,")weapons") or table.HasValue(pathhasweapon,"weapons")) then
+		t.Volume = p * (who.VolumeOfWeapon or self.SoundVolume or GAMEMODE.SoundVolume or 1)
+		return true
+	end
+end
 function GM:IsSpecialPerson(pl, image, returns)
 	local img, tooltip
 	local trs = translate.Get

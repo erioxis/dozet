@@ -1860,8 +1860,8 @@ LANGUAGE.skill_lastabuse_d1 = "Have chance to double end wave points,luck can in
 LANGUAGE.skill_lastabuse_d2 = "25% Max health for heal"
 LANGUAGE.skill_battler = "Battler "
 LANGUAGE.skill_lanky = "Lanky "
-LANGUAGE.skill_xpdamage = "Transfer Damage"
-LANGUAGE.skill_xpdamage_d1 = "Give XP if you block damage\n"
+LANGUAGE.skill_xpdamage = "Experienced"
+LANGUAGE.skill_xpdamage_d1 = "Give XP on parry!\n25% Parried damage become XP\n"
 LANGUAGE.skill_laststand = "Last stand"
 LANGUAGE.skill_laststand_d1 = "Double melee damage when below 25% health\n"
 LANGUAGE.skill_laststand_d2 = "0.85x melee weapon damage at any other time"
@@ -2800,6 +2800,9 @@ LANGUAGE.s_sigildef_d= "Give immunity vs baracurse on 6 wave or higher.\n-24% Da
 LANGUAGE.s_target_d = "x2.2 Damage taken.\nx0.1 damage taken from melee weapon."
 LANGUAGE.s_regeneration_d = "Regenerate 1 hp per second.\nMax 100"
 LANGUAGE.s_stunned_d = "Hard to walk."
+
+LANGUAGE.s_warm = "WARM!"
+LANGUAGE.s_warm_d = "Remove frost and +15% reload speed and -20% fire delay."
 --Ammo 
 LANGUAGE.ammo_scrap = "Scrap"
 LANGUAGE.ammo_explosives = "Explosives"

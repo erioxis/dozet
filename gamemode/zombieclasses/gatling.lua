@@ -1,4 +1,4 @@
-CLASS.Name = "FUCKING CROW WITH MINIGUN"..math.Rand(1, 2)
+CLASS.Name = "FUCKING CROW WITH MINIGUN"
 CLASS.TranslationName = "class_crow_gatling"
 CLASS.Description = "description_crow"
 
@@ -8,8 +8,8 @@ CLASS.Boss = true
 CLASS.Hidden = true
 CLASS.SWEP = "weapon_zs_crowgatling"
 CLASS.Model = Model("models/crow.mdl")
-CLASS.Speed = 60
-CLASS.JumpPower = 350
+CLASS.Speed = 10
+CLASS.JumpPower = 20
 CLASS.Weight = 0
 CLASS.PainSounds = {"NPC_Crow.Pain"}
 CLASS.DeathSounds = {"NPC_Crow.Die"}

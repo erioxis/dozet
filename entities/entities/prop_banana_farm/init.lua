@@ -9,7 +9,7 @@ function ENT:Initialize()
 	self.CreateTime = CurTime()
 
 	self:SetModel("models/weapons/w_c4_planted.mdl")
-	timer.Simple(0, function() self:SetPos(self:GetPos()+Vector(0,0,16)) end)
+	timer.Simple(0, function()  if self:IsValid() then self:SetPos(self:GetPos()+Vector(0,0,16)) end end)
 	self:PhysicsInit(SOLID_VPHYSICS)
 	self:SetUseType(SIMPLE_USE)
 
@@ -31,7 +31,7 @@ function ENT:OnTakeDamage(dmginfo)
 
 	if dmginfo:GetDamage() <= 0 then return end
 
-	if not self.Exploded and dmginfo:GetDamage() >= 90 then
+	if not self.Exploded and dmginfo:GetDamage() >= 90 and dmginfo:GetAttacker():Team() == TEAM_UNDEAD then
 		self:Remove()
 	end
 end

@@ -1,5 +1,7 @@
 translate.AddLanguage("en", "English")
 
+
+LANGUAGE.op_svolume = "Volume of weapon(BETA)"
 --trinkets
 LANGUAGE.t_damager                                  = "Damager"
 LANGUAGE.t_healthpack                                  = "Health Packet"

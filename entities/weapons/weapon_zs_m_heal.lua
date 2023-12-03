@@ -50,7 +50,7 @@ SWEP.AllowQualityWeapons = true
 
 function SWEP:PrimaryAttack()
 	local owner = self:GetOwner()
-	if not self:CanPrimaryAttack() then return end
+	if not self:CanPrimaryAttack() or self:GetNextPrimaryFire() > CurTime()  then return end
 	if owner:GetBloodArmor() > 0 and self.Primary.ArmorBleed <= owner:GetBloodArmor() then
 		for _, pl in pairs(ents.FindInSphere(owner:GetPos(), 120)) do
 			if pl:IsPlayer() and pl:IsValidLivingHuman() and pl ~= owner then
@@ -60,6 +60,7 @@ function SWEP:PrimaryAttack()
 				end
 			end
 		end
+		self:SetNextPrimaryFire(CurTime()+6)
 	end
 
 end
@@ -70,7 +71,7 @@ function SWEP:SecondaryAttack()
 	if self:GetNextSecondaryFire() <= CurTime()  then
 		if not owner:IsValid() then return end
 		self:EmitSound("physics/body/body_medium_break"..math.random(2, 4)..".wav")
-		self:SetNextSecondaryFire(CurTime()+0.13)
+		self:SetNextSecondaryFire(CurTime()+0.43)
 		if SERVER then
 		if owner:GetBloodArmor() < owner.MaxBloodArmor then
 		owner:SetBloodArmor(math.min(owner:GetBloodArmor() + self.ArmorRegen) * (owner.MagicRegen or 1))

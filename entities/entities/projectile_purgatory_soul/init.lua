@@ -46,7 +46,7 @@ function ENT:Hit(vHitPos, vHitNormal, eHitEntity)
 	local effectdata = EffectData()
 		effectdata:SetOrigin(vHitPos)
 		effectdata:SetNormal(vHitNormal)
-	util.Effect("explosion_wispball", effectdata)
+	util.Effect("explosion_save_eye", effectdata)
 end
 
 function ENT:PhysicsCollide(data, phys)

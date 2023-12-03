@@ -145,7 +145,7 @@ function ENT:Think()
 end
 function ENT:OnSpawnInMe(pl)
 	pl:GiveStatus("zomdefence",8)
-	pl:GiveStatus("chains",8,self:GetNestOwner() and self:GetNestOwner():IsValid() or pl)
+	pl:GiveStatus("chains",8,self:GetNestOwner() and self:GetNestOwner():IsValid() and self:GetNestOwner() or pl)
 	pl:SetHealth(pl:Health()*1.5)
 end
 function ENT:OnTakeDamage(dmginfo)

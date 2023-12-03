@@ -9,6 +9,7 @@ Further credits displayed by pressing F1 in-game.
 This was my first ever gamemode. A lot of stuff is from years ago and some stuff is very recent.
 
 ]]
+GM.Halloween = false
 GM.NewYear = false
 AddCSLuaFile("cl_init.lua")
 AddCSLuaFile("shared.lua")
@@ -685,25 +686,27 @@ function GM:InitPostEntity()
 end
 
 function GM:SetupProps()
-	for _, d in pairs(ents.FindByClass("prop_dynamic*")) do
-		if d:IsValid() then
-			local convert = ents.Create("prop_physics")
-			local pos = d:GetPos()
-			convert:SetPos(pos)
-			convert:SetAngles(d:GetAngles())
-			convert:SetMaterial(d:GetMaterial())
-			convert:SetModel(d:GetModel())
-			convert:SetSkin(d:GetSkin() or 0)
-			convert:SetParent(d:GetParent(), d:GetParentAttachment())
-			convert:SetColor(d:GetColor())
-		--	convert:SetAnimation()
-			--if d:GetKeyValues() then
-				--for k,v in pairs(d:GetKeyValues()) do
-				--	convert:SetKeyValue(k,tostring(v))
+	if not self.ZombieEscape then
+		for _, d in pairs(ents.FindByClass("prop_dynamic*")) do
+			if d:IsValid() then
+				local convert = ents.Create("prop_physics")
+				local pos = d:GetPos()
+				convert:SetPos(pos)
+				convert:SetAngles(d:GetAngles())
+				convert:SetMaterial(d:GetMaterial())
+				convert:SetModel(d:GetModel())
+				convert:SetSkin(d:GetSkin() or 0)
+				convert:SetParent(d:GetParent(), d:GetParentAttachment())
+				convert:SetColor(d:GetColor())
+			--	convert:SetAnimation()
+				--if d:GetKeyValues() then
+					--for k,v in pairs(d:GetKeyValues()) do
+					--	convert:SetKeyValue(k,tostring(v))
+					--end
 				--end
-			--end
-			convert:Spawn()
-			d:Remove()
+				convert:Spawn()
+				d:Remove()
+			end
 		end
 	end
 	for _, ent in pairs(ents.FindByClass("prop_physics*")) do
@@ -3668,30 +3671,33 @@ function GM:NestDestroyed(ent, attacker)
 		PrintMessage(HUD_PRINTCONSOLE, attacker:LogID().." killed a nest at "..tostring(ent:GetPos()).." (builder: "..(ent:GetOwner() and ent:GetOwner():IsValid() and ent:GetOwner():IsPlayer() and ent:GetOwner():LogID() or "unknown")..")")
 	end
 end
+-- local variables for API functions. any changes to the line below will be lost on re-generation
+local ents_Create, ents_FindByClass, EffectData, gamemode_Call, math_ceil, math_Clamp, CurTime, math_max, math_min, math_random, math_Round, pairs, string_sub, util_Effect = ents.Create, ents.FindByClass, EffectData, gamemode.Call, math.ceil, math.Clamp, CurTime, math.max, math.min, math.random, math.Round, pairs, string.sub, util.Effect
+
 local function CurseAttach(pl)
 	if pl:IsValidLivingHuman() and pl:IsSkillActive(SKILL_CURSED_ALT)   and pl:IsSkillActive(SKILL_ATTACHMENT_CURSE) then return end
 	if pl:IsValidLivingHuman() and pl:IsSkillActive(SKILL_ATTACHMENT_CURSE) then
 		local cursed = pl:GetStatus("cursed")
-		if (cursed) then 
+		if (cursed) then
 			pl:AddCursed(pl, 1,nil,nil,true)
 		end
-		if (not cursed) then 
+		if (not cursed) then
 			pl:AddCursed(pl, 1)
 		end
 	end
 	if pl:IsValidLivingHuman() and pl:IsSkillActive(SKILL_CURSED_ALT) then
 		local cursed = pl:GetStatus("cursed")
-		if (cursed) then 
+		if (cursed) then
 			pl:AddCursed(pl,  1,nil,nil,true)
 		end
 	end
 end
 local function DoAttachmenttDamage(attacker,ent,damage,time)
-	if !attacker:HasTrinket("cham_at") then
+	if not attacker:HasTrinket("cham_at") then
 		local chnc = attacker.AttChance or 1
 		local damage2 = damage * (ent:GetZombieClassTable().ElementalDebuff or 1)
 		if attacker:HasTrinket("fire_at") then
-			if (math.max(math.random(1,5 * chnc),1) == 1 or attacker:IsSkillActive(SKILL_100_PERC) and (attacker.NextFireAtt or 0) < time ) then
+			if (math_max(math_random(1,5 * chnc),1) == 1 or attacker:IsSkillActive(SKILL_100_PERC) and (attacker.NextFireAtt or 0) < time ) then
 				ent:AttachmentDamage(damage2, attacker, attacker, SLOWTYPE_FLAME)
 				CurseAttach(attacker)
 				attacker.NextFireAtt = time + 2
@@ -3699,18 +3705,18 @@ local function DoAttachmenttDamage(attacker,ent,damage,time)
 			return
 		end
 		if attacker:HasTrinket("pulse_at")  then
-			if (math.max(math.random(1,7* chnc),1) == 1 or attacker:IsSkillActive(SKILL_100_PERC) and (attacker.NextPulseAtt or 0) < time)  then
+			if (math_max(math_random(1,7* chnc),1) == 1 or attacker:IsSkillActive(SKILL_100_PERC) and (attacker.NextPulseAtt or 0) < time)  then
 				ent:AttachmentDamage(damage2, attacker, attacker, SLOWTYPE_PULSE)
 				CurseAttach(attacker)
 				attacker.NextPulseAtt = time + 1
 			end
 			return
 		end
-		if attacker:HasTrinket("acid_at") then 
-			if (math.max(math.random(1,5* chnc),1) == 1  or attacker:IsSkillActive(SKILL_100_PERC) and (attacker.NextIceAtt or 0) < time) then
+		if attacker:HasTrinket("acid_at") then
+			if (math_max(math_random(1,5* chnc),1) == 1  or attacker:IsSkillActive(SKILL_100_PERC) and (attacker.NextIceAtt or 0) < time) then
 				ent:AttachmentDamage(damage2, attacker, attacker, SLOWTYPE_COLD)
-				if math.random(1,4) == 1 then
-					ent:GiveStatus("frost",math.random(1,7))
+				if math_random(1,4) == 1 then
+					ent:GiveStatus("frost",math_random(1,7))
 				end
 				CurseAttach(attacker)
 				attacker.NextIceAtt = time + 3
@@ -3718,18 +3724,18 @@ local function DoAttachmenttDamage(attacker,ent,damage,time)
 			return
 		end
 		local debuffed = ent:GetStatus("zombiestrdebuff")
-		if attacker:HasTrinket("ultra_at") and math.max(1,math.random(12* chnc)) == 1 then
-			ent:GiveStatus("zombiestrdebuff",math.random(1,7))
+		if attacker:HasTrinket("ultra_at") and math_max(1,math_random(12* chnc)) == 1 then
+			ent:GiveStatus("zombiestrdebuff",math_random(1,7))
 			CurseAttach(attacker)
-		elseif attacker:HasTrinket("ultra_at") and (debuffed) and math.random(12* chnc) == 1 then
-			ent:GiveStatus("zombiestrdebuff",math.random(7,14))
+		elseif attacker:HasTrinket("ultra_at") and (debuffed) and math_random(12* chnc) == 1 then
+			ent:GiveStatus("zombiestrdebuff",math_random(7,14))
 			CurseAttach(attacker)
 		end
 	end
 end
 function GM:EntityTakeDamage(ent, dmginfo)
 	local attacker, inflictor = dmginfo:GetAttacker(), dmginfo:GetInflictor()
-	
+
 	if attacker == inflictor and attacker:IsProjectile() and dmginfo:GetDamageType() == DMG_CRUSH then -- Fixes projectiles doing physics-based damage.
 		dmginfo:SetDamage(0)
 		dmginfo:ScaleDamage(0)
@@ -3763,15 +3769,15 @@ function GM:EntityTakeDamage(ent, dmginfo)
 	if attacker.DeadXD then
 		damage = damage * 2
 	end
-	if !ent:IsPlayer() and (attacker:IsPlayer() and attacker:Team() == TEAM_UNDEAD) then
-		damage = damage * (1 + math.Clamp(GAMEMODE:GetBalance()/100,0,3))
+	if not ent:IsPlayer() and (attacker:IsPlayer() and attacker:Team() == TEAM_UNDEAD) then
+		damage = damage * (1 + math_Clamp(GAMEMODE:GetBalance()/100,0,3))
 	end
 	dmginfo:SetDamage(damage)
 	if ent.ProcessDamage and ent:ProcessDamage(dmginfo) then return end
 	attacker, inflictor = dmginfo:GetAttacker(), dmginfo:GetInflictor()
 
 	-- Don't allow blowing up props during wave 0.
-	if self:GetWave() <= 0 and string.sub(ent:GetClass(), 1, 12) == "prop_physics" and inflictor.NoPropDamageDuringWave0 then
+	if self:GetWave() <= 0 and string_sub(ent:GetClass(), 1, 12) == "prop_physics" and inflictor.NoPropDamageDuringWave0 then
 		dmginfo:SetDamage(0)
 		dmginfo:SetDamageType(DMG_ALWAYSGIB)
 		return
@@ -3780,18 +3786,18 @@ function GM:EntityTakeDamage(ent, dmginfo)
 	-- We need to stop explosive chains team killing.
 	if inflictor:IsValid() then
 		local dmgtype = dmginfo:GetDamageType()
-		if ent:IsPlayer() and (dmgtype == DMG_ALWAYSGIB or dmgtype == DMG_BURN or dmgtype == DMG_SLOWBURN) and string.sub(inflictor:GetClass(), 1, 12) == "prop_physics" then -- We'll assume a barrel did this damage to a player
+		if ent:IsPlayer() and (dmgtype == DMG_ALWAYSGIB or dmgtype == DMG_BURN or dmgtype == DMG_SLOWBURN) and string_sub(inflictor:GetClass(), 1, 12) == "prop_physics" then -- We'll assume a barrel did this damage to a player
 			if inflictor.LastDamagedByTeam == ent:Team() and inflictor.LastDamagedBy ~= ent then -- A team member is trying to screw with us
 				dmginfo:SetDamage(0)
 				dmginfo:ScaleDamage(0)
 				return
 			end
-		elseif string.sub(ent:GetClass(), 1, 12) == "prop_physics" then -- Physics object damaged by...
+		elseif string_sub(ent:GetClass(), 1, 12) == "prop_physics" then -- Physics object damaged by...
 			if inflictor:IsPlayer() then
 				ent.LastDamagedByTeam = inflictor:Team()
 				ent.LastDamagedBy = inflictor
-				
-			elseif (dmgtype == DMG_ALWAYSGIB or dmgtype == DMG_BURN or dmgtype == DMG_SLOWBURN) and string.sub(inflictor:GetClass(), 1, 12) == "prop_physics" then -- A barrel damaging a barrel. Probably.
+
+			elseif (dmgtype == DMG_ALWAYSGIB or dmgtype == DMG_BURN or dmgtype == DMG_SLOWBURN) and string_sub(inflictor:GetClass(), 1, 12) == "prop_physics" then -- A barrel damaging a barrel. Probably.
 				if inflictor.LastDamagedByTeam then
 					ent.LastDamagedByTeam = inflictor.LastDamagedByTeam
 					ent.LastDamagedBy = inflictor.LastDamagedBy
@@ -3805,19 +3811,19 @@ function GM:EntityTakeDamage(ent, dmginfo)
 
 	local dispatchdamagedisplay = false
 	local entclass = ent:GetClass()
-	if !ent:IsPlayer() and attacker and attacker:IsPlayer() and !attacker.Zban and !ent.OnRemoveMimic  then
+	if not ent:IsPlayer() and attacker and attacker:IsPlayer() and not attacker.Zban and not ent.OnRemoveMimic  then
 		if ent:GetOwner() ~= attacker then
-			local damage = math.min(dmginfo:GetDamage(), ent:Health())
-			attacker:AddTokens(math.ceil((damage or 2) * 0.25))
+			local damage = math_min(dmginfo:GetDamage(), ent:Health())
+			attacker:AddTokens(math_ceil((damage or 2) * 0.25))
 			if attacker.m_DoubleXP then
-				attacker:AddTokens(math.ceil((damage or 2) * 0.25))
+				attacker:AddTokens(math_ceil((damage or 2) * 0.25))
 			end
 		end
 	end
 
 	if ent:IsPlayer() then
 		dispatchdamagedisplay = true
-		
+
 
 		if attacker.PBAttacker and attacker.PBAttacker:IsValid() then
 			attacker = attacker.PBAttacker
@@ -3832,7 +3838,7 @@ function GM:EntityTakeDamage(ent, dmginfo)
 				local otherteam = ent:Team()
 
 				if myteam ~= otherteam then
-					local damage = math.min(dmginfo:GetDamage(), ent:Health())
+					local damage = math_min(dmginfo:GetDamage(), ent:Health())
 					if damage > 0 then
 						local time = CurTime()
 
@@ -3840,13 +3846,13 @@ function GM:EntityTakeDamage(ent, dmginfo)
 
 						if myteam == TEAM_UNDEAD then
 							if otherteam == TEAM_HUMAN then
-									attacker:AddLifeHumanDamage(damage)
-									attacker:AddTokens(math.ceil(damage * 2))
-									attacker:AddZSXP(math.min(ent:GetMaxHealth()*0.2,math.ceil(damage * 0.2)))
+								attacker:AddLifeHumanDamage(damage)
+								attacker:AddTokens(math_ceil(damage * 2))
+								attacker:AddZSXP(math_min(ent:GetMaxHealth()*0.2,math_ceil(damage * 0.2)))
 							end
 						elseif myteam == TEAM_HUMAN and otherteam == TEAM_UNDEAD then
 							ent.DamagedBy[attacker] = (ent.DamagedBy[attacker] or 0) + damage
-							
+
 							if time >= ent.m_LastWaveStartSpawn + 3 and time >= ent.m_LastGasHeal + 2 then
 								local points = damage / ent:GetMaxHealth() * ent:GetZombieClassTable().Points * (ent:IsChampion() and 1.5 or 1)
 								if POINTSMULTIPLIER then
@@ -3858,11 +3864,11 @@ function GM:EntityTakeDamage(ent, dmginfo)
 								attacker.PointQueue = attacker.PointQueue + points
 							end
 							if numofdaily == 3 then
-								attacker:GiveAchievementProgress("daily_post", math.Round(math.min(damage, ent:Health())))
+								attacker:GiveAchievementProgress("daily_post", math_Round(math_min(damage, ent:Health())))
 							end
-							
+
 							DoAttachmenttDamage(attacker,ent,damage,time)
-							 
+
 
 							local pos = ent:GetPos()
 							pos.z = pos.z + 32
@@ -3881,7 +3887,7 @@ function GM:EntityTakeDamage(ent, dmginfo)
 			return
 		end
 
-		if gamemode.Call("ShouldAntiGrief", ent, attacker, dmginfo, ent.PropHealth) then
+		if gamemode_Call("ShouldAntiGrief", ent, attacker, dmginfo, ent.PropHealth) then
 			attacker:AntiGrief(dmginfo)
 			if dmginfo:GetDamage() <= 0 then return end
 		end
@@ -3893,13 +3899,13 @@ function GM:EntityTakeDamage(ent, dmginfo)
 
 		if ent.PropHealth <= 0 then
 			local effectdata = EffectData()
-				effectdata:SetOrigin(ent:GetPos())
-			util.Effect("Explosion", effectdata, true, true)
+			effectdata:SetOrigin(ent:GetPos())
+			util_Effect("Explosion", effectdata, true, true)
 			ent:Fire("break")
 
-			gamemode.Call("PropBroken", ent, attacker)
+			gamemode_Call("PropBroken", ent, attacker)
 		else
-			local brit = math.Clamp(ent.PropHealth / ent.TotalHealth, 0, 1)
+			local brit = math_Clamp(ent.PropHealth / ent.TotalHealth, 0, 1)
 			local col = ent:GetColor()
 			col.r = 255
 			col.g = 255 * brit
@@ -3923,18 +3929,18 @@ function GM:EntityTakeDamage(ent, dmginfo)
 			ent.TotalHeal = health
 		end
 
-		if gamemode.Call("ShouldAntiGrief", ent, attacker, dmginfo, ent.TotalHeal) then
+		if gamemode_Call("ShouldAntiGrief", ent, attacker, dmginfo, ent.TotalHeal) then
 			attacker:AntiGrief(dmginfo)
 			if dmginfo:GetDamage() <= 0 then return end
 		end
 
 		if dmginfo:GetDamage() >= 20 and attacker:IsPlayer() and attacker:Team() == TEAM_UNDEAD then
-			ent:EmitSound(math.random(2) == 1 and "npc/zombie/zombie_pound_door.wav" or "ambient/materials/door_hit1.wav")
+			ent:EmitSound(math_random(2) == 1 and "npc/zombie/zombie_pound_door.wav" or "ambient/materials/door_hit1.wav")
 
 		end
 
 		ent.Heal = ent.Heal - dmginfo:GetDamage()
-		local brit = math.Clamp(ent.Heal / ent.TotalHeal, 0, 1)
+		local brit = math_Clamp(ent.Heal / ent.TotalHeal, 0, 1)
 		local col = ent:GetColor()
 		col.r = 255
 		col.g = 255 * brit
@@ -3961,20 +3967,20 @@ function GM:EntityTakeDamage(ent, dmginfo)
 		end
 
 		if dmginfo:GetDamage() >= 20 and attacker:IsPlayer() and attacker:Team() == TEAM_UNDEAD then
-			ent:EmitSound(math.random(2) == 1 and "npc/zombie/zombie_pound_door.wav" or "ambient/materials/door_hit1.wav")
+			ent:EmitSound(math_random(2) == 1 and "npc/zombie/zombie_pound_door.wav" or "ambient/materials/door_hit1.wav")
 		end
 
 		if self.ZombieEscape then
 			return
 		end
 
-		if gamemode.Call("ShouldAntiGrief", ent, attacker, dmginfo, ent.TotalHeal) then
+		if gamemode_Call("ShouldAntiGrief", ent, attacker, dmginfo, ent.TotalHeal) then
 			attacker:AntiGrief(dmginfo)
 			if dmginfo:GetDamage() <= 0 then return end
 		end
 
 		ent.Heal = ent.Heal - dmginfo:GetDamage()
-		local brit = math.Clamp(ent.Heal / ent.TotalHeal, 0, 1)
+		local brit = math_Clamp(ent.Heal / ent.TotalHeal, 0, 1)
 		local col = ent:GetColor()
 		col.r = 255
 		col.g = 255 * brit
@@ -3992,7 +3998,7 @@ function GM:EntityTakeDamage(ent, dmginfo)
 			ent:Fire("break", "", 0.1)
 			ent:Fire("kill", "", 0.15)
 
-			local physprop = ents.Create("prop_physics")
+			local physprop = ents_Create("prop_physics")
 			if physprop:IsValid() then
 				physprop:SetPos(ent:GetPos())
 				physprop:SetAngles(ent:GetAngles())
@@ -4004,11 +4010,11 @@ function GM:EntityTakeDamage(ent, dmginfo)
 				if attacker:IsValid() then
 					local phys = physprop:GetPhysicsObject()
 					if phys:IsValid() then
-						phys:SetVelocityInstantaneous((physprop:NearestPoint(attacker:EyePos()) - attacker:EyePos()):GetNormalized() * math.Clamp(dmginfo:GetDamage() * 3, 40, 300))
+						phys:SetVelocityInstantaneous((physprop:NearestPoint(attacker:EyePos()) - attacker:EyePos()):GetNormalized() * math_Clamp(dmginfo:GetDamage() * 3, 40, 300))
 					end
 				end
 				if physprop:GetMaxHealth() == 1 and physprop:Health() == 0 then
-					local health = math.ceil((physprop:OBBMins():Length() + physprop:OBBMaxs():Length()) * 2)
+					local health = math_ceil((physprop:OBBMins():Length() + physprop:OBBMaxs():Length()) * 2)
 					if health < 2000 then
 						physprop.PropHealth = health
 						physprop.TotalHealth = health
@@ -4024,14 +4030,14 @@ function GM:EntityTakeDamage(ent, dmginfo)
 			return
 		end
 
-		if gamemode.Call("ShouldAntiGrief", ent, attacker, dmginfo, ent:GetMaxHealth()) then
+		if gamemode_Call("ShouldAntiGrief", ent, attacker, dmginfo, ent:GetMaxHealth()) then
 			attacker:AntiGrief(dmginfo, true)
 			if dmginfo:GetDamage() <= 0 then return end
 		end
 
 		if ent:Health() == 0 and ent:GetMaxHealth() == 1 then return end
 
-		local brit = math.Clamp(ent:Health() / ent:GetMaxHealth(), 0, 1)
+		local brit = math_Clamp(ent:Health() / ent:GetMaxHealth(), 0, 1)
 		local col = ent:GetColor()
 		col.r = 255
 		col.g = 255 * brit
@@ -4039,7 +4045,7 @@ function GM:EntityTakeDamage(ent, dmginfo)
 		ent:SetColor(col)
 
 		dispatchdamagedisplay = true
-	elseif string.sub(entclass, 1, 12) == "func_physbox" then
+	elseif string_sub(entclass, 1, 12) == "func_physbox" then
 		local holder, status = ent:GetHolder()
 		if holder then status:Remove() end
 
@@ -4053,13 +4059,13 @@ function GM:EntityTakeDamage(ent, dmginfo)
 		ent.Heal = ent.Heal or ent:BoundingRadius() * 35
 		ent.TotalHeal = ent.TotalHeal or ent.Heal
 
-		if gamemode.Call("ShouldAntiGrief", ent, attacker, dmginfo, ent.TotalHeal) then
+		if gamemode_Call("ShouldAntiGrief", ent, attacker, dmginfo, ent.TotalHeal) then
 			attacker:AntiGrief(dmginfo)
 			if dmginfo:GetDamage() <= 0 then return end
 		end
 
 		ent.Heal = ent.Heal - dmginfo:GetDamage()
-		local brit = math.Clamp(ent.Heal / ent.TotalHeal, 0, 1)
+		local brit = math_Clamp(ent.Heal / ent.TotalHeal, 0, 1)
 		local col = ent:GetColor()
 		col.r = 255
 		col.g = 255 * brit
@@ -4071,7 +4077,7 @@ function GM:EntityTakeDamage(ent, dmginfo)
 		if ent.Heal <= 0 then
 			local foundaxis = false
 			local entname = ent:GetName()
-			local allaxis = ents.FindByClass("phys_hinge")
+			local allaxis = ents_FindByClass("phys_hinge")
 			for _, axis in pairs(allaxis) do
 				local keyvalues = axis:GetKeyValues()
 				if keyvalues.attach1 == entname or keyvalues.attach2 == entname then
@@ -6288,3 +6294,9 @@ net.Receive("zs_nestspec", function(len, sender)
 		sender:SpectateEntity(nest)
 	end
 end)
+net.Receive("zs_soundbruh", function(len, sender)
+	if sender and sender:IsValid() then
+		sender.VolumeOfWeapon = net.ReadFloat()
+	end
+end)
+

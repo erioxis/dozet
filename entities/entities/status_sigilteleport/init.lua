@@ -14,7 +14,7 @@ function ENT:Think()
 	local froms = self:GetFromSigil()
 
 	if CurTime() >= self:GetEndTime() then
-		if froms and froms:IsValid() and self:GetTargetSigil() and self:GetTargetSigil():IsValid() then
+		if froms and froms:IsValid() and self:GetTargetSigil() and self:GetTargetSigil():IsValid() and (owner:Team() == TEAM_HUMAN or self:GetTargetSigil():GetSigilCorrupted()) then
 			owner:DoSigilTeleport(self:GetTargetSigil(), froms, self:GetClass() == "status_corruptedteleport")
 		end
 

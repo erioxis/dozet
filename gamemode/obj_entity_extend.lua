@@ -611,6 +611,7 @@ function meta:IsPhysicsModel(mdl)
 	return string.sub(self:GetClass(), 1, 12) == "prop_physics" and (not mdl or string.lower(self:GetModel()) == string.lower(mdl))
 end
 
+
 function meta:IsWeaponType(class)
 	return self:GetClass() == "prop_weapon" and self:GetWeaponType() == class or (self:IsWeapon() and self:GetClass() == class)
 end

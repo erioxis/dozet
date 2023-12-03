@@ -5,7 +5,6 @@ TEAM_SURVIVOR = 4
 TEAM_SURVIVORS = TEAM_SURVIVOR
 TEAM_HUMAN = TEAM_SURVIVOR
 TEAM_HUMANS = TEAM_SURVIVOR
-GM.Halloween = true
 
 DISMEMBER_HEAD = 1
 DISMEMBER_LEFTARM = 2
@@ -138,7 +137,7 @@ GM.MaxArmDamage = 20
 
 GM.UtilityKey = IN_SPEED
 GM.MenuKey = IN_WALK -- I would use the spawn menu but it has no IN_ key assignment.
-GM.SpecialAbilityKey = KEY_Q -- Мб добавлю абилки оружкам
+GM.SpecialAbilityKey = KEY_Q -- ДОБАВИЛ)
 
 GM.ArsenalCrateCommission = 0.45
 
@@ -331,7 +330,8 @@ GM.ResistableStatuses = {
 	"frost",
 	"rot",
 	"poison",
-	"sticky"
+	"sticky",
+	"dosei_inf"
 }
 
 GM.ScrapVals = {
