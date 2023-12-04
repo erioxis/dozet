@@ -871,13 +871,15 @@ function GM:EntityEmitSound(t)
 	local tbl = {t.SoundName,t.OriginalSoundName}
 	--PrintTable(string.Explode("/",string.lower(tbl[1])))
 	local wep = who and who:IsValidPlayer() and who:GetActiveWeapon()
-	local pathhasweapon = string.Explode("/",string.lower(tbl[1]))
-	
-	if who and who:IsValidPlayer()  and (table.HasValue(tbl,wep.Primary.Sound) or table.HasValue(tbl,wep.ReloadFinishSound) or table.HasValue(tbl,wep.ReloadSound) 
-	or table.HasValue(string.Explode("/",string.lower(tbl[2])),"weapon") 
-	or table.HasValue(pathhasweapon,")weapons") or table.HasValue(pathhasweapon,"weapons")) then
-		t.Volume = p * (who.VolumeOfWeapon or self.SoundVolume or GAMEMODE.SoundVolume or 1)
-		return true
+	if wep and wep:IsValid() and (wep.ReloadSound or wep.Primary and wep.Primary.Sound or wep.ReloadFinishSound) then 
+		local pathhasweapon = string.Explode("/",string.lower(tbl[1]))
+		
+		if who and who:IsValidPlayer()  and (table.HasValue(tbl,wep.Primary.Sound) or table.HasValue(tbl,wep.ReloadFinishSound) or table.HasValue(tbl,wep.ReloadSound) 
+		or table.HasValue(string.Explode("/",string.lower(tbl[2])),"weapon") 
+		or table.HasValue(pathhasweapon,")weapons") or table.HasValue(pathhasweapon,"weapons")) then
+			t.Volume = p * (who.VolumeOfWeapon or self.SoundVolume or GAMEMODE.SoundVolume or 1)
+			return true
+		end
 	end
 end
 function GM:IsSpecialPerson(pl, image, returns)

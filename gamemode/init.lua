@@ -4911,7 +4911,7 @@ function GM:HumanKilledZombie(pl, attacker, inflictor, dmginfo, headshot, suicid
 				timer.Simple(0.9, function() inflictor2.Eater = nil end)
 			end
 		end
-		if attacker:IsSkillActive(SKILL_ABFINGES) and math.random(1,10) == 1 then
+		if attacker:IsSkillActive(SKILL_ABFINGERS) and math.random(1,10) == 1 then
 			local reaperstatus = attacker:GiveStatus("reaper", 14)
 			if reaperstatus and reaperstatus:IsValid() then
 				reaperstatus:SetDTInt(1, math.min(reaperstatus:GetDTInt(1) + 1, 50))

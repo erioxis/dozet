@@ -64,7 +64,7 @@ LANGUAGE.skill_shine_hit = "Сияющий удар"
 LANGUAGE.skill_shine_hit_d1 = "+40% Урона ближнего боя против зомби который атакует!\n"
 LANGUAGE.skill_freexp = "Доп.Опыт "
 LANGUAGE.skill_toy = "Лучший Друг Тоя"
-LANGUAGE.skill_toy_d = "Если победить с ним то даст дополнительно 10к опыта!\n"
+LANGUAGE.skill_toy_d = "Если победить с ним то даст дополнительно 10к опыта!\nНe работаeт на ОБЖ и картах гдe нe 12 волн!\n"
 --деф\
 LANGUAGE.skill_steel_ass = "Стальные ягодицы"
 LANGUAGE.skill_steel_ass_d1 = "Баракотовые не заставляют вас падать!\n"
