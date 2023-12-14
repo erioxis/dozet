@@ -16,7 +16,7 @@ function meta:AddStamina(stamina, run)
     end
 	self:SetStamina(math.Clamp(self:GetStamina() + stamina,1,100))
     if stamina < 0 then
-        self.StaminaUsed = CurTime() + 1.1 + (self:GetActiveWeapon() and self:GetActiveWeapon().Primary.Delay or 1) * 1.7
+        self.StaminaUsed = CurTime() + 1.1 + (self:GetActiveWeapon() and self:GetActiveWeapon().Primary.Delay or 1) * 1.2
         if run then
             self.StaminaRun = CurTime() + 0.5
         end

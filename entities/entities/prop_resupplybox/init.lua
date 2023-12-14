@@ -13,18 +13,15 @@ hook.Add("OnPlayerChangedTeam", "ResupplyBox.OnPlayerChangedTeam", RefreshCrateO
 function ENT:Initialize()
 	self:SetModel("models/Items/ammocrate_ar2.mdl")
 
-	self:SetUseType(SIMPLE_USE)
 	self:SetPlaybackRate(1)
-		self:SetCollisionGroup(COLLISION_GROUP_WORLD)
-	
-    self:PhysicsInit(SOLID_VPHYSICS)
+	self:PhysicsInit(SOLID_VPHYSICS)
+	self:SetUseType(SIMPLE_USE)
 
 	self:CollisionRulesChanged()
 
 	local phys = self:GetPhysicsObject()
 	if phys:IsValid() then
 		phys:EnableMotion(false)
-		phys:AddGameFlag(FVPHYSICS_NO_IMPACT_DMG)
 	end
 
 	self:SetMaxObjectHealth(1000)

@@ -73,6 +73,7 @@ GAMEMODE:AddNewRemantleBranch(SWEP, 1, translate.Get("wep_ricosic_r1"), translat
 	wept.ReloadSpeed = 0.6
 
 	wept.BulletCallback = function(attacker, tr, dmginfo)
+		wept.BaseClass.BulletCallback(attacker, tr, dmginfo)
 		local effectdata = EffectData()
 			effectdata:SetOrigin(tr.HitPos)
 			effectdata:SetNormal(tr.HitNormal)
@@ -140,6 +141,7 @@ function SWEP:Think()
 end
 
 function SWEP.BulletCallback(attacker, tr, dmginfo)
+	attacker:GetActiveWeapon().BaseClass.BulletCallback(attacker, tr, dmginfo)
 	local effectdata = EffectData()
 		effectdata:SetOrigin(tr.HitPos)
 		effectdata:SetNormal(tr.HitNormal)
@@ -147,7 +149,7 @@ function SWEP.BulletCallback(attacker, tr, dmginfo)
 	if CLIENT or tr.HitSky then return end
 	local me = attacker:GetActiveWeapon()
 	for i=1,7 do
-		timer.Simple(0.11*i, function() me:FireBulletsLua(tr.HitPos+Vector(0,0,5), (tr.StartPos - tr.HitPos):GetNormal(), 10*i, 1, me.Primary.Damage*0.6, attacker, 1, "tracer_rico", nil, nil, nil, 1028, nil) end)
+		timer.Simple(0.11*i, function() me:FireBulletsLua(tr.HitPos+Vector(0,0,5), (tr.StartPos - tr.HitPos):GetNormal(), 10*i, 1, (me.Primary.Damage or 200)*0.6, attacker, 1, "tracer_rico", nil, nil, nil, 1028, nil) end)
 	end
 end
 

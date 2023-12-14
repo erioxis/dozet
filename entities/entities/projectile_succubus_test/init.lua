@@ -13,21 +13,23 @@ function ENT:Initialize()
 end
 function ENT:ShootBullets(dmg, numbul)
 	local owner = self:GetOwner()
-	if self.PointsMultiplier then
-		POINTSMULTIPLIER = self.PointsMultiplier
-	end
-	self:EmitSound("zombiesurvival/purg_ghostdash"..math.random(1,3)..".wav", 100, nil,100)
-	local target = self.trg
-	local targetpos = target:LocalToWorld(target:OBBCenter())
-	local direction = (targetpos - self:GetPos()):GetNormal()
-	owner:LagCompensation(true)	
-	self:SetDTVector(22, direction)
-	self:FireBulletsLua(self:GetPos(), direction, 0, numbul, dmg, owner, self.KnockbackScale, self.TracerName, self.BulletCallback, 1, nil, 1028, nil, self)
-	owner:LagCompensation(false)
-	self.trg = NULL
+	if owner and owner:IsValid() then 
+		if self.PointsMultiplier then
+			POINTSMULTIPLIER = self.PointsMultiplier
+		end
+		self:EmitSound("zombiesurvival/purg_ghostdash"..math.random(1,3)..".wav", 100, nil,100)
+		local target = self.trg
+		local targetpos = target:LocalToWorld(target:OBBCenter())
+		local direction = (targetpos - self:GetPos()):GetNormal()
+		owner:LagCompensation(true)	
+		self:SetDTVector(22, direction)
+		self:FireBulletsLua(self:GetPos(), direction, 0, numbul, dmg, owner, self.KnockbackScale, self.TracerName, owner:GetActiveWeapon().BulletCallback, 1, nil, 1028, nil, self)
+		owner:LagCompensation(false)
+		self.trg = NULL
 
-	if self.PointsMultiplier then
-		POINTSMULTIPLIER = nil
+		if self.PointsMultiplier then
+			POINTSMULTIPLIER = nil
+		end
 	end
 end
 function compare(a,b)

@@ -7,8 +7,8 @@ CLASS.Help = "controls_frostshade"
 
 CLASS.Boss = true
 
-CLASS.Health = 1900
-CLASS.Speed = 170
+CLASS.Health = 3999
+CLASS.Speed = 250
 
 
 CLASS.SWEP = "weapon_zs_frostshade"

@@ -272,9 +272,13 @@ LANGUAGE.t_d_cryoinductor                                 = "Ice weapon can blow
 LANGUAGE.t_d_pboom                                 = "When you deal enough damage to the pulse there is a chance of an explosion\n -11% pulse slowdown"
 LANGUAGE.t_d_pulseboosteri                                 = "+14% to pulse slowdown\n+22% to explosive radius"
 LANGUAGE.t_d_pulsebooster                                 = "+14% to pulse slowdown"
-LANGUAGE.t_d_targetiiii                                 = "-52% to strenght aim shake\n+11% accuracy\n You can see hp zombie"
+LANGUAGE.t_d_targetiiii                                 = "-22% to strenght aim shake\n+11% accuracy\n You can see hp zombie"
 LANGUAGE.t_d_targetiii                                 = "+27% Accuracy if weapon tier 3 or lower"
-LANGUAGE.t_d_targetii                                 = "+11% to accuracy"
+LANGUAGE.t_d_targetii                                 = "+15% to accuracy"
+LANGUAGE.t_d_targetq2                                = "+20% to accuracy"
+LANGUAGE.t_d_targetq3                                = "+30% to accuracy"
+LANGUAGE.t_d_targetq4                                = "+35% to accuracy\n+15% Damage in head"
+LANGUAGE.t_d_targetq4                                = "+40% to accuracy\n+25% Damage in head\nYou can see hp zombie and -22% to strenght aim shake"
 LANGUAGE.t_d_targeti                                 = "+6% to accuracy"
 LANGUAGE.t_d_autor                                 = "Reload last weapon every 4 seconds"
 LANGUAGE.t_d_gg_nomi                                 = "Give Gomu Gomu Abilities"
@@ -327,6 +331,10 @@ LANGUAGE.t_d_gaunt                            = "Charges your melee damage up to
 LANGUAGE.t_d_fkit                            = "Deal up to +32% melee damage to slowed zombies"
 LANGUAGE.t_d_skit                            = "+5% Melee damage"
 LANGUAGE.t_d_adrenaline                           = "Each hit on you gives 3 seconds of buffs\n Give every 60 seconds buff for damage."
+
+
+LANGUAGE.t_godmirror = "Mirror of all"
+LANGUAGE.t_d_godmirror = "Create a clone of you!Can give weapon to clone!\nOn remove clone don't give back a weapon!!!"
 
 LANGUAGE.applier_x_status = "Applied by %s"
 

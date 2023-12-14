@@ -2,8 +2,8 @@ AddCSLuaFile()
 
 --SWEP.PrintName = "'Goset' Glock 3"
 --SWEP.Description = "Fires 2 shots at once. Not very accurate, but very damaging up close."
-SWEP.PrintName = ""..translate.Get("wep_glock")
-SWEP.Description = ""..translate.Get("wep_d_glock")
+SWEP.PrintName = translate.Get("wep_glock")
+SWEP.Description = translate.Get("wep_d_glock")
 
 SWEP.Slot = 1
 SWEP.SlotPos = 0
@@ -45,7 +45,7 @@ SWEP.IronSightsPos = Vector(-5.75, 10, 2.7)
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_MAX_SPREAD, -0.9, 1)
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_MIN_SPREAD, -0.5, 1)
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_CLIP_SIZE, 1, 1)
-GAMEMODE:AddNewRemantleBranch(SWEP, 1, ""..translate.Get("wep_glock_r1"), ""..translate.Get("wep_d_glock_r1"), function(wept)
+GAMEMODE:AddNewRemantleBranch(SWEP, 1, translate.Get("wep_glock_r1"), translate.Get("wep_d_glock_r1"), function(wept)
 	wept.Primary.NumShots = 4
 	wept.Primary.Damage = wept.Primary.Damage * 0.7
 	wept.ConeMin = wept.ConeMin * 0.65
@@ -61,7 +61,7 @@ GAMEMODE:AddNewRemantleBranch(SWEP, 1, ""..translate.Get("wep_glock_r1"), ""..tr
 		end
 	end
 end)
-local branch = GAMEMODE:AddNewRemantleBranch(SWEP, 2, ""..translate.Get("wep_glock_r2"), ""..translate.Get("wep_d_glock_r2"), function(wept)
+local branch = GAMEMODE:AddNewRemantleBranch(SWEP, 2, translate.Get("wep_glock_r2"), translate.Get("wep_d_glock_r2"), function(wept)
 	wept.Primary.NumShots = 1
 	wept.Primary.Damage = wept.Primary.Damage * 3
 	wept.Primary.Delay = 1.6

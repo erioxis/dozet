@@ -71,8 +71,7 @@ function SWEP:EmitFireSound()
 		self:EmitSound("weapons/sg552/sg552-1.wav", 70, 45, 0.95, CHAN_AUTO)
 	end
 end
-function SWEP.BulletCallback(attacker, tr, dmginfo)
-end
+
 function SWEP:ShootBullets(dmg, numbul, cone)
 	local owner = self:GetOwner()
 	local zeroclip = self:Clip1() == 0

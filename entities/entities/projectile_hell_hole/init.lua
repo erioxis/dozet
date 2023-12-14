@@ -24,7 +24,7 @@ function ENT:ShootBullets(dmg, numbul)
 	local direction = (targetpos - self:GetPos()):GetNormal()
 	owner:LagCompensation(true)	
 	self:SetDTVector(22, direction)
-	self:FireBulletsLua(self:GetPos(), direction, 0, numbul, dmg, owner, self.KnockbackScale, self.TracerName, self.BulletCallback, 1, nil, 1028, nil, self)
+	self:FireBulletsLua(self:GetPos(), direction, 0, numbul, dmg, owner, self.KnockbackScale, self.TracerName, owner:GetActiveWeapon().BulletCallback, 1, nil, 1028, nil, self)
 	owner:LagCompensation(false)
 	self.trg = NULL
 

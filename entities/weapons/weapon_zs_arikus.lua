@@ -169,6 +169,7 @@ function SWEP.BulletCallback(attacker, tr, dmginfo)
 		entus.Target = trg
 		entus:Spawn()
 	end
+	attacker:GetActiveWeapon().BaseClass.BulletCallback(attacker, tr, dmginfo)
 end
 function SWEP:ShootBullets(dmg, numbul, cone)
 	local owner = self:GetOwner()

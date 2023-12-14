@@ -136,6 +136,7 @@ function SWEP:SecondaryAttack()
 end
 
 function SWEP.BulletCallback(attacker, tr, dmginfo)
+	attacker:GetActiveWeapon().BaseClass.BulletCallback(attacker, tr, dmginfo)
 	return {impact = false}
 end
 

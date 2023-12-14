@@ -148,6 +148,7 @@ function SWEP.BulletCallback(attacker, tr, dmginfo)
 		effectdata:SetOrigin(tr.HitPos)
 		effectdata:SetNormal(tr.HitNormal)
 	util.Effect("hit_hunter", effectdata)
+	attacker:GetActiveWeapon().BaseClass.BulletCallback(attacker, tr, dmginfo)
 end
 
 if CLIENT then

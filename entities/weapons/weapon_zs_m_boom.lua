@@ -81,5 +81,5 @@ function SWEP.BulletCallback(attacker, tr, dmginfo)
 	if SERVER then
 		attacker:SetBloodArmor(attacker:GetBloodArmor() *0.2)
 	end
-
+	attacker:GetActiveWeapon().BaseClass.BulletCallback(attacker, tr, dmginfo)
 end

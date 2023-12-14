@@ -20,6 +20,7 @@ function SWEP.BulletCallback(attacker, tr, dmginfo)
 			effectdata:SetOrigin(pos)
 		util.Effect("Explosion", effectdata, true, true)
 	end
+	attacker:GetActiveWeapon().BaseClass.BulletCallback(attacker, tr, dmginfo)
 end
 
 function SWEP:PrimaryAttack()

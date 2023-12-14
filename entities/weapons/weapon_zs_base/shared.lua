@@ -369,20 +369,29 @@ local function DoRicochet(attacker, hitpos, hitnormal, normal, damage)
 		end
 	end
 end
+local function compare(a,b)
+	return a.Health < b.Health
+  end
 function SWEP.BulletCallback(attacker, tr, dmginfo)
 	local wep = attacker:GetActiveWeapon()
+	
 	if attacker:IsSkillActive(SKILL_PARASITE) and (wep.Primary.NumShots or 1) <= 3 and (wep.Tier or 0)< 5 then
 		if attacker:IsSkillActive(SKILL_AUTOAIM) then
-			local target = NULL
+			local tosort = {}
 			for _, ent in pairs(ents.FindInSphere(tr.HitPos, 1048)) do
-				if ent:IsValidLivingZombie() then
-					target = ent
-					break
+				if ent:IsValidLivingZombie() and WorldVisible(tr.HitPos, ent:NearestPoint(tr.HitPos))   then
+					tosort[#tosort+1] = {Trg = ent,Health = ent:Health()}
+					
 				end
 			end
-			if target:IsValid() then
-				local targetpos = target:LocalToWorld(target:OBBCenter())
+			if #tosort < 1 then return end
+			table.sort(tosort, compare)
+			local target = tosort[1].Trg
+			if target and target:IsValid() then
+			--	local bone = target:GetBoneMatrix(math.random(1,25))
+				local targetpos = target:LocalToWorld(target:OBBCenter())+Vector(0,0,12)
 				local direction = (targetpos - tr.HitPos):GetNormal()
+
 				timer.Simple(0, function()attacker:FireBulletsLua(tr.HitPos, direction, 0, 1, dmginfo:GetDamage()*0.33, nil, nil, "tracer_rico", nil, nil, nil, nil, nil, wep) end)
 			end
 		end

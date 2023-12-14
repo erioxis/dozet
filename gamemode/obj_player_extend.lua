@@ -1238,7 +1238,7 @@ function meta:GetMaxZombieHealth()
 	else
 		health = (classtab.Health * healthmulti) + ((GAMEMODE:GetWave() * 15) * (classtab.DynamicHealth or 1)) 
 	end
-	local health  = health * (self.m_HealthMulZS or 1)
+	local health  = health * (self.m_HealthMulZS or 1) * (GAMEMODE.HPMULMAP or 1)
 	return health
 end
 function meta:SetMaxZombieHealth(add)

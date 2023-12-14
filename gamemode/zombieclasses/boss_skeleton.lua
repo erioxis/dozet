@@ -273,37 +273,8 @@ if CLIENT then
 					["UniqueID"] = "d282571af7df9cae08bb885f67c7fb2b8951eec001ec9f8d8fe1b6d77236303a",
 				},
 			},
+		
 			[3] = {
-				["children"] = {
-				},
-				["self"] = {
-					["DrawOrder"] = 0,
-					["UniqueID"] = "2e27525ebcbc03c51459413ea6a5bbdf8fd30fcfb292bea026c7bbfeb59bf245",
-					["TargetEntityUID"] = "",
-					["AimPartName"] = "",
-					["NoTextureFiltering"] = false,
-					["Bone"] = "head",
-					["BlendMode"] = "",
-					["Translucent"] = false,
-					["IgnoreZ"] = true,
-					["IsDisturbing"] = false,
-					["Position"] = Vector(-11.036949157715, -4.3299560546875, -1.52587890625e-05),
-					["AimPartUID"] = "",
-					["EyeAngles"] = false,
-					["Hide"] = false,
-					["Name"] = "",
-					["Style"] = 0,
-					["EditorExpand"] = false,
-					["ClassName"] = "light",
-					["Size"] = 9.35,
-					["PositionOffset"] = Vector(0, 0, 0),
-					["Color"] = Vector(255, 255, 255),
-					["AngleOffset"] = Angle(0, 0, 0),
-					["Brightness"] = 3.2,
-					["Angles"] = Angle(0, 0, 0),
-				},
-			},
-			[4] = {
 				["children"] = {
 				},
 				["self"] = {
@@ -355,7 +326,7 @@ if CLIENT then
 					["UniqueID"] = "6aec2e2fedafcf0e8bac09d629f5b0d1b53fd7c29f4051f768a725add59bbd2b",
 				},
 			},
-			[5] = {
+			[4] = {
 				["children"] = {
 				},
 				["self"] = {
@@ -407,7 +378,7 @@ if CLIENT then
 					["UniqueID"] = "6e7d4808c4b4a884f1c182d7f14fe3574e4b9124f2f546dcae7ae303074bc74f",
 				},
 			},
-			[6] = {
+			[5] = {
 				["children"] = {
 				},
 				["self"] = {
@@ -459,7 +430,7 @@ if CLIENT then
 					["UniqueID"] = "73db2706391db318513035b0602227aa07643e1b519da99915d6c869d1f8ae77",
 				},
 			},
-			[7] = {
+			[6] = {
 				["children"] = {
 				},
 				["self"] = {
@@ -511,7 +482,7 @@ if CLIENT then
 					["UniqueID"] = "541265041b709209b75dbb9e64d6e865522750850242958c25e9fbd2fc530d6c",
 				},
 			},
-			[8] = {
+			[7] = {
 				["children"] = {
 				},
 				["self"] = {
@@ -563,7 +534,7 @@ if CLIENT then
 					["UniqueID"] = "fca4a5f07f7324d8acf2cb5644adacd42e8185d5a72eec311ff077638c370e00",
 				},
 			},
-			[9] = {
+			[8] = {
 				["children"] = {
 				},
 				["self"] = {

@@ -7,7 +7,7 @@ function ENT:SetObjectHealth(health)
 end
 local matRefract = Material("models/spawn_effect")
 function ENT:Draw()
-	if render.SupportsPixelShaders_2_0() then 
+	if render.SupportsPixelShaders_2_0() and MySelf:Team() == TEAM_HUMAN then 
 
 		render.UpdateRefractTexture()
 
@@ -45,5 +45,8 @@ function ENT:Draw()
 		cam.Start3D2D(vPos - vOffset, ang, 0.05)
 			self:Draw3DHealthBar(percentage, name)
 		cam.End3D2D()
+	end
+	if MySelf:Team() ~= TEAM_HUMAN then
+		self:DrawModel()
 	end
 end

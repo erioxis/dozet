@@ -3,8 +3,8 @@ DEFINE_BASECLASS("weapon_zs_base")
 
 --SWEP.PrintName = "'Eraser' Tactical Pistol"
 --SWEP.Description = "Damage increases as remaining bullets decrease."
-SWEP.PrintName = ""..translate.Get("wep_eraser")
-SWEP.Description = ""..translate.Get("wep_d_eraser")
+SWEP.PrintName = translate.Get("wep_eraser")
+SWEP.Description = translate.Get("wep_d_eraser")
 SWEP.Slot = 1
 SWEP.SlotPos = 0
 
@@ -47,7 +47,7 @@ SWEP.IronSightsPos = Vector(-5.95, 0, 2.5)
 
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_RELOAD_SPEED, 0.1, 1)
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_HEADSHOT_MULTI, 0.07)
-GAMEMODE:AddNewRemantleBranch(SWEP, 1, ""..translate.Get("wep_eraser_r1"), ""..translate.Get("wep_d_eraser_r1"), function(wept)
+GAMEMODE:AddNewRemantleBranch(SWEP, 1, translate.Get("wep_eraser_r1"), translate.Get("wep_d_eraser_r1"), function(wept)
 	wept.ConeMax = wept.ConeMax * 1.7
 	wept.ConeMin = wept.ConeMin * 2.1
 	wept.ReloadSpeed = wept.ReloadSpeed * 0.7

@@ -1820,7 +1820,7 @@ function meta:AddPoints(points, floatingscoreobject, fmtype, nomul)
 		if self:IsSkillActive(SKILL_SOLARUZ) then
 			mul = mul * (1-self:GetMScore()/15000)
 		end
-		points = points * mul
+		points = points * mul * (GAMEMODE.PointsMulMAP or 1)
 	
 	end
 	-- This lets us add partial amounts of points (floats)

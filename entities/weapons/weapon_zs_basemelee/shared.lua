@@ -96,7 +96,8 @@ function SWEP:SetWeaponSwingHoldType(t)
 	self.ActivityTranslate = old
 	self.ActivityTranslateSwing = new
 end
-
+function SWEP.BulletCallback(la,lap,lawo)
+end
 function SWEP:Deploy()
 	gamemode.Call("WeaponDeployed", self:GetOwner(), self)
 	self.IdleAnimation = CurTime() + self:SequenceDuration()

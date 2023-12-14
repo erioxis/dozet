@@ -1447,9 +1447,8 @@ function GM:Think()
 					pl:StripWeapon(wep:GetClass())
 				end
 				local barac = pl:IsSkillActive(SKILL_BARA_CURSED)
-				local baracurse = false
-				if self.MaxSigils >= 1 and (barac or #team.GetPlayers(TEAM_HUMAN) <= 1 or baracurse) then
-					if not pl:GetStatus("sigildef") and self:GetWave() >= 6 and  time >= pl.NextDamage and self:GetWaveActive() and self:GetBalance() < 40 or self:GetBalance() > 40 and not pl:GetStatus("sigildef") and  time >= pl.NextDamage then
+				if self.MaxSigils >= 1 and (barac or #team.GetPlayers(TEAM_HUMAN) < 2) then
+					if not pl:GetStatus("sigildef") and self:GetWave() >= 6 and  time > pl.NextDamage and self:GetWaveActive() and self:GetBalance() < 40 or self:GetBalance() > 40 and not pl:GetStatus("sigildef") and  time > pl.NextDamage then
 						pl:TakeSpecialDamage(8 * (pl.TickBuff or 0), DMG_DIRECT)
 						pl.NextDamage = time + 2.4
 						pl:CenterNotify(COLOR_RED, translate.ClientGet(pl, "danger"))
@@ -1482,7 +1481,7 @@ function GM:Think()
 
 
 				local healmax = pl:IsSkillActive(SKILL_D_FRAIL) and math.floor(pl:GetMaxHealth() * 0.44) or pl:IsSkillActive(SKILL_ABUSE) and math.floor(pl:GetMaxHealth() * 0.25)  or pl:GetMaxHealth()
-                if vele:LengthSqr() >= 5636052 then
+                if vele:LengthSqr() > 5636052 then
 					pl:GiveAchievement("highvel")
 				end
 				if pl:IsSkillActive(SKILL_SAUL_GOODMAN) and time >= pl.NextRegenerateClan then
@@ -1490,19 +1489,19 @@ function GM:Think()
 					pl:AddZSXP(1)
 				end
 
-				if pl:IsSkillActive(SKILL_REGENERATOR) and time >= pl.NextRegenerate and pl:Health() < math.min(healmax, pl:GetMaxHealth() * 0.6) then
+				if pl:IsSkillActive(SKILL_REGENERATOR) and time > pl.NextRegenerate and pl:Health() < math.min(healmax, pl:GetMaxHealth() * 0.6) then
 					pl.NextRegenerate = time + 6
 					pl:SetHealth(math.min(healmax, pl:Health() + 1))
 				end
-				if pl:IsSkillActive(SKILL_NULLED) and time >= pl.NextRegenerateNull and pl:Health() < math.min(healmax, pl:GetMaxHealth()) then
+				if pl:IsSkillActive(SKILL_NULLED) and time > pl.NextRegenerateNull and pl:Health() < math.min(healmax, pl:GetMaxHealth()) then
 					pl.NextRegenerateNull = time + 5
 					pl:SetHealth(math.min(healmax, pl:Health() + 3))
 				end
-				if pl:HasTrinket("lazarussoul") and time >= pl.NextRegenerateLazarus and pl:Health() < math.min(healmax, pl:GetMaxHealth() * 0.10) then
+				if pl:HasTrinket("lazarussoul") and time > pl.NextRegenerateLazarus and pl:Health() < math.min(healmax, pl:GetMaxHealth() * 0.10) then
 					pl.NextRegenerateLazarus = time + 160
 					pl:SetHealth(math.min(healmax, pl:Health() + 500))
 				end
-				if pl:HasTrinket("hurt_curse") and time >= pl.NextCurseRegenerate then
+				if pl:HasTrinket("hurt_curse") and time > pl.NextCurseRegenerate then
 					pl.NextCurseRegenerate = time + 20
 					pl:TakeDamage(pl:Health() * 0.25)
 				end
@@ -1518,7 +1517,7 @@ function GM:Think()
 					if #use < 1 then
 						pl:Kill()
 					else
-						local take = table.Random(use)
+						local take = use[math.random(1,#use)]
 						if take == "trinket_flower" then  
 							pl:TakeInventoryItem(take)
 							pl:AddInventoryItem("trinket_flower_g")
@@ -1540,30 +1539,38 @@ function GM:Think()
 									net.WriteString("trinket_sin_ego")
 								net.Send(pl)
 							end
+						elseif  take == "trinket_flower_g" then
+							pl:TakeInventoryItem(take)
+							pl:AddInventoryItem("trinket_sin_ego")
+							net.Start("zs_trinketcorrupt")
+								net.WriteString(take)
+								net.WriteString("trinket_sin_ego")
+							net.Send(pl)
+							pl:AddPoints(-90)
 						else
 							pl:Kill()
 						end
 					end
 				end
-				if pl:IsSkillActive(SKILL_PACIFISMIUM) and time >= pl.NextEnergy then
+				if pl:IsSkillActive(SKILL_PACIFISMIUM) and time > pl.NextEnergy then
 					pl.NextEnergy = time + 45
 					pl:SetChargesActive(pl:GetChargesActive()+1)
 				end
-				if pl:HasTrinket("altjudassoul") and time >= pl.NextRegenerateJudas and pl:Health() < math.min(healmax, pl:GetMaxHealth() * 0.20) then
+				if pl:HasTrinket("altjudassoul") and time > pl.NextRegenerateJudas and pl:Health() < math.min(healmax, pl:GetMaxHealth() * 0.20) then
 					pl.NextRegenerateJudas = time + 1
 					pl:GiveStatus("holly", 1.45)
 					pl:GiveStatus("strengthdartboost", 1.3)
 					pl:GiveStatus("medrifledefboost", 1.3)
 				end
 
-				if time >= (pl.NextRegenerateMantle or 1) and pl.HolyMantle <= 0 and pl:IsSkillActive(SKILL_HOLY_MANTLE) then
+				if time >= (pl.NextRegenerateMantle or 1) and pl.HolyMantle < 0 and pl:IsSkillActive(SKILL_HOLY_MANTLE) then
 					pl.NextRegenerateMantle = time + math.max((27 - ((pl.Luck + pl.LuckAdd) / 3)) + self.GetWave() * 3,5)
 					pl.HolyMantle = pl.HolyMantle + 1
 				end
-				if pl.HolyMantle >= 1 and pl:IsSkillActive(SKILL_HOLY_MANTLE) and pl:IsValid() and pl.MantleFix <= CurTime() then
+				if pl.HolyMantle >= 1 and pl:IsSkillActive(SKILL_HOLY_MANTLE) and pl:IsValid() and pl.MantleFix < CurTime() then
                     pl:GiveStatus("hshield", 1.3)
 				end
-				if time >= pl.NextSleep and pl:IsSkillActive(SKILL_NOSEE) and self:GetWave() ~= 0 then
+				if time > pl.NextSleep and pl:IsSkillActive(SKILL_NOSEE) and self:GetWave() ~= 0 then
 					pl.NextSleep = time + 9
                     pl:GiveStatus("dimvision", 10)
 				end
@@ -1579,7 +1586,7 @@ function GM:Think()
 					pl:SetVelocity(VectorRand() * math.random(700,3700))
 					pl:EmitSound("ambient/water/water_spray3.wav",120,45, 122)
 				end
-				if pl:HasTrinket("adrenaline") and time >= pl.NextRegenerateAdr and pl:Health() < math.min(healmax, pl:GetMaxHealth() * 0.85) then
+				if pl:HasTrinket("adrenaline") and time > pl.NextRegenerateAdr and pl:Health() < math.min(healmax, pl:GetMaxHealth() * 0.85) then
 					pl.NextRegenerateAdr = time + 60
 					pl:GiveStatus("strengthdartboost", 20)
 				end
@@ -1592,19 +1599,19 @@ function GM:Think()
 					pl:AddUselessDamage(pl:GetMaxHealth() * 0.025)
 				end
 
-				if pl:HasTrinket("regenimplant") and time >= pl.NextRegenTrinket and pl:Health() < healmax then
+				if pl:HasTrinket("regenimplant") and time > pl.NextRegenTrinket and pl:Health() < healmax then
 					pl.NextRegenTrinket = time + 7
 					pl:SetHealth(math.min(healmax, pl:Health() + 7))
 				end
-				if pl:HasTrinket("altmagdalenesoul") and time >= pl.NextRegenTrinket2 and pl:Health() > pl:GetMaxHealth() * 0.25 then
+				if pl:HasTrinket("altmagdalenesoul") and time > pl.NextRegenTrinket2 and pl:Health() > pl:GetMaxHealth() * 0.25 then
 					pl.NextRegenTrinket2 = time + 10
 					pl:TakeDamage(pl:GetMaxHealth() * 0.1, lastattacker, lastattacker)
 				end
-				if pl:HasTrinket("nulledher") and time >= pl.NextRegenTrinket3 and pl:Health() < healmax then
+				if pl:HasTrinket("nulledher") and time > pl.NextRegenTrinket3 and pl:Health() < healmax then
 					pl.NextRegenTrinket3 = time + 3
 					pl:SetHealth(math.min(healmax, pl:Health() - 2))
 				end
-				if pl:IsSkillActive(SKILL_TRIP) and time >= pl.NextRegenerate5 and not self:GetWave() == 0 then
+				if pl:IsSkillActive(SKILL_TRIP) and time > pl.NextRegenerate5 and not self:GetWave() == 0 then
 					pl.NextRegenerate5 = time + 1
 					local cursed = pl:GetStatus("cursed")
 					if (not cursed) then 
@@ -1622,15 +1629,15 @@ function GM:Think()
 
 
 
-				if pl:IsSkillActive(SKILL_BLOODARMOR) and pl.MaxBloodArmor > 0 and time >= pl.NextBloodArmorRegen and pl:GetBloodArmor() < pl.MaxBloodArmor then
+				if pl:IsSkillActive(SKILL_BLOODARMOR) and pl.MaxBloodArmor > 0 and time > pl.NextBloodArmorRegen and pl:GetBloodArmor() < pl.MaxBloodArmor then
 					pl.NextBloodArmorRegen = time + 8
 					pl:SetBloodArmor(math.min(pl.MaxBloodArmor, pl:GetBloodArmor() + (1 * pl.BloodarmorGainMul)))
 				end
-				if pl:IsSkillActive(SKILL_BLOODMARY) and pl.MaxBloodArmor > 0 and time >= pl.NextBloodArmorRegen2 and pl:GetBloodArmor() < pl.MaxBloodArmor then
+				if pl:IsSkillActive(SKILL_BLOODMARY) and pl.MaxBloodArmor > 0 and time > pl.NextBloodArmorRegen2 and pl:GetBloodArmor() < pl.MaxBloodArmor then
 					pl.NextBloodArmorRegen2 = time + 2
 					pl:SetBloodArmor(math.min(pl.MaxBloodArmor, pl:GetBloodArmor() + (5 * pl.BloodarmorGainMul)))
 				end
-				if pl:IsSkillActive(SKILL_BLOODLOST) and pl.MaxBloodArmor > 0 and time >= pl.NextBloodArmorRegen3 and pl:GetBloodArmor() < pl.MaxBloodArmor then
+				if pl:IsSkillActive(SKILL_BLOODLOST) and pl.MaxBloodArmor > 0 and time > pl.NextBloodArmorRegen3 and pl:GetBloodArmor() < pl.MaxBloodArmor then
 					pl.NextBloodArmorRegen3 = time + 3
 					pl:SetBloodArmor(math.min(pl.MaxBloodArmor, pl:GetBloodArmor() + (5 * pl.BloodarmorGainMul)))
 				end
@@ -2061,7 +2068,7 @@ function GM:PlayerHealedTeamMember(pl, other, health, wep, pointmul, nobymsg, fl
 
 	pl.HealedThisRound = pl.HealedThisRound + health
 	pl:SetProgress(math.Round(pl:GetProgress('mprog')+health), 'mprog')
-	if pl:IsSkillActive(SKILL_PREMIUM) and pl:GetProgress('mprog') >= 1800 and !pl:HasInventoryItem("cons_bounty") then
+	if pl:IsSkillActive(SKILL_PREMIUM) and pl:GetProgress('mprog') > 1800 and !pl:HasInventoryItem("cons_bounty") then
 		pl:AddInventoryItem("cons_bounty")
 		pl.MedicalBounty = true 
 		pl.GetBounty = true
@@ -2113,7 +2120,7 @@ function GM:PlayerRepairedObject(pl, other, health, wep)
 	if self:GetWave() == 0 or health <= 0 then return end
 	health = math.Round(health*10)/10
 	pl.NextChargeRepair = pl.NextChargeRepair + health
-	if pl.NextChargeRepair >= 200 then
+	if pl.NextChargeRepair > 200 then
 		pl:SetChargesActive(pl:GetChargesActive()+1)
 		pl.NextChargeRepair = 0
 	end
@@ -2716,7 +2723,8 @@ hook.Add("PlayerReady", "post_discord_link", function(pl)
 	timer.Simple(0.1, function()
 	net.Start("zs_code_get") net.WriteString(tostring(pl.SelfCode)) net.Send(pl)
 	end)
-	pl:SendLua("GAMEMODE:CreateNBNO()")
+	pl:SendLua("GAMEMODE:CreateNBNO() GAMEMODE.HPMULMAP = "..GAMEMODE.HPMULMAP.." GAMEMODE.PointsMulMAP = "..GAMEMODE.PointsMulMAP )
+	
 end)
 //gameevent.Listen( "player_say" )
 //hook.Add("player_say", "PlayerSayForBot", function( data )
@@ -4499,6 +4507,13 @@ function GM:KeyPress(pl, key)
 					end
 					pl:ResetSpeed()
 				end
+				if pl:Team() == TEAM_HUMAN and pl:KeyDown(IN_USE) then 
+					for _, ent in pairs(ents.FindInSphere(pl:GetPos(), 26)) do
+						if ent:IsPlayer() and ent:GetZombieClassTable().CrowDa then
+							pl:GiveAchievement("crowhunter")
+						end
+					end
+				end
 				if not pl:IsCarrying() and pl.NextDash <= CurTime() and pl:IsSkillActive(SKILL_GIER_II) and !pl:GetBarricadeGhosting() then
 					if pl:IsSkillActive(SKILL_GIER_II) and pl:IsSkillActive(SKILL_STAMINA) and pl:GetStamina() <= 33 then return end
 						local pos = pl:GetPos()
@@ -4525,6 +4540,29 @@ function GM:KeyPress(pl, key)
 						end
 				end 
 			elseif pl:Team() == TEAM_UNDEAD then
+				if pl:KeyDown(IN_ATTACK) then
+					if pl:GetZombieClassTable().Name == "Shade" then
+						pl:StripWeapons()
+						pl:SetZombieClassName("Frost Shade")
+					elseif pl:GetZombieClassTable().Name == "Frost Shade" then
+						pl:StripWeapons()
+						pl:SetZombieClassName("Shade")
+					end
+					pl:Give(pl:GetZombieClassTable().SWEP)
+				end
+				if pl.CanMerge then
+					local ent1 = NULL
+					for _, ent in pairs(ents.FindInSphere(pl:GetPos(), 256)) do
+						if ent:IsValidLivingZombie() and ent.MergePiece1 and !ent.CanMerge and ent ~= pl then
+							ent1 = ent
+							break
+						end
+					end
+					if ent1:IsValid() and pl.NextTransThink <= CurTime() and ent1:KeyDown(IN_USE) then
+						self:Merge(ent1, pl)
+						pl.NextTransThink = CurTime() + 2
+					end
+				end
 				pl:CallZombieFunction0("AltUse")
 			end
 		end
@@ -4555,30 +4593,9 @@ function GM:KeyPress(pl, key)
 			end
 		end
 
-	end
-	if key == IN_SPEED and pl:Team() == TEAM_HUMAN and pl:KeyDown(IN_USE) then 
-		for _, ent in pairs(ents.FindInSphere(pl:GetPos(), 26)) do
-			if ent:IsPlayer() and ent:GetZombieClassTable().CrowDa then
-				pl:GiveAchievement("crowhunter")
-			end
-		end
-	end
-	if key == IN_JUMP and pl:HasTrinket("troyaksoul_a") and pl.NextDJUMP < CurTime() and !pl:OnGround() then
+	elseif key == IN_JUMP and pl:HasTrinket("troyaksoul_a") and pl.NextDJUMP < CurTime() and !pl:OnGround() then
 		pl.NextDJUMP = CurTime() + 4
 		pl:SetVelocity(pl:GetAngles():Forward()*70+Vector(0,0,1.6*pl:GetJumpPower()))
-	end
-	if key == IN_SPEED and pl:Team() == TEAM_UNDEAD and pl.CanMerge then 
-		local ent1 = NULL
-		for _, ent in pairs(ents.FindInSphere(pl:GetPos(), 256)) do
-			if ent:IsValidLivingZombie() and ent.MergePiece1 and !ent.CanMerge and ent ~= pl then
-				ent1 = ent
-				break
-			end
-		end
-		if ent1:IsValid() and pl.NextTransThink <= CurTime() and ent1:KeyDown(IN_USE) and ent1:KeyDown(IN_USE) then
-			self:Merge(ent1, pl)
-			pl.NextTransThink = CurTime() + 2
-		end
 	end
 end
 
@@ -5040,7 +5057,7 @@ function GM:DoPlayerDeath(pl, attacker, dmginfo)
 			if BLUE_BOMB:IsValid() then
 				BLUE_BOMB:SetPos(pos)
 			end
-			util.PoisonBlastDamage(BLUE_BOMB, pl, pos, 222, 65, true)
+			util.PoisonBlastDamage(BLUE_BOMB, pl, pos, 222, 45, true)
 			
 			pl:CheckRedeem()
 			if math.random(1,3) == 1 then
