@@ -880,6 +880,7 @@ GM:AddMutationItem("m_shade_damage", translate.Get("zshop_bossphysicshazard"), t
 GM:AddMutationItem("m_shade_mortir", translate.Get("zshop_shademortir"), translate.Get("zshop_shademortir_d1"), ITEMCAT_MUTATIONS_BOSS, 1190, nil, function(pl) pl.m_Shade_Stone = true end, "models/player/zombie_classic.mdl")
 GM:AddMutationItem("m_tickle_res", translate.Get("zshop_tickleres"), translate.Get("zshop_tickleres_d1"), ITEMCAT_MUTATIONS_BOSS, 740, nil, function(pl) pl.m_Tickle_Resist = true end, "models/player/zombie_classic.mdl")
 GM:AddMutationItem("m_soul_of_death", translate.Get("zshop_hollow_of_eyes"), translate.Get("zshop_hollow_of_eyes_d1"), ITEMCAT_MUTATIONS_BOSS, 900, nil, function(pl) pl.m_CursedEyes = true end, "models/player/zombie_classic.mdl")
+GM:AddMutationItem("m_hooker_d", translate.Get("zshop_hooker"), translate.Get("zshop_hooker_d1"), ITEMCAT_MUTATIONS_BOSS, 3000, nil, function(pl) pl.HookingTime = true end, "models/player/zombie_classic.mdl")
 -- These are the honorable mentions that come at the end of the round.
 -- classes
 

@@ -235,6 +235,7 @@ function ENT:Destroy()
 end
 
 ENT.PhysDamageImmunity = 0
+ENT.DashHuh = 0
 function ENT:Think()
 	if self.Destroyed then
 		if not self.CreatedDebris then
@@ -259,7 +260,10 @@ function ENT:Think()
 		self:Remove()
 		return
 	end
-	self:Dash()
+	if self.DashHuh < CurTime() then
+		self:Dash()
+		self.DashHuh = CurTime() + 6
+	end
 	local owner = self:GetObjectOwner()
 	if owner:IsValid() then
 		self:SetPhysicsAttacker(owner)
@@ -328,10 +332,12 @@ function ENT:ThreadSafePhysicsCollide(data)
 		if ent:IsPlayer() and ent:Team() == TEAM_UNDEAD and ent:Alive() and (self.NextBoom or 1) <= CurTime() then
 			local center = self:LocalToWorld(self:OBBCenter())
 			ent:TakeSpecialDamage(self.HitDamage*3.56, DMG_ALWAYSGIB, owner, self)
-			effectdata = EffectData()
-			effectdata:SetOrigin(center)
-			effectdata:SetNormal(Vector(0, 0, -1))
-			util.Effect("decal_scorch", effectdata)
+			local effectdata = EffectData()
+			effectdata:SetOrigin( self:LocalToWorld(self:OBBCenter()))
+			effectdata:SetNormal(Vector(0, 0, 1))
+			effectdata:SetMagnitude(5)
+			effectdata:SetScale(1.5)
+			util.Effect("HelicopterMegaBomb", effectdata, true, true)
 			util.BlastDamagePlayer(self,owner,center,128,self.HitDamage*3, DMG_ALWAYSGIB)
 			self:EmitSound("npc/env_headcrabcanister/explosion.wav", 100, 100)
 			self.NextBoom = CurTime() + 3

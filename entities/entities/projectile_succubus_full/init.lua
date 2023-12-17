@@ -2,8 +2,8 @@ INC_SERVER()
 ENT.KnockbackScale = 1
 ENT.TimeToDash = 0
 function ENT:Initialize()
-	self:SetOwner(Entity(1))
-	local owner = self:GetOwner()
+	timer.Simple(0, function(arguments)
+		local owner = self:GetOwner()
 	self:SetModel(owner:GetModel())
 	self:SetPos(owner:GetPos() + Vector(0,0,4))
 	--self:SetParent(owner,2)
@@ -16,6 +16,7 @@ function ENT:Initialize()
 		phys:EnableMotion(true)
 	end
 	self.trg = NULL
+end)
 --	timer.Simple(0, function() self:GetPhysicsObject():SetVelocity(Vector(0,0,0)) end)
 --	self.DieTime = CurTime() + 2
 	--self.TimeToDash = CurTime() + 1
@@ -154,6 +155,8 @@ end
 function ENT:GetWeapon()
 	return weapons.Get(self.Weapon or "weapon_zs_peashooter")
 end
+function ENT:SetNextSecondaryFire()
+end
 function compare(a,b)
 	return a.Health > b.Health
 end
@@ -166,7 +169,7 @@ function ENT:Use(user)
 	end
 end
 function ENT:Think()
-	if !self.trg:IsValid() then
+	if self.trg and !self.trg:IsValid() then
 		local targets = {}
 		for _, ent in pairs(ents.FindInSphere(self:GetPos(), 1048)) do
 			if !ent:IsValid() then continue end
@@ -187,7 +190,7 @@ function ENT:Think()
 			end
 		end
 	end
-	if self.TimeToDash < CurTime() and self.trg:IsValidLivingZombie() and self:GetOwner() and self:GetOwner():IsValidLivingHuman() then
+	if self.TimeToDash < CurTime() and self.trg and self.trg:IsValidLivingZombie() and self:GetOwner() and self:GetOwner():IsValidLivingHuman() then
 		local wep = self:GetWeapon()
 		local dmg = 50
 		if wep  then

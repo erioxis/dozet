@@ -417,3 +417,4 @@ LANGUAGE.s_unl_destroy = " locked successfully!"
 LANGUAGE.bounty_1 = "Random 3 soul of piece"
 LANGUAGE.bounty_2 = "+100 Points"
 LANGUAGE.bounty_3 = "+600 AXP"
+

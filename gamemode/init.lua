@@ -1540,13 +1540,7 @@ function GM:Think()
 								net.Send(pl)
 							end
 						elseif  take == "trinket_flower_g" then
-							pl:TakeInventoryItem(take)
-							pl:AddInventoryItem("trinket_sin_ego")
-							net.Start("zs_trinketcorrupt")
-								net.WriteString(take)
-								net.WriteString("trinket_sin_ego")
-							net.Send(pl)
-							pl:AddPoints(-90)
+							pl:AddPoints(-150)
 						else
 							pl:Kill()
 						end
@@ -3215,6 +3209,7 @@ function GM:PlayerInitialSpawnRound(pl)
 	pl.m_Shade_Stone = nil
 	pl.m_Tickle_Resist = nil
 	pl.m_CursedEyes = nil
+	pl.HookingTime = nil
 
 	pl.m_Zombie_CursedHealth = nil
 	pl.LuckAdd = 0

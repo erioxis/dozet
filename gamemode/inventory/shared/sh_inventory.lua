@@ -211,6 +211,13 @@ end
 GM:AddInventoryItemData("cons_void",		trs("c_void"),			trs("c_void_d"),								"models/props_c17/trappropeller_lever.mdl", 3, nil, nil, function(pl) 
 	funcofvoid(pl, "cons_void")
 end,3)
+local upvec = Vector(0,0,10)
+GM:AddInventoryItemData("cons_recall",		trs("c_recall"),			trs("c_recall_d"),								"models/props_c17/trappropeller_lever.mdl", 1, nil, nil, function(pl) 
+	local clone = pl.Clonehehe
+	if clone and clone:IsValid() then
+		clone:SetPos(pl:GetPos()+upvec)
+	end
+end,0)
 GM:AddInventoryItemData("cons_deadly_vit",		trs("c_deadly_vit"),			trs("c_deadly_vit_d"),								"models/props_c17/trappropeller_lever.mdl", 3, nil, nil, function(pl) 
 	for k,v in pairs(pl:GetStatuses()) do
 		local class = v:GetClass()
@@ -1000,9 +1007,11 @@ GM:AddSkillFunction(trinket, function(pl, active)
 			clone:SetOwner(pl)
 			clone.Weapon = "weapon_zs_peashooter"
 			pl.Clonehehe = clone
+			pl:AddInventoryItem('cons_recall')
 		elseif !active then
 			if pl.Clonehehe and pl.Clonehehe:IsValid() then
 				pl.Clonehehe:Remove()
+				pl:TakeInventoryItem('cons_recall')
 			end
 		end
 	end

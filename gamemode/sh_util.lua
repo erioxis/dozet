@@ -369,7 +369,8 @@ end
 end]]
 function util.BlastDamageEx(inflictor, attacker, epicenter, radius, damage, damagetype, taperfactor, bool)
     local entList = ents.FindInBoxRadius(epicenter, radius)
-	local basedmg = damage / #entList
+	local factor = 1 
+	local basedmg = damage
     for _, ent in pairs(entList) do
         if ent:IsValid() then
 			local specialDamage = 1
@@ -377,10 +378,11 @@ function util.BlastDamageEx(inflictor, attacker, epicenter, radius, damage, dama
                 if ent == attacker and bool then
                     specialDamage = specialDamage * (ent.IndDamageTaken or 1)
                 end
-                ent:TakeSpecialDamage(basedmg * specialDamage, damagetype, attacker, inflictor, nearest)
+                ent:TakeSpecialDamage(basedmg * specialDamage * factor, damagetype, attacker, inflictor, nearest)
 
                 if taperfactor and ent:IsPlayer() then
-                    basedmg = basedmg * taperfactor
+                    basedmg = basedmg * factor
+					factor = factor * taperfactor
                 end
             end
         end
@@ -415,9 +417,7 @@ function util.BlastAlloc(inflictor, attacker, epicenter, radius)
 	for _, ent in pairs(ents.FindInBoxRadius(epicenter, radius)) do
 		if ent:IsValid() then
 			local nearest = ent:NearestPoint(epicenter)
-			if TrueVisibleFilters(epicenter, nearest, inflictor, attacker, ent)
-				or TrueVisibleFilters(epicenter, ent:EyePos(), inflictor, attacker, ent)
-				or TrueVisibleFilters(epicenter, ent:WorldSpaceCenter(), inflictor, attacker, ent) then
+			if WorldVisible(epicenter, ent:NearestPoint(epicenter)) then
 				t[#t + 1] = ent
 			end
 		end

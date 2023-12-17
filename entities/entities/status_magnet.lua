@@ -39,7 +39,9 @@ function ENT:Think()
 			ent:SetPhysicsAttacker(owner, 4)
 
 			if (ent:GetPos() - self:GetPos()):LengthSqr() <= 5600 and ent.GiveToActivator then
-				ent:GiveToActivator(owner)
+				if class == "prop_invitem" and !table.HasValue(string.Explode("_",ent:GetInventoryItemType()), "curse") or class ~=  "prop_invitem" then
+					ent:GiveToActivator(owner)
+				end
 			end
 			
 			if (ent:GetPos() - self:GetPos()):LengthSqr() <= 5600 and ent.Use then

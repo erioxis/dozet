@@ -89,14 +89,28 @@ local function ActivateTrinket(me, pl)
 	net.SendToServer()
 end
 local function UpgradeTrinket(me, pl)
+	local sir = me.Item
 	net.Start("zs_upgrade_trinket")
-		net.WriteString(me.Item)
+		net.WriteString(sir)
 		net.WriteEntity(MySelf)
 	net.SendToServer()
+	local newi = ""
+	if  string.sub(sir ,#sir-1,#sir-1) ~= "q" then
+		newi = sir.."_q1"
+	else
+		newi = string.sub(sir ,0,#sir-1)..(tonumber(string.sub(sir ,#sir,#sir))+1)
+	end
+	timer.Simple(0, function()	
+		for item,v in pairs(GAMEMODE.InventoryMenu.Grids[ GAMEMODE:GetInventoryItemType(newi) ]:GetItems()) do
+	
+			if newi == v.Item then
+				v:DoClick()
+			end
+		end
+	end)
 end
 
-
-local function ItemPanelDoClick(self)
+function GM:ItemPanelDoClick()
 	local item = self.Item
 	if not item then return end
 
@@ -246,7 +260,6 @@ local function ItemPanelDoClick(self)
 	end
 	GAMEMODE:SupplyItemViewerDetail( viewer, sweptable, { SWEP = self.Item }, category == INVCAT_WEAPONS )
 end
-
 local categorycolors = {
 	[ INVCAT_TRINKETS ] = { COLOR_RED, COLOR_DARKRED },
 	[ INVCAT_COMPONENTS ] = { COLOR_BLUE, COLOR_DARKBLUE },
@@ -385,7 +398,7 @@ function GM:InventoryAddGridItem( item, category )
 		else
 			itempan.SWEP =  self.ZSInventoryItemData[ item ]
 		end
-		itempan.DoClick = ItemPanelDoClick
+		itempan.DoClick = self.ItemPanelDoClick
 		itempan.DoRightClick = function()
 			local menu = DermaMenu(itempan)
 			menu:AddOption(translate.Get("drop_item"), function() 

@@ -528,6 +528,8 @@ SKILL_RUB_RUB_STOMACH = 499
 SKILL_SECRET_10 = 528
 SKILL_VIP_ARMY = 529
 SKILL_STEEL_ASS = 530
+SKILL_THROWER_FULL = 531
+SKILL_AND_AGAIN = 532
 
 
 
@@ -1576,7 +1578,12 @@ GM:AddSkill(SKILL_ABFINGERS, trs("skill_abfingers"), GOOD..trs("skill_abfingers_
 GM:AddSkillModifier(SKILL_ABFINGERS, SKILLMOD_BUFF_TIME, -0.06)
 GM:AddSkill(SKILL_D_FINGERS, trs("skill_dfingers"), BAD..trs("skill_dfingers_d1"),
 																9,			-6,					{SKILL_SFINGERS}, TREE_GUNTREE)
-
+GM:AddSkill(SKILL_THROWER_FULL, trs("skill_throw_full"), GOOD..trs("skill_throw_full_d1"),
+																9,			-7,					{SKILL_D_FINGERS,SKILL_AND_AGAIN}, TREE_GUNTREE)
+GM:AddSkillModifier(SKILL_THROWER_FULL, SKILLMOD_DAMAGE, -0.1)
+GM:AddSkill(SKILL_AND_AGAIN, trs("skill_and_again"), GOOD..trs("skill_and_again_d1"),
+																9,			-8,					{}, TREE_GUNTREE)
+GM:AddSkillModifier(SKILL_THROWER_FULL, SKILLMOD_DAMAGE, -0.06)
 -- Melee Tree
 GM:AddSkill(SKILL_WORTHINESS2, trs("worthness").."II", GOOD.."+10"..trs("worth")..BAD.."-6"..trs("start_points"),
 																4,			0,					{}, TREE_MELEETREE)

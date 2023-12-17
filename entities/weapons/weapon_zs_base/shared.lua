@@ -73,8 +73,8 @@ function SWEP:Initialize()
 		self:Anim_Initialize()
 	end
 end
-
-
+SWEP.xThreeDamage = 0
+SWEP.NextBimbimbambam = 0
 function SWEP:PrimaryAttack()
 	if not self:CanPrimaryAttack() then return end
 	local owner = self:GetOwner()
@@ -91,7 +91,32 @@ function SWEP:PrimaryAttack()
 	if owner.BirdEye then
 		dmg = dmg + math.min(dmg*1.5,dmg * ((self.DamageEyeMul or 1)/100))
 	end
+	if SERVER and owner:IsSkillActive(SKILL_THROWER_FULL) then
+		self.NextBimbimbambam = self.NextBimbimbambam + 1
+		if self.NextBimbimbambam > 11 and SERVER then
+			self.NextBimbimbambam = 0
+			if owner:IsSkillActive(SKILL_AND_AGAIN) then
+				self.xThreeDamage = self.xThreeDamage + 1
+			end
+			local ent = ents.Create("projectile_thrower_1")
+			ent:SetOwner(owner)
+			ent:SetPos(owner:GetShootPos())
+			ent:SetOwner(owner)
+			ent:Spawn()
 
+			ent.ProjDamage = self.Primary.Damage  * 4 * (!owner:IsSkillActive(SKILL_AND_AGAIN) and self.Primary.NumShots or 1) * (self.xThreeDamage%3 == 2 and 3 or 1)
+			ent.Team = owner:Team()
+
+			local phys = ent:GetPhysicsObject()
+			if phys:IsValid() then
+				phys:Wake()
+				phys:AddAngleVelocity(VectorRand() * 5)
+				phys:SetVelocityInstantaneous(self:GetOwner():GetAimVector() * 800 * (owner.ObjectThrowStrengthMul or 1))
+			end
+
+			ent:SetPhysicsAttacker(owner)
+		end
+	end
 	self:EmitFireSound()
 	self:TakeAmmo()
 	self:ShootBullets(self.Primary.Damage * dmg, self.Primary.NumShots, self:GetCone())
