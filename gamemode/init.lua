@@ -2749,17 +2749,11 @@ hook.Add("PlayerSay", "ForBots", function(ply, text)
 			return
 			
 		end
+		local full = tonumber(playerInput[3]) or 3
+		local numbers = {}
 		local cain = ply:HasTrinket("cainsoul")
-		local drop = math.random(1,7) 
-		local drop2 = math.random(1,7)
-		local drop3 = math.random(1,7)
-		if cain then
-			drop = math.unrandom(1,7,5,nil,2)
-			drop2 = math.unrandom(1,7,5,nil,2)
-			drop3 = math.unrandom(1,7,5,nil,2)
-		end
-		if ply:IsSkillActive(SKILL_VIP_2) then
-			drop2 = math.unrandom(1,7,5,nil,3)
+		for i=1,math.Clamp(full,1,5) do
+			numbers[i] = math.random(1,7)
 		end
 		ply.NextCasino = CurTime() + 60 - (cain and 25 or 0)
 		timer.Simple(60 - (cain and 25 or 0), function() 
@@ -2767,32 +2761,32 @@ hook.Add("PlayerSay", "ForBots", function(ply, text)
 				ply:PrintTranslatedMessage( HUD_PRINTTALK, "casino_ready" )
 			end
 		end)
-		local all = drop == drop2 and drop2 == drop3
+		local sum = 0
+		for k,v in pairs(numbers) do
+			sum = sum + v
+		end
 		local jackpot = false
-		if (drop+drop2+drop3) >= 18  - (cain and 1 or 0) and (drop+drop2+drop3) ~= 21 and !all then
-			PrintTranslatedMessage( HUD_PRINTTALK, "casino_jack",tonumber(playerInput[2])*3,ply:Nick() )
-			ply:SetPoints(ply:GetPoints()+tonumber(playerInput[2])*3)
+		
+		if (sum) >= full *(5 - (cain and 2 or 0)) and (sum) ~= 7*full  then
+			local togive = tonumber(playerInput[2])*(0.25+full)
+			PrintTranslatedMessage( HUD_PRINTTALK, "casino_jack",togive,ply:Nick() )
+			ply:SetPoints(ply:GetPoints()+togive)
 			jackpot = true
 		end
-		if all  and (drop+drop2+drop3) ~= 21 and drop ~= 1 then
-			PrintTranslatedMessage( HUD_PRINTTALK, "casino_jack",tonumber(playerInput[2])*1.7,ply:Nick() )
-			ply:SetPoints(ply:GetPoints()+tonumber(playerInput[2])*1.7)
-			jackpot = true
-		end
-		if (drop+drop2+drop3) >= 14 - (cain and 1 or 0) and (drop+drop2+drop3) < 18 - (cain and 1 or 0) and !all then
+		if (sum) >= full * (4 - (cain and 2 or 0)) and sum < full*(5 - (cain and 2 or 0))  then
 			PrintTranslatedMessage( HUD_PRINTTALK, "casino_jack",tonumber(playerInput[2])*1.5,ply:Nick() )
 			ply:SetPoints(ply:GetPoints()+tonumber(playerInput[2])*1.5)
 			jackpot = true
 		end
-		if (drop+drop2+drop3) == 3 then
+		if (sum) == 1*full then
 			ply:Kill()
 			PrintTranslatedMessage( HUD_PRINTTALK, "casino_snake_eye" )
 			ply:GiveAchievement("snake_eye")
 		end
-		if (drop+drop2+drop3) == 21 then
+		if sum == 7*full and full > 2 then
 			PrintTranslatedMessage( HUD_PRINTTALK, "casino_gg" )
-			PrintTranslatedMessage( HUD_PRINTTALK, "casino_jack",tonumber(playerInput[2])*6,ply:Nick() )
-			ply:SetPoints(ply:GetPoints()+tonumber(playerInput[2])*6)
+			PrintTranslatedMessage( HUD_PRINTTALK, "casino_jack",tonumber(playerInput[2])*6*(full/3),ply:Nick() )
+			ply:SetPoints(ply:GetPoints()+tonumber(playerInput[2])*6*(full/3))
 			local wepf_c = {}
 			for _, wep in pairs(weapons.GetList()) do
 				if (wep.Tier or 1) == 7 and !wep.ZombieOnly and !wep.NoMobilized and wep.Primary.DefaultClip and wep.Primary.DefaultClip < 9999 then
@@ -2806,7 +2800,7 @@ hook.Add("PlayerSay", "ForBots", function(ply, text)
 			jackpot = true
 		end
 		ply:SetPoints(ply:GetPoints()-tonumber(playerInput[2]))
-		PrintTranslatedMessage( HUD_PRINTTALK, "drop_casino",ply:Nick(), drop,drop2,drop3,tonumber(playerInput[2]) )
+		PrintTranslatedMessage( HUD_PRINTTALK, "drop_casino",ply:Nick(), numbers[1],numbers[2] or "слота 2 нeту!",numbers[3] or "слота 3 нeту!",numbers[4] or "слота 4 нeту!",numbers[5] or "слота 5 нeту!",tonumber(playerInput[2]) )
 		MsgC( Color( 255, 0, 0 ), ply:Nick().." throw casino" .. tonumber(playerInput[2]))
 		return false
 	end
@@ -3866,9 +3860,9 @@ function GM:EntityTakeDamage(ent, dmginfo)
 								end
 								attacker.PointQueue = attacker.PointQueue + points
 							end
-							if numofdaily == 3 then
-								attacker:GiveAchievementProgress("daily_post", math_Round(math_min(damage, ent:Health())))
-							end
+							--if numofdaily == 3 then
+							--	attacker:GiveAchievementProgress("daily_post", math_Round(math_min(damage, ent:Health())))
+							--end
 
 							DoAttachmenttDamage(attacker,ent,damage,time)
 

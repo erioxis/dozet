@@ -311,7 +311,7 @@ function ENT:FireTurret(src, dir)
 			owner:LagCompensation(true)
 			self:FireBulletsLua(src, dir, 5, 1, 16.5 *  (owner.BulletMul or 1), owner, nil, "AR2Tracer", self.BulletCallback, nil, nil, self.GunRange, nil, self)
 			owner:LagCompensation(false)
-			if owner:IsSkillActive(SKILL_MOTHER) and (math.random(1,100) == 1 or owner:IsSkillActive(SKILL_VIP_ARMY)) and (owner:IsSkillActive(SKILL_VIP_ARMY) and owner.CounterBalls < 6 or !owner:IsSkillActive(SKILL_VIP_ARMY)) then 
+			if owner:IsSkillActive(SKILL_MOTHER) and (math.random(1,100) == 1 or owner:IsSkillActive(SKILL_VIP_ARMY)) and (owner:IsSkillActive(SKILL_VIP_ARMY) and owner.CounterBalls < 4 or !owner:IsSkillActive(SKILL_VIP_ARMY)) then 
 				local d = ents.Create("prop_rollermine_exp") 
 				if d:IsValid() then 
 					if owner:IsSkillActive(SKILL_VIP_ARMY) then

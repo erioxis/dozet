@@ -24,6 +24,7 @@ end)
 end
 local function huy(wep,self,dir)
 	local owner = wep:GetOwner()
+	if self.Primary.Projectile == "projectile_impactmine" or self.Primary.Projectile == "projectile_impactmine_kin" or self.Primary.Projectile == "projectile_bulldog" then return end 
 	local ssfw, ssup
 	if self.SameSpread then
 		ssfw, ssup = math.Rand(0, 360), math.Rand(-cone, cone)
@@ -129,8 +130,9 @@ function ENT:ShootBullets(dmg, numbul)
 	local owner = self:GetOwner()
 	local target = self.trg
 	if owner and owner:IsValid() and target and target:IsValidLivingZombie() then 
-
-		self:EmitSound(self:GetWeapon().Primary.Sound or "zombiesurvival/purg_ghostdash"..math.random(1,3)..".wav", 100, nil,100)
+		local wep = self:GetWeapon()
+		if wep.Magic and !owner:IsSkillActive(SKILL_MAGIC) then return end
+		self:EmitSound(wep.Primary.Sound or "zombiesurvival/purg_ghostdash"..math.random(1,3)..".wav", 100, nil,100)
 		local targetpos = target:LocalToWorld(target:OBBCenter())
 		local direction = (targetpos - self:GetPos()):GetNormal()
 		owner:LagCompensation(true)	
@@ -142,7 +144,7 @@ function ENT:ShootBullets(dmg, numbul)
 			phys:SetVelocity(Vector(0,0,0))
 		end
 		self:SetDTVector(22, direction)
-		local wep = self:GetWeapon()
+
 		if !wep.Primary.Projectile  then
 			self:FireBulletsLua(self:GetPos()+Vector(0,0,15), direction, wep.ConeMax or 1, numbul, dmg, owner, wep.KnockbackScale, wep.TracerName, wep.BulletCallback, 1, nil, 1028, nil, self)
 		else
@@ -168,10 +170,19 @@ function ENT:Use(user)
 		self.Weapon = wep
 	end
 end
+ENT.DamageTaked = 0
+function ENT:OnTakeDamage(dmginfo)
+	if dmginfo:GetDamage() <= 0 or dmginfo:GetAttacker() and !dmginfo:GetAttacker():IsValidLivingZombie() then return end
+	self.DamageTaked = dmginfo:GetDamage() + self.DamageTaked
+	if 	self.DamageTaked  > 350 then
+		self.DamageTaked = 0
+		self:SetPos(self:GetOwner():GetPos()+Vector(0,0,15))
+	end
+end
 function ENT:Think()
-	if self.trg and !self.trg:IsValid() then
+	if self.trg and !self.trg:IsValid() and self.TimeToDash < CurTime() then
 		local targets = {}
-		for _, ent in pairs(ents.FindInSphere(self:GetPos(), 1048)) do
+		for _, ent in pairs(team.GetPlayers(TEAM_UNDEAD)) do
 			if !ent:IsValid() then continue end
 			target = ent
 			if WorldVisible(self:LocalToWorld(Vector(0, 0, 10)), ent:NearestPoint(self:LocalToWorld(Vector(0, 0, 10))))  then

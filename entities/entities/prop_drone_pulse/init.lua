@@ -32,7 +32,7 @@ function ENT:FireTurret(src, dir)
 					phys:SetVelocityInstantaneous(angle:Forward() * 470 * (owner.ProjectileSpeedMul or 1))
 				end
 			end
-			if owner:IsSkillActive(SKILL_MOTHER) and (math.random(1,45) == 1 or owner:IsSkillActive(SKILL_VIP_ARMY)) and (owner:IsSkillActive(SKILL_VIP_ARMY) and owner.CounterBalls < 6 or !owner:IsSkillActive(SKILL_VIP_ARMY)) then 
+			if owner:IsSkillActive(SKILL_MOTHER) and (math.random(1,45) == 1 or owner:IsSkillActive(SKILL_VIP_ARMY)) and (owner:IsSkillActive(SKILL_VIP_ARMY) and owner.CounterBalls < 4 or !owner:IsSkillActive(SKILL_VIP_ARMY)) then 
 				local d = ents.Create("prop_rollermine_exp") 
 				if d:IsValid() then 
 					if owner:IsSkillActive(SKILL_VIP_ARMY) then

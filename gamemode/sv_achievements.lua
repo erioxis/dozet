@@ -15,6 +15,27 @@ function GM:HASAchievementEarned(pl, id)
     if self.Achievements[id].Daily then
         pl:GiveAchievementProgress("daily_hehe", 1)
     end
+    for id, ach in pairs(self.Achievements) do
+        if !ach.Goal then continue end
+        local result = sql.Query("SELECT * FROM zs_achievements_" .. "progress" .. " WHERE SteamID = '" .. pl:SteamID() .. "' AND AchievementID = '" .. id .. "'")
+
+        -- Result will return nil if there's no sql entry
+        if result then
+            -- If we have a goal, we'll check for progress
+            if ach.Goal then
+                result = result[1]
+                result.Progress = tonumber(result.Progress)
+                -- Store progress
+                
+                pl.Achs[id] = result.Progress
+
+                -- Check for completion
+            else
+                -- If we get a result on an achievement with no goal, achievement was achieved
+                pl.Achs[id] = true
+            end
+        end
+    end
 end
 
 -- Get player achievements from SQL (I'd say this is fairly expensive to do)
@@ -77,29 +98,7 @@ function PLAYER:GiveAchievementProgress(id, count)
     if count == 0 or (self.Achs[id] or 0) >= GAMEMODE.Achievements[id].Goal then return end
     -- Make sure this exists for calculation
     self.Achs[id] = self.Achs[id] or 0
-    for id, ach in pairs(GAMEMODE.Achievements) do
-        local result = sql.Query("SELECT * FROM zs_achievements_" .. (ach.Goal and "progress" or "onetime") .. " WHERE SteamID = '" .. self:SteamID() .. "' AND AchievementID = '" .. id .. "'")
 
-        -- Result will return nil if there's no sql entry
-        if result then
-            -- If we have a goal, we'll check for progress
-            if ach.Goal then
-                result = result[1]
-                result.Progress = tonumber(result.Progress)
-                -- Store progress
-                self.Achs[id] = result.Progress
-
-                -- Check for completion
-                if self.Achs[id] >= ach.Goal then
-                    completed = completed + 1
-                end
-            else
-                -- If we get a result on an achievement with no goal, achievement was achieved
-                self.Achs[id] = true
-                completed = completed + 1
-            end
-        end
-    end
     -- Update or insert values
     if self.Achs[id] > 0 then
         sql.Query("UPDATE zs_achievements_progress SET SteamID = SteamID, AchievementID = AchievementID, Progress = " .. math.Clamp(self.Achs[id] + count, 0, GAMEMODE.Achievements[id].Goal) .. " WHERE SteamID = '" .. self:SteamID() .. "' AND AchievementID = '" .. id..(GAMEMODE.Achievements[id].DailyCount and GAMEMODE.Achievements[id].DailyCount or GAMEMODE.Achievements[id].WeekCount and GAMEMODE.Achievements[id].WeekCount or "") .. "'")

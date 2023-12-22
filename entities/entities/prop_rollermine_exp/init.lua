@@ -299,7 +299,7 @@ end
 function ENT:Dash()
 	if !self.trg:IsValidLivingZombie() or self.trg and self.trg:IsValid() and !WorldVisible(self:LocalToWorld(Vector(0, 0, 10)), self.trg:NearestPoint(self:LocalToWorld(Vector(0, 0, 10)))) then
 		local targets = {}
-		for _, ent in pairs(ents.FindInSphere(self:GetPos(), 1048)) do
+		for _, ent in pairs(team.GetPlayers(TEAM_UNDEAD)) do
 			if !ent:IsValid() then continue end
 			target = ent
 			if WorldVisible(self:LocalToWorld(Vector(0, 0, 10)), ent:NearestPoint(self:LocalToWorld(Vector(0, 0, 10))))   then

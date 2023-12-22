@@ -954,7 +954,8 @@ trinketwep.PermitDismantle = true
 trinket, trinketwep = GM:AddTrinket(trs("t_curse_un"), "curse_unknown", false, nil, cursesoul, 3, trs("t_d_curse_un"), nil, nil, "weapon_zs_cursed")
 trinketwep.PermitDismantle = true
 trinket, trinketwep = GM:AddTrinket(trs("t_curse_point"), "curse_point", false, nil, cursesoul, 3, trs("t_d_curse_point"), nil, nil, "weapon_zs_cursed")
-trinketwep.PermitDismantle = true
+trinketwep.PermitDismantle = true 
+trinketwep.Stackable = true
 trinket, trinketwep = GM:AddTrinket(trs("t_curse_ancient"), "curse_eye", false, nil, cursesoul, 3, trs("t_d_curse_ancient"), nil, nil, "weapon_zs_cursed")
 trinketwep.PermitDismantle = true
 
@@ -2523,7 +2524,8 @@ trinket = GM:AddTrinket(trs("t_sin_envy"), "sin_envy", false, supveles, supweles
 GM:AddSkillModifier(trinket, SKILLMOD_ARSENAL_DISCOUNT, -0.15)
 trinket = GM:AddTrinket(trs("t_sin_lust"), "sin_lust", false, supveles, supweles, 1, trs("t_d_sin_lust"))
 
-trinket = GM:AddTrinket(trs("t_ego"), "sin_ego", false, supveles, supweles, 1, trs("t_d_ego"))
+trinket, trinketwep = GM:AddTrinket(trs("t_ego"), "sin_ego", false, supveles, supweles, 1, trs("t_d_ego"))
+trinketwep.Stackable = true
 GM:AddSkillModifier(trinket, SKILLMOD_SCRAPDISCOUNT, 0.75)
 
 trinket = GM:AddTrinket(trs("t_vir_pat"), "vir_pat", false, supveles, supweles, 1, trs("t_d_vir_pat"))

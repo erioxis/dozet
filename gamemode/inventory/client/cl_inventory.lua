@@ -477,9 +477,19 @@ function GM:InventoryAddGridItem( item, category )
 		--for k, v in SortedPairs(grid:GetItems()) do
 			--grid:
 		--end
-		--if category == INVCAT_CONSUMABLES then
-			--itempan:SetTooltip("da")
-		--end
+		if itempan.SWEP.Stackable then
+			local meh = 0
+			local mehin = {}
+			for k,v in pairs(grid:GetItems()) do
+				if v.SWEP.Stackable and v.Item == itempan.Item then
+					meh = meh + 1
+					mehin[#mehin + 1] = v
+				end
+			end
+			for k,v in pairs(mehin) do
+				v:SetTooltip(meh)
+			end
+		end
 
 		local mdlframe = vgui.Create("DPanel", itempan)
 		mdlframe:SetSize( (category ~= INVCAT_TRINKETS and (125 * screenscale) or (35 * screenscale)), 35 * screenscale )

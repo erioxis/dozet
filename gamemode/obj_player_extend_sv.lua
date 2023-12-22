@@ -153,7 +153,7 @@ function meta:ProcessDamage(dmginfo)
 		if classtable.Boss and damage >= (mxap * 0.11) then
 			damage = math.min(damage, (mxap * 0.06))
 		end
-		if attacker:IsValidLivingHuman() and inflictor:IsValid() and inflictor == attacker:GetActiveWeapon() then
+		if attacker:IsValidLivingHuman() and inflictor:IsValid() and (inflictor == attacker:GetActiveWeapon() or inflictor.CanUseModifiers) then
 			local wep = attacker:GetActiveWeapon()
 			local health = attacker:Health()
 			local attackermaxhp = math.floor(attacker:GetMaxHealth() * ((attacker:IsSkillActive(SKILL_D_FRAIL) or attacker:IsSkillActive(SKILL_ABUSE)) and 0.44 or 1))
@@ -187,8 +187,8 @@ function meta:ProcessDamage(dmginfo)
 			end
 			--attacker.dpsmeter = damage
 			if attacker:IsSkillActive(SKILL_VAMPIRISM) then
-				attacker:SetNWFloat("vampirism_progress", attacker:GetNWFloat("vampirism_progress",value)+damage*0.09)
-				if attacker:GetNWFloat("vampirism_progress",value) >= 620 then
+				attacker:SetNWFloat("vampirism_progress", attacker:GetNWFloat("vampirism_progress")+damage*0.09)
+				if attacker:GetNWFloat("vampirism_progress") >= 620 then
 					attacker:SetHealth(math.min(attackermaxhp,attacker:Health() + attackermaxhp*0.09))
 					attacker:SetNWFloat("vampirism_progress", 0)
 				end
@@ -1715,10 +1715,9 @@ end
 function meta:Resupply(owner, obj)
 
 	local stockpiling = self:IsSkillActive(SKILL_STOCKPILE)
-	local stowage = 0 == 0
 	
 
-	if (stowage and (self.StowageCaches or 0) <= 0) then
+	if (self.StowageCaches or 0) <= 0 then
 		self:CenterNotify(COLOR_RED, translate.ClientGet(self, "no_ammo_here"))
 		return
 	end
@@ -1733,7 +1732,7 @@ function meta:Resupply(owner, obj)
 	local ammotype = self:GetResupplyAmmoType()
 	local amount = GAMEMODE.AmmoCache[ammotype]
 
-	for i = 1, stockpiling and not stowage and 2 or 1 do
+	for i = 1, stockpiling and 2 or 1 do
 		if self.RessuplyMul then
 			amount = amount * self.RessuplyMul
 		end
