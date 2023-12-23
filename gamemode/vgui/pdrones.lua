@@ -57,111 +57,6 @@ PANEL.CreationTime = 0
 function PANEL:Init()
 	local node
 	local screenscale = BetterScreenScale()
-
-	self.DirectionalLight = {}
-	self.FarZ = 32000
-
-	self.MainMenu = GAMEMODE.DronesMenu
-	self.RemantleNodes = {}
-	self.RemantleNodes[0] = {}
-
-	if not SelectedInv() and self.MainMenu.m_WepClass then
-		self.GunTab = weapons.Get(self.MainMenu.m_WepClass)
-		local gtbl = self.GunTab
-		local curqua = gtbl.QualityTier
-
-		if gtbl.AllowQualityWeapons then
-			local branches = gtbl.Branches
-
-			if branches then
-				for no, _ in pairs(branches) do
-					self.RemantleNodes[no] = {}
-				end
-			end
-
-			self.OrigTab = gtbl.BaseQuality and weapons.Get(gtbl.BaseQuality) or gtbl
-
-			for i = 0, #GAMEMODE.WeaponQualities do
-				node = ClientsideModel("models/props/cs_italy/orange.mdl", RENDER_GROUP_OPAQUE_ENTITY)
-				if IsValid(node) then
-					node:SetNoDraw(true)
-					node:SetPos(Vector(0, -48 + i * 30, i > 0 and branches and 0 or -9))
-
-					node.Unlocked = i == 0 or (curqua and curqua >= i or nil)
-					if i ~= 0 and curqua and curqua >= 1 and gtbl.Branch then
-						node.Locked = true
-					end
-					self.RemantleNodes[0][i] = node
-				end
-
-				if i > 0 and branches then
-					for no, br in pairs(branches) do
-						node = ClientsideModel("models/props/cs_italy/orange.mdl", RENDER_GROUP_OPAQUE_ENTITY)
-						if IsValid(node) then
-							node:SetNoDraw(true)
-							node:SetPos(Vector(0, -48 + i * 30, 0 - (16/#branches)*no))
-
-							node.Unlocked = i == 0 or (curqua and curqua >= i or nil)
-							if curqua and curqua >= 1 and gtbl.Branch ~= no then
-								node.Locked = true
-							end
-							node.Name = br and br.NewNames and br.NewNames[i] or nil
-							self.RemantleNodes[no][i] = node
-						end
-					end
-				end
-			end
-		end
-	end
-
-	self:SetCamPos( Vector( 20000, 0, 0 ) )
-	self:SetLookAt( Vector( 0, 190, 100 ) )
-	self:SetFOV( 12 )
-
-	self:SetAmbientLight( Color( 50, 50, 50 ) )
-
-	self:SetDirectionalLight( BOX_TOP, color_white )
-	self:SetDirectionalLight( BOX_FRONT, color_white )
-
-	local top = vgui.Create("Panel", self)
-	top:SetSize(ScrW(), 256)
-	top:SetMouseInputEnabled(false)
-
-	local qualityname = vgui.Create("DLabel", top)
-	qualityname:SetFont("ZSHUDFont")
-	qualityname:SetTextColor(COLOR_WHITE)
-	qualityname:SetContentAlignment(8)
-	qualityname:Dock(TOP)
-
-	local desc = {}
-	for i=1, 5 do
-		local qualityd = vgui.Create("DLabel", top)
-		qualityd:SetFont("ZS3D2DFontTiny")
-		qualityd:SetTextColor(COLOR_GRAY)
-		qualityd:SetContentAlignment(8)
-		qualityd:Dock(TOP)
-		table.insert(desc, qualityd)
-	end
-
-	local bottom = vgui.Create("Panel", self)
-	bottom:SetSize(ScrW(), 46 * screenscale)
-	bottom:SetMouseInputEnabled(false)
-
-	local scrapcost = vgui.Create("DLabel", bottom)
-	scrapcost:SetFont("ZSHUDFontSmall")
-	scrapcost:SetTextColor(COLOR_WHITE)
-	scrapcost:SetContentAlignment(2)
-	scrapcost:Dock(TOP)
-
-	self.Top = top
-	self.QualityName = qualityname
-	self.QualityDesc = desc
-	self.Bottom = bottom
-	self.ScrapCost = scrapcost
-
-	top:SetAlpha(0)
-	bottom:SetAlpha(0)
-
 	self:DockMargin(0, 0, 0, 0)
 	self:DockPadding(0, 0, 0, 0)
 	self:Dock(FILL)
@@ -179,337 +74,23 @@ function PANEL:PerformLayout()
 end
 
 function PANEL:SetDirectionalLight(iDirection, color)
-	self.DirectionalLight[iDirection] = color
 end
-
-local matBeam = Material("trails/laser")
-local matGlow = Material("sprites/glow04_noz")
-local matWhite = Material("models/debug/debugwhite")
-local colBeam = Color(0, 0, 0)
-local colBeam2 = Color(255, 255, 255)
-local colGlow = Color(0, 0, 0)
 function PANEL:Paint(w, h)
-	local realtime = RealTime()
-	local nodepos, selected
-	local col, othernodepos
-	local add, pos_a, pos_b, sat
-	local size, ang
-
-	local campos = self.vCamPos
-	campos.x = 1600
-	campos.y = math.Clamp(campos.y, -262, 262)
-	campos.z = math.Clamp(campos.z, -262, 262)
-
-	self:SetCamPos(campos)
-	self.vLookatPos:Set(campos)
-	self.vLookatPos.x = 0
-
-	self:SetCamPos(campos)
-
-	surface.SetDrawColor(15, 20, 25, 230)
-	surface.DrawRect(0, 0, w, h)
-
-	ang = self.aLookAngle
-	if not ang then
-		ang = (self.vLookatPos - self.vCamPos):Angle()
-	end
-	local to_camera = ang:Forward() * -1
-
-	local x, y = self:LocalToScreen(0, 0)
-
-	local mx, my = gui.MousePos()
-	local aimvector = util.AimVector(ang, self.fFOV, mx - x, my - y, w, h)
-	local intersectpos = util.IntersectRayWithPlane(self.vCamPos, aimvector, self:GetLookAt(), Vector(-1, 0, 0))
-
-	cam.Start3D( self.vCamPos, ang, self.fFOV, x, y, w, h, 5, self.FarZ )
-	cam.IgnoreZ( true )
-
-	render.SuppressEngineLighting( true )
-	render.SetLightingOrigin( vector_origin )
-	render.ResetModelLighting( self.colAmbientLight.r / 255, self.colAmbientLight.g / 255, self.colAmbientLight.b / 255 )
-
-	for i=0, 6 do
-		col = self.DirectionalLight[ i ]
-		if col then
-			render.SetModelLighting( i, col.r / 255, col.g / 255, col.b / 255 )
-		end
-	end
-
-	render.SetMaterial(matBeam)
-	for branch, nodes in pairs(self.RemantleNodes) do
-		for id, node in pairs(nodes) do
-			if IsValid(node) then
-				nodepos = node:GetPos()
-				othernodes = {}
-
-				if id > 0 then
-					othernodes[#othernodes+1] = nodes[id + 1]
-				else
-					for i = 0, #self.RemantleNodes do
-						othernodes[#othernodes+1] = self.RemantleNodes[i][1]
-					end
-				end
-
-				for _, othernode in pairs(othernodes) do
-					if IsValid(othernode) then
-						othernodepos = othernode:GetPos()
-
-						local beamsize = 4
-						if othernode.Unlocked then
-							colBeam.r = 60
-							colBeam.g = 255
-							colBeam.b = 120
-						elseif node.Unlocked then
-							colBeam.r = 255
-							colBeam.g = 192
-							colBeam.b = 0
-						else
-							colBeam.r = 0
-							colBeam.g = 40
-							colBeam.b = 40
-
-							beamsize = 2
-						end
-
-						if hovquality and hovquality >= id - 1 and hovquality <= id + 1 and hovbranch == branch then
-							add = math.abs(math.sin(realtime * math.pi)) * 120
-							colBeam.r = math.min(colBeam.r + add, 255)
-							colBeam.g = math.min(colBeam.g + add, 255)
-							colBeam.b = math.min(colBeam.b + add, 255)
-
-							colBeam.a = 180
-							colBeam2.a = 190
-						else
-							colBeam.a = 110
-							colBeam2.a = 110
-						end
-
-						pos_a = nodepos + Vector(-16, 0, 0)
-						pos_b = othernodepos + Vector(-16, 0, 0)
-
-						render.DrawBeam(pos_a, pos_b, beamsize, 0, 1, colBeam2)
-						render.DrawBeam(pos_a, pos_b, 8, 0, 1, colBeam)
-					end
-				end
-			end
-		end
-	end
-
-	local oldquality = hovquality
-	local oldbranch = hovbranch
-	hovquality = nil
-	hovbranch = nil
-
-	local angle = (realtime * 90) % 180
-
-	for branch, nodes in pairs(self.RemantleNodes) do
-		for id, node in pairs(nodes) do
-			if IsValid(node) then
-				nodepos = node:GetPos()
-				selected = intersectpos and nodepos:DistToSqr(intersectpos) <= 36
-
-				cam.Start3D2D(node:GetPos() - to_camera * 16, Angle(0, 90, 90), 0.08)
-				surface.DisableClipping(true)
-				DisableClipping(true)
-
-				if selected then
-					hovquality = id
-					hovbranch = branch
-
-					sat = 1 - math.abs(math.sin(realtime * math.pi)) * 0.25
-				else
-					sat = 1
-				end
-
-				local prevnode = nodes[id - 1] or id == 1 and self.RemantleNodes[0][0]
-				if node.Locked then
-					render.SetColorModulation(sat / 4, sat / 4, sat / 4)
-				elseif node.Unlocked then
-					render.SetColorModulation(sat / 4, sat / 4, sat)
-				elseif prevnode.Unlocked and not node.Unlocked then
-					render.SetColorModulation(sat, sat / 2, 0)
-				else
-					render.SetColorModulation(sat / 2, 0, 0)
-				end
-				render.ModelMaterialOverride(matWhite)
-
-				node:DrawModel()
-
-				render.ModelMaterialOverride()
-				render.SetColorModulation(1, 1, 1)
-
-				local txt = translate.Get("rem_standart")
-				local quals = GAMEMODE.WeaponQualities[id]
-				if quals then
-					txt = node.Name or branch == 0 and quals[1] or quals[3]
-				end
-
-				draw.SimpleText(txt, "ZS3D2DFont2", -x, -y, selected and color_white or COLOR_GRAY, TEXT_ALIGN_CENTER)
-
-				DisableClipping(false)
-				surface.DisableClipping(false)
-				cam.End3D2D()
-
-				if not node.Locked then
-					render.SetMaterial(matGlow)
-					colGlow.r = sat * 255 colGlow.g = sat * 255 colGlow.b = sat * 255
-					if node.Unlocked then
-						colGlow.r = colGlow.r / 4
-						colGlow.g = colGlow.g / 4
-					elseif not node.Unlocked then
-						if prevnode.Unlocked then
-							colGlow.g = colGlow.g / 1.5
-							colGlow.b = 0
-						else
-							colGlow.r = colGlow.r / 1.5
-							colGlow.g = 0
-							colGlow.b = 0
-						end
-					end
-					size = selected and 30 or 20
-					render.DrawQuadEasy(nodepos, to_camera, size, size, colGlow, angle)
-					angle = angle + 45
-				end
-			end
-		end
-	end
-
-	if intersectpos then
-		intersectpos = intersectpos + Vector(8, 0, 0)
-		render.SetMaterial(matGlow)
-		render.DrawQuadEasy(intersectpos, to_camera, 12, 12, color_white, realtime * 90)
-	end
-
-	render.SuppressEngineLighting(false)
-
-	cam.IgnoreZ(false)
-	cam.End3D()
-
-	if oldquality ~= hovquality or oldbranch ~= hovbranch then
-		self.Top:Stop()
-		self.Bottom:Stop()
-
-		if hovquality and hovbranch then
-			local txt, scost = translate.Get("rem_standart"), ""
-
-			local quals = GAMEMODE.WeaponQualities[hovquality]
-			if quals then
-				txt = self.RemantleNodes[hovbranch][hovquality].Name or hovbranch == 0 and quals[1] or quals[3]
-				scost = math.floor(GAMEMODE:GetUpgradeScrap(self.GunTab, hovquality) * (MySelf.ScrapDiscount or 1))
-			end
-
-			self.QualityName:SetText(txt)
-			self.QualityName:SizeToContents()
-
-			self.ScrapCost:SetText(scost ~= "" and translate.Get("rem_cost") .. scost or "")
-			self.ScrapCost:SetTextColor(scost ~= "" and MySelf:GetAmmoCount("scrap") >= scost and COLOR_WHITE or COLOR_RED)
-			self.ScrapCost:SizeToContents()
-
-			local dtxt
-			local altdesc = self.OrigTab.RemantleDescs
-			local altdescs = altdesc and altdesc[hovbranch][hovquality]
-
-			for i=1, 5 do
-				dtxt = " "
-				if txt ~= translate.Get("rem_standart") and altdesc and altdescs and altdescs[i] then
-					dtxt = altdescs[i]
-				end
-
-				self.QualityDesc[i]:SetTextColor(i == 1 and hovbranch ~= 0 and COLOR_WHITE or COLOR_GREEN)
-				self.QualityDesc[i]:SetText(dtxt)
-				self.QualityDesc[i]:SizeToContents()
-			end
-			--self:ViewerStatBarUpdate(ыу,false,self.GunTab)
-
-			surface.PlaySound("zombiesurvival/ui/misc1.ogg")
-
-			self.Top:SetAlpha(0)
-			self.Top:AlphaTo(195, 0.1)
-
-			self.Bottom:SetAlpha(0)
-			self.Bottom:AlphaTo(140, 0.1)
-		else
-			self.Top:AlphaTo(0, 0.1)
-			self.Bottom:AlphaTo(0, 0.1)
-		end
-	end
-
 	return true
 end
 
 net.Receive("zs_remantleconf_v2", function()
 	if not (GAMEMODE.DronesMenu and GAMEMODE.DronesMenu:IsValid() and hovquality and hovbranch) then return end
-
-	local ri = GAMEMODE.DronesMenu
-	local path = ri.RemantlePath
-
-	local wepclass = ri.m_WepClass
-	local contentsqua = GAMEMODE.GunTab.QualityTier
-	local desiredqua = contentsqua and contentsqua + 1 or 1
-	local upgclass = GAMEMODE:GetWeaponClassOfQuality(not contentsqua and wepclass or GAMEMODE.GunTab.BaseQuality, desiredqua)
-
-	GAMEMODE.GunTab = weapons.Get(upgclass)
-	local gtbl = GAMEMODE.GunTab
-	local scost = GAMEMODE:GetUpgradeScrap(gtbl, desiredqua)
-
-	path.RemantleNodes[hovbranch][hovquality].Unlocked = true
-	path.ScrapCost:SetTextColor((MySelf:GetAmmoCount("scrap") - scost) >= scost and COLOR_WHITE or COLOR_RED)
-
-	ri.m_ContentsLabel:SetText(gtbl.PrintName)
-	ri.m_ContentsLabel:SizeToContents()
-	ri.m_ContentsLabel:CenterHorizontal()
-
-	local retscrap = GAMEMODE:GetDismantleScrap(gtbl)
-	local disscraptxt = gtbl.NoDismantle and translate.Get("rem_nodism") or translate.Format("rem_dis_for",retscrap)
-
-	ri.m_Dismantle:SetText(disscraptxt)
-	ri.m_Dismantle:SizeToContents()
-	ri.m_Dismantle:CenterHorizontal()
-
-	ri.m_DisaButton:SetDisabled(gtbl.NoDismantle)
-	ri.m_DisaButton:SetTextColor(gtbl.NoDismantle and COLOR_DARKGRAY or COLOR_WHITE)
 end)
 
 function PANEL:OnMousePressed(mc)
-	if mc == MOUSE_LEFT and hovquality and hovbranch and hovquality ~= 0 then
-		local gtbl = self.GunTab
-		local cqua = gtbl.QualityTier or 0
-
-		local current = self.RemantleNodes[hovbranch][hovquality]
-		local prev = self.RemantleNodes[hovbranch][hovquality - 1] or hovquality == 1 and self.RemantleNodes[0][0]
-		if cqua and hovquality > cqua and prev and prev.Unlocked and not current.Locked then
-			if self.GunTab.AmmoIfHas and MySelf:GetAmmoCount(self.GunTab.Primary.Ammo) == 0 then
-				GAMEMODE:CenterNotify(COLOR_RED, "You don't have the deployable ammo type for this!")
-				surface.PlaySound("buttons/button8.wav")
-
-				return
-			end
-
-			local scost = math.floor(GAMEMODE:GetUpgradeScrap(self.GunTab, hovquality) * (MySelf.ScrapDiscount or 1))
-			if MySelf:GetAmmoCount("scrap") >= scost then
-				RunConsoleCommand("zs_upgrade", hovbranch ~= 0 and hovbranch)
-
-				return
-			else
-				GAMEMODE:CenterNotify(COLOR_RED, translate.Get("rem_enough_scr"))
-				surface.PlaySound("buttons/button8.wav")
-
-				return
-			end
-		else
-			GAMEMODE:CenterNotify(COLOR_RED,translate.Get("rem_q_first"))
-			surface.PlaySound("buttons/button8.wav")
-
-			return
-		end
-	end
 end
 
 vgui.Register("ZSRemantlePathDrones", PANEL, "Panel")
 
 function GM:OpenDroneMenu(remantler)
 	if not (remantler and remantler:IsValid()) or (self.DronesMenu and self.DronesMenu:IsVisible()) then return end
-	local mytarget = remantler.DroneUsed
+	local mytarget = remantler:GetDTEntity(11)
 
 	if self.DronesMenu and self.DronesMenu:IsValid() and self.DronesMenu.m_WepClass == mytarget then
 		self.DronesMenu:SetVisible(true)
@@ -537,7 +118,6 @@ function GM:OpenDroneMenu(remantler)
 	frame.m_WepClass = mytarget
 
 
-	local gtbl = remantler.DroneUsed.GunTab
 
 
 	local topspace = vgui.Create("DPanel", frame)
@@ -581,12 +161,6 @@ function GM:OpenDroneMenu(remantler)
 	remprop:CenterHorizontal()
 	remprop.Paint = function() end
 	remprop:SetPadding(0)
-
-	local remantleframe = vgui.Create("DPanel", remprop)
-	local sheet = remprop:AddSheet(translate.Get("rem_t_remling"), remantleframe, "icon16/arrow_up.png", false, false)
-	sheet.Panel:SetPos(0, tabhei + 2)
-	remantleframe.Paint = function(me, w, h) surface.SetDrawColor(31, 33, 35, 255) surface.DrawRect(0, 0, w, h) end
-	remantleframe:SetSize(wid - 8, boty - topy - 8 - topspace:GetTall())
 
 	local trinketsframe = vgui.Create("DPanel")
 	sheet = remprop:AddSheet(translate.Get("rem_t_modules"),  trinketsframe, GAMEMODE.ItemCategoryIcons[ITEMCAT_MODULES], false, false)
@@ -659,18 +233,6 @@ function GM:OpenDroneMenu(remantler)
 	local tabs = dragbase:GetChildren()
 
 	self:ConfigureMenuTabs(tabs, tabhei)
-
-	local contents = EasyLabel(remantleframe, "Drone", "ZSHUDFontSmall", COLOR_WHITE)
-	contents:AlignTop(16 * screenscale)
-	contents:CenterHorizontal()
-	frame.m_ContentsLabel = contents
-
-	local upgpathf = vgui.Create("DPanel", remantleframe)
-	upgpathf:SetSize(wid - 16, remantleframe:GetTall() / 1.75)
-	upgpathf:MoveBelow(contents, 24 * screenscale)
-	upgpathf:CenterHorizontal()
-
-	frame.RemantlePath = vgui.Create("ZSRemantlePathDrones", upgpathf)
 
 
 	frame:MakePopup()

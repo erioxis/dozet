@@ -5,7 +5,7 @@ GM.Website	=	"https://github.com/erioxis/dozet"
 
 -- No, adding a gun doesn't make your name worth being here.
 GM.Credits = {
-	{"Version", "", "9.4.2"},
+	{"Version", "", "9.4.5"},
 	{"Season of ", "", "Quality of Life"},
 	{"erioxis", "Phantom coder", "dead"},
 	{"Холодное Молочко(M-I-L-K-Y)", "Phantom coder", "dead"},
@@ -158,6 +158,7 @@ function GM:AddCustomAmmo()
 	game.AddAmmoType({name = "zapper"})
 	game.AddAmmoType({name = "zapper_arc"})
 	game.AddAmmoType({name = "remantler"})
+	game.AddAmmoType({name = "drone_s"})
 	game.AddAmmoType({name = "turret_buckshot"})
 	game.AddAmmoType({name = "turret_assault"})
 	game.AddAmmoType({name = "turret_rocket"})

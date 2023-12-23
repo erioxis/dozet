@@ -37,7 +37,7 @@ concommand.Add("zs_pointsshopbuy", function(sender, command, arguments)
 	if not itemtab or not itemtab.PointShop then return end
 	if usescrap and itemtab.DontScrap then return end
 	local itemcat = itemtab.Category
-	if usescrap and not (itemcat == ITEMCAT_TRINKETS or itemcat == ITEMCAT_AMMO) and not itemtab.CanMakeFromScrap then return end
+	if usescrap and not (itemcat == ITEMCAT_TRINKETS or itemcat == ITEMCAT_AMMO or itemcat == ITEMCAT_MODULES) and not itemtab.CanMakeFromScrap then return end
 
 	local points = usescrap and sender:GetAmmoCount("scrap") or sender:GetPoints()
 	local count_or_nil = arguments[2] or 1
@@ -81,7 +81,23 @@ concommand.Add("zs_pointsshopbuy", function(sender, command, arguments)
 			if GAMEMODE:GetInventoryItemType(itemtab.SWEP) == INVCAT_TRINKETS and (sender:HasInventoryItem(itemtab.SWEP) or sender:HasInventoryItemQ(itemtab.SWEP)) then
 				return
 			else
-				sender:AddInventoryItem(itemtab.SWEP)
+				if itemcat ~= ITEMCAT_MODULES then
+					sender:AddInventoryItem(itemtab.SWEP)
+				else
+					local rem = sender:NearestDS()
+					local drone = rem:GetDTEntity(11)
+					if drone and drone:IsValid() then
+						drone.TrinketsIn[itemtab.SWEP] = drone.TrinketsIn[itemtab.SWEP] and drone.TrinketsIn[itemtab.SWEP] + 1 or 1
+						drone:OnUpdateTrinkets(itemtab.SWEP)
+						rem.NextUseTrinket = CurTime() + 7
+						drone:SetParent(NULL)
+						rem:SetDTEntity(11,NULL)
+						drone:SetPos(drone:GetObjectOwner():GetPos()+Vector(0,0,6))
+						
+					else
+						return
+					end
+				end
 			end
 		elseif sender:HasWeapon(itemtab.SWEP) then
 			local stored = weapons.Get(itemtab.SWEP)
@@ -138,11 +154,24 @@ concommand.Add("zs_pointsshopbuy", function(sender, command, arguments)
 	GAMEMODE:AddItemStocks(id, -1)
 
 	if usescrap then
-		local nearest = sender:NearestRemantler()
-		if nearest then
-			local owner = nearest.GetObjectOwner and nearest:GetObjectOwner() or nearest:GetOwner()
-			if owner:IsValid() and owner ~= sender then
-				if not sender:IsSkillActive(SKILL_SAMODOS) then
+		if itemcat ~= ITEMCAT_MODULES then
+			local nearest = sender:NearestRemantler()
+			if nearest then
+				local owner = nearest.GetObjectOwner and nearest:GetObjectOwner() or nearest:GetOwner()
+				if owner:IsValid() and owner ~= sender then
+					if not sender:IsSkillActive(SKILL_SAMODOS) then
+						local scrapcom = math.ceil(cost / 6)
+						nearest:SetScraps(nearest:GetScraps() + scrapcom)
+						nearest:GetObjectOwner():GiveAchievementProgress("grem", scrapcom)
+						nearest:GetObjectOwner():CenterNotify(COLOR_GREEN, translate.ClientFormat(owner,"remantle_used", scrapcom)..sender:Nick())
+					end
+				end
+			end
+		else
+			local nearest = sender:NearestDS()
+			if nearest then
+				local owner = nearest.GetObjectOwner and nearest:GetObjectOwner() or nearest:GetOwner()
+				if owner:IsValid() and owner ~= sender then
 					local scrapcom = math.ceil(cost / 6)
 					nearest:SetScraps(nearest:GetScraps() + scrapcom)
 					nearest:GetObjectOwner():GiveAchievementProgress("grem", scrapcom)

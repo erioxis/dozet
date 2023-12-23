@@ -581,6 +581,7 @@ GM:AddPointShopItem("wrench",			ITEMCAT_TOOLS,			20,				"weapon_zs_wrench").NoCl
 GM:AddPointShopItem("resupplybox",		ITEMCAT_DEPLOYABLES,			30,				"weapon_zs_resupplybox").Countables = "prop_resupplybox"
 GM:AddPointShopItem("fridge",		ITEMCAT_DEPLOYABLES,			45,				"weapon_zs_fridge").Countables = "prop_fridge"
 GM:AddPointShopItem("remantler",		ITEMCAT_DEPLOYABLES,			30,				"weapon_zs_remantler").Countables = "prop_remantler"
+GM:AddPointShopItem("drone_s",		ITEMCAT_DEPLOYABLES,			150,				"weapon_zs_drone_station").Countables = "prop_drone_station"
 GM:AddPointShopItem("msgbeacon",		ITEMCAT_DEPLOYABLES,			0,				"weapon_zs_messagebeacon").Countables = "prop_messagebeacon"
 GM:AddPointShopItem("camera",			ITEMCAT_DEPLOYABLES,			15,				"weapon_zs_camera").Countables = "prop_camera"
 GM:AddPointShopItem("tv",				ITEMCAT_DEPLOYABLES,			25,				"weapon_zs_tv").Countables = "prop_tv"
@@ -812,8 +813,13 @@ GM:AddPointShopItem("ttimes",	        ITEMCAT_TRINKETS,		70,				"trinket_ttimes"
 GM:AddPointShopItem("toysite2",		ITEMCAT_TRINKETS,		150,				"trinket_toysite").SubCategory =								ITEMSUBCAT_TRINKETS_DEFENSIVE
 GM:AddPointShopItem("bloodgrass",		ITEMCAT_TRINKETS,		150,				"trinket_bloodgrass").SubCategory =								ITEMSUBCAT_TRINKETS_DEFENSIVE
 -- GM:AddPointShopItem("void",	        ITEMCAT_TRINKETS,		70,				"trinket_void").SubCategory =							  ITEMSUBCAT_TRINKETS_OFFENSIVE
-GM:AddPointShopItem("bloodgrass",		ITEMCAT_MODULES,		150,				"trinket_bloodgrass").SubCategory =								ITEMSUBCAT_TRINKETS_DEFENSIVE
-
+GM:AddPointShopItem("defensive_module",		ITEMCAT_MODULES,		70,				"trinket_defensive_module").SubCategory =								ITEMSUBCAT_TRINKETS_DEFENSIVE
+GM:AddPointShopItem("module_balance",		ITEMCAT_MODULES,		100,				"trinket_module_balance").SubCategory =								ITEMSUBCAT_TRINKETS_OFFENSIVE
+GM:AddPointShopItem("module_resnya",		ITEMCAT_MODULES,		300,				"trinket_module_resnya").SubCategory =								ITEMSUBCAT_TRINKETS_MELEE
+GM:AddPointShopItem("module_bounty",		ITEMCAT_MODULES,		300,				"trinket_module_bounty").SubCategory =								ITEMSUBCAT_TRINKETS_SPECIAL
+GM:AddPointShopItem("module_handler",		ITEMCAT_MODULES,		90,				"trinket_module_handler").SubCategory =								ITEMSUBCAT_TRINKETS_PERFOMANCE
+GM:AddPointShopItem("module_extreme",		ITEMCAT_MODULES,		800,				"trinket_module_extreme").SubCategory =								ITEMSUBCAT_TRINKETS_SUPER
+GM:AddPointShopItem("module_nanite",		ITEMCAT_MODULES,		200,				"trinket_module_nanite").SubCategory =								ITEMSUBCAT_TRINKETS_SUPPORT
   
 GM:AddPointShopItem("flashbomb",		ITEMCAT_OTHER,			25,				"weapon_zs_flashbomb")
 GM:AddPointShopItem("grenade",			ITEMCAT_OTHER,			35,				"weapon_zs_grenade")
@@ -957,7 +963,7 @@ GM:AddDeployableInfo("prop_rollermine",			"Rollermine",			"weapon_zs_rollermine"
 GM:AddDeployableInfo("prop_tv",                   	 "TV",                    	"weapon_zs_tv")
 GM:AddDeployableInfo("prop_obj_sigil",                   	 "Sigil",                    	"weapon_zs_sigil_port")
 GM:AddDeployableInfo("prop_xmas_tree",                   	 "X-mas Tree",                    	"weapon_zs_xmas_tree")
-GM:AddDeployableInfo("prop_drone_station",                   	 "Drone Station",                    	"weapon_zs_xmas_tree")
+GM:AddDeployableInfo("prop_drone_station",                   	 "Drone Station",                    	"weapon_zs_drone_station")
 
 GM.MaxSigils = 2
 

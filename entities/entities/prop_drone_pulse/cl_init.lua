@@ -7,7 +7,8 @@ function ENT:Initialize()
 	self.AmbientSound:Play()
 
 	self.PixVis = util.GetPixelVisibleHandle()
-
+	self.Trailing = CurTime() + 0.15
+	self.TrailPositions = {}
 	hook.Add("CreateMove", self, self.CreateMove)
 	hook.Add("ShouldDrawLocalPlayer", self, self.ShouldDrawLocalPlayer)
 	hook.Add("CalcView", self, self.CalcView)
@@ -29,9 +30,23 @@ function ENT:Initialize()
 		self.GunAttachment = ent
 	end
 end
-
+local angle = Angle(0,0,0)
 function ENT:Think()
 	self.AmbientSound:PlayEx(0.5, math.Clamp(75 + self:GetVelocity():Length() * 0.5, 75, 150))
+	table.insert(self.TrailPositions, 1, self:GetPos()+angle:Right()*96)
+	angle.yaw = angle.yaw + 90
+	if self.TrailPositions[1] then
+		table.remove(self.TrailPositions, 60)
+	end
+
+	local dist = 0
+	local mypos = self:GetPos()
+	for i=1, #self.TrailPositions do
+		if self.TrailPositions[i]:DistToSqr(mypos) > dist then
+			self:SetRenderBoundsWS(self.TrailPositions[i], mypos, Vector(16, 16, 16))
+			dist = self.TrailPositions[i]:DistToSqr(mypos)
+		end
+	end
 end
 
 function ENT:DrawTranslucent()

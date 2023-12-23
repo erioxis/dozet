@@ -100,8 +100,8 @@ CLASS.Wave = 11 / 12
 },
 }]]
 
-CLASS.Health = 7000
-CLASS.Speed = 120
+CLASS.Health = 5550
+CLASS.Speed = 145
 CLASS.Hidden = false
 
 CLASS.FearPerInstance = 1
@@ -219,21 +219,12 @@ function CLASS:DoAnimationEvent(pl, event, data)
 end
 
 if SERVER then
-	function CLASS:OnSpawned(pl)
-		pl:CreateAmbience("ticklemonsterambience")
-	end
+
 		function CLASS:ProcessDamage(pl, dmginfo)
 			local attacker = dmginfo:GetAttacker()
 			local dmg = dmginfo:GetDamage()
 			local hp = pl:Health()
-			if dmginfo:GetInflictor().IsMelee then
 				dmginfo:SetDamage(dmginfo:GetDamage() / 2)
-			end
-			if bit_band(dmginfo:GetDamageType(), DMG_BULLET) ~= 0 then
-				dmginfo:SetDamage(dmginfo:GetDamage() * 0.5)
-			elseif bit_band(dmginfo:GetDamageType(), DMG_SLASH) == 0 and bit_band(dmginfo:GetDamageType(), DMG_CLUB) == 0 then
-				dmginfo:SetDamage(dmginfo:GetDamage() * 0.5)
-			end
 	
 	
 	

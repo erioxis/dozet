@@ -134,7 +134,7 @@ if SERVER then
 	end
 	function CLASS:ProcessDamage(pl, dmginfo)
 		if bit_band(dmginfo:GetDamageType(), DMG_BULLET) ~= 0 then
-			dmginfo:SetDamage(0)
+			dmginfo:SetDamage(0.25)
 		end
 		return dmginfo
 	end

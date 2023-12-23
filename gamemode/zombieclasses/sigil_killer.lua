@@ -5,7 +5,7 @@ CLASS.Help = "controls_fast_zombie"
 
 CLASS.Model = Model("models/player/zombie_fast.mdl")
 
-CLASS.Wave = 12 / 12
+CLASS.Wave = 24 / 12
 CLASS.Revives = false
 CLASS.Infliction = 0.9
 CLASS.Health = 2200

@@ -153,7 +153,14 @@ function ENT:OnPackedUp(pl)
 
 	pl:PushPackedItem(self:GetClass(), self:GetObjectHealth())
 	pl:GiveAmmo(self:GetAmmo(), self.AmmoType)
-
+	if self.TrinketsIn then
+		for k,v in pairs(self.TrinketsIn) do
+			for i=1,v do
+				pl:AddInventoryItem(k)
+			end
+		end
+		self.TrinketsIn = {}
+	end
 	self:Remove()
 end
 
@@ -311,7 +318,7 @@ function ENT:FireTurret(src, dir)
 			owner:LagCompensation(true)
 			self:FireBulletsLua(src, dir, 5, 1, 16.5 *  (owner.BulletMul or 1), owner, nil, "AR2Tracer", self.BulletCallback, nil, nil, self.GunRange, nil, self)
 			owner:LagCompensation(false)
-			if owner:IsSkillActive(SKILL_MOTHER) and (math.random(1,100) == 1 or owner:IsSkillActive(SKILL_VIP_ARMY)) and (owner:IsSkillActive(SKILL_VIP_ARMY) and owner.CounterBalls < 4 or !owner:IsSkillActive(SKILL_VIP_ARMY)) then 
+			if owner:IsSkillActive(SKILL_MOTHER) and (math.random(1,100-(math.min(30,self.TrinketsIn["trinket_module_balance"] or 0))) == 1 or owner:IsSkillActive(SKILL_VIP_ARMY)) and (owner:IsSkillActive(SKILL_VIP_ARMY) and owner.CounterBalls < 4 or !owner:IsSkillActive(SKILL_VIP_ARMY)) then 
 				local d = ents.Create("prop_rollermine_exp") 
 				if d:IsValid() then 
 					if owner:IsSkillActive(SKILL_VIP_ARMY) then

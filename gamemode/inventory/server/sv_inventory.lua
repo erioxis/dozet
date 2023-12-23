@@ -157,6 +157,96 @@ net.Receive("zs_activate_trinket", function(len, pl)
 	end
 	gamemode.Call("OnTrinketActivate", trinket, pl)
 end)
+local function OnIn(self,new,rem)
+	--print(self.TrinketsIn[new], new)
+	if new == "trinket_defensive_module" then
+		self:SetMaxObjectHealth(self:GetMaxObjectHealth()+50)
+	elseif new == "trinket_module_resnya" then
+		self:SetDTInt(12,math.min(5,self.TrinketsIn[new]))
+	elseif new == "trinket_module_bounty" then
+		self.CanUseModifiers = true
+	elseif new == "trinket_module_handler" then
+		self._OldAcc = self._OldAcc or self.Acceleration
+		self.Acceleration = self._OldAcc  * (1 + 0.05 * math.min(10,self.TrinketsIn[new]))
+	elseif new == "trinket_module_extreme" then
+		self.AmmoUsagesStacks = math.min(3,self.TrinketsIn[new])
+	elseif new == "trinket_module_nanite" then
+		self.Nanites = self.TrinketsIn[new]
+	end
+	self._OnRemove = self._OnRemove or self.OnRemove
+	self.OnRemove = function()
+		for k,v in pairs(self.TrinketsIn) do
+			for i=1,v do
+				local ent = ents.Create("prop_invitem")
+				if ent:IsValid() then
+					ent:SetInventoryItemType(k)
+					ent:Spawn()
+					ent:SetPos(self:GetPos())
+					ent:SetOwner(self:GetOwner())
+					ent.DroppedTime = CurTime()
+				end
+			end
+		end
+		self:_OnRemove()
+	end
+	if !self.Think2 then
+		self.Think2 = self.Think
+		self.NextResnyaaa = CurTime() + 2
+		self.NextAmmoGive = 0
+		self.NextRepairSelf = 0
+		self.Think = function(bruh)
+			local intd = self:GetDTInt(12)
+			local inte	= self.AmmoUsagesStacks
+			local intnanite = self.Nanites
+			local owner = self:GetObjectOwner()
+			if self.NextResnyaaa < CurTime() and intd > 0 then
+				for k,v in pairs(ents.FindInBoxRadius(self:GetPos(),128)) do
+					if v:IsValidLivingZombie() then
+						v:TakeDamage(70*intd,owner,self)
+						self:EmitSound("physics/metal/sawblade_stick3.wav", 70, 250)
+					end
+				end
+				self.NextResnyaaa = CurTime() + 1
+			end
+			if inte and inte > 0 and self.NextAmmoGive < CurTime() and owner:GetAmmoCount(self.AmmoType) > 1*inte then
+				local ammotype = self.AmmoType
+				local curammo = self:GetAmmo()
+			
+				local togive = math.min(3+1*inte, owner:GetAmmoCount(ammotype), self.MaxAmmo - curammo)
+				if togive > 0 then
+					self:SetAmmo(curammo + togive)
+					owner:RemoveAmmo(togive, ammotype)
+				end
+				self.NextGiveAmmo = CurTime() + 1-0.25*inte
+			end
+			if intnanite and intnanite > 0 and self.NextRepairSelf < CurTime() then
+				self:SetObjectHealth(math.min(self:GetMaxObjectHealth(),self:GetObjectHealth() + 3*intnanite))
+				self.NextRepairSelf = CurTime() + 2
+			end
+			bruh:Think2()
+		end
+	end
+end
+local drones = {['prop_drone_hauler'] = true ,['prop_drone']  = true  ,['prop_drone_healer']  = true ,['prop_drone_pulse']  = true }
+net.Receive("zs_drone_trinket", function(len, pl)
+	local trinket = net.ReadString()
+	local pl = net.ReadEntity()
+	local data = GAMEMODE.ZSInventoryItemData[trinket]
+	if data.OnlyDrones then
+		for k,v in pairs(ents.FindInBoxRadius(pl:GetPos(),256)) do
+
+			if drones[v:GetClass()] and v:GetObjectOwner() == pl  then
+				v.TrinketsIn = v.TrinketsIn or {}
+				v.TrinketsIn[trinket] = v.TrinketsIn[trinket] and v.TrinketsIn[trinket] + 1 or 1
+				v._OnRemove = v._OnRemove or v.OnRemove
+				v.OnUpdateTrinkets = OnIn
+				v:OnUpdateTrinkets(trinket)
+				pl:TakeInventoryItem(trinket)
+				break
+			end
+		end
+	end
+end)
 net.Receive("zs_upgrade_trinket", function(len, pl)
 	local item = net.ReadString()
 	local pl = net.ReadEntity()

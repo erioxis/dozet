@@ -109,6 +109,12 @@ local function UpgradeTrinket(me, pl)
 		end
 	end)
 end
+local function GiveDroneTrinket(me, pl)
+	net.Start("zs_drone_trinket")
+		net.WriteString(me.Item)
+		net.WriteEntity(MySelf)
+	net.SendToServer()
+end
 
 function GM:ItemPanelDoClick()
 	local item = self.Item
@@ -172,6 +178,21 @@ function GM:ItemPanelDoClick()
 	local doubled = viewer.m_UpgradeButton
 	doubled[1]:SetVisible(false)
 	doubled[2]:SetVisible(false)
+	local drone = viewer.m_Drones
+	drone[1]:SetVisible(false)
+	drone[2]:SetVisible(false)
+	if sweptable.OnlyDrones then
+		local g,bl = doubled[1],doubled[2]
+		g.Item = item
+		g:SetPos( viewer:GetWide() / 2 - g:GetWide() / 2, ( viewer:GetTall() - 99 * screenscale ) )
+		g.DoClick = GiveDroneTrinket
+		g:SetVisible(true)
+		bl:SetText( translate.Format("give_to_drone"))
+		bl:SetFont("ZSBodyTextFont")
+		bl:SetPos( g:GetWide() / 2 - bl:GetWide() / 2, ( g:GetTall() * 0.5 - bl:GetTall() * 0.5 ) )
+		bl:SetContentAlignment( 5 )
+		bl:SetVisible( true )
+	end
 	if sweptable.Upgradable then
 		local g,bl = doubled[1],doubled[2]
 		g.Item = item
@@ -225,6 +246,7 @@ function GM:ItemPanelDoClick()
 	else
 		viewer.m_CraftWith:SetVisible( false )
 	end
+	
 	if category == INVCAT_CONSUMABLES and MySelf:GetChargesActive() >= (item.BountyNeed or 0) then
 		local g,bl = hihi[1],hihi[2]
 		viewer.m_Activate.Item = item
@@ -351,6 +373,17 @@ function GM:CreateInventoryElements()
 	namelab:SetVisible( false )
 
 	viewer.m_ClipButton = {activate,namelab}
+
+	local activate = vgui.Create( "DButton", viewer )
+	activate:SetText( "" )
+	activate:SetSize( viewer:GetWide() / 1.15, 27 * screenscale )
+	activate:SetVisible(false)
+
+	local namelab = EasyLabel( activate, "Give for drone", "ZSBodyTextFont", COLOR_WHITE )
+	namelab:SetWide( activate:GetWide() )
+	namelab:SetVisible( false )
+
+	viewer.m_Drones = {activate,namelab}
 
 	
 	local activate2 = vgui.Create( "DButton", viewer )
@@ -482,12 +515,8 @@ function GM:InventoryAddGridItem( item, category )
 			local mehin = {}
 			for k,v in pairs(grid:GetItems()) do
 				if v.SWEP.Stackable and v.Item == itempan.Item then
-					meh = meh + 1
-					mehin[#mehin + 1] = v
+					v:SetTooltip(GAMEMODE.ZSInventory[itempan.Item])
 				end
-			end
-			for k,v in pairs(mehin) do
-				v:SetTooltip(meh)
 			end
 		end
 

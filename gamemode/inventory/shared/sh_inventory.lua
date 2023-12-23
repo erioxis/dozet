@@ -2546,3 +2546,23 @@ trinket = GM:AddTrinket(trs("t_pr_chamomile"), "pr_chamomile", false, supveles, 
 GM:AddSkillModifier(trinket, SKILLMOD_MEDKIT_EFFECTIVENESS_MUL, 0.55)
 trinket = GM:AddTrinket(trs("t_pr_bloodpack"), "pr_bloodpack", false, supveles, supweles, 4, trs("t_d_pr_bloodpack"))
 GM:AddSkillModifier(trinket, SKILLMOD_MEDKIT_COOLDOWN_MUL, -0.32)
+
+
+
+local placeholder = {
+	["perf"] = { type = "Model", model = "models/props_lab/binderblue.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(5, 1.5, -2), angle = Angle(0, 0, 0), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+}
+trinket, trinketwep = GM:AddTrinket(trs("t_defensive_module"), "defensive_module", false, placeholder, placeholder, 4, trs("t_d_defensive_module"), nil, nil, "weapon_zs_special_trinket")
+trinketwep.OnlyDrones = true
+trinket, trinketwep = GM:AddTrinket(trs("t_module_balance"), "module_balance", false, placeholder, placeholder, 4, trs("t_d_module_balance"), nil, nil, "weapon_zs_special_trinket")
+trinketwep.OnlyDrones = true
+trinket, trinketwep = GM:AddTrinket(trs("t_module_resnya"), "module_resnya", false, placeholder, placeholder, 4, trs("t_d_module_resnya"), nil, nil, "weapon_zs_special_trinket")
+trinketwep.OnlyDrones = true
+trinket, trinketwep = GM:AddTrinket(trs("t_module_bounty"), "module_bounty", false, placeholder, placeholder, 4, trs("t_d_module_bounty"), nil, nil, "weapon_zs_special_trinket")
+trinketwep.OnlyDrones = true
+trinket, trinketwep = GM:AddTrinket(trs("t_module_handler"), "module_handler", false, placeholder, placeholder, 4, trs("t_d_module_handler"), nil, nil, "weapon_zs_special_trinket")
+trinketwep.OnlyDrones = true
+trinket, trinketwep = GM:AddTrinket(trs("t_module_extreme"), "module_extreme", false, placeholder, placeholder, 4, trs("t_d_module_extreme"), nil, nil, "weapon_zs_special_trinket")
+trinketwep.OnlyDrones = true
+trinket, trinketwep = GM:AddTrinket(trs("t_module_nanite"), "module_nanite", false, placeholder, placeholder, 4, trs("t_d_module_nanite"), nil, nil, "weapon_zs_special_trinket")
+trinketwep.OnlyDrones = true

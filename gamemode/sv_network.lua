@@ -29,6 +29,7 @@
 	util.AddNetworkString("zs_soundbruh")
 
 	util.AddNetworkString("zs_last_points")
+	util.AddNetworkString("zs_drone_trinket")
 	
 	
 	util.AddNetworkString("zs_skill_is_destroyed")

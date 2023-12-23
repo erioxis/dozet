@@ -408,6 +408,7 @@ killicon.Add("projectile_healdart", "zombiesurvival/killicons/weapon_zs_medicgun
 killicon.Add("weapon_zs_strengthshot", "zombiesurvival/killicons/weapon_zs_medicgun2", Color(255, 50, 50))
 killicon.Add("weapon_zs_arsenalcrate", "zombiesurvival/killicons/weapon_zs_arsenalcrate")
 killicon.Add("weapon_zs_remantler", "zombiesurvival/killicons/weapon_zs_remantler2.png")
+killicon.Add("weapon_zs_drone_station", "zombiesurvival/killicons/weapon_zs_remantler2.png")
 killicon.Add("weapon_zs_fridge", "zombiesurvival/killicons/weapon_zs_fridge.png")
 killicon.Add("weapon_zs_tv", "zombiesurvival/killicons/weapon_zs_tv.png")
 killicon.Add("weapon_zs_barricadekit", "zombiesurvival/killicons/weapon_zs_barricadekit")

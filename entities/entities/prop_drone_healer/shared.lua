@@ -1,4 +1,5 @@
-ENT.Type = "anim"
+
+ENT.Base = "prop_drone"
 ENT.RenderGroup = RENDERGROUP_TRANSLUCENT
 
 ENT.m_NoNailUnfreeze = true
