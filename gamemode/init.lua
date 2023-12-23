@@ -2744,6 +2744,7 @@ hook.Add("PlayerSay", "ForBots", function(ply, text)
 			ply:PrintTranslatedMessage( HUD_PRINTTALK, "casino_in_s",math.Round((ply.NextCasino or 1)-CurTime()) )
 			return
 		end
+		playerInput[2] = math.min(900,playerInput[2])
 		if ply:GetPoints() <  tonumber(playerInput[2]) then
 			ply:PrintTranslatedMessage( HUD_PRINTTALK, "casino_p")
 			return
@@ -2767,13 +2768,13 @@ hook.Add("PlayerSay", "ForBots", function(ply, text)
 		end
 		local jackpot = false
 		
-		if (sum) >= full *(5 - (cain and 2 or 0)) and (sum) ~= 7*full  then
+		if (sum) >= full *(5 - (cain and 1 or 0)) and (sum) ~= 7*full  then
 			local togive = tonumber(playerInput[2])*(0.25+full)
 			PrintTranslatedMessage( HUD_PRINTTALK, "casino_jack",togive,ply:Nick() )
 			ply:SetPoints(ply:GetPoints()+togive)
 			jackpot = true
 		end
-		if (sum) >= full * (4 - (cain and 2 or 0)) and sum < full*(5 - (cain and 2 or 0))  then
+		if (sum) >= full * (4 - (cain and 1 or 0)) and sum < full*(5 - (cain and 2 or 0))  then
 			PrintTranslatedMessage( HUD_PRINTTALK, "casino_jack",tonumber(playerInput[2])*1.5,ply:Nick() )
 			ply:SetPoints(ply:GetPoints()+tonumber(playerInput[2])*1.5)
 			jackpot = true

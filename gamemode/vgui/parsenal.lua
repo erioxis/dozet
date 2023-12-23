@@ -273,7 +273,7 @@ local function UpgradeTrinket(me, pl)
 end
 local function ItemPanelDoClick(self)
 	local shoptbl = self.ShopTabl
-	local viewer = self.NoPoints and (GAMEMODE.RemantlerInterface and GAMEMODE.RemantlerInterface:IsValid() and GAMEMODE.RemantlerInterface.TrinketsFrame.Viewer or GAMEMODE.DronesMenu.TrinketsFrame.Viewer) or GAMEMODE.ArsenalInterface.Viewer
+	local viewer = self.NoPoints and (!self.InDrones and GAMEMODE.RemantlerInterface and GAMEMODE.RemantlerInterface:IsValid() and GAMEMODE.RemantlerInterface.TrinketsFrame.Viewer or GAMEMODE.DronesMenu.TrinketsFrame.Viewer) or GAMEMODE.ArsenalInterface.Viewer
 
 	if not shoptbl then return end
 	local sweptable = GAMEMODE.ZSInventoryItemData[shoptbl.SWEP] or weapons.Get(shoptbl.SWEP)
@@ -428,6 +428,7 @@ function GM:AddShopItem(list, i, tab, issub, nopointshop)
 	itempan.ID = tab.Signature or i
 	itempan.NoPoints = nopointshop
 	itempan.ShopTabl = tab
+	itempan.InDrones = tab.Category == ITEMCAT_MODULES
 	itempan.Think = ItemPanelThink
 	itempan.Paint = ItemPanelPaint
 	itempan.DoClick = ItemPanelDoClick
