@@ -202,7 +202,7 @@ function meta:ProcessDamage(dmginfo)
 
 			if (attacker:IsSkillActive(SKILL_BOUNTYKILLER) or classtable.Boss or classtable.DemiBoss or attacker.DamagedBounty) and classtable.Health >= 50  then
 				local mul = ((attacker:IsSkillActive(SKILL_BOUNTYKILLER) and 0.15 or 0) + (classtable.DemiBoss and 0.15 or classtable.Boss and 0.4 or 0))
-				attacker:SetProgress(attacker:GetProgress('bprog')+(math.min(damage*mul,self:GetMaxHealth()*mul)), 'bprog')
+				attacker:SetProgress(attacker:GetProgress('bprog')+(math.min(damage,self:GetMaxHealth())*mul), 'bprog')
 				attacker.DamagedBounty = false
 				if attacker:GetProgress('bprog') >= 2500 * (attacker:GetProgress('bprogmul')+1) then
 					attacker.GetBounty = true
@@ -212,10 +212,9 @@ function meta:ProcessDamage(dmginfo)
 					net.Start("zs_invitem")
 					net.WriteString("cons_bounty")
 				net.Send(attacker)
-					attacker:SetPoints(attacker:GetPoints() + 50)
 				end
 			end
-			damage = damage * math.Clamp(attacker:GetModelScale() * attacker:GetModelScale(), 0.05, 5)
+			damage = damage * math.Clamp(attacker:GetModelScale()^2, 0.05, 5)
 			if attacker:HasTrinket("soulalteden") then
 				attacker.RandomDamage = attacker.RandomDamage + math.random(1,5)
 

@@ -60,7 +60,7 @@ function SWEP:PrimaryAttack()
 				end
 			end
 		end
-		self:SetNextPrimaryFire(CurTime()+6)
+		self:SetNextPrimaryFire(CurTime()+5)
 	end
 
 end

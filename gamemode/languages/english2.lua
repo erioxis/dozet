@@ -292,7 +292,7 @@ LANGUAGE.t_d_credit                                 = "Sale by 3%"
 LANGUAGE.t_d_ustore                                 = "Sale by 5%"
 LANGUAGE.t_d_store                                  = "Sale by 4%"
 LANGUAGE.t_d_bhammer                                  = "+10% Repair mul\n -5% Points mul"
-LANGUAGE.t_d_flower                                 = "+50% Points mul\n+50% medkit effectivness and -50% Medkit cooldown.\n"
+LANGUAGE.t_d_flower                                 = "+25% Points mul\n+50% medkit effectivness and -50% Medkit cooldown.\n"
 LANGUAGE.t_d_flower_g                                 = "+100% Points mul.\n Just can't dismantle or drop anything."
 LANGUAGE.t_d_a_flower                                 = "Full immunity vs curse but if have curse 0.1x damage.\nIf curse more than 1200,you die!"
 LANGUAGE.t_d_rageflower                                 = "Health + "
@@ -415,8 +415,8 @@ LANGUAGE.g2p_promo_self = "My promocode"
 LANGUAGE.s_unl_destroy = " locked successfully!"
 
 LANGUAGE.bounty_1 = "Random 3 soul of piece"
-LANGUAGE.bounty_2 = "+100 Points"
-LANGUAGE.bounty_3 = "+600 AXP"
+LANGUAGE.bounty_2 = "+200 Points"
+LANGUAGE.bounty_3 = "+3600 AXP"
 LANGUAGE.give_to_drone = "Give to drone"
 
 LANGUAGE.t_defensive_module                            = "Armor"
@@ -433,5 +433,9 @@ LANGUAGE.t_module_extreme                             = "Portal of Toy"
 LANGUAGE.t_d_module_extreme                            = "Every 1(-0.25 secs per stack) seconds give 3(+1 per stack) ammo for drone and take this ammo from you inventory.\nStacks up to 3."
 LANGUAGE.t_module_nanite                             = "Nanite's"
 LANGUAGE.t_d_module_nanite                            = "Drone passivelly regenerates(3(+3 per stack) HP per 2 seconds).\nStackable."
+LANGUAGE.t_module_mirror                             = "Void Mirror"
+LANGUAGE.t_d_module_mirror                            = "+1 per stack MOAB Rollermine for drone.\nStackable and only for MOAB."
+
+
 
 

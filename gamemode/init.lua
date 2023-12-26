@@ -465,9 +465,6 @@ function GM:Initialize()
 	if self:GetRage() >= 10000 then
 		self:SetRage(0)
 	end
-	if self:GetWinRate() >= 5 then
-		self:SetWinRate(1)
-	end
 	self:DoAchievements()
 	if  GDiscord and GDiscord.sendToDS then
 		local name = GetConVar("hostname"):GetString()						
@@ -1557,11 +1554,11 @@ function GM:Think()
 					pl:GiveStatus("medrifledefboost", 1.3)
 				end
 
-				if time >= (pl.NextRegenerateMantle or 1) and pl.HolyMantle < 0 and pl:IsSkillActive(SKILL_HOLY_MANTLE) then
+				if time >= (pl.NextRegenerateMantle or 1) and pl.HolyMantle < 1 and pl:IsSkillActive(SKILL_HOLY_MANTLE) then
 					pl.NextRegenerateMantle = time + math.max((27 - ((pl.Luck + pl.LuckAdd) / 3)) + self.GetWave() * 3,5)
 					pl.HolyMantle = pl.HolyMantle + 1
 				end
-				if pl.HolyMantle >= 1 and pl:IsSkillActive(SKILL_HOLY_MANTLE) and pl:IsValid() and pl.MantleFix < CurTime() then
+				if pl.HolyMantle > 0 and pl:IsSkillActive(SKILL_HOLY_MANTLE) and pl:IsValid() and pl.MantleFix < CurTime() then
                     pl:GiveStatus("hshield", 1.3)
 				end
 				if time > pl.NextSleep and pl:IsSkillActive(SKILL_NOSEE) and self:GetWave() ~= 0 then
@@ -2532,6 +2529,9 @@ function GM:OnPlayerWin(pl)
 		xp = xp * 4
 	end
 	pl:AddZSXP(xp * (math.max(0.33,self:GetWinRate())))
+	if self:GetWinRate() > 6 then
+		pl:GiveAchievement('sinos')
+	end
 	self:SetRage(self:GetRage() + 100)
 	pl:GiveAchievement("winfirst")
 	if not self.ObjectiveMap then
@@ -2543,6 +2543,9 @@ function GM:OnPlayerWin(pl)
 		end
 		if self:GetBalance() >= 25 then
 			pl:GiveAchievement("infected_dosei")
+		end
+		if self:GetBalance() >= 650 then
+			pl:GiveAchievement("he_is_here")
 		end
 		if pl:GetMaxHealth() < 35 and not self.ObjectiveMap then
 			pl:GiveAchievement("glassman")	
@@ -2717,7 +2720,7 @@ hook.Add("PlayerReady", "post_discord_link", function(pl)
 	timer.Simple(0.1, function()
 	net.Start("zs_code_get") net.WriteString(tostring(pl.SelfCode)) net.Send(pl)
 	end)
-	pl:SendLua("GAMEMODE:CreateNBNO() GAMEMODE.HPMULMAP = "..GAMEMODE.HPMULMAP.." GAMEMODE.PointsMulMAP = "..GAMEMODE.PointsMulMAP )
+	pl:SendLua("GAMEMODE:CreateNBNO() GAMEMODE.HPMULMAP = "..(GAMEMODE.HPMULMAP or 1).." GAMEMODE.PointsMulMAP = "..(GAMEMODE.PointsMulMAP or 1) )
 	
 end)
 //gameevent.Listen( "player_say" )
@@ -2796,6 +2799,9 @@ hook.Add("PlayerSay", "ForBots", function(ply, text)
 			end
 			if tonumber(playerInput[2]) >= 200 then
 				ply:Give(table.Random(wepf_c))
+			end
+			if full == 5 then
+				ply:GiveAchievement("luck_of_all")
 			end
 			ply:GiveAchievement("casino_gg")
 			jackpot = true
@@ -6038,7 +6044,7 @@ function GM:WaveStateChanged(newstate, pl)
 				if pl:IsSkillActive(SKILL_SECONDCHANCE) and pl.LetalSave and whywave >= 5 and pl:IsValidLivingHuman() then
 					pl:GiveAchievement("thisisbeeasy")
 				end
-				if whywave%3 == 0 then
+				if whywave%2 == 0 then
 					pl.LetalSave = true
 				end
 				pl.BerserkerCharge = true

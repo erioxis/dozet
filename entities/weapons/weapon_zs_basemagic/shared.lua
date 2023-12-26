@@ -75,7 +75,7 @@ function SWEP:PrimaryAttack()
 	if not self:CanPrimaryAttack() then return end
 
 	
-	    if owner:GetBloodArmor() > 0 and self.Primary.ArmorBleed <= owner:GetBloodArmor() then
+	    if owner:GetBloodArmor() > 0 and self.Primary.ArmorBleed < owner:GetBloodArmor() then
 	    self:SetNextPrimaryFire(CurTime() + self:GetFireDelay())
 	    self:EmitFireSound()
 	
@@ -83,7 +83,7 @@ function SWEP:PrimaryAttack()
 	    self:EmitFireSound()
 		if SERVER then
 			owner:SetBloodArmor(math.max(1,owner:GetBloodArmor() - self.Primary.ArmorBleed * (owner.MagicDamage or 1) - owner:GetBloodArmor()*0.12))
-			self:ShootBullets(self.Primary.Damage + owner:GetBloodArmor() * (owner.MagicDamage or 1), self.Primary.NumShots, self:GetCone())
+			self:ShootBullets(math.min(self.Primary.Damage + owner:GetBloodArmor() * (owner.MagicDamage or 1),(GAMEMODE:GetWave()*0.25)*self.Primary.Damage) *  (owner.MagicDamage or 1), self.Primary.NumShots, self:GetCone())
 			self.IdleAnimation = CurTime() + self:SequenceDuration()
 		end
 		elseif owner:GetBloodArmor() < self.Primary.ArmorBleed then

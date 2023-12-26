@@ -27,6 +27,7 @@
 	
 	util.AddNetworkString("zs_upgrade_trinket")
 	util.AddNetworkString("zs_soundbruh")
+	util.AddNetworkString("zs_lore_book")
 
 	util.AddNetworkString("zs_last_points")
 	util.AddNetworkString("zs_drone_trinket")

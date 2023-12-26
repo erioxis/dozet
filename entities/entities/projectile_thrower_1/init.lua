@@ -43,6 +43,13 @@ function ENT:Explode()
 
 		local source = self:ProjectileDamageSource()
 		util.BlastDamagePlayer(source, owner, pos, 85, self.ProjDamage* (owner.ProjectileDamageMul or 1), DMG_ALWAYSGIB, 1.1)
+		effectdata = EffectData()
+		effectdata:SetOrigin(pos)
+		effectdata:SetNormal(Vector(0, 0, 1))
+		effectdata:SetMagnitude(5)
+		effectdata:SetScale(1.5)
+		util.Effect("HelicopterMegaBomb", effectdata, true, true)
+		self:EmitSound("npc/env_headcrabcanister/explosion.wav", 100, 200)
 	end
 end
 

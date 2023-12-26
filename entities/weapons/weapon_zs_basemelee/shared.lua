@@ -353,6 +353,13 @@ function SWEP:OnMeleeHit(hitent, hitflesh, tr)
 					count = count + 1
 				end
 			end
+			effectdata = EffectData()
+			effectdata:SetOrigin(tr.HitPos)
+			effectdata:SetNormal(Vector(0, 0, 1))
+			effectdata:SetMagnitude(5)
+			effectdata:SetScale(1.5)
+		util.Effect("HelicopterMegaBomb", effectdata, true, true)
+
 			for i = 1, math.random(3) do
 				for _, ent in pairs(ents.FindInSphere(tr.HitPos, 97)) do
 					if ent:IsValid() and ent:IsPlayer() and ent ~= owner and ent:IsValidLivingZombie() then

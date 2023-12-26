@@ -89,10 +89,6 @@ concommand.Add("zs_pointsshopbuy", function(sender, command, arguments)
 					if drone and drone:IsValid() then
 						drone.TrinketsIn[itemtab.SWEP] = drone.TrinketsIn[itemtab.SWEP] and drone.TrinketsIn[itemtab.SWEP] + 1 or 1
 						drone:OnUpdateTrinkets(itemtab.SWEP)
-						rem.NextUseTrinket = CurTime() + 7
-						drone:SetParent(NULL)
-						rem:SetDTEntity(11,NULL)
-						drone:SetPos(drone:GetObjectOwner():GetPos()+Vector(0,0,6))
 						
 					else
 						return

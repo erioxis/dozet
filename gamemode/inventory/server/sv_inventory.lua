@@ -106,7 +106,7 @@ net.Receive("zs_bounty_add", function(len, pl)
 	pl.NextThinkAboutTrade = (pl.NextThinkAboutTrade or 1) + 10
 	pl:TakeInventoryItem(pl.LastUsedTrinket)
 	if item == "1" then
-		pl:AddPoints(100)
+		pl:AddPoints(200)
 		return
 	elseif item == "2" then
 		for i=1,3 do
@@ -118,7 +118,7 @@ net.Receive("zs_bounty_add", function(len, pl)
 		end
 		return
 	elseif item == "3" then
-		pl:AddZSXP(600,true)
+		pl:AddZSXP(3600,true)
 		return
 	end
 	pl:AddInventoryItem(item)

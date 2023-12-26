@@ -234,3 +234,25 @@ function GM:CreateDifficultyMenu()
         difficultyLabel:SetVisible(true)
     end
 end
+function GM:CreateLoreMenu(text)
+	local scr = BetterScreenScale()
+    local panel = vgui.Create("DFrame")
+    panel:SetSize(500*scr, 500*scr)
+    panel:SetTitle(text[1])
+    panel:Center()
+    panel:MakePopup()
+	panel:ShowCloseButton(true)
+
+
+    local difficultyLabel = vgui.Create("DLabel", panel)
+    difficultyLabel:SetPos(25*scr, -100*scr)
+    difficultyLabel:SetSize(500*scr, 460*scr)
+    difficultyLabel:SetWrap(true)
+	local huh = string.Explode(";",text[2])
+	for k,v in pairs(huh) do
+		huh[k] = v.."\n"
+	end
+	huh = table.concat(huh,"\n")
+	difficultyLabel:SetText(huh)
+
+end

@@ -129,7 +129,7 @@ end
 function ENT:ShootBullets(dmg, numbul)
 	local owner = self:GetOwner()
 	local target = self.trg
-	if owner and owner:IsValid() and target and target:IsValidLivingZombie() then 
+	if owner and owner:IsValid() and target and target:Team() ~= self:GetOwner():Team() then 
 		local wep = self:GetWeapon()
 		if wep.Magic and !owner:IsSkillActive(SKILL_MAGIC) then return end
 		self:EmitSound(wep.Primary.Sound or "zombiesurvival/purg_ghostdash"..math.random(1,3)..".wav", 100, nil,100)
@@ -182,11 +182,11 @@ end
 function ENT:Think()
 	if self.trg and !self.trg:IsValid() and self.TimeToDash < CurTime() then
 		local targets = {}
-		for _, ent in pairs(team.GetPlayers(TEAM_UNDEAD)) do
+		for _, ent in pairs(team.GetPlayers(self:GetOwner():Team() == TEAM_HUMAN and TEAM_UNDEAD or TEAM_HUMAN)) do
 			if !ent:IsValid() then continue end
 			target = ent
 			if WorldVisible(self:LocalToWorld(Vector(0, 0, 10)), ent:NearestPoint(self:LocalToWorld(Vector(0, 0, 10))))  then
-				if target:IsValidLivingZombie() and !(target:GetZombieClassTable().CrowDa or target.SpawnProtection) then 
+				if !(target:GetZombieClassTable().CrowDa or target.SpawnProtection) then 
 					targets[(#targets or 0) + 1] = {Health = ent:Health(), trg = target}
 				end
 			end
@@ -201,7 +201,7 @@ function ENT:Think()
 			end
 		end
 	end
-	if self.TimeToDash < CurTime() and self.trg and self.trg:IsValidLivingZombie() and self:GetOwner() and self:GetOwner():IsValidLivingHuman() then
+	if self.TimeToDash < CurTime() and self:GetOwner():IsValid()  and self.trg and self.trg:IsValid() and self.trg:Team() ~= self:GetOwner():Team() then
 		local wep = self:GetWeapon()
 		local dmg = 50
 		if wep  then

@@ -318,21 +318,23 @@ function ENT:FireTurret(src, dir)
 			owner:LagCompensation(true)
 			self:FireBulletsLua(src, dir, 5, 1, 16.5 *  (owner.BulletMul or 1), owner, nil, "AR2Tracer", self.BulletCallback, nil, nil, self.GunRange, nil, self)
 			owner:LagCompensation(false)
-			if owner:IsSkillActive(SKILL_MOTHER) and (math.random(1,100-(math.min(30,self.TrinketsIn["trinket_module_balance"] or 0))) == 1 or owner:IsSkillActive(SKILL_VIP_ARMY)) and (owner:IsSkillActive(SKILL_VIP_ARMY) and owner.CounterBalls < 4 or !owner:IsSkillActive(SKILL_VIP_ARMY)) then 
-				local d = ents.Create("prop_rollermine_exp") 
-				if d:IsValid() then 
-					if owner:IsSkillActive(SKILL_VIP_ARMY) then
-						d.WrenchRepairMultiplier = 1
-						timer.Simple(1, function()	d.HitDamage = d.HitDamage * 7 end)
-						d.HitByWrench = function()
-							return false
+			if owner:IsSkillActive(SKILL_MOTHER) and (math.random(1,100-(math.min(30,self.TrinketsIn and self.TrinketsIn["trinket_module_balance"] or 0))) == 1 or owner:IsSkillActive(SKILL_VIP_ARMY)) and (owner:IsSkillActive(SKILL_VIP_ARMY) and owner.CounterBalls < 4 or !owner:IsSkillActive(SKILL_VIP_ARMY)) then 
+				for i=1,(self.TrinketsIn and self.TrinketsIn['trinket_module_mirror'] and self.TrinketsIn['trinket_module_mirror']+1 or 1) do
+					local d = ents.Create("prop_rollermine_exp") 
+					if d:IsValid() then 
+						if owner:IsSkillActive(SKILL_VIP_ARMY) then
+							d.WrenchRepairMultiplier = 1
+							timer.Simple(1, function()	d.HitDamage = d.HitDamage * 7 end)
+							d.HitByWrench = function()
+								return false
+							end
 						end
-					end
-					d:SetPos(self:GetPos()+Vector(0,0,5)) 
-					d:Spawn() 
-					d:SetObjectOwner(owner) 
-					d:SetupPlayerSkills() 
-				end 
+						d:SetPos(self:GetPos()+Vector(0,0,5)) 
+						d:Spawn() 
+						d:SetObjectOwner(owner) 
+						d:SetupPlayerSkills() 
+					end 
+				end
 			end
 		else
 			self:SetNextFire(CurTime() + 2)

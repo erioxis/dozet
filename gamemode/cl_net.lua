@@ -118,6 +118,9 @@ local function Some(tbl,upd)
 	end
 	return false
 end
+net.Receive("zs_lore_book", function(len, sender)
+	GAMEMODE:CreateLoreMenu(net.ReadTable())
+end)
 net.Receive("zs_update_style", function(length)
 	if !GAMEMODE.NoStyle then return end
 	local tbl = net.ReadTable()

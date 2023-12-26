@@ -288,6 +288,7 @@ function ENT:Think()
 
 		self:TakeDamage(10)
 	end
+	self:SetObjectHealth(self:GetObjectHealth()-0.5)
 
 	local data = self.HitData
 	if data then
@@ -331,7 +332,7 @@ function ENT:ThreadSafePhysicsCollide(data)
 
 		if ent:IsPlayer() and ent:Team() == TEAM_UNDEAD and ent:Alive() and (self.NextBoom or 1) <= CurTime() then
 			local center = self:LocalToWorld(self:OBBCenter())
-			ent:TakeSpecialDamage(self.HitDamage*3.56, DMG_ALWAYSGIB, owner, self)
+			ent:TakeSpecialDamage(self.HitDamage*5, DMG_ALWAYSGIB, owner, self)
 			local effectdata = EffectData()
 			effectdata:SetOrigin( self:LocalToWorld(self:OBBCenter()))
 			effectdata:SetNormal(Vector(0, 0, 1))
@@ -340,8 +341,7 @@ function ENT:ThreadSafePhysicsCollide(data)
 			util.Effect("HelicopterMegaBomb", effectdata, true, true)
 			util.BlastDamagePlayer(self,owner,center,128,self.HitDamage*3, DMG_ALWAYSGIB)
 			self:EmitSound("npc/env_headcrabcanister/explosion.wav", 100, 100)
-			self.NextBoom = CurTime() + 3
-			self:TakeDamage(30,self,self)
+			self.NextBoom = CurTime() + 2
 			hitflesh = true
 		else
 			local physattacker = ent:GetPhysicsAttacker()

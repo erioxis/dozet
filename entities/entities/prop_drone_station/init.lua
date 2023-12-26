@@ -186,7 +186,16 @@ function ENT:Use(activator, caller)
 		self:GetObjectOwner():SendDeployableClaimedMessage(self)
 		return
 	end
-	if !self:GetDTEntity(11):IsValid() then return end
+	local drone = self:GetDTEntity(11)
+	if !drone:IsValid() then return end
+	if activator == self:GetDTEntity(11):GetObjectOwner() and activator:KeyDown(IN_SPEED) then
+		
+		self.NextUseTrinket = CurTime() + 7
+		drone:SetParent(NULL)
+		self:SetDTEntity(11,NULL)
+		drone:SetPos(drone:GetObjectOwner():GetPos()+Vector(0,0,6))
+		return
+	end
 	if activator == owner and self:GetScraps() > 0 then
 		local amount = self:GetScraps()
 		self:SetScraps(0)

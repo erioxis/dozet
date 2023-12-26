@@ -93,11 +93,11 @@ function FindStartingItem(id)
 	local item = FindItem(id)
 	if item and item.WorthShop then return item end
 end
-function math.randomr5(min, max, need, pl, chances)
-	local ch = chances
+function math.randomr(min, max, need, pl, chances)
+	local ch = pl and math.Round(math.max(((pl.Luck or 1)/(pl:IsSkillActive(SKILL_BLUCK) and 3 or 5) or 1),1)) or chances
 	local rand = min
 	local best = min
-	if pl then ch = math.Round(math.max(((pl.Luck or 1)/(pl:IsSkillActive(SKILL_BLUCK) and 3 or 5) or 1),1)) end
+
 	for i=1,ch do
 		local random = math.random(min,max)
 		if random > best then
@@ -112,9 +112,6 @@ function math.randomr5(min, max, need, pl, chances)
 	end
 
 	return rand
-end
-function math.randomr(min, max)
-	return math.random(min,max)
 end
 function math.unrandom(min, max, need, inv, chances)
 	local ch = chances or 1

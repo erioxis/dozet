@@ -530,6 +530,8 @@ SKILL_VIP_ARMY = 529
 SKILL_STEEL_ASS = 530
 SKILL_THROWER_FULL = 531
 SKILL_AND_AGAIN = 532
+SKILL_DONATE_DARKNESS_I = 533
+SKILL_DONATE_DARKNESS_II = 534
 
 
 
@@ -960,7 +962,7 @@ GM:AddSkill(SKILL_FLOWER, trs("skill_flower"), GOOD..trs("skill_flower_d1")..BAD
 																-1,			1,					{SKILL_COOL_MED}, TREE_SUPPORTTREE)
 GM:AddSkill(SKILL_HEALMODULE, trs("skill_hmod"), GOOD..trs("skill_hmod_d1"),
 																-1,			-0.5,					{SKILL_FLOWER}, TREE_SUPPORTTREE)
-GM:AddSkillModifier(SKILL_FLOWER, SKILLMOD_POINT_MULTIPLIER, -0.25)
+GM:AddSkillModifier(SKILL_FLOWER, SKILLMOD_POINT_MULTIPLIER, -0.15)
 local d = GM:AddSkill(SKILL_ABYSSFLOWER, trs("skill_aflower"), GOOD..trs("skill_aflower_d1")..BAD..trs("skill_aflower_d2"),
 																-1,			0.5,					{SKILL_FLOWER}, TREE_SUPPORTTREE)
 --d.Disabled = true
@@ -1063,7 +1065,7 @@ GM:AddSkill(SKILL_MECHANIC, trs("skill_mech"), GOOD.."-15%"..trs("s_cost")..BAD.
 GM:AddSkill(SKILL_MOTHER, trs("skill_moab"), GOOD..trs("skill_moab_d1")..BAD.."+15%"..trs("s_cost"),
 																0,			-7,					{SKILL_VIP_ARMY}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_VIP_ARMY, trs("skill_vip_army"), GOOD..trs("skill_vip_army_d1")..BAD..trs("skill_vip_army_d2"),
-																1,			-8,					{}, TREE_BUILDINGTREE).NewSkill = true
+																1,			-8,					{}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_AVIATOR, trs("skill_avi"), GOOD..trs("skill_avi_d1")..BAD..trs("skill_avi_d2"),
 																-4,			-2,					{}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_U_BLASTTURRET, trs("skill_u_blast"), GOOD..trs("skill_u_blast_d1"),
@@ -1579,10 +1581,10 @@ GM:AddSkillModifier(SKILL_ABFINGERS, SKILLMOD_BUFF_TIME, -0.06)
 GM:AddSkill(SKILL_D_FINGERS, trs("skill_dfingers"), BAD..trs("skill_dfingers_d1"),
 																9,			-6,					{SKILL_SFINGERS}, TREE_GUNTREE)
 GM:AddSkill(SKILL_THROWER_FULL, trs("skill_throw_full"), GOOD..trs("skill_throw_full_d1"),
-																9,			-7,					{SKILL_D_FINGERS,SKILL_AND_AGAIN}, TREE_GUNTREE)
+																9,			-7,					{SKILL_D_FINGERS,SKILL_AND_AGAIN}, TREE_GUNTREE).NewSkill = true
 GM:AddSkillModifier(SKILL_THROWER_FULL, SKILLMOD_DAMAGE, -0.1)
 GM:AddSkill(SKILL_AND_AGAIN, trs("skill_and_again"), GOOD..trs("skill_and_again_d1"),
-																9,			-8,					{}, TREE_GUNTREE)
+																9,			-8,					{}, TREE_GUNTREE).NewSkill = true
 GM:AddSkillModifier(SKILL_THROWER_FULL, SKILLMOD_DAMAGE, -0.06)
 -- Melee Tree
 GM:AddSkill(SKILL_WORTHINESS2, trs("worthness").."II", GOOD.."+10"..trs("worth")..BAD.."-6"..trs("start_points"),
@@ -2285,6 +2287,16 @@ GM:AddSkillModifier(SKILL_DONATE17, SKILLMOD_DMG_TAKEN, -0.02)
 GM:AddSkill(SKILL_DONATE18, "Donate XVIII", GOOD.."+2.5 luck\n"..GOOD.."Thx for Добрый",
 				                                                            	-2,			4,					{SKILL_DONATE17}, TREE_DONATETREE)
 GM:AddSkillModifier(SKILL_DONATE18, SKILLMOD_LUCK, 2.5)
+GM:AddSkill(SKILL_DONATE_DARKNESS_I, "Donate of Darkness I", GOOD.."+30% К скорости взмаха молотка +10% к силе починке\n"..GOOD.."Thx for Darkness",
+				                                                            	-2,			3,					{SKILL_DONATE18}, TREE_DONATETREE)
+GM:AddSkillModifier(SKILL_DONATE_DARKNESS_I, SKILLMOD_HAMMER_SWING_DELAY_MUL, -0.3)
+GM:AddSkillModifier(SKILL_DONATE_DARKNESS_I, SKILLMOD_REPAIRRATE_MUL, 0.1)
+GM:AddSkill(SKILL_DONATE_DARKNESS_II, "Donate of Darkness II", GOOD.."+50 к скорости и +20% К силе прыжка\n"..BAD.."-15% К урону ближнего боя\n".."Thx for Darkness",
+				                                                            	-2,			2,					{SKILL_DONATE_DARKNESS_I}, TREE_DONATETREE)
+GM:AddSkillModifier(SKILL_DONATE_DARKNESS_II, SKILLMOD_MELEE_DAMAGE_MUL, -0.15)
+GM:AddSkillModifier(SKILL_DONATE_DARKNESS_II, SKILLMOD_SPEED, 50)
+GM:AddSkillModifier(SKILL_DONATE_DARKNESS_II, SKILLMOD_JUMPPOWER_MUL, 0.2)
+
 
 
 SKILL_CHALLENGER1 = 215

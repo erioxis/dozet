@@ -236,7 +236,7 @@ GM:AddInventoryItemData("cons_xmas_goodness",		trs("c_new_year"),			trs("c_new_y
 	droped:Spawn()
 end,1)
 GM:AddInventoryItemData("cons_bounty",		trs("c_bounty"),			trs("c_bounty_d"),								"models/props_c17/trappropeller_lever.mdl", 3, nil, nil, function(pl) 
-	local tbl = {"headshoter", "ind_buffer", "ultra_at", "pearl","broken_world","whysoul","altevesoul","lucky_chance","acum","driller","mirror_of_god"} 
+	local tbl = {"headshoter", "ind_buffer", "ultra_at", "pearl","broken_world","whysoul","altevesoul","lucky_chance","acum","driller","mirror_of_god","module_mirror"} 
 	if pl:IsSkillActive(SKILL_SINS_2) then
 		table.Add(tbl,{	"sin_wrath",
 		"sin_gluttony",
@@ -974,7 +974,7 @@ GM:AddSkillModifier(trinket, SKILLMOD_POINT_MULTIPLIER, -0.05)
 GM:AddSkillModifier(trinket, SKILLMOD_REPAIRRATE_MUL,  0.10)
 
 trinket = GM:AddTrinket(trs("t_flower"), "flower", false, pveles, pweles, 3, trs("t_d_flower"), nil, nil, "weapon_zs_special_trinket")
-GM:AddSkillModifier(trinket, SKILLMOD_POINT_MULTIPLIER, 0.75)
+GM:AddSkillModifier(trinket, SKILLMOD_POINT_MULTIPLIER, 0.4)
 GM:AddSkillModifier(trinket, SKILLMOD_MEDKIT_COOLDOWN_MUL, -0.5)
 GM:AddSkillModifier(trinket, SKILLMOD_MEDKIT_EFFECTIVENESS_MUL, 0.5)
 
@@ -2565,4 +2565,6 @@ trinketwep.OnlyDrones = true
 trinket, trinketwep = GM:AddTrinket(trs("t_module_extreme"), "module_extreme", false, placeholder, placeholder, 4, trs("t_d_module_extreme"), nil, nil, "weapon_zs_special_trinket")
 trinketwep.OnlyDrones = true
 trinket, trinketwep = GM:AddTrinket(trs("t_module_nanite"), "module_nanite", false, placeholder, placeholder, 4, trs("t_d_module_nanite"), nil, nil, "weapon_zs_special_trinket")
+trinketwep.OnlyDrones = true
+trinket, trinketwep = GM:AddTrinket(trs("t_module_mirror"), "module_mirror", false, placeholder, placeholder, 4, trs("t_d_module_mirror"), nil, nil, "weapon_zs_special_trinket")
 trinketwep.OnlyDrones = true
