@@ -41,8 +41,8 @@ function SWEP:MeleeHit(ent, trace, damage, forcescale)
 		for i = 1, math.random(3) do
 			for _, ent in pairs(ents.FindInSphere(trace.HitPos, 18)) do
 				if ent:IsValid() and !ent:IsPlayer() then
-					ent:TakeDamage((self.MeleeDamage * i) * 0.25, self:GetOwner(), self)
-					continue 
+					ent:TakeDamage((self.MeleeDamage * i) * 0.25 / (ent:IsNailed() and 3 or 1), self:GetOwner(), self)
+					 
 				end
 				
 			end

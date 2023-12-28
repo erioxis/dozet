@@ -310,7 +310,7 @@ function GM:DrawInductorIndicators()
 		if icep > 0 and icet >= CurTime() then
 			local nucl = lp:IsSkillActive(SKILL_COOL_NUCLEAR_SYN)
 			local wep = lp:GetActiveWeapon()
-			DrawIndicator(nucl and colAe or colIce,screenscale,icep,icet,nucl and "aboom" or "ii",165 + (35 * ((wep and (wep.Tier or 1))-1) * (wep.Tier or 1)) * (lp:GetIndChance() or 1),x,y)
+			DrawIndicator(nucl and colAe or colIce,screenscale,icep,icet,lp:IsSkillActive(SKILL_CRYMAN) and "cry" or nucl and "aboom" or "ii",165 + (35 * ((wep and (wep.Tier or 1))-1) * (wep.Tier or 1)) * (lp:GetIndChance() or 1),x,y)
 			y = y + ScrH() * 0.07
 		end
 		if pulsed > 0 and lp:HasTrinket("resonance") and pulset >= CurTime() then

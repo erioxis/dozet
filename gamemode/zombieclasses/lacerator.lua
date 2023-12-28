@@ -8,7 +8,7 @@ CLASS.Help = "controls_lacerator"
 
 CLASS.Model = Model("models/player/zombie_lacerator2.mdl")
 
-CLASS.Wave = 4 / 6
+CLASS.Wave = 6 / 12
 
 CLASS.Health = 225
 CLASS.Speed = 270
@@ -24,6 +24,7 @@ CLASS.Points = CLASS.Health/GM.NoHeadboxZombiePointRatio
 CLASS.CanTaunt = true
 
 CLASS.VoicePitch = 0.75
+CLASS.BetterVersion = "Destroyer"
 
 CLASS.NoFallDamage = true
 CLASS.NoFallSlowdown = true

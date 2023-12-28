@@ -2283,10 +2283,6 @@ trinket, soul = GM:AddTrinket("Soul of Alt Troy", "troyaksoul_a", false, nil, {
 	["black_core_2+"] = { type = "Sprite", sprite = "effects/splashwake1", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 10, y = 10 }, color = Color(172, 172, 172), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 2, 0), angle = Angle(0, 0, 0), size = Vector(0.349, 0.349, 0.349), color = Color(126, 126, 126, 100), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} }
 }, 3, "Двойной прыжок.\nDouble Jump.\n Q:3", nil, nil, "weapon_zs_soulalt")
-GM:AddSkillModifier(trinket, SKILLMOD_LUCK, -7)
-GM:AddSkillModifier(trinket, SKILLMOD_REPAIRRATE_MUL, 0.35)
-GM:AddSkillModifier(trinket, SKILLMOD_HAMMER_SWING_DELAY_MUL, -0.25)
-
 trinket, soul = GM:AddTrinket("Soul of Clown", "clownsoul", false, nil, {
 	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 1.697, y = 1.697 }, color = Color(30, 214, 153), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core_2+"] = { type = "Sprite", sprite = "effects/splashwake1", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 10, y = 10 }, color = Color(9, 0, 61), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},

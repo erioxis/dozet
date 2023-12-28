@@ -100,7 +100,7 @@ CLASS.Wave = 11 / 12
 },
 }]]
 
-CLASS.Health = 5550
+CLASS.Health = 1000
 CLASS.Speed = 145
 CLASS.Hidden = false
 

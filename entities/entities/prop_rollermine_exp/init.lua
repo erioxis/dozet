@@ -288,7 +288,7 @@ function ENT:Think()
 
 		self:TakeDamage(10)
 	end
-	self:SetObjectHealth(self:GetObjectHealth()-0.5)
+	--self:SetObjectHealth(self:GetObjectHealth()-0.5)
 
 	local data = self.HitData
 	if data then
@@ -342,6 +342,7 @@ function ENT:ThreadSafePhysicsCollide(data)
 			util.BlastDamagePlayer(self,owner,center,128,self.HitDamage*3, DMG_ALWAYSGIB)
 			self:EmitSound("npc/env_headcrabcanister/explosion.wav", 100, 100)
 			self.NextBoom = CurTime() + 2
+			self:TakeDamage(30,self,self)
 			hitflesh = true
 		else
 			local physattacker = ent:GetPhysicsAttacker()

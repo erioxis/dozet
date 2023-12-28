@@ -532,6 +532,7 @@ SKILL_THROWER_FULL = 531
 SKILL_AND_AGAIN = 532
 SKILL_DONATE_DARKNESS_I = 533
 SKILL_DONATE_DARKNESS_II = 534
+SKILL_CRYMAN = 535
 
 
 
@@ -1038,9 +1039,9 @@ GM:AddSkill(SKILL_OVERHAND, trs("skill_ohandy"), GOOD.."+25%"..trs("repair")..BA
 																-3,			4,					{SKILL_HANDY5}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_HAMMERDISCIPLINE, trs("skill_h_disp").."I", GOOD.."-5%"..trs("hammerd"),
 																0,			1,					{SKILL_BARRICADEEXPERT}, TREE_BUILDINGTREE)
-GM:AddSkill(SKILL_HAMMERDISCIPLINE1, trs("skill_h_disp").."II", GOOD.."-10%"..trs("hammerd"),
+GM:AddSkill(SKILL_HAMMERDISCIPLINE1, trs("skill_h_disp").."II", GOOD.."-7%"..trs("hammerd"),
 																0,			0,					{SKILL_HAMMERDISCIPLINE}, TREE_BUILDINGTREE)
-GM:AddSkill(SKILL_HAMMERDISCIPLINE2, trs("skill_h_disp").."III", GOOD.."-15%"..trs("hammerd"),
+GM:AddSkill(SKILL_HAMMERDISCIPLINE2, trs("skill_h_disp").."III", GOOD.."-9%"..trs("hammerd"),
 																0,			-1,					{SKILL_HAMMERDISCIPLINE1}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_BARRICADEEXPERT, trs("skill_rein"), GOOD..trs("skill_rein_d1")..GOOD..trs("skill_rein_d2")..BAD.."+20%"..trs("hammerd"),
 																0,			3,					{}, TREE_BUILDINGTREE)
@@ -1495,6 +1496,8 @@ GM:AddSkill(SKILL_CURSED_ALT, trs("skill_at_curse2"), GOOD..trs("skill_at_curse2
 																2,			-10.5,					{SKILL_COOL_NUCLEAR_SYN}, TREE_BRANCH_ELEMENTS)
 GM:AddSkill(SKILL_COOL_NUCLEAR_SYN, trs("skill_nuclear_syn"), GOOD..trs("skill_nuclear_syn_d1")..BAD..trs("skill_nuclear_syn_d2"),
 																2,			-11.5,					{}, TREE_BRANCH_ELEMENTS)
+GM:AddSkill(SKILL_CRYMAN, trs("skill_cryman"), GOOD..trs("skill_cryman_d1"),
+																2,			-12.5,					{SKILL_COOL_NUCLEAR_SYN}, TREE_BRANCH_ELEMENTS).NeedAchievement = "secret_some"
 GM:AddSkill(SKILL_ATTACHMENT_CURSE, trs("skill_at_curse"), BAD..trs("skill_at_curse_d1")..GOOD..trs("skill_at_curse_d2"),
 																-2.5,			-6,					{SKILL_HEHE, SKILL_CONISSUE}, TREE_BRANCH_ELEMENTS)
 GM:AddSkill(SKILL_CONISSUE, trs("skill_conissue"), GOOD..trs("skill_conissue_d1")..BAD..trs("skill_conissue_d2"),
@@ -3080,8 +3083,8 @@ GM:AddSkillModifier(SKILL_SIGILOL, SKILLMOD_SIGIL_TELEPORT_MUL, 1)
 GM:AddSkillModifier(SKILL_SIGILOL, SKILLMOD_BARRICADE_PHASE_SPEED_MUL, 3)
 
 GM:AddSkillModifier(SKILL_HAMMERDISCIPLINE, SKILLMOD_HAMMER_SWING_DELAY_MUL, -0.05)
-GM:AddSkillModifier(SKILL_HAMMERDISCIPLINE1, SKILLMOD_HAMMER_SWING_DELAY_MUL, -0.10)
-GM:AddSkillModifier(SKILL_HAMMERDISCIPLINE2, SKILLMOD_HAMMER_SWING_DELAY_MUL, -0.15)
+GM:AddSkillModifier(SKILL_HAMMERDISCIPLINE1, SKILLMOD_HAMMER_SWING_DELAY_MUL, -0.07)
+GM:AddSkillModifier(SKILL_HAMMERDISCIPLINE2, SKILLMOD_HAMMER_SWING_DELAY_MUL, -0.09)
 GM:AddSkillModifier(SKILL_BARRICADEEXPERT, SKILLMOD_HAMMER_SWING_DELAY_MUL, 0.2)
 
 GM:AddSkillModifier(SKILL_SAFEFALL, SKILLMOD_FALLDAMAGE_DAMAGE_MUL, -0.15)

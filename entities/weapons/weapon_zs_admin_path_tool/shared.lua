@@ -48,11 +48,14 @@ function SWEP:Holster()
 	end
 	return true
 end
-function SWEP:OnDropDo()
+function SWEP:OnDropDo(wep)
 	local owner = 	self:GetOwner()
 	if SERVER  and CanPlace(owner) then
 		D3bot.SetMapNavMeshUiSubscription(self:GetOwner(), nil)  self:GetOwner():RemoveFlags(FL_NOTARGET)
 	end
+	timer.Simple(0, function(arguments)
+		wep:Remove()
+	end)
 	return true
 end
 function SWEP:PrimaryAttack()

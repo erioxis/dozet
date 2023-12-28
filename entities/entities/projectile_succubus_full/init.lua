@@ -163,7 +163,7 @@ function compare(a,b)
 	return a.Health > b.Health
 end
 function ENT:Use(user)
-	if self:GetOwner() == user and !user:GetActiveWeapon().IsMelee then
+	if self:GetOwner() == user and !user:GetActiveWeapon().IsMelee and !self.NoUseLol then
 		local wep = user:GetActiveWeapon():GetClass()
 		user:StripWeapon(wep)
 		user:Give(self.Weapon  or "weapon_zs_peashooter",true)

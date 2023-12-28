@@ -15,7 +15,7 @@ function ENT:EntityTakeDamage(ent, dmginfo)
 	if ent ~= self:GetOwner() then return end
 
 	if attacker:IsPlayer() and attacker:IsValidZombie() and !ent:IsSkillActive(SKILL_BERSERK) then
-		dmginfo:ScaleDamage(0.76)
+		dmginfo:ScaleDamage(0.5)
 	end
 end
 

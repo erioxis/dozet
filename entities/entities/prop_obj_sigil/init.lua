@@ -152,11 +152,13 @@ function ENT:UpdateTransmitState()
 	return TRANSMIT_ALWAYS
 end
 function ENT:Think()
-	for _, ent in pairs(ents.FindInSphere(self:GetPos(), math.Clamp(948 / (GAMEMODE:GetWave() * 0.33),163,948))) do
-		if ent ~= self and ent and ent:IsValid() and ent:IsValidLivingHuman() and not self:GetSigilCorrupted() and ent.PlayerReady then
-           ent:GiveStatus("sigildef", 2)
-		elseif ent ~= self and ent and ent:IsValid() and ent:IsValidLivingZombie() and self:GetSigilCorrupted() then
-			ent:GiveStatus("corruptsigildef", 2)
+	for _, ent in pairs(ents.FindInSphere(self:GetPos(), math.Clamp(1948 / (GAMEMODE:GetWave() * 0.33),493,1948))) do
+		if ent and ent:IsValid() and WorldVisible(self:GetPos()+Vector(0,0,5), ent:GetPos()) then
+			if ent:IsValidLivingHuman() and not self:GetSigilCorrupted() and ent.PlayerReady then
+				ent:GiveStatus("sigildef", 2)
+			elseif ent:IsValidLivingZombie() and self:GetSigilCorrupted() then
+				ent:GiveStatus("corruptsigildef", 2)
+			end
 		end
 	end
 end

@@ -1620,7 +1620,7 @@ function meta:DropWeaponByType(class)
 			ent:Spawn()
 			ent:SetOwner(self)
 			if wep.OnDropDo then
-				wep:OnDropDo()
+				wep:OnDropDo(ent)
 			end
 
 			if wep.AmmoIfHas then
@@ -2800,7 +2800,7 @@ function meta:CryogenicInduction(attacker, inflictor, damage)
 	attacker.NextInductors = CurTime() + 1.5
 	timer.Create("Cryogenic" .. attacker:UniqueID(), 0.06, 1, function()
 		if not attacker:IsValid() or not self:IsValid() then return end
-		if !attacker:IsSkillActive(SKILL_COOL_NUCLEAR_SYN) then
+		if !attacker:IsSkillActive(SKILL_COOL_NUCLEAR_SYN) and !attacker:IsSkillActive(SKILL_CRYMAN) then
 			local pos = self:WorldSpaceCenter()
 			pos.z = pos.z + 16
 			self:TakeSpecialDamage(self:Health() * 0.2 + 165 + attacker:GetProgress('iprog'), DMG_DIRECT, attacker, inflictor, pos)
@@ -2819,6 +2819,25 @@ function meta:CryogenicInduction(attacker, inflictor, damage)
 				effectdata:SetOrigin(pos)
 				effectdata:SetNormal(attacker:GetShootPos())
 			util.Effect("hit_ice", effectdata)
+		elseif attacker:IsSkillActive(SKILL_CRYMAN) then
+
+			local pos = self:WorldSpaceCenter()
+			pos.z = pos.z + 16
+			local ent = ents.Create('projectile_succubus_full')
+			if ent:IsValid() then
+				ent:SetPos(pos)
+				ent:Spawn()
+				ent:SetOwner(attacker)
+				ent.NoUseLol = true
+				ent.Weapon = wep.IsMelee and 'weapon_peashooter' or wep:GetClass()
+				timer.Simple(7*(attacker:IsSkillActive(SKILL_COOL_NUCLEAR_SYN) and 2 or 1), function()
+					ent:Remove()
+				end)
+			end
+			local effectdata = EffectData()
+			effectdata:SetOrigin(pos)
+			effectdata:SetNormal(attacker:GetShootPos())
+		util.Effect("hit_ice", effectdata)
 		else
 			attacker:GiveStatus("radiation",3):SetDTInt(1,4)
 			local pos = self:WorldSpaceCenter()
