@@ -14,7 +14,7 @@ function ENT:EntityTakeDamage(ent, dmginfo)
 	local attacker = dmginfo:GetAttacker()
 	if ent ~= self:GetOwner() then return end
 
-	if attacker:IsPlayer() and attacker:IsValidZombie() and !ent:IsSkillActive(SKILL_BERSERK) then
+	if attacker:IsPlayer() and attacker:IsValidZombie() and !ent:IsSkillActive(SKILL_BERSERK) and GAMEMODE:GetWave() < 7 then
 		dmginfo:ScaleDamage(0.5)
 	end
 end

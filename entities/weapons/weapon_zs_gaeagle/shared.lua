@@ -65,7 +65,7 @@ function SWEP.BulletCallback(at,tr,dmginfo)
 	if hitent:IsValidLivingZombie() then
 		wep:SetHitStacks(wep:GetHitStacks()+1)
 	end
-	attacker:GetActiveWeapon().BaseClass.BulletCallback(attacker, tr, dmginfo)
+	at:GetActiveWeapon().BaseClass.BulletCallback(at, tr, dmginfo)
 end
 function SWEP:ShootBullets(dmg, numbul, cone)
 	dmg = dmg + dmg * (20 * self:Clip1() / self.Primary.ClipSize)

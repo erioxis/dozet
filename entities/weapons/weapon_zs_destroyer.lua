@@ -25,7 +25,7 @@ SWEP.MeleeDamage = 43
 SWEP.SlowMeleeDelay = 0.6
 SWEP.SlowMeleeDamage = 32
 SWEP.PounceDamage = 81
-SWEP.DamageType = DMG_DIRECT
+SWEP.MeleeDamageType = DMG_DIRECT
 SWEP.AutoCheck = true
 
 function SWEP:ApplyMeleeDamage(pl, trace, damage)

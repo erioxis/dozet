@@ -106,9 +106,8 @@ GM.Assemblies["trinket_electromagnet"]							= {"comp_electrobattery",	"trinket_
 GM.Assemblies["trinket_projguide"]								= {"comp_cpuparts",			"trinket_targetingvisori"}
 GM.Assemblies["trinket_projwei"]								= {"comp_busthead",			"trinket_projguide"}
 GM.Assemblies["trinket_controlplat"]							= {"comp_cpuparts",			"trinket_mainsuite"}
-GM.Assemblies["weapon_zs_classixx"]				 		    	= {"trinket_classixsoul",			"weapon_zs_classic"}
-GM.Assemblies["trinket_classixsoul"]							= {"comp_cpuparts",			"comp_scoper"}
-GM.Assemblies["comp_scoper"]						        	= {"trinket_electromagnet",	"trinket_classix"}
+GM.Assemblies["weapon_zs_classixx"]				 		    	= {"comp_scoper",			"weapon_zs_classic"}
+GM.Assemblies["comp_scoper"]						        	= {"trinket_classixsoul_a",	"trinket_classixsoul"}
 GM.Assemblies["weapon_zs_cryman"] 				     			= {"comp_gaussframe",		"weapon_zs_hyena"}
 GM.Assemblies["trinket_invalid"]						        	= {"trinket_classil",	"trinket_analgestic"}
 GM.Assemblies["weapon_zs_m5"]						        	= {"comp_sacred_soul",	"weapon_zs_m4"}
@@ -519,7 +518,7 @@ GM:AddInventoryItemData("cons_friendship",		trs("c_friendship"),			trs("c_friend
 end,2)
 GM:AddInventoryItemData("cons_chaos",		trs("c_chaos"),			trs("c_chaos_d"),								"models/props_c17/trappropeller_lever.mdl", 3, nil, nil, function(pl) 
 	local use2 = {}
-	if pl.UsesChaosCard then pl:AddChargesActive(5) return end
+--	if pl.UsesChaosCard then pl:AddChargesActive(5) return end
 	local data = GAMEMODE.ZSInventoryItemData
 	for item,v in pairs(GAMEMODE.GetActiveTrinkets) do
 		if item ~= "cons_chaos" and item ~= "cons_wildcard" and data[item].Bounty and data[item].BountyNeed then
@@ -528,10 +527,8 @@ GM:AddInventoryItemData("cons_chaos",		trs("c_chaos"),			trs("c_chaos_d"),						
 	end
 	pl.UsesChaosCard = true
 	for i=1,5 do
-		local trinket = table.Random(use2)
-		net.Start("zs_t_activated")
-		net.WriteString(trinket)
-	net.Send(pl)
+		local trinket = use2[math.random(#use2)]
+		pl:SendLua('local p = GAMEMODE.ZSInventoryItemData['..trinket..'].PrintName GAMEMODE:CenterNotify({killicon = "weapon_zs_craftables"}, " ", COLOR_RORANGE, translate.Format("trinket_activated", p))')
 		local callback = data[trinket].Bounty
 		callback(pl)
 		--print(trinket)
@@ -569,7 +566,7 @@ local dcad = GM:AddInventoryItemData("cons_necronomicon",		trs("c_necronomicon")
 			pl:EmitSound("ambient/atmosphere/thunder1.wav", 50, 500, 0.5)
 		end
 	end
-	if math.random(1,100) <= 10 then pl:TakeInventoryItem("cons_necronomicon_broke") end
+	if math.random(1,100) <= 10 then pl:TakeInventoryItem("cons_necronomicon") end
 end,1)
 dcad.Upgradable = true
 dcad.NeedForUpgrade = "comp_soul_dosei"

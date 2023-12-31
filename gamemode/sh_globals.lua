@@ -377,3 +377,5 @@ GM.ValidBeaconMessages = {
 	"message_beacon_24",
 	"message_beacon_25"
 }
+GM.Halloween = false
+GM.NewYear = false

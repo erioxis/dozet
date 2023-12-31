@@ -1444,8 +1444,8 @@ function GM:Think()
 					pl:StripWeapon(wep:GetClass())
 				end
 				local barac = pl:IsSkillActive(SKILL_BARA_CURSED)
-				if self.MaxSigils >= 1 and (barac or #team.GetPlayers(TEAM_HUMAN) < 2) then
-					if not pl:GetStatus("sigildef") and self:GetWave() >= 6 and  time > pl.NextDamage and self:GetWaveActive() and self:GetBalance() < 40 or self:GetBalance() > 40 and not pl:GetStatus("sigildef") and  time > pl.NextDamage then
+				if self.MaxSigils >= 1 then
+					if not pl:GetStatus("sigildef") and self:GetWave() >= 6 and  time > pl.NextDamage and self:GetWaveActive() then
 						pl:TakeSpecialDamage(8 * (pl.TickBuff or 0), DMG_DIRECT)
 						pl.NextDamage = time + 2.4
 						pl:CenterNotify(COLOR_RED, translate.ClientGet(pl, "danger"))
@@ -1455,10 +1455,6 @@ function GM:Think()
 					if time >= (pl.NextDamage + 4) then
 						pl.TickBuff = pl.TickBuff - pl.TickBuff
 					end
-					if pl:HasTrinket("antibaracat") and barac then
-						pl:Kill()
-					end
-					
 				end
 				if pl:GetAddedPoints() ~= 0  and ((pl:GetAddedPointsTime()-CurTime()+3)/3) < 0 then
 					pl:SetDTInt(DT_PLAYER_INT_ADDEDPOINTS,0) 
@@ -2742,7 +2738,7 @@ hook.Add("PlayerSay", "ForBots", function(ply, text)
 		end
 		return false
 	end
-	if ( table.HasValue(casino,string.lower( playerInput[1] )) and playerInput[2] and tonumber(playerInput[2]) and tonumber(playerInput[2]) >= 10) and ply:IsValidLivingHuman() then
+	if ( table.HasValue(casino,string.lower( playerInput[1] )) and playerInput[2] and tonumber(playerInput[2]) and tonumber(playerInput[2]) >= 10) and ply:IsValidLivingHuman() and pl.CasinoCan then
 		if (ply.NextCasino or 1) >= CurTime() then
 			ply:PrintTranslatedMessage( HUD_PRINTTALK, "casino_in_s",math.Round((ply.NextCasino or 1)-CurTime()) )
 			return
