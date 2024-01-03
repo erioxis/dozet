@@ -28,7 +28,7 @@ function meta:HealPlayer(pl, amount, pointmul, nobymsg, poisononly)
 
 
 	-- Heal bleed first.
-	if self:HasTrinket("remedy_q4") or self:HasTrinket("remedy_q5") then
+	if self.RemedyRegen then
 		pl.UltraCharge = pl.UltraCharge+ 1
 		if pl.UltraCharge >= 32 - (self:HasTrinket("remedy_q5") and 10 or 0) then
 			pl:GiveStatus("strengthdartboost",30,self)
@@ -509,7 +509,7 @@ function meta:DamageNails(attacker, inflictor, damage, dmginfo)
 		local live = nails[math.random(1,#nails)]
 		local lowler = live:GetOwner()
 		if lowler and lowler:IsValid() and lowler:IsSkillActive(SKILL_SPICY_CADES) then 
-			attacker:TakeSpecialDamage(damage*2,DMG_GENERIC,lowler,live,dmginfo:GetDamagePosition(),0)
+			attacker:TakeSpecialDamage(damage*2,DMG_SLASH,lowler,live,dmginfo:GetDamagePosition(),0)
 		end
 		damage = dmginfo:GetDamage()
 		GAMEMODE:DamageFloater(attacker, self, dmginfo:GetDamagePosition(), dmginfo:GetDamage())

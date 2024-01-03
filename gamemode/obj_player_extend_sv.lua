@@ -642,17 +642,11 @@ function meta:ProcessDamage(dmginfo)
 				end
 
 				if self:IsSkillActive(SKILL_SLAVEC) and math.randomr(1,10,1,self) == 1 then
-					attacker:GiveStatus("dimvision", 5)
-
-					self:EmitSound("ambient/creatures/town_child_scream1.wav", 20, 10)
 					self:GiveStatus("medrifledefboost", 10)
-
 				end
 				if self:HasTrinket("adrenaline") then
 					local boost = self:GiveStatus("adrenalineamp", 3)
 					self:GiveStatus("strengthdartboost", 3)
-					local boost2 = self:GiveStatus("speed", 3)
-					
 					if boost and boost:IsValid() then
 						boost:SetSpeed(55)
 					end
@@ -2800,11 +2794,12 @@ function meta:CryogenicInduction(attacker, inflictor, damage)
 	attacker.NextInductors = CurTime() + 1.5
 	timer.Create("Cryogenic" .. attacker:UniqueID(), 0.06, 1, function()
 		if not attacker:IsValid() or not self:IsValid() then return end
+		attacker:SetProgress((attacker:GetProgress('iprog') -formula)*0.1,'iprog')
 		if !attacker:IsSkillActive(SKILL_COOL_NUCLEAR_SYN) and !attacker:IsSkillActive(SKILL_CRYMAN) then
 			local pos = self:WorldSpaceCenter()
 			pos.z = pos.z + 16
 			self:TakeSpecialDamage(self:Health() * 0.2 + 165 + attacker:GetProgress('iprog'), DMG_DIRECT, attacker, inflictor, pos)
-			attacker:SetProgress((attacker:GetProgress('iprog') -formula)*0.1,'iprog')
+			
 
 			if attacker:IsValidLivingHuman() then
 				util.BlastDamagePlayer(inflictor, attacker, pos, 85 + 25 * (attacker.ExpDamageRadiusMul or 1), self:GetMaxHealthEx() * 0.2, DMG_DROWN, 0.83, true)
@@ -2842,7 +2837,6 @@ function meta:CryogenicInduction(attacker, inflictor, damage)
 			attacker:GiveStatus("radiation",3):SetDTInt(1,4)
 			local pos = self:WorldSpaceCenter()
 			pos.z = pos.z + 16
-			attacker:SetProgress((attacker:GetProgress('iprog') -formula)*0.1,'iprog')
 			for _, ent in pairs(util.BlastAlloc(inflictor, attacker, pos, 200)) do
 				if ent:IsValidLivingPlayer() and gamemode.Call("PlayerShouldTakeDamage", ent, attacker) then
 					local sta = ent:GetStatus("radiation") 

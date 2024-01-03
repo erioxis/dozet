@@ -143,8 +143,7 @@ function SWEP:PrimaryAttack()
     util.Effect("HL1GaussBeamReflect",gd)
     gd:SetStart(ply:GetShootPos() + Vector(0,0,-3) + ply:GetAimVector() * 10)
     util.Effect("HL1GaussBeamReflect",gd)
-    self:SetClip1(0)
-    timer.Simple(20,function() if self:IsValid() then self:SetClip1(1) end end)
+
 
     ply:LagCompensation( false )
 	ply:SetNW2Float(8,CurTime()+(15* self.Primary.Delay))

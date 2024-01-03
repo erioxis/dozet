@@ -894,13 +894,34 @@ trinket = GM:AddTrinket(trs("t_momentsupi"), "momentumsupsysiii", false, mveles,
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_SWING_DELAY_MUL, -0.13)
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_KNOCKBACK_MUL, 0.12)
 
-GM:AddSkillModifier(GM:AddTrinket(trs("t_hemoad"), "hemoadrenali", false, mveles, mweles, nil, trs("t_d_hemoad"), nil, nil, "weapon_zs_melee_trinket"), SKILLMOD_MELEE_DAMAGE_TO_BLOODARMOR_MUL, 0.06)
+trinket, trinketwep = GM:AddTrinket(trs("t_hemoad"), "hemoadrenali", false, mveles, mweles, 1, trs("t_d_hemoad_d1"), nil, nil, "weapon_zs_melee_trinket")
+GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TO_BLOODARMOR_MUL, 0.03)
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 0.02)
-
-trinket = GM:AddTrinket(trs("t_hemoadi"), "hemoadrenalii", false, mveles, mweles, 3, trs("t_d_hemoadi"), nil, nil, "weapon_zs_melee_trinket")
-GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TO_BLOODARMOR_MUL, 0.13)
-GM:AddSkillModifier(trinket, SKILLMOD_MELEE_MOVEMENTSPEED_ON_KILL, 44)
+trinketwep.Upgradable = true
+trinket, trinketwep = GM:AddTrinket(trs("t_hemoad").." +1", "hemoadrenali_q1", false, mveles, mweles, 1, trs("t_d_hemoad_d2"), nil, nil, "weapon_zs_melee_trinket")
+GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TO_BLOODARMOR_MUL, 0.09)
+GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 0.07)
+trinketwep.Upgradable = true
+trinket, trinketwep = GM:AddTrinket(trs("t_hemoad").." +2", "hemoadrenali_q2", false, mveles, mweles, 2, trs("t_d_hemoad_d3"), nil, nil, "weapon_zs_melee_trinket")
+GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TO_BLOODARMOR_MUL, 0.12)
+GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 0.12)
+trinketwep.Upgradable = true
+trinket, trinketwep = GM:AddTrinket(trs("t_hemoad").." +3", "hemoadrenali_q3", false, mveles, mweles, 3, trs("t_d_hemoad_d4"), nil, nil, "weapon_zs_melee_trinket")
+GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TO_BLOODARMOR_MUL, 0.16)
+GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 0.07)
+trinketwep.Upgradable = true
+trinket, trinketwep = GM:AddTrinket(trs("t_hemoad").." +4", "hemoadrenali_q4", false, mveles, mweles, 5, trs("t_d_hemoad_d5"), nil, nil, "weapon_zs_melee_trinket")
+GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TO_BLOODARMOR_MUL, 0.2)
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 0.05)
+GM:AddSkillModifier(trinket, SKILLMOD_MELEE_MOVEMENTSPEED_ON_KILL, 20)
+trinketwep.Upgradable = true
+trinket, trinketwep = GM:AddTrinket(trs("t_hemoad").." +5", "hemoadrenali_q5", false, mveles, mweles, 7, trs("t_d_hemoad_d6"), nil, nil, "weapon_zs_melee_trinket")
+GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TO_BLOODARMOR_MUL, 0.25)
+GM:AddSkillModifier(trinket, SKILLMOD_MELEE_MOVEMENTSPEED_ON_KILL, 40)
+
+
+
+
 trinket = GM:AddTrinket(trs("t_damager"), "damage222", false, mveles, mweles, 3, trs("t_d_damager"), nil, nil, "weapon_zs_melee_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_DAMAGE, 0.90)
 
@@ -910,9 +931,7 @@ GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 0.07)
 GM:AddSkillModifier(trinket, SKILLMOD_SPEED, 55)
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_MOVEMENTSPEED_ON_KILL, 55)
 
-trinket = GM:AddTrinket(trs("t_hemoadii"), "hemoadrenaliii", false, mveles, mweles, 4, trs("t_d_hemoadii"), nil, nil, "weapon_zs_melee_trinket")
-GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TO_BLOODARMOR_MUL, 0.22)
-GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 0.04)
+
 trinket = GM:AddTrinket(trs("t_athermia"), "sharpkt", false, mveles, mweles, 4, trs("t_d_athermia"), nil, nil, "weapon_zs_melee_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TO_BLOODARMOR_MUL, -0.09)
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.05)
@@ -1636,10 +1655,18 @@ trinketwep.Upgradable = true
 trinketwep.NeedForUpgrade = "comp_soul_alt_h"
 trinket, trinketwep = GM:AddTrinket(trs("t_remedy_q3_5").."+4", "remedy_q4", false, supveles, supweles, 4, trs("t_d_remedy_q4"), nil, nil, "weapon_zs_help_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_MEDKIT_EFFECTIVENESS_MUL, 0.38)
+GM:AddSkillFunction(trinket, function(pl, active)
+	pl.RemedyRegen = active
+end)
+
 trinketwep.Upgradable = true
 trinketwep.NeedForUpgrade = "comp_soul_alt_h"
 trinket, trinketwep = GM:AddTrinket(trs("t_remedy_q3_5").."+5", "remedy_q5", false, supveles, supweles, 5, trs("t_d_remedy_q5"), nil, nil, "weapon_zs_help_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_MEDKIT_EFFECTIVENESS_MUL, 0.45)
+GM:AddSkillFunction(trinket, function(pl, active)
+	pl.RemedyRegen = active
+end)
+
 
 trinket,trinketwep = GM:AddTrinket(trs("t_sale"), "salevoy", false, pveles, pweles, 2, trs("t_d_sale"), nil, nil, "weapon_zs_special_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_ARSENAL_DISCOUNT, -0.03)
@@ -2271,10 +2298,10 @@ trinket, soul = GM:AddTrinket("Soul of Troy", "troyaksoul", false, nil, {
 	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 1.697, y = 1.697 }, color = Color(94, 94, 94), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core_2+"] = { type = "Sprite", sprite = "effects/splashwake1", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 10, y = 10 }, color = Color(172, 172, 172), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 2, 0), angle = Angle(0, 0, 0), size = Vector(0.349, 0.349, 0.349), color = Color(126, 126, 126, 100), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} }
-}, 3, "-7 удачи,+35% Сила починки, -25% к времени перед следующим удара молотка\n-7 Luck,+35% Repair rate,-25% swing delay with the Carpenter Hammer \n Q:3", nil, nil, "weapon_zs_soul")
+}, 3, "-7 удачи,+35% Сила починки, -15% к времени перед следующим удара молотка\n-7 Luck,+35% Repair rate,-25% swing delay with the Carpenter Hammer \n Q:3", nil, nil, "weapon_zs_soul")
 GM:AddSkillModifier(trinket, SKILLMOD_LUCK, -7)
 GM:AddSkillModifier(trinket, SKILLMOD_REPAIRRATE_MUL, 0.35)
-GM:AddSkillModifier(trinket, SKILLMOD_HAMMER_SWING_DELAY_MUL, -0.25)
+GM:AddSkillModifier(trinket, SKILLMOD_HAMMER_SWING_DELAY_MUL, -0.15)
 trinket, soul = GM:AddTrinket("Soul of Alt Troy", "troyaksoul_a", false, nil, {
 	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 1.697, y = 1.697 }, color = Color(94, 94, 94), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core_2+"] = { type = "Sprite", sprite = "effects/splashwake1", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 10, y = 10 }, color = Color(172, 172, 172), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},

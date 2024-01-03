@@ -1,6 +1,6 @@
 AddCSLuaFile()
 
-SWEP.PrintName = ""..translate.Get("wep_plank")
+SWEP.PrintName = translate.Get("wep_plank")
 
 
 if CLIENT then

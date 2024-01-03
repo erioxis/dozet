@@ -336,12 +336,12 @@ GM:AddStartingItem("reactiveflasher",	ITEMCAT_TRINKETS,		5,				"trinket_reactive
 GM:AddStartingItem("magnet",			ITEMCAT_TRINKETS,		10,				"trinket_magnet").SubCategory =					ITEMSUBCAT_TRINKETS_SPECIAL
 GM:AddStartingItem("resupplypack",		ITEMCAT_TRINKETS,		25,				"trinket_resupplypack").SubCategory =			ITEMSUBCAT_TRINKETS_SUPPORT
 
-GM:AddStartingItem("m_w_damager",				ITEMCAT_MAGIC,			75,				"weapon_zs_m_damage")
-GM:AddStartingItem("m_w_heal",				ITEMCAT_MAGIC,			75,				"weapon_zs_m_heal")
-GM:AddStartingItem("m_w_electro",				ITEMCAT_MAGIC,			100,				"weapon_zs_m_electro")
-GM:AddStartingItem("m_w_wind",				ITEMCAT_MAGIC,			75,				"weapon_zs_m_wind")
-GM:AddStartingItem("m_w_boom",				ITEMCAT_MAGIC,			75,				"weapon_zs_m_boom")
-GM:AddStartingItem("m_w_magic_proj",				ITEMCAT_MAGIC,			100,				"weapon_zs_magicwand")
+GM:AddStartingItem("m_w_damager",				ITEMCAT_MAGIC,			40,				"weapon_zs_m_damage")
+GM:AddStartingItem("m_w_heal",				ITEMCAT_MAGIC,			40,				"weapon_zs_m_heal")
+GM:AddStartingItem("m_w_electro",				ITEMCAT_MAGIC,			50,				"weapon_zs_m_electro")
+GM:AddStartingItem("m_w_wind",				ITEMCAT_MAGIC,			45,				"weapon_zs_m_wind")
+GM:AddStartingItem("m_w_boom",				ITEMCAT_MAGIC,			45,				"weapon_zs_m_boom")
+GM:AddStartingItem("m_w_magic_proj",				ITEMCAT_MAGIC,			50,				"weapon_zs_magicwand")
 GM:AddStartingItem("stone",				ITEMCAT_OTHER,			5,				"weapon_zs_stone")
 if GM.Halloween then
 	GM:AddStartingItem("pumpkin",				ITEMCAT_OTHER,			5,				"weapon_zs_pumkin")
@@ -680,16 +680,16 @@ GM:AddPointShopItem("bulwark_med",			ITEMCAT_TOOLS,		   3500,			"weapon_zs_med_b
 GM:AddAPointShopItem("soul_of_judas",			ITEMCAT_TRINKETS,			125,			"trinket_bleaksoul").SubCategory =								ITEMSUBCAT_TRINKETS_DEFENSIVE
 GM:AddAPointShopItem("soul_of_spiritess",			ITEMCAT_TRINKETS,			125,			"trinket_spiritess").SubCategory =								ITEMSUBCAT_TRINKETS_SUPER
 GM:AddAPointShopItem("soul_of_samsonsoul",			ITEMCAT_TRINKETS,			225,			"trinket_samsonsoul").SubCategory =								ITEMSUBCAT_TRINKETS_MELEE
-GM:AddAPointShopItem("soul_of_evesoul",			ITEMCAT_TRINKETS,			220,			"trinket_evesoul").SubCategory =								ITEMSUBCAT_TRINKETS_DEFENSIVE
-GM:AddAPointShopItem("soul_of_magdalenesoul",			ITEMCAT_TRINKETS,			250,			"trinket_magdalenesoul").SubCategory =								ITEMSUBCAT_TRINKETS_DEFENSIVE
+GM:AddAPointShopItem("soul_of_evesoul",			ITEMCAT_TRINKETS,			420,			"trinket_evesoul").SubCategory =								ITEMSUBCAT_TRINKETS_DEFENSIVE
+GM:AddAPointShopItem("soul_of_magdalenesoul",			ITEMCAT_TRINKETS,			750,			"trinket_magdalenesoul").SubCategory =								ITEMSUBCAT_TRINKETS_DEFENSIVE
 GM:AddAPointShopItem("soul_of_jacobjesausoul",			ITEMCAT_TRINKETS,			600,			"trinket_jacobjesausoul").SubCategory =								ITEMSUBCAT_TRINKETS_SUPER
 GM:AddAPointShopItem("soul_of_isaacsoul",			ITEMCAT_TRINKETS,			800,			"trinket_isaacsoul").SubCategory =								ITEMSUBCAT_TRINKETS_PERFOMANCE
 GM:AddAPointShopItem("soul_of_lilithsoul",			ITEMCAT_TRINKETS,			800,			"trinket_lilithsoul").SubCategory =								ITEMSUBCAT_TRINKETS_SUPPORT
 GM:AddAPointShopItem("soul_of_whysoul",			ITEMCAT_TRINKETS,			2200,			"trinket_whysoul").SubCategory =								ITEMSUBCAT_TRINKETS_SUPER
 GM:AddAPointShopItem("soul_of_blanksoul",			ITEMCAT_TRINKETS,			700,			"trinket_blanksoul").SubCategory =								ITEMSUBCAT_TRINKETS_SPECIAL
-GM:AddAPointShopItem("soul_of_classixsoul",			ITEMCAT_TRINKETS,			200,			"trinket_classixsoul").SubCategory =								ITEMSUBCAT_TRINKETS_OFFENSIVE
+GM:AddAPointShopItem("soul_of_classixsoul",			ITEMCAT_TRINKETS,			500,			"trinket_classixsoul").SubCategory =								ITEMSUBCAT_TRINKETS_OFFENSIVE
 GM:AddAPointShopItem("soul_of_darksoul",			ITEMCAT_TRINKETS,			500,			"trinket_darksoul").SubCategory =								ITEMSUBCAT_TRINKETS_SUPPORT
-GM:AddAPointShopItem("soul_of_eriosoul",			ITEMCAT_TRINKETS,			200,			"trinket_eriosoul").SubCategory =								ITEMSUBCAT_TRINKETS_MELEE
+GM:AddAPointShopItem("soul_of_eriosoul",			ITEMCAT_TRINKETS,			300,			"trinket_eriosoul").SubCategory =								ITEMSUBCAT_TRINKETS_MELEE
 GM:AddAPointShopItem("soul_of_aposoul",			ITEMCAT_TRINKETS,			900,			"trinket_aposoul").SubCategory =								ITEMSUBCAT_TRINKETS_OFFENSIVE
 GM:AddAPointShopItem("soul_of_betsoul",			ITEMCAT_TRINKETS,			900,			"trinket_betsoul").SubCategory =								ITEMSUBCAT_TRINKETS_DEFENSIVE
 GM:AddAPointShopItem("soul_of_lostsoul",			ITEMCAT_TRINKETS,			500,			"trinket_lostsoul").SubCategory =								ITEMSUBCAT_TRINKETS_SPECIAL
@@ -705,13 +705,13 @@ GM:AddAPointShopItem("soul_of_nulledsoul",			ITEMCAT_TRINKETS,			900,			"trinket
 GM:AddAPointShopItem("soul_of_soulmedical",			ITEMCAT_TRINKETS,			300,			"trinket_soulmedical").SubCategory =								ITEMSUBCAT_TRINKETS_SUPPORT
 GM:AddAPointShopItem("soul_of_lampsoul",			ITEMCAT_TRINKETS,			892,			"trinket_lampsoul").SubCategory =								ITEMSUBCAT_TRINKETS_MELEE
 GM:AddAPointShopItem("soul_of_barasoul",			ITEMCAT_TRINKETS,			9999,			"trinket_barasoul").SubCategory =								ITEMSUBCAT_TRINKETS_SPECIAL
-GM:AddAPointShopItem("soul_of_troyaksoul",			ITEMCAT_TRINKETS,			320,			"trinket_troyaksoul").SubCategory =								ITEMSUBCAT_TRINKETS_SUPPORT
+GM:AddAPointShopItem("soul_of_troyaksoul",			ITEMCAT_TRINKETS,			420,			"trinket_troyaksoul").SubCategory =								ITEMSUBCAT_TRINKETS_SUPPORT
 GM:AddAPointShopItem("soul_of_slight_soul",			ITEMCAT_TRINKETS,			600,			"trinket_slight_soul").SubCategory =								ITEMSUBCAT_TRINKETS_DEFENSIVE
 --GM:AddAPointShopItem("soul_of_lehasoul",			ITEMCAT_TRINKETS,			180,			"trinket_lehasoul").SubCategory =								ITEMSUBCAT_TRINKETS_SPECIAL
 
-GM:AddAPointShopItem("world_card",			ITEMCAT_OTHER,			125,				nil,							translate.Get("s_world"),			translate.Get("s_world_d"),									"status_dim_vision",					function(pl) pl:GiveStatus("world",300) end)
-GM:AddAPointShopItem("devil_card",			ITEMCAT_OTHER,			205,				nil,							translate.Get("s_devil"),			translate.Get("s_devil_d"),									"status_death",					function(pl) pl:GiveStatus("resnya",300) end)
-GM:AddAPointShopItem("hint_doset",			ITEMCAT_OTHER,			25,				nil,							translate.Get("ahint"),			translate.Get("ahint"),									"weapon_zs_special_trinket",					function(pl) pl:CenterNotify(COLOR_GREEN, translate.ClientGet(pl,"ahint_"..math.random(1,16))) end)
+GM:AddAPointShopItem("world_card",			ITEMCAT_OTHER,			225,				nil,							translate.Get("s_world"),			translate.Get("s_world_d"),									"status_dim_vision",					function(pl) pl:GiveStatus("world",300) end)
+GM:AddAPointShopItem("devil_card",			ITEMCAT_OTHER,			505,				nil,							translate.Get("s_devil"),			translate.Get("s_devil_d"),									"status_death",					function(pl) pl:GiveStatus("resnya",300) end)
+GM:AddAPointShopItem("hint_doset",			ITEMCAT_OTHER,			5,				nil,							translate.Get("ahint"),			translate.Get("ahint"),									"weapon_zs_special_trinket",					function(pl) pl:CenterNotify(COLOR_GREEN, translate.ClientGet(pl,"ahint_"..math.random(1,16))) end)
 
 GM:AddAPointShopItem("antivirus_anti",		ITEMCAT_OTHER,			3000,				"weapon_zs_redeemrayv2")
 
@@ -767,7 +767,6 @@ GM:AddPointShopItem("scout",ITEMCAT_TRINKETS,		30,				"trinket_scout").SubCatego
 GM:AddPointShopItem("ass",ITEMCAT_TRINKETS,		15,				"trinket_ass").SubCategory =						ITEMSUBCAT_TRINKETS_DEFENSIVE
 GM:AddPointShopItem("longgrip",		ITEMCAT_TRINKETS,		30,				"trinket_longgrip").SubCategory =								ITEMSUBCAT_TRINKETS_MELEE
 GM:AddPointShopItem("powergauntlet",	ITEMCAT_TRINKETS,		30,				"trinket_powergauntlet").SubCategory =							ITEMSUBCAT_TRINKETS_MELEE
-GM:AddPointShopItem("hemoadrenalii",	ITEMCAT_TRINKETS,		30,				"trinket_hemoadrenalii").SubCategory =							ITEMSUBCAT_TRINKETS_MELEE
 GM:AddPointShopItem("sharpstone",		ITEMCAT_TRINKETS,		30,				"trinket_sharpstone").SubCategory =								ITEMSUBCAT_TRINKETS_MELEE
 GM:AddPointShopItem("salevoy",	      	ITEMCAT_TRINKETS,		30,				"trinket_salevoy").SubCategory =					     			ITEMSUBCAT_TRINKETS_SPECIAL
 GM:AddPointShopItem("analgestic",		ITEMCAT_TRINKETS,		30,				"trinket_analgestic").SubCategory =								ITEMSUBCAT_TRINKETS_PERFOMANCE
@@ -788,7 +787,6 @@ GM:AddPointShopItem("cham_at",		ITEMCAT_TRINKETS,		50,				"trinket_cham_at").Sub
 GM:AddPointShopItem("fire_at",		ITEMCAT_TRINKETS,		50,				"trinket_fire_at").SubCategory =							ITEMSUBCAT_TRINKETS_OFFENSIVE
 GM:AddPointShopItem("pulse_at",		ITEMCAT_TRINKETS,		50,				"trinket_pulse_at").SubCategory =							ITEMSUBCAT_TRINKETS_OFFENSIVE
 GM:AddPointShopItem("acid_at",		ITEMCAT_TRINKETS,		50,				"trinket_acid_at").SubCategory =							ITEMSUBCAT_TRINKETS_OFFENSIVE
-GM:AddPointShopItem("hemoadrenaliii",	ITEMCAT_TRINKETS,		50,				"trinket_hemoadrenaliii").SubCategory =							ITEMSUBCAT_TRINKETS_MELEE
 GM:AddPointShopItem("ammoband",			ITEMCAT_TRINKETS,		50,				"trinket_ammovestiii").SubCategory =							ITEMSUBCAT_TRINKETS_OFFENSIVE
 GM:AddPointShopItem("resonance",		ITEMCAT_TRINKETS,		50,				"trinket_resonance").SubCategory =								ITEMSUBCAT_TRINKETS_OFFENSIVE
 GM:AddPointShopItem("cryoindu",			ITEMCAT_TRINKETS,		50,				"trinket_cryoindu").SubCategory =								ITEMSUBCAT_TRINKETS_OFFENSIVE

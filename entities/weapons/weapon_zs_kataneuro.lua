@@ -40,17 +40,10 @@ end
 SWEP.PrintName = translate.Get("wep_ice_nail")
 SWEP.Description = translate.Get("wep_d_ice_nail")
 function SWEP:PlayHitSound()
-	self:EmitSound(( self.FireNail and "ambient/fire/ignite.wav" or "physics/glass/glass_bottle_break"..math.random(1,2)..".wav"), 1215, (self:GetBlockState() and 200 or 2109))
-	for i=1,3 do
-		timer.Simple(0.09*i, function()	self:EmitSound(( self.FireNail and "ambient/fire/ignite.wav" or "physics/glass/glass_bottle_break"..math.random(1,2)..".wav"), 1215, (self:GetBlockState() and 200/i or 2109/i)) end)
-	end
+	self:EmitSound("weapons/melee/golf club/golf_hit-0"..math.random(4)..".ogg")
+
 end
 
-function SWEP:PlayHitFleshSound()
-	for i=1,3 do
-		timer.Simple(0.05*i, function()	self:EmitSound(( self.FireNail and "ambient/fire/ignite.wav" or "physics/glass/glass_bottle_break"..math.random(1,2)..".wav"), 1215, self:GetBlockState() and 200 or 2109) end)
-	end
-end
 
 SWEP.Base = "weapon_zs_basemelee"
 
@@ -71,13 +64,13 @@ SWEP.AllowQualityWeapons = true
 
 SWEP.WalkSpeed = SPEED_NORMAL
 
-SWEP.Primary.Delay = 0.5
 SWEP.Secondary.Delay = 10
-SWEP.HitAnim = nil
+SWEP.StartSwingAnimation = ACT_VM_HITRIGHT
+SWEP.HitAnim =  ACT_BIG_FLINCH
 SWEP.MissAnim = nil
 SWEP.ChargeSpeed = 1000
 SWEP.FireNail = false
 SWEP.CNail = false
 
-SWEP.Primary.Delay = 1.2
-SWEP.SwingTime = 1.2
+SWEP.Primary.Delay = 0.6
+SWEP.SwingTime = 0.4

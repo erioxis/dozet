@@ -13,6 +13,7 @@ end
 function meta:HasInventoryItem(item)
 	return GAMEMODE.ZSInventory[item] and GAMEMODE.ZSInventory[item] > 0
 end
+local strsub = string.sub
 function meta:HasInventoryItemQ(item)
 	local newi = ""
 	local newi2 = ""
@@ -20,20 +21,21 @@ function meta:HasInventoryItemQ(item)
 	local newi4 = ""
 	local newi5 = ""
 
-	if  string.sub(item ,#item-1,#item-1) ~= "q" then
+	if  strsub(item ,#item-1,#item-1) ~= "q" then
 		newi = item.."_q1"
 		newi2 = item.."_q2"
 		newi3 = item.."_q3"
 		newi4 = item.."_q4"
 		newi5 = item.."_q5"
 	else
-		newi = string.sub(item ,0,#item-1)..(tonumber(string.sub(item ,#item,#item))+1)
-		newi2 = string.sub(item ,0,#item-1)..(tonumber(string.sub(item ,#item,#item))+2)
-		newi3 = string.sub(item ,0,#item-1)..(tonumber(string.sub(item ,#item,#item))+3)
-		newi4 = string.sub(item ,0,#item-1)..(tonumber(string.sub(item ,#item,#item))+4)
-		newi5 = string.sub(item ,0,#item-1)..(tonumber(string.sub(item ,#item,#item))+5)
+		newi = strsub(item ,0,#item-1)..(tonumber(strsub(item ,#item,#item))+1)
+		newi2 = strsub(item ,0,#item-1)..(tonumber(strsub(item ,#item,#item))+2)
+		newi3 = strsub(item ,0,#item-1)..(tonumber(strsub(item ,#item,#item))+3)
+		newi4 = strsub(item ,0,#item-1)..(tonumber(strsub(item ,#item,#item))+4)
+		newi5 = strsub(item ,0,#item-1)..(tonumber(strsub(item ,#item,#item))+5)
 	end
-	return GAMEMODE.ZSInventory[newi] and GAMEMODE.ZSInventory[newi] > 0 or  GAMEMODE.ZSInventory[newi2] and GAMEMODE.ZSInventory[newi2] > 0 or  GAMEMODE.ZSInventory[newi3] and GAMEMODE.ZSInventory[newi3] > 0 or  GAMEMODE.ZSInventory[newi4] and GAMEMODE.ZSInventory[newi4] > 0 or  GAMEMODE.ZSInventory[newi5] and GAMEMODE.ZSInventory[newi5] > 0
+	local inventory = GAMEMODE.ZSInventory
+	return inventory[newi] and inventory[newi] > 0 or  inventory[newi2] and inventory[newi2] > 0 or  inventory[newi3] and inventory[newi3] > 0 or  inventory[newi4] and inventory[newi4] > 0 or  inventory[newi5] and inventory[newi5] > 0
 end
 
 net.Receive("zs_inventoryitem", function()
@@ -95,10 +97,10 @@ local function UpgradeTrinket(me, pl)
 		net.WriteEntity(MySelf)
 	net.SendToServer()
 	local newi = ""
-	if  string.sub(sir ,#sir-1,#sir-1) ~= "q" then
+	if  strsub(sir ,#sir-1,#sir-1) ~= "q" then
 		newi = sir.."_q1"
 	else
-		newi = string.sub(sir ,0,#sir-1)..(tonumber(string.sub(sir ,#sir,#sir))+1)
+		newi = strsub(sir ,0,#sir-1)..(tonumber(strsub(sir ,#sir,#sir))+1)
 	end
 	timer.Simple(0, function()	
 		for item,v in pairs(GAMEMODE.InventoryMenu.Grids[ GAMEMODE:GetInventoryItemType(newi) ]:GetItems()) do
@@ -200,10 +202,10 @@ function GM:ItemPanelDoClick()
 		g.DoClick = UpgradeTrinket
 		g:SetVisible(true)
 		if !sweptable.NeedForUpgrade then
-			bl:SetText( translate.Format("upgrade_inv",GAMEMODE:GetUpgradeScrap(sweptable,(tonumber(string.sub(item ,#item,#item)) and tonumber(string.sub(item ,#item,#item))+1 or 1))))
+			bl:SetText( translate.Format("upgrade_inv",GAMEMODE:GetUpgradeScrap(sweptable,(tonumber(strsub(item ,#item,#item)) and tonumber(strsub(item ,#item,#item))+1 or 1))))
 			bl:SetFont("ZSBodyTextFont")
 		else
-			bl:SetText( translate.Format("upgrade_inv_hard",GAMEMODE:GetUpgradeScrap(sweptable,(tonumber(string.sub(item ,#item,#item)) and tonumber(string.sub(item ,#item,#item))+1 or 1)),GAMEMODE.ZSInventoryItemData[sweptable.NeedForUpgrade].PrintName))
+			bl:SetText( translate.Format("upgrade_inv_hard",GAMEMODE:GetUpgradeScrap(sweptable,(tonumber(strsub(item ,#item,#item)) and tonumber(strsub(item ,#item,#item))+1 or 1)),GAMEMODE.ZSInventoryItemData[sweptable.NeedForUpgrade].PrintName))
 			bl:SetFont("ZS3D2DFontSuperTiny")
 		end
 		bl:SetPos( g:GetWide() / 2 - bl:GetWide() / 2, ( g:GetTall() * 0.5 - bl:GetTall() * 0.5 ) )
@@ -532,7 +534,7 @@ function GM:InventoryAddGridItem( item, category )
 		trintier:CenterVertical( 0.8 )
 		
 		--print(item)
-		local icon = category == INVCAT_WEAPONS and item or GAMEMODE.ZSInventoryItemData[item].Icon and GAMEMODE.ZSInventoryItemData[item].Icon..(table.HasValue({"q1","q2","q3","q4","q5"},string.sub(item ,#item-1,#item)) and "_"..string.sub(item ,#item-1,#item) or "") or "weapon_zs_trinket"
+		local icon = category == INVCAT_WEAPONS and item or GAMEMODE.ZSInventoryItemData[item].Icon and GAMEMODE.ZSInventoryItemData[item].Icon..(table.HasValue({"q1","q2","q3","q4","q5"},strsub(item ,#item-1,#item)) and "_"..strsub(item ,#item-1,#item) or "") or "weapon_zs_trinket"
 		--print(icon)
 		local kitbl = killicon.Get((category ~= INVCAT_COMPONENTS) and icon or "weapon_zs_craftables")
 		if kitbl then

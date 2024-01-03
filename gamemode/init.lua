@@ -3692,8 +3692,8 @@ local function CurseAttach(pl)
 		end
 	end
 end
-local function DoAttachmenttDamage(attacker,ent,damage,time)
-	if not attacker:HasTrinket("cham_at") then
+local function DoAttachmenttDamage(attacker,ent,damage,time,inflictor)
+	if attacker:HasTrinket("cham_at") or inflictor.IgnoreAttachments then return end
 		local chnc = attacker.AttChance or 1
 		local damage2 = damage * (ent:GetZombieClassTable().ElementalDebuff or 1)
 		if attacker:HasTrinket("fire_at") then
@@ -3731,7 +3731,6 @@ local function DoAttachmenttDamage(attacker,ent,damage,time)
 			ent:GiveStatus("zombiestrdebuff",math_random(7,14))
 			CurseAttach(attacker)
 		end
-	end
 end
 function GM:EntityTakeDamage(ent, dmginfo)
 	local attacker, inflictor = dmginfo:GetAttacker(), dmginfo:GetInflictor()
@@ -3867,7 +3866,7 @@ function GM:EntityTakeDamage(ent, dmginfo)
 							--	attacker:GiveAchievementProgress("daily_post", math_Round(math_min(damage, ent:Health())))
 							--end
 
-							DoAttachmenttDamage(attacker,ent,damage,time)
+							DoAttachmenttDamage(attacker,ent,damage,time,dmginfo:GetInflictor())
 
 
 							local pos = ent:GetPos()

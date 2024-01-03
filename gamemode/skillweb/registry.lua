@@ -687,8 +687,8 @@ d.DontUnlock = SKILL_OLD_GOD
 d.DontUnlock2 = SKILL_RESNYA
 local d = GM:AddSkill(SKILL_OLD_GOD, trs("skill_old_g"), GOOD..trs("skill_old_g_d1")..GOOD..trs("skill_old_g_d2"),
 																4,			-2,					{SKILL_NONE}, TREE_OLD_GOD)
-GM:AddSkillModifier(SKILL_OLD_GOD, SKILLMOD_M_DMG, 0.3)
-GM:AddSkillModifier(SKILL_OLD_GOD, SKILLMOD_M_REG, 0.3)
+GM:AddSkillModifier(SKILL_OLD_GOD, SKILLMOD_M_DMG, 0.2)
+GM:AddSkillModifier(SKILL_OLD_GOD, SKILLMOD_M_REG, 0.2)
 d.DontUnlock = SKILL_DOSET
 d.DontUnlock2 = SKILL_RESNYA
 
@@ -718,7 +718,7 @@ GM:AddSkillModifier(SKILL_RESNYA2, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 0.2)
 GM:AddSkill(SKILL_DOSET2, trs("skill_doset2"), GOOD..trs("skill_doset2_d1")..BAD..trs("skill_doset2_d2"),
 																2,			-6,					{SKILL_DOSET1}, TREE_DOSET)
 GM:AddSkillModifier(SKILL_DOSET2, SKILLMOD_MELEE_DAMAGE_MUL, -0.2)
-GM:AddSkillModifier(SKILL_DOSET2, SKILLMOD_DMG_TAKEN, -0.1)
+GM:AddSkillModifier(SKILL_DOSET2, SKILLMOD_DMG_TAKEN, -0.03)
 GM:AddSkill(SKILL_OLD_GOD2, trs("skill_old_g2"), GOOD..trs("skill_old_g2_d1")..BAD..trs("skill_old_g2_d2"),
 																4,			-6,					{SKILL_OLD_GOD1}, TREE_OLD_GOD)
 GM:AddSkillModifier(SKILL_OLD_GOD2, SKILLMOD_DAMAGE, -0.25)
@@ -2013,14 +2013,14 @@ GM:AddSkill(SKILL_STEEL_ASS, trs("skill_steel_ass"), GOOD..trs("skill_steel_ass_
 --Tormented SKill
 SKILL_TORMENT1 = 229
 GM:AddSkill(SKILL_TORMENT1, trs("skill_torment").."I", GOOD.."+5%"..trs("xpmul")..BAD.."-30"..trs("speed")..BAD.."-15%"..trs("b_damage"),
-				                                                            	1,			26,					{SKILL_NONE}, TREE_ANCIENTTREE)
+				                                                            	1,			6,					{SKILL_NONE}, TREE_ANCIENTTREE)
 .RemortReq = 2
 GM:AddSkillModifier(SKILL_TORMENT1, SKILLMOD_DAMAGE, -0.15)
 GM:AddSkillModifier(SKILL_TORMENT1, SKILLMOD_SPEED, -30)
 GM:AddSkillModifier(SKILL_TORMENT1, SKILLMOD_XP, 0.05)
 SKILL_TORMENT2 = 230
 GM:AddSkill(SKILL_TORMENT2, trs("skill_torment").."II", GOOD.."+5%"..trs("xpmul")..BAD.."-15%"..trs("meleedamage")..BAD.."-15"..trs("health"),
-				                                                            	1,			27,					{SKILL_TORMENT1}, TREE_ANCIENTTREE)
+				                                                            	1,			7,					{SKILL_TORMENT1}, TREE_ANCIENTTREE)
 
 GM:AddSkillModifier(SKILL_TORMENT2, SKILLMOD_MELEE_DAMAGE_MUL, -0.15)
 GM:AddSkillModifier(SKILL_TORMENT2, SKILLMOD_HEALTH, -15)
@@ -2037,7 +2037,7 @@ GM:AddSkill(SKILL_BERSERK, trs("skill_ultra_r"), GOOD..trs("skill_ultra_r_d1")..
 																				1.5,			6,					{}, TREE_DEFENSETREE)
 SKILL_TORMENT3 = 231
 GM:AddSkill(SKILL_TORMENT3, trs("skill_torment").."III", GOOD.."+15%"..trs("xpmul")..BAD.."+50%"..trs("res_delay")..BAD.."-5%"..trs("p_mul").."Secret III(+2 skill points)",
-				                                                            	1,			28,					{SKILL_TORMENT2}, TREE_ANCIENTTREE)
+				                                                            	1,			8,					{SKILL_TORMENT2}, TREE_ANCIENTTREE)
 
 GM:AddSkillModifier(SKILL_TORMENT3, SKILLMOD_POINT_MULTIPLIER, -0.05)
 GM:AddSkillModifier(SKILL_TORMENT3, SKILLMOD_RESUPPLY_DELAY_MUL, 0.5)
@@ -2045,31 +2045,30 @@ GM:AddSkillModifier(SKILL_TORMENT3, SKILLMOD_XP, 0.15)
 GM:AddSkillModifier(SKILL_TORMENT3, SKILLMOD_SPOINT, 3)
 SKILL_TORMENT4 = 232
 GM:AddSkill(SKILL_TORMENT4, trs("skill_torment").."IV", GOOD.."+35%"..trs("xpmul")..BAD..trs("skill_torment_d1"),
-				                                                            	1,			29,					{SKILL_TORMENT3}, TREE_ANCIENTTREE)
+				                                                            	1,			9,					{SKILL_TORMENT3}, TREE_ANCIENTTREE)
 
 GM:AddSkillModifier(SKILL_TORMENT4, SKILLMOD_DAMAGE, -0.50)
 GM:AddSkillModifier(SKILL_TORMENT4, SKILLMOD_MELEE_DAMAGE_MUL, -0.5)
 GM:AddSkillModifier(SKILL_TORMENT4, SKILLMOD_XP, 0.35)
 SKILL_TORMENT5 = 233
 GM:AddSkill(SKILL_TORMENT5, trs("skill_torment").."V", GOOD.."+5%"..trs("xpmul")..BAD.."+15%"..trs("meleedamagetaken"),
-				                                                            	2,			28.5,					{SKILL_TORMENT4}, TREE_ANCIENTTREE)
+				                                                            	2,			8.5,					{SKILL_TORMENT4}, TREE_ANCIENTTREE)
 
 GM:AddSkillModifier(SKILL_TORMENT5, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 0.15)
 GM:AddSkillModifier(SKILL_TORMENT5, SKILLMOD_XP, 0.05)
 SKILL_TORMENT6 = 253
 GM:AddSkill(SKILL_TORMENT6, trs("skill_torment").."VI", GOOD.."+10%"..trs("xpmul")..BAD..trs("skill_torment_d2"),
-				                                                            	3,			30,					{SKILL_TORMENT5}, TREE_ANCIENTTREE)
+				                                                            	3,			10,					{SKILL_TORMENT5}, TREE_ANCIENTTREE)
 
 GM:AddSkillModifier(SKILL_TORMENT6, SKILLMOD_REPAIRRATE_MUL, -0.50)
 GM:AddSkillModifier(SKILL_TORMENT6, SKILLMOD_MEDKIT_EFFECTIVENESS_MUL, -0.50)
 GM:AddSkillModifier(SKILL_TORMENT6, SKILLMOD_XP, 0.10)
-GM:AddSkill(SKILL_DEATHCURSE, trs("skill_ccleaning"), GOOD.."+15%"..trs("xpmul")..GOOD..trs("skill_ccleaning_d1")..BAD.."-30%"..trs("m_curse")..BAD..trs("skill_ccleaning_d2"),
+GM:AddSkill(SKILL_DEATHCURSE, trs("skill_ccleaning"), GOOD..trs("skill_ccleaning_d1")..BAD.."-30%"..trs("m_curse")..BAD..trs("skill_ccleaning_d2"),
 				                                                            	3,			-1,					{SKILL_DEFENDBLOOD}, TREE_DEFENSETREE)		
-GM:AddSkillModifier(SKILL_DEATHCURSE, SKILLMOD_XP, 0.15)
 GM:AddSkillModifier(SKILL_DEATHCURSE, SKILLMOD_CURSEM, -0.30)
 GM:AddSkillModifier(SKILL_DEATHCURSE, SKILLMOD_FOODEATTIME_MUL, 0.30)
 GM:AddSkill(SKILL_TORMENT7, trs("skill_torment").."VII", GOOD.."+55%"..trs("xpmul")..BAD..trs("skill_torment_d3")..BAD.."-25%"..trs("sale")..BAD..trs("skill_torment_d2"),
-				                                                            	2,			31,					{SKILL_TORMENT6,SKILL_TORMENT8}, TREE_ANCIENTTREE)
+				                                                            	2,			11,					{SKILL_TORMENT6,SKILL_TORMENT8}, TREE_ANCIENTTREE)
 GM:AddSkillModifier(SKILL_TORMENT7, SKILLMOD_XP, 0.55)
 GM:AddSkillModifier(SKILL_TORMENT7, SKILLMOD_MELEE_DAMAGE_MUL, -0.30)
 GM:AddSkillModifier(SKILL_TORMENT7, SKILLMOD_DAMAGE, -0.30)
@@ -2080,27 +2079,27 @@ GM:AddSkillModifier(SKILL_TORMENT7, SKILLMOD_ARSENAL_DISCOUNT, 0.25)
 GM:AddSkillModifier(SKILL_TORMENT7, SKILLMOD_REPAIRRATE_MUL, -0.50)
 GM:AddSkillModifier(SKILL_TORMENT7, SKILLMOD_MEDKIT_EFFECTIVENESS_MUL, -0.50)
 GM:AddSkill(SKILL_TORMENT8,trs("skill_torment").."VIII", GOOD.."+15%"..trs("xpmul")..BAD.."-50"..trs("health"),
-				                                                            	3,			32,					{SKILL_TORMENT7}, TREE_ANCIENTTREE)
+				                                                            	3,			12,					{SKILL_TORMENT7}, TREE_ANCIENTTREE)
 
 GM:AddSkillModifier(SKILL_TORMENT8, SKILLMOD_HEALTH, -50)
 GM:AddSkillModifier(SKILL_TORMENT8, SKILLMOD_XP, 0.15)
 GM:AddSkill(SKILL_TOY_BEST_FRIEND,trs("skill_toy"), GOOD..trs("skill_toy_d")..BAD.."-10%"..trs("xpmul"),
-																				1,			30,						{SKILL_TORMENT4}, TREE_ANCIENTTREE)
+																				1,			10,						{SKILL_TORMENT4}, TREE_ANCIENTTREE)
 GM:AddSkillModifier(SKILL_TOY_BEST_FRIEND, SKILLMOD_XP, -0.10)
 GM:AddSkill(SKILL_FREEPOINT1,trs("skill_freexp").."I", GOOD.."+1%"..trs("xpmul"),
-				                                                            	4,			33,					{SKILL_TORMENT8}, TREE_ANCIENTTREE)
+				                                                            	4,			13,					{SKILL_TORMENT8}, TREE_ANCIENTTREE)
 GM:AddSkillModifier(SKILL_FREEPOINT1, SKILLMOD_XP, 0.01)
 GM:AddSkill(SKILL_FREEPOINT2,trs("skill_freexp").."II", GOOD.."+3%"..trs("xpmul"),
-				                                                            	5,			32,					{SKILL_FREEPOINT1}, TREE_ANCIENTTREE)
+				                                                            	5,			12,					{SKILL_FREEPOINT1}, TREE_ANCIENTTREE)
 GM:AddSkillModifier(SKILL_FREEPOINT2, SKILLMOD_XP, 0.03)
 GM:AddSkill(SKILL_FREEPOINT3,trs("skill_freexp").."III", GOOD.."+4%"..trs("xpmul"),
-				                                                            	6,			34,					{SKILL_FREEPOINT2}, TREE_ANCIENTTREE)
+				                                                            	6,			14,					{SKILL_FREEPOINT2}, TREE_ANCIENTTREE)
 GM:AddSkillModifier(SKILL_FREEPOINT3, SKILLMOD_XP, 0.04)
 GM:AddSkill(SKILL_FREEPOINT4,trs("skill_freexp").."IV", GOOD.."+6%"..trs("xpmul"),
-				                                                            	6,			35,					{SKILL_FREEPOINT3}, TREE_ANCIENTTREE)
+				                                                            	6,			15,					{SKILL_FREEPOINT3}, TREE_ANCIENTTREE)
 GM:AddSkillModifier(SKILL_FREEPOINT4, SKILLMOD_XP, 0.06)
 GM:AddSkill(SKILL_XPMULGOOD, trs("skill_xpmulgood"), GOOD..trs("skill_xpmulgood_d1")..BAD..trs("skill_xpmulgood_d2"),
-				                                                            	6,			36,					{SKILL_FREEPOINT4}, TREE_ANCIENTTREE)
+				                                                            	6,			16,					{SKILL_FREEPOINT4}, TREE_ANCIENTTREE)
 
 --Defend skills
 
@@ -2168,11 +2167,10 @@ GM:AddSkill(SKILL_TTIMES1, trs("skill_ttime"), GOOD.."-4%"..trs("meleedamagetake
 				                                                            	-4,			2,					{SKILL_TTIMES}, TREE_DEFENSETREE)
 GM:AddSkillModifier(SKILL_TTIMES1, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.04)
 SKILL_TRIP = 198
-GM:AddSkill(SKILL_TRIP, trs("skill_cursewall"), GOOD.."-33%"..trs("meleedamagetaken")..GOOD.."+50% "..trs("m_curse")..BAD.."-12%"..trs("meleedamage")..BAD.."-70"..trs("speed"),
+GM:AddSkill(SKILL_TRIP, trs("skill_cursewall"), GOOD.."-33%"..trs("meleedamagetaken")..GOOD.."+50% "..trs("m_curse")..BAD.."-70"..trs("speed"),
 				                                                            	-2,			2,					{SKILL_DEFENDEROFM,SKILL_TTIMES}, TREE_DEFENSETREE)
 
 GM:AddSkillModifier(SKILL_TRIP, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.33)
-GM:AddSkillModifier(SKILL_TRIP, SKILLMOD_MELEE_DAMAGE_MUL, -0.12)
 GM:AddSkillModifier(SKILL_TRIP, SKILLMOD_SPEED, -70)
 GM:AddSkillModifier(SKILL_TRIP, SKILLMOD_CURSEM, 0.5)
 GM:AddSkill(SKILL_HOLY_MANTLE, trs("skill_holymantle"), GOOD..trs("skill_holymantle_d1"),
@@ -2633,7 +2631,7 @@ GM:SetSkillModifierFunction(SKILLMOD_BARRICADE_PHASE_SPEED_MUL, function(pl, amo
 end)
 
 GM:SetSkillModifierFunction(SKILLMOD_HAMMER_SWING_DELAY_MUL, function(pl, amount)
-	pl.HammerSwingDelayMul = math.Clamp(amount + 1.0, 0.01, 1.0)
+	pl.HammerSwingDelayMul = math.Clamp(amount + 1.0, 0.1, 1.0)
 end)
 
 GM:SetSkillModifierFunction(SKILLMOD_REPAIRRATE_MUL, function(pl, amount)
