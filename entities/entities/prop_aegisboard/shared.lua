@@ -7,6 +7,7 @@ ENT.CanPackUp = true
 ENT.PackUpTime = 3
 ENT.IgnorePackTimeMul = true
 
+ENT.IgnoreTraces = true
 ENT.IsBarricadeObject = true
 ENT.IgnoreBullets = true
 ENT.IgnoreMeleeTeam = TEAM_HUMAN

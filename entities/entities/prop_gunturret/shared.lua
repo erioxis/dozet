@@ -120,6 +120,8 @@ function ENT:GetScanFilter()
 	end
 	-- TODO: Cache this, should be relatively okay right now with just 1 second caches though.
 	table.Add(filter, ents.FindByClass("prop_ffemitterfield"))
+	table.Add(filter, ents.FindByClass("prop_aegisboard"))
+	--PrintTable(filter)
 	return filter
 end
 
