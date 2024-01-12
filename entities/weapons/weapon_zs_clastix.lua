@@ -40,7 +40,8 @@ SWEP.ReloadSound = Sound("Weapon_AWP.ClipOut")
 SWEP.Primary.Sound = Sound("Weapon_Hunter.Single")
 SWEP.Primary.Damage = 65
 SWEP.Primary.NumShots = 1
-SWEP.Primary.Delay = 0.78
+SWEP.Primary.Delay = 0.4
+SWEP.ReloadSpeed = 2
 SWEP.ReloadDelay = SWEP.Primary.Delay
 
 SWEP.Primary.ClipSize = 4
@@ -148,8 +149,9 @@ function SWEP.BulletCallback(attacker, tr, dmginfo)
 	util.Effect("hit_hunter", effectdata)
 	if CLIENT or tr.HitSky then return end
 	local me = attacker:GetActiveWeapon()
-	for i=1,7 do
-		timer.Simple(0.11*i, function() me:FireBulletsLua(tr.HitPos+Vector(0,0,5), (tr.StartPos - tr.HitPos):GetNormal(), 10*i, 1, (me.Primary.Damage or 200)*0.6, attacker, 1, "tracer_rico", nil, nil, nil, 1028, nil) end)
+	for i=0,7 do
+		local zombie = team.GetPlayers(TEAM_UNDEAD)[math.random(1,#team.GetPlayers(TEAM_UNDEAD))]
+		timer.Simple(0.09*i, function() me:FireBulletsLua(tr.HitPos+zombie:GetForward()*12, (zombie:LocalToWorld(zombie:OBBCenter()) - tr.HitPos):GetNormal(), 10*i, 1, (me.Primary.Damage or 200)*1.4, attacker, 1, "tracer_rico", nil, nil, nil, 1028, nil) end)
 	end
 end
 

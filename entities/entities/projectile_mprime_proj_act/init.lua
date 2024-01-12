@@ -33,7 +33,7 @@ function ENT:Hit(vHitPos, vHitNormal, eHitEntity)
 	vHitPos = vHitPos or self:GetPos()
 	vHitNormal = vHitNormal or Vector(0, 0, 1)
 	if owner:IsValid() and eHitEntity then
-		for _,v in pairs(ents.FindInSphere(vHitPos,220)) do
+		for _,v in pairs(player.FindInSphere(vHitPos,220)) do
 			if v:IsValidLivingZombie() and v ~= owner then
 				v:TakeDamage(320)
 			end

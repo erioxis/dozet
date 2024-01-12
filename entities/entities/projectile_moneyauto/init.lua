@@ -78,7 +78,7 @@ function ENT:Think()
 		self:Remove()
 	end
 	if CurTime() >= self.NextThink1 then 
-	for _, ent in pairs(ents.FindInSphere(self:GetPos(), 348)) do
+	for _, ent in pairs(player.FindInSphere(self:GetPos(), 348)) do
 		target = ent
 		if WorldVisible(self:LocalToWorld(Vector(0, 0, 30)), ent:NearestPoint(self:LocalToWorld(Vector(0, 0, 30)))) then
 			if target:IsValidLivingZombie()  then

@@ -133,4 +133,5 @@ function SWEP:Think()
 			end
 		end
 	end
+	self:GiveStatus("sigildef", 1)
 end

@@ -155,7 +155,7 @@ function ENT:PhysicsSimulate(phys, frametime)
 	local direction = Vector(0, 0, 0)
 	local aimangles = owner:EyeAngles()
 	local target = self.trg
-	if target and target:IsValid() and target:GetZombieClassTable().Name == "Crow" then
+	if target and target:IsValid() and (target:GetZombieClassTable().Name == "Crow" or target.SpawnProtection) then
 		self.trg = NULL
 	end
 	local onground = false

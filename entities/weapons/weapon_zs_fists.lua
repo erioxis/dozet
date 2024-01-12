@@ -299,13 +299,14 @@ function SWEP:Deploy()
 	self:GetOwner().Hooking = false
 	return true
 end
+local sectbl = {["projectile_rl"] = true ,["projectile_markcoin"] = true ,["prop_obj_sigil"] = true,["prop_physics"] = true}
 function SWEP:CheckHook()
 	if (self.NextHooking or 1 ) >= CurTime() then return end
 	local owner = self:GetOwner()
 	owner:LagCompensation(true)
 	local trace = owner:GetEyeTrace()
 	local ent = trace.Entity
-	local p = ent and ent:IsValid() and (ent:IsValidLivingZombie() or ent:GetClass() == "prop_physics" or ent:GetClass() == "projectile_rl" or ent:GetClass() == "projectile_markcoin" or ent:GetClass() == "prop_obj_sigil")
+	local p = ent and ent:IsValid() and (ent:IsValidLivingZombie() or sectbl[ent:GetClass()] or ent:IsProjectile() )
 	if ent and ent ~= owner and owner:KeyDown(IN_RELOAD) and p then
 		self.HookedOn = true
 		self.LastENT = ent
@@ -318,7 +319,6 @@ function SWEP:CheckHook()
 	owner:LagCompensation(false)
 end
 local needtbl = {"func_physbox","prop_physics"}
-local sectbl = {"projectile_rl","projectile_markcoin","prop_obj_sigil"}
 function SWEP:Think()
 	local idletime = self:GetNextIdle()
 	local idle_holdtype_time = self:GetNextIdleHoldType()
@@ -375,7 +375,7 @@ function SWEP:Think()
 			local entclass = target:GetClass()
 			local p = target:IsPlayer() and target:IsValidLivingZombie() or entclass == "prop_obj_sigil"
 			local need = table.HasValue(needtbl,entclass)
-			local secondneed = table.HasValue(sectbl,entclass)
+			local secondneed = sectbl[entclass] or target:IsProjectile()
 			if (need or target.HumanHoldable and target:HumanHoldable(owner)) and not target:IsNailed() and target:GetPhysicsObject():IsValid()  and target:GetPhysicsObject():GetMass() <= 1200  and target:OBBMins():Length() + target:OBBMaxs():Length() <= 200 or p
 			or secondneed
 			then

@@ -89,7 +89,7 @@ function ENT:Use(activator, caller)
 		if (cursed) and activator:IsSkillActive(SKILL_RESNYA) then
 			activator:AddCursed(activator, cursed.DieTime - CurTime() - 2)
 		end
-		for _, pl3 in pairs(ents.FindInSphere(activator:GetPos(), 128 * activator:GetModelScale())) do
+		for _, pl3 in pairs(player.FindInSphere(activator:GetPos(), 128 * activator:GetModelScale())) do
 			if pl3:IsValidLivingHuman() and activator:IsSkillActive(SKILL_FOODHEALS) then
 				activator:HealPlayer(pl3, 15)
 			end
@@ -98,7 +98,7 @@ function ENT:Use(activator, caller)
 		util.Blood(self:GetPos(), math.random(2), Vector(0, 0, 1), 100, self:GetDTInt(0), true)
 	elseif self.DieTime ~= 0 and activator:IsSkillActive(SKILL_CAN_EATER) and activator:IsSkillActive(SKILL_GLUTTON)  then
 		self.DieTime = 0
-		for _, pl in pairs(ents.FindInSphere(activator:GetPos(), 128 * activator:GetModelScale())) do
+		for _, pl in pairs(player.FindInSphere(activator:GetPos(), 128 * activator:GetModelScale())) do
 			if pl:IsValidLivingHuman() and activator:IsSkillActive(SKILL_FOODHEALS) then
 				pl:SetBloodArmor(math.min(pl.MaxBloodArmor + 40, pl:GetBloodArmor() + 10))
 				if pl:GetBloodArmor() < pl.MaxBloodArmor + 40 then

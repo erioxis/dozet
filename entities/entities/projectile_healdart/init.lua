@@ -63,7 +63,7 @@ function ENT:AttachToPlayer(vHitPos, eHitEntity)
 		self:Remove()
 		local source = self:ProjectileDamageSource()
 		local taper = 1
-		for _, pl in pairs(ents.FindInSphere(self:GetPos(), 34)) do
+		for _, pl in pairs(player.FindInSphere(self:GetPos(), 44)) do
 			if WorldVisible(self:LocalToWorld(Vector(0, 0, 30)), pl:NearestPoint(self:LocalToWorld(Vector(0, 0, 30)))) then
 				if pl:IsValidLivingZombie() then
 					pl:TakeSpecialDamage(self.Heal * 0.2 * (owner.BulletMul or 1)/(pl:GetZombieClassTable().Boss and 10 or 1) * taper, DMG_DIRECT,owner, self:GetOwner():GetActiveWeapon())

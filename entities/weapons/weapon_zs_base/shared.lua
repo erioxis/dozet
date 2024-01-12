@@ -403,7 +403,7 @@ function SWEP.BulletCallback(attacker, tr, dmginfo)
 	if attacker:IsSkillActive(SKILL_PARASITE) and (wep.Primary.NumShots or 1) <= 3 and (wep.Tier or 0)< 5 then
 		if attacker:IsSkillActive(SKILL_AUTOAIM) then
 			local tosort = {}
-			for _, ent in pairs(ents.FindInSphere(tr.HitPos, 1048)) do
+			for _, ent in pairs(player.FindInSphere(tr.HitPos, 1048)) do
 				if ent:IsValidLivingZombie() and WorldVisible(tr.HitPos, ent:NearestPoint(tr.HitPos))   then
 					tosort[#tosort+1] = {Trg = ent,Health = ent:Health()}
 					

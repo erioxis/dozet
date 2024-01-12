@@ -1444,7 +1444,7 @@ function GM:Think()
 					pl:StripWeapon(wep:GetClass())
 				end
 				local barac = pl:IsSkillActive(SKILL_BARA_CURSED)
-				if self.MaxSigils >= 1 then
+				if self.MaxSigils >= 1 and pl:GetActiveWeapon() ~= "weapon_zs_sigilfragment" then
 					if not pl:GetStatus("sigildef") and self:GetWave() >= 6 and  time > pl.NextDamage and self:GetWaveActive() then
 						pl:TakeSpecialDamage(8 * (pl.TickBuff or 0), DMG_DIRECT)
 						pl.NextDamage = time + 2.4
@@ -2517,7 +2517,7 @@ local function GetTaper(pl, str, mul)
 	return taper
 end
 function GM:OnPlayerWin(pl)
-	local xp = math.Clamp(#player.GetAll() * 120, 300, 4000) * (GAMEMODE.WinXPMulti or 1)
+	local xp = math.Clamp(#player.GetAll() * 900, 1200, 12000) * (GAMEMODE.WinXPMulti or 1)
 	if self.ZombieEscape then
 		xp = xp / 4
 	end
@@ -4499,7 +4499,7 @@ function GM:KeyPress(pl, key)
 					pl:ResetSpeed()
 				end
 				if pl:Team() == TEAM_HUMAN and pl:KeyDown(IN_USE) then 
-					for _, ent in pairs(ents.FindInSphere(pl:GetPos(), 26)) do
+					for _, ent in pairs(player.FindInSphere(pl:GetPos(), 26)) do
 						if ent:IsPlayer() and ent:GetZombieClassTable().CrowDa then
 							pl:GiveAchievement("crowhunter")
 						end
@@ -4543,7 +4543,7 @@ function GM:KeyPress(pl, key)
 				end
 				if pl.CanMerge then
 					local ent1 = NULL
-					for _, ent in pairs(ents.FindInSphere(pl:GetPos(), 256)) do
+					for _, ent in pairs(player.FindInSphere(pl:GetPos(), 256)) do
 						if ent:IsValidLivingZombie() and ent.MergePiece1 and !ent.CanMerge and ent ~= pl then
 							ent1 = ent
 							break

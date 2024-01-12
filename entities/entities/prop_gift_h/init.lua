@@ -24,7 +24,7 @@ function ENT:Initialize()
 		phys:ApplyForceCenter(VectorRand():GetNormalized() * math.Rand(2000, 5000))
 		phys:AddAngleVelocity(VectorRand() * 360)
 	end
-	for _, ent in pairs(ents.FindInSphere(self:GetPos(), 256)) do
+	for _, ent in pairs(player.FindInSphere(self:GetPos(), 256)) do
 		if ent:IsValidLivingHuman() then
 			self.IgnoreEnt = ent
 			break

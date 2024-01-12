@@ -100,7 +100,7 @@ function SWEP:PrimaryAttack()
 		util.Effect("nailrepaired", effectdata, true, true)
 	elseif hitent:IsValidLivingZombie() then
 		if SERVER then
-			hitent:TakeDamage(self.HealStrength, self:GetOwner(),self)
+			hitent:TakeDamage(self.HealStrength * (owner.RepairRateMul or 1), self:GetOwner(),self)
 		end
 		self:SetDTEntity(10, hitent)
 		self:SetNextPrimaryFire(CurTime() + 1)

@@ -83,7 +83,7 @@ function ENT:SetObjectHealth(health)
 
 		local owner = self:GetObjectOwner()
 		if owner and owner:IsValidLivingHuman() and owner:IsSkillActive(SKILL_DRONE_IN_T) then
-			for _, ent in pairs(ents.FindInSphere(self:GetPos(), 128)) do
+			for _, ent in pairs(player.FindInSphere(self:GetPos(), 128)) do
 				if ent:IsValid() and ent:IsPlayer() and ent ~= owner and ent:IsValidLivingZombie() then
 					ent:TakeDamage(250, owner, self)
 				elseif ent:IsValid() and ent:IsPlayer() and ent == owner then
@@ -166,19 +166,23 @@ function ENT:FireTurret(src, dir)
 		local twinvolley = self:GetManualControl() and owner:IsSkillActive(SKILL_TWINVOLLEY)
 		if curammo > (twinvolley and 1 or 0) then
 			self:SetNextFire(CurTime() + self.FireDelay * (twinvolley and 1.5 or 1))
-			if mot and owner:GetBloodArmor() > 0 then
-				owner:SetBloodArmor(math.max(0,curammo - (twinvolley and 2 or 1)))
+			local damage = self.Damage * owner.BulletMul
+			if !(owner:IsSkillActive(SKILL_OVERHEATED_BULLET) and math.random(1,10) == 1) then
+				if mot and owner:GetBloodArmor() > 0 then
+					owner:SetBloodArmor(math.max(0,curammo - (twinvolley and 2 or 1)))
+				else
+					self:SetAmmo(curammo - (twinvolley and 2 or 1))
+				end
 			else
-				self:SetAmmo(curammo - (twinvolley and 2 or 1))
+				damage = damage * 1.25
 			end
 			if self:GetAmmo() == 0 then
 				owner:SendDeployableOutOfAmmoMessage(self)
 			end
-
 			self:PlayShootSound()
 
 			TEMPTURRET = self
-			self:FireBulletsLua(src, dir, self.Spread, self.NumShots * (twinvolley and 2 or 1) + (mot and math.random(1,5) == 1 and 1 or 0), self.Damage * owner.BulletMul, owner, nil, nil, BulletCallback, nil, nil, nil, nil, self)
+			self:FireBulletsLua(src, dir, self.Spread, self.NumShots * (twinvolley and 2 or 1) + (mot and math.random(1,5) == 1 and 1 or 0), damage, owner, nil, nil, BulletCallback, nil, nil, nil, nil, self)
 		else
 			self:SetNextFire(CurTime() + 2)
 			self:EmitSound("npc/turret_floor/die.wav")

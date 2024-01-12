@@ -49,7 +49,7 @@ local function huy(wep,self,dir)
 				ent.Think = function(selfy)
 					if !ent.trg:IsValid() then
 						local targets = {}
-						for _, enemy in pairs(ents.FindInSphere(ent:GetPos(), 1048)) do
+						for _, enemy in pairs(player.FindInSphere(ent:GetPos(), 1048)) do
 							if !enemy:IsValid() then continue end
 							target = enemy
 							if WorldVisible(ent:LocalToWorld(Vector(0, 0, 30)), enemy:NearestPoint(ent:LocalToWorld(Vector(0, 0, 30))))  then
@@ -186,7 +186,7 @@ function ENT:Think()
 			if !ent:IsValid() then continue end
 			target = ent
 			if WorldVisible(self:LocalToWorld(Vector(0, 0, 10)), ent:NearestPoint(self:LocalToWorld(Vector(0, 0, 10))))  then
-				if !(target:GetZombieClassTable().CrowDa or target.SpawnProtection) then 
+				if !(target:GetZombieClassTable().CrowDa or target.SpawnProtection) and pl:GetRenderMode() ~= RENDERMODE_TRANSALPHA  then 
 					targets[(#targets or 0) + 1] = {Health = ent:Health(), trg = target}
 				end
 			end

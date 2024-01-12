@@ -4,7 +4,7 @@ function SWEP:FindZapperTarget(pos, owner)
 	local targethealth = 99999
 	local isheadcrab
 
-	for k, ent in pairs(ents.FindInSphere(pos, 135)) do
+	for k, ent in pairs(player.FindInSphere(pos, 135)) do
 		if ent:IsValidLivingZombie() and not ent:GetZombieClassTable().NeverAlive then
 			isheadcrab = ent:IsHeadcrab()
 			if (isheadcrab or ent:Health() < targethealth) and TrueVisibleFilters(pos, ent:NearestPoint(pos), self, ent) then
@@ -50,7 +50,7 @@ function SWEP:OnMeleeHit(hitent, hitflesh, tr)
 			for i = 1, (secondary and 6 or 3) do
 				local tpos = target:WorldSpaceCenter()
 
-				for k, ent in pairs(ents.FindInSphere(tpos, 105)) do
+				for k, ent in pairs(player.FindInSphere(tpos, 105)) do
 					if not shocked[ent] and ent:IsValidLivingZombie() and not ent:GetZombieClassTable().NeverAlive then
 						if WorldVisible(tpos, ent:NearestPoint(tpos)) then
 							shocked[ent] = true

@@ -53,7 +53,7 @@ function SWEP:DoAlert()
 
 	local mouthpos = owner:EyePos() + owner:GetUp() * -3
 	local screampos = mouthpos + owner:GetAimVector() * 16
-	for _, ent in pairs(ents.FindInSphere(screampos, 92)) do
+	for _, ent in pairs(player.FindInSphere(screampos, 92)) do
 		if ent and ent:IsValidHuman() then
 			local entearpos = ent:EyePos()
 			local dist = screampos:Distance(entearpos)

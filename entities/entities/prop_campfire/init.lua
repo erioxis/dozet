@@ -114,7 +114,7 @@ function ENT:Think()
 	local count = 0
 
 
-	for _, hitent in pairs(ents.FindInSphere(pos, self.MaxDistance*(self:GetObjectHealth()/self:GetMaxObjectHealth()))) do
+	for _, hitent in pairs(player.FindInSphere(pos, self.MaxDistance*(self:GetObjectHealth()/self:GetMaxObjectHealth()))) do
 		if not hitent:IsValid() or hitent == self or not WorldVisible(pos, hitent:NearestPoint(pos)) then
 			continue
 		end	

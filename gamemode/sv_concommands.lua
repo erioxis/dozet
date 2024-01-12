@@ -766,7 +766,7 @@ concommand.Add("zs_d_focusing", function(sender, command, arguments)
 		pl:EmitSound("items/smallmedkit1.wav", 50)
 		pl:SetHealth(math.min(pl:GetMaxHealth() * 0.1 + pl:Health(), pl:GetMaxHealth()))
 		pl.LastHealedFocus = CurTime() + 1
-		for _, pl3 in pairs(ents.FindInSphere(pl:GetPos(), 128 * pl:GetModelScale())) do
+		for _, pl3 in pairs(player.FindInSphere(pl:GetPos(), 128 * pl:GetModelScale())) do
 			if pl3:IsValidLivingHuman() and pl:IsSkillActive(SKILL_FOODHEALS) then
 				pl:HealPlayer(pl3, pl:Health() * 0.1)
 			end

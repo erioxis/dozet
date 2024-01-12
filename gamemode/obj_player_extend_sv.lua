@@ -164,7 +164,7 @@ function meta:ProcessDamage(dmginfo)
 				damage = damage * 1.8
 			end
 			if wep:IsValid() and wep.DealThink then
-				damage = wep:DealThink(dmginfo) or damage
+				damage = wep:DealThink(dmginfo, self) or damage
 			end
 			if attacker:IsSkillActive(SKILL_AMULET_2) and (health < (attackermaxhp * 0.35) or (attacker.MaxBloodArmor * 0.1 >= attacker:GetBloodArmor()) and health < 16) then
 				damage = damage * 2
@@ -2698,7 +2698,7 @@ local function FindZapperTarget(pos, attacker)
 	local targethealth = 99999
 	local isheadcrab
 
-	for k, ent in pairs(ents.FindInSphere(pos, 210)) do
+	for k, ent in pairs(player.FindInSphere(pos, 210)) do
 		if ent:IsValidLivingZombie() and not ent:GetZombieClassTable().NeverAlive then
 			isheadcrab = ent:IsHeadcrab()
 			if (isheadcrab or ent:Health() < targethealth) and TrueVisibleFilters(pos, ent:NearestPoint(pos), self, ent) then
@@ -2731,7 +2731,7 @@ local function DoCryoArc(attacker, inflictor, pl, damage)
 			for i = 1, 3 do
 				local tpos = target:WorldSpaceCenter()
 
-				for k, ent in pairs(ents.FindInSphere(tpos, 210)) do
+				for k, ent in pairs(player.FindInSphere(tpos, 210)) do
 					if not shocked[ent] and ent:IsValidLivingZombie() and not ent:GetZombieClassTable().NeverAlive then
 						if WorldVisible(tpos, ent:NearestPoint(tpos)) then
 							shocked[ent] = true

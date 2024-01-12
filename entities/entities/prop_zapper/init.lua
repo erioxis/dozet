@@ -141,7 +141,7 @@ function ENT:FindZapperTarget(pos, owner)
 	local targethealth = 99999
 	local isheadcrab
 
-	for k, ent in pairs(ents.FindInSphere(pos, 135 * (owner.FieldRangeMul or 1))) do
+	for k, ent in pairs(player.FindInSphere(pos, 135 * (owner.FieldRangeMul or 1))) do
 		if ent:IsValidLivingZombie() and not ent:GetZombieClassTable().NeverAlive then
 			isheadcrab = ent:IsHeadcrab()
 			if (isheadcrab or ent:Health() < targethealth) and TrueVisibleFilters(pos, ent:NearestPoint(pos), self, ent) then

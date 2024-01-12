@@ -43,7 +43,7 @@ function ENT:Think()
 	end
 	if !self.trg:IsValid() then
 		local targets = {}
-		for _, ent in pairs(ents.FindInSphere(self:GetPos(), 1548)) do
+		for _, ent in pairs(player.FindInSphere(self:GetPos(), 1548)) do
 			if !ent:IsValid() then continue end
 			target = ent
 			if WorldVisible(self:LocalToWorld(Vector(0, 0, 30)), ent:NearestPoint(self:LocalToWorld(Vector(0, 0, 30))))  then

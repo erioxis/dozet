@@ -59,7 +59,7 @@ end
 function ENT:Dash()
 	if !self.trg:IsValid() then
 		local targets = {}
-		for _, ent in pairs(ents.FindInSphere(self:GetPos(), 1048)) do
+		for _, ent in pairs(player.FindInSphere(self:GetPos(), 1048)) do
 			if !ent:IsValid() then continue end
 			target = ent
 			if WorldVisible(self:LocalToWorld(Vector(0, 0, 10)), ent:NearestPoint(self:LocalToWorld(Vector(0, 0, 10))))  then

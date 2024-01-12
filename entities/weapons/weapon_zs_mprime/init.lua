@@ -29,7 +29,7 @@ function SWEP:ToDie(damage, numshots, cone)
 				self:GetOwner():SetGravity(1)
 				self:GetOwner():SetFriction(1)
 				if owner:IsValid() then
-					util.BlastDamagePlayer(self, owner, owner:GetPos(), 126, 80, DMG_ALWAYSGIB)
+					util.BlastDamagePlayer(self, owner, owner:GetPos(), 126, 80, DMG_ALWAYSGIB , nil, nil, true)
 				end
 				local effectdata = EffectData()
 				effectdata:SetOrigin(owner:GetPos())
@@ -95,7 +95,7 @@ function SWEP:ToDie(damage, numshots, cone)
 				end
 			end)
 			timer.Create("EndPush", 0.68, 1 , function()
-				util.BlastDamagePlayer(self, owner, owner:GetPos(), 126, 50, DMG_ALWAYSGIB)
+				util.BlastDamagePlayer(self, owner, owner:GetPos(), 126, 50, DMG_ALWAYSGIB, nil, nil, true)
 				local effectdata = EffectData()
 				effectdata:SetOrigin(owner:GetPos())
 				effectdata:SetNormal(self:GetUp() * -1)

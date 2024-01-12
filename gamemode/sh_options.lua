@@ -501,7 +501,7 @@ GM:AddPointShopItem("nailsz",			ITEMCAT_AMMO,			4,				nil,			translate.Get("ammo
 item.NoClassicMode = true
 item =
 GM:AddPointShopItem("scrap",				ITEMCAT_AMMO,			35,				nil,							translate.Get("ammo_scrap").." (x20)",							"Scrap but is have x15.",					"ammo_scrap",						function(pl, count) pl:GiveAmmo(20 * count, "Scrap", true) end)
-item.DontScrap = true
+item.CanMakeFromScrap = true
 -- Tier 1
 GM:AddPointShopItem("knife",			ITEMCAT_MELEE,			25,				"weapon_zs_swissarmyknife")
 GM:AddPointShopItem("zpplnk",			ITEMCAT_MELEE,			25,				"weapon_zs_plank")
@@ -1018,7 +1018,7 @@ GM.NoSuicideWave = -1
 GM.WaveZeroLength = 240
 
 -- Time humans have between waves to do stuff without NEW zombies spawning. Any dead zombies will be in spectator (crow) view and any living ones will still be living.
-GM.WaveIntermissionLength = 90
+GM.WaveIntermissionLength = 120
 
 -- Time in seconds between end round and next map.
 GM.EndGameTime = 25

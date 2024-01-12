@@ -144,7 +144,7 @@ function ENT:Think()
 	local totalheal = (self.HealValue * (self:GetObjectOwner().MedicHealMul or 1))/2
 	local owner = self:GetObjectOwner()
 
-	for _, hitent in pairs(ents.FindInSphere(pos, self.MaxDistance)) do
+	for _, hitent in pairs(player.FindInSphere(pos, self.MaxDistance)) do
 		if not hitent:IsValid() or hitent == self or not WorldVisible(pos, hitent:NearestPoint(pos)) then
 			continue
 		end

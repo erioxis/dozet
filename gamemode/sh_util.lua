@@ -313,10 +313,10 @@ function util.Blood(pos, amount, dir, force, noprediction)
 	util.Effect("bloodstream", effectdata, nil, noprediction)
 end
 
-function util.BlastDamagePlayer(inf, att, center, radius, damage, damagetype, taperfactor, doinddamage)
+function util.BlastDamagePlayer(inf, att, center, radius, damage, damagetype, taperfactor, doinddamage, ignoreprop)
 	if not att:IsValidPlayer() then ErrorNoHalt("[BlastDamagePlayer] Tried to use a nonplayer") end
 
-	util.BlastDamageEx(inf, att, center, radius * (att.ExpDamageRadiusMul or 1), damage * (att.ExplosiveDamageMul or 1), damagetype, taperfactor, doinddamage)
+	util.BlastDamageEx(inf, att, center, radius * (att.ExpDamageRadiusMul or 1), damage * (att.ExplosiveDamageMul or 1), damagetype, taperfactor, doinddamage, nil,ignoreprop)
 end
 function util.BlastDamageElemental(inflictor, attacker, epicenter, radius, damage, element, taperfactor, bool)
 	local tbl = ents.FindInBoxRadius(epicenter, radius)
@@ -364,12 +364,12 @@ end
 		end
 	end
 end]]
-function util.BlastDamageEx(inflictor, attacker, epicenter, radius, damage, damagetype, taperfactor, bool)
+function util.BlastDamageEx(inflictor, attacker, epicenter, radius, damage, damagetype, taperfactor, bool, ignoreprop)
     local entList = ents.FindInBoxRadius(epicenter, radius)
 	local factor = 1 
 	local basedmg = damage
     for _, ent in pairs(entList) do
-        if ent:IsValid() then
+        if ent:IsValid() and (ent:IsPlayer() or !ignoreprop) then
 			local specialDamage = 1
             if WorldVisible(epicenter, ent:NearestPoint(epicenter))  then
                 if ent == attacker and bool then
@@ -691,6 +691,35 @@ function ents.FindInBoxRadius(pos, radius)
 	  end
 	end
 	return entis
+end
+
+--Спасибо молочку и ноацессу
+local GetAll = player.GetAll
+local WorldSpaceAABB = FindMetaTable("Entity").WorldSpaceAABB
+local IsBoxIntersectingSphere = util.IsBoxIntersectingSphere
+
+function player.FindInSphere( origin, radius )
+
+    local ret = {}
+    local count = 1
+    local players = GetAll()
+
+    for i = 1, #players do
+
+        local pl = players[i]
+        local min, max = WorldSpaceAABB( pl )
+
+        if IsBoxIntersectingSphere( min, max, origin, radius ) then
+
+            ret[count] = pl
+            count = count + 1
+
+        end
+
+    end
+
+    return ret
+
 end
 
   

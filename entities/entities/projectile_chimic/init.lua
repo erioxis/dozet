@@ -7,7 +7,7 @@ function ENT:Initialize()
 	self:SetColor(Color(0, 255, 0))
 	self:PhysicsInitSphere(3)
 	self:SetSolid(SOLID_VPHYSICS)
-	self:SetModelScale(0.2, 0)
+	self:SetModelScale(0.01, 0)
 	self:DrawShadow(false)
 	self:SetupGenericProjectile(true)
 	self:SetMaterial("models/shadertest/shader2")
@@ -72,7 +72,7 @@ function ENT:Explode()
 	if owner:IsValidLivingHuman() then
 		local source = self:ProjectileDamageSource()
 		local pos = self:GetPos()
-		local radius = 29
+		local radius = 66
 
 		local function InflictInRadius(func)
 			for _, ent in pairs(util.BlastAlloc(source, owner, pos, radius * (owner.ExpDamageRadiusMul or 1))) do
@@ -105,7 +105,7 @@ function ENT:Explode()
 			end)
 		end
 
-		util.BlastDamagePlayer(source, owner, pos, radius, self.ProjDamage or 75, DMG_ALWAYSGIB, 0.5)
+		util.BlastDamagePlayer(source, owner, pos, radius, self.ProjDamage or 25, DMG_ALWAYSGIB, 0.4)
 
 		if type == 2 then
 			POINTSMULTIPLIER = nil
