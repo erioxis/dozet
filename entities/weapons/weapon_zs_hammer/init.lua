@@ -214,7 +214,7 @@ function SWEP:SecondaryAttack()
 		owner:DoAnimationEvent(ACT_HL2MP_GESTURE_RANGE_ATTACK_MELEE)
 
 		self:SetNextPrimaryFire(CurTime() + 1 + (owner:IsSkillActive(SKILL_GENIUS)  and 3 or 0))
-		self:TakePrimaryAmmo(1)
+		self:TakePrimaryAmmo(owner:HasTrinket("nanite_nails") and 2 or 1)
 
 		local nail = ents.Create("prop_nail")
 		if nail:IsValid() then

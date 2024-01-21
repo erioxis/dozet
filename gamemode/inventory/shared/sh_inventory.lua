@@ -1658,7 +1658,6 @@ GM:AddSkillModifier(trinket, SKILLMOD_MEDKIT_EFFECTIVENESS_MUL, 0.38)
 GM:AddSkillFunction(trinket, function(pl, active)
 	pl.RemedyRegen = active
 end)
-
 trinketwep.Upgradable = true
 trinketwep.NeedForUpgrade = "comp_soul_alt_h"
 trinket, trinketwep = GM:AddTrinket(trs("t_remedy_q3_5").."+5", "remedy_q5", false, supveles, supweles, 5, trs("t_d_remedy_q5"), nil, nil, "weapon_zs_help_trinket")
@@ -1666,6 +1665,10 @@ GM:AddSkillModifier(trinket, SKILLMOD_MEDKIT_EFFECTIVENESS_MUL, 0.45)
 GM:AddSkillFunction(trinket, function(pl, active)
 	pl.RemedyRegen = active
 end)
+
+trinket, trinketwep = GM:AddTrinket(trs("t_nnails"), "nanite_nails", false, supveles, supweles, 3, trs("t_d_nnails"), nil, nil, "ammo_nail")
+GM:AddSkillModifier(trinket, SKILLMOD_REPAIRRATE_MUL, -0.15)
+
 
 
 trinket,trinketwep = GM:AddTrinket(trs("t_sale"), "salevoy", false, pveles, pweles, 2, trs("t_d_sale"), nil, nil, "weapon_zs_special_trinket")
@@ -2082,7 +2085,7 @@ trinket = GM:AddTrinket("Soul of Lilith", "lilithsoul", false, nil, {
 	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 7.697, y = 7.697 }, color = Color(255, 0, 0, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core_2+"] = { type = "Sprite", sprite = "effects/splashwake1", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 10, y = 10 }, color = Color(0, 0, 0, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 2, 0), angle = Angle(0, 0, 0), size = Vector(0.349, 0.349, 0.349), color = Color(0, 0, 0, 255), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} }
-}, 4,"Дает большой бафф к туррелям и дронам с амуницией,аммуниция идет быстрее на 5%\nНа 30% больше хп у всех деплояблов,туррели имеют в 50% больше хп и скорость сканирования на 40% больше\n Give huge buff for turrets and drones\n Q:4", nil, nil, "weapon_zs_soul")
+}, 4,"Дает большой бафф к туррелям и дронам с амуницией,аммуниция идет быстрее на 5%\nНа 30% больше хп у всех установок,туррели имеют в 50% больше хп и скорость сканирования на 40% больше\n Give huge buff for turrets and drones\n Q:4", nil, nil, "weapon_zs_soul")
 GM:AddSkillModifier(trinket, SKILLMOD_RESUPPLY_DELAY_MUL, -0.05)
 GM:AddSkillModifier(trinket, SKILLMOD_DEPLOYABLE_HEALTH_MUL, 0.3)
 GM:AddSkillModifier(trinket, SKILLMOD_TURRET_HEALTH_MUL, 0.5)

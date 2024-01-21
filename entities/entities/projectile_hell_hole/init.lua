@@ -42,7 +42,7 @@ function ENT:Think()
 			if !ent:IsValid() then continue end
 			target = ent
 			if WorldVisible(self:LocalToWorld(Vector(0, 0, 10)), ent:NearestPoint(self:LocalToWorld(Vector(0, 0, 10))))  then
-				if target:IsValidLivingZombie() and pl:GetRenderMode() ~= RENDERMODE_TRANSALPHA  then 
+				if target:IsValidLivingZombie() and target:GetRenderMode() ~= RENDERMODE_TRANSALPHA  then 
 					targets[(#targets or 0) + 1] = {Health = ent:Health(), trg = target}
 				end
 			end
