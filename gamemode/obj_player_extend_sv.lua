@@ -1822,6 +1822,7 @@ function meta:Resupply(owner, obj)
 	local amount = GAMEMODE.AmmoCache[ammotype]
 	if !self.FirstUsedResupply then
 		DoDropStart(self)
+		self.FirstUsedResupply  = true
 	end
 
 	for i = 1, stockpiling and 2 or 1 do
