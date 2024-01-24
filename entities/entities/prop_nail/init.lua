@@ -37,31 +37,25 @@ function ENT:Think()
     	self:Remove()
     end
 	if (self.NextThinkDa or 1) < curTime then
-		self:SetDTBool(12, (parent.ReinforceEnd or 1) > curTime)
-		self:SetDTBool(13, (parent.naniteEnd  or 1)> curTime)
-		self:SetDTBool(14, (parent.CaderEnd or 1)> curTime)
-		self.NextThinkDa = curTime + 0.05
-		if self.NextLivingThink < curTime then
-			self.NextLivingThink = curTime + 4
-			local owner = self:GetOwner() 
-			if owner and owner:IsValidLivingHuman() and owner:HasTrinket('nanite_nails') then
-				local oldhealth = parent:GetBarricadeHealth()
-				if oldhealth <= 0 or oldhealth >= parent:GetMaxBarricadeHealth() or parent:GetBarricadeRepairs() <= 0.01 then return end
-	
-				parent:SetBarricadeHealth(math.min(parent:GetMaxBarricadeHealth(), parent:GetBarricadeHealth() + math.min(parent:GetBarricadeRepairs(), 7)))
-				healed = 7
-				parent:SetBarricadeRepairs(math.max(parent:GetBarricadeRepairs() - 7, 0))
+		self.NextThinkDa = curTime + 4
+		local owner = self:GetOwner() 
+		if owner and owner:IsValidLivingHuman() and owner:HasTrinket('nanite_nails') then
+			local oldhealth = parent:GetBarricadeHealth()
+			if oldhealth <= 0 or oldhealth >= parent:GetMaxBarricadeHealth() or parent:GetBarricadeRepairs() <= 0.01 then return end
+
+			parent:SetBarricadeHealth(math.min(parent:GetMaxBarricadeHealth(), parent:GetBarricadeHealth() + math.min(parent:GetBarricadeRepairs(), 7)))
+			healed = 7
+			parent:SetBarricadeRepairs(math.max(parent:GetBarricadeRepairs() - 7, 0))
 
 
-				gamemode.Call("PlayerRepairedObject", owner, parent, 7, self)
-				parent:EmitSound("npc/dog/dog_servo"..math.random(7, 8)..".wav", 70, math.random(100, 105))
+			gamemode.Call("PlayerRepairedObject", owner, parent, 7, self)
+			parent:EmitSound("npc/dog/dog_servo"..math.random(7, 8)..".wav", 70, math.random(100, 105))
 	
-				local effectdata = EffectData()
-					effectdata:SetOrigin(parent:GetPos())
-					effectdata:SetNormal((self:GetPos() - parent:GetPos()):GetNormalized())
-					effectdata:SetMagnitude(1)
-				util.Effect("nailrepaired", effectdata, true, true)
-			end
+			local effectdata = EffectData()
+				effectdata:SetOrigin(parent:GetPos())
+				effectdata:SetNormal((self:GetPos() - parent:GetPos()):GetNormalized())
+				effectdata:SetMagnitude(1)
+			util.Effect("nailrepaired", effectdata, true, true)
 		end
 	end
 end

@@ -765,7 +765,7 @@ function meta:ProcessDamage(dmginfo)
 			end
 
 
-			local ratio = math.max(0.5 + self.BloodArmorDamageReductionAdd + (self:IsSkillActive(SKILL_IRONBLOOD) and self:Health() <= self:GetMaxHealth() * 0.5 and 0.25 or 0),(attacker:IsPlayer() and -1 or 0.05))
+			local ratio = math.max(0.5 + self.BloodArmorDamageReductionAdd + (self:IsSkillActive(SKILL_IRONBLOOD) and self:Health() <= self:GetMaxHealth() * 0.5 and 0.25 or 0),(attacker:IsPlayer() and -1 or 0.05)) * (self:IsSkillActive(SKILL_HYPERGLYCEMIA) and 1-self:GetBloodArmor()/self.MaxBloodArmor or 1)
 			local absorb = math.min(self:GetBloodArmor(), damage * ratio) * (self:IsSkillActive(SKILL_LEUKEMIA) and math.random(1,4) == 1 and 0 or 1)
 			dmginfo:SetDamage(damage - absorb)
 			self:SetBloodArmor(self:GetBloodArmor() - absorb)
@@ -1003,10 +1003,23 @@ function meta:SetWasHitInHead()
 	self.m_LastHitInHead = CurTime() + 0.2
 end
 
-
-
 function meta:SetBloodArmor( armor )
 	self:SetDTInt( DT_PLAYER_INT_BLOODARMOR, math.max(self:GetStatus( "bloodysickness" ) and 0 or armor,0) )
+	local barmor = self:GetBloodArmor() 
+	if self:IsSkillActive(SKILL_HYPERGLYCEMIA) and barmor >= self.MaxBloodArmor-1 and self.NextGlycemiaExplode < CurTime() then
+		timer.Simple(0, function() self:TakeDamage(self:GetMaxHealth()*0.1,self,BLOOD_BOMBER) end)
+		self.NextGlycemiaExplode = CurTime() + 6
+		local effectdata = EffectData()
+			effectdata:SetOrigin(self:WorldSpaceCenter())
+		util.Effect("explosion_blood", effectdata, true)
+		print(1)
+		self:SetDTInt( DT_PLAYER_INT_BLOODARMOR, 0 )
+		for _,ent in pairs(player.FindInSphere(self:WorldSpaceCenter(),300)) do
+			if WorldVisible(self:LocalToWorld(Vector(0, 0, 10)), ent:NearestPoint(self:LocalToWorld(Vector(0, 0, 10)))) and ent:IsValidLivingZombie()  then
+				ent:TakeDamage(barmor*3,self,BLOOD_BOMBER)
+			end
+		end
+	end
 end
 function meta:AddBloodArmor( armor )
 	self:SetBloodArmor( self:GetBloodArmor() + armor )
@@ -1020,17 +1033,9 @@ end
 function meta:SetChargesActive(charges)
 	self:SetDTInt(DT_PLAYER_INT_ACTIV, charges)
 end
+local tableofmasters = {['cader'] = 14, ['melee'] = 11,['medic'] = 13, ['gunner'] = 12}
 function meta:SetMastery(who,sum)
-	local can = 11
-	if who == "cader" then
-		can =  14
-	elseif  who == "melee" then
-		can = 11
-	elseif who == "medic" then
-		can = 13
-	elseif  who == "gunner" then
-		can = 12
-	end
+	local can = tableofmasters[who] or 11
 	self:SetDTInt(can,sum)
 end
 function meta:SetZArmor(armor)
@@ -1704,6 +1709,97 @@ function meta:DropAllAmmo()
 		end
 	end
 end
+local demiboss = {
+	"comp_soul_alt_h",
+	"comp_soul_health",
+	"comp_soul_status",
+	"comp_soul_melee", 
+	"comp_soul_hack",
+	"comp_soul_godlike","comp_soul_godlike",
+	"comp_soul_dd","comp_soul_dd",
+	"comp_soul_booms",
+	"comp_soul_dosei","comp_soul_dosei"
+
+}
+local function DoDropStart(pl)	
+	if !pl:IsValid() then return end
+	if pl:IsSkillActive(SKILL_ACTIVATE_THIS) then
+		local drop = table.Random(GAMEMODE.GetActiveTrinkets)
+		local func = GAMEMODE:GetInventoryItemType(drop) == INVCAT_CONSUMABLES and pl.AddInventoryItem or pl.Give
+		timer.Simple(0, function() func(pl, drop) end)
+	end
+	if pl:IsSkillActive(SKILL_AMULET_18) then
+		local func = pl.AddInventoryItem 
+		for i=1,3 do
+			local drop = demiboss[math.random(1,#demiboss)]
+			timer.Simple(0, function() func(pl, drop) end)
+		end
+	end
+	if pl:IsSkillActive(SKILL_ASAVE) then
+		local func = pl.AddInventoryItem 
+		local drop = "trinket_curse_eye"
+		timer.Simple(0, function() func(pl, drop) end)
+	end
+	if pl:IsSkillActive(SKILL_AMULET_15) then
+		local drop = table.Random(GAMEMODE.Curses)
+		timer.Simple(0, function() pl:AddInventoryItem(drop) end)
+	end
+	local start = pl:GetRandomStartingItem()
+	if start then
+		local func = GAMEMODE:GetInventoryItemType(start) == INVCAT_TRINKETS and pl.AddInventoryItem or pl.Give
+		timer.Simple(0, function() func(pl, start) end)
+	end
+	if pl:GetSoulPicker() then
+		timer.Simple(0, function() pl:AddInventoryItem("cons_soul_picka") end)
+	end
+	if pl:GetDevoPicker() then
+		timer.Simple(0, function() pl:AddInventoryItem("cons_devolver") end)
+	end
+	if pl:GetBountyPicker() then
+		timer.Simple(0, function() pl:AddInventoryItem("cons_bounty") end)
+	end
+	--local d = string.Explode(" " ,string.lower(self.ZSInventoryItemData[start1].PrintName))
+--[[	if pl:IsSkillActive(SKILL_SOUL_TRADE) and table.HasValue(d, "soul") and not pl:HasTrinket("toysoul") and not pl:SteamID64() == "76561198813932012" then
+		pl:Kill()
+	end]]
+	if start1 then
+		local func1 = GAMEMODE:GetInventoryItemType(start1) == INVCAT_TRINKETS and pl.AddInventoryItem or pl.Give
+		timer.Simple(0, function() func1(pl, start1) end)
+	end
+	local start21 = pl:GetRandomStartingItem2()
+	if start21 then
+		local func21 = GAMEMODE:GetInventoryItemType(start21) == INVCAT_TRINKETS and pl.AddInventoryItem or pl.Give
+		timer.Simple(0, function() func21(pl, start21) end)
+	end
+	local freefood = pl:GetRandomFood()
+	if freefood then
+		local food = GAMEMODE:GetInventoryItemType(freefood) == INVCAT_TRINKETS and pl.AddInventoryItem or pl.Give
+		food(pl, freefood)
+	end
+	if pl:IsSkillActive(SKILL_FLOWER) then
+		if not pl:IsSkillActive(SKILL_ABYSSFLOWER) then
+			pl:AddInventoryItem("trinket_flower")
+		elseif pl:IsSkillActive(SKILL_ABYSSFLOWER) then
+			pl:AddInventoryItem("trinket_a_flower")	
+		end
+	end
+	if pl:IsSkillActive(SKILL_MOBILIZED) then
+		if pl:IsSkillActive(SKILL_MOB_II) and math.random(1,4) == 1 then return end
+		local weapon = {}
+		for _, wep in pairs(weapons.GetList()) do
+			if (wep.Tier or 1) <= (pl:IsSkillActive(SKILL_MOB_II) and 4 or 2) and !wep.ZombieOnly and !wep.NoMobilized and wep.Primary.DefaultClip and wep.Primary.DefaultClip < 9999 and (pl:IsSkillActive(SKILL_MOB_II) and (wep.Tier or 1) >= 3 or !pl:IsSkillActive(SKILL_MOB_II)) then
+				table.insert( weapon, wep.ClassName )
+			end
+		end
+		local drop = table.Random(weapon)
+		timer.Simple(0, function()	pl:Give(drop) end)
+	end
+	local midas = pl:GetFuckingMidas()
+	if midas then
+		local huy = GAMEMODE:GetInventoryItemType(midas) == INVCAT_TRINKETS and pl.AddInventoryItem or pl.Give
+		timer.Simple(0, function() huy(pl, midas) end)
+	end
+end
 
 function meta:Resupply(owner, obj)
 
@@ -1724,6 +1820,9 @@ function meta:Resupply(owner, obj)
 
 	local ammotype = self:GetResupplyAmmoType()
 	local amount = GAMEMODE.AmmoCache[ammotype]
+	if !self.FirstUsedResupply then
+		DoDropStart(self)
+	end
 
 	for i = 1, stockpiling and 2 or 1 do
 		if self.RessuplyMul then

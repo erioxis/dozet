@@ -11,7 +11,7 @@ CLASS.Model = Model("models/player/zombie_lacerator2.mdl")
 CLASS.Wave = 7 / 12
 
 CLASS.Health = 1225
-CLASS.Speed = 570
+CLASS.Speed = 450
 CLASS.SWEP = "weapon_zs_destroyer"
 CLASS.Pac3Out = {[1] = {
 	["children"] = {

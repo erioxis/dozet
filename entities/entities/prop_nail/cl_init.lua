@@ -249,7 +249,9 @@ function ENT:Draw()--[[
 					draw.SimpleText(math.floor(repairs) .. "/" .. math.floor(mrps), (scale and "ZS3D2DUnstyleSmaller" or  "ZS3D2DUnstyleNail"), x + 25, y - 50, COLOR_CYAN, TEXT_ALIGN_CENTER)
 				end
 			end
-			if self:GetDTBool(12) then
+			local curtime = CurTime()
+			local par = self:GetParent()
+			if par:GetDTFloat(12) > curtime then
 				surface.SetMaterial(matDef)
 				surface.SetDrawColor(33, 33, 166)
 				surface.DrawTexturedRect(
@@ -260,7 +262,7 @@ function ENT:Draw()--[[
 				)
 				x = x - 64
 			end
-			if self:GetDTBool(13) then
+			if par:GetDTFloat(13) > curtime then
 				surface.SetMaterial(matDef)
 				surface.SetDrawColor(205, 104, 235)
 				surface.DrawTexturedRect(
@@ -271,7 +273,7 @@ function ENT:Draw()--[[
 				)
 				x = x - 64
 			end
-			if self:GetDTBool(14) then
+			if par:GetDTFloat(14) > curtime then
 				surface.SetMaterial(matDef)
 				surface.SetDrawColor(160, 25, 25)
 				surface.DrawTexturedRect(
@@ -280,6 +282,26 @@ function ENT:Draw()--[[
 					64,
 					64
 				)
+				x = x - 64
+			end
+			if par:GetDTFloat(15) > curtime then
+				surface.SetMaterial(matDef)
+				surface.SetDrawColor(97, 7, 7)
+				surface.DrawTexturedRect(
+					x - 100,
+					y - 64,
+					64,
+					64
+				)
+				surface.SetMaterial(matHeart)
+				surface.SetDrawColor(82, 21, 21)
+				surface.DrawTexturedRect(
+					x - 84,
+					y - 48,
+					32,
+					32
+				)
+				x = x - 64
 			end
 		cam.End3D2D()
 

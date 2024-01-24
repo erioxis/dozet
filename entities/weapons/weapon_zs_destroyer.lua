@@ -20,11 +20,11 @@ sound.Add({
 	sound = "npc/antlion_guard/confused1.wav"
 })
 
-SWEP.MeleeDamage = 43
+SWEP.MeleeDamage = 33
 
 SWEP.SlowMeleeDelay = 0.6
-SWEP.SlowMeleeDamage = 32
-SWEP.PounceDamage = 81
+SWEP.SlowMeleeDamage = 22
+SWEP.PounceDamage = 76
 SWEP.MeleeDamageType = DMG_DIRECT
 SWEP.AutoCheck = true
 

@@ -484,6 +484,10 @@ LANGUAGE.skill_taut_d2 = "-40% скорости передвижения при 
 LANGUAGE.skill_spicy_cades = "Шипастые кейды"
 LANGUAGE.skill_spicy_cades_d1 = "Враги, наносящие урон кейду, наносят себе свой урон, умноженный на 2\n"..BAD.."При починке кейда наносится 1-15 урона\n"
 LANGUAGE.skill_spicy_cades_d2 = "-10 здоровья и -10% к силе починки"
+LANGUAGE.s_need_testing = "ДЛЯ ТЕСТЕРОВ"
+LANGUAGE.skill_cader_bounty = "Нужен бафф?"
+LANGUAGE.skill_cader_bounty_d1 = "Дает прогресс награды в награду кейдера\n100% починенного здоровья переносятся в награду.\n"
+LANGUAGE.skill_cader_bounty_d2 = "НА РАЗРАБОТКЕ И ИМЕЕТ ХУЕВУ ТУЧУ БАГОВ."
 LANGUAGE.skill_u_craftpack = "Крафт-пак"
 LANGUAGE.skill_u_craftpack_d1 = "Открывает новые компоненты в поинтшопе"
 LANGUAGE.skill_carrier = "Пропоносец" -- sic
@@ -865,6 +869,9 @@ LANGUAGE.skill_hp_cog_d1 = "При получении урона есть 50% ш
 LANGUAGE.skill_hp_cog_d2 = "-90% получаемого лечения\n"
 LANGUAGE.skill_cir_0 = "Циркуляция"
 LANGUAGE.skill_cir_d1 = "+1 максимальной кровавой брони\n"
+LANGUAGE.skill_hpmia = "Гипергликемия"
+LANGUAGE.skill_hpmia_d1 = "При накоплении 100% кровавой брони вы взорветесь с уроном (КР.БРОНЯ)*3.\nКД - 6 секунд.\n"
+LANGUAGE.skill_hpmia_d2 = "При взрыве вам нанесется 10% урона от макс.хп\nБольше кровавой брони - меньше ее защита."
 LANGUAGE.skill_stoneblood = "Фантомная кровь"
 LANGUAGE.skill_stoneblood_d1 = "Кровавая броня поглощает на 3% больше урона\n"
 LANGUAGE.skill_san_0 = "Веселая кровь" -- как кровь может быть веселой? она че, танцует и поет? darkness8163 01.01.24 12:16 мск
@@ -1520,6 +1527,10 @@ LANGUAGE.t_d_driller_6                                  = "+70% скорости
 
 LANGUAGE.t_d_nnails                                 = "Трата патронов типа 'Гвоздь' в 2 раза больше.\nКаждые 4 секунд кейды чинят сами себя на 7 ОЗ.\n-15% сила починки"
 LANGUAGE.t_nnails                                 = "Живые гвозди"
+
+LANGUAGE.t_useself                                 = "Самопожертвование"
+LANGUAGE.t_d_useself                                 = "При ударе баррикады молотком вы даете ей бафф на 3с.\nЭтот бафф дает защиту пропу в 22% и 15% получаемого урона этих баррикад перенаправятся в вас."
+
 
 LANGUAGE.trap_barrel = "СЛОМАННАЯ БОЧКА! Шанс появления 1|%d"
 LANGUAGE.t_d_ass                                        = "+6 здоровья\n-2% точности стрельбы"

@@ -534,6 +534,8 @@ SKILL_DONATE_DARKNESS_I = 533
 SKILL_DONATE_DARKNESS_II = 534
 SKILL_CRYMAN = 535
 SKILL_OVERHEATED_BULLET = 536
+SKILL_HYPERGLYCEMIA = 537
+SKILL_NEED_A_BUFF = 538
 
 
 
@@ -824,6 +826,8 @@ GM:AddSkill(SKILL_CIRCULATION1, trs("skill_cir_0").." II", GOOD.."+3"..trs("barm
 																6,			6,					{SKILL_CIRCULATION,SKILL_CIRCULATION2}, TREE_HEALTHTREE)
 GM:AddSkill(SKILL_CIRCULATION2, trs("skill_cir_0").." III", GOOD.."+3"..trs("barmor")..BAD..translate.Format("skillmod_n131","-6%"),
 																4,			8,					{}, TREE_HEALTHTREE)
+GM:AddSkill(SKILL_HYPERGLYCEMIA, trs("skill_hpmia"), GOOD..trs("skill_hpmia_d1")..BAD..trs("skill_hpmia_d2"),
+																4,			9,					{SKILL_CIRCULATION2}, TREE_HEALTHTREE)
 GM:AddSkill(SKILL_SANGUINE, trs("skill_san_0"), GOOD..trs("skill_san_d1")..BAD..trs("skill_san_d2"),
 																6,			2,					{}, TREE_HEALTHTREE)
 GM:AddSkill(SKILL_BLOODYMAN, trs("skill_bloodyman"), GOOD.."+130"..trs("barmor")..BAD.."-100"..trs("health"),
@@ -1159,6 +1163,8 @@ GM:AddSkill(SKILL_SPICY_CADES, trs("skill_spicy_cades"), GOOD.. trs("skill_spicy
 																-5,			4,					{}, TREE_BUILDINGTREE)
 GM:AddSkillModifier(SKILL_SPICY_CADES, SKILLMOD_REPAIRRATE_MUL, -0.10)
 GM:AddSkillModifier(SKILL_SPICY_CADES, SKILLMOD_HEALTH, -10)
+GM:AddSkill(SKILL_NEED_A_BUFF, trs("skill_cader_bounty"), GOOD.. trs("skill_cader_bounty_d1")..BAD.. trs("skill_cader_bounty_d2"),
+																-5,			5,					{SKILL_SPICY_CADES}, TREE_BUILDINGTREE).Vip3 = true
 GM:AddSkill(SKILL_D_NOODLEARMS, trs("skill_noodle"), GOOD.."+10"..trs("worth")..GOOD..trs("skill_noodle_d1")..GOOD.."+35%"..trs("repair")..BAD..trs("skill_noodle_d2"),
 																-7,			2,					{}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_INSTRUMENTS, trs("skill_instruments"), GOOD..trs("skill_instruments_d1"),

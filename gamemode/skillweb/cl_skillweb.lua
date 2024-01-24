@@ -1294,6 +1294,10 @@ function PANEL:Paint(w, h)
 					draw_SimpleText(translate.Get("s_need_ach")..GAMEMODE.Achievements[skill.NeedAchievement].Name,"ZS3D2DFontSmall", 0, xskill, colo, TEXT_ALIGN_CENTER)
 					xskill = xskill + 32 * screenscale
 				end
+				if skill.Vip3 then
+					draw_SimpleText(translate.Get("s_need_testing"),"ZS3D2DFontSmall", 0, xskill, colo, TEXT_ALIGN_CENTER)
+					xskill = xskill + 32 * screenscale
+				end
 			end
 			if GAMEMODE.AddDesc and !skill.Hidden1 and skillid == hoveredskill then
 				--local c = string.Explode("\n", skill.Description)

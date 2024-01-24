@@ -282,7 +282,7 @@ net.Receive("zs_wavestart", function(length)
 
 	gamemode.Call("SetWave", wave)
 	gamemode.Call("SetWaveEnd", time)
-
+	system.FlashWindow()
 	if GAMEMODE.ZombieEscape then
 		GAMEMODE:CenterNotify(COLOR_RED, {font = "ZSHUDFont"}, translate.Get("escape_from_the_zombies"))
 	elseif wave == GAMEMODE:GetNumberOfWaves() then
@@ -314,7 +314,7 @@ net.Receive("zs_waveend", function(length)
 	local time = net.ReadFloat()
 
 	gamemode.Call("SetWaveStart", time)
-
+	system.FlashWindow()
 	if wave < GAMEMODE:GetNumberOfWaves() and wave > 0 then
 		GAMEMODE:CenterNotify(COLOR_RED, {font = "ZSHUDFont"}, translate.Format("wave_x_is_over", wave))
 		GAMEMODE:CenterNotify(translate.Get("wave_x_is_over_sub"))

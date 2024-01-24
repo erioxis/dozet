@@ -100,7 +100,8 @@ net.Receive("zs_bounty_add", function(len, pl)
 	if !pl:HasInventoryItem(pl.LastUsedTrinket) then return end
 	local item = net.ReadString()
 	pl.GetBounty = nil
-	pl.MedicalBounty = nil
+	pl.MedicalBounty = 	pl.MedicalBounty - 1
+	pl.CadersBounties = pl.CadersBounties - 1
 	pl.SeededBounty = nil
 	pl.SeededSouls = nil
 	pl.NextThinkAboutTrade = (pl.NextThinkAboutTrade or 1) + 10

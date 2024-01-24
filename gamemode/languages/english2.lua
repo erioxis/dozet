@@ -370,6 +370,9 @@ LANGUAGE.t_d_sale_q5                                 = "+30% arsenal discount\nY
 LANGUAGE.t_d_nnails                                 = "X2 Nails ammo usage\nEvery 4 seconds cade repairs on 7 HP.\n-15% repair rate"
 LANGUAGE.t_nnails                                 = "Living Nails"
 
+LANGUAGE.t_useself                                 = "Self-sacrifice"
+LANGUAGE.t_d_useself                                 = "On hit a barricade with hammer give them a 3s buff.\nThis buff give -22% damage taken and 15% damage has been reflected to you."
+
 LANGUAGE.t_missluck                           = "Cube of luck"
 LANGUAGE.t_d_missluck                           = "Have chance do a CRIT damage (180%) with 5% chance!"
 

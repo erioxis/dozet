@@ -234,23 +234,34 @@ GM:AddInventoryItemData("cons_xmas_goodness",		trs("c_new_year"),			trs("c_new_y
 	droped:SetPos(pl:GetPos()+Vector(0,0,70))
 	droped:Spawn()
 end,1)
+local tbleternal = {"headshoter", "ind_buffer", "ultra_at", "pearl","broken_world","whysoul","altevesoul","lucky_chance","acum","driller","mirror_of_god","module_mirror"} 
+local medet = {	"pr_gold",
+"pr_barapaw",
+"pr_chamomile",
+"pr_bloodpack",
+"soulmedical"}
+local sinse = {	"sin_wrath",
+"sin_gluttony",
+"sin_sloth",
+"sin_envy",
+"sin_pride",
+"sin_ego",
+"sin_lust"}
+local quecader = {	"troyaksoul",
+"nanite_nails",
+"useself",
+"pr_bloodpack",
+"soulmedical"}
 GM:AddInventoryItemData("cons_bounty",		trs("c_bounty"),			trs("c_bounty_d"),								"models/props_c17/trappropeller_lever.mdl", 3, nil, nil, function(pl) 
-	local tbl = {"headshoter", "ind_buffer", "ultra_at", "pearl","broken_world","whysoul","altevesoul","lucky_chance","acum","driller","mirror_of_god","module_mirror"} 
+	local tbl = tbleternal
 	if pl:IsSkillActive(SKILL_SINS_2) then
-		table.Add(tbl,{	"sin_wrath",
-		"sin_gluttony",
-		"sin_sloth",
-		"sin_envy",
-		"sin_pride",
-		"sin_ego",
-		"sin_lust"})
+		table.Add(tbl,sinse)
 	end
-	if pl.MedicalBounty then
-		tbl = {	"pr_gold",
-		"pr_barapaw",
-		"pr_chamomile",
-		"pr_bloodpack",
-		"soulmedical"}
+	if pl.MedicalBounty > 0 then
+		tbl = medet
+	end
+	if pl.CadersBounties > 0 then
+		tbl = quecader
 	end
 	local tries = 0
 	local need = pl.SeededBounty or {}
@@ -264,6 +275,7 @@ GM:AddInventoryItemData("cons_bounty",		trs("c_bounty"),			trs("c_bounty_d"),			
 			break
 		end
 	end
+
 	pl.SeededBounty = #need > 0 and need or {math.random(1,9)}
 	net.Start("zs_openbounty")
 	net.WriteTable(pl.SeededBounty)
@@ -1666,8 +1678,7 @@ GM:AddSkillFunction(trinket, function(pl, active)
 	pl.RemedyRegen = active
 end)
 
-trinket, trinketwep = GM:AddTrinket(trs("t_nnails"), "nanite_nails", false, supveles, supweles, 3, trs("t_d_nnails"), nil, nil, "ammo_nail")
-GM:AddSkillModifier(trinket, SKILLMOD_REPAIRRATE_MUL, -0.15)
+trinket, trinketwep = GM:AddTrinket(trs("t_useself"), "useself", false, supveles, supweles, 3, trs("t_d_useself"), nil, nil, "ammo_nail")
 
 
 

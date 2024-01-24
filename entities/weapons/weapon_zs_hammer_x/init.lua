@@ -71,7 +71,7 @@ function SWEP:OnMeleeHit(hitent, hitflesh, tr, dmginfo)
 
 	if hitent:IsNailed() then
 
-			hitent.BrokendEnd = CurTime() + 3
+			hitent.BrokendEnd = CurTime() + 2
 			hitent.BrokendApplier = owner
 
 	end

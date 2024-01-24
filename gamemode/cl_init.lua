@@ -2412,6 +2412,7 @@ end
 
 function GM:EndRound(winner, nextmap)
 	if self.RoundEnded then return end
+	system.FlashWindow()
 	self.RoundEnded = true
 
 	ROUNDWINNER = winner

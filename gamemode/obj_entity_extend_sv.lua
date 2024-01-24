@@ -427,7 +427,7 @@ function meta:DamageNails(attacker, inflictor, damage, dmginfo)
 	end
 	
 
-	if self.ReinforceEnd and CurTime() < self.ReinforceEnd and self.ReinforceApplier and self.ReinforceApplier:IsValidLivingHuman() then
+	if self:GetDTFloat(12) and CurTime() < self:GetDTFloat(12) and self.ReinforceApplier and self.ReinforceApplier:IsValidLivingHuman() then
 		local applier = self.ReinforceApplier
 		local multi = 0.88
 		local dmgbefore = damage * 0.1
@@ -439,7 +439,7 @@ function meta:DamageNails(attacker, inflictor, damage, dmginfo)
 		applier.PropDef = (applier.PropDef or 0) + dmgbefore
 		applier:AddPoints(points)
 	end
-	if self.naniteEnd and CurTime() < self.naniteEnd and self.naniteApplier and self.naniteApplier:IsValidLivingHuman() then
+	if self:GetDTFloat(13) and CurTime() < self:GetDTFloat(13) and self.naniteApplier and self.naniteApplier:IsValidLivingHuman() then
 		local applier = self.naniteApplier
 		local multi = 0.20
 		local dmgbefore = damage * 0.80
@@ -453,16 +453,29 @@ function meta:DamageNails(attacker, inflictor, damage, dmginfo)
 	end
 	if self.BrokendEnd and CurTime() < self.BrokendEnd and self.BrokendApplier and self.BrokendApplier:IsValidLivingZombie() then
 		local applier = self.BrokendApplier
-		local multi = 3
+		local multi = 2
 
 		dmginfo:SetDamage(dmginfo:GetDamage() * multi)
 		damage = damage * multi
 
 	end
-	if self.CaderEnd and CurTime() < self.CaderEnd and self.CaderApplier and self.CaderApplier:IsValidLivingHuman() then
+	if self:GetDTFloat(14) and CurTime() < self:GetDTFloat(14) and self.CaderApplier and self.CaderApplier:IsValidLivingHuman() then
 		local applier = self.CaderApplier
 		local multi = 2.5
 		dmginfo:SetDamage(dmginfo:GetDamage() * multi)
+	end
+	if self:GetDTFloat(15) and CurTime() < self:GetDTFloat(15) and self.ApplierUseSelf and self.ApplierUseSelf:IsValidLivingHuman() then
+		local applier = self.ApplierUseSelf
+		applier:TakeDamage(damage*0.15,DMG_DIRECT,attacker,inflictor)
+		local multi = 0.78
+		local dmgbefore = damage 
+		local points = dmgbefore / 7
+
+		dmginfo:SetDamage(dmginfo:GetDamage() * multi)
+		damage = damage * multi
+
+		applier.PropDef = (applier.PropDef or 0) + dmgbefore
+		applier:AddPoints(points)
 	end
 
 	if gamemode.Call("IsEscapeDoorOpen") then

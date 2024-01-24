@@ -270,6 +270,7 @@ local colcham = Color(247,229,132)
 local colIce = Color(21,213,226)
 local colResnya = Color(145,9,9)
 local colAe =  Color(6,77,30)
+local colCader =  Color(50,77,210)
 function GM:DrawInductorIndicators()
 	local x = ScrW() * 0.45
 	local y = ScrH() * 0.05
@@ -279,6 +280,7 @@ function GM:DrawInductorIndicators()
 	if lp:IsValid() then
 		local screenscale = BetterScreenScale()
 		local medp = lp:GetProgress('mprog')
+		local caderp = lp:GetProgress('caderprog')
 		local fired =lp:GetProgress('fprog')
 		local pulsed =lp:GetProgress('pprog')
 		local bountyd =lp:GetProgress('bprog')
@@ -287,6 +289,7 @@ function GM:DrawInductorIndicators()
 		local resnyad =lp:GetProgress('rprog')
 	
 		local medt = lp:GetPTime('mprog')
+		local cadert = lp:GetPTime('caderprog')
 		local firet =lp:GetPTime('fprog')
 		local pulset =lp:GetPTime('pprog')
 		local bountyt =lp:GetPTime('bprog')
@@ -297,32 +300,36 @@ function GM:DrawInductorIndicators()
 			DrawIndicator(colcham,screenscale,cham,chamt,"cham",350* (lp:GetIndChance() or 1),x,y)
 			y = y + ScrH() * 0.07
 		end
-		if fired > 0 and lp:HasTrinket("fire_ind") and firet >= CurTime() then
+		if fired > 0 and lp:HasTrinket("fire_ind") and firet > CurTime() then
 			local hell = lp.HoleOfHell
 			local wep = lp:GetActiveWeapon()
 			DrawIndicator(hell  and Color(65,12,2) or Color(226,62,33),screenscale,fired,firet,hell and "hell" or "fi",(15 * ((wep and (wep.Tier or 1))+1)) * (lp:GetIndChance() or 1),x,y)
 			y = y + ScrH() * 0.07
 		end
-		if medp > 0 and lp:IsSkillActive(SKILL_PREMIUM) and medt >= CurTime() then
+		if medp > 0 and lp:IsSkillActive(SKILL_PREMIUM) and medt > CurTime() then
 			DrawIndicator(colMed,screenscale,medp,medt,"mg",1800,x,y)
 			y = y + ScrH() * 0.07
 		end
-		if icep > 0 and icet >= CurTime() then
+		if caderp > 0 and cadert > CurTime() and lp:IsSkillActive(SKILL_NEED_A_BUFF) then
+			DrawIndicator(colCader,screenscale,caderp,cadert,"caderb",3000,x,y)
+			y = y + ScrH() * 0.07
+		end
+		if icep > 0 and icet > CurTime() then
 			local nucl = lp:IsSkillActive(SKILL_COOL_NUCLEAR_SYN)
 			local wep = lp:GetActiveWeapon()
 			DrawIndicator(nucl and colAe or colIce,screenscale,icep,icet,lp:IsSkillActive(SKILL_CRYMAN) and "cry" or nucl and "aboom" or "ii",165 + (35 * ((wep and (wep.Tier or 1))-1) * (wep.Tier or 1)) * (lp:GetIndChance() or 1),x,y)
 			y = y + ScrH() * 0.07
 		end
-		if pulsed > 0 and lp:HasTrinket("resonance") and pulset >= CurTime() then
+		if pulsed > 0 and lp:HasTrinket("resonance") and pulset > CurTime() then
 			local cryo =  lp:IsSkillActive(SKILL_CRYO_LASER)
 			DrawIndicator(cryo and Color(27,105,207) or Color(61,5,192),screenscale,pulsed,pulset,cryo and "ca" or "pc",20 * GAMEMODE:GetWave() * (lp:GetIndChance() or 1),x,y)
 			y = y + ScrH() * 0.07
 		end
-		if bountyd > 0 and bountyt >= CurTime() then
+		if bountyd > 0 and bountyt > CurTime() then
 			DrawIndicator(colBoun,screenscale,bountyd,bountyt,"bp",2500 * (MySelf:GetProgress('bprogmul')+1),x,y)
 			y = y + ScrH() * 0.07
 		end
-		if resnyad > 0 and resnyat >= CurTime() then
+		if resnyad > 0 and resnyat > CurTime() then
 			DrawIndicator(colResnya,screenscale,resnyad,resnyat,"resnya",1000,x,y)
 			y = y + ScrH() * 0.07
 		end

@@ -1755,97 +1755,6 @@ function GM:Think()
 		--end
 	--end
 end
-local demiboss = {
-	"comp_soul_alt_h",
-	"comp_soul_health",
-	"comp_soul_status",
-	"comp_soul_melee", 
-	"comp_soul_hack",
-	"comp_soul_godlike","comp_soul_godlike",
-	"comp_soul_dd","comp_soul_dd",
-	"comp_soul_booms",
-	"comp_soul_dosei","comp_soul_dosei"
-
-}
-local function DoDropStart(pl)	
-	if !pl:IsValid() then return end
-	if pl:IsSkillActive(SKILL_ACTIVATE_THIS) then
-		local drop = table.Random(GAMEMODE.GetActiveTrinkets)
-		local func = GAMEMODE:GetInventoryItemType(drop) == INVCAT_CONSUMABLES and pl.AddInventoryItem or pl.Give
-		timer.Simple(0, function() func(pl, drop) end)
-	end
-	if pl:IsSkillActive(SKILL_AMULET_18) then
-		local func = pl.AddInventoryItem 
-		for i=1,3 do
-			local drop = demiboss[math.random(1,#demiboss)]
-			timer.Simple(0, function() func(pl, drop) end)
-		end
-	end
-	if pl:IsSkillActive(SKILL_ASAVE) then
-		local func = pl.AddInventoryItem 
-		local drop = "trinket_curse_eye"
-		timer.Simple(0, function() func(pl, drop) end)
-	end
-	if pl:IsSkillActive(SKILL_AMULET_15) then
-		local drop = table.Random(GAMEMODE.Curses)
-		timer.Simple(0, function() pl:AddInventoryItem(drop) end)
-	end
-	local start = pl:GetRandomStartingItem()
-	if start then
-		local func = GAMEMODE:GetInventoryItemType(start) == INVCAT_TRINKETS and pl.AddInventoryItem or pl.Give
-		timer.Simple(0, function() func(pl, start) end)
-	end
-	if pl:GetSoulPicker() then
-		timer.Simple(0, function() pl:AddInventoryItem("cons_soul_picka") end)
-	end
-	if pl:GetDevoPicker() then
-		timer.Simple(0, function() pl:AddInventoryItem("cons_devolver") end)
-	end
-	if pl:GetBountyPicker() then
-		timer.Simple(0, function() pl:AddInventoryItem("cons_bounty") end)
-	end
-	--local d = string.Explode(" " ,string.lower(self.ZSInventoryItemData[start1].PrintName))
---[[	if pl:IsSkillActive(SKILL_SOUL_TRADE) and table.HasValue(d, "soul") and not pl:HasTrinket("toysoul") and not pl:SteamID64() == "76561198813932012" then
-		pl:Kill()
-	end]]
-	if start1 then
-		local func1 = GAMEMODE:GetInventoryItemType(start1) == INVCAT_TRINKETS and pl.AddInventoryItem or pl.Give
-		timer.Simple(0, function() func1(pl, start1) end)
-	end
-	local start21 = pl:GetRandomStartingItem2()
-	if start21 then
-		local func21 = GAMEMODE:GetInventoryItemType(start21) == INVCAT_TRINKETS and pl.AddInventoryItem or pl.Give
-		timer.Simple(0, function() func21(pl, start21) end)
-	end
-	local freefood = pl:GetRandomFood()
-	if freefood then
-		local food = GAMEMODE:GetInventoryItemType(freefood) == INVCAT_TRINKETS and pl.AddInventoryItem or pl.Give
-		food(pl, freefood)
-	end
-	if pl:IsSkillActive(SKILL_FLOWER) then
-		if not pl:IsSkillActive(SKILL_ABYSSFLOWER) then
-			pl:AddInventoryItem("trinket_flower")
-		elseif pl:IsSkillActive(SKILL_ABYSSFLOWER) then
-			pl:AddInventoryItem("trinket_a_flower")	
-		end
-	end
-	if pl:IsSkillActive(SKILL_MOBILIZED) then
-		if pl:IsSkillActive(SKILL_MOB_II) and math.random(1,4) == 1 then return end
-		local weapon = {}
-		for _, wep in pairs(weapons.GetList()) do
-			if (wep.Tier or 1) <= (pl:IsSkillActive(SKILL_MOB_II) and 4 or 2) and !wep.ZombieOnly and !wep.NoMobilized and wep.Primary.DefaultClip and wep.Primary.DefaultClip < 9999 and (pl:IsSkillActive(SKILL_MOB_II) and (wep.Tier or 1) >= 3 or !pl:IsSkillActive(SKILL_MOB_II)) then
-				table.insert( weapon, wep.ClassName )
-			end
-		end
-		local drop = table.Random(weapon)
-		timer.Simple(20, function()	pl:Give(drop) end)
-	end
-	local midas = pl:GetFuckingMidas()
-	if midas then
-		local huy = GAMEMODE:GetInventoryItemType(midas) == INVCAT_TRINKETS and pl.AddInventoryItem or pl.Give
-		timer.Simple(0, function() huy(pl, midas) end)
-	end
-end
 
 function GM:PlayerSwitchWeapon(pl, old, new)--
 	if pl:HasTrinket("autoreload") and old  then
@@ -2057,7 +1966,7 @@ function GM:PlayerHealedTeamMember(pl, other, health, wep, pointmul, nobymsg, fl
 	pl:SetProgress(math.Round(pl:GetProgress('mprog')+health), 'mprog')
 	if pl:IsSkillActive(SKILL_PREMIUM) and pl:GetProgress('mprog') > 1800 and !pl:HasInventoryItem("cons_bounty") then
 		pl:AddInventoryItem("cons_bounty")
-		pl.MedicalBounty = true 
+		pl.MedicalBounty = pl.MedicalBounty + 1 
 		pl.GetBounty = true
 		net.Start("zs_medpremium")
 			net.WriteString("cons_bounty")
@@ -2099,9 +2008,17 @@ end
 
 function GM:ObjectPackedUp(pack, packer, owner)
 end
+local function DoTrueAll(arguments)
+	local xrani = {}
+	for k,v in pairs(arguments) do
+		xrani[v] = true
+	end
+	return xrani
+end
 local tblspicy = {"weapon_zs_hammer","weapon_zs_hammer_q1","weapon_zs_hammer_q2","weapon_zs_hammer_q3","weapon_zs_hammer_q4","weapon_zs_hammer_q5",
 "weapon_zs_electrohammer","weapon_zs_electrohammer_q1","weapon_zs_electrohammer_q2","weapon_zs_electrohammer_q3","weapon_zs_electrohammer_q4","weapon_zs_electrohammer_q5"
 ,"weapon_zs_singurhammer_q1","weapon_zs_singurhammer","weapon_zs_singurhammer_q2","weapon_zs_singurhammer_q3","weapon_zs_singurhammer_q4","weapon_zs_singurhammer_q5"}
+tblspicy = DoTrueAll(tblspicy)
 function GM:PlayerRepairedObject(pl, other, health, wep)
 	health = health - other:RemoveUselessDamage(health)
 	if self:GetWave() == 0 or health <= 0 then return end
@@ -2114,6 +2031,15 @@ function GM:PlayerRepairedObject(pl, other, health, wep)
 	pl.RepairedThisRound = pl.RepairedThisRound + health
 	if numofdaily == 2 then
 		pl:GiveAchievementProgress("daily_post", health)
+	end
+	pl:SetProgress(math.Round(pl:GetProgress('caderprog')+health), 'caderprog')
+	if pl:IsSkillActive(SKILL_NEED_A_BUFF) and pl:GetProgress('caderprog') > 3000 and !pl:HasInventoryItem("cons_bounty") then
+		pl:AddInventoryItem("cons_bounty")
+		pl.CadersBounties = pl.CadersBounties + 1 
+		pl.GetBounty = true
+		
+		pl:SendLua('GAMEMODE:CenterNotify({killicon = "weapon_zs_trinket"}, " ", COLOR_GREEN, translate.Format("caderget", GAMEMODE.ZSInventoryItemData["cons_bounty"].PrintName))')
+		pl:SetProgress(math.Round(pl:GetProgress('caderprog')-3000), 'caderprog')
 	end
 	if pl:IsSkillActive(SKILL_SPICY_CADES) and tblspicy[wep:GetClass()] then
 		pl:TakeDamage(math.random(1,15),pl,pl)
@@ -2858,7 +2784,7 @@ function GM:PlayerReadyRound(pl)
 		pl:SendLua("gamemode.Call(\"EndRound\", "..tostring(ROUNDWINNER)..", \""..game.GetMapNext().."\")")
 		gamemode.Call("DoHonorableMentions", pl)
 	end
-	DoDropStart(pl)
+	--DoDropStart(pl)
 
 	if pl:GetInfo("zs_noredeem") == "1" then
 		pl.NoRedeeming = true
@@ -2958,6 +2884,7 @@ function GM:PlayerInitialSpawn(pl)
 	pl.OneTime = true
 	pl.RespawnedTime = CurTime() + 5
 	pl.OutFitPacTrinket = {}
+	pl.FirstUsedResupply = false
 	--self:PlayerSaveDataMASTERY(pl)
 	self:InitializeVault(pl)
 
@@ -3073,6 +3000,7 @@ function GM:PlayerInitialSpawnRound(pl)
 	pl.RageMul = 0
 	pl.Readyd_COM = true
 	pl.Headshots = 0
+	pl.NextGlycemiaExplode = 0
 	pl.BrainsEaten = 0
 	pl.zKills = 0
 	pl.DeathUsed = CurTime()
@@ -3109,7 +3037,8 @@ function GM:PlayerInitialSpawnRound(pl)
 
 	pl.CrowKills = 0
 	pl.GetBounty = nil
-	pl.MedicalBounty = nil
+	pl.MedicalBounty = 0
+	pl.CadersBounties = 0
 	pl.DefenceDamage = 0
 	pl.StrengthBoostDamage = 0
 
@@ -3169,6 +3098,7 @@ function GM:PlayerInitialSpawnRound(pl)
 	pl.NestSpawns = 0
 	pl.LastRevive = 0
 	pl.LastZGas = 0
+	pl.FirstUsedResupply = false
 
 	--Return
 	pl.r_return = nil
@@ -4994,6 +4924,10 @@ hook.Add("InitPostEntityMap", "BlueBomb", function()
 	if BLUE_BOMB:IsValid() then
 		BLUE_BOMB:Spawn()
 	end
+	BLOOD_BOMBER = ents.Create("dummy_blood_explode")
+	if BLOOD_BOMBER:IsValid() then
+		BLOOD_BOMBER:Spawn()
+	end
 end)
 function GM:DoPlayerDeath(pl, attacker, dmginfo)
 
@@ -5666,7 +5600,7 @@ function GM:PlayerSpawn(pl)
 			if self.StartingLoadout then
 				self:GiveStartingLoadout(pl)
 			elseif pl.m_PreRedeem then
-				DoDropStart(pl)
+				--DoDropStart(pl)
 				if self.RedeemLoadout then
 					for _, class in pairs(self.RedeemLoadout) do
 						pl:Give(class)
@@ -5698,7 +5632,7 @@ if pl:SteamID() == "STEAM_0:0:426833142" then
 	pl:SetMaxHealth(pl:GetMaxHealth() * 1.5) pl:SetHealth(pl:Health() * 1.5)
 end
 	if pl:Team() == TEAM_UNDEAD then
-		pl:SetMaxHealth(pl:GetMaxHealth() * (pl.m_HealthMulZS or 1)) pl:SetHealth(pl:Health() * (pl.m_HealthMulZS or 1))
+		pl:SetMaxHealth(pl:GetMaxHealth() * (pl.m_HealthMulZS or 1) * (GAMEMODE.HPMULMAP or 1)) pl:SetHealth(pl:Health() * (pl.m_HealthMulZS or 1) * (GAMEMODE.HPMULMAP or 1))
 	end
 	if pl:Team() == TEAM_UNDEAD and pl:SteamID() == "STEAM_0:1:585943777" then
 	pl:SetMaxHealth(pl:GetMaxHealth() * 0.25) pl:SetHealth(pl:Health() * 0.25)	
