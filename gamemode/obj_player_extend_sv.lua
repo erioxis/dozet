@@ -1015,7 +1015,7 @@ function meta:SetBloodArmor( armor )
 		self:SetDTInt( DT_PLAYER_INT_BLOODARMOR, 0 )
 		for _,ent in pairs(player.FindInSphere(self:WorldSpaceCenter(),300)) do
 			if WorldVisible(self:LocalToWorld(Vector(0, 0, 10)), ent:NearestPoint(self:LocalToWorld(Vector(0, 0, 10)))) and ent:IsValidLivingZombie()  then
-				ent:TakeDamage(barmor*3,self,BLOOD_BOMBER)
+				ent:TakeDamage(barmor*1.6,self,BLOOD_BOMBER)
 			end
 		end
 	end

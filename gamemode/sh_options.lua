@@ -787,6 +787,7 @@ GM:AddPointShopItem("cham_at",		ITEMCAT_TRINKETS,		50,				"trinket_cham_at").Sub
 GM:AddPointShopItem("fire_at",		ITEMCAT_TRINKETS,		50,				"trinket_fire_at").SubCategory =							ITEMSUBCAT_TRINKETS_OFFENSIVE
 GM:AddPointShopItem("pulse_at",		ITEMCAT_TRINKETS,		50,				"trinket_pulse_at").SubCategory =							ITEMSUBCAT_TRINKETS_OFFENSIVE
 GM:AddPointShopItem("acid_at",		ITEMCAT_TRINKETS,		50,				"trinket_acid_at").SubCategory =							ITEMSUBCAT_TRINKETS_OFFENSIVE
+GM:AddPointShopItem("separate_at",		ITEMCAT_TRINKETS,		50,				"trinket_separate_at").SubCategory =							ITEMSUBCAT_TRINKETS_OFFENSIVE
 GM:AddPointShopItem("ammoband",			ITEMCAT_TRINKETS,		50,				"trinket_ammovestiii").SubCategory =							ITEMSUBCAT_TRINKETS_OFFENSIVE
 GM:AddPointShopItem("resonance",		ITEMCAT_TRINKETS,		50,				"trinket_resonance").SubCategory =								ITEMSUBCAT_TRINKETS_OFFENSIVE
 GM:AddPointShopItem("cryoindu",			ITEMCAT_TRINKETS,		50,				"trinket_cryoindu").SubCategory =								ITEMSUBCAT_TRINKETS_OFFENSIVE

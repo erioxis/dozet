@@ -1620,14 +1620,6 @@ function GM:Think()
 					pl.NextBloodArmorRegen = time + 8
 					pl:SetBloodArmor(math.min(pl.MaxBloodArmor, pl:GetBloodArmor() + (1 * pl.BloodarmorGainMul)))
 				end
-				if pl:IsSkillActive(SKILL_BLOODMARY) and pl.MaxBloodArmor > 0 and time > pl.NextBloodArmorRegen2 and pl:GetBloodArmor() < pl.MaxBloodArmor then
-					pl.NextBloodArmorRegen2 = time + 2
-					pl:SetBloodArmor(math.min(pl.MaxBloodArmor, pl:GetBloodArmor() + (5 * pl.BloodarmorGainMul)))
-				end
-				if pl:IsSkillActive(SKILL_BLOODLOST) and pl.MaxBloodArmor > 0 and time > pl.NextBloodArmorRegen3 and pl:GetBloodArmor() < pl.MaxBloodArmor then
-					pl.NextBloodArmorRegen3 = time + 3
-					pl:SetBloodArmor(math.min(pl.MaxBloodArmor, pl:GetBloodArmor() + (5 * pl.BloodarmorGainMul)))
-				end
 				if pl:IsSkillActive(SKILL_DAMAGER) and math.random(1,250) == 1 then
                    pl:TakeDamage((pl:GetMaxHealth() * 0.10) + 1)
 				end
@@ -3650,6 +3642,14 @@ local function DoAttachmenttDamage(attacker,ent,damage,time,inflictor)
 				end
 				CurseAttach(attacker)
 				attacker.NextIceAtt = time + 3
+			end
+			return
+		end
+		if attacker:HasTrinket("separate_at") then
+			if (math_max(math_random(1,3* chnc),1) == 1  or attacker:IsSkillActive(SKILL_100_PERC) and (attacker.NextSeparateAtt or 0) < time) and !ent.NoBleedStack then
+				ent:AddBleedDamage(math.random(12,23), attacker)
+				CurseAttach(attacker)
+				attacker.NextSeparateAtt = time + 0.4
 			end
 			return
 		end

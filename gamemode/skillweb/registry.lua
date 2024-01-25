@@ -1985,7 +1985,7 @@ GM:AddSkill(SKILL_FREE_WAY, "Way", PURPLE.."Useless?\n",
 .RemortReq = 32
 				
 SKILL_BLOODMARY = 186
-GM:AddSkill(SKILL_BLOODMARY, "Sanguinum Messis", PURPLE.."Regenerate blood armor",
+GM:AddSkill(SKILL_BLOODMARY, "Sanguinum Messis", PURPLE.."A lot more damage from bleed",
 										-3,			-9,					{SKILL_ANCIENT}, TREE_ANCIENTTREE)
 										SKILL_TRUEPOWER = 187
 GM:AddSkill(SKILL_TRUEPOWER, "Future Knowledge Vol.3", PURPLE.."Cost Of Knowledge",
@@ -3146,7 +3146,7 @@ GM:AddSkillModifier(SKILL_CARRIER, SKILLMOD_PROP_CARRY_SLOW_MUL, -1)
 
 GM:AddSkillModifier(SKILL_EXPLOIT, SKILLMOD_DEPLOYABLE_HEALTH_MUL, -0.33)
 
-GM:AddSkillModifier(SKILL_BLOODARMOR, SKILLMOD_HEALTH, -5)
+GM:AddSkillModifier(SKILL_BLOODARMOR, SKILLMOD_HEALTH, -13)
 
 GM:AddSkillModifier(SKILL_HAEMOSTASIS, SKILLMOD_BLOODARMOR_DMG_REDUCTION, 0.06)
 GM:AddSkillModifier(SKILL_LEUKEMIA, SKILLMOD_BLOODARMOR_DMG_REDUCTION, 0.25)
