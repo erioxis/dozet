@@ -42,6 +42,7 @@ local matDef = Material("zombiesurvival/defense.png")
 local colNail = Color(0, 0, 5, 220)
 local colText = Color(240, 240, 240, 105)
 local colDead = Color(230, 80, 80, 95)
+local colRed = Color(130, 29, 29)
 local colDef = Color(90, 49, 252, 255)
 function ENT:Draw()--[[
 ]]
@@ -260,6 +261,7 @@ function ENT:Draw()--[[
 					64,
 					64
 				)
+				draw.SimpleText("12%", "ZS3D2DUnstyleNail", x - 68, y - 48,  colDef, TEXT_ALIGN_CENTER)
 				x = x - 64
 			end
 			if par:GetDTFloat(13) > curtime then
@@ -271,6 +273,7 @@ function ENT:Draw()--[[
 					64,
 					64
 				)
+				draw.SimpleText("x0.2", "ZS3D2DUnstyleNail", x - 68, y - 48,  colDef, TEXT_ALIGN_CENTER)
 				x = x - 64
 			end
 			if par:GetDTFloat(14) > curtime then
@@ -282,6 +285,7 @@ function ENT:Draw()--[[
 					64,
 					64
 				)
+				draw.SimpleText("x2.5", "ZS3D2DUnstyleNail", x - 68, y - 48,  colRed, TEXT_ALIGN_CENTER)
 				x = x - 64
 			end
 			if par:GetDTFloat(15) > curtime then
@@ -294,13 +298,14 @@ function ENT:Draw()--[[
 					64
 				)
 				surface.SetMaterial(matHeart)
-				surface.SetDrawColor(82, 21, 21)
+				surface.SetDrawColor(205, 50, 50)
 				surface.DrawTexturedRect(
 					x - 84,
 					y - 48,
 					32,
 					32
 				)
+				draw.SimpleText("15%", "ZS3D2DUnstyleNail", x - 68, y - 48,  colDef, TEXT_ALIGN_CENTER)
 				x = x - 64
 			end
 		cam.End3D2D()
