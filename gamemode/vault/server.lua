@@ -103,6 +103,13 @@ function GM:LoadVault(pl)
 				if contents.AchXP then
 					pl:SetDCoins(contents.AchXP)
 				end
+				if contents.RemortOldSkills then
+					pl.RemortOldSkills = util.DecompressBitTable(contents.RemortOldSkills, true)
+				end
+				if contents.OldDesiredSkills then
+					pl.OldDesiredSkills = util.DecompressBitTable(contents.OldDesiredSkills, true)
+				end
+			
 				pl.Season = (contents.Season or 1)
 
 				pl.SkillVersion = self.SkillTreeVersion
@@ -167,6 +174,8 @@ function GM:SaveVault(pl)
 		DesiredActiveSkills = util.CompressBitTable(pl:GetDesiredActiveSkills()),
 		UnlockedSkills = util.CompressBitTable(pl:GetUnlockedSkills()),
 		Version = pl.SkillVersion or self.SkillTreeVersion,
+		RemortOldSkills = util.CompressBitTable(contents.RemortOldSkills or {}) or {},
+		OldDesiredSkills = util.CompressBitTable(contents.OldDesiredSkills or {}) or {},
 		MedicMastery = pl:GetMastery("medic"),
 		MeleeMastery =pl:GetMastery("melee"),
 		GunMastery = pl:GetMastery("gunner"),

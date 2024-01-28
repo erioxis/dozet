@@ -1881,6 +1881,9 @@ LANGUAGE.s_dact_all = "Отключить Все"
 LANGUAGE.s_reset = "Сбросить"
 LANGUAGE.s_act_font = "ZSHUDFontTiny"
 
+
+LANGUAGE.s_autoupgrade = "Вкачать все скиллы с прошлого реморта"
+
 LANGUAGE.s_del = "Удалить"
 LANGUAGE.s_save = "Сохранить"
 LANGUAGE.s_load = "Загрузить"

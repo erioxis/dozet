@@ -176,6 +176,18 @@ net.Receive("zs_skills_refunded", function(length, pl)
 
 	pl.SkillsRefunded = false
 end)
+net.Receive("zs_skill_comeback", function(length, pl)
+	if pl.RemortOldSkills and pl.OldDesiredSkills then
+		local war = pl.OldDesiredSkills
+		for k,v in pairs(war) do
+			war[v] = true
+		end
+		
+		for k,v in pairs(pl.RemortOldSkills) do
+			UnlockSkills(pl,v,GAMEMODE.Skills[v],war[v])
+		end
+	end
+end)
 
 function GM:WriteSkillBits(t)
 	t = table.ToAssoc(t)
@@ -332,6 +344,8 @@ function meta:SkillsRemort()
 
 	self:SetZSRemortLevel(rl)
 	self:SetZSXP(0)
+	self.RemortOldSkills = self:GetUnlockedSkills()
+	self.OldDesiredSkills = self:GetDesiredActiveSkills()
 	self:SetUnlockedSkills({})
 	self:SetDesiredActiveSkills({})
 	self.NextSkillReset = nil

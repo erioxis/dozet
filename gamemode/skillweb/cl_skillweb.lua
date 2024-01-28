@@ -481,6 +481,8 @@ function PANEL:Init()
 		
 		UpdateDropDown(dropdown)
 	end
+
+		
 	
 	local savebtn = vgui.Create("DButton", bottomleft)
 	savebtn:SetFont("ZSHUDFontSmallest")
@@ -599,7 +601,6 @@ function PANEL:Init()
 			function() end
 		)
 	end
-		
 	local topright = vgui.Create("DEXRoundedPanel", self)
 	topright:SetSize(160 * screenscale, 64 * screenscale)
 	topright:DockPadding(10, 10, 10, 10)
@@ -652,7 +653,7 @@ function PANEL:Init()
 	bottom1:SetText(MySelf:GetDCoins()..translate.ClientGet(MySelf ,"xp_from_ach"))
 	bottom1:DockPadding(0, 10, 0, 0)
 	local button0 = vgui.Create("DEXRoundedPanel", self)
-	button0:SetSize(160 * screenscale, 64 * screenscale)
+	button0:SetSize(256 * screenscale, 100 * screenscale)
 	button0:SetPos(0 * screenscale, 104 * screenscale)
 	button0:DockPadding(10, 10, 10, 10)
 	local savebtn = vgui.Create("DButton", button0)
@@ -683,6 +684,20 @@ function PANEL:Init()
 		"OK", "Cancel")
 		frame:GetChildren()[5]:GetChildren()[2]:SetTextColor(Color(30, 30, 30))
 	end
+	
+	local reset = vgui.Create("DButton", button0)
+	reset:SetFont("ZSHUDFontTiniestStatus")
+	reset:SetText(translate.Get("s_autoupgrade"))
+	reset:SizeToContents()
+	reset:SetTall(reset:GetTall())
+	reset:DockMargin(0, 5, 0, 0)
+	reset:Dock(TOP)
+	reset.DoClick = function(me)
+		net.Start('zs_skill_comeback')
+			net.WriteEntity(pl)
+		net.SendToServer()
+	end
+		
 	local spremaining = vgui.Create("DEXChangingLabel", bottom)
 	spremaining:SetChangeFunction(function()
 		return translate.Get("hud_uu_sp")..MySelf:GetZSSPRemaining()
@@ -704,6 +719,7 @@ function PANEL:Init()
 	expbar.Paint = function(me, w, h)
 		GAMEMODE:DrawXPBar(0, 2 - screenscale * 2, w, h, w, 1, 0.95, MySelf:GetZSLevel())
 	end
+
 	
 	expbar:SetContentAlignment(5)
 	expbar:Dock(BOTTOM)

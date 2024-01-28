@@ -147,6 +147,9 @@
 	util.AddNetworkString("zs_skills_refunded")
 	util.AddNetworkString("zs_credit_takepoints")
 
+	util.AddNetworkString("zs_skill_comeback")
+	
+
 	util.AddNetworkString("zs_crow_kill_crow")
 	util.AddNetworkString("zs_pl_kill_pl")
 	util.AddNetworkString("zs_pls_kill_pl")

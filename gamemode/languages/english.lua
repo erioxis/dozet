@@ -2899,6 +2899,10 @@ LANGUAGE.s_yes_dact = "All unlocked skills Deactivated."
 LANGUAGE.s_dact_all = "Deactivate all"
 LANGUAGE.s_reset = "Reset"
 
+LANGUAGE.s_autoupgrade = "Unlock all skills from last remort"
+
+
+
 LANGUAGE.s_reset1 = "Reset all skills and refund SP?"
 LANGUAGE.s_reset2 = "Warning"
 LANGUAGE.cancel = "Cancel"
