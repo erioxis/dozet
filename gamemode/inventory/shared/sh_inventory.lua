@@ -250,7 +250,7 @@ local sinse = {	"sin_wrath",
 local quecader = {	"troyaksoul",
 "nanite_nails",
 "useself",
-"pr_bloodpack",
+"illegalmechanism",
 "soulmedical"}
 GM:AddInventoryItemData("cons_bounty",		trs("c_bounty"),			trs("c_bounty_d"),								"models/props_c17/trappropeller_lever.mdl", 3, nil, nil, function(pl) 
 	local tbl = tbleternal
