@@ -1444,7 +1444,7 @@ function GM:Think()
 					pl:StripWeapon(wep:GetClass())
 				end
 				local barac = pl:IsSkillActive(SKILL_BARA_CURSED)
-				if self.MaxSigils >= 1 and pl:GetActiveWeapon() ~= "weapon_zs_sigilfragment" then
+				if self.MaxSigils >= 1 and pl:GetActiveWeapon() ~= "weapon_zs_sigilfragment"  then
 					if not pl:GetStatus("sigildef") and self:GetWave() >= 6 and  time > pl.NextDamage and self:GetWaveActive() then
 						pl:TakeSpecialDamage(8 * (pl.TickBuff or 0), DMG_DIRECT)
 						pl.NextDamage = time + 2.4
@@ -1701,6 +1701,17 @@ function GM:Think()
 						net.WriteInt(pl.StowageCaches, 12)
 						net.WriteBool(true)
 					net.Send(pl)
+				end
+				if GetGlobalFloat("SnowStorm") > time then
+					
+					if !(pl:GetStatus('warm')) then
+						pl:GiveStatus('frost',5)
+						if pl.NextDamage  < time and self:GetWaveActive() then
+							pl:TakeSpecialDamage(pl:GetMaxHealth()*0.15, DMG_DIRECT)
+							pl.NextDamage = time + 3
+						end
+					end
+					pl:GiveStatus('dimvision_unknown',5)
 				end
 			elseif P_Team(pl) == TEAM_UNDEAD and P_Alive(pl) then
 				if pl.m_HealthRegen and time >= pl.NextRegenerate and pl:Health() <= pl:GetMaxHealth() and !pl:GetZombieClassTable().Boss then
@@ -2521,6 +2532,7 @@ function GM:EndRound(winner)
 	end
 
 	if self:ShouldRestartRound() then
+		SetGlobalFloat('SnowStorm', 0)
 		timer.Simple(self.EndGameTime - 3, function() gamemode.Call("PreRestartRound") end)
 		timer.Simple(self.EndGameTime, function() gamemode.Call("RestartRound") end)
 	else
@@ -3645,9 +3657,10 @@ local function DoAttachmenttDamage(attacker,ent,damage,time,inflictor)
 			end
 			return
 		end
-		if attacker:HasTrinket("separate_at") then
+		if attacker:HasTrinket("serrate_at") then
 			if (math_max(math_random(1,3* chnc),1) == 1  or attacker:IsSkillActive(SKILL_100_PERC) and (attacker.NextSeparateAtt or 0) < time) and !ent.NoBleedStack then
-				ent:AddBleedDamage(math.random(12,23), attacker)
+				local huh = ent:GiveStatus('serrated',3)
+				huh:AddDamage(1, attacker)
 				CurseAttach(attacker)
 				attacker.NextSeparateAtt = time + 0.4
 			end
@@ -4692,7 +4705,7 @@ function GM:HumanKilledZombie(pl, attacker, inflictor, dmginfo, headshot, suicid
 	end
 	attacker:GiveAchievementProgress("everycan", 1)
 	attacker:GiveAchievementProgress("dzs", 1)
-	if attacker.ZombiesKilled % 5 + (attacker:IsSkillActive(SKILL_PACIFISMIUM) and 25 or 0) == 0 then
+	if (attacker.ZombiesKilled % (5 + (attacker:IsSkillActive(SKILL_PACIFISMIUM) and 25 or 0))) == 0 then
 		attacker:SetChargesActive(attacker:GetChargesActive()+1)
 	end
 	pl:GiveAchievementProgress("goodtime", 1)

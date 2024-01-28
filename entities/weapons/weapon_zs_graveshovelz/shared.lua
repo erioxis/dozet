@@ -2,7 +2,9 @@ SWEP.Base = "weapon_zs_graveshovel"
 SWEP.ZombieOnly = false
 
 SWEP.MeleeDamage = 32
-SWEP.MeleeKnockBack = 160
+SWEP.MeleeKnockBack = 16
+SWEP.MeleeRange = 63
+
 
 SWEP.Primary.Delay = 0.46
 SWEP.BlockTrue = false

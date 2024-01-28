@@ -5,7 +5,7 @@ GM.Website	=	"https://github.com/erioxis/dozet"
 
 -- No, adding a gun doesn't make your name worth being here.
 GM.Credits = {
-	{"Version", "", "9.6.0"},
+	{"Version", "", "9.6.5"},
 	{"Season of ", "", "Quality of Life"},
 	{"erioxis", "Phantom coder", "dead"},
 	{"Холодное Молочко(M-I-L-K-Y)", "Phantom coder", "dead"},
@@ -111,7 +111,8 @@ local HITGROUP_GEAR = HITGROUP_GEAR
 local HITGROUP_STOMACH = HITGROUP_STOMACH
 local HITGROUP_LEFTLEG = HITGROUP_LEFTLEG
 local HITGROUP_RIGHTLEG = HITGROUP_RIGHTLEG
-local PTeam = FindMetaTable("Player").Team
+local metaplayer = FindMetaTable("Player")
+local PTeam = metaplayer.Team
 
 
 hook.Add( "PlayerSpray", "PostSpray", function( pl )
@@ -152,6 +153,7 @@ function GM:AddCustomAmmo()
 	game.AddAmmoType({name = "mediccloudbomb"})
 	game.AddAmmoType({name = "nanitecloudbomb"})
 	game.AddAmmoType({name = "repairfield"})
+	game.AddAmmoType({name = "camps"})
 	game.AddAmmoType({name = "medstation"})
 	game.AddAmmoType({name = "fridge"})
 	game.AddAmmoType({name = "sigil_port"})

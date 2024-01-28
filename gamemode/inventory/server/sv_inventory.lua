@@ -11,18 +11,6 @@ function meta:AddInventoryItem(item)
 	if item == "trinket_clever" then
 		self:GiveAchievement("bruhwtf")
 	end
-	--[[
-				if self.OutFitPac then
-					self:RemovePACPart(self.OutFitPac)
-					self.OutFitPac = nil 
-				end
-				if classtab.Pac3Out then
-					pac.SetupENT(self)
-					self:AttachPACPart(classtab.Pac3Out)
-					self.OutFitPac = classtab.Pac3Out
-				end
-
-	]]
 	if GAMEMODE.ZSInventoryItemData[item].PacModels then
 		net.Start("zs_item_pac")
 			net.WriteString(item)

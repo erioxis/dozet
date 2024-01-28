@@ -95,13 +95,25 @@ local function SetWeaponViewerSWEP(self, swep, category, comps)
 		weapons.Get(comps[2]) and weapons.Get(comps[2]).PrintName or GAMEMODE.ZSInventoryItemData[comps[2]].PrintName
 		or "")or "")
 end
+local tbleternal = {["headshoter"] = "None", ["ind_buffer"]  = "None", ["ultra_at"] = "None", ["pearl"] = "None",
+["broken_world"]  = "None",["whysoul"]  = "None",["altevesoul"]  = "None",["lucky_chance"]  = "None",["acum"]  = "None",["driller"] = "None",["mirror_of_god"] = "None",["module_mirror"] = "None",
+["pr_gold"] = "Medical",
+["pr_barapaw"] = "Medical",
+["pr_chamomile"] = "Medical",
+["pr_bloodpack"] = "Medical",
+["soulmedical"] = "Medical",
+["troyaksoul"] = "Cader",
+["nanite_nails"] = "Cader",
+["useself"] = "Cader"
+}  
 
+--print(tbleternal['nanite_nails'])
 function MakepWeapons(silent)
 	if not silent then
 		PlayMenuOpenSound()
 	end
 
-	if pWeapons then
+	if pWeapons and pWeapons:IsValid()  then
 		pWeapons:SetAlpha(0)
 		pWeapons:AlphaTo(255, 0.15, 0)
 		pWeapons:SetVisible(true)
@@ -122,6 +134,10 @@ function MakepWeapons(silent)
 				weps[#weps + 1] = tab.SWEP
 				added[tab.SWEP] = true
 				addedcat[tab.SWEP] = tab.Category
+			elseif GAMEMODE.ZSInventoryItemData[tab.SWEP] then
+				trinkets[#trinkets + 1] = tab.SWEP
+				added[tab.SWEP] = true
+				addedcat[tab.SWEP] = tab.SubCategory
 			end
 		end
 	end
@@ -134,22 +150,23 @@ function MakepWeapons(silent)
 			end
 		end
 	end
-	for k, wep in pairs(GAMEMODE.ZSInventoryItemData) do
+	--[[for k, wep in pairs(GAMEMODE.ZSInventoryItemData) do
 		--print(k)
 		if not trinkets[wep] and GAMEMODE:GetInventoryItemType(k) == INVCAT_TRINKETS  and !added[wep.PrintName] then
 			trinkets[#trinkets + 1] = wep
 			added[wep.PrintName] = true
 		end
-	end
+	end]]
 	for k, wep in pairs(GAMEMODE.ZSInventoryItemData) do
 		if not trinkets[wep] and GAMEMODE:GetInventoryItemType(k)  == INVCAT_COMPONENTS and !added[wep.PrintName] then
 			trinkets[#trinkets + 1] = wep
 			added[wep.PrintName] = true
 		end
 	end
+	local usables = {}
 	for k, wep in pairs(GAMEMODE.ZSInventoryItemData) do
-		if not trinkets[wep] and GAMEMODE:GetInventoryItemType(k)  == INVCAT_CONSUMABLES and !added[wep.PrintName] then
-			trinkets[#trinkets + 1] = wep
+		if not usables[wep] and GAMEMODE:GetInventoryItemType(k)  == INVCAT_CONSUMABLES and !added[wep.PrintName] then
+			usables[#usables + 1] = wep
 			added[wep.PrintName] = true
 		end
 	end
@@ -206,12 +223,19 @@ function MakepWeapons(silent)
 	GAMEMODE:ConfigureMenuTabs(tabs, tabhei)
 
 	frame.ViewerY = y
-
+	frame.tierswep = frame.tierswep or {}
+	for i=1,7 do
+		frame.tierswep[i] = frame.WeaponsTree:AddNode(translate.Get('w_tier')..i)
+		frame.tierswep[i].DoClick = function(arguments)
+			frame.tierswep[i]:ExpandTo(true)
+		end
+	end
+	
 	for _, wep in pairs(weps) do
 		local enttab = weapons.Get(wep)
 		local wepnode
 		if enttab then
-			wepnode = frame.WeaponsTree:AddNode(enttab.PrintName or wep)
+			wepnode = frame.tierswep[(enttab.Tier or 1)]:AddNode(enttab.PrintName or wep)
 		else
 			wepnode = frame.WeaponsTree:AddNode(wep)
 		end
@@ -233,11 +257,47 @@ function MakepWeapons(silent)
 		wepnode.Category = enttab.RequiredClip and ITEMCAT_GUNS or (enttab.Primary.Ammo == "none" and enttab.MeleeRange) and ITEMCAT_MELEE or ITEMCAT_TOOLS
 		wepnode.Comps = GAMEMODE.Assemblies[wep]
 	end
-
+	frame.trinketwep = frame.trinketwep or {}
+	--for i=1,8 do
+	--	frame.trinketwep[i] = frame.TrinketTree:AddNode(translate.Get('w_tier')..i)
+	--	frame.trinketwep[i].DoClick = function(arguments)
+	--		frame.trinketwep[i]:ExpandTo(true)
+	--	end
+	--end
+	for k,v in pairs(GAMEMODE.ItemSubCategories) do
+		frame.trinketwep[v] = frame.TrinketTree:AddNode(v)
+		frame.trinketwep[v].DoClick = function(arguments)
+			frame.trinketwep[v]:ExpandTo(true)
+		end
+	end
+	frame.trinketwep["cons"] = frame.TrinketTree:AddNode(translate.Get('vgui_cons'),'icon16/ruby.png')
+	frame.trinketwep["Undefined"] = frame.TrinketTree:AddNode(translate.Get('vgui_comp'),'icon16/tick.png')
+	frame.trinketwep["bounty"] = frame.TrinketTree:AddNode(translate.Get('skill_bounty'),'icon16/award_star_gold_1.png')
 	for k, wep in pairs(trinkets) do
-		local enttab = k
+		local enttab = GAMEMODE.ZSInventoryItemData[wep] or wep
 		local wepnode
-		wepnode = frame.TrinketTree:AddNode(wep.PrintName or wep)
+		wepnode =  frame.trinketwep[(GAMEMODE.ItemSubCategories[addedcat[wep]] or 'Undefined')]:AddNode(enttab.PrintName or wep)
+
+		wepnode.SWEP = wep
+		wepnode.DoClick = WeaponButtonDoClick
+		wepnode.Category = ITEMCAT_TRINKETS
+		wepnode.Comps = GAMEMODE.Assemblies[wep]
+	end
+	for wep,v in pairs(tbleternal) do
+		print(wep,v)
+		local enttab = GAMEMODE.ZSInventoryItemData["trinket_"..wep] or wep
+		local wepnode
+		wepnode =  frame.trinketwep['bounty']:AddNode(enttab.PrintName or wep, v == "Cader" and 'icon16/wrench.png' or v == "Medical" and 'icon16/pill.png' or "icon16/key.png")
+
+		wepnode.SWEP = "trinket_"..wep
+		wepnode.DoClick = WeaponButtonDoClick
+		wepnode.Category = ITEMCAT_TRINKETS
+		wepnode.Comps = GAMEMODE.Assemblies[wep]
+	end
+	for k, wep in pairs(usables) do
+		local enttab = GAMEMODE.ZSInventoryItemData[wep] or wep
+		local wepnode
+		wepnode =  frame.trinketwep["cons"]:AddNode(enttab.PrintName or wep)
 
 		wepnode.SWEP = wep
 		wepnode.DoClick = WeaponButtonDoClick

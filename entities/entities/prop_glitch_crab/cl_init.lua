@@ -1,7 +1,9 @@
- INC_CLIENT()
+INC_CLIENT()
 
 function ENT:Initialize()
-	self:SetModel("models/headcrabclassic.mdl")
+	timer.Simple(0, function(arguments)
+		self:SetModel("models/headcrabclassic.mdl")
+	end)
 	self:SetModelScale(0.5, 0)
 	self:UseClientSideAnimation(true)
 end
@@ -18,20 +20,15 @@ local EmitSounds = {
 }
 
 function ENT:Think()
-
-
-
 	if self.DoEmitNextFrame then
 		self.DoEmitNextFrame = nil
 		self:EmitSound(EmitSounds[math.random(#EmitSounds)], 65, math.random(95, 105))
 	end
-
 	self:SetSequence(2)
 	self:SetCycle(CurTime())
 end
 
 function ENT:Draw()
-
 	render.SetColorModulation(0.259, 0.251, 0.58)
 	render.SuppressEngineLighting(true)
 	self:DrawModel()

@@ -24,7 +24,7 @@ function ENT:OnTakeDamage(dmginfo)
 	if dmginfo:GetDamage() <= 0 then return end
 
 	local attacker = dmginfo:GetAttacker()
-	if dmginfo:GetDamage() >= 1 and not (attacker:IsValid() and attacker:IsPlayer() and attacker:Team() == TEAM_UNDEAD) then
+	if dmginfo:GetDamage() >= 1 and attacker:IsValidLivingHuman() then
 		self:Destroy()
 	end
 end
@@ -35,6 +35,7 @@ function ENT:Think()
 	if self.DieTime < CurTime() then
 		self:Destroy()
 	end
+	if self.CreatedByCrab and self.CreatedByCrab > CurTime() then return end
 	if !self.trg:IsValid() then
 		local targets = {}
 		for _, ent in pairs(player.FindInSphere(self:GetPos(), 1048)) do
@@ -73,7 +74,7 @@ function ENT:Think()
 	return true
 end
 function ENT:Hit(vHitPos, vHitNormal, ent)
-	if !ent:IsValid() then return end
+	if !ent:IsValid() or !ent:IsValidLivingHuman() then return end
 	ent:TakeDamage(3,self:GetOwner() or self,self)
 	self:Destroy()
 end

@@ -237,7 +237,7 @@ function meta:ProcessDamage(dmginfo)
 			if attacker:IsSkillActive(SKILL_BERSERK) and attacker:GetTimerBERS() >= time then
 				damage = damage * 5
 			end
-			if wep.IsMelee then
+			if inflictor.IsMelee then
 				if attacker:IsSkillActive(SKILL_CHEAPKNUCKLE) and math.abs(self:GetForward():Angle().yaw - attacker:GetForward():Angle().yaw) <= 90 then
 					self:AddLegDamage(12)
 				end
@@ -1007,13 +1007,13 @@ function meta:SetBloodArmor( armor )
 	self:SetDTInt( DT_PLAYER_INT_BLOODARMOR, math.max(self:GetStatus( "bloodysickness" ) and 0 or armor,0) )
 	local barmor = self:GetBloodArmor() 
 	if self:IsSkillActive(SKILL_HYPERGLYCEMIA) and barmor >= self.MaxBloodArmor-1 and self.NextGlycemiaExplode < CurTime() then
-		timer.Simple(0, function() self:TakeDamage(self:GetMaxHealth()*0.25,self,BLOOD_BOMBER) end)
+		timer.Simple(0, function() self:TakeSpecialDamage(self:GetMaxHealth()*0.25,DMG_DIRECT,self,BLOOD_BOMBER) end)
 		self.NextGlycemiaExplode = CurTime() + 6
 		local effectdata = EffectData()
 			effectdata:SetOrigin(self:WorldSpaceCenter())
 		util.Effect("explosion_blood", effectdata, true)
 		self:SetDTInt( DT_PLAYER_INT_BLOODARMOR, 0 )
-		for _,ent in pairs(player.FindInSphere(self:WorldSpaceCenter(),300)) do
+		for _,ent in pairs(player.FindInSphere(self:WorldSpaceCenter(),340)) do
 			if WorldVisible(self:LocalToWorld(Vector(0, 0, 10)), ent:NearestPoint(self:LocalToWorld(Vector(0, 0, 10)))) and ent:IsValidLivingZombie()  then
 				ent:TakeDamage(barmor*1.6,self,BLOOD_BOMBER)
 			end

@@ -1,6 +1,6 @@
 CLASS.Name = "God of Shitcade"
 CLASS.TranslationName = "class_antimelee"
-CLASS.Description = "description_butcher"
+CLASS.Description = "description_antimelee"
 CLASS.Help = "controls_butcher"
 
 CLASS.Boss = true

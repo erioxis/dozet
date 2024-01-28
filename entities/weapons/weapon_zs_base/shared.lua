@@ -385,7 +385,7 @@ function SWEP:GetFireDelay()
 	if owner:GetStatus("unreal") then
 		spd = spd / (1 + (owner:GetStatus("unreal"):GetDTInt(1) or 0)*0.1)
 	end
-	return self.Primary.Delay / (owner:GetStatus("frost") and 0.7 or 1) * (owner.M_FireDelay or 1) * spd
+	return self.Primary.Delay / (owner:GetStatus("frost") and 0.7 or owner:GetStatus('warm') and 1.2 or 1) * (owner.M_FireDelay or 1) * spd
 end
 local function DoRicochet(attacker, hitpos, hitnormal, normal, damage)
 	for i=1,2 do

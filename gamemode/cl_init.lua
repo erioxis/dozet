@@ -390,10 +390,26 @@ function GM:SetupFog()
 		fogg = Lerp(power, fogg, 0)
 		fogb = Lerp(power, fogb, 0)
 	end
+	local huh = GetGlobalFloat('SnowStorm', 0)
+	if huh and huh > CurTime() then
+		if (self.NextStorm or 0) < CurTime() then
+			surface.PlaySound('ambient/wind/windgust_strong.wav')
+			self.NextStorm = CurTime() + 10
+		end
+
+		power = math.Clamp((huh - CurTime()) * 2, 0, 1)
+		--print(power)
+
+		fogstart = Lerp(power, fogstart, 1)
+		fogend = Lerp(power, fogend, math.min(998 * power, fogend))
+		fogr = 130
+		fogg = 160
+		fogb = 185
+	end
 end
 
 function GM:_SetupWorldFog()
-	if self.DeathFog == 0 and not MySelf.DimVision then return end
+	if self.DeathFog == 0 and not MySelf.DimVision and GetGlobalFloat('SnowStorm', 0) < CurTime() then return end
 
 	self:SetupFog()
 

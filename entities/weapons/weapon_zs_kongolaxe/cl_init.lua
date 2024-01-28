@@ -40,13 +40,13 @@ INC_CLIENT()
 
 		surface.SetDrawColor(61, 230, 49, 180)
 		surface.SetTexture(surface.GetTextureID("VGUI/gradient_down"))
-		surface.DrawTexturedRect(x, y, math.min((self:GetDTFloat(11)-CurTime()) * 0.1,1) * wid, hei)
+		surface.DrawTexturedRect(x, y, math.min((self:GetDTFloat(11)-CurTime())/7,1) * wid, hei)
 		draw.SimpleText("GOD!", "ZSHUDFontSmall", x, texty-32, COLOR_GREEN, TEXT_ALIGN_LEFT)
 		
 	else
 		surface.SetDrawColor(250, 55, 0, 180)
 		surface.SetTexture(surface.GetTextureID("VGUI/gradient_down"))
-		surface.DrawTexturedRect(x, y, math.min(defleft/25,1) * wid, hei)
+		surface.DrawTexturedRect(x, y, math.min(defleft/100,1) * wid, hei)
 	end
 
 			surface.SetDrawColor(50, 155, 50, 180)

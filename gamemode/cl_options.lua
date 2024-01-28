@@ -381,6 +381,10 @@ GM.MessageBeaconShow = CreateClientConVar("zs_messagebeaconshow", "1", true, fal
 cvars.AddChangeCallback("zs_messagebeaconshow", function(cvar, oldvalue, newvalue)
 	GAMEMODE.MessageBeaconShow = tonumber(newvalue) == 1
 end)
+GM.SnowShow = CreateClientConVar("zs_showsnow", "0", true, false):GetBool()
+cvars.AddChangeCallback("zs_showsnow", function(cvar, oldvalue, newvalue)
+	GAMEMODE.SnowShow = tonumber(newvalue) == 1
+end)
 
 GM.WeaponHUDMode = CreateClientConVar("zs_weaponhudmode", "0", true, false):GetInt()
 cvars.AddChangeCallback("zs_weaponhudmode", function(cvar, oldvalue, newvalue)

@@ -194,6 +194,13 @@ end
 function meta:GetBleedDamage()
 	return self.Bleed and self.Bleed:IsValid() and self.Bleed:GetDamage() or 0
 end
+function meta:SyncAngles()
+    local ang = self:EyeAngles()
+    ang.pitch = 0
+    ang.roll = 0
+    return ang
+end
+meta.GetAngles = meta.SyncAngles
 
 function meta:CallWeaponFunction(funcname, ...)
 	local wep = self:GetActiveWeapon()
@@ -1301,7 +1308,7 @@ function meta:GetMeleeSpeedMul()
 	if self.StaminaHAHA and self:GetStamina() <= (self:IsSkillActive(SKILL_SAHA) and 50 or 33) then
 		mul = math.max(mul * (self:GetStamina()/50),0.1)
 	end
-	return 1 * (1 + math.Clamp(self:GetArmDamage() / GAMEMODE.MaxArmDamage, 0, 1)) / (self:GetStatus("frost") and 0.7 or 1) / (self:GetStatus("resnya") and 1.45 or 1) / (self.SoyMilk and 2 or 1) / mul
+	return 1 * (1 + math.Clamp(self:GetArmDamage() / GAMEMODE.MaxArmDamage, 0, 1)) / (self:GetStatus("frost") and 0.7 or self:GetStatus('warm') and 1.2 or 1) / (self:GetStatus("resnya") and 1.45 or 1) / (self.SoyMilk and 2 or 1) / mul
 end
 
 function meta:GetPhantomHealth()

@@ -7,6 +7,9 @@ SWEP.Secondary.DefaultClip = 0
 SWEP.Secondary.Ammo = "dummy"
 SWEP.Secondary.Automatic = true
 
+SWEP.PrintName = translate.Get('wep_fireofdespair')
+SWEP.Description = translate.Get('wep_d_fireofdespair')
+
 SWEP.Slot = 0
 SWEP.SlotPos = 0
 

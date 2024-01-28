@@ -755,6 +755,14 @@ GM.Statuses["bloodysickness"] = {
 	Icon = Material("zombiesurvival/sickness.png"),
     Debuff = true
 }
+GM.Statuses["serrated"] = {
+	Color = Color(101, 0, 0),
+	Name = "serrated",
+	ValFunc = statusValueFunction("serrated"),
+	Max = 9,
+	Icon = Material("zombiesurvival/sickness.png"),
+    Debuff = true
+}
 GM.Statuses["dosei_inf"] = {
 	Color = Color(15, 188, 188),
 	Name = "dosei_inf",

@@ -15,18 +15,18 @@ SWEP.UseHands = true
 
 SWEP.HoldType = "melee2"
 
-SWEP.MeleeDamage = 98
+SWEP.MeleeDamage = 101
 SWEP.MeleeRange = 75
-SWEP.MeleeSize = 3
-SWEP.MeleeKnockBack = 350
+SWEP.MeleeSize = 2
+SWEP.MeleeKnockBack = 150
 
-SWEP.Primary.Delay = 1.3
+SWEP.Primary.Delay = 1.8
 
 SWEP.WalkSpeed = SPEED_SLOWER
 
 SWEP.SwingRotation = Angle(60, 0, -80)
 SWEP.SwingOffset = Vector(0, -30, 0)
-SWEP.SwingTime = 0.6
+SWEP.SwingTime = 0.9
 SWEP.SwingHoldType = "melee"
 
 SWEP.CanDefend = true
@@ -54,12 +54,13 @@ end
 
 function SWEP:DamageThink(dmginfo) 
 	if self:GetPerc() > 0 then
-		dmginfo:SetDamage(dmginfo:GetDamage() * math.max(0.1,1-self:GetPerc()*0.05))
-		self:SetPerc(self:GetPerc() - 1)
+		local damage = dmginfo:GetDamage() 
+		dmginfo:SetDamage(damage * math.max(0.1,1-self:GetPerc()*0.01))
+		self:SetPerc(self:GetPerc() - math.Round(dmginfo:GetDamage()/10)+1)
 	end
 end
 function SWEP:DealThink(dmginfo) 
-	self:SetPerc(math.min(25,self:GetPerc() + 1))
+	self:SetPerc(math.min(100,self:GetPerc() + 1))
 end
 function SWEP:HaveAbility()
 	if self:GetPerc() >= 25 then
@@ -67,8 +68,8 @@ function SWEP:HaveAbility()
 		self:SetPerc(0)
 		pl:GodEnable()
 		self:SetDTBool(6,true)
-		self:SetDTFloat(11,CurTime()+10)
-		timer.Simple(10, function()
+		self:SetDTFloat(11,CurTime()+7)
+		timer.Simple(7, function()
 			if self:IsValid() then
 				self:SetDTBool(6,false)
 				pl:GodDisable()

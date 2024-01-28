@@ -89,8 +89,9 @@ GM.Assemblies["weapon_zs_fracture"] 							= {"comp_pumpaction",		"weapon_zs_saw
 GM.Assemblies["weapon_zs_seditionist"] 							= {"comp_focusbarrel",		"weapon_zs_deagle"}
 GM.Assemblies["weapon_zs_blareduct"] 							= {"trinket_ammovestii",	"weapon_zs_megamasher"}
 GM.Assemblies["weapon_zs_cinderrod"] 							= {"trinket_classixsoul",		"weapon_zs_blareduct"}
-GM.Assemblies["weapon_zs_innervator"] 							= {"comp_electrobattery",	"weapon_zs_jackhammer"}
-GM.Assemblies["weapon_zs_hephaestus"] 							= {"comp_gaussframe",		"weapon_zs_tithonus"}
+GM.Assemblies["weapon_zs_innervator"] 							= {"comp_electrobattery",	"weapon_zs_jackhammer"}--comp_flak
+GM.Assemblies["comp_flak"] 							= {"comp_gaussframe",		"weapon_zs_tithonus"}
+GM.Assemblies["weapon_zs_hephaestus"] 							= {"comp_flak",		"trinket_greedsoul"}
 GM.Assemblies["weapon_zs_stabber"] 								= {"comp_shortblade",		"weapon_zs_annabelle"}
 GM.Assemblies["weapon_zs_galestorm"] 							= {"comp_multibarrel",		"weapon_zs_uzi"}
 GM.Assemblies["weapon_zs_eminence"] 							= {"trinket_ammovestiii",	"weapon_zs_barrage"}
@@ -253,15 +254,15 @@ local quecader = {	"troyaksoul",
 "illegalmechanism",
 "soulmedical"}
 GM:AddInventoryItemData("cons_bounty",		trs("c_bounty"),			trs("c_bounty_d"),								"models/props_c17/trappropeller_lever.mdl", 3, nil, nil, function(pl) 
-	local tbl = tbleternal
+	local tbl = table.Copy(tbleternal)
 	if pl:IsSkillActive(SKILL_SINS_2) then
 		table.Add(tbl,sinse)
 	end
 	if pl.MedicalBounty > 0 then
-		tbl = medet
+		tbl = table.Copy(medet)
 	end
 	if pl.CadersBounties > 0 then
-		tbl = quecader
+		tbl = table.Copy(quecader)
 	end
 	local tries = 0
 	local need = pl.SeededBounty or {}
@@ -1458,6 +1459,7 @@ trinket, trinketwep = GM:AddTrinket(trs("t_ammopack"), "resupplypack", true, nil
 }, 4, trs("t_d_ammopack"), "resupplypack", 3)
 trinketwep.PermitDismantle = true
 
+GM:AddTrinket(trs("t_spider"), "spider", true, supveles, supweles, nil, trs("t_d_spider"), "spider")
 GM:AddTrinket(trs("t_magnet"), "magnet", true, supveles, supweles, nil, trs("t_d_magnet"), "magnet")
 GM:AddTrinket(trs("t_smagnet"), "electromagnet", true, supveles, supweles, nil, trs("t_d_smagnet"), "magnet_electro")
 local ego = {[1] = {
@@ -1678,6 +1680,8 @@ GM:AddSkillFunction(trinket, function(pl, active)
 	pl.RemedyRegen = active
 end)
 
+trinket, trinketwep = GM:AddTrinket(trs("t_nnails"), "nanite_nails", false, supveles, supweles, 3, trs("t_d_nnails"), nil, nil, "ammo_nail")
+GM:AddSkillModifier(trinket, SKILLMOD_REPAIRRATE_MUL, -0.15)
 trinket, trinketwep = GM:AddTrinket(trs("t_useself"), "useself", false, supveles, supweles, 3, trs("t_d_useself"), nil, nil, "ammo_nail")
 
 
@@ -1957,7 +1961,7 @@ GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_MUL, -0.1)
 trinket = GM:AddTrinket(trs("t_acid_at"), "acid_at", false, supveles, supweles, 2, trs("t_d_acid_at"))
 GM:AddSkillModifier(trinket, SKILLMOD_DAMAGE, -0.1)
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_MUL, -0.1)
-trinket = GM:AddTrinket(trs("t_separate_at"), "separate_at", false, supveles, supweles, 2, trs("t_d_separate_at"))
+trinket = GM:AddTrinket(trs("t_serrate_at"), "serrate_at", false, supveles, supweles, 2, trs("t_d_serrate_at"))
 GM:AddSkillModifier(trinket, SKILLMOD_DAMAGE, -0.04)
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_MUL, -0.04)
 trinket = GM:AddTrinket(trs("t_ultra_at"), "ultra_at", false, supveles, supweles, 2, trs("t_d_ultra_at"))
@@ -2138,7 +2142,7 @@ trinket = GM:AddTrinket("Blank Soul", "blanksoul", false, nil, {
 }, 5,"Пустая душа поглощает 5% урона по вам\nblank soul absorb 5% damage to you \n Q:0 ", nil, nil, "weapon_zs_soul")
 GM:AddSkillModifier(trinket, SKILLMOD_DMG_TAKEN, -0.05)
 
-trinket = GM:AddTrinket(" Soul of Classix", "classixsoul", false, nil, {
+trinket = GM:AddTrinket("Soul of Classix", "classixsoul", false, nil, {
 	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 7.697, y = 7.697 }, color = Color(5, 25, 211, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core_2+"] = { type = "Sprite", sprite = "effects/splashwake1", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 10, y = 10 }, color = Color(5, 0, 25, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 2, 0), angle = Angle(0, 0, 0), size = Vector(0.349, 0.349, 0.349), color = Color(155, 110, 15, 255), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} }

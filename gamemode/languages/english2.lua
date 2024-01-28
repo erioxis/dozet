@@ -80,6 +80,8 @@ LANGUAGE.t_arspack                                 = "Arsenal Pack"
 LANGUAGE.t_ammopack                                 = "Resupply Pack"
 LANGUAGE.t_magnet                                 = "Magnet"
 LANGUAGE.t_smagnet                                 = "Electromagnet"
+LANGUAGE.t_spider                                 = "Spider mechanism"
+LANGUAGE.t_d_spider                                 = "Allow to like spider walking on walls while holding this gadget."
 LANGUAGE.t_exoskelet                                 = "Loading Exoskeleton"
 LANGUAGE.t_blueprints                                 = "Blueprints"
 LANGUAGE.t_ablueprints                                 = "Advanced Blueprints"
@@ -164,7 +166,7 @@ LANGUAGE.t_d_driller_6                                  = "+70% Drill power for 
 -- virtues
 LANGUAGE.skill_steel_ass = "Steel ass"
 LANGUAGE.skill_steel_ass_d1 = "Baracats can't fall you!\n"
-LANGUAGE.skill_steel_ass_d2 = "+300% Damage taken from Miss ASS.\n"
+LANGUAGE.skill_steel_ass_d2 = "+300% Damage taken from King of baracats.\n"
 LANGUAGE.vir_pat_warning = "You can't buy!Wait a endwave!(don't drop)"
 LANGUAGE.t_vir_pat = "Virtue of patience"
 --trinket Descriptions
@@ -200,8 +202,8 @@ LANGUAGE.t_d_cham_at = "Super-effective vs baracats.\nAll damages don't work wit
 LANGUAGE.t_d_fire_at = "Ignite damage\n-10% DMG"
 LANGUAGE.t_d_acid_at = "Cold damage\n-10% DMG"
 LANGUAGE.t_d_pulse_at = "Pulse slow damage\n-10% DMG"
-LANGUAGE.t_separate_at = "Separate damage"
-LANGUAGE.t_d_separate_at = "Inflicts a bleeding with chance.\n-4% DMG"
+LANGUAGE.t_serrate_at = "Serrate damage"
+LANGUAGE.t_d_serrate_at = "Inflicts a bleeding with chance.\n-4% DMG"
 LANGUAGE.t_d_ultra_at = "Sometimes can increase damage by x2.5 for zombie\n-10% DMG"
 LANGUAGE.t_d_curse_slow                                 = "-80 speed\nOn drop or giving anything damage for 100 health"
 LANGUAGE.t_d_curse_faster                                 = "Bullet damage faster getting lower\n On drop anything give +50 Director kills"
@@ -381,6 +383,9 @@ LANGUAGE.t_missluck                           = "Cube of luck"
 LANGUAGE.t_d_missluck                           = "Have chance do a CRIT damage (180%) with 5% chance!"
 
 LANGUAGE.new_f2                                 = "NEW!"
+
+LANGUAGE.op_snow = "Remove particles of snow storm."
+
 LANGUAGE.trap_barrel = "BROKEN BARREL!Chance for spawn 1|%d"
 
 LANGUAGE.survival_name = "Survival"

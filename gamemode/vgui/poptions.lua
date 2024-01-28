@@ -345,6 +345,14 @@ function MakepOptions()
 	check:SizeToContents()
 	list4:AddItem(check)
 
+
+	check = vgui.Create("DCheckBoxLabel", Window)
+	check:SetText(translate.Get("op_snow"))
+	check:SetConVar("zs_showsnow")
+	check:SizeToContents()
+	list4:AddItem(check)
+	
+
 	check = vgui.Create("DCheckBoxLabel", Window)
 	check:SetText(translate.Get("op_filmmod"))
 	check:SetConVar("zs_filmmode")

@@ -58,8 +58,8 @@ end)
 local branch = GAMEMODE:AddNewRemantleBranch(SWEP, 2, ""..translate.Get("wep_tau_f1"), ""..translate.Get("wep_d_tau_f1"), function(wept)
 	wept.Primary.Delay = wept.Primary.Delay * 2.6
 	wept.Primary.Damage = wept.Primary.Damage * 0.77
-	wept.BulletCallback = function(attacker, tr, dmginfo)
 	wept.Primary.Ammo = "chemical"
+	wept.BulletCallback = function(attacker, tr, dmginfo)
 
 			local originaldmg = dmginfo:GetDamage()
 			dmginfo:SetDamage(attacker:GetActiveWeapon().Primary.Damage * 0.3)

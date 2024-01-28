@@ -510,6 +510,7 @@ function GM:OpenRemantlerMenu(remantler)
 	if self.RemantlerInterface and self.RemantlerInterface:IsValid() and self.RemantlerInterface.m_WepClass == mytarget then
 		self.RemantlerInterface:SetVisible(true)
 		self.RemantlerInterface:CenterMouse()
+		self.RemantlerInterface:Remove()
 		return
 	end
 
@@ -643,7 +644,7 @@ function GM:OpenRemantlerMenu(remantler)
 				tbn:SetFont("ZS3D2DFontTiny")
 				tbn:SetAlpha(j == 1 and 255 or 70)
 				tbn:AlignRight(800 * screenscale - (ispacer - 1) * 120 * screenscale)
-				tbn:AlignTop(j <= 3 and 2 or 40)
+				tbn:AlignTop(j <= 4 and 2 or 40)
 				tbn:SizeToContents()
 				tbn.DoClick = function(me)
 					for k, v in pairs(tabpane.Grids) do

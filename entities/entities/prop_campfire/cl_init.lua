@@ -6,12 +6,11 @@ local matBeam = Material( "trails/electric" )
 
 function ENT:Initialize()
 	self:SetModelScale(0, 0)
-	self:SetPos(self:LocalToWorld(Vector(0, 0, -1)))
 
 
 	local cmodel = ClientsideModel("models/props_debris/concrete_chunk03a.mdl")
 	if cmodel:IsValid() then
-		cmodel:SetPos(self:LocalToWorld(Vector(0, 0, -13)))
+		cmodel:SetPos(self:LocalToWorld(Vector(0, 0, -3)))
 		cmodel:SetAngles(self:LocalToWorldAngles(Angle(0, 0, 0)))
 		cmodel:SetSolid(SOLID_NONE)
 		cmodel:SetMoveType(MOVETYPE_NONE)
@@ -31,7 +30,7 @@ function ENT:Initialize()
 	for i=1,8 do
 		local cmodel = ClientsideModel("models/props_docks/dock01_pole01a_128.mdl")
 		if cmodel:IsValid() then
-			cmodel:SetPos(self:LocalToWorld(Vector(0, 0, -17)+ ang:Forward()))
+			cmodel:SetPos(self:LocalToWorld(Vector(0, 0, -7)+ ang:Forward()))
 			ang:RotateAroundAxis( up,45 )
 			cmodel:SetAngles(self:LocalToWorldAngles(ang+Angle(90, 0, 110)))
 			cmodel:SetSolid(SOLID_NONE)

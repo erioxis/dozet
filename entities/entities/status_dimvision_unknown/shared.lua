@@ -11,11 +11,6 @@ function ENT:Initialize()
 
 	self:DrawShadow(false)
 
-	if CLIENT then
-		hook.Add("RenderScreenspaceEffects", self, self.RenderScreenspaceEffects)
-	end
-
-	self:GetOwner().DimVision = self
 end
 
 function ENT:OnRemove()
@@ -26,11 +21,4 @@ end
 
 function ENT:PlayerSet()
 	self:SetStartTime(CurTime())
-
-	local owner = self:GetOwner()
-	if owner:IsValid() and owner.VisionAlterDurationMul then
-		local newdur = self:GetDuration() * owner.VisionAlterDurationMul
-		self.DieTime = CurTime() + newdur
-		self:SetDuration(newdur)
-	end
 end

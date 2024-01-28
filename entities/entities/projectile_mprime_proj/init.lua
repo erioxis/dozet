@@ -46,12 +46,12 @@ function ENT:Hit(vHitPos, vHitNormal, eHitEntity)
 	vHitNormal = vHitNormal or Vector(0, 0, 1)
 	if owner:IsValid() and owner:IsPlayer() then
 		util.BlastDamagePlayer(self, owner, vHitPos + vHitNormal, 60, 40, DMG_DIRECT)
-		if eHitEntity:IsPlayer() and owner:IsValidLivingZombie() then
-			eHitEntity:AddLegDamage(53, owner,self)
+		if eHitEntity:IsPlayer()  then
+			eHitEntity:AddLegDamage(153)
 		end
 	end
-	if eHitEntity and eHitEntity:IsValid() and eHitEntity:GetClass() == "prop_manhack*" then
-		eHitEntity:TakeDamage(250,owner,self)
+	if eHitEntity and eHitEntity:IsValid() and (eHitEntity:GetClass() == "prop_manhack" or eHitEntity:GetClass() == "prop_manhack_saw" ) then
+		eHitEntity:TakeDamage(760,owner,self)
 	end
 
 	local effectdata = EffectData()

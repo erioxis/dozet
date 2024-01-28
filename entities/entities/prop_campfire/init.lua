@@ -1,14 +1,14 @@
 INC_SERVER()
 
 local function RefreshRepFieldOwners(pl)
-	for _, ent in pairs(ents.FindByClass("prop_medstation*")) do
+	for _, ent in pairs(ents.FindByClass("prop_campfire")) do
 		if ent:IsValid() and ent:GetObjectOwner() == pl then
 			ent:ClearObjectOwner()
 		end
 	end
 end
-hook.Add("PlayerDisconnected", "MedField.PlayerDisconnected", RefreshRepFieldOwners)
-hook.Add("OnPlayerChangedTeam", "MedField.OnPlayerChangedTeam", RefreshRepFieldOwners)
+hook.Add("PlayerDisconnected", "cad.PlayerDisconnected", RefreshRepFieldOwners)
+hook.Add("OnPlayerChangedTeam", "cad.OnPlayerChangedTeam", RefreshRepFieldOwners)
 
 function ENT:Initialize()
 	self:SetModel("models/props_combine/combinethumper001a.mdl")
@@ -120,14 +120,11 @@ function ENT:Think()
 		end	
 		if hitent:IsValidLivingHuman() then
 			hitent:GiveStatus('warm',5)
+			hitent:RemoveStatus('frost')
 			count = count + 1
 		end
 	end
 
-	if count > 0 then
-		self:SetNextRepairPulse(CurTime() + 4)
-	end
-
-	self:NextThink(CurTime()+4)
+	self:NextThink(CurTime() + 1)
 	return true
 end

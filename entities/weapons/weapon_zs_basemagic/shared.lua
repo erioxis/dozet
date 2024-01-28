@@ -313,7 +313,7 @@ function SWEP:GetReloadSpeedMultiplier()
 		extramulti = GAMEMODE.WeaponQualities[self.QualityTier][2]
 	end
 
-	return self:GetOwner():GetTotalAdditiveModifier("ReloadSpeedMultiplier", reloadspecmulti) * (owner:GetStatus("frost") and 0.7 or 1) * extramulti
+	return self:GetOwner():GetTotalAdditiveModifier("ReloadSpeedMultiplier", reloadspecmulti) * (owner:GetStatus("frost") and 0.7 or owner:GetStatus('warm') and 1.2 or 1) * extramulti
 end
 
 function SWEP:ProcessReloadEndTime()
@@ -327,7 +327,7 @@ end
 
 function SWEP:GetFireDelay()
 	local owner = self:GetOwner()
-	return self.Primary.Delay / (owner:GetStatus("frost") and 0.7 or 1)
+	return self.Primary.Delay / (owner:GetStatus("frost") and 0.7 or owner:GetStatus('warm') and 1.2 or 1)
 end
 
 function SWEP:ShootBullets(dmg, numbul, cone)

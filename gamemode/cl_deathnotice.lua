@@ -330,6 +330,7 @@ killicon.Add("weapon_zs_marksman", "zombiesurvival/killicons/weapon_zs_marksman"
 killicon.Add("weapon_zs_energysword", "zombiesurvival/killicons/weapon_zs_energysword.png")
 killicon.Add("weapon_zs_energysword_dasher", "zombiesurvival/killicons/weapon_zs_energysword.png")
 killicon.Add("weapon_zs_loy", "zombiesurvival/killicons/weapon_zs_axe")
+killicon.Add("weapon_zs_fireofdespair", "zombiesurvival/killicons/weapon_zs_fireofdespair.png",Color(167,33,0))
 killicon.Add("weapon_zs_axe", "zombiesurvival/killicons/weapon_zs_axe")
 killicon.Add("weapon_zs_sawhack", "zombiesurvival/killicons/weapon_zs_sawhack.png")
 killicon.Add("weapon_zs_keyboard", "zombiesurvival/killicons/weapon_zs_keyboard")
@@ -475,6 +476,12 @@ for i=1,6 do
 	killicon.Add("weapon_zs_melee_trinket"..(colorsp[i] and "_q"..i or ""), "zombiesurvival/reaper.png",colorsp[i] and colorsp[i][1])
 	killicon.Add("weapon_zs_shot_trinket"..(colorsp[i] and "_q"..i or ""), "zombiesurvival/bullet.png",colorsp[i] and colorsp[i][1])
 	killicon.Add("weapon_zs_help_trinket"..(colorsp[i] and "_q"..i or ""), "zombiesurvival/sickness.png",colorsp[i] and colorsp[i][1])
+
+	killicon.Add("weapon_zs_defence_trinket"..(colorsp[i] and "_r"..i or ""), "zombiesurvival/defense.png",colorsp[i] and colorsp[i][2])
+	killicon.Add("weapon_zs_special_trinket"..(colorsp[i] and "_r"..i or ""), "zombiesurvival/speed_up.png",colorsp[i] and colorsp[i][2])
+	killicon.Add("weapon_zs_melee_trinket"..(colorsp[i] and "_r"..i or ""), "zombiesurvival/reaper.png",colorsp[i] and colorsp[i][2])
+	killicon.Add("weapon_zs_shot_trinket"..(colorsp[i] and "_r"..i or ""), "zombiesurvival/bullet.png",colorsp[i] and colorsp[i][2])
+	killicon.Add("weapon_zs_help_trinket"..(colorsp[i] and "_r"..i or ""), "zombiesurvival/sickness.png",colorsp[i] and colorsp[i][2])
 end	
 
 
@@ -497,6 +504,7 @@ killicon.Add("weapon_zs_melee_trinket_d", "zombiesurvival/defense.png", Color(25
 killicon.Add("weapon_zs_special_trinket_d", "zombiesurvival/speed_up.png", Color(255, 0, 0))
 
 killicon.Add("status_bleed", "zombiesurvival/bleed.png", Color(255, 0, 0))
+killicon.Add("status_serrated", "zombiesurvival/bleed.png", Color(113, 0, 0))
 killicon.Add("status_rot", "zombiesurvival/rot.png", Color(255, 0, 0))
 killicon.Add("status_cursed", "zombiesurvival/cursed.png", Color(255, 0, 0))
 killicon.Add("status_enfeeb", "zombiesurvival/infeeble.png", Color(255, 0, 0))

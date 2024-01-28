@@ -114,3 +114,8 @@ function CLASS:UpdateAnimation(pl, velocity, maxseqgroundspeed)
 
 	return true
 end
+function CLASS:PrePlayerDraw(pl)
+end
+
+function CLASS:PostPlayerDraw(pl)
+end
