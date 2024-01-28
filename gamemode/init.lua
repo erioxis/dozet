@@ -6063,6 +6063,19 @@ function GM:WaveStateChanged(newstate, pl)
 				net.Start("zs_luck")
 					net.WriteString(lucktrue)
 				net.Send(pl)
+
+				if pl.IllegalMechanism then
+					local zarplataBlyad = 0
+					for _, d in ipairs( ents.FindByClass( "prop_*" ) ) do
+						if d.CanPackUp and d:GetObjectOwner() == pl then
+							zarplataBlyad = zarplataBlyad + ( pl.IllegalMechanism or 0 )
+						end
+					end
+					net.Start( "zs_illegalmechanism" )
+						net.WriteString( zarplataBlyad )
+					net.Send( pl )
+				end
+
 			elseif pl:Team() == TEAM_UNDEAD and not pl:Alive() and not pl.Revive then
 				local curclass = pl.DeathClass or pl:GetZombieClass()
 				local crowindex = GAMEMODE.ZombieClasses["Crow"].Index

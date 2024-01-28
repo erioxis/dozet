@@ -2605,3 +2605,8 @@ trinket, trinketwep = GM:AddTrinket(trs("t_module_nanite"), "module_nanite", fal
 trinketwep.OnlyDrones = true
 trinket, trinketwep = GM:AddTrinket(trs("t_module_mirror"), "module_mirror", false, placeholder, placeholder, 4, trs("t_d_module_mirror"), nil, nil, "weapon_zs_special_trinket")
 trinketwep.OnlyDrones = true
+
+
+trinket = GM:AddTrinket( trs( "t_illegalmechanism" ), "illegalmechanism", false, supveles, supweles, 4, trs( "t_d_illegalmechanism" ) )
+GM:AddSkillModifier( trinket, SKILLMOD_ILLEGALMECHANISM, 1 )
+GM:AddSkillModifier( trinket, SKILLMOD_DEPLOYABLE_HEALTH_MUL, -0.1 )

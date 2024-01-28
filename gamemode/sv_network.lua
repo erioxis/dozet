@@ -160,3 +160,4 @@
 	util.AddNetworkString("voice_pain")
 	util.AddNetworkString("voice_zombiepain")
 
+	util.AddNetworkString("zs_illegalmechanism")

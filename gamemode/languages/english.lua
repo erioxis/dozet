@@ -3183,6 +3183,8 @@ LANGUAGE.skillmod_n131 = "%s Regen speed(Status)"
 LANGUAGE.skillmod_n132 = "%s Turret damage"
 LANGUAGE.skillmod_n133 = "%s Damage taken"
 LANGUAGE.skillmod_n134 = "%s Databarrel drill power."
+LANGUAGE.skillmod_n135 = "%s points for deployables at the end of the wave."
+
 LANGUAGE.c_for_use = " Charges use\n"
 --СП
 LANGUAGE.toyka_sp = "Creater\nHehe"

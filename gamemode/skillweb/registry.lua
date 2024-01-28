@@ -672,6 +672,7 @@ SKILLMOD_REGEN_SPEED = 131
 SKILLMOD_TURRET_DAMAGE = 132
 SKILLMOD_DAMAGE_TAKEN_N = 133
 SKILLMOD_DRILL_POWER_BARREL = 134
+SKILLMOD_ILLEGALMECHANISM = 135
 
 local GOOD = "^"..COLORID_GREEN
 local BAD = "^"..COLORID_RED
@@ -2825,6 +2826,9 @@ GM:SetSkillModifierFunction(SKILLMOD_DAMAGE_TAKEN_N, function(pl, amount)
 end)
 GM:SetSkillModifierFunction(SKILLMOD_DRILL_POWER_BARREL, function(pl, amount)
 	pl.DrillPowerBarrel = math.Clamp(1+amount, -1, 1000)
+end)
+GM:SetSkillModifierFunction(SKILLMOD_ILLEGALMECHANISM, function(pl, amount)
+	pl.IllegalMechanism = math.Clamp( 1 + amount, -1, 1000 )
 end)
 
 
