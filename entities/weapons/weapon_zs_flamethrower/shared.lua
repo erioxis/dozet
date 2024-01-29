@@ -9,6 +9,9 @@ SWEP.Primary.Delay = 0.1
 SWEP.ViewModel = "models/weapons/c_shotgun.mdl"
 SWEP.WorldModel = "models/weapons/w_crowbar.mdl"
 
+SWEP.InnateDamageType = INNATE_TYPE_FIRE
+SWEP.InnateDamageMul = 0
+
 SWEP.MaxStock = 1
 SWEP.NextPuke = 0
 SWEP.PukeLeft = 0

@@ -567,6 +567,28 @@ function meta:AddLegDamageExt(damage, attacker, inflictor, type)
 		end
 		self:AddLegDamage(damage)
 		self:AddArmDamage(damage)
+		if SERVER then
+			if  attacker:HasTrinket("cryoindu") and not attacker:GetActiveWeapon().AntiInd and (attacker.NextInductors or 1) < CurTime()  then
+				attacker:SetProgress(attacker:GetProgress('iprog') + damage,'iprog')
+				self:CryogenicInduction(attacker, inflictor, damage)
+			end
+			GAMEMODE:DamageAtFloater(attacker, self, self:NearestPoint(attacker:EyePos()), damage, type)
+		end
+	elseif type == SLOWTYPE_FLAME then
+		local zclass =  self:GetZombieClassTable()
+		local valid = self:IsValidLivingZombie()
+		if valid and zclass.ResistFrost then return end
+		if valid and zclass.Boss then return end
+		if zclass.FireBuff then
+			damage = damage * 0.5
+		end
+		if SERVER then 
+			if  attacker:HasTrinket("fire_ind") and not attacker:GetActiveWeapon().AntiInd and (attacker.NextInductors or 1) < CurTime() then
+				attacker:SetProgress(attacker:GetProgress('fprog') + damage, 'fprog')
+				self:FireInduction(attacker, inflictor, damage)
+			end
+			GAMEMODE:DamageAtFloater(attacker, self, self:NearestPoint(attacker:EyePos()), damage, type)
+		end
 	end
 end
 

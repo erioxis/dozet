@@ -161,6 +161,9 @@ local function OnIn(self,new,rem)
 		self.AmmoUsagesStacks = math.min(3,self.TrinketsIn[new])
 	elseif new == "trinket_module_nanite" then
 		self.Nanites = self.TrinketsIn[new]
+	elseif new == "trinket_module_serrate" then
+		self.InnateDamageType = INNATE_TYPE_PULSE
+		self.InnateDamage = 0.05 * self.TrinketsIn[new]
 	end
 	self._OnRemove = self._OnRemove or self.OnRemove
 	self.OnRemove = function()

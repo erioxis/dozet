@@ -4,8 +4,8 @@ SWEP.Base = "weapon_zs_fistz"
 
 --SWEP.PrintName = "Power Fists"
 --SWEP.Description = "A pair of power fists. They are slower than conventional fist combat, but pack a hefty pulse powered punch."
-SWEP.PrintName = ""..translate.Get("wep_powerfists7")
-SWEP.Description = ""..translate.Get("wep_d_powerfists7")
+SWEP.PrintName = translate.Get("wep_powerfists7")
+SWEP.Description = translate.Get("wep_d_powerfists7")
 if CLIENT then
 	SWEP.ViewModelFOV = 65
 	SWEP.ViewModelFlip = false
@@ -28,6 +28,8 @@ if CLIENT then
 	}
 end
 
+SWEP.InnateDamageType = INNATE_TYPE_PULSE
+SWEP.InnateDamageMul = 0
 SWEP.WalkSpeed = SPEED_FAST
 SWEP.UseHands = true
 

@@ -6,7 +6,8 @@ SWEP.PrintName = translate.Get("wep_shredder")
 SWEP.Description = translate.Get("wep_d_shredder")
 SWEP.Slot = 2
 SWEP.SlotPos = 0
-
+SWEP.InnateDamageType = INNATE_TYPE_BOUNTY
+SWEP.InnateDamageMul = 0.04
 if CLIENT then
 	SWEP.ViewModelFlip = false
 	SWEP.ViewModelFOV = 50

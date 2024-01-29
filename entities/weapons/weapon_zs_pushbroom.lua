@@ -2,8 +2,8 @@ AddCSLuaFile()
 
 --SWEP.PrintName = "Push Broom"
 --SWEP.Description = "BrooooooooooOOOOOOOOOOOOOM!"
-SWEP.PrintName = ""..translate.Get("wep_pushbroom")
-SWEP.Description = ""..translate.Get("wep_d_pushbroom")
+SWEP.PrintName = translate.Get("wep_pushbroom")
+SWEP.Description = translate.Get("wep_d_pushbroom")
 if CLIENT then
 	SWEP.ViewModelFOV = 70
 
@@ -23,6 +23,9 @@ SWEP.Base = "weapon_zs_basemelee"
 SWEP.HoldType = "melee2"
 
 SWEP.DamageType = DMG_CLUB
+
+SWEP.InnateDamageType = INNATE_TYPE_BOUNTY
+SWEP.InnateDamageMul = 0.02
 
 SWEP.ViewModel = "models/weapons/c_crowbar.mdl"
 SWEP.WorldModel = "models/weapons/w_crowbar.mdl"

@@ -56,16 +56,18 @@ if CLIENT then
 
 end
 
-SWEP.Tier = 3
+SWEP.Tier = 5
 
 SWEP.MeleeType = "knife"
 
-SWEP.MeleeDamage = 200
-SWEP.OldMeleeDamage = 200
-SWEP.MeleeRange = 52
+SWEP.MeleeDamage = 80
+SWEP.OldMeleeDamage = 80
+SWEP.MeleeRange = 54
 SWEP.MeleeSize = 1.1
+SWEP.InnateDamageType = INNATE_TYPE_BOUNTY
+SWEP.InnateDamageMul = 0.1
 
-SWEP.Primary.Delay = 0.75
+SWEP.Primary.Delay = 0.79
 
 SWEP.WalkSpeed = SPEED_FASTEST
 SWEP.HitDecal = "Manhackcut"
@@ -78,7 +80,6 @@ SWEP.NoHitSoundFlesh = true
 SWEP.AllowQualityWeapons = true
 
 GAMEMODE:AttachWeaponModifier( SWEP, WEAPON_MODIFIER_FIRE_DELAY, -0.05 )
-GAMEMODE:AttachWeaponModifier( SWEP, WEAPON_MODIFIER_STAMINA_EFFECTIVE, -0.03 )
 
 function SWEP:SetAbility( a )
 	self:SetDTFloat( 11, a )
@@ -121,7 +122,7 @@ function SWEP:PostOnMeleeHit( hitent, hitflesh, tr )
 	end
 end
 
-function SWEP:OnHitEntityOverride( ent, dmginfo )
+function SWEP:DealThink( dmginfo, ent)
 	local getabil = self:GetAbility()
 	if ent:IsValidLivingZombie() then
 		self:SetAbility( math.min( 1, getabil + dmginfo:GetDamage() * 0.00037 ) )

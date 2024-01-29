@@ -79,13 +79,13 @@ SWEP.WElements = {
     ["element_name+++++++++++++++++++++"] = { type = "Model", model = "models/props_trainstation/trainstation_clock001.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "element_name", pos = Vector(0.393, 1.504, -15.525), angle = Angle(0, 0, 0), size = Vector(0.209, 0.209, 0.209), color = Color(40, 40, 40, 255), surpresslightning = false, material = "models/combine_advisor/arm", skin = 0, bodygroup = {} }
 }
 
-SWEP.Tier = 5
+SWEP.Tier = 6
 -- ЫЭЪЪ((((ТОЙКА ПОСТАВЬБ БПЖ СЮДА СОВЙ ТИРР((9(9(
 SWEP.MeleeType = "scythe"
 
-SWEP.MeleeDamage = 400
-SWEP.MeleeRange = 96
-SWEP.MeleeSize = 7
+SWEP.MeleeDamage = 220
+SWEP.MeleeRange = 76
+SWEP.MeleeSize = 5
 
 SWEP.OldMeleeRange = 96
 SWEP.OldMeleeSize = 7
@@ -108,7 +108,6 @@ SWEP.WalkSpeed = SPEED_SLOW
 SWEP.AllowQualityWeapons = true
 
 GAMEMODE:AttachWeaponModifier( SWEP, WEAPON_MODIFIER_FIRE_DELAY, -0.03 )
-GAMEMODE:AttachWeaponModifier( SWEP, WEAPON_MODIFIER_STAMINA_EFFECTIVE, -0.03 )
 
 function SWEP:Initialize()
     self.BaseClass.Initialize(self)
@@ -181,11 +180,12 @@ function SWEP:Think()
         self.ChargeSound:Stop()
         self.ChargeSound2:Stop()
     end
+    BaseClass.Think(self)
 
 end
 
 function SWEP:Holster()
-    if CurTime() >= self:GetSwingEnd() and not self:GetOwner():HaveStatus( "cyclone" ) and not self.Dashing then
+    if CurTime() >= self:GetSwingEnd() and not self:GetOwner():GetStatus( "cyclone" ) and not self.Dashing then
         if CLIENT then
             self:Anim_Holster()
         end
@@ -195,7 +195,7 @@ function SWEP:Holster()
 
     return false
 end
-function SWEP:OnHitEntityOverride( ent, dmginfo )
+function SWEP:DealThink( dmginfo, ent)
     if ent:IsValidLivingZombie() then
         self:SetAbility( self.Dashing and 0 or math.min( 1, self:GetAbility() + dmginfo:GetDamage() * 0.000071 ) )
     end
@@ -344,25 +344,10 @@ function SWEP:PostDrawViewModel(vm)
     end
 end
 
-function SWEP:DrawAbility2DHUD( x, y )
+function SWEP:Draw2DHUD( )
     local owner = self:GetOwner()
 
     local ability = self:GetAbility()
-    
-    local w, h = 250, 25
-    y = y + 85
-
-    -- horizontal
-    surface.SetMaterial( matGradientRight )
-    surface.SetDrawColor( colbg )
-    surface.DrawRect( x, y, w, h )
-
-    surface.SetMaterial( matGradientRight )
-    surface.SetDrawColor( colcr.r, colcr.g, colcr.b, 155 )
-    surface.DrawTexturedRect( x, y, w * ability - 2, h )
-
-    surface.SetDrawColor( colcr.r, colcr.g, colcr.b, 155 )
-    surface.DrawRect( x + ( w * ability ) , y, 2, h )
-
-    draw.SimpleText( "(Q) " .. translate.Get( "weapon_ability_silence_2d" ), "ZSSHUD4Font_20", x + w / 2, y + h / 2 , ability >= 1 and Color( 65, 255, 15 ) or colcr, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER )
+  
+    self:Draw2DFeature( self:GetAbility(), nil, nil, "weapon_ability_silence" , "ZSHUDFontSmallest", ability >= 1 and Color( 65, 255, 15 ) or colcr )
 end

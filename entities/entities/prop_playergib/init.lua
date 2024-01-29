@@ -100,8 +100,8 @@ function ENT:Use(activator, caller)
 		self.DieTime = 0
 		for _, pl in pairs(player.FindInSphere(activator:GetPos(), 128 * activator:GetModelScale())) do
 			if pl:IsValidLivingHuman() and activator:IsSkillActive(SKILL_FOODHEALS) then
-				pl:SetBloodArmor(math.min(pl.MaxBloodArmor + 40, pl:GetBloodArmor() + 10))
-				if pl:GetBloodArmor() < pl.MaxBloodArmor + 40 then
+				pl:SetBloodArmor(math.min(pl.MaxBloodArmor + 10, pl:GetBloodArmor() + 10))
+				if pl:GetBloodArmor() < pl.MaxBloodArmor + 10 then
 					activator:AddPoints(2)
 				end
 			end

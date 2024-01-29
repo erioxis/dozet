@@ -449,6 +449,7 @@ GM:AddPointShopItem("juggernaut",		ITEMCAT_GUNS,		    170,			"weapon_zs_juggerna
 GM:AddPointShopItem("zenith",		ITEMCAT_GUNS,			170,			"weapon_zs_zenith")
 GM:AddPointShopItem("rail_gun",			ITEMCAT_GUNS,			170,			"weapon_zs_rgun")
 GM:AddPointShopItem("double_uzi",			ITEMCAT_GUNS,			170,			"weapon_zs_double_uzi")
+GM:AddPointShopItem("smorning",		ITEMCAT_GUNS,			170,			"weapon_zs_smorning")
 -- Tier 5
 GM:AddPointShopItem("piercer",			ITEMCAT_GUNS,			500,				"weapon_zs_piercer")
 GM:AddPointShopItem("slugrifle",		ITEMCAT_GUNS,			500,			"weapon_zs_slugrifle")
@@ -467,7 +468,7 @@ GM:AddPointShopItem("boomstick",		ITEMCAT_GUNS,			500,			"weapon_zs_boomstick")
 GM:AddPointShopItem("bulldog",		ITEMCAT_GUNS,			500,			"weapon_zs_bulldog")
 GM:AddPointShopItem("clastix",			ITEMCAT_GUNS,			500,			"weapon_zs_clastix")
 GM:AddPointShopItem("autorgun",		ITEMCAT_GUNS,		    500,			"weapon_zs_auto_turret")
-GM:AddPointShopItem("pumpkinlayer",		ITEMCAT_GUNS,		    500,			"weapon_zs_pumpkinlayer").New = true
+--GM:AddPointShopItem("pumpkinlayer",		ITEMCAT_GUNS,		    500,			"weapon_zs_pumpkinlayer").New = true
 -- Tier 6 beta
 GM:AddPointShopItem("zeus",				ITEMCAT_GUNS,			1500,			"weapon_zs_zeus")
 GM:AddPointShopItem("balance_t6",				ITEMCAT_GUNS,			1500,			"weapon_zs_balance")
@@ -476,8 +477,8 @@ GM:AddPointShopItem("plasmk",			ITEMCAT_GUNS,			1500,			"weapon_zs_plasmatik")
 GM:AddPointShopItem("deathdlrs",		ITEMCAT_GUNS,			1500,			"weapon_zs_deathdealers")
 GM:AddPointShopItem("rlaucnher",		ITEMCAT_GUNS,			1500,			"weapon_zs_rocket_launcher")
 GM:AddPointShopItem("biotic_grl",		ITEMCAT_GUNS,			1500,			"weapon_zs_biotic_grl")
-GM:AddPointShopItem("smorning",		ITEMCAT_GUNS,			1500,			"weapon_zs_smorning")
 GM:AddPointShopItem("drill",		ITEMCAT_GUNS,			1500,			"weapon_zs_drill")
+GM:AddPointShopItem("solemnvw",		ITEMCAT_GUNS,			1500,			"weapon_zs_solemnvow").New = true
 -- Tier 7
 GM:AddAPointShopItem("sacredhh",			ITEMCAT_GUNS,			2150,			"weapon_zs_m6")
 GM:AddAPointShopItem("gaysseagle",   	ITEMCAT_GUNS,			2150,			"weapon_zs_gaeagle")
@@ -546,6 +547,7 @@ GM:AddPointShopItem("kshield",		ITEMCAT_MELEE,			235,			"weapon_zs_kobaldshield"
 GM:AddPointShopItem("inail",		ITEMCAT_MELEE,			235,			"weapon_zs_ice_nail")
 GM:AddPointShopItem("mogilka",			ITEMCAT_MELEE,			235,			"weapon_zs_graveshovelz").SkillRequirement = SKILL_RESNYA1
 -- Tier 5
+GM:AddPointShopItem("sawer",			ITEMCAT_MELEE,			900,			"weapon_zs_sawer").New = true
 GM:AddPointShopItem("rshield",		ITEMCAT_MELEE,			900,			"weapon_zs_rubyshield")
 GM:AddPointShopItem("frotchet",			ITEMCAT_MELEE,			900,			"weapon_zs_frotchet")
 GM:AddPointShopItem("luxrockj",			ITEMCAT_MELEE,			235,			"weapon_zs_luxshade")
@@ -556,6 +558,7 @@ GM:AddPointShopItem("baragay",			ITEMCAT_MELEE,			900,			"weapon_zs_baramelee")
 -- Tier 6
 GM:AddPointShopItem("megahook",			ITEMCAT_MELEE,			1300,			"weapon_zs_harpoon_mega")
 GM:AddPointShopItem("teslar",			ITEMCAT_MELEE,			1300,			"weapon_zs_teslorer")
+GM:AddPointShopItem("silence",			ITEMCAT_MELEE,			1300,			"weapon_zs_silence").New = true
 GM:AddPointShopItem("pw7",			ITEMCAT_MELEE,			1300,			"weapon_zs_powerfists_t7")
 
 -- Tier 7
@@ -822,6 +825,7 @@ GM:AddPointShopItem("module_bounty",		ITEMCAT_MODULES,		300,				"trinket_module_
 GM:AddPointShopItem("module_handler",		ITEMCAT_MODULES,		90,				"trinket_module_handler").SubCategory =								ITEMSUBCAT_TRINKETS_PERFOMANCE
 GM:AddPointShopItem("module_extreme",		ITEMCAT_MODULES,		800,				"trinket_module_extreme").SubCategory =								ITEMSUBCAT_TRINKETS_SUPER
 GM:AddPointShopItem("module_nanite",		ITEMCAT_MODULES,		200,				"trinket_module_nanite").SubCategory =								ITEMSUBCAT_TRINKETS_SUPPORT
+GM:AddPointShopItem("module_serrate",		ITEMCAT_MODULES,		100,				"trinket_module_serrate").SubCategory =								ITEMSUBCAT_TRINKETS_ELEMENTAL
   
 GM:AddPointShopItem("flashbomb",		ITEMCAT_OTHER,			25,				"weapon_zs_flashbomb")
 GM:AddPointShopItem("grenade",			ITEMCAT_OTHER,			35,				"weapon_zs_grenade")

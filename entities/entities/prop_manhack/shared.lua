@@ -5,7 +5,8 @@ ENT.m_NoNailUnfreeze = true
 ENT.NoNails = true
 
 ENT.WrenchRepairMultiplier = 1
-
+ENT.CanPackUp = true
+ENT.PackUpTime = 0.21
 ENT.Model = "models/manhack.mdl"
 ENT.HitBoxSize = 21
 ENT.Mass = 50
@@ -86,4 +87,13 @@ end
 
 function ENT:GetRedLightAngles()
 	return self:GetAngles()
+end
+function ENT:SetTrinkets(sbl)
+	self.Inventory = sbl
+end
+function ENT:HasTrinket(some)
+	return self.Inventory["trinket_"..some]
+end
+function ENT:AddTrinkets(some)
+	self.Inventory[#self.Inventory+1] = some
 end

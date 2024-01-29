@@ -170,7 +170,7 @@ function meta:ProcessDamage(dmginfo)
 				damage = damage * 2
 			end
 
-			if attacker:IsSkillActive(SKILL_AMULET_11) and health > attackermaxhp then
+			if attacker:IsSkillActive(SKILL_AMULET_11) and health >= attackermaxhp then
 				damage = damage * 1.45
 			end
 			if classtable.BaraCat then
@@ -194,14 +194,14 @@ function meta:ProcessDamage(dmginfo)
 				end
 			end
 			if attacker:IsSkillActive(SKILL_INF_POWER) then
-				damage = damage * (1+attacker:GetMScore()/15000)
+				damage = damage * (1+attacker:GetMScore()/10000)
 			end
 			if damage >= 10000 then
 				attacker:GiveAchievement("opm")
 			end
-
-			if (attacker:IsSkillActive(SKILL_BOUNTYKILLER) or classtable.Boss or classtable.DemiBoss or attacker.DamagedBounty) and classtable.Health >= 50  then
-				local mul = ((attacker:IsSkillActive(SKILL_BOUNTYKILLER) and 0.15 or 0) + (classtable.DemiBoss and 0.15 or classtable.Boss and 0.4 or 0))
+			local bountyhaswep = inflictor.InnateDamageType == INNATE_TYPE_BOUNTY
+			if (attacker:IsSkillActive(SKILL_BOUNTYKILLER) or classtable.Boss or classtable.DemiBoss or attacker.DamagedBounty or bountyhaswep) and classtable.Health >= 50  then
+				local mul = bountyhaswep and (inflictor.InnateDamageMul or 0.05) or ((attacker:IsSkillActive(SKILL_BOUNTYKILLER) and 0.15 or 0) + (classtable.DemiBoss and 0.15 or classtable.Boss and 0.4 or 0))
 				attacker:SetProgress(attacker:GetProgress('bprog')+(math.min(damage,self:GetMaxHealth())*mul), 'bprog')
 				attacker.DamagedBounty = false
 				if attacker:GetProgress('bprog') >= 2500 * (attacker:GetProgress('bprogmul')+1) then
@@ -473,7 +473,7 @@ function meta:ProcessDamage(dmginfo)
 		return true
 	end
 	if self:IsSkillActive(SKILL_XPMULGOOD) and self.AddXPMulti > 0.20 then
-        self.AddXPMulti = self.AddXPMulti - 0.05
+        self.AddXPMulti = self.AddXPMulti - 0.02
 	end
 
 	if attacker:IsPlayer() and attacker:Team() == TEAM_UNDEAD and damage >= 1000 and !self:HasGodMode() then
@@ -504,7 +504,7 @@ function meta:ProcessDamage(dmginfo)
 			if !dmgbypass and mywep.DamageThink and mywep:DamageThink(dmginfo) then return end
 			damage = dmginfo:GetDamage()
 			if (GAMEMODE:GetBalance() * 0.05) >= 0.1 then
-				damage = damage *  (1 + (math.Clamp(GAMEMODE:GetBalance() * 0.05,0.5,1.5)))
+				damage = damage *  (1 + (math.Clamp(GAMEMODE:GetBalance() * 0.05,-0.1,0.5)))
 			end
 
 			if self:IsBarricadeGhosting() then
@@ -805,8 +805,8 @@ function meta:ProcessDamage(dmginfo)
 
 		self.ShouldFlinch = true
 	end
-	if self:IsSkillActive(SKILL_MOREDAMAGE) and damage > 30 and !dmgbypass then
-		damage = 30
+	if self:IsSkillActive(SKILL_MOREDAMAGE) and damage > 30  then
+		damage = math.max(30,damage-70)
 	end
 	if (((self:GetZSRemortLevel() / 4) or 0) + (self.AmuletPiece or 0)) < 0 then
 		damage = damage * 2 + ((self:GetZSRemortLevel() / 4) - (self.AmuletPiece or 0))

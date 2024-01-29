@@ -28,6 +28,10 @@ SWEP.ViewModel = "models/weapons/c_pistol.mdl"
 SWEP.WorldModel = "models/weapons/w_alyx_gun.mdl"
 SWEP.UseHands = true
 
+SWEP.InnateDamageType = INNATE_TYPE_PULSE
+SWEP.InnateDamageMul = 0.25
+
+
 SWEP.CSMuzzleFlashes = false
 
 SWEP.ReloadSound = Sound("weapons/alyx_gun/alyx_shotgun_cock1.wav")
@@ -58,7 +62,6 @@ function SWEP.BulletCallback(attacker, tr, dmginfo)
 	local ent = tr.Entity
 	if ent:IsValidZombie() then
 		local wep = attacker:GetActiveWeapon()
-		ent:AddLegDamageExt(4.5, attacker,  wep, SLOWTYPE_PULSE)
 		local intd = wep:GetDTInt(6)
 		wep:SetDTInt(6,intd+1)
 		if intd >= 5 then

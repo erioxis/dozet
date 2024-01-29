@@ -17,6 +17,8 @@ if CLIENT then
 	SWEP.HUD3DAng = Angle(0, 0, 0)
 end
 
+SWEP.InnateDamageType = INNATE_TYPE_BOUNTY
+SWEP.InnateDamageMul = 0.06
 SWEP.Base = "weapon_zs_base"
 
 SWEP.HoldType = "pistol"
@@ -52,6 +54,8 @@ GAMEMODE:AddNewRemantleBranch(SWEP, 1, translate.Get("wep_eraser_r1"), translate
 	wept.ConeMin = wept.ConeMin * 2.1
 	wept.ReloadSpeed = wept.ReloadSpeed * 0.7
 	wept.HeadshotMulti = wept.HeadshotMulti * 0.8
+	wept.InnateDamageType = INNATE_TYPE_BOUNTY
+	wept.InnateDamageMul = 0.15
 
 	wept.BulletCallback = function(attacker, tr, dmginfo)
 		dmginfo:SetDamage(dmginfo:GetDamage() + dmginfo:GetDamage() * GAMEMODE:GetWave()/44)

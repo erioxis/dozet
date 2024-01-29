@@ -23,6 +23,8 @@ SWEP.MeleeRange = 77
 
 SWEP.PrintName = translate.Get("wep_rapir")
 SWEP.Description = translate.Get("wep_d_rapir")
+SWEP.InnateDamageType = INNATE_TYPE_BOUNTY
+SWEP.InnateDamageMul = 0.05
 if CLIENT then
 	SWEP.VElements = {
 		["rapier"] = { type = "Model", model = "models/hunter/misc/shell2x2a.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3.514, 1.557, -2.715), angle = Angle(11.758, 0, 0), size = Vector(0.014, 0.014, 0.143), color = Color(36, 36, 36, 255), surpresslightning = false, material = "phoenix_storms/middle", skin = 0, bodygroup = {} },

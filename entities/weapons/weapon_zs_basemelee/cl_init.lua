@@ -40,7 +40,11 @@ function SWEP:DrawHUD()
 	self:DrawCrosshairDot()
 end
 
-
+function SWEP:Draw2DHUD()
+	if self.DrawDrawAbility2DHUD then
+		self:DrawDrawAbility2DHUD(ScrW() + wid - 960, ScrH() - hei - 72)
+	end
+end
 
 
 

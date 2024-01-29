@@ -4,8 +4,8 @@ SWEP.Base = "weapon_zs_baseshotgun"
 
 --SWEP.PrintName = "'Sweeper' Shotgun"
 --SWEP.Description = "A pump shotgun with a modest shell number and packs a hefty punch."
-SWEP.PrintName = ""..translate.Get("wep_sweeper")
-SWEP.Description = ""..translate.Get("wep_d_sweeper")
+SWEP.PrintName = translate.Get("wep_sweeper")
+SWEP.Description = translate.Get("wep_d_sweeper")
 
 if CLIENT then
 	SWEP.ViewModelFlip = false
@@ -19,6 +19,9 @@ end
 SWEP.Base = "weapon_zs_baseshotgun"
 
 SWEP.HoldType = "shotgun"
+
+SWEP.InnateDamageType = INNATE_TYPE_BOUNTY
+SWEP.InnateDamageMul = 0.09
 
 SWEP.ViewModel = "models/weapons/cstrike/c_shot_m3super90.mdl"
 SWEP.WorldModel = "models/weapons/w_shot_m3super90.mdl"

@@ -1,8 +1,8 @@
 AddCSLuaFile()
 DEFINE_BASECLASS("weapon_zs_base")
 
-SWEP.PrintName = ""..translate.Get("wep_adonis")
-SWEP.Description = ""..translate.Get("wep_d_adonis")
+SWEP.PrintName = translate.Get("wep_adonis")
+SWEP.Description = translate.Get("wep_d_adonis")
 
 SWEP.Slot = 2
 SWEP.SlotPos = 0
@@ -15,6 +15,9 @@ if CLIENT then
 	SWEP.HUD3DPos = Vector(1, 0, 0)
 	SWEP.HUD3DScale = 0.018
 end
+
+SWEP.InnateDamageType = INNATE_TYPE_PULSE
+SWEP.InnateDamageMul = 0
 
 SWEP.Base = "weapon_zs_base"
 
@@ -55,7 +58,7 @@ SWEP.FireAnimSpeed = 0.4
 SWEP.LegDamage = 50
 
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_FIRE_DELAY, -0.014, 1)
-GAMEMODE:AddNewRemantleBranch(SWEP, 1, ""..translate.Get("wep_adonis_r1"), ""..translate.Get("wep_d_adonis_r1"), function(wept)
+GAMEMODE:AddNewRemantleBranch(SWEP, 1, translate.Get("wep_adonis_r1"), translate.Get("wep_d_adonis_r1"), function(wept)
 	wept.ConeMin = 2.25
 	wept.ConeMax = 3.75
 	wept.ReloadSpeed = 0.2

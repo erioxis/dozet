@@ -16,6 +16,7 @@ end
 
 
 
+
 SWEP.ShadeControl = "env_shadecontrollux"
 SWEP.ShadeProjectile = "projectile_luxrock"
 

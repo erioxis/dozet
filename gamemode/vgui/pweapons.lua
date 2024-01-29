@@ -104,8 +104,15 @@ local tbleternal = {["headshoter"] = "None", ["ind_buffer"]  = "None", ["ultra_a
 ["soulmedical"] = "Medical",
 ["troyaksoul"] = "Cader",
 ["nanite_nails"] = "Cader",
-["useself"] = "Cader"
+["useself"] = "Cader",
+["illegalmechanism"] = "Cader",
 }  
+local innatedamage = {[INNATE_TYPE_BOUNTY] = "flag_pink",
+[INNATE_TYPE_ICE] = "drink",
+[INNATE_TYPE_SERRATE] = "delete",
+[INNATE_TYPE_FIRE] = "flag_yellow",
+[INNATE_TYPE_PULSE] = "shading",
+}
 
 --print(tbleternal['nanite_nails'])
 function MakepWeapons(silent)
@@ -118,6 +125,7 @@ function MakepWeapons(silent)
 		pWeapons:AlphaTo(255, 0.15, 0)
 		pWeapons:SetVisible(true)
 		pWeapons:MakePopup()
+		--pWeapons:Remove()
 		return
 	end
 
@@ -235,7 +243,7 @@ function MakepWeapons(silent)
 		local enttab = weapons.Get(wep)
 		local wepnode
 		if enttab then
-			wepnode = frame.tierswep[(enttab.Tier or 1)]:AddNode(enttab.PrintName or wep)
+			wepnode = frame.tierswep[(enttab.Tier or 1)]:AddNode(enttab.PrintName or wep,  innatedamage[enttab.InnateDamageType] and "icon16/"..innatedamage[enttab.InnateDamageType]..".png")
 		else
 			wepnode = frame.WeaponsTree:AddNode(wep)
 		end
@@ -248,7 +256,7 @@ function MakepWeapons(silent)
 		local enttab = weapons.Get(wep)
 		local wepnode
 		if enttab then
-			wepnode = frame.CraftsTree:AddNode(enttab.PrintName or wep)
+			wepnode = frame.CraftsTree:AddNode(enttab.PrintName or wep, innatedamage[enttab.InnateDamageType] and "icon16/"..innatedamage[enttab.InnateDamageType]..".png")
 		else
 			wepnode = frame.CraftsTree:AddNode(wep)
 		end

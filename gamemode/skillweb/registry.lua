@@ -1936,36 +1936,35 @@ GM:AddSkillModifier(SKILL_SIGILIBERATOR, SKILLMOD_DAMAGE_ALL, 0.45)
 GM:AddSkill(SKILL_SIGILIBERATOR, "Liberator", PURPLE.."x1.45 damage\n" ..BAD.."+50% damage taken",
 										-3,			-8.3,					{SKILL_EX2}, TREE_ANCIENTTREE)
 										SKILL_DEATH = 181	
-GM:AddSkillModifier(SKILL_DEATH, SKILLMOD_MEDKIT_COOLDOWN_MUL, 0.2)
-GM:AddSkillModifier(SKILL_DEATH, SKILLMOD_MEDKIT_EFFECTIVENESS_MUL, 0.2)		
-GM:AddSkill(SKILL_DEATH, "Morieris", PURPLE.."Better medicine\n" ..BAD.."+20% Medkit Cooldown\n"..PURPLE.."+20% Medkit effectiveness",
+GM:AddSkillModifier(SKILL_DEATH, SKILLMOD_MEDKIT_COOLDOWN_MUL, -0.06)
+GM:AddSkillModifier(SKILL_DEATH, SKILLMOD_MEDKIT_EFFECTIVENESS_MUL, 0.06)		
+GM:AddSkill(SKILL_DEATH, "Morieris", PURPLE.."Better medicine\n" ..PURPLE.."-6% Medkit Cooldown\n"..PURPLE.."+6% Medkit effectiveness",
 										-3,			-7.5,					{SKILL_EX2}, TREE_ANCIENTTREE)
-GM:AddSkill(SKILL_HELPLIFER, "Chance", PURPLE.."Can save from fatal hit\n10% Chance\nOn upgrade chance is 50%",
+GM:AddSkill(SKILL_HELPLIFER, "Chance", PURPLE.."Can save from fatal hit\n10% Chance",
 										2,			-7,					{SKILL_EX2}, TREE_ANCIENTTREE,0)
 .CanUpgrade = 2
-GM:AddSkill(SKILL_INF_POWER, "Dozei Core", PURPLE.."+1% Damage per 150 score.\n"..BAD.."-6% Damage",
+GM:AddSkill(SKILL_INF_POWER, "Dozei Core", PURPLE.."+1% Damage per 100 score.\n"..BAD.."-6% Damage",
 										4,			-5,					{SKILL_NO_BALANCE,SKILL_HELPLIFER}, TREE_ANCIENTTREE)
 GM:AddSkillModifier(SKILL_INF_POWER, SKILLMOD_DAMAGE_ALL, -0.06)
-GM:AddSkill(SKILL_NO_BALANCE, "Silver bullets", PURPLE.."Sometimes your damage become a DIRECT damage!\n7% Chance",
+GM:AddSkill(SKILL_NO_BALANCE, "Silver damage", PURPLE.."Sometimes your damage become a DIRECT damage!\n7% Chance",
 										2.5,			-3.5,					{}, TREE_ANCIENTTREE).SPUse = 6
 GM:AddSkill(SKILL_SOUL_TRADE, "[TRADE]Soul", PURPLE.."Sell Your Soul For Toy and now ALL SOULS KILL YOU.\n"..PURPLE.."+66.6% Point Mul\n"..BAD.."The dosei is stronger...-25% Damage",
 										4,			-7,					{SKILL_HELPLIFER}, TREE_ANCIENTTREE)
 GM:AddSkillModifier(SKILL_SOUL_TRADE, SKILLMOD_DAMAGE_ALL, -0.25)	
 GM:AddSkill(SKILL_SEEAURA, "Ancient vision", PURPLE.."You can see zombie aura",
 										2,			-8.5,					{SKILL_HELPLIFER}, TREE_ANCIENTTREE)
-GM:AddSkill(SKILL_INVISIBLE_MAN, "Anti-Vision", PURPLE.."Zombie can't see you aura",
+GM:AddSkill(SKILL_INVISIBLE_MAN, "Anti-Vision", PURPLE.."Zombie can't see you soul.",
 										2,			-9.5,					{SKILL_SEEAURA}, TREE_ANCIENTTREE)
 										SKILL_ALLPOWER = 182
 GM:AddSkillModifier(SKILL_ALLPOWER, SKILLMOD_REPAIRRATE_MUL, 0.10)		
 GM:AddSkill(SKILL_ALLPOWER, "Cunctipotens", PURPLE.."Better cades\n" ..PURPLE.."+10% Repair Mul",
 					-4,			-7.3,					{SKILL_DEATH}, TREE_ANCIENTTREE)
 SKILL_ANCIENT = 183
-GM:AddSkillModifier(SKILL_ANCIENT, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 0.03)
-GM:AddSkillModifier(SKILL_ANCIENT, SKILLMOD_MELEE_DAMAGE_MUL, 0.05)		
-GM:AddSkill(SKILL_ANCIENT, "Adventum Antiqua", PURPLE.."+5% Damage melee\n" ..BAD.."+3% Damage taken mul",
+GM:AddSkillModifier(SKILL_ANCIENT, SKILLMOD_DAMAGE_ALL, 0.02)		
+GM:AddSkill(SKILL_ANCIENT, "Adventum Antiqua", PURPLE.."+2% Damage\n",
 					-4,			-9.5,					{SKILL_SIGILIBERATOR}, TREE_ANCIENTTREE)
 					SKILL_CLASSIX1 = 185	
-GM:AddSkill(SKILL_CLASSIX1, "Classical scientia mundi", PURPLE.."Random bloodarmor",
+GM:AddSkill(SKILL_CLASSIX1, "Classical scientia mundi", PURPLE.."Give trinket for random blood armor.",
 					-5,			-8.5,					{SKILL_ALLPOWER}, TREE_ANCIENTTREE)
 SKILL_MAGIC = 255
 GM:AddSkill(SKILL_MAGIC, "Magic", PURPLE.."Open a usage of magic\n",
@@ -1976,11 +1975,11 @@ GM:AddSkillModifier(SKILL_MAGIC_MYSTERY, SKILLMOD_M_DMG, 0.25)
 GM:AddSkill(SKILL_USEFULL, "Use...FULL", PURPLE.."+9% Magic blood armor regeneration\n",
 					-7,			-10,					{SKILL_MAGIC_MYSTERY}, TREE_ANCIENTTREE)
 GM:AddSkillModifier(SKILL_USEFULL, SKILLMOD_M_REG, 0.09)
-GM:AddSkill(SKILL_ANATOMY, "Knowledge of anatomy", PURPLE.."+10% Headshot damage\n",
+GM:AddSkill(SKILL_ANATOMY, "Knowledge of anatomy", PURPLE.."+1% Headshot damage\n",
 					-7,			-11,					{SKILL_USEFULL}, TREE_ANCIENTTREE)
-GM:AddSkillModifier(SKILL_ANATOMY, SKILLMOD_HEADSHOT_MUL, 0.10)
+GM:AddSkillModifier(SKILL_ANATOMY, SKILLMOD_HEADSHOT_MUL, 0.01)
 GM:AddSkill(SKILL_MORE_INFO, "See the invisible", PURPLE.."Show more information about zombie\n",
-					-7,			-7.5,					{SKILL_MAGIC}, TREE_ANCIENTTREE).LevelReq = 76
+					-7,			-7.5,					{SKILL_MAGIC}, TREE_ANCIENTTREE).LevelReq = 72
 GM:AddSkill(SKILL_FREE_WAY, "Way", PURPLE.."Useless?\n",
 					-6,			-9,					{SKILL_MAGIC, SKILL_NONE}, TREE_ANCIENTTREE)
 .RemortReq = 32
@@ -1997,15 +1996,15 @@ GM:AddSkill(SKILL_HEARTS, "Ancient Hearts", PURPLE.."Unlock Heart Trinkets",
 GM:AddSkill(SKILL_WORTHINESS5, "Worthiness V", PURPLE.."+10 worth\n"..BAD.."-6 points",
 																				-5,			-13,					{SKILL_HEARTS}, TREE_ANCIENTTREE)
 SKILL_NANOMACHINES = 239
-GM:AddSkill(SKILL_NANOMACHINES, "Anci-tech", PURPLE.."+5% Bullet damage\n"..PURPLE.."+50% DMG reflect",
+GM:AddSkill(SKILL_NANOMACHINES, "Anci-tech", PURPLE.."+4% damage\n"..PURPLE.."+4% DMG reflect",
 																				-6,			-12,					{SKILL_HEARTS}, TREE_ANCIENTTREE)
-GM:AddSkillModifier(SKILL_NANOMACHINES, SKILLMOD_DAMAGE, 0.05)
-GM:AddSkillModifier(SKILL_NANOMACHINES, SKILLMOD_MELEE_ATTACKER_DMG_REFLECT_PERCENT, 0.5)
+GM:AddSkillModifier(SKILL_NANOMACHINES, SKILLMOD_DAMAGE_ALL, 0.04)
+GM:AddSkillModifier(SKILL_NANOMACHINES, SKILLMOD_MELEE_ATTACKER_DMG_REFLECT_PERCENT, 0.04)
 SKILL_MYTHRIL = 274
-GM:AddSkill(SKILL_MYTHRIL, "Mythril armor", PURPLE.."+30% Xp multiplier\n"..PURPLE.."+4% Chance to take XP Instead of damage\n"..BAD.."-25 speed",
+GM:AddSkill(SKILL_MYTHRIL, "Mythril armor", PURPLE.."+6% Xp multiplier\n"..PURPLE.."+4% Chance to take XP Instead of damage\n"..BAD.."-15 speed",
 																				-7,			-13,					{SKILL_NANOMACHINES,SKILL_ULTIMATE_TORMENT}, TREE_ANCIENTTREE)
-GM:AddSkillModifier(SKILL_MYTHRIL, SKILLMOD_XP, 0.30)
-GM:AddSkillModifier(SKILL_MYTHRIL, SKILLMOD_SPEED, -25)
+GM:AddSkillModifier(SKILL_MYTHRIL, SKILLMOD_XP, 0.06)
+GM:AddSkillModifier(SKILL_MYTHRIL, SKILLMOD_SPEED, -15)
 GM:AddSkill(SKILL_ULTIMATE_TORMENT, "Torment:ULTIMATE", PURPLE.."+40% Xp multiplier\n",
 																				-7,			-16,					{}, TREE_ANCIENTTREE).NeedAchievement = "full_curse"
 GM:AddSkillModifier(SKILL_ULTIMATE_TORMENT, SKILLMOD_XP, 0.4)
@@ -2019,27 +2018,27 @@ GM:AddSkill(SKILL_STEEL_ASS, trs("skill_steel_ass"), GOOD..trs("skill_steel_ass_
 				                                                            	3,			-2,					{SKILL_DEATHCURSE}, TREE_DEFENSETREE)
 --Tormented SKill
 SKILL_TORMENT1 = 229
-GM:AddSkill(SKILL_TORMENT1, trs("skill_torment").."I", GOOD.."+5%"..trs("xpmul")..BAD.."-30"..trs("speed")..BAD.."-15%"..trs("b_damage"),
+GM:AddSkill(SKILL_TORMENT1, trs("skill_torment").."I", GOOD.."+8%"..trs("xpmul")..BAD.."-30"..trs("speed")..BAD.."-15%"..trs("b_damage"),
 				                                                            	1,			6,					{SKILL_NONE}, TREE_ANCIENTTREE)
 .RemortReq = 2
 GM:AddSkillModifier(SKILL_TORMENT1, SKILLMOD_DAMAGE, -0.15)
 GM:AddSkillModifier(SKILL_TORMENT1, SKILLMOD_SPEED, -30)
-GM:AddSkillModifier(SKILL_TORMENT1, SKILLMOD_XP, 0.05)
+GM:AddSkillModifier(SKILL_TORMENT1, SKILLMOD_XP, 0.08)
 SKILL_TORMENT2 = 230
-GM:AddSkill(SKILL_TORMENT2, trs("skill_torment").."II", GOOD.."+5%"..trs("xpmul")..BAD.."-15%"..trs("meleedamage")..BAD.."-15"..trs("health"),
+GM:AddSkill(SKILL_TORMENT2, trs("skill_torment").."II", GOOD.."+8%"..trs("xpmul")..BAD.."-15%"..trs("meleedamage")..BAD.."-15"..trs("health"),
 				                                                            	1,			7,					{SKILL_TORMENT1}, TREE_ANCIENTTREE)
 
 GM:AddSkillModifier(SKILL_TORMENT2, SKILLMOD_MELEE_DAMAGE_MUL, -0.15)
 GM:AddSkillModifier(SKILL_TORMENT2, SKILLMOD_HEALTH, -15)
-GM:AddSkillModifier(SKILL_TORMENT2, SKILLMOD_XP, 0.05)
+GM:AddSkillModifier(SKILL_TORMENT2, SKILLMOD_XP, 0.08)
 SKILL_SLAVEC = 251
-GM:AddSkill(SKILL_SLAVEC, trs("skill_cot"), GOOD..trs("skill_cot_d1")..GOOD.."+20"..trs("speed")..BAD.."-15"..trs("health"),
+GM:AddSkill(SKILL_SLAVEC, trs("skill_cot"), GOOD..trs("skill_cot_d1")..GOOD.."+3"..trs("speed")..BAD.."-5"..trs("health"),
 																				1.5,			5,					{SKILL_DOSETHELP, SKILL_BERSERK}, TREE_DEFENSETREE)
-GM:AddSkillModifier(SKILL_SLAVEC, SKILLMOD_HEALTH, -15)
-GM:AddSkillModifier(SKILL_SLAVEC, SKILLMOD_SPEED, 20)
-GM:AddSkill(SKILL_SHINNING_HIT, trs("skill_shine_hit"), GOOD..trs("skill_shine_hit_d1")..BAD.."-20%"..trs("meleedamage"),
+GM:AddSkillModifier(SKILL_SLAVEC, SKILLMOD_HEALTH, -5)
+GM:AddSkillModifier(SKILL_SLAVEC, SKILLMOD_SPEED, 3)
+GM:AddSkill(SKILL_SHINNING_HIT, trs("skill_shine_hit"), GOOD..trs("skill_shine_hit_d1")..BAD.."-10%"..trs("meleedamage"),
 																				3,			6,					{SKILL_SLAVEC}, TREE_DEFENSETREE)
-GM:AddSkillModifier(SKILL_SHINNING_HIT, SKILLMOD_MELEE_DAMAGE_MUL, -0.2)
+GM:AddSkillModifier(SKILL_SHINNING_HIT, SKILLMOD_MELEE_DAMAGE_MUL, -0.1)
 GM:AddSkill(SKILL_BERSERK, trs("skill_ultra_r"), GOOD..trs("skill_ultra_r_d1")..GOOD..trs("skill_ultra_r_d2")..BAD..trs("skill_ultra_r_d3"),
 																				1.5,			6,					{}, TREE_DEFENSETREE)
 SKILL_TORMENT3 = 231
@@ -2051,34 +2050,31 @@ GM:AddSkillModifier(SKILL_TORMENT3, SKILLMOD_RESUPPLY_DELAY_MUL, 0.5)
 GM:AddSkillModifier(SKILL_TORMENT3, SKILLMOD_XP, 0.15)
 GM:AddSkillModifier(SKILL_TORMENT3, SKILLMOD_SPOINT, 3)
 SKILL_TORMENT4 = 232
-GM:AddSkill(SKILL_TORMENT4, trs("skill_torment").."IV", GOOD.."+35%"..trs("xpmul")..BAD..trs("skill_torment_d1"),
+GM:AddSkill(SKILL_TORMENT4, trs("skill_torment").."IV", GOOD.."+45%"..trs("xpmul")..BAD..trs("skill_torment_d1"),
 				                                                            	1,			9,					{SKILL_TORMENT3}, TREE_ANCIENTTREE)
-
-GM:AddSkillModifier(SKILL_TORMENT4, SKILLMOD_DAMAGE, -0.50)
-GM:AddSkillModifier(SKILL_TORMENT4, SKILLMOD_MELEE_DAMAGE_MUL, -0.5)
-GM:AddSkillModifier(SKILL_TORMENT4, SKILLMOD_XP, 0.35)
+GM:AddSkillModifier(SKILL_TORMENT4, SKILLMOD_DAMAGE_ALL, -0.5)
+GM:AddSkillModifier(SKILL_TORMENT4, SKILLMOD_XP, 0.45)
 SKILL_TORMENT5 = 233
-GM:AddSkill(SKILL_TORMENT5, trs("skill_torment").."V", GOOD.."+5%"..trs("xpmul")..BAD.."+15%"..trs("meleedamagetaken"),
+GM:AddSkill(SKILL_TORMENT5, trs("skill_torment").."V", GOOD.."+4%"..trs("xpmul")..BAD.."+15%"..trs("meleedamagetaken"),
 				                                                            	2,			8.5,					{SKILL_TORMENT4}, TREE_ANCIENTTREE)
 
 GM:AddSkillModifier(SKILL_TORMENT5, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 0.15)
-GM:AddSkillModifier(SKILL_TORMENT5, SKILLMOD_XP, 0.05)
+GM:AddSkillModifier(SKILL_TORMENT5, SKILLMOD_XP, 0.04)
 SKILL_TORMENT6 = 253
-GM:AddSkill(SKILL_TORMENT6, trs("skill_torment").."VI", GOOD.."+10%"..trs("xpmul")..BAD..trs("skill_torment_d2"),
+GM:AddSkill(SKILL_TORMENT6, trs("skill_torment").."VI", GOOD.."+20%"..trs("xpmul")..BAD..trs("skill_torment_d2"),
 				                                                            	3,			10,					{SKILL_TORMENT5}, TREE_ANCIENTTREE)
 
-GM:AddSkillModifier(SKILL_TORMENT6, SKILLMOD_REPAIRRATE_MUL, -0.50)
-GM:AddSkillModifier(SKILL_TORMENT6, SKILLMOD_MEDKIT_EFFECTIVENESS_MUL, -0.50)
-GM:AddSkillModifier(SKILL_TORMENT6, SKILLMOD_XP, 0.10)
+GM:AddSkillModifier(SKILL_TORMENT6, SKILLMOD_REPAIRRATE_MUL, -0.5)
+GM:AddSkillModifier(SKILL_TORMENT6, SKILLMOD_MEDKIT_EFFECTIVENESS_MUL, -0.5)
+GM:AddSkillModifier(SKILL_TORMENT6, SKILLMOD_XP, 0.20)
 GM:AddSkill(SKILL_DEATHCURSE, trs("skill_ccleaning"), GOOD..trs("skill_ccleaning_d1")..BAD.."-30%"..trs("m_curse")..BAD..trs("skill_ccleaning_d2"),
 				                                                            	3,			-1,					{SKILL_DEFENDBLOOD}, TREE_DEFENSETREE)		
 GM:AddSkillModifier(SKILL_DEATHCURSE, SKILLMOD_CURSEM, -0.30)
 GM:AddSkillModifier(SKILL_DEATHCURSE, SKILLMOD_FOODEATTIME_MUL, 0.30)
-GM:AddSkill(SKILL_TORMENT7, trs("skill_torment").."VII", GOOD.."+55%"..trs("xpmul")..BAD..trs("skill_torment_d3")..BAD.."-25%"..trs("sale")..BAD..trs("skill_torment_d2"),
+GM:AddSkill(SKILL_TORMENT7, trs("skill_torment").."VII", GOOD.."+75%"..trs("xpmul")..BAD..trs("skill_torment_d3")..BAD.."-25%"..trs("sale")..BAD..trs("skill_torment_d2"),
 				                                                            	2,			11,					{SKILL_TORMENT6,SKILL_TORMENT8}, TREE_ANCIENTTREE)
-GM:AddSkillModifier(SKILL_TORMENT7, SKILLMOD_XP, 0.55)
-GM:AddSkillModifier(SKILL_TORMENT7, SKILLMOD_MELEE_DAMAGE_MUL, -0.30)
-GM:AddSkillModifier(SKILL_TORMENT7, SKILLMOD_DAMAGE, -0.30)
+GM:AddSkillModifier(SKILL_TORMENT7, SKILLMOD_XP, 0.75)
+GM:AddSkillModifier(SKILL_TORMENT7, SKILLMOD_DAMAGE_ALL, -0.30)
 GM:AddSkillModifier(SKILL_TORMENT7, SKILLMOD_LUCK, -5)
 GM:AddSkillModifier(SKILL_TORMENT7, SKILLMOD_HEALTH, -45)
 GM:AddSkillModifier(SKILL_TORMENT7, SKILLMOD_SPEED, -55)
@@ -2096,15 +2092,15 @@ GM:AddSkillModifier(SKILL_TOY_BEST_FRIEND, SKILLMOD_XP, -0.10)
 GM:AddSkill(SKILL_FREEPOINT1,trs("skill_freexp").."I", GOOD.."+1%"..trs("xpmul"),
 				                                                            	4,			13,					{SKILL_TORMENT8}, TREE_ANCIENTTREE)
 GM:AddSkillModifier(SKILL_FREEPOINT1, SKILLMOD_XP, 0.01)
-GM:AddSkill(SKILL_FREEPOINT2,trs("skill_freexp").."II", GOOD.."+3%"..trs("xpmul"),
+GM:AddSkill(SKILL_FREEPOINT2,trs("skill_freexp").."II", GOOD.."+2%"..trs("xpmul"),
 				                                                            	5,			12,					{SKILL_FREEPOINT1}, TREE_ANCIENTTREE)
-GM:AddSkillModifier(SKILL_FREEPOINT2, SKILLMOD_XP, 0.03)
-GM:AddSkill(SKILL_FREEPOINT3,trs("skill_freexp").."III", GOOD.."+4%"..trs("xpmul"),
+GM:AddSkillModifier(SKILL_FREEPOINT2, SKILLMOD_XP, 0.02)
+GM:AddSkill(SKILL_FREEPOINT3,trs("skill_freexp").."III", GOOD.."+2%"..trs("xpmul"),
 				                                                            	6,			14,					{SKILL_FREEPOINT2}, TREE_ANCIENTTREE)
-GM:AddSkillModifier(SKILL_FREEPOINT3, SKILLMOD_XP, 0.04)
-GM:AddSkill(SKILL_FREEPOINT4,trs("skill_freexp").."IV", GOOD.."+6%"..trs("xpmul"),
+GM:AddSkillModifier(SKILL_FREEPOINT3, SKILLMOD_XP, 0.02)
+GM:AddSkill(SKILL_FREEPOINT4,trs("skill_freexp").."IV", GOOD.."+2%"..trs("xpmul"),
 				                                                            	6,			15,					{SKILL_FREEPOINT3}, TREE_ANCIENTTREE)
-GM:AddSkillModifier(SKILL_FREEPOINT4, SKILLMOD_XP, 0.06)
+GM:AddSkillModifier(SKILL_FREEPOINT4, SKILLMOD_XP, 0.02)
 GM:AddSkill(SKILL_XPMULGOOD, trs("skill_xpmulgood"), GOOD..trs("skill_xpmulgood_d1")..BAD..trs("skill_xpmulgood_d2"),
 				                                                            	6,			16,					{SKILL_FREEPOINT4}, TREE_ANCIENTTREE)
 

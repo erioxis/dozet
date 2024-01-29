@@ -453,6 +453,8 @@ LANGUAGE.t_module_nanite                             = "Nanite's"
 LANGUAGE.t_d_module_nanite                            = "Drone passivelly regenerates(3(+3 per stack) HP per 2 seconds).\nStackable."
 LANGUAGE.t_module_mirror                             = "Void Mirror"
 LANGUAGE.t_d_module_mirror                            = "+1 per stack MOAB Rollermine for drone.\nStackable and only for MOAB."
+LANGUAGE.t_module_serrate                             = "Pulse attack"
+LANGUAGE.t_d_module_serrate                            = "Give a pulse-modifier for drone.\nStackable (+5% additional pulse damage per stack)"
 
 
 

@@ -3809,7 +3809,10 @@ function GM:EntityTakeDamage(ent, dmginfo)
 							--	attacker:GiveAchievementProgress("daily_post", math_Round(math_min(damage, ent:Health())))
 							--end
 
-							DoAttachmenttDamage(attacker,ent,damage,time,dmginfo:GetInflictor())
+							DoAttachmenttDamage(attacker,ent,damage,time,inflictor)
+							if inflictor.InnateDamageType and inflictor.InnateDamageMul > 0 and inflictor.InnateDamageType < 4 then
+								ent:AddLegDamageExt( damage * inflictor.InnateDamageMul, attacker, inflictor, inflictor.InnateDamageType)
+							end
 
 
 							local pos = ent:GetPos()
@@ -5991,7 +5994,7 @@ function GM:WaveStateChanged(newstate, pl)
 				end
 				pl.BerserkerCharge = true
 				if pl:IsSkillActive(SKILL_XPMULGOOD) then
-				   pl.AddXPMulti = (pl.AddXPMulti or 1) + 0.20
+				   pl.AddXPMulti = (pl.AddXPMulti or 1) + 0.2
 				end
 				if pl:Frags() == 1024 then
 					pl:GiveAchievement("bitbat")

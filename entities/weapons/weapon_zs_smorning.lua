@@ -119,10 +119,10 @@ SWEP.ViewModel = "models/weapons/cstrike/c_pist_elite.mdl"
 SWEP.WorldModel = "models/weapons/w_pist_elite.mdl"
 SWEP.UseHands = true
 SWEP.Souleater = 1
-SWEP.Tier = 6
+SWEP.Tier = 4
 
 SWEP.Primary.Sound = Sound("Weapon_ELITE.Single")
-SWEP.Primary.Damage = 47
+SWEP.Primary.Damage = 31
 SWEP.Primary.NumShots = 1
 SWEP.Primary.Delay = 0.15
 
@@ -143,8 +143,8 @@ GAMEMODE:AddNewRemantleBranch(SWEP, 1, translate.Get("wep_smorning_r1"), transla
 	wept.BulletCallback = function(attacker, tr, dmginfo)
 		local ent = tr.Entity
 		if SERVER and math.random(7) == 1 and ent:IsValidLivingZombie() then
-			ent:GiveStatus("hollowing",33,attacker,false,true)
-			attacker:SetHealth(math.min(attacker:GetMaxHealth(), attacker:Health() + (attacker:GetMaxHealth() * 0.11))) 
+			ent:GiveStatus("hollowing",123,attacker,false,true)
+			attacker:SetHealth(math.min(attacker:GetMaxHealth(), attacker:Health() + (attacker:GetMaxHealth() * 0.03))) 
 		end
 	end 
 	

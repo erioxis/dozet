@@ -2,6 +2,9 @@ AddCSLuaFile()
 DEFINE_BASECLASS("weapon_zs_basemelee")
 SWEP.PrintName = translate.Get("wep_dubin")
 SWEP.Description = translate.Get("wep_d_dubin")
+SWEP.InnateDamageType = INNATE_TYPE_PULSE
+SWEP.InnateDamageMul = 0
+
 if CLIENT then
 	SWEP.ViewModelFOV = 65
 	SWEP.ViewModelFlip = false

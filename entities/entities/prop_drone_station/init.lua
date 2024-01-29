@@ -98,6 +98,9 @@ local function OnIn(self,new,rem)
 		self.AmmoUsagesStacks = math.min(3,self.TrinketsIn[new])
 	elseif new == "trinket_module_nanite" then
 		self.Nanites = self.TrinketsIn[new]
+	elseif new == "trinket_module_serrate" then
+		self.InnateDamageType = INNATE_TYPE_PULSE
+		self.InnateDamage = 0.05 * self.TrinketsIn[new]
 	end
 	self._OnRemove = self._OnRemove or self.OnRemove
 	self.OnRemove = function()
@@ -153,7 +156,7 @@ local function OnIn(self,new,rem)
 		end
 	end
 end
-local drones = {['prop_drone_hauler'] = true ,['prop_drone']  = true  ,['prop_drone_healer']  = true ,['prop_drone_pulse']  = true }
+local drones = {['prop_drone_hauler'] = true ,['prop_drone']  = true  ,['prop_drone_healer']  = true ,['prop_drone_pulse']  = true,['prop_manhack']  = true,['prop_manhack_saw']  = true}
 function ENT:Think()
 	if self.Destroyed then
 		self:Remove()

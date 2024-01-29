@@ -2609,6 +2609,8 @@ trinket, trinketwep = GM:AddTrinket(trs("t_module_nanite"), "module_nanite", fal
 trinketwep.OnlyDrones = true
 trinket, trinketwep = GM:AddTrinket(trs("t_module_mirror"), "module_mirror", false, placeholder, placeholder, 4, trs("t_d_module_mirror"), nil, nil, "weapon_zs_special_trinket")
 trinketwep.OnlyDrones = true
+trinket, trinketwep = GM:AddTrinket(trs("t_module_serrate"), "module_serrate", false, placeholder, placeholder, 4, trs("t_d_module_serrate"), nil, nil, "weapon_zs_special_trinket")
+trinketwep.OnlyDrones = true
 
 
 trinket = GM:AddTrinket( trs( "t_illegalmechanism" ), "illegalmechanism", false, supveles, supweles, 4, trs( "t_d_illegalmechanism" ) )

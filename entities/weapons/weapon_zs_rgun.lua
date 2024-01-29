@@ -29,6 +29,10 @@ SWEP.ViewModel = "models/weapons/c_shotgun.mdl"
 SWEP.WorldModel = "models/weapons/w_shotgun.mdl"
 SWEP.UseHands = true
 
+SWEP.InnateDamageType = INNATE_TYPE_PULSE
+SWEP.InnateDamageMul = 0.35
+
+
 SWEP.CSMuzzleFlashes = false
 
 SWEP.ReloadDelay = 0.81

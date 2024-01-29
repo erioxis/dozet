@@ -12,6 +12,8 @@ function ENT:Initialize()
 	self:Fire("kill", "", 15)
 	self:EmitSound("weapons/crossbow/bolt_fly4.wav")
 end
+ENT.InnateDamageType = INNATE_TYPE_BOUNTY
+ENT.InnateDamageMul = 0.15
 
 local temp_pen_ents = {}
 local temp_me = NULL

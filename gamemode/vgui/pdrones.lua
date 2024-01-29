@@ -204,7 +204,7 @@ function GM:OpenDroneMenu(remantler)
 				tbn:SetFont("ZS3D2DFontTiny")
 				tbn:SetAlpha(j == 1 and 255 or 70)
 				tbn:AlignRight(800 * screenscale - (ispacer - 1) * 120 * screenscale)
-				tbn:AlignTop(j <= 3 and 2 or 40)
+				tbn:AlignTop(j <= 4 and 2 or 40)
 				tbn:SizeToContents()
 				tbn.DoClick = function(me)
 					for k, v in pairs(tabpane.Grids) do

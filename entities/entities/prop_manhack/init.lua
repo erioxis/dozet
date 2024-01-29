@@ -6,6 +6,7 @@ function ENT:Initialize()
 	self:SetModel(self.Model)
 	self:SetUseType(SIMPLE_USE)
 
+	self:PhysicsInitBox(Vector(-30, -17, -14.15), Vector(18.29, 11.86, 15))
 	self:PhysicsInit(SOLID_VPHYSICS)
 	local phys = self:GetPhysicsObject()
 	if phys:IsValid() then
@@ -143,7 +144,8 @@ function ENT:SetObjectHealth(health)
 		self:Destroy()
 	end
 end
-
+function ENT:Use(activator, caller)
+end
 function ENT:OnTakeDamage(dmginfo)
 	if dmginfo:GetDamage() <= 0 then return end
 
@@ -172,12 +174,9 @@ function ENT:OnTakeDamage(dmginfo)
 	util.Effect("sparks", effectdata)
 end
 
-function ENT:Use(pl)
-	if pl == self:GetObjectOwner() and pl:Team() == TEAM_HUMAN and pl:Alive() and self:GetVelocity():Length() <= self.HoverSpeed then
-		self:OnPackedUp(pl)
-	end
+function ENT:AltUse(activator, tr)
+	self:PackUp(activator)
 end
-
 function ENT:PhysicsCollide(data, phys)
 	self.HitData = data
 	self:NextThink(CurTime())

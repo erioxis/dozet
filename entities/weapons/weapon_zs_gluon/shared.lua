@@ -45,7 +45,7 @@ SWEP.TracerName = "tracer_gluon"
 
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_SHORT_TEAM_HEAT, -0.01, 1)
 
-local branch = GAMEMODE:AddNewRemantleBranch(SWEP, 1, ""..translate.Get("wep_gluon_r1"), ""..translate.Get("wep_d_gluon_r1"), function(wept)
+local branch = GAMEMODE:AddNewRemantleBranch(SWEP, 1, translate.Get("wep_gluon_r1"), translate.Get("wep_d_gluon_r1"), function(wept)
 	wept.Primary.Damage = wept.Primary.Damage * 0.8
 	wept.TracerName = "tracer_higgs"
 	wept.EmitStartFiringSound = function(self)
@@ -58,7 +58,7 @@ end)
 branch.Colors = {Color(160, 160, 160), Color(105, 105, 105), Color(50, 50, 50), Color(255, 255, 255)}
 branch.NewNames = {"Deep", "Deeplands", "Void", "Null", "VOIDLING"}
 
-GAMEMODE:AddNewRemantleBranch(SWEP, 2, ""..translate.Get("wep_gluon_r2"), ""..translate.Get("wep_d_gluon_r2"), function(wept)
+GAMEMODE:AddNewRemantleBranch(SWEP, 2, translate.Get("wep_gluon_r2"), translate.Get("wep_d_gluon_r2"), function(wept)
 	wept.GluonDamage = function(self)
 		return wept.Primary.Damage + (self:GetShortHeat() * 0.25 * wept.Primary.Damage)
 	end

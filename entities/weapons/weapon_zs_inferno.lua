@@ -2,8 +2,8 @@ AddCSLuaFile()
 
 --SWEP.PrintName = "'Inferno' AUG"
 --SWEP.Description = "A very accurate assault rifle with great damage output and a high clip size."
-SWEP.PrintName = ""..translate.Get("wep_inferno")
-SWEP.Description = ""..translate.Get("wep_d_inferno")
+SWEP.PrintName = translate.Get("wep_inferno")
+SWEP.Description = translate.Get("wep_d_inferno")
 SWEP.Slot = 2
 SWEP.SlotPos = 0
 
@@ -18,6 +18,10 @@ if CLIENT then
 end
 
 SWEP.Base = "weapon_zs_base"
+
+SWEP.InnateDamageType = INNATE_TYPE_FIRE
+SWEP.InnateDamageMul = 0.13
+
 
 SWEP.HoldType = "ar2"
 
@@ -50,20 +54,3 @@ SWEP.IronSightsAng = Vector(-1, -1, 0)
 SWEP.IronSightsPos = Vector(-3, 4, 3)
 
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_RELOAD_SPEED, 0.1)
-GAMEMODE:AddNewRemantleBranch(SWEP, 1, ""..translate.Get("wep_inferno"), ""..translate.Get("wep_d_inferno_r1"), function(wept)
-	wept.Primary.Damage = wept.Primary.Damage * 0.85
-
-	wept.BulletCallback = function(attacker, tr, dmginfo)
-		local ent = tr.Entity
-		if SERVER and math.random(12) == 1 and ent:IsValidLivingZombie() then
-			ent:Ignite(40)
-			for __, fire in pairs(ents.FindByClass("entityflame")) do
-				if fire:IsValid() and fire:GetParent() == ent then
-					fire:SetOwner(attacker)
-					fire:SetPhysicsAttacker(attacker)
-					fire.AttackerForward = attacker
-				end
-			end
-		end
-	end
-end)

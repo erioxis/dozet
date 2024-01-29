@@ -64,6 +64,9 @@ if CLIENT then
 end
 SWEP.PrintName = translate.Get("wep_ice_nail")
 SWEP.Description = translate.Get("wep_d_ice_nail")
+SWEP.InnateDamageType = INNATE_TYPE_ICE
+SWEP.InnateDamageMul = 0.15
+
 function SWEP:PlayHitSound()
 	self:EmitSound(( self.FireNail and "ambient/fire/ignite.wav" or "physics/glass/glass_bottle_break"..math.random(1,2)..".wav"), 1215, (self:GetBlockState() and 200 or 2109))
 	for i=1,3 do
@@ -107,7 +110,6 @@ function SWEP:OnMeleeHit(hitent, hitflesh, tr)
 	local ent = tr.Entity
 	local owner = self:GetOwner()
 	if ent:IsPlayer() and SERVER then
-		ent:AttachmentDamage(self.MeleeDamage/1.7, owner, self, (self.FireNail and SLOWTYPE_FLAME or self.CNail and 4 or SLOWTYPE_COLD))
 		if self:GetBlockState() then
 			owner:SetVelocity(owner:GetEyeTrace().Normal * 1 + (-owner:GetAngles():Forward()*190))
 		end
@@ -119,6 +121,9 @@ end
 GAMEMODE:AddNewRemantleBranch(SWEP, 1, translate.Get("wep_ice_nail_r1"), translate.Get("wep_d_ice_nail_r1"), function(wept)
 	wept.MeleeDamage = wept.MeleeDamage * 1.2
 	wept.Primary.Delay = wept.Primary.Delay * 1.6
+	wept.InnateDamageType = INNATE_TYPE_FIRE
+	wept.InnateDamageMul = 0.1
+
 
 	wept.FireNail = true
 end)

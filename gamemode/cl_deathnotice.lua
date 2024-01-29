@@ -10,6 +10,12 @@ if not killicon.GetFont then
 		storedfonts[sClass] = {sFont, sLetter, cColor}
 		return OldAddFont(sClass, sFont, sLetter, cColor)
 	end
+	local colors = {[INNATE_TYPE_BOUNTY] = Color(154,0,126),
+	[INNATE_TYPE_SERRATE] = Color(172,0,06),
+	[INNATE_TYPE_ICE] = Color(0,92,229),
+	[INNATE_TYPE_FIRE] = Color(192,71,34),
+	[INNATE_TYPE_PULSE] = Color(0,18,154)
+	}
 
 	function killicon.Add(sClass, sTexture, cColor)
 		cColor = cColor or color_white
@@ -28,12 +34,25 @@ if not killicon.GetFont then
 	function killicon.Get(sClass)
 		return killicon.GetFont(sClass) or killicon.GetIcon(sClass)
 	end
-
+	local checked = {}
 	function killicon.GetFont(sClass) 
+		if !checked[sClass] and storedfonts[sClass] then
+			local wep = weapons.Get(sClass) 
+			checked[sClass] = true
+			storedfonts[sClass][3] = 
+			storedfonts[sClass] and 
+			color_white ~= storedfonts[sClass][3] and storedfonts[sClass][3] or wep and wep.InnateDamageType and colors[wep.InnateDamageType] or color_white
+		end
 		return storedfonts[sClass]
 	end
-
 	function killicon.GetIcon(sClass)
+		if !checked[sClass] and storedicons[sClass] then
+			local wep = weapons.Get(sClass) 
+			checked[sClass] = true
+			storedicons[sClass][2] = 
+			storedicons[sClass] and 
+			color_white ~= storedicons[sClass][2] and storedicons[sClass][2] or wep and wep.InnateDamageType and colors[wep.InnateDamageType] or color_white
+		end
 		return storedicons[sClass]
 	end
 end
@@ -331,9 +350,9 @@ killicon.Add("weapon_zs_energysword", "zombiesurvival/killicons/weapon_zs_energy
 killicon.Add("weapon_zs_energysword_dasher", "zombiesurvival/killicons/weapon_zs_energysword.png")
 killicon.Add("weapon_zs_loy", "zombiesurvival/killicons/weapon_zs_axe")
 killicon.Add("weapon_zs_solemnvow", "zombiesurvival/killicons/weapon_zs_solemnvow.png")
-killicon.Add("weapon_zs_silence", "zombiesurvival/killicons/weapon_zs_silence.png",Color(68,220,130))
-killicon.Add("weapon_zs_sawer", "zombiesurvival/killicons/weapon_zs_sawer.png")
-killicon.Add("weapon_zs_fireofdespair", "zombiesurvival/killicons/weapon_zs_fireofdespair.png",Color(167,33,0))
+killicon.Add("weapon_zs_silence", "zombiesurvival/killicons/weapon_zs_silence.png", Color(68,220,130))
+killicon.Add("weapon_zs_sawer", "zombiesurvival/killicons/weapon_zs_sawer.png", Color(192,0,195))
+killicon.Add("weapon_zs_fireofdespair", "zombiesurvival/killicons/weapon_zs_fireofdespair.png", Color(167,33,0))
 killicon.Add("weapon_zs_axe", "zombiesurvival/killicons/weapon_zs_axe")
 killicon.Add("weapon_zs_sawhack", "zombiesurvival/killicons/weapon_zs_sawhack.png")
 killicon.Add("weapon_zs_keyboard", "zombiesurvival/killicons/weapon_zs_keyboard")

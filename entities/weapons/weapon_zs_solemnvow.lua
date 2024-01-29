@@ -87,7 +87,7 @@ SWEP.ViewModel = "models/weapons/cstrike/c_pist_elite.mdl"
 SWEP.WorldModel = "models/weapons/w_pist_elite.mdl"
 SWEP.UseHands = true
 
-SWEP.Primary.Damage = 250
+SWEP.Primary.Damage = 120
 SWEP.Primary.NumShots = 1
 SWEP.Primary.Delay = 0.31
 
@@ -98,7 +98,6 @@ SWEP.Astral = false
 SWEP.PhasingSpeed = 0
 
 SWEP.Tier = 6
---ЭЫЭЭКЭЫ(9(9( ТОЙКА ПАЖЕ СВОЙ ТИР
 
 SWEP.WalkSpeed = SPEED_FASTEST
 
@@ -273,11 +272,11 @@ end
 function SWEP:Draw2DHUD()
 	self.BaseClass.Draw2DHUD( self )
 
-	self:Draw2DFeature( self:GetHitStacks(), nil, nil, "weapon_ability_astral_2d", "ZSSHUD4Font_20", Color( 255, 100, 255 ) )
+	self:Draw2DFeature( self:GetHitStacks(), nil, nil, "weapon_ability_astral", "ZSHUDFontSmallest", Color( 255, 100, 255 ) )
 end
 
 function SWEP:Draw3DHUD( vm, pos, ang )
 	self.BaseClass.Draw3DHUD( self, vm, pos, ang )
 
-	self:Draw3DFeature( vm, pos, ang, self:GetHitStacks(), nil, nil, "weapon_ability_astral_3d", "ZSSHUD4Font_50", Color( 255, 100, 255 ) )
+	self:Draw3DFeature( vm, pos, ang, self:GetHitStacks(), nil, nil, "weapon_ability_astral", "ZSHUDFontSmallest", Color( 255, 100, 255 ) )
 end

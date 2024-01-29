@@ -25,6 +25,8 @@ if CLIENT then
 end
 
 a = math.random(20,40)
+SWEP.InnateDamageType = INNATE_TYPE_BOUNTY
+SWEP.InnateDamageMul = 0.3
 
 SWEP.WalkSpeed = SPEED_FASTEST
 

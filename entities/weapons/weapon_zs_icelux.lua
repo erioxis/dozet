@@ -4,8 +4,8 @@ SWEP.Base = "weapon_zs_basemelee"
 
 ---"Ice Shade Manipulator"
 --- "A high-tech device, useful for crowds of zombies, has endless ice blocks "
-SWEP.PrintName = ""..translate.Get("wep_shadeice")
-SWEP.Description = ""..translate.Get("wep_d_shadeice")
+SWEP.PrintName = translate.Get("wep_shadeice")
+SWEP.Description = translate.Get("wep_d_shadeice")
 
 SWEP.ViewModel = Model("models/weapons/v_crowbar.mdl")
 SWEP.WorldModel = Model("models/weapons/w_crowbar.mdl")
@@ -13,6 +13,10 @@ SWEP.WorldModel = Model("models/weapons/w_crowbar.mdl")
 if CLIENT then
 	SWEP.ViewModelFOV = 70
 end
+
+SWEP.InnateDamageType = INNATE_TYPE_ICE
+SWEP.InnateDamageMul = 0
+
 
 
 
