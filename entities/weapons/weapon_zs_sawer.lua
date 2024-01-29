@@ -103,7 +103,7 @@ function SWEP:PlayHitFleshSound()
 end
 
 function SWEP:OnMeleeHit( hitent, hitflesh, tr )
-	if isplayer( hitent ) and hitent:Team() == TEAM_ZOMBIE then
+	if hitent:IsPlayer()  and hitent:Team() == TEAM_ZOMBIE then
 		hitent:AddArmDamage( 5 )
 		if not self.m_BackStabbing and math.abs( hitent:GetForward():Angle().yaw - self:GetOwner():GetForward():Angle().yaw ) <= 90 then
 			self.m_BackStabbing = true
@@ -125,7 +125,7 @@ end
 function SWEP:DealThink( dmginfo, ent)
 	local getabil = self:GetAbility()
 	if ent:IsValidLivingZombie() then
-		self:SetAbility( math.min( 1, getabil + dmginfo:GetDamage() * 0.00037 ) )
+		self:SetAbility( math.min( 1, getabil + dmginfo:GetDamage() * 0.0006 ) )
 	end
 	if getabil >= 1 then
 		for i = 1, 5 do
@@ -133,11 +133,10 @@ function SWEP:DealThink( dmginfo, ent)
 		end
 		local owner = self:GetOwner()
 		ent:GiveStatus( "zombiestrdebuff", 5, owner )
-		ent:GiveStatus( "zomdebuff", 5, owner )
 		ent:AddArmDamage( 30 )
 
 		self:EmitSound( "physics/body/body_medium_break" .. math.random( 2, 4 ) .. ".wav" , 100, math.random( 45, 50 ) )
-		ent:TakeSpecialDamage( self.MeleeDamage, DMG_SLASH, owner, self )
+		timer.Simple(0, function() ent:TakeSpecialDamage( self.MeleeDamage, DMG_SLASH, owner, self ) end)
 		self:SetAbility( 0 )
 	end
 end
@@ -168,25 +167,11 @@ if not CLIENT then return end
 local matGradientRight = CreateMaterial("gradient-r", "UnlitGeneric", {["$basetexture"] = "vgui/gradient-r", ["$vertexalpha"] = "1", ["$vertexcolor"] = "1", ["$ignorez"] = "1", ["$nomip"] = "1"})
 local colbg = Color( 0, 0, 0, 155 )
 local colcr = Color( 75, 25, 25, 100 )
-function SWEP:DrawAbility2DHUD( x, y )
+function SWEP:Draw2DHUD( x, y )
 	local owner = self:GetOwner()
 
     local ability = self:GetAbility()
 	
-	local w, h = 250, 25
-	y = y + 85
+	self:Draw2DFeature( ability, nil, nil, "weapon_ability_sawer", "ZSHUDFontSmallest", ability >= 1 and Color( 255, 55, 25 ) or colcr )
 
-	-- horizontal
-	surface.SetMaterial( matGradientRight )
-	surface.SetDrawColor( colbg )
-	surface.DrawRect( x, y, w, h )
-
-	surface.SetMaterial( matGradientRight )
-	surface.SetDrawColor( colcr.r, colcr.g, colcr.b, 155 )
-	surface.DrawTexturedRect( x, y, w * self:GetAbility() - 2, h )
-
-	surface.SetDrawColor( colcr.r, colcr.g, colcr.b, 155 )
-	surface.DrawRect( x + ( w * self:GetAbility() ) , y, 2, h )
-
-	draw.SimpleText( translate.Get( "weapon_ability_sawer_2d" ), "ZSSHUD4Font_20", x + w / 2, y + h / 2 , ability >= 1 and Color( 255, 55, 25 ) or colcr, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER )
 end

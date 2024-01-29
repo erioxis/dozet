@@ -243,7 +243,7 @@ function SWEP:Think()
 end
 
 function SWEP:Deploy()
-	if self:GetOwner():HaveStatus( "astral" ) then return false end
+	if self:GetOwner():GetStatus( "astral" ) then return false end
 
 	self.BaseClass.Deploy( self )
 end

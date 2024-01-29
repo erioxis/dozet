@@ -281,3 +281,6 @@ end
 GM.HonorableMentions[HM_NESTMASTER].GetPlayer = function(self)
 	return GetMostKey("NestSpawns")
 end
+GM.HonorableMentions[HM_BOUNTIES].GetPlayer = function(self)
+	return GetMostKey("BountiesGet")
+end

@@ -16,6 +16,7 @@ local function  CycleDo(skillid,k,pl)
 		print(k1)
 	end
 end
+
 local function UnlockSkills(pl,skillid,skill,activate)
 	if skill and not pl:IsSkillUnlocked(skillid) and (pl:GetZSSPRemaining() >= 1 or GAMEMODE.Skills[skillid].Amulet) and pl:SkillCanUnlock(skillid) and not skill.Disabled then
 		pl:SetSkillUnlocked(skillid, true)
@@ -151,16 +152,8 @@ net.Receive("zs_skills_remort", function(length, pl)
 end)
 
 net.Receive("zs_skills_reset", function(length, pl)
-	if pl:GetZSLevel() < 10 then
-		pl:SkillNotify("You must be level 10 to reset your skills.")
-		return
-	end
 
 	local time = os.time()
-	if pl.NextSkillReset and time < pl.NextSkillReset then
-		pl:SkillNotify("You must wait before resetting your skills again.")
-		return
-	end
 
 	pl:SkillsReset()
 
@@ -176,8 +169,10 @@ net.Receive("zs_skills_refunded", function(length, pl)
 
 	pl.SkillsRefunded = false
 end)
+local builds = {["Gunnery"] = {["Unlocked"] = {7,35,36,37,38,40,41,44,45,66,67,76,80,82,84,89,99,102,103,110,116,117,118,144,150,152,155,190,191,192,196,197,198,200,249,250,251,252,260,262,285,287,302,322,351,371,383,391,418,499},['Desired'] = {7,35,36,37,38,40,41,45,66,67,82,84,99,102,103,110,116,117,118,144,150,152,155,196,200,249,250,251,252,260,262,285,287,302,322,351,371,383,391,418,499}}}
 net.Receive("zs_skill_comeback", function(length, pl)
-	if pl.RemortOldSkills and pl.OldDesiredSkills then
+	local build = net.ReadString()
+	if build == "1" and pl.RemortOldSkills and pl.OldDesiredSkills then
 		local war = pl.OldDesiredSkills
 		for k,v in pairs(war) do
 			war[v] = true
@@ -185,6 +180,25 @@ net.Receive("zs_skill_comeback", function(length, pl)
 		
 		for k,v in pairs(pl.RemortOldSkills) do
 			UnlockSkills(pl,v,GAMEMODE.Skills[v],war[v])
+		end
+	elseif build ~= "1" then
+		local hih = table.Copy(builds)
+		local mda = hih[build]['Unlocked']--
+		
+	--	local war = string.Explode(",",hih[2])
+	--	PrintTable(war)
+		local war = hih[build]['Desired']
+		local pleh = {}
+		for k,v in ipairs(war) do
+			print(k,v)
+			pleh[v] = true
+		end
+		local user = {}
+		for k,v in pairs(mda) do
+			user[v] = k
+		end
+		for k,v in pairs(user) do
+			timer.Create(k..v.."skill222",0,4, function() UnlockSkills(pl,k,GAMEMODE.Skills[k],pleh[k]) end)
 		end
 	end
 end)

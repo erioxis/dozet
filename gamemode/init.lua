@@ -3100,6 +3100,7 @@ function GM:PlayerInitialSpawnRound(pl)
 	pl.LateBuyerMessage = nil
 	pl.NestsDestroyed = 0
 	pl.NestSpawns = 0
+	pl.BountiesGet = 0
 	pl.LastRevive = 0
 	pl.LastZGas = 0
 	pl.FirstUsedResupply = false

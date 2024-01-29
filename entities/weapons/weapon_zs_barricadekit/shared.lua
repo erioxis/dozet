@@ -20,7 +20,7 @@ SWEP.Secondary.Automatic = false
 
 SWEP.UseHands = true
 
-SWEP.MaxStock = 5
+SWEP.MaxStock = 10
 
 if CLIENT then
 	SWEP.ViewModelFOV = 60
@@ -44,7 +44,7 @@ function SWEP:CanPrimaryAttack()
 
 	if owner:IsHolding() or owner:GetBarricadeGhosting() then return false end
 
-	if owner:GetPoints() <= (7 * ((GAMEMODE:GetWave() + GAMEMODE:GetWave() * 0.1) * 2)) + 15 then
+	if self:GetPrimaryAmmoCount() <= 0  then
 		self:EmitSound("Weapon_Shotgun.Empty")
 		self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
 		return false
@@ -55,19 +55,6 @@ end
 function SWEP:SecondaryAttack()
 end
 
-function SWEP:CanSecondaryAttack()
-	local owner = self:GetOwner()
-
-	if owner:IsHolding() or owner:GetBarricadeGhosting() or owner:KeyDown(IN_SPEED) then return false end
-
-	if  self:GetPrimaryAmmoCount() <= 0 then
-		self:EmitSound("Weapon_Shotgun.Empty")
-		self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
-		return false
-	end
-
-	return true
-end
 
 function SWEP:Reload()
 end

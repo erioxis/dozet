@@ -17,10 +17,6 @@ function ENT:DrawTranslucent()
 	self:DrawModel()
 	render.SetBlend( 1 )
 
-	if render.SupportsVertexShaders_2_0() then
-		render.PopCustomClipPlane()
-		render.EnableClipping(false)
-	end
 end
 
 function ENT:Initialize()

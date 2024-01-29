@@ -292,7 +292,6 @@ function MakepWeapons(silent)
 		wepnode.Comps = GAMEMODE.Assemblies[wep]
 	end
 	for wep,v in pairs(tbleternal) do
-		print(wep,v)
 		local enttab = GAMEMODE.ZSInventoryItemData["trinket_"..wep] or wep
 		local wepnode
 		wepnode =  frame.trinketwep['bounty']:AddNode(enttab.PrintName or wep, v == "Cader" and 'icon16/wrench.png' or v == "Medical" and 'icon16/pill.png' or "icon16/key.png")

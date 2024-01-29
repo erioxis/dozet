@@ -373,8 +373,10 @@ LANGUAGE.hm_pacifist  = "The TRUE Medic"
 LANGUAGE.hm_pacifist_desc  = "goes to %s for not killing a single zombie and still surviving!"
 LANGUAGE.hm_stealed  = "I love fucking dkills"
 LANGUAGE.hm_stealed_desc  = "goes to %s for assisting in the disposal of %d zombies."
-LANGUAGE.hm_lhuman  = "Last Human of the world"
+LANGUAGE.hm_lhuman  = "Last Human of the simulatuon"
 LANGUAGE.hm_lhuman_desc  = "goes to %s for being the last person alive."
+LANGUAGE.hm_bounties  = "Toy Helper"
+LANGUAGE.hm_bounties_d  = "%s activated %d bounties."
 -- Various gamemode stuff
 LANGUAGE.map_sb = "Map: "
 LANGUAGE.tickrate_sb = "Tickrate: "
@@ -2906,6 +2908,9 @@ LANGUAGE.s_dact_all = "Deactivate all"
 LANGUAGE.s_reset = "Reset"
 
 LANGUAGE.s_autoupgrade = "Unlock all skills from last remort"
+
+
+LANGUAGE.s_unlockthis = "Unlock this build"
 
 
 

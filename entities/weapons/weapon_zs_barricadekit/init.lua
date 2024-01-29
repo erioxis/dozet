@@ -70,39 +70,6 @@ function SWEP:PrimaryAttack()
 		if stored then
 			ent:SetObjectHealth(stored[1])
 		end
-		owner:TakePoints((7 * ((GAMEMODE:GetWave() + GAMEMODE:GetWave() * 0.1) * 2)) + 15)
-	end
-end
-function SWEP:SecondaryAttack()
-	if not self:CanSecondaryAttack() then return end
-
-	local owner = self:GetOwner()
-	if not gamemode.Call("CanPlaceNail", owner) then return false end
-
-	local status = owner.status_ghost_barricadekit
-	if not (status and status:IsValid()) then return end
-	status:RecalculateValidity()
-	if not status:GetValidPlacement() then return end
-
-	local pos, ang = status:RecalculateValidity()
-	if not pos or not ang then return end
-
-	self:SetNextPrimaryAttack(CurTime() + self.Primary.Delay)
-
-	local ent = ents.Create("prop_aegisboard")
-	if ent:IsValid() then
-		ent:SetPos(pos)
-		ent:SetAngles(ang)
-		ent:Spawn()
-
-		ent:EmitSound("npc/dog/dog_servo12.wav")
-
-		ent:SetObjectOwner(owner)
-
-		local stored = owner:PopPackedItem(ent:GetClass())
-		if stored then
-			ent:SetObjectHealth(stored[1])
-		end
 		self:TakePrimaryAmmo(1)
 	end
 end

@@ -921,6 +921,7 @@ GM.HonorableMentions[HM_STRENGTHDMG] = {Name = "Alchemic", String = "is what %s 
 GM.HonorableMentions[HM_BARRICADEDESTROYER] = {Name = "Zmainer", String = "goes to %s for doing %d damage to barricades.", Callback = genericcallback, Color = COLOR_LIMEGREEN}
 GM.HonorableMentions[HM_NESTDESTROYER] = {Name = "FUCKING NIGGER", String = "goes to %s for destroying %d nests.", Callback = genericcallback, Color = COLOR_LIMEGREEN}
 GM.HonorableMentions[HM_NESTMASTER] = {Name = "Good man", String = "goes to %s for having %d zombies spawn through their nest.", Callback = genericcallback, Color = COLOR_LIMEGREEN}
+GM.HonorableMentions[HM_BOUNTIES] = {Name = translate.Get("hm_bounties"), String = translate.Get("hm_bounties_d"), Callback = genericcallback, Color = COLOR_PURPLE}
 
 -- Don't let humans use these models because they look like undead models. Must be lower case.
 GM.RestrictedModels = {

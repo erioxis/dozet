@@ -653,7 +653,7 @@ function PANEL:Init()
 	bottom1:SetText(MySelf:GetDCoins()..translate.ClientGet(MySelf ,"xp_from_ach"))
 	bottom1:DockPadding(0, 10, 0, 0)
 	local button0 = vgui.Create("DEXRoundedPanel", self)
-	button0:SetSize(256 * screenscale, 100 * screenscale)
+	button0:SetSize(256 * screenscale, 200 * screenscale)
 	button0:SetPos(0 * screenscale, 104 * screenscale)
 	button0:DockPadding(10, 10, 10, 10)
 	local savebtn = vgui.Create("DButton", button0)
@@ -684,6 +684,8 @@ function PANEL:Init()
 		"OK", "Cancel")
 		frame:GetChildren()[5]:GetChildren()[2]:SetTextColor(Color(30, 30, 30))
 	end
+
+
 	
 	local quepro = vgui.Create("DButton", button0)
 	quepro:SetFont("ZSHUDFontTiniestStatus")
@@ -694,10 +696,20 @@ function PANEL:Init()
 	quepro:Dock(TOP)
 	quepro.DoClick = function(me)
 		net.Start('zs_skill_comeback')
-			net.WriteEntity(pl)
+			net.WriteString(quepro.Who or "1")
 		net.SendToServer()
 	end
-		
+	local dropdown = vgui.Create("DComboBox", button0)
+	dropdown:Dock(TOP)
+	dropdown:SetMouseInputEnabled(true)
+	dropdown:SetTextColor(color_black)
+
+	dropdown:AddChoice('Gunnery')
+
+	dropdown.OnSelect = function( index, text, data )	
+		quepro:SetText(translate.Get("s_unlockthis"))
+		quepro.Who = data
+	end
 	local spremaining = vgui.Create("DEXChangingLabel", bottom)
 	spremaining:SetChangeFunction(function()
 		return translate.Get("hud_uu_sp")..MySelf:GetZSSPRemaining()

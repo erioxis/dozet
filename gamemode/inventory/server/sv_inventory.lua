@@ -93,7 +93,11 @@ net.Receive("zs_bounty_add", function(len, pl)
 	pl.SeededBounty = nil
 	pl.SeededSouls = nil
 	pl.NextThinkAboutTrade = (pl.NextThinkAboutTrade or 1) + 10
-	pl:TakeInventoryItem(pl.LastUsedTrinket)
+	if pl.LastUsedTrinket == "cons_bounty" then
+		pl.BountiesGet = pl.BountiesGet + 1
+	end
+		pl:TakeInventoryItem(pl.LastUsedTrinket)
+
 	if item == "1" then
 		pl:AddPoints(200)
 		return

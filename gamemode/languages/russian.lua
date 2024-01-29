@@ -355,6 +355,8 @@ LANGUAGE.hm_stealed  = "Я блять люблю Дкиллы"
 LANGUAGE.hm_stealed_desc  = "%s Застилил %d зомби."
 LANGUAGE.hm_lhuman  = "Послений человек симуляции"
 LANGUAGE.hm_lhuman_desc  = "%s Стал последним человеком на дозете."
+LANGUAGE.hm_bounties  = "Помощник Досета"
+LANGUAGE.hm_bounties_d  = "%s активировал %d наград(ы)."
 -- Various gamemode stuff|
 LANGUAGE.x_will_be_y_soon							= "%s скоро станет %s!"
 LANGUAGE.you_will_be_x_soon							= "Ты скоро станешь %s!"
@@ -1889,6 +1891,8 @@ LANGUAGE.s_act_font = "ZSHUDFontTiny"
 
 
 LANGUAGE.s_autoupgrade = "Вкачать все скиллы с прошлого реморта"
+
+LANGUAGE.s_unlockthis = "Вкачать этот билд"
 
 LANGUAGE.s_del = "Удалить"
 LANGUAGE.s_save = "Сохранить"
