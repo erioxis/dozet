@@ -2668,7 +2668,7 @@ hook.Add("PlayerSay", "ForBots", function(ply, text)
 		end
 		return false
 	end
-	if ( table.HasValue(casino,string.lower( playerInput[1] )) and playerInput[2] and tonumber(playerInput[2]) and tonumber(playerInput[2]) >= 10) and ply:IsValidLivingHuman() and pl.CasinoCan then
+	if ( table.HasValue(casino,string.lower( playerInput[1] )) and playerInput[2] and tonumber(playerInput[2]) and tonumber(playerInput[2]) >= 10) and ply:IsValidLivingHuman() and ply.CasinoCan then
 		if (ply.NextCasino or 1) >= CurTime() then
 			ply:PrintTranslatedMessage( HUD_PRINTTALK, "casino_in_s",math.Round((ply.NextCasino or 1)-CurTime()) )
 			return

@@ -143,7 +143,7 @@ function SWEP:DealThink(dmginfo, ent)
 end
 
 function SWEP:HaveAbility()
-	
+	if true then return end
 	local owner = self:GetOwner()
 	self:StartSwinging( true )
 	timer.Simple( 1.7, function()

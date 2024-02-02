@@ -13,7 +13,6 @@ local function  CycleDo(skillid,k,pl)
 		if !rememberedskills[k1] or UnlockSkills(pl,k1,GAMEMODE.Skills[k1],true) then
 			
 		end
-		print(k1)
 	end
 end
 
@@ -191,7 +190,6 @@ net.Receive("zs_skill_comeback", function(length, pl)
 		local war = hih[build]['Desired']
 		local pleh = {}
 		for k,v in ipairs(war) do
-			print(k,v)
 			pleh[v] = true
 		end
 		local user = {}
