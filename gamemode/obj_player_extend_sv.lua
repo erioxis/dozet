@@ -772,7 +772,7 @@ function meta:ProcessDamage(dmginfo)
 			self.BloodDead = absorb
 			local who = self.WhoBuffed
 			if (self.BuffedArmor or 0) > 0 and who and who:IsValidLivingHuman() then
-				local hpperpoint = GAMEMODE.MedkitPointsPerHealth
+				local hpperpoint = GAMEMODE.MedkitPointsPerHealth/2
 				local points = absorb / hpperpoint
 				who.PointQueue = who.PointQueue + points
 				self.BuffedArmor = math.max((self.BuffedArmor or 0)-absorb*2,0)
@@ -2632,7 +2632,8 @@ function meta:MakeDemiBossDrop(killer)
 	end
 end
 function meta:MakeBossDrop(killer)
-	local drop = "cons_soul_picka"
+	if killer and killer:IsValidLivingHuman() and killer:GetActiveWeapon():GetClass() == "weapon_zs_m6" then return end
+	local drop = "cons_soul_picka" 
 	local pos = self:LocalToWorld(self:OBBCenter())
 	local ent = ents.Create("prop_invitem")
 	if ent:IsValid() then

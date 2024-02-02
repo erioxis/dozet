@@ -1979,7 +1979,7 @@ function GM:PlayerHealedTeamMember(pl, other, health, wep, pointmul, nobymsg, fl
 		pl:SetProgress(math.Round(pl:GetProgress('mprog')-1800), 'mprog')
 	end
 	pl.NextChargeHeal = pl.NextChargeHeal + health
-	if pl.NextChargeHeal >= 450 then
+	if pl.NextChargeHeal >= 750 then
 		pl:SetChargesActive(pl:GetChargesActive()+1)
 		pl.NextChargeHeal = 0
 	end
@@ -2027,7 +2027,7 @@ function GM:PlayerRepairedObject(pl, other, health, wep)
 	if self:GetWave() == 0 or health <= 0 then return end
 	health = math.Round(health*10)/10
 	pl.NextChargeRepair = pl.NextChargeRepair + health
-	if pl.NextChargeRepair > 200 then
+	if pl.NextChargeRepair > 700 then
 		pl:SetChargesActive(pl:GetChargesActive()+1)
 		pl.NextChargeRepair = 0
 	end
@@ -2417,7 +2417,7 @@ function GM:WritePromo(promo,pl)
 			else
 				pl.UsedCodes = {promo}
 			end
-			v:CenterNotify(COLOR_GREEN, translate.ClientGet(pl, "promo_used"))
+			v:CenterNotify(COLOR_GREEN, translate.ClientFormat(v, "promo_used_by", pl:Nick()))
 			pl:CenterNotify(COLOR_GREEN, translate.ClientGet(pl, "promo_used"))
 			return
 		end
@@ -2559,7 +2559,7 @@ function GM:EndRound(winner)
 				gamemode.Call("OnPlayerLose", pl)
 			end
 		end
-		self:SetWinRate(math.max(0,self:GetWinRate() + 1))
+		self:SetWinRate(math.max(1,self:GetWinRate() + 1))
 		self.WinsMAP = (self.WinsMAP or 0) + 1
 		hook.Add("PlayerShouldTakeDamage", "EndRoundShouldTakeDamage", EndRoundPlayerShouldTakeDamage)
 	elseif winner == TEAM_UNDEAD then
@@ -3713,7 +3713,7 @@ function GM:EntityTakeDamage(ent, dmginfo)
 		damage = damage * 2
 	end
 	if not ent:IsPlayer() and (attacker:IsPlayer() and attacker:Team() == TEAM_UNDEAD) then
-		damage = damage * (1 + math_Clamp(GAMEMODE:GetBalance()/100,0,3))
+		damage = damage * (1 + math_Clamp(GAMEMODE:GetBalance()/100,0,1.5))
 	end
 	dmginfo:SetDamage(damage)
 	if ent.ProcessDamage and ent:ProcessDamage(dmginfo) then return end
@@ -4720,6 +4720,11 @@ function GM:HumanKilledZombie(pl, attacker, inflictor, dmginfo, headshot, suicid
 		attacker.InbalanceMoment = 	attacker.InbalanceMoment +1
 		if attacker.InbalanceMoment > 12 then
 			for k,v in pairs(ents.FindByClass("prop_gunturret*")) do
+				if v:GetObjectOwner() == attacker then
+					v:Remove()
+				end
+			end
+			for k,v in pairs(ents.FindByClass("prop_roller*")) do
 				if v:GetObjectOwner() == attacker then
 					v:Remove()
 				end
@@ -6084,7 +6089,7 @@ function GM:WaveStateChanged(newstate, pl)
 				if pl.IllegalMechanism then
 					local zarplataBlyad = 0
 					for _, d in ipairs( ents.FindByClass( "prop_*" ) ) do
-						if d.CanPackUp and d:GetObjectOwner() == pl then
+						if d.CanPackUp and d.GetObjectOwner and d:GetObjectOwner() == pl then
 							zarplataBlyad = zarplataBlyad + ( pl.IllegalMechanism or 0 )
 						end
 					end
@@ -6104,6 +6109,9 @@ function GM:WaveStateChanged(newstate, pl)
 			end
 			if pl:Team() == TEAM_UNDEAD then
 				pl:AddTokens(math.ceil(whywave* 90) + 120)
+				if pl:GetZombieClassTable().Name == "Destroyer" then
+					pl:Kill()
+				end
 			end
 
 			pl.SkipCrow = nil
@@ -6135,7 +6143,7 @@ function GM:PlayerSwitchFlashlight(pl, newstate)
 		local trace = pl:GetEyeTrace()
 		local trce =trace.Entity
 		if trce and trce:IsValidLivingZombie() and pl.NextWhiteOut < time and newstate and pl:IsSkillActive(SKILL_FLASHLIGHT_PLUS) and math.abs(pl:GetForward():Angle().yaw - trce:GetForward():Angle().yaw) >= 45 
-			and (trce:GetPos():Length()-pl:GetPos():Length()) < 3 and (trace.HitGroup == HITGROUP_HEAD or trace.HitGroup-1 == HITGROUP_HEAD)
+			and (trce:GetPos():Length()-pl:GetPos():Length()) < 3 and (trace.HitGroup == HITGROUP_HEAD or trace.HitGroup == HITGROUP_CHEST)
 			then
 			pl:SendLua("util.WhiteOut(25)")
 			trce:SendLua("util.WhiteOut(45)")

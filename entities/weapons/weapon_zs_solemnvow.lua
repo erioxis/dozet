@@ -1,6 +1,6 @@
 AddCSLuaFile()
 
-SWEP.PrintName = "Solemnvow"
+SWEP.PrintName4 = "Solemnvow"
 SWEP.Slot = 1
 SWEP.SlotPos = 0
 
@@ -97,7 +97,7 @@ SWEP.Astral = false
 
 SWEP.PhasingSpeed = 0
 
-SWEP.Tier = 6
+SWEP.Tier = 5
 
 SWEP.WalkSpeed = SPEED_FASTEST
 

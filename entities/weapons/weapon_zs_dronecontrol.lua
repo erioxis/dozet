@@ -105,3 +105,28 @@ if not CLIENT then return end
 function SWEP:DrawWeaponSelection(x, y, w, h, alpha)
 	self:BaseDrawWeaponSelection(x, y, w, h, alpha)
 end
+function SWEP:DrawHUD()
+	self:Draw2DHUD()
+end
+local texGradDown = surface.GetTextureID("VGUI/gradient_down")
+function SWEP:Draw2DHUD()
+	local owner = self:GetOwner()
+	if owner:IsSkillActive(SKILL_MOTHER) then
+		local wid, hei = 384, 16
+		local x, y = ScrW() - wid - 32, ScrH() - hei - 72
+		local texty = y - 4 - draw.GetFontHeight("ZSHUDFontSmall")
+
+	
+		draw.SimpleText("Мин", "ZSHUDFontSmall", x + wid -120, texty, COLOR_GREEN, TEXT_ALIGN_LEFT)
+	
+		local charges = 0
+		for k,v in pairs(ents.FindByClass('prop_rollermine_exp')) do
+			if v:GetObjectOwner() == owner then
+				charges = charges + 1
+			end
+		end
+		draw.SimpleText(charges, "ZSHUDFontSmall", x + wid, texty, charges > 0 and COLOR_GREEN or COLOR_DARKRED, TEXT_ALIGN_RIGHT)
+
+	
+	end
+end

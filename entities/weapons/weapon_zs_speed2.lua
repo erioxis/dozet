@@ -49,7 +49,7 @@ SWEP.SwingOffset = Vector(0, -30, 0)
 SWEP.SwingTime = 1.33
 SWEP.SwingHoldType = "melee"
 
-SWEP.Tier = 7
+SWEP.Tier = 6
 
 SWEP.Knockback = -56
 

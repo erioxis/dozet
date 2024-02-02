@@ -478,7 +478,6 @@ GM:AddPointShopItem("deathdlrs",		ITEMCAT_GUNS,			1500,			"weapon_zs_deathdealer
 GM:AddPointShopItem("rlaucnher",		ITEMCAT_GUNS,			1500,			"weapon_zs_rocket_launcher")
 GM:AddPointShopItem("biotic_grl",		ITEMCAT_GUNS,			1500,			"weapon_zs_biotic_grl")
 GM:AddPointShopItem("drill",		ITEMCAT_GUNS,			1500,			"weapon_zs_drill")
-GM:AddPointShopItem("solemnvw",		ITEMCAT_GUNS,			1500,			"weapon_zs_solemnvow").New = true
 -- Tier 7
 GM:AddAPointShopItem("sacredhh",			ITEMCAT_GUNS,			2150,			"weapon_zs_m6")
 GM:AddAPointShopItem("gaysseagle",   	ITEMCAT_GUNS,			2150,			"weapon_zs_gaeagle")
@@ -563,8 +562,8 @@ GM:AddPointShopItem("pw7",			ITEMCAT_MELEE,			1300,			"weapon_zs_powerfists_t7")
 
 -- Tier 7
 --GM:AddPointShopItem("speed",			ITEMCAT_MELEE,			180600,			"weapon_zs_speed")
-GM:AddAPointShopItem("xouryc",			ITEMCAT_MELEE,			1900,			"weapon_zs_loy")
-GM:AddAPointShopItem("murasama",			ITEMCAT_MELEE,			1900,			"weapon_zs_murasama")
+GM:AddAPointShopItem("xouryc",			ITEMCAT_MELEE,			2100,			"weapon_zs_loy")
+GM:AddAPointShopItem("murasama",			ITEMCAT_MELEE,			2100,			"weapon_zs_murasama")
 -- Super Trinkets ------------------------------------------------------------------------------------------------------------------------------------------------
 --
 GM:AddPointShopItem("futureblu",			ITEMCAT_TRINKETS,		250,				"trinket_futureblu").SubCategory =								ITEMSUBCAT_TRINKETS_SUPER
@@ -722,7 +721,36 @@ GM:AddAPointShopItem("hint_doset",			ITEMCAT_OTHER,			5,				nil,							translate
 GM:AddAPointShopItem("antivirus_anti",		ITEMCAT_OTHER,			3000,				"weapon_zs_redeemrayv2")
 
 GM:AddAPointShopItem("speedx22",			ITEMCAT_MELEE,			8000,			"weapon_zs_speed")
+--Melee tier 1
+
+--Melee tier 2
+
+--Melee tier 3
+GM:AddAPointShopItem("refraction",			ITEMCAT_MELEE,			250,			"weapon_zs_refraction")
+--Melee tier 4
 GM:AddAPointShopItem("dubin",			ITEMCAT_MELEE,			350,			"weapon_zs_dubin")
+--Melee tier 5
+GM:AddAPointShopItem("fireofdespair",			ITEMCAT_MELEE,			650,			"weapon_zs_fireofdespair")
+--Melee tier 6
+
+--Melee tier 7
+
+
+
+--Gunnery tier 1
+
+--Gunnery tier 2
+GM:AddAPointShopItem("dsg53",		ITEMCAT_GUNS,			100,			"weapon_zs_dsg53")
+--Gunnery tier 3
+
+--Gunnery tier 4
+--Gunnery tier 5
+GM:AddAPointShopItem("solemnvw",		ITEMCAT_GUNS,			1200,			"weapon_zs_solemnvow")
+--Gunnery tier 6
+GM:AddAPointShopItem("nuclearminigun",		ITEMCAT_GUNS,			1600,			"weapon_zs_nuclearminigun")
+
+
+
 GM:AddAPointShopItem("bannahuyx222",			ITEMCAT_TOOLS,			4500,			"weapon_zs_banhammer")
 -- Tier 1
 GM:AddPointShopItem("cutlery",			ITEMCAT_TRINKETS,		10,				"trinket_cutlery").SubCategory =								ITEMSUBCAT_TRINKETS_DEFENSIVE

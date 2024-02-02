@@ -41,7 +41,7 @@ cvars.AddChangeCallback("zs_babymode", function(cvar, oldvalue, newvalue)
 	GAMEMODE:SetBabyMode(tonumber(newvalue) == 1)
 end)
 
-GM.EndWaveHealthBonus = CreateConVar("zs_endwavehealthbonus", "30", FCVAR_ARCHIVE + FCVAR_NOTIFY, "Humans will get this much health after every wave. 0 to disable."):GetInt()
+GM.HealthBonus = CreateConVar("zs_endwavehealthbonus", "30", FCVAR_ARCHIVE + FCVAR_NOTIFY, "Humans will get this much health after every wave. 0 to disable."):GetInt()
 cvars.AddChangeCallback("zs_endwavehealthbonus", function(cvar, oldvalue, newvalue)
 	GAMEMODE.EndWaveHealthBonus = tonumber(newvalue) or 0
 end)
@@ -96,7 +96,7 @@ cvars.AddChangeCallback("zs_nopropdamagefromhumanmelee", function(cvar, oldvalue
 	GAMEMODE.NoPropDamageFromHumanMelee = tonumber(newvalue) == 1
 end)
 
-GM.MedkitPointsPerHealth = 9--[[CreateConVar("zs_medkitpointsperhealth", "8", FCVAR_ARCHIVE + FCVAR_NOTIFY, "Specifies the amount of healing for players to be given a point. For use with the medkit and such."):GetInt()
+GM.MedkitPointsPerHealth = 11--[[CreateConVar("zs_medkitpointsperhealth", "8", FCVAR_ARCHIVE + FCVAR_NOTIFY, "Specifies the amount of healing for players to be given a point. For use with the medkit and such."):GetInt()
 cvars.AddChangeCallback("zs_medkitpointsperhealth", function(cvar, oldvalue, newvalue)
 	GAMEMODE.MedkitPointsPerHealth = tonumber(newvalue) or 1
 end)]]

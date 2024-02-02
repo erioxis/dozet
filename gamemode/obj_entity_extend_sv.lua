@@ -45,6 +45,9 @@ function meta:HealPlayer(pl, amount, pointmul, nobymsg, poisononly)
 			amount = amount - rmv
 		end
 	end
+	if  amount > 7 and pl:GetStatus('serrated') then
+		pl:RemoveStatus('serrated')
+	end
 
 	-- Heal poison next.
 	if poison > 0 and amount > 0 then

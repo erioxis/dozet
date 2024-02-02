@@ -31,7 +31,7 @@ function ENT:OnTakeDamage(dmginfo)
 
 	if dmginfo:GetDamage() <= 0 then return end
 
-	if not self.Exploded and dmginfo:GetDamage() >= 90 and dmginfo:GetAttacker():Team() == TEAM_UNDEAD then
+	if not self.Exploded and dmginfo:GetDamage() >= 60 and dmginfo:GetAttacker():IsPlayer() and dmginfo:GetAttacker():Team() == TEAM_UNDEAD then
 		self:Remove()
 	end
 end

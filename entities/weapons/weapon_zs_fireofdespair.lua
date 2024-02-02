@@ -18,6 +18,9 @@ SWEP.HUD3DPos = Vector(0, -1, -7)
 SWEP.HUD3DAng = Angle(180, -90, 90)
 SWEP.HUD3DScale = 0.055
 
+SWEP.InnateDamageType = INNATE_TYPE_FIRE
+SWEP.InnateDamageMul = 0.2
+
 SWEP.ViewModel = "models/weapons/c_crowbar.mdl"
 SWEP.WorldModel = "models/weapons/w_crowbar.mdl"
 SWEP.UseHands = true
@@ -140,6 +143,7 @@ function SWEP:DealThink(dmginfo, ent)
 end
 
 function SWEP:HaveAbility()
+	
 	local owner = self:GetOwner()
 	self:StartSwinging( true )
 	timer.Simple( 1.7, function()

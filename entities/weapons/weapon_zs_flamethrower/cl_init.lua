@@ -65,13 +65,14 @@ function SWEP:Draw3DHUD(vm, pos, ang)
 	cam.End3D2D()
 end
 function SWEP:PreDrawViewModel()
-	if self:GetOwner():GetAmmoCount(self:GetPrimaryAmmoType()) < 1 then
-		self.VElements["element_name"].pos = Vector(0.116, 0.614, -221.20211)
+	if self:GetOwner().Deathtrue then
+		self.VElements["element_name"].color = Color(255, 255, 255)
 	else
-		self.VElements["element_name"].pos = Vector(0.116, 0.614, -1.202)
+		self.VElements["element_name"].color = Color(0, 80, 255, 255)
 	end
 	baseclass.Get("weapon_zs_base").PreDrawViewModel(self)
 end
+
 function SWEP:Draw2DHUD()
 	local screenscale = BetterScreenScale()
 

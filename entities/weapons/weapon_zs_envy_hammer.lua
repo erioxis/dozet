@@ -19,8 +19,8 @@ SWEP.ViewModelBoneMods = {
 SWEP.Base = "weapon_zs_hammer"
 
 SWEP.MeleeDamage = 1
-SWEP.HealStrength = 5
-SWEP.MeleeRange = 37
+SWEP.HealStrength = 9
+SWEP.MeleeRange = 48
 
 SWEP.ViewModel = "models/weapons/v_hammer/c_hammer.mdl"
 SWEP.WorldModel = "models/weapons/w_hammer.mdl"

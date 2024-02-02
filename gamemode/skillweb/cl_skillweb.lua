@@ -705,6 +705,7 @@ function PANEL:Init()
 	dropdown:SetTextColor(color_black)
 
 	dropdown:AddChoice('Gunnery')
+	dropdown:AddChoice('Medic')
 
 	dropdown.OnSelect = function( index, text, data )	
 		quepro:SetText(translate.Get("s_unlockthis"))

@@ -1,7 +1,7 @@
 --SWEP.PrintName = "'Spinfusor' Pulse Disc Launcher"
 --SWEP.Description = "Launches pulse projectiles that react on walls, sending energy back in the direction they travelled."
-SWEP.PrintName = ""..translate.Get("wep_zenithmega")
-SWEP.Description = ""..translate.Get("wep_d_zenithmega")
+SWEP.PrintName = translate.Get("wep_zenithmega")
+SWEP.Description = translate.Get("wep_d_zenithmega")
 
 SWEP.Slot = 3
 SWEP.SlotPos = 0

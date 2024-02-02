@@ -4,7 +4,7 @@ SWEP.Base = "weapon_zs_baseproj"
 SWEP.PrintName = translate.Get("wep_flamethrower")
 SWEP.Description = translate.Get("wep_d_flamethrower")
 
-SWEP.Primary.Delay = 0.1
+SWEP.Primary.Delay = 0.6
 
 SWEP.ViewModel = "models/weapons/c_shotgun.mdl"
 SWEP.WorldModel = "models/weapons/w_crowbar.mdl"
@@ -15,7 +15,7 @@ SWEP.InnateDamageMul = 0
 SWEP.MaxStock = 1
 SWEP.NextPuke = 0
 SWEP.PukeLeft = 0
-SWEP.Primary.Damage = 55
+SWEP.Primary.Damage = 187
 SWEP.Primary.Ammo = "chemical"
 SWEP.NextAmmoTake = 0
 SWEP.RequiredClip = 1
@@ -33,7 +33,6 @@ end
 function SWEP:PrimaryAttack()
 	if !self:GetOwner():KeyDown(IN_ATTACK) and self:CanPrimaryAttack() and self:GetOwner():WaterLevel() < 2 then return end
 	local owner = self:GetOwner()
-	self.PukeLeft = 80
 	if self:GetOwner():GetAmmoCount("chemical") >= 1 then
 		owner:EmitSound("ambient/fire/gascan_ignite1.wav")
 		owner:EmitSound("ambient/fire/ignite.wav")

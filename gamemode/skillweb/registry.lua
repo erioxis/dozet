@@ -896,13 +896,13 @@ GM:AddSkill(SKILL_MOTIONIII, trs("skill_motion3"), GOOD..trs("skill_motion_d_all
 																0,			-2,					{SKILL_D_SLOW}, TREE_SPEEDTREE)
 GM:AddSkill(SKILL_BACKPEDDLER, trs("skill_backpeddler"), GOOD..trs("skill_backpeddler_d1")..BAD..trs("skill_backpeddler_d2")..BAD..trs("skill_backpeddler_d3"),
 																-6,			0,					{}, TREE_SPEEDTREE)
-GM:AddSkill(SKILL_CRESCENDO1, trs("skill_crescendo").."I", GOOD.."+4 "..trs("hp_per_wave")..BAD.."-3 "..trs("sp_per_wave"),
+GM:AddSkill(SKILL_CRESCENDO1, trs("skill_crescendo").."I", GOOD.."+0.5 "..trs("hp_per_wave")..BAD.."-0.2 "..trs("sp_per_wave"),
 																-6,			1,					{SKILL_BACKPEDDLER}, TREE_SPEEDTREE)
-GM:AddSkill(SKILL_CRESCENDO2, trs("skill_crescendo").."II", GOOD.."+4 "..trs("hp_per_wave")..BAD.."-4 "..trs("sp_per_wave"),
+GM:AddSkill(SKILL_CRESCENDO2, trs("skill_crescendo").."II", GOOD.."+0.5 "..trs("hp_per_wave")..BAD.."-0.2 "..trs("sp_per_wave"),
 																-6,			2,					{SKILL_CRESCENDO1}, TREE_SPEEDTREE)
 GM:AddSkill(SKILL_ANTIVOR, trs("skill_antivor"), GOOD..trs("skill_antivor_d1")..BAD..trs("skill_antivor_d2"),
 																-8,			1,					{SKILL_CRESCENDO2}, TREE_SPEEDTREE)
-GM:AddSkill(SKILL_CRESCENDO3, trs("skill_crescendo").."III", GOOD.."+4 "..trs("hp_per_wave")..BAD.."-2 "..trs("sp_per_wave"),
+GM:AddSkill(SKILL_CRESCENDO3, trs("skill_crescendo").."III", GOOD.."+0.5 "..trs("hp_per_wave")..BAD.."-0.2 "..trs("sp_per_wave"),
 																-6,			3,					{SKILL_CRESCENDO2,SKILL_SAUL_GOODMAN}, TREE_SPEEDTREE)
 GM:AddSkill(SKILL_SAUL_GOODMAN, trs("skill_saul_goodman"), GOOD..trs("skill_saul_goodman_d1")..BAD.."-4%"..trs("xpmul"),
 																-6,			4,					{SKILL_CRESCENDO2}, TREE_SPEEDTREE)
@@ -1363,24 +1363,20 @@ local d = GM:AddSkill(SKILL_SECRET_VI, "Secret VI", GOOD.."+5 Skill Points",
 d.Hidden = true	
 d.Hidden1 = true	
 local rand = math.random(2,50)
-local d = GM:AddSkill(SKILL_SECRET_VIII, "Secret VIII", GOOD.."+10 Skill Points\nYou can!",
+local d = GM:AddSkill(SKILL_SECRET_VIII, "Secret VIII", GOOD.."Автопрокачка съела его",
 																-2,			rand,					{SKILL_NONE}, TREE_GUNTREE)
-GM:AddSkillModifier(SKILL_SECRET_VIII, SKILLMOD_SPOINT, 11)
 d.Hidden = true	
 d.Hidden1 = true
 local rand2 = math.random(-20,20)
 local rand1 = math.random(-20,20)
-local d = GM:AddSkill(SKILL_SECRET_9, "Secret IX", GOOD.."+20 Skill Points\nAhh finded at last...",
+local d = GM:AddSkill(SKILL_SECRET_9, "Secret IX", GOOD.."Автопрокачка отменила его.",
 																rand2,			rand1,					{SKILL_NONE}, TREE_GUNTREE)
-GM:AddSkillModifier(SKILL_SECRET_9, SKILLMOD_SPOINT, 21)
 d.Hidden = true	
 d.Hidden1 = true
 rand2 = math.random(-20,20)
 rand1 = math.random(-20,20)
-local d = GM:AddSkill(SKILL_SECRET_10, "Secret X", GOOD.."+25 Skill Points and +300% XP Multiplicator\nEnd?",
+local d = GM:AddSkill(SKILL_SECRET_10, "Secret X", GOOD.."Автопрокачка отмeнила eго.",
 																rand2,			rand1,					{SKILL_NONE}, math.random(1,12))
-GM:AddSkillModifier(SKILL_SECRET_10, SKILLMOD_SPOINT, 26)
-GM:AddSkillModifier(SKILL_SECRET_10, SKILLMOD_XP, 3)
 d.Hidden = true	
 d.Hidden1 = true
 local d = GM:AddSkill(SKILL_SECRET_VII, "ᅠ ᅠ ᅠ", GOOD.."+5 Skill Points\nSecret VII",
@@ -2947,9 +2943,9 @@ GM:AddSkillModifier(SKILL_CHEESE3, SKILLMOD_SPEED, 1)
 GM:AddSkillModifier(SKILL_BLOODYMAN, SKILLMOD_HEALTH, -100)
 GM:AddSkillModifier(SKILL_BLOODYMAN, SKILLMOD_BLOODARMOR, 130)
 
-GM:AddSkillModifier(SKILL_MOTIONI, SKILLMOD_SPEED, 5)
-GM:AddSkillModifier(SKILL_MOTIONII, SKILLMOD_SPEED, 5)
-GM:AddSkillModifier(SKILL_MOTIONIII, SKILLMOD_SPEED, 5)
+GM:AddSkillModifier(SKILL_MOTIONI, SKILLMOD_SPEED, 2)
+GM:AddSkillModifier(SKILL_MOTIONII, SKILLMOD_SPEED, 2)
+GM:AddSkillModifier(SKILL_MOTIONIII, SKILLMOD_SPEED, 2)
 
 GM:AddSkillModifier(SKILL_FOCUS, SKILLMOD_AIMSPREAD_MUL, -0.03)
 GM:AddSkillModifier(SKILL_FOCUS, SKILLMOD_RELOADSPEED_MUL, -0.03)
@@ -3397,12 +3393,12 @@ GM:AddSkillModifier(SKILL_VKID2, SKILLMOD_SPEED, 15)
 GM:AddSkillModifier(SKILL_VKID2, SKILLMOD_HEALTH, -65)
 
 GM:AddSkillModifier(SKILL_CURSEDHEALTH, SKILLMOD_CURSEM, -0.25)
-GM:AddSkillModifier(SKILL_CRESCENDO1, SKILLMOD_HP_PER_WAVE, 4)
-GM:AddSkillModifier(SKILL_CRESCENDO2, SKILLMOD_HP_PER_WAVE, 4)
-GM:AddSkillModifier(SKILL_CRESCENDO3, SKILLMOD_HP_PER_WAVE, 4)
-GM:AddSkillModifier(SKILL_CRESCENDO1, SKILLMOD_SP_PER_WAVE, -3)
-GM:AddSkillModifier(SKILL_CRESCENDO2, SKILLMOD_SP_PER_WAVE, -4)
-GM:AddSkillModifier(SKILL_CRESCENDO3, SKILLMOD_SP_PER_WAVE, -2)
+GM:AddSkillModifier(SKILL_CRESCENDO1, SKILLMOD_HP_PER_WAVE, 0.5)
+GM:AddSkillModifier(SKILL_CRESCENDO2, SKILLMOD_HP_PER_WAVE, 0.5)
+GM:AddSkillModifier(SKILL_CRESCENDO3, SKILLMOD_HP_PER_WAVE, 0.5)
+GM:AddSkillModifier(SKILL_CRESCENDO1, SKILLMOD_SP_PER_WAVE, -0.2)
+GM:AddSkillModifier(SKILL_CRESCENDO2, SKILLMOD_SP_PER_WAVE, -0.2)
+GM:AddSkillModifier(SKILL_CRESCENDO3, SKILLMOD_SP_PER_WAVE, -0.2)
 GM:AddSkillModifier(SKILL_SLOWCOACH, SKILLMOD_SP_PER_WAVE, 3)
 GM:AddSkillModifier(SKILL_LUCKY_UNLIVER, SKILLMOD_HP_PER_WAVE, -5)
 

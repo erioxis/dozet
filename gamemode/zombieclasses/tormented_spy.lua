@@ -2,8 +2,8 @@ CLASS.Base = "wraith"
 
 CLASS.Name = "Corrupted Spy"
 CLASS.TranslationName = "class_tormented_spy"
-CLASS.Description = "description_tormented_wraith"
-CLASS.Help = "controls_tormented_wraith"
+CLASS.Description = "description_tormented_spy"
+CLASS.Help = "controls_tormented_spy"
 
 CLASS.Health = 3
 CLASS.Points = CLASS.Health/GM.NoHeadboxZombiePointRatio
