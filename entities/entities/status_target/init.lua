@@ -13,9 +13,8 @@ if SERVER then
 	end
 end
 function ENT:EntityTakeDamage(ent, dmginfo)
-	if ent ~= self:GetOwner() then return end
-
-	local attacker = dmginfo:GetAttacker()
+	if ent ~= self:GetOwner() and dmginfo then return end
+	local attacker =  dmginfo.GetAttacker and dmginfo:GetAttacker() or NULL
 	if attacker:IsValidHuman() and dmginfo:GetInflictor().IsMelee then
 		dmginfo:SetDamage(dmginfo:GetDamage() * 0.1)
 	else

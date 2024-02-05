@@ -280,7 +280,7 @@ function meta:ProcessDamage(dmginfo)
 					attacker:SetPhantomHealth(attacker:GetPhantomHealth() - toheal)
 				end
 
-				if attacker:IsSkillActive(SKILL_BLOODLIFE) then
+				if attacker:IsSkillActive(SKILL_BLOODLIFE) and !self:GetZombieClassTable().Boss  then
 					damage = damage + (attacker:GetBloodArmor() * 0.05)
 				end
 				
@@ -696,7 +696,7 @@ function meta:ProcessDamage(dmginfo)
 				end
 
 
-				if self.MeleeDamageTakenMul and not dmgbypass then
+				if self.MeleeDamageTakenMul then
 					if classtablea.GigaTim then
 						damage = damage / self.MeleeDamageTakenMul
 					else

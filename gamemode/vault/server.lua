@@ -167,6 +167,7 @@ end
 function GM:SaveVault(pl)
 	if not self:ShouldSaveVault(pl) then return end
 	local remort =pl:GetZSRemortLevel()
+	local saved,savek = pl.OldDesiredSkills,pl.RemortOldSkills 
 	local tosave = {
 		Points = math.floor(pl.PointsVault),
 		XP = pl:GetZSXP(),
@@ -174,8 +175,8 @@ function GM:SaveVault(pl)
 		DesiredActiveSkills = util.CompressBitTable(pl:GetDesiredActiveSkills()),
 		UnlockedSkills = util.CompressBitTable(pl:GetUnlockedSkills()),
 		Version = pl.SkillVersion or self.SkillTreeVersion,
-		RemortOldSkills = util.CompressBitTable(pl.RemortOldSkills or {}) or {},
-		OldDesiredSkills = util.CompressBitTable(pl.OldDesiredSkills or {}) or {},
+	--	RemortOldSkills = util.CompressBitTable(savek) or {},
+	--	OldDesiredSkills = util.CompressBitTable(isaved) or {},
 		MedicMastery = pl:GetMastery("medic"),
 		MeleeMastery =pl:GetMastery("melee"),
 		GunMastery = pl:GetMastery("gunner"),

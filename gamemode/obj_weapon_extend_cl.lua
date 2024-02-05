@@ -106,6 +106,45 @@ local text = {
 }
 local colHealth = Color(1,1,1,255)
 function meta:DrawStyle()
+	if !GAMEMODE.NoStyle or MySelf.StyleMoment and #MySelf.StyleMoment < 0 then return end
+	local screenscale = BetterScreenScale()
+	local wid, hei = 110*screenscale , 150 *screenscale 
+	local x, y = ScrW() - wid - screenscale * 180 , ScrH() - hei - screenscale * 500
+	local col  = Color(0,0,0)
+		colHealth.r = math.abs(math.sin(CurTime() * 0.5 *  math.pi )) * 120
+		colHealth.g = math.abs(math.sin(CurTime() * 0.5 *math.pi)) * 120
+		colHealth.b = math.abs(math.sin(CurTime() * 0.5 *math.pi)) * 120
+		colHealth.a = 120
+		draw.RoundedBoxEx(8, x, y, wid*2, hei*3, colHealth, true,true, true, true) 
+		draw.RoundedBoxEx(8, x, y*0.7, wid*2, hei*0.35, colHealth, true,true, true, true) 
+		local pable = MySelf.StyleMoment
+		colHealth = Color(math.abs(math.sin(CurTime() * math.pi)) * 255,math.abs(math.sin(CurTime()* 0.5 * math.pi)) * 255,math.abs(math.sin(CurTime()* 0.5 * math.pi)) * 255,255)
+		col = colHealth
+		table.SortByMember(pable,"time")
+		local style = 0
+		for i=1,#pable do
+			if !pable[i] then continue end
+			local v = pable[i]
+			col = (v.color and v.color or colHealth)
+			DrawNew(v.text,i,wid,x,y,col,v.time,v.count)
+			if v.time-CurTime() <= 0 then
+				MySelf.StyleMoment[i] = nil
+				net.Start("zs_sync_style")
+				net.WriteTable(MySelf.StyleMoment)
+			net.SendToServer()
+			end
+			style = style + (v.score or 0)
+		end
+		local style2 = MySelf:GetStyle()
+		surface.SetDrawColor(colHealth)
+		if style2 == 9 then
+			draw.SimpleText(text[style2], "ZSHUDFont", x*1.07, y*0.78, Color(160,172,5,120), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+		end
+		draw.SimpleText(text[style2], "ZSHUDFontSmall", x*1.07, y*0.78, colors[style2], TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+		local al = table.Copy(colors[style2])
+		al.a = 77
+		draw.SimpleText(style2, "ZSHUDFontSmallest", x*1.07, y*0.74, al, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+		surface.DrawRect( x, y*0.9 , wid*2*((((style2*1000)-style)-500)/1000), hei*0.08*(math.max(0.2,math.abs(math.sin(CurTime() * math.pi)))))
 end
 --local CrossHairScale = 1
 local matGrad = Material("VGUI/gradient-r")

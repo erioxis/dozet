@@ -2820,7 +2820,7 @@ GM:SetSkillModifierFunction(SKILLMOD_DRILL_POWER_BARREL, function(pl, amount)
 	pl.DrillPowerBarrel = math.Clamp(1+amount, -1, 1000)
 end)
 GM:SetSkillModifierFunction(SKILLMOD_ILLEGALMECHANISM, function(pl, amount)
-	pl.IllegalMechanism = math.Clamp( 1 + amount, -1, 1000 )
+	pl.IllegalMechanism = math.Clamp( 0 + amount, -1, 1000 )
 end)
 
 

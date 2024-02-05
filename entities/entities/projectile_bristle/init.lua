@@ -45,6 +45,8 @@ function ENT:Hit(vHitPos, vHitNormal, eHitEntity)
 		if eHitEntity:IsPlayer() then
 			eHitEntity:TakeDamage(3, owner, self)
 
+			eHitEntity:GiveStatus('stunned',5)
+
 			local bleed = eHitEntity:GiveStatus("bleed")
 			if bleed and bleed:IsValid() then
 				bleed:AddDamage(8)

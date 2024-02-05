@@ -16,11 +16,16 @@ function ENT:Think()
 		owner:Freeze(true)
 	else
 		owner:SetSpeed(10)
+		if !self.OldJumpPower then
+			self.OldJumpPower = owner:GetJumpPower()
+		end
+		owner:SetJumpPower(0)
 	end
 	if self.DieTime < CurTime() then
 		if owner:IsBot() then
 			owner:Freeze(false)
 		else
+			owner:SetJumpPower(self.OldJumpPower)
 			owner:ResetSpeed()
 		end
 		self:Remove()

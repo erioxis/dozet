@@ -95,6 +95,7 @@ function SWEP:Think()
 						bleed:AddDamage(self.PounceDamage / 2)
 						bleed.Damager = owner
 					end
+					ent:GiveStatus('stunned',6)
 
 					ent:TakeSpecialDamage(self.PounceDamage / 2, DMG_SLASH, owner, self)
 				else

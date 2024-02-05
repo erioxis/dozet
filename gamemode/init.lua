@@ -6086,7 +6086,7 @@ function GM:WaveStateChanged(newstate, pl)
 					net.WriteString(lucktrue)
 				net.Send(pl)
 
-				if pl.IllegalMechanism then
+				if pl.IllegalMechanism and pl.IllegalMechanism > 0 then
 					local zarplataBlyad = 0
 					for _, d in ipairs( ents.FindByClass( "prop_*" ) ) do
 						if d.CanPackUp and d.GetObjectOwner and d:GetObjectOwner() == pl then
@@ -6094,7 +6094,7 @@ function GM:WaveStateChanged(newstate, pl)
 						end
 					end
 					net.Start( "zs_illegalmechanism" )
-						net.WriteString( zarplataBlyad )
+						net.WriteInt(zarplataBlyad,16)
 					net.Send( pl )
 				end
 

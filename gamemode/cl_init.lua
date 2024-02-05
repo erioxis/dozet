@@ -89,6 +89,10 @@ hook.Add("InitPostEntity", "GetLocal", function()
 	MySelf:ApplySkills()
 	MySelf.LastAddedPoints = 0
 	MySelf.LastCheckPoints = 0
+	MySelf.StyleMoment = {}
+	net.Start("zs_sync_style")
+		net.WriteTable(MySelf.StyleMoment)
+	net.SendToServer()
 end)
 
 -- Remove when model decal crash is fixed.
@@ -1705,7 +1709,7 @@ function GM:CreateVGUI()
 	self.GameStatePanel = vgui.Create("ZSGameState")
 	self.GameStatePanel:SetTextFont("ZSHUDFontSmaller")
 	self.GameStatePanel:SetAlpha(220)
-	self.GameStatePanel:SetSize(screenscale * 420, screenscale * 115)
+	self.GameStatePanel:SetSize(screenscale * 720, screenscale * 115)
 	self.GameStatePanel:ParentToHUD()
 
 	self.TopNotificationHUD = vgui.Create("DEXNotificationsList")

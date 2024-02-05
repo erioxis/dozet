@@ -109,6 +109,9 @@ function SWEP:Holster()
 	if CLIENT then
 		self:Anim_Holster()
 	end
+	if SERVER then
+		self:GetOwner():RemoveStatus('sigildef', nil, true)
+	end
 
 	return true
 end
@@ -133,5 +136,6 @@ function SWEP:Think()
 			end
 		end
 	end
+	if #team.GetPlayers(TEAM_HUMAN) < 3 then return end
 	self:GetOwner():GiveStatus("sigildef", 1)
 end

@@ -310,7 +310,7 @@ net.Receive("zs_getacurse", function(length)
 end)
 
 net.Receive( "zs_illegalmechanism", function( length )
-	GAMEMODE:CenterNotify( COLOR_CYAN, translate.Format( "points_for_illegalmechanism", net.ReadInt( 8 ) ) )
+	GAMEMODE:CenterNotify( COLOR_CYAN, translate.Format( "points_for_illegalmechanism", net.ReadInt( 16 ) ) )
 end )
 
 net.Receive("zs_waveend", function(length)
