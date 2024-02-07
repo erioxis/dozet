@@ -5,6 +5,8 @@ EFFECT.Halo		= Material( "effects/strider_tracer" )
 EFFECT.Muzzle		= Material( "effects/yellowflare" )
 EFFECT.FlyBy	= "ambient/machines/spinup.wav"
 
+EFFECT.LifeTime = 0.7
+
 function EFFECT:Init( data )
 
 	self.Position = data:GetStart()

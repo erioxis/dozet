@@ -684,6 +684,7 @@ end
 
 function GM:SetupProps()
 	if not self.ZombieEscape then
+		local phys
 		for _, d in pairs(ents.FindByClass("prop_dynamic*")) do
 			if d:IsValid() then
 				local convert = ents.Create("prop_physics")
@@ -695,6 +696,10 @@ function GM:SetupProps()
 				convert:SetSkin(d:GetSkin() or 0)
 				convert:SetParent(d:GetParent(), d:GetParentAttachment())
 				convert:SetColor(d:GetColor())
+				phys = convert:GetPhysicsObject()
+				if phys and phys:IsValid() then
+					phys:EnableMotion(false)
+				end
 			--	convert:SetAnimation()
 				--if d:GetKeyValues() then
 					--for k,v in pairs(d:GetKeyValues()) do
@@ -1675,7 +1680,7 @@ function GM:Think()
 					pl.OldWeaponToReload = nil
 				end
 				if time > (pl.NextFridgeUse or 0) then
-					pl.NextFridgeUse = time + 145
+					pl.NextFridgeUse = time + 245
 					pl.FridgeCaches = (pl.FridgeCaches or 0) + 1
 
 					net.Start("zs_nextfridgeuse")
@@ -1690,7 +1695,7 @@ function GM:Think()
 				if time > (pl.NextResupplyUse or 0) then
 					local stockpiling = pl:IsSkillActive(SKILL_STOCKPILE)
 
-					pl.NextResupplyUse = time + math.max(15,self.ResupplyBoxCooldown * (pl.ResupplyDelayMul or 1) * (stockpiling and 2 or 1))  - (pl:IsSkillActive(SKILL_STOWAGE) and math.max(0,self:GetBalance() / 4) or 0)
+					pl.NextResupplyUse = time + math.max(10,self.ResupplyBoxCooldown * (pl.ResupplyDelayMul or 1) * (stockpiling and 2 or 1)  - (pl:IsSkillActive(SKILL_STOWAGE) and math.max(0,self:GetBalance() / 4) or 0))
 					pl.StowageCaches = (pl.StowageCaches or 0) + (stockpiling and 2 or 1)
 
 					net.Start("zs_nextresupplyuse")
