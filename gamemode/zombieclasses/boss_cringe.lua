@@ -93,7 +93,7 @@ CLASS.Wave = 11 / 12
 		["EditorExpand"] = true,
 		["OwnerName"] = "self",
 		["IsDisturbing"] = false,
-		["Name"] = "мой костюм",
+		["Name"] = "умний",
 		["Duplicate"] = false,
 		["ClassName"] = "group",
 	},

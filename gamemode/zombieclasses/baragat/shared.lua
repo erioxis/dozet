@@ -13,7 +13,7 @@ CLASS.KnockbackScale = 0
 
 CLASS.FearPerInstance = 1
 
-CLASS.Points = 50
+CLASS.Points = 10
 
 CLASS.NoFallDamage = true
 CLASS.NoFallSlowdown = true
@@ -28,9 +28,9 @@ CLASS.JumpPower = 760
 CLASS.CanFeignDeath = false
 
 
-CLASS.ModelScale = 0.5
-CLASS.Hull = {Vector(-16, -16, 0), Vector(16, 16, 32)}
-CLASS.HullDuck = {Vector(-16, -16, 0), Vector(16, 16, 32)}
+CLASS.ModelScale = 0.9
+CLASS.Hull = {Vector(-32, -32, 0), Vector(32, 32, 64)}
+CLASS.HullDuck = {Vector(-32, -32, 0), Vector(32, 32, 64)}
 CLASS.ViewOffset = Vector(0, 0, 32 * CLASS.ModelScale)
 CLASS.ViewOffsetDucked = Vector(0, 0, 32 * CLASS.ModelScale)
 CLASS.StepSize = 25

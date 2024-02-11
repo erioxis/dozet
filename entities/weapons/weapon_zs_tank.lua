@@ -4,9 +4,9 @@ SWEP.PrintName = "Tank"
 
 SWEP.Base = "weapon_zs_zombie"
 
-SWEP.MeleeDamage = 34
+SWEP.MeleeDamage = 44
 SWEP.SlowDownScale = 0
-SWEP.MeleeDamageVsProps = 70
+SWEP.MeleeDamageVsProps = 34
 
 SWEP.AlertDelay = 1
 
@@ -26,6 +26,8 @@ end
 function SWEP:MeleeHit(ent, trace, damage, forcescale)
 	if not ent:IsPlayer() then
 		damage = self.MeleeDamageVsProps
+	else
+		ent:GiveStatus('stunned',6)
 	end
 
 	self.BaseClass.MeleeHit(self, ent, trace, damage, forcescale)

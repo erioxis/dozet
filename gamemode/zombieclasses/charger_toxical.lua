@@ -1,15 +1,85 @@
-CLASS.Name = "Charger"
-CLASS.TranslationName = "class_lacerator_charging"
-CLASS.Description = "description_lacerator_charging"
-CLASS.Help = "controls_lacerator_charging"
+CLASS.Name = "Toxical Charger"
+CLASS.TranslationName = "class_txlacerator_charging"
+CLASS.Description = "description_txlacerator_charging"
+CLASS.Help = "controls_txlacerator_charging"
 
 CLASS.Model = Model("models/player/zombie_lacerator2.mdl")
 
-CLASS.Wave = 3 / 6
+CLASS.Wave = 4 / 6
 
-CLASS.Health = 600
+CLASS.Health = 1200
 CLASS.Speed = 220
-CLASS.SWEP = "weapon_zs_lacerator_charging"
+
+CLASS.Pac3Out = {[1] = {
+	["children"] = {
+		[1] = {
+			["children"] = {
+			},
+			["self"] = {
+				["Skin"] = 0,
+				["Invert"] = false,
+				["LightBlend"] = 1,
+				["CellShade"] = 0,
+				["AimPartName"] = "",
+				["IgnoreZ"] = false,
+				["AimPartUID"] = "",
+				["Passes"] = 1,
+				["Name"] = "",
+				["Angles"] = Angle(3.7643110752106, 2.2716060357197e-06, 9.7199837512107e-08),
+				["DoubleFace"] = false,
+				["PositionOffset"] = Vector(0, 0, 0),
+				["BlurLength"] = 0,
+				["OwnerEntity"] = false,
+				["Brightness"] = 0.6,
+				["DrawOrder"] = 0,
+				["BlendMode"] = "",
+				["TintColor"] = Vector(0, 0, 0),
+				["Alpha"] = 1,
+				["LodOverride"] = -1,
+				["TargetEntityUID"] = "",
+				["BlurSpacing"] = 0,
+				["UsePlayerColor"] = false,
+				["Material"] = "",
+				["UseWeaponColor"] = false,
+				["EyeAngles"] = false,
+				["UseLegacyScale"] = false,
+				["Bone"] = "chest",
+				["Color"] = Vector(62, 217, 0),
+				["Fullbright"] = false,
+				["BoneMerge"] = false,
+				["IsDisturbing"] = false,
+				["Position"] = Vector(-6.8680648803711, 0, -16.844289779663),
+				["NoTextureFiltering"] = false,
+				["AlternativeScaling"] = false,
+				["Hide"] = false,
+				["Translucent"] = false,
+				["Scale"] = Vector(1, 1, 1),
+				["ClassName"] = "model",
+				["EditorExpand"] = false,
+				["Size"] = 0.55,
+				["ModelFallback"] = "",
+				["AngleOffset"] = Angle(0, 0, 0),
+				["TextureFilter"] = 3,
+				["Model"] = "models/props_c17/oildrum001_explosive.mdl",
+				["UniqueID"] = "bdaa8d15241fb10db082346d7b5d519d9bc9a329a13461e2351a22be7f199ae5",
+			},
+		},
+	},
+	["self"] = {
+		["DrawOrder"] = 0,
+		["UniqueID"] = "b05cbdd308bc67564007975c93107735e5ecbe647d2e3691c545567175f46833",
+		["Hide"] = false,
+		["TargetEntityUID"] = "",
+		["EditorExpand"] = true,
+		["OwnerName"] = "self",
+		["IsDisturbing"] = false,
+		["Name"] = "токсичный таран",
+		["Duplicate"] = false,
+		["ClassName"] = "group",
+	},
+},}
+
+CLASS.SWEP = "weapon_zs_toxic_charger"
 
 CLASS.Hull = {Vector(-16, -16, 0), Vector(16, 16, 58)}
 CLASS.HullDuck = {Vector(-16, -16, 0), Vector(16, 16, 32)}
@@ -17,7 +87,6 @@ CLASS.ViewOffset = Vector(0, 0, 50)
 CLASS.ViewOffsetDucked = Vector(0, 0, 24)
 
 CLASS.Points = CLASS.Health/GM.NoHeadboxZombiePointRatio
-CLASS.BetterVersion = "Toxical Charger"
 
 CLASS.VoicePitch = 0.75
 
@@ -187,7 +256,7 @@ end
 if SERVER then return end
 
 CLASS.Icon = "zombiesurvival/killicons/lacerator"
-CLASS.IconColor = Color(180, 45, 0)
+CLASS.IconColor = Color(2, 101, 0)
 
 function CLASS:CreateMove(pl, cmd)
 	local wep = pl:GetActiveWeapon()
@@ -209,7 +278,7 @@ function CLASS:CreateMove(pl, cmd)
 end
 
 function CLASS:PrePlayerDraw(pl)
-	render.SetColorModulation(0.7, 0.17, 0)
+	render.SetColorModulation(0, 0.275, 0)
 end
 
 function CLASS:PostPlayerDraw(pl)

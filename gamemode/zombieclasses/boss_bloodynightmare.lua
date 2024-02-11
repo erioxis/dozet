@@ -95,7 +95,7 @@ if SERVER then
 end
 function CLASS:ProcessDamage(pl, dmginfo)
 	if dmginfo:GetInflictor().IsMelee then
-		dmginfo:SetDamage(dmginfo:GetDamage() / 1000)
+		dmginfo:SetDamage(dmginfo:GetDamage() / 3)
 	end
 	return dmginfo
 end

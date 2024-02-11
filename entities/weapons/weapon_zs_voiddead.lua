@@ -6,11 +6,6 @@ SWEP.PrintName = ""
 SWEP.ViewModel 				= 	Model("models/weapons/v_zombiearms.mdl")
 SWEP.WorldModel 			= 	"models/weapons/w_crowbar.mdl"
 
-function SWEP:Initialize()
-	if CLIENT then
-		self:Anim_Initialize()
-	end
-end
 
 if CLIENT then
 	SWEP.ShowViewModel = false
@@ -80,6 +75,11 @@ SWEP.ViewModelBoneMods = {
 }
 
 end
+function SWEP:Initialize()
+	if CLIENT then
+		self:Anim_Initialize()
+	end
+end
 
 SWEP.MeleeDamage = 47.5
 SWEP.BleedDamage = 15
@@ -98,8 +98,8 @@ if CLIENT then
 		local screenscale = BetterScreenScale()
 		local owner = self:GetOwner()
 
-		local wid, hei = ScreenWidth * 0.2, ScreenHeight * 0.03
-		local x, y = ScreenWidth - wid - screenscale * 64, ScreenHeight - hei - screenscale * 32
+		local wid, hei = 210 * screenscale,30* screenscale
+		local x, y = 1700*screenscale - wid - screenscale * 64, 900*screenscale - hei - screenscale * 32
 
 		surface.SetDrawColor( 0, 0, 0, 155 )
 		surface.DrawRect( x, y, wid, hei )

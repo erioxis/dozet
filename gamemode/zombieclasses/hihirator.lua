@@ -6,10 +6,10 @@ CLASS.Help = "controls_imp"
 
 CLASS.Wave = 3 / 12
 
-CLASS.Health = 450
+CLASS.Health = 150
 CLASS.Speed = 220
 CLASS.CanPickupProp = true
-CLASS.Points = 3
+CLASS.Points = 2
 CLASS.CanPiz = true
 
 CLASS.CanTaunt = true

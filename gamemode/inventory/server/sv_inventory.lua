@@ -255,7 +255,7 @@ net.Receive("zs_upgrade_trinket", function(len, pl)
 		newi = string.sub(item ,0,#item-1)..(tonumber(string.sub(item ,#item,#item))+1)
 	end
 --	print(newi)
-	local cost = GAMEMODE:GetUpgradeScrap(tbl,(tonumber(string.sub(item ,#item,#item)) and tonumber(string.sub(item ,#item,#item))+1 or 1))
+	local cost = math.Round(GAMEMODE:GetUpgradeScrap(tbl,(tbl.QualityTier or 0)+1)*0.65)
 --	print(cost)
 	if cost > pl:GetAmmoCount("scrap") or tbl.NeedForUpgrade and !pl:HasInventoryItem(tbl.NeedForUpgrade) then 
 		GAMEMODE:ConCommandErrorMessage(pl, translate.ClientGet(pl, "need_to_have_enough_scrap"))
@@ -473,7 +473,8 @@ function meta:HasInventoryItemQ(item)
 	local newi3 = ""
 	local newi4 = ""
 	local newi5 = ""
-
+	local opt = string.sub(item ,0,#item-1)
+	local opt3 = string.sub(item ,#item,#item)
 	if  string.sub(item ,#item-1,#item-1) ~= "q" then
 		newi = item.."_q1"
 		newi2 = item.."_q2"
@@ -481,11 +482,11 @@ function meta:HasInventoryItemQ(item)
 		newi4 = item.."_q4"
 		newi5 = item.."_q5"
 	else
-		newi = string.sub(item ,0,#item-1)..(tonumber(string.sub(item ,#item,#item))+1)
-		newi2 = string.sub(item ,0,#item-1)..(tonumber(string.sub(item ,#item,#item))+2)
-		newi3 = string.sub(item ,0,#item-1)..(tonumber(string.sub(item ,#item,#item))+3)
-		newi4 = string.sub(item ,0,#item-1)..(tonumber(string.sub(item ,#item,#item))+4)
-		newi5 = string.sub(item ,0,#item-1)..(tonumber(string.sub(item ,#item,#item))+5)
+		newi = opt..(tonumber(opt3)+1)
+		newi2 = opt..(tonumber(opt3)+2)
+		newi3 = opt..(tonumber(opt3)+3)
+		newi4 = opt..(tonumber(opt3)+4)
+		newi5 = opt..(tonumber(opt3)+5)
 	end
 	return self.ZSInventory[newi] or  self.ZSInventory[newi2] or  self.ZSInventory[newi3] or  self.ZSInventory[newi4] or  self.ZSInventory[newi5]
 end

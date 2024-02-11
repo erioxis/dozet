@@ -58,6 +58,8 @@ LANGUAGE.t_pulsebooster                                 = "Pulse booster"
 LANGUAGE.t_pulseboosteri                                 = "Pulse infuser"
 LANGUAGE.t_pboom                                 = "Resonance Cascade Device"
 LANGUAGE.t_cryoinductor                                 = "Cryogenic Inductor"
+LANGUAGE.t_spinel                                 = "Spinel"
+LANGUAGE.t_d_spinel                                 = "Any serrate damage give a stacks in serrate-bar\nWhen bar is full, spawn a bloody rollermine."
 LANGUAGE.t_extendedmag                                 = "Extended Magazine"
 LANGUAGE.t_pulseboosterii                                 = "Pulse Impedance Module"
 LANGUAGE.t_crabstompers                                 = "Curb Stompers"
@@ -375,6 +377,10 @@ LANGUAGE.t_d_sale_q5                                 = "+30% arsenal discount\nY
 
 LANGUAGE.t_d_nnails                                 = "X2 Nails ammo usage\nEvery 4 seconds cade repairs on 7 HP.\n-15% repair rate"
 LANGUAGE.t_nnails                                 = "Living Nails"
+
+
+LANGUAGE.t_d_gov_blue                                 = "+25% Additional bounties progress.\nOnly for caders.\n-10% Repair rate"
+LANGUAGE.t_gov_blue                                 = "Goverment Blueprints"
 
 LANGUAGE.t_useself                                 = "Self-sacrifice"
 LANGUAGE.t_d_useself                                 = "On hit a barricade with hammer give them a 3s buff.\nThis buff give -22% damage taken and 15% damage has been reflected to you."

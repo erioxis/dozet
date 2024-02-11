@@ -40,6 +40,8 @@ function GM:AddTrinket(name, swepaffix, pairedweapon, veles, weles, tier, descri
 
 	local datatab = {PrintName = name, DroppedEles = weles, Tier = tier, Description = description, Status = status, Stocks = stocks, Icon = icon, PacModels = models}
 
+	datatab.QualityTier = (string.sub(swepaffix ,#swepaffix-1,#swepaffix-1) == "q" and tonumber(string.sub(swepaffix ,#swepaffix,#swepaffix)) or 0)
+
 	if pairedweapon then
 		skill.PairedWeapon = "weapon_zs_t_" .. swepaffix
 	end
@@ -1148,9 +1150,9 @@ GM:AddSkill(SKILL_BADBUYER, trs("skill_bbuyer"), GOOD.."+100"..trs("worth")..GOO
 																9,			0,					{SKILL_D_LATEBUYER}, TREE_BUILDINGTREE)
 GM:AddSkillModifier(SKILL_BADBUYER, SKILLMOD_WORTH, 100)
 GM:AddSkillModifier(SKILL_BADBUYER, SKILLMOD_ARSENAL_DISCOUNT, -0.09)
-GM:AddSkill(SKILL_HAMMERDOOR, trs("skill_dd_3"), GOOD..trs("skill_dd_3_d1")..BAD.."+10%"..trs("hammerd"),
+GM:AddSkill(SKILL_HAMMERDOOR, trs("skill_dd_3"), GOOD..trs("skill_dd_3_d1")..BAD.."+3%"..trs("hammerd"),
 																8,			3,					{SKILL_D_LATEBUYER}, TREE_BUILDINGTREE)
-GM:AddSkillModifier(SKILL_HAMMERDOOR, SKILLMOD_HAMMER_SWING_DELAY_MUL, 0.10)
+GM:AddSkillModifier(SKILL_HAMMERDOOR, SKILLMOD_HAMMER_SWING_DELAY_MUL, 0.03)
 GM:AddSkill(SKILL_CARRIER, trs("skill_carrier"), GOOD..trs("skill_carrier_d1")..BAD..trs("skill_carrier_d2")..BAD..trs("skill_carrier_d3"),
 																9,			2,					{SKILL_D_LATEBUYER}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_U_CRAFTINGPACK, trs("skill_u_craftpack"), GOOD..trs("skill_u_craftpack_d1"),
@@ -1164,8 +1166,9 @@ GM:AddSkill(SKILL_SPICY_CADES, trs("skill_spicy_cades"), GOOD.. trs("skill_spicy
 																-5,			4,					{}, TREE_BUILDINGTREE)
 GM:AddSkillModifier(SKILL_SPICY_CADES, SKILLMOD_REPAIRRATE_MUL, -0.10)
 GM:AddSkillModifier(SKILL_SPICY_CADES, SKILLMOD_HEALTH, -10)
-GM:AddSkill(SKILL_NEED_A_BUFF, trs("skill_cader_bounty"), GOOD.. trs("skill_cader_bounty_d1")..BAD.. trs("skill_cader_bounty_d2"),
-																-5,			5,					{SKILL_SPICY_CADES}, TREE_BUILDINGTREE).Vip3 = true
+GM:AddSkill(SKILL_NEED_A_BUFF, trs("skill_cader_bounty"), GOOD..trs("skill_cader_bounty_d1")..BAD.."+10%"..trs("hammerd"),
+																-5,			5,					{SKILL_SPICY_CADES}, TREE_BUILDINGTREE)
+GM:AddSkillModifier(SKILL_NEED_A_BUFF, SKILLMOD_HAMMER_SWING_DELAY_MUL, 0.10)
 GM:AddSkill(SKILL_D_NOODLEARMS, trs("skill_noodle"), GOOD.."+10"..trs("worth")..GOOD..trs("skill_noodle_d1")..GOOD.."+35%"..trs("repair")..BAD..trs("skill_noodle_d2"),
 																-7,			2,					{}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_INSTRUMENTS, trs("skill_instruments"), GOOD..trs("skill_instruments_d1"),
@@ -1344,7 +1347,7 @@ GM:AddSkill(SKILL_QUE_PRO, trs("skill_quepro"), GOOD.."-10000%"..trs("xpmul"),
 .QuePro = true														
 
 
-GM:AddSkill(SKILL_UNSIGIL, trs("skill_uncorrupt"), GOOD.."+24%"..trs("r_speed")..GOOD.."+6%"..trs("b_damage")..BAD.."-80%"..trs("meleedamage"),
+GM:AddSkill(SKILL_UNSIGIL, trs("skill_uncorrupt"), GOOD..trs("skill_uncorrupt_d1")..GOOD.."+24%"..trs("r_speed")..GOOD.."+6%"..trs("b_damage")..BAD.."-80%"..trs("meleedamage"),
 																0,			2,					{SKILL_LEVELHEADED}, TREE_GUNTREE)
 GM:AddSkillModifier(SKILL_UNSIGIL, SKILLMOD_DAMAGE, 0.06)
 SKILL_PHOENIX = 260
@@ -1423,15 +1426,12 @@ GM:AddSkill(SKILL_LEVELHEADED, trs("skill_l_headed"), GOOD..trs("skill_l_headed_
 																-2,			2,					{}, TREE_GUNTREE)
 GM:AddSkill(SKILL_QUICKDRAW, trs("skill_quick_d"), GOOD.."+65%"..trs("w_draw")..BAD.."-15%"..trs("r_speed"),
 																0,			1,					{}, TREE_GUNTREE)
-GM:AddSkill(SKILL_FOCUS, trs("skill_focus").."I", GOOD.."+3%"..trs("w_ac")..GOOD.."+5%"..trs("b_damage")..BAD.."-3%"..trs("r_speed"),
+GM:AddSkill(SKILL_FOCUS, trs("skill_focus").."I", GOOD.."+3%"..trs("w_ac")..BAD.."-3%"..trs("r_speed"),
 																5,			6,					{SKILL_NONE, SKILL_FOCUSII}, TREE_GUNTREE)
-GM:AddSkill(SKILL_FOCUSII, trs("skill_focus").."II", GOOD.."+4%"..trs("w_ac")..GOOD.."+9%"..trs("b_damage")..BAD.."-7%"..trs("r_speed"),
+GM:AddSkill(SKILL_FOCUSII, trs("skill_focus").."II", GOOD.."+4%"..trs("w_ac")..BAD.."-7%"..trs("r_speed"),
 																4,			3,					{SKILL_FOCUSIII, SKILL_SCAVENGER, SKILL_D_PALSY, SKILL_PITCHER}, TREE_GUNTREE)
-GM:AddSkill(SKILL_FOCUSIII, trs("skill_focus").."III", GOOD.."+6%"..trs("w_ac")..GOOD.."+11%"..trs("b_damage")..BAD.."-6%"..trs("r_speed"),
+GM:AddSkill(SKILL_FOCUSIII, trs("skill_focus").."III", GOOD.."+6%"..trs("w_ac")..BAD.."-6%"..trs("r_speed"),
 																3,			0,					{SKILL_EGOCENTRIC, SKILL_WOOISM, SKILL_ORPHICFOCUS, SKILL_SCOURER}, TREE_GUNTREE)
-GM:AddSkillModifier(SKILL_FOCUS, SKILLMOD_DAMAGE, 0.05)
-GM:AddSkillModifier(SKILL_FOCUSII, SKILLMOD_DAMAGE, 0.09)
-GM:AddSkillModifier(SKILL_FOCUSIII, SKILLMOD_DAMAGE, 0.11)
 SKILL_ARSVOID = 238
 GM:AddSkill(SKILL_ARSVOID, trs("skill_ars_void"), GOOD..trs("skill_ars_void_d1")..GOOD.."+5%"..trs("b_damage")..BAD.."+12%"..trs("sale"),
 																6,			-4,					{SKILL_DELIBRATION}, TREE_GUNTREE)
@@ -1521,10 +1521,10 @@ GM:AddSkill(SKILL_HIHI, trs("skill_hihi"), GOOD..trs("skill_hihi_d1"),
 GM:AddSkill(SKILL_ORPHICFOCUS, trs("skill_orfocus"), GOOD..trs("skill_orfocus_d1")..GOOD.."+2%"..trs("w_ac")..BAD..trs("skill_orfocus_d2")..BAD.."-6%"..trs("r_speed"),
 																5,			-1,					{SKILL_DELIBRATION}, TREE_GUNTREE)
 															
-GM:AddSkill(SKILL_AIMLESS, trs("skill_unfocus"), GOOD.."+25%"..trs("b_damage")..BAD.."-50%"..trs("w_ac"),
+GM:AddSkill(SKILL_AIMLESS, trs("skill_unfocus"), GOOD.."+45%"..trs("r_delay_shoot")..BAD.."-100%"..trs("w_ac"),
 																5,			0,					{SKILL_ORPHICFOCUS}, TREE_GUNTREE)
-GM:AddSkillModifier(SKILL_AIMLESS, SKILLMOD_DAMAGE, 0.25)
-GM:AddSkillModifier(SKILL_AIMLESS, SKILLMOD_AIMSPREAD_MUL, 0.5)
+GM:AddSkillModifier(SKILL_AIMLESS, SKILLMOD_FIRE_DELAY, -0.45)
+GM:AddSkillModifier(SKILL_AIMLESS, SKILLMOD_AIMSPREAD_MUL, 1)
 GM:AddSkill(SKILL_DELIBRATION, trs("skill_deli"), GOOD.."+3%"..trs("w_ac")..GOOD.."+1%"..trs("b_damage"),
 																6,			-3,					{}, TREE_GUNTREE)
 GM:AddSkillModifier(SKILL_DELIBRATION, SKILLMOD_DAMAGE, 0.01)
@@ -1623,7 +1623,7 @@ GM:AddSkill(SKILL_SOULNET, trs("skill_souleater"), GOOD..trs("skill_souleater_d1
 .RemortReq = 4
 GM:AddSkill(SKILL_GLASSWEAPONS, trs("skill_glassweapon"), GOOD..trs("skill_glassweapon_d1")..BAD..trs("skill_glassweapon_d2"),
 																2,			4,					{}, TREE_MELEETREE)
-GM:AddSkill(SKILL_GLASSMAN, trs("skill_glassman"), GOOD.."+230%"..trs("meleedamage")..BAD.."+200%"..trs("meleedamagetaken"),
+GM:AddSkill(SKILL_GLASSMAN, trs("skill_glassman"), GOOD.."+45%"..trs("meleedamage")..BAD.."+50%"..trs("meleedamagetaken"),
 																3,			5,					{SKILL_GLASSWEAPONS}, TREE_MELEETREE)
 GM:AddSkill(SKILL_D_CLUMSY,  trs("skill_d_clumsy"), GOOD.."+20"..trs("worth")..GOOD.."+10"..trs("start_points")..BAD..trs("skill_d_clumsy_d1"),
 																-2,			2,					{}, TREE_MELEETREE)
@@ -1720,9 +1720,8 @@ GM:AddSkillModifier(SKILL_MELEEFAN, SKILLMOD_MELEE_DAMAGE_MUL, 0.45)
 GM:AddSkill(SKILL_STAMINA, trs("skill_stamina"), GOOD.."+30%"..trs("meleedamage")..BAD..trs("skill_stamina_d1"),
 																9,			-1,					{SKILL_MELEEFAN,SKILL_SAHA}, TREE_MELEETREE).AlwaysActive = true
 GM:AddSkillModifier(SKILL_STAMINA, SKILLMOD_MELEE_DAMAGE_MUL, 0.30)
-GM:AddSkill(SKILL_SAHA, trs("skill_saha"), BAD.."-10%"..trs("meleedamage")..GOOD..trs("skill_saha_d1")..BAD..trs("skill_saha_d2"),
+GM:AddSkill(SKILL_SAHA, trs("skill_saha"), GOOD..trs("skill_saha_d1")..BAD..trs("skill_saha_d2"),
 																9,			0,					{}, TREE_MELEETREE)
-GM:AddSkillModifier(SKILL_SAHA, SKILLMOD_MELEE_DAMAGE_MUL, -0.1)
 GM:AddSkill(SKILL_STAMINLESS1, trs("skill_stamina").." I", GOOD..translate.Format("skillmod_n123", "+6%").."\n"..BAD..translate.Format("skillmod_n124", "+6%"),
 																11,			-1,					{SKILL_STAMINA}, TREE_MELEETREE)
 GM:AddSkillModifier(SKILL_STAMINLESS1, SKILLMOD_STAMINA_ADD, 0.06)
@@ -2084,7 +2083,7 @@ GM:AddSkillModifier(SKILL_TORMENT8, SKILLMOD_HEALTH, -50)
 GM:AddSkillModifier(SKILL_TORMENT8, SKILLMOD_XP, 0.15)
 GM:AddSkill(SKILL_TOY_BEST_FRIEND,trs("skill_toy"), GOOD..trs("skill_toy_d")..BAD.."-10%"..trs("xpmul"),
 																				1,			10,						{SKILL_TORMENT4}, TREE_ANCIENTTREE)
-GM:AddSkillModifier(SKILL_TOY_BEST_FRIEND, SKILLMOD_XP, -0.10)
+GM:AddSkillModifier(SKILL_TOY_BEST_FRIEND, SKILLMOD_XP, -0.05)
 GM:AddSkill(SKILL_FREEPOINT1,trs("skill_freexp").."I", GOOD.."+1%"..trs("xpmul"),
 				                                                            	4,			13,					{SKILL_TORMENT8}, TREE_ANCIENTTREE)
 GM:AddSkillModifier(SKILL_FREEPOINT1, SKILLMOD_XP, 0.01)
@@ -3035,8 +3034,8 @@ GM:AddSkillModifier(SKILL_BATTLER4, SKILLMOD_DAMAGE, -0.06)
 GM:AddSkillModifier(SKILL_BATTLER5, SKILLMOD_DAMAGE, -0.06)
 GM:AddSkillModifier(SKILL_BATTLER6, SKILLMOD_DAMAGE, -0.07)
 
-GM:AddSkillModifier(SKILL_GLASSMAN, SKILLMOD_MELEE_DAMAGE_MUL, 2.3)
-GM:AddSkillModifier(SKILL_GLASSMAN, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 2)
+GM:AddSkillModifier(SKILL_GLASSMAN, SKILLMOD_MELEE_DAMAGE_MUL, 0.45)
+GM:AddSkillModifier(SKILL_GLASSMAN, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 0.5)
 
 GM:AddSkillModifier(SKILL_JOUSTER, SKILLMOD_MELEE_DAMAGE_MUL, 0.15)
 GM:AddSkillModifier(SKILL_JOUSTER, SKILLMOD_MELEE_KNOCKBACK_MUL, -0.9)

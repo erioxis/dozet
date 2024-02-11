@@ -52,6 +52,15 @@ local function SetWeaponViewerSWEP(self, swep, category, comps)
 	viewer.m_Desc:MoveBelow(viewer.m_VBG, 8)
 	viewer.m_Desc:SetFont("ZSBodyTextFont")
 	viewer.m_Desc:SetText(desctext)
+	if self.ButtonGive then
+		self.ButtonGive:MoveBelow(viewer.m_Desc)
+		self.ButtonGive:SetFont("ZSHUDFont")
+		self.ButtonGive.DoClick = function(arguments)
+			net.Start("zs_admin_give_t")
+			net.WriteString(swep.SWEP or swep)
+			net.SendToServer()
+		end
+	end
 
 	GAMEMODE:ViewerStatBarUpdate(viewer, category ~= ITEMCAT_GUNS and category ~= ITEMCAT_MELEE, sweptable)
 	if GAMEMODE:HasPurchaseableAmmo(sweptable) and GAMEMODE.AmmoNames[string.lower(sweptable.Primary.Ammo)] then
@@ -96,7 +105,7 @@ local function SetWeaponViewerSWEP(self, swep, category, comps)
 		or "")or "")
 end
 local tbleternal = {["headshoter"] = "None", ["ind_buffer"]  = "None", ["ultra_at"] = "None", ["pearl"] = "None",
-["broken_world"]  = "None",["whysoul"]  = "None",["altevesoul"]  = "None",["lucky_chance"]  = "None",["acum"]  = "None",["driller"] = "None",["mirror_of_god"] = "None",["module_mirror"] = "None",
+["broken_world"]  = "None",["whysoul"]  = "None",["altevesoul"]  = "None",["lucky_chance"]  = "None",["acum"]  = "None",["driller"] = "None",["mirror_of_god"] = "None",["module_mirror"] = "None",["spinel"] = "None",
 ["pr_gold"] = "Medical",
 ["pr_barapaw"] = "Medical",
 ["pr_chamomile"] = "Medical",
@@ -106,6 +115,8 @@ local tbleternal = {["headshoter"] = "None", ["ind_buffer"]  = "None", ["ultra_a
 ["nanite_nails"] = "Cader",
 ["useself"] = "Cader",
 ["illegalmechanism"] = "Cader",
+["cons_nanites"] = "Cader",
+["gov_blueprints"] = "Cader"
 }  
 local innatedamage = {[INNATE_TYPE_BOUNTY] = "flag_pink",
 [INNATE_TYPE_ICE] = "drink",
@@ -196,6 +207,7 @@ function MakepWeapons(silent)
 	local title = EasyLabel(frame, "Weapon Database", "ZSHUDFont", color_white)
 	title:SetPos(wid * 0.5 - title:GetWide() * 0.5, y)
 	y = y + title:GetTall() + 8
+
 
 	local propertysheet = vgui.Create("DPropertySheet", frame)
 
@@ -292,11 +304,11 @@ function MakepWeapons(silent)
 		wepnode.Comps = GAMEMODE.Assemblies[wep]
 	end
 	for wep,v in pairs(tbleternal) do
-		local enttab = GAMEMODE.ZSInventoryItemData["trinket_"..wep] or wep
+		local enttab = GAMEMODE.ZSInventoryItemData["trinket_"..wep] or GAMEMODE.ZSInventoryItemData[wep] or wep
 		local wepnode
 		wepnode =  frame.trinketwep['bounty']:AddNode(enttab.PrintName or wep, v == "Cader" and 'icon16/wrench.png' or v == "Medical" and 'icon16/pill.png' or "icon16/key.png")
 
-		wepnode.SWEP = "trinket_"..wep
+		wepnode.SWEP = GAMEMODE.ZSInventoryItemData["trinket_"..wep] and "trinket_"..wep or wep
 		wepnode.DoClick = WeaponButtonDoClick
 		wepnode.Category = ITEMCAT_TRINKETS
 		wepnode.Comps = GAMEMODE.Assemblies[wep]
@@ -312,6 +324,9 @@ function MakepWeapons(silent)
 		wepnode.Comps = GAMEMODE.Assemblies[wep]
 	end
 	frame:SetWeaponViewerSWEP()
+	if MySelf:IsSuperAdmin() then
+		frame.ButtonGive = EasyButton(frame, "Give")
+	end
 
 	MakepWeapons(true)
 end

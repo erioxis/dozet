@@ -149,6 +149,7 @@ killicon.Add("projectile_doomcrab", "zombiesurvival/killicons/projectile_bonemes
 killicon.Add("weapon_zs_redmarrow", "zombiesurvival/killicons/skeletal_walker", Color(255,0,0))
 killicon.Add("weapon_zs_lacerator", "zombiesurvival/killicons/lacerator")
 killicon.Add("weapon_zs_lacerator_charging", "zombiesurvival/killicons/lacerator", Color(180, 45, 0))
+killicon.Add("weapon_zs_toxic_charger", "zombiesurvival/killicons/lacerator", Color(25, 191, 0))
 killicon.Add("weapon_zs_devourer", "zombiesurvival/killicons/devourer")
 killicon.Add("projectile_devourer", "zombiesurvival/killicons/devourer")
 killicon.Add("weapon_zs_frostshade", "zombiesurvival/killicons/shadev2", Color(0, 190, 255))

@@ -12,8 +12,9 @@ function ENT:SetDie(fTime)
 end
 function ENT:Think()
 	local owner = self:GetOwner()
-	local lox = self.Damager and self.Damager:IsPlayer() and self.Damager:IsSkillActive(SKILL_LOX)
-	local marry =  self.Damager and self.Damager:IsPlayer() and self.Damager:IsSkillActive(SKILL_BLOODMARY)
+	local validowner = self.Damager and self.Damager:IsValid() and self.Damager:IsPlayer() and self.Damager or owner
+	local lox = validowner:IsSkillActive(SKILL_LOX)
+	local marry =  validowner:IsSkillActive(SKILL_BLOODMARY)
 	if self:GetDamage() <= 0 or owner:GetZombieClassTable().Skeletal then
 		self:Remove()
 		return
@@ -22,7 +23,15 @@ function ENT:Think()
 	local dmg = 8 * self:GetDamage()
 
 	owner.NoBleedStack = true
-	owner:TakeSpecialDamage(dmg * (marry and 2 or 1) * (lox and 2 or 1),DMG_CLUB, self.Damager and self.Damager:IsValid() and self.Damager:IsPlayer() and self.Damager or owner, self,nil,0)
+	dmg = dmg * (marry and 2 or 1) * (lox and 2 or 1)
+	if validowner:HasTrinket('spinel') then
+		validowner:SetProgress(validowner:GetProgress('spinprog')+dmg,'spinprog')
+		
+		if owner:SpinelInduction(validowner) then
+			self:Remove()
+		end
+	end
+	owner:TakeSpecialDamage(dmg,DMG_CLUB, validowner, self,nil,0)
 	owner.NoBleedStack = false
 
 

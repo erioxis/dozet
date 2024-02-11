@@ -202,10 +202,10 @@ function GM:ItemPanelDoClick()
 		g.DoClick = UpgradeTrinket
 		g:SetVisible(true)
 		if !sweptable.NeedForUpgrade then
-			bl:SetText( translate.Format("upgrade_inv",GAMEMODE:GetUpgradeScrap(sweptable,(tonumber(strsub(item ,#item,#item)) and tonumber(strsub(item ,#item,#item))+1 or 1))))
+			bl:SetText( translate.Format("upgrade_inv",math.Round(GAMEMODE:GetUpgradeScrap(sweptable,(sweptable.QualityTier or 0)+1)*0.65)))
 			bl:SetFont("ZSBodyTextFont")
 		else
-			bl:SetText( translate.Format("upgrade_inv_hard",GAMEMODE:GetUpgradeScrap(sweptable,(tonumber(strsub(item ,#item,#item)) and tonumber(strsub(item ,#item,#item))+1 or 1)),GAMEMODE.ZSInventoryItemData[sweptable.NeedForUpgrade].PrintName))
+			bl:SetText( translate.Format("upgrade_inv_hard",math.Round(GAMEMODE:GetUpgradeScrap(sweptable,(sweptable.QualityTier or 0)+1)*0.65),GAMEMODE.ZSInventoryItemData[sweptable.NeedForUpgrade].PrintName))
 			bl:SetFont("ZS3D2DFontSuperTiny")
 		end
 		bl:SetPos( g:GetWide() / 2 - bl:GetWide() / 2, ( g:GetTall() * 0.5 - bl:GetTall() * 0.5 ) )

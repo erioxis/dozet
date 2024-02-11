@@ -512,7 +512,8 @@ function meta:DamageNails(attacker, inflictor, damage, dmginfo)
 			damage = damage * 1.5
 			dmginfo:SetDamage(damage)
 		end
-		if attacker:GetZombieClassTable().CanPiz and attacker:GetZombieClassTable().SWEP ~= inflictor:GetClass() then
+		local tblz = attacker:GetZombieClassTable()
+		if tblz.CanPiz and tblz.SWEP ~= inflictor:GetClass() then
 			damage = damage*0.1/(inflictor.Tier and inflictor.Tier or 1)
 			dmginfo:SetDamage(damage)
 		end
@@ -524,7 +525,7 @@ function meta:DamageNails(attacker, inflictor, damage, dmginfo)
 		end
 		local live = nails[math.random(1,#nails)]
 		local lowler = live:GetOwner()
-		if lowler and lowler:IsValid() and lowler:IsSkillActive(SKILL_SPICY_CADES) then 
+		if !inflictor.ZombieCanPickup and lowler and lowler:IsValid() and lowler:IsSkillActive(SKILL_SPICY_CADES) then 
 			attacker:TakeSpecialDamage(damage*2,DMG_SLASH,lowler,live,dmginfo:GetDamagePosition(),0)
 		end
 		damage = dmginfo:GetDamage()

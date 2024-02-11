@@ -23,6 +23,7 @@
 	util.AddNetworkString("zs_code_get")
 	util.AddNetworkString("zs_ability_weapon")
 	util.AddNetworkString("zs_skills_active_branch")
+	util.AddNetworkString("zs_admin_give_t")
 
 	
 	util.AddNetworkString("zs_upgrade_trinket")

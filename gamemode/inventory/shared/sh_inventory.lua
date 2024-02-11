@@ -235,12 +235,13 @@ GM:AddInventoryItemData("cons_xmas_goodness",		trs("c_new_year"),			trs("c_new_y
 	droped:SetPos(pl:GetPos()+Vector(0,0,70))
 	droped:Spawn()
 end,1)
-local tbleternal = {"headshoter", "ind_buffer", "ultra_at", "pearl","broken_world","whysoul","altevesoul","lucky_chance","acum","driller","mirror_of_god","module_mirror"} 
+local tbleternal = {"headshoter", "ind_buffer", "ultra_at", "pearl","broken_world","whysoul","altevesoul","lucky_chance","acum","driller","mirror_of_god","module_mirror","spinel"} 
 local medet = {	"pr_gold",
 "pr_barapaw",
 "pr_chamomile",
 "pr_bloodpack",
-"soulmedical"}
+"soulmedical"
+}
 local sinse = {	"sin_wrath",
 "sin_gluttony",
 "sin_sloth",
@@ -252,7 +253,8 @@ local quecader = {	"troyaksoul",
 "nanite_nails",
 "useself",
 "illegalmechanism",
-"soulmedical"}
+"cons_nanites",
+"gov_blueprints"}
 GM:AddInventoryItemData("cons_bounty",		trs("c_bounty"),			trs("c_bounty_d"),								"models/props_c17/trappropeller_lever.mdl", 3, nil, nil, function(pl) 
 	local tbl = table.Copy(tbleternal)
 	if pl:IsSkillActive(SKILL_SINS_2) then
@@ -268,7 +270,7 @@ GM:AddInventoryItemData("cons_bounty",		trs("c_bounty"),			trs("c_bounty_d"),			
 	local need = pl.SeededBounty or {}
 	while #need < 3 do
 		local item = tbl[math.random(1,#tbl)]
-		if !table.HasValue(need,item)  and !(pl:HasTrinket(item) or pl:HasInventoryItemQ("trinket_"..item)) then 
+		if !table.HasValue(need,item)  and !(pl:HasTrinket(item) or pl:HasInventoryItemQ("trinket_"..item) or pl:HasInventoryItem(item)) then 
 			need[#need+1] = item
 		end
 		tries = tries + 1
@@ -475,6 +477,31 @@ GM:AddInventoryItemData("cons_gausscard",		trs("c_gausscard"),			trs("c_gausscar
 	pl:Give("weapon_zs_gauss_card_r5")
 	timer.Simple(10, function() pl:StripWeapon("weapon_zs_gauss_card_r5") end)
 end,10)
+GM:AddInventoryItemData("cons_nanites",		trs("c_nanites"),			trs("c_nanites_d"),								"models/props_c17/trappropeller_lever.mdl", 3, nil, nil, function(pl) 
+	if pl:GetStatus('cooldown_nanite') then return end
+	pl:GiveStatus('cooldown_nanite',180)
+	local ent = ents.Create("projectile_nanitecloudbomb")
+	if ent:IsValid() then
+		local pos = pl:GetShootPos()
+		pos.z = pos.z - 16
+		ent:SetPos(pos)
+		ent:SetOwner(pl)
+		ent:Spawn()
+
+		ent.GrenadeDamage = 32
+		ent.GrenadeRadius = 128
+		ent.Team = pl:Team()
+
+		local phys = ent:GetPhysicsObject()
+		if phys:IsValid() then
+			phys:Wake()
+			phys:AddAngleVelocity(VectorRand() * 30)
+			phys:SetVelocityInstantaneous(pl:GetAimVector() * 600 * 0.4)
+		end
+
+		ent:SetPhysicsAttacker(pl)
+	end
+end,0)
 GM:AddInventoryItemData("cons_sack_of_trinkets",		trs("c_sack_of_trinkets"),			trs("c_sack_of_trinkets_d"),								"models/props_c17/trappropeller_lever.mdl", 3, nil, nil, function(pl)
 	local use2 = {} 
 	local data = GAMEMODE.ZSInventoryItemData
@@ -1131,6 +1158,8 @@ GM:AddSkillModifier(trinket, SKILLMOD_PULSE_WEAPON_SLOW_MUL, -0.11)
 
 trinket = GM:AddTrinket(trs("t_cryoinductor"), "cryoindu", false, oveles, oweles, 4, trs("t_d_cryoinductor"), nil, nil, "weapon_zs_shot_trinket")
 
+trinket = GM:AddTrinket(trs("t_spinel"), "spinel", false, oveles, oweles, 4, trs("t_d_spinel"), nil, nil, "weapon_zs_shot_trinket")
+
 trinket = GM:AddTrinket(trs("t_extendedmag"), "extendedmag", false, oveles, oweles, 3, trs("t_d_extendedmag"), nil, nil, "weapon_zs_shot_trinket")
 
 trinket = GM:AddTrinket(trs("t_pulseboosterii"), "pulseimpedance", false, oveles, oweles, 5, trs("t_d_pulseboosterii"), nil, nil, "weapon_zs_shot_trinket")
@@ -1683,6 +1712,8 @@ end)
 trinket, trinketwep = GM:AddTrinket(trs("t_nnails"), "nanite_nails", false, supveles, supweles, 3, trs("t_d_nnails"), nil, nil, "ammo_nail")
 GM:AddSkillModifier(trinket, SKILLMOD_REPAIRRATE_MUL, -0.15)
 trinket, trinketwep = GM:AddTrinket(trs("t_useself"), "useself", false, supveles, supweles, 3, trs("t_d_useself"), nil, nil, "ammo_nail")
+trinket, trinketwep = GM:AddTrinket(trs("t_gov_blue"), "gov_blueprints", false, supveles, supweles, 3, trs("t_d_gov_blue"), nil, nil, "ammo_nail")
+GM:AddSkillModifier(trinket, SKILLMOD_REPAIRRATE_MUL, -0.1)
 
 
 

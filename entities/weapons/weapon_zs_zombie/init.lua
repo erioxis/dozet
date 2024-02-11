@@ -1,5 +1,7 @@
 INC_SERVER()
 
+AddCSLuaFile("animations.lua")
+
 SWEP.MoanDelay = 1
 
 function SWEP:Reload()

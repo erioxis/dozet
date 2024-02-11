@@ -281,18 +281,20 @@ function GM:DrawInductorIndicators()
 		local screenscale = BetterScreenScale()
 		local medp = lp:GetProgress('mprog')
 		local caderp = lp:GetProgress('caderprog')
-		local fired =lp:GetProgress('fprog')
-		local pulsed =lp:GetProgress('pprog')
-		local bountyd =lp:GetProgress('bprog')
-		local icep =lp:GetProgress('iprog')
-		local cham =lp:GetProgress('cprog')
-		local resnyad =lp:GetProgress('rprog')
+		local fired = lp:GetProgress('fprog')
+		local pulsed = lp:GetProgress('pprog')
+		local bountyd = lp:GetProgress('bprog')
+		local icep = lp:GetProgress('iprog')
+		local spinprog = lp:GetProgress('spinprog')
+		local cham = lp:GetProgress('cprog')
+		local resnyad = lp:GetProgress('rprog')
 	
 		local medt = lp:GetPTime('mprog')
 		local cadert = lp:GetPTime('caderprog')
 		local firet =lp:GetPTime('fprog')
 		local pulset =lp:GetPTime('pprog')
 		local bountyt =lp:GetPTime('bprog')
+		local spintime = lp:GetPTime('spinprog')
 		local icet =lp:GetPTime('iprog')
 		local chamt =lp:GetPTime('cprog')
 		local resnyat =lp:GetPTime('rprog')
@@ -311,7 +313,7 @@ function GM:DrawInductorIndicators()
 			y = y + ScrH() * 0.07
 		end
 		if caderp > 0 and cadert > CurTime() and lp:IsSkillActive(SKILL_NEED_A_BUFF) then
-			DrawIndicator(colCader,screenscale,caderp,cadert,"caderb",3000,x,y)
+			DrawIndicator(colCader,screenscale,caderp,cadert,"caderb",2500,x,y)
 			y = y + ScrH() * 0.07
 		end
 		if icep > 0 and icet > CurTime() then
@@ -331,6 +333,10 @@ function GM:DrawInductorIndicators()
 		end
 		if resnyad > 0 and resnyat > CurTime() then
 			DrawIndicator(colResnya,screenscale,resnyad,resnyat,"resnya",1000,x,y)
+			y = y + ScrH() * 0.07
+		end
+		if spinprog > 0 and spintime > CurTime() then
+			DrawIndicator(colResnya,screenscale,spinprog,spintime,"spinel",2000,x,y)
 			y = y + ScrH() * 0.07
 		end
 	end

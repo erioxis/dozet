@@ -4,23 +4,19 @@ ENT.TimeToDash = 0
 function ENT:Initialize()
 	timer.Simple(0, function(arguments)
 		local owner = self:GetOwner()
-	self:SetModel(owner:GetModel())
-	self:SetPos(owner:GetPos() + Vector(0,0,4))
-	--self:SetParent(owner,2)
-	self:PhysicsInitSphere(21)
-	self:SetSolid(SOLID_VPHYSICS)
-	self:SetUseType(SIMPLE_USE)
-	self:CollisionRulesChanged()
-	local phys = self:GetPhysicsObject()
-	if phys:IsValid() then
-		phys:EnableMotion(true)
-	end
-	self.trg = NULL
-end)
---	timer.Simple(0, function() self:GetPhysicsObject():SetVelocity(Vector(0,0,0)) end)
---	self.DieTime = CurTime() + 2
-	--self.TimeToDash = CurTime() + 1
-	--self:Fire("kill", "", 4.75)
+		self:SetModel(owner:GetModel())
+		self:SetPos(owner:GetPos() + Vector(0,0,4))
+		--self:SetParent(owner,2)
+		self:PhysicsInitSphere(21)
+		self:SetSolid(SOLID_VPHYSICS)
+		self:SetUseType(SIMPLE_USE)
+		self:CollisionRulesChanged()
+		local phys = self:GetPhysicsObject()
+		if phys:IsValid() then
+			phys:EnableMotion(true)
+		end
+		self.trg = NULL
+	end)
 end
 local function huy(wep,self,dir)
 	local owner = wep:GetOwner()
@@ -129,6 +125,10 @@ end
 function ENT:ShootBullets(dmg, numbul)
 	local owner = self:GetOwner()
 	local target = self.trg
+	if self:GetWeapon().RemoveOnGive then
+		owner:Kill()
+		self:Remove()
+	end
 	if owner and owner:IsValid() and target and target:Team() ~= self:GetOwner():Team() then 
 		local wep = self:GetWeapon()
 		if wep.Magic and !owner:IsSkillActive(SKILL_MAGIC) then return end
@@ -158,6 +158,12 @@ function ENT:GetWeapon()
 	return weapons.Get(self.Weapon or "weapon_zs_peashooter")
 end
 function ENT:SetNextSecondaryFire()
+end
+function ENT:GetNextSecondaryFire()
+end
+function ENT:SetHitStacks()
+end
+function ENT:GetHitStacks()
 end
 function compare(a,b)
 	return a.Health > b.Health

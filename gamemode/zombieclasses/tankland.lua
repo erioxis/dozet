@@ -3,7 +3,7 @@ CLASS.TranslationName = "class_tank"
 CLASS.Description = "description_tank"
 CLASS.Help = "controls_eradicator"
 
-CLASS.Wave = 6 / 12
+CLASS.Wave = 7 / 12
 
 CLASS.Pac3Out = {[1] = {
 	["children"] = {
@@ -172,24 +172,24 @@ CLASS.Pac3Out = {[1] = {
 		["EditorExpand"] = true,
 		["OwnerName"] = "self",
 		["IsDisturbing"] = false,
-		["Name"] = "мой костюм",
+		["Name"] = "дохуя крутой",
 		["Duplicate"] = false,
 		["ClassName"] = "group",
 	},
 },
 }
 
-CLASS.Health = 1200
-CLASS.Speed = 182
+CLASS.Health = 500
+CLASS.Speed = 111
 CLASS.KnockbackScale = 0
 CLASS.NoSlowdown = true
 
 CLASS.CanTaunt = true
 --CLASS.BetterVersion = "Skelecringe"
 
-CLASS.Points = CLASS.Health/GM.HumanoidZombiePointRatio/3
+CLASS.Points = CLASS.Health/GM.HumanoidZombiePointRatio/2
 
-CLASS.DynamicHealth = 0.5
+CLASS.DynamicHealth = 0.95
 
 CLASS.SWEP = "weapon_zs_tank"
 
@@ -365,9 +365,9 @@ end
 if SERVER then
 	function CLASS:ProcessDamage(pl, dmginfo)
 		if pl.EradiVived then return end
-		dmgblock = math.random(1,5)
-		if dmginfo:GetDamage() > 300 then 
-			dmginfo:SetDamage(100)
+		dmgblock = math.random(1,7)
+		if dmginfo:GetDamage() > 200 then 
+			dmginfo:SetDamage(200)
 		end
 	
 		if dmgblock == 1 then
@@ -395,7 +395,7 @@ if SERVER then
 
 
 		dmginfo:SetDamage(0)
-		pl:SetHealth(1200)
+		pl:SetHealth(500)
 
 
 		if dmginfo:GetInflictor().IsMelee then
@@ -408,9 +408,9 @@ if SERVER then
 		end
 		local status = pl:GiveStatus("revive_slump")
 		if status then
-			status:SetReviveTime(CurTime() + 2)
-			status:SetReviveAnim(2.1)
-			status:SetReviveHeal(5000)
+			status:SetReviveTime(CurTime() + 12)
+			status:SetReviveAnim(12.1)
+			status:SetReviveHeal(500)
 
 			pl.EradiVived = true
 		end
@@ -428,7 +428,7 @@ end
 if not CLIENT then return end
 
 CLASS.Icon = "zombiesurvival/killicons/poisonzombie"
-CLASS.IconColor = Color(66, 0, 0)
+CLASS.IconColor = Color(158, 0, 0)
 
 local matSkin = Material("Models/charple/charple4_sheet.vtf")
 function CLASS:PrePlayerDrawOverrideModel(pl)

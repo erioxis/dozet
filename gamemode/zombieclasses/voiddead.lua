@@ -12,7 +12,7 @@ CLASS.NoHideMainModel = true
 CLASS.SWEP = "weapon_zs_voiddead"
 CLASS.Health = 6300
 CLASS.Speed = 250
-CLASS.Wave = 6 / 8
+CLASS.Wave = 9 / 12
 CLASS.Points = 210
 CLASS.ModelScale = 1.05
 
@@ -21,7 +21,7 @@ CLASS.FearPerInstance = 1
 CLASS.KnockbackScale = 0
 
 CLASS.CanTaunt = true
-
+CLASS.Hidden = true
 CLASS.ResistBleed = true
 CLASS.ResistFrost = true
 CLASS.ResistFlame = true

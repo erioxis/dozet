@@ -182,7 +182,7 @@ CLASS.Pac3Out = {[1] = {
 		["EditorExpand"] = true,
 		["OwnerName"] = "self",
 		["IsDisturbing"] = false,
-		["Name"] = "мой костюм",
+		["Name"] = "Бараняшка :3",
 		["Duplicate"] = false,
 		["ClassName"] = "group",
 	},

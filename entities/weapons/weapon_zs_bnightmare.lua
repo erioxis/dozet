@@ -49,7 +49,7 @@ function SWEP:ApplyMeleeDamage(ent, trace, damage)
 				bleed.Damager = self:GetOwner()
 			end
 			local mdah = ent:GiveStatus('serrated', 5)
-			huh:AddDamage(1, self:GetOwner())
+			mdah:AddDamage(1, self:GetOwner())
 		end
 	end
 

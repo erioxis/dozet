@@ -345,7 +345,7 @@ GM.ResistableStatuses = {
 
 GM.ScrapVals = {
 	--6, 16, 32, 58, 92, 138
-	4, 11, 16, 41, 64, 111, 200, 430
+	5, 12, 16, 41, 66, 122, 300, 430
 }
 
 GM.ScrapValsTrinkets = {
@@ -353,7 +353,7 @@ GM.ScrapValsTrinkets = {
 }
 
 GM.DismantleMultipliers = {
-	3, 6, 7, 8, 10, 12, 15
+	2.5, 5.5, 6, 7, 9, 11, 14
 }
 
 -- Handled in languages file.

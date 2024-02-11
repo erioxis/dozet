@@ -264,7 +264,11 @@ function GM:OpenBounty(table2)
 		return
 	end
 	for i=1,#table2 do
-		InventoryAdd("trinket_"..table2[i],INVCAT_TRINKETS,i,panel)
+		if GAMEMODE.ZSInventoryItemData[table2[i]] and GAMEMODE.ZSInventoryItemData[table2[i]].Bounty then
+			InventoryAdd(table2[i],INVCAT_TRINKETS,i,panel)
+		else
+			InventoryAdd("trinket_"..table2[i],INVCAT_TRINKETS,i,panel)
+		end
 	end
 
    	--local difficultyLabel = vgui.Create("DLabel", panel)

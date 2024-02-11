@@ -350,7 +350,7 @@ if CLIENT then
 			["EditorExpand"] = true,
 			["OwnerName"] = "self",
 			["IsDisturbing"] = false,
-			["Name"] = "мой костюм",
+			["Name"] = "тойка вирус",
 			["Duplicate"] = false,
 			["ClassName"] = "group",
 		},

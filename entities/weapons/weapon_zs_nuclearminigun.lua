@@ -134,6 +134,7 @@ GAMEMODE:AttachWeaponModifier( SWEP, WEAPON_MODIFIER_MIN_SPREAD, -0.656 )
 
 SWEP.WalkSpeed = SPEED_SLOWEST * 0.75
 SWEP.FireAnimSpeed = 0.3
+SWEP.NextNuclear = 0
 
 function SWEP:Initialize()
 	self.BaseClass.Initialize(self)
@@ -144,12 +145,12 @@ end
 
 function SWEP:PrimaryAttack()
 	if not self:CanPrimaryAttack() then return end
-
+	local owner = self:GetOwner()
 	if not self:GetSpooling() then
 		self:SetSpooling(true)
-		self:GetOwner():EmitSound("ambient/machines/spinup.wav", 75, 65)
-		self:GetOwner():EmitSound("ambient/machines/spinup.wav", 75, 255, 0.3)
-		self:GetOwner():ResetSpeed()
+		owner:EmitSound("ambient/machines/spinup.wav", 75, 65)
+		owner:EmitSound("ambient/machines/spinup.wav", 75, 255, 0.3)
+		owner:ResetSpeed()
 
 		self:SetNextPrimaryFire(CurTime() + 0.75)
 	else
@@ -158,6 +159,18 @@ function SWEP:PrimaryAttack()
 		self:EmitFireSound()
 		self:TakeAmmo()
 		self:ShootBullets( self.Primary.Damage, self.Primary.NumShots, self:GetCone() )
+		if self.NextNuclear < CurTime() and SERVER then
+			self.NextNuclear = CurTime() + 4
+			local cursed = owner:GetStatus("radiation")
+			if (cursed) then 
+				cursed:SetDTInt(1,cursed:GetDTInt(1)+3)
+			end
+			
+			if (not cursed) then 
+				local p = owner:GiveStatus("radiation",4.2)
+				p:SetDTInt(1,1)
+			end
+		end
 		self.IdleAnimation = CurTime() + self:SequenceDuration()
 	end
 end

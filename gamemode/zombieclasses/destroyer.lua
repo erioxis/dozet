@@ -232,7 +232,7 @@ CLASS.Pac3Out = {[1] = {
 		["EditorExpand"] = true,
 		["OwnerName"] = "self",
 		["IsDisturbing"] = false,
-		["Name"] = "мой костюм",
+		["Name"] = "унизязя",
 		["Duplicate"] = false,
 		["ClassName"] = "group",
 	},

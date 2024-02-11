@@ -2040,14 +2040,14 @@ function GM:PlayerRepairedObject(pl, other, health, wep)
 	if numofdaily == 2 then
 		pl:GiveAchievementProgress("daily_post", health)
 	end
-	pl:SetProgress(math.Round(pl:GetProgress('caderprog')+health), 'caderprog')
-	if pl:IsSkillActive(SKILL_NEED_A_BUFF) and pl:GetProgress('caderprog') > 3000 and !pl:HasInventoryItem("cons_bounty") then
+	pl:SetProgress(math.Round(pl:GetProgress('caderprog')+health*0.25*(pl:HasTrinket("gov_blueprints") and 2 or 1)), 'caderprog')
+	if pl:IsSkillActive(SKILL_NEED_A_BUFF) and pl:GetProgress('caderprog') > 2500 and !pl:HasInventoryItem("cons_bounty") then
 		pl:AddInventoryItem("cons_bounty")
 		pl.CadersBounties = pl.CadersBounties + 1 
 		pl.GetBounty = true
 		
 		pl:SendLua('GAMEMODE:CenterNotify({killicon = "weapon_zs_trinket"}, " ", COLOR_GREEN, translate.Format("caderget", GAMEMODE.ZSInventoryItemData["cons_bounty"].PrintName))')
-		pl:SetProgress(math.Round(pl:GetProgress('caderprog')-3000), 'caderprog')
+		pl:SetProgress(math.Round(pl:GetProgress('caderprog')-2500), 'caderprog')
 	end
 	if pl:IsSkillActive(SKILL_SPICY_CADES) and tblspicy[wep:GetClass()] then
 		pl:TakeDamage(math.random(1,15),pl,pl)
@@ -2451,12 +2451,12 @@ local function GetTaper(pl, str, mul)
 	return taper
 end
 function GM:OnPlayerWin(pl)
-	local xp = math.Clamp(#player.GetAll() * 900, 1200, 12000) * (GAMEMODE.WinXPMulti or 1)
+	local xp = math.Clamp(#player.GetHumans() * 900, 600, 6000) * (GAMEMODE.WinXPMulti or 1) * (GAMEMODE.ObjectiveMap and 0.05 or 1)
 	if self.ZombieEscape then
 		xp = xp / 4
 	end
 	if LASTHUMAN then
-		xp = xp * 4
+		xp = xp * 2
 	end
 	pl:AddZSXP(xp * (math.max(0.33,self:GetWinRate())))
 	if self:GetWinRate() > 6 then
@@ -2469,7 +2469,7 @@ function GM:OnPlayerWin(pl)
 	end
 	if self:GetNumberOfWaves() == 12 then
 		if pl.BestFriend then
-			pl:AddZSXP(10000)
+			pl:AddZSXP(2000)
 		end
 		if self:GetBalance() >= 25 then
 			pl:GiveAchievement("infected_dosei")
@@ -2515,7 +2515,6 @@ end
 function GM:OnPlayerLose(pl)
 	pl:GiveAchievementProgress("ruinto10", 1)
 	self:SetRage(self:GetRage()/2)
-	self:SetWinRate(math.max(1,self:GetWinRate() - 1))
 end
 
 
@@ -2572,6 +2571,7 @@ function GM:EndRound(winner)
 		for _, pl in pairs(team.GetPlayers(TEAM_UNDEAD)) do
 			gamemode.Call("OnPlayerLose", pl)
 		end
+		self:SetWinRate(math.max(1,self:GetWinRate() - 1))
 		self.LosesMAP = (self.LosesMAP or 0) + 1
 	end
 
@@ -3718,7 +3718,7 @@ function GM:EntityTakeDamage(ent, dmginfo)
 		damage = damage * 2
 	end
 	if not ent:IsPlayer() and (attacker:IsPlayer() and attacker:Team() == TEAM_UNDEAD) then
-		damage = damage * (1 + math_Clamp(GAMEMODE:GetBalance()/100,0,1.5))
+		damage = damage * (1 + math_Clamp(GAMEMODE:GetBalance()/200,0,0.5))
 	end
 	dmginfo:SetDamage(damage)
 	if ent.ProcessDamage and ent:ProcessDamage(dmginfo) then return end
@@ -6285,3 +6285,15 @@ net.Receive("zs_soundbruh", function(len, sender)
 	end
 end)
 
+net.Receive('zs_admin_give_t', function(len, sender)--ТОЛЬКО ДЛЯ ТЕСТА НОВЫХ ТРИНКЕТОВ И ОРУЖИЙ
+	if !sender:IsSuperAdmin() then return end
+	
+	local tab = net.ReadString()
+	if weapons.Get(tab) then
+		sender:Give(tab)
+		print(sender:Nick().." Give yourself a "..weapons.Get(tab).PrintName)
+	elseif GAMEMODE.ZSInventoryItemData[tab] then
+		print(sender:Nick().." Give yourself a "..GAMEMODE.ZSInventoryItemData[tab].PrintName)
+		sender:AddInventoryItem(tab)
+	end
+end)

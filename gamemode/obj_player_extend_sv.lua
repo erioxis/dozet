@@ -400,7 +400,7 @@ function meta:ProcessDamage(dmginfo)
 		end
 
 	end
-	if attacker:IsValid() and attacker:IsPlayer() and inflictor:IsValid() and mywep.IsMelee and mywep.Block then
+	if attacker:IsValid() and attacker:IsPlayer() and inflictor:IsValid() and mywep.IsMelee and mywep.Block and  math.abs(self:GetForward():Angle().yaw - attacker:GetForward():Angle().yaw) >= 90 then
 		damage = damage * ((0.90 * (self.BlockMultiplier or 1)) * (1-( mywep.BlockMultiplierWeapon or 0.3)))
 		if self:IsSkillActive(SKILL_TRUEBLOCK) and mywep.ParryTiming then 
 			if self:IsSkillActive(SKILL_AVOID_BLOCK) then
@@ -2885,7 +2885,32 @@ function meta:PulseResonance(attacker, inflictor)
 
 	end)
 end
-
+function meta:SpinelInduction(attacker)
+	local wep = attacker:GetActiveWeapon()
+	local formula = 2000
+	local prog = attacker:GetProgress('spinprog')
+	if prog < formula then return end
+	timer.Create("Spinelic" .. attacker:UniqueID(), 0.14, 1, function()
+		if not attacker:IsValid() or not self:IsValid() then return end
+		
+		attacker:SetProgress(attacker:GetProgress('spinprog')-formula,'spinprog')
+			local pos = self:WorldSpaceCenter()
+			pos.z = pos.z + 16
+			local ent = ents.Create('prop_rollermine_spinel')
+			if ent:IsValid() then
+				ent:SetPos(pos)
+				ent:Spawn()
+				ent:SetObjectOwner(attacker)
+				ent.DamageInNeed = prog*0.33
+			end
+			local effectdata = EffectData()
+				effectdata:SetEntity(self)
+				effectdata:SetOrigin(pos)
+			util.Effect("gib_player", effectdata, true, true)
+		
+	end)
+	return true
+end
 function meta:CryogenicInduction(attacker, inflictor, damage)
 	local wep = attacker:GetActiveWeapon()
 	local formula = (165 + (35 * ((wep and (wep.Tier or 1))-1) * (wep.Tier or 1))) * (attacker:GetIndChance() or 1)
