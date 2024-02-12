@@ -1040,10 +1040,10 @@ end)
 -- Static values that don't need convars...
 
 -- Initial length for wave 1.
-GM.WaveOneLength = 60
+GM.WaveOneLength = 70
 
 -- Add this many seconds for each additional wave.
-GM.TimeAddedPerWave = 30
+GM.TimeAddedPerWave = 24
 
 -- New players are put on the zombie team if the current wave is this or higher. Do not put it lower than 1 or you'll break the game.
 GM.NoNewHumansWave = 5
@@ -1064,7 +1064,7 @@ GM.EndGameTime = 25
 GM.SurvivalClips = 4 --2
 
 -- How long do humans have to wait before being able to get more ammo from a resupply box?
-GM.ResupplyBoxCooldown = 75
+GM.ResupplyBoxCooldown = 60
 
 -- Put your unoriginal, 5MB Rob Zombie and Metallica music here.
 GM.LastHumanSound = Sound("zombiesurvival/lasthuman.ogg")

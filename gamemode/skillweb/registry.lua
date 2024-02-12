@@ -1599,17 +1599,17 @@ GM:AddSkill(SKILL_WORTHINESS2, trs("worthness").."II", GOOD.."+10"..trs("worth")
 GM:AddSkill(SKILL_AVOID_BLOCK, trs("skill_xpdamage"), GOOD..trs("skill_xpdamage_d1")..BAD.."-25%"..trs("b_mul"),
 																5,			1,					{SKILL_WORTHINESS2}, TREE_MELEETREE)
 GM:AddSkillModifier(SKILL_AVOID_BLOCK, SKILLMOD_BLOCKMULTIPLIER, 0.25)
-GM:AddSkill(SKILL_BATTLER1, trs("skill_battler").."I", GOOD.."+1%"..trs("meleedamage")..BAD.."-1%"..trs("b_damage"),
+GM:AddSkill(SKILL_BATTLER1, trs("skill_battler").."I", GOOD.."+1%"..trs("melee_l")..BAD.."-1%"..trs("b_damage"),
 																-6,			-6,					{SKILL_BATTLER2, SKILL_NONE}, TREE_MELEETREE)
-GM:AddSkill(SKILL_BATTLER2, trs("skill_battler").."II", GOOD.."+2%"..trs("meleedamage")..BAD.."-1%"..trs("b_damage"),
+GM:AddSkill(SKILL_BATTLER2, trs("skill_battler").."II", GOOD.."+2%"..trs("melee_l")..BAD.."-1%"..trs("b_damage"),
 																-6,			-4,					{SKILL_BATTLER3, SKILL_LIGHTWEIGHT}, TREE_MELEETREE)
-GM:AddSkill(SKILL_BATTLER3, trs("skill_battler").."III", GOOD.."+3%"..trs("meleedamage")..BAD.."-4%"..trs("b_damage"),
+GM:AddSkill(SKILL_BATTLER3, trs("skill_battler").."III", GOOD.."+3%"..trs("melee_l")..BAD.."-4%"..trs("b_damage"),
 																-4,			-2,					{SKILL_BATTLER4, SKILL_LANKY, SKILL_FOUR_IN_ONE}, TREE_MELEETREE)
-GM:AddSkill(SKILL_BATTLER4, trs("skill_battler").."IV", GOOD.."+3%"..trs("meleedamage")..BAD.."-6%"..trs("b_damage"),
+GM:AddSkill(SKILL_BATTLER4, trs("skill_battler").."IV", GOOD.."+3%"..trs("melee_l")..BAD.."-6%"..trs("b_damage"),
 																-2,			0,					{SKILL_BATTLER5, SKILL_MASTERCHEF, SKILL_D_CLUMSY}, TREE_MELEETREE)
-GM:AddSkill(SKILL_BATTLER5, trs("skill_battler").."V", GOOD.."+4%"..trs("meleedamage")..BAD.."-6%"..trs("b_damage"),
+GM:AddSkill(SKILL_BATTLER5, trs("skill_battler").."V", GOOD.."+4%"..trs("melee_l")..BAD.."-6%"..trs("b_damage"),
 																0,			2,					{SKILL_GLASSWEAPONS, SKILL_BLOODLUST}, TREE_MELEETREE)
-GM:AddSkill(SKILL_BATTLER6, trs("skill_battler").."VI", GOOD.."+6%"..trs("meleedamage")..BAD.."-7%"..trs("b_damage"),
+GM:AddSkill(SKILL_BATTLER6, trs("skill_battler").."VI", GOOD.."+6%"..trs("melee_l")..BAD.."-7%"..trs("b_damage"),
 																0,			0,					{SKILL_BATTLER5}, TREE_MELEETREE)
 GM:AddSkill(SKILL_LASTSTAND, trs("skill_laststand"), GOOD..trs("skill_laststand_d1")..BAD..trs("skill_laststand_d2"),
 																0,			6,					{SKILL_ABUSE}, TREE_MELEETREE)
@@ -1623,7 +1623,7 @@ GM:AddSkill(SKILL_SOULNET, trs("skill_souleater"), GOOD..trs("skill_souleater_d1
 .RemortReq = 4
 GM:AddSkill(SKILL_GLASSWEAPONS, trs("skill_glassweapon"), GOOD..trs("skill_glassweapon_d1")..BAD..trs("skill_glassweapon_d2"),
 																2,			4,					{}, TREE_MELEETREE)
-GM:AddSkill(SKILL_GLASSMAN, trs("skill_glassman"), GOOD.."+45%"..trs("meleedamage")..BAD.."+50%"..trs("meleedamagetaken"),
+GM:AddSkill(SKILL_GLASSMAN, trs("skill_glassman"), GOOD..trs("skill_glassman_d1")..BAD.."+50%"..trs("meleedamagetaken"),
 																3,			5,					{SKILL_GLASSWEAPONS}, TREE_MELEETREE)
 GM:AddSkill(SKILL_D_CLUMSY,  trs("skill_d_clumsy"), GOOD.."+20"..trs("worth")..GOOD.."+10"..trs("start_points")..BAD..trs("skill_d_clumsy_d1"),
 																-2,			2,					{}, TREE_MELEETREE)
@@ -2081,7 +2081,7 @@ GM:AddSkill(SKILL_TORMENT8,trs("skill_torment").."VIII", GOOD.."+15%"..trs("xpmu
 
 GM:AddSkillModifier(SKILL_TORMENT8, SKILLMOD_HEALTH, -50)
 GM:AddSkillModifier(SKILL_TORMENT8, SKILLMOD_XP, 0.15)
-GM:AddSkill(SKILL_TOY_BEST_FRIEND,trs("skill_toy"), GOOD..trs("skill_toy_d")..BAD.."-10%"..trs("xpmul"),
+GM:AddSkill(SKILL_TOY_BEST_FRIEND,trs("skill_toy"), GOOD..trs("skill_toy_d")..BAD.."-5%"..trs("xpmul"),
 																				1,			10,						{SKILL_TORMENT4}, TREE_ANCIENTTREE)
 GM:AddSkillModifier(SKILL_TOY_BEST_FRIEND, SKILLMOD_XP, -0.05)
 GM:AddSkill(SKILL_FREEPOINT1,trs("skill_freexp").."I", GOOD.."+1%"..trs("xpmul"),
@@ -2100,7 +2100,6 @@ GM:AddSkill(SKILL_XPMULGOOD, trs("skill_xpmulgood"), GOOD..trs("skill_xpmulgood_
 				                                                            	6,			16,					{SKILL_FREEPOINT4}, TREE_ANCIENTTREE)
 
 --Defend skills
-
 SKILL_DEFEND1 = 191
 GM:AddSkill(SKILL_DEFEND1, trs("skill_sdefender").."II", GOOD.."-2%"..trs("meleedamagetaken")..BAD.."-2"..trs("speed"),
 				                                                            	0.75,			0,					{SKILL_DEFEND}, TREE_DEFENSETREE)
@@ -2539,10 +2538,6 @@ GM:SetSkillModifierFunction(SKILLMOD_DAMAGE_ALL, function(pl, amount)
 	if pl:HasTrinket("sin_ego") then 
 		local g = GetTaper(pl, "ego", 0.04)
 		damagemul = damagemul *g
-	end
-
-	if GAMEMODE.ObjectiveMap then
-		damagemul = damagemul * 0.5
 	end
 	if pl.IsLastHuman then
 		if pl:IsSkillActive(SKILL_LAST_MAN) then
@@ -3019,12 +3014,12 @@ GM:AddSkillModifier(SKILL_SUGARRUSH, SKILLMOD_FOODRECOVERY_MUL, -0.35)
 GM:AddSkillModifier(SKILL_FOODHEALS, SKILLMOD_FOODRECOVERY_MUL, -0.35)
 
 
-GM:AddSkillModifier(SKILL_BATTLER1, SKILLMOD_MELEE_DAMAGE_MUL, 0.01)
-GM:AddSkillModifier(SKILL_BATTLER2, SKILLMOD_MELEE_DAMAGE_MUL, 0.02)
-GM:AddSkillModifier(SKILL_BATTLER3, SKILLMOD_MELEE_DAMAGE_MUL, 0.03)
-GM:AddSkillModifier(SKILL_BATTLER4, SKILLMOD_MELEE_DAMAGE_MUL, 0.03)
-GM:AddSkillModifier(SKILL_BATTLER5, SKILLMOD_MELEE_DAMAGE_MUL, 0.04)
-GM:AddSkillModifier(SKILL_BATTLER6, SKILLMOD_MELEE_DAMAGE_MUL, 0.06)
+GM:AddSkillModifier(SKILL_BATTLER1, SKILLMOD_MELEE_RANGE_MUL, 0.01)
+GM:AddSkillModifier(SKILL_BATTLER2, SKILLMOD_MELEE_RANGE_MUL, 0.02)
+GM:AddSkillModifier(SKILL_BATTLER3, SKILLMOD_MELEE_RANGE_MUL, 0.03)
+GM:AddSkillModifier(SKILL_BATTLER4, SKILLMOD_MELEE_RANGE_MUL, 0.03)
+GM:AddSkillModifier(SKILL_BATTLER5, SKILLMOD_MELEE_RANGE_MUL, 0.04)
+GM:AddSkillModifier(SKILL_BATTLER6, SKILLMOD_MELEE_RANGE_MUL, 0.06)
 GM:AddSkillModifier(SKILL_SOULNET, SKILLMOD_MELEE_DAMAGE_MUL, -0.10)
 
 GM:AddSkillModifier(SKILL_BATTLER1, SKILLMOD_DAMAGE, -0.01)
@@ -3034,7 +3029,7 @@ GM:AddSkillModifier(SKILL_BATTLER4, SKILLMOD_DAMAGE, -0.06)
 GM:AddSkillModifier(SKILL_BATTLER5, SKILLMOD_DAMAGE, -0.06)
 GM:AddSkillModifier(SKILL_BATTLER6, SKILLMOD_DAMAGE, -0.07)
 
-GM:AddSkillModifier(SKILL_GLASSMAN, SKILLMOD_MELEE_DAMAGE_MUL, 0.45)
+GM:AddSkillModifier(SKILL_GLASSMAN, SKILLMOD_MELEE_ATTACKER_DMG_REFLECT_PERCENT, 2.5)
 GM:AddSkillModifier(SKILL_GLASSMAN, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 0.5)
 
 GM:AddSkillModifier(SKILL_JOUSTER, SKILLMOD_MELEE_DAMAGE_MUL, 0.15)

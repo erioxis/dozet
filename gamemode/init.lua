@@ -2451,12 +2451,12 @@ local function GetTaper(pl, str, mul)
 	return taper
 end
 function GM:OnPlayerWin(pl)
-	local xp = math.Clamp(#player.GetHumans() * 900, 600, 6000) * (GAMEMODE.WinXPMulti or 1) * (GAMEMODE.ObjectiveMap and 0.05 or 1)
+	local xp = math.Clamp(#player.GetHumans() * 900, 600, 6000) * (GAMEMODE.WinXPMulti or 1) * (GAMEMODE.ObjectiveMap and 3 or 1)
 	if self.ZombieEscape then
 		xp = xp / 4
 	end
-	if LASTHUMAN then
-		xp = xp * 2
+	if #player.GetHumans() ~= 1 and LASTHUMAN then
+		xp = xp * 6
 	end
 	pl:AddZSXP(xp * (math.max(0.33,self:GetWinRate())))
 	if self:GetWinRate() > 6 then
@@ -2469,7 +2469,7 @@ function GM:OnPlayerWin(pl)
 	end
 	if self:GetNumberOfWaves() == 12 then
 		if pl.BestFriend then
-			pl:AddZSXP(2000)
+			pl:AddZSXP(20000)
 		end
 		if self:GetBalance() >= 25 then
 			pl:GiveAchievement("infected_dosei")

@@ -37,7 +37,7 @@ local function huy(wep,self,dir)
 			ent.ShotMarker = i
 			ent.Team = owner:Team()
 
-			self:EntModify(ent)
+			self.EntModify(wep,ent)
 			if owner:IsSkillActive(SKILL_SOMETHING_WRONG) and math.random(1,math.max(1,20-GAMEMODE:GetWave())) == 1 then
 				ent._Think = ent.Think
 				ent.trg = NULL
@@ -89,7 +89,7 @@ local function huy(wep,self,dir)
 						ent1.ProjSource = ent
 						ent1.Team = owner:Team()
 			
-						self:EntModify(ent1)
+						self.EntModify(wep,ent1)
 
 						ent1:Spawn()
 						local phys = ent1:GetPhysicsObject()
