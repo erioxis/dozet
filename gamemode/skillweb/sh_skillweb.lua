@@ -220,14 +220,13 @@ function meta:ApplySkills(override)
 			g = math.random(1,496)
 			if g == 217 then
 				g = math.random(1,496) 
-				if g == 217 then
-					self:GiveAchievement("phantomwill")
-					break
-				end
 			end
 			if !current_active[g] then
 				break
 			end
+		end
+		if g == 217 then
+			self:GiveAchievement("phantomwill")
 		end
 		desired_assoc[g] = true
 		current_active[g] = true

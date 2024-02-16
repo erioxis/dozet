@@ -1,7 +1,7 @@
 --SWEP.PrintName = "CLASSIXXXXX"
 --SWEP.Description = "Свежая струя говна в тебя летит."
-SWEP.PrintName = " "..translate.Get("wep_classixx")
-SWEP.Description = " "..translate.Get("wep_d_classixx")
+SWEP.PrintName = translate.Get("wep_classixx")
+SWEP.Description = translate.Get("wep_d_classixx")
 SWEP.Base = "weapon_zs_base"
 
 SWEP.HoldType = "ar2"
@@ -13,9 +13,9 @@ SWEP.ShowViewModel = true
 SWEP.ShowWorldModel = true
 SWEP.UseHands = true
 
-SWEP.Primary.Damage = 667
-SWEP.Primary.NumShots = 3
-SWEP.Primary.Delay = 0.6
+SWEP.Primary.Damage = 3667
+SWEP.Primary.NumShots = 1
+SWEP.Primary.Delay = 0.4
 SWEP.Primary.KnockbackScale = 0.1
 SWEP.Primary.MaxDistance = 2028
 
@@ -38,7 +38,7 @@ SWEP.HeatDecayShort = 0.1
 SWEP.HeatDecayLong = 0.05
 SWEP.HeatInitialLong = 0.05
 
-SWEP.WalkSpeed = SPEED_SLOWEST * 1.5
+SWEP.WalkSpeed = SPEED_SLOWEST * 0.1
 SWEP.FireAnimSpeed = 0.27
 SWEP.FireSoundPitch = 125
 

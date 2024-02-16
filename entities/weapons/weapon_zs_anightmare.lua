@@ -25,11 +25,14 @@ function SWEP:MeleeHit(ent, trace, damage, forcescale)
 end
 
 function SWEP:ApplyMeleeDamage(pl, trace, damage)
-	if SERVER and pl:IsPlayer() and (not pl:GetStatus("hshield")) and pl:GetActiveWeapon() and !pl:GetActiveWeapon().ResistDamage and !pl:HasTrinket("toykasoul") and !pl:IsSkillActive(SKILL_ASAVE) then
-		local killer = self:GetOwner()
-		timer.Simple(0.15, function()
-			pl:Kill()
-		end)
+	if SERVER and pl:IsPlayer() and (not pl:GetStatus("hshield")) and pl:GetActiveWeapon() and !pl:GetActiveWeapon().ResistDamage then
+		local cursed = pl:GetStatus("cursed")
+		if (cursed) then 
+			pl:AddCursed(self:GetOwner(), cursed.DieTime - CurTime() + 50)
+		end
+		if (not cursed) then 
+			pl:AddCursed(self:GetOwner(), 50)
+		end
         
 	end
 	self.BaseClass.ApplyMeleeDamage(self, pl, trace, damage)

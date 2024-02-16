@@ -1673,6 +1673,8 @@ function GM:Think()
 
 							mywep:SetClip1(current + needed)
 							pl:RemoveAmmo(needed, ammotype)
+							local class = mywep:GetClass()
+							pl:SendLua("GAMEMODE:CenterNotify({killicon = '"..class.."'},COLOR_CYAN,translate.Format(\"wep_ready\", weapons.Get('"..class.."').PrintName))")
 						end
 					end
 
@@ -1695,7 +1697,7 @@ function GM:Think()
 				if time > (pl.NextResupplyUse or 0) then
 					local stockpiling = pl:IsSkillActive(SKILL_STOCKPILE)
 
-					pl.NextResupplyUse = time + math.max(10,self.ResupplyBoxCooldown * (pl.ResupplyDelayMul or 1) * (stockpiling and 2 or 1)  - (pl:IsSkillActive(SKILL_STOWAGE) and math.max(0,self:GetBalance() / 4) or 0))
+					pl.NextResupplyUse = time + math.max(10,self.ResupplyBoxCooldown * (pl.ResupplyDelayMul or 1) * (stockpiling and 2 or 1)  - (pl:IsSkillActive(SKILL_STOWAGE) and math.Clamp(self:GetBalance() / 4,0,120) or 0))
 					pl.StowageCaches = (pl.StowageCaches or 0) + (stockpiling and 2 or 1)
 
 					net.Start("zs_nextresupplyuse")
@@ -1766,7 +1768,8 @@ end
 
 function GM:PlayerSwitchWeapon(pl, old, new)--
 	if pl:HasTrinket("autoreload") and old  then
-		pl.NextAutomatedReload = CurTime() + 2.5
+		pl.NextAutomatedReload = CurTime() + 4
+		pl:SetNWFloat("autoreload",pl.NextAutomatedReload)
 		pl.OldWeaponToReload = old
 	end
 end
@@ -2455,8 +2458,8 @@ function GM:OnPlayerWin(pl)
 	if self.ZombieEscape then
 		xp = xp / 4
 	end
-	if #player.GetHumans() ~= 1 and LASTHUMAN then
-		xp = xp * 6
+	if #team.GetPlayers(TEAM_HUMAN) ~= 1 and LASTHUMAN then
+		xp = xp * 4
 	end
 	pl:AddZSXP(xp * (math.max(0.33,self:GetWinRate())))
 	if self:GetWinRate() > 6 then
@@ -2571,7 +2574,7 @@ function GM:EndRound(winner)
 		for _, pl in pairs(team.GetPlayers(TEAM_UNDEAD)) do
 			gamemode.Call("OnPlayerLose", pl)
 		end
-		self:SetWinRate(math.max(1,self:GetWinRate() - 1))
+		self:SetWinRate(1)
 		self.LosesMAP = (self.LosesMAP or 0) + 1
 	end
 
@@ -2607,15 +2610,12 @@ function GM:ScalePlayerDamage(pl, hitgroup, dmginfo)
 	if hitgroup == HITGROUP_HEAD and dmginfo:IsBulletDamage() then
 		pl.m_LastHeadShot = CurTime()
 	end
-	if hitgroup == HITGROUP_HEAD and pl:IsValidLivingZombie() then
-		dmginfo:SetDamage(dmginfo:GetDamage() * (attacker.HeadshotMul or 1))
-	end
 
 	--local crouchpunish = pl:ShouldCrouchJumpPunish()
 
 	if not pl:CallZombieFunction2("ScalePlayerDamage", hitgroup, dmginfo) then
 		if hitgroup == HITGROUP_HEAD then
-			dmginfo:SetDamage(dmginfo:GetDamage() * (inflictor.HeadshotMulti or 2) * (attacker:IsPlayer() and attacker:GetStatus("renegade") and 1.5 or 1))
+			dmginfo:SetDamage(dmginfo:GetDamage() * (inflictor.HeadshotMulti or 2) * (attacker.HeadshotMul or 1) * (attacker:IsPlayer() and attacker:GetStatus("renegade") and 1.5 or 1))
 		elseif hitgroup == HITGROUP_LEFTLEG or hitgroup == HITGROUP_RIGHTLEG then
 			--if not crouchpunish then
 			if not pl:ShouldCrouchJumpPunish() then
@@ -4913,7 +4913,7 @@ function GM:ZombieKilledHuman(pl, attacker, inflictor, dmginfo, headshot, suicid
 	attacker:AddTokens(math.Clamp(pl:GetMaxHealth() * 1.25,1,500))
 	attacker:AddLifeBrainsEaten(1)
 	attacker:AddZSXP(self.InitialVolunteers[attacker:UniqueID()] and xp or math.floor(xp*4))
-	self:SetRage(self:GetRage() - 15 / self:GetWinRate())
+	self:SetRage(self:GetRage() - 15 / (self:GetWinRate()+1))
 	local classtab = attacker:GetZombieClassTable()
 
 

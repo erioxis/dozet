@@ -90,7 +90,7 @@ local function ContentsPaint(self, w, h)
 		oldh = math_Apr(oldh,math_Clamp(thealth, 0,lp:GetMaxHealthEx()),0.4 * (lp:Team() ~= TEAM_HUMAN and 20 or 1) * (fast and 40 or 1))
 		if lp:Team() == TEAM_HUMAN then
 			local bloodarmor = lp:GetBloodArmor()
-			local max = (math.Round(lp.MaxBloodArmor) or 25)
+			local max = math.Round((lp.MaxBloodArmor or 25))
 			if bloodarmor > 0 then
 				if lp:HasTrinket("curse_unknown") then
 					bloodarmor = math.Round(max * sin)

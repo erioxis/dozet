@@ -106,7 +106,7 @@ local text = {
 }
 local colHealth = Color(1,1,1,255)
 function meta:DrawStyle()
-	if !GAMEMODE.NoStyle or MySelf.StyleMoment and #MySelf.StyleMoment < 0 then return end
+	if !GAMEMODE.NoStyle or MySelf.StyleMoment and #MySelf.StyleMoment <= 0 then return end
 	local screenscale = BetterScreenScale()
 	local wid, hei = 110*screenscale , 150 *screenscale 
 	local x, y = ScrW() - wid - screenscale * 180 , ScrH() - hei - screenscale * 500
@@ -162,6 +162,7 @@ local matGlow = Material("sprites/glow04_noz")
 local texDownEdge = surface.GetTextureID("gui/gradient_down")
 local NoParasite = surface.GetTextureID("zombiesurvival/killicons/bleed")
 local colHealth = Color(0, 0, 0, 240)
+local colAReload = Color(0, 116, 70, 240)
 local baserot = 0
 local function drawCringeCircle(x,y,radius, seg)
 	local cir = {}
@@ -245,7 +246,6 @@ function meta:DrawCrosshairCross()
 			surface_DrawTexturedRect(x + 2 + subwidth - 6, y + 1 - hei/2, 4, hei * 2)
 		end
 
-
 	local ang = Angle(0, 0, baserot)
 	for i=0, 359, 360 / GAMEMODE.CrosshairLines do
 		ang.roll = baserot + i
@@ -275,7 +275,26 @@ function meta:DrawCrosshairDot()
 	surface_DrawRect(x - hsize, y - hsize, size, size)
 	surface_SetDrawColor(0, 0, 0, GAMEMODE.CrosshairColor2.a)
 	surface.DrawOutlinedRect(x - hsize, y - hsize, size, size)
+	if MySelf:HasTrinket("autoreload") and MySelf:GetNWFloat("autoreload") > CurTime() then
+		local screenscale = BetterScreenScale()
+		local prog = MySelf:GetNWFloat("autoreload")
+		local healthperc = 1-math.Clamp((prog-CurTime()) / 3.5, 0, 1)
+		local wid, hei = 70 * screenscale, 18 * screenscale
+		local subwidth = healthperc * wid
+		local y = y+12*screenscale
+		surface_SetDrawColor(0, 0, 0, 230)
+		surface_DrawRect(x, y, wid, hei)
 
+		surface_SetDrawColor(colAReload.r, colAReload.g, colAReload.b, 40)
+		surface.SetTexture(texDownEdge)
+		surface_DrawTexturedRect(x + 2, y + 1, subwidth - 4, hei - 2)
+		surface_SetDrawColor(colAReload.r, colAReload.g, colAReload.b, 30)
+		surface_DrawRect(x + 2, y + 1, subwidth - 4, hei - 2)
+
+		surface.SetMaterial(matGlow)
+		surface_SetDrawColor(255, 255, 255, 255)
+		surface_DrawTexturedRect(x + 2 + subwidth - 6, y + 1 - hei/2, 4, hei * 2)
+	end
 	if GAMEMODE.LastOTSBlocked and MySelf:Team() == TEAM_HUMAN and GAMEMODE:UseOverTheShoulder() then
 		GAMEMODE:DrawCircle(x, y, 8, COLOR_RED)
 	end

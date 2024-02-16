@@ -5,7 +5,7 @@ GM.Website	=	"https://github.com/erioxis/dozet"
 
 -- No, adding a gun doesn't make your name worth being here.
 GM.Credits = {
-	{"Version", "", "9.7.5"},
+	{"Version", "", "9.8.0"},
 	{"Season of ", "", "Quality of Life"},
 	{"erioxis", "Phantom coder", "dead"},
 	{"Холодное Молочко(M-I-L-K-Y)", "Phantom coder", "dead"},
@@ -949,7 +949,7 @@ function GM:SetWaveEnd(time)
 	SetGlobalFloat("waveend", time)
 end
 function GM:GetBalance()
-	return (self:GetRage() * self:GetWinRate()) * 0.005
+	return (self:GetRage() * self:GetWinRate()) * 0.005 + 0.01
 end
 
 function GM:GetRage()

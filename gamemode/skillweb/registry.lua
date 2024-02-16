@@ -2179,6 +2179,7 @@ GM:AddSkill(SKILL_BLOODYFISTS, trs("skill_bloodyfists"), GOOD..trs("skill_bloody
 GM:AddSkillModifier(SKILL_BLOODYFISTS, SKILLMOD_UNARMED_DAMAGE_MUL, -0.20)
 GM:AddSkill(SKILL_ASAVE, trs("skill_ancientsave"), GOOD..trs("skill_ancientsave_d1")..BAD..trs("skill_ancientsave_d2"),
 				                                                            	-4,			5,					{SKILL_SELFSAVER}, TREE_DEFENSETREE)
+GM:AddSkillModifier(SKILL_ASAVE, SKILLMOD_CURSEM, 4.5)
 GM:AddSkill(SKILL_SSS, trs("skill_sss"), GOOD..trs("skill_sss_d1")..BAD..trs("skill_sss_d2"),
 				                                                            	-4,			7,					{SKILL_ASAVE}, TREE_DEFENSETREE)
 GM:AddSkillModifier(SKILL_SSS, SKILLMOD_SPEED, -45)																			

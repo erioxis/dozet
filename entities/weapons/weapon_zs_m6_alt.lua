@@ -3,8 +3,8 @@ DEFINE_BASECLASS("weapon_zs_base")
 
 --SWEP.PrintName = "'Amalgama' M6"
 --SWEP.Description = "Very Strange weapon,have some souls,upgrade per kill(if you don't kill zombie every 120 sec upgrade has dismantled)..."
-SWEP.PrintName = ""..translate.Get("wep_m6_alt")
-SWEP.Description = ""..translate.Get("wep_d_m6_alt")
+SWEP.PrintName = translate.Get("wep_m6_alt")
+SWEP.Description = translate.Get("wep_d_m6_alt")
 SWEP.Slot = 2
 SWEP.SlotPos = 0
 
@@ -78,4 +78,31 @@ end
 
 function SWEP:GetAuraRange()
 	return 1028
+end
+function SWEP:OnDropDo(wep)
+	local owner = 	self:GetOwner()
+	local drop = "cons_soul_picka" 
+	for i=1,3 do
+		local pos = self:LocalToWorld(self:OBBCenter())
+		local ent = ents.Create("prop_invitem")
+		if ent:IsValid() then
+			ent:SetPos(pos)
+			ent:SetAngles(AngleRand())
+			ent:SetInventoryItemType(drop)
+			if owner and owner:IsValidLivingHuman() then
+				ent:SetOwner(owner)
+			end
+			ent:Spawn()
+			local phys = ent:GetPhysicsObject()
+			if phys:IsValid() then
+				phys:Wake()
+				phys:SetVelocityInstantaneous(VectorRand():GetNormalized() * math.Rand(24, 100))
+				phys:AddAngleVelocity(VectorRand() * 200)
+			end
+		end
+	end
+	timer.Simple(0, function(arguments)
+		wep:Remove()
+	end)
+	return true
 end
