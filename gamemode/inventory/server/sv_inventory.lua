@@ -78,10 +78,10 @@ local demiboss = {
 	"comp_soul_status",
 	"comp_soul_melee", 
 	"comp_soul_hack",
-	"comp_soul_godlike","comp_soul_godlike",
-	"comp_soul_dd","comp_soul_dd",
+	"comp_soul_godlike",
+	"comp_soul_dd",
 	"comp_soul_booms",
-	"comp_soul_dosei","comp_soul_dosei"
+	"comp_soul_dosei",
 
 }
 net.Receive("zs_bounty_add", function(len, pl)
@@ -95,8 +95,11 @@ net.Receive("zs_bounty_add", function(len, pl)
 	pl.NextThinkAboutTrade = (pl.NextThinkAboutTrade or 1) + 10
 	if pl.LastUsedTrinket == "cons_bounty" then
 		pl.BountiesGet = pl.BountiesGet + 1
+		if pl.BountiesGet > 19 then
+			pl:GiveAchievement('hunteronb')
+		end
 	end
-		pl:TakeInventoryItem(pl.LastUsedTrinket)
+	pl:TakeInventoryItem(pl.LastUsedTrinket)
 
 	if item == "1" then
 		pl:AddPoints(200)

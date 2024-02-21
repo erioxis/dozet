@@ -107,7 +107,6 @@ include("sh_globals.lua")
 include("obj_entity_extend_sv.lua")
 include("obj_player_extend_sv.lua")
 include("obj_weapon_extend_sv.lua")
-
 AddCSLuaFile("loader.lua")
 include("loader.lua")
 
@@ -136,6 +135,7 @@ include("sv_zombieescape.lua")
 
 
 include_library("statistics")
+include("sv_director.lua")
 
 local pairs = pairs
 local ipairs = ipairs
@@ -527,6 +527,7 @@ end
 GM.CenterNotify = GM.CenterNotifyAll
 GM.NoBaracursed = true
 GM.DamageLock = false 
+GM.NextThinkDirector = 0
 
 function GM:TopNotifyAll(...)
 	net.Start("zs_topnotify")
@@ -1391,6 +1392,12 @@ function GM:Think()
 
 	if NextTick <= time then
 		NextTick = time + 1
+		if self.NextThinkDirector < time then
+			self.NextThinkDirector = time + 30
+			if math.random(1,6) == 1 then
+				self:DirectorThink(time,self:GetRage())
+			end
+		end
 
 		local plpos
 
@@ -1618,9 +1625,6 @@ function GM:Think()
 					pl:AddStamina(16)
 				end
 		
-
-
-
 				if pl:IsSkillActive(SKILL_BLOODARMOR) and pl.MaxBloodArmor > 0 and time > pl.NextBloodArmorRegen and pl:GetBloodArmor() < pl.MaxBloodArmor then
 					pl.NextBloodArmorRegen = time + 8
 					pl:SetBloodArmor(math.min(pl.MaxBloodArmor, pl:GetBloodArmor() + (1 * pl.BloodarmorGainMul)))
@@ -1681,7 +1685,7 @@ function GM:Think()
 					pl.NextAutomatedReload = math.huge
 					pl.OldWeaponToReload = nil
 				end
-				if time > (pl.NextFridgeUse or 0) then
+				if time > pl.NextFridgeUse then
 					pl.NextFridgeUse = time + 245
 					pl.FridgeCaches = (pl.FridgeCaches or 0) + 1
 
@@ -1694,7 +1698,7 @@ function GM:Think()
 						net.WriteBool(true)
 					net.Send(pl)
 				end
-				if time > (pl.NextResupplyUse or 0) then
+				if time > pl.NextResupplyUse then
 					local stockpiling = pl:IsSkillActive(SKILL_STOCKPILE)
 
 					pl.NextResupplyUse = time + math.max(10,self.ResupplyBoxCooldown * (pl.ResupplyDelayMul or 1) * (stockpiling and 2 or 1)  - (pl:IsSkillActive(SKILL_STOWAGE) and math.Clamp(self:GetBalance() / 4,0,120) or 0))
@@ -2461,7 +2465,7 @@ function GM:OnPlayerWin(pl)
 	if #team.GetPlayers(TEAM_HUMAN) ~= 1 and LASTHUMAN then
 		xp = xp * 4
 	end
-	pl:AddZSXP(xp * (math.max(0.33,self:GetWinRate())))
+	pl:AddZSXP(xp * (math.max(0.33,0.67+self:GetWinRate()/3)))
 	if self:GetWinRate() > 6 then
 		pl:GiveAchievement('sinos')
 	end
@@ -2976,6 +2980,7 @@ local queprotbl ={
 	"76561198834667136"
 }
 function GM:PlayerInitialSpawnRound(pl)
+	local time = CurTime()
 	pl:SprintDisable()
 	if pl:KeyDown(IN_WALK) then
 		pl:ConCommand("-walk")
@@ -3012,8 +3017,8 @@ function GM:PlayerInitialSpawnRound(pl)
 	pl.NextGlycemiaExplode = 0
 	pl.BrainsEaten = 0
 	pl.zKills = 0
-	pl.DeathUsed = CurTime()
-	pl.RespawnedTime = CurTime() + 5
+	pl.DeathUsed = time
+	pl.RespawnedTime = time + 5
 	if self.NoPhoenix[pl:UniqueID()] then
 		pl.RedeemedOnce = false
 	else
@@ -3022,7 +3027,7 @@ function GM:PlayerInitialSpawnRound(pl)
 	end
 	pl.HolyMantle = 0
 	pl.BerserkerCharge = true
-	pl.MantleFix = CurTime() + 10
+	pl.MantleFix = time + 10
 	pl.NextPremium = 0
 	pl.NextDamage = 0
 	pl.TickBuff = 0
@@ -3036,9 +3041,12 @@ function GM:PlayerInitialSpawnRound(pl)
 	
 	pl.StuckedInProp = nil
 	pl.Stuckedtrue = nil
+	pl.NextResupplyUse = time + 35
+	pl.NextFridgeUse = time + 360
 	pl.Stuckedtrue_C = 0
 
 	pl.CanBuy = nil
+	pl.NextConsumeEgo = time + 120
 
 	pl.ResupplyBoxUsedByOthers = 0
 
@@ -3175,10 +3183,10 @@ function GM:PlayerInitialSpawnRound(pl)
 		-- They already died and reconnected.
 		pl:ChangeTeam(TEAM_UNDEAD)
 	elseif LASTHUMAN then ----
-		pl.SpawnedTime = CurTime()
+		pl.SpawnedTime = time
 		pl:ChangeTeam(TEAM_UNDEAD)
 	elseif self:GetWave() <= 0 then
-		pl.SpawnedTime = CurTime()
+		pl.SpawnedTime = time
 		pl:ChangeTeam(TEAM_HUMAN)
 		if self.DynamicSpawning then
 			timer.Simple(1, function()
@@ -3190,9 +3198,9 @@ function GM:PlayerInitialSpawnRound(pl)
 		end
 	elseif self:GetNumberOfWaves() == -1 or self.NoNewHumansWave <= self:GetWave() or team.NumPlayers(TEAM_UNDEAD) == 0 and 1 <= team.NumPlayers(TEAM_HUMAN) then -- Joined during game, no zombies, some humans or joined past the deadline.
 		pl:ChangeTeam(TEAM_UNDEAD)
-		self.PreviouslyDied[uniqueid] = CurTime()
+		self.PreviouslyDied[uniqueid] = time
 	else
-		pl.SpawnedTime = CurTime()
+		pl.SpawnedTime = time
 		pl:ChangeTeam(TEAM_HUMAN)
 		if self.DynamicSpawning then
 			timer.Simple(0, function()

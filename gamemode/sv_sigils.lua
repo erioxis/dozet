@@ -137,6 +137,7 @@ function GM:CreateSigils(secondtry, rearrange,corrupted)
 					ent:Spawn()
 				end
 				ent:SetSigilCorrupted(corrupted)
+				ent.NaturallySpawned = true
 				ent.NodePos = point
 			end
 		end

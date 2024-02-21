@@ -296,7 +296,27 @@ function GM:TopNotify(...)
 		return self.TopNotificationHUD:AddNotification(...)
 	end
 end
+function GM:DrawBarSome(x, y, w, h, xpw, barwm, hm, progress, xp)
+	local barw = xpw * barwm
 
+	surface.SetDrawColor(0, 0, 0, 220)
+	surface.DrawRect(x, y, barw, 4)
+	surface.SetDrawColor(10, 200, 10, 160)
+	surface.DrawRect(x, y, barw * progress, 2)
+	surface.SetDrawColor(0, 170, 0, 160)
+	surface.DrawRect(x, y + 2, barw * progress, 2)
+		if progress > 0 then
+			local lx = x + barw * progress - 1
+			surface.SetDrawColor(255, 255, 255, 20 + math.abs(math.sin(RealTime() * 2)) * 170)
+			surface.DrawLine(lx, y - 2, lx, y + 7)
+			surface.SetDrawColor(255, 255, 255, 160)
+			surface.DrawLine(x, y - 1, x, y + 5)
+			lx = x + barw - 1
+			surface.DrawLine(lx, y - 1, lx, y + 5)
+		end
+		draw_SimpleText("Da", "ZSXPBar", x, h / 2 + y, COLOR_WHITE, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+		draw_SimpleText("Pizda", "ZSXPBar", x + barw, h / 2 + y, COLOR_WHITE, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
+end
 function GM:_InputMouseApply(cmd, x, y, ang)
 	if MySelf:KeyDown(IN_WALK) and MySelf:IsHolding() then
 		self.InputMouseX = math.NormalizeAngle(self.InputMouseX - x * 0.02 * GAMEMODE.PropRotationSensitivity)

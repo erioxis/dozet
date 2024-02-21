@@ -55,8 +55,8 @@ end
 function SWEP:DamageThink(dmginfo) 
 	if self:GetPerc() > 0 then
 		local damage = dmginfo:GetDamage() 
+		self:SetPerc(self:GetPerc() - math.Round(damage/10)+1)
 		dmginfo:SetDamage(damage * math.max(0.1,1-self:GetPerc()*0.01))
-		self:SetPerc(self:GetPerc() - math.Round(dmginfo:GetDamage()/10)+1)
 	end
 end
 function SWEP:DealThink(dmginfo) 

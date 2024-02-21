@@ -19,5 +19,6 @@ function ENT:Initialize()
 	if CLIENT then
 		hook.Add("Draw", self, self.Draw)
 		hook.Add("RenderScreenspaceEffects", self, self.RenderScreenspaceEffects)
+		hook.Add("AdjustMouseSensitivity", self, self.AdjustMouseSensitivity)
 	end
 end

@@ -244,7 +244,8 @@ function GM:SaveWinRate()
 		PointsMul = (self.PointsMulMAP or 1),
 		DirectorMul = (self.DirectorMAP or 0),
 		Director = (self.Director or false),
-		Dif = (self.Dif or 0)
+		Dif = (self.Dif or 0),
+		WinXPMulti = (self.WinXPMulti or 1)
 	}
 
 	local filename = self.VaultBalance.."/".."map_"..game.GetMap().."_balance.txt"
@@ -253,7 +254,6 @@ function GM:SaveWinRate()
 end
 
 function GM:LoadWinRate()
-
 	local filename = "system_balance.txt"
 	if file.Exists(filename, "DATA") then
 		local contents = file.Read(filename, "DATA")
@@ -317,6 +317,9 @@ function GM:LoadWinRate()
 				end
 				if contents.Director then
 					self.Director = contents.Director
+				end
+				if contents.WinXPMulti then
+					self.WinXPMulti = contents.WinXPMulti
 				end
 			end
 		end

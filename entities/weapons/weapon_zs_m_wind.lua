@@ -81,7 +81,7 @@ function SWEP:PrimaryAttack()
 		self:SetNextPrimaryFire(CurTime() + self:GetFireDelay())
 
 			self:EmitFireSound()
-			self:ShootBullets(math.min(self.Primary.Damage + (owner:GetBloodArmor() * 2.5) * (owner.MagicDamage or 1),1920), self.Primary.NumShots, self:GetCone())
+			self:ShootBullets(math.min(self.Primary.Damage + (owner:GetBloodArmor() * 2.5) * (owner.MagicDamage or 1),1200), self.Primary.NumShots, self:GetCone())
 			self.IdleAnimation = CurTime() + self:SequenceDuration()
 			if SERVER then
 				owner:TakeDamage(self.Primary.ArmorBleed)

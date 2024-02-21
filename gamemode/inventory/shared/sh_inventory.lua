@@ -271,6 +271,7 @@ GM:AddInventoryItemData("cons_bounty",		trs("c_bounty"),			trs("c_bounty_d"),			
 	while #need < 3 do
 		local item = tbl[math.random(1,#tbl)]
 		if !table.HasValue(need,item)  and !(pl:HasTrinket(item) or pl:HasInventoryItemQ("trinket_"..item) or pl:HasInventoryItem(item)) then 
+			tbl[item] = nil
 			need[#need+1] = item
 		end
 		tries = tries + 1
@@ -558,7 +559,7 @@ GM:AddInventoryItemData("cons_friendship",		trs("c_friendship"),			trs("c_friend
 end,2)
 GM:AddInventoryItemData("cons_chaos",		trs("c_chaos"),			trs("c_chaos_d"),								"models/props_c17/trappropeller_lever.mdl", 3, nil, nil, function(pl) 
 	local use2 = {}
---	if pl.UsesChaosCard then pl:AddChargesActive(5) return end
+	if pl.UsesChaosCard then pl:AddChargesActive(5) return end
 	local data = GAMEMODE.ZSInventoryItemData
 	for item,v in pairs(GAMEMODE.GetActiveTrinkets) do
 		if item ~= "cons_chaos" and item ~= "cons_wildcard" and data[item].Bounty and data[item].BountyNeed then
@@ -1961,21 +1962,21 @@ skill3d = "qual_0"
 end
 trinket = GM:AddTrinket(trs("t_cursedtrinket"), "cursedtrinket", false, supveles, supweles, 4, (isnumber(tonumber(skill1)) and skill1* 100 or skill1)..trs(skill1d)..skill2..trs(skill2d)..(isnumber(tonumber(skill3)) and skill3* 100 or skill3)..trs(skill3d)..trs("t_d_cursedtrinket"))
 if d == 1 then
-GM:AddSkillModifier(trinket, SKILLMOD_DAMAGE, skill1)
-GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, skill2)
-GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, skill3)
+	GM:AddSkillModifier(trinket, SKILLMOD_DAMAGE, skill1)
+	GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, skill2)
+	GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, skill3)
 elseif d == 2 then
-GM:AddSkillModifier(trinket, SKILLMOD_POINT_MULTIPLIER, skill1)
-GM:AddSkillModifier(trinket, SKILLMOD_SPEED, skill2)
-GM:AddSkillModifier(trinket, SKILLMOD_ARSENAL_DISCOUNT, skill3)
+	GM:AddSkillModifier(trinket, SKILLMOD_POINT_MULTIPLIER, skill1)
+	GM:AddSkillModifier(trinket, SKILLMOD_SPEED, skill2)
+	GM:AddSkillModifier(trinket, SKILLMOD_ARSENAL_DISCOUNT, skill3)
 elseif d == 3 then
-GM:AddSkillModifier(trinket, SKILLMOD_RES_AMMO_MUL, skill1)
-GM:AddSkillModifier(trinket, SKILLMOD_BLOODARMOR, skill2)
-GM:AddSkillModifier(trinket, SKILLMOD_MANHACK_DAMAGE_MUL, skill3)
+	GM:AddSkillModifier(trinket, SKILLMOD_RES_AMMO_MUL, skill1)
+	GM:AddSkillModifier(trinket, SKILLMOD_BLOODARMOR, skill2)
+	GM:AddSkillModifier(trinket, SKILLMOD_MANHACK_DAMAGE_MUL, skill3)
 elseif d == 4 then
-GM:AddSkillModifier(trinket, SKILLMOD_SELF_DAMAGE_MUL, skill1)
-GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, skill2)
-GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_MUL, skill3)
+	GM:AddSkillModifier(trinket, SKILLMOD_SELF_DAMAGE_MUL, skill1)
+	GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, skill2)
+	GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_MUL, skill3)
 else
 	
 end

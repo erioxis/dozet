@@ -20,7 +20,7 @@ function ENT:Initialize()
 end
 local function huy(wep,self,dir)
 	local owner = wep:GetOwner()
-	if self.Primary.Projectile == "projectile_impactmine" or self.Primary.Projectile == "projectile_impactmine_kin" or self.Primary.Projectile == "projectile_bulldog" then return end 
+	if self.Primary.Projectile == "projectile_impactmine" or self.Primary.Projectile == "projectile_impactmine_kin" or self.Primary.Projectile == "projectile_bulldog" or self.Primary.Projectile == "projectile_bomb_sticky" then self:Remove() return end 
 	local ssfw, ssup
 	if self.SameSpread then
 		ssfw, ssup = math.Rand(0, 360), math.Rand(-cone, cone)
@@ -146,7 +146,7 @@ function ENT:ShootBullets(dmg, numbul)
 		self:SetDTVector(22, direction)
 
 		if !wep.Primary.Projectile  then
-			self:FireBulletsLua(self:GetPos()+Vector(0,0,15), direction, wep.ConeMax or 1, numbul, dmg, owner, wep.KnockbackScale, wep.TracerName, !wep.Magic and wep.BulletCallback, 1, nil, 1028, nil, self)
+			self:FireBulletsLua(self:GetPos()+Vector(0,0,15), direction, ((wep.ConeMax or 1)+1.6)*2.5, numbul, dmg, owner, wep.KnockbackScale, wep.TracerName, !wep.Magic and wep.BulletCallback, 1, nil, 1028, nil, self)
 		else
 			huy(self,wep,direction)
 		end
@@ -164,6 +164,8 @@ end
 function ENT:SetHitStacks()
 end
 function ENT:GetHitStacks()
+end
+function ENT:GetFireDelay()
 end
 function compare(a,b)
 	return a.Health > b.Health

@@ -4,10 +4,11 @@ SWEP.PrintName = "The Tickle Monster"
 
 SWEP.Base = "weapon_zs_zombie"
 
-SWEP.MeleeDamage = 77
-SWEP.MeleeDamageVsProps = 100
+SWEP.MeleeDamage = 90
+SWEP.MeleeDamageVsProps = 22
 SWEP.MeleeReach = 350
 SWEP.MeleeSize = 3
+SWEP.MeleeDamageType = DMG_DIRECT
 
 function SWEP:Reload()
 	self:SecondaryAttack()

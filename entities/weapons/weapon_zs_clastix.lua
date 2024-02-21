@@ -80,7 +80,7 @@ GAMEMODE:AddNewRemantleBranch(SWEP, 1, translate.Get("wep_ricosic_r1"), translat
 			effectdata:SetNormal(tr.HitNormal)
 		util.Effect("hit_hunter", effectdata)
 		if CLIENT or tr.HitSky then return end
-		local me = attacker:GetActiveWeapon()
+		local me = wept
 		for i=1,7 do
 			timer.Simple(0.1, function() me:FireBulletsLua(tr.HitPos+Vector(0,0,5), (tr.StartPos - tr.HitPos):GetNormal(), 10*i, 1, me.Primary.Damage*0.6, attacker, 1, "tracer_rico", nil, nil, nil, 1028, nil) end)
 		end
@@ -142,16 +142,16 @@ function SWEP:Think()
 end
 
 function SWEP.BulletCallback(attacker, tr, dmginfo)
-	attacker:GetActiveWeapon().BaseClass.BulletCallback(attacker, tr, dmginfo)
+	local inflictor = dmginfo:GetInflictor()
+	inflictor.BaseClass.BulletCallback(attacker, tr, dmginfo)
 	local effectdata = EffectData()
 		effectdata:SetOrigin(tr.HitPos)
 		effectdata:SetNormal(tr.HitNormal)
 	util.Effect("hit_hunter", effectdata)
 	if CLIENT or tr.HitSky then return end
-	local me = attacker:GetActiveWeapon()
-	for i=0,7 do
+	for i=1,5 do
 		local zombie = team.GetPlayers(TEAM_UNDEAD)[math.random(1,#team.GetPlayers(TEAM_UNDEAD))]
-		timer.Simple(0.09*i, function() me:FireBulletsLua(tr.HitPos+zombie:GetForward()*12, (zombie:LocalToWorld(zombie:OBBCenter()) - tr.HitPos):GetNormal(), 10*i, 1, (me.Primary.Damage or 200)*1.4, attacker, 1, "tracer_rico", nil, nil, nil, 1028, nil) end)
+		timer.Simple(0.09*i, function() inflictor:FireBulletsLua(tr.HitPos+zombie:GetForward()*12, (zombie:LocalToWorld(zombie:OBBCenter()) - tr.HitPos):GetNormal(), 10*i, 1, (inflictor.Primary.Damage or 200)*1.4, attacker, 1, "tracer_rico", nil, nil, nil, 1028, nil) end)
 	end
 end
 
