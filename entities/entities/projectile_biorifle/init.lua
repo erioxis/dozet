@@ -88,7 +88,7 @@ function ENT:Explode()
 					ent.Corrosion = CurTime()
 				elseif type == 1 then
 					ent:Ignite(5)
-					for __, fire in pairs(ents.FindByClass("entityflame")) do
+					for __, fire in ipairs(ents.FindByClass("entityflame")) do
 						if fire:IsValid() and fire:GetParent() == ent then
 							fire:SetOwner(owner)
 							fire:SetPhysicsAttacker(owner)

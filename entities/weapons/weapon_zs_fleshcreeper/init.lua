@@ -41,7 +41,7 @@ function SWEP:BuildingThink()
 	local uid = owner:UniqueID()
 	local count = 0
 	local personal_count = 0
-	for _, ent in pairs(ents.FindByClass("prop_creepernest")) do
+	for _, ent in ipairs(ents.FindByClass("prop_creepernest")) do
 		if ent.OwnerUID == uid then
 			personal_count = personal_count + 1
 		end
@@ -110,20 +110,20 @@ function SWEP:BuildingThink()
 	end
 
 	-- See if there's a nest nearby.
-	for _, ent in pairs(ents.FindByClass("prop_creepernest")) do
+	for _, ent in ipairs(ents.FindByClass("prop_creepernest")) do
 		if util.SkewedDistance(ent:GetPos(), hitpos, 1.5) <= GAMEMODE.CreeperNestDistBuildNest then
 			self:SendMessage("too_close_to_another_nest")
 			return
 		end
 	end
-	for _, ent in pairs(ents.FindByClass("prop_glitchnest")) do
+	for _, ent in ipairs(ents.FindByClass("prop_glitchnest")) do
 		if util.SkewedDistance(ent:GetPos(), hitpos, 1.5) <= GAMEMODE.CreeperNestDistBuildNest then
 			self:SendMessage("too_close_to_another_nest")
 			return
 		end
 	end
 
-	for _, sigil in pairs(ents.FindByClass("prop_obj_sigil")) do
+	for _, sigil in ipairs(ents.FindByClass("prop_obj_sigil")) do
 		if sigil:GetSigilCorrupted() then continue end
 
 		if util.SkewedDistance(sigil:GetPos(), hitpos, 1.5) <= GAMEMODE.CreeperNestDistBuildNest then

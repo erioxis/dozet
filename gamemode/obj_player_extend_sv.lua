@@ -1052,7 +1052,7 @@ function meta:KnockDown(time)
 end
 
 function meta:FakeDeath(sequenceid, modelscale, length, start)
-	for _, ent in pairs(ents.FindByClass("fakedeath")) do
+	for _, ent in ipairs(ents.FindByClass("fakedeath")) do
 		if ent:GetOwner() == self then
 			ent:Remove()
 		end
@@ -1150,7 +1150,7 @@ function meta:AddLifeBrainsEaten(amount)
 end
 
 function meta:RemoveEphemeralStatuses()
-	for _, status in pairs(ents.FindByClass("status_*")) do
+	for _, status in ipairs(ents.FindByClass("status_*")) do
 		if status.Ephemeral and status:IsValid() and status:GetOwner() == self then
 			status:Remove()
 		end
@@ -1436,13 +1436,13 @@ end
 
 function meta:RemoveAllStatus(bSilent, bInstant)
 	if bInstant then
-		for _, ent in pairs(ents.FindByClass("status_*")) do
+		for _, ent in ipairs(ents.FindByClass("status_*")) do
 			if not ent.NoRemoveOnDeath and ent:GetOwner() == self then
 				ent:Remove()
 			end
 		end
 	else
-		for _, ent in pairs(ents.FindByClass("status_*")) do
+		for _, ent in ipairs(ents.FindByClass("status_*")) do
 			if not ent.NoRemoveOnDeath and ent:GetOwner() == self then
 				ent.SilentRemove = bSilent
 				ent:SetDie()
@@ -1456,7 +1456,7 @@ end
 function meta:RemoveStatus(sType, bSilent, bInstant, sExclude)
 	local removed
 
-	for _, ent in pairs(ents.FindByClass("status_"..sType)) do
+	for _, ent in ipairs(ents.FindByClass("status_"..sType)) do
 		if ent:GetOwner() == self and not (sExclude and ent:GetClass() == "status_"..sExclude) then
 			if bInstant then
 				ent:Remove()
@@ -2009,7 +2009,7 @@ end
 function meta:CreateAmbience(class)
 	class = "status_"..class
 
-	for _, ent in pairs(ents.FindByClass(class)) do
+	for _, ent in ipairs(ents.FindByClass(class)) do
 		if ent:GetOwner() == self then return end
 	end
 

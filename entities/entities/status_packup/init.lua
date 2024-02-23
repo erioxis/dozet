@@ -33,7 +33,7 @@ function ENT:Think()
 			if CurTime() >= self:GetEndTime() then
 				if self:GetNotOwner() then
 					local count = 0
-					for _, ent in pairs(ents.FindByClass("status_packup")) do
+					for _, ent in ipairs(ents.FindByClass("status_packup")) do
 						if ent:GetPackUpEntity() == pack then
 							count = count + 1
 						end

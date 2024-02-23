@@ -72,7 +72,7 @@ local function BulletCallback(attacker, tr, dmginfo)
 
 		if ent:IsPlayer() and math.random(3) == 1 then
 			ent:Ignite(6)
-			for __, fire in pairs(ents.FindByClass("entityflame")) do
+			for __, fire in ipairs(ents.FindByClass("entityflame")) do
 				if fire:IsValid() and fire:GetParent() == ent then
 					fire:SetOwner(owner)
 					fire:SetPhysicsAttacker(owner)

@@ -76,7 +76,7 @@ function SWEP:Think()
 			self:CycleCamera()
 		end
 
-		for _, ent in pairs(ents.FindByClass("prop_camera")) do
+		for _, ent in ipairs(ents.FindByClass("prop_camera")) do
 			if ent:GetObjectOwner() == self:GetOwner() then
 				return
 			end

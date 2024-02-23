@@ -1,7 +1,7 @@
 INC_SERVER()
 
 local function RefreshRemantlerOwners(pl)
-	for _, ent in pairs(ents.FindByClass("prop_remantler")) do
+	for _, ent in ipairs(ents.FindByClass("prop_remantler")) do
 		if ent:IsValid() and ent:GetObjectOwner() == pl then
 			ent:SetObjectOwner(NULL)
 		end

@@ -35,7 +35,7 @@ function SWEP:PrimaryAttack()
 	local owner = self:GetOwner()
 	if CurTime() <= self:GetNextPrimaryFire() or (owner.ShadeShield and owner.ShadeShield:IsValid()) then return end
 
-	for _, ent in pairs(ents.FindByClass(self.ShadeControl)) do
+	for _, ent in ipairs(ents.FindByClass(self.ShadeControl)) do
 		if ent:IsValid() and ent:GetOwner() == owner then
 			local obj = ent:GetParent()
 			if obj:IsValid() then
@@ -72,7 +72,7 @@ function SWEP:CanGrab()
 	self:SetNextSecondaryFire(CurTime() + 0.11)
 
 	if SERVER then
-		for _, ent in pairs(ents.FindByClass(self.ShadeControl)) do
+		for _, ent in ipairs(ents.FindByClass(self.ShadeControl)) do
 			if ent:IsValid() and ent:GetOwner() == owner then
 				ent:Remove()
 				return
@@ -95,14 +95,14 @@ function SWEP:SecondaryAttack()
 		if SERVER then
 		local phys = ent:GetPhysicsObject()
 		if phys:IsValid() and phys:IsMoveable() and phys:GetMass() <= 500 then
-			for _, ent2 in pairs(ents.FindByClass(self.ShadeControl)) do
+			for _, ent2 in ipairs(ents.FindByClass(self.ShadeControl)) do
 				if ent2:IsValid() and ent2:GetParent() == ent then
 					ent2:Remove()
 					return
 				end
 			end
 
-			for _, status in pairs(ents.FindByClass("status_human_holding")) do
+			for _, status in ipairs(ents.FindByClass("status_human_holding")) do
 				if status:IsValid() and status:GetObject() == ent then
 					status:Remove()
 				end

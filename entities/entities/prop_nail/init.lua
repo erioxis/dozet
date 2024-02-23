@@ -5,7 +5,7 @@ ENT.m_NextStrainSound = 0
 hook.Add("PlayerInitialSpawn", "NailPlayerInitialSpawn", function(pl)
 	local uid = pl:UniqueID()
 
-	for _, nail in pairs(ents.FindByClass("prop_nail")) do
+	for _, nail in ipairs(ents.FindByClass("prop_nail")) do
 		if nail:GetOwnerUID() == uid then
 			nail:SetDeployer(pl)
 		end

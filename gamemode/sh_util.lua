@@ -474,7 +474,7 @@ function util.ToMinutesSecondsMilliseconds(seconds)
 end
 
 function util.RemoveAll(class)
-	for _, ent in pairs(ents.FindByClass(class)) do
+	for _, ent in ipairs(ents.FindByClass(class)) do
 		ent:Remove()
 	end
 end

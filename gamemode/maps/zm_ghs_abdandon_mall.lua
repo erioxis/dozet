@@ -10,5 +10,5 @@ hook.Add("InitPostEntityMap", "Adding", function()
 		ent2:Spawn()
 	end
 
-	for _, ent in pairs(ents.FindByClass("trigger_teleport")) do ent:Remove() end
+	for _, ent in ipairs(ents.FindByClass("trigger_teleport")) do ent:Remove() end
 end)

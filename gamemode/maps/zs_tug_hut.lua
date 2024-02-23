@@ -16,7 +16,7 @@ hook.Add("InitPostEntityMap", "Adding", function()
 		ent:Spawn()
 	end
 
-	for _, ent in pairs(ents.FindByClass("item_healthcharger")) do
+	for _, ent in ipairs(ents.FindByClass("item_healthcharger")) do
 			ent:Remove()
 		end
 	end

@@ -68,7 +68,7 @@ GAMEMODE:AddNewRemantleBranch(SWEP, 1, translate.Get("wep_adonis_r1"), translate
 		local killer = self:GetOwner()
 
 		if killer:IsValid() then
-			for _,v in pairs(ents.FindByClass("prop_zapper*")) do
+			for _,v in ipairs(ents.FindByClass("prop_zapper*")) do
 				if v:GetObjectOwner() == killer then
 					v:SetNextZap(0)
 				end

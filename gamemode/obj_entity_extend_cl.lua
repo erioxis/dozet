@@ -95,7 +95,7 @@ local CachedNails = {}
 timer.Create("CacheNails", 0.3333, 0, function()
 	CachedNails = {}
 
-	for _, nail in pairs(ents.FindByClass("prop_nail")) do
+	for _, nail in ipairs(ents.FindByClass("prop_nail")) do
 		if nail:IsValid() and nail.GetAttachEntity then
 			CachedNails[#CachedNails + 1] = nail
 			nail.CachedAttachEntity = nail:GetAttachEntity()

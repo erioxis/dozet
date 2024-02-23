@@ -1,7 +1,7 @@
 local Hints = {}
 
 function GM:DrawPointWorldHints()
-	for _, ent in pairs(ents.FindByClass("point_worldhint")) do if ent:IsValid() and ent.DrawHint then ent:DrawHint() end end
+	for _, ent in ipairs(ents.FindByClass("point_worldhint")) do if ent:IsValid() and ent.DrawHint then ent:DrawHint() end end
 end
 
 function GM:WorldHint(text, pos, ent, lifetime)

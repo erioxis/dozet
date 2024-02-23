@@ -1,7 +1,7 @@
 INC_SERVER()
 
 local function RefreshDetpackOwners(pl)
-	for _, ent in pairs(ents.FindByClass("prop_detpack")) do
+	for _, ent in ipairs(ents.FindByClass("prop_detpack")) do
 		if ent:IsValid() and ent:GetOwner() == pl then
 			ent:SetOwner(NULL)
 		end

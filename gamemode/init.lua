@@ -600,7 +600,7 @@ function GM:SetupSpawnPoints()
 	end
 
 	-- Add all the old ZS spawns from GMod9.
-	for _, oldspawn in pairs(ents.FindByClass("gmod_player_start")) do
+	for _, oldspawn in ipairs(ents.FindByClass("gmod_player_start")) do
 		if oldspawn.BlueTeam then
 			table.insert(htab, oldspawn)
 		else
@@ -686,7 +686,7 @@ end
 function GM:SetupProps()
 	if not self.ZombieEscape then
 		local phys
-		for _, d in pairs(ents.FindByClass("prop_dynamic*")) do
+		for _, d in ipairs(ents.FindByClass("prop_dynamic*")) do
 			if d:IsValid() then
 				local convert = ents.Create("prop_physics")
 				local pos = d:GetPos()
@@ -712,7 +712,7 @@ function GM:SetupProps()
 			end
 		end
 	end
-	for _, ent in pairs(ents.FindByClass("prop_physics*")) do
+	for _, ent in ipairs(ents.FindByClass("prop_physics*")) do
 		local mdl = ent:GetModel()
 		if mdl then
 			mdl = string.lower(mdl)
@@ -794,7 +794,7 @@ function GM:ReplaceMapWeapons()
 		return
 	end
 
-	for _, ent in pairs(ents.FindByClass("weapon_*")) do
+	for _, ent in ipairs(ents.FindByClass("weapon_*")) do
 		local wepclass = ent:GetClass()
 		if wepclass ~= "weapon_map_base" then
 			if string.sub(wepclass, 1, 10) == "weapon_zs_" then
@@ -845,7 +845,7 @@ function GM:ReplaceMapAmmo()
 	end
 
 	for classname, ammotype in pairs(ammoreplacements) do
-		for _, ent in pairs(ents.FindByClass(classname)) do
+		for _, ent in ipairs(ents.FindByClass(classname)) do
 			local newent = ents.Create("prop_ammo")
 			if newent:IsValid() then
 				newent:SetAmmoType(ammotype)
@@ -1920,7 +1920,7 @@ function GM:CalculateInfliction(victim, attacker)
 			if v.Infliction and infliction >= v.Infliction and not self:IsClassUnlocked(v.Name) then
 				v.Unlocked = true
 
-				for _, ent in pairs(ents.FindByClass("logic_classunlock")) do
+				for _, ent in ipairs(ents.FindByClass("logic_classunlock")) do
 					local classname = v.Name
 					if ent.Class == string.lower(classname) then
 						ent:Input("onclassunlocked", ent, ent, classname)
@@ -1942,7 +1942,7 @@ function GM:CalculateInfliction(victim, attacker)
 		end
 	end
 
-	for _, ent in pairs(ents.FindByClass("logic_infliction")) do
+	for _, ent in ipairs(ents.FindByClass("logic_infliction")) do
 		if ent.Infliction <= infliction then
 			ent:Input("oninflictionreached", NULL, NULL, infliction)
 		end
@@ -1961,7 +1961,7 @@ function GM:LastHuman(pl)
 			net.WriteEntity(pl or NULL)
 		net.Broadcast()
 
-		for _, ent in pairs(ents.FindByClass("logic_infliction")) do
+		for _, ent in ipairs(ents.FindByClass("logic_infliction")) do
 			ent:Input("onlasthuman", pl, pl, pl and pl:IsValid() and pl:EntIndex() or -1)
 		end
 		pl:GiveAchievement("becomelast")
@@ -2262,15 +2262,15 @@ end
 function GM:DoRestartGame()
 	self.RoundEnded = nil
 
-	for _, ent in pairs(ents.FindByClass("prop_weapon")) do
+	for _, ent in ipairs(ents.FindByClass("prop_weapon")) do
 		ent:Remove()
 	end
 
-	for _, ent in pairs(ents.FindByClass("prop_ammo")) do
+	for _, ent in ipairs(ents.FindByClass("prop_ammo")) do
 		ent:Remove()
 	end
 
-	for _, ent in pairs(ents.FindByClass("prop_invitem")) do
+	for _, ent in ipairs(ents.FindByClass("prop_invitem")) do
 		ent:Remove()
 	end
 
@@ -2328,7 +2328,7 @@ function GM:RestartGame()
 		net.Send(pl)
 	end
  
-	for _, ent in pairs(ents.FindByClass("prop_obj_sigil")) do
+	for _, ent in ipairs(ents.FindByClass("prop_obj_sigil")) do
 		ent:Remove()
 	end
 
@@ -2365,16 +2365,16 @@ function GM:InitPostEntityMap(fromze)
 	gamemode.Call("CreateZombieGas")
 	gamemode.Call("SetupProps")
 
-	for _, ent in pairs(ents.FindByClass("prop_ammo")) do ent.PlacedInMap = true end
-	for _, ent in pairs(ents.FindByClass("prop_weapon")) do ent.PlacedInMap = true end
-	for _, ent in pairs(ents.FindByClass("func_door_rotating")) do ent.NoTraceAttack = true end
-	for _, ent in pairs(ents.FindByClass("func_physbox")) do ent.IsPhysbox = true end
-	for _, ent in pairs(ents.FindByClass("func_physbox_multiplayer")) do
+	for _, ent in ipairs(ents.FindByClass("prop_ammo")) do ent.PlacedInMap = true end
+	for _, ent in ipairs(ents.FindByClass("prop_weapon")) do ent.PlacedInMap = true end
+	for _, ent in ipairs(ents.FindByClass("func_door_rotating")) do ent.NoTraceAttack = true end
+	for _, ent in ipairs(ents.FindByClass("func_physbox")) do ent.IsPhysbox = true end
+	for _, ent in ipairs(ents.FindByClass("func_physbox_multiplayer")) do
 		ent.IsPhysbox = true
 		ent.IgnoreZEProtect = true
 	end
 
-	for _, ent in pairs(ents.FindByClass("item_*")) do ent.NoNails = true end
+	for _, ent in ipairs(ents.FindByClass("item_*")) do ent.NoNails = true end
 
 	if self.ObjectiveMap then
 		self:SetDynamicSpawning(false)
@@ -2589,11 +2589,11 @@ function GM:EndRound(winner)
 
 
 	if winner == TEAM_HUMAN then
-		for _, ent in pairs(ents.FindByClass("logic_winlose")) do
+		for _, ent in ipairs(ents.FindByClass("logic_winlose")) do
 			ent:Input("onwin")
 		end
 	else
-		for _, ent in pairs(ents.FindByClass("logic_winlose")) do
+		for _, ent in ipairs(ents.FindByClass("logic_winlose")) do
 			ent:Input("onlose")
 		end
 	end
@@ -4732,12 +4732,12 @@ function GM:HumanKilledZombie(pl, attacker, inflictor, dmginfo, headshot, suicid
 	if pl.LastZGas > CurTime() then
 		attacker.InbalanceMoment = 	attacker.InbalanceMoment +1
 		if attacker.InbalanceMoment > 12 then
-			for k,v in pairs(ents.FindByClass("prop_gunturret*")) do
+			for k,v in ipairs(ents.FindByClass("prop_gunturret*")) do
 				if v:GetObjectOwner() == attacker then
 					v:Remove()
 				end
 			end
-			for k,v in pairs(ents.FindByClass("prop_roller*")) do
+			for k,v in ipairs(ents.FindByClass("prop_roller*")) do
 				if v:GetObjectOwner() == attacker then
 					v:Remove()
 				end
@@ -5701,7 +5701,7 @@ function GM:SetWave(wave)
 				table.insert(UnlockedClasses, classid)
 			end
 
-			for _, ent in pairs(ents.FindByClass("logic_classunlock")) do
+			for _, ent in ipairs(ents.FindByClass("logic_classunlock")) do
 				local classname = GAMEMODE.ZombieClasses[classid].Name
 				if ent.Class == string.lower(classname) then
 					ent:Input("onclassunlocked", ent, ent, classname)
@@ -5854,7 +5854,7 @@ function GM:WaveStateChanged(newstate, pl)
 		if self:GetUseSigils() and prevwave >= self:GetNumberOfWaves() then return end
 		if prevwave == 6 then 
 			local removed = false
-			for k,v in pairs(ents.FindByClass("prop_obj_sigil")) do
+			for k,v in ipairs(ents.FindByClass("prop_obj_sigil")) do
 				if v:GetSigilCorrupted() then
 					v:Remove()
 					removed = true
@@ -5899,12 +5899,12 @@ function GM:WaveStateChanged(newstate, pl)
 		end
 
 		local curwave = self:GetWave()
-		for _, ent in pairs(ents.FindByClass("logic_waves")) do
+		for _, ent in ipairs(ents.FindByClass("logic_waves")) do
 			if ent.Wave == curwave or ent.Wave == -1 then
 				ent:Input("onwavestart", ent, ent, curwave)
 			end
 		end
-		for _, ent in pairs(ents.FindByClass("logic_wavestart")) do
+		for _, ent in ipairs(ents.FindByClass("logic_wavestart")) do
 			if ent.Wave == curwave or ent.Wave == -1 then
 				ent:Input("onwavestart", ent, ent, curwave)
 			end
@@ -5925,7 +5925,7 @@ function GM:WaveStateChanged(newstate, pl)
 				-- Start spawning boss zombies.
 			elseif self:GetEscapeStage() == ESCAPESTAGE_NONE then
 				-- If we're using sigils, remove them all and spawn the doors.
-				for _, sigil in pairs(ents.FindByClass("prop_obj_sigil")) do
+				for _, sigil in ipairs(ents.FindByClass("prop_obj_sigil")) do
 					if !sigil.Immune then continue end
 					local ent = ents.Create("prop_obj_exit")
 					if ent:IsValid() then
@@ -5943,12 +5943,12 @@ function GM:WaveStateChanged(newstate, pl)
 				self:SetEscapeStage(ESCAPESTAGE_ESCAPE)
 
 				local curwave = self:GetWave()
-				for _, ent in pairs(ents.FindByClass("logic_waves")) do
+				for _, ent in ipairs(ents.FindByClass("logic_waves")) do
 					if ent.Wave == curwave or ent.Wave == -1 then
 						ent:Input("onwaveend", ent, ent, curwave)
 					end
 				end
-				for _, ent in pairs(ents.FindByClass("logic_waveend")) do
+				for _, ent in ipairs(ents.FindByClass("logic_waveend")) do
 					if ent.Wave == curwave or ent.Wave == -1 then
 						ent:Input("onwaveend", ent, ent, curwave)
 					end
@@ -5960,12 +5960,12 @@ function GM:WaveStateChanged(newstate, pl)
 			gamemode.Call("EndRound", TEAM_HUMAN)
 
 			local curwave = self:GetWave()
-			for _, ent in pairs(ents.FindByClass("logic_waves")) do
+			for _, ent in ipairs(ents.FindByClass("logic_waves")) do
 				if ent.Wave == curwave or ent.Wave == -1 then
 					ent:Input("onwaveend", ent, ent, curwave)
 				end
 			end
-			for _, ent in pairs(ents.FindByClass("logic_waveend")) do
+			for _, ent in ipairs(ents.FindByClass("logic_waveend")) do
 				if ent.Wave == curwave or ent.Wave == -1 then
 					ent:Input("onwaveend", ent, ent, curwave)
 				end
@@ -6131,12 +6131,12 @@ function GM:WaveStateChanged(newstate, pl)
 		end
 
 		local curwave = self:GetWave()
-		for _, ent in pairs(ents.FindByClass("logic_waves")) do
+		for _, ent in ipairs(ents.FindByClass("logic_waves")) do
 			if ent.Wave == curwave or ent.Wave == -1 then
 				ent:Input("onwaveend", ent, ent, curwave)
 			end
 		end
-		for _, ent in pairs(ents.FindByClass("logic_waveend")) do
+		for _, ent in ipairs(ents.FindByClass("logic_waveend")) do
 			if ent.Wave == curwave or ent.Wave == -1 then
 				ent:Input("onwaveend", ent, ent, curwave)
 			end

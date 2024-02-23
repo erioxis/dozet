@@ -30,7 +30,7 @@ function SWEP:CreateTrinketStatus()
 	if not owner:IsValid() then return end
 
 	local status = self.TrinketStatus
-	for _, ent in pairs(ents.FindByClass(status)) do
+	for _, ent in ipairs(ents.FindByClass(status)) do
 		if ent:GetOwner() == owner then return end
 	end
 

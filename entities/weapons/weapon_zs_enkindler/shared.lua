@@ -41,7 +41,7 @@ GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_MAXIMUM_MINES, 1)
 function SWEP:CanPrimaryAttack()
 	if self.BaseClass.CanPrimaryAttack(self) then
 		local c = 0
-		for _, ent in pairs(ents.FindByClass("projectile_impactmine_kin")) do
+		for _, ent in ipairs(ents.FindByClass("projectile_impactmine_kin")) do
 			if (CLIENT or ent.CreateTime + 300 > CurTime()) and ent:GetOwner() == self:GetOwner() then
 				c = c + 1
 			end

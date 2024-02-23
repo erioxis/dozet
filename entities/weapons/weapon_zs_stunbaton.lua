@@ -53,7 +53,7 @@ function SWEP:OnMeleeHit(hitent, hitflesh, tr)
 	local ent = tr.Entity
 	if SERVER and math.random(5) == 1 and ent:IsValidLivingZombie() then
 		ent:Ignite(30)
-		for __, fire in pairs(ents.FindByClass("entityflame")) do
+		for __, fire in ipairs(ents.FindByClass("entityflame")) do
 			if fire:IsValid() and fire:GetParent() == ent then
 				fire:SetOwner(attacker)
 				fire.AttackerForward = attacker

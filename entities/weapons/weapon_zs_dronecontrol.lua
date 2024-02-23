@@ -52,7 +52,7 @@ function SWEP:Think()
 	end
 
 	if SERVER then
-		for _, ent in pairs(ents.FindByClass("prop_drone*")) do
+		for _, ent in ipairs(ents.FindByClass("prop_drone*")) do
 			if ent:IsValid() and ent:GetObjectOwner() == self:GetOwner() then
 				return
 			end
@@ -120,7 +120,7 @@ function SWEP:Draw2DHUD()
 		draw.SimpleText("Мин", "ZSHUDFontSmall", x + wid -120, texty, COLOR_GREEN, TEXT_ALIGN_LEFT)
 	
 		local charges = 0
-		for k,v in pairs(ents.FindByClass('prop_rollermine_exp')) do
+		for k,v in ipairs(ents.FindByClass('prop_rollermine_exp')) do
 			if v:GetObjectOwner() == owner then
 				charges = charges + 1
 			end

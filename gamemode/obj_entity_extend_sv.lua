@@ -205,12 +205,12 @@ local function CheckItemCreated(self)
 	if not self:IsValid() or self.PlacedInMap then return end
 
 	local tab = {}
-	for _, ent in pairs(ents.FindByClass("prop_ammo")) do
+	for _, ent in ipairs(ents.FindByClass("prop_ammo")) do
 		if not ent.PlacedInMap then
 			table.insert(tab, ent)
 		end
 	end
-	for _, ent in pairs(ents.FindByClass("prop_weapon")) do
+	for _, ent in ipairs(ents.FindByClass("prop_weapon")) do
 		if not ent.PlacedInMap then
 			table.insert(tab, ent)
 		end
@@ -647,7 +647,7 @@ function meta:RemoveNail(nail, dontremoveentity, removedby, forceremoveconstrain
 	local cons = nail:GetNailConstraint()
 	local othernails = 0
 	if not forceremoveconstraint then
-		for _, othernail in pairs(ents.FindByClass("prop_nail")) do
+		for _, othernail in ipairs(ents.FindByClass("prop_nail")) do
 			if othernail ~= nail and not nail.m_IsRemoving and othernail:GetNailConstraint():IsValid() and othernail:GetNailConstraint() == cons then
 				othernails = othernails + 1
 			end

@@ -36,13 +36,13 @@ function ENT:Initialize()
 		object.IgnoreBullets = true
 
 
-		for _, ent in pairs(ents.FindByClass("logic_pickupdrop")) do
+		for _, ent in ipairs(ents.FindByClass("logic_pickupdrop")) do
 			if ent.EntityToWatch == object:GetName() and ent:IsValid() then
 				ent:Input("onpickedup", owner, object, "")
 			end
 		end
 
-		for _, ent in pairs(ents.FindByClass("point_propnocollide")) do
+		for _, ent in ipairs(ents.FindByClass("point_propnocollide")) do
 			if ent:IsValid() and ent:GetProp() == object then
 				ent:Remove()
 			end
@@ -108,7 +108,7 @@ end
 local function DoubleCheck(object)
 	if not IsValid(object) then return end
 
-	for _, status in pairs(ents.FindByClass("status_human_holding")) do
+	for _, status in ipairs(ents.FindByClass("status_human_holding")) do
 		if status:IsValid() and not status.Removing and status:GetObject() == object then
 			return
 		end
@@ -183,7 +183,7 @@ function ENT:OnRemove()
 		object._LastDroppedBy = owner
 		object._LastDropped = CurTime()
 
-		for _, ent in pairs(ents.FindByClass("logic_pickupdrop")) do
+		for _, ent in ipairs(ents.FindByClass("logic_pickupdrop")) do
 			if ent.EntityToWatch == object:GetName() and ent:IsValid() then
 				ent:Input("ondropped", owner, object, "")
 			end

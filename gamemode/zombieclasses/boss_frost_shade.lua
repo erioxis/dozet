@@ -92,7 +92,7 @@ if SERVER then
 						end
 					end
 
-					for _, ent in pairs(ents.FindByClass("env_frostshadecontrol")) do
+					for _, ent in ipairs(ents.FindByClass("env_frostshadecontrol")) do
 						if ent:IsValid() and ent:GetOwner() == pl then
 							ent:Remove()
 							return

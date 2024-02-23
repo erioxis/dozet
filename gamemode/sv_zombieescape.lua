@@ -57,7 +57,7 @@ hook.Add("EntityKeyValue", "zombieescape", function(ent, key, value)
 end)
 
 hook.Add("InitPostEntityMap", "zombieescape", function(fromze)
-	for _, ent in pairs(ents.FindByClass("filter_activator_team")) do
+	for _, ent in ipairs(ents.FindByClass("filter_activator_team")) do
 		if ent.ZEFix then
 			ent:SetKeyValue("filterteam", ent.ZEFix)
 		end

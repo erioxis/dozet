@@ -1,5 +1,5 @@
 hook.Add("InitPostEntityMap", "MPInitPostEntity", function()
-	for _, ent in pairs(ents.FindByClass("func_button")) do
+	for _, ent in ipairs(ents.FindByClass("func_button")) do
 		ent:Remove()
 	end
 

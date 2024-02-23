@@ -999,7 +999,7 @@ concommand.Add("zs_stuck", function(sender, command, arguments)
 		end
 	end
 	if ent == NULL then
-		for _, ent1 in pairs(ents.FindByClass("prop_obj_sigil")) do
+		for _, ent1 in ipairs(ents.FindByClass("prop_obj_sigil")) do
 			if ent1:GetClass() == "prop_obj_sigil" then
 				ent = ent1
 				break
@@ -1078,7 +1078,7 @@ end)
 concommand.Add("zs_shitmap_teleport_on", function(sender, command, arguments)
 	if not sender:IsSuperAdmin() then return end
 
-	for _, ent in pairs(ents.FindByClass("trigger_teleport")) do
+	for _, ent in ipairs(ents.FindByClass("trigger_teleport")) do
 		ent:Fire("enable", "", 0)
 	end
 end)
@@ -1086,7 +1086,7 @@ end)
 concommand.Add("zs_shitmap_teleport_off", function(sender, command, arguments)
 	if not sender:IsSuperAdmin() then return end
 
-	for _, ent in pairs(ents.FindByClass("trigger_teleport")) do
+	for _, ent in ipairs(ents.FindByClass("trigger_teleport")) do
 		ent:Fire("enable", "", 0)
 	end
 end)

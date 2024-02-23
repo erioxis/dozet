@@ -470,12 +470,12 @@ function GM:GetDynamicSpawns(pl)
 	local tab = {}
 
 	local humans = team.GetPlayers(TEAM_HUMAN)
-	for _, nest in pairs(ents.FindByClass("prop_creepernest")) do
+	for _, nest in ipairs(ents.FindByClass("prop_creepernest")) do
 		if self:DynamicSpawnIsValid(nest, humans) then
 			table.insert(tab, nest)
 		end
 	end
-	for _, nest in pairs(ents.FindByClass("prop_glitchnest")) do
+	for _, nest in ipairs(ents.FindByClass("prop_glitchnest")) do
 		if self:DynamicSpawnIsValid(nest, humans) then
 			table.insert(tab, nest)
 		end

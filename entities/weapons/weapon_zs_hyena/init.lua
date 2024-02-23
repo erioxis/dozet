@@ -9,7 +9,7 @@ end
 
 function SWEP:SecondaryAttack()
 	if self:GetNextSecondaryFire() > CurTime() then return end
-	for k,v in pairs(ents.FindByClass(self.Primary.Projectile)) do
+	for k,v in ipairs(ents.FindByClass(self.Primary.Projectile)) do
 		if v:GetOwner() == self:GetOwner() then
 			v:Explode()
 		end

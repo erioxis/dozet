@@ -1,7 +1,7 @@
 INC_SERVER()
 
 local function RefreshZapperOwners(pl)
-	for _, ent in pairs(ents.FindByClass("prop_zapper*")) do
+	for _, ent in ipairs(ents.FindByClass("prop_zapper*")) do
 		if ent:IsValid() and ent:GetObjectOwner() == pl then
 			ent:ClearObjectOwner()
 		end

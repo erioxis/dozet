@@ -152,7 +152,7 @@ function meta:HasTrinket(trinket)
 end
 
 function meta:CreateTrinketStatus(status)
-	for _, ent in pairs(ents.FindByClass("status_" .. status)) do
+	for _, ent in ipairs(ents.FindByClass("status_" .. status)) do
 		if ent:GetOwner() == self then return end
 	end
 

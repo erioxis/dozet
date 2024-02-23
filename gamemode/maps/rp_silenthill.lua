@@ -1,5 +1,5 @@
 hook.Add("InitPostEntityMap", "Adding", function()
-	for _, ent in pairs(ents.FindByClass("trigger_teleport")) do ent:Remove() end
+	for _, ent in ipairs(ents.FindByClass("trigger_teleport")) do ent:Remove() end
 
 	local buttons = ents.FindByClass("func_button")
 	for i=4, 9 do

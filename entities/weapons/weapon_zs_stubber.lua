@@ -94,7 +94,7 @@ SWEP.BulletCallback = function(attacker, tr, dmginfo)
 	local ent = tr.Entity
 	if SERVER and math.random(12) == 1 and ent:IsValidLivingZombie() then
 		ent:Ignite(30)
-		for __, fire in pairs(ents.FindByClass("entityflame")) do
+		for __, fire in ipairs(ents.FindByClass("entityflame")) do
 			if fire:IsValid() and fire:GetParent() == ent then
 				fire:SetOwner(attacker)
 				fire:SetPhysicsAttacker(attacker)

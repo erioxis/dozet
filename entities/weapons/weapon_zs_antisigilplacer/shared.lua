@@ -39,7 +39,7 @@ end
 
 function SWEP:Holster()
 	if SERVER then
-		for _, ent in pairs(ents.FindByClass("point_fakeasigil")) do
+		for _, ent in ipairs(ents.FindByClass("point_fakeasigil")) do
 			ent:Remove()
 		end
 	end
@@ -154,7 +154,7 @@ end)
 end
 
 function SWEP:RefreshSigils()
-	for _, ent in pairs(ents.FindByClass("point_fakeasigil")) do
+	for _, ent in ipairs(ents.FindByClass("point_fakeasigil")) do
 		ent:Remove()
 	end
 

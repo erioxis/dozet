@@ -122,7 +122,7 @@ end
 function GM:DebugProfiler()
 	for _, node in pairs(self.ProfilerNodes) do
 		local spawned = false
-		for __, e in pairs(ents.FindByClass("prop_dynamic*")) do
+		for __, e in ipairs(ents.FindByClass("prop_dynamic*")) do
 			if e.IsNode and e:GetPos() == node then spawned = true end
 		end
 		if not spawned then
@@ -139,7 +139,7 @@ function GM:DebugProfiler()
 	end
 	for _, node in pairs(self.ProfilerNodesAnti) do
 		local spawned = false
-		for __, e in pairs(ents.FindByClass("prop_dynamic*")) do
+		for __, e in ipairs(ents.FindByClass("prop_dynamic*")) do
 			if e.IsNode and e:GetPos() == node then spawned = true end
 		end
 		if not spawned then

@@ -64,7 +64,7 @@ end
 function SWEP:CanPrimaryAttack()
 	if self:GetOwner():IsHolding() or self:GetOwner():GetBarricadeGhosting() then return false end
 
-	for _, ent in pairs(ents.FindByClass("prop_manhack*")) do
+	for _, ent in ipairs(ents.FindByClass("prop_manhack*")) do
 		if ent:GetObjectOwner() == self:GetOwner() then return false end
 	end
 

@@ -46,7 +46,7 @@ end)
 function SWEP:CanPrimaryAttack()
 	if self.BaseClass.CanPrimaryAttack(self) then
 		local c = 0
-		for _, ent in pairs(ents.FindByClass("projectile_crymam")) do
+		for _, ent in ipairs(ents.FindByClass("projectile_crymam")) do
 			if ent:GetOwner() == self:GetOwner() then
 				c = c + 1
 			end

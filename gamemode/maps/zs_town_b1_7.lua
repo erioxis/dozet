@@ -3,7 +3,7 @@ hook.Add("InitPostEntityMap", "Adding", function()
 		if ent:GetClass() == "func_door_rotating" then ent:Remove() end
 	end
 
-	for _, ent in pairs(ents.FindByClass("func_movelinear")) do
+	for _, ent in ipairs(ents.FindByClass("func_movelinear")) do
 		ent:Remove()
 	end
 

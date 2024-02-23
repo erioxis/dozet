@@ -6,7 +6,7 @@ ENT.LastHitPeriod = 0.5
 ENT.Hitbox = "prop_hitbox_gunturret"
 
 local function RefreshTurretOwners(pl)
-	for _, ent in pairs(ents.FindByClass("prop_gunturret*")) do
+	for _, ent in ipairs(ents.FindByClass("prop_gunturret*")) do
 		if ent:IsValid() and ent:GetObjectOwner() == pl then
 			ent:ClearObjectOwner()
 			ent:ClearTarget()

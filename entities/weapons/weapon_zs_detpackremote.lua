@@ -41,7 +41,7 @@ end
 
 if SERVER then
 function SWEP:Think()
-	for _, ent in pairs(ents.FindByClass("prop_detpack")) do
+	for _, ent in ipairs(ents.FindByClass("prop_detpack")) do
 		if ent:GetOwner() == self:GetOwner() then
 			return
 		end
@@ -56,7 +56,7 @@ function SWEP:PrimaryAttack()
 
 	if CLIENT then return end
 
-	for _, ent in pairs(ents.FindByClass("prop_detpack")) do
+	for _, ent in ipairs(ents.FindByClass("prop_detpack")) do
 		if ent:GetOwner() == self:GetOwner() and ent:GetExplodeTime() == 0 then
 			ent:SetExplodeTime(CurTime() + ent.ExplosionDelay)
 		end

@@ -684,7 +684,7 @@ function GM:DrawFearMeter(power, screenscale)
 		end
 	end
 	local sigilsc = 0
-	for _, ent in pairs(ents.FindByClass("prop_obj_sigil")) do 
+	for _, ent in ipairs(ents.FindByClass("prop_obj_sigil")) do 
 		if ent:IsValid() then
 			sigilsc = sigilsc + 1
 		end
@@ -994,7 +994,7 @@ function GM:DrawSigilTeleportBar(x, y, fraction, target, screenscale)
 	local startx = x - maxbarwidth * 0.5
 
 	local letter = "?"
-	for i, sigil in pairs(ents.FindByClass("prop_obj_sigil")) do
+	for i, sigil in ipairs(ents.FindByClass("prop_obj_sigil")) do
 		if target == sigil then
 			letter = string.char(65 + i)
 			break

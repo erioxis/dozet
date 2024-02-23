@@ -27,7 +27,7 @@ GM.Events6500 = {
 		return true
 	end,
     function()
-		for k,v in pairs(ents.FindByClass('prop_databox')) do
+		for k,v in ipairs(ents.FindByClass('prop_databox')) do
             if v then
                 v:Remove()
             end

@@ -38,7 +38,7 @@ function SWEP:DrawHUD()
 
 	local c = 0
 	if not self.NextMineCheckTime or self.NextMineCheckTime < CurTime() then
-		for _, ent in pairs(ents.FindByClass("projectile_impactmine_kin")) do
+		for _, ent in ipairs(ents.FindByClass("projectile_impactmine_kin")) do
 			if (CLIENT or ent.CreateTime + 300 > CurTime()) and ent:GetOwner() == self:GetOwner() then
 				c = c + 1
 			end
