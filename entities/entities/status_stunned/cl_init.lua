@@ -77,5 +77,6 @@ function ENT:Draw()
 	emitter:Finish() emitter = nil collectgarbage("step", 64)
 end
 function ENT:AdjustMouseSensitivity(base)
+	if LocalPlayer() ~= self:GetOwner() then return end
 	return base - 0.05
 end

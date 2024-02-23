@@ -172,7 +172,7 @@ end
 local function funcofd1(pl, nouse)
 	local use = {}
 	for item,v in pairs(pl:GetInventoryItems()) do
-		if item ~= nouse and string.len(item) >= 7  then
+		if item ~= nouse and string.len(item) >= 7 and item ~= "cons_bounty" then
 			table.insert(use, #use + 1,item)
 		end
 		

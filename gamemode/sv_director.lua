@@ -1,4 +1,5 @@
 --ЭТОТ КОД ВОЙДЕТ В ИСТОРИЮ!
+local random_opt = math.random
 GM.Events6500 = {
 	function()
 		for k,v in pairs(team.GetPlayers(TEAM_UNDEAD)) do
@@ -49,7 +50,7 @@ GM.Events6500 = {
     function()
         PrintMessage( HUD_PRINTTALK, "БАРАБОГ РЕШИЛ ВСЕХ ТЕЛЕПОРТИРОВАТЬ НА НАТУРАЛЬНЫЙ СИГИЛ!если он есть...Иначе поставит 15 хп.")
         local huh = ents.FindByClass('prop_obj_sigil')
-        local sigil = huh[math.random(1,#huh)]
+        local sigil = huh[random_opt(1,#huh)]
         if !sigil.NodePos then 
             for k,v in pairs(team.GetPlayers(TEAM_HUMAN)) do
                 v:SetHealth(15)
@@ -93,14 +94,111 @@ GM.Events6500 = {
 	end,
     function(time, rage)
         for k,v in pairs(team.GetPlayers(TEAM_HUMAN)) do
-            v:GiveStatus('knockdown',10/(math.max(0.1,v.KnockdownRecoveryMul or 1)))
+            v:GiveStatus('knockdown',5/(math.max(0.1,v.KnockdownRecoveryMul or 1)))
         end
         PrintMessage( HUD_PRINTTALK, "БАРАБОГ РЕШИЛ ОТОРВАТЬ НОГИ ВЫЖИВШИМ!(ХЕХЕ ВАМ ВОССТАНОВИТ,НО НЕ СКОРО)")
 		return true
 	end,
 }
 GM.Events11500 = {
-	
+    function(time, rage)
+        for k,v in pairs(team.GetPlayers(TEAM_HUMAN)) do
+            v:GiveStatus('knockdown',15/(math.max(0.1,v.KnockdownRecoveryMul or 1)))
+        end
+        PrintMessage( HUD_PRINTTALK, "БАРАБОГ РЕШИЛ ОТОРВАТЬ НОГИ ВЫЖИВШИМ!")
+		return true
+	end,
+    function(time, rage)
+        if GAMEMODE.ObjectiveMap then return false end
+        gamemode.Call(
+            gamemode.Call( "GetWaveActive" ) and "SetWaveEnd" or "SetWaveStart",
+            (gamemode.Call( "GetWaveActive" )  and gamemode.Call( "GetWaveEnd" ) or  gamemode.Call( "GetWaveStart" )) + 120
+        )
+        PrintMessage( HUD_PRINTTALK, "БАРАБОГ РЕШИЛ ИСПОЛЬЗОВАТЬ СВОИ ЧАСЫ В ПОЛНУЮ МОЩЬ И ПРОДЛИЛ ВОЛНУ!")
+		return true
+	end,
+    function(time, rage)
+        if GAMEMODE.ObjectiveMap then return false end
+        gamemode.Call(
+            gamemode.Call( "GetWaveActive" ) and "SetWaveEnd" or "SetWaveStart",
+            (gamemode.Call( "GetWaveActive" )  and gamemode.Call( "GetWaveEnd" ) or  gamemode.Call( "GetWaveStart" )) - 120
+        )
+        PrintMessage( HUD_PRINTTALK, "БАРАБОГ РЕШИЛ ИСПОЛЬЗОВАТЬ СВОИ ЧАСЫ В ПОЛНУЮ МОЩЬ И СОКРАТИЛ ВОЛНУ!")
+		return true
+	end, 
+    function(time, rage)
+        timer.Create('barabog_hihi_'..time, 0.7,10,function(arguments)
+            GAMEMODE:DirectorThink(CurTime(),6550)
+        end)
+        PrintMessage( HUD_PRINTTALK, "БАРАБОГ ОЧEНЬ ЗОЛ!ОН НАКОЛДОВАЛ 10 СЛАБЫХ СОБЫТИЙ!")
+		return true
+	end,
+    function()
+		for k,v in pairs(team.GetPlayers(TEAM_HUMAN)) do
+            v:GiveStatus('stunned',15)
+        end
+        PrintMessage( HUD_PRINTTALK, "БАРАБОГ СТУКНУЛ ДУБИНОЙ ПО ЛБУ ЛЮДЕЙ!" )
+		return true
+	end,
+    function()
+        PrintMessage( HUD_PRINTTALK, "БАРАБОГ РЕШИЛ ВСЕХ ТЕЛЕПОРТИРОВАТЬ НА НАТУРАЛЬНЫЙ СИГИЛ!А ЕСЛИ НЕТУ - ТО УБЬЕТ.")
+        local huh = ents.FindByClass('prop_obj_sigil')
+        local truesigils = {}
+        for k,v in pairs(huh) do
+            if v.NodePos then
+                truesigils[#truesigils+1] = v
+            end
+        end
+        local sigil = truesigils[random_opt(1,#truesigils)]
+        if !sigil.NodePos then 
+            for k,v in pairs(team.GetPlayers(TEAM_HUMAN)) do
+                v:Kill()
+            end
+           return false
+        end
+        for k,v in pairs(team.GetPlayers(TEAM_HUMAN)) do
+            v:SetPos(sigil.NodePos)
+        end
+		return true
+	end,
+    function(time)
+        PrintMessage( HUD_PRINTTALK, "БАРАБОГ РЕШИЛ НEМНОГО ОТДОХНУТЬ!")--много
+        GAMEMODE.NextThinkDirector = time + 210
+		return true
+	end,
+    function(time)
+        PrintMessage( HUD_PRINTTALK, "ХEХE РEШИЛ ПОДДEРЖАТЬ ЛЮДEЙ,ДАВ ИМ...АИРДРОПЫ!")
+        GAMEMODE:CreateRandomObjectPos("prop_airdrop", 3)
+		return false
+	end,
+    function(time, rage)
+        local randers = {}
+        local stock = 0
+        local rand
+        for i=1,3 do
+            rand = random_opt(1,7)
+            randers[#randers + 1] = rand
+            stock = stock + rand
+        end
+        PrintMessage( HUD_PRINTTALK, "БАРАБОГ СЫГРАЛ В КАЗИНО И ВЫБИЛ - "..randers[1]..randers[2]..randers[3])
+        if stock == 21 then
+            PrintMessage( HUD_PRINTTALK, "JACKPOT - ЛЮДИ ПОЛУЧАТ 20 СОБЫТИЙ!")
+            timer.Create("barahous"..rand..randers[2].."Ы",0.5, 20, function() GAMEMODE:DirectorThink(CurTime(),rage) end)
+        elseif stock > 14 then
+            PrintMessage( HUD_PRINTTALK, "ЛАДНО,БАРАБОГ ПРОСТО ВОЗЬМЕТ У ВАС 30% ПОИНТОВ!")
+            for k,v in pairs(team.GetPlayers(TEAM_HUMAN)) do
+                v:SetPoints(v:GetPoints()*0.7)
+            end
+        elseif stock > 7 then
+            PrintMessage( HUD_PRINTTALK, "ЛАДНО,БАРАБОГ ПРОСТО ВОЗЬМЕТ У ВАС 15% ПОИНТОВ!")
+            for k,v in pairs(team.GetPlayers(TEAM_HUMAN)) do
+                v:SetPoints(v:GetPoints()*0.85)
+            end
+        else
+            PrintMessage( HUD_PRINTTALK, "БАРАБОГ НЕ ВЫБИЛ СОБЫТИЙ((((")
+        end
+		return false
+	end,
 }
 GM.Events35000 = {
 	
@@ -110,15 +208,15 @@ function GM:DirectorThink(time, rage)
 	mapmul = mapmul + 1
     rage = rage * mapmul
 	if rage > 35000  then
-        local rand = math.random(1,#self.Events35000)
-		local func = self.Events35000[rand]
+        local rand = random_opt(1,#self.Events11500)
+		local func = self.Events11500[rand]
 		return func(time, rage)
     elseif rage > 11500 then
-        local rand = math.random(1,#self.Events11500)
+        local rand = random_opt(1,#self.Events11500)
 		local func = self.Events11500[rand]
 		return func(time, rage)
     elseif rage > 6500  then
-        local rand = math.random(1,#self.Events6500)
+        local rand = random_opt(1,#self.Events6500)
 		local func = self.Events6500[rand]
 		return func(time, rage)
     end
