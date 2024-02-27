@@ -301,10 +301,8 @@ function meta:ProcessDamage(dmginfo)
 		
 		end
 		if attacker:IsValidLivingHuman() then
-			local wep = attacker:GetActiveWeapon()
-			local damage1 = damage
 			attacker:SetDPS(attacker:GetDPS() + damage)
-			timer.Simple(1, function() if attacker:IsValid() then attacker:SetDPS(attacker:GetDPS() - damage1) end end)
+			timer.Simple(1, function() if attacker:IsValid() then attacker:SetDPS(attacker:GetDPS() - damage) end end)
 		end
 		dmginfo:SetDamage(damage)
 		return false
@@ -317,7 +315,9 @@ function meta:ProcessDamage(dmginfo)
 		end
 
 
-
+		if self:IsSkillActive(SKILL_XPMULGOOD) and self.AddXPMulti > 0.20 then
+			self.AddXPMulti = self.AddXPMulti - 0.02
+		end
 		if self:IsSkillActive(SKILL_DODGE) and math.max(0,math.random(1,math.max(30 - (self:GetWalkSpeed() / 15),2))) == 1  then
 			if attacker:IsPlayer() then
 				GAMEMODE:BlockFloater(attacker, self, dmginfo:GetDamagePosition())
@@ -471,9 +471,6 @@ function meta:ProcessDamage(dmginfo)
 			GAMEMODE:BlockFloater(attacker, self, dmginfo:GetDamagePosition())
 		end
 		return true
-	end
-	if self:IsSkillActive(SKILL_XPMULGOOD) and self.AddXPMulti > 0.20 then
-        self.AddXPMulti = self.AddXPMulti - 0.02
 	end
 
 	if attacker:IsPlayer() and attacker:Team() == TEAM_UNDEAD and damage >= 1000 and !self:HasGodMode() then
@@ -1824,7 +1821,6 @@ function meta:Resupply(owner, obj)
 		self.FirstUsedResupply  = true
 	end
 
-	for i = 1, stockpiling and 2 or 1 do
 		if self.RessuplyMul then
 			amount = amount * self.RessuplyMul
 		end
@@ -1865,7 +1861,6 @@ function meta:Resupply(owner, obj)
 				net.WriteFloat(1)
 			net.Send(owner)
 		end
-	end
 
 	return true
 end

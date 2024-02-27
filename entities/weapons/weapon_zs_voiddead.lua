@@ -2,7 +2,7 @@ AddCSLuaFile()
 
 SWEP.Base = "weapon_zs_zombie"
 
-SWEP.PrintName = ""
+SWEP.PrintName = "Nihil Dead"
 SWEP.ViewModel 				= 	Model("models/weapons/v_zombiearms.mdl")
 SWEP.WorldModel 			= 	"models/weapons/w_crowbar.mdl"
 
@@ -194,6 +194,15 @@ end
 function SWEP:SetNextBleedsplosion( time )
 	self:SetDTFloat( 1, time )
 end
+function SWEP:ViewModelDrawn()
+	self:Anim_ViewModelDrawn()
+end
+function SWEP:DrawWorldModel()
+	local owner = self:GetOwner()
+	if owner:IsValid() and (owner.ShadowMan or owner.SpawnProtection) then return end
+
+	self:Anim_DrawWorldModel()
+end
 
 function SWEP:GetNextBleedsplosion()
 	return self:GetDTFloat( 1 )
@@ -280,7 +289,7 @@ function SWEP:Reload()
 			function() if IsValid( owner ) then owner:EmitSound(sndname, 74, 175 - i*17, 1, CHAN_AUTO) end
 		end)
 	end		
-	local sndname1 = "npc/strider/creak%d.wav"
+	local sndname1 = "npc/strider/creak1.wav"
 	for i = 1, 8 do
 		timer.Create("reloadsound2" .. i, 0.04 * i, 1,
 			function() if IsValid( owner ) then owner:EmitSound(sndname1, 74, 155 + i*8, 1, CHAN_AUTO) end

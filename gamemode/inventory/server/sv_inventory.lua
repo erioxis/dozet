@@ -226,7 +226,7 @@ local function OnIn(self,new,rem)
 		end
 	end
 end
-local drones = {['prop_drone_hauler'] = true ,['prop_drone']  = true  ,['prop_drone_healer']  = true ,['prop_drone_pulse']  = true }
+local drones =  {['prop_drone_hauler'] = true ,['prop_drone']  = true  ,['prop_drone_healer']  = true ,['prop_drone_pulse']  = true,['prop_manhack']  = true,['prop_manhack_saw']  = true}
 net.Receive("zs_drone_trinket", function(len, pl)
 	local trinket = net.ReadString()
 	local pl = net.ReadEntity()

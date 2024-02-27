@@ -51,14 +51,14 @@ GM.Events6500 = {
         PrintMessage( HUD_PRINTTALK, "БАРАБОГ РЕШИЛ ВСЕХ ТЕЛЕПОРТИРОВАТЬ НА НАТУРАЛЬНЫЙ СИГИЛ!если он есть...Иначе поставит 15 хп.")
         local huh = ents.FindByClass('prop_obj_sigil')
         local sigil = huh[random_opt(1,#huh)]
-        if !sigil.NodePos then 
+        if !sigil.NaturallySpawned then 
             for k,v in pairs(team.GetPlayers(TEAM_HUMAN)) do
                 v:SetHealth(15)
             end
            return false
         end
         for k,v in pairs(team.GetPlayers(TEAM_HUMAN)) do
-            v:SetPos(sigil.NodePos)
+            v:SetPos(sigil.NodePos or sigil:GetPos())
         end
 		return true
 	end,
@@ -145,19 +145,19 @@ GM.Events11500 = {
         local huh = ents.FindByClass('prop_obj_sigil')
         local truesigils = {}
         for k,v in pairs(huh) do
-            if v.NodePos then
+            if v.NaturallySpawned then
                 truesigils[#truesigils+1] = v
             end
         end
         local sigil = truesigils[random_opt(1,#truesigils)]
-        if !sigil.NodePos then 
+        if !sigil.NaturallySpawned then 
             for k,v in pairs(team.GetPlayers(TEAM_HUMAN)) do
                 v:Kill()
             end
            return false
         end
         for k,v in pairs(team.GetPlayers(TEAM_HUMAN)) do
-            v:SetPos(sigil.NodePos)
+            v:SetPos(sigil.NodePos or v:GetPos())
         end
 		return true
 	end,
@@ -201,7 +201,6 @@ GM.Events11500 = {
 	end,
 }
 GM.Events35000 = {
-	
 }
 function GM:DirectorThink(time, rage)
 	local mapmul = self.DirectorMAP or 0

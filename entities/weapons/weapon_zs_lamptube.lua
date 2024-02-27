@@ -2,8 +2,8 @@ AddCSLuaFile()
 
 --SWEP.PrintName = "Lamp"
 --SWEP.Description = "Обычная лампа но что-то в ней не так"
-SWEP.PrintName = ""..translate.Get("wep_lampt")
-SWEP.Description = ""..translate.Get("wep_d_lamp")
+SWEP.PrintName = translate.Get("wep_lampt")
+SWEP.Description = translate.Get("wep_d_lamp")
 if CLIENT then
 
 	SWEP.ViewModelFOV = 70

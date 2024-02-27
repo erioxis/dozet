@@ -76,7 +76,7 @@ function ENT:StartTouch(ent)
 					net.WriteString("cons_soul_picka")
 				net.Send(ent)	
 			end
-			taked = taked.."|Получил x"..math.random(1,4).." раз Жетон Души"
+			taked = taked.."|Получил x"..wrep.." раз Жетон Души"
 		end
 		if math.random(1,5) == 5 then
 			local rand = math.random(200,900)

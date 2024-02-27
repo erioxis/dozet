@@ -170,9 +170,9 @@ function PANEL:Text3Paint()
 			if god and d then
 				powergod = d:Health()/5000000 * 100
 			end
-			
+			local rage = GAMEMODE:GetRage()
 			if !god then
-				draw.SimpleText(((0 < balance) and translate.Get("dosei_inf")..balance.."%" or ""), "ZSHUDFontTiniest", 0, 17, COLOR_SOFTRED)
+				draw.SimpleText(((0 < balance) and translate.Get("dosei_inf")..balance.."%" or ""), "ZSHUDFontTiniest", 0, 17, rage > 35000 and COLOR_RED or rage > 11500 and COLOR_YELLOW or rage > 6500 and COLOR_BLUE or COLOR_GRAY)
 			else
 				draw.SimpleText(translate.Get("power_god")..powergod.."%", "ZSHUDFontTiniest", 0, 16, COLOR_SOFTRED)
 			end

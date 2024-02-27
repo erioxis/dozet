@@ -46,6 +46,7 @@ function ENT:Initialize()
 		ent:SetPos(self:GetPos())
 		ent:SetAngles(self:GetAngles())
 		ent:SetParent(self)
+		self.FHB = ent
 		ent:SetOwner(self)
 		ent.Size = self.HitBoxSize
 		ent:Spawn()

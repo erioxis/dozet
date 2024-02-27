@@ -60,7 +60,6 @@ function EFFECT:Render()
 	local rdelta =  delta
 	local size = rdelta ^ 0.5 * self.Size
 	local bgdelta = math.max( delta * 15, 0 )
-	print( bgdelta )
 	colGlow.a = delta * 100
 	colGlow.r = 255 - delta * 255
 	colGlow.g = bgdelta

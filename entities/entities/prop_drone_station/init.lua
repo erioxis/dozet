@@ -14,21 +14,16 @@ function ENT:Initialize()
 	self.NextUse = {}
 
 	self:SetModel("models/props_lab/powerbox01a.mdl")
-	self:SetUseType(SIMPLE_USE)
-	
 	
 	self:PhysicsInit(SOLID_VPHYSICS)
-	self:SetSolid(SOLID_VPHYSICS)
-	self:SetCollisionGroup(COLLISION_GROUP_PROJECTILE)
-	self:SetCustomCollisionCheck(true)
+	self:SetUseType(SIMPLE_USE)
 
 	self:CollisionRulesChanged()
-		local phys = self:GetPhysicsObject()
-		if phys:IsValid() then
-			phys:EnableMotion(false)
-		end
 
-	self:CollisionRulesChanged()
+	local phys = self:GetPhysicsObject()
+	if phys:IsValid() then
+		phys:EnableMotion(false)
+	end
 
 	self:SetMaxObjectHealth(200)
 	self:SetObjectHealth(self:GetMaxObjectHealth())
@@ -169,7 +164,11 @@ function ENT:Think()
 			v:SetParent(self)
 			v.TrinketsIn = v.TrinketsIn or {}
 			v.OnUpdateTrinkets = OnIn
-			v:SetPos(self:GetForward()*30+Vector(0,0,12))
+			if v:GetClass() == "prop_manhack" or v:GetClass() == "prop_manhack_saw" then
+				v:SetPos(self:GetForward()*45+Vector(0,0,26))
+			else
+				v:SetPos(self:GetForward()*30+Vector(0,0,12))
+			end
 			self:SetDTEntity(11, v)
 			
 		end
