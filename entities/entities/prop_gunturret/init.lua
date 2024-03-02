@@ -166,7 +166,7 @@ function ENT:FireTurret(src, dir)
 		local twinvolley = self:GetManualControl() and owner:IsSkillActive(SKILL_TWINVOLLEY)
 		if curammo > (twinvolley and 1 or 0) then
 			self:SetNextFire(CurTime() + self.FireDelay * (twinvolley and 1.5 or 1))
-			local damage = self.Damage * owner.BulletMul
+			local damage = self.Damage * (owner.BulletMul or 1)
 			if !(owner:IsSkillActive(SKILL_OVERHEATED_BULLET) and math.random(1,10) == 1) then
 				if mot and owner:GetBloodArmor() > 0 then
 					owner:SetBloodArmor(math.max(0,curammo - (twinvolley and 2 or 1)))

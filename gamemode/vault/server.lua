@@ -109,6 +109,12 @@ function GM:LoadVault(pl)
 				if contents.OldDesiredSkills then
 					pl.OldDesiredSkills = util.DecompressBitTable(contents.OldDesiredSkills, true)
 				end
+				if contents.CheeseCount then
+					pl.CheeseCount = contents.CheeseCount
+					if pl.CheeseCount then
+						pl:GiveAchievement('cheese_shmich')
+					end
+				end
 			
 				pl.Season = (contents.Season or 1)
 
@@ -181,6 +187,7 @@ function GM:SaveVault(pl)
 		MeleeMastery =pl:GetMastery("melee"),
 		GunMastery = pl:GetMastery("gunner"),
 		CaderMastery = pl:GetMastery("cadder"),
+		CheeseCount = (pl.CheeseCount or 0),
 		Zban = (pl.Zban or false),
 		AchXP = pl:GetDCoins(),
 		Season = self.DozetSeason,

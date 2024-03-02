@@ -146,7 +146,7 @@ function ENT:ShootBullets(dmg, numbul)
 		self:SetDTVector(22, direction)
 
 		if !wep.Primary.Projectile  then
-			self:FireBulletsLua(self:GetPos()+Vector(0,0,15), direction, ((wep.ConeMax or 1)+1.6)*2.5, numbul, dmg, owner, wep.KnockbackScale, wep.TracerName, !wep.Magic and wep.BulletCallback, 1, nil, 1028, nil, self)
+			self:FireBulletsLua(self:GetPos()+Vector(0,0,15), direction, ((wep.ConeMax or 1)+1.6)*2.5, numbul, dmg, owner, wep.KnockbackScale, wep.TracerName, !wep.Magic and math.random(1,7) == 1 and wep.BulletCallback, 1, nil, 1028, nil, self)
 		else
 			huy(self,wep,direction)
 		end
@@ -211,6 +211,7 @@ function ENT:Think()
 	end
 	if self.TimeToDash < CurTime() and self:GetOwner():IsValid()  and self.trg and self.trg:IsValid() and self.trg:Team() ~= self:GetOwner():Team() then
 		local wep = self:GetWeapon()
+		if !wep then return end
 		local dmg = 50
 		if wep  then
 			dmg = (wep.IsMelee and wep.MeleeDamage or wep.Primary.Damage or 50) * 0.66

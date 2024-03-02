@@ -525,7 +525,7 @@ function meta:DamageNails(attacker, inflictor, damage, dmginfo)
 		end
 		local live = nails[math.random(1,#nails)]
 		local lowler = live:GetOwner()
-		if !inflictor.ZombieCanPickup and lowler and lowler:IsValid() and lowler:IsSkillActive(SKILL_SPICY_CADES) then 
+		if !inflictor.ZombieCanPickup and lowler and lowler:IsValid() and lowler:IsSkillActive(SKILL_SPICY_CADES) and inflictor == attacker:GetActiveWeapon() and DMG_BULLET ~= dmginfo:GetDamageType() then 
 			attacker:TakeSpecialDamage(damage*2,DMG_SLASH,lowler,live,dmginfo:GetDamagePosition(),0)
 		end
 		damage = dmginfo:GetDamage()

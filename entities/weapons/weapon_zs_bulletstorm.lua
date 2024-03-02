@@ -102,7 +102,7 @@ function SWEP:HaveAbility()
 	self:SetDTBool(12,!self:GetDTBool(12))
 end
 function SWEP.BulletCallback(attacker, tr, dmginfo)
-	local wep = attacker:GetActiveWeapon()
+	local wep = dmginfo:GetInflictor()
 	if !wep.Phantom then return end
 	if wep:GetDTBool(12) and wep:GetDTInt(12) >= 0 then
 		local effectdata = EffectData()
@@ -115,7 +115,7 @@ function SWEP.BulletCallback(attacker, tr, dmginfo)
 	if tr.Entity and tr.Entity:IsValidLivingZombie() then
 		wep:SetDTInt(12,math.min(90,wep:GetDTInt(12)+1))
 	end
-	attacker:GetActiveWeapon().BaseClass.BulletCallback(attacker, tr, dmginfo)
+	wep.BaseClass.BulletCallback(attacker, tr, dmginfo)
 end
 
 

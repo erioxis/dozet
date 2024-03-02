@@ -57,7 +57,7 @@ function MakepEndBoard(winner)
 	xpadded:SetPos(wid * 0.5 - xpadded:GetWide() * 0.1, y)
 	y = y + xpadded:GetTall() + 2
 
-	xpadded = EasyLabel(frame, translate.Get("winrate_xdxd")..GAMEMODE:GetWinRate(), "ZSHUDFontTiny", COLOR_GREEN)
+	xpadded = EasyLabel(frame, translate.Get("winrate_xdxd")..GAMEMODE:GetWinRate()-1, "ZSHUDFontTiny", COLOR_GREEN)
 
 	xpadded:SetPos(wid * 0.5 - xpadded:GetWide() * 0.2, y)
 	y = y + xpadded:GetTall() + 2

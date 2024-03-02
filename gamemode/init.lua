@@ -2799,7 +2799,7 @@ function GM:PlayerReadyRound(pl)
 	end
 	--DoDropStart(pl)
 
-	if pl:GetInfo("zs_noredeem") == "1" then
+	if pl:GetInfo("zs_noredeem") == "1" or pl:IsBot() then
 		pl.NoRedeeming = true
 	end
 

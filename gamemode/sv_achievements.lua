@@ -101,9 +101,9 @@ function PLAYER:GiveAchievementProgress(id, count)
 
     -- Update or insert values
     if self.Achs[id] > 0 then
-        sql.Query("UPDATE zs_achievements_progress SET SteamID = SteamID, AchievementID = AchievementID, Progress = " .. math.Clamp(self.Achs[id] + count, 0, GAMEMODE.Achievements[id].Goal) .. " WHERE SteamID = '" .. self:SteamID() .. "' AND AchievementID = '" .. id..(GAMEMODE.Achievements[id].DailyCount and GAMEMODE.Achievements[id].DailyCount or GAMEMODE.Achievements[id].WeekCount and GAMEMODE.Achievements[id].WeekCount or "") .. "'")
+        sql.Query("UPDATE zs_achievements_progress SET SteamID = SteamID, AchievementID = AchievementID, Progress = " .. math.Clamp(self.Achs[id] + count, 0, GAMEMODE.Achievements[id].Goal) .. " WHERE SteamID = '" .. self:SteamID() .. "' AND AchievementID = '" .. id..(GAMEMODE.Achievements[id].DailyCount and GAMEMODE.Achievements[id].DailyCount or GAMEMODE.Achievements[id].WeekCount or "") .. "'")
     else
-        sql.Query("INSERT INTO zs_achievements_progress VALUES('" .. self:SteamID() .. "', '" .. id..(GAMEMODE.Achievements[id].DailyCount and GAMEMODE.Achievements[id].DailyCount or GAMEMODE.Achievements[id].WeekCount and GAMEMODE.Achievements[id].WeekCount or "") .. "', " .. math.Clamp(count, 0, GAMEMODE.Achievements[id].Goal) .. ")")
+        sql.Query("INSERT INTO zs_achievements_progress VALUES('" .. self:SteamID() .. "', '" .. id..(GAMEMODE.Achievements[id].DailyCount and GAMEMODE.Achievements[id].DailyCount or GAMEMODE.Achievements[id].WeekCount or "") .. "', " .. math.Clamp(count, 0, GAMEMODE.Achievements[id].Goal) .. ")")
     end
 
     -- Cache

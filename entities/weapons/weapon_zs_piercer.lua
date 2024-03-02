@@ -419,7 +419,7 @@ function SWEP.BulletCallback(attacker, tr, dmginfo)
 		end
 		end
 	end
-	attacker:GetActiveWeapon().BaseClass.BulletCallback(attacker, tr, dmginfo)
+	dmginfo:GetInflictor().BaseClass.BulletCallback(attacker, tr, dmginfo)
 end
 
 

@@ -139,7 +139,7 @@ function SWEP.BulletCallback(attacker, tr, dmginfo)
 			ent:AddLegDamageExt(4.5, attacker, attacker:GetActiveWeapon(), SLOWTYPE_PULSE)
 		end
 	end
-	attacker:GetActiveWeapon().BaseClass.BulletCallback(attacker, tr, dmginfo)
+	dmginfo:GetInflictor().BaseClass.BulletCallback(attacker, tr, dmginfo)
 	return {impact = false}
 end
 

@@ -2,8 +2,8 @@ AddCSLuaFile()
 
 --SWEP.PrintName = "Type XIIIa Longsword"
 --SWEP.Description = "Can cleave through multiple zombies in one swing."
-SWEP.PrintName = ""..translate.Get("wep_lsword")
-SWEP.Description = ""..translate.Get("wep_d_lsword")
+SWEP.PrintName = translate.Get("wep_lsword")
+SWEP.Description = translate.Get("wep_d_lsword")
 
 if CLIENT then
 	SWEP.ViewModelFOV = 55

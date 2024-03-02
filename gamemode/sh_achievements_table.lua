@@ -443,6 +443,23 @@ GM.Achievements["hunteronb"] = {
     Desc = translate("challenge_hunteronb_d"),
     Reward = 50000
 }
+--сырчивки
+GM.Achievements["cheese_mouse"] = {
+    Name = translate("challenge_cheese_1"),
+    Desc = translate("challenge_cheese_1_d"),
+    Goal = 300,
+    Reward = 5000
+}
+GM.Achievements["cheese_shmich"] = {
+    Name = translate("challenge_cheese_2"),
+    Desc = translate("challenge_cheese_2_d"),
+    Reward = 30000
+}
+GM.Achievements["henlo"] = {
+    Name = translate("challenge_cheese_3"),
+    Desc = translate("challenge_cheese_3_d"),
+    Reward = 150000
+}
 
 
 

@@ -81,7 +81,7 @@ function SWEP.BulletCallback(attacker, tr)
 		hitent:TakeSpecialDamage(hitent:Health(), DMG_DIRECT, attacker, attacker:GetActiveWeapon(), tr.HitPos)
 		hitent:EmitSound("npc/roller/blade_out.wav", 80, 125)
 	end
-	attacker:GetActiveWeapon().BaseClass.BulletCallback(attacker, tr, dmginfo)
+	dmginfo:GetInflictor().BaseClass.BulletCallback(attacker, tr, dmginfo)
 end
 
 if not CLIENT then return end

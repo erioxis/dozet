@@ -655,6 +655,11 @@ local soulrec = {
 	["black_core_2+"] = { type = "Sprite", sprite = "effects/splashwake1", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 10, y = 10 }, color = Color(255, 255, 255, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 2, 0), angle = Angle(0, 0, 0), size = Vector(0.349, 0.349, 0.349), color = Color(167, 23, 167), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} }
 }
+local soulerr = {
+	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 7.697, y = 7.697 }, color = Color(50, 1, 0), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
+	["black_core_2+"] = { type = "Sprite", sprite = "effects/splashwake1", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 10, y = 10 }, color = Color(137, 223, 91), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
+	["black_core"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 2, 0), angle = Angle(0, 0, 0), size = Vector(0.349, 0.349, 0.349), color = Color(167, 23, 167), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} }
+}
 GM:AddInventoryItemData("comp_linearactuator",	"Linear Actuator",			"A linear actuator from a shell holder. Requires a heavy base to mount properly.",				"models/Items/combine_rifle_cartridge01.mdl")
 GM:AddInventoryItemData("comp_pulsespool",		"Pulse Spool",				"Used to inject more pulse power to a system. Could be used to stabilise something.",			"models/Items/combine_rifle_cartridge01.mdl")
 GM:AddInventoryItemData("comp_flak",			"Flak Chamber",				"An internal chamber for projecting heated scrap.",												"models/weapons/w_rocket_launcher.mdl")
@@ -673,6 +678,8 @@ GM:AddInventoryItemData("comp_soul_godlike",		"Piece of soul(GOD LIKE)",		"Blank
 GM:AddInventoryItemData("comp_soul_dosei",		"Piece of soul(DOSEI)",		"Blank soul of dosei things", soulrec)
 GM:AddInventoryItemData("comp_soul_dd",		"Piece of soul(BIG MANS)",		"Blank soul of big mans things", soulrec)
 GM:AddInventoryItemData("comp_soul_booms",		"Piece of soul(BOOMS)",		"Blank soul of booms things", soulrec)
+
+GM:AddInventoryItemData("comp_errorium",		trs("c_errorium"),			trs("c_errorium_d"), soulerr)
 
 GM:AddInventoryItemData("comp_soul_emm",		"Piece of Anti-Sigil",		"Ermmmm", soulrec)
 GM:AddInventoryItemData("comp_soul_emm2",		"Piece of sigil???",		"Worth", soulrec)

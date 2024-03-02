@@ -1,7 +1,7 @@
 --SWEP.PrintName = "'Carrion' Impact Mine Layer"
 --SWEP.Description = "A mine layer that shoots out simple tripmines that attach to surfaces."
-SWEP.PrintName = ""..translate.Get("wep_mlayer")
-SWEP.Description = ""..translate.Get("wep_d_mlayer")
+SWEP.PrintName = translate.Get("wep_mlayer")
+SWEP.Description = translate.Get("wep_d_mlayer")
 
 SWEP.Slot = 4
 SWEP.SlotPos = 0
@@ -33,10 +33,10 @@ SWEP.WalkSpeed = SPEED_SLOWEST * 0.9
 
 SWEP.UseHands = true
 
-SWEP.MaxMines = 30
+SWEP.MaxMines = 4
 
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_MAXIMUM_MINES, 1)
-GAMEMODE:AddNewRemantleBranch(SWEP, 1, ""..translate.Get("wep_mlayer_r1"), ""..translate.Get("wep_d_mlayer_r1"), function(wept)
+GAMEMODE:AddNewRemantleBranch(SWEP, 1, translate.Get("wep_mlayer_r1"), translate.Get("wep_d_mlayer_r1"), function(wept)
 	wept.Primary.Damage = wept.Primary.Damage * 0.22
 	if SERVER then
 		wept.EntModify = function(self, ent)

@@ -75,7 +75,7 @@ GM.Events6500 = {
 		return true
 	end,
     function(time, rage)
-        if GAMEMODE.ObjectiveMap then return false end
+        if GAMEMODE.ObjectiveMap  or GAMEMODE:GetWave() == 12 then return false end
         gamemode.Call(
             gamemode.Call( "GetWaveActive" ) and "SetWaveEnd" or "SetWaveStart",
             (gamemode.Call( "GetWaveActive" )  and gamemode.Call( "GetWaveEnd" ) or  gamemode.Call( "GetWaveStart" )) - 60
@@ -84,7 +84,7 @@ GM.Events6500 = {
 		return true
 	end,
     function(time, rage)
-        if GAMEMODE.ObjectiveMap then return false end
+        if GAMEMODE.ObjectiveMap  or GAMEMODE:GetWave() == 12 then return false end
         gamemode.Call(
             gamemode.Call( "GetWaveActive" ) and "SetWaveEnd" or "SetWaveStart",
             (gamemode.Call( "GetWaveActive" )  and gamemode.Call( "GetWaveEnd" ) or  gamemode.Call( "GetWaveStart" )) + 60
@@ -109,7 +109,7 @@ GM.Events11500 = {
 		return true
 	end,
     function(time, rage)
-        if GAMEMODE.ObjectiveMap then return false end
+        if GAMEMODE.ObjectiveMap or GAMEMODE:GetWave() == 12 then return false end
         gamemode.Call(
             gamemode.Call( "GetWaveActive" ) and "SetWaveEnd" or "SetWaveStart",
             (gamemode.Call( "GetWaveActive" )  and gamemode.Call( "GetWaveEnd" ) or  gamemode.Call( "GetWaveStart" )) + 120
@@ -118,7 +118,7 @@ GM.Events11500 = {
 		return true
 	end,
     function(time, rage)
-        if GAMEMODE.ObjectiveMap then return false end
+        if GAMEMODE.ObjectiveMap or GAMEMODE:GetWave() == 12 then return false end
         gamemode.Call(
             gamemode.Call( "GetWaveActive" ) and "SetWaveEnd" or "SetWaveStart",
             (gamemode.Call( "GetWaveActive" )  and gamemode.Call( "GetWaveEnd" ) or  gamemode.Call( "GetWaveStart" )) - 120

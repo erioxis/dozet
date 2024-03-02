@@ -118,5 +118,5 @@ function SWEP.BulletCallback(attacker, tr, dmginfo)
 	if IsFirstTimePredicted() then
 		util.CreatePulseImpactEffect(tr.HitPos, tr.HitNormal)
 	end
-	attacker:GetActiveWeapon().BaseClass.BulletCallback(attacker, tr, dmginfo)
+	dmginfo:GetInflictor().BaseClass.BulletCallback(attacker, tr, dmginfo)
 end

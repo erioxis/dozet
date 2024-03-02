@@ -742,7 +742,7 @@ GM:AddAPointShopItem("fireofdespair",			ITEMCAT_MELEE,			650,			"weapon_zs_fireo
 --Gunnery tier 2
 GM:AddAPointShopItem("dsg53",		ITEMCAT_GUNS,			100,			"weapon_zs_dsg53")
 --Gunnery tier 3
-
+GM:AddAPointShopItem("ova_magnum",			ITEMCAT_GUNS,			300,				"weapon_zs_overmagnum")
 --Gunnery tier 4
 --Gunnery tier 5
 GM:AddAPointShopItem("solemnvw",		ITEMCAT_GUNS,			1200,			"weapon_zs_solemnvow")

@@ -1,5 +1,4 @@
---SWEP.PrintName = "'Helios' Gluon Gun"
---SWEP.Description = "Projects a stream of gluons at the target, causing immense damage. Hard to wield and aim, and builds up heat over time."
+
 SWEP.PrintName = translate.Get("wep_gluon")
 SWEP.Description = translate.Get("wep_d_gluon")
 SWEP.Base = "weapon_zs_base"
@@ -55,7 +54,7 @@ local branch = GAMEMODE:AddNewRemantleBranch(SWEP, 1, translate.Get("wep_gluon_r
 	wept.FireSoundPitch = 96
 	wept.LegDamage = true
 end)
-branch.Colors = {Color(160, 160, 160), Color(105, 105, 105), Color(50, 50, 50), Color(255, 255, 255)}
+branch.Colors = {Color(160, 160, 160), Color(105, 105, 105), Color(50, 50, 50), Color(108, 0, 122), Color(6, 0, 118)}
 branch.NewNames = {"Deep", "Deeplands", "Void", "Null", "VOIDLING"}
 
 GAMEMODE:AddNewRemantleBranch(SWEP, 2, translate.Get("wep_gluon_r2"), translate.Get("wep_d_gluon_r2"), function(wept)
@@ -161,7 +160,7 @@ function SWEP.BulletCallback(attacker, tr, dmginfo)
 			ent:AddLegDamageExt(4.5, attacker, attacker:GetActiveWeapon(), SLOWTYPE_PULSE)
 		end
 	end
-	attacker:GetActiveWeapon().BaseClass.BulletCallback(attacker, tr, dmginfo)
+	dmginfo:GetInflictor().BaseClass.BulletCallback(attacker, tr, dmginfo)
 	return {impact = false}
 end
 
