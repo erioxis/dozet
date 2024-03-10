@@ -1,5 +1,14 @@
 --ЭТОТ КОД ВОЙДЕТ В ИСТОРИЮ!
 local random_opt = math.random
+local function GetPlayers()
+    local cgg = {}
+    for k,v in pairs(team.GetPlayers(TEAM_HUMAN)) do
+        if !v:IsSkillActive(SKILL_BARA_CURSED) then
+            cgg[k] = v
+        end
+    end
+    return cgg
+end
 GM.Events6500 = {
 	function()
 		for k,v in pairs(team.GetPlayers(TEAM_UNDEAD)) do
@@ -20,7 +29,7 @@ GM.Events6500 = {
 		return true
 	end,
     function()
-		for k,v in pairs(team.GetPlayers(TEAM_HUMAN)) do
+		for k,v in pairs(GetPlayers(TEAM_HUMAN)) do
             v:GiveStatus('stunned',7)
         end
         PrintMessage( HUD_PRINTTALK, "БАРАБОГ РЕШИЛ...ОГЛУШИТЬ ЛЮДЕЙ ЗА ИХ ГРЕХИ!" )
@@ -52,12 +61,12 @@ GM.Events6500 = {
         local huh = ents.FindByClass('prop_obj_sigil')
         local sigil = huh[random_opt(1,#huh)]
         if !sigil.NaturallySpawned then 
-            for k,v in pairs(team.GetPlayers(TEAM_HUMAN)) do
+            for k,v in pairs(GetPlayers(TEAM_HUMAN)) do
                 v:SetHealth(15)
             end
            return false
         end
-        for k,v in pairs(team.GetPlayers(TEAM_HUMAN)) do
+        for k,v in pairs(GetPlayers(TEAM_HUMAN)) do
             v:SetPos(sigil.NodePos or sigil:GetPos())
         end
 		return true
@@ -93,7 +102,7 @@ GM.Events6500 = {
 		return true
 	end,
     function(time, rage)
-        for k,v in pairs(team.GetPlayers(TEAM_HUMAN)) do
+        for k,v in pairs(GetPlayers(TEAM_HUMAN)) do
             v:GiveStatus('knockdown',5/(math.max(0.1,v.KnockdownRecoveryMul or 1)))
         end
         PrintMessage( HUD_PRINTTALK, "БАРАБОГ РЕШИЛ ОТОРВАТЬ НОГИ ВЫЖИВШИМ!(ХЕХЕ ВАМ ВОССТАНОВИТ,НО НЕ СКОРО)")
@@ -102,7 +111,7 @@ GM.Events6500 = {
 }
 GM.Events11500 = {
     function(time, rage)
-        for k,v in pairs(team.GetPlayers(TEAM_HUMAN)) do
+        for k,v in pairs(GetPlayers(TEAM_HUMAN)) do
             v:GiveStatus('knockdown',15/(math.max(0.1,v.KnockdownRecoveryMul or 1)))
         end
         PrintMessage( HUD_PRINTTALK, "БАРАБОГ РЕШИЛ ОТОРВАТЬ НОГИ ВЫЖИВШИМ!")
@@ -134,7 +143,7 @@ GM.Events11500 = {
 		return true
 	end,
     function()
-		for k,v in pairs(team.GetPlayers(TEAM_HUMAN)) do
+		for k,v in pairs(GetPlayers(TEAM_HUMAN)) do
             v:GiveStatus('stunned',15)
         end
         PrintMessage( HUD_PRINTTALK, "БАРАБОГ СТУКНУЛ ДУБИНОЙ ПО ЛБУ ЛЮДЕЙ!" )
@@ -151,12 +160,12 @@ GM.Events11500 = {
         end
         local sigil = truesigils[random_opt(1,#truesigils)]
         if !sigil.NaturallySpawned then 
-            for k,v in pairs(team.GetPlayers(TEAM_HUMAN)) do
+            for k,v in pairs(GetPlayers(TEAM_HUMAN)) do
                 v:Kill()
             end
            return false
         end
-        for k,v in pairs(team.GetPlayers(TEAM_HUMAN)) do
+        for k,v in pairs(GetPlayers(TEAM_HUMAN)) do
             v:SetPos(sigil.NodePos or v:GetPos())
         end
 		return true
@@ -186,12 +195,12 @@ GM.Events11500 = {
             timer.Create("barahous"..rand..randers[2].."Ы",0.5, 20, function() GAMEMODE:DirectorThink(CurTime(),rage) end)
         elseif stock > 14 then
             PrintMessage( HUD_PRINTTALK, "ЛАДНО,БАРАБОГ ПРОСТО ВОЗЬМЕТ У ВАС 30% ПОИНТОВ!")
-            for k,v in pairs(team.GetPlayers(TEAM_HUMAN)) do
+            for k,v in pairs(GetPlayers(TEAM_HUMAN)) do
                 v:SetPoints(v:GetPoints()*0.7)
             end
         elseif stock > 7 then
             PrintMessage( HUD_PRINTTALK, "ЛАДНО,БАРАБОГ ПРОСТО ВОЗЬМЕТ У ВАС 15% ПОИНТОВ!")
-            for k,v in pairs(team.GetPlayers(TEAM_HUMAN)) do
+            for k,v in pairs(GetPlayers(TEAM_HUMAN)) do
                 v:SetPoints(v:GetPoints()*0.85)
             end
         else

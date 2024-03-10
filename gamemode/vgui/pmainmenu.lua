@@ -324,6 +324,29 @@ local function DoStats(self, list, neg)
 			d:Remove()
 		end
 	end
+	local skillsrand = GAMEMODE.MySkillsRandom
+	if #skillsrand > 0 then
+		for k,v in pairs(skillsrand) do
+			local d = vgui.Create("DEXChangingLabel", bottom)
+			d:SetFont("DefaultFont")
+			d:SetText(GAMEMODE.Skills[v].Name)
+	
+			d:SetTextColor( Color(71,231,119))
+			list:AddItem(d) 
+			for d1,p2 in pairs(string.Explode("\n", GAMEMODE.Skills[v].Description)) do 
+				local d3 = vgui.Create("DEXChangingLabel", bottom)
+				if p2:sub(1, 1) == "^" then
+					local colid = tonumber(p2:sub(2, 2)) or 0
+					local p2 = p2:sub(3)
+					d3:SetText(p2)
+					d3:SetTextColor(util.ColorIDToColor(colid, COLOR_GRAY))
+				end
+				if d3:GetText() ~= "Label" then
+					list:AddItem(d3) 
+				end
+			end
+		end
+	end
 	if GAMEMODE.AchievementsProgress["full_curse"] then return end
 	local d = vgui.Create("DEXChangingLabel", bottom)
 	d:SetFont("DefaultFont")

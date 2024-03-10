@@ -1,6 +1,7 @@
 INC_SERVER()
 
 function SWEP:ApplyMeleeDamage(ent, trace, damage)
+	self.BaseClass.ApplyMeleeDamage(self, ent, trace, damage)
 	if ent:IsValid() then
 		--[[local vel = ent:GetPos() - self:GetOwner():GetPos()
 		vel.z = 0
@@ -16,8 +17,10 @@ function SWEP:ApplyMeleeDamage(ent, trace, damage)
 			noknockdown = false
 			ent.NextKnockdown = CurTime() + 4.7
 		end
+		if ent:IsPlayer() and ent:IsSkillActive(SKILL_BARA_CURSED) then 
+			return
+		end
 		ent:ThrowFromPositionSetZ(trace.StartPos, ent:IsPlayer() and 2200 or 6000, nil, ent:IsPlayer() and ent:IsSkillActive(SKILL_STEEL_ASS) or noknockdown)
 	end
-
-	self.BaseClass.ApplyMeleeDamage(self, ent, trace, damage)
+	
 end

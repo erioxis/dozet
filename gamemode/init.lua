@@ -166,6 +166,14 @@ local P_Alive = M_Player.Alive
 local player_GetAll = player.GetAll
 local P_GetPhantomHealth = M_Player.GetPhantomHealth
 
+local function DoTrueAll(arguments)
+	local xrani = {}
+	for k,v in pairs(arguments) do
+		xrani[v] = true
+	end
+	return xrani
+end
+
 function GM:WorldHint(hint, pos, ent, lifetime, filter)
 	net.Start("zs_worldhint")
 		net.WriteString(hint)
@@ -1261,16 +1269,14 @@ local function ButMutagenBot(sender,id)
 		cost = math.ceil(cost)
 
 		if tokens < cost  then
-			sender:CenterNotify(COLOR_RED, translate.ClientGet(sender, "you_dont_have_enough_btokens"))
-			sender:SendLua("surface.PlaySound(\"buttons/button10.wav\")")
 			return
 		end
 		itemtab.Callback(sender)
 		sender:TakeTokens(cost)
 		sender.UsedMutations = sender.UsedMutations or { }
 		table.insert( sender.UsedMutations, itemtab.Signature )
+		print("Bot buyed a "..id.Signature)
 	end
-	print("Bot buyed a "..id.Signature)
 end
 local trade_da = {
 	"trinket_altjudassoul",  -- 2
@@ -1326,6 +1332,7 @@ local trade_da = {
 	"trinket_troyaksoul",
 	"trinket_troyaksoul_a"
 }
+trade_da = DoTrueAll(trade_da)
 local NextTick = 0
 local NextTick1 = 0
 function GM:Think()
@@ -1436,7 +1443,11 @@ function GM:Think()
 				elseif wep and wep:IsValid() and !wep.AddedAmmo and wep:GetCombinedPrimaryAmmo() > 0 then
 					wep.AddedAmmo = true
 				end
-				if (pl.NextThinkAboutTrade or 1) < time and pl:IsSkillActive(SKILL_SOUL_TRADE) then
+				local tradeac = pl:IsSkillActive(SKILL_SOUL_TRADE) 
+				if pl:IsSkillActive(SKILL_BARA_CURSED) and (tradeac or pl:IsSkillActive(SKILL_GODHEART) or pl:IsSkillActive(SKILL_GOD_HEART)) then
+					pl:Kill()
+				end
+				if (pl.NextThinkAboutTrade or 1) < time and tradeac then
 					pl.NextThinkAboutTrade = time + 10
 					for k,v in pairs(pl:GetInventoryItems()) do
 						if pl:HasTrinket("toysoul") or pl:SteamID64() == "76561198813932012" then break end
@@ -1455,7 +1466,6 @@ function GM:Think()
 				if pl:HasTrinket("sin_envy") and wep and (wep.Tier or 1) < 5 and wep:GetClass() ~= "weapon_zs_fists" then
 					pl:StripWeapon(wep:GetClass())
 				end
-				local barac = pl:IsSkillActive(SKILL_BARA_CURSED)
 				if self.MaxSigils >= 1 and pl:GetActiveWeapon() ~= "weapon_zs_sigilfragment"  then
 					if not pl:GetStatus("sigildef") and self:GetWave() >= 6 and  time > pl.NextDamage and self:GetWaveActive() then
 						pl:TakeSpecialDamage(8 * (pl.TickBuff or 0), DMG_DIRECT)
@@ -1566,7 +1576,7 @@ function GM:Think()
 					pl.NextRegenerateMantle = time + math.max((27 - ((pl.Luck + pl.LuckAdd) / 3)) + self.GetWave() * 3,5)
 					pl.HolyMantle = pl.HolyMantle + 1
 				end
-				if pl.HolyMantle > 0 and pl:IsSkillActive(SKILL_HOLY_MANTLE) and pl:IsValid() and pl.MantleFix < CurTime() then
+				if pl.HolyMantle > 0 and pl:IsSkillActive(SKILL_HOLY_MANTLE) and pl:IsValid() and pl.MantleFix < time then
                     pl:GiveStatus("hshield", 1.3)
 				end
 				if time > pl.NextSleep and pl:IsSkillActive(SKILL_NOSEE) and self:GetWave() ~= 0 then
@@ -1577,9 +1587,22 @@ function GM:Think()
 				if pl.MasteryHollowing > 800 and pl:IsSkillActive(SKILL_UPLOAD) then
 					local cursed5 = pl:GetStatus("hollowing")
 					pl:Kill()
-					pl:AddHallow(pl:GetOwner(),cursed5.DieTime - (CurTime() + cursed5.DieTime))
+					pl:AddHallow(pl:GetOwner(),cursed5.DieTime - (time + cursed5.DieTime))
 					print(" Уебало "..pl:Nick()..(" "..pl.MasteryHollowing))
 					PrintMessage(HUD_PRINTCONSOLE," Уебало "..pl:Nick()..(" "..pl.MasteryHollowing))
+				end
+				if pl.BlockolyDebuffs and pl.NextRemoveBlock < time then
+					for k,v in pairs(pl:GetStatuses()) do
+						local class = v:GetClass() 
+						class = string.sub(class,8,#class)
+						local tab = GAMEMODE.Statuses[class]
+						if tab and tab.Debuff then
+							pl:RemoveStatus(class,nil,true)
+							pl.NextRemoveBlock = time + 120
+							pl:SendLua('GAMEMODE:CenterNotify(COLOR_WHITE, "Статус "..translate.Get("s_"..GAMEMODE.Statuses[\"'..class..'\"].Name).." успешно убран!")')
+							break
+						end
+					end
 				end
 				if pl:HasTrinket("curse_ponos") and math.random(200) == 200 then
 					pl:SetVelocity(VectorRand() * math.random(700,3700))
@@ -1733,8 +1756,8 @@ function GM:Think()
 					pl:ResetSpeed()
 				end
 				if pl:IsBot() and (pl.NextThinkMutagenBots or 1) < time then
-					pl.NextThinkMutagenBots = time + 35
-					if math.random(1,3) == 1 then
+					pl.NextThinkMutagenBots = time + 15
+					if math.random(1,15) == 1 then
 						ButMutagenBot(pl,self.Mutations[math.random(1,#self.Mutations)])
 					end
 				end
@@ -1745,8 +1768,8 @@ function GM:Think()
 		if self:GetEscapeStage() == ESCAPESTAGE_DEATH then
 			for _, pl in pairs(allplayers) do
 				if P_Team(pl) == TEAM_HUMAN and (pl.DeathUsed or 1) <= CurTime() and pl:Alive() then
-					pl:GiveStatus("death",10)
-					pl.DeathUsed = CurTime() + 20
+					pl:GiveStatus("death",5)
+					pl.DeathUsed = CurTime() + 10
 				end
 			end
 		end
@@ -2022,13 +2045,6 @@ function GM:PlayerHealedTeamMember(pl, other, health, wep, pointmul, nobymsg, fl
 end
 
 function GM:ObjectPackedUp(pack, packer, owner)
-end
-local function DoTrueAll(arguments)
-	local xrani = {}
-	for k,v in pairs(arguments) do
-		xrani[v] = true
-	end
-	return xrani
 end
 local tblspicy = {"weapon_zs_hammer","weapon_zs_hammer_q1","weapon_zs_hammer_q2","weapon_zs_hammer_q3","weapon_zs_hammer_q4","weapon_zs_hammer_q5",
 "weapon_zs_electrohammer","weapon_zs_electrohammer_q1","weapon_zs_electrohammer_q2","weapon_zs_electrohammer_q3","weapon_zs_electrohammer_q4","weapon_zs_electrohammer_q5"
@@ -3028,6 +3044,7 @@ function GM:PlayerInitialSpawnRound(pl)
 	pl.HolyMantle = 0
 	pl.BerserkerCharge = true
 	pl.MantleFix = time + 10
+	pl.NextRemoveBlock = 0
 	pl.NextPremium = 0
 	pl.NextDamage = 0
 	pl.TickBuff = 0
@@ -4857,6 +4874,15 @@ function GM:HumanKilledZombie(pl, attacker, inflictor, dmginfo, headshot, suicid
 		if attacker:IsSkillActive(SKILL_PILLUCK) then
 			attacker.LuckAdd = attacker.LuckAdd + 0.01
 		end
+		if attacker:IsSkillActive(SKILL_QUILLS) then
+			local hehe = attacker:GetDTInt(25)
+			attacker:SetDTInt(25,hehe+1)
+			if hehe > 14 then
+				local flesharmor = attacker:GiveStatus('flesh_armor')
+				flesharmor:SetDamage(attacker:GetMaxHealth())
+				attacker:SetDTInt(25,0)
+			end
+		end
 
 
 		if wep.OnZombieKilled then
@@ -6099,11 +6125,11 @@ function GM:WaveStateChanged(newstate, pl)
 					net.WriteString(lucktrue)
 				net.Send(pl)
 
-				if pl.IllegalMechanism and pl.IllegalMechanism > 0 then
+				if pl.IllegalMechanism  then
 					local zarplataBlyad = 0
 					for _, d in ipairs( ents.FindByClass( "prop_*" ) ) do
 						if d.CanPackUp and d.GetObjectOwner and d:GetObjectOwner() == pl then
-							zarplataBlyad = zarplataBlyad + ( pl.IllegalMechanism or 0 )
+							zarplataBlyad = zarplataBlyad + whywave*2
 						end
 					end
 					net.Start( "zs_illegalmechanism" )

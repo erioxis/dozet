@@ -5,7 +5,7 @@ GM.Website	=	"https://github.com/erioxis/dozet"
 
 -- No, adding a gun doesn't make your name worth being here.
 GM.Credits = {
-	{"Version", "", "9.9.2"},
+	{"Version", "", "9.9.5"},
 	{"Season of ", "", "Quality of Life"},
 	{"erioxis", "Phantom coder", "dead"},
 	{"Холодное Молочко(M-I-L-K-Y)", "Phantom coder", "dead"},
@@ -866,7 +866,7 @@ function GM:PlayerNoClip(pl, on)
 
 	return false
 end
-function GM:EntityEmitSound(t)
+--[[function GM:EntityEmitSound(t)
 	--PrintTable(t)
 	
 	local p = t.Volume
@@ -884,7 +884,7 @@ function GM:EntityEmitSound(t)
 			return true
 		end
 	end
-end
+end]]--Возможно уничтожает звуки  нахуй
 function GM:IsSpecialPerson(pl, image, returns)
 	local img, tooltip
 	local trs = translate.Get
@@ -1046,7 +1046,6 @@ local dailyreward = {["Daily1"] = {Goal = 100, Reward = 2500},
 local weekreward = {["w1"] = {Goal = 10000, Reward = 52500},
 ["w2"] = {Goal = 1000000, Reward = 16500},
 ["w3"] = {Goal = 4, Reward = 100000}
-
 }
 local num = 1
 local tbl = {Goal = 100, Reward = 2500}

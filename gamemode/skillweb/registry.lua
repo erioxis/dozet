@@ -538,6 +538,7 @@ SKILL_CRYMAN = 535
 SKILL_OVERHEATED_BULLET = 536
 SKILL_HYPERGLYCEMIA = 537
 SKILL_NEED_A_BUFF = 538
+SKILL_QUILLS = 539
 
 
 
@@ -674,7 +675,6 @@ SKILLMOD_REGEN_SPEED = 131
 SKILLMOD_TURRET_DAMAGE = 132
 SKILLMOD_DAMAGE_TAKEN_N = 133
 SKILLMOD_DRILL_POWER_BARREL = 134
-SKILLMOD_ILLEGALMECHANISM = 135
 
 local GOOD = "^"..COLORID_GREEN
 local BAD = "^"..COLORID_RED
@@ -1057,8 +1057,10 @@ GM:AddSkill(SKILL_LOADEDHULL, trs("skill_l_hull"), GOOD..trs("skill_l_hull_d1").
 																-2,			-4,					{SKILL_REINFORCEDHULL, SKILL_REINFORCEDBLADES, SKILL_AVIATOR}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_REINFORCEDHULL, trs("skill_r_hull"), GOOD..trs("skill_r_hull_d1")..BAD..trs("skill_r_hull_d2")..BAD..trs("skill_r_hull_d3"),
 																-2,			-2,					{SKILL_STABLEHULL}, TREE_BUILDINGTREE)
-GM:AddSkill(SKILL_BARA_CURSED, trs("skill_baracurse"), GOOD..trs("skill_baracurse_d1")..BAD..trs("skill_baracurse_d2"),
+d = GM:AddSkill(SKILL_BARA_CURSED, trs("skill_baracurse"), GOOD..trs("skill_baracurse_d1")..BAD..trs("skill_baracurse_d2"),
 																-2,			-0.5,					{SKILL_REINFORCEDHULL,SKILL_BLOODHACK}, TREE_BUILDINGTREE)
+d.DontUnlock = SKILL_SOUL_TRADE	
+d.DontUnlock2 = SKILL_GODHEART	
 GM:AddSkill(SKILL_BLOODHACK, trs("skill_bloodhack"), GOOD..trs("skill_bloodhack_d1")..BAD..trs("skill_bloodhack_d2"),
 																-2,			0,					{SKILL_REINFORCEDHULL}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_STABLEHULL, trs("skill_s_hull"), GOOD..trs("skill_s_hull_d1")..BAD..trs("skill_r_hull_d3"),
@@ -1943,9 +1945,10 @@ GM:AddSkill(SKILL_INF_POWER, "Dozei Core", PURPLE.."+1% Damage per 100 score.\n"
 GM:AddSkillModifier(SKILL_INF_POWER, SKILLMOD_DAMAGE_ALL, -0.06)
 GM:AddSkill(SKILL_NO_BALANCE, "Silver damage", PURPLE.."Sometimes your damage become a DIRECT damage!\n7% Chance",
 										2.5,			-3.5,					{}, TREE_ANCIENTTREE).SPUse = 6
-GM:AddSkill(SKILL_SOUL_TRADE, "[TRADE]Soul", PURPLE.."Sell Your Soul For Toy and now ALL SOULS KILL YOU.\n"..PURPLE.."+66.6% Point Mul\n"..BAD.."The dosei is stronger...-25% Damage",
+local d = GM:AddSkill(SKILL_SOUL_TRADE, "[TRADE]Soul", PURPLE.."Sell Your Soul For Toy and now ALL SOULS KILL YOU.\n"..PURPLE.."+66.6% Point Mul\n"..BAD.."The dosei is stronger...-25% Damage",
 										4,			-7,					{SKILL_HELPLIFER}, TREE_ANCIENTTREE)
-GM:AddSkillModifier(SKILL_SOUL_TRADE, SKILLMOD_DAMAGE_ALL, -0.25)	
+GM:AddSkillModifier(SKILL_SOUL_TRADE, SKILLMOD_DAMAGE_ALL, -0.25)
+d.DontUnlock = SKILL_BARA_CURSED	
 GM:AddSkill(SKILL_SEEAURA, "Ancient vision", PURPLE.."You can see zombie aura",
 										2,			-8.5,					{SKILL_HELPLIFER}, TREE_ANCIENTTREE)
 GM:AddSkill(SKILL_INVISIBLE_MAN, "Anti-Vision", PURPLE.."Zombie can't see you soul.",
@@ -2197,6 +2200,9 @@ GM:AddSkill(SKILL_ANTI_DEVO, trs("skill_adevo"), GOOD..trs("skill_adevo_d1")..BA
 				                                                            	1,			7,					{SKILL_MOREDAMAGE}, TREE_DEFENSETREE)
 GM:AddSkillModifier(SKILL_ANTI_DEVO, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 0.25)
 GM:AddSkillModifier(SKILL_ANTI_DEVO, SKILLMOD_BLOODARMOR_DMG_REDUCTION, -0.07)
+GM:AddSkill(SKILL_QUILLS, trs("skill_quills"), GOOD..trs("skill_quills_d1")..BAD..trs("skill_quills_d2"),
+				                                                            	2,			7,					{SKILL_ANTI_DEVO}, TREE_DEFENSETREE)
+GM:AddSkillModifier(SKILL_QUILLS, SKILLMOD_BLOODARMOR, -250)
 GM:AddSkill(SKILL_SECONDCHANCE, trs("skill_schance"), GOOD..trs("skill_schance_d1"),
 				                                                            	0,			8,					{SKILL_MOREDAMAGE}, TREE_DEFENSETREE)
 GM:AddSkill(SKILL_CQARMOR, trs("skill_cqarmor"), GOOD..trs("skill_cqarmor_d1")..BAD..trs("skill_cqarmor_d2"),
@@ -2564,7 +2570,7 @@ end)
 GM:SetSkillModifierFunction(SKILLMOD_BLOODARMOR, function(pl, amount)
 	local oldarmor = pl:GetBloodArmor()
 	local oldcap = pl.MaxBloodArmor or 20
-	local new = 20 + math.Clamp(amount, 0, 1000)
+	local new = 20 + math.Clamp(amount, -20, 1000)
 
 	pl.MaxBloodArmor = new
 
@@ -2814,10 +2820,6 @@ end)
 GM:SetSkillModifierFunction(SKILLMOD_DRILL_POWER_BARREL, function(pl, amount)
 	pl.DrillPowerBarrel = math.Clamp(1+amount, -1, 1000)
 end)
-GM:SetSkillModifierFunction(SKILLMOD_ILLEGALMECHANISM, function(pl, amount)
-	pl.IllegalMechanism = math.Clamp( 0 + amount, -1, 1000 )
-end)
-
 
 GM:SetSkillModifierFunction(SKILLMOD_PROJECTILE_DAMAGE_TAKEN_MUL, GM:MkGenericMod("ProjDamageTakenMul"))
 GM:SetSkillModifierFunction(SKILLMOD_EXP_DAMAGE_RADIUS, GM:MkGenericMod("ExpDamageRadiusMul"))

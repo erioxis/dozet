@@ -75,7 +75,7 @@ function SWEP.BulletCallback(attacker, tr, dmginfo)
 			particle:SetRoll( math.random( 0, 360 ) )
 			particle:SetVelocity(attacker:LocalToWorld(attacker:OBBCenter())-tr.HitPos)
 			timer.Simple(0, function()
-				if tr.Entity:IsValid() and tr.Entity:Alive() then
+				if tr.Entity:IsValidLivingZombie() then
 					particle:SetPos(Vector(0,0,0))
 				end
 			end)

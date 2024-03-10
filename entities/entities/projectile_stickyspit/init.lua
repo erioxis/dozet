@@ -42,10 +42,10 @@ function ENT:Hit(vHitPos, vHitNormal, eHitEntity)
 	if eHitEntity and eHitEntity:IsPlayer() then
 		local cursed = eHitEntity:GetStatus("sticky")
 		if (cursed) then 
-			eHitEntity:GiveStatus("sticky",cursed.DieTime - CurTime() + 3)
+			eHitEntity:GiveStatus("sticky",cursed.DieTime - CurTime() + 1.2)
 		end
 		if (not cursed) then 
-			eHitEntity:GiveStatus("sticky",4)
+			eHitEntity:GiveStatus("sticky",1.3)
 		end
 		if eHitEntity:IsValid() then
 			eHitEntity:PoisonDamage(5, owner, self)

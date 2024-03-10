@@ -42,7 +42,10 @@ net.Receive("zs_deminextboss", function(length)
 	GAMEMODE.NextDemiBossZombieClass = net.ReadString()
 end)
 net.Receive("zs_fuckluasend", function(length)
-	local g = net.ReadInt(10)
+	local g = net.ReadInt(16)
+	GAMEMODE.MySkillsRandom[#GAMEMODE.MySkillsRandom+1] = g
+	MySelf:PrintMessage(HUD_PRINTTALK, translate.Format("current_skill_rand",GAMEMODE.Skills[g].Name))
+
 	for k,v in pairs(string.Explode("\n", GAMEMODE.Skills[g].Description)) do 
 		if v:sub(1, 1) == "^" then
 			local colid = tonumber(v:sub(2, 2)) or 0

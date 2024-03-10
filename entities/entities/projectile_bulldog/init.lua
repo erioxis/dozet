@@ -30,24 +30,24 @@ function ENT:Think()
 		self:Remove()
 	end
 	if CurTime() >= self.NextThink1 then 
-	for _, ent in pairs(ents.FindInSphere(self:GetPos(), 2308)) do
-		target = ent
-		if WorldVisible(self:LocalToWorld(Vector(0, 0, 30)), ent:NearestPoint(self:LocalToWorld(Vector(0, 0, 30)))) then
-			if target:IsValidLivingZombie() and target:Health() >= 200 and !target:GetZombieClassTable().Boss and !target:GetZombieClassTable().BaraCat then
-				local targetpos = target:LocalToWorld(target:OBBCenter())
-				local direction = (targetpos - self:GetPos()):GetNormal()
-				
+		for _, ent in pairs(ents.FindInSphere(self:GetPos(), 2308)) do
+			target = ent
+			if WorldVisible(self:LocalToWorld(Vector(0, 0, 30)), ent:NearestPoint(self:LocalToWorld(Vector(0, 0, 30)))) then
+				if target:IsValidLivingZombie() and target:Health() >= 200 and !target:GetZombieClassTable().Boss and !target:GetZombieClassTable().BaraCat then
+					local targetpos = target:LocalToWorld(target:OBBCenter())
+					local direction = (targetpos - self:GetPos()):GetNormal()
+					
 
-				self:SetAngles(direction:Angle())
+					self:SetAngles(direction:Angle())
 
-				local phys = self:GetPhysicsObject()
-				phys:SetVelocityInstantaneous(direction * 1500)
-				--target:TakeSpecialDamage(self.ProjDamage*0.2 + (target:GetZombieClassTable().Boss and target:Health() * 0.03 or target:Health() * 0.07),DMG_GENERIC ,self:GetOwner(), self:GetOwner():GetActiveWeapon())
-				break
+					local phys = self:GetPhysicsObject()
+					phys:SetVelocityInstantaneous(direction * 1500)
+					--target:TakeSpecialDamage(self.ProjDamage*0.2 + (target:GetZombieClassTable().Boss and target:Health() * 0.03 or target:Health() * 0.07),DMG_GENERIC ,self:GetOwner(), self:GetOwner():GetActiveWeapon())
+					break
+				end
 			end
 		end
-	end
-		self.NextThink1 = CurTime() + 0.05
+		self.NextThink1 = CurTime() + 0.25
 	end
 
 end

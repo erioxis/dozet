@@ -612,7 +612,8 @@ GM.Statuses["sticky"] =   {
 	Name = "sticky",
 	ValFunc = statusValueFunction("sticky"),
 	Max = 7,
-	Icon = Material("zombiesurvival/strength_shot.png")
+	Icon = Material("zombiesurvival/strength_shot.png"),
+    Debuff = true
 }
 GM.Statuses["adrenalineamp"] = {
 	Color = Color(170, 200, 120),
@@ -817,4 +818,15 @@ GM.Statuses["regeneration"] = {
 		return (lp.RegenStatus and lp.RegenStatus:IsValid() and lp.RegenStatus:GetMaxStacks(lp) or 100)
 	end,
 	Icon = Material("zombiesurvival/regeneration.png")
+}
+GM.Statuses["flesh_armor"] = {
+	Color = Color(255, 54, 211),
+	Name = "flesh_armor",
+	ValFunc = function(self, lp)
+		return (lp.FleshStatus and lp.FleshStatus:IsValid() and lp.FleshStatus:GetDamage() or 0)
+	end,
+	MaxValueFunc = function(self, lp)
+		return (lp.FleshStatus and lp.FleshStatus:IsValid() and lp.FleshStatus:GetMaxStacks(lp) or 100)
+	end,
+	Icon = Material("zombiesurvival/defense.png")
 }

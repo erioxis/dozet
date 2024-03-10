@@ -288,6 +288,8 @@ function GM:DrawInductorIndicators()
 		local spinprog = lp:GetProgress('spinprog')
 		local cham = lp:GetProgress('cprog')
 		local resnyad = lp:GetProgress('rprog')
+
+		local qillings = lp:GetDTInt(25)
 	
 		local medt = lp:GetPTime('mprog')
 		local cadert = lp:GetPTime('caderprog')
@@ -298,6 +300,8 @@ function GM:DrawInductorIndicators()
 		local icet =lp:GetPTime('iprog')
 		local chamt =lp:GetPTime('cprog')
 		local resnyat =lp:GetPTime('rprog')
+
+
 		if cham > 0 and chamt >= CurTime() then
 			DrawIndicator(colcham,screenscale,cham,chamt,"cham",350* (lp:GetIndChance() or 1),x,y)
 			y = y + ScrH() * 0.07
@@ -337,6 +341,10 @@ function GM:DrawInductorIndicators()
 		end
 		if spinprog > 0 and spintime > CurTime() then
 			DrawIndicator(colResnya,screenscale,spinprog,spintime,"spinel",2000,x,y)
+			y = y + ScrH() * 0.07
+		end
+		if qillings > 0 then
+			DrawIndicator(colResnya,screenscale,qillings,CurTime()+10,"quill",15,x,y)
 			y = y + ScrH() * 0.07
 		end
 	end

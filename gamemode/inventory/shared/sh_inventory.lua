@@ -2015,10 +2015,29 @@ trinket = GM:AddTrinket(trs("t_hp_up"), "hp_up", false, develes, deweles, 5, trs
 GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, 20)
 
 
-
+trinket, trinketwep =  GM:AddTrinket(trs("t_pearl"), "pearl", false, develes, deweles, 4, trs("t_d_pearl"), nil, nil, "weapon_zs_help_trinket")
+GM:AddSkillModifier(trinket, SKILLMOD_BUFF_TIME, 0.1)
+trinketwep.Upgradable = true
+trinket, trinketwep =  GM:AddTrinket(trs("t_pearl").." +1", "pearl_q1", false, develes, deweles, 4, trs("t_d_pearl_q1"), nil, nil, "weapon_zs_help_trinket")
+GM:AddSkillModifier(trinket, SKILLMOD_BUFF_TIME, 0.15)
+trinketwep.Upgradable = true
+trinket, trinketwep =  GM:AddTrinket(trs("t_pearl").." +2", "pearl_q2", false, develes, deweles, 4, trs("t_d_pearl_q2"), nil, nil, "weapon_zs_help_trinket")
+GM:AddSkillModifier(trinket, SKILLMOD_BUFF_TIME, 0.2)
+trinketwep.Upgradable = true
+trinket, trinketwep =  GM:AddTrinket(trs("t_pearl").." +3", "pearl_q3", false, develes, deweles, 4, trs("t_d_pearl_q3"), nil, nil, "weapon_zs_help_trinket")
+GM:AddSkillModifier(trinket, SKILLMOD_BUFF_TIME, 0.25)
+GM:AddSkillModifier(trinket, SKILLMOD_DEBUFF_TIME, 0.05)
+trinketwep.Upgradable = true
+trinket, trinketwep =  GM:AddTrinket(trs("t_pearl").." +4", "pearl_q4", false, develes, deweles, 4, trs("t_d_pearl_q4"), nil, nil, "weapon_zs_help_trinket")
+GM:AddSkillModifier(trinket, SKILLMOD_BUFF_TIME, 0.3)
+GM:AddSkillModifier(trinket, SKILLMOD_DEBUFF_TIME, 0.15)
+trinketwep.Upgradable = true
+trinket, trinketwep =  GM:AddTrinket(trs("t_pearl").." +5", "pearl_q5", false, develes, deweles, 4, trs("t_d_pearl_q5"), nil, nil, "weapon_zs_help_trinket")
+GM:AddSkillModifier(trinket, SKILLMOD_BUFF_TIME, 0.4)
+GM:AddSkillModifier(trinket, SKILLMOD_DEBUFF_TIME, 0.5)
+GM:AddSkillFunction(trinket, function(pl, active) pl.BlockolyDebuffs = active   end)
 
 GM:AddSkillModifier(GM:AddTrinket(trs("t_headshoter"), "headshoter", false, supveles, supweles, 2, trs("t_d_headshoter"), nil, nil, "weapon_zs_help_trinket"), SKILLMOD_HEADSHOT_MUL, 0.3)
-GM:AddSkillModifier(GM:AddTrinket(trs("t_pearl"), "pearl", false, supveles, supweles, 3, trs("t_d_pearl"), nil, nil, "weapon_zs_help_trinket"), SKILLMOD_BUFF_TIME, 0.1)
 GM:AddTrinket(trs("t_broken_world"), "broken_world", false, supveles, supweles, 3, trs("t_d_broken_world"), nil, nil, "weapon_zs_help_trinket")
 GM:AddTrinket(trs("t_missluck"), "lucky_chance", false, supveles, supweles, 3, trs("t_d_missluck"), nil, nil, "weapon_zs_help_trinket")
 GM:AddSkillModifier(GM:AddTrinket(trs("t_ind_buffer"), "ind_buffer", false, {
@@ -2653,5 +2672,5 @@ trinketwep.OnlyDrones = true
 
 
 trinket = GM:AddTrinket( trs( "t_illegalmechanism" ), "illegalmechanism", false, supveles, supweles, 4, trs( "t_d_illegalmechanism" ) )
-GM:AddSkillModifier( trinket, SKILLMOD_ILLEGALMECHANISM, 1 )
 GM:AddSkillModifier( trinket, SKILLMOD_DEPLOYABLE_HEALTH_MUL, -0.1 )
+GM:AddSkillFunction(trinket, function(pl, active) pl.IllegalMechanism = active   end)

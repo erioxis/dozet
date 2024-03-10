@@ -199,27 +199,29 @@ function meta:ApplySkills(override)
 			end
 		end
 	end
+	if SERVER then
+		self:SendLua('GAMEMODE.MySkillsRandom = {}')
+	end
 	if table.HasValue(desired,492) then
-		
-		local g = math.random(1,496)
+		local g = math.random(1,538)
 		desired_assoc[g] = true
 		current_active[g] = true
 		print(g)
 		if g == 217 then
 			self:GiveAchievement("phantomwill")
 		end
-		timer.Simple(1, function() self:SendLua('MySelf:PrintMessage(HUD_PRINTTALK, translate.Format("current_skill_rand",GAMEMODE.Skills['..(g)..'].Name))') 
+		timer.Simple(1, function()
 			net.Start("zs_fuckluasend")
-			net.WriteInt(g,10)
+			net.WriteInt(g,16)
 			net.Send(self)
 		end)
 	end
 	if table.HasValue(desired,493) then
-		local g = math.random(1,496)
+		local g = math.random(1,538)
 		while current_active[g] do
-			g = math.random(1,496)
+			g = math.random(1,538)
 			if g == 217 then
-				g = math.random(1,496) 
+				g = math.random(1,538) 
 			end
 			if !current_active[g] then
 				break
@@ -231,9 +233,9 @@ function meta:ApplySkills(override)
 		desired_assoc[g] = true
 		current_active[g] = true
 		print(g)
-		timer.Simple(1, function() self:SendLua('MySelf:PrintMessage(HUD_PRINTTALK, translate.Format("current_skill_rand",GAMEMODE.Skills['..(g)..'].Name))') 
+		timer.Simple(1, function()
 			net.Start("zs_fuckluasend")
-			net.WriteInt(g,10)
+			net.WriteInt(g,16)
 			net.Send(self)
 		end)
 	end

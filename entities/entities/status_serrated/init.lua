@@ -20,10 +20,10 @@ function ENT:Think()
 		return
 	end
 	
-	local dmg = 8 * self:GetDamage()
+	local dmg = 6 * self:GetDamage()
 
 	owner.NoBleedStack = true
-	dmg = dmg * (marry and 2 or 1) * (lox and 2 or 1)
+	dmg = dmg * (marry and 1.2 or 1) * (lox and 2 or 1)
 	if validowner:HasTrinket('spinel') then
 		validowner:SetProgress(validowner:GetProgress('spinprog')+dmg,'spinprog')
 		

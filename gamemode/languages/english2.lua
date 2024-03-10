@@ -175,7 +175,14 @@ LANGUAGE.t_vir_pat = "Virtue of patience"
 LANGUAGE.t_d_ind_buffer                        = "+30% Elemental Damage"
 LANGUAGE.t_d_headshoter                        = "+30% headshot damage"
 LANGUAGE.t_d_broken_world                        = "Give a buff of World forever!"
+
 LANGUAGE.t_d_pearl                        = "+10% Buff time"
+LANGUAGE.t_d_pearl_q1                        = "+15% Buff time"
+LANGUAGE.t_d_pearl_q2                        = "+20% Buff time"
+LANGUAGE.t_d_pearl_q3                        = "+25% Buff time\n+5% Debuff time"
+LANGUAGE.t_d_pearl_q4                        = "+30% Buff time\n+15% Debuff time"
+LANGUAGE.t_d_pearl_q5                        = "+40% Buff time\n+50% Debuff time\nEvery 120 seconds remove any debuff."
+
 LANGUAGE.t_d_curse_ponos                        = "Sometimes you fly to sky\nOn drop you fly x10 times"
 LANGUAGE.t_d_curse_un                        = "You can't see health and blood armor\nOn drop teleport to random z-spawn"
 LANGUAGE.t_d_curse_fragility                        = "+50% Melee damage taken.\nOn drop take 6 luck."
@@ -461,7 +468,6 @@ LANGUAGE.t_module_mirror                             = "Void Mirror"
 LANGUAGE.t_d_module_mirror                            = "+1 per stack MOAB Rollermine for drone.\nStackable and only for MOAB."
 LANGUAGE.t_module_serrate                             = "Pulse attack"
 LANGUAGE.t_d_module_serrate                            = "Give a pulse-modifier for drone.\nStackable (+5% additional pulse damage per stack)"
-
 
 
 

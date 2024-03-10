@@ -34,7 +34,7 @@ function meta:ProcessDamage(dmginfo)
 			self:GiveStatus("flimsy",1)
 		end
 	end
-	if self:IsValidLivingZombie() and self:GetZombieClassTable().Stoney and self:GetActiveWeapon() and self:GetActiveWeapon().IsSwinging and !self:GetActiveWeapon():IsSwinging() and !dmgbypass then
+	if self:IsValidLivingZombie() and self:GetZombieClassTable().Stoney and self:GetActiveWeapon() and self:GetActiveWeapon().IsSwinging and !self:GetActiveWeapon():IsSwinging() then
 		dmginfo:SetDamage(0)
 		if attacker:IsPlayer() then
 			GAMEMODE:BlockFloater(attacker, self, dmginfo:GetDamagePosition())
@@ -230,9 +230,6 @@ function meta:ProcessDamage(dmginfo)
 				if self.Zmainer and !self:IsBot() then
 					damage = damage *1.25
 				end
-			end
-			if attacker:IsSkillActive(SKILL_BARA_CURSED) and GAMEMODE:GetWave() >= 6 then
-				damage = damage * 1.45
 			end
 			if attacker:IsSkillActive(SKILL_BERSERK) and attacker:GetTimerBERS() >= time then
 				damage = damage * 5
@@ -566,7 +563,7 @@ function meta:ProcessDamage(dmginfo)
 						self:AddBloodlust(attacker, damage * 0.3)
 					end
 				end
-				if attacker.m_Zombie_Bara and not self:IsSkillActive(SKILL_BARA_CURSED) and time >= (self.NextKnockdown or 0) then
+				if attacker.m_Zombie_Bara  and time >= (self.NextKnockdown or 0) then
 					self:GiveStatus("knockdown",1)
 					self.NextKnockdown = time + 1
 					self:SetVelocity(Vector(0,0,1900))
@@ -2912,10 +2909,11 @@ function meta:CryogenicInduction(attacker, inflictor, damage)
 	if attacker:GetProgress('iprog') < formula then return end
 	if self:GetZombieClassTable().Boss then return end
 	attacker.NextInductors = CurTime() + 1.5
+	local synth = attacker:IsSkillActive(SKILL_COOL_NUCLEAR_SYN)
 	timer.Create("Cryogenic" .. attacker:UniqueID(), 0.06, 1, function()
 		if not attacker:IsValid() or not self:IsValid() then return end
 		attacker:SetProgress((attacker:GetProgress('iprog') -formula)*0.1,'iprog')
-		if !attacker:IsSkillActive(SKILL_COOL_NUCLEAR_SYN) and !attacker:IsSkillActive(SKILL_CRYMAN) then
+		if !synth and !attacker:IsSkillActive(SKILL_CRYMAN) then
 			local pos = self:WorldSpaceCenter()
 			pos.z = pos.z + 16
 			self:TakeSpecialDamage(self:Health() * 0.2 + 165 + attacker:GetProgress('iprog'), DMG_DIRECT, attacker, inflictor, pos)
@@ -2940,12 +2938,15 @@ function meta:CryogenicInduction(attacker, inflictor, damage)
 			pos.z = pos.z + 16
 			local ent = ents.Create('projectile_succubus_full')
 			if ent:IsValid() then
+				if synth then
+					attacker:GiveStatus("radiation",2):SetDTInt(1,3)
+				end
 				ent:SetPos(pos)
 				ent:Spawn()
 				ent:SetOwner(attacker)
 				ent.NoUseLol = true
 				ent.Weapon = wep.IsMelee and 'weapon_peashooter' or wep:GetClass()
-				timer.Simple(7*(attacker:IsSkillActive(SKILL_COOL_NUCLEAR_SYN) and 2 or 1), function()
+				timer.Simple(7*(synth and 2 or 1), function()
 					ent:Remove()
 				end)
 			end
@@ -2954,10 +2955,10 @@ function meta:CryogenicInduction(attacker, inflictor, damage)
 			effectdata:SetNormal(attacker:GetShootPos())
 		util.Effect("hit_ice", effectdata)
 		else
-			attacker:GiveStatus("radiation",3):SetDTInt(1,4)
+			attacker:GiveStatus("radiation",2):SetDTInt(1,2)
 			local pos = self:WorldSpaceCenter()
 			pos.z = pos.z + 16
-			for _, ent in pairs(util.BlastAlloc(inflictor, attacker, pos, 200)) do
+			for _, ent in pairs(util.BlastAlloc(inflictor, attacker, pos, 150)) do
 				if ent:IsValidLivingPlayer() and gamemode.Call("PlayerShouldTakeDamage", ent, attacker) then
 					local sta = ent:GetStatus("radiation") 
 					if sta then

@@ -28,7 +28,7 @@ SWEP.WalkSpeed = SPEED_SLOW
 
 SWEP.Tier = 5
 
-SWEP.MaxBombs = 15
+SWEP.MaxBombs = 3
 
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_RELOAD_SPEED, 0.1)
 GAMEMODE:AddNewRemantleBranch(SWEP, 1, "'Lynx' Cryo Sticky Launcher", "Fires cryo bombs that deal less damage but slow zombies", function(wept)

@@ -214,6 +214,7 @@ GM.SuppressArsenalTime = 0
 GM.ZombieThirdPerson = false
 GM.Beats = {}
 GM.CurrentRound = 1
+GM.MySkillsRandom = {}
 
 GM.DeathFog = 0
 GM.FogStart = 0

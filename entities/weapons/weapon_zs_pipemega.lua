@@ -58,13 +58,13 @@ end
 if SERVER then
 function SWEP:OnMeleeHit(hitent, hitflesh, tr)
 	if hitent:IsValid() and hitent:IsPlayer() and hitent:GetZombieClassTable().Name ~= "Shade" and CurTime() >= (hitent._NextLeadPipeEffect or 0) then
-		hitent._NextLeadPipeEffect = CurTime() + 1
+		hitent._NextLeadPipeEffect = CurTime() + 8 - (self.QualityTier or 0)
 
-		--hitent:GiveStatus("disorientation")
-		local x = math.Rand(0.33, 1)
+		hitent:GiveStatus("stunned",self.QualityTier or 0.5)
+		local x = math.Rand(0.23, 6)
 		x = x * (math.random(2) == 2 and 1 or -1)
 
-		local ang = Angle(1 - x, x, 0) * 38
+		local ang = Angle(1 - x, x, 0) * 138
 		hitent:ViewPunch(ang)
 
 		local eyeangles = hitent:EyeAngles()
