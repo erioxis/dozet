@@ -1368,20 +1368,24 @@ local d = GM:AddSkill(SKILL_SECRET_VI, "Secret VI", GOOD.."+5 Skill Points",
 d.Hidden = true	
 d.Hidden1 = true	
 local rand = math.random(2,50)
-local d = GM:AddSkill(SKILL_SECRET_VIII, "Secret VIII", GOOD.."Автопрокачка съела его",
-																-2,			rand,					{SKILL_NONE}, TREE_GUNTREE)
+local d = GM:AddSkill(SKILL_SECRET_VIII, "Secret VIII", GOOD.."+10 Скилл поинтов",
+																rand*math.random(1,2),			rand,					{SKILL_NONE}, TREE_GUNTREE)
+GM:AddSkillModifier(SKILL_SECRET_VIII, SKILLMOD_SPOINT, 10)
 d.Hidden = true	
 d.Hidden1 = true
 local rand2 = math.random(-20,20)
 local rand1 = math.random(-20,20)
-local d = GM:AddSkill(SKILL_SECRET_9, "Secret IX", GOOD.."Автопрокачка отменила его.",
+local d = GM:AddSkill(SKILL_SECRET_9, "Secret IX", GOOD.."+20 Скилл поинтов.",
 																rand2,			rand1,					{SKILL_NONE}, TREE_GUNTREE)
+GM:AddSkillModifier(SKILL_SECRET_9, SKILLMOD_SPOINT, 20)
 d.Hidden = true	
 d.Hidden1 = true
 rand2 = math.random(-20,20)
 rand1 = math.random(-20,20)
-local d = GM:AddSkill(SKILL_SECRET_10, "Secret X", GOOD.."Автопрокачка отмeнила eго.",
+local d = GM:AddSkill(SKILL_SECRET_10, "Secret X", GOOD.."Ну тебе повезло!Бери +50% к опыту и +15 скилл поинтов!",
 																rand2,			rand1,					{SKILL_NONE}, math.random(1,12))
+GM:AddSkillModifier(SKILL_SECRET_10, SKILLMOD_SPOINT, 15)
+GM:AddSkillModifier(SKILL_SECRET_10, SKILLMOD_XP, 0.5)
 d.Hidden = true	
 d.Hidden1 = true
 local d = GM:AddSkill(SKILL_SECRET_VII, "ᅠ ᅠ ᅠ", GOOD.."+5 Skill Points\nSecret VII",

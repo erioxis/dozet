@@ -21,13 +21,13 @@ SWEP.ModelScale = 0.55
 
 SWEP.MaxStock = 5
 
-SWEP.Repair = 8
+SWEP.Repair = 14
 SWEP.MaxDistance = 75
 
 SWEP.WalkSpeed = SPEED_NORMAL
 SWEP.FullWalkSpeed = SPEED_SLOWEST
 
-SWEP.ResupplyAmmoType = "pulse"
+SWEP.ResupplyAmmoType = "battery"
 
 SWEP.GhostStatus = "ghost_medstation"
 SWEP.DeployClass = "prop_medstation"

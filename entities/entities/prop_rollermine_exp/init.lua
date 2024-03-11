@@ -216,9 +216,6 @@ function ENT:Destroy()
 	util.Effect("sparks", effectdata)
 
 	local owner = self:GetObjectOwner()
-	if self.EliteArmy and owner:IsValidLivingHuman() then
-		owner.CounterBalls = owner.CounterBalls - 1
-	end
 	if owner:IsValidLivingHuman() and owner:IsSkillActive(SKILL_LOADEDHULL) then
 		effectdata = EffectData()
 			effectdata:SetOrigin(epicenter)
@@ -233,7 +230,12 @@ function ENT:Destroy()
 		util.Effect("HelicopterMegaBomb", effectdata, true, true)
 	end
 end
-
+function ENT:OnRemove()
+	local owner = self:GetObjectOwner()
+	if owner:IsValidLivingHuman() then
+		owner.CounterBalls = owner.CounterBalls - 1
+	end
+end
 ENT.PhysDamageImmunity = 0
 ENT.DashHuh = 0
 function ENT:Think()

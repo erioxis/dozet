@@ -34,7 +34,7 @@ function ENT:AcceptInput(name, activator, caller, arg)
 
 		if hitent:IsNailed() then
 			local oldhealth = hitent:GetBarricadeHealth()
-			hitent:SetBarricadeRepairs(math.max(hitent:GetBarricadeRepairs() + totalheal, 0))
+			hitent:SetBarricadeRepairs(math.Clamp(hitent:GetBarricadeRepairs() + totalheal, 0,hitent:GetMaxBarricadeRepairs()*1.15))
 		end
 	end
 

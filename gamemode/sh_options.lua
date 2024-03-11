@@ -273,7 +273,7 @@ GM:AddStartingItem("zapper",			ITEMCAT_DEPLOYABLES,			15,				"weapon_zs_zapper",
 item.Countables = "prop_zapper"
 item.NoClassicMode = true
 item =
-GM:AddStartingItem("medstation1",		ITEMCAT_DEPLOYABLES,			25,				"weapon_zs_medstation",		nil,							nil,									nil,											function(pl) pl:GiveEmptyWeapon("weapon_zs_medstation") pl:GiveAmmo(1, "medstation") pl:GiveAmmo(150, "pulse") end)
+GM:AddStartingItem("medstation1",		ITEMCAT_DEPLOYABLES,			25,				"weapon_zs_medstation",		nil,							nil,									nil,											function(pl) pl:GiveEmptyWeapon("weapon_zs_medstation") pl:GiveAmmo(1, "medstation") pl:GiveAmmo(150, "battery") end)
 item.Countables = "prop_medstation"
 GM:AddStartingItem("manhack",			ITEMCAT_DEPLOYABLES,			15,				"weapon_zs_manhack").Countables = "prop_manhack"
 item =

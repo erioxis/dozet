@@ -769,6 +769,13 @@ GM.Statuses["cooldown_nanite"] =	{
 	Max = 180,
 	Icon = Material("zombiesurvival/block.png")
 }
+GM.Statuses["cooldown_med"] =	{
+	Color = Color(110, 110, 110),
+	Name = "cooldown_med",
+	ValFunc = statusValueFunction("cooldown_med"),
+	Max = 120,
+	Icon = Material("zombiesurvival/block.png")
+}
 GM.Statuses["portal"] =	{
 	Color = Color(156, 40, 209),
 	Name = "portal",

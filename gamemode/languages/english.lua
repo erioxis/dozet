@@ -1792,7 +1792,7 @@ LANGUAGE.skill_toy = "Toy's Best Friend!"
 LANGUAGE.skill_toy_d = "On win give 20k xp!\n"
 --деф
 LANGUAGE.skill_quills = "Flesh armor"
-LANGUAGE.skill_quills_d1 = "Every 15 kills give a flesh armor.(cap at 50% max health)\n"..GOOD.."+50% Damage while have flesh armor.\n"
+LANGUAGE.skill_quills_d1 = "Every 25/assists kills give a flesh armor.(cap at 50% max health)\n"..GOOD.."+50% Damage while have flesh armor.\n"
 LANGUAGE.skill_quills_d2 = "-250 Max blood armor.\n"
 LANGUAGE.skill_schance = "Second chance"
 LANGUAGE.skill_schance_d1 = "Save from letal hit(Only once per 3 wave's) and restore 50% health.\n"

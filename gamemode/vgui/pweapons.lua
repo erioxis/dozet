@@ -110,6 +110,7 @@ local tbleternal = {["headshoter"] = "None", ["ind_buffer"]  = "None", ["ultra_a
 ["pr_barapaw"] = "Medical",
 ["pr_chamomile"] = "Medical",
 ["pr_bloodpack"] = "Medical",
+["cons_medicalbomb"] = "Medical",
 ["soulmedical"] = "Medical",
 ["troyaksoul"] = "Cader",
 ["nanite_nails"] = "Cader",

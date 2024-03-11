@@ -47,7 +47,15 @@ function GM:InitializeVault(pl)
 	pl.PointsVault = 0
 	pl:SetZSXP(0)
 end
-
+local function RemoveFuckingTrue(tb)
+	local mda = {}
+	for k,v in pairs(tb) do
+		if k ~= v then
+			mda[k] = v
+		end
+	end
+	return mda
+end
 function GM:LoadVault(pl)
 	if not self:ShouldLoadVault(pl) then return end
 
@@ -104,10 +112,10 @@ function GM:LoadVault(pl)
 					pl:SetDCoins(contents.AchXP)
 				end
 				if contents.RemortOldSkills then
-					pl.RemortOldSkills = util.DecompressBitTable(contents.RemortOldSkills, true)
+					pl.RemortOldSkills = util.DecompressBitTable(contents.RemortOldSkills)
 				end
 				if contents.OldDesiredSkills then
-					pl.OldDesiredSkills = util.DecompressBitTable(contents.OldDesiredSkills, true)
+					pl.OldDesiredSkills = util.DecompressBitTable(contents.OldDesiredSkills)
 				end
 				if contents.CheeseCount then
 					pl.CheeseCount = contents.CheeseCount
@@ -169,11 +177,12 @@ function GM:PlayerReadyVault(pl)
 		end
 	end
 end
-
 function GM:SaveVault(pl)
 	if not self:ShouldSaveVault(pl) then return end
 	local remort =pl:GetZSRemortLevel()
 	local saved,savek = pl.OldDesiredSkills,pl.RemortOldSkills 
+	--PrintTable(RemoveFuckingTrue(saved))
+	--PrintTable(savek)
 	local tosave = {
 		Points = math.floor(pl.PointsVault),
 		XP = pl:GetZSXP(),
@@ -181,8 +190,8 @@ function GM:SaveVault(pl)
 		DesiredActiveSkills = util.CompressBitTable(pl:GetDesiredActiveSkills()),
 		UnlockedSkills = util.CompressBitTable(pl:GetUnlockedSkills()),
 		Version = pl.SkillVersion or self.SkillTreeVersion,
-	--	RemortOldSkills = util.CompressBitTable(savek) or {},
-	--	OldDesiredSkills = util.CompressBitTable(isaved) or {},
+		RemortOldSkills = util.CompressBitTable(RemoveFuckingTrue(savek) or {}),
+		OldDesiredSkills = util.CompressBitTable(RemoveFuckingTrue(saved) or {}),
 		MedicMastery = pl:GetMastery("medic"),
 		MeleeMastery =pl:GetMastery("melee"),
 		GunMastery = pl:GetMastery("gunner"),

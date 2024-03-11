@@ -4874,7 +4874,7 @@ function GM:HumanKilledZombie(pl, attacker, inflictor, dmginfo, headshot, suicid
 		if attacker:IsSkillActive(SKILL_PILLUCK) then
 			attacker.LuckAdd = attacker.LuckAdd + 0.01
 		end
-		if attacker:IsSkillActive(SKILL_QUILLS) then
+		if attacker:IsSkillActive(SKILL_QUILLS) or mostdamager and mostdamager:IsSkillActive(SKILL_QUILLS) then
 			local hehe = attacker:GetDTInt(25)
 			attacker:SetDTInt(25,hehe+1)
 			if hehe > 14 then

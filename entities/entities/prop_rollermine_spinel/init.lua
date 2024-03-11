@@ -60,10 +60,7 @@ function ENT:SetupPlayerSkills()
 		maxspeed = maxspeed * (owner.ControllableSpeedMul or 1)
 		acceleration = acceleration * (owner.ControllableHandlingMul or 1)
 		loaded = owner:IsSkillActive(SKILL_LOADEDHULL)
-		self.EliteArmy = owner:IsSkillActive(SKILL_VIP_ARMY)
-		if self.EliteArmy then
-			owner.CounterBalls = owner.CounterBalls + 1
-		end
+
 		local owner = self:GetObjectOwner()
 	end
 

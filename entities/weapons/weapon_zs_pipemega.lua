@@ -61,7 +61,7 @@ function SWEP:OnMeleeHit(hitent, hitflesh, tr)
 		hitent._NextLeadPipeEffect = CurTime() + 8 - (self.QualityTier or 0)
 
 		hitent:GiveStatus("stunned",self.QualityTier or 0.5)
-		local x = math.Rand(0.23, 6)
+		local x = math.Rand(0.23, 1)
 		x = x * (math.random(2) == 2 and 1 or -1)
 
 		local ang = Angle(1 - x, x, 0) * 138

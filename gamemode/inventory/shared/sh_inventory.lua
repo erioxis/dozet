@@ -240,7 +240,8 @@ local medet = {	"pr_gold",
 "pr_barapaw",
 "pr_chamomile",
 "pr_bloodpack",
-"soulmedical"
+"soulmedical",
+"cons_medicalbomb"
 }
 local sinse = {	"sin_wrath",
 "sin_gluttony",
@@ -503,6 +504,31 @@ GM:AddInventoryItemData("cons_nanites",		trs("c_nanites"),			trs("c_nanites_d"),
 		ent:SetPhysicsAttacker(pl)
 	end
 end,0)
+GM:AddInventoryItemData("cons_medicalbomb",		trs("c_medicalbomb"),			trs("c_medicalbomb_d"),								"models/props_c17/trappropeller_lever.mdl", 3, nil, nil, function(pl) 
+	if pl:GetStatus('cooldown_med') then return end
+	pl:GiveStatus('cooldown_med',120)
+	local ent = ents.Create("projectile_mediccloudbomb")
+	if ent:IsValid() then
+		local pos = pl:GetShootPos()
+		pos.z = pos.z - 16
+		ent:SetPos(pos)
+		ent:SetOwner(pl)
+		ent:Spawn()
+
+		ent.GrenadeDamage = 32
+		ent.GrenadeRadius = 128
+		ent.Team = pl:Team()
+
+		local phys = ent:GetPhysicsObject()
+		if phys:IsValid() then
+			phys:Wake()
+			phys:AddAngleVelocity(VectorRand() * 30)
+			phys:SetVelocityInstantaneous(pl:GetAimVector() * 600 * 0.4)
+		end
+
+		ent:SetPhysicsAttacker(pl)
+	end
+end,0)
 GM:AddInventoryItemData("cons_sack_of_trinkets",		trs("c_sack_of_trinkets"),			trs("c_sack_of_trinkets_d"),								"models/props_c17/trappropeller_lever.mdl", 3, nil, nil, function(pl)
 	local use2 = {} 
 	local data = GAMEMODE.ZSInventoryItemData
@@ -579,7 +605,7 @@ GM:AddInventoryItemData("cons_dust",		trs("c_dust"),			trs("c_dust_d"),								"
 	pl:GiveStatus("portal",10)
 end,2)
 GM:AddInventoryItemData("cons_pill_unk",		trs("c_pill"),			trs("c_pill_d"),								"models/props_c17/trappropeller_lever.mdl", 2, nil, nil, function(pl) 
-	if math.random(1,3) ~= 1 then
+	if math.random(1,3) ~= 1 or pl:GetActiveWeapon().MaxStock then
 		pl:TakeDamage(pl:Health()*0.25, pl, pl) 
 	else 
 		local melee = (pl:GetActiveWeapon() and pl:GetActiveWeapon().IsMelee or false)

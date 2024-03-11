@@ -17,7 +17,7 @@ local function  CycleDo(skillid,k,pl)
 end
 
 local function UnlockSkills(pl,skillid,skill,activate)
-	if skill and not pl:IsSkillUnlocked(skillid) and (pl:GetZSSPRemaining() >= 1 or GAMEMODE.Skills[skillid].Amulet) and pl:SkillCanUnlock(skillid) and not skill.Disabled then
+	if skill and not pl:IsSkillUnlocked(skillid) and (pl:GetZSSPRemaining() >= 1 or skill.Amulet) and pl:SkillCanUnlock(skillid) and not skill.Disabled then
 		pl:SetSkillUnlocked(skillid, true)
 
 		local msg = translate.Get("skill_discover")..skill.Name
@@ -171,20 +171,31 @@ end)
 local builds = {["Gunnery"] = {["Unlocked"] = {7,35,36,37,38,40,41,44,45,66,67,76,80,82,84,89,99,102,103,110,116,117,118,144,150,152,155,190,191,192,196,197,198,200,249,250,251,252,260,262,285,287,302,322,351,371,383,391,418,499},['Desired'] = {7,35,36,37,38,40,41,45,66,67,82,84,99,102,103,110,116,117,118,144,150,152,155,196,200,249,250,251,252,260,262,285,287,302,322,351,371,383,391,418,499}},
 ["Medic"] = {["Unlocked"] = {11,12,13,71,277,140,72,115,139,114,113,73,95,312,324,126,311,314,319,190,196,197,198,199,249,250,262,191,192,287,251,371,303,1,2,3,4,5,70,17,127,128,215,216,82,76,150,285,322,66},['Desired'] = {11,12,13,71,277,140,72,115,139,114,113,95,324,319,126,196,250,262,249,287,251,371,303,1,2,3,4,5,70,17,127,128,215,216,76,82,150,285,322,66}}
 }
+local function RemoveFuckingTrue(tb)
+	local mda = {}
+	for k,v in pairs(tb) do
+		if k ~= v then
+			mda[k] = v
+		end
+	end
+	return mda
+end
 net.Receive("zs_skill_comeback", function(length, pl)
 	local build = net.ReadString()
 	if build == "1" and pl.RemortOldSkills and pl.OldDesiredSkills then
-		local war = pl.OldDesiredSkills
+		local war = table.Copy(pl.OldDesiredSkills)
 		for k,v in pairs(war) do
 			war[v] = true
 		end
+		war = RemoveFuckingTrue(war)
 		
-		for k,v in pairs(pl.RemortOldSkills) do
-			UnlockSkills(pl,v,GAMEMODE.Skills[v],war[v])
+		for k,v in pairs(table.Copy(pl.RemortOldSkills)) do
+			if !GAMEMODE.Skills[v] or GAMEMODE.Skills[v].Hidden or GAMEMODE.Skills[v].Hidden1 then continue end
+			UnlockSkills(pl,v,GAMEMODE.Skills[v],war[v])--
 		end
 	elseif build ~= "1" then
 		local hih = table.Copy(builds)
-		local mda = hih[build]['Unlocked']--
+		local mda = hih[build]['Unlocked']
 		
 
 		local war = hih[build]['Desired']
@@ -357,8 +368,8 @@ function meta:SkillsRemort()
 
 	self:SetZSRemortLevel(rl)
 	self:SetZSXP(0)
-	self.RemortOldSkills = self:GetUnlockedSkills()
-	self.OldDesiredSkills = self:GetDesiredActiveSkills()
+	self.RemortOldSkills = table.Copy(self:GetUnlockedSkills())
+	self.OldDesiredSkills = table.Copy(self:GetDesiredActiveSkills())
 	self:SetUnlockedSkills({})
 	self:SetDesiredActiveSkills({})
 	self.NextSkillReset = nil

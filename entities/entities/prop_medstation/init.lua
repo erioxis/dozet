@@ -67,7 +67,7 @@ function ENT:SetObjectHealth(health)
 			ent = ents.Create("prop_ammo")
 			if ent:IsValid() then
 				local heading = VectorRand():GetNormalized()
-				ent:SetAmmoType("pulse")
+				ent:SetAmmoType("battery")
 				ent:SetAmmo(todrop)
 				ent:SetPos(pos + heading * 8)
 				ent:SetAngles(VectorRand():Angle())
@@ -101,10 +101,10 @@ function ENT:Use(activator, caller)
 		if self:GetObjectOwner():IsValid() then
 			if activator:GetInfo("zs_nousetodeposit") == "0" or activator == self:GetObjectOwner() then
 				local curammo = self:GetAmmo()
-				local togive = math.min(math.min(55, activator:GetAmmoCount("pulse")), self.MaxAmmo - curammo)
+				local togive = math.min(math.min(55, activator:GetAmmoCount("battery")), self.MaxAmmo - curammo)
 				if togive > 0 then
 					self:SetAmmo(curammo + togive)
-					activator:RemoveAmmo(togive, "pulse")
+					activator:RemoveAmmo(togive, "battery")
 					activator:RestartGesture(ACT_GMOD_GESTURE_ITEM_GIVE)
 					self:EmitSound("npc/scanner/combat_scan1.wav", 60, 250)
 				end
@@ -125,7 +125,7 @@ function ENT:OnPackedUp(pl)
 	pl:GiveAmmo(1, "medstation")
 
 	pl:PushPackedItem(self:GetClass(), self:GetObjectHealth())
-	pl:GiveAmmo(self:GetAmmo(), "pulse")
+	pl:GiveAmmo(self:GetAmmo(), "battery")
 
 	self:Remove()
 end
@@ -140,34 +140,38 @@ function ENT:Think()
 
 	local pos = self:LocalToWorld(Vector(0, 0, 30))
 	local count = 0
-
-	local totalheal = (self.HealValue * (self:GetObjectOwner().MedicHealMul or 1))/2
 	local owner = self:GetObjectOwner()
-
+	local totalheal = self.HealValue * (owner.MedicHealMul or 1)
+	local vPos = self:GetPos()
+	local target, lowesthp = nil, 9999
 	for _, hitent in pairs(player.FindInSphere(pos, self.MaxDistance)) do
-		if not hitent:IsValid() or hitent == self or not WorldVisible(pos, hitent:NearestPoint(pos)) then
-			continue
+		local p = hitent:GetPos()
+		if  hitent:IsValidLivingHuman() and gamemode.Call("PlayerCanBeHealed", hitent) then
+			if p:DistToSqr(vPos) < 16384 and WorldVisible(vPos, hitent:NearestPoint(vPos)) then --128^2
+				local hp = hitent:Health()
+				if hp < hitent:GetMaxHealth() and lowesthp > hp then
+					target, lowesthp = hitent, hp
+				end
+			end
 		end
-		if hitent:IsPlayer() and hitent:HasTrinket("curse_unknown") then
-			continue
-		end
+	end
 
-		local healed = false
+	local healed = false
 
-       if hitent:GetMaxHealth() > hitent:Health() and hitent:IsPlayer() and hitent:IsValidLivingHuman() and !(hitent:IsSkillActive(SKILL_ABUSE) or hitent:IsSkillActive(SKILL_D_FRAIL)) and (hitent.NextMedStation or 1) < CurTime()  then
-			hitent:EmitSound("npc/dog/dog_servo"..math.random(7, 8)..".wav", 70, math.random(100, 105))
+    if target and target:GetMaxHealth() > target:Health() and target:IsPlayer() and target:IsValidLivingHuman() and !(target:IsSkillActive(SKILL_ABUSE) or target:IsSkillActive(SKILL_D_FRAIL)) and (target.NextMedStation or 1) < CurTime()  then
+		target:EmitSound("npc/dog/dog_servo"..math.random(7, 8)..".wav", 70, math.random(100, 105))
 			
-		  	owner:HealPlayer(hitent, totalheal)
-		  	local effectdata = EffectData()
-				effectdata:SetOrigin(hitent:GetPos())
-				effectdata:SetNormal((self:GetPos() - hitent:GetPos()):GetNormalized())
-				effectdata:SetMagnitude(1)
-			util.Effect("nailrepaired", effectdata, true, true)
-			self:SetAmmo(self:GetAmmo() - totalheal/3)
-			count = count + 1
-			self:SetSequence(0)
-			if count >= 3 or self:GetAmmo() <= 0 then break end
-	   end
+		owner:HealPlayer(target, totalheal)
+		local effectdata = EffectData()
+			effectdata:SetOrigin((target:NearestPoint(vPos) + target:WorldSpaceCenter()) / 2)
+			effectdata:SetEntity(target)
+		util.Effect("hit_healdart", effectdata, true, true)
+		self:SetAmmo(self:GetAmmo() - totalheal)
+		count = count + 1
+		self:SetSequence(0)
+		if owner ~= target then
+			owner.PointQueue = owner.PointQueue + 0.6
+		end
 	end
 
 	if count > 0 then

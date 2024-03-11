@@ -66,9 +66,9 @@ function SWEP:PrimaryAttack()
 			ent:SetObjectHealth(stored[1])
 		end
 
-		local ammo = math.min(owner:GetAmmoCount("pulse"), 150)
+		local ammo = math.min(owner:GetAmmoCount("battery"), 150)
 		ent:SetAmmo(ammo)
-		owner:RemoveAmmo(ammo, "pulse")
+		owner:RemoveAmmo(ammo, "battery")
 
 		ent.DeployableAmmo = self.Primary.Ammo
 		ent.HealValue = self.Repair
