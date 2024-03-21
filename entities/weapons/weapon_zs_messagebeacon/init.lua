@@ -56,7 +56,13 @@ function SWEP:PrimaryAttack()
 		ent:Spawn()
 
 		ent:SetObjectOwner(owner)
+
 		ent:SetMessageID(self.MessageID)
+		if self.CustomMessage then
+			ent:SetMessageCarefull(self.CustomMessage)
+		end
+
+		
 
 		ent:EmitSound("npc/dog/dog_servo12.wav")
 
@@ -86,9 +92,12 @@ end
 SWEP.MessageID = 1
 concommand.Add("setmessagebeaconmessage", function(sender, command, arguments)
 	if not sender:IsValid() then return end
-
+	local customMessage = arguments[2]
 	local wep = sender:GetActiveWeapon()
 	if wep:IsValid() and wep:GetClass() == "weapon_zs_messagebeacon" then
 		wep.MessageID = math.Clamp(math.floor(tonumbersafe(arguments[1]) or 1), 1, #GAMEMODE.ValidBeaconMessages)
+		if customMessage and customMessage ~= "FALSE" then
+			wep.CustomMessage = customMessage
+		end
 	end
 end)

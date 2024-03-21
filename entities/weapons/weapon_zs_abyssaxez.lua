@@ -11,6 +11,8 @@ SWEP.Secondary.Ammo 			= 	"dummy"
 SWEP.Secondary.Automatic 		=	 true
 
 SWEP.OriginalMeleeDamage = SWEP.MeleeDamage
+SWEP.MeleeDamageType = DMG_DIRECT
+SWEP.DamageType = DMG_DIRECT
 
 SWEP.Slot 			= 	0
 SWEP.SlotPos 		= 	0

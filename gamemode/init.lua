@@ -4874,13 +4874,14 @@ function GM:HumanKilledZombie(pl, attacker, inflictor, dmginfo, headshot, suicid
 		if attacker:IsSkillActive(SKILL_PILLUCK) then
 			attacker.LuckAdd = attacker.LuckAdd + 0.01
 		end
-		if attacker:IsSkillActive(SKILL_QUILLS) or mostdamager and mostdamager:IsSkillActive(SKILL_QUILLS) then
-			local hehe = attacker:GetDTInt(25)
-			attacker:SetDTInt(25,hehe+1)
-			if hehe > 14 then
-				local flesharmor = attacker:GiveStatus('flesh_armor')
-				flesharmor:SetDamage(attacker:GetMaxHealth())
-				attacker:SetDTInt(25,0)
+		local realque = attacker:IsSkillActive(SKILL_QUILLS) and attacker or mostdamager and mostdamager:IsSkillActive(SKILL_QUILLS) and mostdamager
+		if realque then
+			local hehe = realque:GetDTInt(25)
+			realque:SetDTInt(25,hehe+1)
+			if hehe > 24 then
+				local flesharmor = realque:GiveStatus('flesh_armor')
+				flesharmor:SetDamage(realque:GetMaxHealth())
+				realque:SetDTInt(25,0)
 			end
 		end
 
@@ -5689,17 +5690,13 @@ function GM:PlayerSpawn(pl)
 	wcol.y = math.Clamp(wcol.y, 0, 2.5)
 	wcol.z = math.Clamp(wcol.z, 0, 2.5)
 	pl:SetWeaponColor(wcol)
-if pl:SteamID() == "STEAM_0:0:426833142" then
-	pl:SetMaxHealth(pl:GetMaxHealth() * 1.5) pl:SetHealth(pl:Health() * 1.5)
-end
 	if pl:Team() == TEAM_UNDEAD then
-		pl:SetMaxHealth(pl:GetMaxHealth() * (pl.m_HealthMulZS or 1) * (GAMEMODE.HPMULMAP or 1)) pl:SetHealth(pl:Health() * (pl.m_HealthMulZS or 1) * (GAMEMODE.HPMULMAP or 1))
-	end
-	if pl:Team() == TEAM_UNDEAD and pl:SteamID() == "STEAM_0:1:585943777" then
-	pl:SetMaxHealth(pl:GetMaxHealth() * 0.25) pl:SetHealth(pl:Health() * 0.25)	
-	end
-	if pl:Team() == TEAM_UNDEAD and pl.m_ZArmor then
-		pl:SetZArmor(pl:Health() * 0.33)
+		local mul = (pl.m_HealthMulZS or 1) * (GAMEMODE.HPMULMAP or 1)
+		pl:SetMaxHealth(pl:GetMaxHealth() * mul) 
+		pl:SetHealth(pl:Health() * mul)
+		if pl.m_ZArmor then
+			pl:SetZArmor(pl:Health() * 0.33)
+		end
 	end
 end
 

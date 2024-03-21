@@ -72,7 +72,7 @@ function SWEP:OnZombieKilled()
 	end
 end
 
-function SWEP.BulletCallback(attacker, tr)
+function SWEP.BulletCallback(attacker, tr, dmginfo)
 	local hitent = tr.Entity
 	if hitent:IsValidLivingZombie() and hitent:Health() <= hitent:GetMaxHealthEx() * 0.04 and gamemode.Call("PlayerShouldTakeDamage", hitent, attacker) then
 		if SERVER then

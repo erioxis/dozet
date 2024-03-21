@@ -52,7 +52,7 @@ end
 
 SWEP.ArmorRegen = 1
 SWEP.Primary.ArmorBleed = 50
-function SWEP.BulletCallback(attacker, tr)
+function SWEP.BulletCallback(attacker, tr, dmginfo)
 	local hitent = tr.Entity
 	if hitent:IsValidLivingZombie() and  gamemode.Call("PlayerShouldTakeDamage", hitent, attacker) then
 		local targetpos = hitent:LocalToWorld(hitent:OBBCenter()) 

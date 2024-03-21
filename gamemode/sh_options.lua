@@ -659,7 +659,7 @@ item.SkillRequirement = SKILL_U_ZAPPER_ARC
 item =
 GM:AddPointShopItem("ffemitter",		ITEMCAT_DEPLOYABLES,			40,				"weapon_zs_ffemitter",			nil,							nil,									nil,											function(pl) pl:GiveEmptyWeapon("weapon_zs_ffemitter") pl:GiveAmmo(1, "slam") pl:GiveAmmo(30, "pulse") end)
 item.Countables = "prop_ffemitter"
-GM:AddPointShopItem("campfire",		ITEMCAT_DEPLOYABLES,			35,				"weapon_zs_campfire",		nil,							nil,									nil,											function(pl) pl:GiveEmptyWeapon("weapon_zs_campfire") pl:GiveAmmo(1, "camps") end)
+--GM:AddPointShopItem("campfire",		ITEMCAT_DEPLOYABLES,			35,				"weapon_zs_campfire",		nil,							nil,									nil,											function(pl) pl:GiveEmptyWeapon("weapon_zs_campfire") pl:GiveAmmo(1, "camps") end)
 GM:AddPointShopItem("propanetank",		ITEMCAT_TOOLS,			15,				"comp_propanecan")
 GM:AddPointShopItem("busthead",			ITEMCAT_TOOLS,			25,				"comp_busthead")
 GM:AddPointShopItem("sawblade",			ITEMCAT_TOOLS,			30,				"comp_sawblade").SkillRequirement = SKILL_U_CRAFTINGPACK
@@ -796,7 +796,7 @@ GM:AddPointShopItem("fire_ind",  	ITEMCAT_TRINKETS,		30,				"trinket_fire_ind").
 GM:AddPointShopItem("reachem",			ITEMCAT_TRINKETS,		30,				"trinket_reachem").SubCategory =								ITEMSUBCAT_TRINKETS_OFFENSIVE
 GM:AddPointShopItem("momentumsupsysiii",ITEMCAT_TRINKETS,		30,				"trinket_momentumsupsysiii").SubCategory =						ITEMSUBCAT_TRINKETS_MELEE
 GM:AddPointShopItem("adrenaline",ITEMCAT_TRINKETS,		30,				"trinket_adrenaline").SubCategory =						ITEMSUBCAT_TRINKETS_PERFOMANCE
-GM:AddPointShopItem("brokenhammer",ITEMCAT_TRINKETS,		30,				"trinket_brokenhammer").SubCategory =						ITEMSUBCAT_TRINKETS_SPECIAL
+GM:AddPointShopItem("brokenhammer",ITEMCAT_TRINKETS,		30,				"trinket_brokenhammer").SubCategory =						ITEMSUBCAT_TRINKETS_SUPPORT
 GM:AddPointShopItem("scout",ITEMCAT_TRINKETS,		30,				"trinket_scout").SubCategory =						ITEMSUBCAT_TRINKETS_PERFOMANCE
 GM:AddPointShopItem("ass",ITEMCAT_TRINKETS,		15,				"trinket_ass").SubCategory =						ITEMSUBCAT_TRINKETS_DEFENSIVE
 GM:AddPointShopItem("longgrip",		ITEMCAT_TRINKETS,		30,				"trinket_longgrip").SubCategory =								ITEMSUBCAT_TRINKETS_MELEE

@@ -173,6 +173,7 @@ local builds = {["Gunnery"] = {["Unlocked"] = {7,35,36,37,38,40,41,44,45,66,67,7
 }
 local function RemoveFuckingTrue(tb)
 	local mda = {}
+	tb = tb or {}
 	for k,v in pairs(tb) do
 		if k ~= v then
 			mda[k] = v

@@ -117,7 +117,7 @@ local function DoArc(attacker, inflictor, pl, damage)
 		end
 	end
 end
-function SWEP.BulletCallback(attacker, tr)
+function SWEP.BulletCallback(attacker, tr, dmginfo)
 	local hitent = tr.Entity
 	if hitent:IsValidLivingZombie() and  gamemode.Call("PlayerShouldTakeDamage", hitent, attacker) and SERVER then
 		DoArc(attacker,attacker:GetActiveWeapon(),hitent,120+attacker:GetBloodArmor()*1.5)

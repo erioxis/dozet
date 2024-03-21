@@ -605,14 +605,14 @@ GM:AddInventoryItemData("cons_dust",		trs("c_dust"),			trs("c_dust_d"),								"
 	pl:GiveStatus("portal",10)
 end,2)
 GM:AddInventoryItemData("cons_pill_unk",		trs("c_pill"),			trs("c_pill_d"),								"models/props_c17/trappropeller_lever.mdl", 2, nil, nil, function(pl) 
-	if math.random(1,3) ~= 1 or pl:GetActiveWeapon().MaxStock then
+	if math.random(1,3) ~= 1 then
 		pl:TakeDamage(pl:Health()*0.25, pl, pl) 
 	else 
 		local melee = (pl:GetActiveWeapon() and pl:GetActiveWeapon().IsMelee or false)
 		local ammo = (!melee and pl:GetResupplyAmmoType() or "scrap")
 		pl:GiveAmmo((melee and 5 or 20),ammo) 
 	end
-end,2)
+end,3)
 GM:AddInventoryItemData("cons_mantle",		trs("c_mantle"),			trs("c_mantle_d"),								"models/props_c17/trappropeller_lever.mdl", 2, nil, nil, function(pl) 
 	pl.HolyMantle = pl.HolyMantle+1
 end,3)

@@ -586,6 +586,7 @@ function GM:LocalPlayerFound()
 	self.RenderScene = self._RenderScene
 	self.SetupSkyboxFog = self._SetupSkyboxFog
 	self.SetupWorldFog = self._SetupWorldFog
+	self.Hullsed = 0
 
 	LocalPlayer().LegDamage = 0
 	LocalPlayer().ArmDamage = 0
@@ -595,6 +596,11 @@ function GM:LocalPlayerFound()
 		self.RenderScreenspaceEffects = self._RenderScreenspaceEffects
 	end
 end
+--[[OldLanguageChanged = OldLanguageChanged or LanguageChanged
+function LanguageChanged(lang)
+	GAMEMODE:LocalPlayerFound()
+	OldLanguageChanged( lang )
+end]]
 
 local LastSigilCorrupted = -math.huge
 local LastSigilUncorrupted = -math.huge
@@ -1131,6 +1137,7 @@ function GM:ZombieObserverHUD(obsmode)
 end
 
 local colLifeStats = Color(255, 50, 50, 255)
+local colorWhiter = Color(255, 255, 255, 255)
 function GM:ZombieHUD()
 	if sigiltp and sigiltp:IsValid() then
 		self:DrawSigilTeleportBar(w * 0.5, h * 0.55, 1 - sigiltp:GetTimeRemaining() / sigiltp:GetMaxTime(), sigiltp:GetTargetSigil(), screenscale)
@@ -1157,6 +1164,22 @@ function GM:ZombieHUD()
 			draw_SimpleTextBlur(translate.Format("x_brains_eaten", self.LifeStatsBrainsEaten), "ZSHUDFontSmall", x, y, colLifeStats, TEXT_ALIGN_LEFT)
 			y = y + th
 		end
+	end
+	if self.Hullsed and self.Hullsed > CurTime() then
+		local x = ScrW() * 0
+		local y = ScrH() * 0.4
+		local classtable = MySelf:GetZombieClassTable()
+		if classtable.Help then
+			local boom = string.Explode("\n", translate.Get(classtable.Help))
+			colorWhiter.a = math.Clamp((self.Hullsed - CurTime()) / (2), 0, 1) * 255
+			--print(math.Clamp((self.Hullsed - CurTime()) / (self.Hullsed * 0.33), 0, 1)*255 )
+			local th = draw_GetFontHeight("ZSHUDFontSmallest")
+			for i=1,#boom do
+				draw_SimpleTextBlur(boom[i], "ZSHUDFontSmallest", x, y, colorWhiter, TEXT_ALIGN_LEFT)
+				y = y + th
+			end
+		end
+		
 	end
 
 	local obsmode = MySelf:GetObserverMode()

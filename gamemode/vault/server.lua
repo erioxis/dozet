@@ -49,6 +49,7 @@ function GM:InitializeVault(pl)
 end
 local function RemoveFuckingTrue(tb)
 	local mda = {}
+	tb = tb or {}
 	for k,v in pairs(tb) do
 		if k ~= v then
 			mda[k] = v

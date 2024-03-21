@@ -104,7 +104,7 @@ LANGUAGE.t_fblueprints                                  = "Blueprints from futur
 LANGUAGE.t_kbook                                 = "Book Of Knowledge"
 LANGUAGE.t_bloodlust                                 = "Bloodlust"
 LANGUAGE.t_auto_magazine                                 = "Broken Clip"
-LANGUAGE.t_d_auto_magazine                                 = "-15% Bullet damage.\n-25% Fire delay.\nYou don't need reload."
+LANGUAGE.t_d_auto_magazine                                 = "-15% damage from every shooting weapon.\n-25% Fire delay.\nYou don't need reload."
 LANGUAGE.t_adbat                                 = "Additional Battery"
 LANGUAGE.t_mecharm                                 = "Mech Arm"
 LANGUAGE.t_sshield                                 = "Steel Shield"
@@ -449,6 +449,9 @@ LANGUAGE.bounty_1 = "Random 3 soul of piece"
 LANGUAGE.bounty_2 = "+200 Points"
 LANGUAGE.bounty_3 = "+3600 AXP"
 LANGUAGE.give_to_drone = "Give to drone"
+
+LANGUAGE.wep_m_beacon = "Message Beacon"
+LANGUAGE.wep_m_beacon_d = "This beacon allows you to display messages to all other humans in range.\nPress SECONDARY ATTACK to select different messages.\nPress PRIMARY ATTACK to deploy.\nPress SPRINT on a deployed message beacon that you own to pick it up."
 
 LANGUAGE.t_defensive_module                            = "Armor"
 LANGUAGE.t_d_defensive_module                            = "+50 HP for drone.\nStackable."

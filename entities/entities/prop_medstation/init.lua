@@ -166,7 +166,7 @@ function ENT:Think()
 			effectdata:SetOrigin((target:NearestPoint(vPos) + target:WorldSpaceCenter()) / 2)
 			effectdata:SetEntity(target)
 		util.Effect("hit_healdart", effectdata, true, true)
-		self:SetAmmo(self:GetAmmo() - totalheal)
+		self:SetAmmo(self:GetAmmo() - totalheal/3)
 		count = count + 1
 		self:SetSequence(0)
 		if owner ~= target then

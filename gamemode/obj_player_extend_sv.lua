@@ -759,7 +759,7 @@ function meta:ProcessDamage(dmginfo)
 			end
 
 
-			local ratio = math.max(0.5 + self.BloodArmorDamageReductionAdd + (self:IsSkillActive(SKILL_IRONBLOOD) and self:Health() <= self:GetMaxHealth() * 0.5 and 0.25 or 0),(attacker:IsPlayer() and -1 or 0.05)) * (self:IsSkillActive(SKILL_HYPERGLYCEMIA) and 1-self:GetBloodArmor()/self.MaxBloodArmor or 1)
+			local ratio = math.max(0.5 + self.BloodArmorDamageReductionAdd + (self:IsSkillActive(SKILL_IRONBLOOD) and self:Health() <= self:GetMaxHealth() * 0.5 and 0.25 or 0),0.05) * (self:IsSkillActive(SKILL_HYPERGLYCEMIA) and 1-self:GetBloodArmor()/self.MaxBloodArmor or 1)
 			local absorb = math.min(self:GetBloodArmor(), damage * ratio) * (self:IsSkillActive(SKILL_LEUKEMIA) and math.random(1,4) == 1 and 0 or 1)
 			dmginfo:SetDamage(damage - absorb)
 			self:SetBloodArmor(self:GetBloodArmor() - absorb)
@@ -998,7 +998,7 @@ function meta:SetWasHitInHead()
 end
 
 function meta:SetBloodArmor( armor )
-	self:SetDTInt( DT_PLAYER_INT_BLOODARMOR, math.max(self:GetStatus( "bloodysickness" ) and 0 or armor,0) )
+	self:SetDTInt( DT_PLAYER_INT_BLOODARMOR, math.max((self:GetStatus( "bloodysickness" ) or self:IsSkillActive(SKILL_QUILLS)) and 0 or armor,0) )
 	local barmor = self:GetBloodArmor() 
 	if self:IsSkillActive(SKILL_HYPERGLYCEMIA) and barmor >= self.MaxBloodArmor-1 and self.NextGlycemiaExplode < CurTime() then
 		timer.Simple(0, function() self:TakeSpecialDamage(self:GetMaxHealth()*0.25,DMG_DIRECT,self,BLOOD_BOMBER) end)

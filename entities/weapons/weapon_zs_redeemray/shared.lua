@@ -112,7 +112,7 @@ function SWEP:CheckHealRay()
 	if ent:IsValidLivingZombie() and owner:KeyDown(IN_ATTACK) and
 		ent:WorldSpaceCenter():DistToSqr(owner:WorldSpaceCenter()) <= self.HealRange * self.HealRange and self:GetCombinedPrimaryAmmo() > 0 then
 
-		if CurTime() > self:GetDTFloat(10) and not ent:GetZombieClassTable().Boss and GAMEMODE:GetEscapeStage() == ESCAPESTAGE_NONE and !ent.NoRedeeming then
+		if CurTime() > self:GetDTFloat(10) and not ent:GetZombieClassTable().Boss and GAMEMODE:GetEscapeStage() == ESCAPESTAGE_NONE and !ent.NoRedeeming and !ent:IsBot() then
 			self:SetDTFloat(10, CurTime() + 2)
 			if SERVER then
 				ent:Redeem(true)

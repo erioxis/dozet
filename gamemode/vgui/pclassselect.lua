@@ -71,7 +71,7 @@ function PANEL:Init()
 	self.DemiClassTypeButton:SizeToContents()
 	self.DemiClassTypeButton.DoClick = DemiBossTypeDoClick
 
-	self.CloseButton = EasyButton(nil, "Close", 8, 4)
+	self.CloseButton = EasyButton(nil, translate.Get('mm_close'), 8, 4)
 	self.CloseButton:SetFont("ZSHUDFontSmall")
 	self.CloseButton:SizeToContents()
 	self.CloseButton.DoClick = function()  var = false ZombieClass = "" Window:Remove()  end

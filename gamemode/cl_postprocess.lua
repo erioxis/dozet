@@ -344,7 +344,7 @@ function GM:DrawInductorIndicators()
 			y = y + ScrH() * 0.07
 		end
 		if qillings > 0 then
-			DrawIndicator(colResnya,screenscale,qillings,CurTime()+10,"quill",15,x,y)
+			DrawIndicator(colResnya,screenscale,qillings,CurTime()+10,"quill",25,x,y)
 			y = y + ScrH() * 0.07
 		end
 	end

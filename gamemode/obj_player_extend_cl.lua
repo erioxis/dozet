@@ -92,7 +92,13 @@ end
 
 meta.OldGetMaxHealth = FindMetaTable("Entity").GetMaxHealth
 function meta:GetMaxHealth()
-	return self:GetDTInt(0)
+	local health = self:GetDTInt(0)
+	local champion = self:GetChampion()
+	health = health * (self:IsChampion() and ((champion == CHAMP_SMOL or champion == CHAMP_GRAY) and 0.5 or champion == CHAMP_BIG and 2 or champion == CHAMP_RED and 3 or 1.5) or 1)
+	if self.HPPerWave then
+		health = health + (self.HPPerWave * (GAMEMODE:GetWave() or 1))
+	end
+	return health
 end
 
 function meta:DoHulls(classid, teamid)
@@ -101,7 +107,7 @@ function meta:DoHulls(classid, teamid)
 
 	if teamid == TEAM_UNDEAD then
 		self:SetIK(false)
-
+		GAMEMODE.Hullsed = CurTime() + 11
 		local classtab = GAMEMODE.ZombieClasses[classid]
 		if classtab then
 			local scale = (self:IsChampion() and (self:GetChampion() == CHAMP_SMOL and 0.75 or self:GetChampion() == CHAMP_BIG and 1.3 or 1.1) or 1)

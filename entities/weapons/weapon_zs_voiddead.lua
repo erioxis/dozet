@@ -119,7 +119,7 @@ if CLIENT then
 end
 
 function SWEP:ApplyMeleeDamage(ent, trace, damage)
-	if SERVER and isplayer( ent ) then
+	if SERVER and ent:IsPlayer() then
 		local owner = self:GetOwner()
 		ent:GiveStatus( "dimvision", 4, self:GetOwner() )
 		ent:AddBleedDamage( self.BleedDamage, self:GetOwner() )
