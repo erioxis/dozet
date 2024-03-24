@@ -6252,7 +6252,7 @@ end)
 net.Receive("zs_sync_style", function(len, sender)
 end)
 net.Receive("zs_add_p", function(len, sender)
-	local points = net.ReadInt(12)
+	local points = net.ReadInt(12)*0.85
 	local ent = net.ReadEntity()
 	if sender:GetPoints() < points then return end
 	if ent and ent:IsValid() then
