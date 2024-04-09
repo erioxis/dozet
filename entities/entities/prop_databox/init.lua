@@ -64,7 +64,7 @@ function ENT:Think()
 					own:SendLua("GAMEMODE:CenterNotify(COLOR_RED, translate.Format('trap_barrel',20-math.min(4,math.Round(GAMEMODE:GetBalance()/5))))")
 					return
 				end
-				if math.random(1,25) == 1 then
+				if math.random(1,10) == 1 then
 					local magnum = ents.Create('prop_weapon')
 					if magnum:IsValid() then
 						magnum:SetPos(self:GetPos())

@@ -35,7 +35,7 @@ function meta:ProcessDamage(dmginfo)
 		end
 	end
 	if self:IsValidLivingZombie() and self:GetZombieClassTable().Stoney and self:GetActiveWeapon() and self:GetActiveWeapon().IsSwinging and !self:GetActiveWeapon():IsSwinging() then
-		dmginfo:SetDamage(0)
+		dmginfo:SetDamage(1)
 		if attacker:IsPlayer() then
 			GAMEMODE:BlockFloater(attacker, self, dmginfo:GetDamagePosition())
 		end
@@ -1745,6 +1745,9 @@ local function DoDropStart(pl)
 	if pl:GetSoulPicker() then
 		timer.Simple(0, function() pl:AddInventoryItem("cons_soul_picka") end)
 	end
+	if pl:IsSkillActive(SKILL_BERSERK) then
+		timer.Simple(0, function() pl:AddInventoryItem("cons_berserk") end)
+	end
 	if pl:GetDevoPicker() then
 		timer.Simple(0, function() pl:AddInventoryItem("cons_devolver") end)
 	end
@@ -1812,18 +1815,11 @@ function meta:Resupply(owner, obj)
 
 
 	local ammotype = self:GetResupplyAmmoType()
-	local amount = GAMEMODE.AmmoCache[ammotype]
+	local amount = GAMEMODE.AmmoCache[ammotype] * (self.RessuplyMul or 1) * (owner.RessuplyEff or 1)
 	if !self.FirstUsedResupply then
 		DoDropStart(self)
 		self.FirstUsedResupply  = true
 	end
-
-		if self.RessuplyMul then
-			amount = amount * self.RessuplyMul
-		end
-		if owner.RessuplyEff then
-			amount = amount * owner.RessuplyEff
-		end
 
 		if owner:IsSkillActive(SKILL_VOR) then
 			owner:GiveAmmo(amount * 0.1, ammotype)

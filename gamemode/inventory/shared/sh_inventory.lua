@@ -623,6 +623,12 @@ GM:AddInventoryItemData("cons_necronomicon_q1",		trs("c_necronomicon"),			trs("c
 	end
 	if math.random(1,100) <= 10 then pl:TakeInventoryItem("cons_necronomicon_q1") pl:AddInventoryItem("cons_necronomicon") end
 end,2)
+GM:AddInventoryItemData("cons_berserk",		trs("c_berserk"),			trs("c_berserk_d"),								"models/props_c17/trappropeller_lever.mdl", 2, nil, nil, function(pl) 
+	if pl.BerserkerCharge then
+		pl:SetTimerBERS(CurTime())
+		pl.BerserkerCharge = false
+	end
+end,0)
 local dcad = GM:AddInventoryItemData("cons_necronomicon",		trs("c_necronomicon"),			trs("c_necronomicon_broke_d"),								"models/props_c17/trappropeller_lever.mdl", 2, nil, nil, function(pl) 
 	local z = 0
 	for k,v in pairs(team.GetPlayers(TEAM_UNDEAD)) do

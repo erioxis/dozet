@@ -58,6 +58,7 @@ include("vgui/dsidemenu.lua")
 include("vgui/dspawnmenu.lua")
 include("vgui/zsgamestate.lua")
 include("vgui/zshealtharea.lua")
+include("vgui/zs_dozet_hp.lua")
 include("vgui/zsstatusarea.lua")
 include("vgui/mutshop.lua")
 include("vgui/achievements.lua")
@@ -285,6 +286,12 @@ end
 
 function GM:ClickedEndBoardPlayerButton(pl, button)
 end
+function GM:OnReloaded()
+	self.BaseClass.OnReloaded(self)
+
+	timer.Simple(0, function() self:LocalPlayerFound() end)
+end
+
 
 function GM:CenterNotify(...)
 	if self.CenterNotificationHUD and self.CenterNotificationHUD:IsValid() then
@@ -1165,14 +1172,13 @@ function GM:ZombieHUD()
 			y = y + th
 		end
 	end
-	if self.Hullsed and self.Hullsed > CurTime() then
+	if MySelf.Hullsed and MySelf.Hullsed > CurTime() then
 		local x = ScrW() * 0
 		local y = ScrH() * 0.4
 		local classtable = MySelf:GetZombieClassTable()
 		if classtable.Help then
 			local boom = string.Explode("\n", translate.Get(classtable.Help))
-			colorWhiter.a = math.Clamp((self.Hullsed - CurTime()) / (2), 0, 1) * 255
-			--print(math.Clamp((self.Hullsed - CurTime()) / (self.Hullsed * 0.33), 0, 1)*255 )
+			colorWhiter.a = math.Clamp((MySelf.Hullsed - CurTime()) / (2), 0, 1) * 255
 			local th = draw_GetFontHeight("ZSHUDFontSmallest")
 			for i=1,#boom do
 				draw_SimpleTextBlur(boom[i], "ZSHUDFontSmallest", x, y, colorWhiter, TEXT_ALIGN_LEFT)
@@ -1639,16 +1645,16 @@ function GM:CreateNonScaleFonts()
 	surface.CreateLegacyFont("tahoma", 96, 1000, true, false, "zshintfont", false, true)
 
 	-- Default, DefaultBold, DefaultSmall, etc. were changed when gmod13 hit. These are renamed fonts that have the old values.
-	surface.CreateFont("DefaultFontVerySmall", {font = "tahoma", size = 10, weight = 0, antialias = false})
-	surface.CreateFont("DefaultFontSmall", {font = "tahoma", size = 11, weight = 0, antialias = false})
-	surface.CreateFont("DefaultFontSmallDropShadow", {font = "tahoma", size = 11, weight = 0, shadow = true, antialias = false})
-	surface.CreateFont("DefaultFont", {font = "tahoma", size = 13, weight = 500, antialias = false})
-	surface.CreateFont("DefaultFontAA", {font = "tahoma", size = 13, weight = 500, antialias = true})
-	surface.CreateFont("DefaultFontBold", {font = "tahoma", size = 13, weight = 1000, antialias = false})
-	surface.CreateFont("DefaultFontLarge", {font = "tahoma", size = 16, weight = 0, antialias = false})
-	surface.CreateFont("DefaultFontLargeAA", {font = "tahoma", size = 16, weight = 0, antialias = true})
-	surface.CreateFont("DefaultFontLargest", {font = "tahoma", size = 22, weight = 0, antialias = false})
-	surface.CreateFont("DefaultFontLargestAA", {font = "tahoma", size = 22, weight = 0, antialias = true})
+	surface.CreateFont("DefaultFontVerySmall", {font = "tahoma", size = 10, weight = 0, antialias = false, extended = true})
+	surface.CreateFont("DefaultFontSmall", {font = "tahoma", size = 11, weight = 0, antialias = false, extended = true})
+	surface.CreateFont("DefaultFontSmallDropShadow", {font = "tahoma", size = 11, weight = 0, shadow = true, antialias = false, extended = true})
+	surface.CreateFont("DefaultFont", {font = "tahoma", size = 13, weight = 500, antialias = false, extended = true})
+	surface.CreateFont("DefaultFontAA", {font = "tahoma", size = 13, weight = 500, antialias = true, extended = true})
+	surface.CreateFont("DefaultFontBold", {font = "tahoma", size = 13, weight = 1000, antialias = false, extended = true})
+	surface.CreateFont("DefaultFontLarge", {font = "tahoma", size = 16, weight = 0, antialias = false, extended = true})
+	surface.CreateFont("DefaultFontLargeAA", {font = "tahoma", size = 16, weight = 0, antialias = true, extended = true})
+	surface.CreateFont("DefaultFontLargest", {font = "tahoma", size = 22, weight = 0, antialias = false, extended = true})
+	surface.CreateFont("DefaultFontLargestAA", {font = "tahoma", size = 22, weight = 0, antialias = true, extended = true})
 end
 
 function GM:CreateScalingFonts()
@@ -1780,7 +1786,7 @@ end
 
 function GM:CreateLateVGUI()
 	if not self.HealthHUD then
-		self.HealthHUD = vgui.Create("ZSHealthArea")
+		self.HealthHUD = vgui.Create(self.GoofyAhhHud and 'ZSHealthArea2' or "ZSHealthArea")
 	end
 
 	if not self.StatusHUD then

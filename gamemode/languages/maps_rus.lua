@@ -10,8 +10,8 @@ LANGUAGE["Wait for Bob to land.."] = "Жди когда боб приземли�
 LANGUAGE["This is pewdiepie"] = "Это пьюдипай"
 LANGUAGE["You will be spawned soon!"] = "Ты скоро заспавнишься!"
 LANGUAGE["Enjoy dancing Bob while you wait!"] = "Наслаждайся танцом Боба пока ты ждешь!"
-LANGUAGE["Bob is love, Bob is life"] = "Боб - краш и Боб - жизнь"
-LANGUAGE["My name is Bob!"] = "Мое имя - Боб!"
+LANGUAGE["Bob is love, Bob is life"] = "Боб - краш, Боб - навсегда"
+LANGUAGE["My name is Bob!"] = "Меня зовут Боб!"
 LANGUAGE["Please stand by!"] = "Подождите пожалуйста!"
 LANGUAGE["Find me!"] = "Найди меня :)"
 --Обж фармаси

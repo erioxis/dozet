@@ -519,6 +519,8 @@ LANGUAGE.c_nanites_d                                        = "On use drop a nan
 LANGUAGE.c_necronomicon                                        = "Necronomicon"
 LANGUAGE.c_necronomicon_d                                        = "All Zombies take 250 damage."
 LANGUAGE.c_necronomicon_broke_d                                        = "All Zombies take 100 damage.\nBroken and deal damage only for 3 zombies."
+LANGUAGE.c_berserk                                       = "Berserker"
+LANGUAGE.c_berserk_d                                        = "Enable berserk buffs."
 LANGUAGE.c_timer                                        = "Baragod Hours"
 LANGUAGE.c_timer_d                                        = "+15 or -15 Secs for timer."
 LANGUAGE.c_chaos                                        = "Chaos Card"
@@ -1775,6 +1777,8 @@ LANGUAGE.skill_amulet_17 = "AMULET:Will of god"
 LANGUAGE.skill_amulet_17_d1 = "-5 seconds for holy mantle recharge"
 LANGUAGE.skill_amulet_18 = "AMULET:Soul King"
 LANGUAGE.skill_amulet_18_d1 = "Give 3 random piece of souls"
+LANGUAGE.skill_amulet_19 = "Balanced Amulet"
+LANGUAGE.skill_amulet_19_d1 = "Give 5% of damage,jump height and 5 speed,luck,health."
 --free skill
 LANGUAGE.skill_freeskill = "Free SP"
 --torment

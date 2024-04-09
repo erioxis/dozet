@@ -93,7 +93,7 @@ end
 
 if SERVER then
 	function CLASS:ProcessDamage(pl, dmginfo)
-		dmginfo:SetDamage(dmginfo:GetDamage())
+		dmginfo:SetDamage(dmginfo:GetDamage()*0.75)
 		return dmginfo
 	end
 
@@ -102,19 +102,10 @@ if SERVER then
 		if pl.NoOneShot then
 			local pos = pl:GetPos()
 			if attacker and attacker:IsValid() and attacker ~= pl then
-				attacker:TakeDamage(5000,pl,pl:GetActiveWeapon())
-				attacker:Kill()
-				timer.Simple(0.5, function() attacker:TakeDamage(5000,pl,pl:GetActiveWeapon()) attacker:Kill()  end)
+				attacker.BerserkerCharge = false
+				attacker.LetalSave = false
+				attacker:TakeInventoryItem('trinket_lazarussoul')
 			end
-			timer.Simple(0.5, function()
-			
-				pl:SetZombieClass(GAMEMODE.ZombieClasses["Sisyphis Prime"].Index)
-				pl:DoHulls(GAMEMODE.ZombieClasses["Sisyphis Prime"].Index, TEAM_UNDEAD)
-				pl:EmitSound(Sound("zombiesurvival/sp_nicetry"..(math.random(1,2) == 2 and 2 or "")..".wav"))
-				pl.DeathClass = nil
-				pl:UnSpectateAndSpawn()
-				pl:SetPos(pos)
-			end)
 
 		end
 		pl:SetZombieClass(GAMEMODE.DefaultZombieClass)

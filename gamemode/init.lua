@@ -95,6 +95,7 @@ AddCSLuaFile("vgui/parsenal_anti.lua")
 AddCSLuaFile("vgui/premantle.lua")
 AddCSLuaFile("vgui/pdrones.lua")
 AddCSLuaFile("vgui/zshealtharea.lua")
+AddCSLuaFile("vgui/zs_dozet_hp.lua")
 AddCSLuaFile("vgui/zsstatusarea.lua")
 AddCSLuaFile("vgui/pstatus.lua")
 AddCSLuaFile("vgui/zsgamestate.lua")
@@ -2136,40 +2137,7 @@ local function RealMap(map)
 	return string.match(map, "(.+)%.bsp")
 end
 function GM:LoadNextMap()
-	-- Just in case.
-	timer.Simple(10, game.LoadNextMap)
-	timer.Simple(15, function() RunConsoleCommand("changelevel", game.GetMap()) end)
-
-	if file.Exists(GetConVar("mapcyclefile"):GetString(), "GAME") then
-		game.LoadNextMap()
-	else
-		local maps = file.Find("maps/zs_*.bsp", "GAME")
-		maps = table.Add(maps, file.Find("maps/ze_*.bsp", "GAME"))
-		maps = table.Add(maps, file.Find("maps/zm_*.bsp", "GAME"))
-		table.sort(maps)
-		if #maps > 0 then
-			local currentmap = game.GetMap()
-			for i, map in ipairs(maps) do
-				local lowermap = string.lower(map)
-				local realmap = RealMap(lowermap)
-				if realmap == currentmap then
-					if maps[i + 1] then
-						local nextmap = RealMap(maps[i + 1])
-						if nextmap then
-							RunConsoleCommand("changelevel", nextmap)
-						end
-					else
-						local nextmap = RealMap(maps[1])
-						if nextmap then
-							RunConsoleCommand("changelevel", nextmap)
-						end
-					end
-
-					break
-				end
-			end
-		end
-	end
+	NDB.VoteMap.InitiateVoteMap(25, 3)
 end
 
 

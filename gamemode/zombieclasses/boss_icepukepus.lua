@@ -208,6 +208,7 @@ local matSkin = Material("Models/Barnacle/barnacle_sheet")
 function CLASS:PrePlayerDraw(pl)
 	render.ModelMaterialOverride(matSkin)
 	render.SetColorModulation(0.106, 0.588, 0.914)
+	render.WorldMaterialOverride(matSkin)
 end
 
 function CLASS:PostPlayerDraw(pl)

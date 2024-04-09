@@ -25,7 +25,7 @@ SWEP.Base = "weapon_zs_basemelee"
 
 SWEP.HoldType = "melee2"
 
-SWEP.DamageType = DMG_CLUB
+SWEP.DamageType = DMG_DIRECT
 
 SWEP.ViewModel = "models/weapons/v_sledgehammer/c_sledgehammer.mdl"
 SWEP.WorldModel = "models/weapons/w_crowbar.mdl"

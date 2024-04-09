@@ -73,6 +73,27 @@ function PLAYER:ProcessAchievements()
     net.WriteInt(completed,9)
     net.Send(self)
 end
+--Оптимизация.
+function PLAYER:ProcessAchievement(achid)
+    local ach = GAMEMODE.Achievements[achid]
+    local result = sql.Query("SELECT * FROM zs_achievements_" .. (ach.Goal and "progress" or "onetime") .. " WHERE SteamID = '" .. self:SteamID() .. "' AND AchievementID = '" .. achid..(ach.DailyCount and ach.DailyCount or ach.WeekCount and ach.WeekCount or "") .. "'")
+
+    if result then
+        if ach.Goal then
+            result = result[1]
+            result.Progress = tonumber(result.Progress)
+            -- Store progress
+            self.Achs[achid] = result.Progress
+        else
+            -- If we get a result on an achievement with no goal, achievement was achieved
+            self.Achs[achid] = true
+        end
+    end
+    net.Start("HNS.AchievementsProgress")
+    net.WriteString(util.TableToJSON(self.Achs))
+    net.WriteInt(0,9)
+    net.Send(self)
+end
 
 -- For one time achievements
 function PLAYER:GiveAchievement(id)
@@ -92,6 +113,7 @@ end
 
 -- For progressiv eachievements
 function PLAYER:GiveAchievementProgress(id, count)
+
     -- Check if achievement was already earned
     local completed = 0
 
@@ -121,7 +143,9 @@ function PLAYER:GiveAchievementProgress(id, count)
     end
 
     -- Update
-    self:ProcessAchievements()
+   -- local start = SysTime()
+    self:ProcessAchievement(id)
+   -- print( ( '%.8f seconds' ):format( SysTime() - start ) )
 end
 
 local lastSecond = 0

@@ -539,6 +539,7 @@ SKILL_OVERHEATED_BULLET = 536
 SKILL_HYPERGLYCEMIA = 537
 SKILL_NEED_A_BUFF = 538
 SKILL_QUILLS = 539
+SKILL_AMULET_19 = 540
 
 
 
@@ -1247,6 +1248,17 @@ d.Amulet = true
 d.AmuletCost = 3													
 GM:AddSkillModifier(SKILL_AMULET_4, SKILLMOD_SPOINT, 1)
 GM:AddSkillModifier(SKILL_AMULET_4, SKILLMOD_PIECE_OF_AMULET, -3)
+local d = GM:AddSkill(SKILL_AMULET_19, trs("skill_amulet_19"), GOOD.. trs("skill_amulet_19_d1"),
+																-10,			-1,					{SKILL_NONE}, TREE_POINTTREE)
+d.Amulet = true		
+d.AmuletCost = 10													
+GM:AddSkillModifier(SKILL_AMULET_19, SKILLMOD_SPOINT, 1)
+GM:AddSkillModifier(SKILL_AMULET_19, SKILLMOD_PIECE_OF_AMULET, -10)
+GM:AddSkillModifier(SKILL_AMULET_19, SKILLMOD_DAMAGE_ALL, 0.05)
+GM:AddSkillModifier(SKILL_AMULET_19, SKILLMOD_JUMPPOWER_MUL, 0.05)
+GM:AddSkillModifier(SKILL_AMULET_19, SKILLMOD_LUCK, 5)
+GM:AddSkillModifier(SKILL_AMULET_19, SKILLMOD_HEALTH, 5)
+GM:AddSkillModifier(SKILL_AMULET_19, SKILLMOD_SPEED, 5)
 local d = GM:AddSkill(SKILL_AMULET_5, trs("skill_amulet_5"), GOOD.. trs("skill_amulet_5_d1"),
 																-10,			-3,					{SKILL_NONE}, TREE_POINTTREE)
 d.Amulet = true			
@@ -1368,21 +1380,21 @@ local d = GM:AddSkill(SKILL_SECRET_VI, "Secret VI", GOOD.."+5 Skill Points",
 d.Hidden = true	
 d.Hidden1 = true	
 local rand = math.random(2,50)
-local d = GM:AddSkill(SKILL_SECRET_VIII, "Secret VIII", GOOD.."+10 Скилл поинтов",
+local d = GM:AddSkill(SKILL_SECRET_VIII, "Secret VIII", GOOD.."+10 Очков навыка",
 																rand*math.random(1,2),			rand,					{SKILL_NONE}, TREE_GUNTREE)
 GM:AddSkillModifier(SKILL_SECRET_VIII, SKILLMOD_SPOINT, 10)
 d.Hidden = true	
 d.Hidden1 = true
 local rand2 = math.random(-20,20)
 local rand1 = math.random(-20,20)
-local d = GM:AddSkill(SKILL_SECRET_9, "Secret IX", GOOD.."+20 Скилл поинтов.",
+local d = GM:AddSkill(SKILL_SECRET_9, "Secret IX", GOOD.."+20 Очков навыка.",
 																rand2,			rand1,					{SKILL_NONE}, TREE_GUNTREE)
 GM:AddSkillModifier(SKILL_SECRET_9, SKILLMOD_SPOINT, 20)
 d.Hidden = true	
 d.Hidden1 = true
 rand2 = math.random(-20,20)
 rand1 = math.random(-20,20)
-local d = GM:AddSkill(SKILL_SECRET_10, "Secret X", GOOD.."Ну тебе повезло!Бери +50% к опыту и +15 скилл поинтов!",
+local d = GM:AddSkill(SKILL_SECRET_10, "Secret X", GOOD.."Ну тебе повезло!Бери +50% к опыту и +15 очков навыка!",
 																rand2,			rand1,					{SKILL_NONE}, math.random(1,12))
 GM:AddSkillModifier(SKILL_SECRET_10, SKILLMOD_SPOINT, 15)
 GM:AddSkillModifier(SKILL_SECRET_10, SKILLMOD_XP, 0.5)
@@ -2205,7 +2217,7 @@ GM:AddSkill(SKILL_ANTI_DEVO, trs("skill_adevo"), GOOD..trs("skill_adevo_d1")..BA
 GM:AddSkillModifier(SKILL_ANTI_DEVO, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 0.25)
 GM:AddSkillModifier(SKILL_ANTI_DEVO, SKILLMOD_BLOODARMOR_DMG_REDUCTION, -0.07)
 GM:AddSkill(SKILL_QUILLS, trs("skill_quills"), GOOD..trs("skill_quills_d1")..BAD..trs("skill_quills_d2"),
-				                                                            	2,			7,					{SKILL_ANTI_DEVO}, TREE_DEFENSETREE).NewSkill = true
+				                                                            	2,			7,					{SKILL_ANTI_DEVO}, TREE_DEFENSETREE)
 GM:AddSkillModifier(SKILL_QUILLS, SKILLMOD_BLOODARMOR, -2500)
 GM:AddSkill(SKILL_SECONDCHANCE, trs("skill_schance"), GOOD..trs("skill_schance_d1"),
 				                                                            	0,			8,					{SKILL_MOREDAMAGE}, TREE_DEFENSETREE)

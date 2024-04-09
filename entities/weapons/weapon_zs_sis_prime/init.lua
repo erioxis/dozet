@@ -112,7 +112,6 @@ function SWEP:ToDie(damage, numshots, cone)
 end
 function SWEP:DoShoot()
 	local owner = self:GetOwner()
-	for i = 0,1 do
 		local ent = ents.Create(self.Primary.Projectile)
 		if ent:IsValid() then
 			if !self:GetJudge() then
@@ -142,5 +141,4 @@ function SWEP:DoShoot()
 				self:PhysModify(phys)
 			end
 		end
-	end
 end

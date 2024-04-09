@@ -163,6 +163,14 @@ cvars.AddChangeCallback("zs_show_dmg_in_perc", function(cvar, oldvalue, newvalue
 	GAMEMODE.ShowPercDmg = tonumber(newvalue) == 1
 end)
 
+GM.GoofyAhhHud = CreateClientConVar("zs_goofy_ahh_hud", "0", true, false):GetBool()
+cvars.AddChangeCallback("zs_goofy_ahh_hud", function(cvar, oldvalue, newvalue)
+	GAMEMODE.GoofyAhhHud = tonumber(newvalue) == 1
+	GAMEMODE.HealthHUD:Remove()
+	GAMEMODE.HealthHUD = vgui.Create(GAMEMODE.GoofyAhhHud and 'ZSHealthArea2' or "ZSHealthArea")
+end)
+
+
 GM.IronsightZoomScale = math.Clamp(CreateClientConVar("zs_ironsightzoom", 1, true, false):GetFloat(), 0, 1)
 cvars.AddChangeCallback("zs_ironsightzoom", function(cvar, oldvalue, newvalue)
 	GAMEMODE.IronsightZoomScale = math.Clamp(tonumber(newvalue) or 1, 0, 1)

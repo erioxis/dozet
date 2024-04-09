@@ -20,12 +20,8 @@ local function ContentsPaint(self, w, h)
 		local gp = (((lp:GetZSRemortLevel() / 4) or 0) + (lp.AmuletPiece or 0)) < 0 and lp:Team() == TEAM_HUMAN
 		local screenscale = BetterScreenScale()
 		local health2 = 0
-		local fast = false
-		if oldh2 <= thealth - 50 or  oldh2 <= thealth + 500 or  oldh <= thealth -100 then
-			fast = true
-		end
 		local sin = math.max(0,math.sin(CurTime() * 2))
-		local health = math_Apr(oldh,math_Clamp(thealth, 1,lp:GetMaxHealthEx()),1.2 * (lp:Team() ~= TEAM_HUMAN and 20 or 1) * (fast and 40 or 1))
+		local health = math_Clamp(thealth, 1,lp:GetMaxHealthEx())
 		local healthperc = math_Clamp(health / lp:GetMaxHealthEx(), 0, 1)
 		
 		local wid, hei = 300 * screenscale, 18 * screenscale
@@ -41,8 +37,8 @@ local function ContentsPaint(self, w, h)
 		local y = 115 * screenscale
 		local subwidth = healthperc * wid
 		if thealth > lp:GetMaxHealthEx() then
-			health2 = " (+"..math.Round(math_Apr(oldh2,math.Round(thealth-lp:GetMaxHealthEx()),1.5* (fast and 40 or 1)))..")"
-			oldh2 = math_Apr(oldh2,math.Round(thealth-lp:GetMaxHealthEx()),1.5* (fast and 40 or 1))
+			health2 = " (+"..math.Round(thealth-lp:GetMaxHealthEx())..")"
+			oldh2 = math.Round(thealth-lp:GetMaxHealthEx())
 		end
 		if lp:HasTrinket("curse_unknown") then
 			health = lp:GetMaxHealthEx() * sin
@@ -87,7 +83,6 @@ local function ContentsPaint(self, w, h)
 			surface_SetDrawColor(194, 12, 155, 50)
 			surface_DrawRect(x, y, wid, hei * 2)
 		end
-		oldh = math_Apr(oldh,math_Clamp(thealth, 0,lp:GetMaxHealthEx()),0.4 * (lp:Team() ~= TEAM_HUMAN and 20 or 1) * (fast and 40 or 1))
 		if lp:Team() == TEAM_HUMAN then
 			local bloodarmor = lp:GetBloodArmor()
 			local max = math.Round((lp.MaxBloodArmor or 25))

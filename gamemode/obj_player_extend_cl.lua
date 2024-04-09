@@ -107,7 +107,7 @@ function meta:DoHulls(classid, teamid)
 
 	if teamid == TEAM_UNDEAD then
 		self:SetIK(false)
-		GAMEMODE.Hullsed = CurTime() + 11
+		self.Hullsed = CurTime() + 11
 		local classtab = GAMEMODE.ZombieClasses[classid]
 		if classtab then
 			local scale = (self:IsChampion() and (self:GetChampion() == CHAMP_SMOL and 0.75 or self:GetChampion() == CHAMP_BIG and 1.3 or 1.1) or 1)

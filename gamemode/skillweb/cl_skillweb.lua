@@ -1540,7 +1540,7 @@ function PANEL:OnMousePressed(mc)
 					elseif not GAMEMODE.Skills[hoveredskill].HiddenU then
 						if GAMEMODE.OneClickSkill then UnlockSkill(self, hoveredskill) return end
 						contextmenu.Button:SetText("Unlock")
-					if GAMEMODE.Skills[hoveredskill].Amulet and (MySelf:GetZSRemortLevel() / 4 > MySelf.AmuletPiece or MySelf:GetZSRemortLevel() == 0) then
+					if GAMEMODE.Skills[hoveredskill].Amulet and (MySelf:GetZSRemortLevel() / 4 > (MySelf.AmuletPiece or 0) or MySelf:GetZSRemortLevel() == 0) then
 						self:DisplayMessage("You take x2 damage if don't have enought amulet cells!", COLOR_RED)
 							surface.PlaySound("buttons/button8.wav")
 						end

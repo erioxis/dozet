@@ -96,8 +96,8 @@ function GM:SkillCanUnlock(pl, skillid, skilllist)
 
 	return false
 end
-function GM:GetConnectedSkills(pl,myskillid,connections)
-	local counted = 0
+function GM:GetConnectedSkills(pl,myskillid,connections, none)
+	local counted = none and 1 or 0
 	for k,v in pairs(pl:GetUnlockedSkills()) do
 		if connections[v] then
 			counted = counted + 1
@@ -112,12 +112,8 @@ function GM:SkillCanDeUnlock(pl, skillid, skilllist)
 	local skill = self.Skills[skillid]
 	if skill then
 		local connections = skill.Connections
-
-		if connections[SKILL_NONE] then
-			return false
-		end
 		for _, myskillid in pairs(skilllist) do
-			if self:GetConnectedSkills(pl,myskillid,connections) then
+			if self:GetConnectedSkills(pl,myskillid,connections, connections[SKILL_NONE])  then
 				return true
 			end
 		end
