@@ -71,34 +71,41 @@ function SWEP:PostOnMeleeMiss(tr)
 	self:SetDTInt(2, 0)
 end
 
-GAMEMODE:AddNewRemantleBranch(SWEP, 1, "Plank with nails", "Give Bleed when you hit zombie,less damage,", function(wept)
-wept.MeleeDamage = wept.MeleeDamage * 0.8
-wept.BleedDamage = wept.MeleeDamage * 2
-function wept:PlayerHitUtil(owner, damage, hitent, dmginfo)
-	hitent:MeleeViewPunch(damage*0.1)
-	local bleed = hitent:GetStatus("bleed")
-	if SERVER then
-		hitent:GiveAchievement("bleedmode")
-	end
-	if bleed and bleed:IsValid() then
-		bleed:AddDamage(damage)
-		bleed.Damager = owner
-	else
-		local stat = hitent:GiveStatus("bleed")
-		if stat and stat:IsValid() then
-			stat:SetDamage(damage)
-			stat.Damager = owner
+GAMEMODE:AddNewRemantleBranch(SWEP, 1, translate.Get("wep_plank_r1"), translate.Get("wep_plank_d_r1"), function(wept)
+	wept.MeleeDamage = wept.MeleeDamage * 0.8
+	wept.BleedDamage = wept.MeleeDamage * 2
+	wept.PlayerHitUtil = function(self, owner, damage, hitent, dmginfo)
+		hitent:MeleeViewPunch(damage*0.1)
+		local bleed = hitent:GetStatus("bleed")
+		if SERVER then
+			hitent:GiveAchievement("bleedmode")
+		end
+		if bleed and bleed:IsValid() then
+			bleed:AddDamage(wept.BleedDamage*.65)
+			bleed.Damager = owner
+		else
+			local stat = hitent:GiveStatus("bleed")
+			if stat and stat:IsValid() then
+				stat:SetDamage(wept.BleedDamage)
+				stat.Damager = owner
+			end
 		end
 	end
-end
-
-		wept.OnMeleeHit = function(self, hitent, hitflesh, tr)
+	wept.OnMeleeHit = function(self, hitent, hitflesh, tr)
 		if self:GetOwner():GetBleedDamage() > 1 then
 			self.MeleeDamage = wept.MeleeDamage * 1.5
 		end
 	end
 
 	wept.PostOnMeleeHit = function(self, hitent, hitflesh, tr)
+		if hitent:IsValid() and hitent:IsPlayer() then
+			local combo = self:GetDTInt(2)
+			local owner = self:GetOwner()
+			local armdelay = owner:GetMeleeSpeedMul()
+			self:SetNextPrimaryFire(CurTime() + math.max(0.2, self.Primary.Delay * (1 - combo / 20)) * armdelay)
+	
+			self:SetDTInt(2, combo + 1)
+		end
 		self.MeleeDamage = wept.MeleeDamage
 	end
 

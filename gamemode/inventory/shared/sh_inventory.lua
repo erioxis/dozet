@@ -253,6 +253,8 @@ local sinse = {	"sin_wrath",
 local quecader = {	"troyaksoul",
 "nanite_nails",
 "useself",
+"ice_of_nails",
+"deal_with_zombie",
 "illegalmechanism",
 "cons_nanites",
 "gov_blueprints"}
@@ -701,15 +703,15 @@ GM:AddInventoryItemData("comp_sacred_soul",		"Sacred Soul",		"This sacred cartri
 GM:AddInventoryItemData("comp_bloodhack",		"Bloody Hack",		"djasnndwhadjajs||daw...",									"models/Items/combine_rifle_cartridge01.mdl")
 GM:AddInventoryItemData("comp_ticket",		trs("c_ticket"),		trs("c_ticket_d"),									"models/props_c17/paper01.mdl")
 --Осколки душ
-GM:AddInventoryItemData("comp_soul_hack",		"Piece of soul(HACK)",		"Blank soul of hacks things", soulrec)
-GM:AddInventoryItemData("comp_soul_melee",		"Piece of soul(MELEE)",		"Blank soul of melee things", soulrec)
-GM:AddInventoryItemData("comp_soul_status",		"Piece of soul(STATUS)",		"Blank soul of status things", soulrec)
-GM:AddInventoryItemData("comp_soul_health",		"Piece of soul(HEALTH)",		"Blank soul of health things", soulrec)
-GM:AddInventoryItemData("comp_soul_alt_h",		"Piece of soul(ALTERNATIVE HEALTH)",		"Blank soul of ALT health things", soulrec)
-GM:AddInventoryItemData("comp_soul_godlike",		"Piece of soul(GOD LIKE)",		"Blank soul of GODLIKE! things", soulrec)
-GM:AddInventoryItemData("comp_soul_dosei",		"Piece of soul(DOSEI)",		"Blank soul of dosei things", soulrec)
-GM:AddInventoryItemData("comp_soul_dd",		"Piece of soul(BIG MANS)",		"Blank soul of big mans things", soulrec)
-GM:AddInventoryItemData("comp_soul_booms",		"Piece of soul(BOOMS)",		"Blank soul of booms things", soulrec)
+GM:AddInventoryItemData("comp_soul_hack",		trs("c_soul_part_hack"),		trs("c_soul_part_hack_d"), soulrec)
+GM:AddInventoryItemData("comp_soul_melee",		trs("c_soul_part_melee_d"),		trs("c_soul_part_melee_d"), soulrec)
+GM:AddInventoryItemData("comp_soul_status",		trs("c_soul_part_status"),		trs("c_soul_part_status_d"), soulrec)
+GM:AddInventoryItemData("comp_soul_health",		trs("c_soul_part_health"),		trs("c_soul_part_health_d"), soulrec)
+GM:AddInventoryItemData("comp_soul_alt_h",		trs("c_soul_part_alt_health"),		trs("c_soul_part_alt_health_d"), soulrec)
+GM:AddInventoryItemData("comp_soul_godlike",		trs("c_soul_part_godlike"),		trs("c_soul_part_godlike_d"), soulrec)
+GM:AddInventoryItemData("comp_soul_dosei",		trs("c_soul_part_dosei"),		trs("c_soul_part_dosei_d"), soulrec)
+GM:AddInventoryItemData("comp_soul_dd",		trs("c_soul_part_bigmans"),		trs("c_soul_part_bigmans_d"), soulrec)
+GM:AddInventoryItemData("comp_soul_booms",		trs("c_soul_part_booms"),		trs("c_soul_part_booms_d"), soulrec)
 
 GM:AddInventoryItemData("comp_errorium",		trs("c_errorium"),			trs("c_errorium_d"), soulerr)
 
@@ -1152,10 +1154,10 @@ trinket = GM:AddTrinket(trs("t_invalid"), "invalid", false, pveles, pweles, 3, t
 GM:AddSkillModifier(trinket, SKILLMOD_KNOCKDOWN_RECOVERY_MUL, -0.5)
 
 
-GM:AddSkillModifier(GM:AddTrinket(trs("t_ammovesti"), "ammovestii", false, ammoveles, ammoweles, 2, trs("t_d_ammovesti"), nil, nil, "weapon_zs_shot_trinket"), SKILLMOD_RELOADSPEED_MUL, 0.07)
-GM:AddSkillModifier(GM:AddTrinket(trs("t_ammovestii"), "ammovestiii", false, ammoveles, ammoweles, 4, trs("t_d_ammovestii"), nil, nil, "weapon_zs_shot_trinket"), SKILLMOD_RELOADSPEED_MUL, 0.11)
-GM:AddSkillModifier(GM:AddTrinket(trs("t_ammovestiiii"), "sammovest", false, ammoveles, ammoweles, 4, trs("t_d_ammovestinf"), nil, nil, "weapon_zs_shot_trinket"), SKILLMOD_RELOADSPEED_MUL, 0.16)
-GM:AddSkillModifier(GM:AddTrinket(trs("t_ammovestiii"), "classix", false, book, bookw, 4,trs("t_d_ammovestinf"), nil, nil, "weapon_zs_shot_trinket"), SKILLMOD_RELOADSPEED_MUL, 0.16)
+GM:AddSkillModifier(GM:AddTrinket(trs("t_ammovesti"), "ammovestii", false, ammoveles, ammoweles, 2, trs("t_d_ammovesti"), nil, nil, "weapon_zs_shot_trinket"), SKILLMOD_RELOADSPEED_MUL, 0.04)
+GM:AddSkillModifier(GM:AddTrinket(trs("t_ammovestii"), "ammovestiii", false, ammoveles, ammoweles, 4, trs("t_d_ammovestii"), nil, nil, "weapon_zs_shot_trinket"), SKILLMOD_RELOADSPEED_MUL, 0.05)
+GM:AddSkillModifier(GM:AddTrinket(trs("t_ammovestiiii"), "sammovest", false, ammoveles, ammoweles, 4, trs("t_d_ammovestinf"), nil, nil, "weapon_zs_shot_trinket"), SKILLMOD_RELOADSPEED_MUL, 0.06)
+GM:AddSkillModifier(GM:AddTrinket(trs("t_ammovestiii"), "classix", false, book, bookw, 4,trs("t_d_ammovestinf"), nil, nil, "weapon_zs_shot_trinket"), SKILLMOD_RELOADSPEED_MUL, 0.06)
 
 GM:AddTrinket(trs("t_autor"), "autoreload", false, ammoveles, ammoweles, 2, trs("t_d_autor"), nil, nil, "weapon_zs_shot_trinket")
 GM:AddTrinket(trs("t_gg_nomi"), "gg_nomi", false, ammoveles, ammoweles, 4, trs("t_d_gg_nomi"), nil, nil, "weapon_zs_shot_trinket")
@@ -1752,6 +1754,8 @@ end)
 trinket, trinketwep = GM:AddTrinket(trs("t_nnails"), "nanite_nails", false, supveles, supweles, 3, trs("t_d_nnails"), nil, nil, "ammo_nail")
 GM:AddSkillModifier(trinket, SKILLMOD_REPAIRRATE_MUL, -0.15)
 trinket, trinketwep = GM:AddTrinket(trs("t_useself"), "useself", false, supveles, supweles, 3, trs("t_d_useself"), nil, nil, "ammo_nail")
+trinket, trinketwep = GM:AddTrinket(trs("t_ice_of_nails"), "ice_of_nails", false, supveles, supweles, 3, trs("t_d_ice_of_nails"), nil, nil, "ammo_nail")
+trinket, trinketwep = GM:AddTrinket(trs("t_deal_with_zombie"), "deal_with_zombie", false, supveles, supweles, 3, trs("t_d_deal_with_zombie"), nil, nil, "ammo_nail")
 trinket, trinketwep = GM:AddTrinket(trs("t_gov_blue"), "gov_blueprints", false, supveles, supweles, 3, trs("t_d_gov_blue"), nil, nil, "ammo_nail")
 GM:AddSkillModifier(trinket, SKILLMOD_REPAIRRATE_MUL, -0.1)
 
@@ -1831,7 +1835,7 @@ trinket = GM:AddTrinket(trs("t_fblueprints"), "futureblu", false, supveles, supw
 GM:AddSkillModifier(trinket, SKILLMOD_REPAIRRATE_MUL, 0.30)
 trinket = GM:AddTrinket(trs("t_kbook"), "knowbook", false, book, bookw, 5, trs("t_d_kbook"))
 GM:AddSkillModifier(trinket,  SKILLMOD_RESUPPLY_DELAY_MUL, -0.1)
-GM:AddSkillModifier(trinket, SKILLMOD_RELOADSPEED_MUL, 0.15)
+GM:AddSkillModifier(trinket, SKILLMOD_RELOADSPEED_MUL, 0.07)
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_MUL, 0.15)
 trinket = GM:AddTrinket(trs("t_bloodlust"), "bloodlust", false, book, bookw, 5, trs("t_d_bloodlust"))
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_POWERATTACK_MUL, 0.50)
@@ -1839,7 +1843,7 @@ GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, -10)
 trinket = GM:AddTrinket(trs("t_adbat"), "adbat", false, supveles, supweles, 5, trs("t_d_adbat"))
 GM:AddSkillModifier(trinket, SKILLMOD_RELOADSPEED_PULSE_MUL, 0.33)
 trinket = GM:AddTrinket(trs("t_mecharm"), "marm", false, supveles, supweles, 5, trs("t_d_mecharm"))
-GM:AddSkillModifier(trinket, SKILLMOD_RELOADSPEED_MUL, 0.22)
+GM:AddSkillModifier(trinket, SKILLMOD_RELOADSPEED_MUL, 0.06)
 local sshield = {[1] = {
 	["children"] = {
 		[1] = {
@@ -2169,9 +2173,9 @@ trinket = GM:AddTrinket("Soul of Isaac", "isaacsoul", false, nil, {
 	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 7.697, y = 7.697 }, color = Color(34, 120, 255, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core_2+"] = { type = "Sprite", sprite = "effects/splashwake1", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 10, y = 10 }, color = Color(0, 5, 255, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 2, 0), angle = Angle(0, 0, 0), size = Vector(0.349, 0.349, 0.349), color = Color(115, 0, 0, 255), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} }
-}, 2,"Дает всего по немногу,дает 10 хп,перезарядка быстрее на 8%,вы получаете на 4% больше поинтов\n+10 hp,Reload speed by 8%,+4% point multiplier \n Q:2", nil, nil, "weapon_zs_soul")
+}, 2,"Дает всего по немногу,дает 10 хп,перезарядка быстрее на 5%,вы получаете на 4% больше поинтов\n+10 hp,Reload speed by 8%,+4% point multiplier \n Q:2", nil, nil, "weapon_zs_soul")
 GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, 10)
-GM:AddSkillModifier(trinket, SKILLMOD_RELOADSPEED_MUL, 0.08)
+GM:AddSkillModifier(trinket, SKILLMOD_RELOADSPEED_MUL, 0.05)
 GM:AddSkillModifier(trinket, SKILLMOD_POINT_MULTIPLIER, 0.04)
 
 trinket = GM:AddTrinket("Soul of Minos Prime", "soul_lime", false, nil, {
@@ -2500,7 +2504,7 @@ trinket, soul = GM:AddTrinket("Soul of Alt Isaac", "altisaacsoul", false, nil, {
 	["black_core"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 2, 0), angle = Angle(0, 0, 0), size = Vector(0.349, 0.349, 0.349), color = Color(115, 0, 0, 255), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} }
 }, 3,"Забыт\nForgotten\n Q:2", nil, nil, "weapon_zs_soulalt")
 GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, 10)
-GM:AddSkillModifier(trinket, SKILLMOD_RELOADSPEED_MUL, 0.08)
+GM:AddSkillModifier(trinket, SKILLMOD_RELOADSPEED_MUL, 0.01)
 GM:AddSkillModifier(trinket, SKILLMOD_POINT_MULTIPLIER, 0.04)
 
 
@@ -2590,7 +2594,7 @@ trinket, soul = GM:AddTrinket("Soul of Alt Forgotten", "altforsoul", false, nil,
 }, 4, "Бьете хуже мили оружием!Вы сможете нормально атаковать другим оружием и наносить больше урона\nmelee is dead! you can use other weapon \n Q:Alt", nil, nil, "weapon_zs_soulalt")
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_MUL, -1.20)
 GM:AddSkillModifier(trinket, SKILLMOD_AIMSPREAD_MUL, -0.25)
-GM:AddSkillModifier(trinket, SKILLMOD_RELOADSPEED_MUL, 0.12)
+GM:AddSkillModifier(trinket, SKILLMOD_RELOADSPEED_MUL, 0.06)
 GM:AddSkillModifier(trinket, SKILLMOD_DAMAGE, 0.10)
 
 trinket, soul = GM:AddTrinket("Soul of Beregod", "barasoul", false, nil, {

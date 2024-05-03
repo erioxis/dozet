@@ -200,10 +200,12 @@ function PANEL:SetNotification( ... )
 
 			if v:IsValid() then
 				local color = team.GetColor( v:Team() )
-				if v:GetZombieClassTable().DemiBoss then 
-					color = Color(255,233,31)
-				elseif v:GetZombieClassTable().Boss then 
-					color = Color(216,0,0) 
+				if v:Team() == TEAM_ZOMBIE then
+					if v:GetZombieClassTable().DemiBoss then 
+						color = Color(255,233,31)
+					elseif v:GetZombieClassTable().Boss then 
+						color = Color(216,0,0) 
+					end
 				end
 
 				self:AddLabel( " " .. v:Name(), color, GetFont() )
@@ -211,10 +213,17 @@ function PANEL:SetNotification( ... )
 				self:AddLabel( " ?", team.GetColor( TEAM_UNASSIGNED ), GetFont() )
 			end
 		elseif vtype == "Entity" then
-			self:AddLabel( "[" .. ( v:IsValid() and v:GetClass() or "?" ) .. "]", COLOR_RED, GetFont() )
+			local class =  v:GetClass()
+			if class == "curse_of_sigil" then
+				self:AddLabel( v:GetDTString(12) or "[" .. ( v:IsValid() and class or "?" ) .. "]", COLOR_RED, GetFont() )
+			else
+				self:AddLabel( "[" .. ( v:IsValid() and class or "?" ) .. "]", COLOR_RED, GetFont() )
+			end
 		else
 			local text = tostring( v )
-
+			if text == "#curse_of_sigil" then
+				text = translate.Get('curse_of_sigil')
+			end
 			self:AddLabel( text, defaultcol, defaultfont )
 		end
 	end

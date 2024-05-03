@@ -91,6 +91,44 @@ cvars.AddChangeCallback("zs_filmmode", function(cvar, oldvalue, newvalue)
 end)
 
 CreateClientConVar("zs_noredeem", "0", true, true)
+
+CreateClientConVar("zs_shield_radius", "0", true, false)
+cvars.AddChangeCallback("zs_shield_radius", function(cvar, oldvalue, newvalue)
+	local ent = MySelf:NearestShit()
+	net.Start('zs_shield_abuse')
+		net.WriteString('range')
+		net.WriteEntity(ent)
+		net.WriteUInt(newvalue, 24)
+	net.SendToServer()
+end)
+CreateClientConVar("zs_shield_x", "0", true, false)
+cvars.AddChangeCallback("zs_shield_x", function(cvar, oldvalue, newvalue)
+	local ent = MySelf:NearestShit()
+	net.Start('zs_shield_abuse')
+		net.WriteString('x_yaw')
+		net.WriteEntity(ent)
+		net.WriteUInt(newvalue, 24)
+	net.SendToServer()
+end)
+CreateClientConVar("zs_shield_y", "0", true, false)
+cvars.AddChangeCallback("zs_shield_y", function(cvar, oldvalue, newvalue)
+	local ent = MySelf:NearestShit()
+	net.Start('zs_shield_abuse')
+		net.WriteString('y_yaw')
+		net.WriteEntity(ent)
+		net.WriteUInt(newvalue, 24)
+	net.SendToServer()
+end)
+CreateClientConVar("zs_shield_z", "0", true, false)
+cvars.AddChangeCallback("zs_shield_z", function(cvar, oldvalue, newvalue)
+	local ent = MySelf:NearestShit()
+	net.Start('zs_shield_abuse')
+		net.WriteString('z_yaw')
+		net.WriteEntity(ent)
+		net.WriteUInt(newvalue, 24)
+	net.SendToServer()
+end)
+
 CreateClientConVar("zs_alwaysvolunteer", "0", true, true)
 CreateClientConVar("zs_nobosspick", "0", true, true)
 CreateClientConVar("zs_blockunable", "0", true, true)
@@ -118,6 +156,16 @@ GM.RGB_HP = CreateClientConVar("zs_rgb_ura", "0", true, false):GetBool()
 cvars.AddChangeCallback("zs_rgb_ura", function(cvar, oldvalue, newvalue)
 	GAMEMODE.RGB_HP = tonumber(newvalue) == 1
 end)
+
+GM.Size_HPBar = CreateClientConVar("zs_hp_bar_size", "300", true, false):GetFloat()
+cvars.AddChangeCallback("zs_hp_bar_size", function(cvar, oldvalue, newvalue)
+	GAMEMODE.Size_HPBar = tonumber(newvalue)
+end)
+GM.Size_BABar = CreateClientConVar("zs_ba_bar_size", "240", true, false):GetFloat()
+cvars.AddChangeCallback("zs_ba_bar_size", function(cvar, oldvalue, newvalue)
+	GAMEMODE.Size_BABar = tonumber(newvalue)
+end)
+
 GM.DisableCMenu = CreateClientConVar("zs_disablecustommenu", "0", true, false):GetBool()
 cvars.AddChangeCallback("zs_disablecustommenu", function(cvar, oldvalue, newvalue)
 	GAMEMODE.DisableCMenu = tonumber(newvalue) == 1
@@ -150,6 +198,12 @@ GM.OneClickSkill = CreateClientConVar("zs_blockunable", "0", true, false):GetBoo
 cvars.AddChangeCallback("zs_blockunable", function(cvar, oldvalue, newvalue)
 	GAMEMODE.OneClickSkill = tonumber(newvalue) == 1
 end)
+GM.ShowElol = CreateClientConVar("zs_show_e_lol", "0", true, false):GetBool()
+cvars.AddChangeCallback("zs_show_e_lol", function(cvar, oldvalue, newvalue)
+	GAMEMODE.ShowElol = tonumber(newvalue) == 1
+end)
+
+
 
 GM.FontPL = CreateClientConVar("zs_font", "", true, false):GetString()
 cvars.AddChangeCallback("zs_font", function(cvar, oldvalue, newvalue)
@@ -249,6 +303,11 @@ end)
 GM.CrosshairOffset = math.Clamp(CreateClientConVar("zs_crosshairoffset", 0, true, false):GetInt(), 0, 90)
 cvars.AddChangeCallback("zs_crosshairoffset", function(cvar, oldvalue, newvalue)
 	GAMEMODE.CrosshairOffset = math.Clamp(tonumber(newvalue) or 0, 0, 90)
+end)
+
+GM.NewHud = CreateClientConVar("zs_newhud_inv", "1", true, false):GetBool()
+cvars.AddChangeCallback("zs_newhud_inv", function(cvar, oldvalue, newvalue)
+	GAMEMODE.NewHud = newvalue == "1"
 end)
 
 GM.CrosshairThickness = math.Clamp(CreateClientConVar("zs_crosshairthickness", 1, true, false):GetFloat(), 0.5, 2)
@@ -407,6 +466,11 @@ end)
 GM.DrawPainFlash = CreateClientConVar("zs_drawpainflash", "1", true, false):GetBool()
 cvars.AddChangeCallback("zs_drawpainflash", function(cvar, oldvalue, newvalue)
 	GAMEMODE.DrawPainFlash = tonumber(newvalue) == 1
+end)
+
+GM.ShowDeployableInfo = CreateClientConVar("zs_show_deployable_info", "1", true, false):GetBool()
+cvars.AddChangeCallback("zs_show_deployable_info", function(cvar, oldvalue, newvalue)
+	GAMEMODE.ShowDeployableInfo = tonumber(newvalue) == 1
 end)
 
 GM.DisplayXPHUD = CreateClientConVar("zs_drawxp", "1", true, false):GetBool()

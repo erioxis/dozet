@@ -30,6 +30,7 @@ function ENT:Initialize()
 	end
 
 	self:ItemCreated()
+	timer.Simple(0, function() self:SetDTBool(12, self:GetOwner() and self:GetOwner():IsValid() and  self:GetOwner():IsSkillActive(SKILL_SAMODOS)) end)
 end
 
 function ENT:SetupPhysics(weptab)
@@ -85,6 +86,7 @@ end
 local function compare(a,b)
 	return a > b
 end
+ENT.LuaSended = false
 function ENT:GiveToActivator(activator, caller)
 	local owner = self:GetOwner()
 	if activator:IsSkillActive(SKILL_SAMODOS) and not activator:HasTrinket("toysoul") and owner ~= activator then activator:CenterNotify(COLOR_RED, translate.ClientGet(activator, "samodos")) return end

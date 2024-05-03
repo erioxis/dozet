@@ -220,6 +220,12 @@ function MakepOptions()
 	list:AddItem(check)
 
 	check = vgui.Create("DCheckBoxLabel", Window)
+	check:SetText(translate.Get("op_showdeployable"))
+	check:SetConVar("zs_show_deployable_info")
+	check:SizeToContents()
+	list:AddItem(check)
+
+	check = vgui.Create("DCheckBoxLabel", Window)
 	check:SetText(translate.Get("op_noproppickup"))
 	check:SetConVar("zs_nopickupprops")
 	check:SizeToContents()
@@ -389,6 +395,12 @@ function MakepOptions()
 	list4:AddItem(check)
 
 	check = vgui.Create("DCheckBoxLabel", Window)
+	check:SetText(translate.Get("op_show_e"))
+	check:SetConVar("zs_show_e_lol")
+	check:SizeToContents()
+	list4:AddItem(check)
+
+	check = vgui.Create("DCheckBoxLabel", Window)
 	check:SetText(translate.Get("op_1click"))
 	check:SetConVar("zs_blockunable")
 	check:SizeToContents()
@@ -512,6 +524,25 @@ function MakepOptions()
 	slider:SizeToContents()
 	list3:AddItem(slider)
 	
+
+	
+	local slider = vgui.Create("DNumSlider", Window)
+	slider:SetDecimals(1)
+	slider:SetMinMax(10, 400)
+	slider:SetConVar("zs_hp_bar_size")
+	slider:SetText(translate.Get("op_hpbar_size"))
+	slider:SizeToContents()
+	list3:AddItem(slider)-- 300
+
+	local slider = vgui.Create("DNumSlider", Window)
+	slider:SetDecimals(1)
+	slider:SetMinMax(10, 340)
+	slider:SetConVar("zs_ba_bar_size")
+	slider:SetText(translate.Get("op_babar_size"))-- 240
+	slider:SizeToContents()
+	list3:AddItem(slider)
+	
+
 	local slider = vgui.Create("DNumSlider", Window)
 	slider:SetDecimals(0)
 	slider:SetMinMax(2, 8)

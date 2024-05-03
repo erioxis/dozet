@@ -1361,7 +1361,7 @@ GM:AddSkill(SKILL_QUE_PRO, trs("skill_quepro"), GOOD.."-10000%"..trs("xpmul"),
 .QuePro = true														
 
 
-GM:AddSkill(SKILL_UNSIGIL, trs("skill_uncorrupt"), GOOD..trs("skill_uncorrupt_d1")..GOOD.."+24%"..trs("r_speed")..GOOD.."+6%"..trs("b_damage")..BAD.."-80%"..trs("meleedamage"),
+GM:AddSkill(SKILL_UNSIGIL, trs("skill_uncorrupt"), GOOD..trs("skill_uncorrupt_d1")..GOOD.."+5%"..trs("r_speed")..GOOD.."+6%"..trs("b_damage")..BAD.."-80%"..trs("meleedamage"),
 																0,			2,					{SKILL_LEVELHEADED}, TREE_GUNTREE)
 GM:AddSkillModifier(SKILL_UNSIGIL, SKILLMOD_DAMAGE, 0.06)
 SKILL_PHOENIX = 260
@@ -1474,12 +1474,12 @@ GM:AddSkill(SKILL_LOX, trs("skill_lox"), GOOD..trs("skill_lox_d1")..BAD..trs("sk
 GM:AddSkillModifier(SKILL_LOX, SKILLMOD_ADD_STATUS, 1)
 GM:AddSkillModifier(SKILL_ABSOLUTE, SKILLMOD_ADD_STATUS, -0.05)
 GM:AddSkillModifier(SKILL_VAMPIRISM, SKILLMOD_DAMAGE, -0.25)
-GM:AddSkill(SKILL_D_CURSEDTRUE, trs("skill_d_truecurse"), BAD.."-100%"..trs("m_curse")..GOOD.."+35"..trs("health")..GOOD.."+40"..trs("speed")..GOOD.."+15%"..trs("r_speed"),
+GM:AddSkill(SKILL_D_CURSEDTRUE, trs("skill_d_truecurse"), BAD.."-100%"..trs("m_curse")..GOOD.."+35"..trs("health")..GOOD.."+40"..trs("speed")..GOOD.."+05%"..trs("r_speed"),
 																2,		    8,					{SKILL_VAMPIRISM}, TREE_GUNTREE)
 GM:AddSkillModifier(SKILL_D_CURSEDTRUE, SKILLMOD_CURSEM, -1)
 GM:AddSkillModifier(SKILL_D_CURSEDTRUE, SKILLMOD_SPEED, 40)
 GM:AddSkillModifier(SKILL_D_CURSEDTRUE, SKILLMOD_HEALTH, 35)
-GM:AddSkillModifier(SKILL_D_CURSEDTRUE, SKILLMOD_RELOADSPEED_MUL, 0.15)
+GM:AddSkillModifier(SKILL_D_CURSEDTRUE, SKILLMOD_RELOADSPEED_MUL, 0.05)
 
 
 
@@ -2254,9 +2254,9 @@ GM:AddSkill(SKILL_DONATE3, "Donate III", GOOD.."+10% For XP\n"..BAD.."THX Chayok
 				                                                            	0,			2,					{SKILL_DONATE2}, TREE_DONATETREE)
 GM:AddSkillModifier(SKILL_DONATE3, SKILLMOD_XP, 0.10) -- Донат должен давать лишь маленькое премущество 
 SKILL_DONATE4 = 207
-GM:AddSkill(SKILL_DONATE4, "Donate IV", GOOD.."+10% Reload Speed\n"..BAD.."THX cheetus and null",
+GM:AddSkill(SKILL_DONATE4, "Donate IV", GOOD.."+4% Reload Speed\n"..BAD.."THX cheetus and null",
 				                                                            	1,			3,					{SKILL_DONATE3}, TREE_DONATETREE)
-GM:AddSkillModifier(SKILL_DONATE4, SKILLMOD_RELOADSPEED_MUL, 0.10)
+GM:AddSkillModifier(SKILL_DONATE4, SKILLMOD_RELOADSPEED_MUL, 0.04)
 SKILL_DONATE5 = 208
 GM:AddSkill(SKILL_DONATE5, "Donate V", GOOD.."Sale by 3%\n"..BAD.."Thx ivan36099",
 				                                                            	2,			3,					{SKILL_DONATE4}, TREE_DONATETREE)
@@ -2270,9 +2270,9 @@ GM:AddSkill(SKILL_DONATE7, "Donate VII", GOOD.."+20% Hammer repair mul\n"..BAD..
 				                                                            	1,			4,					{SKILL_DONATE6}, TREE_DONATETREE)
 GM:AddSkillModifier(SKILL_DONATE7, SKILLMOD_REPAIRRATE_MUL, 0.20)
 SKILL_DONATE8 = 212
-GM:AddSkill(SKILL_DONATE8, "Donate VIII", GOOD.."+21% Reload speed\n"..GOOD.."thx shepard",
+GM:AddSkill(SKILL_DONATE8, "Donate VIII", GOOD.."+7% Reload speed\n"..GOOD.."thx shepard",
 				                                                            	1,			5,					{SKILL_DONATE7}, TREE_DONATETREE)
-GM:AddSkillModifier(SKILL_DONATE8, SKILLMOD_RELOADSPEED_MUL, 0.21)
+GM:AddSkillModifier(SKILL_DONATE8, SKILLMOD_RELOADSPEED_MUL, 0.07)
 SKILL_DONATE9 = 213
 GM:AddSkill(SKILL_DONATE9, "Donate IX", GOOD.."+15 Health\n"..GOOD.."thx shepard",
 				                                                            	0,			5,					{SKILL_DONATE8}, TREE_DONATETREE)
@@ -3078,7 +3078,7 @@ GM:AddSkillModifier(SKILL_TRIGGER_DISCIPLINE2, SKILLMOD_MELEE_DAMAGE_MUL, -0.07)
 
 GM:AddSkillModifier(SKILL_TRIGGER_DISCIPLINE3, SKILLMOD_MELEE_DAMAGE_MUL, -0.07)
 
-GM:AddSkillModifier(SKILL_UNSIGIL, SKILLMOD_RELOADSPEED_MUL, 0.26)
+GM:AddSkillModifier(SKILL_UNSIGIL, SKILLMOD_RELOADSPEED_MUL, 0.05)
 GM:AddSkillModifier(SKILL_UNSIGIL, SKILLMOD_MELEE_DAMAGE_MUL, -0.8)
 
 

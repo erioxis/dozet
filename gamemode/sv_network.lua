@@ -70,6 +70,8 @@
 	util.AddNetworkString("zs_healby")
 	util.AddNetworkString("zs_buffby")
 	util.AddNetworkString("zs_buffwith")
+	util.AddNetworkString("zs_shield_abuse")
+
 	util.AddNetworkString("zs_repairobject")
 	util.AddNetworkString("zs_worldhint")
 	util.AddNetworkString("zs_honmention")

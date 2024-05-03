@@ -87,7 +87,7 @@ local matGlow = Material("sprites/glow04_noz")
 local texSideEdge = surface.GetTextureID("gui/gradient")
 function PANEL:Paint()
 	local lp = LocalPlayer()
-	if lp:IsValid() then
+	if lp:IsValid() and GAMEMODE.UseModelHealthBar then
 		local health = math.max(lp:Health(), 0)
 		local healthperc = math.Clamp(health / lp:GetMaxHealthEx(), 0, 1)
 		local barghost = lp:IsBarricadeGhosting()
@@ -224,7 +224,7 @@ local matShadow = CreateMaterial("zshealthhudshadow", "UnlitGeneric", {["$basete
 local colShadow = Color(20, 20, 20, 230)
 function PANEL:Paint()
 	local ent = self.OverrideEntity or self.Entity
-	if not ent or not ent:IsValid() or !GAMEMODE.UseModelHealthBar then return end
+	if not ent or not ent:IsValid() then return end
 
 	local lp = LocalPlayer()
 	if not lp:IsValid() then return end

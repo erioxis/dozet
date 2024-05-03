@@ -1020,6 +1020,19 @@ function meta:GetDynamicTraceFilter()
 	return DynamicTraceFilter
 end
 
+local function GIBS_IGNORE(ent)
+	if ent:GetClass() == "prop_playergib" then
+		return false
+	end
+
+	return true
+end
+
+
+function meta:DYNAMO_IGNORE_GIBS()
+	return GIBS_IGNORE
+end
+
 local function CheckFHB(tr)
 	if tr.Entity.FHB and tr.Entity:IsValid() then
 		tr.Entity = tr.Entity:GetParent()
@@ -1222,6 +1235,23 @@ function meta:NearestRemantler()
 	local pos = self:EyePos()
 
 	local remantlers = ents.FindByClass("prop_remantler")
+	local min, remantler = 99999
+
+	for _, ent in pairs(remantlers) do
+		local nearpoint = ent:NearestPoint(pos)
+		local trmatch = self:TraceLine(100).Entity == ent
+		local dist = trmatch and 0 or pos:DistToSqr(nearpoint)
+		if pos:DistToSqr(nearpoint) <= 10000 and dist < min then
+			remantler = ent
+		end
+	end
+
+	return remantler
+end
+function meta:NearestShit()
+	local pos = self:EyePos()
+
+	local remantlers = ents.FindByClass("prop_ffemitter")
 	local min, remantler = 99999
 
 	for _, ent in pairs(remantlers) do

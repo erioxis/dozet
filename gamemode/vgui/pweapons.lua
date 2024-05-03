@@ -115,6 +115,8 @@ local tbleternal = {["headshoter"] = "None", ["ind_buffer"]  = "None", ["ultra_a
 ["troyaksoul"] = "Cader",
 ["nanite_nails"] = "Cader",
 ["useself"] = "Cader",
+["ice_of_nails"] = "Cader",
+["deal_with_zombie"] = "Cader",
 ["illegalmechanism"] = "Cader",
 ["cons_nanites"] = "Cader",
 ["gov_blueprints"] = "Cader"

@@ -226,6 +226,9 @@ LANGUAGE.t_d_longgrip                                    = "+10% Melee range"
 LANGUAGE.t_ttimes                                 = "Tough Times"
 LANGUAGE.t_d_ttimes                                 = "9% chance to block damage\nReduces damage received by 1"
 
+
+LANGUAGE.curse_of_sigil = "Curse of SIGIL "
+
 LANGUAGE.t_d_ass                                   = "+6 health,-2% Accuracy"
 LANGUAGE.t_d_mticket                                 = "Every end wave can give 1000 XP(Chance Increase with luck)"
 LANGUAGE.t_d_lticket                                 = "Every end wave can give 120 points(Chance Increase with luck)"
@@ -236,10 +239,10 @@ LANGUAGE.t_d_voidheart                                 = "+15% Melee damage,-20 
 LANGUAGE.t_d_kheart                                 = "+19% Points mul,-15 health\n+10% damage taken"
 LANGUAGE.t_d_nheart                                 = "+10% Melee Damage,+20 health,slowly dying after taking damage"
 LANGUAGE.t_d_sshield                                 = "-5% Melee damage taken"
-LANGUAGE.t_d_mecharm                                 = "+22% Reload Speed"
+LANGUAGE.t_d_mecharm                                 = "+6% Reload Speed\nUse range increased by 48 units."
 LANGUAGE.t_d_adbat                                 = "+33% Reload Speed For Pulse Weapon"
 LANGUAGE.t_d_bloodlust                                 = "-10 HP,+50% Damage per attack(Reset if miss)."
-LANGUAGE.t_d_kbook                                 = "-10% resupply delay time,+15% Reload Speed.+15% Melee damage."
+LANGUAGE.t_d_kbook                                 = "-10% resupply delay time,+7% Reload Speed.+15% Melee damage."
 LANGUAGE.t_d_fblueprints                                 = "+30% Repair rate"
 LANGUAGE.t_gasmask                            = "Strange Gasmask"
 LANGUAGE.t_d_gasmask                            = "Give immune vs poison damage in zgas but only on wave 5 or higher.\n-10% Poison damage taken."
@@ -295,9 +298,9 @@ LANGUAGE.t_d_targetq4                                = "+40% to accuracy\n+25% D
 LANGUAGE.t_d_targeti                                 = "+6% to accuracy"
 LANGUAGE.t_d_autor                                 = "Reload last weapon every 4 seconds"
 LANGUAGE.t_d_gg_nomi                                 = "Give Gomu Gomu Abilities"
-LANGUAGE.t_d_ammovestinf                                 = "+16% Reload speed"
-LANGUAGE.t_d_ammovestii                               = "+11% Reload speed"
-LANGUAGE.t_d_ammovesti                                 = "+7% Reload speed"
+LANGUAGE.t_d_ammovestinf                                 = "+6% Reload speed"
+LANGUAGE.t_d_ammovestii                               = "+5% Reload speed"
+LANGUAGE.t_d_ammovesti                                 = "+4% Reload speed"
 LANGUAGE.t_d_credit2                                 = "Sale by 4%"
 LANGUAGE.t_d_invalid                                 = "berecat  sucks dicks,-50% Ragdoll debuff"
 LANGUAGE.t_d_galvanka                                 = "-50% Slow effect multiplier\n-50% Low hp slow multiplier\n+25% weapon switch speed\n -20% To time for ragdoll debuff\n"
@@ -391,6 +394,13 @@ LANGUAGE.t_gov_blue                                 = "Goverment Blueprints"
 
 LANGUAGE.t_useself                                 = "Self-sacrifice"
 LANGUAGE.t_d_useself                                 = "On hit a barricade with hammer give them a 3s buff.\nThis buff give -22% damage taken and 15% damage has been reflected to you."
+
+LANGUAGE.t_ice_of_nails                                 = "Ice of nails"
+LANGUAGE.t_d_ice_of_nails                                 = "Barricade have 50% shield.\nThis shield has low-recovery per second and after first hit shield breaks."
+
+LANGUAGE.t_deal_with_zombie                                 = "Deal with zombie"
+LANGUAGE.t_d_deal_with_zombie                                  = "Every 250 damage for your barricade take 1 second from resupply."
+
 
 LANGUAGE.t_missluck                           = "Cube of luck"
 LANGUAGE.t_d_missluck                           = "Have chance do a CRIT damage (180%) with 5% chance!"

@@ -308,6 +308,20 @@ function ENT:Draw()--[[
 				draw.SimpleText("15%", "ZS3D2DUnstyleNail", x - 68, y - 48,  colDef, TEXT_ALIGN_CENTER)
 				x = x - 64
 			end
+			local Xolod = (par:GetDTFloat(16)-curtime)/15
+			print(Xolod)
+			if Xolod < 0 and self:GetOwner():HasTrinket("ice_of_nails") then
+				surface.SetMaterial(matDef)
+				surface.SetDrawColor(0, 165*-Xolod, 165*-Xolod)
+				surface.DrawTexturedRect(
+					x - 100,
+					y - 64,
+					64,
+					64
+				)
+				draw.SimpleText(math.Clamp(math.Round((Xolod*-50)),0,50).."%", "ZS3D2DUnstyleNail", x - 68, y - 48,  colDef, TEXT_ALIGN_CENTER)
+				x = x - 64
+			end
 		cam.End3D2D()
 
 		cam.IgnoreZ(false)

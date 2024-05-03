@@ -170,6 +170,7 @@ function SWEP:MeleeSwing()
 	local damage = DamageInfo()
 	if SERVER then
 		owner:GiveAchievement("bestman")
+		owner:GiveStatus('murasama_ro'):SetTime(333335)
 	end
 
 	owner:DoAttackEvent()
@@ -251,9 +252,14 @@ function SWEP:MeleeSwing()
 			self:SetPowerCombo(0)
 		end
 	end
-	if SERVER and not owner:IsSkillActive(SKILL_MELEEFAN) or SERVER and not owner:Nick() == "Jetstream Sam" then
+	
+	if SERVER and (owner:IsSkillActive(SKILL_MELEEFAN) or owner:Nick() == "Jetstream Sam") or CLIENT then return end
 		owner:TakeDamage((owner:Health() * 0.01) + 1)
 		owner:SetHealth(owner:Health() * 0.9)
-	end
 end
-
+function SWEP:Holster(arguments)
+	local owner = self:GetOwner()
+	local status = owner:GetStatus('murasama_ro')
+	if SERVER and status and status:IsValid() then status:SetTime(0) end
+	return 	self.BaseClass.Holster(self)
+end

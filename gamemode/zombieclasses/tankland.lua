@@ -364,7 +364,6 @@ end
 
 if SERVER then
 	function CLASS:ProcessDamage(pl, dmginfo)
-		if pl.EradiVived then return end
 		dmgblock = math.random(1,7)
 		if dmginfo:GetDamage() > 200 then 
 			dmginfo:SetDamage(200)
@@ -375,6 +374,7 @@ if SERVER then
 			net.Start("zs_damageblock")
 			net.Send(pl)
 		end
+		if pl.EradiVived then return end
 		local attacker, inflictor = dmginfo:GetAttacker(), dmginfo:GetInflictor()
 		if inflictor and inflictor.IgnoreNiggers then
 			dmginfo:ScaleDamage(0.1)
@@ -390,7 +390,7 @@ if SERVER then
 		if bit_band(dmgtype, DMG_ALWAYSGIB) ~= 0 or bit_band(dmgtype, DMG_BURN) ~= 0 or bit_band(dmgtype, DMG_CRUSH) ~= 0 then return end
 
 		if CurTime() < (pl.NextZombieRevive or 0) then return end
-		pl.NextZombieRevive = CurTime() + 44.25
+		pl.NextZombieRevive = CurTime() + 24.25
 
 
 

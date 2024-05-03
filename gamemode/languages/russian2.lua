@@ -210,6 +210,9 @@ LANGUAGE.pshop_magic = "Магия"
 LANGUAGE.pshop_modules = "Модули"
 
 LANGUAGE.op_svolume = "Звуки оружий(бeта)"
+
+LANGUAGE.op_hpbar_size = "Размер шкалы здоровья"
+LANGUAGE.op_babar_size = "Размер шкалы кровавой брони"
 --конец мелочи
 LANGUAGE.skill_corrupt = "Барабогово заражение" -- лмао, барабогOwO? darkness8163 28.12.23 21:39 мск
 LANGUAGE.skill_corrupt_d1 = "Снаряды могут исказиться в зависимости от волны\nИскажённые снаряды наводятся сами!!\n"..BAD.."-10% урона при искажении"
@@ -1254,6 +1257,7 @@ LANGUAGE.something_cool_is_here		= "Появилось 2 заражённых с
 
 LANGUAGE.something_cool_is_here_2		= "Появилось 3 оружия в случайных местах!"
 LANGUAGE.databox_start		= "Появилось несколько бочек с информацией!"
+LANGUAGE.hehe_start		= "Хехе сбросил несколько ящиков с припасами!"
 LANGUAGE.farm_banana_here		= "Ферма бананов появилась!"
 LANGUAGE.datagod_start		= "Появилась мегабочка с информацией!!!"
 LANGUAGE.storm_start		= "Сибирьский шторм начался..."
@@ -1565,7 +1569,14 @@ LANGUAGE.t_gov_blue                                 = "Чертежи прави
 LANGUAGE.t_useself                                 = "Самопожертвование"
 LANGUAGE.t_d_useself                                 = "При ударе баррикады молотком вы даете ей бафф на 3с.\nЭтот бафф дает защиту пропу в 22% и 15% получаемого урона этих баррикад перенаправятся в вас."
 
+LANGUAGE.t_ice_of_nails                                 = "Холодок Гвоздей"
+LANGUAGE.t_d_ice_of_nails                                 = "Гвозди получают защиту если их не бить более 15 секунд(50% защита)."
 
+LANGUAGE.t_deal_with_zombie                                 = "Сделка с зомби"
+LANGUAGE.t_d_deal_with_zombie                                  = "Зомби при ударе по баррикаде уменьшают задержку амуниции(1 секунда к 250 урона)."
+
+
+LANGUAGE.curse_of_sigil = "Проклятье СИГИЛА "
 LANGUAGE.trap_barrel = "СЛОМАННАЯ БОЧКА! Шанс появления 1|%d"
 LANGUAGE.t_d_ass                                        = "+6 здоровья\n-2% точности стрельбы"
 LANGUAGE.t_d_mticket                                 = "В конце волны может дать 1000 опыта (удача влияет на шанс)"
@@ -1577,10 +1588,10 @@ LANGUAGE.t_d_kheart                                 = "+10% поинтов\n-15 
 LANGUAGE.t_d_voidheart                                 = "+15% рукопашного урону\n-20 здоровья"
 LANGUAGE.t_d_nheart                                 = "+10% рукопашного урона\n+20 хп\nПолучение урона медленно убивает"
 LANGUAGE.t_d_sshield                                 = "-5% получаемого урона"
-LANGUAGE.t_d_mecharm                                 = "+22% скорости перезарядки"
+LANGUAGE.t_d_mecharm                                 = "+6% скорости перезарядки\nРадиус использования на 48 юнитов больше. "
 LANGUAGE.t_d_adbat                                 = "+33% скорости перезарядки для пульс-оружия"
 LANGUAGE.t_d_bloodlust                                 = "-10 здоровья\n+50% к рукопашному урону за каждый последовательный удар"
-LANGUAGE.t_d_kbook                                 = "-10% задержки ящика с аммуницией\n+15% скорости перезарядки\n+15% рукопашного урона"
+LANGUAGE.t_d_kbook                                 = "-10% задержки ящика с аммуницией\n+7% скорости перезарядки\n+15% рукопашного урона"
 LANGUAGE.t_d_fblueprints                                 = "+30% силы починки"
 LANGUAGE.t_d_gstore                                 = "Скидка +15%"
 LANGUAGE.t_d_gasmask                            = "Дает иммунитет к урону от зомби-газов, но только на пятой волне или выше.\n-10% получаемого яда"
@@ -1631,9 +1642,9 @@ LANGUAGE.t_d_targetq4                                = "+35% точности\n+
 LANGUAGE.t_d_targeti                                 = "+6% точности"
 LANGUAGE.t_d_autor                                 = "Перезаряжает последнее убранное оружие за 4 секунды"
 LANGUAGE.t_d_gg_nomi                                 = "Делает тебя Резиновым Человеком"
-LANGUAGE.t_d_ammovestinf                                 = "+16% скорости перезарядки" -- TODO: Доделать darkness8163 01.01.24 15:10 мск -- Хорошо, доделаю darkness8163 03.01.24 6:10 мск
-LANGUAGE.t_d_ammovestii                               = "+11% скорости перезарядки"
-LANGUAGE.t_d_ammovesti                                 = "+7% скорости перезарядки"
+LANGUAGE.t_d_ammovestinf                                 = "+6% скорости перезарядки" 
+LANGUAGE.t_d_ammovestii                               = "+5% скорости перезарядки"
+LANGUAGE.t_d_ammovesti                                 = "+4% скорости перезарядки"
 LANGUAGE.t_d_credit2                                 = "Скидка +4%"
 LANGUAGE.t_d_invalid                                 = "-50% Кулдаун падения"
 LANGUAGE.t_d_galvanka                                 = "-20% кулдаун падения\n-50% замедления от неполного хп\n+25% К перемещению предметов в инвентаре"

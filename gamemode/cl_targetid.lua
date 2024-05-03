@@ -156,6 +156,20 @@ function GM:DrawSigilTargetHint(ent, fade, anti)
 	draw.SimpleTextBlur(translate.Get("sigil_tp"..(anti and "_a" or "")), "ZSHUDFontTiny", x, y, colTemp, TEXT_ALIGN_CENTER)
 end
 
+function GM:DrawInUseRange(ent, fade)
+	fade = fade or 1
+	local pos = ent:GetPos()
+	pos.z = pos.z + 16
+	local ts = pos:ToScreen()
+	local x, y = ts.x, math.Clamp(ts.y, 0, ScrH() * 0.95)
+
+	colTemp.a = fade * 255
+	util.ColorCopy(color_white, colTemp)
+
+	draw.SimpleTextBlur("E", "ZSHUDFontSmaller", x, y, colTemp, TEXT_ALIGN_CENTER)
+
+end
+
 function GM:DrawSigilZombieHint(ent, fade, anti)
 	fade = fade or 1
 	local pos = ent:GetPos()
@@ -196,7 +210,7 @@ function GM:HUDDrawTargetID(teamid)
 		self.TraceTargetTeam = util.TraceLine(trace).Entity
 	end
 
-	if entity:IsValid() and (entity:IsPlayer() and (entity:Team() == teamid or isspectator) or entity.Sigil) then
+	if entity:IsValid() and (entity:IsPlayer() and (entity:Team() == teamid or isspectator) or entity.Sigil or self.ShowElol and  self:FindUseEntity(MySelf, NULL) == entity) then
 		entitylist[entity] = CurTime()
 	end
 
@@ -211,6 +225,8 @@ function GM:HUDDrawTargetID(teamid)
 			end
 		elseif teamid == TEAM_UNDEAD and ent.Sigil and CurTime() < time + 0.5 and !ent.AntiSigil then
 			self:DrawSigilZombieHint(ent, 1 - math.Clamp((CurTime() - time) / 0.5, 0, 1))	
+		elseif ent:IsValid() and CurTime() < time + .3 then
+			self:DrawInUseRange(ent, 1 - math.Clamp((CurTime() - time) / .3, 0, 1))
 		else
 			entitylist[ent] = nil
 		end

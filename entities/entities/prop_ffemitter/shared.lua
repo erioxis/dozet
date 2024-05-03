@@ -39,3 +39,12 @@ end
 function ENT:GetAmmo()
 	return self:GetDTInt(0)
 end
+function ENT:HitByWrench(wep, owner, tr)
+	if owner and owner == self:GetObjectOwner() and owner:KeyDown(IN_USE) then
+		self:CreateShieldMenu(owner)
+	end
+	return false
+end
+function ENT:CreateShieldMenu(owner)
+	owner:SendLua('OpenMenuOfShit(MySelf:NearestShit())')
+end

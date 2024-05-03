@@ -304,27 +304,7 @@ function GM:TopNotify(...)
 		return self.TopNotificationHUD:AddNotification(...)
 	end
 end
-function GM:DrawBarSome(x, y, w, h, xpw, barwm, hm, progress, xp)
-	local barw = xpw * barwm
 
-	surface.SetDrawColor(0, 0, 0, 220)
-	surface.DrawRect(x, y, barw, 4)
-	surface.SetDrawColor(10, 200, 10, 160)
-	surface.DrawRect(x, y, barw * progress, 2)
-	surface.SetDrawColor(0, 170, 0, 160)
-	surface.DrawRect(x, y + 2, barw * progress, 2)
-		if progress > 0 then
-			local lx = x + barw * progress - 1
-			surface.SetDrawColor(255, 255, 255, 20 + math.abs(math.sin(RealTime() * 2)) * 170)
-			surface.DrawLine(lx, y - 2, lx, y + 7)
-			surface.SetDrawColor(255, 255, 255, 160)
-			surface.DrawLine(x, y - 1, x, y + 5)
-			lx = x + barw - 1
-			surface.DrawLine(lx, y - 1, lx, y + 5)
-		end
-		draw_SimpleText("Da", "ZSXPBar", x, h / 2 + y, COLOR_WHITE, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-		draw_SimpleText("Pizda", "ZSXPBar", x + barw, h / 2 + y, COLOR_WHITE, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
-end
 function GM:_InputMouseApply(cmd, x, y, ang)
 	if MySelf:KeyDown(IN_WALK) and MySelf:IsHolding() then
 		self.InputMouseX = math.NormalizeAngle(self.InputMouseX - x * 0.02 * GAMEMODE.PropRotationSensitivity)
@@ -814,6 +794,101 @@ function GM:DrawFearMeter(power, screenscale)
 	end
 end
 
+local matGlow = Material("Sprites/light_glow02_add_noz")
+local colHealthFull = Color(0,219,33)
+local colHealthEmpty = Color(100,0,0)
+local colHealth = Color(0,0,0)
+local math_abs = math.abs
+local math_Approach = math.Approach
+local math_Clamp = math.Clamp
+local surface_SetDrawColor = surface.SetDrawColor
+local surface_DrawRect = surface.DrawRect
+local surface_SetTexture = surface.SetTexture
+local surface_SetMaterial = surface.SetMaterial
+local surface_DrawTexturedRect = surface.DrawTexturedRect
+function GM:DrawDeployables(power, screenscale)
+	if !self.ShowDeployableInfo then return end
+
+
+	local w, h = ScrW(), ScrH()
+	local size = 492 * screenscale
+	local half_size = size / 2
+	local mx, my = w / 7 - half_size, h / 1.5 - size
+
+	local sigilsc = {}
+	for _, ent in ipairs(ents.GetAll()) do 
+		if ent:IsValid() and ent.CanPackUp and (ent.GetObjectOwner and ent:GetObjectOwner() == MySelf or ent.GetOwner and ent:GetOwner() == MySelf) then
+			sigilsc[#sigilsc+1] = ent
+		end
+	end
+	if  #sigilsc > 0 then
+		local sigwid, sighei = screenscale * 18, screenscale * 36
+		local extrude = size * 0.25 + sighei / 2
+		local rad, sigil, health, maxhealth, corrupt, damageflash, sigx, sigy, healthfrac
+
+		local corruptsigils = 0
+		local g = 0
+		for i=1, #sigilsc do
+
+			sigil = sigilsc[i]
+			health = 0
+			maxhealth = 0
+			corrupt = false
+			if sigil and sigil:IsValid() then
+				health = sigil.GetObjectHealth and sigil:GetObjectHealth() or sigil:Health()
+				maxhealth = sigil.GetMaxObjectHealth and sigil:GetMaxObjectHealth() or sigil:GetMaxHealth()
+			end
+
+			if health >= 0 then
+					
+				local wep = weapons.Get(self.DeployableInfo[sigil:GetClass()] and self.DeployableInfo[sigil:GetClass()].WepClass or "")
+				if !wep then continue end
+				g = g  + 1
+				sigx = mx + 20 
+				sigy = my + 70 * screenscale * g
+
+				damageflash = 0
+
+				healthfrac = health / maxhealth
+				colHealth.r = math_Approach(colHealthEmpty.r, colHealthFull.r, math_abs(colHealthEmpty.r - colHealthFull.r) * healthfrac)
+				colHealth.g = math_Approach(colHealthEmpty.g, colHealthFull.g, math_abs(colHealthEmpty.g - colHealthFull.g) * healthfrac)
+				colHealth.b = math_Approach(colHealthEmpty.b, colHealthFull.b, math_abs(colHealthEmpty.b - colHealthFull.b) * healthfrac)
+					local hcolor = COLOR_WHITE
+
+					local wid, hei = 70, 6
+					local x, y = sigx, sigy
+					local healthperc = math_Clamp(health / maxhealth, 0, 1)
+					local wid, hei = 120 * screenscale, 18 * screenscale
+
+					local subwidth = healthperc * wid
+					local class = sigil:GetClass()
+					local hasammo = false
+					if sigil.GetAmmo then
+						hasammo =  sigil:GetAmmo() 
+					end
+			
+					draw.SimpleText(health.."/"..maxhealth..(class == 'prop_remantler' and "|"..sigil:GetScraps()..translate.Get('scram_rem') or (class == "prop_resupplybox" or class == "prop_fridge") and "|"..( class == "prop_fridge" and MySelf.FridgeCaches or MySelf.StowageCaches or 0).. (translate.Get("uleft")) or ""), "ZSHUDFontSmallest", x * screenscale, y - 36 * screenscale, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+					
+					local timeremain = math.ceil(math.max(0, (class == "prop_fridge" and MySelf.NextFridgeUse or MySelf.NextUse or 0) - CurTime()))
+					
+					draw.SimpleText(wep.PrintName..((class == "prop_resupplybox" or class == "prop_fridge") and "|"..(timeremain > 0 and timeremain or translate.Get("ready")) or " ")..(hasammo and translate.Get('ammo')..":"..hasammo.."/"..(sigil.MaxAmmo or 0) or ""), "ZSHUDFontSmallest", x * screenscale, y - 12 * screenscale, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+					surface_SetDrawColor(0, 0, 0, 230)
+					surface_DrawRect(x, y, wid, hei)
+			
+					surface_SetDrawColor(colHealth.r * 1, colHealth.g * 0.2, colHealth.b, 40)
+					surface_SetTexture(texDownEdge)
+					surface_DrawTexturedRect(x + 2, y + 1, subwidth - 4, hei - 2)
+					surface_SetDrawColor(colHealth.r * 0.6, colHealth.g * 0.6, colHealth.b, 30)
+					surface_DrawRect(x + 2, y + 1, subwidth - 4, hei - 2)
+			
+					surface_SetMaterial(matGlow)
+					surface_SetDrawColor(255, 255, 255, 255)
+					surface_DrawTexturedRect(x + 2 + subwidth - 6, y + 1 - hei/2, 4, hei * 2)
+			end
+		end
+	end
+end
+
 function GM:GetDynamicSpawning()
 	return not GetGlobalBool("DynamicSpawningDisabled", false)
 end
@@ -1083,7 +1158,7 @@ function GM:HumanHUD(screenscale)
 		local txth = draw_GetFontHeight("ZSHUDFontSmall")
 		draw_SimpleTextBlurry(translate.Format("giving_items_to", lockon:Name()), "ZSHUDFontSmall", w * 0.5, h * 0.55 + txth, COLOR_GRAY, TEXT_ALIGN_CENTER)
 	end
-	if gamemode.Call("PlayerCanPurchase", MySelf) and GAMEMODE.NewbieMode then
+	if gamemode.Call("PlayerCanPurchase", MySelf) and GAMEMODE.NewbieMode and (!GAMEMODE:GetWaveActive() or GAMEMODE:GetWave() == 0) then
 		draw_SimpleTextBlurry(translate.Get("press_f2_for_the_points_shop"), "ZSHUDFontSmall", w * 0.5, screenscale * 135, COLOR_GRAY, TEXT_ALIGN_CENTER)
 	end
 end
@@ -1097,6 +1172,7 @@ function GM:_HUDPaint()
 	self:HUDDrawTargetID(myteam, screenscale)
 
 	self:DrawFearMeter(self:CachedFearPower(), screenscale)
+	self:DrawDeployables(0, screenscale)
 
 	if myteam == TEAM_UNDEAD then
 		self:ZombieHUD()

@@ -16,7 +16,7 @@ local surface_SetMaterial = surface.SetMaterial
 local function ContentsPaint(self, w, h)
 	local lp = MySelf
 	if lp:IsValid() then
-		local thealth =lp:Health()
+		local thealth = lp:Health()
 		local gp = (((lp:GetZSRemortLevel() / 4) or 0) + (lp.AmuletPiece or 0)) < 0 and lp:Team() == TEAM_HUMAN
 		local screenscale = BetterScreenScale()
 		local health2 = 0
@@ -24,7 +24,7 @@ local function ContentsPaint(self, w, h)
 		local health = math_Clamp(thealth, 1,lp:GetMaxHealthEx())
 		local healthperc = math_Clamp(health / lp:GetMaxHealthEx(), 0, 1)
 		
-		local wid, hei = 300 * screenscale, 18 * screenscale
+		local wid, hei = GAMEMODE.Size_HPBar * screenscale, 18 * screenscale
  
 		colHealth.r = (lp:GetInfo("zs_rhealth") + healthperc) * 100
 		colHealth.g = lp:GetInfo("zs_ghealth") - healthperc
@@ -93,7 +93,7 @@ local function ContentsPaint(self, w, h)
 				end
 				x = 78 * screenscale
 				y = 142 * screenscale
-				wid, hei = 240 * screenscale, 14 * screenscale
+				wid, hei = GAMEMODE.Size_BABar * screenscale, 14 * screenscale
 
 				healthperc = math_Clamp(bloodarmor / max, 0, 1)
 				colHealth.r = lp:GetInfo("zs_rblood") + healthperc * 2.5

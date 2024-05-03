@@ -510,7 +510,6 @@ function GM:OpenRemantlerMenu(remantler)
 	if self.RemantlerInterface and self.RemantlerInterface:IsValid() and self.RemantlerInterface.m_WepClass == mytarget then
 		self.RemantlerInterface:SetVisible(true)
 		self.RemantlerInterface:CenterMouse()
-		self.RemantlerInterface:Remove()
 		return
 	end
 

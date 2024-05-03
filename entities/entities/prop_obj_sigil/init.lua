@@ -154,7 +154,7 @@ end
 function ENT:Think()
 	for _, ent in pairs(player.FindInSphere(self:GetPos(), math.Clamp(1948 / (GAMEMODE:GetWave() * 0.33),493,1948))) do
 		if ent and ent:IsValid() then
-			if ent:IsValidLivingHuman() and not self:GetSigilCorrupted() and ent.PlayerReady then
+			if ent:IsValidLivingHuman() and not self:GetSigilCorrupted() then
 				ent:GiveStatus("sigildef", 2)
 			elseif ent:IsValidLivingZombie() and self:GetSigilCorrupted() then
 				ent:GiveStatus("corruptsigildef", 2)

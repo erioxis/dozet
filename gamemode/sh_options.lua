@@ -508,7 +508,7 @@ item.DontScrap  = true
 GM:AddPointShopItem("knife",			ITEMCAT_MELEE,			25,				"weapon_zs_swissarmyknife")
 GM:AddPointShopItem("zpplnk",			ITEMCAT_MELEE,			25,				"weapon_zs_plank")
 GM:AddPointShopItem("axe",				ITEMCAT_MELEE,			25,				"weapon_zs_axe")
-GM:AddPointShopItem("nullified",				ITEMCAT_MELEE,			10,				"weapon_zs_null")
+--GM:AddPointShopItem("nullified",				ITEMCAT_MELEE,			10,				"weapon_zs_null") COM: Портит вид
 GM:AddPointShopItem("zpfryp",			ITEMCAT_MELEE,			25,				"weapon_zs_fryingpan")
 GM:AddPointShopItem("zpcpot",			ITEMCAT_MELEE,			25,				"weapon_zs_pot")
 GM:AddPointShopItem("ladel",			ITEMCAT_MELEE,			25,				"weapon_zs_ladel")
@@ -544,6 +544,7 @@ GM:AddPointShopItem("scythe",			ITEMCAT_MELEE,			235,			"weapon_zs_scythe")
 GM:AddPointShopItem("powerfists",		ITEMCAT_MELEE,			235,			"weapon_zs_powerfists")
 GM:AddPointShopItem("kshield",		ITEMCAT_MELEE,			235,			"weapon_zs_kobaldshield")
 GM:AddPointShopItem("inail",		ITEMCAT_MELEE,			235,			"weapon_zs_ice_nail")
+GM:AddPointShopItem("sinos_first",		ITEMCAT_MELEE,			235,			"weapon_zs_scrap_sinos").New = true
 GM:AddPointShopItem("mogilka",			ITEMCAT_MELEE,			235,			"weapon_zs_graveshovelz").SkillRequirement = SKILL_RESNYA1
 -- Tier 5
 GM:AddPointShopItem("sawer",			ITEMCAT_MELEE,			900,			"weapon_zs_sawer").New = true
@@ -551,13 +552,13 @@ GM:AddPointShopItem("rshield",		ITEMCAT_MELEE,			900,			"weapon_zs_rubyshield")
 GM:AddPointShopItem("frotchet",			ITEMCAT_MELEE,			900,			"weapon_zs_frotchet")
 GM:AddPointShopItem("luxrockj",			ITEMCAT_MELEE,			235,			"weapon_zs_luxshade")
 GM:AddPointShopItem("luxoid",			ITEMCAT_MELEE,			900,			"weapon_zs_luxoid")
-GM:AddPointShopItem("boomerang",		ITEMCAT_MELEE,			900,			"weapon_zs_boomerang")
+--GM:AddPointShopItem("boomerang",		ITEMCAT_MELEE,			900,			"weapon_zs_boomerang") Надо доработать!
 GM:AddPointShopItem("pipemega",		ITEMCAT_MELEE,			900,			"weapon_zs_pipemega")
 GM:AddPointShopItem("baragay",			ITEMCAT_MELEE,			900,			"weapon_zs_baramelee")
 -- Tier 6
 GM:AddPointShopItem("megahook",			ITEMCAT_MELEE,			1300,			"weapon_zs_harpoon_mega")
 GM:AddPointShopItem("teslar",			ITEMCAT_MELEE,			1300,			"weapon_zs_teslorer")
-GM:AddPointShopItem("silence",			ITEMCAT_MELEE,			1300,			"weapon_zs_silence").New = true
+GM:AddPointShopItem("silence",			ITEMCAT_MELEE,			1300,			"weapon_zs_silence")
 GM:AddPointShopItem("pw7",			ITEMCAT_MELEE,			1300,			"weapon_zs_powerfists_t7")
 
 -- Tier 7

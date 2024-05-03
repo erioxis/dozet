@@ -1469,7 +1469,7 @@ function GM:Think()
 				end
 				if self.MaxSigils >= 1 and pl:GetActiveWeapon() ~= "weapon_zs_sigilfragment"  then
 					if not pl:GetStatus("sigildef") and self:GetWave() >= 6 and  time > pl.NextDamage and self:GetWaveActive() then
-						pl:TakeSpecialDamage(8 * (pl.TickBuff or 0), DMG_DIRECT)
+						pl:TakeSpecialDamage(8 * (pl.TickBuff or 0), DMG_DIRECT, SIGILKILLER, SIGILKILLER)
 						pl.NextDamage = time + 2.4
 						pl:CenterNotify(COLOR_RED, translate.ClientGet(pl, "danger"))
 						pl.TickBuff = pl.TickBuff + (pl.TickBuff * 0.2) + 1
@@ -3809,8 +3809,17 @@ function GM:EntityTakeDamage(ent, dmginfo)
 							--end
 
 							DoAttachmenttDamage(attacker,ent,damage,time,inflictor)
-							if inflictor.InnateDamageType and inflictor.InnateDamageMul > 0 and inflictor.InnateDamageType < 4 then
-								ent:AddLegDamageExt( damage * inflictor.InnateDamageMul, attacker, inflictor, inflictor.InnateDamageType)
+							local innate =  inflictor.InnateDamageType 
+							if innate then
+								local mul = inflictor.InnateDamageMul
+								if mul > 0 and innate < 4 then
+									ent:AddLegDamageExt( damage * mul, attacker, inflictor, innate)
+								elseif mul > 0 and innate == 4 then
+									if math.random(1,inflictor.InnateSerrateRandom) == 1 then
+										local mdah = ent:GiveStatus('serrated', mul)
+										mdah:AddDamage(1, self:GetOwner())
+									end
+								end
 							end
 
 
@@ -4954,6 +4963,11 @@ hook.Add("InitPostEntityMap", "BlueBomb", function()
 	if BLUE_BOMB:IsValid() then
 		BLUE_BOMB:Spawn()
 	end
+	SIGILKILLER = ents.Create("curse_of_sigil")
+	if SIGILKILLER:IsValid() then
+		SIGILKILLER:Spawn()
+		SIGILKILLER:SetDTString(12,"Curse of Sigil")
+	end
 	BLOOD_BOMBER = ents.Create("dummy_blood_explode")
 	if BLOOD_BOMBER:IsValid() then
 		BLOOD_BOMBER:Spawn()
@@ -5770,6 +5784,14 @@ function GM:EventStart(wave)
 		end
 		return
 	end
+	if math.random(1,4) == 1  then
+		gamemode.Call("CreateRandomObjectPos", "prop_supply_doset",math.random(2,4))
+		for _, pl in pairs(player.GetAll()) do
+			if pl then
+				pl:CenterNotify(COLOR_GREEN,{killicon = "headshot"},{font = "ZSHUDFontSmall"},translate.ClientGet(pl,"hehe_start"),{killicon = "headshot"})
+			end
+		end
+	end
 	if math.random(1,2) == 1  then
 		local rand =  math.random(1,10) 
 		gamemode.Call("CreateRandomObjectPos", "prop_databox",math.random(3,6)+(rand == 1 and 4 or 0))
@@ -6162,7 +6184,7 @@ function GM:PlayerSwitchFlashlight(pl, newstate)
 			end
 			if trce:IsBot() then
 				trce:Freeze(true)
-				timer.Simple(4,function()
+				timer.Simple(3.2,function()
 					trce:Freeze(false)
 				end)
 			end
@@ -6294,5 +6316,20 @@ net.Receive('zs_admin_give_t', function(len, sender)--ТОЛЬКО ДЛЯ ТЕС
 	elseif GAMEMODE.ZSInventoryItemData[tab] then
 		print(sender:Nick().." Give yourself a "..GAMEMODE.ZSInventoryItemData[tab].PrintName)
 		sender:AddInventoryItem(tab)
+	end
+end)
+
+net.Receive('zs_shield_abuse', function(len, sender)
+	if !sender or !sender:IsValid() then return end
+	local func = net.ReadString()
+	local ent = net.ReadEntity()
+	local add = net.ReadUInt(24)
+	local field = ent.Field
+	if !field or !field:IsValid() or !ent or !ent:IsValid() or sender ~= ent:GetObjectOwner() then return end
+	if func == "range" then
+		field:SetPos(ent:GetPos() + ent:GetForward() * 48 + -ent:GetUp() * math.Clamp(add,-150,150) )
+	else
+		local oldang  = field:GetAngles()
+		field:SetAngles(Angle(func == "x_yaw" and add or oldang.p,func == "y_yaw" and add or oldang.y, func == "z_yaw" and add or oldang.r))
 	end
 end)

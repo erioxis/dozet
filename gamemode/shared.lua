@@ -5,7 +5,7 @@ GM.Website	=	"https://github.com/erioxis/dozet"
 
 -- No, adding a gun doesn't make your name worth being here.
 GM.Credits = {
-	{"Version", "", "9.9.8"},
+	{"Version", "", "9.9.9"},
 	{"Season of ", "", "Quality of Life"},
 	{"erioxis", "Phantom coder", "dead"},
 	{"Холодное Молочко(M-I-L-K-Y)", "Phantom coder", "dead"},
@@ -669,14 +669,20 @@ function GM:GetDamageResistance(fearpower)
 
 	return fearpower * 0.30
 end
-
-function GM:FindUseEntity(pl, ent)
-	if not ent:IsValid() then
-		local e = pl:TraceLine(90, MASK_SOLID, pl:GetDynamicTraceFilter()).Entity
+local function InUseRange(self, pl, ent)
+	if not ent:IsValid() or ent:GetClass() == "prop_playergib" then
+		local range = 90 + (pl:HasTrinket("marm") and  48 or 0)
+		local e = pl:TraceLine(range, MASK_SOLID, pl:GetDynamicTraceFilter()).Entity
+		if e and e:IsValid() and e:GetClass() == "prop_playergib" and !pl:IsSkillActive(SKILL_CAN_EATER) then
+			e = pl:TraceLine(range, MASK_SOLID, pl:DYNAMO_IGNORE_GIBS()).Entity
+		end
 		if e:IsValid() then return e end
 	end
 
 	return ent
+end
+function GM:FindUseEntity(pl, ent)
+	return InUseRange(self,pl,ent)
 end
 
 function GM:ShouldUseAlternateDynamicSpawn()

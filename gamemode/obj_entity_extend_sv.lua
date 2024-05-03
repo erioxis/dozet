@@ -517,7 +517,7 @@ function meta:DamageNails(attacker, inflictor, damage, dmginfo)
 			damage = damage*0.1/(inflictor.Tier and inflictor.Tier or 1)
 			dmginfo:SetDamage(damage)
 		end
-		if owner ~= attacker then
+		if owner ~= attacker and damage > 0 then
 			attacker:AddTokens(math.ceil((damage or 2) * 0.15))
 			if attacker.m_DoubleXP then
 				attacker:AddTokens(math.ceil((damage or 2) * 0.15))
@@ -525,8 +525,22 @@ function meta:DamageNails(attacker, inflictor, damage, dmginfo)
 		end
 		local live = nails[math.random(1,#nails)]
 		local lowler = live:GetOwner()
-		if !inflictor.ZombieCanPickup and lowler and lowler:IsValid() and lowler:IsSkillActive(SKILL_SPICY_CADES) and inflictor == attacker:GetActiveWeapon() and DMG_BULLET ~= dmginfo:GetDamageType() then 
-			attacker:TakeSpecialDamage(damage*2,DMG_SLASH,lowler,live,dmginfo:GetDamagePosition(),0)
+		if lowler and lowler:IsValid() then
+			if !inflictor.ZombieCanPickup and lowler:IsSkillActive(SKILL_SPICY_CADES) and inflictor == attacker:GetActiveWeapon() and DMG_BULLET ~= dmginfo:GetDamageType() then 
+				attacker:TakeSpecialDamage(damage*2,DMG_SLASH,lowler,live,dmginfo:GetDamagePosition(),0)
+			end
+			if lowler:HasTrinket('ice_of_nails') then
+				dmginfo:SetDamage(damage*(1-math.Clamp(((self:GetDTFloat(16)-CurTime())*-1)/15,0,.5)))
+				self:SetDTFloat(16,CurTime()+20)
+			end
+			if lowler:HasTrinket('deal_with_zombie') then
+				local takeseconds = damage/250
+				lowler.NextResupplyUse = lowler.NextResupplyUse - takeseconds 
+				net.Start("zs_nextresupplyuse")
+					net.WriteFloat(lowler.NextResupplyUse)
+				net.Send(lowler)
+
+			end
 		end
 		damage = dmginfo:GetDamage()
 		GAMEMODE:DamageFloater(attacker, self, dmginfo:GetDamagePosition(), dmginfo:GetDamage())
