@@ -25,7 +25,7 @@ function ENT:Initialize()
 	end
 
 	self:ItemCreated()
-	timer.Simple(0, function()  if self and self:IsValid() then self:SetDTBool(12, self:GetOwner():IsSkillActive(SKILL_SAMODOS)) end end)
+	timer.Simple(0, function()  if self and self:IsValid() and self:GetOwner() and self:GetOwner():IsValid() then self:SetDTBool(12, self:GetOwner():IsSkillActive(SKILL_SAMODOS)) end end)
 end
 
 function ENT:Use(activator, caller)

@@ -1323,6 +1323,7 @@ function GM:_PostDrawTranslucentRenderables()
 		self:DrawZombieIndicators()
 		self:DrawNestIndicators()
 		self:DrawAntiSigilIndicators()
+		self:DrawAltarIndicators()
 		self:DrawZombieSpawnIndicators()
 
 	end
@@ -1442,6 +1443,46 @@ function GM:DrawAntiSigilIndicators()
 			surface_DrawTexturedRect(-64, -128, 128, 256)
 
 			draw_SimpleTextBlurry(translate.Get("sigil_nm_a"), "ZS3D2DFont2Big", 0, 128, COLOR_GRAY, TEXT_ALIGN_CENTER)
+
+			render_FogMode(oldfogmode)
+			cam_End3D2D()
+			cam_IgnoreZ(false)
+		end
+	end
+end
+local ColorCD = Color(192,0,0)
+function GM:DrawAltarIndicators()
+	if P_Team(MySelf) ~= TEAM_HUMAN then return end
+
+	local pos, distance, ang, deployable, alpha
+	local eyepos = EyePos()
+
+	surface_SetMaterial(matSigil)
+
+	for i, remantler in pairs(GAMEMODE.CachedAltarsSigilEntities) do
+		if not remantler:IsValid() then continue end
+
+		
+
+		pos = remantler:GetPos()
+		pos.z = pos.z + 64
+		distance = eyepos:DistToSqr(pos)
+
+		if distance >= 6400 then
+			ang = (eyepos - pos):Angle()
+			ang:RotateAroundAxis(ang:Right(), 270)
+			ang:RotateAroundAxis(ang:Up(), 90)
+			alpha = math.min(220, math.sqrt(distance / 4))
+		
+			
+			cam_IgnoreZ(true)
+			cam_Start3D2D(pos, ang, math.max(250, math.sqrt(distance)) / 5000)
+			local oldfogmode = render_GetFogMode()
+			render_FogMode(0)
+			surface_SetDrawColor(ColorCD.r, ColorCD.g, ColorCD.b, alpha)
+			surface_DrawTexturedRect(-64, -128, 128, 256)
+
+			draw_SimpleTextBlurry(translate.Get("altar_broke"), "ZS3D2DFont2Big", 0, 128, COLOR_GRAY, TEXT_ALIGN_CENTER)
 
 			render_FogMode(oldfogmode)
 			cam_End3D2D()

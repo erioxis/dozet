@@ -540,6 +540,8 @@ SKILL_HYPERGLYCEMIA = 537
 SKILL_NEED_A_BUFF = 538
 SKILL_QUILLS = 539
 SKILL_AMULET_19 = 540
+SKILL_NE_QUE_PRO = 541
+SKILL_CADER_MASTERY = 542
 
 
 
@@ -881,9 +883,9 @@ GM:AddSkill(SKILL_AGILEII, trs("skill_agile").."II", GOOD.."+5%"..trs("jump")..B
 																4,			2,					{SKILL_AGILEIII, SKILL_WORTHINESS3}, TREE_SPEEDTREE)
 GM:AddSkill(SKILL_AGILEIII, trs("skill_agile").."III", GOOD.."+6%"..trs("jump")..BAD.."-4"..trs("speed"),
 																4,			-2,					{SKILL_SAFEFALL, SKILL_ULTRANIMBLE, SKILL_SURESTEP, SKILL_INTREPID, SKILL_VKID, SKILL_NOSEE}, TREE_SPEEDTREE)
-GM:AddSkill(SKILL_VKID, trs("skill_vkid"), GOOD.."+30%"..trs("jump")..GOOD.."+60"..trs("speed")..GOOD..trs("skill_vkid_d")..BAD.."-50"..trs("health"),
+GM:AddSkill(SKILL_VKID, trs("skill_vkid"), GOOD.."+10%"..trs("jump")..GOOD.."+60"..trs("speed")..GOOD..trs("skill_vkid_d")..BAD.."-50"..trs("health"),
 																4,			-3,					{SKILL_VKID2}, TREE_SPEEDTREE)
-GM:AddSkill(SKILL_VKID2, trs("skill_vkid2"), GOOD.."+30%"..trs("jump")..GOOD.."+15"..trs("speed")..GOOD..trs("skill_vkid_d")..BAD.."-65"..trs("health"),
+GM:AddSkill(SKILL_VKID2, trs("skill_vkid2"), GOOD.."+10%"..trs("jump")..GOOD.."+15"..trs("speed")..GOOD..trs("skill_vkid_d")..BAD.."-65"..trs("health"),
 																4,			-4,					{}, TREE_SPEEDTREE)
 GM:AddSkill(SKILL_D_SLOW, trs("skill_slow"), GOOD..trs("skill_slow_d1")..GOOD..trs("skill_slow_d2")..BAD..trs("skill_slow_d3")..BAD..trs("skill_slow_d4"),
 																0,			-4,					{}, TREE_SPEEDTREE)
@@ -1173,7 +1175,10 @@ GM:AddSkill(SKILL_NEED_A_BUFF, trs("skill_cader_bounty"), GOOD..trs("skill_cader
 																-5,			5,					{SKILL_SPICY_CADES}, TREE_BUILDINGTREE)
 GM:AddSkillModifier(SKILL_NEED_A_BUFF, SKILLMOD_HAMMER_SWING_DELAY_MUL, 0.10)
 GM:AddSkill(SKILL_D_NOODLEARMS, trs("skill_noodle"), GOOD.."+10"..trs("worth")..GOOD..trs("skill_noodle_d1")..GOOD.."+35%"..trs("repair")..BAD..trs("skill_noodle_d2"),
-																-7,			2,					{}, TREE_BUILDINGTREE)
+																-7,			2,					{SKILL_CADER_MASTERY}, TREE_BUILDINGTREE)
+GM:AddSkill(SKILL_CADER_MASTERY, trs("skill_cader_mastery"), GOOD..trs("skill_cader_mastery_d1")..BAD.."-21%"..trs("repair"),
+																-7,			2.5,					{}, TREE_BUILDINGTREE)
+GM:AddSkillModifier(SKILL_CADER_MASTERY, SKILLMOD_REPAIRRATE_MUL, -0.21)
 GM:AddSkill(SKILL_INSTRUMENTS, trs("skill_instruments"), GOOD..trs("skill_instruments_d1"),
 																-10,		-3,					{SKILL_ENGI}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_ENGI, trs("skill_engi"), GOOD..trs("skill_engi_d1"),
@@ -1358,7 +1363,7 @@ GM:AddSkillModifier(SKILL_AMULET_18, SKILLMOD_SPOINT, 1)
 
 GM:AddSkill(SKILL_QUE_PRO, trs("skill_quepro"), GOOD.."-10000%"..trs("xpmul"),
 																-30,			-10,					{SKILL_NONE}, TREE_POINTTREE)
-.QuePro = true														
+.QuePro = true											
 
 
 GM:AddSkill(SKILL_UNSIGIL, trs("skill_uncorrupt"), GOOD..trs("skill_uncorrupt_d1")..GOOD.."+5%"..trs("r_speed")..GOOD.."+6%"..trs("b_damage")..BAD.."-80%"..trs("meleedamage"),
@@ -1451,9 +1456,9 @@ GM:AddSkill(SKILL_FOCUSII, trs("skill_focus").."II", GOOD.."+4%"..trs("w_ac")..B
 GM:AddSkill(SKILL_FOCUSIII, trs("skill_focus").."III", GOOD.."+6%"..trs("w_ac")..BAD.."-6%"..trs("r_speed"),
 																3,			0,					{SKILL_EGOCENTRIC, SKILL_WOOISM, SKILL_ORPHICFOCUS, SKILL_SCOURER}, TREE_GUNTREE)
 SKILL_ARSVOID = 238
-GM:AddSkill(SKILL_ARSVOID, trs("skill_ars_void"), GOOD..trs("skill_ars_void_d1")..GOOD.."+5%"..trs("b_damage")..BAD.."+12%"..trs("sale"),
+GM:AddSkill(SKILL_ARSVOID, trs("skill_ars_void"), GOOD..trs("skill_ars_void_d1")..BAD.."-5%"..trs("b_damage")..BAD.."+12%"..trs("sale"),
 																6,			-4,					{SKILL_DELIBRATION}, TREE_GUNTREE)
-GM:AddSkillModifier(SKILL_ARSVOID, SKILLMOD_DAMAGE, 0.05)
+GM:AddSkillModifier(SKILL_ARSVOID, SKILLMOD_DAMAGE, -0.05)
 GM:AddSkillModifier(SKILL_ARSVOID, SKILLMOD_ARSENAL_DISCOUNT, 0.12)
 GM:AddSkill(SKILL_GOOD_BOUNTY, trs("skill_bounty_free"), GOOD..trs("skill_bounty_free_d1")..BAD..trs("skill_bounty_free_d2"),
 																6,			-5,					{SKILL_ARSVOID}, TREE_GUNTREE).NeedAchievement = "dzs"
@@ -1539,10 +1544,10 @@ GM:AddSkill(SKILL_HIHI, trs("skill_hihi"), GOOD..trs("skill_hihi_d1"),
 GM:AddSkill(SKILL_ORPHICFOCUS, trs("skill_orfocus"), GOOD..trs("skill_orfocus_d1")..GOOD.."+2%"..trs("w_ac")..BAD..trs("skill_orfocus_d2")..BAD.."-6%"..trs("r_speed"),
 																5,			-1,					{SKILL_DELIBRATION}, TREE_GUNTREE)
 															
-GM:AddSkill(SKILL_AIMLESS, trs("skill_unfocus"), GOOD.."+45%"..trs("r_delay_shoot")..BAD.."-100%"..trs("w_ac"),
+GM:AddSkill(SKILL_AIMLESS, trs("skill_unfocus"), GOOD.."+20%"..trs("r_delay_shoot")..BAD.."-50%"..trs("w_ac"),
 																5,			0,					{SKILL_ORPHICFOCUS}, TREE_GUNTREE)
-GM:AddSkillModifier(SKILL_AIMLESS, SKILLMOD_FIRE_DELAY, -0.45)
-GM:AddSkillModifier(SKILL_AIMLESS, SKILLMOD_AIMSPREAD_MUL, 1)
+GM:AddSkillModifier(SKILL_AIMLESS, SKILLMOD_FIRE_DELAY, -0.2)
+GM:AddSkillModifier(SKILL_AIMLESS, SKILLMOD_AIMSPREAD_MUL, .5)
 GM:AddSkill(SKILL_DELIBRATION, trs("skill_deli"), GOOD.."+3%"..trs("w_ac")..GOOD.."+1%"..trs("b_damage"),
 																6,			-3,					{}, TREE_GUNTREE)
 GM:AddSkillModifier(SKILL_DELIBRATION, SKILLMOD_DAMAGE, 0.01)
@@ -1554,10 +1559,10 @@ GM:AddSkill(SKILL_WOOISM, trs("skill_ziga"), GOOD..trs("skill_ziga_d1")..BAD..tr
 																5,			1,					{SKILL_TRUEWOOISM}, TREE_GUNTREE)
 GM:AddSkill(SKILL_SCAVENGER, trs("skill_eyes"), GOOD.. trs("skill_eyes_d1"),
 																7,			4,					{SKILL_BUG_GET}, TREE_GUNTREE)
-GM:AddSkill(SKILL_BUG_GET, trs("skill_shooter_fast"), GOOD.. trs("skill_shooter_fast_d1")..BAD.."-15%"..trs("b_damage"),
+GM:AddSkill(SKILL_BUG_GET, trs("skill_shooter_fast"), GOOD.. trs("skill_shooter_fast_d1")..BAD.."-6%"..trs("b_damage"),
 																7,			3,					{}, TREE_GUNTREE)
-GM:AddSkillModifier(SKILL_BUG_GET, SKILLMOD_FIRE_DELAY, -0.15)
-GM:AddSkillModifier(SKILL_BUG_GET, SKILLMOD_DAMAGE, -0.15)
+GM:AddSkillModifier(SKILL_BUG_GET, SKILLMOD_FIRE_DELAY, -0.07)
+GM:AddSkillModifier(SKILL_BUG_GET, SKILLMOD_DAMAGE, -0.06)
 GM:AddSkill(SKILL_PITCHER, trs("skill_pitcher"), GOOD..trs("skill_pitcher_d1"),
 																6,			2,					{}, TREE_GUNTREE)
 GM:AddSkill(SKILL_PITCHER2, trs("skill_pitcher2"), GOOD..trs("skill_pitcher2_d1").."-15%"..trs("b_damage"),
@@ -2312,11 +2317,11 @@ GM:AddSkill(SKILL_DONATE_DARKNESS_I, "Donate of Darkness I", GOOD.."+30% К ск
 				                                                            	-2,			3,					{SKILL_DONATE18}, TREE_DONATETREE)
 GM:AddSkillModifier(SKILL_DONATE_DARKNESS_I, SKILLMOD_HAMMER_SWING_DELAY_MUL, -0.3)
 GM:AddSkillModifier(SKILL_DONATE_DARKNESS_I, SKILLMOD_REPAIRRATE_MUL, 0.1)
-GM:AddSkill(SKILL_DONATE_DARKNESS_II, "Donate of Darkness II", GOOD.."+50 к скорости и +20% К силе прыжка\n"..BAD.."-15% К урону ближнего боя\n".."Thx for Darkness",
+GM:AddSkill(SKILL_DONATE_DARKNESS_II, "Donate of Darkness II", GOOD.."+60 к скорости и +5% К силе прыжка\n"..BAD.."-15% К урону ближнего боя\n".."Thx for Darkness",
 				                                                            	-2,			2,					{SKILL_DONATE_DARKNESS_I}, TREE_DONATETREE)
 GM:AddSkillModifier(SKILL_DONATE_DARKNESS_II, SKILLMOD_MELEE_DAMAGE_MUL, -0.15)
-GM:AddSkillModifier(SKILL_DONATE_DARKNESS_II, SKILLMOD_SPEED, 50)
-GM:AddSkillModifier(SKILL_DONATE_DARKNESS_II, SKILLMOD_JUMPPOWER_MUL, 0.2)
+GM:AddSkillModifier(SKILL_DONATE_DARKNESS_II, SKILLMOD_SPEED, 60)
+GM:AddSkillModifier(SKILL_DONATE_DARKNESS_II, SKILLMOD_JUMPPOWER_MUL, 0.05)
 
 
 
@@ -2694,7 +2699,12 @@ GM:SetSkillModifierFunction(SKILLMOD_RELOADSPEED_RIFLE_MUL, function(pl, amount)
 	pl.ReloadSpeedMultiplier357 = math.Clamp(amount + 1.0, 0.0, 100.0)
 end)
 GM:SetSkillModifierFunction(SKILLMOD_DMG_TAKEN, function(pl, amount)
-	pl.DamageTakenMul = math.Clamp(amount + 1.0, 0.05, 100.0) 
+	local mul = 1
+	if  pl:HasTrinket("curse_point") then
+		local taper = GetTaper(pl,"point",0.02 * (pl:IsSkillActive(SKILL_AMULET_15) and 2 or 1))
+		mul = mul * taper
+	end
+	pl.DamageTakenMul = math.Clamp(amount + 1.0 * mul, 0.05, 100.0) 
 end)
 
 GM:SetSkillModifierFunction(SKILLMOD_RELOADSPEED_XBOW_MUL, function(pl, amount)
@@ -3397,11 +3407,11 @@ GM:AddSkillModifier(SKILL_CURSECURE, SKILLMOD_MELEE_DAMAGE_MUL, -0.15)
 GM:AddSkillModifier(SKILL_INSIGHT, SKILLMOD_ARSENAL_DISCOUNT, 0.02)
 GM:AddSkillModifier(SKILL_ACUITY, SKILLMOD_ARSENAL_DISCOUNT, -0.02)
 
-GM:AddSkillModifier(SKILL_VKID, SKILLMOD_JUMPPOWER_MUL, 0.30)
+GM:AddSkillModifier(SKILL_VKID, SKILLMOD_JUMPPOWER_MUL, 0.10)
 GM:AddSkillModifier(SKILL_VKID, SKILLMOD_SPEED, 60)
 GM:AddSkillModifier(SKILL_VKID, SKILLMOD_HEALTH, -50)
 
-GM:AddSkillModifier(SKILL_VKID2, SKILLMOD_JUMPPOWER_MUL, 0.30)
+GM:AddSkillModifier(SKILL_VKID2, SKILLMOD_JUMPPOWER_MUL, 0.10)
 GM:AddSkillModifier(SKILL_VKID2, SKILLMOD_SPEED, 15)
 GM:AddSkillModifier(SKILL_VKID2, SKILLMOD_HEALTH, -65)
 

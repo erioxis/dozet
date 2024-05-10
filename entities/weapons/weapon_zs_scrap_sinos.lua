@@ -49,7 +49,7 @@ SWEP.BoxPhysicsMin = Vector(-0.5764, -2.397225, -20.080572) * SWEP.ModelScale
 SWEP.BoxPhysicsMax = Vector(0.70365, 2.501825, 19.973375) * SWEP.ModelScale
 
 SWEP.MeleeDamage = 85
-SWEP.MeleeRange = 74
+SWEP.MeleeRange = 43
 SWEP.InnateDamageType = INNATE_TYPE_SERRATE
 SWEP.InnateDamageMul = 1.4
 SWEP.InnateSerrateRandom = 5

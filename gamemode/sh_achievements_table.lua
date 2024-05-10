@@ -655,7 +655,7 @@ GM.Statuses["sigildef"] =  {
 	Name = "sigildef",
 	ValFunc = statusValueFunction("sigildef"),
 	Max = 3,
-	Icon = Material("zombiesurvival/defense.png")
+	Icon = Material("zombiesurvival/sigildef.png")
 }
 GM.Statuses["reaper"] = {
 	Color = Color(130, 30, 140),

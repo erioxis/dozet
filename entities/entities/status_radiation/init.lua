@@ -14,11 +14,14 @@ end
 function ENT:Think()
 	local owner = self:GetOwner()
 	if owner:IsValid() and self.NextDamage < CurTime() then
-		owner:TakeSpecialDamage(owner:GetMaxHealth()*0.01*self:GetDTInt(1), DMG_DIRECT, self.Damager and self.Damager:IsValid() and self.Damager:IsPlayer() and self.Damager or owner, self, nil,0)
-		self.NextDamage = CurTime() +0.1
-		if owner:IsValidLivingZombie() and owner:GetZombieClassTable().Boss then
-			self.NextDamage = CurTime() +1
+		local boss = owner:GetZombieClassTable().Boss
+		local int = self:GetDTInt(1)
+		local damage = owner:GetMaxHealth()*0.01*int
+		if boss then
+			damage = int+2
 		end
+		owner:TakeSpecialDamage(damage, DMG_DIRECT, self.Damager and self.Damager:IsValid() and self.Damager:IsPlayer() and self.Damager or owner, self, nil,0)
+		self.NextDamage = CurTime() +0.1+(boss and 0.5 or 0)
 	end
 	if self:IsValid() and self.DieTime <= CurTime() then
 		self:Remove()

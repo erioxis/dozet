@@ -12,7 +12,7 @@ function SWEP:ApplyMeleeDamage(ent, trace, damage)
 		ent:SetGroundEntity(NULL)
 		ent:SetVelocity(vel)]]
 		if math.random(9) == 1 and ent:IsPlayer() then
-			if ent:HasTrinket("antibaracat") and !ent:IsSkillActive(SKILL_STEEL_ASS) then ent:ThrowFromPositionSetZ(trace.StartPos, ent:IsPlayer() and 600 or 1600, nil, noknockdown) 	self.BaseClass.ApplyMeleeDamage(self, ent, trace, damage) return end
+			if ent:HasTrinket("antibaracat") then ent:ThrowFromPositionSetZ(trace.StartPos, ent:IsPlayer() and 600 or 1600, nil, noknockdown) 	self.BaseClass.ApplyMeleeDamage(self, ent, trace, damage) return end
 			timer.Simple(3, function()
 				ent:Kill()
 			end)

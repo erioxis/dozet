@@ -36,7 +36,7 @@ function ENT:Think()
 
 				local phys = self:GetPhysicsObject()
 				phys:SetVelocityInstantaneous(direction * 1500)
-				target:TakeSpecialDamage(self.ProjDamage + (target:GetZombieClassTable().Boss and target:Health() * 0.03 or target:Health() * 0.07),DMG_GENERIC ,self:GetOwner(), self:GetOwner():GetActiveWeapon())
+				--target:TakeSpecialDamage(self.ProjDamage + (target:GetZombieClassTable().Boss and target:Health() * 0.03 or target:Health() * 0.07),DMG_GENERIC ,self:GetOwner(), self:GetOwner():GetActiveWeapon())
 				break
 			end
 		end

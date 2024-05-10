@@ -104,7 +104,7 @@ local function SetWeaponViewerSWEP(self, swep, category, comps)
 		weapons.Get(comps[2]) and weapons.Get(comps[2]).PrintName or GAMEMODE.ZSInventoryItemData[comps[2]].PrintName
 		or "")or "")
 end
-local tbleternal = {["headshoter"] = "None", ["ind_buffer"]  = "None", ["ultra_at"] = "None", ["pearl"] = "None",
+local tbleternal = {["headshoter"] = "None",["spider"] = "None", ["ind_buffer"]  = "None", ["ultra_at"] = "None", ["pearl"] = "None",
 ["broken_world"]  = "None",["whysoul"]  = "None",["altevesoul"]  = "None",["lucky_chance"]  = "None",["acum"]  = "None",["driller"] = "None",["mirror_of_god"] = "None",["module_mirror"] = "None",["spinel"] = "None",
 ["pr_gold"] = "Medical",
 ["pr_barapaw"] = "Medical",

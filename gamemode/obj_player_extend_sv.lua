@@ -166,7 +166,7 @@ function meta:ProcessDamage(dmginfo)
 			if wep:IsValid() and wep.DealThink then
 				damage = wep:DealThink(dmginfo, self) or damage
 			end
-			if attacker:IsSkillActive(SKILL_AMULET_2) and (health < (attackermaxhp * 0.35) or (attacker.MaxBloodArmor * 0.1 >= attacker:GetBloodArmor()) and health < 16) then
+			if attacker:IsSkillActive(SKILL_AMULET_2) and health < (attackermaxhp * 0.35) then
 				damage = damage * 2
 			end
 
@@ -315,7 +315,7 @@ function meta:ProcessDamage(dmginfo)
 		if self:IsSkillActive(SKILL_XPMULGOOD) and self.AddXPMulti > 0.20 then
 			self.AddXPMulti = self.AddXPMulti - 0.02
 		end
-		if self:IsSkillActive(SKILL_DODGE) and math.max(0,math.random(1,math.max(30 - (self:GetWalkSpeed() / 15),2))) == 1  then
+		if self:IsSkillActive(SKILL_DODGE) and math.max(0,math.random(1,math.max(30 - (self:GetWalkSpeed() / 15),6))) == 1  then
 			if attacker:IsPlayer() then
 				GAMEMODE:BlockFloater(attacker, self, dmginfo:GetDamagePosition())
 			end
@@ -608,7 +608,7 @@ function meta:ProcessDamage(dmginfo)
 				end
 
 
-				if self:IsSkillActive(SKILL_TTIMES) and math.randomr(1,100,5,self) <= 5 then
+				if self:IsSkillActive(SKILL_TTIMES) and math.random(1,100) <= 5 then
 					attacker:GiveStatus("dimvision", 1)
 					net.Start("zs_damageblock")
 					net.Send(self)
@@ -622,7 +622,7 @@ function meta:ProcessDamage(dmginfo)
 				end
 
 
-				if self.TTimesHihi and  math.randomr(1,100,8,self) <= 9 then
+				if self.TTimesHihi and  math.random(1,100) <= 9 then
 					attacker:GiveStatus("dimvision", 1)
 					net.Start("zs_damageblock")
 					net.Send(self)
@@ -1754,6 +1754,9 @@ local function DoDropStart(pl)
 	if pl:GetBountyPicker() then
 		timer.Simple(0, function() pl:AddInventoryItem("cons_bounty") end)
 	end
+	if pl:IsSkillActive(SKILL_CADER_MASTERY) then
+		timer.Simple(0, function() pl:AddInventoryItem("cons_bounty") pl.CadersBounties = 1 end)
+	end
 	--local d = string.Explode(" " ,string.lower(self.ZSInventoryItemData[start1].PrintName))
 --[[	if pl:IsSkillActive(SKILL_SOUL_TRADE) and table.HasValue(d, "soul") and not pl:HasTrinket("toysoul") and not pl:SteamID64() == "76561198813932012" then
 		pl:Kill()
@@ -1784,10 +1787,10 @@ local function DoDropStart(pl)
 		local weapon = {}
 		for _, wep in pairs(weapons.GetList()) do
 			if (wep.Tier or 1) <= (pl:IsSkillActive(SKILL_MOB_II) and 4 or 2) and !wep.ZombieOnly and !wep.NoMobilized and wep.Primary.DefaultClip and wep.Primary.DefaultClip < 9999 and (pl:IsSkillActive(SKILL_MOB_II) and (wep.Tier or 1) >= 3 or !pl:IsSkillActive(SKILL_MOB_II)) then
-				table.insert( weapon, wep.ClassName )
+				weapon[#weapon+1] = wep.ClassName 
 			end
 		end
-		local drop = table.Random(weapon)
+		local drop = weapon[math.random(1,#weapon)]
 		timer.Simple(0, function()	pl:Give(drop) end)
 	end
 	local midas = pl:GetFuckingMidas()
@@ -2190,6 +2193,7 @@ function meta:Redeem(silent, noequip)
 
 	self:RemoveStatus("overridemodel", false, true)
 	self.Zmainer = false
+	self.Redeemedhaha = true
 
 	self:KillSilent()
 

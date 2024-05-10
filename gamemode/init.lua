@@ -1621,10 +1621,13 @@ function GM:Think()
 					pl:TakeDamage(pl:GetMaxHealth() * 0.05)
 					pl:AddUselessDamage(pl:GetMaxHealth() * 0.05)
 				end
-
-				if pl:HasTrinket("regenimplant") and time > pl.NextRegenTrinket and pl:Health() < healmax then
-					pl.NextRegenTrinket = time + 7
-					pl:SetHealth(math.min(healmax, pl:Health() + 7))
+				
+				local have1 = pl:HasTrinket("vitpackagei_q5") 
+				local have2 = pl:HasTrinket("vitpackagei_q4") 
+				local have3 = pl:HasTrinket("vitpackagei_q3") --оптимизация укатилась как и баланс
+				if (have1 or have2 or have3) and time > pl.NextRegenTrinket and pl:Health() < healmax then
+					pl.NextRegenTrinket = time + (have1 and 10 or have2 and 11 or 12 )
+					pl:SetHealth(math.min(healmax, pl:Health() + (have1 and 5 or have2 and 4 or 3)))
 				end
 				if pl:HasTrinket("altmagdalenesoul") and time > pl.NextRegenTrinket2 and pl:Health() > pl:GetMaxHealth() * 0.25 then
 					pl.NextRegenTrinket2 = time + 10
@@ -2548,10 +2551,11 @@ function GM:EndRound(winner)
 			if pl:Team() == TEAM_HUMAN then
 				if not self:GetUseSigils() then
 					gamemode.Call("OnPlayerWin", pl)
-
+					pl.WinsTotal = (pl.WinsTotal or 0) + 1
 				end
 			elseif pl:Team() == TEAM_UNDEAD then
 				gamemode.Call("OnPlayerLose", pl)
+				pl.LoseTotal = (pl.LoseTotal or 0) + 1
 			end
 		end
 		self:SetWinRate(math.max(1,self:GetWinRate() + 1))
@@ -2561,6 +2565,7 @@ function GM:EndRound(winner)
 		hook.Add("PlayerShouldTakeDamage", "EndRoundShouldTakeDamage", EndRoundPlayerCanSuicide)
 		for _, pl in pairs(team.GetPlayers(TEAM_UNDEAD)) do
 			gamemode.Call("OnPlayerLose", pl)
+			pl.LoseTotal = (pl.LoseTotal or 0) + 1
 		end
 		self:SetWinRate(1)
 		self.LosesMAP = (self.LosesMAP or 0) + 1
@@ -3036,6 +3041,8 @@ function GM:PlayerInitialSpawnRound(pl)
 	pl.ResupplyBoxUsedByOthers = 0
 
 	pl.WaveJoined = self:GetWave()
+
+	pl.Redeemedhaha = false
 
 	pl.CrowKills = 0
 	pl.GetBounty = nil
@@ -3817,7 +3824,7 @@ function GM:EntityTakeDamage(ent, dmginfo)
 								elseif mul > 0 and innate == 4 then
 									if math.random(1,inflictor.InnateSerrateRandom) == 1 then
 										local mdah = ent:GiveStatus('serrated', mul)
-										mdah:AddDamage(1, self:GetOwner())
+										mdah:AddDamage(1, attacker)
 									end
 								end
 							end
@@ -4138,7 +4145,10 @@ function GM:OnPlayerChangedTeam(pl, oldteam, newteam)
 		pl.DamagedBy = {}
 
 		pl:SetBarricadeGhosting(false)
-		self.CheckedOut[pl:UniqueID()] = true
+		if pl.WaveJoined < 5 and !pl.Redeemedhaha then
+			self.CheckedOut[pl:UniqueID()] = true
+			pl.WaveJoined = 12
+		end
 	elseif newteam == TEAM_HUMAN then
 		self.PreviouslyDied[pl:UniqueID()] = nil
 

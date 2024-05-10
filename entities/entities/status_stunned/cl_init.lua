@@ -1,7 +1,6 @@
 INC_CLIENT()
 
 ENT.NextEmit = 0
-INC_CLIENT()
 
 function ENT:GetPower()
 	local time = CurTime()

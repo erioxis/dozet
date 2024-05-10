@@ -509,13 +509,15 @@ for i=1,6 do
 	killicon.Add("weapon_zs_special_trinket"..(colorsp[i] and "_q"..i or ""), "zombiesurvival/speed_up.png",colorsp[i] and colorsp[i][1])
 	killicon.Add("weapon_zs_melee_trinket"..(colorsp[i] and "_q"..i or ""), "zombiesurvival/reaper.png",colorsp[i] and colorsp[i][1])
 	killicon.Add("weapon_zs_shot_trinket"..(colorsp[i] and "_q"..i or ""), "zombiesurvival/bullet.png",colorsp[i] and colorsp[i][1])
-	killicon.Add("weapon_zs_help_trinket"..(colorsp[i] and "_q"..i or ""), "zombiesurvival/sickness.png",colorsp[i] and colorsp[i][1])
+	killicon.Add("weapon_zs_help_trinket"..(colorsp[i] and "_q"..i or ""), "zombiesurvival/healty.png",colorsp[i] and colorsp[i][1])
+	killicon.Add("weapon_zs_mecha_trinket"..(colorsp[i] and "_q"..i or ""), "zombiesurvival/wrench.png",colorsp[i] and colorsp[i][1])
 
 	killicon.Add("weapon_zs_defence_trinket"..(colorsp[i] and "_r"..i or ""), "zombiesurvival/defense.png",colorsp[i] and colorsp[i][2])
 	killicon.Add("weapon_zs_special_trinket"..(colorsp[i] and "_r"..i or ""), "zombiesurvival/speed_up.png",colorsp[i] and colorsp[i][2])
 	killicon.Add("weapon_zs_melee_trinket"..(colorsp[i] and "_r"..i or ""), "zombiesurvival/reaper.png",colorsp[i] and colorsp[i][2])
 	killicon.Add("weapon_zs_shot_trinket"..(colorsp[i] and "_r"..i or ""), "zombiesurvival/bullet.png",colorsp[i] and colorsp[i][2])
-	killicon.Add("weapon_zs_help_trinket"..(colorsp[i] and "_r"..i or ""), "zombiesurvival/sickness.png",colorsp[i] and colorsp[i][2])
+	killicon.Add("weapon_zs_help_trinket"..(colorsp[i] and "_r"..i or ""), "zombiesurvival/healty.png",colorsp[i] and colorsp[i][2])
+	killicon.Add("weapon_zs_mecha_trinket"..(colorsp[i] and "_r"..i or ""), "zombiesurvival/wrench.png",colorsp[i] and colorsp[i][2])
 end	
 
 

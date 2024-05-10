@@ -123,7 +123,6 @@ function SWEP.BulletCallback(attacker, tr, dmginfo)
 		DoArc(attacker,attacker:GetActiveWeapon(),hitent,120+attacker:GetBloodArmor()*1.5)
 		attacker:SetBloodArmor(attacker:GetBloodArmor()-60)
 	end
-	dmginfo:GetInflictor().BaseClass.BulletCallback(attacker, tr, dmginfo)
 end
 function SWEP:SecondaryAttack()
 	local owner = self:GetOwner()

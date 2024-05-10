@@ -246,9 +246,9 @@ function ENT:Draw()--[[
 					end
 					colNail.r = 255 - green
 					draw.SimpleText(displayowner, "ZS3D2DUnstyleSmallest", 0, y + 20, col, TEXT_ALIGN_CENTER)
-					draw.SimpleText(math.floor(nhp) .. "/" .. math.floor(self:GetMaxNailHealth()), (scale and "ZS3D2DUnstyleSmaller" or "ZS3D2DUnstyleNail"), x + 25, y - 30,  colNail, TEXT_ALIGN_CENTER)
-					draw.SimpleText(math.floor(repairs) .. "/" .. math.floor(mrps), (scale and "ZS3D2DUnstyleSmaller" or  "ZS3D2DUnstyleNail"), x + 25, y - 50, COLOR_CYAN, TEXT_ALIGN_CENTER)
 				end
+				draw.SimpleText(math.floor(nhp) .. "/" .. math.floor(self:GetMaxNailHealth()), (scale and "ZS3D2DUnstyleSmaller" or "ZS3D2DUnstyleNail"), x + 25, y - 30,  colNail, TEXT_ALIGN_CENTER)
+					draw.SimpleText(math.floor(repairs) .. "/" .. math.floor(mrps), (scale and "ZS3D2DUnstyleSmaller" or  "ZS3D2DUnstyleNail"), x + 25, y - 50, COLOR_CYAN, TEXT_ALIGN_CENTER)
 			end
 			local curtime = CurTime()
 			local par = self:GetParent()
@@ -309,8 +309,7 @@ function ENT:Draw()--[[
 				x = x - 64
 			end
 			local Xolod = (par:GetDTFloat(16)-curtime)/15
-			print(Xolod)
-			if Xolod < 0 and self:GetOwner():HasTrinket("ice_of_nails") then
+			if Xolod < 0 and self:GetOwner() and self:GetOwner():IsValid() and self:GetOwner():HasTrinket("ice_of_nails") then
 				surface.SetMaterial(matDef)
 				surface.SetDrawColor(0, 165*-Xolod, 165*-Xolod)
 				surface.DrawTexturedRect(

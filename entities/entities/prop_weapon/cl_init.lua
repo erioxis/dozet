@@ -159,6 +159,7 @@ local function NewHud(self)
 				surface_SetTexture(texDownEdge)
 				surface_DrawTexturedRect(x-250, y-200, wid*4, hei*30)
 					local tier =  (weptab.Tier or 0) 
+					local quality = (weptab.QualityTier or 0)
 					draw.SimpleText((weptab.PrintName or translate.Get("ammo_")), "ZSHUDFontBig", x + 55, y - 150, COLOR_WHITE, TEXT_ALIGN_CENTER)
 					local owner = self:GetOwner()
 					if owner and owner:IsValid() and owner:IsPlayer() then
@@ -169,6 +170,9 @@ local function NewHud(self)
 					end
 					if tier then
 						draw.SimpleText(translate.Get('w_tier')..tier, "ZSHUDFont", x+300, y - 200, (tier > 6 and HSVToColor(CurTime()*180 % 360, 1, 1)) or colCyan, TEXT_ALIGN_CENTER)
+					end
+					if quality and quality > 0 then
+						draw.SimpleText(translate.Get('w_quality')..quality, "ZSHUDFont", x+50, y,   GAMEMODE.WeaponQualityColors[quality][(self.Branch or 1)+1] or colCyan, TEXT_ALIGN_CENTER)
 					end
 		cam.End3D2D()
 

@@ -115,6 +115,12 @@ function GM:LoadVault(pl)
 				if contents.RemortOldSkills then
 					pl.RemortOldSkills = util.DecompressBitTable(contents.RemortOldSkills)
 				end
+				if contents.WinsPlayer then
+					pl.WinsTotal = contents.WinsPlayer
+				end
+				if contents.LosePlayer then
+					pl.LoseTotal = contents.LosePlayer
+				end
 				if contents.OldDesiredSkills then
 					pl.OldDesiredSkills = util.DecompressBitTable(contents.OldDesiredSkills)
 				end
@@ -202,12 +208,15 @@ function GM:SaveVault(pl)
 		AchXP = pl:GetDCoins(),
 		Season = self.DozetSeason,
 		SelfCode = pl.SelfCode or string.Random(32),
+		WinsPlayer = (pl.WinsTotal or 0),
+		LosePlayer = (pl.LoseTotal or 0),
 		UsedCodes = pl.UsedCodes
 	}
 --	print(pl:SteamID64())
 	local tosavexp = {
 		AchXP = pl:GetDCoins()
 	}
+
 
 	if pl.NextSkillReset and os.time() < pl.NextSkillReset then
 		tosave.NextSkillReset = pl.NextSkillReset

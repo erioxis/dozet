@@ -90,8 +90,7 @@ net.Receive("zs_bounty_add", function(len, pl)
 	pl.GetBounty = nil
 	pl.MedicalBounty = 	math.max(0,pl.MedicalBounty - 1)
 	pl.CadersBounties = math.max(0,pl.CadersBounties - 1)
-	pl.SeededBounty = nil
-	pl.SeededSouls = nil
+	pl[pl.LastUsedTrinket] = nil
 	pl.NextThinkAboutTrade = (pl.NextThinkAboutTrade or 1) + 10
 	if pl.LastUsedTrinket == "cons_bounty" then
 		pl.BountiesGet = pl.BountiesGet + 1

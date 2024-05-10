@@ -1,3 +1,5 @@
+INC_CLIENT()
+
 ENT.NextEmit = 0.1
 local matFlesh = Material("effects/fire_cloud2")
 

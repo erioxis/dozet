@@ -808,14 +808,11 @@ GM:AddPointShopItem("analgestic",		ITEMCAT_TRINKETS,		30,				"trinket_analgestic
 GM:AddPointShopItem("feathfallframe",	ITEMCAT_TRINKETS,		30,				"trinket_featherfallframe").SubCategory =						ITEMSUBCAT_TRINKETS_PERFOMANCE
 GM:AddPointShopItem("pulseampii",		ITEMCAT_TRINKETS,		30,				"trinket_pulseampii").SubCategory =								ITEMSUBCAT_TRINKETS_OFFENSIVE
 GM:AddPointShopItem("extendedmag",		ITEMCAT_TRINKETS,		30,				"trinket_extendedmag").SubCategory =							ITEMSUBCAT_TRINKETS_OFFENSIVE
-GM:AddPointShopItem("vitpackageii",		ITEMCAT_TRINKETS,		30,				"trinket_vitpackageii").SubCategory =							ITEMSUBCAT_TRINKETS_DEFENSIVE
 GM:AddPointShopItem("cardpackageii",	ITEMCAT_TRINKETS,		30,				"trinket_cardpackageii").SubCategory =							ITEMSUBCAT_TRINKETS_DEFENSIVE
-GM:AddPointShopItem("regenimplant",		ITEMCAT_TRINKETS,		30,				"trinket_regenimplant").SubCategory =							ITEMSUBCAT_TRINKETS_DEFENSIVE
 GM:AddPointShopItem("barbedarmor",		ITEMCAT_TRINKETS,		30,				"trinket_barbedarmor").SubCategory =							ITEMSUBCAT_TRINKETS_DEFENSIVE
 GM:AddPointShopItem("blueprintsii",		ITEMCAT_TRINKETS,		30,				"trinket_blueprintsii").SubCategory =							ITEMSUBCAT_TRINKETS_SUPPORT
 GM:AddPointShopItem("remedy",			ITEMCAT_TRINKETS,		30,				"trinket_remedy").SubCategory =									ITEMSUBCAT_TRINKETS_SUPPORT
 GM:AddPointShopItem("flashlo",	      	ITEMCAT_TRINKETS,		30,				"trinket_flashlo").SubCategory =								ITEMSUBCAT_TRINKETS_MELEE
-GM:AddPointShopItem("pills",	      	ITEMCAT_TRINKETS,		30,				"trinket_pills").SubCategory =								ITEMSUBCAT_TRINKETS_MELEE
 GM:AddPointShopItem("damage222",	      	ITEMCAT_TRINKETS,		30,				"trinket_damage222").SubCategory =								ITEMSUBCAT_TRINKETS_MELEE
 -- Tier 4
 GM:AddPointShopItem("cham_at",		ITEMCAT_TRINKETS,		50,				"trinket_cham_at").SubCategory =							ITEMSUBCAT_TRINKETS_ELEMENTAL
@@ -914,7 +911,7 @@ GM:AddMutationItem("m_rclaw", translate.Get("zshop_rclaw"), translate.Get("zshop
 GM:AddMutationItem("m_evo", translate.Get("zshop_evo"), translate.Get("zshop_evo_d1"), ITEMCAT_MUTATIONS, 670, nil, function(pl) pl.m_Evo = true end, "models/player/zombie_classic.mdl")
 GM:AddMutationItem("m_zarmor", translate.Get("zshop_zarmor"), translate.Get("zshop_zarmor_d1"), ITEMCAT_MUTATIONS, 1210, nil, function(pl) pl.m_ZArmor = true end, "models/player/zombie_classic.mdl")
 GM:AddMutationItem("m_zarmor2", translate.Get("zshop_zarmor2"), translate.Get("zshop_zarmor2_d1"), ITEMCAT_MUTATIONS, 900, nil, function(pl) pl.m_ZArmor2 = true end, "models/player/zombie_classic.mdl")
-GM:AddMutationItem("redeem_pshop", translate.Get("zshop_red"), translate.Get("zshop_red_d1"), ITEMCAT_MUTATIONS, 10000, nil, function(pl) pl:Redeem() pl:GiveAchievement("amnesty") end, "models/player/zombie_classic.mdl")
+GM:AddMutationItem("redeem_pshop", translate.Get("zshop_red"), translate.Get("zshop_red_d1"), ITEMCAT_MUTATIONS, 10000, nil, function(pl) if GAMEMODE:GetEscapeStage() == ESCAPESTAGE_NONE then pl:Redeem() pl:GiveAchievement("amnesty") end end, "models/player/zombie_classic.mdl")
 -- Boss Mutagen
 
 GM:AddMutationItem("m_shade_damage", translate.Get("zshop_bossphysicshazard"), translate.Get("zshop_bossphysicshazard2"), ITEMCAT_MUTATIONS_BOSS, 550, nil, function(pl) pl.m_Shade_Force = true end, "models/player/zombie_classic.mdl")

@@ -213,6 +213,7 @@ end
 
 function CLASS:PostPlayerDraw(pl)
 	render.SetColorModulation(1, 1, 1)
+	render.WorldMaterialOverride()
 
 	if pl == MySelf and not pl:ShouldDrawLocalPlayer() or pl.SpawnProtection then return end
 

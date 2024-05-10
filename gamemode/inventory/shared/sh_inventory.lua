@@ -235,7 +235,7 @@ GM:AddInventoryItemData("cons_xmas_goodness",		trs("c_new_year"),			trs("c_new_y
 	droped:SetPos(pl:GetPos()+Vector(0,0,70))
 	droped:Spawn()
 end,1)
-local tbleternal = {"headshoter", "ind_buffer", "ultra_at", "pearl","broken_world","whysoul","altevesoul","lucky_chance","acum","driller","mirror_of_god","module_mirror","spinel"} 
+local tbleternal = {"headshoter","spider", "ind_buffer", "ultra_at", "pearl","broken_world","whysoul","altevesoul","lucky_chance","acum","driller","mirror_of_god","module_mirror","spinel"} 
 local medet = {	"pr_gold",
 "pr_barapaw",
 "pr_chamomile",
@@ -270,7 +270,7 @@ GM:AddInventoryItemData("cons_bounty",		trs("c_bounty"),			trs("c_bounty_d"),			
 		tbl = table.Copy(quecader)
 	end
 	local tries = 0
-	local need = pl.SeededBounty or {}
+	local need = pl["cons_bounty"] or {}
 	while #need < 3 do
 		local item = tbl[math.random(1,#tbl)]
 		if !table.HasValue(need,item)  and !(pl:HasTrinket(item) or pl:HasInventoryItemQ("trinket_"..item) or pl:HasInventoryItem(item)) then 
@@ -283,9 +283,9 @@ GM:AddInventoryItemData("cons_bounty",		trs("c_bounty"),			trs("c_bounty_d"),			
 		end
 	end
 
-	pl.SeededBounty = #need > 0 and need or {math.random(1,9)}
+	pl["cons_bounty"] = #need > 0 and need or {math.random(1,9)}
 	net.Start("zs_openbounty")
-	net.WriteTable(pl.SeededBounty)
+	net.WriteTable(pl["cons_bounty"])
 	net.Send(pl)
 end,0)
 local pick =  {
@@ -345,7 +345,7 @@ local pick =  {
 }
 GM:AddInventoryItemData("cons_soul_picka",		trs("c_soul_picka"),			trs("c_soul_picka_d"),								"models/props_c17/trappropeller_lever.mdl", 3, nil, nil, function(pl) 
 
-	local need = pl.SeededSouls or {}
+	local need = pl["cons_soul_picka"] or {}
 	local tries = 0
 	if #need < 2 then
 		while #need < 3 or tries < 20 do
@@ -359,7 +359,7 @@ GM:AddInventoryItemData("cons_soul_picka",		trs("c_soul_picka"),			trs("c_soul_p
 			end
 		end
 	end
-	pl.SeededSouls = need
+	pl["cons_soul_picka"] = need
 	net.Start("zs_openbounty")
 		net.WriteTable(need)
 	net.Send(pl)
@@ -704,7 +704,7 @@ GM:AddInventoryItemData("comp_bloodhack",		"Bloody Hack",		"djasnndwhadjajs||daw
 GM:AddInventoryItemData("comp_ticket",		trs("c_ticket"),		trs("c_ticket_d"),									"models/props_c17/paper01.mdl")
 --Осколки душ
 GM:AddInventoryItemData("comp_soul_hack",		trs("c_soul_part_hack"),		trs("c_soul_part_hack_d"), soulrec)
-GM:AddInventoryItemData("comp_soul_melee",		trs("c_soul_part_melee_d"),		trs("c_soul_part_melee_d"), soulrec)
+GM:AddInventoryItemData("comp_soul_melee",		trs("c_soul_part_melee"),		trs("c_soul_part_melee_d"), soulrec)
 GM:AddInventoryItemData("comp_soul_status",		trs("c_soul_part_status"),		trs("c_soul_part_status_d"), soulrec)
 GM:AddInventoryItemData("comp_soul_health",		trs("c_soul_part_health"),		trs("c_soul_part_health_d"), soulrec)
 GM:AddInventoryItemData("comp_soul_alt_h",		trs("c_soul_part_alt_health"),		trs("c_soul_part_alt_health_d"), soulrec)
@@ -782,10 +782,41 @@ trinketwep.PermitDismantle = true
 
 trinket, trinketwep = GM:AddTrinket(trs("t_gasmask"), "gasmask", false, hpveles, hpweles, 4, trs("t_d_gasmask"), nil, nil, "weapon_zs_special_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_POISON_DAMAGE_TAKEN_MUL, -0.1)
-trinket, trinketwep = GM:AddTrinket(trs("t_healthpack"), "vitpackagei", false, hpveles, hpweles, 2, trs("t_d_healthpack"), nil, nil, "weapon_zs_defence_trinket_d")
-GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, 10)
+
+trinket, trinketwep = GM:AddTrinket(trs("t_healthpack"), "vitpackagei", false, hpveles, hpweles, 2, trs("t_d_healthpack"), nil, nil, "weapon_zs_defence_trinket")
+GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, 4)
+GM:AddSkillModifier(trinket, SKILLMOD_HEALING_RECEIVED, 0.03)
+trinketwep.Upgradable = true
+
+trinket, trinketwep = GM:AddTrinket(trs("t_healthpack").."+1", "vitpackagei_q1", false, hpveles, hpweles, 2, trs("t_d_healthpack_q1"), nil, nil, "weapon_zs_defence_trinket")
+GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, 8)
+GM:AddSkillModifier(trinket, SKILLMOD_HEALING_RECEIVED, 0.06)
+trinketwep.Upgradable = true
+
+trinket, trinketwep = GM:AddTrinket(trs("t_healthpack").."+2", "vitpackagei_q2", false, hpveles, hpweles, 2, trs("t_d_healthpack_q2"), nil, nil, "weapon_zs_defence_trinket")
+GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, 12)
+GM:AddSkillModifier(trinket, SKILLMOD_HEALING_RECEIVED, 0.07)
+GM:AddSkillModifier(trinket, SKILLMOD_BLOODARMOR_GAIN_MUL, -0.03)
+trinketwep.Upgradable = true
+trinketwep.NeedForUpgrade = "comp_soul_alt_h"
+trinket, trinketwep = GM:AddTrinket(trs("t_healthpack").."+3", "vitpackagei_q3", false, hpveles, hpweles, 2, trs("t_d_healthpack_q3"), nil, nil, "weapon_zs_defence_trinket")
+GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, 17)
+GM:AddSkillModifier(trinket, SKILLMOD_HEALING_RECEIVED, 0.07)
+GM:AddSkillModifier(trinket, SKILLMOD_BLOODARMOR_GAIN_MUL, -0.07)
+trinketwep.Upgradable = true
+trinketwep.NeedForUpgrade = "comp_soul_health"
+trinket, trinketwep = GM:AddTrinket(trs("t_healthpack").."+4", "vitpackagei_q4", false, hpveles, hpweles, 3, trs("t_d_healthpack_q4"), nil, nil, "weapon_zs_defence_trinket")
+GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, 22)
 GM:AddSkillModifier(trinket, SKILLMOD_HEALING_RECEIVED, 0.09)
-trinketwep.PermitDismantle = true
+GM:AddSkillModifier(trinket, SKILLMOD_BLOODARMOR_GAIN_MUL, -0.15)
+trinketwep.Upgradable = true
+trinketwep.NeedForUpgrade = "comp_soul_dd"
+trinket, trinketwep = GM:AddTrinket(trs("t_healthpack").."+5", "vitpackagei_q5", false, hpveles, hpweles, 4, trs("t_d_healthpack_q5"), nil, nil, "weapon_zs_defence_trinket")
+GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, 25)
+GM:AddSkillModifier(trinket, SKILLMOD_BLOODARMOR_GAIN_MUL, -0.30)
+GM:AddSkillModifier(trinket, SKILLMOD_HEALING_RECEIVED, 0.12)
+
+
 
 GM:AddTrinket(trs("t_bloodgrass"), "bloodgrass", false, hpveles, hpweles, 4, trs("t_d_bloodgrass"), nil, nil, "weapon_zs_defence_trinket_d")
 GM:AddTrinket(trs("t_antidevo"), "antidevo", false, hpveles, hpweles, 2, trs("t_d_antidevo"), nil, nil, "weapon_zs_defence_trinket_d")
@@ -793,13 +824,7 @@ GM:AddTrinket(trs("t_antidevo"), "antidevo", false, hpveles, hpweles, 2, trs("t_
 
 GM:AddTrinket(trs("t_acum"), "acum", false, nil, "models/items/car_battery01.mdl", 5, trs("t_d_acum"), nil, nil, "weapon_zs_special_trinket")
 
-trinket = GM:AddTrinket(trs("t_vbank"), "vitpackageii", false, hpveles, hpweles, 2, trs("t_d_vbank"), nil, nil, "weapon_zs_defence_trinket")
-GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, 20)
-GM:AddSkillModifier(trinket, SKILLMOD_BLOODARMOR_DMG_REDUCTION, -0.03)
 
-trinket = GM:AddTrinket(trs("t_truepill"), "pills", false, hpveles, hpweles, 2, trs("t_d_truepill"), nil, 15, "weapon_zs_melee_trinket")
-GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, 10)
-GM:AddSkillModifier(trinket, SKILLMOD_HEALING_RECEIVED, 0.11)
 --trinket = GM:AddTrinket("Damage", "damage222", false, hpveles, hpweles, 4, "+10% damage melee ")
 --GM:AddWeaponModifier(trinket, WEAPON_MODIFIER_DAMAGE, 3)
 
@@ -930,7 +955,6 @@ trinket = GM:AddTrinket(trs("t_bloodpackii"), "cardpackageii", false, hpveles, h
 GM:AddSkillModifier(trinket, SKILLMOD_BLOODARMOR, 20)
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TO_BLOODARMOR_MUL, 0.12)
 
-GM:AddTrinket(trs("t_regimp"), "regenimplant", false, hpveles, hpweles, 3, trs("t_d_regimp"), nil, nil, "weapon_zs_defence_trinket")
 GM:AddTrinket(trs("t_longgrip"), "longgrip", false, hpveles, hpweles, 3, trs("t_d_longgrip"), nil, nil, "weapon_zs_melee_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_RANGE_MUL, 0.10)
 
@@ -1530,7 +1554,7 @@ trinket, trinketwep = GM:AddTrinket(trs("t_ammopack"), "resupplypack", true, nil
 }, 4, trs("t_d_ammopack"), "resupplypack", 3)
 trinketwep.PermitDismantle = true
 
-GM:AddTrinket(trs("t_spider"), "spider", true, supveles, supweles, nil, trs("t_d_spider"), "spider")
+GM:AddTrinket(trs("t_spider"), "spider", true, supveles, supweles, 4, trs("t_d_spider"), "spider")
 GM:AddTrinket(trs("t_magnet"), "magnet", true, supveles, supweles, nil, trs("t_d_magnet"), "magnet")
 GM:AddTrinket(trs("t_smagnet"), "electromagnet", true, supveles, supweles, nil, trs("t_d_smagnet"), "magnet_electro")
 local ego = {[1] = {
@@ -1684,17 +1708,17 @@ local ego = {[1] = {
 	},
 },
 }
-trinket, trinketwep = GM:AddTrinket(trs("t_exoskelet"), "loadingex", false, supveles, supweles, 2, trs("t_d_exoskelet"), nil, nil, "weapon_zs_help_trinket", ego)
+trinket, trinketwep = GM:AddTrinket(trs("t_exoskelet"), "loadingex", false, supveles, supweles, 2, trs("t_d_exoskelet"), nil, nil, "weapon_zs_mecha_trinket", ego)
 GM:AddSkillModifier(trinket, SKILLMOD_PROP_CARRY_SLOW_MUL, -0.55)
 GM:AddSkillModifier(trinket, SKILLMOD_DEPLOYABLE_PACKTIME_MUL, -0.2)
 GM:AddSkillModifier(trinket, SKILLMOD_ENDWAVE_POINTS, 2)
 trinketwep.PermitDismantle = true
 
-trinket, trinketwep = GM:AddTrinket(trs("t_blueprints"), "blueprintsi", false, supveles, supweles, 2, trs("t_d_blueprints"), nil, nil, "weapon_zs_help_trinket")
+trinket, trinketwep = GM:AddTrinket(trs("t_blueprints"), "blueprintsi", false, supveles, supweles, 2, trs("t_d_blueprints"), nil, nil, "weapon_zs_mecha_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_REPAIRRATE_MUL, 0.10)
 trinketwep.PermitDismantle = true
 
-GM:AddSkillModifier(GM:AddTrinket(trs("t_ablueprints"), "blueprintsii", false, supveles, supweles, 4, trs("t_d_ablueprints"), nil, nil, "weapon_zs_help_trinket"), SKILLMOD_REPAIRRATE_MUL, 0.20)
+GM:AddSkillModifier(GM:AddTrinket(trs("t_ablueprints"), "blueprintsii", false, supveles, supweles, 4, trs("t_d_ablueprints"), nil, nil, "weapon_zs_mecha_trinket"), SKILLMOD_REPAIRRATE_MUL, 0.20)
 
 trinket, trinketwep = GM:AddTrinket(trs("t_medi"), "processor", false, supveles, supweles, 2, trs("t_d_medi"), nil, nil, "weapon_zs_help_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_MEDKIT_COOLDOWN_MUL, -0.02)
@@ -1785,12 +1809,12 @@ GM:AddSkillModifier(trinket, SKILLMOD_ARSENAL_DISCOUNT, -0.3)
 
 
 
-trinket = GM:AddTrinket(trs("t_deploi"), "mainsuite", false, supveles, supweles, 2, trs("t_d_deploi"), nil, nil, "weapon_zs_help_trinket")
+trinket = GM:AddTrinket(trs("t_deploi"), "mainsuite", false, supveles, supweles, 2, trs("t_d_deploi"), nil, nil, "weapon_zs_mecha_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_FIELD_RANGE_MUL, 0.1)
 GM:AddSkillModifier(trinket, SKILLMOD_FIELD_DELAY_MUL, -0.07)
 GM:AddSkillModifier(trinket, SKILLMOD_TURRET_RANGE_MUL, 0.1)
 
-trinket = GM:AddTrinket(trs("t_deploii"), "controlplat", false, supveles, supweles, 2, trs("t_d_deploii"), nil, nil, "weapon_zs_help_trinket")
+trinket = GM:AddTrinket(trs("t_deploii"), "controlplat", false, supveles, supweles, 2, trs("t_d_deploii"), nil, nil, "weapon_zs_mecha_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_CONTROLLABLE_HEALTH_MUL, 0.15)
 GM:AddSkillModifier(trinket, SKILLMOD_CONTROLLABLE_SPEED_MUL, 0.15)
 GM:AddSkillModifier(trinket, SKILLMOD_MANHACK_DAMAGE_MUL, 0.50)
@@ -1817,7 +1841,7 @@ GM:AddSkillModifier(trinket, SKILLMOD_EXP_DAMAGE_MUL, 0.4)
 GM:AddSkillModifier(trinket, SKILLMOD_EXP_DAMAGE_RADIUS, 0.3)
 
 
-trinket = GM:AddTrinket(trs("t_deploiii"), "opsmatrix", false, supveles, supweles, 4, trs("t_d_deploiii"), nil, nil, "weapon_zs_help_trinket")
+trinket = GM:AddTrinket(trs("t_deploiii"), "opsmatrix", false, supveles, supweles, 4, trs("t_d_deploiii"), nil, nil, "weapon_zs_mecha_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_FIELD_RANGE_MUL, 0.15)
 GM:AddSkillModifier(trinket, SKILLMOD_FIELD_DELAY_MUL, -0.13)
 GM:AddSkillModifier(trinket, SKILLMOD_TURRET_RANGE_MUL, 0.85)
@@ -2084,8 +2108,8 @@ GM:AddSkillModifier(GM:AddTrinket(trs("t_ind_buffer"), "ind_buffer", false, {
 	["base+"] = { type = "Model", model = "models/props_c17/oildrum001.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "base", pos = Vector(0, 0, 4.07), angle = Angle(180, 12.243, 0), size = Vector(0.123, 0.123, 0.085), color = HSVToColor((CurTime() * 60 + (2 * 5)) % 360, 1, 1), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} }
 } , 2, trs("t_d_ind_buffer"), nil, nil, "weapon_zs_help_trinket"), SKILLMOD_ELEMENTAL_MUL, 0.3)
 -- ???
-GM:AddSkillModifier(GM:AddTrinket(trs("t_manifesti"), "acqmanifest", false, supveles, supweles, 2, trs("t_d_manifesti"), nil, nil, "weapon_zs_help_trinket"), SKILLMOD_RESUPPLY_DELAY_MUL, -0.03)
-GM:AddSkillModifier(GM:AddTrinket(trs("t_manifestii"), "promanifest", false, supveles, supweles, 4, trs("t_d_manifestii"), nil, nil, "weapon_zs_help_trinket"), SKILLMOD_RESUPPLY_DELAY_MUL, -0.07)
+GM:AddSkillModifier(GM:AddTrinket(trs("t_manifesti"), "acqmanifest", false, supveles, supweles, 2, trs("t_d_manifesti"), nil, nil, "weapon_zs_mecha_trinket"), SKILLMOD_RESUPPLY_DELAY_MUL, -0.03)
+GM:AddSkillModifier(GM:AddTrinket(trs("t_manifestii"), "promanifest", false, supveles, supweles, 4, trs("t_d_manifestii"), nil, nil, "weapon_zs_mecha_trinket"), SKILLMOD_RESUPPLY_DELAY_MUL, -0.07)
 
 -- Boss Trinkets
 

@@ -411,7 +411,7 @@ end
 function util.BlastAlloc(inflictor, attacker, epicenter, radius)
 	local t = {}
 
-	for _, ent in pairs(ents.FindInBoxRadius(epicenter, radius)) do
+	for _, ent in pairs(player.FindInSphere(epicenter, radius)) do
 		if ent:IsValid() then
 			local nearest = ent:NearestPoint(epicenter)
 			if WorldVisible(epicenter, ent:NearestPoint(epicenter)) then

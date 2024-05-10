@@ -675,7 +675,7 @@ net.Receive("zs_luck", function(length)
 	local luck = net.ReadString()
 	MySelf:EmitSound("buttons/button3.wav", 75, 50)
 
-	GAMEMODE:CenterNotify({killicon = "weapon_zs_trinket", Tag = "luck"..luck}, " ", COLOR_RED, translate.Format("yluck", luck, math.Round(math.max((luck/(MySelf:IsSkillActive(SKILL_BLUCK) and 3 or 5) or 1),1))))
+	GAMEMODE:CenterNotify({killicon = "weapon_zs_trinket", Tag = "luck"..luck}, " ", COLOR_RED, translate.Format("yluck", luck, math.Round(math.max((luck/(MySelf:IsSkillActive(SKILL_BLUCK) and 3 or 5) or 1),1))-1))
 end)
 
 net.Receive("zs_damageblock", function(length)

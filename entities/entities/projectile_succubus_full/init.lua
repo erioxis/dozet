@@ -150,7 +150,7 @@ function ENT:ShootBullets(dmg, numbul)
 		self:SetDTVector(22, direction)
 
 		if !wep.Primary.Projectile  then
-			self:FireBulletsLua(self:GetPos()+Vector(0,0,15), direction, ((wep.ConeMax or 1)+1.6)*2.5, numbul, dmg, owner, wep.KnockbackScale, wep.TracerName, !wep.Magic and wep.BulletCallback, 1, nil, 1028, nil, self)
+			self:FireBulletsLua(self:GetPos()+Vector(0,0,25), direction, ((wep.ConeMax or 1)+1.6)*2.5, numbul, dmg, owner, wep.KnockbackScale, wep.TracerName, !wep.Magic and wep.BulletCallback, 1, nil, 1028, nil, self)
 		else
 			huy(self,wep,direction)
 		end

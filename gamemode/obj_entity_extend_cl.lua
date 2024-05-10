@@ -159,6 +159,17 @@ timer.Create("CacheASigil", 10, 0, function()
 
 	GAMEMODE.CachedASigilEntities = asigil
 end)
+GM.CachedAltarsSigilEntities = {}
+timer.Create("CacheAltarSigil", 25, 0, function()
+	if not GAMEMODE then return end
+	GAMEMODE.CachedAltarsSigilEntities = {}
+
+	local asigil = {}
+	table.Add(asigil, ents.FindByClass("prop_idols"))
+
+
+	GAMEMODE.CachedAltarsSigilEntities = asigil
+end)
 
 GM.CachedResupplyEntities = {}
 timer.Create("CachedResupplyEntities", 0.5, 0, function()

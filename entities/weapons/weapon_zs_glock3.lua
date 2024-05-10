@@ -46,10 +46,10 @@ GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_MAX_SPREAD, -0.9, 1)
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_MIN_SPREAD, -0.5, 1)
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_CLIP_SIZE, 1, 1)
 GAMEMODE:AddNewRemantleBranch(SWEP, 1, translate.Get("wep_glock_r1"), translate.Get("wep_d_glock_r1"), function(wept)
-	wept.Primary.NumShots = 4
-	wept.Primary.Damage = wept.Primary.Damage * 0.7
-	wept.ConeMin = wept.ConeMin * 0.65
-	wept.ConeMax = wept.ConeMax * 0.65
+	wept.Primary.NumShots = 2
+	wept.Primary.Damage = wept.Primary.Damage * 0.74
+	wept.ConeMin = wept.ConeMin * 2
+	wept.ConeMax = wept.ConeMax * 2
 
 	wept.BulletCallback = function(attacker, tr, dmginfo)
 		if SERVER and tr.Entity:IsValidLivingZombie() and math.random(20) == 1 then
@@ -63,8 +63,8 @@ GAMEMODE:AddNewRemantleBranch(SWEP, 1, translate.Get("wep_glock_r1"), translate.
 end)
 local branch = GAMEMODE:AddNewRemantleBranch(SWEP, 2, translate.Get("wep_glock_r2"), translate.Get("wep_d_glock_r2"), function(wept)
 	wept.Primary.NumShots = 1
-	wept.Primary.Damage = wept.Primary.Damage * 3
-	wept.Primary.Delay = 1.6
+	wept.Primary.Damage = wept.Primary.Damage * 2
+	wept.Primary.Delay = 2
 	wept.ConeMin = wept.ConeMin * 0.3
 	wept.ConeMax = wept.ConeMax * 0.4
 	wept.Primary.Sound = Sound("weapons/usp/usp1.wav")
