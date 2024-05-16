@@ -283,13 +283,17 @@ function CatmullInterpolate(previous, start, last, nextp, elapsedTime, duration)
 							0.5 * percentCompleteSquared)
 end
 
-function string.AndSeparate(list)
+function string.AndSeparate(list, pl)
 	local length = #list
+	local and2 = " and "
+	if pl then
+		and2 = translate.ClientGet(pl,'and_lmao')
+	end
 	if length <= 0 then return "" end
 	if length == 1 then return list[1] end
-	if length == 2 then return list[1].." and "..list[2] end
+	if length == 2 then return list[1]..and2..list[2] end
 
-	return table.concat(list, ", ", 1, length - 1)..", and "..list[length]
+	return table.concat(list, ", ", 1, length - 1)..","..and2..list[length]
 end
 
 function util.SkewedDistance(a, b, skew)

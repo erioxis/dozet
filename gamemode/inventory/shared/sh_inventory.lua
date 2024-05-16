@@ -1244,11 +1244,47 @@ GM:AddSkillModifier(trinket, SKILLMOD_WEAPON_WEIGHT_SLOW_MUL, -0.35)
 
 
 -- Defensive Trinkets
-trinket, trinketwep = GM:AddTrinket(trs("t_defender"), "kevlar", false, develes, deweles, 2, trs("t_d_defender"), nil, nil, "weapon_zs_defence_trinket_d")
+trinket, trinketwep = GM:AddTrinket(trs("t_defender"), "kevlar", false, develes, deweles, 2, trs("t_d_defender"), nil, nil, "weapon_zs_defence_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.06)
 GM:AddSkillModifier(trinket, SKILLMOD_PROJECTILE_DAMAGE_TAKEN_MUL, -0.11)
-GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TO_BLOODARMOR_MUL, -0.01)
-trinketwep.PermitDismantle = true
+trinketwep.Upgradable = true
+trinket, trinketwep = GM:AddTrinket(trs("t_defender_q1").."+1", "kevlar_q1", false, develes, deweles, 3, trs("t_d_defender_q1"), nil, nil, "weapon_zs_defence_trinket")
+GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.09)
+GM:AddSkillModifier(trinket, SKILLMOD_PROJECTILE_DAMAGE_TAKEN_MUL, -0.12)
+trinketwep.Upgradable = true
+trinket, trinketwep = GM:AddTrinket(trs("t_defender_q2").."+2", "kevlar_q2", false, develes, deweles, 3, trs("t_d_defender_q2"), nil, nil, "weapon_zs_defence_trinket")
+GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.12)
+GM:AddSkillModifier(trinket, SKILLMOD_PROJECTILE_DAMAGE_TAKEN_MUL, -0.16)
+trinketwep.Upgradable = true
+trinket, trinketwep = GM:AddTrinket(trs("t_defender_q3").."+3", "kevlar_q3", false, develes, deweles, 4, trs("t_d_defender_q3"), nil, nil, "weapon_zs_defence_trinket")
+GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.15)
+GM:AddSkillModifier(trinket, SKILLMOD_PROJECTILE_DAMAGE_TAKEN_MUL, -0.21)
+GM:AddSkillModifier(trinket, SKILLMOD_SPEED, -16)
+trinketwep.Upgradable = true
+trinket, trinketwep = GM:AddTrinket(trs("t_defender_q4").."+4", "kevlar_q4", false, develes, deweles, 5, trs("t_d_defender_q4"), nil, nil, "weapon_zs_defence_trinket")
+GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.19)
+GM:AddSkillModifier(trinket, SKILLMOD_PROJECTILE_DAMAGE_TAKEN_MUL, -0.33)
+GM:AddSkillModifier(trinket, SKILLMOD_SPEED, -21)
+trinketwep.Upgradable = true
+GM:AddSkillFunction(trinket, function(pl, active)
+	pl.SuccesfullArmor = pl:HasTrinket('kevlar_q4') or pl:HasTrinket('kevlar_q5')
+	if active then
+		pl:GiveStatus('damage_cd', 10)
+	end
+end)
+trinket, trinketwep = GM:AddTrinket(trs("t_defender_q5").."+5", "kevlar_q5", false, develes, deweles, 5, trs("t_d_defender_q5"), nil, nil, "weapon_zs_defence_trinket")
+GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.21)
+GM:AddSkillModifier(trinket, SKILLMOD_PROJECTILE_DAMAGE_TAKEN_MUL, -0.45)
+GM:AddSkillModifier(trinket, SKILLMOD_SPEED, -31)
+GM:AddSkillFunction(trinket, function(pl, active)
+	pl.SuccesfullArmor = pl:HasTrinket('kevlar_q4') or pl:HasTrinket('kevlar_q5')
+	if active then
+		pl:GiveStatus('damage_cd', 10)
+	end
+end)
+
+
+
 
 trinket = GM:AddTrinket(trs("t_defenderi"), "barbedarmor", false, develes, deweles, 3, trs("t_d_defenderi"), nil, nil, "weapon_zs_defence_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_ATTACKER_DMG_REFLECT, 11)
@@ -1504,10 +1540,6 @@ GM:AddSkillFunction(GM:AddTrinket(trs("t_necro"), "necrosense", false, develes, 
 trinket, trinketwep = GM:AddTrinket(trs("t_reactf"), "reactiveflasher", false, develes, deweles, 2, trs("t_d_reactf"), nil, nil, "weapon_zs_special_trinket_d")
 trinketwep.PermitDismantle = true
 
-trinket = GM:AddTrinket(trs("t_defenderiii"), "composite", false, develes, deweles, 4, trs("t_d_defenderiii"), nil, nil, "weapon_zs_defence_trinket")
-GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.06)
-GM:AddSkillModifier(trinket, SKILLMOD_PROJECTILE_DAMAGE_TAKEN_MUL, -0.16)
-GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TO_BLOODARMOR_MUL, -0.07)
 
 trinket, trinketwep = GM:AddTrinket(trs("t_ttimes"), "ttimes", false, develes, deweles, 5, trs("t_d_ttimes"), nil, nil, "weapon_zs_defence_trinket")
 trinketwep.Upgradable = true
@@ -1536,10 +1568,6 @@ GM:AddSkillModifier(trinket, SKILLMOD_DAMAGE_TAKEN_N, -6)
 
 
 
-trinket = GM:AddTrinket(trs("t_defenderiiii"), "toysite", false, develes, deweles, 4, trs("t_d_defenderiiii"), nil, nil, "weapon_zs_defence_trinket")
-GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.06)
-GM:AddSkillModifier(trinket, SKILLMOD_PROJECTILE_DAMAGE_TAKEN_MUL, -0.21)
-GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TO_BLOODARMOR_MUL, 0.05)
 
 -- Support Trinkets
 trinket, trinketwep = GM:AddTrinket(trs("t_arspack"), "arsenalpack", false, {
@@ -2487,7 +2515,7 @@ trinket = GM:AddTrinket("Soul of Alt Eden", "soulalteden", false, nil, {
 	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 17.697, y = 17.697 }, color = Color(4, 8, 255, 208), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core_2+"] = { type = "Sprite", sprite = "effects/splashwake1", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 30, y = 30 }, color = Color(165, 39, 39), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},
 	["black_core"] = { type = "Model", model = "models/dav0r/hoverball.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 2, 0), angle = Angle(0, 0, 0), size = Vector(0.349, 0.349, 0.349), color = Color(26, 201, 245), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} }
-}, 5, "Chaos never change,give random status every random damage\nХаос никогда не меняется,дает рандомный статус при накоплениее рандомного урона\n Q:D20", nil, nil, "weapon_zs_soulalt")
+}, 5, "Chaos never change,give random status every random damage\nХаос никогда не меняется,дает хаотика себе и врагу при накопление рандомного урона\n Q:D20", nil, nil, "weapon_zs_soulalt")
 
 trinket = GM:AddTrinket("Soul of Alt Tea", "altchayok", false, nil, {
 	["black_core_2"] = { type = "Sprite", sprite = "effects/splashwake3", bone = "ValveBiped.Bip01_R_Hand", rel = "black_core", pos = Vector(0, 0.1, -0.201), size = { x = 17.697, y = 17.697 }, color = Color(255, 0, 255, 255), nocull = false, additive = true, vertexalpha = true, vertexcolor = true, ignorez = false},

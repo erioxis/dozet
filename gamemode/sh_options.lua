@@ -826,7 +826,6 @@ GM:AddPointShopItem("cryoindu",			ITEMCAT_TRINKETS,		50,				"trinket_cryoindu").
 GM:AddPointShopItem("refinedsub",		ITEMCAT_TRINKETS,		50,				"trinket_refinedsub").SubCategory =								ITEMSUBCAT_TRINKETS_OFFENSIVE
 GM:AddPointShopItem("sammovest",	   ITEMCAT_TRINKETS,		50,				"trinket_sammovest").SubCategory =						ITEMSUBCAT_TRINKETS_OFFENSIVE
 GM:AddPointShopItem("eodvest",			ITEMCAT_TRINKETS,		50,				"trinket_eodvest").SubCategory =								ITEMSUBCAT_TRINKETS_DEFENSIVE
-GM:AddPointShopItem("composite",		ITEMCAT_TRINKETS,		50,				"trinket_composite").SubCategory =								ITEMSUBCAT_TRINKETS_DEFENSIVE
 GM:AddPointShopItem("resupplypack",		ITEMCAT_TRINKETS,		50,				"trinket_resupplypack").SubCategory =							ITEMSUBCAT_TRINKETS_SUPPORT
 GM:AddPointShopItem("promanifest",		ITEMCAT_TRINKETS,		50,				"trinket_promanifest").SubCategory =							ITEMSUBCAT_TRINKETS_SUPPORT
 GM:AddPointShopItem("opsmatrix",		ITEMCAT_TRINKETS,		50,				"trinket_opsmatrix").SubCategory =								ITEMSUBCAT_TRINKETS_SUPPORT
@@ -841,7 +840,6 @@ GM:AddPointShopItem("classix",	        ITEMCAT_TRINKETS,		70,				"trinket_classi
 GM:AddPointShopItem("killer",	        ITEMCAT_TRINKETS,		70,				"trinket_killer").SubCategory =						     	 ITEMSUBCAT_TRINKETS_MELEE
 GM:AddPointShopItem("classil",	        ITEMCAT_TRINKETS,		70,				"trinket_classil").SubCategory =							  ITEMSUBCAT_TRINKETS_OFFENSIVE 
 GM:AddPointShopItem("ttimes",	        ITEMCAT_TRINKETS,		70,				"trinket_ttimes").SubCategory =							  ITEMSUBCAT_TRINKETS_DEFENSIVE
-GM:AddPointShopItem("toysite2",		ITEMCAT_TRINKETS,		150,				"trinket_toysite").SubCategory =								ITEMSUBCAT_TRINKETS_DEFENSIVE
 GM:AddPointShopItem("bloodgrass",		ITEMCAT_TRINKETS,		150,				"trinket_bloodgrass").SubCategory =								ITEMSUBCAT_TRINKETS_DEFENSIVE
 -- GM:AddPointShopItem("void",	        ITEMCAT_TRINKETS,		70,				"trinket_void").SubCategory =							  ITEMSUBCAT_TRINKETS_OFFENSIVE
 GM:AddPointShopItem("defensive_module",		ITEMCAT_MODULES,		70,				"trinket_defensive_module").SubCategory =								ITEMSUBCAT_TRINKETS_DEFENSIVE

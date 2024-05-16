@@ -17,12 +17,17 @@ function ENT:EntityTakeDamage(ent, dmginfo)
 	local who = self:GetDTEntity(11)
 	if ent ~= self:GetOwner() or !who:IsValid() or who:Team() ~= self:GetOwner():Team() or who == self:GetOwner() or !IsValid(dmginfo) then return end
 	local dmg = dmginfo:GetDamage()
-	timer.Simple(0.05, function() who:TakeSpecialDamage(dmg * 0.4,dmginfo.GetDamageType and dmginfo:GetDamageType() and dmginfo:GetDamageType() or DMG_DIRECT,dmginfo:GetAttacker(),dmginfo:GetInflictor()) end)
-	dmginfo:SetDamage(dmg * 0.5)
+	local type = dmginfo:GetDamageType()
+	local attacker = dmginfo:GetAttacker()
+	local inflictor = dmginfo:GetInflictor()
+	timer.Simple(0.05, function() who:TakeSpecialDamage(dmg * 0.4, type,attacker,inflictor) end)
+	dmg = dmg * 0.6
+	dmginfo:SetDamage(dmg)
 	if who:IsValidLivingHuman() then
+		dmg = dmginfo:GetDamage() - dmg
 		local hpperpoint = GAMEMODE.MedkitPointsPerHealth
-		local points = dmginfo:GetDamage() / hpperpoint
-		who.DefenceDamage = (who.DefenceDamage or 0) + dmginfo:GetDamage()
+		local points = dmg / hpperpoint
+		who.DefenceDamage = (who.DefenceDamage or 0) + dmg
 		who:AddPoints(math.min(10,points))
 	end
 end

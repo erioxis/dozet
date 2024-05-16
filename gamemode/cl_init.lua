@@ -861,6 +861,7 @@ function GM:DrawDeployables(power, screenscale)
 					local wid, hei = 120 * screenscale, 18 * screenscale
 
 					local subwidth = healthperc * wid
+					health = math.Round(health)
 					local class = sigil:GetClass()
 					local hasammo = false
 					if sigil.GetAmmo then

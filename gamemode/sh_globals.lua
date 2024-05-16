@@ -353,7 +353,7 @@ GM.ScrapValsTrinkets = {
 }
 
 GM.DismantleMultipliers = {
-	2.5, 5.5, 6, 7, 9, 11, 14
+	1, 1.6, 3.3, 5.5, 7.2, 9.3, 11
 }
 
 -- Handled in languages file.

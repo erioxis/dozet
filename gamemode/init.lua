@@ -3136,6 +3136,7 @@ function GM:PlayerInitialSpawnRound(pl)
 	pl.m_ZArmor2 = nil
 	pl.m_ZArmor3 = nil
 	pl.LastHealedFocus = 0
+	pl.ArmedArmor = 0
 	pl.AddXPMulti = 1
 	pl.Luls = 0
 	pl.StyleMoment = {}
@@ -5739,7 +5740,7 @@ function GM:SetWave(wave)
 				table.insert(classnames, translate.ClientGet(pl, classtbl.TranslationName))
 			end
 			net.Start("zs_classunlock")
-				net.WriteString(string.AndSeparate(classnames))
+				net.WriteString(string.AndSeparate(classnames, pl))
 			net.Send(pl)
 		end
 	end

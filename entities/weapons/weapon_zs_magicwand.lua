@@ -40,7 +40,7 @@ SWEP.SwingHoldType = "melee"
 
 SWEP.SwingTimeSecondary = 0.87
 SWEP.Primary.ArmorBleed = 12
-SWEP.Tier = 4
+SWEP.Tier = 2
 
 SWEP.AllowQualityWeapons = true
 SWEP.ShowViewModel = false

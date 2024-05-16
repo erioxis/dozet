@@ -460,6 +460,11 @@ GM.Achievements["henlo"] = {
     Desc = translate("challenge_cheese_3_d"),
     Reward = 150000
 }
+GM.Achievements["golden_rush"] = {
+    Name = translate("challenge_golden_rush"),
+    Desc = translate("challenge_golden_rush_d"),
+    Reward = 250000
+}
 
 
 
@@ -836,4 +841,35 @@ GM.Statuses["flesh_armor"] = {
 		return (lp.FleshStatus and lp.FleshStatus:IsValid() and lp.FleshStatus:GetMaxStacks(lp) or 100)
 	end,
 	Icon = Material("zombiesurvival/defense.png")
+}
+
+GM.Statuses["damage_blocking"] = {
+	Color = Color(255, 255, 255),
+	Name = "damage_blocking",
+	ValFunc = function(self, lp)
+        if !lp:IsValid() then return end
+		local status = lp:GetStatus( "damage_blocking")
+		if status and status:IsValid() then
+			return 1
+		end
+		return 0
+	end,
+    Max = 1,
+	Icon = Material("zombiesurvival/defense.png")
+}
+
+GM.Statuses["damage_cd"] = {
+	Color = Color(110, 110, 110),
+	Name = "damage_cd",
+	ValFunc = statusValueFunction("damage_cd"),
+    Max = 25,
+	Icon = Material("zombiesurvival/defense.png")
+}
+
+GM.Statuses["well_defended"] = {
+	Color = Color(255, 0, 230),
+	Name = "well_defended",
+	ValFunc = statusValueFunction("well_defended"),
+    Max = 25,
+	Icon = Material("zombiesurvival/reaper.png")
 }

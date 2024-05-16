@@ -436,7 +436,7 @@ concommand.Add("zs_dismantle", function(sender, command, arguments)
 	local contents, wtbl = active:GetClass()
 	if not invitem then
 		wtbl = weapons.Get(contents)
-		if wtbl.RemoveOnGive then return end
+		if active.RemoveOnGive then return end
 		if wtbl.NoDismantle or not (wtbl.AllowQualityWeapons and !wtbl.CanDismantle or wtbl.PermitDismantle) then
 			GAMEMODE:ConCommandErrorMessage(sender, translate.ClientGet(sender, "cannot_dismantle"))
 			return
@@ -717,7 +717,7 @@ concommand.Add("zsdropweapon", function(sender, command, arguments)
 	if sender:HasTrinket("flower_g") then sender:TakeInventoryItem("trinket_flower_g")  return end
 	if invitem == "trinket_flower" then 	sender:TakeInventoryItem("trinket_flower") return end
 	if invitem == "trinket_clever" then  return end
-	if (currentwep and currentwep:IsValid() and currentwep).RemoveOnGive then return end
+	if (currentwep and currentwep:IsValid() and currentwep).RemoveOnGive then if currentwep.AAHHH then currentwep:Remove() end return end
 	if invitem or (currentwep and currentwep:IsValid()) then
 		local ent = invitem and sender:DropInventoryItemByType(invitem) or sender:DropWeaponByType(currentwep:GetClass())
 		if ent and ent:IsValid() then
@@ -765,8 +765,9 @@ concommand.Add("zs_d_focusing", function(sender, command, arguments)
 		pl:EmitSound("items/smallmedkit1.wav", 50)
 		pl:SetHealth(math.min(pl:GetMaxHealth() * 0.1 + pl:Health(), pl:GetMaxHealth()))
 		pl.LastHealedFocus = CurTime() + 1
+		if !pl:IsSkillActive(SKILL_FOODHEALS) then return end
 		for _, pl3 in pairs(player.FindInSphere(pl:GetPos(), 128 * pl:GetModelScale())) do
-			if pl3:IsValidLivingHuman() and pl:IsSkillActive(SKILL_FOODHEALS) then
+			if pl3:IsValidLivingHuman() then
 				pl:HealPlayer(pl3, pl:Health() * 0.1)
 			end
 		end

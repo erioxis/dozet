@@ -111,12 +111,15 @@ function SWEP:CheckHealRay()
 
 	if ent:IsValidLivingZombie() and owner:KeyDown(IN_ATTACK) and
 		ent:WorldSpaceCenter():DistToSqr(owner:WorldSpaceCenter()) <= self.HealRange * self.HealRange and self:GetCombinedPrimaryAmmo() > 0 then
-
-		if CurTime() > self:GetDTFloat(10) and not ent:GetZombieClassTable().Boss and GAMEMODE:GetEscapeStage() == ESCAPESTAGE_NONE and !ent.NoRedeeming and !ent:IsBot() then
+			local tbl = ent:GetZombieClassTable() or {}
+		if CurTime() > self:GetDTFloat(10) and (not tbl.Boss or tbl.Name == "Golden Zombie") and GAMEMODE:GetEscapeStage() == ESCAPESTAGE_NONE and !ent.NoRedeeming and (!ent:IsBot() or tbl.Name == "Golden Zombie") then
 			self:SetDTFloat(10, CurTime() + 2)
 			if SERVER then
 				ent:Redeem(true)
 				owner:GiveAchievement("redeemed")
+				if tbl.Name == "Golden Zombie" then
+					owner:GiveAchievement("golden_rush")
+				end
 				owner:StripWeapon(self:GetClass())
 				ent:SetPos(owner:GetPos())
 			else

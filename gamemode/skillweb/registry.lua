@@ -1479,7 +1479,7 @@ GM:AddSkill(SKILL_LOX, trs("skill_lox"), GOOD..trs("skill_lox_d1")..BAD..trs("sk
 GM:AddSkillModifier(SKILL_LOX, SKILLMOD_ADD_STATUS, 1)
 GM:AddSkillModifier(SKILL_ABSOLUTE, SKILLMOD_ADD_STATUS, -0.05)
 GM:AddSkillModifier(SKILL_VAMPIRISM, SKILLMOD_DAMAGE, -0.25)
-GM:AddSkill(SKILL_D_CURSEDTRUE, trs("skill_d_truecurse"), BAD.."-100%"..trs("m_curse")..GOOD.."+35"..trs("health")..GOOD.."+40"..trs("speed")..GOOD.."+05%"..trs("r_speed"),
+GM:AddSkill(SKILL_D_CURSEDTRUE, trs("skill_d_truecurse"), BAD.."-100%"..trs("m_curse")..GOOD.."+35"..trs("health")..GOOD.."+40"..trs("speed")..GOOD.."+5%"..trs("r_speed"),
 																2,		    8,					{SKILL_VAMPIRISM}, TREE_GUNTREE)
 GM:AddSkillModifier(SKILL_D_CURSEDTRUE, SKILLMOD_CURSEM, -1)
 GM:AddSkillModifier(SKILL_D_CURSEDTRUE, SKILLMOD_SPEED, 40)

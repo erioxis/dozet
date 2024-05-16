@@ -8,7 +8,7 @@ CLASS.Model = Model("models/player/catpants.mdl")
 CLASS.OverrideModel = Model("models/player/catpants.mdl")
 
 CLASS.Wave = 6 / 6
-CLASS.Variations = false
+CLASS.Variations = {}
 CLASS.KnockbackScale = 0
 
 CLASS.FearPerInstance = 1
@@ -29,8 +29,8 @@ CLASS.CanFeignDeath = false
 
 
 CLASS.ModelScale = 0.9
-CLASS.Hull = {Vector(-32, -32, 0), Vector(32, 32, 64)}
-CLASS.HullDuck = {Vector(-32, -32, 0), Vector(32, 32, 64)}
+CLASS.Hull = {Vector(-25, -25, 0), Vector(25, 25, 55)}
+CLASS.HullDuck = {Vector(-25, -25, 0), Vector(25, 25, 55)}
 CLASS.ViewOffset = Vector(0, 0, 32 * CLASS.ModelScale)
 CLASS.ViewOffsetDucked = Vector(0, 0, 32 * CLASS.ModelScale)
 CLASS.StepSize = 25

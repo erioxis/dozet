@@ -65,7 +65,26 @@ LANGUAGE.t_pulseboosterii                                 = "Pulse Impedance Mod
 LANGUAGE.t_crabstompers                                 = "Curb Stompers"
 LANGUAGE.t_abbiuld                                 = "Superior Assembly"
 LANGUAGE.t_olymp                                 = "Olympian Frame"
+
 LANGUAGE.t_defender                                 = "Kevlar Underbody"
+LANGUAGE.t_d_defender                                 = "-6% melee damage taken\n-11% projectile damage taken"
+
+LANGUAGE.t_defender_q1                                 = "Kevlar Underbody"
+LANGUAGE.t_d_defender_q1                                 = "-9% melee damage taken.\n-12% projectile damage taken."
+
+LANGUAGE.t_defender_q2                                 = "Kevlar Underbody"
+LANGUAGE.t_d_defender_q2                                 = "-12% melee damage taken.\n-16% projectile damage taken."
+
+LANGUAGE.t_defender_q3                                 = "Kevlar Underbody"
+LANGUAGE.t_d_defender_q3                                 = "-15% melee damage taken.\n-21% projectile damage taken.\n-16 speed"
+
+LANGUAGE.t_defender_q4                                 = "Kevlar Underbody"
+LANGUAGE.t_d_defender_q4                                 = "-19% melee damage taken.\n-33% projectile damage taken.\n-21 speed\nFirst taked damage reduces by 45%.\n CD 15 Seconds"
+
+LANGUAGE.t_defender_q5                                 = "HD-00 Underbody"-- сильно защищенный 00
+LANGUAGE.t_d_defender_q5                                 = "-21% melee damage taken.\n-45% projectile damage taken.\n-32 speed\nFirst taked damage fully blocked.\n CD 25 Seconds."
+
+
 LANGUAGE.t_defenderi                                 = "Barbed Armor"
 LANGUAGE.t_antitoxin                                 = "Antitoxin Package"
 LANGUAGE.t_hemostatis                                 = "Hemostasis Implant"
@@ -278,7 +297,6 @@ LANGUAGE.t_d_defenderii                                 = "-35% explosive damage
 LANGUAGE.t_d_hemostatis                                 = "-30% bleed damage taken\n-60% bleeding speed."
 LANGUAGE.t_d_antitoxin                                 = "-17% poison damage taken\n-40% poison damage over time speed"
 LANGUAGE.t_d_defenderi                                 = "50% of melee damage taken reflected back to melee attackers\nAdditional 10 damage reflected back to melee attackers\nMelee attackers take 30 arm damage\n-4% melee damage taken and you take +3point to end wave"
-LANGUAGE.t_d_defender                                 = "-6% melee damage taken\n-11% projectile damage taken"
 LANGUAGE.t_d_olymp                                 = "+100% object throwing strength\n-25% prop carrying slow down\n-35% movement speed reduction with heavy weapons +3 points to end wave"
 LANGUAGE.t_d_abbiuld                                 = "Increase weapon damage and reload speed if weapon tier 2 or lower"
 LANGUAGE.t_d_crabstompers                                 = "Instantly kills headcrabs deals 50 damage to the thors class you jumped on \ndeals 300% damage from falling on the zombie you fell on\nyou will not be able to receive damage from falling when you fall on a zombie\t-25% Deceleration after falling"

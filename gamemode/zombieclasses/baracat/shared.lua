@@ -6,8 +6,10 @@ CLASS.Description = "description_baracat"
 CLASS.Help = "controls_asskicker"
 CLASS.Model = Model("models/player/catpants.mdl")
 CLASS.OverrideModel = Model("models/player/catpants.mdl")
-CLASS.BetterVersion = "Baragat"
-CLASS.Variations = false
+
+CLASS.Variations = {"Baragat", "Juggernaut Baracat", "Titan Baracat", "Cursed Baracat"}
+CLASS.Original = true
+
 
 CLASS.Weight = 0.6
 CLASS.Wave = 3 / 6

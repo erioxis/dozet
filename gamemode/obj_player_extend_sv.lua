@@ -34,16 +34,24 @@ function meta:ProcessDamage(dmginfo)
 			self:GiveStatus("flimsy",1)
 		end
 	end
-	if self:IsValidLivingZombie() and self:GetZombieClassTable().Stoney and self:GetActiveWeapon() and self:GetActiveWeapon().IsSwinging and !self:GetActiveWeapon():IsSwinging() then
-		dmginfo:SetDamage(1)
-		if attacker:IsPlayer() then
-			GAMEMODE:BlockFloater(attacker, self, dmginfo:GetDamagePosition())
+	local classtable
+	if self:IsValidLivingZombie() then
+		local wep = self:GetActiveWeapon() 
+		classtable = self:GetZombieClassTable()
+		if classtable.Stoney and wep and wep.IsSwinging and !wep:IsSwinging() then
+			dmginfo:SetDamage(1)
+			if attacker:IsPlayer() then
+				GAMEMODE:BlockFloater(attacker, self, dmginfo:GetDamagePosition())
+			end
+			local vel = self:GetEyeTrace().Normal * 1 + (-self:GetAngles():Forward()*90)
+			vel.z = 0
+			self:SetVelocity(vel)
+			self.LastDMGType = dmgtype
+			return
 		end
-		local vel = self:GetEyeTrace().Normal * 1 + (-self:GetAngles():Forward()*90)
-		vel.z = 0
-		self:SetVelocity(vel)
-		self.LastDMGType = dmgtype
-		return
+		if classtable.DamageReduction then
+			dmginfo:ScaleDamage(1-classtable.DamageReduction)
+		end
 	end
 
 	if attacker.AttackerForward and attacker.AttackerForward:IsValid() then
@@ -59,7 +67,6 @@ function meta:ProcessDamage(dmginfo)
 	end
 
 	if P_Team(self) == TEAM_UNDEAD then
-		local classtable = self:GetZombieClassTable()
 		dmginfo = !dmgbypass and self:CallZombieFunction1("ProcessDamage", dmginfo) or dmginfo
 		if attacker.Balance2 and math.random(1,100) < 8 then
 			dmginfo:SetDamageType(DMG_DIRECT)
@@ -150,9 +157,6 @@ function meta:ProcessDamage(dmginfo)
 		if attacker.DamageAll then
 			damage = damage * attacker.DamageAll
 		end
-		if classtable.Boss and damage >= (mxap * 0.11) then
-			damage = math.min(damage, (mxap * 0.06))
-		end
 		if attacker:IsValidLivingHuman() and inflictor:IsValid() and (inflictor == attacker:GetActiveWeapon() or inflictor.CanUseModifiers) then
 			local wep = attacker:GetActiveWeapon()
 			local health = attacker:Health()
@@ -214,13 +218,20 @@ function meta:ProcessDamage(dmginfo)
 				net.Send(attacker)
 				end
 			end
-			damage = damage * math.Clamp(attacker:GetModelScale()^2, 0.05, 5)
+			damage = damage * math.Clamp(attacker:GetModelScale()^2, 0.05, 25)
 			if attacker:HasTrinket("soulalteden") then
 				attacker.RandomDamage = attacker.RandomDamage + math.random(1,5)
 
 				if attacker.RandomDamage >= 100 then
 					attacker.RandomDamage = 0
-					attacker:GiveRandomStatus(math.random(10,50), tableofstatus)
+					local cursed = attacker:GetStatus("well_defended")
+					if (cursed) then 
+						cursed:SetDTInt(1,cursed:GetDTInt(1)+1)
+					end
+					if (not cursed) then 
+						attacker:GiveStatus("well_defended", math.random(5,9)):SetDTInt(1,1)
+					end
+					self:GiveStatus("well_defended", math.random(5,9), attacker):SetDTInt(1,1)
 				end
 			end
 			if attacker:IsSkillActive(SKILL_OLD_GOD1) then
@@ -297,6 +308,9 @@ function meta:ProcessDamage(dmginfo)
 			end
 		
 		end
+		if classtable.Boss and damage >= (mxap * 0.11) then
+			damage = math.min(damage, (mxap * 0.06))
+		end
 		if attacker:IsValidLivingHuman() then
 			attacker:SetDPS(attacker:GetDPS() + damage)
 			timer.Simple(1, function() if attacker:IsValid() then attacker:SetDPS(attacker:GetDPS() - damage) end end)
@@ -366,6 +380,25 @@ function meta:ProcessDamage(dmginfo)
 			if attacker:IsPlayer() then
 				GAMEMODE:BlockFloater(attacker, self, dmginfo:GetDamagePosition())
 			end
+		return true
+    end 
+
+	
+	if self:GetStatus('damage_blocking') then
+		net.Start("zs_damageblock")
+		net.Send(self)
+		local kevlar5 = self:HasTrinket('kevlar_q5')
+
+		self:EmitSound("npc/barnacle/neck_snap"..math.random(2)..".wav", 120, 40)
+		if self.SuccesfullArmor then
+			self:GiveStatus('damage_cd', kevlar5 and 25 or 15)
+		end
+		self:RemoveStatus('damage_blocking', nil, true)
+		dmginfo:SetDamage(damage * (kevlar5 and 0 or 0.55))
+		if attacker:IsPlayer() then
+			GAMEMODE:BlockFloater(attacker, self, dmginfo:GetDamagePosition())
+		end
+		
 		return true
     end 
 
@@ -847,8 +880,8 @@ function meta:GiveRandomStatus(time, exlude)
 		table.insert(status, #status+1,k)
 		--print(k)
 	end
-	local give = table.Random(status)
-	self:GiveStatus(give, time)
+	local give = status[math.random(1,#status)]
+	return self:GiveStatus(give, time)
 end
 
 GM.TrinketRecharges = {
@@ -1783,7 +1816,7 @@ local function DoDropStart(pl)
 		end
 	end
 	if pl:IsSkillActive(SKILL_MOBILIZED) then
-		if pl:IsSkillActive(SKILL_MOB_II) and math.random(1,4) == 1 then return end
+		if pl:IsSkillActive(SKILL_MOB_II) and math.random(1,10) == 1 then return end
 		local weapon = {}
 		for _, wep in pairs(weapons.GetList()) do
 			if (wep.Tier or 1) <= (pl:IsSkillActive(SKILL_MOB_II) and 4 or 2) and !wep.ZombieOnly and !wep.NoMobilized and wep.Primary.DefaultClip and wep.Primary.DefaultClip < 9999 and (pl:IsSkillActive(SKILL_MOB_II) and (wep.Tier or 1) >= 3 or !pl:IsSkillActive(SKILL_MOB_II)) then
@@ -1791,7 +1824,19 @@ local function DoDropStart(pl)
 			end
 		end
 		local drop = weapon[math.random(1,#weapon)]
-		timer.Simple(0, function()	pl:Give(drop) end)
+		timer.Simple(0, function()	
+			local wep = pl:Give(drop)
+		
+			--[[wep.NoDismantle = true 
+			wep.AAHHH = true
+			wep.RemoveOnGive = true
+			wep.OnDropDo = function(self, object)
+				timer.Simple(0, function(arguments)
+					object:Remove()
+				end)
+				return true
+			end]]
+		end)
 	end
 	local midas = pl:GetFuckingMidas()
 	if midas then

@@ -9,7 +9,7 @@ CLASS.OverrideModel = Model("models/player/catpants.mdl")
 CLASS.Variations = false
 
 CLASS.Weight = 0.77
-CLASS.Boss = true 
+CLASS.Boss = false 
 CLASS.Hidden = true
 CLASS.Wave = 200
 
@@ -226,7 +226,7 @@ CLASS.Pac3Out = {[1] = {
 }
 
 CLASS.KnockbackScale = 0
-CLASS.BaraCat = true
+CLASS.BaraCat = false
 CLASS.FearPerInstance = 1
 CLASS.NoFallDamage = true
 CLASS.NoFallSlowdown = true
@@ -236,8 +236,8 @@ CLASS.Points = 2500
 
 CLASS.SWEP = "weapon_zs_wand_of_manthra"
 
-CLASS.Health = 72000
-CLASS.Speed = 470
+CLASS.Health = 108000
+CLASS.Speed = 520
 CLASS.JumpPower = 400
 
 
@@ -330,27 +330,27 @@ end
 
 function CLASS:PostPlayerDraw(pl)
 end
-local messages = {" БЫЛА БЫ ТУТ МОЯ БРАТВА!", " БАРАБОГ,НАЧИНАЙ СВОЙ ХОД!", " ПОМНИТЕ БАРАКОТА НА КОЛЕСАХ?ЭТО Я СОЗДАЛ!"," ВЫ ХОРОШО РАЗВИЛИСЬ!", " ВАШИ ТЕХНОЛОГИИ МЕНЯ НЕ ПРОБЬЮТ!"}
+local messages = {" БЫЛА БЫ ТУТ МОЯ БРАТВА!", " БАРАБОГ,НАЧИНАЙ СВОЙ ХОД!", " ПОМНИТЕ БАРАКОТА НА КОЛЕСАХ?ЭТО Я СОЗДАЛ!"," ВЫ ХОРОШО РАЗВИЛИСЬ!", " ВАШИ ТЕХНОЛОГИИ МЕНЯ НЕ ПРОБЬЮТ!", " НЕТ СМЫСЛА ПЫТАТЬСЯ!"}
 if SERVER then
 	function CLASS:ProcessDamage(pl, dmginfo)
-		dmginfo:ScaleDamage(0.5)
+		dmginfo:ScaleDamage(0.33)
 		if GAMEMODE.IdolsAreActive then
 			dmginfo:SetDamage(0)
 		end
 		local attacker = dmginfo:GetAttacker() 
 		if dmginfo:GetInflictor().Magic and dmginfo:GetAttacker() ~= pl then
-			pl:Kill()
+			attacker:Kill()
 			attacker:PrintMessage(HUD_PRINTTALK,'МАНХРА: ИСПОЛЬЗУЕШЬ МОЮ ЖЕ МАГИЮ ПРОТИВ МЕНЯ?ФАТАЛЬНАЯ ОШИБКА!')
 		elseif dmginfo:GetInflictor():GetClass() == 'projectile_succubus_full' then
 			attacker:PrintMessage(HUD_PRINTTALK,'МАНХРА: УСТАРЕВШАЯ ТЕХНОЛОГИЯ!МОЯ РАЗРАБОТКА БУДЕТ ЛУЧШЕ ЧЕМ ЭТО!')
 			dmginfo:GetInflictor():Remove()
 			pl:SetHealth(pl:Health()+6000)
 		end
-		if !pl.USEDHP_2 and pl:Health() < pl:GetMaxHealth() * 0.5 then
+		if !pl.USEDHP_2 and pl:Health() < pl:GetMaxHealth() * 0.85 then
 			pl.USEDHP_2 = true 
-			PrintMessage(HUD_PRINTTALK,'МАНХРА: ВЫ УЖЕ СНЕСЛИ МНЕ МОЮ БРОНЮ?Я ТОЛЬКО РАЗГОНЯЮСЬ!')
 			PrintMessage(HUD_PRINTTALK,'МАНХРА: ДАВАЙТЕ! СНЕСИТЕ МОИ ИДОЛЫ!')
 			gamemode.Call("CreateRandomObjectPos", "prop_idols", 7)
+			timer.Simple(355, function() pl.USEDHP_2 = false end)
 		end
 		if math.random(1,300) == 1 then
 			PrintMessage(HUD_PRINTTALK,'МАНХРА:'..messages[math.random(1,#messages)])

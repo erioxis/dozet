@@ -58,11 +58,12 @@ function ENT:Explode()
 				if math.random() < 0.6 then
 					v:GiveStatus( "frost", 2, owner )
 					v:AddLegDamageExt( 3, owner, self, SLOWTYPE_COLD )
+					v:GiveStatus('dosei_inf', 2*(GAMEMODE.IdolsAreActive and 3 or 1))
 				end
 			end
 		end
 
-		util.BlastDamagePlayer( source, owner, pos, 95, self.ProjDamage*1.5, DMG_DIRECT)
+		util.BlastDamagePlayer( source, owner, pos, 95, self.ProjDamage*1.5*(GAMEMODE.IdolsAreActive and 3 or 1), DMG_DIRECT)
 	end
 end
 
