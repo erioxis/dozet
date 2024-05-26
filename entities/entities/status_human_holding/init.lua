@@ -71,7 +71,7 @@ function ENT:Initialize()
 			if object:GetOwner() then
 				self.OldOwner = object:GetOwner()
 			end
-			object:SetOwner(owner)
+			object:SetOwner(object:GetClass() ~= 'prop_databox' and object:GetOwner() or owner)
 			if object:GetCollisionGroup() ~= COLLISION_GROUP_WORLD then
 				object:SetCollisionGroup(COLLISION_GROUP_WEAPON)
 			end

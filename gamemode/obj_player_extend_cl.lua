@@ -98,6 +98,10 @@ function meta:GetMaxHealth()
 	if self.HPPerWave then
 		health = health + (self.HPPerWave * (GAMEMODE:GetWave() or 1))
 	end
+	local necrosis =  self:GetStatus('necrosis')
+	if necrosis and necrosis:IsValid() then
+		health = health * (1+math.min(0,(necrosis:GetDTInt(1)/100)))
+	end
 	return health
 end
 

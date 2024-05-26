@@ -161,7 +161,7 @@ function ENT:Think()
     if target and target:GetMaxHealth() > target:Health() and target:IsPlayer() and target:IsValidLivingHuman() and !(target:IsSkillActive(SKILL_ABUSE) or target:IsSkillActive(SKILL_D_FRAIL)) and (target.NextMedStation or 1) < CurTime()  then
 		target:EmitSound("npc/dog/dog_servo"..math.random(7, 8)..".wav", 70, math.random(100, 105))
 			
-		owner:HealPlayer(target, totalheal)
+		totalheal = owner:HealPlayer(target, totalheal)
 		local effectdata = EffectData()
 			effectdata:SetOrigin((target:NearestPoint(vPos) + target:WorldSpaceCenter()) / 2)
 			effectdata:SetEntity(target)

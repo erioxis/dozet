@@ -179,7 +179,7 @@ function GM:DrawSigilZombieHint(ent, fade, anti)
 
 	colTemp.a = fade * 128
 	util.ColorCopy(color_white, colTemp)
-	draw.SimpleTextBlur("HP:"..math.Round(ent:GetSigilHealth()).."/"..ent:GetSigilMaxHealth(), "ZSHUDFont", x, y, colTemp, TEXT_ALIGN_CENTER)
+	draw.SimpleTextBlur(translate.Get('sigil_hint_health')..math.Round(ent:GetSigilHealth()).."/"..ent:GetSigilMaxHealth(), "ZSHUDFont", x, y, colTemp, TEXT_ALIGN_CENTER)
 end
 
 GM.TraceTarget = NULL

@@ -237,12 +237,14 @@ net.Receive("zs_lifestats", function(length)
 	local barricadedamage = net.ReadUInt(16)
 	local humandamage = net.ReadUInt(16)
 	local brainseaten = net.ReadUInt(8)
+	local reduceddamage = net.ReadUInt(16)
 
 	GAMEMODE.LifeStatsEndTime = CurTime() + GAMEMODE.LifeStatsLifeTime
 
 	GAMEMODE.LifeStatsBarricadeDamage = barricadedamage
 	GAMEMODE.LifeStatsHumanDamage = humandamage
 	GAMEMODE.LifeStatsBrainsEaten = brainseaten
+	GAMEMODE.LifeStatsDamageReduced = reduceddamage
 end)
 
 net.Receive("zs_lifestatsbd", function(length)

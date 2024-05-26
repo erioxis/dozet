@@ -496,7 +496,7 @@ function meta:AttachmentDamage(damage, attacker, inflictor, type)
 	
 	if type == SLOWTYPE_PULSE then
 		if SERVER then
-			if SERVER and attacker:HasTrinket("resonance") then
+			if attacker:HasTrinket("resonance") then
 				attacker:SetProgress(attacker:GetProgress('pprog') + damage, 'pprog')
 
 				if attacker:GetProgress('pprog') > 20* GAMEMODE:GetWave() * (attacker:GetIndChance() or 1) and (attacker.NextInductors or 1) < CurTime() then
@@ -524,7 +524,7 @@ function meta:AttachmentDamage(damage, attacker, inflictor, type)
 		end
 	elseif type == SLOWTYPE_CHAM then
 		if SERVER then
-			if SERVER and attacker:HasTrinket("cham_storm") and self:GetZombieClassTable().BaraCat and (attacker.NextInductors or 1) < CurTime() then
+			if attacker:HasTrinket("cham_storm") and self:GetZombieClassTable().BaraCat and (attacker.NextInductors or 1) < CurTime() then
 				attacker:SetProgress(attacker:GetProgress('cprog') + damage, 'cprog')
 				self:ChamStorm(attacker, inflictor, damage)
 			end
@@ -545,16 +545,15 @@ function meta:AddLegDamageExt(damage, attacker, inflictor, type)
 		if attacker.PulseImpedance then
 			self:AddArmDamage(legdmg)
 		end
-
-		if SERVER and attacker:HasTrinket("resonance") then
-			attacker:SetProgress(attacker:GetProgress('pprog') + (self:GetFlatLegDamage() - startleg), 'pprog')
-
-			if attacker:GetProgress('pprog') > 20* GAMEMODE:GetWave() * (attacker:GetIndChance() or 1) and (attacker.NextInductors or 1) < CurTime() then
-				self:PulseResonance(attacker, inflictor)
-				attacker.NextInductors = CurTime() + 1.5
-			end
-		end
 		if SERVER then
+			if attacker:HasTrinket("resonance") then
+				attacker:SetProgress(attacker:GetProgress('pprog') + (self:GetFlatLegDamage() - startleg), 'pprog')
+
+				if attacker:GetProgress('pprog') > 20* GAMEMODE:GetWave() * (attacker:GetIndChance() or 1) and (attacker.NextInductors or 1) < CurTime() then
+					self:PulseResonance(attacker, inflictor)
+					attacker.NextInductors = CurTime() + 1.5
+				end
+			end
 			GAMEMODE:DamageAtFloater(attacker, self, self:NearestPoint(attacker:EyePos()), legdmg,type)
 		end
 	elseif type == SLOWTYPE_COLD then
@@ -1315,6 +1314,10 @@ function meta:GetMaxHealth()
 	health = health * (self:IsChampion() and ((champion == CHAMP_SMOL or champion == CHAMP_GRAY) and 0.5 or champion == CHAMP_BIG and 2 or champion == CHAMP_RED and 3 or 1.5) or 1)
 	if self.HPPerWave then
 		health = health + (self.HPPerWave * (GAMEMODE:GetWave() or 1))
+	end
+	local necrosis =  self:GetStatus('necrosis')
+	if necrosis and necrosis:IsValid() then
+		health = health * (1+math.min(0,(necrosis:GetDTInt(1)/100)))
 	end
 	return math.max(1,health)
 end

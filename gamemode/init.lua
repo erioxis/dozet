@@ -2886,6 +2886,8 @@ function GM:PlayerInitialSpawn(pl)
 	pl.OneTime = true
 	pl.RespawnedTime = CurTime() + 5
 	pl.OutFitPacTrinket = {}
+	pl.HitsToResistImmune = 0
+
 	pl.FirstUsedResupply = false
 	--self:PlayerSaveDataMASTERY(pl)
 	self:InitializeVault(pl)
@@ -3072,6 +3074,7 @@ function GM:PlayerInitialSpawnRound(pl)
 
 	pl.LifeBarricadeDamage = 0
 	pl.LifeHumanDamage = 0
+	pl.LifeShieldGiven = 0
 	pl.LifeBrainsEaten = 0
 
 	pl.WaveBarricadeDamage = 0
@@ -4647,6 +4650,7 @@ function GM:PlayerDeath(pl, inflictor, attacker)
 	elseif pl.RedeemedOnce then 
 		pl.RedeemedOnce = false
     end
+	pl.HitsToResistImmune = 0 
 	if !pl.RedeemedOnce and pl:IsSkillActive(SKILL_AMULET_5) and math.random(1,4) == 2 then
 		timer.Simple(0.005, function()
 			if pl:IsValid() then
@@ -5190,7 +5194,7 @@ function GM:DoPlayerDeath(pl, attacker, dmginfo)
 			end
 		end
 
-		if not revive and (pl.LifeBarricadeDamage ~= 0 or pl.LifeHumanDamage ~= 0 or pl.LifeBrainsEaten ~= 0) then
+		if not revive and (pl.LifeBarricadeDamage ~= 0 or pl.LifeHumanDamage ~= 0 or pl.LifeBrainsEaten ~= 0 or pl.LifeShieldGiven ~= 0) then
 			timer.Simple(0, function() if pl:IsValid() then pl:SendLifeStats() end end)
 		end
 
@@ -5474,6 +5478,7 @@ function GM:PlayerSpawn(pl)
 
 		pl.LifeBarricadeDamage = 0
 		pl.LifeHumanDamage = 0
+		pl.LifeShieldGiven = 0
 		pl.LifeBrainsEaten = 0
 
 		pl.BossHealRemaining = nil
@@ -5802,6 +5807,15 @@ function GM:EventStart(wave)
 				pl:CenterNotify(COLOR_GREEN,{killicon = "headshot"},{font = "ZSHUDFontSmall"},translate.ClientGet(pl,"hehe_start"),{killicon = "headshot"})
 			end
 		end
+	end
+	if math.random(1,8) == 1  then
+		gamemode.Call("CreateRandomObjectPos", "prop_casino",1)
+		for _, pl in pairs(player.GetAll()) do
+			if pl then
+				pl:CenterNotify(COLOR_GREEN,{killicon = "headshot"},{font = "ZSHUDFontSmall"},translate.ClientGet(pl,"casino_appear"),{killicon = "headshot"})
+			end
+		end
+		return
 	end
 	if math.random(1,2) == 1  then
 		local rand =  math.random(1,10) 

@@ -1055,31 +1055,42 @@ local cursesoul = { ["black_core_2"] = { type = "Sprite", sprite = "effects/spla
 --curses
 trinket, trinketwep = GM:AddTrinket(trs("t_curse_dropping"), "curse_dropping", false, nil, cursesoul, 3, trs("t_d_curse_dropping"), nil, nil, "weapon_zs_cursed")
 trinketwep.PermitDismantle = true
+trinketwep.NoMagnet = true
 trinket, trinketwep = GM:AddTrinket(trs("t_hurt_curse"), "hurt_curse", false, nil,cursesoul, 3,trs("t_d_hurt_curse"), nil, nil, "weapon_zs_cursed")
 trinketwep.PermitDismantle = true
+trinketwep.NoMagnet = true
 trinket, trinketwep = GM:AddTrinket(trs("t_uncurse"), "un_curse", false, nil,cursesoul, 3, trs("t_d_uncurse"), nil, nil, "weapon_zs_cursed")
 GM:AddSkillModifier(trinket, SKILLMOD_CURSEM, -0.70)
 trinketwep.PermitDismantle = true
+trinketwep.NoMagnet = true
 trinket, trinketwep = GM:AddTrinket(trs("t_curse_faster"), "curse_faster", false, nil,cursesoul, 3, trs("t_d_curse_faster"), nil, nil, "weapon_zs_cursed")
 trinketwep.PermitDismantle = true
+trinketwep.NoMagnet = true
 trinket, trinketwep = GM:AddTrinket(trs("t_curse_slow"), "curse_slow", false, nil, cursesoul, 3, trs("t_d_curse_slow"), nil, nil, "weapon_zs_cursed")
 GM:AddSkillModifier(trinket, SKILLMOD_SPEED, -80)
 trinketwep.PermitDismantle = true
+trinketwep.NoMagnet = true
 trinket, trinketwep = GM:AddTrinket(trs("t_curse_heart"), "curse_heart", false, nil, cursesoul, 3, trs("t_d_curse_heart"), nil, nil, "weapon_zs_cursed")
 GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, -80)
 trinketwep.PermitDismantle = true
+trinketwep.NoMagnet = true
 trinket, trinketwep = GM:AddTrinket(trs("t_curse_fragility"), "curse_fragility", false, nil, cursesoul, 3, trs("t_d_curse_fragility"), nil, nil, "weapon_zs_cursed")
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, 0.50)
 trinketwep.PermitDismantle = true
+trinketwep.NoMagnet = true
 trinket, trinketwep = GM:AddTrinket(trs("t_curse_ponos"), "curse_ponos", false, nil, cursesoul, 3, trs("t_d_curse_ponos"), nil, nil, "weapon_zs_cursed")
 trinketwep.PermitDismantle = true
+trinketwep.NoMagnet = true
 trinket, trinketwep = GM:AddTrinket(trs("t_curse_un"), "curse_unknown", false, nil, cursesoul, 3, trs("t_d_curse_un"), nil, nil, "weapon_zs_cursed")
 trinketwep.PermitDismantle = true
+trinketwep.NoMagnet = true
 trinket, trinketwep = GM:AddTrinket(trs("t_curse_point"), "curse_point", false, nil, cursesoul, 3, trs("t_d_curse_point"), nil, nil, "weapon_zs_cursed")
 trinketwep.PermitDismantle = true 
+trinketwep.NoMagnet = true
 trinketwep.Stackable = true
 trinket, trinketwep = GM:AddTrinket(trs("t_curse_ancient"), "curse_eye", false, nil, cursesoul, 3, trs("t_d_curse_ancient"), nil, nil, "weapon_zs_cursed")
 trinketwep.PermitDismantle = true
+trinketwep.NoMagnet = true
 
 --perfomance
 GM:AddSkillModifier(GM:AddTrinket( trs("t_adrenaline"), "adrenaline", false, pveles, pweles, nil, trs("t_d_adrenaline"), nil, nil, "weapon_zs_special_trinket"), SKILLMOD_JUMPPOWER_MUL, 0.01)
@@ -2006,9 +2017,6 @@ GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_TAKEN_MUL, -0.05)
 trinket = GM:AddTrinket(trs("t_antibaracat"), "antibaracat", false, supveles, supweles, 5, trs("t_d_antibaracat"))
 GM:AddSkillModifier(trinket, SKILLMOD_MEDKIT_EFFECTIVENESS_MUL, 0.5)
 trinket = GM:AddTrinket(trs("t_auto_magazine"), "ultra_mag", false, book, bookw, 5, trs("t_d_auto_magazine"))
-GM:AddSkillModifier(trinket, SKILLMOD_DAMAGE, -0.15)
-GM:AddSkillModifier(trinket, SKILLMOD_PROJECTILE_DAMAGE_MUL, -0.15)
-GM:AddSkillModifier(trinket, SKILLMOD_FIRE_DELAY, -0.25)
 
 --Special Trinkets
 trinket = GM:AddTrinket(trs("t_nheart"), "nulledher", false, supveles, supweles, 4, trs("t_d_nheart"))
@@ -2700,18 +2708,26 @@ GM:AddSkillModifier(trinket, SKILLMOD_CLOUD_TIME, 1)
 trinketwep.PermitDismantle = true
 
 --Sins
-trinket = GM:AddTrinket(trs("t_sin_greed"), "sin_greed", false, supveles, supweles, 1, trs("t_d_sin_greed"))
-trinket = GM:AddTrinket(trs("t_sin_sloth"), "sin_sloth", false, supveles, supweles, 1, trs("t_d_sin_sloth"))
-trinket = GM:AddTrinket(trs("t_sin_wrath"), "sin_wrath", false, supveles, supweles, 1, trs("t_d_sin_wrath"))
+trinket, trinketwep = GM:AddTrinket(trs("t_sin_greed"), "sin_greed", false, supveles, supweles, 1, trs("t_d_sin_greed"))
+trinketwep.NoMagnet = true
+trinket, trinketwep = GM:AddTrinket(trs("t_sin_sloth"), "sin_sloth", false, supveles, supweles, 1, trs("t_d_sin_sloth"))
+trinketwep.NoMagnet = true
+trinket, trinketwep = GM:AddTrinket(trs("t_sin_wrath"), "sin_wrath", false, supveles, supweles, 1, trs("t_d_sin_wrath"))
+trinketwep.NoMagnet = true
 GM:AddSkillModifier(trinket, SKILLMOD_DMG_TAKEN, 1.5)
-trinket = GM:AddTrinket(trs("t_sin_gluttony"), "sin_gluttony", false, supveles, supweles, 1, trs("t_d_sin_gluttony"))
-trinket = GM:AddTrinket(trs("t_sin_pride"), "sin_pride", false, supveles, supweles, 1, trs("t_d_sin_pride"))
+trinket, trinketwep = GM:AddTrinket(trs("t_sin_gluttony"), "sin_gluttony", false, supveles, supweles, 1, trs("t_d_sin_gluttony"))
+trinketwep.NoMagnet = true
+trinket, trinketwep = GM:AddTrinket(trs("t_sin_pride"), "sin_pride", false, supveles, supweles, 1, trs("t_d_sin_pride"))
+trinketwep.NoMagnet = true
 GM:AddSkillModifier(trinket, SKILLMOD_ARSENAL_DISCOUNT, -0.15)
-trinket = GM:AddTrinket(trs("t_sin_envy"), "sin_envy", false, supveles, supweles, 1, trs("t_d_sin_envy"))
+trinket, trinketwep = GM:AddTrinket(trs("t_sin_envy"), "sin_envy", false, supveles, supweles, 1, trs("t_d_sin_envy"))
+trinketwep.NoMagnet = true
 GM:AddSkillModifier(trinket, SKILLMOD_ARSENAL_DISCOUNT, -0.15)
-trinket = GM:AddTrinket(trs("t_sin_lust"), "sin_lust", false, supveles, supweles, 1, trs("t_d_sin_lust"))
+trinket, trinketwep = GM:AddTrinket(trs("t_sin_lust"), "sin_lust", false, supveles, supweles, 1, trs("t_d_sin_lust"))
+trinketwep.NoMagnet = true
 
 trinket, trinketwep = GM:AddTrinket(trs("t_ego"), "sin_ego", false, supveles, supweles, 1, trs("t_d_ego"))
+trinketwep.NoMagnet = true
 trinketwep.Stackable = true
 GM:AddSkillModifier(trinket, SKILLMOD_SCRAPDISCOUNT, 0.75)
 
@@ -2741,22 +2757,45 @@ local placeholder = {
 }
 trinket, trinketwep = GM:AddTrinket(trs("t_defensive_module"), "defensive_module", false, placeholder, placeholder, 4, trs("t_d_defensive_module"), nil, nil, "weapon_zs_special_trinket")
 trinketwep.OnlyDrones = true
+trinketwep.FunctionOnConnect = function(self, new, rem)
+	self:SetMaxObjectHealth(self:GetMaxObjectHealth()+50)
+end
 trinket, trinketwep = GM:AddTrinket(trs("t_module_balance"), "module_balance", false, placeholder, placeholder, 4, trs("t_d_module_balance"), nil, nil, "weapon_zs_special_trinket")
 trinketwep.OnlyDrones = true
 trinket, trinketwep = GM:AddTrinket(trs("t_module_resnya"), "module_resnya", false, placeholder, placeholder, 4, trs("t_d_module_resnya"), nil, nil, "weapon_zs_special_trinket")
 trinketwep.OnlyDrones = true
+trinketwep.FunctionOnConnect = function(self, new, rem)
+	self:SetDTInt(12,math.min(5,self.TrinketsIn[new]))
+end
 trinket, trinketwep = GM:AddTrinket(trs("t_module_bounty"), "module_bounty", false, placeholder, placeholder, 4, trs("t_d_module_bounty"), nil, nil, "weapon_zs_special_trinket")
 trinketwep.OnlyDrones = true
+trinketwep.FunctionOnConnect = function(self, new, rem)
+	self.CanUseModifiers = true
+end
 trinket, trinketwep = GM:AddTrinket(trs("t_module_handler"), "module_handler", false, placeholder, placeholder, 4, trs("t_d_module_handler"), nil, nil, "weapon_zs_special_trinket")
 trinketwep.OnlyDrones = true
+trinketwep.FunctionOnConnect = function(self, new, rem)
+	self._OldAcc = self._OldAcc or self.Acceleration
+	self.Acceleration = self._OldAcc  * (1 + 0.05 * math.min(10,self.TrinketsIn[new]))
+end
 trinket, trinketwep = GM:AddTrinket(trs("t_module_extreme"), "module_extreme", false, placeholder, placeholder, 4, trs("t_d_module_extreme"), nil, nil, "weapon_zs_special_trinket")
 trinketwep.OnlyDrones = true
+trinketwep.FunctionOnConnect = function(self, new, rem)
+	self.AmmoUsagesStacks = math.min(3,self.TrinketsIn[new])
+end
 trinket, trinketwep = GM:AddTrinket(trs("t_module_nanite"), "module_nanite", false, placeholder, placeholder, 4, trs("t_d_module_nanite"), nil, nil, "weapon_zs_special_trinket")
 trinketwep.OnlyDrones = true
+trinketwep.FunctionOnConnect = function(self, new, rem)
+	self.Nanites = self.TrinketsIn[new]
+end
 trinket, trinketwep = GM:AddTrinket(trs("t_module_mirror"), "module_mirror", false, placeholder, placeholder, 4, trs("t_d_module_mirror"), nil, nil, "weapon_zs_special_trinket")
 trinketwep.OnlyDrones = true
 trinket, trinketwep = GM:AddTrinket(trs("t_module_serrate"), "module_serrate", false, placeholder, placeholder, 4, trs("t_d_module_serrate"), nil, nil, "weapon_zs_special_trinket")
 trinketwep.OnlyDrones = true
+trinketwep.FunctionOnConnect = function(self, new, rem)
+	self.InnateDamageType = INNATE_TYPE_PULSE
+	self.InnateDamage = 0.05 * self.TrinketsIn[new]
+end
 
 
 trinket = GM:AddTrinket( trs( "t_illegalmechanism" ), "illegalmechanism", false, supveles, supweles, 4, trs( "t_d_illegalmechanism" ) )

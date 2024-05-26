@@ -5,6 +5,9 @@ CLASS.TranslationName = "class_tormented_wraith"
 CLASS.Description = "description_tormented_wraith"
 CLASS.Help = "controls_tormented_wraith"
 
+CLASS.Variations = {}
+CLASS.Original = false
+
 
 
 CLASS.Health = 320

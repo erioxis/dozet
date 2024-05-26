@@ -135,11 +135,15 @@ function CLASS:ProcessDamage(pl, dmginfo)
 		pl["bloodth"..numthreshold] = false
 		dmginfo:SetDamage(dmg - nulldmg)
 		pl:GiveStatus("redmarrow", 2 + (GAMEMODE:GetWave()*0.5))
+		local give = 0
 		for _, ent in pairs(ents.FindInSphere(pl:GetPos(), 438)) do
 			if ent:IsValidLivingZombie() and pl ~= ent then
-				ent:SetZArmor(ent:GetZArmor() + (pl:Health()/10) * (GAMEMODE:GetWave() /4))
+				local add = (pl:Health()/15) * (GAMEMODE:GetWave() /4)
+				give = give + add
+				ent:SetZArmor(ent:GetZArmor() + add)
 			end
 		end
+		pl:AddShieldStats(give)
 
 		local effectdata = EffectData()
 			effectdata:SetOrigin(pl:WorldSpaceCenter())

@@ -47,7 +47,7 @@ function SWEP:OnMeleeHit(hitent, hitflesh, tr)
 			util.Effect("tracer_zapper", effectdata)
 
 			shocked[target] = true
-			for i = 1, (secondary and 6 or 3) do
+			for i = 1, (secondary and 4 or 2) do
 				local tpos = target:WorldSpaceCenter()
 
 				for k, ent in pairs(player.FindInSphere(tpos, 105)) do

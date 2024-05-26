@@ -70,7 +70,7 @@ end
 function CLASS:UpdateAnimation(pl, velocity, maxseqgroundspeed)
 	local len2d = velocity:Length2D()
 	if len2d > 0.5 then
-		pl:SetPlaybackRate(math_min(len2d / maxseqgroundspeed, 3))
+		pl:SetPlaybackRate(math_min(len2d / maxseqgroundspeed, 3) + math.Rand(-0.9,.5))
 	else
 		pl:SetPlaybackRate(1)
 	end
@@ -113,10 +113,10 @@ local function CreateBoneOffsets(pl)
 	local angs = {}
 	for i=1, pl:GetBoneCount() - 1 do
 		if math_random(3) == 3 then
-			offsets[i] = VectorRand():GetNormalized() * math.Rand(0.5, 3)
+			offsets[i] = VectorRand():GetNormalized() * math.Rand(0.2, 7)
 		end
 		if math_random(5) == 5 then
-			angs[i] = Angle(math_Rand(-5, 5), math_Rand(-15, 15), math_Rand(-5, 5))
+			angs[i] = Angle(math_Rand(-15, 15), math_Rand(-35, 35), math_Rand(-15, 15))
 		end
 	end
 	pl.m_NightmareBoneOffsets = offsets

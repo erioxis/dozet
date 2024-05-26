@@ -7,8 +7,8 @@ SWEP.PrintName = "Toxic Charger"
 SWEP.ViewModel = Model("models/weapons/v_pza.mdl")
 
 SWEP.MeleeDelay = 0.8
-SWEP.MeleeDamage = 32
-SWEP.MeleeDamageVsProps = 33
+SWEP.MeleeDamage = 38
+SWEP.MeleeDamageVsProps = 44
 SWEP.Primary.Delay = 1.5
 
 SWEP.SwingAnimSpeed = 0.6

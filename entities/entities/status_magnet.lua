@@ -37,15 +37,20 @@ function ENT:Think()
 			local dir = (pos - ent:NearestPoint(pos)):GetNormalized()
 			phys:ApplyForceCenter((phys:GetMass() or 2) * self.Force * dir)
 			ent:SetPhysicsAttacker(owner, 4)
-
-			if (ent:GetPos() - self:GetPos()):LengthSqr() <= 5600 and ent.GiveToActivator then
-				if class == "prop_invitem" and !table.HasValue(string.Explode("_",ent:GetInventoryItemType()), "curse") or class ~=  "prop_invitem" then
-					ent:GiveToActivator(owner)
+			print(GAMEMODE.ZSInventoryItemData[ent:GetInventoryItemType()].NoMagnet)
+			if (ent:GetPos() - self:GetPos()):LengthSqr() <= 5600  then
+				local can = class == "prop_invitem" and !GAMEMODE.ZSInventoryItemData[ent:GetInventoryItemType()].NoMagnet or class ~= "prop_invitem"
+				if ent.GiveToActivator then
+					if can then
+						ent:GiveToActivator(owner)
+					end
 				end
-			end
-			
-			if (ent:GetPos() - self:GetPos()):LengthSqr() <= 5600 and ent.Use then
-				ent:Use(owner, self)
+				
+				if ent.Use then
+					if can then
+						ent:Use(owner, self)
+					end
+				end
 			end
 		end
 	end

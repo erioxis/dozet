@@ -6,7 +6,7 @@ function ENT:Initialize()
 	self:SetModel(self.Model)
 	self:SetUseType(SIMPLE_USE)
 
-	self:PhysicsInitBox(Vector(-30, -17, -14.15), Vector(18.29, 11.86, 15))
+	self:PhysicsInitBox(Vector(-22, -11, -7.15), Vector(13.29, 7, 7))
 	self:PhysicsInit(SOLID_VPHYSICS)
 	local phys = self:GetPhysicsObject()
 	if phys:IsValid() then

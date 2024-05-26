@@ -21,11 +21,11 @@ CLASS.NoFallDamage = true
 CLASS.NoFallSlowdown = true
 CLASS.NoSlowdown = true
 
-CLASS.Points = 25
+CLASS.Points = 10
 
 CLASS.SWEP = "weapon_zs_baracat_t"
 
-CLASS.Health = 5000
+CLASS.Health = 1200
 CLASS.Speed = 270
 CLASS.JumpPower = 620
 
@@ -114,7 +114,7 @@ CLASS.HullDuck = {Vector(-22, -22, 0), Vector(22, 22, 32)}
 CLASS.ViewOffset = Vector(0, 0, 32 * CLASS.ModelScale)
 CLASS.ViewOffsetDucked = Vector(0, 0, 32 * CLASS.ModelScale)
 CLASS.StepSize = 35
-CLASS.DamageReduction = 0.85
+CLASS.DamageReduction = 0.1
 CLASS.CrouchedWalkSpeed = 1
 CLASS.Mass = DEFAULT_MASS * 12
 

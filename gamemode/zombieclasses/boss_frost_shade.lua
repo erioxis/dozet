@@ -86,11 +86,15 @@ if SERVER then
 				local status = pl:GiveStatus("frostshadeshield")
 				if status and status:IsValid() then
 					status:SetStateEndTime(curtime + 0.5)
+					local give = 0
 					for _, ent in pairs(player.FindInSphere(pl:GetPos(), 238)) do
 						if ent:IsValidLivingZombie() and pl ~= ent then
-							ent:SetZArmor(ent:GetZArmor() + 255 * (GAMEMODE:GetWave() /2))
+							local add = 255 * (GAMEMODE:GetWave() /2)
+							give = give + add
+							ent:SetZArmor(ent:GetZArmor() + add)
 						end
 					end
+					pl:AddShieldStats(give)
 
 					for _, ent in ipairs(ents.FindByClass("env_frostshadecontrol")) do
 						if ent:IsValid() and ent:GetOwner() == pl then

@@ -49,8 +49,21 @@ function meta:ProcessDamage(dmginfo)
 			self.LastDMGType = dmgtype
 			return
 		end
-		if classtable.DamageReduction then
-			dmginfo:ScaleDamage(1-classtable.DamageReduction)
+		local red = classtable.DamageReduction
+		local immune = classtable.HitsToResistImmune
+		
+		if red then
+			if immune then
+				self.HitsToResistImmune = self.HitsToResistImmune + 1
+				if self.HitsToResistImmune > immune then
+					red = -2
+					if self.OutFitPac then
+						self:RemovePACPart(self.OutFitPac)
+						self.OutFitPac = nil 
+					end
+				end
+			end
+			dmginfo:ScaleDamage(1-red)
 		end
 	end
 
@@ -1142,6 +1155,7 @@ function meta:SendLifeStats()
 		net.WriteUInt(math.ceil(self.LifeBarricadeDamage or 0), 16)
 		net.WriteUInt(math.ceil(self.LifeHumanDamage or 0), 16)
 		net.WriteUInt(self.LifeBrainsEaten or 0, 8)
+		net.WriteUInt(math.ceil(self.LifeShieldGiven or 0), 16)
 	net.Send(self)
 end
 function meta:Block()
@@ -1162,6 +1176,14 @@ end
 function meta:AddLifeHumanDamage(amount)
 	self.LifeHumanDamage = self.LifeHumanDamage + amount
 	self.WaveHumanDamage = self.WaveHumanDamage + amount
+
+	if not self:Alive() then
+		timer.Simple(0, function() if self:IsValid() then self:SendLifeStats() end end)
+	end
+end
+
+function meta:AddShieldStats(amount)
+	self.LifeShieldGiven = self.LifeShieldGiven + amount
 
 	if not self:Alive() then
 		timer.Simple(0, function() if self:IsValid() then self:SendLifeStats() end end)
@@ -1870,7 +1892,7 @@ function meta:Resupply(owner, obj)
 	end
 
 		if owner:IsSkillActive(SKILL_VOR) then
-			owner:GiveAmmo(amount * 0.1, ammotype)
+			owner:GiveAmmo(amount * 0.35, ammotype)
 			net.Start("zs_ammopickup")
 				net.WriteUInt(amount * 0.1, 16)
 				net.WriteString(ammotype)

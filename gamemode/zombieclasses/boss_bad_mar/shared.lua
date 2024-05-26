@@ -1,7 +1,7 @@
 CLASS.Name = "Bad Marrow"
 CLASS.TranslationName = "class_baw"
 CLASS.Description = "description_baw"
-CLASS.Help = "controls_red_marrow"
+CLASS.Help = "controls_bad_marrow"
 
 CLASS.Boss = true
 
@@ -106,11 +106,7 @@ function CLASS:ProcessDamage(pl, dmginfo)
 	if dmginfo:GetInflictor().IsMelee then
 		dmginfo:SetDamage(dmginfo:GetDamage() / 2)
 	end
-	if bit_band(dmginfo:GetDamageType(), DMG_BULLET) ~= 0 then
-		dmginfo:SetDamage(dmginfo:GetDamage() * 0.65)
-	elseif bit_band(dmginfo:GetDamageType(), DMG_SLASH) == 0 and bit_band(dmginfo:GetDamageType(), DMG_CLUB) == 0 then
-		dmginfo:SetDamage(dmginfo:GetDamage() * 0.25)
-	end
+	dmginfo:ScaleDamage(1.14-math.min(0.9,GAMEMODE:GetWave()*0.07))
 
 
 	if pl:GetStatus("redmad") and attacker:IsPlayer() and attacker:Team() == TEAM_HUMAN then

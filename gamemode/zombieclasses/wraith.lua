@@ -3,7 +3,9 @@ CLASS.TranslationName = "class_wraith"
 CLASS.Description = "description_wraith"
 CLASS.Help = "controls_wraith"
 
-CLASS.BetterVersion = "Tormented Wraith"
+CLASS.Variations = {CLASS.Name, "Corrupted Wraith", "Corrupted Spy"}
+CLASS.Original = true
+
 
 CLASS.Wave = 2 / 6
 CLASS.Gravity = 0.5

@@ -201,6 +201,7 @@ local M_Player = FindMetaTable("Player")
 local P_Team = M_Player.Team
 
 GM.LifeStatsBrainsEaten = 0
+GM.LifeStatsDamageReduced = 0
 GM.LifeStatsHumanDamage = 0
 GM.LifeStatsBarricadeDamage = 0
 GM.InputMouseX = 0
@@ -1226,7 +1227,7 @@ function GM:ZombieHUD()
 	if sigiltp and sigiltp:IsValid() then
 		self:DrawSigilTeleportBar(w * 0.5, h * 0.55, 1 - sigiltp:GetTimeRemaining() / sigiltp:GetMaxTime(), sigiltp:GetTargetSigil(), screenscale)
 	end
-	if self.LifeStatsEndTime and CurTime() < self.LifeStatsEndTime and (self.LifeStatsBarricadeDamage > 0 or self.LifeStatsHumanDamage > 0 or self.LifeStatsBrainsEaten > 0) then
+	if self.LifeStatsEndTime and CurTime() < self.LifeStatsEndTime and (self.LifeStatsBarricadeDamage > 0 or self.LifeStatsHumanDamage > 0 or self.LifeStatsBrainsEaten > 0 or self.LifeStatsDamageReduced > 0) then
 		colLifeStats.a = math.Clamp((self.LifeStatsEndTime - CurTime()) / (self.LifeStatsLifeTime * 0.33), 0, 1) * 255
 
 		local th = draw_GetFontHeight("ZSHUDFontSmall")
@@ -1246,6 +1247,10 @@ function GM:ZombieHUD()
 		end
 		if self.LifeStatsBrainsEaten > 0 then
 			draw_SimpleTextBlur(translate.Format("x_brains_eaten", self.LifeStatsBrainsEaten), "ZSHUDFontSmall", x, y, colLifeStats, TEXT_ALIGN_LEFT)
+			y = y + th
+		end
+		if self.LifeStatsDamageReduced > 0 then
+			draw_SimpleTextBlur(translate.Format("x_shield_given", self.LifeStatsDamageReduced), "ZSHUDFontSmall", x, y, colLifeStats, TEXT_ALIGN_LEFT)
 			y = y + th
 		end
 	end

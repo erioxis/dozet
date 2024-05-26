@@ -74,28 +74,25 @@ function ENT:OnPackedUp(pl)
 
 	pl:PushPackedItem(self:GetClass(), self:GetObjectHealth(), self:GetScraps())
 
-	self:Remove()
+	local drone = self:GetDTEntity(11)
+	if drone:IsValid() then
+		
+		self.NextUseTrinket = CurTime() + 7
+		if drone:GetPhysicsObject() then
+			drone:GetPhysicsObject():Wake()
+		end
+		self:SetDTEntity(11,NULL)
+		drone:SetPos(drone:GetObjectOwner():GetPos()+Vector(0,0,6))
+	end
+
+	timer.Simple(0, function() self:Remove() end)
 end
 ENT.NextUseTrinket  = 0
 
 local function OnIn(self,new,rem)
-	--print(self.TrinketsIn[new], new)
-	if new == "trinket_defensive_module" then
-		self:SetMaxObjectHealth(self:GetMaxObjectHealth()+50)
-	elseif new == "trinket_module_resnya" then
-		self:SetDTInt(12,math.min(5,self.TrinketsIn[new]))
-	elseif new == "trinket_module_bounty" then
-		self.CanUseModifiers = true
-	elseif new == "trinket_module_handler" then
-		self._OldAcc = self._OldAcc or self.Acceleration
-		self.Acceleration = self._OldAcc  * (1 + 0.05 * math.min(10,self.TrinketsIn[new]))
-	elseif new == "trinket_module_extreme" then
-		self.AmmoUsagesStacks = math.min(3,self.TrinketsIn[new])
-	elseif new == "trinket_module_nanite" then
-		self.Nanites = self.TrinketsIn[new]
-	elseif new == "trinket_module_serrate" then
-		self.InnateDamageType = INNATE_TYPE_PULSE
-		self.InnateDamage = 0.05 * self.TrinketsIn[new]
+	local tab = GAMEMODE.ZSInventoryItemData[new]
+	if tab.FunctionOnConnect then
+		tab.FunctionOnConnect(self, new, rem)
 	end
 	self._OnRemove = self._OnRemove or self.OnRemove
 	self.OnRemove = function()
@@ -106,7 +103,7 @@ local function OnIn(self,new,rem)
 					ent:SetInventoryItemType(k)
 					ent:Spawn()
 					ent:SetPos(self:GetPos())
-					ent:SetOwner(self:GetOwner())
+					ent:SetOwner(self:GetObjectOwner())
 					ent.DroppedTime = CurTime()
 				end
 			end
@@ -161,13 +158,15 @@ function ENT:Think()
 	
 		local drone = self:GetDTEntity(11)
 		if drones[v:GetClass()] and v:GetParent() ~= self and  !drone:IsValid()  then
-			v:SetParent(self)
+			if v:GetPhysicsObject() then
+				v:GetPhysicsObject():Sleep()
+			end
 			v.TrinketsIn = v.TrinketsIn or {}
 			v.OnUpdateTrinkets = OnIn
 			if v:GetClass() == "prop_manhack" or v:GetClass() == "prop_manhack_saw" then
-				v:SetPos(self:GetForward()*45+Vector(0,0,26))
+				v:SetPos(self:GetPos() + self:GetForward()*45+Vector(0,0,26))
 			else
-				v:SetPos(self:GetForward()*30+Vector(0,0,12))
+				v:SetPos(self:GetPos() + self:GetForward()*30+Vector(0,0,12))
 			end
 			self:SetDTEntity(11, v)
 			
@@ -193,7 +192,9 @@ function ENT:Use(activator, caller)
 	if activator == self:GetDTEntity(11):GetObjectOwner() and activator:KeyDown(IN_SPEED) then
 		
 		self.NextUseTrinket = CurTime() + 7
-		drone:SetParent(NULL)
+		if drone:GetPhysicsObject() then
+			drone:GetPhysicsObject():Wake()
+		end
 		self:SetDTEntity(11,NULL)
 		drone:SetPos(drone:GetObjectOwner():GetPos()+Vector(0,0,6))
 		return

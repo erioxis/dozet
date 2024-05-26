@@ -86,11 +86,15 @@ function ENT:Think()
 			owner.NextShield = fCurTime + (self.Destroyed and 12 or (2 + extraduration))
 			self:Remove()
 			if self.Destroyed then
+				local give = 0
 				for _, ent in pairs(ents.FindInSphere(owner:GetPos(), 238)) do
 					if ent:IsValidLivingZombie() and pl ~= ent then
-						ent:SetZArmor(ent:GetZArmor() + 255 * (GAMEMODE:GetWave() /2))
+						local toadd = 255 * (GAMEMODE:GetWave() /2)
+						give = give + toadd
+						ent:SetZArmor(ent:GetZArmor() + toadd)
 					end
 				end
+				owner:AddShieldStats(give)
 			end
 			owner:GetActiveWeapon():SetNextShadeTime(fCurTime + (self.Destroyed and 12 or (2 + extraduration)))
 			return

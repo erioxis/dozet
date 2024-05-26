@@ -5,6 +5,10 @@ CLASS.TranslationName = "class_tormented_spy"
 CLASS.Description = "description_tormented_spy"
 CLASS.Help = "controls_tormented_spy"
 
+CLASS.Variations = {}
+CLASS.Original = false
+
+
 CLASS.Health = 3
 CLASS.Points = CLASS.Health/GM.NoHeadboxZombiePointRatio
 CLASS.Speed = 450

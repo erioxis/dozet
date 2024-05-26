@@ -2335,9 +2335,9 @@ SKILL_CHALLENGER3 = 217
 GM:AddSkill(SKILL_CHALLENGER2, trs("skill_challenger").."II", GOOD.."+3%"..trs("r_speed"),
 				                                                            	5,			4,					{SKILL_CHALLENGER1,SKILL_CHALLENGER3}, TREE_DONATETREE)
 GM:AddSkillModifier(SKILL_CHALLENGER2, SKILLMOD_RELOADSPEED_MUL, 0.03)
-GM:AddSkill(SKILL_CHALLENGER3,trs("skill_challenger").."III", GOOD.."+100%"..trs("xpmul"),
+GM:AddSkill(SKILL_CHALLENGER3,trs("skill_challenger").."III", GOOD.."+35%"..trs("xpmul"),
 				                                                            	5,			0,					{}, TREE_DONATETREE).NeedAchievement = "phantomwill"
-GM:AddSkillModifier(SKILL_CHALLENGER3, SKILLMOD_XP, 1)
+GM:AddSkillModifier(SKILL_CHALLENGER3, SKILLMOD_XP, .35)
 --Skill for high-remort
 GM:AddSkill(SKILL_SECRET2, "Secret V", GOOD.."Good thing, +3 spoints",
 				                                                            	-22,			-33,					{SKILL_NONE}, TREE_MELEETREE)

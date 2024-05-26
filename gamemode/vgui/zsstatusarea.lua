@@ -32,6 +32,7 @@ function PANEL:Init()
 		status.GetMemberMaxValue = statusdisp.MaxValueFunc
 		status.MemberMaxValue = statusdisp.Max
 		status.Icon = statusdisp.Icon
+		status.PercentageCap = statusdisp.PercentageCap
 		status.CodeName = statusdisp.Name
 		status:Dock(LEFT)
 
@@ -179,7 +180,18 @@ function PANEL:Paint(w, h)
 	--end
 	local nm = self:GetMemberName()
 	local stat = lp:GetStatus(self.CodeName)
-	draw.SimpleText(t1..(stat and stat:IsValid() and stat:GetDTInt(1) ~= 0 and "|"..stat:GetDTInt(1) or ""), ((stat and stat:IsValid() and stat:GetDTInt(1) ~= 0)  and "ZSHUDFontSmaller" or t1 >= 10000 and "ZSHUDFontSmallest" or "ZSHUDFontSmall"), w / 2, y + h / 2.85 - boxsize/2 + 5, color_white_alpha230, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+	local valid = stat and stat:IsValid()
+	local int = 0
+	if valid then
+		int = stat:GetDTInt(1)
+	end
+	local int2 = int
+	if self.PercentageCap then
+		int2 = int.."%"
+		draw.SimpleText(int2, "ZSHUDFontSmallest", w / 2, y + h / 3.5 - boxsize/2 + 5, color_white_alpha230, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+		int = 0
+	end
+	draw.SimpleText(t1..(int ~= 0 and "|"..int2 or ""), ((int ~= 0)  and "ZSHUDFontSmallest" or t1 >= 10000 and "ZSHUDFontSmallest" or "ZSHUDFontSmall"), w / 2, y + h / 2.85 - boxsize/2 + 5, color_white_alpha230, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 	if nm then
 		draw.SimpleText(nm, (string.len(nm) >= 8 and "ZSHUDFontTiniestStatus2" or "ZSHUDFontTiniestStatus"), w / 2, y + h / 2.5 - boxsize/2 + 5, color_white_alpha230, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 	end

@@ -153,23 +153,9 @@ net.Receive("zs_activate_trinket", function(len, pl)
 	gamemode.Call("OnTrinketActivate", trinket, pl)
 end)
 local function OnIn(self,new,rem)
-	--print(self.TrinketsIn[new], new)
-	if new == "trinket_defensive_module" then
-		self:SetMaxObjectHealth(self:GetMaxObjectHealth()+50)
-	elseif new == "trinket_module_resnya" then
-		self:SetDTInt(12,math.min(5,self.TrinketsIn[new]))
-	elseif new == "trinket_module_bounty" then
-		self.CanUseModifiers = true
-	elseif new == "trinket_module_handler" then
-		self._OldAcc = self._OldAcc or self.Acceleration
-		self.Acceleration = self._OldAcc  * (1 + 0.05 * math.min(10,self.TrinketsIn[new]))
-	elseif new == "trinket_module_extreme" then
-		self.AmmoUsagesStacks = math.min(3,self.TrinketsIn[new])
-	elseif new == "trinket_module_nanite" then
-		self.Nanites = self.TrinketsIn[new]
-	elseif new == "trinket_module_serrate" then
-		self.InnateDamageType = INNATE_TYPE_PULSE
-		self.InnateDamage = 0.05 * self.TrinketsIn[new]
+	local tab = GAMEMODE.ZSInventoryItemData[new]
+	if tab.FunctionOnConnect then
+		tab.FunctionOnConnect(self, new, rem)
 	end
 	self._OnRemove = self._OnRemove or self.OnRemove
 	self.OnRemove = function()
@@ -180,7 +166,7 @@ local function OnIn(self,new,rem)
 					ent:SetInventoryItemType(k)
 					ent:Spawn()
 					ent:SetPos(self:GetPos())
-					ent:SetOwner(self:GetOwner())
+					ent:SetOwner(self:GetObjectOwner())
 					ent.DroppedTime = CurTime()
 				end
 			end
@@ -259,9 +245,25 @@ net.Receive("zs_upgrade_trinket", function(len, pl)
 --	print(newi)
 	local cost = math.Round(GAMEMODE:GetUpgradeScrap(tbl,(tbl.QualityTier or 0)+1)*0.65)
 --	print(cost)
-	if cost > pl:GetAmmoCount("scrap") or tbl.NeedForUpgrade and !pl:HasInventoryItem(tbl.NeedForUpgrade) then 
+	if cost > pl:GetAmmoCount("scrap")  then 
 		GAMEMODE:ConCommandErrorMessage(pl, translate.ClientGet(pl, "need_to_have_enough_scrap"))
 		return 
+	end
+	local who = tbl.NeedForUpgrade
+	if who and !pl:HasInventoryItem(who) then
+		pl:SendLua('GAMEMODE:CenterNotify(COLOR_RED, translate.Format("inv_dont_have_s_u", GAMEMODE.ZSInventoryItemData["'..who..'"].PrintName))')
+		pl:SendLua("surface.PlaySound(\"buttons/button10.wav\")")
+		return 
+	end
+	local nearest = pl:NearestRemantler()
+	if nearest then
+		local owner = nearest.GetObjectOwner and nearest:GetObjectOwner() or nearest:GetOwner()
+		if owner:IsValid() and owner ~= pl then
+			local scrapcom = math.ceil(cost / 5)
+			nearest:SetScraps(nearest:GetScraps() + scrapcom)
+			nearest:GetObjectOwner():GiveAchievementProgress("grem", scrapcom)
+			nearest:GetObjectOwner():CenterNotify(COLOR_GREEN, translate.ClientFormat(owner ,"remantle_used", scrapcom)..pl:Nick())
+		end
 	end
 	pl:SendLua("surface.PlaySound(\"buttons/lever"..math.random(5)..".wav\")")
 	pl:RemoveAmmo(cost, "scrap")
@@ -276,7 +278,7 @@ function meta:TryAssembleItem(component, heldclass)
 
 	if heldwepiitype then
 		if not self:HasInventoryItem(heldclass) then
-			self:CenterNotify(COLOR_RED, translate.ClientGet(self, "inv_dont_have_s"))
+			self:SendLua('GAMEMODE:CenterNotify(COLOR_RED, translate.Format("inv_dont_have_s", GAMEMODE.ZSInventoryItemData["'..heldclass..'"].PrintName))')
 			self:SendLua("surface.PlaySound(\"buttons/button10.wav\")")
 			return
 		end

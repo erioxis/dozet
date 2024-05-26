@@ -54,6 +54,10 @@ function ENT:Hit(vHitPos, vHitNormal, eHitEntity)
 	if eHitEntity and eHitEntity:IsValid() then
 		eHitEntity:TakeDamage(eHitEntity.BeingControlled and 200 or 25, owner, self)
 
+		if eHitEntity:GetClass() == "prop_manhack" or eHitEntity:GetClass() == "prop_manhack_saw" then
+			eHitEntity:TakeDamage(760,owner,self)
+		end
+
 		if eHitEntity.FizzleStatusAOE then return end
 	end
 

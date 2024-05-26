@@ -14,7 +14,7 @@ function ENT:Think()
 	
 	local hollowing = self
 	local owner = self:GetOwner()
-	if (hollowing) then
+	if (hollowing) and owner and owner:IsValid() then
 		if (hollowing.DieTime <= CurTime()) then
 			owner:TakeSpecialDamage(self.maxHallow, DMG_DIRECT, (self.Applier or owner), self)
 			hollowing:Remove()

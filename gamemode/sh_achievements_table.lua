@@ -560,6 +560,15 @@ GM.Statuses["frost"] = {
 	Icon = Material("zombiesurvival/frost.png"),
     Debuff = true
 }
+GM.Statuses["necrosis"] = {
+	Color = Color(87, 40, 9),
+	Name = "necrosis",
+	ValFunc = statusValueFunction("necrosis"),
+	Max = 20,
+    PercentageCap = true,
+	Icon = Material("zombiesurvival/sickness.png"),
+    Debuff = true
+}
 GM.Statuses["warm"] = {
 	Color = Color(255, 111, 0),
 	Name = "warm",

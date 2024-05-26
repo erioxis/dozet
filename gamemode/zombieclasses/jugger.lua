@@ -262,7 +262,8 @@ CLASS.HullDuck = {Vector(-22, -22, 0), Vector(22, 22, 32)}
 CLASS.ViewOffset = Vector(0, 0, 32 * CLASS.ModelScale)
 CLASS.ViewOffsetDucked = Vector(0, 0, 32 * CLASS.ModelScale)
 CLASS.StepSize = 25
-CLASS.DamageReduction = 0.65
+CLASS.DamageReduction = 0.85
+CLASS.HitsToResistImmune = 75
 CLASS.CrouchedWalkSpeed = 1
 CLASS.Mass = DEFAULT_MASS * 12
 

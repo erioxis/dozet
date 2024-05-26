@@ -622,7 +622,7 @@ function MakepOptions()
 	slider:SetConVar("zs_filmgrainopacity")
 	slider:SetText("Film grain")
 	slider:SizeToContents()
-	list:AddItem(slider)
+	list2:AddItem(slider)
 
 	slider = vgui.Create("DNumSlider", Window)
 	slider:SetDecimals(1)
