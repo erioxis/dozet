@@ -231,7 +231,7 @@ LANGUAGE.t_d_fire_at = "Ignite damage\n-10% DMG"
 LANGUAGE.t_d_acid_at = "Cold damage\n-10% DMG"
 LANGUAGE.t_d_pulse_at = "Pulse slow damage\n-10% DMG"
 LANGUAGE.t_serrate_at = "Serrate damage"
-LANGUAGE.t_d_serrate_at = "Inflicts a bleeding with chance.\n-4% DMG"
+LANGUAGE.t_d_serrate_at = "Inflicts a bleeding with chance.\n-16% DMG"
 LANGUAGE.t_d_ultra_at = "Sometimes can increase damage by x2.5 for zombie\n-10% DMG"
 LANGUAGE.t_d_curse_slow                                 = "-80 speed\nOn drop or giving anything damage for 100 health"
 LANGUAGE.t_d_curse_faster                                 = "Bullet damage faster getting lower\n On drop anything give +50 Director kills"
@@ -504,6 +504,8 @@ LANGUAGE.t_module_mirror                             = "Void Mirror"
 LANGUAGE.t_d_module_mirror                            = "+1 per stack MOAB Rollermine for drone.\nStackable and only for MOAB."
 LANGUAGE.t_module_serrate                             = "Pulse attack"
 LANGUAGE.t_d_module_serrate                            = "Give a pulse-modifier for drone.\nStackable (+5% additional pulse damage per stack)"
+LANGUAGE.t_module_better_cd                             = "Better Handle"
+LANGUAGE.t_d_module_better_cd                            = "+1% Fire attack speed.\nStackable"
 
 
 

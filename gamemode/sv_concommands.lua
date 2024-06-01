@@ -85,12 +85,12 @@ concommand.Add("zs_pointsshopbuy", function(sender, command, arguments)
 					sender:AddInventoryItem(itemtab.SWEP)
 				else
 					local rem = sender:NearestDS()
-					local drone = rem:GetDTEntity(11)
+					local drone = rem and rem:IsValid() and rem:GetDTEntity(11) or NULL
 					if drone and drone:IsValid() then
 						drone.TrinketsIn[itemtab.SWEP] = drone.TrinketsIn[itemtab.SWEP] and drone.TrinketsIn[itemtab.SWEP] + 1 or 1
 						drone:OnUpdateTrinkets(itemtab.SWEP)
 					else
-						return
+						sender:AddInventoryItem(itemtab.SWEP)
 					end
 				end
 			end

@@ -37,7 +37,7 @@ function ENT:Think()
 			local dir = (pos - ent:NearestPoint(pos)):GetNormalized()
 			phys:ApplyForceCenter((phys:GetMass() or 2) * self.Force * dir)
 			ent:SetPhysicsAttacker(owner, 4)
-			print(GAMEMODE.ZSInventoryItemData[ent:GetInventoryItemType()].NoMagnet)
+			--print(GAMEMODE.ZSInventoryItemData[ent:GetInventoryItemType()].NoMagnet)
 			if (ent:GetPos() - self:GetPos()):LengthSqr() <= 5600  then
 				local can = class == "prop_invitem" and !GAMEMODE.ZSInventoryItemData[ent:GetInventoryItemType()].NoMagnet or class ~= "prop_invitem"
 				if ent.GiveToActivator then

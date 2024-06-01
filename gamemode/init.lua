@@ -2115,16 +2115,21 @@ function GM:DoHonorableMentions(filter)
 	self:CacheHonorableMentions()
 
 	for i, tab in pairs(self.CachedHMs) do
+		local ent = tab[1]
 		net.Start("zs_honmention")
-			net.WriteEntity(tab[1])
+			net.WriteEntity(ent)
 			net.WriteUInt(tab[2], 8)
 			net.WriteInt(tab[3], 32)
+			if ent and ent:IsValid() then
+				ent:AddZSXP(BOUNTY_XP_HM[tab[2]]*tab[3], true)
+			end
 		if filter then
 			net.Send(filter)
 		else
 			net.Broadcast()
 		end
 	end
+	self:SaveAllVaults()
 end
 
 function GM:PostDoHonorableMentions()
@@ -2157,6 +2162,7 @@ function GM:PreRestartRound()
 end
 
 GM.CurrentRound = 1
+GM.RTVCounter = 0
 GM.RestartedGame = false
 function GM:RestartRound()
 	self.CurrentRound = self.CurrentRound + 1
@@ -4499,16 +4505,6 @@ function GM:KeyPress(pl, key)
 						end
 				end 
 			elseif pl:Team() == TEAM_UNDEAD then
-				if pl:KeyDown(IN_ATTACK) then
-					if pl:GetZombieClassTable().Name == "Shade" then
-						pl:StripWeapons()
-						pl:SetZombieClassName("Frost Shade")
-					elseif pl:GetZombieClassTable().Name == "Frost Shade" then
-						pl:StripWeapons()
-						pl:SetZombieClassName("Shade")
-					end
-					pl:Give(pl:GetZombieClassTable().SWEP)
-				end
 				if pl.CanMerge then
 					local ent1 = NULL
 					for _, ent in pairs(player.FindInSphere(pl:GetPos(), 256)) do

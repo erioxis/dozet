@@ -14,10 +14,10 @@ if SERVER then
 end
 local tableofstatus =  {"death","knockdown","flimsy"}
 function ENT:OnRemove()
-	local st =	self:GetOwner():GiveRandomStatus(math.random(5,35))
+	local st =	self:GetOwner():GiveRandomStatus(math.random(5,35), tableofstatus)
 
 	if st and st:IsValid() and st.AddDamage then
-		st:AddDamage(math.random(15,50), self.Damager or self.Applier, tableofstatus)
+		st:AddDamage(math.random(15,50), self.Damager or self.Applier)
 	end
 end
 function ENT:Think(arguments)

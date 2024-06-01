@@ -261,7 +261,7 @@ function MakepWorth()
 	propertysheet.Paint = function() end
 
 	local list = vgui.Create("DPanelList", propertysheet)
-	local sheet = propertysheet:AddSheet("Favorites", list, "icon16/heart.png", false, false)
+	local sheet = propertysheet:AddSheet(translate.Get('worth_favorites'), list, "icon16/heart.png", false, false)
 	sheet.Panel:SetPos(0, tabhei + 2)
 	list:EnableVerticalScrollbar(true)
 	list:SetWide(propertysheet:GetWide() - 16)
@@ -445,7 +445,7 @@ function MakepWorth()
 	if #GAMEMODE.SavedCarts == 0 then
 		propertysheet:SetActiveTab(propertysheet.Items[math.min(2, #propertysheet.Items)].Tab)
 	else
-		propertysheet:SwitchToName("Favorites")
+		propertysheet:SwitchToName(translate.Get('worth_favorites'))
 	end
 
 	return frame

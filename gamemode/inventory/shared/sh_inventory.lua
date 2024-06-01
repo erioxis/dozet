@@ -2097,8 +2097,8 @@ trinket = GM:AddTrinket(trs("t_acid_at"), "acid_at", false, supveles, supweles, 
 GM:AddSkillModifier(trinket, SKILLMOD_DAMAGE, -0.1)
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_MUL, -0.1)
 trinket = GM:AddTrinket(trs("t_serrate_at"), "serrate_at", false, supveles, supweles, 2, trs("t_d_serrate_at"))
-GM:AddSkillModifier(trinket, SKILLMOD_DAMAGE, -0.04)
-GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_MUL, -0.04)
+GM:AddSkillModifier(trinket, SKILLMOD_DAMAGE, -0.16)
+GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_MUL, -0.16)
 trinket = GM:AddTrinket(trs("t_ultra_at"), "ultra_at", false, supveles, supweles, 2, trs("t_d_ultra_at"))
 GM:AddSkillModifier(trinket, SKILLMOD_DAMAGE, -0.1)
 GM:AddSkillModifier(trinket, SKILLMOD_MELEE_DAMAGE_MUL, -0.1)
@@ -2795,6 +2795,11 @@ trinketwep.OnlyDrones = true
 trinketwep.FunctionOnConnect = function(self, new, rem)
 	self.InnateDamageType = INNATE_TYPE_PULSE
 	self.InnateDamage = 0.05 * self.TrinketsIn[new]
+end
+trinket, trinketwep = GM:AddTrinket(trs("t_module_better_cd"), "module_cd", false, placeholder, placeholder, 4, trs("t_d_module_better_cd"), nil, nil, "weapon_zs_special_trinket")
+trinketwep.OnlyDrones = true
+trinketwep.FunctionOnConnect = function(self, new, rem)
+	self.ReducedCD = 0.01 * self.TrinketsIn[new]
 end
 
 

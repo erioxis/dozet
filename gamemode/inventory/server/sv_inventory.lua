@@ -207,7 +207,7 @@ local function OnIn(self,new,rem)
 				self:SetObjectHealth(math.min(self:GetMaxObjectHealth(),self:GetObjectHealth() + 3*intnanite))
 				self.NextRepairSelf = CurTime() + 2
 			end
-			bruh:Think2()
+			self:Think2()
 		end
 	end
 end

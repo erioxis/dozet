@@ -9,6 +9,8 @@ CLASS.Health = 2100
 CLASS.Points = CLASS.Health/GM.NoHeadboxZombiePointRatio
 CLASS.Speed = 110
 
+CLASS.Original = false
+
 CLASS.Boss = true
 
 CLASS.SWEP = "weapon_zs_tormentedspy"

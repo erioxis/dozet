@@ -186,17 +186,25 @@ function meta:ApplySkills(override)
 	local desired = override or self:Alive() and self:Team() == TEAM_HUMAN and self:GetDesiredActiveSkills() or {}
 	local current_active = self:GetActiveSkills()
 	local desired_assoc = table.ToAssoc(desired)
-
+	local randomoff = math.Round(util.SharedRandom(self:EntIndex(),1,12))
+	
 	-- Do we even have these skills unlocked?
 	if not override then
 		for skillid in pairs(desired_assoc) do
-			if not self:IsSkillUnlocked(skillid) or allskills[skillid] and allskills[skillid].Disabled then
+			if desired_assoc[SKILL_CHAMPION_TRUE] and allskills[skillid].Tree == randomoff then
+				desired_assoc[skillid] = nil
+				continue 
+			end
+			if not self:IsSkillUnlocked(skillid) or allskills[skillid] and allskills[skillid].Disabled  then
 				desired_assoc[skillid] = nil
 			end
 		end
 	end
 	if SERVER then
 		self:SendLua('GAMEMODE.MySkillsRandom = {}')
+		if desired_assoc[SKILL_CHAMPION_TRUE] then
+			self:PrintMessage(HUD_PRINTTALK, randomoff.." Ветка отключена.")
+		end
 	end
 	if table.HasValue(desired,492) then
 		local g = math.random(1,538)

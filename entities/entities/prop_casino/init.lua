@@ -113,13 +113,13 @@ function ENT:Use(activator, caller)
 	end
 	local jackpot = false
 	
-	if (sum) >= full *6  and (sum) ~= 7*full  then
+	if (sum) >= full *5  and (sum) ~= 7*full  then
 		local togive = beat*(0.11+full)
 		PrintTranslatedMessage( HUD_PRINTTALK, "casino_jack",togive,ply:Nick() )
 		ply:SetPoints(ply:GetPoints()+togive)
 		jackpot = true
 	end
-	if (sum) >= full * (5 - (cain and 1 or 0)) and sum < full*(5 - (cain and 2 or 0))  then
+	if (sum) >= full * (4 - (cain and 0.5 or 0)) and sum < full*(4 - (cain and 0.5 or 0))  then
 		PrintTranslatedMessage( HUD_PRINTTALK, "casino_jack",beat*1.1,ply:Nick() )
 		ply:SetPoints(ply:GetPoints()+beat*1.1)
 		jackpot = true

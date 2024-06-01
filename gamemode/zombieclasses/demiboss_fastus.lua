@@ -9,12 +9,12 @@ CLASS.DemiBoss = true
 CLASS.Revives = true
 
 CLASS.Health = 1200
-CLASS.Speed = 322
+CLASS.Speed = 325
 CLASS.SWEP = "weapon_zs_fastking"
 
 CLASS.Points = CLASS.Health/GM.NoHeadboxZombiePointRatio
 CLASS.Variations = false
-CLASS.Original = true
+CLASS.Original = false
 
 
 CLASS.CanTaunt = true

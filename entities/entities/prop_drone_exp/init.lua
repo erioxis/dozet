@@ -291,7 +291,7 @@ function ENT:FireTurret(src, dir)
 			
 		local pos = self:LocalToWorld(self:OBBCenter())
 			local owner = self:GetObjectOwner()
-			self:SetNextFire(CurTime() + 1.15)
+			self:SetNextFire(CurTime() + 1.15 * (1-(self.ReducedCD or 0)))
 			self:SetAmmo(curammo - 1)
 				effectdata = EffectData()
 				effectdata:SetOrigin(pos)

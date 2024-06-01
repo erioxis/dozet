@@ -170,6 +170,16 @@ if SERVER then
 
 	function CLASS:AltUse(pl)
 		self:ShadeShield(pl)
+		if pl:KeyDown(IN_ATTACK) then
+			if self.Name == "Shade" then
+				pl:StripWeapons()
+				pl:SetZombieClassName("Frost Shade")
+			elseif self.Name == "Frost Shade" then
+				pl:StripWeapons()
+				pl:SetZombieClassName("Shade")
+			end
+			pl:Give(pl:GetZombieClassTable().SWEP)
+		end
 	end
 end
 

@@ -1,24 +1,24 @@
-CLASS.Name = "Wraith"
-CLASS.TranslationName = "class_wraith"
-CLASS.Description = "description_wraith"
-CLASS.Help = "controls_wraith"
+CLASS.Name = "Necros Wraith"
+CLASS.TranslationName = "class_necros"
+CLASS.Description = "description_necros"
+CLASS.Help = "controls_necros"
 
-CLASS.Variations = {CLASS.Name, "Corrupted Wraith", "Corrupted Spy", "Necros Wraith"}
-CLASS.Original = true
+CLASS.Variations = {}
+CLASS.Original = false
 
 
-CLASS.Wave = 2 / 6
-CLASS.Gravity = 0.5
+CLASS.Wave = 5 / 12
+CLASS.Gravity = 0.8
 
-CLASS.Health = 233
+CLASS.Health = 500
 
-CLASS.SWEP = "weapon_zs_wraith"
+CLASS.SWEP = "weapon_zs_wraith_necro"
 CLASS.Model = Model("models/player/zelpa/stalker.mdl")
-CLASS.Speed = 150
+CLASS.Speed = 190
 
 CLASS.CanTaunt = true
 
-CLASS.Points = CLASS.Health/GM.NoHeadboxZombiePointRatio
+CLASS.Points = CLASS.Health/GM.NoHeadboxZombiePointRatio/2
 CLASS.Weight = 0.5
 CLASS.VoicePitch = 0.65
 
@@ -162,7 +162,7 @@ function CLASS:PrePlayerDraw(pl)
 	if alpha == 0 then return true end
 
 	render.SetBlend(alpha)
-	render.SetColorModulation(0.025, 0.025, 0.1)
+	render.SetColorModulation(0.102, 0.102, 0.847)
 	render.SuppressEngineLighting(true)
 end
 

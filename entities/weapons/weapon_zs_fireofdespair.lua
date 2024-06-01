@@ -140,11 +140,12 @@ function SWEP:DealThink(dmginfo, ent)
     local owner = self:GetOwner()
     ent:GiveStatus( "burn", math.random( 5, 15 ), owner )
     ent:AddLegDamageExt( 6, owner, self, SLOWTYPE_FLAME )
+	self:SetDTFloat(12, self:GetDTFloat(12)+dmginfo:GetDamage())
 end
-
 function SWEP:HaveAbility()
-	if true then return end
+	if self:GetDTFloat(12) < 5000 then return end
 	local owner = self:GetOwner()
+	self:SetDTFloat(12, 0)
 	self:StartSwinging( true )
 	timer.Simple( 1.7, function()
 		if not ( IsValid( self ) or IsValid( owner ) ) then return end
@@ -184,6 +185,23 @@ function SWEP:HaveAbility()
 		end
 	end)
 end
+if !CLIENT then return end
+	local ablicolor =  Color( 189,108,27)
+	function SWEP:Draw2DHUD()
+		self:Draw2DFeature( self:GetDTFloat(12)/5000, nil, nil, "weapon_ability_fod", "ZSHUDFontSmallest", ablicolor, "+menu" )
+		self.BaseClass.Draw2DHUD(self)
+	end
+	
+	function SWEP:Draw3DHUD(vm, pos, ang)
+	
+		cam.Start3D2D( pos, ang, self.HUD3DScale / 6 )
+				self:Draw3DFeatureHorizontal( vm, pos+Vector(0,0,1), ang, self:GetDTFloat(12)/5000, nil, nil, "weapon_ability_fod", "ZSHUDFont", ablicolor )
+		cam.End3D2D()
+		self.BaseClass.Draw3DHUD(self,vm, pos, ang)
+	end
+	
+
+
 
 function SWEP:Think()
 	if self:IsSwinging() and self:GetSwingEnd() <= CurTime() then

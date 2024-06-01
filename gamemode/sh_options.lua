@@ -844,6 +844,7 @@ GM:AddPointShopItem("bloodgrass",		ITEMCAT_TRINKETS,		150,				"trinket_bloodgras
 -- GM:AddPointShopItem("void",	        ITEMCAT_TRINKETS,		70,				"trinket_void").SubCategory =							  ITEMSUBCAT_TRINKETS_OFFENSIVE
 GM:AddPointShopItem("defensive_module",		ITEMCAT_MODULES,		70,				"trinket_defensive_module").SubCategory =								ITEMSUBCAT_TRINKETS_DEFENSIVE
 GM:AddPointShopItem("module_balance",		ITEMCAT_MODULES,		100,				"trinket_module_balance").SubCategory =								ITEMSUBCAT_TRINKETS_OFFENSIVE
+GM:AddPointShopItem("module_cd",		ITEMCAT_MODULES,		150,				"trinket_module_cd").SubCategory =								ITEMSUBCAT_TRINKETS_OFFENSIVE
 GM:AddPointShopItem("module_resnya",		ITEMCAT_MODULES,		300,				"trinket_module_resnya").SubCategory =								ITEMSUBCAT_TRINKETS_MELEE
 GM:AddPointShopItem("module_bounty",		ITEMCAT_MODULES,		300,				"trinket_module_bounty").SubCategory =								ITEMSUBCAT_TRINKETS_SPECIAL
 GM:AddPointShopItem("module_handler",		ITEMCAT_MODULES,		90,				"trinket_module_handler").SubCategory =								ITEMSUBCAT_TRINKETS_PERFOMANCE

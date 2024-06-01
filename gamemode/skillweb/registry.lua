@@ -542,6 +542,7 @@ SKILL_QUILLS = 539
 SKILL_AMULET_19 = 540
 SKILL_NE_QUE_PRO = 541
 SKILL_CADER_MASTERY = 542
+SKILL_CHAMPION_TRUE = 543
 
 
 
@@ -2338,6 +2339,10 @@ GM:AddSkillModifier(SKILL_CHALLENGER2, SKILLMOD_RELOADSPEED_MUL, 0.03)
 GM:AddSkill(SKILL_CHALLENGER3,trs("skill_challenger").."III", GOOD.."+35%"..trs("xpmul"),
 				                                                            	5,			0,					{}, TREE_DONATETREE).NeedAchievement = "phantomwill"
 GM:AddSkillModifier(SKILL_CHALLENGER3, SKILLMOD_XP, .35)
+GM:AddSkill(SKILL_CHAMPION_TRUE,trs("skill_challenger").."IV", GOOD.."+115%"..trs("xpmul")..BAD..trs('skill_challenger_true'),
+				                                                            	5,			-2,					{SKILL_CHALLENGER3}, TREE_DONATETREE)
+GM:AddSkillModifier(SKILL_CHAMPION_TRUE, SKILLMOD_XP, 1.15)
+
 --Skill for high-remort
 GM:AddSkill(SKILL_SECRET2, "Secret V", GOOD.."Good thing, +3 spoints",
 				                                                            	-22,			-33,					{SKILL_NONE}, TREE_MELEETREE)

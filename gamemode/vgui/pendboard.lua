@@ -7,7 +7,8 @@ function GM:AddHonorableMention(pl, mentionid, ...)
 	if not mentiontab then return end
 
 	local pan = vgui.Create("DEndBoardPlayerPanel", pEndBoard.List)
-	pan:SetPlayer(pl, mentiontab.Color, string.format(mentiontab.String, mentiontab.Callback(pl, ...)), nil, mentiontab.Name)
+	local giv,liv = mentiontab.Callback(pl, ...)
+	pan:SetPlayer(pl, mentiontab.Color, string.format(mentiontab.String, giv,liv), nil, mentiontab.Name, mentionid, liv)
 	pEndBoard.List:AddItem(pan)
 end
 
@@ -104,7 +105,7 @@ function PANEL:GetPlayer()
 	return self.m_Player or NULL
 end
 
-function PANEL:SetPlayer(pl, col, misc, misccol, overridename)
+function PANEL:SetPlayer(pl, col, misc, misccol, overridename, id, magnitude)
 	if self.m_pAvatar then
 		self.m_pAvatar:Remove()
 		self.m_pAvatar = nil
@@ -117,6 +118,11 @@ function PANEL:SetPlayer(pl, col, misc, misccol, overridename)
 		self.m_pMisc:Remove()
 		self.m_pMisc = nil
 	end
+	if self.HihiHaha then
+		self.HihiHaha:Remove()
+		self.HihiHaha = nil
+	end
+
 
 	if pl:IsValidPlayer() then
 		local name = overridename or pl:Name()
@@ -131,6 +137,19 @@ function PANEL:SetPlayer(pl, col, misc, misccol, overridename)
 		local namelab = EasyLabel(self, name, "ZSHUDFontTiny", col)
 		namelab:SetPos(40, -2)
 		self.m_pName = namelab
+		local col323 = COLOR_CYAN
+		if pl == LocalPlayer() then
+			col323 = COLOR_YELLOW
+		end
+
+		local text = (BOUNTY_XP_HM[id]*(magnitude+1))
+		if text > 0 then
+			text = "+"..text
+		end
+		local namelab = EasyLabel(self, text..translate.Get('xp'), "ZSHUDFontTiny", col323)
+		namelab:SetPos(480, -2)
+		self.HihiHaha = namelab
+
 
 		if misc then
 			local misclab = EasyLabel(self, misc, nil, misccol)

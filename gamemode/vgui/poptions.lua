@@ -139,6 +139,12 @@ function MakepOptions()
 	check:SetTooltip(translate.Get("op_show_node_tool"))
 	list2:AddItem(check)
 
+	check = vgui.Create("DCheckBoxLabel", Window)
+	check:SetText(translate.Get("op_show_node"))
+	check:SetConVar("zs_disablesprite")
+	check:SizeToContents()
+	check:SetTooltip(translate.Get("op_show_sprite_tool"))
+	list2:AddItem(check)
 	
 	check = vgui.Create("DCheckBoxLabel", Window)
 	check:SetText(translate.Get("op_ms_mss"))
@@ -175,12 +181,6 @@ function MakepOptions()
 
 
 	
-	check = vgui.Create("DCheckBoxLabel", Window)
-	check:SetText(translate.Get("op_show_node"))
-	check:SetConVar("zs_disablesprite")
-	check:SizeToContents()
-	check:SetTooltip(translate.Get("op_show_sprite_tool"))
-	list2:AddItem(check)
 	
 	slider = vgui.Create("DNumSlider", Window)
 	slider:SetDecimals(1)

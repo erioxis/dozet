@@ -333,7 +333,6 @@ function PANEL:Init()
 				else
 					node:SetModelScale(0.57, 0)
 				end
-				
 				node.Skill = skill
 				node.SkillID = id
 				self.SkillNodes[skill.Tree][id] = node
@@ -1272,14 +1271,18 @@ function PANEL:Paint(w, h)
 				render_ModelMaterialOverride()
 				render_SetBlend(0.95)
 				node:SetModelScale(3.7)
-				node:DrawModel()
+				if !GAMEMODE.DisableNode then
+					node:DrawModel()
+				end
 				node:SetModelScale(3.8)
 			end
 				
 			render_ModelMaterialOverride(matWhite)
 			render_SetBlend(skillid <= -2 and 0.2 or 0.95)
 			if !skill.Hidden1 and !skill.Hidden  then
-				node:DrawModel()
+				if !GAMEMODE.DisableNode then
+					node:DrawModel()
+				end
 			end
 			render_SetBlend(1)
 			render_SetColorModulation(1, 1, 1)

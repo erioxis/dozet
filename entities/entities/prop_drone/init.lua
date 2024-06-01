@@ -311,8 +311,8 @@ function ENT:FireTurret(src, dir)
 		local curammo = self:GetAmmo()
 		if curammo > 0 then
 			local owner = self:GetObjectOwner()
-
-			self:SetNextFire(CurTime() + 0.15)
+			--print(self.ReducedCD)
+			self:SetNextFire(CurTime() + 0.15 * (1-(self.ReducedCD or 0)))
 			self:SetAmmo(curammo - 1)
 
 			owner:LagCompensation(true)
