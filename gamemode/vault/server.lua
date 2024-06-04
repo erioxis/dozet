@@ -26,12 +26,15 @@ end
 --[[function GM:ShouldUseVault(pl)
 	return not self.ZombieEscape and not self:IsClassicMode()
 end]]
-
-function GM:GetVaultFile(pl, xp)
+TYPE_XP = 1
+TYPE_ETERNAL = 2
+function GM:GetVaultFile(pl, type)
 	local steamid = pl:SteamID64() or "invalid"
 	local d = ""
-	if xp then
+	if type == TYPE_XP then
 		d = "_ACH_XP"
+	elseif type == TYPE_ETERNAL then
+		d = "_INVENTORY"
 	end
 
 	return self.VaultFolder..d.."/"..steamid:sub(-2).."/"..steamid..d..".txt"
@@ -137,7 +140,7 @@ function GM:LoadVault(pl)
 			end
 		end
 	end
-	local filename = self:GetVaultFile(pl, true)
+	local filename = self:GetVaultFile(pl, TYPE_XP)
 	if file.Exists(filename, "DATA") then
 		local contents = file.Read(filename, "DATA")
 		if contents and #contents > 0 then
@@ -147,6 +150,23 @@ function GM:LoadVault(pl)
 					pl:SetDCoins(contents.AchXP)
 				end
 				pl.SkillVersion = self.SkillTreeVersion
+			end
+		end
+	end
+	local filename = self:GetVaultFile(pl, TYPE_ETERNAL)
+	if file.Exists(filename, "DATA") then
+		local contents = file.Read(filename, "DATA")
+		if contents and #contents > 0 then
+			contents = Deserialize(contents)
+			if contents then
+				if contents.Inventory then
+					for k,v in pairs(contents.Inventory) do
+						print(k,v)
+						for i=1,v do
+							timer.Simple(0, function() pl:AddInventoryItem(k) end)
+						end
+					end
+				end
 			end
 		end
 	end
@@ -227,12 +247,27 @@ function GM:SaveVault(pl)
 	end
 
 	local filename = self:GetVaultFile(pl)
-	local filenamexp = self:GetVaultFile(pl,true)
+	local filenamexp = self:GetVaultFile(pl,TYPE_XP)
 	file.CreateDir(string.GetPathFromFilename(filename))
 	file.Write(filename, Serialize(tosave))
 
 	file.CreateDir(string.GetPathFromFilename(filenamexp))
 	file.Write(filenamexp, Serialize(tosavexp))
+
+	local huh = {}
+	for k,v in pairs(pl:GetInventoryItems()) do
+		if GAMEMODE:GetInventoryItemType(k) == INVCAT_ETERNAL then
+			huh[k] = v
+		end
+	end
+	local tosaveinv = {
+		Inventory =  huh
+	}
+
+	local filenameinv = self:GetVaultFile(pl,TYPE_ETERNAL)
+	file.CreateDir(string.GetPathFromFilename(filenameinv))
+	file.Write(filenameinv, Serialize(tosaveinv))
+	
 end
 local num = 1
 

@@ -1177,9 +1177,11 @@ GM:AddSkill(SKILL_NEED_A_BUFF, trs("skill_cader_bounty"), GOOD..trs("skill_cader
 GM:AddSkillModifier(SKILL_NEED_A_BUFF, SKILLMOD_HAMMER_SWING_DELAY_MUL, 0.10)
 GM:AddSkill(SKILL_D_NOODLEARMS, trs("skill_noodle"), GOOD.."+10"..trs("worth")..GOOD..trs("skill_noodle_d1")..GOOD.."+35%"..trs("repair")..BAD..trs("skill_noodle_d2"),
 																-7,			2,					{SKILL_CADER_MASTERY}, TREE_BUILDINGTREE)
-GM:AddSkill(SKILL_CADER_MASTERY, trs("skill_cader_mastery"), GOOD..trs("skill_cader_mastery_d1")..BAD.."-21%"..trs("repair"),
+local master = GM:AddSkill(SKILL_CADER_MASTERY, trs("skill_cader_mastery"), GOOD..trs("skill_cader_mastery_d1")..BAD.."-12%"..trs("repair"),
 																-7,			2.5,					{}, TREE_BUILDINGTREE)
-GM:AddSkillModifier(SKILL_CADER_MASTERY, SKILLMOD_REPAIRRATE_MUL, -0.21)
+GM:AddSkillModifier(SKILL_CADER_MASTERY, SKILLMOD_REPAIRRATE_MUL, -0.12)
+master.ClassNeed = DT_PLAYER_INT_CADER
+master.ClassLevel = 3
 GM:AddSkill(SKILL_INSTRUMENTS, trs("skill_instruments"), GOOD..trs("skill_instruments_d1"),
 																-10,		-3,					{SKILL_ENGI}, TREE_BUILDINGTREE)
 GM:AddSkill(SKILL_ENGI, trs("skill_engi"), GOOD..trs("skill_engi_d1"),
@@ -1197,10 +1199,12 @@ GM:AddSkill(SKILL_STOWAGE, 	trs("skill_stowage"), GOOD..trs("skill_stowage_d1").
 SKILL_NANITES = 241
 GM:AddSkill(SKILL_NANITES, 	trs("skill_nanite_r"), GOOD..trs("skill_nanite_buff")..BAD.."-10%"..trs("repair"),
 																4,			-4,					{SKILL_STOWAGE,SKILL_THE_CADER }, TREE_BUILDINGTREE)
-GM:AddSkill(SKILL_THE_CADER, 	trs("skill_cader_r"), BAD..trs("skill_cader_buff")..GOOD.."+50%"..trs("repair"),
+master = GM:AddSkill(SKILL_THE_CADER, 	trs("skill_cader_r"), BAD..trs("skill_cader_buff")..GOOD.."+50%"..trs("repair"),
 																4,			-4.5,					{SKILL_STOWAGE}, TREE_BUILDINGTREE)
 GM:AddSkillModifier(SKILL_NANITES, SKILLMOD_REPAIRRATE_MUL, -0.10)
 GM:AddSkillModifier(SKILL_THE_CADER, SKILLMOD_REPAIRRATE_MUL, 0.50)
+master.ClassNeed = DT_PLAYER_INT_CADER
+master.ClassLevel = 1
 GM:AddSkill(SKILL_FOLGA, trs("skill_foil"), GOOD..trs("skill_foil_d1"),
 																4,			-5.5,					{SKILL_U_ROLLERMINE}, TREE_BUILDINGTREE)
 GM:AddSkillModifier(SKILL_FOLGA, SKILLMOD_DAMAGE_TAKEN_N, -1)
@@ -1610,9 +1614,11 @@ GM:AddSkill(SKILL_ABFINGERS, trs("skill_abfingers"), GOOD..trs("skill_abfingers_
 GM:AddSkillModifier(SKILL_ABFINGERS, SKILLMOD_BUFF_TIME, -0.06)
 GM:AddSkill(SKILL_D_FINGERS, trs("skill_dfingers"), BAD..trs("skill_dfingers_d1"),
 																9,			-6,					{SKILL_SFINGERS}, TREE_GUNTREE)
-GM:AddSkill(SKILL_THROWER_FULL, trs("skill_throw_full"), GOOD..trs("skill_throw_full_d1"),
+master = GM:AddSkill(SKILL_THROWER_FULL, trs("skill_throw_full"), GOOD..trs("skill_throw_full_d1"),
 																9,			-7,					{SKILL_D_FINGERS,SKILL_AND_AGAIN}, TREE_GUNTREE)
-GM:AddSkillModifier(SKILL_THROWER_FULL, SKILLMOD_DAMAGE, -0.1)
+GM:AddSkillModifier(SKILL_THROWER_FULL, SKILLMOD_DAMAGE, -0.05)
+master.ClassNeed = DT_PLAYER_INT_GUNNER
+master.ClassLevel = 1
 GM:AddSkill(SKILL_AND_AGAIN, trs("skill_and_again"), GOOD..trs("skill_and_again_d1"),
 																9,			-8,					{}, TREE_GUNTREE)
 GM:AddSkillModifier(SKILL_THROWER_FULL, SKILLMOD_DAMAGE, -0.06)
@@ -1635,16 +1641,21 @@ GM:AddSkill(SKILL_BATTLER5, trs("skill_battler").."V", GOOD.."+4%"..trs("melee_l
 																0,			2,					{SKILL_GLASSWEAPONS, SKILL_BLOODLUST}, TREE_MELEETREE)
 GM:AddSkill(SKILL_BATTLER6, trs("skill_battler").."VI", GOOD.."+6%"..trs("melee_l")..BAD.."-7%"..trs("b_damage"),
 																0,			0,					{SKILL_BATTLER5}, TREE_MELEETREE)
-GM:AddSkill(SKILL_LASTSTAND, trs("skill_laststand"), GOOD..trs("skill_laststand_d1")..BAD..trs("skill_laststand_d2"),
+local master = GM:AddSkill(SKILL_LASTSTAND, trs("skill_laststand"), GOOD..trs("skill_laststand_d1")..BAD..trs("skill_laststand_d2"),
 																0,			6,					{SKILL_ABUSE}, TREE_MELEETREE)
-.RemortReq = 4
+master.RemortReq = 4
+master.ClassNeed = DT_PLAYER_INT_MELEE
+master.ClassLevel = 1
 GM:AddSkill(SKILL_ABUSE, trs("skill_lastabuse"), GOOD.."+10%"..trs("meleedamage")..GOOD..trs("skill_lastabuse_d1")..BAD..trs("skill_lastabuse_d2"),
 																0,			7,					{SKILL_CURSECURE}, TREE_MELEETREE).RemortReq = 4
 GM:AddSkill(SKILL_CURSECURE, trs("skill_cursecure"), GOOD..trs("skill_cursecure_d1")..GOOD.."+20%"..trs("m_curse")..BAD..trs("skill_cursecure_d2"),
 																0,			8,					{}, TREE_MELEETREE).RemortReq = 4
-GM:AddSkill(SKILL_SOULNET, trs("skill_souleater"), GOOD..trs("skill_souleater_d1")..BAD.."-10%"..trs("meleedamage"),
+local master = GM:AddSkill(SKILL_SOULNET, trs("skill_souleater"), GOOD..trs("skill_souleater_d1")..BAD.."-10%"..trs("meleedamage"),
 																0,			4,					{SKILL_LASTSTAND}, TREE_MELEETREE)
-.RemortReq = 4
+master.RemortReq = 4
+master.ClassNeed = DT_PLAYER_INT_MELEE
+master.ClassLevel = 2
+
 GM:AddSkill(SKILL_GLASSWEAPONS, trs("skill_glassweapon"), GOOD..trs("skill_glassweapon_d1")..BAD..trs("skill_glassweapon_d2"),
 																2,			4,					{}, TREE_MELEETREE)
 GM:AddSkill(SKILL_GLASSMAN, trs("skill_glassman"), GOOD..trs("skill_glassman_d1")..BAD.."+50%"..trs("meleedamagetaken"),

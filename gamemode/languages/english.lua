@@ -83,6 +83,7 @@ LANGUAGE.vgui_trin = "Trinkets"
 LANGUAGE.vgui_comp = "Components"
 LANGUAGE.vgui_cons = "Usables"
 LANGUAGE.vgui_weap = "Weapons"
+LANGUAGE.vgui_eter = "Eternal"
 
 LANGUAGE.refresh = "Refresh"
 
@@ -584,6 +585,23 @@ LANGUAGE.c_recall_d                                        = "Teleport clone to 
 LANGUAGE.upgrade_inv =  "Upgrade for %s scrap"
 LANGUAGE.upgrade_inv_hard =  "Upgrade for %s scrap and take %s"
 
+LANGUAGE.e_doseit                                        = "Piece of doseit"
+LANGUAGE.e_doseit_d                                        = "Need for upgrading mastery.\nα-material"
+LANGUAGE.e_doseit_2                                        = "Bar of doseit"
+LANGUAGE.e_doseit_2_d                                        = "Need for upgrading mastery.\nβ-material"
+
+LANGUAGE.e_lithum                                        = "Lithum"
+LANGUAGE.e_lithum_d                                        = "Need for upgrading mastery.\nα-material"
+LANGUAGE.e_lithum_2                                        = "Lithumis"
+LANGUAGE.e_lithum_2_d                                        = "Need for upgrading mastery.\nβ-material"
+
+LANGUAGE.e_egurm                                        = "Egurm"
+LANGUAGE.e_egurm_d                                        = "Need for upgrading mastery.\nα-material"
+LANGUAGE.e_egurm_2                                        = "E-Wire"
+LANGUAGE.e_egurm_2_d                                        = "Need for upgrading mastery.\nβ-material"
+
+LANGUAGE.e_shelon_2                                        = "Shell Oxid"
+LANGUAGE.e_shelon_2_d                                        = "Need for upgrading mastery.\nβ-material"
 
 
 
@@ -2857,6 +2875,7 @@ LANGUAGE.mm_options = "Options"
 LANGUAGE.mm_w_base = "Weapon Database"
 LANGUAGE.mm_s_base = "Status Database"
 LANGUAGE.mm_skills = "Skills"
+LANGUAGE.mm_mastery = "Mastery"
 LANGUAGE.mm_skillsz = "Zombie Skills"
 LANGUAGE.mm_zs_v = "ZS Version"
 

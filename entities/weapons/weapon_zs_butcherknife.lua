@@ -33,8 +33,19 @@ if CLIENT then
 		end
 	end
 end
-SWEP.Base = "weapon_zs_basemelee"
-DEFINE_BASECLASS("weapon_zs_basemelee")
+SWEP.UsedNewWeapons = true 
+if !SWEP.UsedNewWeapons then
+	SWEP.Base = "weapon_zs_basemelee"
+	DEFINE_BASECLASS("weapon_zs_basemelee")
+	SWEP.MeleeDamage = 45
+else
+	SWEP.Base = "weapon_zs_basemelee_modified"
+	DEFINE_BASECLASS("weapon_zs_basemelee_modified")
+	SWEP.MeleeDamage = 15
+	SWEP.OverPosition =  Vector(0,0,3)
+	SWEP.Additionalism =  Vector(-1,-2,-3)
+	SWEP.Attacks_Per_Swung = 3
+end
 SWEP.DamageType = DMG_SLASH
 SWEP.ViewModel = "models/weapons/c_crowbar.mdl"
 SWEP.WorldModel = "models/weapons/w_crowbar.mdl"
@@ -42,7 +53,6 @@ SWEP.UseHands = true
 SWEP.NoDroppedWorldModel = true
 --[[SWEP.BoxPhysicsMax = Vector(8, 1, 4)
 SWEP.BoxPhysicsMin = Vector(-8, -1, -4)]]
-SWEP.MeleeDamage = 45
 SWEP.MeleeRange = 49
 SWEP.MeleeSize = 0.666
 SWEP.Primary.Delay = 0.46 
@@ -115,7 +125,7 @@ function SWEP:SecondaryAttack()
 			end
 		end
 	end
-	BaseClass.SecondaryAttack(self)
+	self.BaseClass.SecondaryAttack(self)
 end
 function SWEP:OnMeleeHit(hitent, hitflesh, tr)
 	if hitent:IsValid() and hitent:IsPlayer() and not self.m_BackStabbing and math.abs(hitent:GetForward():Angle().yaw - self:GetOwner():GetForward():Angle().yaw) <= 90 then

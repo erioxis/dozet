@@ -246,6 +246,129 @@ function GM:CreateDifficultyMenu()
         difficultyLabel:SetVisible(true)
     end
 end
+local faded_black = Color(0, 0, 0, 200)
+local function clickClack(self)
+	net.Start('zs_mastery_upgrade')
+	net.WriteUInt(self.ParentHihi.ClassSelected or 11, 5)
+	net.WriteUInt(MySelf:GetDTInt(self.ParentHihi.ClassSelected)+1, 8)
+	net.SendToServer()
+end
+local Masterires = {
+	"Ближний бой",
+	"Стрелок",
+	"Медик",
+	"Плотник",
+}
+function GM:CreateMasteryMenu()
+	if MySelf:Team() ~= TEAM_HUMAN then return end
+	local desc = {}
+    local panel = vgui.Create("DFrame")
+    panel:SetSize(500, 500)
+    panel:SetTitle("Выберите мастерство(BETA)")
+    panel:Center()
+    panel:MakePopup()
+	self.MasteryLevel = panel
+
+    local selectDifficulty = vgui.Create("DComboBox", panel)
+    selectDifficulty:SetPos(25, 50)
+    selectDifficulty:SetSize(150, 25)
+
+    -- добавляем 10 элементов в выпадающий список
+    for i = 1,#Masterires do
+        selectDifficulty:AddChoice(Masterires[i])
+    end
+
+    local difficultyLabel = vgui.Create("DLabel", panel)
+    difficultyLabel:SetPos(25, 100)
+    difficultyLabel:SetSize(450, 100)
+    difficultyLabel:SetWrap(true)
+
+	difficultyLabel:SetText('Выбирай!')
+
+    local submitButton = vgui.Create("DButton", panel)
+    submitButton:SetText("Выбрать")
+    submitButton:SetPos(200, 50)
+    submitButton:SetSize(75, 25)
+
+	local upgBut = vgui.Create("DButton", panel)
+    upgBut:SetText("Прокачать")
+    upgBut:SetPos(300, 50)
+    upgBut:SetSize(75, 25)
+	upgBut.ParentHihi = panel
+	upgBut.DoClick = clickClack
+
+    submitButton.DoClick = function()
+        local selectedDifficulty = selectDifficulty:GetSelectedID() or 1
+        local difficultyName = selectDifficulty:GetSelected()  or 1
+        local difficultyDescription = Masterires[selectedDifficulty]
+		local class = 10+selectedDifficulty
+		panel.ClassSelected = class
+		local tabled2 = self.mastery:GetLevel(class,MySelf:GetDTInt(class)+1)
+        difficultyLabel:SetText(tabled2.Desc)
+        difficultyLabel:SetVisible(true)
+		local comp = tabled2.Components
+		local printname = ""
+		for k,v in pairs(comp) do
+			printname = printname..GAMEMODE.ZSInventoryItemData["eter_"..k].PrintName.." x"..v.."\n"
+		end
+		for i=1,4 do
+			if i == 3 then
+				if tabled2.Points <= MySelf:GetPoints() then
+					desc[i]:SetTextColor(COLOR_DARKGREEN)
+				else
+					desc[i]:SetTextColor(COLOR_DARKRED)
+				end
+			elseif i == 2 then
+				if tabled2.XP <= MySelf:GetDCoins() then
+					desc[i]:SetTextColor(COLOR_DARKGREEN)
+				else
+					desc[i]:SetTextColor(COLOR_DARKRED)
+				end
+			elseif i == 4 then
+				local numberofcomp = table.Count(comp)
+				local used = 0
+				for k,v in pairs(comp) do
+					local num = MySelf:GetInventoryItems()["eter_"..k]
+					if num >= v then
+						used = used + 1
+					end
+				end
+				desc[i]:SetTextColor(used ~= numberofcomp and COLOR_DARKRED or COLOR_DARKGREEN) 
+			end
+			desc[i]:SetText(i == 2 and "ОПЫТА"..":"..tabled2.XP or i == 3 and "Поинтов:"..tabled2.Points or i == 1 and "Стоимость:" or printname)
+		end
+    end
+	for i=1, 4 do
+		local skilldesc = vgui.Create("DLabel", panel)
+		skilldesc:SetFont("ZSHUDFontTiniest")
+		skilldesc:SetTextColor(COLOR_GRAY)
+		skilldesc:SetSize(220,120)
+		--skilldesc:Dock(BOTTOM)
+		skilldesc:SetText('')
+
+		skilldesc:SetPos(skilldesc:GetX()+250,skilldesc:GetY()+40*i+90+50*(i==4 and 2 or 1))
+		
+		
+		table.insert(desc, skilldesc)
+	end
+	panel.Paint = function(self, w, h)
+	    -- Draws a rounded box with the color faded_black stored above.
+	    draw.RoundedBox(2, 0, 0, w, h, faded_black)
+	    -- Draws text in the color white.
+	  --  draw.SimpleText("Derma Frame", "ZS3D2DUnstyleSmaller", 250, 5, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+		local howmuch = 50*(GAMEMODE.mastery:GetLevels(panel.ClassSelected or 11) or 0)
+		local upgraded = 50*MySelf:GetDTInt(panel.ClassSelected or 11)
+		--print(upgraded)
+		for i = 0, howmuch, 50 do
+			local val = math.Clamp(howmuch - i, 0, 50)
+
+			surface.SetDrawColor(100, 170 * (upgraded <= i and 0 or 1), 215 * (upgraded <= i and 0 or 1), 255)
+			surface.DrawRect(w - 450 +  1 + i/5 + i/50, h - 190 , val/5, h/25)
+
+
+		end
+	end
+end
 function GM:CreateLoreMenu(text)
 	local scr = BetterScreenScale()
     local panel = vgui.Create("DFrame")

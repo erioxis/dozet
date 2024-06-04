@@ -2,10 +2,11 @@ GM.Name		=	""
 GM.Author	=	"Toyka"
 GM.Email	=	"nope"
 GM.Website	=	"https://github.com/erioxis/dozet"
+GM.mastery = {}
 
 -- No, adding a gun doesn't make your name worth being here.
 GM.Credits = {
-	{"Version", "", "10.0.5"},
+	{"Version", "", "10.0.8"},
 	{"Season of ", "", "Simulation leave"},
 	{"erioxis", "Phantom coder", "dead"},
 	{"Холодное Молочко(M-I-L-K-Y)", "Phantom coder", "dead"},
@@ -38,6 +39,7 @@ include("sh_serialization.lua")
 include("sh_util.lua")
 include("shared/sh_bullets.lua")
 include("sh_stamina.lua")
+include("sh_mastery.lua")
 include("skillweb/sh_skillweb.lua")
 
 include("sh_options.lua")

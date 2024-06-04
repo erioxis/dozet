@@ -28,6 +28,7 @@ end
 function SWEP:ApplyMeleeDamage(ent, trace, damage)
 	if SERVER and ent:IsValidLivingHuman() then
 		for k,v in pairs(ent:GetInventoryItems()) do
+			if GAMEMODE:GetInventoryItemType(k) == INVCAT_ETERNAL then continue end
 			ent:TakeInventoryItem(k)
 			ent:AddInventoryItem("trinket_sin_ego")
 		end

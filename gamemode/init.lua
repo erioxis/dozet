@@ -11,9 +11,11 @@ This was my first ever gamemode. A lot of stuff is from years ago and some stuff
 ]]
 GM.Halloween = false
 GM.NewYear = false
+GM.mastery = {}
 AddCSLuaFile("cl_init.lua")
 AddCSLuaFile("shared.lua")
 AddCSLuaFile("sh_stamina.lua")
+AddCSLuaFile("sh_mastery.lua")
 AddCSLuaFile("sh_translate.lua")
 AddCSLuaFile("sh_colors.lua")
 AddCSLuaFile("sh_serialization.lua")
@@ -1526,7 +1528,7 @@ function GM:Think()
 					local use = {}
 					for item,v in pairs(pl:GetInventoryItems()) do
 						local g = table.HasValue(string.Explode("_",item), "curse")
-						if item ~= "trinket_sin_ego" and !g then
+						if item ~= "trinket_sin_ego" and !g and GAMEMODE:GetInventoryItemType(item) ~= INVCAT_ETERNAL then
 							table.insert(use, #use + 1,item)
 						end
 					end
@@ -2110,7 +2112,7 @@ function GM:CacheHonorableMentions()
 
 	gamemode.Call("PostDoHonorableMentions")
 end
-
+local eternals = {'eter_lithum', "eter_doseit", "eter_egurm"}
 function GM:DoHonorableMentions(filter)
 	self:CacheHonorableMentions()
 
@@ -2122,6 +2124,13 @@ function GM:DoHonorableMentions(filter)
 			net.WriteInt(tab[3], 32)
 			if ent and ent:IsValid() then
 				ent:AddZSXP(BOUNTY_XP_HM[tab[2]]*tab[3], true)
+			end
+			if ROUNDWINNER == TEAM_HUMAN then
+				if math.random(1,2) == 1 then
+					local item = eternals[math.random(1,#eternals)]
+				timer.Simple(0, function()	ent:AddInventoryItem(item) end)
+					ent:SetDTString(15, ent:GetDTString(15)..","..GAMEMODE.ZSInventoryItemData[item].PrintName)
+				end
 			end
 		if filter then
 			net.Send(filter)
@@ -2457,6 +2466,10 @@ function GM:OnPlayerWin(pl)
 	end
 	if #team.GetPlayers(TEAM_HUMAN) ~= 1 and LASTHUMAN then
 		xp = xp * 4
+	end
+	for i=1,math.random(1,4) do 
+		local item = eternals[math.random(1,#eternals)]
+		timer.Simple(0, function()	pl:AddInventoryItem(item) end)
 	end
 	pl:AddZSXP(xp * (math.max(0.33,0.67+self:GetWinRate()/3)))
 	if self:GetWinRate() > 6 then
@@ -3161,8 +3174,15 @@ function GM:PlayerInitialSpawnRound(pl)
 	pl.m_Zombie_CursedHealth = nil
 	pl.LuckAdd = 0
 	pl.AntiFarmTimer = 0
-
 	pl.ZSInventory = {}
+	if pl.ZSInventory then
+		for k,v in pairs(pl:GetInventoryItems()) do
+			if GAMEMODE:GetInventoryItemType(k) == INVCAT_ETERNAL then 
+				continue 
+			end
+			pl:TakeInventoryItem(k)
+		end
+	end
 	pl.IsLastHuman = nil
 	pl.NextSleep = 0
 	--local nosend = not pl.DidInitPostEntity
@@ -5205,7 +5225,7 @@ function GM:DoPlayerDeath(pl, attacker, dmginfo)
 				end
 			end
 			for invitem, count in pairs(pl:GetInventoryItems()) do
-				if invitem == "trinket_altlazarussoul" then continue  end
+				if invitem == "trinket_altlazarussoul" or GAMEMODE:GetInventoryItemType(invitem) == INVCAT_ETERNAL then continue  end
 				for i = 1, count do
 					table.insert(oldt, #oldt+1,invitem)
 				end

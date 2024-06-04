@@ -363,6 +363,7 @@ killicon.Add("weapon_zs_nuclearminigun", "zombiesurvival/killicons/weapon_zs_nuc
 killicon.Add("weapon_zs_refraction", "zombiesurvival/killicons/weapon_zs_refraction.png")
 killicon.Add("projectile_refraction", "zombiesurvival/killicons/weapon_zs_refraction.png")
 killicon.Add("weapon_zs_axe", "zombiesurvival/killicons/weapon_zs_axe")
+killicon.Add("weapon_zs_axe_modifiied", "zombiesurvival/killicons/weapon_zs_axe")
 killicon.Add("weapon_zs_sawhack", "zombiesurvival/killicons/weapon_zs_sawhack.png")
 killicon.Add("weapon_zs_keyboard", "zombiesurvival/killicons/weapon_zs_keyboard")
 killicon.Add("weapon_zs_sledgehammer", "zombiesurvival/killicons/weapon_zs_sledgehammer")

@@ -77,6 +77,8 @@ function MakepEndBoard(winner)
 	y = y + list:GetTall() + 8
 
 	frame.List = list
+	list:AddItem(EasyLabel(frame, MySelf:GetDTString(15), "ZSHUDFontSmaller", COLOR_WHITE))
+
 
 	frame:SetTall(y)
 	frame:Center()

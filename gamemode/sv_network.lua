@@ -167,3 +167,5 @@
 	util.AddNetworkString("voice_zombiepain")
 
 	util.AddNetworkString("zs_illegalmechanism")
+	
+	util.AddNetworkString("zs_mastery_upgrade")

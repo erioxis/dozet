@@ -4,6 +4,8 @@ INVCAT_TRINKETS = 1
 INVCAT_COMPONENTS = 2
 INVCAT_CONSUMABLES = 3
 INVCAT_WEAPONS = 4
+INVCAT_ETERNAL = 5
+
 
 local meta = FindMetaTable("Player")
 function meta:GetInventoryItems()
@@ -288,7 +290,8 @@ local categorycolors = {
 	[ INVCAT_TRINKETS ] = { COLOR_RED, COLOR_DARKRED },
 	[ INVCAT_COMPONENTS ] = { COLOR_BLUE, COLOR_DARKBLUE },
 	[ INVCAT_CONSUMABLES ] = { COLOR_YELLOW, Color(75,67,1) },
-	[INVCAT_WEAPONS] = {Color(41,39,182),Color(99,173,233)}
+	[ INVCAT_WEAPONS ] = {Color(41,39,182),Color(99,173,233)},
+	[ INVCAT_ETERNAL ] = {Color(199,198,241),Color(50,147,113)}
 }
 local colBG = Color( 10, 10, 10, 252 )
 local colBGH = Color( 200, 200, 200, 5 )
@@ -628,7 +631,7 @@ function GM:OpenInventory()
 	end
 
 	local screenscale = BetterScreenScale()
-	local w, h =800 * screenscale, 700 * screenscale
+	local w, h = 900 * screenscale, 700 * screenscale
 
 	local frame = vgui.Create( "DFrame" )
 	frame:SetSize( w, h )
@@ -679,7 +682,7 @@ function GM:OpenInventory()
 	invprop:SetWide( frame:GetWide() - 320 * screenscale )
 	invprop:DockMargin( 2 * screenscale, 2 * screenscale, 2 * screenscale, 2 * screenscale )
 	
-	for i, con in pairs( self.ZSInventoryCategories ) do
+	for i, con in ipairs( self.ZSInventoryCategories ) do
 		local itemframe = vgui.Create( "DScrollPanel", invprop )
 		itemframe:Dock( FILL )
 		itemframe:DockMargin( 4 * screenscale, 4 * screenscale, 4 * screenscale, 4 * screenscale )
@@ -703,6 +706,7 @@ function GM:OpenInventory()
 		itemframe.Grid = invgrid
 
 		self.InventoryMenu.Grids[ i ] = invgrid
+		print(i)
 
 		invprop:AddSheet( con, itemframe )
 	end
@@ -738,7 +742,7 @@ function GM:OpenInventory()
 		xd = xd + 1
 		checkbutton:SetSize(32* screenscale,32* screenscale)
 		checkbutton:SetTooltip(self.AmmoNames[k])
-		checkbutton:SetPos( 16 *  screenscale+ 440* screenscale,48 * xd  * screenscale+60* screenscale)
+		checkbutton:SetPos( 16 *  screenscale+ 500* screenscale,48 * xd  * screenscale+60* screenscale)
 
 		local sel =  vgui.Create("DEXChangingLabel", frame)
 		sel:SetChangeFunction(function()
@@ -746,7 +750,7 @@ function GM:OpenInventory()
 		end, true)
 		sel:SetContentAlignment(5)
 		sel:SetFont("ZSHUDFontTiniest")
-		sel:SetPos( 16 * screenscale+ 452* screenscale, 48 * xd  * screenscale+63* screenscale)
+		sel:SetPos( 16 * screenscale+ 534* screenscale, 48 * xd  * screenscale+63* screenscale)
 		for i=1,2 do
 			local gb = vgui.Create("DImageButton",frame)
 			gb:SetImage((i == 1  and "icon16/user_go.png" or "icon16/box.png"))
@@ -758,7 +762,7 @@ function GM:OpenInventory()
 					RunConsoleCommand("zsdropammo", k)
 				end
 			end
-			gb:SetPos( 16 * i * screenscale+ 440* screenscale,48 * xd  * screenscale+93* screenscale)
+			gb:SetPos( 16 * i * screenscale+ 500* screenscale,48 * xd  * screenscale+93* screenscale)
 			gb.DontCount = true
 			gb.NoWide = true
 		end

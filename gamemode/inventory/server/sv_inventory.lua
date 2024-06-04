@@ -59,7 +59,12 @@ end
 function meta:WipePlayerInventory()
 	if not self.ZSInventory or table.Count(self.ZSInventory) == 0 then return end
 
-	self.ZSInventory = {}
+	for k,v in pairs(self:GetInventoryItems()) do
+		if GAMEMODE:GetInventoryItemType(k) == INVCAT_ETERNAL then 
+			continue 
+		end
+		self:TakeInventoryItem(k)
+	end
 	self:ApplyTrinkets()
 
 	net.Start("zs_wipeinventory")
@@ -392,7 +397,7 @@ end
 
 function meta:DropInventoryItemByType(itype)
 	if GAMEMODE.ZombieEscape then return end
-	if not self:HasInventoryItem(itype) then return end
+	if not self:HasInventoryItem(itype) or GAMEMODE:GetInventoryItemType(itype) == INVCAT_ETERNAL then return end
 
 	local ent = ents.Create("prop_invitem")
 	if ent:IsValid() then

@@ -71,6 +71,9 @@ function GM:SkillCanUnlock(pl, skillid, skilllist)
 		if skill.RemortReq and pl:GetZSRemortLevel() < skill.RemortReq then
 			return false
 		end
+		if skill.ClassNeed and pl:GetDTInt(skill.ClassNeed) < (skill.ClassLevel or 1) then
+			return false
+		end
 		if skill.Amulet then
 			return pl:GetZSRemortLevel() >= 4
 		end

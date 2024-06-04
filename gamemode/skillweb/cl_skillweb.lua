@@ -1318,6 +1318,11 @@ function PANEL:Paint(w, h)
 					draw_SimpleText(translate.Get("s_need_l")..skill.LevelReq,"ZS3D2DFontSmall", 0, xskill, colo, TEXT_ALIGN_CENTER)
 					xskill = xskill + 32 * screenscale
 				end
+
+				if skill.ClassNeed then
+					draw_SimpleText(translate.Get("s_need_"..skill.ClassNeed)..(skill.ClassLevel or 1),"ZS3D2DFontSmall", 0, xskill, colo, TEXT_ALIGN_CENTER)
+					xskill = xskill + 32 * screenscale
+				end
 				if skill.AmuletCost then
 					draw_SimpleText(( 0 < skill.AmuletCost and translate.Get("s_need_am") or translate.Get("s_give_am"))..( 0 < skill.AmuletCost and skill.AmuletCost or -skill.AmuletCost),"ZS3D2DFontSmall", 0, xskill, colo, TEXT_ALIGN_CENTER)
 					xskill = xskill + 32 * screenscale

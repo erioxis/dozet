@@ -2,19 +2,22 @@ INVCAT_TRINKETS = 1
 INVCAT_COMPONENTS = 2
 INVCAT_CONSUMABLES = 3
 INVCAT_WEAPONS = 4
+INVCAT_ETERNAL = 5
 
 GM.ZSInventoryItemData = {}
 GM.ZSInventoryCategories = {
+	[INVCAT_ETERNAL] = translate.Get("vgui_eter"),
 	[INVCAT_TRINKETS] = translate.Get("vgui_trin"),
 	[INVCAT_COMPONENTS] =  translate.Get("vgui_comp"),
 	[INVCAT_CONSUMABLES] = translate.Get("vgui_cons"),
-	[INVCAT_WEAPONS] = translate.Get("vgui_weap")
+	[INVCAT_WEAPONS] = translate.Get("vgui_weap"),
 }
 GM.ZSInventoryPrefix = {
 	[INVCAT_TRINKETS] = "trin",
 	[INVCAT_COMPONENTS] = "comp",
 	[INVCAT_CONSUMABLES] = "cons",
-	[INVCAT_WEAPONS] = "weap"
+	[INVCAT_WEAPONS] = "weap",
+	[INVCAT_ETERNAL] = "eter"
 }
 
 GM.Assemblies = {}
@@ -146,7 +149,7 @@ local function funcofvoid(pl, nouse)
 	local use = {}
 	for item,v in pairs(pl:GetInventoryItems()) do
 		local g = table.HasValue(string.Explode("_",item), "curse")
-		if item ~= nouse and string.len(item) >= 7 and !g then
+		if item ~= nouse and string.len(item) >= 7 and !g and GAMEMODE:GetInventoryItemType(item) ~= INVCAT_ETERNAL then
 			table.insert(use, #use + 1,item)
 		end
 	end
@@ -156,7 +159,7 @@ local function funcofvoid(pl, nouse)
 	local data = GAMEMODE.ZSInventoryItemData
 	for item,v in pairs(data) do
 		local g = table.HasValue(string.Explode("_",item), "curse")
-		if item ~= nouse and (data[item].Tier or 1) == (data[toeat].Tier or 1) and string.len(item) >= 7 and !g then
+		if item ~= nouse and (data[item].Tier or 1) == (data[toeat].Tier or 1) and string.len(item) >= 7 and !g and GAMEMODE:GetInventoryItemType(item) ~= INVCAT_ETERNAL then
 			table.insert(use2, #use2 + 1,item)
 		end
 	end
@@ -172,7 +175,7 @@ end
 local function funcofd1(pl, nouse)
 	local use = {}
 	for item,v in pairs(pl:GetInventoryItems()) do
-		if item ~= nouse and string.len(item) >= 7 and item ~= "cons_bounty" then
+		if item ~= nouse and string.len(item) >= 7 and item ~= "cons_bounty" and GAMEMODE:GetInventoryItemType(item) ~= INVCAT_ETERNAL then
 			table.insert(use, #use + 1,item)
 		end
 		
@@ -2806,3 +2809,20 @@ end
 trinket = GM:AddTrinket( trs( "t_illegalmechanism" ), "illegalmechanism", false, supveles, supweles, 4, trs( "t_d_illegalmechanism" ) )
 GM:AddSkillModifier( trinket, SKILLMOD_DEPLOYABLE_HEALTH_MUL, -0.1 )
 GM:AddSkillFunction(trinket, function(pl, active) pl.IllegalMechanism = active   end)
+
+--Вечные
+
+GM:AddInventoryItemData("eter_doseit",		trs("e_doseit"),			trs("e_doseit_d"),								"models/props_c17/trappropeller_lever.mdl", 1)
+
+GM:AddInventoryItemData("eter_lithum",		trs("e_lithum"),			trs("e_lithum_d"),								"models/props_c17/trappropeller_lever.mdl", 1)
+
+GM:AddInventoryItemData("eter_egurm",		trs("e_egurm"),			trs("e_egurm_d"),								"models/props_c17/trappropeller_lever.mdl", 1)
+
+--Т2
+GM:AddInventoryItemData("eter_doseit_2",		trs("e_doseit_2"),			trs("e_doseit_2_d"),								"models/props_c17/trappropeller_lever.mdl", 2)
+
+GM:AddInventoryItemData("eter_lithum_2",		trs("e_lithum_2"),			trs("e_lithum_2_d"),								"models/props_c17/trappropeller_lever.mdl", 2)
+
+GM:AddInventoryItemData("eter_egurm_2",		trs("e_egurm_2"),			trs("e_egurm_2_d"),								"models/props_c17/trappropeller_lever.mdl", 2)
+
+GM:AddInventoryItemData("eter_shelon_2",		trs("e_shelon_2"),			trs("e_shelon_2_d"),								"models/props_c17/trappropeller_lever.mdl", 2)

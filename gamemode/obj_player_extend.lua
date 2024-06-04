@@ -1093,6 +1093,21 @@ function meta:CompensatedMeleeTrace(distance, size, start, dir, hit_team_members
 	return tr
 end
 
+function meta:CompensatedMeleeTrace_Modified(distance, size, i, start, dir, hit_team_members, override_team)
+	
+	start = start or self:GetShootPos()
+	dir = dir or self:GetAimVector()
+
+	self:LagCompensation(true)
+	local tr = self:MeleeTrace(distance, size, start, dir, hit_team_members, override_team)
+	CheckFHB(tr)
+	self:LagCompensation(false)
+
+	InvalidateCompensatedTrace(tr, start, distance)
+
+	return tr
+end
+
 function meta:CompensatedPenetratingMeleeTrace(distance, size, start, dir, hit_team_members)
 	start = start or self:GetShootPos()
 	dir = dir or self:GetAimVector()

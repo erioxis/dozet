@@ -4,7 +4,8 @@ local categorycolors = {
 	[ INVCAT_TRINKETS ] = { COLOR_RED, COLOR_DARKRED },
 	[ INVCAT_COMPONENTS ] = { COLOR_BLUE, COLOR_DARKBLUE },
 	[ INVCAT_CONSUMABLES ] = { COLOR_YELLOW, Color(75,67,1) },
-	[INVCAT_WEAPONS] = {Color(41,39,182),Color(99,173,233)}
+	[INVCAT_WEAPONS] = {Color(41,39,182),Color(99,173,233)},
+	[ INVCAT_ETERNAL ] = {Color(199,198,241),Color(50,147,113)},
 }
 ENT.ColorModulation = Color(1, 0.5, 0)
 function ENT:Think()

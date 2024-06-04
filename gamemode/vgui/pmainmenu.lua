@@ -203,6 +203,16 @@ function GM:ShowHelp()
 	but:DockPadding(0, 12, 0, 12)
 	but:Dock(TOP)
 	but.DoClick = function() GAMEMODE:ToggleSkillWeb() end
+	if MySelf:Team() == TEAM_HUMAN then
+		but = vgui.Create("DButton", menu)
+		but:SetFont("ZSHUDFontSmaller")
+		but:SetText(translate.Get("mm_mastery"))
+		but:SetTall(buttonhei)
+		but:DockMargin(0, 0, 0, 12)
+		but:DockPadding(0, 12, 0, 12)
+		but:Dock(TOP)
+		but.DoClick = function() GAMEMODE:CreateMasteryMenu() end
+	end
 
 
 --[[	but = vgui.Create("DButton", menu)
