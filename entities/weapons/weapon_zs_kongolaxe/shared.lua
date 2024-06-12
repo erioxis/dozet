@@ -7,7 +7,19 @@ SWEP.Description = translate.Get("wep_d_kaxe")
 
 
 
-SWEP.Base = "weapon_zs_basemelee"
+SWEP.UsedNewWeapons = true 
+if !SWEP.UsedNewWeapons then
+	SWEP.Base = "weapon_zs_basemelee"
+	DEFINE_BASECLASS("weapon_zs_basemelee")
+	SWEP.MeleeDamage = 101
+else
+	SWEP.Base = "weapon_zs_basemelee_modified"
+	DEFINE_BASECLASS("weapon_zs_basemelee_modified")
+	SWEP.MeleeDamage = 34
+	SWEP.OverPosition =  Vector(0,0,3)
+	SWEP.Additionalism =  Vector(-1,-2,-3)
+	SWEP.Attacks_Per_Swung = 5
+end
 
 SWEP.ViewModel = "models/weapons/c_stunstick.mdl"
 SWEP.WorldModel = "models/weapons/w_crowbar.mdl"
@@ -15,7 +27,6 @@ SWEP.UseHands = true
 
 SWEP.HoldType = "melee2"
 
-SWEP.MeleeDamage = 101
 SWEP.MeleeRange = 75
 SWEP.MeleeSize = 2
 SWEP.MeleeKnockBack = 150

@@ -38,7 +38,7 @@ function SWEP:ShootBullets(damage, numshots, cone)
 				ent:SetOwner(owner)
 				ent:Spawn()
 	
-				ent.ProjDamage = self.Primary.Damage  * 4 * (!owner:IsSkillActive(SKILL_AND_AGAIN) and self.Primary.NumShots or 1) * (self.xThreeDamage%3 == 2 and 3 or 1)
+				ent.ProjDamage = self.Primary.Damage  * 4 * (!owner:IsSkillActive(SKILL_AND_AGAIN) and self.Primary.NumShots or 1) * (self.xThreeDamage%6 == 2 and 3 or 1)  * (owner:IsSkillActive(SKILL_BIG_WAVE) and GAMEMODE:GetWave()*0.21 or 1)
 				ent.Team = owner:Team()
 	
 				local phys = ent:GetPhysicsObject()

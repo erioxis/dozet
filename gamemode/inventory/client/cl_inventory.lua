@@ -515,11 +515,11 @@ function GM:InventoryAddGridItem( item, category )
 		--for k, v in SortedPairs(grid:GetItems()) do
 			--grid:
 		--end
-		if itempan.SWEP.Stackable then
+		if itempan.SWEP.Stackable or category == INVCAT_ETERNAL then
 			local meh = 0
 			local mehin = {}
 			for k,v in pairs(grid:GetItems()) do
-				if v.SWEP.Stackable and v.Item == itempan.Item then
+				if (v.SWEP.Stackable or category == INVCAT_ETERNAL) and v.Item == itempan.Item then
 					v:SetTooltip(GAMEMODE.ZSInventory[itempan.Item])
 				end
 			end
@@ -706,7 +706,6 @@ function GM:OpenInventory()
 		itemframe.Grid = invgrid
 
 		self.InventoryMenu.Grids[ i ] = invgrid
-		print(i)
 
 		invprop:AddSheet( con, itemframe )
 	end

@@ -103,7 +103,7 @@ function SWEP:SecondaryAttack()
 		if owner:IsSkillActive(SKILL_CURSE_OF_MISS) and math.random(1,2) == 1 and SERVER then
 			GAMEMODE:BlockFloater(owner, NULL, tr.HitPos, 1)
 			self:SetPowerCombo(0)
-			BaseClass.SecondaryAttack(self)
+			self.BaseClass.SecondaryAttack(self)
 			return
 		end
 		 
@@ -124,6 +124,7 @@ function SWEP:SecondaryAttack()
 				self.IsMelee = true
 			end
 		end
+		return
 	end
 	self.BaseClass.SecondaryAttack(self)
 end

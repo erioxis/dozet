@@ -73,6 +73,9 @@ concommand.Add("zs_pointsshopbuy", function(sender, command, arguments)
 		timer.Create("buy"..itemtab.Name.."WARNING", 0.01,1, function()GAMEMODE:ConCommandErrorMessage(sender, translate.ClientGet(sender, usescrap and "need_to_have_enough_scrap" or "dont_have_enough_points")) end)
 		return
 	end
+	if itemcat == ITEMCAT_AMMO and sender:GetMastery('gunner') > 1 and math.random(1,100) < 4 then
+		cost = 0
+	end
 
 	if itemtab.Callback then
 		itemtab.Callback( sender, count_or_nil )

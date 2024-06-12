@@ -109,7 +109,7 @@ function SWEP:CheckHealRay()
 	local ent = self:GetDTEntity(10)
 	local owner = self:GetOwner()
 
-	if ent:IsValidLivingZombie() and owner:KeyDown(IN_ATTACK) and
+	if ent:IsValidLivingZombie() and owner:KeyDown(IN_ATTACK) and owner:IsValidLivingHuman() and
 		ent:WorldSpaceCenter():DistToSqr(owner:WorldSpaceCenter()) <= self.HealRange * self.HealRange and self:GetCombinedPrimaryAmmo() > 0 then
 			local tbl = ent:GetZombieClassTable() or {}
 		if CurTime() > self:GetDTFloat(10) and (not tbl.Boss or tbl.Name == "Golden Zombie") and GAMEMODE:GetEscapeStage() == ESCAPESTAGE_NONE and !ent.NoRedeeming and (!ent:IsBot() or tbl.Name == "Golden Zombie") then

@@ -3,7 +3,7 @@ AddCSLuaFile()
 SWEP.Base = "weapon_zs_butcherknife"
 
 SWEP.ZombieOnly = true
-SWEP.MeleeDamage = 31
+SWEP.MeleeDamage = 12
 SWEP.OriginalMeleeDamage = SWEP.MeleeDamage
 SWEP.Primary.Delay = 0.41
 SWEP.ZombieCanPickup = true

@@ -103,7 +103,7 @@ function GM:LoadVault(pl)
 					pl:SetMastery("medic",contents.MedicMastery)
 				end
 				if contents.CaderMastery then
-					pl:SetMastery("cadder",contents.CaderMastery)
+					pl:SetMastery("cader",contents.CaderMastery)
 				end
 				if contents.Zban then
 					pl.Zban = contents.Zban
@@ -161,7 +161,6 @@ function GM:LoadVault(pl)
 			if contents then
 				if contents.Inventory then
 					for k,v in pairs(contents.Inventory) do
-						print(k,v)
 						for i=1,v do
 							timer.Simple(0, function() pl:AddInventoryItem(k) end)
 						end
@@ -222,7 +221,7 @@ function GM:SaveVault(pl)
 		MedicMastery = pl:GetMastery("medic"),
 		MeleeMastery =pl:GetMastery("melee"),
 		GunMastery = pl:GetMastery("gunner"),
-		CaderMastery = pl:GetMastery("cadder"),
+		CaderMastery = pl:GetMastery("cader"),
 		CheeseCount = (pl.CheeseCount or 0),
 		Zban = (pl.Zban or false),
 		AchXP = pl:GetDCoins(),

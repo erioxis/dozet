@@ -130,6 +130,7 @@ local innatedamage = {[INNATE_TYPE_BOUNTY] = "flag_pink",
 
 --print(tbleternal['nanite_nails'])
 function MakepWeapons(silent)
+
 	if not silent then
 		PlayMenuOpenSound()
 	end
@@ -139,7 +140,7 @@ function MakepWeapons(silent)
 		pWeapons:AlphaTo(255, 0.15, 0)
 		pWeapons:SetVisible(true)
 		pWeapons:MakePopup()
-		--pWeapons:Remove()
+	 	--pWeapons:Remove()
 		return
 	end
 
@@ -207,7 +208,7 @@ function MakepWeapons(silent)
 
 	local y = 8
 
-	local title = EasyLabel(frame, "Weapon Database", "ZSHUDFont", color_white)
+	local title = EasyLabel(frame, translate.Get('mm_w_base'), "ZSHUDFont", color_white)
 	title:SetPos(wid * 0.5 - title:GetWide() * 0.5, y)
 	y = y + title:GetTall() + 8
 
@@ -254,6 +255,7 @@ function MakepWeapons(silent)
 		end
 	end
 	
+	
 	for _, wep in pairs(weps) do
 		local enttab = weapons.Get(wep)
 		local wepnode
@@ -296,6 +298,9 @@ function MakepWeapons(silent)
 	frame.trinketwep["cons"] = frame.TrinketTree:AddNode(translate.Get('vgui_cons'),'icon16/ruby.png')
 	frame.trinketwep["Undefined"] = frame.TrinketTree:AddNode(translate.Get('vgui_comp'),'icon16/tick.png')
 	frame.trinketwep["bounty"] = frame.TrinketTree:AddNode(translate.Get('skill_bounty'),'icon16/award_star_gold_1.png')
+	frame.trinketwep["bounty_cader"] = frame.trinketwep["bounty"]:AddNode("Кейдер",'icon16/wrench.png')
+	frame.trinketwep["bounty_medical"] = frame.trinketwep["bounty"]:AddNode("Медик",'icon16/pill.png')
+	frame.trinketwep["bounty_none"] = frame.trinketwep["bounty"]:AddNode("Обычный",'icon16/key.png')
 	for k, wep in pairs(trinkets) do
 		local enttab = GAMEMODE.ZSInventoryItemData[wep] or wep
 		local wepnode
@@ -309,7 +314,7 @@ function MakepWeapons(silent)
 	for wep,v in pairs(tbleternal) do
 		local enttab = GAMEMODE.ZSInventoryItemData["trinket_"..wep] or GAMEMODE.ZSInventoryItemData[wep] or wep
 		local wepnode
-		wepnode =  frame.trinketwep['bounty']:AddNode(enttab.PrintName or wep, v == "Cader" and 'icon16/wrench.png' or v == "Medical" and 'icon16/pill.png' or "icon16/key.png")
+		wepnode =  frame.trinketwep['bounty_'..string.lower(v)]:AddNode(enttab.PrintName or wep, v == "Cader" and 'icon16/wrench.png' or v == "Medical" and 'icon16/pill.png' or "icon16/key.png")
 
 		wepnode.SWEP = GAMEMODE.ZSInventoryItemData["trinket_"..wep] and "trinket_"..wep or wep
 		wepnode.DoClick = WeaponButtonDoClick

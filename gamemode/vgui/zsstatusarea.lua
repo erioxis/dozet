@@ -290,6 +290,8 @@ function GM:CreateMasteryMenu()
     submitButton:SetPos(200, 50)
     submitButton:SetSize(75, 25)
 
+	self.subButton_2 = selectDifficulty
+
 	local upgBut = vgui.Create("DButton", panel)
     upgBut:SetText("Прокачать")
     upgBut:SetPos(300, 50)
@@ -329,7 +331,7 @@ function GM:CreateMasteryMenu()
 				local used = 0
 				for k,v in pairs(comp) do
 					local num = MySelf:GetInventoryItems()["eter_"..k]
-					if num >= v then
+					if num and num >= v then
 						used = used + 1
 					end
 				end

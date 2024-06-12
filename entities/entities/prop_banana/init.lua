@@ -34,7 +34,7 @@ function ENT:Think()
 end
 function ENT:Use(activator, caller)
 	if (self:GetOwner() and self:GetOwner() == activator or !self:GetOwner() or !self:GetOwner():IsValid()) and self.NextUse < CurTime() then
-		activator:AddPoints(self:GetHP())
+		activator:AddPoints(self:GetHP()+ (2 * (activator:GetMastery('cader') > 4 and GAMEMODE:GetWave() or 0)))
 		self:Remove()
 	end
 end

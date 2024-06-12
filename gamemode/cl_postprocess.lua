@@ -316,7 +316,7 @@ function GM:DrawInductorIndicators()
 			DrawIndicator(colMed,screenscale,medp,medt,"mg",1800,x,y)
 			y = y + ScrH() * 0.07
 		end
-		if caderp > 0 and cadert > CurTime() and lp:IsSkillActive(SKILL_NEED_A_BUFF) then
+		if caderp > 0 and cadert > CurTime() then
 			DrawIndicator(colCader,screenscale,caderp,cadert,"caderb",2500,x,y)
 			y = y + ScrH() * 0.07
 		end

@@ -221,7 +221,7 @@ net.Receive("zs_drone_trinket", function(len, pl)
 	local trinket = net.ReadString()
 	local pl = net.ReadEntity()
 	local data = GAMEMODE.ZSInventoryItemData[trinket]
-	if data.OnlyDrones then
+	if data.OnlyDrones and pl:HasInventoryItem(trinket) then
 		for k,v in pairs(ents.FindInBoxRadius(pl:GetPos(),256)) do
 
 			if drones[v:GetClass()] and v:GetObjectOwner() == pl  then

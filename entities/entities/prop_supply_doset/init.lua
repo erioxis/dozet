@@ -50,7 +50,7 @@ function ENT:StartTouch(ent)
 				taked = "Мед."..taked
 			end
 		end
-		if math.random(1,2) == 2 then
+		if math.random(1,2) == 2 or ent:GetMastery('gunner') > 3 then
 			local ammo = (ent:GetActiveWeapon() and ent:GetResupplyAmmoType() or "scrap")
 			local aaaa = math.Round(GAMEMODE.AmmoCache[ammo]*(GAMEMODE:GetWave()+1)/3)
 			ent:GiveAmmo(aaaa,ammo)
@@ -63,6 +63,14 @@ function ENT:StartTouch(ent)
 					net.WriteString("cons_soul_picka")
 				net.Send(ent)	
 			taked = taked.."/Получил Жетон Души"
+		end
+		if ent:GetMastery('medic') > 3 and math.random(1,10) == 1 then
+			ent:AddInventoryItem("cons_bounty")
+			net.Start("zs_invitem")
+				net.WriteString("cons_bounty")
+			net.Send(ent)	
+			ent.MedicalBounty = ent.MedicalBounty + 1
+			taked =  taked.."/Мед.Награда"
 		end
 		if math.random(1,9) == 1 then
 			local rand = math.random(100,1000)

@@ -163,7 +163,7 @@ function SWEP:Reload()
 end
 
 function SWEP:CanPrimaryAttack()
-	if self:GetOwner():IsHolding() or self:GetOwner():GetBarricadeGhosting() then return false end
+	if self:GetOwner():IsHolding() or self:GetOwner():GetBarricadeGhosting() or (self:GetOwner()[self:GetClass().."NOMELEE"] or 0) > CurTime() then return false end
 	return self:GetNextPrimaryFire() <= CurTime() and not self:IsSwinging()
 end
 

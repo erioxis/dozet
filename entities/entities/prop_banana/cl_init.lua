@@ -48,7 +48,7 @@ function ENT:Draw()
 				hei = 8
 				x = wid * -0.5 + 2
 					--local item = GAMEMODE:GetInventoryItemType(itype)
-					draw.SimpleText(self:GetHP(), "ZSHUDFontBig", x + 55, y - 100, COLOR_YELLOW, TEXT_ALIGN_CENTER)
+					draw.SimpleText(self:GetHP() + (2 * (MySelf:GetMastery('cader') > 4 and GAMEMODE:GetWave() or 0)), "ZSHUDFontBig", x + 55, y - 100, COLOR_YELLOW, TEXT_ALIGN_CENTER)
 
 		cam.End3D2D()
 

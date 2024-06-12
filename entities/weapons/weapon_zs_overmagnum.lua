@@ -38,7 +38,7 @@ SWEP.Primary.Ammo = "pistol"
 SWEP.Primary.Gesture = ACT_HL2MP_GESTURE_RANGE_ATTACK_PISTOL
 GAMEMODE:SetupDefaultClip(SWEP.Primary)
 
-SWEP.Tier = 2
+SWEP.Tier = 3
 SWEP.RemnantDamage = 0
 
 SWEP.ConeMax = 0

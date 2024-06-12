@@ -350,14 +350,14 @@ GM:AddInventoryItemData("cons_soul_picka",		trs("c_soul_picka"),			trs("c_soul_p
 
 	local need = pl["cons_soul_picka"] or {}
 	local tries = 0
-	if #need < 2 then
-		while #need < 3 or tries < 20 do
+	if #need < 3 then
+		while #need < 4 or tries < 20 do
 			local item = pick[math.random(1,#pick)]
 			if !table.HasValue(need,item) and !(pl:HasTrinket(item) or pl:HasInventoryItemQ("trinket_"..item)) then 
 				need[#need+1] = item
 			end
 			tries = tries + 1
-			if #need > 2 or tries > 20 then
+			if #need > 3 or tries > 20 then
 				break
 			end
 		end
@@ -365,6 +365,16 @@ GM:AddInventoryItemData("cons_soul_picka",		trs("c_soul_picka"),			trs("c_soul_p
 	pl["cons_soul_picka"] = need
 	net.Start("zs_openbounty")
 		net.WriteTable(need)
+	net.Send(pl)
+end,0)
+GM:AddInventoryItemData("cons_starter_pack",		trs("c_starter_pack"),			trs("c_starter_pack_d"),								"models/props_c17/trappropeller_lever.mdl", 3, nil, nil, function(pl) 
+	local haha = table.Copy(GAMEMODE.StarterTrinkets)
+	local g = {}
+	for k,v in pairs(haha) do
+		g[k] = string.sub(v,9,#v)
+	end
+	net.Start("zs_openbounty")
+		net.WriteTable(g)
 	net.Send(pl)
 end,0)
 GM:AddInventoryItemData("cons_wildcard",		trs("c_wildcard"),			trs("c_wildcard_d"),								"models/props_c17/trappropeller_lever.mdl", 4, nil, nil, function(pl) 
@@ -2760,47 +2770,57 @@ local placeholder = {
 }
 trinket, trinketwep = GM:AddTrinket(trs("t_defensive_module"), "defensive_module", false, placeholder, placeholder, 4, trs("t_d_defensive_module"), nil, nil, "weapon_zs_special_trinket")
 trinketwep.OnlyDrones = true
+trinketwep.Stackable = true
 trinketwep.FunctionOnConnect = function(self, new, rem)
 	self:SetMaxObjectHealth(self:GetMaxObjectHealth()+50)
 end
 trinket, trinketwep = GM:AddTrinket(trs("t_module_balance"), "module_balance", false, placeholder, placeholder, 4, trs("t_d_module_balance"), nil, nil, "weapon_zs_special_trinket")
 trinketwep.OnlyDrones = true
+trinketwep.Stackable = true
 trinket, trinketwep = GM:AddTrinket(trs("t_module_resnya"), "module_resnya", false, placeholder, placeholder, 4, trs("t_d_module_resnya"), nil, nil, "weapon_zs_special_trinket")
 trinketwep.OnlyDrones = true
+trinketwep.Stackable = true
 trinketwep.FunctionOnConnect = function(self, new, rem)
 	self:SetDTInt(12,math.min(5,self.TrinketsIn[new]))
 end
 trinket, trinketwep = GM:AddTrinket(trs("t_module_bounty"), "module_bounty", false, placeholder, placeholder, 4, trs("t_d_module_bounty"), nil, nil, "weapon_zs_special_trinket")
 trinketwep.OnlyDrones = true
+trinketwep.Stackable = true
 trinketwep.FunctionOnConnect = function(self, new, rem)
 	self.CanUseModifiers = true
 end
 trinket, trinketwep = GM:AddTrinket(trs("t_module_handler"), "module_handler", false, placeholder, placeholder, 4, trs("t_d_module_handler"), nil, nil, "weapon_zs_special_trinket")
 trinketwep.OnlyDrones = true
+trinketwep.Stackable = true
 trinketwep.FunctionOnConnect = function(self, new, rem)
 	self._OldAcc = self._OldAcc or self.Acceleration
 	self.Acceleration = self._OldAcc  * (1 + 0.05 * math.min(10,self.TrinketsIn[new]))
 end
 trinket, trinketwep = GM:AddTrinket(trs("t_module_extreme"), "module_extreme", false, placeholder, placeholder, 4, trs("t_d_module_extreme"), nil, nil, "weapon_zs_special_trinket")
 trinketwep.OnlyDrones = true
+trinketwep.Stackable = true
 trinketwep.FunctionOnConnect = function(self, new, rem)
 	self.AmmoUsagesStacks = math.min(3,self.TrinketsIn[new])
 end
 trinket, trinketwep = GM:AddTrinket(trs("t_module_nanite"), "module_nanite", false, placeholder, placeholder, 4, trs("t_d_module_nanite"), nil, nil, "weapon_zs_special_trinket")
 trinketwep.OnlyDrones = true
+trinketwep.Stackable = true
 trinketwep.FunctionOnConnect = function(self, new, rem)
 	self.Nanites = self.TrinketsIn[new]
 end
 trinket, trinketwep = GM:AddTrinket(trs("t_module_mirror"), "module_mirror", false, placeholder, placeholder, 4, trs("t_d_module_mirror"), nil, nil, "weapon_zs_special_trinket")
 trinketwep.OnlyDrones = true
+trinketwep.Stackable = true
 trinket, trinketwep = GM:AddTrinket(trs("t_module_serrate"), "module_serrate", false, placeholder, placeholder, 4, trs("t_d_module_serrate"), nil, nil, "weapon_zs_special_trinket")
 trinketwep.OnlyDrones = true
+trinketwep.Stackable = true
 trinketwep.FunctionOnConnect = function(self, new, rem)
 	self.InnateDamageType = INNATE_TYPE_PULSE
 	self.InnateDamage = 0.05 * self.TrinketsIn[new]
 end
 trinket, trinketwep = GM:AddTrinket(trs("t_module_better_cd"), "module_cd", false, placeholder, placeholder, 4, trs("t_d_module_better_cd"), nil, nil, "weapon_zs_special_trinket")
 trinketwep.OnlyDrones = true
+trinketwep.Stackable = true
 trinketwep.FunctionOnConnect = function(self, new, rem)
 	self.ReducedCD = 0.01 * self.TrinketsIn[new]
 end
@@ -2826,3 +2846,14 @@ GM:AddInventoryItemData("eter_lithum_2",		trs("e_lithum_2"),			trs("e_lithum_2_d
 GM:AddInventoryItemData("eter_egurm_2",		trs("e_egurm_2"),			trs("e_egurm_2_d"),								"models/props_c17/trappropeller_lever.mdl", 2)
 
 GM:AddInventoryItemData("eter_shelon_2",		trs("e_shelon_2"),			trs("e_shelon_2_d"),								"models/props_c17/trappropeller_lever.mdl", 2)
+
+--Т3
+GM:AddInventoryItemData("eter_doseit_3",		trs("e_doseit_3"),			trs("e_doseit_3_d"),								"models/props_c17/trappropeller_lever.mdl", 3)
+
+GM:AddInventoryItemData("eter_lithum_3",		trs("e_lithum_3"),			trs("e_lithum_3_d"),								"models/props_c17/trappropeller_lever.mdl", 3)
+
+GM:AddInventoryItemData("eter_egurm_3",		trs("e_egurm_3"),			trs("e_egurm_3_d"),								"models/props_c17/trappropeller_lever.mdl", 3)
+
+GM:AddInventoryItemData("eter_shelon_3",		trs("e_shelon_3"),			trs("e_shelon_3_d"),								"models/props_c17/trappropeller_lever.mdl", 3)
+
+GM:AddInventoryItemData("eter_errorium_3",		trs("e_errorium_3"),			trs("e_errorium_3_d"),								"models/props_c17/trappropeller_lever.mdl", 3)

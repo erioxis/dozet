@@ -2,8 +2,8 @@ AddCSLuaFile()
 
 --SWEP.PrintName = "'Hunter' Rifle"
 --SWEP.Description = "Fires special large caliber rounds. The reloading time is slow but it packs a powerful punch."
-SWEP.PrintName = ""..translate.Get("wep_hunter")
-SWEP.Description = ""..translate.Get("wep_d_hunter")
+SWEP.PrintName = translate.Get("wep_hunter")
+SWEP.Description = translate.Get("wep_d_hunter")
 SWEP.Slot = 3
 SWEP.SlotPos = 0
 

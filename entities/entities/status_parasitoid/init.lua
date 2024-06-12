@@ -21,9 +21,9 @@ function ENT:Think()
 		if dmger and dmger:IsValid() and dmger:IsPlayer() and self.NextThinker <= CurTime() then
 			owner:TakeSpecialDamage((self.Damage or 10) * (flimsy and 2.5 or 1) * self:GetDTInt(1),DMG_ACID,dmger, self, owner:GetPos()+Vector(0,0,math.random(-30,30)), 0)
 			if !dmger:IsSkillActive(SKILL_PARASITOID_2) then
-				dmger:SetHealth(math.min(dmger:Health() + (self.Damage or 10)*0.1, dmger:GetMaxHealth()))
+				dmger:SetHealth(math.min(dmger:Health() + (self.Damage or 10), dmger:GetMaxHealth()))
 			else
-				dmger:SetBloodArmor(math.min(dmger:GetBloodArmor() + (self.Damage or 10)*0.05, dmger.MaxBloodArmor*2))
+				dmger:SetBloodArmor(math.min(dmger:GetBloodArmor() + (self.Damage or 10), dmger.MaxBloodArmor*2))
 			end
 			self.NextThinker = CurTime() + 0.4
 		end

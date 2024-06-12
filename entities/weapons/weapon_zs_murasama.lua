@@ -28,8 +28,8 @@ SWEP.WElements = {
 }
 
 
-SWEP.PrintName = ""..translate.Get("wep_murasama")
-SWEP.Description = ""..translate.Get("wep_d_murasama")
+SWEP.PrintName = translate.Get("wep_murasama")
+SWEP.Description = translate.Get("wep_d_murasama")
 if CLIENT then
 	SWEP.VElements = {
 		["hand"] = { type = "Model", model = "models/props_junk/wood_pallet001a_chunka1.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(1.485, 2.614, 2.876), angle = Angle(0, 0, -89.521), size = Vector(0.626, 0.331, 0.256), color = Color(74, 70, 70, 255), surpresslightning = false, material = "cs_assault/concretefloor026a", skin = 0, bodygroup = {} },
@@ -83,7 +83,7 @@ end
 function SWEP:SecondaryAttack()
 	damage = self.MeleeDamage * 0.37
 	owner = self:GetOwner()
-	if SERVER then
+	if SERVER and owner:GetMastery('melee') < 3 then
 		owner:TakeDamage(owner:Health() * 0.5)
 	end
 		self:SetNextSecondaryFire(CurTime() + 2)
@@ -253,7 +253,7 @@ function SWEP:MeleeSwing()
 		end
 	end
 	
-	if SERVER and (owner:IsSkillActive(SKILL_MELEEFAN) or owner:Nick() == "Jetstream Sam") or CLIENT then return end
+	if SERVER and (owner:IsSkillActive(SKILL_MELEEFAN) or owner:Nick() == "Jetstream Sam") or CLIENT or owner:GetMastery('melee') > 2 then return end
 		owner:TakeDamage((owner:Health() * 0.01) + 1)
 		owner:SetHealth(owner:Health() * 0.9)
 end

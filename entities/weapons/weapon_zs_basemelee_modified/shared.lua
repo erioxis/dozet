@@ -163,7 +163,7 @@ function SWEP:Reload()
 end
 
 function SWEP:CanPrimaryAttack()
-	if self:GetOwner():IsHolding() or self:GetOwner():GetBarricadeGhosting() then return false end
+	if self:GetOwner():IsHolding() or self:GetOwner():GetBarricadeGhosting() or (self:GetOwner()[self:GetClass().."NOMELEE"] or 0) > CurTime() then return false end
 	return self:GetNextPrimaryFire() <= CurTime() and not self:IsSwinging()
 end
 
@@ -247,6 +247,12 @@ local function BaseSwungEffect(self, tr, owner)
 	if not tr.Hit then
 		if self.MissAnim then
 			self:SendWeaponAnim(self.MissAnim)
+		end
+		if tr.Entity and tr.Entity:IsValid() then
+			if !WorldVisible(tr.Entity:GetPos(), owner:EyePos()) then
+				return true
+			end
+
 		end
 		self.IdleAnimation = CurTime() + self:SequenceDuration()
 		self:PlaySwingSound()

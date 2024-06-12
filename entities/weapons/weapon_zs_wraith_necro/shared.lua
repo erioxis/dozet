@@ -68,6 +68,7 @@ function SWEP:DoAlert()
 					if necro:IsValid() then
 						--print(necro:GetDTInt(1)-7*(math.Round(power*0.11)))
 						necro:SetDTInt(1, necro:GetDTInt(1)-7*(math.Round(power*0.11)))
+						necro:AddDie(10)
 					end
 				end
 			end

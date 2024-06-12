@@ -25,8 +25,23 @@ if CLIENT then
 		weles["base"].color = col1
 	end
 end
+SWEP.UsedNewWeapons = true 
 
-SWEP.Base = "weapon_zs_basemelee"
+if !SWEP.UsedNewWeapons then
+	SWEP.Base = "weapon_zs_basemelee"
+	DEFINE_BASECLASS("weapon_zs_basemelee")
+	SWEP.MeleeDamage = 45
+else
+	SWEP.Base = "weapon_zs_basemelee_modified"
+	DEFINE_BASECLASS("weapon_zs_basemelee_modified")
+	SWEP.MeleeDamage = 53/3
+	SWEP.OverPosition =  {0,0,11}
+	SWEP.Additionalism =  {0,-0.8,-11}
+	SWEP.StaminaUse = 12	
+	
+	SWEP.HitAnim = ACT_VM_MISSCENTER
+	SWEP.MissAnim = ACT_VM_MISSCENTER
+end
 
 SWEP.ViewModel = "models/weapons/c_stunstick.mdl"
 SWEP.WorldModel = "models/props/cs_militia/axe.mdl"

@@ -37,6 +37,19 @@ function meta:HealPlayer(pl, amount, pointmul, nobymsg, poisononly)
 			pl.UltraCharge = 0
 		end
 	end
+	if self:GetMastery('medic') > 4 and math.random(1,100) == 1 then 
+		for k,v in pairs(pl:GetStatuses()) do
+			local class = v:GetClass() 
+			class = string.sub(class,8,#class)
+			local tab = GAMEMODE.Statuses[class]
+			if tab and tab.Debuff then
+				pl:RemoveStatus(class,nil,true)
+				pl:SendLua('GAMEMODE:CenterNotify(COLOR_WHITE, "Статус "..translate.Get("s_"..GAMEMODE.Statuses[\"'..class..'\"].Name).." успешно убран!")')
+				self:SendLua('GAMEMODE:CenterNotify(COLOR_WHITE, "Статус "..translate.Get("s_"..GAMEMODE.Statuses[\"'..class..'\"].Name).." у игрока успешно убран!")')
+				break
+			end
+		end
+	end
 	if not pl:IsSkillActive(SKILL_DEFENDBLOOD) then
 		if not poisononly and bleed > 0 then
 			rmv = math.min(amount, bleed)

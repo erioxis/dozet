@@ -543,6 +543,7 @@ SKILL_AMULET_19 = 540
 SKILL_NE_QUE_PRO = 541
 SKILL_CADER_MASTERY = 542
 SKILL_CHAMPION_TRUE = 543
+SKILL_BIG_WAVE = 544
 
 
 
@@ -1198,9 +1199,9 @@ GM:AddSkill(SKILL_STOWAGE, 	trs("skill_stowage"), GOOD..trs("skill_stowage_d1").
 																4,			-3,					{SKILL_NANITES}, TREE_BUILDINGTREE)
 SKILL_NANITES = 241
 GM:AddSkill(SKILL_NANITES, 	trs("skill_nanite_r"), GOOD..trs("skill_nanite_buff")..BAD.."-10%"..trs("repair"),
-																4,			-4,					{SKILL_STOWAGE,SKILL_THE_CADER }, TREE_BUILDINGTREE)
+																4,			-4,					{SKILL_STOWAGE, SKILL_THE_CADER}, TREE_BUILDINGTREE)
 master = GM:AddSkill(SKILL_THE_CADER, 	trs("skill_cader_r"), BAD..trs("skill_cader_buff")..GOOD.."+50%"..trs("repair"),
-																4,			-4.5,					{SKILL_STOWAGE}, TREE_BUILDINGTREE)
+																4,			-4.5,					{}, TREE_BUILDINGTREE)
 GM:AddSkillModifier(SKILL_NANITES, SKILLMOD_REPAIRRATE_MUL, -0.10)
 GM:AddSkillModifier(SKILL_THE_CADER, SKILLMOD_REPAIRRATE_MUL, 0.50)
 master.ClassNeed = DT_PLAYER_INT_CADER
@@ -1393,8 +1394,8 @@ local rand = math.random(2,50)
 local d = GM:AddSkill(SKILL_SECRET_VIII, "Secret VIII", GOOD.."+10 Очков навыка",
 																rand*math.random(1,2),			rand,					{SKILL_NONE}, TREE_GUNTREE)
 GM:AddSkillModifier(SKILL_SECRET_VIII, SKILLMOD_SPOINT, 10)
-d.Hidden = true	
-d.Hidden1 = true
+--d.Hidden = true	
+--d.Hidden1 = true
 local rand2 = math.random(-20,20)
 local rand1 = math.random(-20,20)
 local d = GM:AddSkill(SKILL_SECRET_9, "Secret IX", GOOD.."+20 Очков навыка.",
@@ -1620,8 +1621,10 @@ GM:AddSkillModifier(SKILL_THROWER_FULL, SKILLMOD_DAMAGE, -0.05)
 master.ClassNeed = DT_PLAYER_INT_GUNNER
 master.ClassLevel = 1
 GM:AddSkill(SKILL_AND_AGAIN, trs("skill_and_again"), GOOD..trs("skill_and_again_d1"),
-																9,			-8,					{}, TREE_GUNTREE)
-GM:AddSkillModifier(SKILL_THROWER_FULL, SKILLMOD_DAMAGE, -0.06)
+																9,			-8,					{SKILL_BIG_WAVE}, TREE_GUNTREE)
+GM:AddSkillModifier(SKILL_AND_AGAIN, SKILLMOD_DAMAGE, -0.06)
+GM:AddSkill(SKILL_BIG_WAVE, trs("skill_wave_big"), GOOD..trs("skill_wave_big_d1"),
+																9,			-9,					{}, TREE_GUNTREE)
 -- Melee Tree
 GM:AddSkill(SKILL_WORTHINESS2, trs("worthness").."II", GOOD.."+10"..trs("worth")..BAD.."-6"..trs("start_points"),
 																4,			0,					{}, TREE_MELEETREE)

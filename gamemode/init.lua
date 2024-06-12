@@ -2007,7 +2007,7 @@ function GM:PlayerHealedTeamMember(pl, other, health, wep, pointmul, nobymsg, fl
 	if self:GetWave() == 0 or health <= 0 or pl == other then return end
 
 	pl.HealedThisRound = pl.HealedThisRound + health
-	pl:SetProgress(math.Round(pl:GetProgress('mprog')+health), 'mprog')
+	pl:SetProgress(math.Round(pl:GetProgress('mprog')+health*(pl:GetMastery('medic') > 2 and 1.1 or 1)), 'mprog')
 	if pl:IsSkillActive(SKILL_PREMIUM) and pl:GetProgress('mprog') > 1800 and !pl:HasInventoryItem("cons_bounty") then
 		pl:AddInventoryItem("cons_bounty")
 		pl.MedicalBounty = pl.MedicalBounty + 1 
@@ -2069,17 +2069,19 @@ function GM:PlayerRepairedObject(pl, other, health, wep)
 	if numofdaily == 2 then
 		pl:GiveAchievementProgress("daily_post", health)
 	end
-	pl:SetProgress(math.Round(pl:GetProgress('caderprog')+health*0.25*(pl:HasTrinket("gov_blueprints") and 2 or 1)), 'caderprog')
-	if pl:IsSkillActive(SKILL_NEED_A_BUFF) and pl:GetProgress('caderprog') > 2500 and !pl:HasInventoryItem("cons_bounty") then
-		pl:AddInventoryItem("cons_bounty")
-		pl.CadersBounties = pl.CadersBounties + 1 
-		pl.GetBounty = true
-		
-		pl:SendLua('GAMEMODE:CenterNotify({killicon = "weapon_zs_trinket"}, " ", COLOR_GREEN, translate.Format("caderget", GAMEMODE.ZSInventoryItemData["cons_bounty"].PrintName))')
-		pl:SetProgress(math.Round(pl:GetProgress('caderprog')-2500), 'caderprog')
+	if pl:IsSkillActive(SKILL_NEED_A_BUFF)  then
+		pl:SetProgress(math.Round(pl:GetProgress('caderprog')+health*0.25*(pl:HasTrinket("gov_blueprints") and 2 or 1)), 'caderprog')
+		if pl:GetProgress('caderprog') > 2500 and !pl:HasInventoryItem("cons_bounty") then
+			pl:AddInventoryItem("cons_bounty")
+			pl.CadersBounties = pl.CadersBounties + 1 
+			pl.GetBounty = true
+			
+			pl:SendLua('GAMEMODE:CenterNotify({killicon = "weapon_zs_trinket"}, " ", COLOR_GREEN, translate.Format("caderget", GAMEMODE.ZSInventoryItemData["cons_bounty"].PrintName))')
+			pl:SetProgress(math.Round(pl:GetProgress('caderprog')-2500), 'caderprog')
+		end
 	end
 	if pl:IsSkillActive(SKILL_SPICY_CADES) and tblspicy[wep:GetClass()] then
-		pl:TakeDamage(math.random(1,15),pl,pl)
+		pl:TakeDamage(math.random(1,15)*(pl:GetMastery('cader') > 3 and 0.5 or 1),pl,pl)
 	end
 	--net.Start("zs_update_style") net.WriteTable({time = CurTime()+2+(math.random(10,20)*0.2),text = "REPAIRED PROP FOR "..health,score = health,color = Color(23,69,194)}) net.Send(pl) 
 
@@ -2124,12 +2126,12 @@ function GM:DoHonorableMentions(filter)
 			net.WriteInt(tab[3], 32)
 			if ent and ent:IsValid() then
 				ent:AddZSXP(BOUNTY_XP_HM[tab[2]]*tab[3], true)
-			end
-			if ROUNDWINNER == TEAM_HUMAN then
-				if math.random(1,2) == 1 then
-					local item = eternals[math.random(1,#eternals)]
-				timer.Simple(0, function()	ent:AddInventoryItem(item) end)
-					ent:SetDTString(15, ent:GetDTString(15)..","..GAMEMODE.ZSInventoryItemData[item].PrintName)
+				if ROUNDWINNER == TEAM_HUMAN then
+					if math.random(1,4) == 1 then
+						local item = eternals[math.random(1,#eternals)]
+					timer.Simple(0, function()	ent:AddInventoryItem(item) end)
+						ent:SetDTString(15, ent:GetDTString(15)..","..GAMEMODE.ZSInventoryItemData[item].PrintName)
+					end
 				end
 			end
 		if filter then
@@ -2459,6 +2461,7 @@ local function GetTaper(pl, str, mul)
 	end
 	return taper
 end
+local eternals2 = {'eter_lithum_2', "eter_doseit_2", "eter_egurm_2", "eter_shelon_2"}
 function GM:OnPlayerWin(pl)
 	local xp = math.Clamp(#player.GetHumans() * 900, 600, 6000) * (GAMEMODE.WinXPMulti or 1) * (GAMEMODE.ObjectiveMap and 3 or 1)
 	if self.ZombieEscape then
@@ -2467,12 +2470,19 @@ function GM:OnPlayerWin(pl)
 	if #team.GetPlayers(TEAM_HUMAN) ~= 1 and LASTHUMAN then
 		xp = xp * 4
 	end
-	for i=1,math.random(1,4) do 
+	for i=1,math.random(1,4- (GAMEMODE.ObjectiveMap and 1 or 0)) do 
 		local item = eternals[math.random(1,#eternals)]
 		timer.Simple(0, function()	pl:AddInventoryItem(item) end)
 	end
-	pl:AddZSXP(xp * (math.max(0.33,0.67+self:GetWinRate()/3)))
-	if self:GetWinRate() > 6 then
+	local winrate = self:GetWinRate()
+	if winrate > 1 then
+		for i=1,math.random(1,1- (GAMEMODE.ObjectiveMap and 0 or -winrate)) do 
+			local item = eternals2[math.random(1,#eternals2)]
+			timer.Simple(0, function()	pl:AddInventoryItem(item) end)
+		end
+	end
+	pl:AddZSXP(xp * (math.max(0.33,0.67+winrate/3)))
+	if winrate > 6 then
 		pl:GiveAchievement('sinos')
 	end
 	self:SetRage(self:GetRage() + 100)
@@ -3191,6 +3201,9 @@ function GM:PlayerInitialSpawnRound(pl)
 	pl.CounterBalls = 0
 	
 	self:LoadVault(pl)
+	if pl:GetMastery('medic') > 0 then
+		pl.MasteryShield = true
+	end
 	local uniqueid = pl:UniqueID()
 	--[[if pl:SteamID() == "STEAM_1:1:497887119" then 
 		pl.ClanNigger = true
@@ -5825,7 +5838,10 @@ function GM:EventStart(wave)
 		end
 	end
 	if math.random(1,8) == 1  then
-		gamemode.Call("CreateRandomObjectPos", "prop_casino",1)
+		local ent = gamemode.Call("CreateRandomObjectPos", "prop_casino",1)
+		if ent and ent:IsValid() then
+			ent:SetPos(ent:GetPos()+Vector(0,0,20))
+		end
 		for _, pl in pairs(player.GetAll()) do
 			if pl then
 				pl:CenterNotify(COLOR_GREEN,{killicon = "headshot"},{font = "ZSHUDFontSmall"},translate.ClientGet(pl,"casino_appear"),{killicon = "headshot"})
@@ -6061,6 +6077,17 @@ function GM:WaveStateChanged(newstate, pl)
 				end
 				if pl:IsSkillActive(SKILL_SECONDCHANCE) and pl.LetalSave and whywave >= 5 and pl:IsValidLivingHuman() then
 					pl:GiveAchievement("thisisbeeasy")
+				end
+				if pl:GetMastery('cader') > 1 then
+					pl:SetProgress(math.Round(pl:GetProgress('caderprog')+150*whywave), 'caderprog')
+					if pl:GetProgress('caderprog') > 2500 then
+						pl:AddInventoryItem("cons_bounty")
+						pl.CadersBounties = pl.CadersBounties + 1 
+						pl.GetBounty = true
+						
+						pl:SendLua('GAMEMODE:CenterNotify({killicon = "weapon_zs_trinket"}, " ", COLOR_GREEN, translate.Format("caderget", GAMEMODE.ZSInventoryItemData["cons_bounty"].PrintName))')
+						pl:SetProgress(math.Round(pl:GetProgress('caderprog')-2500), 'caderprog')
+					end
 				end
 				if whywave%2 == 0 then
 					pl.LetalSave = true

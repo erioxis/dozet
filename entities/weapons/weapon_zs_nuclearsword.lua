@@ -221,7 +221,7 @@ function SWEP:Ability( owner, self, pos )
 	end
 end
 SWEP.ReloadTime = CurTime()
-function SWEP:ActivateAbility() -- Q KEY
+function SWEP:HaveAbility() -- Q KEY
 	local owner = self:GetOwner()
 
 	self.AbilityActive = not self.AbilityActive

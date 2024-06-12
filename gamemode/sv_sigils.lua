@@ -180,6 +180,7 @@ function GM:GetRandomPosition(saved, pos)
 end
 function GM:CreateRandomObjectPos(class, numbers,wep)
 	if !D3bot.MapNavMesh then return end
+	local lastent = NULL
 	for i=1,(numbers or 1) do
 		local saved, pos = self:GetRandomPoint_Mesh()
 		local ent = ents.Create((class or "prop_obj_anti_sigil"))
@@ -193,8 +194,10 @@ function GM:CreateRandomObjectPos(class, numbers,wep)
 		--	Entity(1):SetPos(Vector(pos.X,pos.Y,pos.Z))
 			ent.SpawnedOnWave = self:GetWave()
 			ent:Spawn()
+			lastent = ent
 		end
 	end
+	return lastent
 end
 
 function GM:SetUseSigils(use)

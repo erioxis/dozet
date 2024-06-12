@@ -441,20 +441,12 @@ end
 function meta:GetChargesActive()
 	return self:GetDTInt(DT_PLAYER_INT_ACTIV)
 end
+local masteries2 = {['melee'] = 11,['gunner'] = 12,['medic'] = 13,['cader'] = 14}
 function meta:GetMastery(who,sum)
 	if sum then
 		return self:GetDTInt(11),self:GetDTInt(12),self:GetDTInt(13),self:GetDTInt(14)
 	end
-	local can = 11
-	if who == "cader" then
-		can =  14
-	elseif  who == "melee" then
-		can = 11
-	elseif who == "medic" then
-		can = 13
-	elseif  who == "gunner" then
-		can = 12
-	end
+	local can = masteries2[who] or 11
 	return self:GetDTInt(can)
 end
 function meta:AddChargesActive(int)

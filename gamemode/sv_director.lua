@@ -210,14 +210,75 @@ GM.Events11500 = {
 	end,
 }
 GM.Events35000 = {
+    function(time, rage)
+        local randers = {}
+        local stock = 0
+        local rand
+        for i=1,3 do
+            rand = random_opt(1,7)
+            randers[#randers + 1] = rand
+            stock = stock + rand
+        end
+        PrintMessage( HUD_PRINTTALK, "БАРАБОГ СЫГРАЛ В КАЗИНО И ВЫБИЛ - "..randers[1]..randers[2]..randers[3])
+        if stock == 21 then
+            PrintMessage( HUD_PRINTTALK, "JACKPOT - ЛЮДИ ПОЛУЧАТ 30 СОБЫТИЙ!")
+            timer.Create("barahous"..rand..randers[2].."Ы",0.5, 30, function() GAMEMODE:DirectorThink(CurTime(),12000) end)
+        elseif stock > 9 then
+            PrintMessage( HUD_PRINTTALK, "ЛАДНО,БАРАБОГ ПРОСТО ВОЗЬМЕТ У ВАС 50% ПОИНТОВ!")
+            for k,v in pairs(GetPlayers(TEAM_HUMAN)) do
+                v:SetPoints(v:GetPoints()*0.5)
+            end
+        elseif stock > 5 then
+            PrintMessage( HUD_PRINTTALK, "ЛАДНО,БАРАБОГ ПРОСТО ВОЗЬМЕТ У ВАС 25% ПОИНТОВ!")
+            for k,v in pairs(GetPlayers(TEAM_HUMAN)) do
+                v:SetPoints(v:GetPoints()*0.75)
+            end
+        else
+            PrintMessage( HUD_PRINTTALK, "БАРАБОГ НЕ ВЫБИЛ СОБЫТИЙ((((")
+            return false
+        end
+		return true
+	end,
+    function(time)
+        PrintMessage( HUD_PRINTTALK, "БАРАБОГ ЗОЛ!")--много
+        GAMEMODE.NextThinkDirector = time - 50
+		return true
+	end,
+    function(time, rage)
+        for k,v in pairs(GetPlayers(TEAM_HUMAN)) do
+            v:GiveStatus('knockdown',25/(math.max(0.1,v.KnockdownRecoveryMul or 1)))
+        end
+        PrintMessage( HUD_PRINTTALK, "БАРАБОГ РЕШИЛ ПРОКЛЯСТЬ НОГИ ВЫЖИВШИМ!")
+		return true
+	end,
+    function(time, rage)
+        for k,v in pairs(GetPlayers(TEAM_HUMAN)) do
+           local items = v:GetInventoryItems()
+           local i = 0
+           local save = {}
+           for k2,v2 in pairs(items) do
+                if  GAMEMODE:GetInventoryItemType(k2) == INVCAT_ETERNAL then continue end
+                i = i + 1
+                save[i] = k2
+           end
+           local trinket = save[math.random(1,i)]
+           if trinket then
+            v:SendLua('GAMEMODE:CenterNotify(COLOR_RED, "У вас спиздили: "..GAMEMODE.ZSInventoryItemData["'..trinket..'"].PrintName)')
+            v:TakeInventoryItem(trinket)
+           end
+        end
+        PrintMessage( HUD_PRINTTALK, "БАРАБОГ РЕШИЛ УКРАСТЬ 1 ТРИНКЕТ У ВСЕХ ИГРОКОВ!")
+		return true
+	end,
+
 }
 function GM:DirectorThink(time, rage)
 	local mapmul = self.DirectorMAP or 0
 	mapmul = mapmul + 1
     rage = rage * mapmul
 	if rage > 35000  then
-        local rand = random_opt(1,#self.Events11500)
-		local func = self.Events11500[rand]
+        local rand = random_opt(1,#self.Events35000)
+		local func = self.Events35000[rand]
 		return func(time, rage)
     elseif rage > 11500 then
         local rand = random_opt(1,#self.Events11500)

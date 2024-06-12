@@ -419,6 +419,10 @@ function meta:ProcessDamage(dmginfo)
 
 	if attacker == self and dmgtype ~= DMG_CRUSH and dmgtype ~= DMG_FALL and self.SelfDamageMul then
 		damage = damage * self.SelfDamageMul
+		if self:GetMastery('gunner') > 4 and math.random(1,20) == 1 then
+			dmginfo:SetDamage(0)
+			return
+		end
 	end
 	if bit.band(dmgtype, DMG_ALWAYSGIB) ~= 0 and self.ExplosiveDamageTakenMul then
 		damage = damage * self.ExplosiveDamageTakenMul
@@ -713,6 +717,10 @@ function meta:ProcessDamage(dmginfo)
 				end
 				if self:HasTrinket("flower") and damage >= 13 and !self:HasGodMode() then
 					dmginfo:SetDamage(0)
+					if self.MasteryShield then
+						self.MasteryShield  = false
+						return true
+					end
 					self:TakeInventoryItem("trinket_flower")
 					net.Start("zs_trinketconsumed")
 						net.WriteString("Flower")
@@ -1794,10 +1802,12 @@ local function DoDropStart(pl)
 	end
 	local start = pl:GetRandomStartingItem()
 	if start then
-		local func = GAMEMODE:GetInventoryItemType(start) == INVCAT_TRINKETS and pl.AddInventoryItem or pl.Give
-		timer.Simple(0, function() func(pl, start) end)
+		timer.Simple(0, function() pl:AddInventoryItem('cons_starter_pack') end)
 	end
 	if pl:GetSoulPicker() then
+		if pl:GetMastery("melee") > 3 then
+			timer.Simple(0, function() pl:AddInventoryItem("cons_soul_picka") end)
+		end
 		timer.Simple(0, function() pl:AddInventoryItem("cons_soul_picka") end)
 	end
 	if pl:IsSkillActive(SKILL_BERSERK) then
@@ -1845,6 +1855,22 @@ local function DoDropStart(pl)
 				weapon[#weapon+1] = wep.ClassName 
 			end
 		end
+		if pl:GetMastery('gunner') > 2 then
+			local drop = weapon[math.random(1,#weapon)]
+			timer.Simple(0, function()	
+				local wep = pl:Give(drop)
+			
+				--[[wep.NoDismantle = true 
+				wep.AAHHH = true
+				wep.RemoveOnGive = true
+				wep.OnDropDo = function(self, object)
+					timer.Simple(0, function(arguments)
+						object:Remove()
+					end)
+					return true
+				end]]
+			end)
+		end
 		local drop = weapon[math.random(1,#weapon)]
 		timer.Simple(0, function()	
 			local wep = pl:Give(drop)
@@ -1861,6 +1887,11 @@ local function DoDropStart(pl)
 		end)
 	end
 	local midas = pl:GetFuckingMidas()
+	if pl:GetMastery('medic') > 1 then 
+		for i=1,2 do
+			pl:AddInventoryItem('comp_soul_health')
+		end
+	end
 	if midas then
 		local huy = GAMEMODE:GetInventoryItemType(midas) == INVCAT_TRINKETS and pl.AddInventoryItem or pl.Give
 		timer.Simple(0, function() huy(pl, midas) end)
@@ -2815,17 +2846,9 @@ function meta:GetBountyPicker()
 	return false
 end
 function meta:GetRandomStartingItem()
-	local pool = {}
-
 	if self:IsSkillActive(SKILL_EQUIPPED) then
-		pool[#pool + 1] = GAMEMODE.StarterTrinkets[math.random(#GAMEMODE.StarterTrinkets)]
+		return true
 	end
-
-
-	if #pool > 0 then
-		return pool[math.random(#pool)]
-	end
-
 end
 function meta:GetRandomFood()
 	local pool = {}

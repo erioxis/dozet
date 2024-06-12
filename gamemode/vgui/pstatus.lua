@@ -140,8 +140,7 @@ function GM:CreateNBNO()
     panel:SetTitle(translate.Get("newbie_text"))
     panel:Center()
     panel:MakePopup()
-	panel:ShowCloseButton(false)
-	timer.Simple(11,function() panel:ShowCloseButton(true) end)
+	panel:ShowCloseButton(true)
 
 
     local difficultyLabel = vgui.Create("DLabel", panel)
@@ -178,7 +177,7 @@ local function TrinketPanelPaint( self, w, h )
 	end
 
 	if self.SWEP then
-		draw.SimpleText( self.SWEP.PrintName, "ZSHUDFontTiny", w/2, h/6, Color( 255, 255, 255 ), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER )	
+		draw.SimpleText( self.SWEP.PrintName, "ZSHUDFontTiny", w/2, h/8, Color( 255, 255, 255 ), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER )	
 		--local txt = self.SWEP.Description 
 
 		--draw.DrawText( txt, "ZSBodyTextFontBig", w/2.2, h/3, Color( 255, 255, 255 ), TEXT_ALIGN_CENTER)	
@@ -193,7 +192,7 @@ local function ItemPanelDoClick(self)
 	self.Owner:Close()
 
 end
-local function InventoryAdd( item, category, i, self,custom)
+local function InventoryAdd( item, category, i, self,custom, big)
 	local screenscale = BetterScreenScale()
 	local grid = GAMEMODE:GetInventoryItemType( item )
 
@@ -209,11 +208,11 @@ local function InventoryAdd( item, category, i, self,custom)
 		itempan.DoClick = ItemPanelDoClick
 		itempan.Category = category
 		itempan:Center()
-		itempan:SetSize(250 * screenscale,400 * screenscale)
-		itempan:SetPos(300 * screenscale * i - 200 * screenscale,itempan:GetY()-180*screenscale)
+		itempan:SetSize(250 * screenscale * (big and 0.9 or 1),400 * screenscale)
+		itempan:SetPos(290 * screenscale * (big and 0.8 or 1) * i - 200 * screenscale,itempan:GetY()-180*screenscale)
 
 		local desc = vgui.Create("DLabel", itempan)
-		desc:SetSize(250 * screenscale,400 * screenscale)
+		desc:SetSize(250 * screenscale * (big and 0.9 or 1),400 * screenscale)
 		desc:SetFont("ZSHUDFontTiny")
 		desc:SetWrap(true)
 
@@ -226,8 +225,8 @@ local function InventoryAdd( item, category, i, self,custom)
 		mdlframe:SetMouseInputEnabled( false )
 		mdlframe.Paint = function() end
 
-		local trintier = EasyLabel( itempan, translate.Get("w_tier")..itempan.SWEP.Tier, "ZSHUDFontSmaller", COLOR_WHITE )
-		trintier:CenterHorizontal( 0.9 )
+		local trintier = EasyLabel( itempan, translate.Get("w_tier")..(itempan.SWEP.Tier or 0), "ZSHUDFontSmaller", COLOR_WHITE )
+		trintier:CenterHorizontal( 0.8 )
 		trintier:CenterVertical( 0.9 )
 		
 
@@ -244,7 +243,11 @@ local d = {"headshoter", "ind_buffer",  "ultra_at", "pearl","broken_world"}
 function GM:OpenBounty(table2)
 	local scr = BetterScreenScale()
     local panel = vgui.Create("DFrame")
-    panel:SetSize(1000*scr, 500*scr)
+	local big = false
+	if #table2 > 4 then
+		big = true
+	end
+    panel:SetSize(320*scr*(#table2) * (big and 0.77 or 1), 500*scr)
     panel:SetTitle("Select bounty")
     panel:Center()
     panel:MakePopup()
@@ -267,7 +270,7 @@ function GM:OpenBounty(table2)
 		if GAMEMODE.ZSInventoryItemData[table2[i]] and GAMEMODE.ZSInventoryItemData[table2[i]].Bounty then
 			InventoryAdd(table2[i],INVCAT_TRINKETS,i,panel)
 		else
-			InventoryAdd("trinket_"..table2[i],INVCAT_TRINKETS,i,panel)
+			InventoryAdd("trinket_"..table2[i],INVCAT_TRINKETS,i,panel, false, big)
 		end
 	end
 
