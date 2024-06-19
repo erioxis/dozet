@@ -21,8 +21,8 @@ function SWEP:ServerMeleePostHitEntity(tr, hitent, damagemultiplier)
 			effectdata:SetEntity(owner)
 			util.Effect("weapon_shattered", effectdata, true, true)
 
-			owner[self:GetClass().."NOMELEE"] = CurTime() + 15
-			owner:SendLua('MySelf["'..self:GetClass()..'".."NOMELEE"] = CurTime() + 15')
+			owner[self:GetClass().."NOMELEE"] = CurTime() + 23
+			owner:SendLua('MySelf["'..self:GetClass()..'".."NOMELEE"] = CurTime() + 23')
 		end
 	end
 end

@@ -1629,7 +1629,8 @@ end
 vgui.Register("ZSSkillWeb", PANEL, "Panel")
 	
 function GM:DrawXPBar(x, y, w, h, xpw, barwm, hm, level)
-	local barw = xpw * barwm
+	local adding = 35 * BetterScreenScale()
+	local barw = xpw * barwm + adding
 	local xp = MySelf:GetZSXP()
 	local progress = GAMEMODE:ProgressForXP(xp)
 	local rlevel = MySelf:GetZSRemortLevel()
@@ -1712,7 +1713,7 @@ function PANEL:Paint(w, h)
 		
 	if sp > 0 then
 		colFlash.a = 90 + math.abs(math.sin(RealTime() * 2)) * 160
-		draw_SimpleText(sp..translate.Get("hud_sp"), "ZSHUDFontSmallest", w - 2, h / 2, colFlash, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
+		draw_SimpleText(sp..translate.Get("hud_sp"), sp < 100 and "ZSHUDFontSmallest" or "ZSHUDFontTiny", w - 2 , h / 2 - (sp > 100 and 5 or 0)*BetterScreenScale(), colFlash, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
 	end
 end
 	

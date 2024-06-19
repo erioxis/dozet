@@ -68,7 +68,7 @@ function SWEP.BulletCallback(at,tr,dmginfo)
 	at:GetActiveWeapon().BaseClass.BulletCallback(at, tr, dmginfo)
 end
 function SWEP:ShootBullets(dmg, numbul, cone)
-	dmg = dmg + dmg * (20 * self:Clip1() / self.Primary.ClipSize)
+	dmg = dmg + dmg * (120 * self:Clip1() / self.Primary.ClipSize)
 
 	BaseClass.ShootBullets(self, dmg, numbul, cone)
 end

@@ -37,7 +37,7 @@ function meta:HealPlayer(pl, amount, pointmul, nobymsg, poisononly)
 			pl.UltraCharge = 0
 		end
 	end
-	if self:GetMastery('medic') > 4 and math.random(1,100) == 1 then 
+	if pl ~= self and self:GetMastery('medic') > 4 and math.random(1,100) == 1 then 
 		for k,v in pairs(pl:GetStatuses()) do
 			local class = v:GetClass() 
 			class = string.sub(class,8,#class)

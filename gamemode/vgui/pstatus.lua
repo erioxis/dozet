@@ -244,10 +244,11 @@ function GM:OpenBounty(table2)
 	local scr = BetterScreenScale()
     local panel = vgui.Create("DFrame")
 	local big = false
-	if #table2 > 4 then
+	local count = math.max(3,#table2)
+	if count > 4 then
 		big = true
 	end
-    panel:SetSize(320*scr*(#table2) * (big and 0.77 or 1), 500*scr)
+    panel:SetSize(320*scr*(count) * (big and 0.77 or 1), 500*scr)
     panel:SetTitle("Select bounty")
     panel:Center()
     panel:MakePopup()
@@ -257,11 +258,11 @@ function GM:OpenBounty(table2)
 		table2 = d 
 	end
 	if isnumber(table2[1]) then
-		InventoryAdd("2",INVCAT_TRINKETS,1,panel,{Tier = 1,PrintName = translate.Get("bounty_1"),Description = ""})
+		InventoryAdd("2",INVCAT_TRINKETS,1,panel,{Tier = 1,PrintName = translate.Get("bounty_1"),Description = ""},1)
 		if table2[1] > 4 then
-			InventoryAdd("1",INVCAT_TRINKETS,2,panel,{Tier = 2,PrintName = translate.Get("bounty_2"),Description = ""})
+			InventoryAdd("1",INVCAT_TRINKETS,2,panel,{Tier = 2,PrintName = translate.Get("bounty_2"),Description = ""},2)
 			if table2[1] == 9 then
-				InventoryAdd("3",INVCAT_TRINKETS,3,panel,{Tier = 3,PrintName = translate.Get("bounty_3"),Description = ""})
+				InventoryAdd("3",INVCAT_TRINKETS,3,panel,{Tier = 3,PrintName = translate.Get("bounty_3"),Description = ""},3)
 			end
 		end
 		return

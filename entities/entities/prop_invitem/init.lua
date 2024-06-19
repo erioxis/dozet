@@ -58,7 +58,7 @@ function ENT:GiveToActivator(activator, caller)
 		activator:CenterNotify(COLOR_RED, translate.ClientGet(activator, "samodosa"))
 		return
 	end
-	if itypecat == INVCAT_TRINKETS and (activator:HasInventoryItem(itype) or activator:HasInventoryItemQ(itype)  or activator:HasInventoryItemQ(string.sub(itype,0,#itype-3))) or activator:HasInventoryItem(string.sub(itype,0,#itype-3)) and !( GAMEMODE.ZSInventoryItemData[itype].OnlyDrones or GAMEMODE.ZSInventoryItemData[itype].Stackable)  then
+	if (itypecat == INVCAT_TRINKETS and (activator:HasInventoryItem(itype) or activator:HasInventoryItemQ(itype)  or activator:HasInventoryItemQ(string.sub(itype,0,#itype-3))) or activator:HasInventoryItem(string.sub(itype,0,#itype-3))) and !( GAMEMODE.ZSInventoryItemData[itype].OnlyDrones or GAMEMODE.ZSInventoryItemData[itype].Stackable)  then
 		activator:CenterNotify(COLOR_RED, translate.ClientGet(activator, "you_already_have_this_trinket"))
 		return
 	end

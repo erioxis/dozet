@@ -51,7 +51,7 @@ function ENT:Hit(vHitPos, vHitNormal, eHitEntity)
 		end
 	end
 	if eHitEntity and eHitEntity:IsValid() and (eHitEntity:GetClass() == "prop_manhack" or eHitEntity:GetClass() == "prop_manhack_saw" ) then
-		eHitEntity:TakeDamage(760,owner,self)
+		eHitEntity:TakeDamage(eHitEntity:GetMaxObjectHealth()*0.43,owner,self)
 	end
 
 	local effectdata = EffectData()
