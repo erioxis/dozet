@@ -6,7 +6,7 @@ GM.mastery = {}
 
 -- No, adding a gun doesn't make your name worth being here.
 GM.Credits = {
-	{"Version", "", "10.1.0"},
+	{"Version", "", "10.1.1"},
 	{"Season of ", "", "Simulation leave"},
 	{"erioxis", "Phantom coder", "dead"},
 	{"Холодное Молочко(M-I-L-K-Y)", "Phantom coder", "dead"},
