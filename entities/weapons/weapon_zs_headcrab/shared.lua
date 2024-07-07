@@ -269,7 +269,7 @@ function SWEP:ApplyMeleeDamage(pl, trace, damage)
 			pl:AddCursed(self:GetOwner(), 5,nil,nil,true)
 		end
 		if (not cursed) then 
-			pl:AddCursed(pl:GetOwner(), 3)
+			pl:AddCursed(self:GetOwner(), 3)
 		end
 	end
 	self.BaseClass.ApplyMeleeDamage(self, pl, trace, damage)

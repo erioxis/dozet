@@ -18,9 +18,9 @@ CLASS.NoFallDamage = true
 CLASS.NoFallSlowdown = true
 
 CLASS.SWEP = "weapon_zs_abyssaxez"
-CLASS.Health = 24500
-CLASS.Speed = 135
-CLASS.Points = 100
+CLASS.Health = 12500
+CLASS.Speed = 195
+CLASS.Points = 200
 CLASS.Wave = 11 / 12
 CLASS.Hidden = true
 
@@ -74,7 +74,7 @@ function CLASS:ProcessDamage( pl, dmginfo )
 		elseif bit.band( dmginfo:GetDamageType(), DMG_BURN ) ~= 0 then 
 			dmginfo:SetDamage( 0 )
 		end
-		dmginfo:ScaleDamage(0.25 )
+		dmginfo:ScaleDamage(0.15)
 	end
 	return dmginfo
 end

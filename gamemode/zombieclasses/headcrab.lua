@@ -14,7 +14,7 @@ CLASS.Health = 11
 CLASS.Speed = 230
 CLASS.JumpPower = 160
 
-CLASS.Variations = {"Poison Headcrab", "Fast Headcrab", "Bloodsucker Headcrab","Barbed Headcrab"}
+CLASS.Variations = {"Poison Headcrab",  "Fast Headcrab", "Bloodsucker Headcrab","Barbed Headcrab"}
 CLASS.Original = true
 
 

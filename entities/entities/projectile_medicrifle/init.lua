@@ -17,13 +17,11 @@ function ENT:Hit(vHitPos, vHitNormal, eHitEntity, vOldVelocity)
 					local alt = self:GetDTBool(0)
 					pl:TakeSpecialDamage(self.Heal * 0.9, DMG_ACID,owner, owner:GetActiveWeapon())
 					pl:PoisonDamage(12, owner, self)
-					local status = pl:GiveStatus(alt and "zombiestrdebuff" or "zombiedartdebuff")
+					local status = pl:GiveStatus(alt and "zombiestrdebuff" or "zombiedartdebuff", nil, owner)
 					status.DieTime = CurTime() + (self.BuffDuration or 10)
-					status.Applier = owner
 				elseif	pl:IsValidLivingHuman() and pl ~= owner then
 					local alt = self:GetDTBool(0)
-					local strstatus = pl:GiveStatus(alt and "strengthdartboost" or "medrifledefboost", (alt and 0.1 or 0.2) * (self.BuffDuration or 1))
-					strstatus.Applier = owner
+					local strstatus = pl:GiveStatus(alt and "strengthdartboost" or "medrifledefboost", (alt and 0.1 or 0.2) * (self.BuffDuration or 1), owner)
 					owner:HealPlayer(pl, self.Heal * 0.3)
 					local txt = alt and translate.ClientGet(pl,"buff_srifle") or translate.ClientGet(pl,"buff_mrifle")
 						net.Start("zs_buffby")
@@ -68,9 +66,8 @@ function ENT:Hit(vHitPos, vHitNormal, eHitEntity, vOldVelocity)
 					POINTSMULTIPLIER = nil
 				end
 
-				local status = eHitEntity:GiveStatus(alt and "zombiestrdebuff" or "zombiedartdebuff")
+				local status = eHitEntity:GiveStatus(alt and "zombiestrdebuff" or "zombiedartdebuff", nil, owner)
 				status.DieTime = CurTime() + (self.BuffDuration or 10)
-				status.Applier = owner
 			elseif eHitEntity:Team() == TEAM_HUMAN then
 				local ehithp, ehitmaxhp = eHitEntity:Health(), eHitEntity:GetMaxHealth()
 
@@ -81,8 +78,7 @@ function ENT:Hit(vHitPos, vHitNormal, eHitEntity, vOldVelocity)
 
 		
 				elseif not (owner:IsSkillActive(SKILL_RECLAIMSOL) and ehithp >= ehitmaxhp) then
-					local status = eHitEntity:GiveStatus(alt and "strengthdartboost" or "medrifledefboost", (alt and 1 or 2) * (self.BuffDuration or 10))
-					status.Applier = owner
+					local status = eHitEntity:GiveStatus(alt and "strengthdartboost" or "medrifledefboost", (alt and 1 or 2) * (self.BuffDuration or 10), owner)
 
 					owner:HealPlayer(eHitEntity, self.Heal)
 

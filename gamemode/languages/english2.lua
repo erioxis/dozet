@@ -205,7 +205,7 @@ LANGUAGE.t_d_pearl_q5                        = "+40% Buff time\n+50% Debuff time
 LANGUAGE.t_d_curse_ponos                        = "Sometimes you fly to sky\nOn drop you fly x10 times"
 LANGUAGE.t_d_curse_un                        = "You can't see health and blood armor\nOn drop teleport to random z-spawn"
 LANGUAGE.t_d_curse_fragility                        = "+50% Melee damage taken.\nOn drop take 6 luck."
-LANGUAGE.t_d_curse_ancient                        = "Teleport in random point while taking damage with 11% chance and take x3 damage when teleported!\nOn Drop disable all skills"
+LANGUAGE.t_d_curse_ancient                        = "Teleport in random point while taking damage with 5% chance and take x3 damage when teleported!\nOn Drop disable all skills"
 LANGUAGE.t_d_pr_bloodpack = "-32% Medkit cooldown\nYou can use your health for heal others(MEDICAL KIT ONLY)."
 LANGUAGE.t_d_pr_chamomile = "Best WEAPON vs BARAGAYS\n+55% Heal multiplier"
 LANGUAGE.t_d_pr_barapaw = "Have chance to knockdown healed player\n-44% Medkit cooldown"
@@ -464,7 +464,7 @@ LANGUAGE.defense_name = "Defence"
 LANGUAGE.defense_desc = "Skill tree for defence and love take a speed.\nSome skills worth for it."
 
 LANGUAGE.donate_name = "Donate's"
-LANGUAGE.donate_desc = "Skill tree frokm players."
+LANGUAGE.donate_desc = "Skill tree from players."
 
 LANGUAGE.useless_name = "USELESS"
 LANGUAGE.useless_desc = "USELESS!"
@@ -506,6 +506,8 @@ LANGUAGE.t_module_serrate                             = "Pulse attack"
 LANGUAGE.t_d_module_serrate                            = "Give a pulse-modifier for drone.\nStackable (+5% additional pulse damage per stack)"
 LANGUAGE.t_module_better_cd                             = "Better Handle"
 LANGUAGE.t_d_module_better_cd                            = "+1% Fire attack speed.\nStackable"
+
+LANGUAGE.we_remind_this_sound = "zombiesurvival/gman_remind_eng.wav"
 
 
 

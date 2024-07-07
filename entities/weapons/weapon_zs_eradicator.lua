@@ -25,10 +25,10 @@ function SWEP:ApplyMeleeDamage(pl, trace, damage)
 	if SERVER and pl:IsPlayer()  then
 		local cursed = pl:GetStatus("hollowing")
 		if (cursed) then 
-			pl:AddHallow(self:GetOwner(), 15,true)
+			pl:AddHallow(self:GetOwner(), 15,self:GetOwner())
 		end
 		if (not cursed) then 
-			pl:AddHallow(pl:GetOwner(), 25)
+			pl:AddHallow(self:GetOwner(), 25)
 		end
 	end
 	self.BaseClass.ApplyMeleeDamage(self, pl, trace, damage)

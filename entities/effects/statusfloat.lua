@@ -8,7 +8,7 @@ local cam = cam
 local Particles = {}
 
 
-hook.Add("PostDrawTranslucentRenderables", "DrawBlocking", function()
+hook.Add("PostDrawTranslucentRenderables", "DrawFloatingStatus", function()
 	if #Particles == 0 then return end
 	local done = true
 	local curtime = CurTime()
@@ -20,14 +20,17 @@ hook.Add("PostDrawTranslucentRenderables", "DrawBlocking", function()
 	if GAMEMODE.DamageNumberThroughWalls then
 		cam.IgnoreZ(true)
 	end
-
+	local tables = GAMEMODE.Statuses
 	for _, particle in pairs(Particles) do
 		if particle and curtime < (particle.DieTime or 1) then
 			done = false
-
+			local class = particle.Bool
+			local tab = tables[string.sub(class,8,#class)]
+			if !tab then continue end
+			local colors = tab.Color
 
 			cam.Start3D2D(particle:GetPos(), ang, 0.1 * GAMEMODE.DamageNumberScale)
-				draw.SimpleText(particle.Bool == 1 and translate.Get("miss").."!" or particle.Bool == 2 and translate.Get("parried")  or  translate.Get("blockistrue").."!", "ZS3D2DFont2", 0, 0, Color(33, 65, 209, math.Clamp(particle.DieTime - curtime, 0, 1) * 220), TEXT_ALIGN_CENTER, TEXT_ALIGN_BOTTOM)
+				draw.SimpleText(translate.Get("s_"..tab.Name), "ZS3D2DFont2", 100+math.sin(particle.DieTime-CurTime() * math.pi)*200, 0, Color(colors.r, colors.g, colors.b, math.Clamp(particle.DieTime - curtime, 0, 1) * 220), TEXT_ALIGN_CENTER, TEXT_ALIGN_BOTTOM)
 			cam.End3D2D()
 		end
 	end
@@ -43,10 +46,11 @@ end)
 
 local gravity = Vector(0, 0, -500)
 function EFFECT:Init(data)
-	local pos = data:GetOrigin()
-	local bool = data:GetAttachment()
+	local rand = VectorRand(-33,22)
+	rand.z = math.Clamp(rand.z,5,25)
+	local pos = data:GetOrigin() + rand
 	local Type = data:GetScale()
-	local velscal = GAMEMODE.DamageNumberSpeed
+	local velscal = 0.32
 
 	local vel = VectorRand()
 	vel.z = math.Rand(0.7, 0.98)
@@ -54,18 +58,22 @@ function EFFECT:Init(data)
 
 	local emitter = ParticleEmitter(pos)
 	local particle = emitter:Add("sprites/glow04_noz", pos)
-	particle:SetDieTime(2)
+	particle:SetDieTime(3)
 	particle:SetStartAlpha(0)
 	particle:SetEndAlpha(0)
 	particle:SetStartSize(0)
 	particle:SetEndSize(0)
 	particle:SetCollide(true)
 	particle:SetBounce(0.7)
-	particle:SetAirResistance(32)
-	particle:SetGravity(gravity * (velscal ^ 2))
+	particle:SetAirResistance(12)
+	particle:SetGravity(gravity * -(velscal ^ 2))
 	particle:SetVelocity(Vector(0,0,0) * 4 * vel * velscal)
+	
+	if GAMEMODE.PushAp then
+		particle.Bool = GAMEMODE.PushAp
+		GAMEMODE.PushAp = nil
+	end
 
-	particle.Bool = bool
 	particle.DieTime = CurTime() + 2 * GAMEMODE.DamageNumberLifetime
 	particle.Type = Type
 

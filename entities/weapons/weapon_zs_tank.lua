@@ -27,7 +27,7 @@ function SWEP:MeleeHit(ent, trace, damage, forcescale)
 	if not ent:IsPlayer() then
 		damage = self.MeleeDamageVsProps
 	else
-		ent:GiveStatus('stunned',6)
+		ent:GiveStatus('stunned',3,self:GetOwner())
 	end
 
 	self.BaseClass.MeleeHit(self, ent, trace, damage, forcescale)

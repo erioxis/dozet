@@ -26,6 +26,8 @@
 	util.AddNetworkString("zs_admin_give_t")
 
 	
+
+	
 	util.AddNetworkString("zs_upgrade_trinket")
 	util.AddNetworkString("zs_soundbruh")
 	util.AddNetworkString("zs_lore_book")
@@ -119,6 +121,8 @@
 	util.AddNetworkString("zs_xp_damage")
 
 	util.AddNetworkString("zs_block_number")
+	
+	util.AddNetworkString("zs_status_float")
 	util.AddNetworkString("zs_luck")
 	util.AddNetworkString("zs_repeat")
 	util.AddNetworkString("zs_skillarsenalvoid")

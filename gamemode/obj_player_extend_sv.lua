@@ -190,13 +190,26 @@ function meta:ProcessDamage(dmginfo)
 			if attacker:IsSkillActive(SKILL_AMULET_11) and health >= attackermaxhp then
 				damage = damage * 1.45
 			end
-			if classtable.BaraCat then
+			if self.BaraCat then
 				if attacker:HasTrinket("antibaracat") then
 					damage = damage * 1.2
 				end
 				if attacker:HasTrinket("cham_at") then
 					damage = damage * 1.2
 					self:AttachmentDamage(damage, attacker, inflictor, 4)
+				end
+				local baraalive = false
+				for k,v in pairs(team.GetPlayers(TEAM_UNDEAD)) do
+					if v == self then
+						continue 
+					end
+					if v:GetZombieClassTable().Name == "Miss ASS" then
+						baraalive = true
+						break
+					end
+				end
+				if baraalive then
+					damage = damage * 0.35
 				end
 			end
 			if (attacker:GetStatus("cursed"))  and attacker:HasTrinket("a_flower") then
@@ -342,9 +355,9 @@ function meta:ProcessDamage(dmginfo)
 		if self:IsSkillActive(SKILL_XPMULGOOD) and self.AddXPMulti > 0.20 then
 			self.AddXPMulti = self.AddXPMulti - 0.02
 		end
-		if self:IsSkillActive(SKILL_DODGE) and math.max(0,math.random(1,math.max(30 - (self:GetWalkSpeed() / 15),6))) == 1  then
+		if self:IsSkillActive(SKILL_DODGE) and math.max(0,math.random(1,math.max(30 - (self:GetWalkSpeed() / 15),10))) == 1  then
 			if attacker:IsPlayer() then
-				GAMEMODE:BlockFloater(attacker, self, dmginfo:GetDamagePosition())
+				GAMEMODE:BlockFloater(attacker, self, dmginfo:GetDamagePosition(), 1)
 			end
 			dmginfo:SetDamage(0)
 			net.Start("zs_damageblock")
@@ -473,9 +486,9 @@ function meta:ProcessDamage(dmginfo)
 			self:AddStamina(-6)
 		end
 	end
-	local mythrilchance = math.randomr(1,25,1,self)
+	local mythrilchance = math.randomr(1,100,1,self)
 	if self:IsSkillActive(SKILL_MYTHRIL) and mythrilchance == 1 and not self:GetStatus("hshield") and damage < 200 then
-		xpadded = damage * 0.5
+		xpadded = damage * 0.25
 		net.Start("zs_xp_damage")
 		net.WriteString(xpadded)
 		net.Send(self)
@@ -487,7 +500,7 @@ function meta:ProcessDamage(dmginfo)
 		end
 		return true
 	end
-	if self:HasTrinket("curse_eye") and math.random(1,100) < 12 then
+	if self:HasTrinket("curse_eye") and math.random(1,100) < 6 then
 		damage = damage * 3
 		self:SetPos(GAMEMODE:GetRandomPosition(GAMEMODE:GetRandomPoint_Mesh()))
 	end
@@ -570,7 +583,7 @@ function meta:ProcessDamage(dmginfo)
 				end
 			end
 			if self:IsSkillActive(SKILL_AMULET_1) then
-				local amuletrng = math.randomr(1, math.max(2,10 / (self.CarefullMelody_DMG *0.5)),2,self)
+				local amuletrng = math.randomr(1, math.Round(math.max(2,10 / (self.CarefullMelody_DMG *0.5))),2,self)
 				if amuletrng == 2 then
 					dmginfo:SetDamage(0)
 					net.Start("zs_damageblock")
@@ -580,7 +593,7 @@ function meta:ProcessDamage(dmginfo)
 						GAMEMODE:BlockFloater(attacker, self, dmginfo:GetDamagePosition())
 					end
 					return true
-				elseif amuletrng ~= 1 then
+				else
 					self.CarefullMelody_DMG = self.CarefullMelody_DMG + 1
 				end
 			end
@@ -873,7 +886,7 @@ function meta:ProcessDamage(dmginfo)
 		timer.Simple(0.1, function() droped:GetPhysicsObject():SetVelocity(VectorRand(-500,500)) end )
 	end
 	if self.Purgatory and (self.NextPRG or 1) <= time and (damage >= 4 or (takedbl or 1) >= 10) and !self:IsSkillActive(SKILL_GIER_II) then
-		self.NextPRG = time + 0.3
+		self.NextPRG = time + 2
 		--self:GiveStatus("portal",1)
 		for i=1,3 do
 			local droped = ents.Create("projectile_purgatory_soul")
@@ -1218,7 +1231,7 @@ function meta:AddPoisonDamage(damage, attacker)
 	--damage = math.ceil(damage)
 
 	if damage > 0 then
-		local status = self:GiveStatus("poison")
+		local status = self:GiveStatus("poison",nil,attacker)
 		if status and status:IsValid() then
 			status:AddDamage(damage, attacker)
 		end
@@ -1232,11 +1245,11 @@ end
 
 function meta:AddCursed(attacker, count,bruh,bruh,yes)
 	--damage = math.ceil(damage)
-	self:GiveStatus("cursed", count,nil,nil,yes).Inflictor = attacker
+	self:GiveStatus("cursed", count,attacker,nil,yes).Inflictor = attacker
 end
 
 function meta:AddHallow(attacker, count,yes)
-	local apl = self:GiveStatus("hollowing", count,nil,nil,yes)
+	local apl = self:GiveStatus("hollowing", count,attacker,nil,yes)
 	apl.Applier = attacker
 end
 
@@ -1546,7 +1559,7 @@ function meta:GetStatuses()
 end
 
 
-function meta:GiveStatus(sType, fDie, applier, ignoredouble, adding)
+function meta:GiveStatus(sType, fDie, applier, ignoredouble, adding, show)
 	local resistable = table.HasValue(GAMEMODE.ResistableStatuses, sType)
 	local unsDie = fDie
 	local op = GAMEMODE.Statuses[sType]
@@ -1563,8 +1576,11 @@ function meta:GiveStatus(sType, fDie, applier, ignoredouble, adding)
 		self.BioCleanserMessage = nil
 		return
 	end
-
 	local cur = self:GetStatus(sType)
+	if !show and cur and applier and (self.NextFloatingStatuss[sType] or 0) < CurTime() then
+		GAMEMODE:StatusFloater(applier, self:LocalToWorld(applier:OBBCenter()), cur)
+		self.NextFloatingStatuss[sType] = CurTime() + 0.6
+	end
 	if cur then
 		if fDie then
 			if adding then
@@ -1593,6 +1609,9 @@ function meta:GiveStatus(sType, fDie, applier, ignoredouble, adding)
 			if applier then
 				ent.Applier = applier
 				ent:SetDTEntity(22,applier)
+			end
+			if !show and applier then
+				GAMEMODE:StatusFloater(applier, self:LocalToWorld(applier:OBBCenter()), ent)
 			end
 			return ent
 		end
@@ -1887,11 +1906,11 @@ local function DoDropStart(pl)
 		end)
 	end
 	local midas = pl:GetFuckingMidas()
-	if pl:GetMastery('medic') > 1 then 
+	timer.Simple(0, function() if pl:GetMastery('medic') > 1 then 
 		for i=1,2 do
 			pl:AddInventoryItem('comp_soul_health')
 		end
-	end
+	end end)
 	if midas then
 		local huy = GAMEMODE:GetInventoryItemType(midas) == INVCAT_TRINKETS and pl.AddInventoryItem or pl.Give
 		timer.Simple(0, function() huy(pl, midas) end)
@@ -2738,7 +2757,7 @@ function meta:MakeBossDrop(killer)
 		if phys:IsValid() then
 			phys:Wake()
 			phys:SetVelocityInstantaneous(VectorRand():GetNormalized() * math.Rand(24, 100))
-			phys:AddAngleVelocity(VectorRand() * 200)
+			phys:AddAngleVelocity(VectorRand() * 400)
 		end
 	end
 end

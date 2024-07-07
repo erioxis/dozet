@@ -13,9 +13,6 @@ function SWEP:ApplyMeleeDamage(ent, trace, damage)
 		local gt = ent:GiveStatus("frost", 8)
 		local owner = self:GetOwner()
 
-		if gt and gt:IsValid() then
-			gt.Applier = owner
-		end
 		ent:AddLegDamageExt(12, owner, self, SLOWTYPE_COLD)
 	end
 

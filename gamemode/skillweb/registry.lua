@@ -1610,9 +1610,9 @@ GM:AddSkill(SKILL_SFINGERS, trs("skill_sfingers"), GOOD..trs("skill_sfingers_d1"
 																8,			-5,					{SKILL_NFINGERS}, TREE_GUNTREE)
 GM:AddSkillModifier(SKILL_NFINGERS, SKILLMOD_RES_AMMO_MUL, -0.10)
 GM:AddSkillModifier(SKILL_SFINGERS, SKILLMOD_RES_AMMO_MUL, -0.25)
-GM:AddSkill(SKILL_ABFINGERS, trs("skill_abfingers"), GOOD..trs("skill_abfingers_d1")..BAD..translate.Format("skillmod_n130","-6%"),
+GM:AddSkill(SKILL_ABFINGERS, trs("skill_abfingers"), GOOD..trs("skill_abfingers_d1")..BAD..translate.Format("skillmod_n130","-12%"),
 																9,			-4,					{SKILL_NFINGERS}, TREE_GUNTREE)
-GM:AddSkillModifier(SKILL_ABFINGERS, SKILLMOD_BUFF_TIME, -0.06)
+GM:AddSkillModifier(SKILL_ABFINGERS, SKILLMOD_BUFF_TIME, -0.12)
 GM:AddSkill(SKILL_D_FINGERS, trs("skill_dfingers"), BAD..trs("skill_dfingers_d1"),
 																9,			-6,					{SKILL_SFINGERS}, TREE_GUNTREE)
 master = GM:AddSkill(SKILL_THROWER_FULL, trs("skill_throw_full"), GOOD..trs("skill_throw_full_d1"),
@@ -2120,9 +2120,9 @@ GM:AddSkill(SKILL_TORMENT8,trs("skill_torment").."VIII", GOOD.."+15%"..trs("xpmu
 
 GM:AddSkillModifier(SKILL_TORMENT8, SKILLMOD_HEALTH, -50)
 GM:AddSkillModifier(SKILL_TORMENT8, SKILLMOD_XP, 0.15)
-GM:AddSkill(SKILL_TOY_BEST_FRIEND,trs("skill_toy"), GOOD..trs("skill_toy_d")..BAD.."-5%"..trs("xpmul"),
+GM:AddSkill(SKILL_TOY_BEST_FRIEND,trs("skill_toy"), GOOD..trs("skill_toy_d")..BAD.."-9%"..trs("xpmul"),
 																				1,			10,						{SKILL_TORMENT4}, TREE_ANCIENTTREE)
-GM:AddSkillModifier(SKILL_TOY_BEST_FRIEND, SKILLMOD_XP, -0.05)
+GM:AddSkillModifier(SKILL_TOY_BEST_FRIEND, SKILLMOD_XP, -0.09)
 GM:AddSkill(SKILL_FREEPOINT1,trs("skill_freexp").."I", GOOD.."+1%"..trs("xpmul"),
 				                                                            	4,			13,					{SKILL_TORMENT8}, TREE_ANCIENTTREE)
 GM:AddSkillModifier(SKILL_FREEPOINT1, SKILLMOD_XP, 0.01)

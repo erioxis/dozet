@@ -15,15 +15,15 @@ function ENT:Think()
 
 	local owner = self:GetOwner()
 	if not owner:IsValid() then owner = self end
+	local tr = self.Touched
 
-	if self.Touched and not self.Damaged then
+	if tr and not self.Damaged and tr.Entity ~= owner then
 		self.Damaged = true
 
 		local airtime = CurTime() - self.TimeCreated
 		local dmgmul = math.Clamp(1 + airtime * 1.2, 1, 1.6)
 		local alt2 = self:GetDTBool(1)
 
-		local tr = self.Touched
 
 		self:DealProjectileTraceDamage((self.ProjDamage or 66) * (alt2 and dmgmul or 1), tr, owner)
 

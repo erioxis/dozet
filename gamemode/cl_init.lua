@@ -312,7 +312,7 @@ function GM:_InputMouseApply(cmd, x, y, ang)
 		self.InputMouseX = math.NormalizeAngle(self.InputMouseX - x * 0.02 * GAMEMODE.PropRotationSensitivity)
 		self.InputMouseY = math.NormalizeAngle(self.InputMouseY - y * 0.02 * GAMEMODE.PropRotationSensitivity)
 
-		local snap = GAMEMODE.PropRotationSnap
+		local snap = 15--GAMEMODE.PropRotationSnap
 		local snapanglex, snapangley = self.InputMouseX, self.InputMouseY
 		if snap > 0 then
 			snapanglex = Angle(self.InputMouseX, 0, 0):SnapTo("p", snap).p
@@ -1879,7 +1879,6 @@ function GM:EvaluateFilmMode()
 end
 
 function GM:CreateVGUI()
-	self.GameStatePanel:Remove()
 	local screenscale = BetterScreenScale()
 	self.GameStatePanel = vgui.Create("ZSGameState")
 	self.GameStatePanel:SetTextFont("ZSHUDFontSmaller")

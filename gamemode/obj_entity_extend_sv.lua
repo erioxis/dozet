@@ -441,7 +441,6 @@ function meta:DamageNails(attacker, inflictor, damage, dmginfo)
 
 		return true
 	end
-	
 
 	if self:GetDTFloat(12) and CurTime() < self:GetDTFloat(12) and self.ReinforceApplier and self.ReinforceApplier:IsValidLivingHuman() then
 		local applier = self.ReinforceApplier
@@ -836,6 +835,7 @@ GM.ProjectileThickness = 3
 
 function meta:ProjectileTraceAhead(phys)
 	if not self.Touched then
+		local human = self:GetOwner() == TEAM_HUMAN
 		local vel = self.PreVel or phys:GetVelocity()
 		if self.PreVel then self.PreVel = nil end
 
@@ -863,7 +863,7 @@ function meta:ProjectileTraceAhead(phys)
 			if trace.Entity then
 				local ent = trace.Entity
 
-				if ent:IsValidLivingZombie() or ent.ZombieConstruction then
+				if human and (ent:IsValidLivingZombie() or ent.ZombieConstruction) or ent:IsValidLivingHuman() then
 					self.Touched = trace
 				end
 

@@ -6,11 +6,11 @@ function SWEP:ApplyMeleeDamage(pl, trace, damage)
 		local cursed = pl:GetStatus("cursed")
 		if (cursed) then 
 			pl:GiveStatus("dimvision", 6)
-			pl:AddCursed(self:GetOwner(),  10,nil,nil,true)
+			pl:AddCursed(self:GetOwner(),  10)
 		end
 		if (not cursed) then 
 			pl:GiveStatus("dimvision", 12)
-			pl:AddCursed(pl:GetOwner(), 10)
+			pl:AddCursed(self:GetOwner(), 10)
 		end
 	else
 		local cursed = pl:GetStatus("rot")
@@ -20,12 +20,12 @@ function SWEP:ApplyMeleeDamage(pl, trace, damage)
 					if (cursed) then 
 			pl:AddRot(self:GetOwner(),5)
 			end
-			pl:AddCursed(self:GetOwner(),  5,nil,nil,true)
+			pl:AddCursed(self:GetOwner(),  5)
 		end
 		if (not cursed1) then 
 			pl:GiveStatus("dimvision", 12)
 								if (cursed) then 
-			pl:AddRot(pl:GetOwner(), 5)
+			pl:AddRot(self:GetOwner(), 5)
 			end
 						pl:AddCursed(self:GetOwner(), 5)
 		end

@@ -1358,10 +1358,10 @@ function GM:Think()
 				if self:GetWaveStart() - 10 <= time then
 					self:SpawnBossZombie()
 					if self:GetWave() > 5 then
-					   timer.Simple(0.07, function()	self:SpawnBossZombie() end)
+						timer.Simple(0.07, function()	self:SpawnBossZombie() end)
 					end
 					if self:GetWave() > 10 then
-					   timer.Create("bosses"..#player.GetAll(),0.05,#player.GetAll(), function()	self:SpawnBossZombie() end)
+						timer.Create("bosses"..#player.GetAll(),0.05,#player.GetAll(), function()	self:SpawnBossZombie() end)
 					end
 				else
 					self:CalculateNextBoss()
@@ -1590,7 +1590,7 @@ function GM:Think()
 				if pl.MasteryHollowing > 800 and pl:IsSkillActive(SKILL_UPLOAD) then
 					local cursed5 = pl:GetStatus("hollowing")
 					pl:Kill()
-					pl:AddHallow(pl:GetOwner(),cursed5.DieTime - (time + cursed5.DieTime))
+					pl:AddHallow(nil,cursed5.DieTime - (time + cursed5.DieTime))
 					print(" Уебало "..pl:Nick()..(" "..pl.MasteryHollowing))
 					PrintMessage(HUD_PRINTCONSOLE," Уебало "..pl:Nick()..(" "..pl.MasteryHollowing))
 				end
@@ -1624,10 +1624,10 @@ function GM:Think()
 					pl:AddUselessDamage(pl:GetMaxHealth() * 0.05)
 				end
 				
-				local have1 = pl:HasTrinket("vitpackagei_q5") 
-				local have2 = pl:HasTrinket("vitpackagei_q4") 
-				local have3 = pl:HasTrinket("vitpackagei_q3") --оптимизация укатилась как и баланс
-				if (have1 or have2 or have3) and time > pl.NextRegenTrinket and pl:Health() < healmax then
+				local have1 = pl.RemedyRegen32
+				local have2 = pl.RemedyRegen22
+
+				if pl.HasVI and time > pl.NextRegenTrinket and pl:Health() < healmax then
 					pl.NextRegenTrinket = time + (have1 and 10 or have2 and 11 or 12 )
 					pl:SetHealth(math.min(healmax, pl:Health() + (have1 and 5 or have2 and 4 or 3)))
 				end
@@ -1643,10 +1643,10 @@ function GM:Think()
 					pl.NextRegenerate5 = time + 1
 					local cursed = pl:GetStatus("cursed")
 					if (not cursed) then 
-						pl:AddCursed(pl:GetOwner(), 1)
+						pl:AddCursed(nil, 1)
 					end
 					if (cursed) then 
-						pl:AddCursed(pl:GetOwner(),  1,nil,nil,true)
+						pl:AddCursed(nil,  1,nil,nil,true)
 					end
 				end
 
@@ -2537,7 +2537,7 @@ end
 
 function GM:OnPlayerLose(pl)
 	pl:GiveAchievementProgress("ruinto10", 1)
-	self:SetRage(self:GetRage()/2)
+	self:SetRage(self:GetRage()/1.1)
 end
 
 
@@ -3095,6 +3095,8 @@ function GM:PlayerInitialSpawnRound(pl)
 	pl.InbalanceMoment = 0
 	pl.NextDJUMP = 0
 
+
+	pl.NextFloatingStatus = 0
 	pl.DamageDealt = {}
 	pl.DamageDealt[TEAM_UNDEAD] = 0
 	pl.DamageDealt[TEAM_HUMAN] = 0
@@ -3118,6 +3120,7 @@ function GM:PlayerInitialSpawnRound(pl)
 	pl.HealedThisRound = 0
 	pl.RepairedThisRound = 0
 	pl.NextRegenerate = 0
+	pl.NextFloatingStatuss = {}
 	pl.NextRegenerateClan = 0
 	pl.NextCurseRegenerate = 0
 	pl.NextRegenerateLazarus = 0
@@ -3149,7 +3152,7 @@ function GM:PlayerInitialSpawnRound(pl)
 
 	--Normal Mutations (Z-Shop)
 	pl.m_HealthMulZS = 1
-	pl.m_Zombie_Moan = nil
+pl.m_Zombie_Moan = nil
 	pl.m_Zombie_MoanGuard = nil
 	pl.m_zombiedef = nil
 	pl.m_Zombie_Bara = nil
@@ -4110,7 +4113,6 @@ function GM:EntityTakeDamage(ent, dmginfo)
 
 		if attacker:IsPlayer() and dispatchdamagedisplay and not hasdmgsess then
 			self:DamageFloater(attacker, ent, dmgpos, dmg)--, (ent:IsPlayer() and ((ent:Team() == TEAM_HUMAN) and ent:GetBloodArmor() or ent:GetZArmor()) > 0))
-
 		elseif hasdmgsess and dispatchdamagedisplay then
 			attacker:CollectDamageNumberSession(dmg, dmgpos, ent:IsPlayer())
 		end
@@ -4151,6 +4153,17 @@ function GM:BlockFloater(attacker, victim, dmgpos, bool)
 	end
 	net.Start("zs_block_number")
 		net.WriteUInt(bool,4)
+		net.WriteVector((dmgpos or Vector(0,0,0)))
+	net.Send(attacker)
+end
+
+function GM:StatusFloater(attacker, dmgpos, status)
+	if dmgpos == vector_origin then dmgpos = Vector(0,0,0) end
+	if !status or !status:IsValid() then
+		return
+	end
+	net.Start("zs_status_float")
+		net.WriteString(status:GetClass())
 		net.WriteVector((dmgpos or Vector(0,0,0)))
 	net.Send(attacker)
 end
@@ -4932,10 +4945,10 @@ function GM:HumanKilledZombie(pl, attacker, inflictor, dmginfo, headshot, suicid
 				timer.Simple(0.9, function() inflictor2.Eater = nil end)
 			end
 		end
-		if attacker:IsSkillActive(SKILL_ABFINGERS) and math.random(1,10) == 1 then
-			local reaperstatus = attacker:GiveStatus("reaper", 14)
+		if attacker:IsSkillActive(SKILL_ABFINGERS) and math.random(1,5) == 1 then
+			local reaperstatus = attacker:GiveStatus("reaper", 6)
 			if reaperstatus and reaperstatus:IsValid() then
-				reaperstatus:SetDTInt(1, math.min(reaperstatus:GetDTInt(1) + 1, 50))
+				reaperstatus:SetDTInt(1, math.min(reaperstatus:GetDTInt(1) + 1, 30))
 				attacker:EmitSound("hl1/ambience/particle_suck1.wav", 55, 150 + reaperstatus:GetDTInt(1) * 30, 0.45)
 			end
 		end
@@ -5230,6 +5243,7 @@ function GM:DoPlayerDeath(pl, attacker, dmginfo)
 		pl:CallZombieFunction5("PostOnKilled", attacker, inflictor, suicide, headshot, dmginfo)
 	elseif plteam == TEAM_HUMAN then
 		if pl:IsSkillActive(SKILL_PHOENIX) and pl.RedeemedOnce or pl:HasTrinket("altlazarussoul")  then 
+			pl:SendLua('MySelf:EmitSound(translate.Get(\"we_remind_this_sound\"))')
 			local oldw = {}
 			local oldt = {}
 			for _, wep in pairs(pl:GetWeapons()) do
@@ -5574,6 +5588,7 @@ function GM:PlayerSpawn(pl)
 		end
 		if classtab.WeaponsWave then
 			pl:Give((classtab.WeaponsWave[(self:GetWave() or 1)] and classtab.WeaponsWave[(self:GetWave() or 1)] or classtab.WeaponsWave[1]))
+
 		end
 
 

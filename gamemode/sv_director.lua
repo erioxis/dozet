@@ -13,12 +13,12 @@ GM.Events6500 = {
 	function()
 		for k,v in pairs(team.GetPlayers(TEAM_UNDEAD)) do
             v:GodEnable()
-            timer.Simple(5, function(arguments)
+            timer.Simple(7, function(arguments)
                 v:GodDisable()
             end)
         end
         
-        PrintMessage( HUD_PRINTTALK, "БАРАБОГ РЕШИЛ СДЕЛАТЬ ВСЕХ ЗОМБИ БЕССМЕРТНЫМИ НА 5 СЕКУНД." )
+        PrintMessage( HUD_PRINTTALK, "БАРАБОГ РЕШИЛ СДЕЛАТЬ ВСЕХ ЗОМБИ БЕССМЕРТНЫМИ НА 7 СЕКУНД." )
 		return true
 	end,
     function()
@@ -44,7 +44,7 @@ GM.Events6500 = {
         PrintMessage( HUD_PRINTTALK, "БАРАБОГ РЕШИЛ УДАЛИТЬ БОЧКИ С ДАННЫМИ!" )
 		return true
 	end,
-    function()
+   --[[ function()
         PrintMessage( HUD_PRINTTALK, "БАРАБОГ РЕШИЛ СМЕНИТЬ КАРТУ!" )
         for i=1,5 do
             timer.Simple(i, function(arguments)
@@ -55,7 +55,7 @@ GM.Events6500 = {
             PrintMessage( HUD_PRINTTALK, "ХЕХЕ ПРЕРВАЛ СМЕНУ КАРТЫ!" )
         end)
 		return true
-	end,
+	end, Просто спамит в чат.]] 
     function()
         PrintMessage( HUD_PRINTTALK, "БАРАБОГ РЕШИЛ ВСЕХ ТЕЛЕПОРТИРОВАТЬ НА НАТУРАЛЬНЫЙ СИГИЛ!если он есть...Иначе поставит 15 хп.")
         local huh = ents.FindByClass('prop_obj_sigil')
@@ -268,6 +268,17 @@ GM.Events35000 = {
            end
         end
         PrintMessage( HUD_PRINTTALK, "БАРАБОГ РЕШИЛ УКРАСТЬ 1 ТРИНКЕТ У ВСЕХ ИГРОКОВ!")
+		return true
+	end,
+    function()
+		for k,v in pairs(team.GetPlayers(TEAM_UNDEAD)) do
+            v:GodEnable()
+            timer.Simple(13, function(arguments)
+                v:GodDisable()
+            end)
+        end
+        
+        PrintMessage( HUD_PRINTTALK, "БАРАБОГ РЕШИЛ СДЕЛАТЬ ВСЕХ ЗОМБИ БЕССМЕРТНЫМИ НА 13 СЕКУНД." )
 		return true
 	end,
 

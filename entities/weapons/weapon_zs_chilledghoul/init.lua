@@ -1,12 +1,9 @@
 INC_SERVER()
 function SWEP:ApplyMeleeDamage(ent, trace, damage)
 	if ent:IsPlayer() then
-		local gt = ent:GiveStatus("frost", 8)
 		local owner = self:GetOwner()
+		local gt = ent:GiveStatus("frost", 8, owner)
 
-		if gt and gt:IsValid() then
-			gt.Applier = owner
-		end
 		ent:AddLegDamageExt(12, owner, self, SLOWTYPE_COLD)
         ent.TakedIce = (ent.TakedIce or 0) + 7
 		if (ent.TakedIce or 1) >= 90 then

@@ -45,7 +45,7 @@ function SWEP:ApplyMeleeDamage(pl, trace, damage)
 			pl:AddHallow(self:GetOwner(), 25,true)
 		end
 		if (not cursed) then 
-			pl:AddHallow(pl:GetOwner(), 25)
+			pl:AddHallow(self:GetOwner(), 25)
 		end
 	end
 	self.BaseClass.ApplyMeleeDamage(self, pl, trace, damage)

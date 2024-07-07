@@ -12,6 +12,13 @@ GM.ZSInventoryCategories = {
 	[INVCAT_CONSUMABLES] = translate.Get("vgui_cons"),
 	[INVCAT_WEAPONS] = translate.Get("vgui_weap"),
 }
+GM.ZSInventoryDesc = {
+	[INVCAT_ETERNAL] = translate.Get("vgui_eter_d"),
+	[INVCAT_TRINKETS] = translate.Get("vgui_trin_d"),
+	[INVCAT_COMPONENTS] =  translate.Get("vgui_comp_d"),
+	[INVCAT_CONSUMABLES] = translate.Get("vgui_cons_d"),
+	[INVCAT_WEAPONS] = translate.Get("vgui_weap_d"),
+}
 GM.ZSInventoryPrefix = {
 	[INVCAT_TRINKETS] = "trin",
 	[INVCAT_COMPONENTS] = "comp",
@@ -549,7 +556,7 @@ GM:AddInventoryItemData("cons_sack_of_trinkets",		trs("c_sack_of_trinkets"),			t
 	local data = GAMEMODE.ZSInventoryItemData
 	for item,v in pairs(data) do
 		local g = table.HasValue(string.Explode("_",item), "curse")
-		if item ~= nouse and !pl:HasInventoryItem(item) and string.len(item) >= 5 and !g and  (data[item].Tier or 1) <= 3 and !pl:HasInventoryItemQ(item) then
+		if item ~= nouse and !pl:HasInventoryItem(item) and string.len(item) >= 5 and !g and  (data[item].Tier or 1) <= 3 and !pl:HasInventoryItemQ(item) and GAMEMODE:GetInventoryItemType(item) ~= INVCAT_ETERNAL  then
 			table.insert(use2, #use2 + 1,item)
 		end
 	end
@@ -816,18 +823,31 @@ trinket, trinketwep = GM:AddTrinket(trs("t_healthpack").."+3", "vitpackagei_q3",
 GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, 17)
 GM:AddSkillModifier(trinket, SKILLMOD_HEALING_RECEIVED, 0.07)
 GM:AddSkillModifier(trinket, SKILLMOD_BLOODARMOR_GAIN_MUL, -0.07)
+GM:AddSkillFunction(trinket, function(pl, active)
+	pl.HasVI = active
+end)
+
 trinketwep.Upgradable = true
 trinketwep.NeedForUpgrade = "comp_soul_health"
 trinket, trinketwep = GM:AddTrinket(trs("t_healthpack").."+4", "vitpackagei_q4", false, hpveles, hpweles, 3, trs("t_d_healthpack_q4"), nil, nil, "weapon_zs_defence_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, 22)
 GM:AddSkillModifier(trinket, SKILLMOD_HEALING_RECEIVED, 0.09)
 GM:AddSkillModifier(trinket, SKILLMOD_BLOODARMOR_GAIN_MUL, -0.15)
+GM:AddSkillFunction(trinket, function(pl, active)
+	pl.RemedyRegen22 = active
+	pl.HasVI = active
+end)
+
 trinketwep.Upgradable = true
 trinketwep.NeedForUpgrade = "comp_soul_dd"
 trinket, trinketwep = GM:AddTrinket(trs("t_healthpack").."+5", "vitpackagei_q5", false, hpveles, hpweles, 4, trs("t_d_healthpack_q5"), nil, nil, "weapon_zs_defence_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, 25)
 GM:AddSkillModifier(trinket, SKILLMOD_BLOODARMOR_GAIN_MUL, -0.30)
 GM:AddSkillModifier(trinket, SKILLMOD_HEALING_RECEIVED, 0.12)
+GM:AddSkillFunction(trinket, function(pl, active)
+	pl.RemedyRegen32 = active
+	pl.HasVI = active
+end)
 
 
 

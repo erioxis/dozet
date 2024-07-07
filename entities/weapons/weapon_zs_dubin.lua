@@ -147,7 +147,7 @@ function SWEP:PostHitUtil(owner, hitent, dmginfo, tr, vel)
 			dmginfo:SetDamageType(DMG_DIRECT)
 		end
 		if hitent and hitent:IsValidLivingZombie() then
-			hitent:GiveStatus("stunned",2.1*(hitent:GetZombieClassTable().Boss and 0.3 or hitent:GetZombieClassTable().DemiBoss and 0.6 or 1))
+			hitent:GiveStatus("stunned",2.1*(hitent:GetZombieClassTable().Boss and 0.3 or hitent:GetZombieClassTable().DemiBoss and 0.6 or 1), owner)
 		end
 	end
 

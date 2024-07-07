@@ -29,7 +29,9 @@ function SWEP:ToDie(damage, numshots, cone)
 				self:GetOwner():SetGravity(1)
 				self:GetOwner():SetFriction(1)
 				if owner:IsValid() then
+					owner:GodEnable()
 					util.BlastDamagePlayer(self, owner, owner:GetPos(), 126, 80, DMG_ALWAYSGIB , nil, nil, true)
+					owner:GodDisable()
 				end
 				local effectdata = EffectData()
 				effectdata:SetOrigin(owner:GetPos())
@@ -90,18 +92,20 @@ function SWEP:ToDie(damage, numshots, cone)
 			end)
 			timer.Create("EndPush1", 0.1, 1 , function()
 				owner:SetLocalVelocity(Vector(0,0,0))
-				if owner:Health() <= 1000 then
+				if owner:Health() < owner:GetMaxHealth()*0.5 then
 					owner:GiveStatus("minoscharge")
 				end
 			end)
 			timer.Create("EndPush", 0.68, 1 , function()
+				owner:GodEnable()
 				util.BlastDamagePlayer(self, owner, owner:GetPos(), 126, 50, DMG_ALWAYSGIB, nil, nil, true)
+				owner:GodDisable()
 				local effectdata = EffectData()
 				effectdata:SetOrigin(owner:GetPos())
 				effectdata:SetNormal(self:GetUp() * -1)
 			util.Effect("decal_scorch", effectdata)
 				ParticleEffect("dusty_explosion_rockets", owner:GetPos(), angle_zero)
-				if owner:Health() <= 1000 then
+				if owner:Health()  < owner:GetMaxHealth()*0.5 then
 					self:DoShoot()
 				end
 			end)
@@ -110,7 +114,6 @@ function SWEP:ToDie(damage, numshots, cone)
 end
 function SWEP:DoShoot()
 	local owner = self:GetOwner()
-	for i = 0,1 do
 		local ent = ents.Create(self.Primary.Projectile)
 		if ent:IsValid() then
 			if !self:GetJudge() then
@@ -140,5 +143,4 @@ function SWEP:DoShoot()
 				self:PhysModify(phys)
 			end
 		end
-	end
 end

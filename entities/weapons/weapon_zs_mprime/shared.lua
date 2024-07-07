@@ -94,6 +94,9 @@ function SWEP:PrimaryAttack(right, sec)
 
 	local armdelay = owner:GetMeleeSpeedMul()
 	local hitdelay = self.Primary.Delay / 3 * (owner.MeleeSwingDelayMul or 1) * armdelay
+	if  owner:Health() < owner:GetMaxHealth()*0.5 then
+		hitdelay = hitdelay * 0.3
+	end
 	owner:GetViewModel():SetPlaybackRate(1 / armdelay)
 
 

@@ -16,9 +16,8 @@ function ENT:Hit(vHitPos, vHitNormal, eHitEntity, vOldVelocity)
 					local alt = self:GetDTBool(0)
 					pl:TakeSpecialDamage(self.Heal * 1.2 /#who * (owner.MedicHealMul or 1), DMG_ACID,owner, owner:GetActiveWeapon(), nil, 0)
 					pl:PoisonDamage(12, owner, self)
-					local status = pl:GiveStatus(alt and "zombiestrdebuff" or "zombiedartdebuff")
+					local status = pl:GiveStatus(alt and "zombiestrdebuff" or "zombiedartdebuff", nil, owner)
 					status.DieTime = CurTime() + (self.BuffDuration or 10)
-					status.Applier = owner
 				end
 			end
 		end
@@ -43,8 +42,7 @@ function ENT:Hit(vHitPos, vHitNormal, eHitEntity, vOldVelocity)
 		self:AttachToPlayer(vHitPos, eHitEntity)
 
 		if eHitEntity:IsPlayer() and eHitEntity:Team() ~= TEAM_UNDEAD then
-			local strstatus = eHitEntity:GiveStatus(alt and "medrifledefboost" or "strengthdartboost", (alt and 2 or 1) * (self.BuffDuration or 10))
-			strstatus.Applier = owner
+			local strstatus = eHitEntity:GiveStatus(alt and "medrifledefboost" or "strengthdartboost", (alt and 2 or 1) * (self.BuffDuration or 10), owner)
 
 			local txt = alt and translate.Get("buff_mdart") or translate.Get("buff_bdart")
 

@@ -15,10 +15,7 @@ SWEP.SlowDownImmunityTime = 2]]
 function SWEP:ApplyMeleeDamage(ent, trace, damage)
 	ent:PoisonDamage(damage, self:GetOwner(), self, trace.HitPos)
 	if SERVER and ent:IsPlayer() then
-		local gt = ent:GiveStatus("enfeeble", damage * self.EnfeebleDurationMul)
-		if gt and gt:IsValid() then
-			gt.Applier = self:GetOwner()
-		end
+		 ent:GiveStatus("enfeeble", damage * self.EnfeebleDurationMul, owner)
 	end
 end
 

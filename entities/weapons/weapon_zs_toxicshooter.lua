@@ -107,7 +107,7 @@ function SWEP:HaveAbility()
 				self:SetDTFloat(6,self:GetDTFloat(6)-50)
 				local s = ent:GetStatus("radiation")
 				if !s then
-					local g = ent:GiveStatus("radiation",6)
+					local g = ent:GiveStatus("radiation",6, self:GetOwner())
 					g:SetDTInt(1,1)
 					g.Damager = self:GetOwner()
 				else

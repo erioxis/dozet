@@ -40,7 +40,7 @@ function ENT:GetAmmo()
 	return self:GetDTInt(0)
 end
 function ENT:HitByWrench(wep, owner, tr)
-	if owner and owner == self:GetObjectOwner() and owner:KeyDown(IN_USE) then
+	if owner and owner == self:GetObjectOwner() and owner:KeyDown(IN_USE) and wep:GetClass() == 'weapon_zs_wrench'  then
 		self:CreateShieldMenu(owner)
 	end
 	return false
