@@ -32,7 +32,7 @@ if !SWEP.UsedNewWeapons then
 else
 	SWEP.Base = "weapon_zs_basemelee_modified"
 	SWEP.MeleeDamage = 45
-	SWEP.OverPosition =  Vector(0,10,14)
+	SWEP.OverPosition =  Vector(0,10,26)
 	SWEP.Additionalism =  Vector(4,0,-7)
 	SWEP.Attacks_Per_Swung = 5
 end

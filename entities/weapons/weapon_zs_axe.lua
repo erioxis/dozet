@@ -35,8 +35,8 @@ else
 	SWEP.Base = "weapon_zs_basemelee_modified"
 	DEFINE_BASECLASS("weapon_zs_basemelee_modified")
 	SWEP.MeleeDamage = 53/3
-	SWEP.OverPosition =  {0,0,11}
-	SWEP.Additionalism =  {0,-0.8,-11}
+	SWEP.OverPosition =  {8,5,11}
+	SWEP.Additionalism =  {-1,-1.3,-6}
 	SWEP.StaminaUse = 12	
 	
 	SWEP.HitAnim = ACT_VM_MISSCENTER

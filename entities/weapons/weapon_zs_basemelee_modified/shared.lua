@@ -366,9 +366,13 @@ function SWEP:MeleeSwing()
 	owner:ResetSpeed()
 	self:DoMeleeAttackAnim()
 
-	local up, right, forward = owner:GetUp(),owner:GetRight(),owner:GetForward()
+	local vec = owner:GetAimVector():Angle()
+
+	local up, right, forward = vec:Up(),vec:Right(),vec:Forward()--owner:GetUp(),owner:GetRight(),owner:GetForward()
 
 	local newpos = self.LastHitPos or owner:GetShootPos()
+	self._KnockBackOld = self.MeleeKnockBack
+	self.MeleeKnockBack = 0
 	local ovious = self.OverPosition or vector_base
 	local additional = self.Additionalism or vector_base
 	local rotate = right*ovious[1]+forward*ovious[2]+up*ovious[3]
@@ -385,6 +389,7 @@ function SWEP:MeleeSwing()
 		
 		BaseSwung(self, tr, owner)
 	end
+	self.MeleeKnockBack = self._KnockBackOld
 	local tr2 = owner:CompensatedMeleeTrace_Modified(distance*(aps+1), self.MeleeSize)
 	doemit(self, tr2.HitPos)
 	self.LastHitPos = nil

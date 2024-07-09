@@ -970,7 +970,7 @@ trinket = GM:AddTrinket(trs("t_richeye"), "greedeye", false, hpveles, hpweles, 3
 GM:AddSkillModifier(trinket, SKILLMOD_ENDWAVE_POINTS, 20)
 GM:AddSkillModifier(trinket, SKILLMOD_ARSENAL_DISCOUNT, 0.05)
 
-trinket = GM:AddTrinket(trs("t_bara"), "classil", true, hpveles, hpweles, 4, trs("t_d_bara"), nil, nil, "weapon_zs_shot_trinket")
+trinket = GM:AddTrinket(trs("t_bara"), "classil", true, hpveles, hpweles, 4, trs("t_d_bara"), nil, nil, "weapon_zs_bullet_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_HEALTH, 60)
 GM:AddSkillModifier(trinket, SKILLMOD_BLOODARMOR_DMG_REDUCTION, 0.09)
 GM:AddSkillModifier(trinket, SKILLMOD_HEALING_RECEIVED, -5)
@@ -1228,60 +1228,60 @@ GM:AddSkillModifier(GM:AddTrinket(trs("t_ammovestiiii"), "sammovest", false, amm
 GM:AddSkillModifier(GM:AddTrinket(trs("t_ammovestiii"), "classix", false, book, bookw, 4,trs("t_d_ammovestinf"), nil, nil, "weapon_zs_shot_trinket"), SKILLMOD_RELOADSPEED_MUL, 0.06)
 
 GM:AddTrinket(trs("t_autor"), "autoreload", false, ammoveles, ammoweles, 2, trs("t_d_autor"), nil, nil, "weapon_zs_shot_trinket")
-GM:AddTrinket(trs("t_gg_nomi"), "gg_nomi", false, ammoveles, ammoweles, 4, trs("t_d_gg_nomi"), nil, nil, "weapon_zs_shot_trinket")
+GM:AddTrinket(trs("t_gg_nomi"), "gg_nomi", false, ammoveles, ammoweles, 4, trs("t_d_gg_nomi"), nil, nil, "weapon_zs_bullet_trinket")
 
 -- Offensive Implants
-trinket, trinketwep = GM:AddTrinket(trs("t_targeti"), "targetingvisori", false, oveles, oweles, 2, trs("t_d_targeti"), nil, nil, "weapon_zs_shot_trinket")
+trinket, trinketwep = GM:AddTrinket(trs("t_targeti"), "targetingvisori", false, oveles, oweles, 2, trs("t_d_targeti"), nil, nil, "weapon_zs_bullet_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_AIMSPREAD_MUL, -0.06)
 trinketwep.Upgradable = true
-trinket, trinketwep = GM:AddTrinket(trs("t_targeti").."+1", "targetingvisori_q1", false, oveles, oweles, 2, trs("t_d_targetii"), nil, nil, "weapon_zs_shot_trinket")
+trinket, trinketwep = GM:AddTrinket(trs("t_targeti").."+1", "targetingvisori_q1", false, oveles, oweles, 2, trs("t_d_targetii"), nil, nil, "weapon_zs_bullet_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_AIMSPREAD_MUL, -0.15)
 trinketwep.Upgradable = true
-trinket, trinketwep = GM:AddTrinket(trs("t_targeti").."+2", "targetingvisori_q2", false, oveles, oweles, 2, trs("t_d_targetq2"), nil, nil, "weapon_zs_shot_trinket")
+trinket, trinketwep = GM:AddTrinket(trs("t_targeti").."+2", "targetingvisori_q2", false, oveles, oweles, 2, trs("t_d_targetq2"), nil, nil, "weapon_zs_bullet_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_AIMSPREAD_MUL, -0.2)
 trinketwep.Upgradable = true
-trinket, trinketwep = GM:AddTrinket(trs("t_targeti").."+3", "targetingvisori_q3", false, oveles, oweles, 2, trs("t_d_targetq3"), nil, nil, "weapon_zs_shot_trinket")
+trinket, trinketwep = GM:AddTrinket(trs("t_targeti").."+3", "targetingvisori_q3", false, oveles, oweles, 2, trs("t_d_targetq3"), nil, nil, "weapon_zs_bullet_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_AIMSPREAD_MUL, -0.3)
 trinketwep.Upgradable = true
-trinket, trinketwep = GM:AddTrinket(trs("t_targeti").."+4", "targetingvisori_q4", false, oveles, oweles, 2, trs("t_d_targetq4"), nil, nil, "weapon_zs_shot_trinket")
+trinket, trinketwep = GM:AddTrinket(trs("t_targeti").."+4", "targetingvisori_q4", false, oveles, oweles, 2, trs("t_d_targetq4"), nil, nil, "weapon_zs_bullet_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_AIMSPREAD_MUL, -0.35)
 GM:AddSkillModifier(trinket, SKILLMOD_HEADSHOT_MUL, 0.15)
 trinketwep.Upgradable = true
-trinket, trinketwep = GM:AddTrinket(trs("t_targeti").."+5", "targetingvisori_q5", false, oveles, oweles, 4, trs("t_d_targetq5"), nil, nil, "weapon_zs_shot_trinket")
+trinket, trinketwep = GM:AddTrinket(trs("t_targeti").."+5", "targetingvisori_q5", false, oveles, oweles, 4, trs("t_d_targetq5"), nil, nil, "weapon_zs_bullet_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_AIMSPREAD_MUL, -0.4)
 GM:AddSkillModifier(trinket, SKILLMOD_AIM_SHAKE_MUL, -0.22)
 GM:AddSkillModifier(trinket, SKILLMOD_HEADSHOT_MUL, 0.25)
 GM:AddSkillFunction(trinket, function(pl, active) pl.TargetLocus = active end)
 
 
-GM:AddTrinket(trs("t_targetiii"), "refinedsub", false, oveles, oweles, 4, trs("t_d_targetiii"), nil, nil, "weapon_zs_shot_trinket")
+GM:AddTrinket(trs("t_targetiii"), "refinedsub", false, oveles, oweles, 4, trs("t_d_targetiii"), nil, nil, "weapon_zs_bullet_trinket")
 
 
-GM:AddSkillModifier(GM:AddTrinket(trs("t_pulsebooster"), "pulseampi", false, oveles, oweles, nil, trs("t_d_pulsebooster"), nil, nil, "weapon_zs_shot_trinket"), SKILLMOD_PULSE_WEAPON_SLOW_MUL, 0.14)
+GM:AddSkillModifier(GM:AddTrinket(trs("t_pulsebooster"), "pulseampi", false, oveles, oweles, nil, trs("t_d_pulsebooster"), nil, nil, "weapon_zs_bullet_trinket"), SKILLMOD_PULSE_WEAPON_SLOW_MUL, 0.14)
 
-trinket = GM:AddTrinket(trs("t_pulseboosteri"), "pulseampii", false, oveles, oweles, 3, trs("t_d_pulseboosteri"), nil, nil, "weapon_zs_shot_trinket")
+trinket = GM:AddTrinket(trs("t_pulseboosteri"), "pulseampii", false, oveles, oweles, 3, trs("t_d_pulseboosteri"), nil, nil, "weapon_zs_bullet_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_PULSE_WEAPON_SLOW_MUL, 0.2)
 GM:AddSkillModifier(trinket, SKILLMOD_EXP_DAMAGE_RADIUS, 0.22)
 
-trinket = GM:AddTrinket(trs("t_pboom"), "resonance", false, oveles, oweles, 4, trs("t_d_pboom"), nil, nil, "weapon_zs_shot_trinket")
+trinket = GM:AddTrinket(trs("t_pboom"), "resonance", false, oveles, oweles, 4, trs("t_d_pboom"), nil, nil, "weapon_zs_bullet_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_PULSE_WEAPON_SLOW_MUL, -0.11)
 
-trinket = GM:AddTrinket(trs("t_cryoinductor"), "cryoindu", false, oveles, oweles, 4, trs("t_d_cryoinductor"), nil, nil, "weapon_zs_shot_trinket")
+trinket = GM:AddTrinket(trs("t_cryoinductor"), "cryoindu", false, oveles, oweles, 4, trs("t_d_cryoinductor"), nil, nil, "weapon_zs_bullet_trinket")
 
-trinket = GM:AddTrinket(trs("t_spinel"), "spinel", false, oveles, oweles, 4, trs("t_d_spinel"), nil, nil, "weapon_zs_shot_trinket")
+trinket = GM:AddTrinket(trs("t_spinel"), "spinel", false, oveles, oweles, 4, trs("t_d_spinel"), nil, nil, "weapon_zs_bullet_trinket")
 
-trinket = GM:AddTrinket(trs("t_extendedmag"), "extendedmag", false, oveles, oweles, 3, trs("t_d_extendedmag"), nil, nil, "weapon_zs_shot_trinket")
+trinket = GM:AddTrinket(trs("t_extendedmag"), "extendedmag", false, oveles, oweles, 3, trs("t_d_extendedmag"), nil, nil, "weapon_zs_bullet_trinket")
 
-trinket = GM:AddTrinket(trs("t_pulseboosterii"), "pulseimpedance", false, oveles, oweles, 5, trs("t_d_pulseboosterii"), nil, nil, "weapon_zs_shot_trinket")
+trinket = GM:AddTrinket(trs("t_pulseboosterii"), "pulseimpedance", false, oveles, oweles, 5, trs("t_d_pulseboosterii"), nil, nil, "weapon_zs_bullet_trinket")
 GM:AddSkillFunction(trinket, function(pl, active) pl.PulseImpedance = active end)
 GM:AddSkillModifier(trinket, SKILLMOD_PULSE_WEAPON_SLOW_MUL, 0.24)
 
-trinket = GM:AddTrinket(trs("t_crabstompers"), "curbstompers", false, oveles, oweles, 2, trs("t_d_crabstompers"), nil, nil, "weapon_zs_shot_trinket")
+trinket = GM:AddTrinket(trs("t_crabstompers"), "curbstompers", false, oveles, oweles, 2, trs("t_d_crabstompers"), nil, nil, "weapon_zs_bullet_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_FALLDAMAGE_SLOWDOWN_MUL, -0.25)
 
-GM:AddTrinket(trs("t_abbiuld"), "supasm", false, oveles, oweles, 5, trs("t_d_abbiuld"), nil, nil, "weapon_zs_shot_trinket")
+GM:AddTrinket(trs("t_abbiuld"), "supasm", false, oveles, oweles, 5, trs("t_d_abbiuld"), nil, nil, "weapon_zs_bullet_trinket")
 
-trinket = GM:AddTrinket(trs("t_olymp"), "olympianframe", false, oveles, oweles, 2, trs("t_d_olymp"), nil, nil, "weapon_zs_shot_trinket")
+trinket = GM:AddTrinket(trs("t_olymp"), "olympianframe", false, oveles, oweles, 2, trs("t_d_olymp"), nil, nil, "weapon_zs_bullet_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_ENDWAVE_POINTS, 3)
 GM:AddSkillModifier(trinket, SKILLMOD_PROP_CARRY_SLOW_MUL, -0.25)
 GM:AddSkillModifier(trinket, SKILLMOD_WEAPON_WEIGHT_SLOW_MUL, -0.35)
@@ -1891,10 +1891,10 @@ GM:AddSkillModifier(trinket, SKILLMOD_CONTROLLABLE_HEALTH_MUL, 0.15)
 GM:AddSkillModifier(trinket, SKILLMOD_CONTROLLABLE_SPEED_MUL, 0.15)
 GM:AddSkillModifier(trinket, SKILLMOD_MANHACK_DAMAGE_MUL, 0.50)
 
-trinket = GM:AddTrinket(trs("t_proji"), "projguide", false, supveles, supweles, 2, trs("t_d_proji"), nil, nil, "weapon_zs_shot_trinket")
+trinket = GM:AddTrinket(trs("t_proji"), "projguide", false, supveles, supweles, 2, trs("t_d_proji"), nil, nil, "weapon_zs_bullet_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_PROJ_SPEED, 1.6)
 
-trinket = GM:AddTrinket(trs("t_projii"), "projwei", false, supveles, supweles, 2, trs("t_d_projii"), nil, nil, "weapon_zs_shot_trinket")
+trinket = GM:AddTrinket(trs("t_projii"), "projwei", false, supveles, supweles, 2, trs("t_d_projii"), nil, nil, "weapon_zs_bullet_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_PROJ_SPEED, -0.5)
 GM:AddSkillModifier(trinket, SKILLMOD_PROJECTILE_DAMAGE_MUL, 0.2)
 
@@ -1908,7 +1908,7 @@ local ectow = {
 	["base+"] = { type = "Model", model = "models/props_c17/oildrum001.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "base", pos = Vector(0, 0, 4.07), angle = Angle(180, 12.243, 0), size = Vector(0.123, 0.123, 0.085), color = Color(0, 0, 255, 255), surpresslightning = true, material = "models/shiny", skin = 0, bodygroup = {} }
 }
 
-trinket = GM:AddTrinket(trs("t_chemicals"), "reachem", false, ectov, ectow, 3, trs("t_d_chemicals"), nil, nil, "weapon_zs_shot_trinket")
+trinket = GM:AddTrinket(trs("t_chemicals"), "reachem", false, ectov, ectow, 3, trs("t_d_chemicals"), nil, nil, "weapon_zs_bullet_trinket")
 GM:AddSkillModifier(trinket, SKILLMOD_EXP_DAMAGE_MUL, 0.4)
 GM:AddSkillModifier(trinket, SKILLMOD_EXP_DAMAGE_RADIUS, 0.3)
 

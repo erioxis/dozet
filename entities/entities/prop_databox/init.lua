@@ -90,7 +90,7 @@ function ENT:Think()
 			util.Effect("explosion_golden",ef)
 			if math.random(1,4) == 1 then
 				self:Remove()
-				if !own:HasTrinket("driller_q5") and math.random(1,4) == 1 then
+				if !own:HasTrinket("driller_q5") and math.random(1,7) == 1 then
 					own:TakeSpecialDamage(own:Health()*0.33,DMG_DIRECT,self,self)
 					own:SendLua("GAMEMODE:CenterNotify(COLOR_RED, translate.Format('trap_barrel',4))")
 					return

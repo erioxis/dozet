@@ -765,7 +765,7 @@ function GM:OpenArsenalMenu()
 		return
 	end
 	local screenscale = BetterScreenScale()
-	local wid, hei = math.min(ScrW(), 1200) * screenscale, math.min(ScrH(), 800) * screenscale
+	local wid, hei = math.min(ScrW(), 1400) * screenscale, math.min(ScrH(), 850) * screenscale
 	local tabhei = 24 * screenscale
 
 	local frame = vgui.Create("DFrame")
@@ -787,7 +787,7 @@ function GM:OpenArsenalMenu()
 
 	local title = EasyLabel(topspace, translate.Get("pointshop1"), "ZSHUDFontSmall", COLOR_WHITE)
 	title:CenterHorizontal()
-	local subtitle = EasyLabel(topspace, "Your little world", "ZSHUDFontTiny", COLOR_WHITE)
+	local subtitle = EasyLabel(topspace, translate.Get("pointshop1_desc"), "ZSHUDFontTiny", COLOR_WHITE)
 	subtitle:CenterHorizontal()
 	subtitle:MoveBelow(title, 4)
 
@@ -833,11 +833,18 @@ function GM:OpenArsenalMenu()
 	local ___, boty = bottomspace:GetPos()
 
 	local propertysheet = vgui.Create("DPropertySheet", frame)
-	propertysheet:SetSize(wid - 300 * screenscale, boty - topy - 8 - topspace:GetTall())
+	propertysheet:SetSize(wid - 500 * screenscale, boty - topy - 8 - topspace:GetTall())
 	propertysheet:MoveBelow(topspace, 4)
 	propertysheet:SetPadding(1)
 	propertysheet:CenterHorizontal(0.33)
-	propertysheet:SetPos(30,12)
+	--propertysheet:SetPos(30,12)
+	propertysheet:SetVerticalScrollbarEnabled(true)
+
+	--local scroller = propertysheet:GetChildren()[1]
+	--print(scroller:GetPos())
+	--scroller:SetVisible(true)
+	--scroller:SetPos(scroller:GetX()-132*screenscale, scroller:GetY())
+
 
 	for catid, catname in ipairs(GAMEMODE.ItemCategories) do
 		local hasitems = false
@@ -862,6 +869,7 @@ function GM:OpenArsenalMenu()
 			local itemframe = vgui.Create("DScrollPanel", tabpane)
 			itemframe:SetSize(propertysheet:GetWide(), propertysheet:GetTall() - (usecats and (32 + offset) or 32))
 			itemframe:SetPos(0, usecats and offset or 0)
+			--itemframe:Dock(FILL)
 			
 			local mkgrid = function()
 				local list = vgui.Create("DGrid", itemframe)
@@ -880,7 +888,7 @@ function GM:OpenArsenalMenu()
 				slider:SetSize(wid - 660 * screenscale, 120 * screenscale)			-- Set the size
 				slider:SetText( "Ammo per buy" )	-- Set the text above the slider
 				slider:SetMin( 1 )				 	-- Set the minimum number you can slide to
-				slider:SetMax( 1000 )				-- Set the maximum number you can slide to
+				slider:SetMax( 100 )				-- Set the maximum number you can slide to
 				slider:SetDecimals( 0 )				-- Decimal places - zero for whole number
 				slider:SetConVar( ("zs_ammoslider"))
 				itemframe:AddItem(slider)

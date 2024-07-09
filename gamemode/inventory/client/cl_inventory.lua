@@ -542,6 +542,11 @@ function GM:InventoryAddGridItem( item, category )
 		local kitbl = killicon.Get((category ~= INVCAT_COMPONENTS) and icon or "weapon_zs_craftables")
 		if kitbl then
 			self:AttachKillicon(kitbl, itempan, mdlframe)
+			local icn = itempan.m_Icon
+			if IsValid(icn) then
+				icn:SetAlpha(120)
+				icn:SetZPos(-36001)
+			end
 		end
 	end
 end
@@ -619,12 +624,12 @@ function GM:OpenInventory()
 	--	self.InventoryMenu:Remove()
 		if self.Inv_NearestFrame and self.Inv_NearestFrame:IsValid() then
 			self.Inv_NearestFrame:SetVisible( true )
-			--self.Inv_NearestFrame:Remove()
+		--	self.Inv_NearestFrame:Remove()
 		end
 
 		if self.m_InvViewer and self.m_InvViewer:IsValid() and self.InventoryMenu.SelInv then
 			self.m_InvViewer:SetVisible( true )
-			--self.m_InvViewer:Remove()
+		--	self.m_InvViewer:Remove()
 		end
 		
 		return

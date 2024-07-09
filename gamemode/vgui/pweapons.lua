@@ -189,6 +189,7 @@ function MakepWeapons(silent)
 	local usables = {}
 	for k, wep in pairs(GAMEMODE.ZSInventoryItemData) do
 		if not usables[wep] and GAMEMODE:GetInventoryItemType(k)  == INVCAT_CONSUMABLES and !added[wep.PrintName] then
+			wep.SWEP = k
 			usables[#usables + 1] = wep
 			added[wep.PrintName] = true
 		end

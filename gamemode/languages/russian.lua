@@ -473,6 +473,7 @@ LANGUAGE.samodosa                                = "Лут не под ваши�
 LANGUAGE.xp_damage                                = "Получено опыта из урона: %d"
 LANGUAGE.worthshop1                                = "Ворф магазин"
 LANGUAGE.pointshop1                                = "Магазин"
+LANGUAGE.pointshop1_desc                                = "Доставка бесплатна!"
 LANGUAGE.spendpoints                                = "Поинтов:"
 LANGUAGE.nodismantled                                = "\nНельзя разобрать."
 LANGUAGE.buy                                = "Купить"
