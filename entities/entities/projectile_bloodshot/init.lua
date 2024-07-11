@@ -47,11 +47,9 @@ function ENT:Explode(hitpos, hitnormal)
 			if ent and ent:IsValidLivingHuman() and WorldVisible(hitpos, ent:NearestPoint(hitpos)) then
 				ent:SetBloodArmor(math.min(ent:GetBloodArmor() + 10 * ent.BloodarmorGainMul, ent.MaxBloodArmor))
 
-				local strstatus = ent:GiveStatus("strengthdartboost", 8 * (owner.CloudTime or 1))
-				strstatus.Applier = owner
+				local strstatus = ent:GiveStatus("strengthdartboost", 8 * (owner.CloudTime or 1), owner)
 
-				local defstatus = ent:GiveStatus("medrifledefboost", 12 * (owner.CloudTime or 1))
-				defstatus.Applier = owner
+				local defstatus = ent:GiveStatus("medrifledefboost", 12 * (owner.CloudTime or 1), owner)
 
 				net.Start("zs_buffby")
 					net.WriteEntity(owner)

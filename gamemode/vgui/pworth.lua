@@ -88,6 +88,10 @@ hook.Add("Initialize", "LoadCarts", function()
 		GAMEMODE.SavedCarts = Deserialize(file.Read(GAMEMODE.CartFile)) or {}
 	end
 end)
+--hook.Add("PlayerInitialSpawnRound", "LoadCarts2", function(pl)
+--	if GAMEMODE:GetWave() >= 1 then
+	--end
+--end)
 
 local function ClearCartDoClick()
 	for _, btn in ipairs(WorthButtons) do
@@ -218,9 +222,9 @@ function MakepWorth()
 	topspace:SetWide(wid * 0.75)
 	topspace:SetPaintBackground(false)
 
-	local title = EasyLabel(topspace, "The Worth Menu", "ZSHUDFontSmall", COLOR_WHITE)
+	local title = EasyLabel(topspace, translate.Get("pworth"), "ZSHUDFontSmall", COLOR_WHITE)
 	title:CenterHorizontal()
-	local subtitle = EasyLabel(topspace, "Select the items you're going to start with this round.", "ZSHUDFontTiny", COLOR_WHITE)
+	local subtitle = EasyLabel(topspace, translate.Get("pworth_sel"), "ZSHUDFontTiny", COLOR_WHITE)
 	subtitle:CenterHorizontal()
 	subtitle:MoveBelow(title, 4)
 
@@ -253,7 +257,7 @@ function MakepWorth()
 	propertysheet.Paint = function() end
 
 	local list = vgui.Create("DPanelList", propertysheet)
-	local sheet = propertysheet:AddSheet("Favorites", list, "icon16/heart.png", false, false)
+	local sheet = propertysheet:AddSheet(translate.Get('worth_favorites'), list, "icon16/heart.png", false, false)
 	sheet.Panel:SetPos(0, tabhei + 2)
 	list:EnableVerticalScrollbar(true)
 	list:SetWide(propertysheet:GetWide() - 16)
@@ -275,6 +279,15 @@ function MakepWorth()
 		cartpan:SetCursor("pointer")
 		cartpan:SetSize(list:GetWide(), panhei)
 
+<<<<<<< Updated upstream
+=======
+				end
+			end
+		end
+		--local priceall = translate.Get("w_cost")..priceall
+		names = string.sub(names,0, string.len(names)-1)
+		
+>>>>>>> Stashed changes
 		local cartname = savetab[1]
 
 		local x = 8
@@ -291,8 +304,15 @@ function MakepWorth()
 			x = x + defimage:GetWide() + 4
 		end
 
+<<<<<<< Updated upstream
 		local cartnamelabel = EasyLabel(cartpan, cartname, panfont)
 		cartnamelabel:SetPos(x, cartpan:GetTall() * 0.5 - cartnamelabel:GetTall() * 0.5)
+=======
+		local cartnamelabel = EasyLabel(cartpan, cartname.." - "..translate.Get("w_cost")..priceall, panfont)
+		cartnamelabel:SetPos(x, cartpan:GetTall() * 0.3 - cartnamelabel:GetTall() * 0.5)
+		local cartnamelabel2 = EasyLabel(cartpan, names, nil, Color(238,255,87))
+		cartnamelabel2:SetPos(x - (defaultcart == cartname and lol + 4 or 0), cartpan:GetTall() * 0.76 - cartnamelabel2:GetTall() * 0.2)
+>>>>>>> Stashed changes
 
 		x = cartpan:GetWide()
 
@@ -367,7 +387,7 @@ function MakepWorth()
 		end
 	end
 
-	local worthlab = EasyLabel(frame, "Worth: "..tostring(remainingworth), "ZSHUDFontSmall", COLOR_LIMEGREEN)
+	local worthlab = EasyLabel(frame, translate.Get("w_cost")..tostring(remainingworth), "ZSHUDFontSmall", COLOR_LIMEGREEN)
 	worthlab:SetPos(8, frame:GetTall() - worthlab:GetTall() - 8)
 	frame.WorthLab = worthlab
 
@@ -413,7 +433,7 @@ function MakepWorth()
 	if #GAMEMODE.SavedCarts == 0 then
 		propertysheet:SetActiveTab(propertysheet.Items[math.min(2, #propertysheet.Items)].Tab)
 	else
-		propertysheet:SwitchToName("Favorites")
+		propertysheet:SwitchToName(translate.Get('worth_favorites'))
 	end
 
 	return frame
@@ -536,7 +556,12 @@ function PANEL:SetWorthID(id)
 		self.PriceLabel:SetTextColor(COLOR_RED)
 		self.PriceLabel:SetText(GAMEMODE.Skills[tab.SkillRequirement].Name)
 	elseif tab.Price then
-		self.PriceLabel:SetText(tostring(tab.Price).." Worth")
+		local pr = tab.Price
+		if pr < 0 then
+			pr = "+"..(tab.Price*-1)
+			self.PriceLabel:SetTextColor(COLOR_GREEN)
+		end
+		self.PriceLabel:SetText(pr.." Worth")
 	else
 		self.PriceLabel:SetText("")
 	end

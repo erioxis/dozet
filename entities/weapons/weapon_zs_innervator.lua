@@ -1,9 +1,16 @@
 AddCSLuaFile()
 DEFINE_BASECLASS("weapon_zs_base")
 
+<<<<<<< Updated upstream
 SWEP.PrintName = "'Innervator' Voltgun"
 SWEP.Description = "An electric volt cannon."
 
+=======
+--SWEP.PrintName = "'Innervator' Voltgun"
+--SWEP.Description = "An electric volt cannon."
+SWEP.PrintName = translate.Get("wep_inner")
+SWEP.Description = translate.Get("wep_d_inner")
+>>>>>>> Stashed changes
 if CLIENT then
 	SWEP.Slot = 3
 	SWEP.SlotPos = 0

@@ -56,7 +56,7 @@ function SWEP:Think()
 	if SERVER then
 		self:ControlClosestTurret()
 
-		for _, ent in pairs(ents.FindByClass("prop_gunturret*")) do
+		for _, ent in ipairs(ents.FindByClass("prop_gunturret*")) do
 			if ent:GetObjectOwner() == self:GetOwner() then
 				return
 			end
@@ -69,7 +69,7 @@ end
 function SWEP:ControlClosestTurret()
 	local closest, closestdist
 	local ownerpos = self:GetOwner():GetPos()
-	for _, ent in pairs(ents.FindByClass("prop_gunturret*")) do
+	for _, ent in ipairs(ents.FindByClass("prop_gunturret*")) do
 		if ent:GetObjectOwner() == self:GetOwner() then
 			local dist = ent:NearestPoint(ownerpos):DistToSqr(ownerpos)
 			if not closestdist or dist < closestdist then

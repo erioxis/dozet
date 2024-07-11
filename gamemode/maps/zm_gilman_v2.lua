@@ -1,7 +1,7 @@
 -- This profile removes the ZM objectives from the map.
 
 hook.Add("InitPostEntityMap", "MapProfile", function()
-	for _, ent in pairs(ents.FindByClass("prop_dynamic*")) do
+	for _, ent in ipairs(ents.FindByClass("prop_dynamic*")) do
 		if ent:GetModel() == "models/alyx.mdl" then
 			ent:Remove()
 		end

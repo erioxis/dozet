@@ -9,13 +9,19 @@ SWEP.ConeMax = 1.5
 SWEP.ConeMin = 0.5
 SWEP.ConeRamp = 2
 
-SWEP.CSMuzzleFlashes = true
+SWEP.CSMuzzleFlashes = true 
+SWEP.ShotGunHeatTime = 0
 
 SWEP.Primary.ClipSize = 8
 SWEP.Primary.DefaultClip = 0
 SWEP.Primary.Automatic = false
 SWEP.Primary.Ammo = "pistol"
 SWEP.RequiredClip = 1
+<<<<<<< Updated upstream
+=======
+SWEP.Souleater = 0
+SWEP.NoAmmoFrom = false
+>>>>>>> Stashed changes
 
 SWEP.Secondary.ClipSize = 1
 SWEP.Secondary.DefaultClip = 1
@@ -40,6 +46,12 @@ SWEP.FireAnimSpeed = 1.0
 SWEP.IdleActivity = ACT_VM_IDLE
 
 SWEP.Weight = 5
+function SWEP:GetShotgunHeat()
+	return self:GetDTFloat(16)
+end
+function SWEP:SetShotgunHeat(c)
+	self:SetDTFloat(16, c)
+end
 
 function SWEP:Initialize()
 	if not self:IsValid() then return end --???
@@ -64,15 +76,66 @@ function SWEP:Initialize()
 		self:Anim_Initialize()
 	end
 end
+<<<<<<< Updated upstream
 
 function SWEP:PrimaryAttack()
 	if not self:CanPrimaryAttack() then return end
 
 	self:SetNextPrimaryFire(CurTime() + self:GetFireDelay())
+=======
+SWEP.xThreeDamage = 0
+SWEP.NextBimbimbambam = 0
+function SWEP:PrimaryAttack()
+	if not self:CanPrimaryAttack() then return end
+	local owner = self:GetOwner()
+	self:SetNextPrimaryFire(CurTime() + self:GetFireDelay() )
+	local extramulti = 1
+	if owner:HasTrinket("supasm") and (self.Tier or 1) <= 2  then
+		extramulti = 1.1
+	end
+	if owner:IsSkillActive(SKILL_LAST_AMMO) then
+		extramulti = extramulti - (self:GetPrimaryClipSize() >= 12 and 0.25 or -0.5)
+	end
+ 	local dmg = 1 * (extramulti or 1)
+	--DamageEyeMul
+	if owner.BirdEye then
+		dmg = dmg + math.min(dmg*1.5,dmg * ((self.DamageEyeMul or 1)/100))
+	end
+	if SERVER and owner:IsSkillActive(SKILL_THROWER_FULL) then
+		self.NextBimbimbambam = self.NextBimbimbambam + 1
+		if self.NextBimbimbambam > 11 and SERVER then
+			self.NextBimbimbambam = 0
+			if owner:IsSkillActive(SKILL_AND_AGAIN) then
+				self.xThreeDamage = self.xThreeDamage + 1
+			end
+			local ent = ents.Create("projectile_thrower_1")
+			ent:SetOwner(owner)
+			ent:SetPos(owner:GetShootPos())
+			ent:SetOwner(owner)
+			ent:Spawn()
+>>>>>>> Stashed changes
 
+			ent.ProjDamage = self.Primary.Damage  * 4 * (!owner:IsSkillActive(SKILL_AND_AGAIN) and self.Primary.NumShots or 1) * (self.xThreeDamage%3 == 2 and 3 or 1) * (owner:IsSkillActive(SKILL_BIG_WAVE) and GAMEMODE:GetWave()*0.22 or 1)
+			ent.Team = owner:Team()
+
+			local phys = ent:GetPhysicsObject()
+			if phys:IsValid() then
+				phys:Wake()
+				phys:AddAngleVelocity(VectorRand() * 5)
+				phys:SetVelocityInstantaneous(self:GetOwner():GetAimVector() * 800 * (owner.ObjectThrowStrengthMul or 1))
+			end
+
+			ent:SetPhysicsAttacker(owner)
+		end
+	end
 	self:EmitFireSound()
 	self:TakeAmmo()
+<<<<<<< Updated upstream
 	self:ShootBullets(self.Primary.Damage, self.Primary.NumShots, self:GetCone())
+=======
+	self:ShootBullets(self.Primary.Damage * dmg, self.Primary.NumShots, self:GetCone())
+	self:SetShotgunHeat(CurTime()+(self.ShotGunHeatTimeMul or 1.2))
+>>>>>>> Stashed changes
 	self.IdleAnimation = CurTime() + self:SequenceDuration()
 end
 
@@ -107,9 +170,9 @@ end
 
 function SWEP:GetPrimaryClipSize()
 	local owner = self:GetOwner()
-	local multi = self.Primary.ClipSize/self.RequiredClip >= 8 and owner:HasTrinket("extendedmag") and 1.15 or 1
+	local multi = self.Primary.ClipSize/self.RequiredClip >= 8 and owner:HasTrinket("extendedmag") and 1.15 or 1 
 
-	return math.floor(self:GetMaxClip1() * multi)
+	return math.floor(self:GetMaxClip1() * multi)-- * (owner:IsSkillActive(SKILL_SSS) and math.max(0.7,owner:GetStyle()/3) or 1))
 end
 
 function SWEP:FinishReload()
@@ -162,13 +225,20 @@ function SWEP:GetCone()
 
 	local orphic = not owner.Orphic and 1 or self:GetIronsights() and 0.9 or 1.1
 	local tiervalid = (self.Tier or 1) <= 3
+<<<<<<< Updated upstream
 	local spreadmul = (owner.AimSpreadMul or 1) - ((tiervalid and owner:HasTrinket("refinedsub")) and 0.27 or 0)
+=======
+	local spreadmul = ((owner.AimSpreadMul or 1) - ((tiervalid and owner:HasTrinket("refinedsub")) and 0.27 or 0))
+	if self.ShotGunHeat then
+		spreadmul = spreadmul + 3*math.Clamp(self:GetShotgunHeat()-CurTime(),0,1)
+	end
+>>>>>>> Stashed changes
 
 	if owner.TrueWooism then
 		return (basecone + conedelta * 0.5 ^ self.ConeRamp) * spreadmul * orphic
 	end
 
-	if not owner:OnGround() or self.ConeMax == basecone then return self.ConeMax end
+	if not owner:OnGround() or self.ConeMax == basecone then return self.ConeMax * (self.ShotGunHeat and math.max(1,(3*math.Clamp(self:GetShotgunHeat()-CurTime(),0,1))) or 1) end
 
 	local multiplier = math.min(owner:GetVelocity():Length() / self.WalkSpeed, 1) * 0.5
 
@@ -227,6 +297,7 @@ function SWEP:Deploy()
 end
 
 function SWEP:Holster()
+	if (self:GetOwner():GetStatus("sticky")) then return false end
 	if CLIENT then
 		self:Anim_Holster()
 	end
@@ -236,12 +307,28 @@ end
 
 SWEP.AU = 0
 function SWEP:TakeAmmo()
+<<<<<<< Updated upstream
 	if self.AmmoUse then
 		self.AU = self.AU + self.AmmoUse
 		if self.AU >= 1 then
 			local use = math.floor(self.AU)
 			self:TakePrimaryAmmo(use)
 			self.AU = self.AU - use
+=======
+	if self.Eater then return  end
+	local own = self:GetOwner():IsSkillActive(SKILL_D_FINGERS)
+	for i=1, (own and 2 or 1) do
+		if own and math.random(1,3) ~= 1 then continue  end
+		if self.AmmoUse then
+			self.AU = self.AU + self.AmmoUse
+			if self.AU >= 1 then
+				local use = math.floor(self.AU)
+				self:TakePrimaryAmmo(use)
+				self.AU = self.AU - use
+			end
+		else
+			self:TakePrimaryAmmo(self.RequiredClip)
+>>>>>>> Stashed changes
 		end
 	else
 		self:TakePrimaryAmmo(self.RequiredClip)
@@ -321,9 +408,55 @@ end
 
 function SWEP:GetFireDelay()
 	local owner = self:GetOwner()
-	return self.Primary.Delay / (owner:GetStatus("frost") and 0.7 or 1)
+	local spd = 1
+	if owner.FastEye and SERVER then
+		spd = spd + math.max(-spd*0.5,-((self.SpeedEyeMul or 1)/100))
+	end
+	if owner:GetStatus("unreal") then
+		spd = spd / (1 + (owner:GetStatus("unreal"):GetDTInt(1) or 0)*0.1)
+	end
+	return self.Primary.Delay / (owner:GetStatus("frost") and 0.7 or owner:GetStatus('warm') and 1.2 or 1) * (owner.M_FireDelay or 1) * spd
 end
+local function DoRicochet(attacker, hitpos, hitnormal, normal, damage)
+	for i=1,2 do
+		if attacker:IsValid() then
+			attacker:FireBulletsLua(hitpos, i*hitnormal * hitnormal:Dot(normal * -1 * i) + normal, 0, 1, damage, nil, nil, "tracer_rico", nil, nil, nil, nil, nil, attacker:GetActiveWeapon())
+		end
+	end
+end
+local function compare(a,b)
+	return a.Health < b.Health
+  end
+function SWEP.BulletCallback(attacker, tr, dmginfo)
+	local wep = attacker:GetActiveWeapon()
+	
+	if attacker:IsSkillActive(SKILL_PARASITE) and (wep.Primary.NumShots or 1) <= 3 and (wep.Tier or 0)< 5 then
+		if attacker:IsSkillActive(SKILL_AUTOAIM) then
+			local tosort = {}
+			for _, ent in pairs(player.FindInSphere(tr.HitPos, 1048)) do
+				if ent:IsValidLivingZombie() and WorldVisible(tr.HitPos, ent:NearestPoint(tr.HitPos))   then
+					tosort[#tosort+1] = {Trg = ent,Health = ent:Health()}
+					
+				end
+			end
+			if #tosort < 1 then return end
+			table.sort(tosort, compare)
+			local target = tosort[1].Trg
+			if target and target:IsValid() then
+			--	local bone = target:GetBoneMatrix(math.random(1,25))
+				local targetpos = target:LocalToWorld(target:OBBCenter())+Vector(0,0,12)
+				local direction = (targetpos - tr.HitPos):GetNormal()
 
+				timer.Simple(0, function()attacker:FireBulletsLua(tr.HitPos, direction, 0, 1, dmginfo:GetDamage()*0.33, nil, nil, "tracer_rico", nil, nil, nil, nil, nil, wep) end)
+			end
+		end
+		local ent = tr.Entity
+		if SERVER and (tr.HitWorld and not tr.HitSky or ent) and !attacker:IsSkillActive(SKILL_AUTOAIM) then
+			local hitpos, hitnormal, normal, dmg = tr.HitPos, tr.HitNormal, tr.Normal, dmginfo:GetDamage() *0.1
+			timer.Simple(0, function() DoRicochet(attacker, hitpos, hitnormal, normal, dmg) end)
+		end
+	end
+end
 function SWEP:ShootBullets(dmg, numbul, cone)
 	local owner = self:GetOwner()
 	self:SendWeaponAnimation()
@@ -344,6 +477,7 @@ function SWEP:ShootBullets(dmg, numbul, cone)
 	if self.PointsMultiplier then
 		POINTSMULTIPLIER = nil
 	end
+	self:SetShotgunHeat(CurTime()+(self.ShotGunHeatTimeMul or 1.2))
 end
 
 local ActIndex = {

@@ -42,12 +42,25 @@ end
 function PANEL:Init()
 	self.ClassButtons = {}
 
+<<<<<<< Updated upstream
 	self.ClassTypeButton = EasyButton(nil, bossmode and "Open Normal Class Selection" or "Open Boss Class Selection", 8, 4)
+=======
+	self.ClassTypeButton = EasyButton(nil, bossmode and not demiboss and translate.Get("vgui_open_class") or translate.Get("vgui_open_class_b"), 8, 4)
+>>>>>>> Stashed changes
 	self.ClassTypeButton:SetFont("ZSHUDFontSmall")
 	self.ClassTypeButton:SizeToContents()
 	self.ClassTypeButton.DoClick = BossTypeDoClick
 
+<<<<<<< Updated upstream
 	self.CloseButton = EasyButton(nil, "Close", 8, 4)
+=======
+	self.DemiClassTypeButton = EasyButton(nil, demiboss and translate.Get("vgui_open_class") or translate.Get("vgui_open_class_db"), 8, 4)
+	self.DemiClassTypeButton:SetFont("ZSHUDFontSmall")
+	self.DemiClassTypeButton:SizeToContents()
+	self.DemiClassTypeButton.DoClick = DemiBossTypeDoClick
+
+	self.CloseButton = EasyButton(nil, translate.Get('mm_close'), 8, 4)
+>>>>>>> Stashed changes
 	self.CloseButton:SetFont("ZSHUDFontSmall")
 	self.CloseButton:SizeToContents()
 	self.CloseButton.DoClick = function() Window:Remove() end
@@ -67,7 +80,15 @@ function PANEL:Init()
 
 			local ok
 			if bossmode then
+<<<<<<< Updated upstream
 				ok = classtab.Boss
+=======
+				ok = classtab.Boss and (!classtab.Hidden or GAMEMODE:GetWave()>= (classtab.Wave and classtab.Wave or 32) )
+				
+			
+			elseif demiboss and not bossmode then
+				ok = classtab.DemiBoss and not classtab.Hidden
+>>>>>>> Stashed changes
 			else
 				ok = not classtab.Boss and
 					(not classtab.Hidden or classtab.CanUse and classtab:CanUse(MySelf)) and
@@ -85,6 +106,46 @@ function PANEL:Init()
 					self.ButtonGrid:AddItem(button)
 				end
 			end
+<<<<<<< Updated upstream
+=======
+		elseif classtab and not classtab.Disabled and not already_added[classtab.Index] and classtab.Variations and var and ZombieClass == classtab.Name then
+			for k,v in pairs(classtab.Variations) do
+					for i=1, #GAMEMODE.ZombieClasses do
+						local classtab2 = GAMEMODE.ZombieClasses[GAMEMODE:GetBestAvailableZombieClass(i)]
+						
+				
+						if classtab2 and not classtab2.Disabled and not already_added[classtab2.Index] and classtab2.Name == v or (classtab2 and classtab2.Original and ZombieClass == classtab2.Name) and not already_added[classtab2.Index] then
+							already_added[classtab2.Index] = true
+							already_added[classtab.Index] = true
+				
+							local ok
+							if bossmode then
+								ok = classtab2.Boss and classtab2.Hidden
+							
+							elseif demiboss and not bossmode then
+								ok = classtab2.DemiBoss and not classtab2.Hidden
+							else
+								ok = not classtab2.Boss and not classtab2.DemiBoss and
+									(not classtab2.Hidden) and
+									(not GAMEMODE.ObjectiveMap or classtab2.Unlocked)
+							end
+							
+				
+							if ok then
+								if not use_better_versions or not classtab2.BetterVersionOf or GAMEMODE:IsClassUnlocked(classtab2.Index) then
+									local button = vgui.Create("ClassButton")
+									button:SetClassTable(classtab2)
+									button.Wave = classtab2.Wave or 1
+				
+									table.insert(self.ClassButtons, button)
+				
+									self.ButtonGrid:AddItem(button)
+								end
+							end
+						end
+					end
+			end
+>>>>>>> Stashed changes
 		end
 	end
 
@@ -94,6 +155,7 @@ end
 
 function PANEL:PerformLayout()
 	if #self.ClassButtons < 8 then self.Rows = 1 end
+	--if #self.ClassButtons >= 20 then self.Rows = 3 end
 
 	local cols = math.ceil(#self.ClassButtons / self.Rows)
 	local cell_size = ScrW() / cols
@@ -221,11 +283,15 @@ end
 
 function PANEL:Think()
 	if not self.ClassTable then return end
-
+	
 	local enabled
 	if MySelf:GetZombieClass() == self.ClassTable.Index then
 		enabled = 2
+<<<<<<< Updated upstream
 	elseif self.ClassTable.Boss or gamemode.Call("IsClassUnlocked", self.ClassTable.Index) then
+=======
+	elseif (self.ClassTable.Boss and !self.ClassTable.Hidden) or gamemode.Call("IsClassUnlocked", self.ClassTable.Index) or self.ClassTable.DemiBoss then
+>>>>>>> Stashed changes
 		enabled = 1
 	else
 		enabled = 0
@@ -233,7 +299,6 @@ function PANEL:Think()
 
 	if enabled ~= self.LastEnabledState then
 		self.LastEnabledState = enabled
-
 		if enabled == 2 then
 			self.NameLabel:SetTextColor(COLOR_GREEN)
 			self.Image:SetImageColor(self.ClassTable.IconColor or color_white)
@@ -246,6 +311,9 @@ function PANEL:Think()
 			self.NameLabel:SetTextColor(COLOR_DARKRED)
 			self.Image:SetImageColor(COLOR_DARKRED)
 			self.Image:SetAlpha(170)
+		end
+		if self.ClassTable.Original then
+			self.NameLabel:SetTextColor(COLOR_YELLOW)
 		end
 	end
 end
@@ -267,6 +335,9 @@ function PANEL:SetClassTable(classtable)
 	self.ClassTable = classtable
 
 	self.NameLabel:SetText(translate.Get(classtable.TranslationName))
+	if classtable.Original then
+		self.NameLabel:SetTextColor(COLOR_YELLOW)
+	end
 	self.NameLabel:SizeToContents()
 
 	self:CreateDescLabels()
@@ -299,7 +370,7 @@ function PANEL:CreateDescLabels()
 	if classtable.BetterVersion then
 		local betterclasstable = GAMEMODE.ZombieClasses[classtable.BetterVersion]
 		if betterclasstable then
-			table.insert(lines, translate.Format("evolves_in_to_x_on_wave_y", betterclasstable.Name, betterclasstable.Wave))
+			table.insert(lines, translate.Format("evolves_in_to_x_on_wave_y", translate.Get(betterclasstable.TranslationName), betterclasstable.Wave))
 		end
 	end
 

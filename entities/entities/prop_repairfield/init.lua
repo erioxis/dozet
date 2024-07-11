@@ -1,7 +1,7 @@
 INC_SERVER()
 
 local function RefreshRepFieldOwners(pl)
-	for _, ent in pairs(ents.FindByClass("prop_repairfield*")) do
+	for _, ent in ipairs(ents.FindByClass("prop_repairfield*")) do
 		if ent:IsValid() and ent:GetObjectOwner() == pl then
 			ent:ClearObjectOwner()
 		end
@@ -39,7 +39,9 @@ function ENT:SetObjectHealth(health)
 		if self:GetObjectOwner():IsValidLivingHuman() then
 			self:GetObjectOwner():SendDeployableLostMessage(self)
 		end
-
+		if self:GetObjectOwner():IsSkillActive(SKILL_EXPLOIT) and math.random(1,4) == 1 then
+			self:GetObjectOwner():Give("weapon_zs_repairfield")
+		end
 		local ent = ents.Create("prop_physics")
 		if ent:IsValid() then
 			ent:SetModel(self:GetModel())
@@ -100,7 +102,7 @@ function ENT:Use(activator, caller)
 		if self:GetObjectOwner():IsValid() then
 			if activator:GetInfo("zs_nousetodeposit") == "0" then
 				local curammo = self:GetAmmo()
-				local togive = math.min(math.min(15, activator:GetAmmoCount("pulse")), self.MaxAmmo - curammo)
+				local togive = math.min(activator:GetAmmoCount("pulse")/5, self.MaxAmmo - curammo)
 				if togive > 0 then
 					self:SetAmmo(curammo + togive)
 					activator:RemoveAmmo(togive, "pulse")
@@ -128,7 +130,7 @@ function ENT:OnPackedUp(pl)
 
 	self:Remove()
 end
-
+ENT.NoPointsFromSelfRepair = true
 function ENT:Think()
 	if self.Destroyed then
 		self:Remove()
@@ -171,7 +173,6 @@ function ENT:Think()
 		if healed then
 			hitent:EmitSound("npc/dog/dog_servo"..math.random(7, 8)..".wav", 70, math.random(100, 105))
 			gamemode.Call("PlayerRepairedObject", self:GetObjectOwner(), hitent, healed, self)
-
 			local effectdata = EffectData()
 				effectdata:SetOrigin(hitent:GetPos())
 				effectdata:SetNormal((self:GetPos() - hitent:GetPos()):GetNormalized())

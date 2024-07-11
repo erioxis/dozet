@@ -1,5 +1,12 @@
+<<<<<<< Updated upstream
 SWEP.PrintName = "'Spinfusor' Pulse Disc Launcher"
 SWEP.Description = "Launches pulse projectiles that react on walls, sending energy back in the direction they travelled."
+=======
+--SWEP.PrintName = "'Spinfusor' Pulse Disc Launcher"
+--SWEP.Description = "Launches pulse projectiles that react on walls, sending energy back in the direction they travelled."
+SWEP.PrintName = translate.Get("wep_spinner")
+SWEP.Description = translate.Get("wep_d_spinner")
+>>>>>>> Stashed changes
 
 SWEP.Slot = 3
 SWEP.SlotPos = 0
@@ -29,6 +36,8 @@ SWEP.CSMuzzleFlashes = false
 
 SWEP.Primary.Damage = 86
 SWEP.Primary.Delay = 1.2
+SWEP.InnateDamageType = INNATE_TYPE_PULSE
+SWEP.InnateDamageMul = 0
 SWEP.Primary.Automatic = false
 SWEP.Primary.Ammo = "pulse"
 SWEP.Primary.Sound = Sound("Weapon_Slayer.Single")

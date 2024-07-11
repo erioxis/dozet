@@ -47,7 +47,7 @@ function ENT:RecalculateValidity()
 	local eyeangles = owner:EyeAngles()
 	local shootpos = owner:GetShootPos()
 	local entity
-	local tr = util.TraceLine({start = shootpos, endpos = shootpos + owner:GetAimVector() * 48, mask = MASK_SOLID_BRUSHONLY, filter = owner})
+	local tr = util.TraceLine({start = shootpos, endpos = shootpos + owner:GetAimVector() * 48 * owner:GetModelScale()^1.2, mask = MASK_SOLID_BRUSHONLY, filter = owner})
 
 	if tr.HitWorld and not tr.HitSky or tr.HitNonWorld and self.GhostPlaceOnEntities then
 		if self.GhostHitNormalOffset then

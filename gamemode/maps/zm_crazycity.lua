@@ -10,7 +10,7 @@ hook.Add("InitPostEntityMap", "Adding", function()
 		ent:Spawn()
 	end
 
-	for _, ent in pairs(ents.FindByClass("func_door_rotating")) do
+	for _, ent in ipairs(ents.FindByClass("func_door_rotating")) do
 		ent:Fire("open", "", 0)
 		ent:Fire("kill", "", 0.5)
 	end

@@ -1,7 +1,7 @@
 AddCSLuaFile()
 
-SWEP.PrintName = "Rollermine"
-SWEP.Description = "A deployable, remotely controlled device.\nRolls along the ground, bouncing off zombies and dealing damage.\nCan jump with the JUMP key."
+SWEP.PrintName = translate.Get("wep_rmine")
+SWEP.Description = translate.Get("wep_d_rmine")
 
 if CLIENT then
 	SWEP.ViewModelFlip = false
@@ -65,7 +65,7 @@ end
 function SWEP:CanPrimaryAttack()
 	if self:GetOwner():IsHolding() or self:GetOwner():GetBarricadeGhosting() then return false end
 
-	for _, ent in pairs(ents.FindByClass("prop_rollermine*")) do
+	for _, ent in ipairs(ents.FindByClass("prop_rollermine*")) do
 		if ent:GetObjectOwner() == self:GetOwner() then return false end
 	end
 

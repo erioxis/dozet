@@ -1,6 +1,6 @@
 AddCSLuaFile()
 
-SWEP.PrintName = "Manhack Control"
+SWEP.PrintName = translate.Get("control_mhack")
 SWEP.Description = "Controller for your Manhack."
 
 if CLIENT then
@@ -57,7 +57,7 @@ function SWEP:Think()
 	end
 
 	if SERVER then
-		for _, ent in pairs(ents.FindByClass(self.EntityClass)) do
+		for _, ent in ipairs(ents.FindByClass(self.EntityClass)) do
 			if ent:IsValid() and ent:GetObjectOwner() == self:GetOwner() then
 				return
 			end

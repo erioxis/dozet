@@ -6,9 +6,15 @@ SWEP.MeleeSize = 4.5
 SWEP.MeleeDamage = 34
 SWEP.SlowDownScale = 10
 SWEP.MeleeDamageType = DMG_SLASH
+<<<<<<< Updated upstream
 SWEP.MeleeAnimationDelay = 0.05
 
 SWEP.Primary.Delay = 0.4
+=======
+SWEP.MeleeAnimationDelay = 0.11
+SWEP.ZombieCanPickup = true
+SWEP.Primary.Delay = 0.87
+>>>>>>> Stashed changes
 
 SWEP.ViewModel = Model("models/weapons/v_pza.mdl")
 SWEP.WorldModel = "models/weapons/w_crowbar.mdl"

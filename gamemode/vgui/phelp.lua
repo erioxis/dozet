@@ -88,7 +88,7 @@ function MakepHelp()
 	Window:SetCursor("pointer")
 	pHelp = Window
 
-	local label = EasyLabel(Window, "Help", "ZSHUDFont", color_white)
+	local label = EasyLabel(Window, translate.Get('mm_help'), "ZSHUDFont", color_white)
 	label:CenterHorizontal()
 	label:AlignTop(8)
 

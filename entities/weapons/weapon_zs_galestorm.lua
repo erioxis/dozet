@@ -1,7 +1,14 @@
 AddCSLuaFile()
 
+<<<<<<< Updated upstream
 SWEP.PrintName = "'Gale Storm' SMG"
 SWEP.Description = "Hold right click to use the Storm firing mode: fire rate is reduced to 60% but two bullets are fired at once."
+=======
+--SWEP.PrintName = "'Gale Storm' SMG"
+--SWEP.Description = "Hold right click to use the Storm firing mode: fire rate is reduced to 60% but two bullets are fired at once."
+SWEP.PrintName = translate.Get("wep_gale")
+SWEP.Description = translate.Get("wep_d_gale")
+>>>>>>> Stashed changes
 SWEP.Slot = 2
 SWEP.SlotPos = 0
 

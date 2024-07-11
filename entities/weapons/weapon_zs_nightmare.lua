@@ -33,17 +33,18 @@ end
 
 function SWEP:ApplyMeleeDamage(ent, trace, damage)
 	if SERVER and ent:IsPlayer() then
-		local gt = ent:GiveStatus("enfeeble", damage * self.EnfeebleDurationMul)
+		local owner = self:GetOwner()
+		local gt = ent:GiveStatus("enfeeble", damage * self.EnfeebleDurationMul,owner)
 		if gt and gt:IsValid() then
-			gt.Applier = self:GetOwner()
+			gt.Applier = owner
 		end
 
-		ent:GiveStatus("dimvision", 3)
+		ent:GiveStatus("dimvision", 3,owner)
 
-		local bleed = ent:GiveStatus("bleed")
+		local bleed = ent:GiveStatus("bleed",nil,owner)
 		if bleed and bleed:IsValid() then
 			bleed:AddDamage(self.BleedDamage)
-			bleed.Damager = self:GetOwner()
+			bleed.Damager = owner
 		end
 	end
 

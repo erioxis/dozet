@@ -1,8 +1,15 @@
 AddCSLuaFile()
 
+<<<<<<< Updated upstream
 SWEP.PrintName = "'Inferno' AUG"
 SWEP.Description = "A very accurate assault rifle with great damage output and a high clip size."
 
+=======
+--SWEP.PrintName = "'Inferno' AUG"
+--SWEP.Description = "A very accurate assault rifle with great damage output and a high clip size."
+SWEP.PrintName = translate.Get("wep_inferno")
+SWEP.Description = translate.Get("wep_d_inferno")
+>>>>>>> Stashed changes
 SWEP.Slot = 2
 SWEP.SlotPos = 0
 
@@ -17,6 +24,10 @@ if CLIENT then
 end
 
 SWEP.Base = "weapon_zs_base"
+
+SWEP.InnateDamageType = INNATE_TYPE_FIRE
+SWEP.InnateDamageMul = 0.13
+
 
 SWEP.HoldType = "ar2"
 
@@ -48,6 +59,7 @@ SWEP.MaxStock = 3
 SWEP.IronSightsAng = Vector(-1, -1, 0)
 SWEP.IronSightsPos = Vector(-3, 4, 3)
 
+<<<<<<< Updated upstream
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_RELOAD_SPEED, 0.1)
 GAMEMODE:AddNewRemantleBranch(SWEP, 1, "'Inferno' Incendiary Rifle", "Fires incendiary assault rifle rounds,overdamage!", function(wept)
 	wept.Primary.Damage = wept.Primary.Damage * 2
@@ -66,3 +78,6 @@ GAMEMODE:AddNewRemantleBranch(SWEP, 1, "'Inferno' Incendiary Rifle", "Fires ince
 		end
 	end
 end)
+=======
+GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_RELOAD_SPEED, 0.1)
+>>>>>>> Stashed changes

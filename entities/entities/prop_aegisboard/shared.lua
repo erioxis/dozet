@@ -7,8 +7,10 @@ ENT.CanPackUp = true
 ENT.PackUpTime = 3
 ENT.IgnorePackTimeMul = true
 
+ENT.IgnoreTraces = true
 ENT.IsBarricadeObject = true
-
+ENT.IgnoreBullets = true
+ENT.IgnoreMeleeTeam = TEAM_HUMAN
 function ENT:GetObjectHealth()
 	return self:GetDTFloat(0)
 end
@@ -36,3 +38,10 @@ end
 function ENT:HitByWrench(wep, owner, tr)
 	return true
 end
+<<<<<<< Updated upstream
+=======
+local exlude = {["prop_physics"] = true ,["prop_physics_multiplayer"] = true}
+function ENT:ShouldNotCollide(ent)
+	return ent:IsPlayer() and ent:Team() == TEAM_HUMAN or ent:IsProjectile() or exlude[ent:GetClass()]
+end
+>>>>>>> Stashed changes

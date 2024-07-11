@@ -12,11 +12,11 @@ hook.Add("InitPostEntityMap", "Adding", function()
 		ent:Spawn()
 	end
 
-	for _, spawn in pairs(ents.FindByClass("info_player*")) do
+	for _, spawn in ipairs(ents.FindByClass("info_player*")) do
 		spawn:Fire("kill", "", 0)
 	end
 
-	for _, door in pairs(ents.FindByClass("func_door_rotating")) do
+	for _, door in ipairs(ents.FindByClass("func_door_rotating")) do
 		door:Fire("open", "", 0)
 		door:Fire("kill", "", 1)
 	end

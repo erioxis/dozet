@@ -24,7 +24,7 @@ function ENT:FireTurret(src, dir)
 					ent:SetPos(src)
 					ent:SetAngles(angle)
 					ent:SetOwner(owner)
-					ent.ProjDamage = self.Damage * (owner.ProjectileDamageMul or 1)
+					ent.ProjDamage = self.Damage * (owner.ProjectileDamageMul or 1)  * (owner.TurretDamageMul or 1)
 					ent.ProjSource = self
 					ent.ProjTaper = 0.95
 

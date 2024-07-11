@@ -3,14 +3,14 @@ CLASS.TranslationName = "class_giga_gore_child"
 CLASS.Description = "description_giga_gore_child"
 CLASS.Help = "controls_giga_gore_child"
 
-CLASS.Boss = true
+CLASS.DemiBoss = true
 
 CLASS.KnockbackScale = 0
 
-CLASS.Health = 4100
+CLASS.Health = 1900
 CLASS.Speed = 230
 
-CLASS.Points = 40
+CLASS.Points = 20
 
 CLASS.CanTaunt = true
 

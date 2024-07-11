@@ -21,6 +21,7 @@ SWEP.Primary.Sound = Sound("Weapon_M3.Single")
 SWEP.Primary.Damage = 8
 SWEP.Primary.NumShots = 6
 SWEP.Primary.Delay = 1
+SWEP.ShotGunHeat = true
 
 SWEP.Primary.ClipSize = 6
 SWEP.Primary.Automatic = false

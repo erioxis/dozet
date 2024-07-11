@@ -50,6 +50,45 @@ GAMEMODE:AddNewRemantleBranch(SWEP, 1, "'Prometheus' Tau Cannon", "Bounces at lo
 			local hitpos, hitnormal, normal, dmg = tr.HitPos, tr.HitNormal, tr.Normal, dmginfo:GetDamage() * 1.2
 			timer.Simple(0, function() DoRicochet(attacker, hitpos, hitnormal, normal, dmg) end)
 		end
+<<<<<<< Updated upstream
+=======
+		return {impact = false}
+	end
+end)
+local branch = GAMEMODE:AddNewRemantleBranch(SWEP, 2, ""..translate.Get("wep_tau_f1"), ""..translate.Get("wep_d_tau_f1"), function(wept)
+	wept.Primary.Delay = wept.Primary.Delay * 2.6
+	wept.Primary.Damage = wept.Primary.Damage * 0.77
+	wept.Primary.Ammo = "chemical"
+	wept.BulletCallback = function(attacker, tr, dmginfo)
+
+			local originaldmg = dmginfo:GetDamage()
+			dmginfo:SetDamage(attacker:GetActiveWeapon().Primary.Damage * 0.3)
+			if tr.Hit and SERVER then
+				local ent = ents.Create("prop_electricfield")
+				if ent:IsValid() then
+					ent:SetPos(tr.HitPos)
+					ent:SetOwner(attacker)
+					ent:Spawn()
+				end
+				for _, ent in pairs(ents.FindInSphere(tr.HitPos, 48)) do
+					if ent and ent:IsValid() then
+						local nearest = ent:NearestPoint(tr.HitPos)
+						if TrueVisibleFilters(tr.HitPos, nearest, dmginfo:GetInflictor(), ent) && ent != attacker then
+							ent:TakeSpecialDamage(originaldmg * 2, DMG_SHOCK, attacker, dmginfo:GetInflictor(), nearest)
+						end
+					end
+				end
+			end
+			local ent = tr.Entity
+			local effectdata = EffectData()
+			effectdata:SetOrigin(tr.HitPos)
+				util.Effect("explosion_lightning", effectdata)
+			effectdata:SetNormal(tr.HitNormal)		
+			effectdata:SetMagnitude(2)
+			effectdata:SetScale(1)
+				util.Effect("cball_explode", effectdata)		
+
+>>>>>>> Stashed changes
 
 		return {impact = false}
 	end
@@ -97,6 +136,7 @@ function SWEP:SecondaryAttack()
 end
 
 function SWEP.BulletCallback(attacker, tr, dmginfo)
+	dmginfo:GetInflictor().BaseClass.BulletCallback(attacker, tr, dmginfo)
 	return {impact = false}
 end
 

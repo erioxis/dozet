@@ -1,7 +1,14 @@
 AddCSLuaFile()
 
+<<<<<<< Updated upstream
 SWEP.PrintName = "'Executioner' Axe"
 SWEP.Description = "Instantly kills zombies brought bellow 5% of their max health."
+=======
+--SWEP.PrintName = "'Executioner' Axe"
+--SWEP.Description = "Instantly kills zombies brought bellow 13% of their max health."
+SWEP.PrintName = translate.Get("wep_exec")
+SWEP.Description = translate.Get("wep_d_exec")
+>>>>>>> Stashed changes
 
 if CLIENT then
 	SWEP.ViewModelFOV = 55
@@ -23,7 +30,17 @@ if CLIENT then
 	}
 end
 
-SWEP.Base = "weapon_zs_basemelee"
+SWEP.UsedNewWeapons = true 
+if !SWEP.UsedNewWeapons then
+	SWEP.Base = "weapon_zs_basemelee"
+	SWEP.MeleeDamage = 113
+else
+	SWEP.Base = "weapon_zs_basemelee_modified"
+	SWEP.MeleeDamage = 45
+	SWEP.OverPosition =  Vector(0,10,26)
+	SWEP.Additionalism =  Vector(4,0,-7)
+	SWEP.Attacks_Per_Swung = 5
+end
 
 SWEP.ViewModel = "models/weapons/c_stunstick.mdl"
 SWEP.WorldModel = "models/weapons/w_crowbar.mdl"
@@ -31,7 +48,6 @@ SWEP.UseHands = true
 
 SWEP.HoldType = "melee2"
 
-SWEP.MeleeDamage = 113
 SWEP.MeleeRange = 75
 SWEP.MeleeSize = 2.75
 SWEP.MeleeKnockBack = 225

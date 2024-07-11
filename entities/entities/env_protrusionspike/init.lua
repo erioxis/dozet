@@ -15,12 +15,11 @@ end
 function ENT:Explode()
 	local pos = self:GetPos()
 	local owner = self:GetOwner()
-	local rad = 36
-
-	for _, ent in pairs(util.BlastAlloc(self, owner, pos + Vector(0, 0, rad), rad)) do
+	local rad = 76
+	for _, ent in pairs(player.FindInSphere(pos + Vector(0, 0, rad), rad)) do
 		if ent:IsValidLivingZombie() and gamemode.Call("PlayerShouldTakeDamage", ent, owner) and ent ~= owner then
 			ent:TakeSpecialDamage(self.Damage or 113.4, DMG_DROWN, owner, self, pos)
-			ent:AddLegDamageExt(18, owner, self, SLOWTYPE_COLD)
+			ent:AddLegDamageExt(38, owner, self, SLOWTYPE_COLD)
 		end
 	end
 end

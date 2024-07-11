@@ -135,4 +135,5 @@ function SWEP.BulletCallback(attacker, tr, dmginfo)
 			wep:SetHitStacks(wep:GetHitStacks() + 1)
 		end
 	end
+	dmginfo:GetInflictor().BaseClass.BulletCallback(attacker, tr, dmginfo)
 end

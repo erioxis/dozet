@@ -64,9 +64,28 @@ function CLASS:PlayerStepSoundTime(pl, iType, bWalking)
 end
 
 if SERVER then
+<<<<<<< Updated upstream
 function CLASS:ProcessDamage(pl, dmginfo)
 	if dmginfo:GetInflictor().IsMelee then
 		dmginfo:SetDamage(dmginfo:GetDamage() / 2)
+=======
+	function CLASS:ProcessDamage(pl, dmginfo)
+		local attacker = dmginfo:GetAttacker()
+		local dmg = dmginfo:GetDamage()
+		local hp = pl:Health()
+		if dmginfo:GetInflictor().IsMelee then
+			dmginfo:SetDamage(dmginfo:GetDamage() / 2.5)
+		end
+		if bit_band(dmginfo:GetDamageType(), DMG_BULLET) ~= 0 then
+			dmginfo:SetDamage(dmginfo:GetDamage() * 0.5)
+		elseif bit_band(dmginfo:GetDamageType(), DMG_SLASH) == 0 and bit_band(dmginfo:GetDamageType(), DMG_CLUB) == 0 then
+			dmginfo:SetDamage(dmginfo:GetDamage() * 0.5)
+		end
+
+
+
+		return dmginfo
+>>>>>>> Stashed changes
 	end
 end
 end

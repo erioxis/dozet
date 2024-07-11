@@ -35,7 +35,7 @@ function GM:CreateMoveOTS(cmd)
 	local maxhealth = MySelf:GetMaxHealth()
 	local threshold = MySelf.HasPalsy and maxhealth - 1 or maxhealth * 0.25
 	local health = MySelf:Health()
-	local frightened = MySelf:GetStatus("frightened")
+	local frightened = MySelf:GetStatus("frightened") or  MySelf:GetStatus("effects")
 	local gunsway = MySelf.GunSway
 
 	if (health <= threshold or frightened or gunsway) and not GAMEMODE.ZombieEscape then
@@ -91,7 +91,14 @@ function GM:CalcViewOTS(pl, origin, angles, fov, znear, zfar)
 
 	-- Don't face away more than a certain amount of degrees
 	desired_angles.yaw = math.ApproachAngle(otscameraangles.yaw, desired_angles.yaw, maxdiff)
+<<<<<<< Updated upstream
 
+=======
+	if pl:IsSkillActive(SKILL_MADNESS) then
+		angles.roll = angles.roll + math.sin(CurTime() * 0.7) * 42
+		angles.pitch = angles.pitch + math.sin(CurTime() * 0.7) * 42
+	end
+>>>>>>> Stashed changes
 	pl:SetEyeAngles(desired_angles)
 
 	origin:Set(camPos)

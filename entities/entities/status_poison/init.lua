@@ -17,13 +17,13 @@ function ENT:Think()
 	end
 
 	local attackers = self.Attackers
-	local damage = math.min(self.DamagePerTick, self:GetDamage())
+	local damage = math.min(self.DamagePerTick, self:GetDamage()) * (owner:IsValidLivingZombie() and 2 or 1)
 	local attacker = self
 
 	-- Whoever has the most amount of remaining damage should get this credit.
 	local mostd = 0
 	for a, d in pairs(attackers) do
-		if a:IsValidZombie() and d > mostd then
+		if (a:IsValidZombie() or owner:IsValidLivingZombie()) and d > mostd then
 			attacker = a
 			mostd = d
 		end
@@ -31,7 +31,7 @@ function ENT:Think()
 	-- Uhhh... just pick the first one in the list then.
 	if attacker == self then
 		for a, d in pairs(attackers) do
-			if a:IsValidZombie() then
+			if a:IsValidZombie() or owner:IsValidLivingZombie() then
 				attacker = a
 				break
 			end
@@ -45,8 +45,15 @@ function ENT:Think()
 		attackers[attacker] = attackers[attacker] - damage
 	end
 
-	owner:TakeSpecialDamage(damage, DMG_ACID, attacker, self)
+	if self:GetDamage() >= owner:Health() then
+		owner:TakeSpecialDamage(self:GetDamage()*0.75, DMG_ACID, attacker, self)
+		self:Remove()
+	end
 
+<<<<<<< Updated upstream
 	self:NextThink(CurTime() + 2 / (owner.PoisonSpeedMul or 1))
+=======
+	self:NextThink(CurTime() + 2 / (owner:IsValidLivingZombie() and 0.5 or owner.PoisonSpeedMul or 1))
+>>>>>>> Stashed changes
 	return true
 end

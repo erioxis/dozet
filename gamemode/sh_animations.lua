@@ -8,6 +8,7 @@ local ACT_MP_JUMP = ACT_MP_JUMP
 local ACT_MP_CROUCHWALK = ACT_MP_CROUCHWALK
 local ACT_MP_CROUCH_IDLE = ACT_MP_CROUCH_IDLE
 local GESTURE_SLOT_JUMP = GESTURE_SLOT_JUMP
+local ACT_GMOD_GESTURE_ITEM_GIVE = ACT_GMOD_GESTURE_ITEM_GIVE
 local ACT_LAND = ACT_LAND
 local MOVETYPE_NOCLIP = MOVETYPE_NOCLIP
 local math_min = math.min
@@ -58,7 +59,10 @@ function GM:CalcMainActivity(pl, velocity)
 			end
 		end
 	end
-
+	if M_Player.GetProgress(pl, "giveditem")-1.9 >= CurTime() then
+		P_AnimRestartGesture(pl,4,ACT_GMOD_GESTURE_ITEM_GIVE, true)
+		--return ACT_GMOD_GESTURE_ITEM_DROP, -1
+	end
 	-- Handle landing
 	onground = E_OnGround(pl)
 	if onground and not pt.m_bWasOnGround then

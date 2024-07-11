@@ -52,11 +52,28 @@ function ENT:Explode(hitpos, hitnormal, hitent)
 					if status and status:IsValid() then
 						status:SetHealLeft(75)
 					end
+					local chains = pl:GiveStatus("chains",10)
+					if chains and chains:IsValid() and pl ~= owner then
+						chains:SetDTEntity(11,owner)
+					end
 					break
 				end
 			end
 		end
+<<<<<<< Updated upstream
 	end
+=======
+		for _, pl in pairs(ents.FindInSphere(hitpos, 48)) do
+			if pl:GetClass() == "prop_ffemitter" then break end
+			if pl:IsValidLivingHuman() then
+				pl:TakeDamage(5, self:GetOwner(), self)
+				pl:PoisonDamage(4, owner, self)
+				
+			end
+		end
+	end
+
+>>>>>>> Stashed changes
 end
 
 function ENT:PhysicsCollide(data, physobj)

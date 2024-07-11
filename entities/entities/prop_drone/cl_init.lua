@@ -5,6 +5,8 @@ function ENT:Initialize()
 
 	self.AmbientSound = CreateSound(self, "npc/scanner/scanner_scan_loop2.wav")
 	self.AmbientSound:Play()
+	self.Trailing = CurTime() + 0.15
+	self.TrailPositions = {}
 
 	local sound = "npc/attack_helicopter/aheli_weapon_fire_loop3.wav"
 	self.ShootingSound = CreateSound(self, sound)
@@ -15,7 +17,7 @@ function ENT:Initialize()
 	hook.Add("ShouldDrawLocalPlayer", self, self.ShouldDrawLocalPlayer)
 	hook.Add("CalcView", self, self.CalcView)
 end
-
+local angle = Angle(0,0,0)
 function ENT:Think()
 	self.AmbientSound:PlayEx(0.5, math.Clamp(75 + self:GetVelocity():Length() * 0.5, 75, 150))
 
@@ -28,13 +30,29 @@ function ENT:Think()
 	else
 		self.ShootingSound:Stop()
 	end
+
+	table.insert(self.TrailPositions, 1, self:GetPos()+angle:Right()*96)
+	angle.yaw = angle.yaw + 90
+	if self.TrailPositions[1] then
+		table.remove(self.TrailPositions, 60)
+	end
+
+	local dist = 0
+	local mypos = self:GetPos()
+	for i=1, #self.TrailPositions do
+		if self.TrailPositions[i]:DistToSqr(mypos) > dist then
+			self:SetRenderBoundsWS(self.TrailPositions[i], mypos, Vector(16, 16, 16))
+			dist = self.TrailPositions[i]:DistToSqr(mypos)
+		end
+	end
 end
 
 function ENT:OnRemove()
 	self.AmbientSound:Stop()
 	self.ShootingSound:Stop()
 end
-
+local matTrail = Material("trails/physbeam")
+local colTrail = Color(188, 27, 27)
 function ENT:SetObjectHealth(health)
 	self:SetDTFloat(0, health)
 end
@@ -62,7 +80,16 @@ function ENT:DrawTranslucent()
 		self:DrawModel()
 		render.SetBlend(1)
 	end
+	if self:GetDTInt(12) > 0 then
+		render.SetMaterial(matTrail)
+		for i=1, #self.TrailPositions do
+			if self.TrailPositions[i+1] then
+				colTrail.a = 255 - 255 * (i/#self.TrailPositions)
 
+				render.DrawBeam(self.TrailPositions[i], self.TrailPositions[i+1], 32, 32, 0, colTrail)
+			end
+		end
+	end
 	local ammo = self:GetAmmo()
 
 	local epos = self:GetRedLightPos()

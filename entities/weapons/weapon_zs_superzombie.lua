@@ -157,3 +157,19 @@ function SWEP:GetClimbing()
 	return self:GetDTBool(1)
 end
 SWEP.IsClimbing = SWEP.GetClimbing
+<<<<<<< Updated upstream
+=======
+
+function SWEP:ApplyMeleeDamage(pl, trace, damage)
+	if SERVER and pl:IsPlayer() then
+		local rot = pl:GetStatus("rot")
+		if (rot) then 
+			pl:AddRot(self:GetOwner(), 5,true)
+		end
+		if (not rot) then 
+			pl:AddRot(self:GetOwner(), 5)
+		end
+	end
+	self.BaseClass.ApplyMeleeDamage(self, pl, trace, damage)
+end
+>>>>>>> Stashed changes

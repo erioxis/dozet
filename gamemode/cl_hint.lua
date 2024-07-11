@@ -1,7 +1,7 @@
 local Hints = {}
 
 function GM:DrawPointWorldHints()
-	for _, ent in pairs(ents.FindByClass("point_worldhint")) do if ent:IsValid() and ent.DrawHint then ent:DrawHint() end end
+	for _, ent in ipairs(ents.FindByClass("point_worldhint")) do if ent:IsValid() and ent.DrawHint then ent:DrawHint() end end
 end
 
 function GM:WorldHint(text, pos, ent, lifetime)
@@ -44,6 +44,9 @@ function DrawWorldHint(hint, pos, delta, scale)
 	cam.Start3D2D(pos, ang, (scale or 1) * math.max(250, eyepos:Distance(pos)) * delta * 0.0005)
 
 	draw.SimpleText("!", "zshintfont", 0, 0, colFG, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+	if translate.HasTranslate(hint) then
+		hint = translate.Get(hint)
+	end
 	draw.SimpleText(hint, "ZS3D2DFont2Small", 0, 64, colFG, TEXT_ALIGN_CENTER)
 
 	surface.SetMaterial(matRing)
@@ -60,7 +63,6 @@ end
 
 function GM:DrawWorldHints()
 	local drawhint = DrawWorldHint
-
 	if #Hints > 0 then
 		local curtime = CurTime()
 
@@ -73,6 +75,7 @@ function GM:DrawWorldHints()
 
 				drawhint(hint.Hint, ent and ent:LocalToWorld(hint.Pos) or hint.Pos, math.Clamp(hint.EndTime - curtime, 0, 1))
 			end
+			
 		end
 
 		if done then

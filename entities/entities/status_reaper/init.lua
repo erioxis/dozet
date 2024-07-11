@@ -15,7 +15,7 @@ function ENT:EntityTakeDamage(ent, dmginfo)
 	local attacker = dmginfo:GetAttacker()
 	if attacker ~= self:GetOwner() then return end
 	if attacker:IsValid() and attacker:IsPlayer() and attacker:Team() == TEAM_HUMAN then
-		dmginfo:SetDamage(dmginfo:GetDamage() * (1 + 0.13 * self:GetDTInt(1)))
+		dmginfo:SetDamage(dmginfo:GetDamage() * (1 + 0.035 * self:GetDTInt(1)))
 	end
 end
 
@@ -23,7 +23,7 @@ function ENT:HumanKilledZombie(pl, attacker, inflictor, dmginfo, headshot, suici
 	if attacker ~= self:GetOwner() then return end
 
 	if attacker:IsValid() and attacker:IsPlayer() and attacker:Team() == TEAM_HUMAN then
-		local reaperstatus = attacker:GiveStatus("reaper", math.min(14, self.DieTime - CurTime() + 7))
+		local reaperstatus = attacker:GiveStatus("reaper", math.min(20, self.DieTime - CurTime() + 7))
 		if reaperstatus and reaperstatus:IsValid() then
 			attacker:EmitSound("hl1/ambience/particle_suck1.wav", 55, 150 + reaperstatus:GetDTInt(1) * 30, 0.45)
 		end

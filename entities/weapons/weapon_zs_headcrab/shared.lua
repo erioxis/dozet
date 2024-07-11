@@ -261,3 +261,19 @@ end
 
 util.PrecacheSound("npc/antlion/digdown1.wav")
 util.PrecacheSound("npc/antlion/digup1.wav")
+<<<<<<< Updated upstream
+=======
+
+function SWEP:ApplyMeleeDamage(pl, trace, damage)
+	if SERVER and pl:IsPlayer() then
+		local cursed = pl:GetStatus("cursed")
+		if (cursed) then 
+			pl:AddCursed(self:GetOwner(), 5,nil,nil,true)
+		end
+		if (not cursed) then 
+			pl:AddCursed(self:GetOwner(), 3)
+		end
+	end
+	self.BaseClass.ApplyMeleeDamage(self, pl, trace, damage)
+end
+>>>>>>> Stashed changes

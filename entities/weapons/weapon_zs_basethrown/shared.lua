@@ -78,6 +78,7 @@ function SWEP:Deploy()
 end
 
 function SWEP:Holster()
+	if (self:GetOwner():GetStatus("sticky")) then return false end
 	self.NextDeploy = nil
 	return true
 end

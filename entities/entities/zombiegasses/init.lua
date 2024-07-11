@@ -32,9 +32,23 @@ function ENT:AcceptInput(name, activator, caller, arg)
 			if ent:Team() == TEAM_UNDEAD then
 				if CurTime() >= (ent.LastRangedAttack or 0) + 3 then
 					ent:GiveStatus("zombiespawnbuff", self.TickTime + 0.1)
+					ent.LastZGas = CurTime() + 1.2
 				end
 			elseif GAMEMODE:GetWave() ~= 0 then
 				ent:GiveStatus("spawnslow", self.TickTime + 0.1)
+<<<<<<< Updated upstream
+=======
+				if ent:HasTrinket("gasmask") and GAMEMODE:GetWave() > 4 then return end
+				if (ent.NextPoisonZGAS or 1) <= CurTime()  then
+					local p = ent:GiveStatus("poison")
+					if p and p:IsValid() then
+						p:AddDamage(8)
+					end
+					ent:GiveAchievementProgress("toxicgases",1)
+					ent.NextPoisonZGAS = CurTime() + 3
+					ent:TakeSpecialDamage(12, DMG_DIRECT)
+				end
+>>>>>>> Stashed changes
 			end
 		end
 	end

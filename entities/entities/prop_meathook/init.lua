@@ -46,9 +46,8 @@ function ENT:Think()
 				self.TicksLeft = self.TicksLeft - 1
 
 				if self.Weaken then
-					local status = parent:GiveStatus("zombiestrdebuff")
+					local status = parent:GiveStatus("zombiestrdebuff", nil, owner)
 					status.DieTime = CurTime() + 0.45
-					status.Applier = owner
 				end
 
 				util.Blood((parent:NearestPoint(self:GetPos()) + parent:WorldSpaceCenter()) / 2, math.random(4, 9), Vector(0, 0, 1), 100)

@@ -266,15 +266,15 @@ function ZSBOTS.Think()
 			end
 		end
 
-		--[[for _, ent in pairs(ents.FindByClass("prop_*")) do
+		--[[for _, ent in ipairs(ents.FindByClass("prop_*")) do
 			if ent:IsBarricadeProp() and ent:HumanNearby() then table.insert(bot.PathableTargets, ent) end
 		end]]
 
-		--[[for _, ent in pairs(ents.FindByClass("func_breakable*")) do
+		--[[for _, ent in ipairs(ents.FindByClass("func_breakable*")) do
 			if ent:HumanNearby() then table.insert(bot.PathableTargets, ent) end
 		end]]
 
-		--[[for _, ent in pairs(ents.FindByClass("prop_obj_sigil")) do
+		--[[for _, ent in ipairs(ents.FindByClass("prop_obj_sigil")) do
 			if not ent:GetSigilCorrupted() then table.insert(bot.PathableTargets, ent) end
 		end]]
 
@@ -575,21 +575,21 @@ end
 concommand.Add("createnavmesh", function(sender, command, arguments)
 	if sender:IsSuperAdmin() and not game.IsDedicated() then
 		if sender:GetObserverMode() == OBS_MODE_NONE and sender:IsOnGround() and sender:OnGround() then
-			for _, ent in pairs(ents.FindByClass("func_door*")) do
+			for _, ent in ipairs(ents.FindByClass("func_door*")) do
 				ent:Fire("open", "", 0)
 				ent:Fire("kill", "", 1)
 			end
-			for _, ent in pairs(ents.FindByClass("prop_door*")) do
+			for _, ent in ipairs(ents.FindByClass("prop_door*")) do
 				ent:Fire("open", "", 0)
 				ent:Fire("kill", "", 1)
 			end
-			for _, ent in pairs(ents.FindByClass("prop_physics*")) do
+			for _, ent in ipairs(ents.FindByClass("prop_physics*")) do
 				ent:Remove()
 			end
-			for _, ent in pairs(ents.FindByClass("func_breakable")) do
+			for _, ent in ipairs(ents.FindByClass("func_breakable")) do
 				ent:Remove()
 			end
-			for _, ent in pairs(ents.FindByClass("func_physbox")) do
+			for _, ent in ipairs(ents.FindByClass("func_physbox")) do
 				ent:Remove()
 			end
 			local ent = ents.Create("info_player_start")

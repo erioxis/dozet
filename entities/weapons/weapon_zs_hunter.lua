@@ -1,7 +1,14 @@
 AddCSLuaFile()
 
+<<<<<<< Updated upstream
 SWEP.PrintName = "'Hunter' Rifle"
 SWEP.Description = "Fires special large caliber rounds. The reloading time is slow but it packs a powerful punch."
+=======
+--SWEP.PrintName = "'Hunter' Rifle"
+--SWEP.Description = "Fires special large caliber rounds. The reloading time is slow but it packs a powerful punch."
+SWEP.PrintName = translate.Get("wep_hunter")
+SWEP.Description = translate.Get("wep_d_hunter")
+>>>>>>> Stashed changes
 SWEP.Slot = 3
 SWEP.SlotPos = 0
 
@@ -143,6 +150,7 @@ function SWEP.BulletCallback(attacker, tr, dmginfo)
 		effectdata:SetOrigin(tr.HitPos)
 		effectdata:SetNormal(tr.HitNormal)
 	util.Effect("hit_hunter", effectdata)
+	dmginfo:GetInflictor().BaseClass.BulletCallback(attacker, tr, dmginfo)
 end
 
 if CLIENT then

@@ -14,7 +14,11 @@ function ENT:Initialize()
 		phys:Wake()
 	end
 
+<<<<<<< Updated upstream
 	self:SetMaxObjectHealth(450)
+=======
+	self:SetMaxObjectHealth(250)
+>>>>>>> Stashed changes
 	self:SetObjectHealth(self:GetMaxObjectHealth())
 end
 

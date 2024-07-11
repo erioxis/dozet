@@ -23,7 +23,11 @@ SWEP.ConeMax = 0.0001
 
 SWEP.WalkSpeed = SPEED_SLOW
 
+<<<<<<< Updated upstream
 SWEP.Tier = 5
+=======
+SWEP.Tier = 6
+>>>>>>> Stashed changes
 
 SWEP.MaxBombs = 10
 
@@ -44,7 +48,7 @@ end)
 function SWEP:CanPrimaryAttack()
 	if self.BaseClass.CanPrimaryAttack(self) then
 		local c = 0
-		for _, ent in pairs(ents.FindByClass("projectile_crygas")) do
+		for _, ent in ipairs(ents.FindByClass("projectile_crygas")) do
 			if ent:GetOwner() == self:GetOwner() then
 				c = c + 1
 			end

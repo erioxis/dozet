@@ -41,7 +41,7 @@ hook.Add("InitPostEntityMap", "Adding", function()
 		ent2:Spawn()
 	end
 
-	for _, ent in pairs(ents.FindByClass("func_breakable")) do
+	for _, ent in ipairs(ents.FindByClass("func_breakable")) do
 		ent:Fire("Break", "", 0)
 	end
 	

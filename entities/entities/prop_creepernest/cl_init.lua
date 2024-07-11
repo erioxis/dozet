@@ -4,6 +4,7 @@ ENT.Seed = 0
 ENT.Tall = 0
 ENT.Blocked = false
 
+
 function ENT:Initialize()
 	local dist = math.max(16, GAMEMODE.CreeperNestDist) * 2
 
@@ -27,7 +28,7 @@ function ENT:Initialize()
 
 	self.Seed = math.Rand(0, 10)
 end
-
+ENT.NestName = translate.Get("nest_name_l1")
 local EmitSounds = {
 	Sound("physics/flesh/flesh_squishy_impact_hard1.wav"),
 	Sound("physics/flesh/flesh_squishy_impact_hard2.wav"),

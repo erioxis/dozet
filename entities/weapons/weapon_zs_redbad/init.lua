@@ -57,3 +57,26 @@ function SWEP:SecondaryAttack()
 	timer.Simple(0.6, function() DoSwing(owner, self) end)
 	timer.Simple(0.75, function() DoFleshThrow(owner, self) end)
 end
+<<<<<<< Updated upstream
+=======
+
+function SWEP:ApplyMeleeDamage(pl, trace, damage)
+	if SERVER and pl:IsPlayer() then
+		pl:GiveStatus("dosei_inf", 7,self:GetOwner())
+		local rot = pl:GetStatus("rot")
+		if (rot) then 
+			pl:AddRot(self:GetOwner(), 3,true)
+			if rot and rot:IsValid() then
+				rot:AddDamage(5, owner)
+			end
+		end
+		if (not rot) then 
+			pl:AddRot(self:GetOwner(), 3)
+			if rot and rot:IsValid() then
+				rot:AddDamage(5, owner)
+			end
+		end
+	end
+	self.BaseClass.ApplyMeleeDamage(self, pl, trace, damage)
+end
+>>>>>>> Stashed changes

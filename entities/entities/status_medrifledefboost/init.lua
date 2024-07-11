@@ -17,8 +17,13 @@ function ENT:EntityTakeDamage(ent, dmginfo)
 	local attacker = dmginfo:GetAttacker()
 	if ent ~= self:GetOwner() then return end
 
+<<<<<<< Updated upstream
 	if attacker:IsValidZombie() then
 		local protect = 0.8
+=======
+	if attacker:IsPlayer() and attacker:IsValidZombie() then
+		local protect = 0.25
+>>>>>>> Stashed changes
 
 		local dmgfraction = dmginfo:GetDamage() * protect
 		dmginfo:SetDamage(dmginfo:GetDamage() * (1 - protect))

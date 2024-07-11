@@ -16,7 +16,10 @@ function ENT:PlayerHurt(victim, attacker, healthleft, damage)
 		if healthleft < 0 then
 			attributeddamage = attributeddamage + healthleft
 		end
+		if attributeddamage > 0 then
+			attributeddamage = attributeddamage - (attributeddamage / 2)
 
+<<<<<<< Updated upstream
 		if attributeddamage > 0 then
 			attributeddamage = attributeddamage - (attributeddamage / 1.25)
 
@@ -24,6 +27,12 @@ function ENT:PlayerHurt(victim, attacker, healthleft, damage)
 			victim.DamagedBy[applier] = (victim.DamagedBy[applier] or 0) + attributeddamage
 
 			local points = attributeddamage / victim:GetMaxHealth() * victim:GetZombieClassTable().Points
+=======
+			applier.DamageDealt[TEAM_HUMAN] = applier.DamageDealt[TEAM_HUMAN] + attributeddamage
+			victim.DamagedBy[applier] = (victim.DamagedBy[applier] or 0) + attributeddamage
+			if GAMEMODE.ObjectiveMap then return end
+			local points = math.min(math.min(victim:Health(),attributeddamage) / victim:GetMaxHealth() * victim:GetZombieClassTable().Points,5 )
+>>>>>>> Stashed changes
 			applier.PointQueue = applier.PointQueue + points
 
 			local pos = victim:GetPos()

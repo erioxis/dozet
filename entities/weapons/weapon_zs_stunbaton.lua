@@ -49,4 +49,17 @@ function SWEP:OnMeleeHit(hitent, hitflesh, tr)
 	if hitent:IsValid() and hitent:IsPlayer() then
 		hitent:AddLegDamageExt(self.LegDamage, self:GetOwner(), self, SLOWTYPE_PULSE)
 	end
+<<<<<<< Updated upstream
+=======
+	local ent = tr.Entity
+	if SERVER and math.random(5) == 1 and ent:IsValidLivingZombie() then
+		ent:Ignite(30)
+		for __, fire in ipairs(ents.FindByClass("entityflame")) do
+			if fire:IsValid() and fire:GetParent() == ent then
+				fire:SetOwner(attacker)
+				fire.AttackerForward = attacker
+			end
+		end
+	end
+>>>>>>> Stashed changes
 end

@@ -22,7 +22,7 @@ function ENT:SetProp(ent)
 
 	if not IsValid(ent) then return end
 
-	for _, e in pairs(ents.FindByClass(self:GetClass())) do
+	for _, e in ipairs(ents.FindByClass(self:GetClass())) do
 		if e ~= self and e and e:IsValid() and e:GetProp() == ent then
 			self.m_entProp = NULL
 			return
@@ -55,7 +55,7 @@ function ENT:OnRemove()
 		ent:SetMaterial(self.OldMaterial)
 	end
 
-	for _, e in pairs(ents.FindByClass("status_human_holding")) do
+	for _, e in ipairs(ents.FindByClass("status_human_holding")) do
 		if e:IsValid() and e:GetObject() == ent then
 			return
 		end
@@ -109,4 +109,8 @@ function ENT:Think()
 
 	self:NextThink(CurTime())
 	return true
+<<<<<<< Updated upstream
 end
+=======
+end
+>>>>>>> Stashed changes

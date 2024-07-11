@@ -10,10 +10,21 @@ CLASS.Unlocked = true
 CLASS.IsDefault = true
 CLASS.Order = 0
 
+<<<<<<< Updated upstream
 CLASS.Health = 310
 CLASS.Speed = 175
 CLASS.Revives = true
 
+=======
+CLASS.Health = 200
+CLASS.Speed = 195
+CLASS.Revives = true
+CLASS.Variations = {"Pyro", "Gore Blaster Zombie", "Chem Burster", "Eraditor", "Eradicator", "Zombie Legs", "Zombie Dreams", "Dreaming Zombie","Stoney","Mimic Zombie"}
+CLASS.Original = true
+
+CLASS.DynamicHealth = 1
+CLASS.Weight = 0.95
+>>>>>>> Stashed changes
 CLASS.CanTaunt = true
 
 CLASS.Points = CLASS.Health/GM.HumanoidZombiePointRatio
@@ -26,14 +37,6 @@ CLASS.PainSounds = {"npc/zombie/zombie_pain1.wav", "npc/zombie/zombie_pain2.wav"
 CLASS.DeathSounds = {"npc/zombie/zombie_die1.wav", "npc/zombie/zombie_die2.wav", "npc/zombie/zombie_die3.wav"}
 
 CLASS.VoicePitch = 0.65
-if SERVER then
-function CLASS:ProcessDamage(pl, dmginfo)
-	if dmginfo:GetInflictor().IsMelee then
-		dmginfo:SetDamage(dmginfo:GetDamage() / 1.3)
-	end
-end
-end
-
 
 CLASS.CanFeignDeath = true
 
@@ -242,8 +245,9 @@ if SERVER then
 			status:SetReviveHeal(10)
 		end
 
-		return true
+		return dmginfo
 	end
+
 
 	function CLASS:ReviveCallback(pl, attacker, dmginfo)
 		if not pl:ShouldReviveFrom(dmginfo) then return false end
@@ -277,7 +281,7 @@ if SERVER then
 					pl:SecondWind()
 				end
 			end)
-
+			--net.Start("zs_update_style") net.WriteTable({time = CurTime()+4+(math.random(1,20)*0.2),text = "CUT OFF!",score = 50}) net.Send(attacker) 
 			return true
 		end
 
@@ -291,4 +295,74 @@ end
 
 if CLIENT then
 	CLASS.Icon = "zombiesurvival/killicons/zombie"
+	if !GM.Halloween then return end
+	CLASS.Pac3Out = {[1] = {
+		["children"] = {
+			[1] = {
+				["children"] = {
+				},
+				["self"] = {
+					["Skin"] = 0,
+					["Invert"] = false,
+					["LightBlend"] = 1,
+					["CellShade"] = 0,
+					["AimPartName"] = "",
+					["IgnoreZ"] = false,
+					["AimPartUID"] = "",
+					["Passes"] = 1,
+					["Name"] = "",
+					["Angles"] = Angle(-34.385143280029, -45.711170196533, 7.0863647460938),
+					["DoubleFace"] = false,
+					["PositionOffset"] = Vector(0, 0, 0),
+					["BlurLength"] = 0,
+					["OwnerEntity"] = false,
+					["Brightness"] = 1,
+					["DrawOrder"] = 0,
+					["BlendMode"] = "",
+					["TintColor"] = Vector(0, 0, 0),
+					["Alpha"] = 1,
+					["LodOverride"] = -1,
+					["TargetEntityUID"] = "",
+					["BlurSpacing"] = 0,
+					["UsePlayerColor"] = false,
+					["Material"] = "",
+					["UseWeaponColor"] = false,
+					["EyeAngles"] = false,
+					["UseLegacyScale"] = false,
+					["Bone"] = "head",
+					["Color"] = Vector(255, 255, 255),
+					["Fullbright"] = false,
+					["BoneMerge"] = false,
+					["IsDisturbing"] = false,
+					["Position"] = Vector(0.0001220703125, -3.8178100585938, -6.5268135070801),
+					["NoTextureFiltering"] = false,
+					["AlternativeScaling"] = false,
+					["Hide"] = false,
+					["Translucent"] = false,
+					["Scale"] = Vector(1, 1, 1),
+					["ClassName"] = "model",
+					["EditorExpand"] = false,
+					["Size"] = 1,
+					["ModelFallback"] = "",
+					["AngleOffset"] = Angle(0, 0, 0),
+					["TextureFilter"] = 3,
+					["Model"] = "models/draganm_custom/pumpkin_pack/jackolantd_02.mdl",
+					["UniqueID"] = "d8f40c35587e1db45840af4812990695c85ef5e253df09f7d6175fa628fdcc36",
+				},
+			},
+		},
+		["self"] = {
+			["DrawOrder"] = 0,
+			["UniqueID"] = "d2452eac269309aae9d8df4bd2f0f7ca0527f37ebc28c86259c0dea83b23605f",
+			["Hide"] = false,
+			["TargetEntityUID"] = "",
+			["EditorExpand"] = true,
+			["OwnerName"] = "self",
+			["IsDisturbing"] = false,
+			["Name"] = "тойка вирус",
+			["Duplicate"] = false,
+			["ClassName"] = "group",
+		},
+	},
+	}
 end

@@ -17,7 +17,38 @@ CLASS.Points = CLASS.Health/GM.HumanoidZombiePointRatio
 CLASS.ResistFrost = true
 
 CLASS.Skeletal = true
+if SERVER then
+	function CLASS:AltUse(pl)
+		pl:StartFeignDeath()
+	end
+	function CLASS:OnKilled(pl, attacker, inflictor, suicide, headshot, dmginfo)
+		if attacker:IsPlayer() and dmginfo:GetDamage() < 100 and inflictor.IsMelee and attacker ~= pl then
+			attacker:GiveAchievement("niggerbruh")
+		end
+		pl.DeadZombied = nil
+		pl.DeadXD = nil
+		return true
+	end
 
+	function CLASS:ProcessDamage(pl, dmginfo)
+		local attacker = dmginfo:GetAttacker()
+		if dmginfo:GetInflictor().IgnoreNiggers then
+			dmginfo:SetDamage(math.min(dmginfo:GetDamage(),50))
+		end
+		if attacker and attacker ~= pl and dmginfo:GetInflictor() and dmginfo:GetInflictor().IsMelee then
+			dmginfo:SetDamage(dmginfo:GetDamage()*0.5)
+		end
+		if dmginfo:GetDamage() >= pl:Health() and !pl.DeadZombied then
+			pl.DeadZombied = true 
+			pl.DeadXD = true
+			timer.Simple(1.5, function() pl.DeadXD = nil end)
+		end
+		if pl.DeadXD then
+			dmginfo:SetDamage(0)
+		end
+		return dmginfo
+	end
+end
 if not CLIENT then return end
 
 CLASS.Icon = "zombiesurvival/killicons/skeletal_walker"

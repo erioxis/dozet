@@ -56,7 +56,7 @@ function ENT:Explode(hitpos, hitnormal)
 		for ent, dmg in pairs(util.BlastDamageExAlloc(self, owner, hitpos, 128, 60, DMG_SLASH)) do
 			if ent:IsValidLivingPlayer() and (ent:Team() == TEAM_UNDEAD or ent == owner) then
 				ent:Ignite(dmg / 7)
-				for __, fire in pairs(ents.FindByClass("entityflame")) do
+				for __, fire in ipairs(ents.FindByClass("entityflame")) do
 					if fire:IsValid() and fire:GetParent() == ent then
 						fire:SetOwner(owner)
 						fire:SetPhysicsAttacker(owner)

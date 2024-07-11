@@ -66,7 +66,11 @@ function SWEP:PrimaryAttack()
 	end
 
 	if not ent or self:GetDTEntity(10):IsValid() then return end
+<<<<<<< Updated upstream
 
+=======
+			if  owner:IsSkillActive(SKILL_FOREVERALONE) then return end
+>>>>>>> Stashed changes
 	self:SetDTEntity(10, ent)
 	self:SetNextPrimaryFire(CurTime() + 1)
 	self:EmitSound("items/medshot4.wav", 75, 80)
@@ -110,6 +114,12 @@ function SWEP:CheckHealRay()
 		ent:WorldSpaceCenter():DistToSqr(owner:WorldSpaceCenter()) <= self.HealRange * self.HealRange and self:GetCombinedPrimaryAmmo() > 0 then
 
 		if CurTime() > self:GetDTFloat(10) then
+<<<<<<< Updated upstream
+=======
+			if owner:HasTrinket("pr_barapaw") and math.random(3) == 3 and SERVER then
+				ent:GiveStatus("knockdown", 1.5)
+			end
+>>>>>>> Stashed changes
 			owner:HealPlayer(ent, math.min(self:GetCombinedPrimaryAmmo(), self.Heal))
 			self:TakeAmmo()
 			self:SetDTFloat(10, CurTime() + 0.36)

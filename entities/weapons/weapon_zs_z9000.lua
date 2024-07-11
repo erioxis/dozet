@@ -1,7 +1,12 @@
 AddCSLuaFile()
 
+<<<<<<< Updated upstream
 SWEP.PrintName = "Undead Pistol"
 SWEP.Description = "why."
+=======
+SWEP.PrintName = translate.Get("wep_z9000")
+SWEP.Description = translate.Get("wep_d_z9000")
+>>>>>>> Stashed changes
 SWEP.Slot = 1
 SWEP.SlotPos = 0
 
@@ -28,13 +33,23 @@ SWEP.ViewModel = "models/weapons/c_pistol.mdl"
 SWEP.WorldModel = "models/weapons/w_alyx_gun.mdl"
 SWEP.UseHands = true
 
+SWEP.InnateDamageType = INNATE_TYPE_PULSE
+SWEP.InnateDamageMul = 0.25
+
+
 SWEP.CSMuzzleFlashes = false
 
 SWEP.ReloadSound = Sound("weapons/alyx_gun/alyx_shotgun_cock1.wav")
 SWEP.Primary.Sound = Sound("weapons/alyx_gun/alyx_gun_fire3.wav")
+<<<<<<< Updated upstream
 SWEP.Primary.Damage = 30
 SWEP.Primary.NumShots = 2
 SWEP.Primary.Delay = 1
+=======
+SWEP.Primary.Damage = 31
+SWEP.Primary.NumShots = 1
+SWEP.Primary.Delay = 0.75
+>>>>>>> Stashed changes
 
 SWEP.Primary.ClipSize = 32
 SWEP.Primary.Automatic = false
@@ -57,10 +72,37 @@ SWEP.PointsMultiplier = GAMEMODE.PulsePointsMultiplier
 function SWEP.BulletCallback(attacker, tr, dmginfo)
 	local ent = tr.Entity
 	if ent:IsValidZombie() then
-		ent:AddLegDamageExt(4.5, attacker, attacker:GetActiveWeapon(), SLOWTYPE_PULSE)
+		local wep = attacker:GetActiveWeapon()
+		local intd = wep:GetDTInt(6)
+		wep:SetDTInt(6,intd+1)
+		if intd >= 5 then
+			local dmg = dmginfo:GetDamage()
+			ent:AddLegDamageExt( dmg * 0.5, attacker,  wep, SLOWTYPE_PULSE)
+			if SERVER then
+				ent:TakeDamage( dmg * 3, attacker,  wep)
+			end
+			wep:SetDTInt(6,0)
+		end
 	end
 
 	if IsFirstTimePredicted() then
 		util.CreatePulseImpactEffect(tr.HitPos, tr.HitNormal)
 	end
+	dmginfo:GetInflictor().BaseClass.BulletCallback(attacker, tr, dmginfo)
 end
+
+if !CLIENT then return end
+	local ablicolor =  Color( 19,34,174)
+	function SWEP:Draw2DHUD()
+		self:Draw2DFeature(self:GetDTInt(6)/5, nil, nil, "weapon_ability_z9000", "ZSHUDFontSmallest", ablicolor )
+		self.BaseClass.Draw2DHUD(self)
+	end
+	
+	function SWEP:Draw3DHUD(vm, pos, ang)
+	
+		cam.Start3D2D( pos, ang, self.HUD3DScale / 6 )
+				self:Draw3DFeatureHorizontal( vm, pos+Vector(0,-1,1), ang, self:GetDTInt(6)/5, nil, nil, "weapon_ability_z9000", "ZSHUDFont", ablicolor )
+		cam.End3D2D()
+		self.BaseClass.Draw3DHUD(self,vm, pos, ang)
+	end
+	

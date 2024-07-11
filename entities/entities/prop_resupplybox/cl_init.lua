@@ -86,5 +86,8 @@ net.Receive("zs_nextresupplyuse", function(length)
 end)
 
 net.Receive("zs_stowagecaches", function(length)
-	MySelf.StowageCaches = net.ReadInt(8)
+	MySelf.StowageCaches = net.ReadInt(12)
+	if net.ReadBool() and MySelf.StowageCaches then
+		GAMEMODE:CenterNotify({killicon = "weapon_zs_resupplybox"},Color(0,(150 * MySelf.StowageCaches)%255,(25* MySelf.StowageCaches)%255),translate.Format("caches_x_ready", MySelf.StowageCaches),{killicon = "weapon_zs_resupplybox"})
+	end
 end)

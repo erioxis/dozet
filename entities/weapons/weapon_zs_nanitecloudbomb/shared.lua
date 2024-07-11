@@ -1,5 +1,5 @@
-SWEP.PrintName = "Nanite Cloud Bomb"
-SWEP.Description = "Explodes in to a cloud of nanites. Heals all props and deployables in the radius."
+SWEP.PrintName = translate.Get('wep_nbc')
+SWEP.Description = translate.Get('wep_d_nbc')
 
 SWEP.Base = "weapon_zs_basethrown"
 

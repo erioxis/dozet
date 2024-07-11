@@ -10,6 +10,30 @@ SWEP.SlowDownScale = 0.3
 function SWEP:Reload()
 	self:SecondaryAttack()
 end
+<<<<<<< Updated upstream
+=======
+function SWEP:MeleeHit(ent, trace, damage, forcescale)
+	if not ent:IsPlayer() then
+		damage = self.MeleeDamageVsProps
+	end
+
+	self.BaseClass.MeleeHit(self, ent, trace, damage, forcescale)
+end
+
+function SWEP:ApplyMeleeDamage(pl, trace, damage)
+	if SERVER and pl:IsPlayer() and (not pl:GetStatus("hshield")) and pl:GetActiveWeapon() and !pl:GetActiveWeapon().ResistDamage then
+		local cursed = pl:GetStatus("cursed")
+		if (cursed) then 
+			pl:AddCursed(self:GetOwner(), cursed.DieTime - CurTime() + 50)
+		end
+		if (not cursed) then 
+			pl:AddCursed(self:GetOwner(), 50)
+		end
+        
+	end
+	self.BaseClass.ApplyMeleeDamage(self, pl, trace, damage)
+end
+>>>>>>> Stashed changes
 
 function SWEP:PlayAlertSound()
 	self:GetOwner():EmitSound("npc/barnacle/barnacle_tongue_pull"..math.random(3)..".wav")
@@ -20,6 +44,11 @@ function SWEP:PlayAttackSound()
 	self:EmitSound("npc/barnacle/barnacle_bark"..math.random(2)..".wav", 75, 85)
 end
 
+<<<<<<< Updated upstream
+=======
+
+
+>>>>>>> Stashed changes
 if not CLIENT then return end
 
 function SWEP:ViewModelDrawn()

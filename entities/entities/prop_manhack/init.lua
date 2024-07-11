@@ -6,6 +6,7 @@ function ENT:Initialize()
 	self:SetModel(self.Model)
 	self:SetUseType(SIMPLE_USE)
 
+	self:PhysicsInitBox(Vector(-22, -11, -7.15), Vector(13.29, 7, 7))
 	self:PhysicsInit(SOLID_VPHYSICS)
 	local phys = self:GetPhysicsObject()
 	if phys:IsValid() then
@@ -45,6 +46,7 @@ function ENT:Initialize()
 		ent:SetPos(self:GetPos())
 		ent:SetAngles(self:GetAngles())
 		ent:SetParent(self)
+		self.FHB = ent
 		ent:SetOwner(self)
 		ent.Size = self.HitBoxSize
 		ent:Spawn()
@@ -101,7 +103,7 @@ function ENT:SetupPlayerSkills()
 
 	if owner:IsValid() then
 		newmaxhealth = newmaxhealth * owner:GetTotalAdditiveModifier("ControllableHealthMul", "ManhackHealthMul")
-		hitdamage = hitdamage * (owner.ManhackDamageMul or 1)
+		hitdamage = hitdamage * (owner.ManhackDamageMul or 1) 
 		maxspeed = maxspeed * (owner.ControllableSpeedMul or 1)
 		acceleration = acceleration * (owner.ControllableHandlingMul or 1)
 		loaded = owner:IsSkillActive(SKILL_LOADEDHULL)
@@ -143,7 +145,8 @@ function ENT:SetObjectHealth(health)
 		self:Destroy()
 	end
 end
-
+function ENT:Use(activator, caller)
+end
 function ENT:OnTakeDamage(dmginfo)
 	if dmginfo:GetDamage() <= 0 then return end
 
@@ -172,12 +175,9 @@ function ENT:OnTakeDamage(dmginfo)
 	util.Effect("sparks", effectdata)
 end
 
-function ENT:Use(pl)
-	if pl == self:GetObjectOwner() and pl:Team() == TEAM_HUMAN and pl:Alive() and self:GetVelocity():Length() <= self.HoverSpeed then
-		self:OnPackedUp(pl)
-	end
+function ENT:AltUse(activator, tr)
+	self:PackUp(activator)
 end
-
 function ENT:PhysicsCollide(data, phys)
 	self.HitData = data
 	self:NextThink(CurTime())
@@ -219,6 +219,7 @@ function ENT:PhysicsSimulate(phys, frametime)
 		if owner:KeyDown(IN_MOVERIGHT) then
 			movedir = movedir + aimangles:Right()
 		end
+		--self:TakeDamage(10)
 		if owner:KeyDown(IN_MOVELEFT) then
 			movedir = movedir - aimangles:Right()
 		end
@@ -283,7 +284,13 @@ function ENT:Destroy()
 	if self:GetObjectOwner():IsValidLivingHuman() then
 		self:GetObjectOwner():SendDeployableLostMessage(self)
 	end
-
+	if self:GetObjectOwner():IsSkillActive(SKILL_EXPLOIT) and math.random(1,4) == 1 then
+		if math.random(1,10) ~= 1 then
+			self:GetObjectOwner():Give("weapon_zs_manhack")
+		else
+			self:GetObjectOwner():Give("weapon_zs_manhack_saw")
+		end
+	end
 	self:EmitSound("npc/manhack/gib.wav")
 
 	local effectdata = EffectData()
@@ -306,6 +313,13 @@ function ENT:Destroy()
 		util.BlastDamagePlayer(self, owner, epicenter, 128, 225, DMG_ALWAYSGIB)
 	else
 		util.Effect("HelicopterMegaBomb", effectdata, true, true)
+	end
+	local wep = self.WeaponClass
+	if owner:IsValidLivingHuman() and wep ~= "weapon_zs_manhack" then
+		if wep == "weapon_zs_auto_turret" then owner:Give("weapon_zs_juggernaut") return end
+		if wep == "weapon_zs_auto_turret_q1" then owner:Give("weapon_zs_auto_turret") return end
+		local who = string.sub(wep,0,#wep-1)
+		owner:Give(who..tonumber(string.sub(wep,#wep,#wep))-1)
 	end
 end
 
@@ -376,8 +390,10 @@ function ENT:ThreadSafePhysicsCollide(data)
 		hitentity = true
 
 		self.NextTouch[ent] = CurTime() + self.HitCooldown
-
-		ent:TakeSpecialDamage(self.HitDamage, DMG_SLASH, owner, self)
+		if owner.MeleeDamageToBloodArmorMul and owner.MeleeDamageToBloodArmorMul > 0 and owner:GetBloodArmor() < owner.MaxBloodArmor and owner:IsSkillActive(SKILL_BLOODHACK) then
+			owner:SetBloodArmor(math.min((owner.MaxBloodArmor or 20),owner:GetBloodArmor() + math.min(self.HitDamage, ent:Health()) * (owner.MeleeDamageToBloodArmorMul or 1)* (owner.BloodarmorGainMul or 1) * 0.2))
+		end
+		ent:TakeSpecialDamage(self.HitDamage * (self.WeaponClass ~= "weapon_zs_manhack" and 4 or 1), DMG_SLASH, owner, self)
 
 		if ent:IsPlayer() and ent:Team() == TEAM_UNDEAD and ent:Alive() or nest then
 			hitflesh = true

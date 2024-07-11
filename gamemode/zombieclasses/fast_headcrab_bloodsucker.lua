@@ -8,7 +8,8 @@ CLASS.Help = "controls_bloodsucker_headcrab"
 CLASS.Wave = 3 / 6
 
 CLASS.Model = Model("models/headcrab.mdl")
-
+CLASS.Variations = {}
+CLASS.Original = false
 CLASS.SWEP = "weapon_zs_bloodsucker_headcrab"
 
 CLASS.Health = 50

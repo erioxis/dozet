@@ -76,7 +76,16 @@ function SWEP:PrimaryAttack()
 	if not self:CanPrimaryAttack() then return end
 
 	local owner = self:GetOwner()
+<<<<<<< Updated upstream
 
+=======
+	if SERVER then
+   		 owner:GiveAchievement("1to1")
+	end
+	if self:GetOwner():IsValid() then
+		self:GetOwner():GiveStatus("sigildef", 12)
+	end
+>>>>>>> Stashed changes
 
 	owner:ViewPunch( 0.1 * Angle(math.Rand(-0.1, -0.7), math.Rand(-2.1, 0.5), 0))
 

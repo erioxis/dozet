@@ -11,7 +11,141 @@ local ironsightscrosshair = CreateClientConVar("zs_ironsightscrosshair", "0", tr
 cvars.AddChangeCallback("zs_ironsightscrosshair", function(cvar, oldvalue, newvalue)
 	ironsightscrosshair = tonumber(newvalue) == 1
 end)
+local x_y = CreateClientConVar("zs_x_stamina", "0", true, false):GetFloat()
+cvars.AddChangeCallback("zs_x_stamina", function(cvar, oldvalue, newvalue)
+	x_y = tonumber(newvalue)
+end)
+local y_s = CreateClientConVar("zs_y_stamina", "0", true, false):GetFloat()
+cvars.AddChangeCallback("zs_y_stamina", function(cvar, oldvalue, newvalue)
+	y_s = tonumber(newvalue)
+end)
+local matGlow = Material("sprites/glow04_noz")
+local texDownEdge = surface.GetTextureID("gui/gradient_down")
+local colHealth = Color(0,0,0)
+local olds = 100
+local apr = math.Approach
+local surface_SetDrawColor = surface.SetDrawColor
+local surface_DrawRect = surface.DrawRect
+local surface_DrawTexturedRect = surface.DrawTexturedRect
+function meta:DrawStaminaBar()
+	local lp = MySelf
 
+	if lp:GetStamina() < 100 then
+		local x = ScrW() * 0.45 + (x_y)
+		local y = ScrH() * 0.78 + (y_s)
+		local screenscale = BetterScreenScale()
+		local wid, hei = 250 * screenscale, 30 * screenscale
+		if lp:IsValid() then
+			local health = apr(olds,math.max(lp:GetStamina(), 0),1.5)
+		
+			local healthperc = math.Clamp(health / 100, 0.01, 1)
+	 
+			colHealth.r = 255/healthperc
+			colHealth.g = 255 * healthperc
+			colHealth.b = 0
+	
+			local subwidth = healthperc * wid
+			local sup = (lp:IsSkillActive(SKILL_SAHA) and 0.5 or 0.33)
+			surface_SetDrawColor(0, 0, 0, 230)
+			surface_DrawRect(x, y, wid, hei)
+			surface.SetAlphaMultiplier(0.3)
+			surface_SetDrawColor((healthperc < sup and 120 or 0), (healthperc < sup and  50 or 0), 0,120)
+			surface_DrawRect(x, y, wid*sup, hei)
+			surface.SetAlphaMultiplier(1)
+			
+	
+			surface_SetDrawColor(colHealth.r * 1, colHealth.g * 0.2, colHealth.b, 40)
+			surface.SetTexture(texDownEdge)
+			surface_DrawTexturedRect(x + 2, y + 1, subwidth - 4, hei - 2)
+			surface_SetDrawColor(colHealth.r * 0.6, colHealth.g * 0.6, colHealth.b, 30)
+			surface_DrawRect(x + 2, y + 1, subwidth - 4, hei - 2)
+	
+			surface.SetMaterial(matGlow)
+			surface_SetDrawColor(255, 255, 255, 255)
+			surface_DrawTexturedRect(x + 2 + subwidth - 6, y + 1 - hei/2, 4, hei * 2)
+
+			surface.SetMaterial(matGlow)
+			surface_SetDrawColor(255, 255, 255, 255)
+			surface_DrawTexturedRect(x + 2 +  wid*0.33 - 6.5, y + 1 - hei/2, 4, hei * 2)
+			local phantomwidth = (health == 100 and 0 or wid)
+			draw.SimpleTextBlurry((math.Round(olds*100)/100).."%" , "ZSHUDFontSmall", x, y - 12, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM)
+			--olds = math.MoveTowards(olds,math.max(lp:GetStamina(), 0),0.1)
+			olds = apr(olds,math.max(lp:GetStamina(), 0),0.45)
+		end
+	end
+end
+local function DrawNew(text,sup,wid,x, y, col,time,count)
+	if time then
+		col.a = 255 * math.max(0.1,((time-CurTime()-0.5)/2))
+	end
+
+	draw.SimpleText("+ "..text..(count and " x"..count or "") , "ZSHUDFontTiny", x, y*1.07+((sup-1)*25), col, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM)
+
+end
+local colors = {
+	Color(255, 255, 255),
+	Color(59, 15, 15),
+	Color(0, 176, 220),
+	Color(220, 0, 0),
+	Color(16, 16, 16),
+	Color(189, 40, 40),
+	Color(71, 30, 184),
+	Color(184, 30, 125),
+	Color(231, 243, 62)
+}
+local text = {
+	"Eugh",
+	"Dead",
+	"COOL!",
+	"Bloody!",
+	"Agent of Style",
+	"Salut",
+	"Supreme Style",
+	"SSSHitstorm",
+	"GOD OF ZS"
+}
+local colHealth = Color(1,1,1,255)
+function meta:DrawStyle()
+	if !GAMEMODE.NoStyle or MySelf.StyleMoment and #MySelf.StyleMoment <= 0 then return end
+	local screenscale = BetterScreenScale()
+	local wid, hei = 110*screenscale , 150 *screenscale 
+	local x, y = ScrW() - wid - screenscale * 180 , ScrH() - hei - screenscale * 500
+	local col  = Color(0,0,0)
+		colHealth.r = math.abs(math.sin(CurTime() * 0.5 *  math.pi )) * 120
+		colHealth.g = math.abs(math.sin(CurTime() * 0.5 *math.pi)) * 120
+		colHealth.b = math.abs(math.sin(CurTime() * 0.5 *math.pi)) * 120
+		colHealth.a = 120
+		draw.RoundedBoxEx(8, x, y, wid*2, hei*3, colHealth, true,true, true, true) 
+		draw.RoundedBoxEx(8, x, y*0.7, wid*2, hei*0.35, colHealth, true,true, true, true) 
+		local pable = MySelf.StyleMoment
+		colHealth = Color(math.abs(math.sin(CurTime() * math.pi)) * 255,math.abs(math.sin(CurTime()* 0.5 * math.pi)) * 255,math.abs(math.sin(CurTime()* 0.5 * math.pi)) * 255,255)
+		col = colHealth
+		table.SortByMember(pable,"time")
+		local style = 0
+		for i=1,#pable do
+			if !pable[i] then continue end
+			local v = pable[i]
+			col = (v.color and v.color or colHealth)
+			DrawNew(v.text,i,wid,x,y,col,v.time,v.count)
+			if v.time-CurTime() <= 0 then
+				MySelf.StyleMoment[i] = nil
+				net.Start("zs_sync_style")
+				net.WriteTable(MySelf.StyleMoment)
+			net.SendToServer()
+			end
+			style = style + (v.score or 0)
+		end
+		local style2 = MySelf:GetStyle()
+		surface.SetDrawColor(colHealth)
+		if style2 == 9 then
+			draw.SimpleText(text[style2], "ZSHUDFont", x*1.07, y*0.78, Color(160,172,5,120), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+		end
+		draw.SimpleText(text[style2], "ZSHUDFontSmall", x*1.07, y*0.78, colors[style2], TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+		local al = table.Copy(colors[style2])
+		al.a = 77
+		draw.SimpleText(style2, "ZSHUDFontSmallest", x*1.07, y*0.74, al, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+		surface.DrawRect( x, y*0.9 , wid*2*((((style2*1000)-style)-500)/1000), hei*0.08*(math.max(0.2,math.abs(math.sin(CurTime() * math.pi)))))
+end
 --local CrossHairScale = 1
 local matGrad = Material("VGUI/gradient-r")
 local function DrawLine(x, y, rot)
@@ -19,13 +153,33 @@ local function DrawLine(x, y, rot)
 
 	rot = 270 - rot
 	surface.SetMaterial(matGrad)
-	surface.SetDrawColor(0, 0, 0, GAMEMODE.CrosshairColor.a)
+	surface_SetDrawColor(0, 0, 0, GAMEMODE.CrosshairColor.a)
 	surface.DrawTexturedRectRotated(x, y, 14, math.max(4 * thickness, 2 + 2 * thickness), rot)
-	surface.SetDrawColor(GAMEMODE.CrosshairColor)
+	surface_SetDrawColor(GAMEMODE.CrosshairColor)
 	surface.DrawTexturedRectRotated(x, y, 12, 2 * thickness, rot)
 end
-
+local matGlow = Material("sprites/glow04_noz")
+local texDownEdge = surface.GetTextureID("gui/gradient_down")
+local NoParasite = surface.GetTextureID("zombiesurvival/killicons/bleed")
+local colHealth = Color(0, 0, 0, 240)
+local colAReload = Color(0, 116, 70, 240)
 local baserot = 0
+local function drawCringeCircle(x,y,radius, seg)
+	local cir = {}
+
+	table.insert( cir, { x = x, y = y, u = 0.5, v = 0.5 } )
+	for i = 0, seg do
+		local a = math.rad( ( i / seg ) * -360 )
+		table.insert( cir, { x = x + math.sin( a ) * radius, y = y + math.cos( a ) * radius, u = math.sin( a ) / 2 + 0.5, v = math.cos( a ) / 2 + 0.5 } )
+	end
+
+	local a = math.rad( 0 ) -- This is needed for non absolute segment counts
+	table.insert( cir, { x = x + math.sin( a ) * radius, y = y + math.cos( a ) * radius, u = math.sin( a ) / 2 + 0.5, v = math.cos( a ) / 2 + 0.5 } )
+
+	surface.DrawPoly( cir )
+
+end
+--drawCringeCircle(xd,yd,16, math.sin( CurTime() ) * 20 + 25)
 function meta:DrawCrosshairCross()
 	local x = ScrW() * 0.5
 	local y = ScrH() * 0.5
@@ -40,7 +194,7 @@ function meta:DrawCrosshairCross()
 	cone = ScrH() * 0.0003125 * cone
 	cone = cone * 90 / MySelf:GetFOV()
 
-	--CrossHairScale = cone --math.Approach(CrossHairScale, cone, FrameTime() * math.max(5, math.abs(CrossHairScale - cone) * 0.02))
+	--CrossHairScale = cone --apr(CrossHairScale, cone, FrameTime() * math.max(5, math.abs(CrossHairScale - cone) * 0.02))
 
 	local midarea = 40 * cone --CrossHairScale
 
@@ -52,6 +206,48 @@ function meta:DrawCrosshairCross()
 	else
 		baserot = math.NormalizeAngle(baserot + vel:Dot(EyeAngles():Right()) * math.min(10, len / 40000))
 	end
+<<<<<<< Updated upstream
+=======
+	local firedelay = MySelf:GetActiveWeapon():GetNextPrimaryFire() - CurTime() 
+		local scrW1 = ScrW()
+		local scrH1 = ScrH()
+		local x1, y1 = scrW1 * 0.5 , scrH1 * 0.5
+		local screenscale = BetterScreenScale()
+		local lp = MySelf
+		local ratio = (MySelf:GetActiveWeapon().Primary.Delay or 1) / firedelay
+		surface.DrawCircle(x1, y1, 38 * cone, 5, 35 * ratio * 0.5, 5, 255 * ratio * 0.4)
+		local ratio = ((CurTime()-((MySelf:GetActiveWeapon().Primary.Delay or 1) + MySelf:GetActiveWeapon():GetNextPrimaryFire() - MySelf:GetActiveWeapon():GetFireDelay()))) * 100
+		--if ratio/100+0.11 <= 0 and MySelf:GetActiveWeapon() and !MySelf:GetActiveWeapon().IsMelee then
+			--draw.SimpleTextBlurry(-math.Round(ratio)/100-0.11, "ZSHUDFontTiny",x1-70 * math.max(1.004,cone), y1+10 * math.max(1.004,cone), Color(255,255,255), TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+	--	end
+		if MySelf:IsSkillActive(SKILL_VAMPIRISM) then
+			local screenscale = BetterScreenScale()
+			local prog = lp:GetNWFloat("vampirism_progress",value)
+			local healthperc = math.Clamp(prog  / 1200, 0, 1)
+			local wid, hei = 100 * screenscale, 18 * screenscale
+	
+			colHealth.r = 255 * healthperc
+			colHealth.g = 120
+			colHealth.b = 122
+
+			local y = y + 35 *  screenscale
+			local subwidth = healthperc * wid
+			draw.SimpleTextBlurry(math.Round(prog) , "ZSHUDFontSmallest", x + wid + 18 * screenscale, y + 8 * screenscale, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+
+			surface_SetDrawColor(0, 0, 0, 230)
+			surface_DrawRect(x, y, wid, hei)
+
+			surface_SetDrawColor(colHealth.r * 1, colHealth.g * 0.2, colHealth.b, 40)
+			surface.SetTexture(texDownEdge)
+			surface_DrawTexturedRect(x + 2, y + 1, subwidth - 4, hei - 2)
+			surface_SetDrawColor(colHealth.r * 0.6, colHealth.g * 0.6, colHealth.b, 30)
+			surface_DrawRect(x + 2, y + 1, subwidth - 4, hei - 2)
+
+			surface.SetMaterial(matGlow)
+			surface_SetDrawColor(255, 255, 255, 255)
+			surface_DrawTexturedRect(x + 2 + subwidth - 6, y + 1 - hei/2, 4, hei * 2)
+		end
+>>>>>>> Stashed changes
 
 	local ang = Angle(0, 0, baserot)
 	for i=0, 359, 360 / GAMEMODE.CrosshairLines do
@@ -60,22 +256,80 @@ function meta:DrawCrosshairCross()
 		DrawLine(math.Round(x + p.y), math.Round(y + p.z), ang.roll)
 	end
 end
-
+local NoParasite2 = surface.GetTextureID("zombiesurvival/killicons/weapon_zs_scythe2")
 function meta:DrawCrosshairDot()
 	local x = ScrW() * 0.5
 	local y = ScrH() * 0.5
 	local thickness = GAMEMODE.CrosshairThickness
+	local screenscale = BetterScreenScale()
 	local size = 4 * thickness
 	local hsize = size/2
+<<<<<<< Updated upstream
 
 	surface.SetDrawColor(GAMEMODE.CrosshairColor2)
 	surface.DrawRect(x - hsize, y - hsize, size, size)
 	surface.SetDrawColor(0, 0, 0, GAMEMODE.CrosshairColor2.a)
+=======
+	local wepi = MySelf:GetActiveWeapon()
+	local firedelay = wepi:GetNextPrimaryFire() - CurTime()-0.045
+	local ratio = (wepi.IsMelee and wepi.MeleeDelay or 1) / firedelay
+	surface.DrawCircle(x, y, 10, 5 * ratio * 0.2, 35 * ratio * 0.5, 5, 255 * ratio * 0.4)
+	if firedelay >= 0 then
+		draw.SimpleText(math.Round((firedelay)*100)/100 , "ZSHUDFontSmallest", x  * screenscale, y + 8 * screenscale, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+	end
+	if wepi:GetReloadFinish() ~= 0 then
+		draw.SimpleText(math.Round(wepi:GetReloadFinish()-CurTime(),2) , "ZSHUDFontSmallest", x-120 * screenscale, y + 8 * screenscale, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+	end
+	surface_SetDrawColor(GAMEMODE.CrosshairColor2)
+	surface_DrawRect(x - hsize, y - hsize, size, size)
+	surface_SetDrawColor(0, 0, 0, GAMEMODE.CrosshairColor2.a)
+>>>>>>> Stashed changes
 	surface.DrawOutlinedRect(x - hsize, y - hsize, size, size)
+	if MySelf:HasTrinket("autoreload") and MySelf:GetNWFloat("autoreload") > CurTime() then
+		local screenscale = BetterScreenScale()
+		local prog = MySelf:GetNWFloat("autoreload")
+		local healthperc = 1-math.Clamp((prog-CurTime()) / 3.5, 0, 1)
+		local wid, hei = 70 * screenscale, 18 * screenscale
+		local subwidth = healthperc * wid
+		local y = y+12*screenscale
+		surface_SetDrawColor(0, 0, 0, 230)
+		surface_DrawRect(x, y, wid, hei)
 
+		surface_SetDrawColor(colAReload.r, colAReload.g, colAReload.b, 40)
+		surface.SetTexture(texDownEdge)
+		surface_DrawTexturedRect(x + 2, y + 1, subwidth - 4, hei - 2)
+		surface_SetDrawColor(colAReload.r, colAReload.g, colAReload.b, 30)
+		surface_DrawRect(x + 2, y + 1, subwidth - 4, hei - 2)
+
+		surface.SetMaterial(matGlow)
+		surface_SetDrawColor(255, 255, 255, 255)
+		surface_DrawTexturedRect(x + 2 + subwidth - 6, y + 1 - hei/2, 4, hei * 2)
+	end
 	if GAMEMODE.LastOTSBlocked and MySelf:Team() == TEAM_HUMAN and GAMEMODE:UseOverTheShoulder() then
 		GAMEMODE:DrawCircle(x, y, 8, COLOR_RED)
 	end
+	if (MySelf:IsSkillActive(SKILL_PARASITOID) or MySelf:IsSkillActive(SKILL_CAN_EATER)) and MySelf:GetProgress("parasite_prog") > CurTime() then
+	
+		local wid, hei = 32 * screenscale, 32 * screenscale
+
+		colHealth.r = 255 
+		colHealth.g = 120
+		colHealth.b = 122
+
+		draw.SimpleTextBlurry(math.Round((MySelf:GetProgress("parasite_prog")-CurTime())*100)/100 , "ZSHUDFontSmallest", x + wid  * screenscale, y + 8 * screenscale, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+
+
+		surface_SetDrawColor(colHealth.r * 1, colHealth.g * 0.2, colHealth.b, 255)
+		surface.SetTexture(NoParasite)
+		surface_DrawTexturedRect(x, y , 32, hei)
+		surface_SetDrawColor(colHealth.r * 0.2, colHealth.g * 1.2, colHealth.b*2, 255)
+		surface.SetTexture(NoParasite2)
+		surface_DrawTexturedRect(x, y , 32, hei)
+	end
+	if MySelf.StaminaHAHA then
+		self:DrawStaminaBar()
+	end
+	self:DrawStyle()
 end
 
 local matScope = Material("zombiesurvival/scope")
@@ -83,18 +337,18 @@ function meta:DrawRegularScope()
 	local scrw, scrh = ScrW(), ScrH()
 	local size = math.min(scrw, scrh)
 	surface.SetMaterial(matScope)
-	surface.SetDrawColor(255, 255, 255, 255)
-	surface.DrawTexturedRect((scrw - size) * 0.5, (scrh - size) * 0.5, size, size)
-	surface.SetDrawColor(0, 0, 0, 255)
+	surface_SetDrawColor(255, 255, 255, 255)
+	surface_DrawTexturedRect((scrw - size) * 0.5, (scrh - size) * 0.5, size, size)
+	surface_SetDrawColor(0, 0, 0, 255)
 	if scrw > size then
 		local extra = (scrw - size) * 0.5
-		surface.DrawRect(0, 0, extra, scrh)
-		surface.DrawRect(scrw - extra, 0, extra, scrh)
+		surface_DrawRect(0, 0, extra, scrh)
+		surface_DrawRect(scrw - extra, 0, extra, scrh)
 	end
 	if scrh > size then
 		local extra = (scrh - size) * 0.5
-		surface.DrawRect(0, 0, scrw, extra)
-		surface.DrawRect(0, scrh - extra, scrw, extra)
+		surface_DrawRect(0, 0, scrw, extra)
+		surface_DrawRect(0, scrh - extra, scrw, extra)
 	end
 end
 
@@ -112,43 +366,43 @@ function meta:DrawFuturisticScope()
 	for i=0,6 do
 		local rectsize = math.floor(screenscale * 44) + i * math.floor(130 * screenscale)
 		local hrectsize = rectsize * 0.5
-		surface.SetDrawColor(0,145,255,math.max(35,25 + i * 30)/2)
+		surface_SetDrawColor(0,145,255,math.max(35,25 + i * 30)/2)
 		surface.DrawOutlinedRect(hw-hrectsize,hh-hrectsize,rectsize,rectsize)
 	end
 	if scrw > size then
 		local extra = (scrw - size) * 0.5
 		for i=0,12 do
-			surface.SetDrawColor(0,145,255, math.max(10,255 - i * 21.25)/2)
+			surface_SetDrawColor(0,145,255, math.max(10,255 - i * 21.25)/2)
 			surface.DrawLine(hw,i*line,hw,i*line+line)
 			surface.DrawLine(hw,scrh-i*line,hw,scrh-i*line-line)
 			surface.DrawLine(i*line+extra,hh,i*line+line+extra,hh)
 			surface.DrawLine(scrw-i*line-extra,hh,scrw-i*line-line-extra,hh)
 		end
-		surface.SetDrawColor(0, 0, 0, 255)
-		surface.DrawRect(0, 0, extra, scrh)
-		surface.DrawRect(scrw - extra, 0, extra, scrh)
+		surface_SetDrawColor(0, 0, 0, 255)
+		surface_DrawRect(0, 0, extra, scrh)
+		surface_DrawRect(scrw - extra, 0, extra, scrh)
 	end
 	if scrh > size then
 		local extra = (scrh - size) * 0.5
 		for i=0,12 do
-			surface.SetDrawColor(0,145,255, math.max(10,255 - i * 21.25)/2)
+			surface_SetDrawColor(0,145,255, math.max(10,255 - i * 21.25)/2)
 			surface.DrawLine(hw,i*line+extra,hw,i*line+line+extra)
 			surface.DrawLine(hw,scrh-i*line-extra,hw,scrh-i*line-line-extra)
 			surface.DrawLine(i*line,hh,i*line+line,hh)
 			surface.DrawLine(scrw-i*line,hh,scrw-i*line-line,hh)
 		end
-		surface.SetDrawColor(0, 0, 0, 255)
-		surface.DrawRect(0, 0, scrw, extra)
-		surface.DrawRect(0, scrh - extra, scrw, extra)
+		surface_SetDrawColor(0, 0, 0, 255)
+		surface_DrawRect(0, 0, scrw, extra)
+		surface_DrawRect(0, scrh - extra, scrw, extra)
 	end
 
 	surface.SetMaterial(texGradientU)
-	surface.SetDrawColor(0,0,0,255)
-	surface.DrawTexturedRect((scrw - size) * 0.5, (scrh - size) * 0.5, size, gradsize)
+	surface_SetDrawColor(0,0,0,255)
+	surface_DrawTexturedRect((scrw - size) * 0.5, (scrh - size) * 0.5, size, gradsize)
 	surface.SetMaterial(texGradientD)
-	surface.DrawTexturedRect((scrw - size) * 0.5, scrh - (scrh - size) * 0.5 - gradsize, size, gradsize)
+	surface_DrawTexturedRect((scrw - size) * 0.5, scrh - (scrh - size) * 0.5 - gradsize, size, gradsize)
 	surface.SetMaterial(texGradientR)
-	surface.DrawTexturedRect(scrw - (scrw - size) * 0.5 - gradsize, (scrh - size) * 0.5, gradsize, size)
+	surface_DrawTexturedRect(scrw - (scrw - size) * 0.5 - gradsize, (scrh - size) * 0.5, gradsize, size)
 	surface.DrawTexturedRectRotated((scrw - size) * 0.5 + gradsize / 2, (scrh - size) * 0.5 + size / 2, gradsize, size, 180)
 end
 
@@ -168,8 +422,8 @@ function meta:BaseDrawWeaponSelection(x, y, wide, tall, alpha)
 		local wid, hei = material:Width(), material:Height()
 
 		surface.SetMaterial(material)
-		surface.SetDrawColor(cols.r, cols.g, cols.b, alpha )
-		surface.DrawTexturedRect(x + wide * 0.5 - wid * 0.5, y + tall * 0.5 - hei * 0.5, wid, hei)
+		surface_SetDrawColor(cols.r, cols.g, cols.b, alpha )
+		surface_DrawTexturedRect(x + wide * 0.5 - wid * 0.5, y + tall * 0.5 - hei * 0.5, wid, hei)
 	end
 
 	draw.SimpleTextBlur(self:GetPrintName(), "ZSHUDFontSmaller", x + wide * 0.5, y + tall * 0.15, COLOR_RED, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
@@ -213,4 +467,86 @@ local function HiddenViewModel(self, pos, ang)
 end
 function meta:HideViewModel()
 	self.GetViewModelPosition = HiddenViewModel
+end
+
+local matGradientRight = CreateMaterial("gradient-r", "UnlitGeneric", {["$basetexture"] = "vgui/gradient-r", ["$vertexalpha"] = "1", ["$vertexcolor"] = "1", ["$ignorez"] = "1", ["$nomip"] = "1"})
+function meta:Draw2DFeature( progress, remst, nexst, text, font, color, cenpress, clipif )
+	local w, h = 300, 20
+	local x, y = ScrW() - w, ScrH() - h
+	local alpha = progress >= 1 and math.abs( math.sin( CurTime() * 10 ) ) * 255 or 255 
+	local col = Color( color.r, color.g, color.b, alpha )
+	
+	local wh = math.min( w, progress * w )
+	if remst and remst ~= 0 and nexst and progress >= 1 then
+		wh = math.min( w, wh * ( remst - CurTime() ) / nexst )
+	end
+
+	surface.SetMaterial( matGradientRight )
+	surface_SetDrawColor( Color( 0, 0, 0, 200 ) )
+	surface_DrawTexturedRect( x, y - 122, w, h + 4 )
+
+	surface.SetMaterial( matGradientRight )
+	surface_SetDrawColor( col )
+	surface_DrawTexturedRect( x, y - 120, wh, h )
+
+	surface.SetFont( font )
+	local wtxt, htxt = surface.GetTextSize( text )
+
+	draw.SimpleText( translate.Get( text ), font, x + w, y - 120 - htxt / 2 + 12, col, TEXT_ALIGN_RIGHT )
+
+	if GAMEMODE.NewbieMode and cenpress and progress >= 1 then
+		if clipif and ( self:Clip1() < self:GetMaxClip1() / 2 and ( remst and remst ~= 0 ) ) then return end
+		local nobind = !input.LookupBinding( cenpress )
+		local txt, font = translate.Format(nobind and "no_find_x_bind" or "weapon_press_x", nobind and "+menu" or string.upper( input.LookupBinding( cenpress ) ) ), "ZSHUDFontSmallest"
+		surface.SetFont( font )
+		local wid, hei = surface.GetTextSize( txt )
+
+		draw.SimpleText( txt, font, ScrW() / 2 + wid/2, ScrH() / 2 + 60, col, TEXT_ALIGN_RIGHT )
+	end
+end
+
+function meta:Draw3DFeature( vm, pos, ang, progress, remst, nexst, text, font, color )
+	cam.Start3D2D( pos, ang, self.HUD3DScale / 2 )
+		local alpha = progress >= 1 and math.abs( math.sin( CurTime() * 10 ) ) * 255 or 255 
+		local col = Color( color.r, color.g, color.b, alpha )
+		
+		local wid2, hei2 = 30, 200
+		local x, y = -wid2 - 40, -hei2/2
+
+		local heih = math.min( hei2, progress * hei2 )
+		if remst and remst ~= 0 and nexst and progress >= 0 then
+			heih = math.min( hei2, heih * ( remst - CurTime() ) / nexst )
+		end
+
+		surface_SetDrawColor( Color( 0, 0, 0, 150 ) )
+		surface_DrawRect( x - 10 - wid2, y, wid2, hei2 )
+
+		surface_SetDrawColor( col )
+		surface_DrawRect( x - 10 - wid2, y, wid2, heih )
+		
+		draw.SimpleText( translate.Get( text ), font, x + 150 - wid2, y - 50, col, TEXT_ALIGN_RIGHT )
+	cam.End3D2D()
+end
+
+function meta:Draw3DFeatureHorizontal( vm, pos, ang, progress, remst, nexst, text, font, color )
+	cam.Start3D2D( pos, ang, self.HUD3DScale / 2 )
+		local alpha = progress >= 1 and math.abs( math.sin( CurTime() * 10 ) ) * 255 or 255 
+		local col = Color( color.r, color.g, color.b, alpha )
+		
+		local wid2, hei2 = 40, 200
+		local x, y = -wid2 - 40, -hei2/2
+
+		local heih = math.min( hei2, progress * hei2 )
+		if remst and remst ~= 0 and nexst and progress >= 0 then
+			heih = math.min( hei2, heih * ( remst - CurTime() ) / nexst )
+		end
+
+		surface_SetDrawColor( Color( 0, 0, 0, 150 ) )
+		surface_DrawRect( x - 10 - wid2, y, hei2, wid2 )
+
+		surface_SetDrawColor( col )
+		surface_DrawRect( x - 10 - wid2, y, heih, wid2 )
+
+		draw.SimpleText( translate.Get( text ), font, x + 190 - wid2, y - 50, col, TEXT_ALIGN_RIGHT )
+	cam.End3D2D()
 end

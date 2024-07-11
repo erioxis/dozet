@@ -64,11 +64,11 @@ function ENT:OnTakeDamage(dmginfo)
 	local attacker = dmginfo:GetAttacker()
 	if attacker:IsValid() and attacker:IsPlayer() and attacker:Team() == TEAM_UNDEAD then
 		local owner = self:GetNestOwner()
-		if attacker:GetZombieClassTable().Name ~= "Flesh Creeper" then
+		if !(attacker:GetZombieClassTable().Name == "Flesh Creeper" or attacker:GetZombieClassTable().Name == "Glitch Creeper")  then
 			return
 		end
 
-		if owner and owner:IsValidZombie() and owner ~= attacker and not attacker:IsAdmin() and owner:GetZombieClassTable().Name == "Flesh Creeper" and owner:Alive() and owner:GetPos():DistToSqr(self:GetPos()) <= 589824 then --768^2
+		if owner and owner:IsValidZombie() and owner ~= attacker and not attacker:IsAdmin() and (attacker:GetZombieClassTable().Name == "Flesh Creeper" or attacker:GetZombieClassTable().Name == "Glitch Creeper")  and owner:Alive() and owner:GetPos():DistToSqr(self:GetPos()) <= 589824 then --768^2
 			attacker:CenterNotify(COLOR_RED, translate.ClientFormat(attacker, "x_has_built_this_nest_and_is_still_around", owner:Name()))
 			return
 		end
@@ -128,6 +128,15 @@ function ENT:OnRemove()
 		for _, pl in pairs(team.GetPlayers(TEAM_UNDEAD)) do
 			pl:CenterNotify(COLOR_RED, translate.ClientFormat(pl, "nest_destroyed", name))
 		end
+<<<<<<< Updated upstream
+=======
+		for _, pl in pairs(player.GetAll()) do
+			if self.NKiller:IsValid() and self.NKiller:IsPlayer() then
+				pl:TopNotify(COLOR_YELLOW ,{killicon = "nest"},translate.ClientGet(pl,"nest_destroyed_killicon"),{killicon = (self.NKiller:GetActiveWeapon():GetClass() or "nest")}, self.NKiller)
+			end
+		end
+>>>>>>> Stashed changes
+
 
 		local pos = self:WorldSpaceCenter()
 		for i=1, 8 do

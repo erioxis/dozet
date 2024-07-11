@@ -66,6 +66,11 @@ function PANEL:Init()
 
 	self.m_AuthorLabel = EasyLabel(self, "by "..GAMEMODE.Author.." ("..GAMEMODE.Email..")", "ZSScoreBoardPing", COLOR_GRAY)
 	self.m_ContactLabel = EasyLabel(self, GAMEMODE.Website, "ZSScoreBoardPing", COLOR_GRAY)
+<<<<<<< Updated upstream
+=======
+	self.m_MapLabel = EasyLabel(self, translate.Get("map_sb")..game.GetMap(), "ZSScoreBoardPlayer", COLOR_GRAY)
+	self.m_TickRateLabel = EasyLabel(self, translate.Get("tickrate_sb")..math.Round(1 / engine.TickInterval()), "ZSScoreBoardPlayer", COLOR_GRAY)
+>>>>>>> Stashed changes
 
 	self.m_HumanHeading = vgui.Create("DTeamHeading", self)
 	self.m_HumanHeading:SetTeam(TEAM_HUMAN)
@@ -93,6 +98,14 @@ function PANEL:PerformLayout()
 
 	self.m_AuthorLabel:MoveBelow(self.m_TitleLabel)
 	self.m_ContactLabel:MoveBelow(self.m_AuthorLabel)
+<<<<<<< Updated upstream
+=======
+	self.m_MapLabel:MoveBelow(self.m_ServerNameLabel)
+	self.m_MapLabel:SetPos(752 * screenscale,900* screenscale)
+	if self.m_TickRateLabel and self.m_TickRateLabel:IsValid() then
+		self.m_TickRateLabel:SetPos(2 * screenscale,900* screenscale)
+	end
+>>>>>>> Stashed changes
 
 	self.m_ServerNameLabel:SetPos(math.min(self:GetWide() - self.m_ServerNameLabel:GetWide(), self:GetWide() * 0.75 - self.m_ServerNameLabel:GetWide() * 0.5), 32 - self.m_ServerNameLabel:GetTall() / 2)
 
@@ -131,6 +144,10 @@ function PANEL:Think()
 	if RealTime() >= self.NextRefresh then
 		self.NextRefresh = RealTime() + self.RefreshTime
 		self:RefreshScoreboard()
+	end
+	if self.m_TickRateLabel and self.m_TickRateLabel:IsValid() then
+		self.m_TickRateLabel:Remove()
+		self.m_TickRateLabel = EasyLabel(self, translate.Get("tickrate_sb")..math.Round(1 / engine.TickInterval()), "ZSScoreBoardPlayer", math.Round(1 / engine.TickInterval()) > 20 and COLOR_GREEN or  math.Round(1 / engine.TickInterval()) < 19 and COLOR_RED or COLOR_GRAY )
 	end
 end
 
@@ -189,7 +206,6 @@ function PANEL:RefreshScoreboard()
 	self.m_ServerNameLabel:SetText(GetHostName())
 	self.m_ServerNameLabel:SizeToContents()
 	self.m_ServerNameLabel:SetPos(math.min(self:GetWide() - self.m_ServerNameLabel:GetWide(), self:GetWide() * 0.75 - self.m_ServerNameLabel:GetWide() * 0.5), 32 - self.m_ServerNameLabel:GetTall() / 2)
-
 	if self.PlayerPanels == nil then self.PlayerPanels = {} end
 
 	for pl, panel in pairs(self.PlayerPanels) do
@@ -307,6 +323,13 @@ function PANEL:Init()
 
 	self.m_Mute = vgui.Create("DImageButton", self)
 	self.m_Mute.DoClick = MuteDoClick
+<<<<<<< Updated upstream
+=======
+
+	
+	self.m_Flag = vgui.Create("DImage", self)
+	self.m_Flag:SetSize(32 * math.max(0.95, BetterScreenScale()), 32 * math.max(0.95, BetterScreenScale()))
+>>>>>>> Stashed changes
 
 	self.m_Friend = vgui.Create("DImageButton", self)
 	self.m_Friend.DoClick = ToggleZSFriend
@@ -328,13 +351,14 @@ function PANEL:Paint()
 	end
 
 	if self.Hovered then
-		mul = math.min(1, mul * 1.5)
+		mul = math.min(1, mul * 1.5) + math.abs(math.sin(RealTime() * 3)) * 0.2
 	end
 
 	colTemp.r = col.r * mul
 	colTemp.g = col.g * mul
 	colTemp.b = col.b * mul
 	draw.RoundedBox(4, 0, 0, self:GetWide(), self:GetTall(), colTemp)
+	
 
 	return true
 end
@@ -381,6 +405,9 @@ function PANEL:PerformLayout()
 	self.m_RemortLabel:SizeToContents()
 	self.m_RemortLabel:MoveLeftOf(self.m_ClassImage, 2)
 	self.m_RemortLabel:CenterVertical()
+
+	self.m_Flag:SetSize(self:GetWide() * math.max(0.95, BetterScreenScale()), 32 * math.max(0.95, BetterScreenScale()))
+	self.m_Flag:SetZPos(-10)
 end
 
 function PANEL:RefreshPlayer()
@@ -389,7 +416,11 @@ function PANEL:RefreshPlayer()
 		self:Remove()
 		return
 	end
+<<<<<<< Updated upstream
 
+=======
+	
+>>>>>>> Stashed changes
 	local name = pl:Name()
 	if #name > 23 then
 		name = string.sub(name, 1, 21)..".."
@@ -397,7 +428,13 @@ function PANEL:RefreshPlayer()
 	self.m_PlayerLabel:SetText(name)
 	self.m_PlayerLabel:SetAlpha(240)
 
+<<<<<<< Updated upstream
 	self.m_ScoreLabel:SetText(pl:Frags())
+=======
+
+
+	self.m_ScoreLabel:SetText(pl:GetMScore().."|"..pl:GetPoints())
+>>>>>>> Stashed changes
 	self.m_ScoreLabel:SetAlpha(240)
 
 	local rlvl = pl:GetZSRemortLevel()
@@ -442,8 +479,26 @@ function PANEL:RefreshPlayer()
 		self._LastTeam = pl:Team()
 		self:SetParent(self._LastTeam == TEAM_HUMAN and ScoreBoard.HumanList or ScoreBoard.ZombieList)
 	end
-
+	local used = false
 	self:InvalidateLayout()
+	self.m_Flag:SetVisible(false)
+	self.m_Flag:SetAlpha(190)
+	if pl:IsUserGroup("superadmin") then
+		self.m_PlayerLabel:SetColor(Color(222,71,71))
+		self.m_Flag:SetImage("zombiesurvival/ultraobed.png")
+		used = true
+	elseif pl:SteamID64() == "76561198811927576"  then
+		self.m_PlayerLabel:SetColor(HSVToColor(CurTime()*110 % 360, 1, 1))
+		self.m_Flag:SetImage("zombiesurvival/dobri_banner.png")
+		used = true
+	elseif pl:SteamID64() == "76561198883589289"  then
+		self.m_Flag:SetImage("zombiesurvival/ivan_banner.vtf")
+		used = true
+	end
+	if used then
+		self.m_Flag:SetVisible(true)
+		self.m_Flag:SetAlpha(255)
+	end
 end
 
 function PANEL:Think()
@@ -467,7 +522,7 @@ function PANEL:SetPlayer(pl)
 			self.m_SpecialImage:SetVisible(false)
 		end
 
-		self.m_Flash = pl:SteamID() == "STEAM_0:1:3307510"
+		self.m_Flash = math.random(1,100) == 1
 	else
 		self.m_Avatar:SetVisible(false)
 		self.m_SpecialImage:SetVisible(false)

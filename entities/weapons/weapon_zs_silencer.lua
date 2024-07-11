@@ -1,7 +1,15 @@
 AddCSLuaFile()
 
+<<<<<<< Updated upstream
 SWEP.PrintName = "'Silencer' SMG"
 SWEP.Description = "Shrouds your aura and has very high burst DPS for an SMG, but poor accuracy."
+=======
+---"'Silencer' SMG"
+---"Shrouds your aura and has very high burst DPS for an SMG, but poor accuracy."
+SWEP.PrintName = translate.Get("wep_silencer")
+SWEP.Description = translate.Get("wep_d_silencer")
+
+>>>>>>> Stashed changes
 
 SWEP.Slot = 2
 SWEP.SlotPos = 0

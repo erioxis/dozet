@@ -146,9 +146,16 @@ function CLASS:AltUse(pl)
 end
 
 function CLASS:ProcessDamage(pl, dmginfo)
+<<<<<<< Updated upstream
 	if dmginfo:GetInflictor().IsMelee then
 		dmginfo:SetDamage(dmginfo:GetDamage() / 30)
+=======
+	local attacker = dmginfo:GetAttacker()
+	if attacker and attacker ~= pl and dmginfo:GetInflictor() and dmginfo:GetInflictor().IsMelee  then
+		dmginfo:SetDamage(dmginfo:GetDamage()*0.3)
+>>>>>>> Stashed changes
 	end
+	return dmginfo
 end
 end
 

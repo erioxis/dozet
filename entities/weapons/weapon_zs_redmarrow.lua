@@ -6,6 +6,7 @@ end
 
 SWEP.Base = "weapon_zs_zombie"
 
+<<<<<<< Updated upstream
 SWEP.MeleeDamage = 30
 SWEP.MeleeDamageShielded = 50
 SWEP.MeleeDelay = 0.74
@@ -14,6 +15,26 @@ function SWEP:MeleeHit(ent, trace, damage, forcescale)
 	local owner = self:GetOwner()
 	if owner:GetStatus("redmarrow") then
 		damage = self.MeleeDamageShielded
+=======
+SWEP.MeleeDamage = 41
+SWEP.MeleeDamageShielded = 1700
+SWEP.MeleeDelay = 0.74
+SWEP.MeleeDamageVsProps = 33
+SWEP.MeleeDamageType = DMG_DIRECT
+
+function SWEP:MeleeHit(ent, trace, damage, forcescale)
+	local owner = self:GetOwner()
+	if ent:IsPlayer() and (not ent:GetStatus("hshield")) and ent:GetTimerBERS() < CurTime() and ent:HasTrinket("antibaracat") then
+		ent:Kill()
+	end
+	if ent:IsPlayer() and owner:GetStatus("redmarrow") and !(ent:GetStatus("hshield")) and !owner.Zmainer then
+		damage = self.MeleeDamageShielded
+	end
+	if not ent:IsPlayer() then
+		damage = self.MeleeDamageVsProps
+	else
+		ent:GiveStatus("bloodysickness", 6)
+>>>>>>> Stashed changes
 	end
 
 	self.BaseClass.MeleeHit(self, ent, trace, damage, forcescale)

@@ -27,7 +27,7 @@ function SWEP:PrimaryAttack()
 	if CLIENT then return end
 
 	local owner = self:GetOwner()
-	for _, ent in pairs(ents.FindByClass("status_resupplypack")) do
+	for _, ent in ipairs(ents.FindByClass("status_resupplypack")) do
 		if ent:GetOwner() == owner then
 			owner:Resupply(owner, ent)
 		end

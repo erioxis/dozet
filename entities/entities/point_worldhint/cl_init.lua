@@ -15,7 +15,7 @@ function ENT:DrawHint()
 		local pos = self:GetPos()
 		local eyepos = EyePos()
 		local range = self:GetRange()
-
+	--	print(self:GetHint())
 		if range <= 0 then
 			DrawWorldHint(self:GetHint(), pos)
 		else

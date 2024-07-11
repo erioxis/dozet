@@ -95,7 +95,7 @@ local CachedNails = {}
 timer.Create("CacheNails", 0.3333, 0, function()
 	CachedNails = {}
 
-	for _, nail in pairs(ents.FindByClass("prop_nail")) do
+	for _, nail in ipairs(ents.FindByClass("prop_nail")) do
 		if nail:IsValid() and nail.GetAttachEntity then
 			CachedNails[#CachedNails + 1] = nail
 			nail.CachedAttachEntity = nail:GetAttachEntity()
@@ -128,6 +128,7 @@ function meta:TransAlphaToMe()
 	return 1
 end
 
+<<<<<<< Updated upstream
 GM.CachedArsenalEntities = {}
 timer.Create("CacheArsenalEntities", 0.5, 0, function()
 	if not GAMEMODE then return end
@@ -144,6 +145,49 @@ timer.Create("CacheArsenalEntities", 0.5, 0, function()
 	end
 
 	GAMEMODE.CachedArsenalEntities = arseents
+=======
+GM.CachedGiftEntities = {}
+GM.CachedGift2Entities = {}
+timer.Create("CacheGiftEntities", 3, 0, function()
+	if not GAMEMODE then return end
+	GAMEMODE.CachedGiftEntities = {}
+
+	local gifts = {}
+	table.Add(gifts, ents.FindByClass("prop_gift"))
+
+
+	GAMEMODE.CachedGiftEntities = gifts
+
+	GAMEMODE.CachedGift2Entities = {}
+
+	gifts = {}
+	table.Add(gifts, ents.FindByClass("prop_gift_h"))
+
+
+	GAMEMODE.CachedGift2Entities = gifts
+end)
+GM.CachedASigilEntities = {}
+timer.Create("CacheASigil", 10, 0, function()
+	if not GAMEMODE then return end
+	GAMEMODE.CachedASigilEntities = {}
+
+	local asigil = {}
+	table.Add(asigil, ents.FindByClass("prop_obj_anti_sigil"))
+
+
+	GAMEMODE.CachedASigilEntities = asigil
+end)
+GM.CachedAltarsSigilEntities = {}
+timer.Create("CacheAltarSigil", 25, 0, function()
+	if not GAMEMODE then return end
+	GAMEMODE.CachedAltarsSigilEntities = {}
+
+	local asigil = {}
+	table.Add(asigil, ents.FindByClass("prop_idols"))
+
+
+	GAMEMODE.CachedAltarsSigilEntities = asigil
+>>>>>>> Stashed changes
 end)
 
 GM.CachedResupplyEntities = {}
@@ -181,6 +225,20 @@ timer.Create("CachedRemantlerEntities", 0.5, 0, function()
 	GAMEMODE.CachedRemantlerEntities = remanents
 end)
 
+GM.CachedZSpawns = {}
+GM.NextZThink = 0
+timer.Create("CachedZSSpawnEntities", 2, 0, function()
+	if not GAMEMODE then return end
+	GAMEMODE.CachedZSpawns = {}
+	local zsspawn = {}
+	table.Add(zsspawn, ents.FindByClass("zombiegasses"))
+
+	if GAMEMODE:GetWave() < 4 and !GAMEMODE:GetWaveActive() then
+		GAMEMODE.NextZThink = CurTime() + 7
+		GAMEMODE.CachedZSpawns= zsspawn
+	end
+end)
+
 GM.CachedNests = {}
 timer.Create("CachedNests", 0.5, 0, function()
 	if not GAMEMODE then return end
@@ -188,6 +246,7 @@ timer.Create("CachedNests", 0.5, 0, function()
 
 	local nests = {}
 	table.Add(nests, ents.FindByClass("prop_creepernest"))
+	table.Add(nests, ents.FindByClass("prop_glitchnest"))
 
 	GAMEMODE.CachedNests = nests
 end)

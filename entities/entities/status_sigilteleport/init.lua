@@ -15,7 +15,11 @@ function ENT:Think()
 	local froms = self:GetFromSigil()
 
 	if CurTime() >= self:GetEndTime() then
+<<<<<<< Updated upstream
 		if self:GetTargetSigil():IsValid() then
+=======
+		if froms and froms:IsValid() and self:GetTargetSigil() and self:GetTargetSigil():IsValid() and (owner:Team() == TEAM_HUMAN or self:GetTargetSigil():GetSigilCorrupted()) then
+>>>>>>> Stashed changes
 			owner:DoSigilTeleport(self:GetTargetSigil(), froms, self:GetClass() == "status_corruptedteleport")
 		end
 

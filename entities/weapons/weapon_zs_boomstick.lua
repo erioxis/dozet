@@ -2,9 +2,16 @@ AddCSLuaFile()
 
 SWEP.Base = "weapon_zs_baseshotgun"
 
+<<<<<<< Updated upstream
 SWEP.PrintName = "Boom Stick"
 SWEP.Description = "This shotgun allows you to load up to four shells in the chamber at once. Hold down reload for faster loading of each shell."
 
+=======
+--SWEP.PrintName = "Boom Stick"
+--SWEP.Description = "This shotgun allows you to load up to four shells in the chamber at once. Hold down reload for faster loading of each shell."
+SWEP.PrintName = translate.Get("wep_boomstick")
+SWEP.Description = translate.Get("wep_d_boomstick")
+>>>>>>> Stashed changes
 if CLIENT then
 	SWEP.HUD3DBone = "ValveBiped.Gun"
 	SWEP.HUD3DPos = Vector(1.65, 0, -8)
@@ -49,7 +56,11 @@ SWEP.ReloadSound = Sound("Weapon_Shotgun.Reload")
 
 GAMEMODE:SetPrimaryWeaponModifier(SWEP, WEAPON_MODIFIER_RELOAD_SPEED, 0.07)
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_CLIP_SIZE, 1)
+<<<<<<< Updated upstream
 GAMEMODE:AddNewRemantleBranch(SWEP, 1, "Lithe Stick", "Decreased damage but faster reload, more knockback and more move speed", function(wept)
+=======
+GAMEMODE:AddNewRemantleBranch(SWEP, 1, translate.Get("wep_boomstick_r1"), translate.Get("wep_d_boomstick_r1"), function(wept)
+>>>>>>> Stashed changes
 	wept.Primary.Damage = wept.Primary.Damage * 0.30
 	wept.ReloadSpeed = wept.ReloadSpeed * 1.3
 	wept.Primary.Delay = wept.Primary.Delay * 0.9

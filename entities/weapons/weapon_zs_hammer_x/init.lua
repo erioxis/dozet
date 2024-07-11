@@ -13,7 +13,7 @@ function SWEP:Reload()
 	local ent
 	local dist
 
-	for _, e in pairs(ents.FindByClass("prop_nail")) do
+	for _, e in ipairs(ents.FindByClass("prop_nail")) do
 		if not e.m_PryingOut and e:GetParent() == trent then
 			local edist = e:GetActualPos():DistToSqr(tr.HitPos)
 			if not dist or edist < dist then
@@ -73,9 +73,14 @@ function SWEP:OnMeleeHit(hitent, hitflesh, tr)
 			hitent.ReinforceApplier = owner
 		end
 
+<<<<<<< Updated upstream
 		local healstrength = self.HealStrength * GAMEMODE.NailHealthPerRepair * (owner.RepairRateMul or 1)
 		local oldhealth = hitent:GetBarricadeHealth()
 		if oldhealth <= 0 or oldhealth >= hitent:GetMaxBarricadeHealth() or hitent:GetBarricadeRepairs() <= 0.01 then return end
+=======
+			hitent.BrokendEnd = CurTime() + 2
+			hitent.BrokendApplier = owner
+>>>>>>> Stashed changes
 
 		hitent:SetBarricadeHealth(math.min(hitent:GetMaxBarricadeHealth(), hitent:GetBarricadeHealth() + math.min(hitent:GetBarricadeRepairs(), healstrength)))
 		local healed = hitent:GetBarricadeHealth() - oldhealth
@@ -121,11 +126,9 @@ function SWEP:SecondaryAttack()
 
 	local count = 0
 	for _, nail in pairs(trent:GetNails()) do
-		if nail:GetDeployer() == owner then
-			count = count + 1
-			if count >= GAMEMODE.MaxNails then
-				return
-			end
+		count = count + 1
+		if count >= GAMEMODE.MaxNails then
+			return
 		end
 	end
 
@@ -138,7 +141,7 @@ function SWEP:SecondaryAttack()
 		return
 	end
 
-	for _, nail in pairs(ents.FindByClass("prop_nail")) do
+	for _, nail in ipairs(ents.FindByClass("prop_nail")) do
 		if nail:GetParent() == trent and nail:GetActualPos():DistToSqr(tr.HitPos) <= 81 then
 			owner:PrintTranslatedMessage(HUD_PRINTCENTER, "too_close_to_another_nail")
 			return

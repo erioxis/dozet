@@ -1,8 +1,7 @@
 AddCSLuaFile()
 
-SWEP.PrintName = "Manhack"
-SWEP.Description = "A deployable, remotely controlled device.\nIdeal for scouting but also can be used for attacking from safety.\nHas sharp blades that pierce into zombies."
-
+SWEP.PrintName = translate.Get("wep_mhack")
+SWEP.Description = translate.Get("wep_d_mhack")
 if CLIENT then
 	SWEP.ViewModelFlip = false
 	SWEP.ViewModelFOV = 50
@@ -65,7 +64,7 @@ end
 function SWEP:CanPrimaryAttack()
 	if self:GetOwner():IsHolding() or self:GetOwner():GetBarricadeGhosting() then return false end
 
-	for _, ent in pairs(ents.FindByClass("prop_manhack*")) do
+	for _, ent in ipairs(ents.FindByClass("prop_manhack*")) do
 		if ent:GetObjectOwner() == self:GetOwner() then return false end
 	end
 

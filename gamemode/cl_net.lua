@@ -23,12 +23,117 @@ end)
 net.Receive("zs_armdamage", function(length)
 	MySelf.ArmDamage = net.ReadFloat()
 end)
+net.Receive("zs_code_get", function(length)
+	MySelf.SelfCode = net.ReadString()
+	print(MySelf.SelfCode)
+end)
+
 
 net.Receive("zs_nextboss", function(length)
 	GAMEMODE.NextBossZombie = net.ReadEntity()
 	GAMEMODE.NextBossZombieClass = GAMEMODE.ZombieClasses[net.ReadUInt(8)].Name
 end)
+net.Receive("zs_fuckluasend", function(length)
+	local g = net.ReadInt(16)
+	GAMEMODE.MySkillsRandom[#GAMEMODE.MySkillsRandom+1] = g
+	MySelf:PrintMessage(HUD_PRINTTALK, translate.Format("current_skill_rand",GAMEMODE.Skills[g].Name))
 
+	for k,v in pairs(string.Explode("\n", GAMEMODE.Skills[g].Description)) do 
+		if v:sub(1, 1) == "^" then
+			local colid = tonumber(v:sub(2, 2)) or 0
+			local v = v:sub(3)
+			chat.AddText(util.ColorIDToColor(colid, COLOR_GRAY), v )
+		end
+	end
+end)
+local kill_sounds = {
+    "mge/kill/6am.wav",
+    "mge/kill/16-0.wav",
+    "mge/kill/bro.wav",
+    "mge/kill/cock.wav",
+    "mge/kill/debil.wav",
+    "mge/kill/etoez.wav",
+    "mge/kill/ez.wav",
+    "mge/kill/hi_mother.wav",
+    "mge/kill/kak.wav",
+    "mge/kill/kakzhe.wav",
+    "mge/kill/kashtan.wav",
+    "mge/kill/killthemall.wav",
+    "mge/kill/knife.wav",
+    "mge/kill/kulak.wav",
+    "mge/kill/maloy.wav",
+    "mge/kill/musor.wav",
+    "mge/kill/musor2.wav",
+    "mge/kill/na.wav",
+    "mge/kill/noobs.wav",
+    "mge/kill/perhot.wav",
+    "mge/kill/petushok.wav",
+    "mge/kill/pivorezka.wav",
+    "mge/kill/roblox.wav",
+    "mge/kill/school.wav",
+    "mge/kill/shotgun.wav",
+    "mge/kill/shutup.wav",
+    "mge/kill/tolstyak.wav",
+	"mge/death/brat.wav",
+    "mge/death/che.wav",
+    "mge/death/circus.wav",
+    "mge/death/eeee.wav",
+    "mge/death/leave1.wav",
+    "mge/death/leave2.wav",
+    "mge/death/leave3.wav",
+    "mge/death/monitor.wav",
+    "mge/death/mrazi.wav",
+    "mge/death/prikolist.wav",
+    "mge/death/rest.wav",
+    "mge/death/rezat.wav",
+    "mge/death/shkaf1.wav",
+    "mge/death/shkaf2.wav",
+    "mge/death/shkaf3.wav",
+    "mge/death/shock.wav",
+    "mge/death/tip.wav",
+    "mge/death/vot_eto.wav",
+    "mge/death/vot_eto2.wav"
+}
+net.Receive("zs_mge_phr", function(length)
+	local sound = kill_sounds[math.random(1,#kill_sounds)]
+	MySelf:EmitSound(sound)
+end)
+local function Some(tbl,upd)
+	for k,v in pairs(MySelf.StyleMoment) do
+		if v.text == tbl.text then
+			v.count = (v.count or 1)+1
+			if v.score then
+				v.score = v.score + tbl.score
+			end
+			v.time = math.min(v.time + 2,CurTime()+10)
+
+			MySelf.StyleMoment[k] = v
+			return true
+		end
+	end
+	return false
+end
+net.Receive("zs_lore_book", function(len, sender)
+	GAMEMODE:CreateLoreMenu(net.ReadTable())
+end)
+net.Receive("zs_update_style", function(length)
+	if !GAMEMODE.NoStyle then return end
+	local tbl = net.ReadTable()
+	if Some(tbl) then return end
+	MySelf.StyleMoment[#MySelf.StyleMoment+1] = tbl
+	if table.Count(tbl) <= 0 then
+		MySelf.StyleMoment = {[1] = {text = "OVERLOAD", time = 2 + CurTime()}}
+	end
+	net.Start("zs_sync_style")
+		net.WriteTable(MySelf.StyleMoment)
+	net.SendToServer()
+end)
+net.Receive("zs_last_points", function(length)
+	local count = net.ReadInt(8)
+	MySelf.LastAddedPoints = count
+	MySelf.LastCheckPoints = CurTime() + 2.7
+	timer.Simple(3, function() MySelf.LastAddedPoints = MySelf.LastAddedPoints - count end)
+end)
 net.Receive("zs_zvols", function(length)
 	local volunteers = {}
 	local count = net.ReadUInt(8)
@@ -51,6 +156,70 @@ net.Receive("zs_dmg", function(length)
 		util.Effect("damagenumber", effectdata)
 	end
 end)
+<<<<<<< Updated upstream
+=======
+net.Receive("zs_at_dmg", function(length)
+	local typed = net.ReadUInt(4)
+	local damage = net.ReadUInt(16)
+	local pos = net.ReadVector()
+
+	if DamageFloaters then
+		local effectdata = EffectData()
+			effectdata:SetOrigin(pos)
+			effectdata:SetMagnitude(damage)
+			effectdata:SetScale(typed)
+		util.Effect("damage_at_number", effectdata)
+	end
+end)
+net.Receive("zs_block_number", function(length)
+	local bool = net.ReadUInt(4)
+	local pos = net.ReadVector()
+
+	if DamageFloaters then
+		local effectdata = EffectData()
+			effectdata:SetOrigin(pos)
+			effectdata:SetAttachment(bool)
+			effectdata:SetScale(0)
+		util.Effect("blocknumber", effectdata)
+	end
+end)
+net.Receive("zs_status_float", function(length)
+	local bool = net.ReadString()
+	local pos = net.ReadVector()
+
+	if DamageFloaters then
+		GAMEMODE.PushAp = bool
+		local effectdata = EffectData()
+			effectdata:SetOrigin(pos)
+			effectdata:SetScale(0)
+		util.Effect("statusfloat", effectdata)
+	end
+end)
+net.Receive("HNS.AchievementsProgress", function()
+	local p = util.JSONToTable(net.ReadString())
+	local completed = net.ReadInt(9)
+    GAMEMODE.AchievementsProgress =  p
+
+
+    -- Clamp progress
+    for id, progress in pairs(p) do
+        if isnumber(progress)   then
+            GAMEMODE.AchievementsProgress[id] = math.Clamp(progress, 0, GAMEMODE.Achievements[id].Goal or 1)
+
+        end
+    end
+end)
+net.Receive("HNS.AchievementsGet", function()
+    local ply = net.ReadEntity()
+    local id = net.ReadString()
+    -- Chat
+    chat.AddText(COLOR_WHITE, "[", Color(125, 255, 125), "ZS", COLOR_WHITE, "] ", ply, COLOR_WHITE, " has earned ", Color(125, 255, 125), GAMEMODE.Achievements[id].Name, COLOR_WHITE, ".")
+    -- Sound
+  
+
+end)
+
+>>>>>>> Stashed changes
 
 net.Receive("zs_dmg_prop", function(length)
 	local damage = net.ReadUInt(16)
@@ -69,12 +238,14 @@ net.Receive("zs_lifestats", function(length)
 	local barricadedamage = net.ReadUInt(16)
 	local humandamage = net.ReadUInt(16)
 	local brainseaten = net.ReadUInt(8)
+	local reduceddamage = net.ReadUInt(16)
 
 	GAMEMODE.LifeStatsEndTime = CurTime() + GAMEMODE.LifeStatsLifeTime
 
 	GAMEMODE.LifeStatsBarricadeDamage = barricadedamage
 	GAMEMODE.LifeStatsHumanDamage = humandamage
 	GAMEMODE.LifeStatsBrainsEaten = brainseaten
+	GAMEMODE.LifeStatsDamageReduced = reduceddamage
 end)
 
 net.Receive("zs_lifestatsbd", function(length)
@@ -117,7 +288,7 @@ net.Receive("zs_wavestart", function(length)
 
 	gamemode.Call("SetWave", wave)
 	gamemode.Call("SetWaveEnd", time)
-
+	system.FlashWindow()
 	if GAMEMODE.ZombieEscape then
 		GAMEMODE:CenterNotify(COLOR_RED, {font = "ZSHUDFont"}, translate.Get("escape_from_the_zombies"))
 	elseif wave == GAMEMODE:GetNumberOfWaves() then
@@ -138,12 +309,16 @@ net.Receive("zs_classunlock", function(length)
 	GAMEMODE:CenterNotify(COLOR_GREEN, translate.Format("x_unlocked", net.ReadString()))
 end)
 
+net.Receive( "zs_illegalmechanism", function( length )
+	GAMEMODE:CenterNotify( COLOR_CYAN, translate.Format( "points_for_illegalmechanism", net.ReadInt( 16 ) ) )
+end )
+
 net.Receive("zs_waveend", function(length)
 	local wave = net.ReadInt(16)
 	local time = net.ReadFloat()
 
 	gamemode.Call("SetWaveStart", time)
-
+	system.FlashWindow()
 	if wave < GAMEMODE:GetNumberOfWaves() and wave > 0 then
 		GAMEMODE:CenterNotify(COLOR_RED, {font = "ZSHUDFont"}, translate.Format("wave_x_is_over", wave))
 		GAMEMODE:CenterNotify(translate.Get("wave_x_is_over_sub"))
@@ -197,6 +372,71 @@ net.Receive("zs_boss_spawned", function(length)
 		MySelf:EmitSound(string.format("npc/zombie_poison/pz_alert%d.wav", math.random(1, 2)), 0, math.random(95, 105))
 	end
 end)
+<<<<<<< Updated upstream
+=======
+net.Receive("zs_champion", function(length)
+	local classindex = net.ReadUInt(8)
+	local classtbl = GAMEMODE.ZombieClasses[classindex]
+	local ki = {killicon = classtbl.SWEP}
+	local kid = {killicon = "default"}
+	GAMEMODE:CenterNotify(kid, " ", COLOR_RED, translate.Get("you_champion"), kid)
+end)
+net.Receive("zs_champion_all", function(length)
+	local ent = net.ReadEntity()
+	local classindex = net.ReadUInt(8)
+	local classtbl = GAMEMODE.ZombieClasses[classindex]
+	local ki = {killicon = classtbl.SWEP}
+	local kid = {killicon = "default"}
+	GAMEMODE:TopNotify(kid, " ", COLOR_RED, translate.Format("s_champion",(ent and ent.Nick and ent:Nick() or "?")), kid)
+
+	if MySelf:IsValid() and MySelf == ent then
+		MySelf:EmitSound(string.format("npc/zombie_poison/pz_alert%d.wav", math.random(1, 2)), 0, math.random(25,35))
+	end
+end)
+net.Receive("zs_golden", function(length)
+	local kid = {killicon = "default"}
+	GAMEMODE:TopNotify(kid, " ", COLOR_RED, translate.Get("golden_appeared"), kid)
+
+	if MySelf:IsValid() and MySelf == ent then
+		MySelf:EmitSound("zombiesurvival/Coin_Throw.mp3", 0, math.random(25,65))
+	end
+end)
+net.Receive("zs_boss_spawned_merge", function(length)
+	local ent = net.ReadEntity()
+	local classindex = net.ReadUInt(8)
+	local ent2 = net.ReadEntity()
+	local classtbl = GAMEMODE.ZombieClasses[classindex]
+	local ki = {killicon = classtbl.SWEP}
+	local kid = {killicon = "default"}
+
+	if ent == MySelf and ent:IsValid() then
+		GAMEMODE:CenterNotify(ki, " ", COLOR_RED, translate.Format("you_are_x", translate.Get(classtbl.TranslationName)), ki)
+	elseif ent:IsValid() and P_Team(MySelf) == TEAM_UNDEAD then
+		GAMEMODE:CenterNotify(ki, " ", COLOR_RED, translate.Format("x_has_transed_as_y", ent:Name(), ent2:Name(),translate.Get(classtbl.TranslationName)), ki)
+	else
+		GAMEMODE:CenterNotify(kid, " ", COLOR_RED, translate.Get("x_has_transed"), kid)
+	end
+
+	if MySelf:IsValid() then
+		MySelf:EmitSound(string.format("npc/zombie_poison/pz_alert%d.wav", math.random(1, 2)), 0, math.random(95, 105))
+	end
+end)
+net.Receive("zs_demiboss_spawned", function(length)
+	local ent = net.ReadEntity()
+	local classindex = net.ReadUInt(8)
+	local classtbl = GAMEMODE.ZombieClasses[classindex]
+	local ki = {killicon = classtbl.SWEP}
+	local kid = {killicon = "default"}
+
+	if ent == MySelf and ent:IsValid() then
+		GAMEMODE:CenterNotify(ki, " ", COLOR_YELLOW, translate.Format("you_are_x", translate.Get(classtbl.TranslationName)), ki)
+	elseif ent:IsValid() and P_Team(MySelf) == TEAM_UNDEAD then
+		GAMEMODE:CenterNotify(ki, " ", COLOR_YELLOW, translate.Format("x_has_risen_as_y", ent:Name(), translate.Get(classtbl.TranslationName)), ki)
+	else
+		GAMEMODE:CenterNotify(kid, " ", COLOR_YELLOW, translate.Get("x_has_risen_demi"), kid)
+	end
+end)
+>>>>>>> Stashed changes
 net.Receive("zs_boss_slain", function(length)
 	local ent = net.ReadEntity()
 	local classindex = net.ReadUInt(8)
@@ -396,14 +636,67 @@ net.Receive("zs_trinketconsumed", function(length)
 
 	GAMEMODE:CenterNotify({killicon = "weapon_zs_trinket"}, " ", COLOR_RORANGE, translate.Format("trinket_consumed", trinket))
 end)
+<<<<<<< Updated upstream
+=======
+net.Receive("zs_trinketcorrupt", function(length)
+	local trinket = (GAMEMODE.ZSInventoryItemData[net.ReadString()].PrintName or "?")
+	local who = net.ReadString()
+	local trinket2 = (GAMEMODE.ZSInventoryItemData[who] and GAMEMODE.ZSInventoryItemData[who].PrintName or "?")
+	MySelf:EmitSound("buttons/button3.wav", 75, 50)
+
+	GAMEMODE:CenterNotify({killicon = "weapon_zs_trinket"}, " ", COLOR_RED, translate.Format("trinket_dead", trinket, trinket2))
+end)
+net.Receive("zs_pointsdoubled", function(length)
+	MySelf:EmitSound("buttons/button3.wav", 75, 50)
+
+	GAMEMODE:CenterNotify({killicon = "weapon_zs_trinket"}, " ", COLOR_RORANGE, translate.Format("pointsdoubled"))
+end)
+net.Receive("zs_luck", function(length)
+	local luck = net.ReadString()
+	MySelf:EmitSound("buttons/button3.wav", 75, 50)
+
+	GAMEMODE:CenterNotify({killicon = "weapon_zs_trinket", Tag = "luck"..luck}, " ", COLOR_RED, translate.Format("yluck", luck, math.Round(math.max((luck/(MySelf:IsSkillActive(SKILL_BLUCK) and 3 or 5) or 1),1))-1))
+end)
+
+net.Receive("zs_damageblock", function(length)
+	GAMEMODE:CenterNotify({block = true})
+end)
+net.Receive("zs_xp_damage", function(length)
+	local xpadd = net.ReadString()
+	GAMEMODE:CenterNotify(COLOR_GREEN, translate.Format("xp_damage", xpadd))
+end)
+net.Receive("zs_holymantle", function(length)
+	GAMEMODE:CenterNotify(" ", COLOR_GREEN, translate.Format("holymantle"))
+end)
+net.Receive("zs_skillarsenalvoid", function(length)
+	local drop = net.ReadString()
+	MySelf:EmitSound("buttons/button3.wav", 75, 50)
+
+	GAMEMODE:CenterNotify({killicon = "weapon_zs_plank_q1"}, " ", COLOR_GREEN, translate.Format("arsvoid", drop))
+end)
+net.Receive("zs_medpremium", function(length)
+	local drop = net.ReadString()
+	MySelf:EmitSound("buttons/button3.wav", 75, 50)
+
+	GAMEMODE:CenterNotify({killicon = "weapon_zs_trinket"}, " ", COLOR_GREEN, translate.Format("premiumget", GAMEMODE.ZSInventoryItemData[drop].PrintName))
+end)
+
+>>>>>>> Stashed changes
 
 net.Receive("zs_invitem", function(length)
 	local invitemt = net.ReadString()
-	local inviname = GAMEMODE.ZSInventoryItemData[invitemt].PrintName
+	local inviname = (GAMEMODE.ZSInventoryItemData[invitemt] and GAMEMODE.ZSInventoryItemData[invitemt].PrintName or "Nothing")
 	local category = GAMEMODE:GetInventoryItemType(invitemt)
+	local ico = (GAMEMODE.ZSInventoryItemData[invitemt] and GAMEMODE.ZSInventoryItemData[invitemt].Icon or "weapon_zs_trinket")
 
 	surface.PlaySound("items/ammo_pickup.wav")
-	GAMEMODE:CenterNotify({killicon = category == INVCAT_TRINKETS and "weapon_zs_trinket" or "weapon_zs_craftables"}, " ", COLOR_RORANGE, translate.Format("obtained_a_inv", inviname))
+	GAMEMODE:CenterNotify({killicon = category == INVCAT_TRINKETS and ico or "weapon_zs_craftables"}, " ", COLOR_RORANGE, translate.Format("obtained_a_inv", inviname))
+end)
+net.Receive("zs_t_activated", function(length)
+	local invitemt = net.ReadString()
+	local inviname = (GAMEMODE.ZSInventoryItemData[invitemt] and GAMEMODE.ZSInventoryItemData[invitemt].PrintName or "Nothing")
+	surface.PlaySound("items/ammo_pickup.wav")
+	GAMEMODE:CenterNotify({killicon = "weapon_zs_craftables"}, " ", COLOR_RORANGE, translate.Format("trinket_activated", inviname))
 end)
 
 net.Receive("zs_invgiven", function(length)

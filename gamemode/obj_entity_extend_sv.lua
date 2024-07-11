@@ -10,11 +10,15 @@ end]]
 function meta:IsDoorLocked()
 	return self:GetSaveTable().m_bLocked
 end
-
 function meta:HealPlayer(pl, amount, pointmul, nobymsg, poisononly)
 	local healed, rmv = 0, 0
 
+<<<<<<< Updated upstream
 	local health, maxhealth = pl:Health(), pl:IsSkillActive(SKILL_D_FRAIL) and math.floor(pl:GetMaxHealth() * 0.25) or pl:GetMaxHealth()
+=======
+	local cashhealth = pl:GetMaxHealth()
+	local health, maxhealth = pl:Health(), pl:IsSkillActive(SKILL_D_FRAIL) and math.floor(cashhealth * 0.44) or pl:IsSkillActive(SKILL_ABUSE) and math.floor(cashhealth * 0.25) or cashhealth
+>>>>>>> Stashed changes
 	local missing_health = maxhealth - health
 	local poison = pl:GetPoisonDamage()
 	local bleed = pl:GetBleedDamage()
@@ -27,11 +31,46 @@ function meta:HealPlayer(pl, amount, pointmul, nobymsg, poisononly)
 	amount = amount * multiplier
 
 	-- Heal bleed first.
+<<<<<<< Updated upstream
 	if not poisononly and bleed > 0 then
 		rmv = math.min(amount, bleed)
 		pl:AddBleedDamage(-rmv)
 		healed = healed + rmv
 		amount = amount - rmv
+=======
+	if self.RemedyRegen then
+		pl.UltraCharge = pl.UltraCharge+ 1
+		if pl.UltraCharge >= 32 - (self:HasTrinket("remedy_q5") and 10 or 0) then
+			pl:GiveStatus("strengthdartboost",30,self)
+			pl:GiveStatus("medrifledefboost",30,self)
+			pl:GiveStatus("holly",30,self)
+			pl.UltraCharge = 0
+		end
+	end
+	if pl ~= self and self:GetMastery('medic') > 4 and math.random(1,100) == 1 then 
+		for k,v in pairs(pl:GetStatuses()) do
+			local class = v:GetClass() 
+			class = string.sub(class,8,#class)
+			local tab = GAMEMODE.Statuses[class]
+			if tab and tab.Debuff then
+				pl:RemoveStatus(class,nil,true)
+				pl:SendLua('GAMEMODE:CenterNotify(COLOR_WHITE, "Статус "..translate.Get("s_"..GAMEMODE.Statuses[\"'..class..'\"].Name).." успешно убран!")')
+				self:SendLua('GAMEMODE:CenterNotify(COLOR_WHITE, "Статус "..translate.Get("s_"..GAMEMODE.Statuses[\"'..class..'\"].Name).." у игрока успешно убран!")')
+				break
+			end
+		end
+	end
+	if not pl:IsSkillActive(SKILL_DEFENDBLOOD) then
+		if not poisononly and bleed > 0 then
+			rmv = math.min(amount, bleed)
+			pl:AddBleedDamage(-rmv)
+			healed = healed + rmv
+			amount = amount - rmv
+		end
+>>>>>>> Stashed changes
+	end
+	if  amount > 7 and pl:GetStatus('serrated') then
+		pl:RemoveStatus('serrated')
 	end
 
 	-- Heal poison next.
@@ -45,6 +84,14 @@ function meta:HealPlayer(pl, amount, pointmul, nobymsg, poisononly)
 	-- Then heal missing health.
 	if not poisononly and missing_health > 0 and amount > 0 then
 		rmv = math.min(amount, missing_health)
+		local sts = pl:GetStatus("dosei_inf")
+		if sts then
+			self:TakeSpecialDamage(rmv, DMG_DIRECT,sts.Applier,sts)
+			return
+		end
+		if self:IsSkillActive(SKILL_MEDICBOOSTER) then
+			pl:GiveStatus("regeneration",nil,self):AddDamage(rmv*0.1)
+		end
 		pl:SetHealth(health + rmv)
 		healed = healed + rmv
 		amount = amount - rmv
@@ -55,13 +102,23 @@ function meta:HealPlayer(pl, amount, pointmul, nobymsg, poisononly)
 	if healed > 0 and self:IsPlayer() then
 		gamemode.Call("PlayerHealedTeamMember", self, pl, healed, self:GetActiveWeapon(), pointmul, nobymsg, healed >= 10)
 		pl:SetPhantomHealth(math.max(0, pl:GetPhantomHealth() - healed))
+		self:GiveAchievementProgress("best_medicine", healed)
+		if self:IsSkillActive(SKILL_M_CHAINS) then
+			local chain = pl:GiveStatus("chains",15)
+			chain:SetDTEntity(11,self)
+		end
 	end
 
 	return healed
 end
 
 local healthpropscalar = {
+<<<<<<< Updated upstream
 	["models/props_c17/door01_left.mdl"] = 0.7
+=======
+	["models/props_c17/door01_left.mdl"] = 2,
+	["models/props_c17/oildrum001_explosive.mdl"] = 0.001
+>>>>>>> Stashed changes
 }
 
 function meta:GetDefaultBarricadeHealth()
@@ -176,12 +233,12 @@ local function CheckItemCreated(self)
 	if not self:IsValid() or self.PlacedInMap then return end
 
 	local tab = {}
-	for _, ent in pairs(ents.FindByClass("prop_ammo")) do
+	for _, ent in ipairs(ents.FindByClass("prop_ammo")) do
 		if not ent.PlacedInMap then
 			table.insert(tab, ent)
 		end
 	end
-	for _, ent in pairs(ents.FindByClass("prop_weapon")) do
+	for _, ent in ipairs(ents.FindByClass("prop_weapon")) do
 		if not ent.PlacedInMap then
 			table.insert(tab, ent)
 		end
@@ -355,13 +412,12 @@ function meta:ResetLastBarricadeAttacker(attacker, dmginfo)
 			attacker.BarricadeDamage = attacker.BarricadeDamage + dmg
 			if attacker.LifeBarricadeDamage ~= nil then
 				attacker:AddLifeBarricadeDamage(dmg)
-				GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_ZOMBIECLASS, attacker:GetZombieClassTable().Name, "BarricadeDamage", dmg)
 			end
 		end
 	end
 end
 
-meta.OldSetPhysicsAttacker = meta.SetPhysicsAttacker
+meta.OldSetPhysicsAttacker = meta.OldSetPhysicsAttacker or meta.SetPhysicsAttacker
 function meta:SetPhysicsAttacker(ent)
 	if string.sub(self:GetClass(), 1, 12) == "func_physbox" and ent:IsValid() then
 		self.PBAttacker = ent
@@ -401,7 +457,7 @@ function meta:DamageNails(attacker, inflictor, damage, dmginfo)
 		return true
 	end
 
-	if self.ReinforceEnd and CurTime() < self.ReinforceEnd and self.ReinforceApplier and self.ReinforceApplier:IsValidLivingHuman() then
+	if self:GetDTFloat(12) and CurTime() < self:GetDTFloat(12) and self.ReinforceApplier and self.ReinforceApplier:IsValidLivingHuman() then
 		local applier = self.ReinforceApplier
 		local multi = 0.92
 		local dmgbefore = damage * 0.08
@@ -413,6 +469,47 @@ function meta:DamageNails(attacker, inflictor, damage, dmginfo)
 		applier.PropDef = (applier.PropDef or 0) + dmgbefore
 		applier:AddPoints(points)
 	end
+<<<<<<< Updated upstream
+=======
+	if self:GetDTFloat(13) and CurTime() < self:GetDTFloat(13) and self.naniteApplier and self.naniteApplier:IsValidLivingHuman() then
+		local applier = self.naniteApplier
+		local multi = 0.20
+		local dmgbefore = damage * 0.80
+
+
+		dmginfo:SetDamage(dmginfo:GetDamage() * multi)
+		damage = damage * multi
+
+		applier.PropDef = (applier.PropDef or 0) + dmgbefore
+
+	end
+	if self.BrokendEnd and CurTime() < self.BrokendEnd and self.BrokendApplier and self.BrokendApplier:IsValidLivingZombie() then
+		local applier = self.BrokendApplier
+		local multi = 2
+
+		dmginfo:SetDamage(dmginfo:GetDamage() * multi)
+		damage = damage * multi
+
+	end
+	if self:GetDTFloat(14) and CurTime() < self:GetDTFloat(14) and self.CaderApplier and self.CaderApplier:IsValidLivingHuman() then
+		local applier = self.CaderApplier
+		local multi = 2.5
+		dmginfo:SetDamage(dmginfo:GetDamage() * multi)
+	end
+	if self:GetDTFloat(15) and CurTime() < self:GetDTFloat(15) and self.ApplierUseSelf and self.ApplierUseSelf:IsValidLivingHuman() then
+		local applier = self.ApplierUseSelf
+		applier:TakeDamage(damage*0.15,DMG_DIRECT,attacker,inflictor)
+		local multi = 0.78
+		local dmgbefore = damage 
+		local points = dmgbefore / 7
+
+		dmginfo:SetDamage(dmginfo:GetDamage() * multi)
+		damage = damage * multi
+
+		applier.PropDef = (applier.PropDef or 0) + dmgbefore
+		applier:AddPoints(points)
+	end
+>>>>>>> Stashed changes
 
 	if gamemode.Call("IsEscapeDoorOpen") then
 		local multi = gamemode.Call("GetEscapeStage") * 1.5
@@ -427,12 +524,59 @@ function meta:DamageNails(attacker, inflictor, damage, dmginfo)
 
 	if attacker:IsPlayer() then
 		-- :O)
+		local owner = self:GetOwner()
 		if attacker.SpawnProtection then
 			damage = damage * 5
 			dmginfo:SetDamage(damage)
 			self:AddUselessDamage(damage)
 		end
+<<<<<<< Updated upstream
 
+=======
+		if attacker.Zban then
+			dmginfo:SetDamage(0)
+			damage = 0
+		end
+		if attacker.m_PropCurse then
+			damage = damage * 1.35
+			dmginfo:SetDamage(damage)
+		end
+		if attacker.m_Zmain then
+			damage = damage * 1.5
+			dmginfo:SetDamage(damage)
+		end
+		local tblz = attacker:GetZombieClassTable()
+		if tblz.CanPiz and tblz.SWEP ~= inflictor:GetClass() then
+			damage = damage*0.1/(inflictor.Tier and inflictor.Tier or 1)
+			dmginfo:SetDamage(damage)
+		end
+		if owner ~= attacker and damage > 0 then
+			attacker:AddTokens(math.ceil((damage or 2) * 0.15))
+			if attacker.m_DoubleXP then
+				attacker:AddTokens(math.ceil((damage or 2) * 0.15))
+			end
+		end
+		local live = nails[math.random(1,#nails)]
+		local lowler = live:GetOwner()
+		if lowler and lowler:IsValid() then
+			if !inflictor.ZombieCanPickup and lowler:IsSkillActive(SKILL_SPICY_CADES) and inflictor == attacker:GetActiveWeapon() and DMG_BULLET ~= dmginfo:GetDamageType() then 
+				attacker:TakeSpecialDamage(damage*2,DMG_SLASH,lowler,live,dmginfo:GetDamagePosition(),0)
+			end
+			if lowler:HasTrinket('ice_of_nails') then
+				dmginfo:SetDamage(damage*(1-math.Clamp(((self:GetDTFloat(16)-CurTime())*-1)/15,0,.5)))
+				self:SetDTFloat(16,CurTime()+20)
+			end
+			if lowler:HasTrinket('deal_with_zombie') then
+				local takeseconds = damage/250
+				lowler.NextResupplyUse = lowler.NextResupplyUse - takeseconds 
+				net.Start("zs_nextresupplyuse")
+					net.WriteFloat(lowler.NextResupplyUse)
+				net.Send(lowler)
+
+			end
+		end
+		damage = dmginfo:GetDamage()
+>>>>>>> Stashed changes
 		GAMEMODE:DamageFloater(attacker, self, dmginfo:GetDamagePosition(), dmginfo:GetDamage())
 	end
 
@@ -551,7 +695,7 @@ function meta:RemoveNail(nail, dontremoveentity, removedby, forceremoveconstrain
 	local cons = nail:GetNailConstraint()
 	local othernails = 0
 	if not forceremoveconstraint then
-		for _, othernail in pairs(ents.FindByClass("prop_nail")) do
+		for _, othernail in ipairs(ents.FindByClass("prop_nail")) do
 			if othernail ~= nail and not nail.m_IsRemoving and othernail:GetNailConstraint():IsValid() and othernail:GetNailConstraint() == cons then
 				othernails = othernails + 1
 			end
@@ -713,6 +857,7 @@ GM.ProjectileThickness = 3
 
 function meta:ProjectileTraceAhead(phys)
 	if not self.Touched then
+		local human = self:GetOwner() == TEAM_HUMAN
 		local vel = self.PreVel or phys:GetVelocity()
 		if self.PreVel then self.PreVel = nil end
 
@@ -740,7 +885,7 @@ function meta:ProjectileTraceAhead(phys)
 			if trace.Entity then
 				local ent = trace.Entity
 
-				if ent:IsValidLivingZombie() or ent.ZombieConstruction then
+				if human and (ent:IsValidLivingZombie() or ent.ZombieConstruction) or ent:IsValidLivingHuman() then
 					self.Touched = trace
 				end
 

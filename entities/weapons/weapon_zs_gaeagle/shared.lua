@@ -47,6 +47,7 @@ SWEP.ReloadSpeed = 0.7
 
 SWEP.FireAnimSpeed = 1.8
 
+<<<<<<< Updated upstream
 SWEP.Tier = 4
 
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_CLIP_SIZE, 1)
@@ -55,3 +56,49 @@ function SWEP:ShootBullets(dmg, numbul, cone)
 
 	BaseClass.ShootBullets(self, dmg, numbul, cone)
 end
+=======
+SWEP.Tier = 7
+
+GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_CLIP_SIZE, 2)
+function SWEP:SetHitStacks( stacks )
+	self:SetDTFloat( 11, stacks )
+end
+
+function SWEP:GetHitStacks()
+	return self:GetDTFloat( 11 )
+end
+function SWEP.BulletCallback(at,tr,dmginfo)
+	local wep = dmginfo:GetInflictor()
+	local hitent = tr.Entity
+	if hitent:IsValidLivingZombie() then
+		wep:SetHitStacks(wep:GetHitStacks()+1)
+	end
+	at:GetActiveWeapon().BaseClass.BulletCallback(at, tr, dmginfo)
+end
+function SWEP:ShootBullets(dmg, numbul, cone)
+	dmg = dmg + dmg * (120 * self:Clip1() / self.Primary.ClipSize)
+
+	BaseClass.ShootBullets(self, dmg, numbul, cone)
+end
+
+function SWEP:PrimaryAttack()
+	if not self:CanPrimaryAttack() then return end
+	local owner = self:GetOwner()
+	if owner:GetAmmoCount("pulse") < 30 then return end
+	local owm = (owner.M_FireDelay or 1)
+	self:SetNextPrimaryFire(CurTime() + self:GetFireDelay() * (1 * owm))
+	local extramulti = 1
+	if owner:HasTrinket("supasm") and (self.Tier or 1) <= 2  then
+		extramulti = 1.25
+	end
+
+
+	self:EmitFireSound()
+	self:TakeAmmo()
+	owner:SetAmmo(math.max(0,owner:GetAmmoCount("pulse")-30),"pulse")
+	self:ShootBullets(self.Primary.Damage * (self:GetPrimaryClipSize() >= 12 and owner:IsSkillActive(SKILL_LAST_AMMO) and 0.75 or self:GetPrimaryClipSize() <= 11 and owner:IsSkillActive(SKILL_LAST_AMMO) and 1.5 + ((self:GetPrimaryClipSize()) * 0.01) or 1) * (extramulti or 1), self.Primary.NumShots, self:GetCone())
+	self:SetShotgunHeat(CurTime()+(self.ShotGunHeatTimeMul or 1.2))
+	self.IdleAnimation = CurTime() + self:SequenceDuration()
+end
+
+>>>>>>> Stashed changes

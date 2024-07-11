@@ -5,7 +5,7 @@ CLASS.Help = "controls_lacerator_charging"
 
 CLASS.Model = Model("models/player/zombie_lacerator2.mdl")
 
-CLASS.Wave = 4 / 6
+CLASS.Wave = 3 / 6
 
 CLASS.Health = 600
 CLASS.Speed = 220
@@ -17,6 +17,7 @@ CLASS.ViewOffset = Vector(0, 0, 50)
 CLASS.ViewOffsetDucked = Vector(0, 0, 24)
 
 CLASS.Points = CLASS.Health/GM.NoHeadboxZombiePointRatio
+CLASS.BetterVersion = "Toxical Charger"
 
 CLASS.VoicePitch = 0.75
 
@@ -104,7 +105,12 @@ function CLASS:PlayerStepSoundTime(pl, iType, bWalking)
 
 	return 250
 end
-
+function CLASS:ProcessDamage(pl, dmginfo)
+	local wep = pl:GetActiveWeapon()
+	if  wep:IsValid() and wep.GetCharge and wep:GetCharge() > 0 then
+		dmginfo:ScaleDamage(math.max(0.2,1-wep:GetCharge()))
+	end
+end
 function CLASS:CalcMainActivity(pl, velocity)
 	local wep = pl:GetActiveWeapon()
 	if not wep:IsValid() or not wep.GetChargeStart then return end

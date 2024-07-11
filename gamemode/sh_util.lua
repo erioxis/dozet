@@ -1,3 +1,4 @@
+local string = string
 function player.GetAllActive()
 	local t = {}
 
@@ -10,6 +11,71 @@ function player.GetAllActive()
 	return t
 end
 
+
+string.oldupper = string.oldupper or string.upper
+string.oldlower = string.oldlower or string.lower
+local lowers = {['А']='а',['Б']='б',['В']='в',['Г']='г',['Д']='д',['Е']='е',['Ё']='ё',['Ж']='ж',['З']='з',['И']='и',['Й']='й',['К']='к',['Л']='л',['М']='м',['Н']='н',['О']='о',['П']='п',['Р']='р',['С']='с',['Т']='т',['У']='у',['Ф']='ф',['Х']='х',['Ц']='ц',['Ч']='ч',['Ш']='ш',['Щ']='щ',['Ъ']='ъ',['Ы']='ы',['Ь']='ь',['Э']='э',['Ю']='ю',['Я']='я'}
+local uppers = {['а']='А',['б']='Б',['в']='В',['г']='Г',['д']='Д',['е']='Е',['ё']='Ё',['ж']='Ж',['з']='З',['и']='И',['й']='Й',['к']='К',['л']='Л',['м']='М',['н']='Н',['о']='О',['п']='П',['р']='Р',['с']='С',['т']='Т',['у']='У',['ф']='Ф',['х']='Х',['ц']='Ц',['ч']='Ч',['ш']='Ш',['щ']='Щ',['ъ']='Ъ',['ы']='Ы',['ь']='Ь',['э']='Э',['ю']='Ю',['я']='Я'}
+function math.MoveTowards(current, target, maxDelta)
+	if math.abs(target - current) <= maxDelta then
+		return target
+	end
+
+	return current + math.Sign(target - current) * maxDelta
+end
+function string.Random( length )
+
+	local length = tonumber( length )
+
+    if length < 1 then return end
+
+    local result = {}
+
+    for i = 1, length do
+
+        result[i] = string.char( math.random(97, 120) )
+
+    end
+
+    return table.concat(result)
+
+end
+function math.Sign(num)  
+	if num > 0 then
+		num = 1
+	elseif num < 0 then
+		num = -1
+	else 
+		num = 0
+	end
+
+	return num
+end
+function string.upper( str )
+    local result = ''
+
+    for char in string.gmatch( str, '[%z\x01-\x7F\xC2-\xF4][\x80-\xBF]*' ) do
+        result = result..(uppers[char] or string.oldupper( char ))
+    end
+
+    return result
+end
+
+function string.lower( str )
+    local result = ''
+
+    for char in string.gmatch( str, '[%z\x01-\x7F\xC2-\xF4][\x80-\xBF]*' ) do
+        result = result .. ( lowers[char] or string.oldlower( char ) )
+    end
+
+    return result
+end
+function string.findnumeric( str )
+
+	local numeric = string.match( str, '%d+' )
+	return tonumber( numeric ) or 1
+
+end
 function player.GetAllSpectators()
 	local t = {}
 
@@ -25,6 +91,45 @@ end
 function FindStartingItem(id)
 	local item = FindItem(id)
 	if item and item.WorthShop then return item end
+end
+function math.randomr(min, max, need, pl, chances)
+	local ch = pl and math.Round(math.max(((pl.Luck or 1)/(pl:IsSkillActive(SKILL_BLUCK) and 3 or 5) or 1),1)) or chances
+	local rand = min
+	local best = min
+
+	for i=1,ch do
+		local random = math.random(min,max)
+		if random > best then
+			best = random
+		end
+		if random == need then
+			rand = need
+			break
+		else
+			rand = best
+		end
+	end
+
+	return rand
+end
+function math.unrandom(min, max, need, inv, chances)
+	local ch = chances or 1
+	local rand = min
+	local best = min
+	for i=1,ch do
+		local random = math.random(min,max)
+		if random > best then
+			best = random
+		end
+		if not inv and random >= need or random <= need then
+			rand = random
+			break
+		else
+			rand = best
+		end
+	end
+
+	return rand
 end
 
 function FindItem(id)
@@ -151,13 +256,17 @@ function CatmullInterpolate(previous, start, last, nextp, elapsedTime, duration)
 							0.5 * percentCompleteSquared)
 end
 
-function string.AndSeparate(list)
+function string.AndSeparate(list, pl)
 	local length = #list
+	local and2 = " and "
+	if pl then
+		and2 = translate.ClientGet(pl,'and_lmao')
+	end
 	if length <= 0 then return "" end
 	if length == 1 then return list[1] end
-	if length == 2 then return list[1].." and "..list[2] end
+	if length == 2 then return list[1]..and2..list[2] end
 
-	return table.concat(list, ", ", 1, length - 1)..", and "..list[length]
+	return table.concat(list, ", ", 1, length - 1)..","..and2..list[length]
 end
 
 function util.SkewedDistance(a, b, skew)
@@ -181,6 +290,7 @@ function util.Blood(pos, amount, dir, force, noprediction)
 	util.Effect("bloodstream", effectdata, nil, noprediction)
 end
 
+<<<<<<< Updated upstream
 function util.BlastDamagePlayer(inf, att, center, radius, damage, damagetype, taperfactor)
 	if not att:IsValidPlayer() then ErrorNoHalt("[BlastDamagePlayer] Tried to use a nonplayer") end
 
@@ -189,6 +299,41 @@ end
 
 -- I had to make this since the default function checks visibility vs. the entitiy's center and not the nearest position.
 function util.BlastDamageEx(inflictor, attacker, epicenter, radius, damage, damagetype, taperfactor)
+=======
+function util.BlastDamagePlayer(inf, att, center, radius, damage, damagetype, taperfactor, doinddamage, ignoreprop)
+	if not att:IsValidPlayer() then ErrorNoHalt("[BlastDamagePlayer] Tried to use a nonplayer") end
+
+	util.BlastDamageEx(inf, att, center, radius * (att.ExpDamageRadiusMul or 1), damage * (att.ExplosiveDamageMul or 1), damagetype, taperfactor, doinddamage, nil,ignoreprop)
+end
+function util.BlastDamageElemental(inflictor, attacker, epicenter, radius, damage, element, taperfactor, bool)
+	local tbl = ents.FindInBoxRadius(epicenter, radius)
+	local basedmg = damage / #tbl
+	for _, ent in pairs(tbl) do
+		if ent:IsValidLivingPlayer() then
+			if  WorldVisible(epicenter, ent:NearestPoint(epicenter))  then
+				if ent:IsValidLivingHuman() and bool then
+					ent:GiveStatus("holly", 5)
+				end
+				
+				if !bool then
+					ent:AttachmentDamage(basedmg, attacker, inflictor,element)
+				else
+					for i=1,4 do
+						ent:AttachmentDamage(basedmg, attacker, inflictor,i)
+					end
+				end
+				
+				if taperfactor and ent:IsPlayer() then
+					basedmg = basedmg * taperfactor
+				end
+			end
+		end
+	end
+end
+
+-- I had to make this since the default function checks visibility vs. the entitiy's center and not the nearest position.
+--[[function util.BlastDamageEx(inflictor, attacker, epicenter, radius, damage, damagetype, taperfactor, bool)
+>>>>>>> Stashed changes
 	local basedmg = damage
 
 	for _, ent in pairs(ents.FindInSphere(epicenter, radius)) do
@@ -198,7 +343,11 @@ function util.BlastDamageEx(inflictor, attacker, epicenter, radius, damage, dama
 				or TrueVisibleFilters(epicenter, ent:EyePos(), inflictor, attacker, ent)
 				or TrueVisibleFilters(epicenter, ent:WorldSpaceCenter(), inflictor, attacker, ent) then
 
+<<<<<<< Updated upstream
 				ent:TakeSpecialDamage(((radius - nearest:Distance(epicenter)) / radius) * basedmg, damagetype, attacker, inflictor, nearest)
+=======
+				ent:TakeSpecialDamage((((radius - nearest:Distance(epicenter)) / radius) * basedmg) * (ent == attacker and bool and (ent.IndDamageTaken or 1) or 1), damagetype, attacker, inflictor, nearest)
+>>>>>>> Stashed changes
 
 				if taperfactor and ent:IsPlayer() then
 					basedmg = basedmg * taperfactor
@@ -206,6 +355,27 @@ function util.BlastDamageEx(inflictor, attacker, epicenter, radius, damage, dama
 			end
 		end
 	end
+end]]
+function util.BlastDamageEx(inflictor, attacker, epicenter, radius, damage, damagetype, taperfactor, bool, ignoreprop)
+    local entList = ents.FindInBoxRadius(epicenter, radius)
+	local factor = 1 
+	local basedmg = damage
+    for _, ent in pairs(entList) do
+        if ent:IsValid() and (ent:IsPlayer() or !ignoreprop) then
+			local specialDamage = 1
+            if WorldVisible(epicenter, ent:NearestPoint(epicenter))  then
+                if ent == attacker and bool then
+                    specialDamage = specialDamage * (ent.IndDamageTaken or 1)
+                end
+                ent:TakeSpecialDamage(basedmg * specialDamage * factor, damagetype, attacker, inflictor, nearest)
+
+                if taperfactor and ent:IsPlayer() then
+                    basedmg = basedmg * factor
+					factor = factor * taperfactor
+                end
+            end
+        end
+    end
 end
 
 function util.BlastDamageExAlloc(inflictor, attacker, epicenter, radius, damage, damagetype)
@@ -233,12 +403,10 @@ end
 function util.BlastAlloc(inflictor, attacker, epicenter, radius)
 	local t = {}
 
-	for _, ent in pairs(ents.FindInSphere(epicenter, radius)) do
+	for _, ent in pairs(player.FindInSphere(epicenter, radius)) do
 		if ent:IsValid() then
 			local nearest = ent:NearestPoint(epicenter)
-			if TrueVisibleFilters(epicenter, nearest, inflictor, attacker, ent)
-				or TrueVisibleFilters(epicenter, ent:EyePos(), inflictor, attacker, ent)
-				or TrueVisibleFilters(epicenter, ent:WorldSpaceCenter(), inflictor, attacker, ent) then
+			if WorldVisible(epicenter, ent:NearestPoint(epicenter)) then
 				t[#t + 1] = ent
 			end
 		end
@@ -298,7 +466,7 @@ function util.ToMinutesSecondsMilliseconds(seconds)
 end
 
 function util.RemoveAll(class)
-	for _, ent in pairs(ents.FindByClass(class)) do
+	for _, ent in ipairs(ents.FindByClass(class)) do
 		ent:Remove()
 	end
 end
@@ -504,3 +672,47 @@ function util.CreatePulseImpactEffect(hitpos, hitnormal)
 	pulseeffect:SetNormal(hitnormal)
 	util.Effect("cball_bounce", pulseeffect)
 end
+function ents.FindInBoxRadius(pos, radius)
+	local min = pos - Vector(radius, radius, radius)
+	local max = pos + Vector(radius, radius, radius)
+	local all = ents.FindInBox(min, max)
+	local entis = {}
+	for _, ent in pairs(all) do
+	  if ent:GetPos():Distance(pos) <= radius then
+		table.insert(entis, ent)
+	  end
+	end
+	return entis
+end
+
+--Спасибо молочку и ноацессу
+local GetAll = player.GetAll
+local WorldSpaceAABB = FindMetaTable("Entity").WorldSpaceAABB
+local IsBoxIntersectingSphere = util.IsBoxIntersectingSphere
+
+function player.FindInSphere( origin, radius )
+
+    local ret = {}
+    local count = 1
+    local players = GetAll()
+
+    for i = 1, #players do
+
+        local pl = players[i]
+        local min, max = WorldSpaceAABB( pl )
+
+        if IsBoxIntersectingSphere( min, max, origin, radius ) then
+
+            ret[count] = pl
+            count = count + 1
+
+        end
+
+    end
+
+    return ret
+
+end
+
+
+  

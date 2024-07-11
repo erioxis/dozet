@@ -9,6 +9,8 @@ CLASS.Health = 2100
 CLASS.Points = CLASS.Health/GM.NoHeadboxZombiePointRatio
 CLASS.Speed = 110
 
+CLASS.Original = false
+
 CLASS.Boss = true
 
 CLASS.SWEP = "weapon_zs_tormentedspy"
@@ -25,6 +27,21 @@ function CLASS:Move(pl, move)
 	if pl:KeyDown(IN_SPEED) then
 		move:SetMaxSpeed(90)
 		move:SetMaxClientSpeed(90)
+	end
+end
+function CLASS:OnSpawned(pl)
+	if pl.m_CursedEyes then
+		local plid = pl:SteamID()
+		timer.Create("fear_checking_"..plid,7,0,function()
+			for k,v in pairs(team.GetPlayers(TEAM_UNDEAD)) do
+				if v:IsValid() then
+					v:GiveStatus("curse_mutagen",10)
+				end
+			end
+			if pl:GetZombieClassTable().Name ~= "Soul Of Child" or pl:IsValidLivingHuman()  then
+				timer.Remove("fear_checking_"..plid)
+			end
+		end)
 	end
 end
 
@@ -63,6 +80,7 @@ if SERVER then
 
 			activ:SetTormented(CurTime())
 		end
+		return dmginfo
 	end
 end
 
@@ -79,6 +97,7 @@ function CLASS:PrePlayerDraw(pl)
 	render.SetColorModulation(0.025, 0.15, 0.065)
 	render.SuppressEngineLighting(true)
 end
+<<<<<<< Updated upstream
 if SERVER then
 	function CLASS:ProcessDamage(pl, dmginfo)
 		if dmginfo:GetInflictor().IsMelee then
@@ -86,3 +105,6 @@ if SERVER then
 		end
 	end
 	end
+=======
+
+>>>>>>> Stashed changes

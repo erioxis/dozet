@@ -37,13 +37,29 @@ end
 
 local matExpert = Material("zombiesurvival/padlock.png")
 local matHeart = Material("icon16/heart.png")
+local matWhite = Material("models/debug/debugwhite")
+local matDef = Material("zombiesurvival/defense.png")
 local colNail = Color(0, 0, 5, 220)
 local colText = Color(240, 240, 240, 105)
 local colDead = Color(230, 80, 80, 95)
-function ENT:DrawTranslucent()
+local colRed = Color(130, 29, 29)
+local colDef = Color(90, 49, 252, 255)
+function ENT:Draw()--[[
+]]
+
+	local cader = false
 	local parent = self:GetParent()
 	if not parent:IsValid() or RealTime() == parent.LastNailInfoDraw then
-		self:DrawModel()
+		if MySelf:Team() == TEAM_HUMAN then
+			render.ModelMaterialOverride(matWhite)
+			local mu = math.Clamp(self:GetNailHealth() / self:GetMaxNailHealth(), 0, 1)
+			local green = mu * 200
+			render.SetColorModulation((200 - green)/255, green/255, 0.05)
+			render.SuppressEngineLighting(true)
+			self:DrawModel()
+			render.SuppressEngineLighting(false)
+			render.ModelMaterialOverride(nil)
+		end
 		return
 	end
 
@@ -61,12 +77,19 @@ function ENT:DrawTranslucent()
 			drawinfo = GAMEMODE.TraceTargetNoPlayers == self:GetParent()
 		end
 	end
-
-	self:DrawModel()
+	if myteam == TEAM_HUMAN then
+		render.ModelMaterialOverride(matWhite)
+		local mu = math.Clamp(self:GetNailHealth() / self:GetMaxNailHealth(), 0, 1)
+		local green = mu * 200
+		render.SetColorModulation((200 - green)/255, green/255, 0.05)
+		render.SuppressEngineLighting(true)
+		self:DrawModel()
+		render.SuppressEngineLighting(false)
+		render.ModelMaterialOverride(nil)
+	end
 
 	local nhp = self:GetNailHealth()
 	local mnhp = self:GetMaxNailHealth()
-
 	if nhp/mnhp < 0.35 and CurTime() > self.NextEmit then
 		local normal = self:GetForward() * -1
 		local epos = self:GetPos() + normal
@@ -133,7 +156,7 @@ function ENT:DrawTranslucent()
 		ang:RotateAroundAxis(ang:Up(), -90)
 		ang:RotateAroundAxis(ang:Forward(), 90)
 
-		local nearest = parent:WorldSpaceCenter()
+		local nearest = parent:WorldSpaceCenter() 
 		local norm = nearest - eyepos
 		norm:Normalize()
 		local dot = EyeVector():Dot(norm)
@@ -146,6 +169,7 @@ function ENT:DrawTranslucent()
 		cam.IgnoreZ(true)
 
 		cam.Start3D2D(nearest, ang, 0.1)
+			local scale = false
 			local wid, hei = 150, 6
 			local x, y = wid * -0.5 + 2, 0
 
@@ -160,6 +184,21 @@ function ENT:DrawTranslucent()
 					validfriend and 16 or 24,
 					validfriend and 16 or 24
 				)
+			end
+			if MySelf:GetEyeTrace().Entity == parent then
+				scale = true
+				if GAMEMODE.NewbieMode and myteam ~= TEAM_UNDEAD then
+
+					draw.SimpleText(translate.Format("press_z_or_b", input.LookupBinding("+undo") or "B"), "ZS3D2DUnstyleSmaller", x + 25, y - 90,  COLOR_WHITE, TEXT_ALIGN_CENTER)
+				end
+			end
+			if GAMEMODE.NewbieMode and myteam ~= TEAM_UNDEAD and self:GetNailHealth() < self:GetMaxNailHealth() * 0.5 then
+				for k,v in pairs(MySelf:GetWeapons()) do
+					if v.HealStrength and v.HealStrength > 0.8 and self:GetRepairs() > 10 then
+						cader = true
+					end
+				end
+				draw.SimpleText((cader and  translate.Get("repair_this_nb") or translate.Get("run_danger_nb")), "ZS3D2DUnstyleSmaller", x + 25, y - 120,  (cader and COLOR_BLUE or COLOR_RED), TEXT_ALIGN_CENTER)
 			end
 
 			if self:GetMaxRepairs() > 0 or self:GetMaxNailHealth() > 0 then
@@ -199,13 +238,98 @@ function ENT:DrawTranslucent()
 				if displayowner then
 					local col = redname and colDead or colText
 					col.a = 125 * vis
+<<<<<<< Updated upstream
 
 					draw.SimpleText(displayowner, "ZS3D2DUnstyleSmallest", 0, y + 20, col, TEXT_ALIGN_CENTER)
 					draw.SimpleText(math.floor(nhp) .. "/" .. math.floor(self:GetMaxNailHealth()), "ZS3D2DUnstyleTiny", x + 25, y - 30, col, TEXT_ALIGN_CENTER)
+=======
+					if scale then 
+						x = x * 3
+						y = y * 2
+					end
+					colNail.r = 255 - green
+					draw.SimpleText(displayowner, "ZS3D2DUnstyleSmallest", 0, y + 20, col, TEXT_ALIGN_CENTER)
+>>>>>>> Stashed changes
 				end
+				draw.SimpleText(math.floor(nhp) .. "/" .. math.floor(self:GetMaxNailHealth()), (scale and "ZS3D2DUnstyleSmaller" or "ZS3D2DUnstyleNail"), x + 25, y - 30,  colNail, TEXT_ALIGN_CENTER)
+					draw.SimpleText(math.floor(repairs) .. "/" .. math.floor(mrps), (scale and "ZS3D2DUnstyleSmaller" or  "ZS3D2DUnstyleNail"), x + 25, y - 50, COLOR_CYAN, TEXT_ALIGN_CENTER)
+			end
+			local curtime = CurTime()
+			local par = self:GetParent()
+			if par:GetDTFloat(12) > curtime then
+				surface.SetMaterial(matDef)
+				surface.SetDrawColor(33, 33, 166)
+				surface.DrawTexturedRect(
+					x - 100,
+					y - 64,
+					64,
+					64
+				)
+				draw.SimpleText("12%", "ZS3D2DUnstyleNail", x - 68, y - 48,  colDef, TEXT_ALIGN_CENTER)
+				x = x - 64
+			end
+			if par:GetDTFloat(13) > curtime then
+				surface.SetMaterial(matDef)
+				surface.SetDrawColor(205, 104, 235)
+				surface.DrawTexturedRect(
+					x - 100,
+					y - 64,
+					64,
+					64
+				)
+				draw.SimpleText("x0.2", "ZS3D2DUnstyleNail", x - 68, y - 48,  colDef, TEXT_ALIGN_CENTER)
+				x = x - 64
+			end
+			if par:GetDTFloat(14) > curtime then
+				surface.SetMaterial(matDef)
+				surface.SetDrawColor(160, 25, 25)
+				surface.DrawTexturedRect(
+					x - 100,
+					y - 64,
+					64,
+					64
+				)
+				draw.SimpleText("x2.5", "ZS3D2DUnstyleNail", x - 68, y - 48,  colRed, TEXT_ALIGN_CENTER)
+				x = x - 64
+			end
+			if par:GetDTFloat(15) > curtime then
+				surface.SetMaterial(matDef)
+				surface.SetDrawColor(97, 7, 7)
+				surface.DrawTexturedRect(
+					x - 100,
+					y - 64,
+					64,
+					64
+				)
+				surface.SetMaterial(matHeart)
+				surface.SetDrawColor(205, 50, 50)
+				surface.DrawTexturedRect(
+					x - 84,
+					y - 48,
+					32,
+					32
+				)
+				draw.SimpleText("15%", "ZS3D2DUnstyleNail", x - 68, y - 48,  colDef, TEXT_ALIGN_CENTER)
+				x = x - 64
+			end
+			local Xolod = (par:GetDTFloat(16)-curtime)/15
+			if Xolod < 0 and self:GetOwner() and self:GetOwner():IsValid() and self:GetOwner():HasTrinket("ice_of_nails") then
+				surface.SetMaterial(matDef)
+				surface.SetDrawColor(0, 165*-Xolod, 165*-Xolod)
+				surface.DrawTexturedRect(
+					x - 100,
+					y - 64,
+					64,
+					64
+				)
+				draw.SimpleText(math.Clamp(math.Round((Xolod*-50)),0,50).."%", "ZS3D2DUnstyleNail", x - 68, y - 48,  colDef, TEXT_ALIGN_CENTER)
+				x = x - 64
 			end
 		cam.End3D2D()
 
 		cam.IgnoreZ(false)
 	end
+
+end
+function ENT:Think()
 end

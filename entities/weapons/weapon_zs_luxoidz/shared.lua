@@ -22,6 +22,8 @@ SWEP.Secondary.Delay = SWEP.Primary.Delay * 3
 
 SWEP.WalkSpeed = SPEED_SLOWER
 
+SWEP.ZombieCanPickup = true
+
 SWEP.HitAnim = ACT_VM_MISSCENTER
 SWEP.PointsMultiplier = 0.3
 SWEP.SwingRotation = Angle(60, 0, -80)

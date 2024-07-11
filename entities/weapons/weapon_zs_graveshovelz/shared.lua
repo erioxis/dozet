@@ -1,15 +1,28 @@
 SWEP.Base = "weapon_zs_graveshovel"
 SWEP.ZombieOnly = false
 
+<<<<<<< Updated upstream
 SWEP.MeleeDamage = 40
 SWEP.MeleeKnockBack = 160
 
 SWEP.Primary.Delay = 0.4
+=======
+SWEP.MeleeDamage = 32
+SWEP.MeleeKnockBack = 16
+SWEP.MeleeRange = 63
+
+
+SWEP.Primary.Delay = 0.46
+SWEP.BlockTrue = false
+SWEP.CanPickup = true
+SWEP.OneTapDevo = true
+>>>>>>> Stashed changes
 
 SWEP.ViewModel = Model("models/weapons/v_pza.mdl")
 SWEP.WorldModel = "models/weapons/w_crowbar.mdl"
 
 AccessorFuncDT(SWEP, "HookTime", "Float", 1)
+GAMEMODE:SetPrimaryWeaponModifier(SWEP, WEAPON_MODIFIER_FIRE_DELAY, -0.054)
 
 function SWEP:SecondaryAttack()
 	if CurTime() < self:GetNextPrimaryFire() or CurTime() < self:GetNextSecondaryFire() then return end

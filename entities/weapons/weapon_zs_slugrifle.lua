@@ -131,6 +131,7 @@ function SWEP.BulletCallback(attacker, tr, dmginfo)
 			dmginfo:SetDamage(dmginfo:GetDamage() + ent:GetMaxHealthEx() * 0.95)
 		end
 	end
+	dmginfo:GetInflictor().BaseClass.BulletCallback(attacker, tr, dmginfo)
 end
 
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_RELOAD_SPEED, 0.4)

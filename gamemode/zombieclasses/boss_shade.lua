@@ -134,6 +134,7 @@ if SERVER then
 				status:SetLastDamaged(CurTime())
 			end
 		end
+		return dmginfo
 	end
 
 	function CLASS:ShadeShield(pl)
@@ -153,7 +154,7 @@ if SERVER then
 				if status and status:IsValid() then
 					status:SetStateEndTime(curtime + 0.5)
 
-					for _, ent in pairs(ents.FindByClass("env_shadecontrol")) do
+					for _, ent in ipairs(ents.FindByClass("env_shadecontrol")) do
 						if ent:IsValid() and ent:GetOwner() == pl then
 							ent:Remove()
 							return
@@ -166,6 +167,16 @@ if SERVER then
 
 	function CLASS:AltUse(pl)
 		self:ShadeShield(pl)
+		if pl:KeyDown(IN_ATTACK) then
+			if self.Name == "Shade" then
+				pl:StripWeapons()
+				pl:SetZombieClassName("Frost Shade")
+			elseif self.Name == "Frost Shade" then
+				pl:StripWeapons()
+				pl:SetZombieClassName("Shade")
+			end
+			pl:Give(pl:GetZombieClassTable().SWEP)
+		end
 	end
 end
 

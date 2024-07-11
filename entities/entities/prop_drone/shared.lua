@@ -4,23 +4,24 @@ ENT.RenderGroup = RENDERGROUP_TRANSLUCENT
 ENT.m_NoNailUnfreeze = true
 ENT.NoNails = true
 ENT.CanPackUp = true
-ENT.PackUpTime = 0.21
+ENT.PackUpTime = 0.25
 
-ENT.WrenchRepairMultiplier = 1
-ENT.MaxAmmo = 1200
+ENT.WrenchRepairMultiplier = 0.666
+ENT.MaxAmmo = 450
 
 ENT.FirePitch = 0
 ENT.FireYaw = 0
 
 ENT.Acceleration = 170
-ENT.MaxSpeed = 240
+ENT.MaxSpeed = 180
 ENT.HoverSpeed = 40
 ENT.HoverHeight = 92
 ENT.HoverForce = 128
 ENT.TurnSpeed = 55
 ENT.IdleDrag = 0.25
+ENT.Inventory = {}
 
-ENT.MaxHealth = 400
+ENT.MaxHealth = 190
 ENT.GunRange = 275
 ENT.CarryMass = 80
 
@@ -97,7 +98,7 @@ end
 
 function ENT:CalculateFireAngles()
 	local owner = self:GetObjectOwner()
-	if not owner:IsValid() or self:GetMaterial() ~= "" then
+	if not owner:IsValid() then
 		self.FireYaw = math.Approach(self.FireYaw, 0, FrameTime() * 60)
 		self.FirePitch = math.Approach(self.FirePitch, 15, FrameTime() * 30)
 		return
@@ -159,4 +160,17 @@ end
 
 function ENT:GetRedLightPos()
 	return self:LocalToWorld(Vector(3, 0, 13.75))
+end
+function ENT:GetTrinkets()
+	return self.Inventory
+end
+
+function ENT:SetTrinkets(sbl)
+	self.Inventory = sbl
+end
+function ENT:HasTrinket(some)
+	return self.Inventory["trinket_"..some]
+end
+function ENT:AddTrinkets(some)
+	self.Inventory[#self.Inventory+1] = some
 end

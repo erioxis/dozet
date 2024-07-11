@@ -5,6 +5,13 @@ SWEP.Base = "weapon_zs_fists"
 SWEP.PrintName = "Power Fists"
 SWEP.Description = "A pair of power fists. They are slower than conventional fist combat, but pack a hefty pulse powered punch."
 
+<<<<<<< Updated upstream
+=======
+--SWEP.PrintName = "Power Fists"
+--SWEP.Description = "A pair of power fists. They are slower than conventional fist combat, but pack a hefty pulse powered punch."
+SWEP.PrintName = translate.Get("wep_powerfists")
+SWEP.Description = translate.Get("wep_d_powerfists")
+>>>>>>> Stashed changes
 if CLIENT then
 	SWEP.ViewModelFOV = 65
 	SWEP.ViewModelFlip = false
@@ -26,7 +33,8 @@ if CLIENT then
 		["base+++"] = { type = "Model", model = "models/props_c17/TrapPropeller_Engine.mdl", bone = "ValveBiped.Bip01_R_Finger2", rel = "base+", pos = Vector(0, 0, 0), angle = Angle(0, 0, 0), size = Vector(0.28, 0.21, 0.15), color = Color(135, 115, 95, 255), surpresslightning = false, material = "models/props_pipes/valve001_skin2", skin = 0, bodygroup = {} },
 	}
 end
-
+SWEP.InnateDamageType = INNATE_TYPE_PULSE
+SWEP.InnateDamageMul = 0
 SWEP.WalkSpeed = SPEED_FAST
 SWEP.UseHands = true
 

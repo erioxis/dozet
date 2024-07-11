@@ -88,4 +88,5 @@ function SWEP.BulletCallback(attacker, tr, dmginfo)
 			wep:SetDTInt(9, wep:GetDTInt(9) + 1)
 		end
 	end
+	dmginfo:GetInflictor().BaseClass.BulletCallback(attacker, tr, dmginfo)
 end

@@ -60,7 +60,7 @@ SWEP.ViewModel = "models/weapons/cstrike/c_shot_xm1014.mdl"
 SWEP.WorldModel = "models/weapons/w_shot_xm1014.mdl"
 SWEP.UseHands = false
 
-SWEP.Primary.Damage = 135
+SWEP.Primary.Damage = 700
 SWEP.Primary.NumShots = 1
 SWEP.Primary.Delay = 1
 SWEP.HeadshotMulti = 1.75
@@ -179,12 +179,19 @@ function SWEP:Think()
 		self:MockReload()
 	end
 end
-
+local function DoRicochet(attacker, hitpos, hitnormal, normal, damage)
+	for i=1,2 do
+		if attacker:IsValid() then
+			attacker:FireBulletsLua(hitpos, i*hitnormal * hitnormal:Dot(normal * -1 * i) + normal, 0, 1, damage, nil, nil, "tracer_rico", nil, nil, nil, nil, nil, attacker:GetActiveWeapon())
+		end
+	end
+end
 function SWEP.BulletCallback(attacker, tr, dmginfo)
 	local effectdata = EffectData()
 		effectdata:SetOrigin(tr.HitPos)
 		effectdata:SetNormal(tr.HitNormal)
 	util.Effect("hit_hunter", effectdata)
+	dmginfo:GetInflictor().BaseClass.BulletCallback(attacker, tr, dmginfo)
 end
 
 function SWEP:EmitReloadSound()

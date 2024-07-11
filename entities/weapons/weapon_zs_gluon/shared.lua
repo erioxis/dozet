@@ -1,6 +1,12 @@
+<<<<<<< Updated upstream
 SWEP.PrintName = "'Helios' Gluon Gun"
 SWEP.Description = "Projects a stream of gluons at the target, causing immense damage. Hard to wield and aim, and builds up heat over time."
 
+=======
+
+SWEP.PrintName = translate.Get("wep_gluon")
+SWEP.Description = translate.Get("wep_d_gluon")
+>>>>>>> Stashed changes
 SWEP.Base = "weapon_zs_base"
 
 SWEP.HoldType = "physgun"
@@ -44,8 +50,13 @@ SWEP.TracerName = "tracer_gluon"
 
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_SHORT_TEAM_HEAT, -0.01, 1)
 
+<<<<<<< Updated upstream
 local branch = GAMEMODE:AddNewRemantleBranch(SWEP, 1, "'Hades' Higgs Gun", "Has a pulse slowing effect but deals less damage", function(wept)
 	wept.Primary.Damage = wept.Primary.Damage * 10.5/12.5
+=======
+local branch = GAMEMODE:AddNewRemantleBranch(SWEP, 1, translate.Get("wep_gluon_r1"), translate.Get("wep_d_gluon_r1"), function(wept)
+	wept.Primary.Damage = wept.Primary.Damage * 0.8
+>>>>>>> Stashed changes
 	wept.TracerName = "tracer_higgs"
 	wept.EmitStartFiringSound = function(self)
 		self:EmitSound("ambient/machines/teleport1.wav", 75, 210)
@@ -54,10 +65,17 @@ local branch = GAMEMODE:AddNewRemantleBranch(SWEP, 1, "'Hades' Higgs Gun", "Has 
 	wept.FireSoundPitch = 96
 	wept.LegDamage = true
 end)
+<<<<<<< Updated upstream
 branch.Colors = {Color(160, 160, 160), Color(105, 105, 105), Color(50, 50, 50)}
 branch.NewNames = {"Deep", "Deeplands", "Void", "Null"}
 
 GAMEMODE:AddNewRemantleBranch(SWEP, 2, "'Tartarus' Muon Gun", "Deals more damage with heat, but can overheat and damage you, reduced range", function(wept)
+=======
+branch.Colors = {Color(160, 160, 160), Color(105, 105, 105), Color(50, 50, 50), Color(108, 0, 122), Color(6, 0, 118)}
+branch.NewNames = {"Deep", "Deeplands", "Void", "Null", "VOIDLING"}
+
+GAMEMODE:AddNewRemantleBranch(SWEP, 2, translate.Get("wep_gluon_r2"), translate.Get("wep_d_gluon_r2"), function(wept)
+>>>>>>> Stashed changes
 	wept.GluonDamage = function(self)
 		return wept.Primary.Damage + (self:GetShortHeat() * 0.25 * wept.Primary.Damage)
 	end
@@ -160,7 +178,7 @@ function SWEP.BulletCallback(attacker, tr, dmginfo)
 			ent:AddLegDamageExt(4.5, attacker, attacker:GetActiveWeapon(), SLOWTYPE_PULSE)
 		end
 	end
-
+	dmginfo:GetInflictor().BaseClass.BulletCallback(attacker, tr, dmginfo)
 	return {impact = false}
 end
 

@@ -13,12 +13,19 @@ CLASS.Points = 30
 
 CLASS.Model = Model("models/player/skeleton.mdl")
 
+CLASS.NoBypass = true
+
 CLASS.VoicePitch = 0.65
 
 CLASS.SWEP = "weapon_zs_redmarrow"
 
+<<<<<<< Updated upstream
 CLASS.Health = 2400
 CLASS.Speed = 165
+=======
+CLASS.Health = 2200
+CLASS.Speed = 215
+>>>>>>> Stashed changes
 
 CLASS.Skeletal = true
 
@@ -107,16 +114,47 @@ function CLASS:ProcessDamage(pl, dmginfo)
 		dmg = 0
 	end
 
+<<<<<<< Updated upstream
 	local numthreshold = math_Clamp(math_ceil(hp / 200), 1, 9)
 	local dmgthreshold = math_Clamp(numthreshold * 200 - 200, 1, 1600)
+=======
+
+	local numthreshold = math_Clamp(math_ceil(hp / 250), 1, 5)
+	local dmgthreshold = math_Clamp(numthreshold * 250 - 100, 1, 4500)
+>>>>>>> Stashed changes
 
 	local newhp = hp - dmg
 	local nulldmg = dmgthreshold - newhp
 
+<<<<<<< Updated upstream
 	if newhp <= dmgthreshold and pl["bloodth"..numthreshold] then
 		pl["bloodth"..numthreshold] = false
 		dmginfo:SetDamage(dmg - nulldmg)
 		pl:GiveStatus("redmarrow", 3)
+=======
+	local slavec = math.random(1,6)
+	if slavec == 1 and attacker:IsPlayer() then
+		attacker:GiveStatus("dimvision", 1)
+
+		pl:EmitSound("ambient/creatures/town_child_scream1.wav", 20, 10)
+		dmginfo:SetDamage(0)
+
+	end
+
+	if newhp <= dmgthreshold and pl["bloodth"..numthreshold] then
+		pl["bloodth"..numthreshold] = false
+		dmginfo:SetDamage(dmg - nulldmg)
+		pl:GiveStatus("redmarrow", 2 + (GAMEMODE:GetWave()*0.5))
+		local give = 0
+		for _, ent in pairs(ents.FindInSphere(pl:GetPos(), 438)) do
+			if ent:IsValidLivingZombie() and pl ~= ent then
+				local add = (pl:Health()/15) * (GAMEMODE:GetWave() /4)
+				give = give + add
+				ent:SetZArmor(ent:GetZArmor() + add)
+			end
+		end
+		pl:AddShieldStats(give)
+>>>>>>> Stashed changes
 
 		local effectdata = EffectData()
 			effectdata:SetOrigin(pl:WorldSpaceCenter())
@@ -126,6 +164,7 @@ function CLASS:ProcessDamage(pl, dmginfo)
 		util.BlastDamageEx(pl, pl, pl:GetPos(), 55, 7, DMG_CLUB)
 		pl:GodDisable()
 	end
+	return dmginfo
 end
 if SERVER then
 function CLASS:ProcessDamage(pl, dmginfo)

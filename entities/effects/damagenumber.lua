@@ -24,15 +24,24 @@ hook.Add("PostDrawTranslucentRenderables", "DrawDamage", function()
 	end
 
 	for _, particle in pairs(Particles) do
+<<<<<<< Updated upstream
 		if particle and curtime < particle.DieTime then
 			local c = particle.Type == 1 and colprop or col
+=======
+		if particle and curtime < (particle.DieTime or 1) then
+			local c = particle.Type == 1 and colprop or not particle.Bool and col or col1
+>>>>>>> Stashed changes
 
 			done = false
 
 			c.a = math.Clamp(particle.DieTime - curtime, 0, 1) * 220
 
 			cam.Start3D2D(particle:GetPos(), ang, 0.1 * GAMEMODE.DamageNumberScale)
+<<<<<<< Updated upstream
 				draw.SimpleText(particle.Amount, "ZS3D2DFont2", 0, 0, c, TEXT_ALIGN_CENTER, TEXT_ALIGN_BOTTOM)
+=======
+			draw.SimpleText(particle.Amount..(victim:IsPlayer() and GAMEMODE.ShowPercDmg and !particle.Bool and " ("..math.Round((particle.Amount/(victim and victim:IsValidLivingZombie() and victim:GetMaxZombieHealth() or victim:IsValid() and victim:GetMaxHealth() or victim.PropHealth or 1) * 100)).."%)" or ""), "ZS3D2DFont2", 0, 0, c, TEXT_ALIGN_CENTER, TEXT_ALIGN_BOTTOM)
+>>>>>>> Stashed changes
 			cam.End3D2D()
 		end
 	end

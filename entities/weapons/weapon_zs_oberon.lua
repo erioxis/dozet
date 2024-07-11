@@ -1,7 +1,15 @@
 AddCSLuaFile()
 
+<<<<<<< Updated upstream
 SWEP.PrintName = "'Oberon' Pulse Shotgun"
 SWEP.Description = "Fires a spread of pulse shots that slow targets."
+=======
+--SWEP.PrintName = "'Oberon' Pulse Shotgun"
+--SWEP.Description = "Fires a spread of pulse shots that slow targets."
+
+SWEP.PrintName = translate.Get("wep_oberon")
+SWEP.Description = translate.Get("wep_d_oberon")
+>>>>>>> Stashed changes
 
 if CLIENT then
 	SWEP.Slot = 3
@@ -105,9 +113,47 @@ function SWEP.BulletCallback(attacker, tr, dmginfo)
 	if IsFirstTimePredicted() then
 		util.CreatePulseImpactEffect(tr.HitPos, tr.HitNormal)
 	end
+	dmginfo:GetInflictor().BaseClass.BulletCallback(attacker, tr, dmginfo)
 end
 
 function SWEP:EmitFireSound()
 	self:EmitSound(self.Primary.Sound)
 	self:EmitSound("weapons/glock/glock18-1.wav", 75, math.random(162, 168), 0.7, CHAN_WEAPON + 20)
 end
+function SWEP:HaveAbility() 
+	local float = self:GetDTFloat(6)
+	if float>=220 then
+		self.NoAbility = true
+		timer.Create("ultra_bruh", 0.12, 0, function()
+			self:ShootBullets(self.Primary.Damage, self.Primary.NumShots, self:GetCone())
+			self:SetDTFloat(6,self:GetDTFloat(6)-19)
+			self.IdleAnimation = CurTime() + self:SequenceDuration()
+			self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
+			self:EmitFireSound()
+			if self:GetDTFloat(6)<0 then
+				self.NoAbility = false 
+				self:SetDTFloat(6,0)
+				timer.Remove("ultra_bruh")
+			end
+		end)
+	end
+end
+function SWEP:DealThink(dmginfo) 
+	if self.NoAbility then return end
+	self:SetDTFloat(6,math.min(220,self:GetDTFloat(6)+math.min(6,dmginfo:GetDamage()*0.66)))
+end
+if not CLIENT then return end
+
+	local ablicolor =  Color( 72,3,168)
+	function SWEP:Draw2DHUD()
+		self:Draw2DFeature( self:GetDTFloat(6)/220, nil, nil, "weapon_ability_oberon", "ZSHUDFontSmallest", ablicolor, "+menu" )
+		self.BaseClass.Draw2DHUD(self)
+	end
+	
+	function SWEP:Draw3DHUD(vm, pos, ang)
+	
+		cam.Start3D2D( pos, ang, self.HUD3DScale / 6 )
+				self:Draw3DFeatureHorizontal( vm, pos+Vector(0,0,1), ang, self:GetDTFloat(6)/220, nil, nil, "weapon_ability_oberon", "ZSHUDFont", ablicolor )
+		cam.End3D2D()
+		self.BaseClass.Draw3DHUD(self,vm, pos, ang)
+	end

@@ -6,8 +6,13 @@ ESCAPESTAGE_DEATH = 3
 function GM:GetSigils()
 	local sigils = {}
 
+<<<<<<< Updated upstream
 	for _, ent in pairs(ents.FindByClass("prop_obj_sigil")) do
 		if ent:IsValid() and ent:GetSigilHealthBase() ~= 0 then
+=======
+	for _, ent in ipairs(ents.FindByClass("prop_obj_sigil")) do
+		if ent:IsValid() and ent.GetSigilHealthBase and ent:GetSigilHealthBase() ~= 0 then
+>>>>>>> Stashed changes
 			sigils[#sigils + 1] = ent
 		end
 	end
@@ -18,7 +23,7 @@ end
 function GM:GetUncorruptedSigils()
 	local sigils = {}
 
-	for _, ent in pairs(ents.FindByClass("prop_obj_sigil")) do
+	for _, ent in ipairs(ents.FindByClass("prop_obj_sigil")) do
 		if ent:GetSigilHealthBase() ~= 0 and not ent:GetSigilCorrupted() then
 			sigils[#sigils + 1] = ent
 		end
@@ -31,7 +36,7 @@ GM.GetSigilsUncorrupted = GM.GetUncorruptedSigils
 function GM:GetCorruptedSigils()
 	local sigils = {}
 
-	for _, ent in pairs(ents.FindByClass("prop_obj_sigil")) do
+	for _, ent in ipairs(ents.FindByClass("prop_obj_sigil")) do
 		if ent:GetSigilHealthBase() ~= 0 and ent:GetSigilCorrupted() then
 			sigils[#sigils + 1] = ent
 		end
@@ -44,7 +49,7 @@ GM.GetSigilsCorrupted = GM.GetCorruptedSigils
 function GM:NumSigils()
 	local sigils = 0
 
-	for _, ent in pairs(ents.FindByClass("prop_obj_sigil")) do
+	for _, ent in ipairs(ents.FindByClass("prop_obj_sigil")) do
 		if ent:GetSigilHealthBase() ~= 0 then
 			sigils = sigils + 1
 		end
@@ -54,7 +59,7 @@ function GM:NumSigils()
 end
 
 function GM:HasSigils()
-	for _, ent in pairs(ents.FindByClass("prop_obj_sigil")) do
+	for _, ent in ipairs(ents.FindByClass("prop_obj_sigil")) do
 		if ent:GetSigilHealthBase() ~= 0 then
 			return true
 		end
@@ -66,7 +71,7 @@ end
 function GM:NumUncorruptedSigils()
 	local sigils = 0
 
-	for _, ent in pairs(ents.FindByClass("prop_obj_sigil")) do
+	for _, ent in ipairs(ents.FindByClass("prop_obj_sigil")) do
 		if ent:GetSigilHealthBase() ~= 0 and not ent:GetSigilCorrupted() then
 			sigils = sigils + 1
 		end
@@ -79,7 +84,7 @@ GM.NumSigilsUncorrupted = GM.NumUncorruptedSigils
 function GM:NumCorruptedSigils()
 	local sigils = 0
 
-	for _, ent in pairs(ents.FindByClass("prop_obj_sigil")) do
+	for _, ent in ipairs(ents.FindByClass("prop_obj_sigil")) do
 		if ent:GetSigilHealthBase() ~= 0 and ent:GetSigilCorrupted() then
 			sigils = sigils + 1
 		end
@@ -96,7 +101,7 @@ end
 function GM:IsEscapeDoorOpen()
 	if not self:GetEscapeSequence() then return false end
 
-	for _, ent in pairs(ents.FindByClass("prop_obj_exit")) do
+	for _, ent in ipairs(ents.FindByClass("prop_obj_exit")) do
 		if ent:IsOpened() then
 			return true
 		end

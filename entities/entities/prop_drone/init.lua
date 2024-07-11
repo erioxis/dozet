@@ -153,7 +153,14 @@ function ENT:OnPackedUp(pl)
 
 	pl:PushPackedItem(self:GetClass(), self:GetObjectHealth())
 	pl:GiveAmmo(self:GetAmmo(), self.AmmoType)
-
+	if self.TrinketsIn then
+		for k,v in pairs(self.TrinketsIn) do
+			for i=1,v do
+				pl:AddInventoryItem(k)
+			end
+		end
+		self.TrinketsIn = {}
+	end
 	self:Remove()
 end
 
@@ -218,8 +225,14 @@ function ENT:PhysicsSimulate(phys, frametime)
 	end
 
 	phys:EnableGravity(false)
-	phys:SetAngleDragCoefficient(20000)
+	phys:SetAngleDragCoefficient(10000)
 	phys:SetVelocityInstantaneous(vel)
+
+	local diff = math.AngleDifference(eyeangles.yaw, phys:GetAngles().yaw)
+	local z = math.Clamp(diff, -32, 32) * frametime * 10
+	local curz = phys:GetAngleVelocity().z
+	z = z - curz * (frametime * math.min(1, math.abs(z - curz) ^ 2 * 0.02))
+	phys:AddAngleVelocity(Vector(0, 0, z))
 
 	self:SetPhysicsAttacker(owner)
 
@@ -242,6 +255,13 @@ function ENT:Destroy()
 	util.Effect("sparks", effectdata)
 
 	local owner = self:GetObjectOwner()
+	if owner:IsSkillActive(SKILL_EXPLOIT) and math.random(1,4) == 1 then
+		if math.random(1,5) ~= 1 then
+			owner:Give("weapon_zs_drone")
+		else
+			owner:Give("weapon_zs_drone_hauler")
+		end
+	end
 	if owner:IsValidLivingHuman() and owner:IsSkillActive(SKILL_LOADEDHULL) then
 		effectdata = EffectData()
 			effectdata:SetOrigin(pos)
@@ -291,13 +311,31 @@ function ENT:FireTurret(src, dir)
 		local curammo = self:GetAmmo()
 		if curammo > 0 then
 			local owner = self:GetObjectOwner()
-
-			self:SetNextFire(CurTime() + 0.15)
+			--print(self.ReducedCD)
+			self:SetNextFire(CurTime() + 0.15 * (1-(self.ReducedCD or 0)))
 			self:SetAmmo(curammo - 1)
 
 			owner:LagCompensation(true)
-			self:FireBulletsLua(src, dir, 5, 1, 16.5, owner, nil, "AR2Tracer", self.BulletCallback, nil, nil, self.GunRange, nil, self)
+			self:FireBulletsLua(src, dir, 5, 1, 16.5 *  (owner.BulletMul or 1), owner, nil, "AR2Tracer", self.BulletCallback, nil, nil, self.GunRange, nil, self)
 			owner:LagCompensation(false)
+			if owner:IsSkillActive(SKILL_MOTHER) and (math.random(1,100-(math.min(30,self.TrinketsIn and self.TrinketsIn["trinket_module_balance"] or 0))) == 1 or owner:IsSkillActive(SKILL_VIP_ARMY)) and (owner:IsSkillActive(SKILL_VIP_ARMY) and owner.CounterBalls < 5 or !owner:IsSkillActive(SKILL_VIP_ARMY)) then 
+				for i=1,(self.TrinketsIn and self.TrinketsIn['trinket_module_mirror'] and self.TrinketsIn['trinket_module_mirror']+1 or 1) do
+					local d = ents.Create("prop_rollermine_exp") 
+					if d:IsValid() then 
+						if owner:IsSkillActive(SKILL_VIP_ARMY) then
+							d.WrenchRepairMultiplier = 1
+							timer.Simple(1, function()	d.HitDamage = d.HitDamage * 7 end)
+							d.HitByWrench = function()
+								return false
+							end
+						end
+						d:SetPos(self:GetPos()+Vector(0,0,5)) 
+						d:Spawn() 
+						d:SetObjectOwner(owner) 
+						d:SetupPlayerSkills() 
+					end 
+				end
+			end
 		else
 			self:SetNextFire(CurTime() + 2)
 			self:EmitSound("npc/turret_floor/die.wav")
@@ -305,7 +343,7 @@ function ENT:FireTurret(src, dir)
 	end
 end
 
-ENT.PhysDamageImmunity = 1
+ENT.PhysDamageImmunity = 0
 function ENT:Think()
 	if self.Destroyed then
 		if not self.CreatedDebris then

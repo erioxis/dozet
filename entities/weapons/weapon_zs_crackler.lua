@@ -45,7 +45,11 @@ SWEP.IronSightsPos = Vector(-3, 3, 2)
 
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_MAX_SPREAD, -0.375, 1)
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_MIN_SPREAD, -0.2, 1)
+<<<<<<< Updated upstream
 GAMEMODE:AddNewRemantleBranch(SWEP, 1, "'Crackler' Combat Rifle", "Loses automatic fire rate but gains a bit of damage and accuracy", function(wept)
+=======
+GAMEMODE:AddNewRemantleBranch(SWEP, 1, translate.Get("wep_cracker"), translate.Get("wep_d_cracker_r1"), function(wept)
+>>>>>>> Stashed changes
 	wept.Primary.Damage = wept.Primary.Damage * 1.2
 	wept.Primary.Delay = wept.Primary.Delay * 2
 	wept.Primary.ClipSize = 15
@@ -53,3 +57,42 @@ GAMEMODE:AddNewRemantleBranch(SWEP, 1, "'Crackler' Combat Rifle", "Loses automat
 	wept.ConeMax = wept.ConeMax * 0.7
 	wept.Primary.Automatic = false
 end)
+function SWEP:DealThink(dmginfo) 
+	if self.NoAbility then return end
+	self:SetDTFloat(6,math.min(302,self:GetDTFloat(6)+math.min(20,dmginfo:GetDamage()*0.2)))
+end
+function SWEP:HaveAbility() 
+	if self:GetDTFloat(6) >= 300 then
+		if !self.OldCallBack then
+			self.OldCallBack = self.BulletCallback
+		end
+		self.BulletCallback = function(attacker, tr, dmginfo)
+			local ent = tr.Entity
+			if ent and ent:IsValidLivingZombie() then
+				self:SetDTFloat(6,self:GetDTFloat(6)-50)
+				attacker:SetProgress(attacker:GetProgress('bprog')+dmginfo:GetDamage()*2.5, 'bprog')
+				attacker.DamagedBounty = true
+				if self:GetDTFloat(6) < 0 then
+					self:SetDTFloat(6,0)
+					self.NoAbility = false
+					self.BulletCallback = self.OldCallBack
+				end
+			end
+		end
+	end
+end
+if !CLIENT then return end
+	local ablicolor =  Color( 19,174,115)
+	function SWEP:Draw2DHUD()
+		self:Draw2DFeature( self:GetDTFloat(6)/300, nil, nil, "weapon_ability_crack", "ZSHUDFontSmallest", ablicolor, "+menu" )
+		self.BaseClass.Draw2DHUD(self)
+	end
+	
+	function SWEP:Draw3DHUD(vm, pos, ang)
+	
+		cam.Start3D2D( pos, ang, self.HUD3DScale / 6 )
+				self:Draw3DFeatureHorizontal( vm, pos+Vector(0,0,1), ang, self:GetDTFloat(6)/300, nil, nil, "weapon_ability_crack", "ZSHUDFont", ablicolor )
+		cam.End3D2D()
+		self.BaseClass.Draw3DHUD(self,vm, pos, ang)
+	end
+	

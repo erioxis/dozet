@@ -5,7 +5,7 @@ ENT.m_NextStrainSound = 0
 hook.Add("PlayerInitialSpawn", "NailPlayerInitialSpawn", function(pl)
 	local uid = pl:UniqueID()
 
-	for _, nail in pairs(ents.FindByClass("prop_nail")) do
+	for _, nail in ipairs(ents.FindByClass("prop_nail")) do
 		if nail:GetOwnerUID() == uid then
 			nail:SetDeployer(pl)
 		end
@@ -18,6 +18,7 @@ function ENT:Initialize()
 	self.m_NailUnremovable = self.m_NailUnremovable or false
 	self.HealthOveride = self.HealthOveride or -1
 	self.HealthMultiplier = self.HealthMultiplier or 1
+	self.NextThinkDa = 1
 end
 
 function ENT:OnDamaged(damage, attacker, inflictor, dmginfo)
@@ -27,6 +28,41 @@ function ENT:OnDamaged(damage, attacker, inflictor, dmginfo)
 	end
 end
 
+<<<<<<< Updated upstream
+=======
+ENT.TimeNext = CurTime() + 0.5
+ENT.NextLivingThink = 0
+function ENT:Think()
+	local parent = self:GetBaseEntity()
+	local curTime = CurTime()
+    if self.EntPos and self.TimeNext < curTime and self.EntPos:Distance( parent:GetPos() ) > 1 then
+    	self:Remove()
+    end
+	if (self.NextThinkDa or 1) < curTime then
+		self.NextThinkDa = curTime + 4
+		local owner = self:GetOwner() 
+		if owner and owner:IsValidLivingHuman() and owner:HasTrinket('nanite_nails') then
+			local oldhealth = parent:GetBarricadeHealth()
+			if oldhealth <= 0 or oldhealth >= parent:GetMaxBarricadeHealth() or parent:GetBarricadeRepairs() <= 0.01 then return end
+
+			parent:SetBarricadeHealth(math.min(parent:GetMaxBarricadeHealth(), parent:GetBarricadeHealth() + math.min(parent:GetBarricadeRepairs(), 7)))
+			healed = 7
+			parent:SetBarricadeRepairs(math.max(parent:GetBarricadeRepairs() - 7, 0))
+
+
+			gamemode.Call("PlayerRepairedObject", owner, parent, 7, self)
+			parent:EmitSound("npc/dog/dog_servo"..math.random(7, 8)..".wav", 70, math.random(100, 105))
+	
+			local effectdata = EffectData()
+				effectdata:SetOrigin(parent:GetPos())
+				effectdata:SetNormal((self:GetPos() - parent:GetPos()):GetNormalized())
+				effectdata:SetMagnitude(1)
+			util.Effect("nailrepaired", effectdata, true, true)
+		end
+	end
+end
+
+>>>>>>> Stashed changes
 function ENT:AttachTo(baseent, attachent, physbone, physbone2)
 	self:SetBaseEntity(baseent)
 	self:SetAttachEntity(attachent, physbone, physbone2)

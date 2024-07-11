@@ -14,7 +14,12 @@ CLASS.PainSounds = {"NPC_Crow.Pain"}
 CLASS.DeathSounds = {"NPC_Crow.Die"}
 
 CLASS.Unlocked = true
+<<<<<<< Updated upstream
 CLASS.Hidden = false
+=======
+CLASS.Hidden = true
+CLASS.Weight = 0
+>>>>>>> Stashed changes
 
 CLASS.Hull = {Vector(-4, -4, 0), Vector(4, 4, 9)}
 CLASS.HullDuck = {Vector(-4, -4, 0), Vector(4, 4, 9)}

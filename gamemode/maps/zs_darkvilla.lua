@@ -1,15 +1,15 @@
 hook.Add("InitPostEntityMap", "Adding", function()
 	
 
-	for _, ent in pairs(ents.FindByClass("trigger_teleport")) do
+	for _, ent in ipairs(ents.FindByClass("trigger_teleport")) do
 		ent:Remove()
 	end
 
-	for _, ent in pairs(ents.FindByClass("func_button")) do
+	for _, ent in ipairs(ents.FindByClass("func_button")) do
 		ent:Remove()
 	end
 
-	for _, ent in pairs(ents.FindByClass("prop_dynamic")) do
+	for _, ent in ipairs(ents.FindByClass("prop_dynamic")) do
 		local pro = ents.Create("prop_physics")
 		if pro:IsValid() then
 			pro:SetModel(ent:GetModel())

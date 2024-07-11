@@ -24,18 +24,29 @@ function SWEP:Think()
 end
 
 local function okclick(self)
-	RunConsoleCommand("setmessagebeaconmessage", self:GetParent().Choice)
+	RunConsoleCommand("setmessagebeaconmessage", self:GetParent().Choice, self:GetParent().MessageCus or "FALSE")
 	self:GetParent():Close()
 end
 
 local function onselect(self, index, value, data)
-	self:GetParent().Choice = data
+	if data ~= "MSG" then
+		self:GetParent().Choice = data
+	else
+		local frame = Derma_StringRequest("Напишите сообщения", "Ы", "",
+		function(d)
+			self:GetParent().MessageCus = d
+		end,
+		function(d) end,
+		"OK", "Cancel")
+		frame:GetChildren()[5]:GetChildren()[2]:SetTextColor(Color(128, 128, 128))
+	end
 end
 
 local Menu
 function SWEP:SecondaryAttack()
 	if Menu and Menu:IsValid() then
 		Menu:SetVisible(true)
+		Menu.MessageCus = nil
 		return
 	end
 
@@ -45,6 +56,7 @@ function SWEP:SecondaryAttack()
 	Menu:SetTitle("Select a message")
 	Menu:Center()
 	Menu.Choice = 1
+	Menu.MessageCus = "FALSE"
 
 	local choice = vgui.Create("DComboBox", Menu)
 	for k, v in ipairs(GAMEMODE.ValidBeaconMessages) do
@@ -54,6 +66,8 @@ function SWEP:SecondaryAttack()
 	choice:SizeToContents()
 	choice:SetWide(Menu:GetWide() - 16)
 	choice:Center()
+
+	choice:AddChoice(translate.Get('my_message'), "MSG")
 	choice.OnSelect = onselect
 
 	local ok = EasyButton(Menu, "OK", 8, 4)

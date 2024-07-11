@@ -89,7 +89,12 @@ function SWEP:MeleeSwing()
 	if combo == 2 then
 		damagemultiplier = damagemultiplier * 1.35
 	end
-
+	if owner:IsSkillActive(SKILL_CURSE_OF_MISS) and math.random(1,3) == 1 and SERVER then
+		GAMEMODE:BlockFloater(owner, NULL, tr.HitPos, 1)
+		self:SetPowerCombo(0)
+		return
+	end
+	 
 	for _, trace in ipairs(tr) do
 		if not trace.Hit then continue end
 
@@ -146,11 +151,28 @@ function SWEP:MeleeHitEntity(tr, hitent, damagemultiplier, damage)
 
 	local owner = self:GetOwner()
 
-	if SERVER and hitent:IsPlayer() and owner:IsSkillActive(SKILL_GLASSWEAPONS) then
-		damagemultiplier = damagemultiplier * 7
-		owner.GlassWeaponShouldBreak = not owner.GlassWeaponShouldBreak
+	if SERVER then
+		if hitent:IsPlayer() and hitent:GetActiveWeapon() and hitent:GetActiveWeapon().IsSwinging and hitent:GetActiveWeapon():IsSwinging() then
+			hitent.IdealHit = true 
+			timer.Create("Parry_a_"..hitent:Nick(),5,1,function() hitent.IdealHit = false end)
+		end
+		if hitent:IsPlayer() and owner:IsSkillActive(SKILL_GLASSWEAPONS) then
+			damagemultiplier = damagemultiplier * 3.5
+			owner.GlassWeaponShouldBreak = not owner.GlassWeaponShouldBreak
+		end
+
+		if hitent:IsPlayer() and owner:IsSkillActive(SKILL_SOULNET) then
+			damagemultiplier = damagemultiplier * 1.06
+
+		end
+		if owner.ShineAndHit and hitent.IdealHit then
+			damagemultiplier = damagemultiplier * 1.4
+		end
 	end
 
+	if SERVER and owner.ShineAndHit and hitent:IsPlayer() and hitent:GetActiveWeapon() and hitent:GetActiveWeapon().IsSwinging and hitent:GetActiveWeapon():IsSwinging() then
+		damagemultiplier = damagemultiplier * 1.4
+	end
 	damage = damage * damagemultiplier
 
 	local dmginfo = DamageInfo()

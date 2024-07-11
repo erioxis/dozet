@@ -1,8 +1,13 @@
 AddCSLuaFile()
 DEFINE_BASECLASS("weapon_zs_base")
 
+<<<<<<< Updated upstream
 SWEP.PrintName = "'Adonis' Улучшенная версия"
 SWEP.Description = "Прошлая версия была пистолетом но ее чертежи затерялись."
+=======
+SWEP.PrintName = translate.Get("wep_adonis")
+SWEP.Description = translate.Get("wep_d_adonis")
+>>>>>>> Stashed changes
 
 SWEP.Slot = 2
 SWEP.SlotPos = 0
@@ -15,6 +20,9 @@ if CLIENT then
 	SWEP.HUD3DPos = Vector(1, 0, 0)
 	SWEP.HUD3DScale = 0.018
 end
+
+SWEP.InnateDamageType = INNATE_TYPE_PULSE
+SWEP.InnateDamageMul = 0
 
 SWEP.Base = "weapon_zs_base"
 
@@ -55,7 +63,11 @@ SWEP.FireAnimSpeed = 0.4
 SWEP.LegDamage = 50
 
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_FIRE_DELAY, -0.014, 1)
+<<<<<<< Updated upstream
 GAMEMODE:AddNewRemantleBranch(SWEP, 1, "'Servitor' Pulse Rifle", "Refreshes zapper cooldown on kill, more leg damage, reduced accuracy and reload speed", function(wept)
+=======
+GAMEMODE:AddNewRemantleBranch(SWEP, 1, translate.Get("wep_adonis_r1"), translate.Get("wep_d_adonis_r1"), function(wept)
+>>>>>>> Stashed changes
 	wept.ConeMin = 2.25
 	wept.ConeMax = 3.75
 	wept.ReloadSpeed = 0.2
@@ -65,7 +77,7 @@ GAMEMODE:AddNewRemantleBranch(SWEP, 1, "'Servitor' Pulse Rifle", "Refreshes zapp
 		local killer = self:GetOwner()
 
 		if killer:IsValid() then
-			for _,v in pairs(ents.FindByClass("prop_zapper*")) do
+			for _,v in ipairs(ents.FindByClass("prop_zapper*")) do
 				if v:GetObjectOwner() == killer then
 					v:SetNextZap(0)
 				end
@@ -84,4 +96,5 @@ function SWEP.BulletCallback(attacker, tr, dmginfo)
 	if IsFirstTimePredicted() then
 		util.CreatePulseImpactEffect(tr.HitPos, tr.HitNormal)
 	end
+	dmginfo:GetInflictor().BaseClass.BulletCallback(attacker, tr, dmginfo)
 end

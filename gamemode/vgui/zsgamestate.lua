@@ -12,11 +12,13 @@ function PANEL:Init()
 	self.m_Text1 = vgui.Create("DLabel", self)
 	self.m_Text2 = vgui.Create("DLabel", self)
 	self.m_Text3 = vgui.Create("DLabel", self)
+	self.m_Text4 = vgui.Create("DLabel", self)
 	self:SetTextFont("ZSHUDFontTiny")
 
 	self.m_Text1.Paint = self.Text1Paint
 	self.m_Text2.Paint = self.Text2Paint
 	self.m_Text3.Paint = self.Text3Paint
+	self.m_Text4.Paint = self.Text4Paint
 
 	self:InvalidateLayout()
 end
@@ -28,6 +30,8 @@ function PANEL:SetTextFont(font)
 	self.m_Text2:SetFont(font)
 	self.m_Text3.Font = font
 	self.m_Text3:SetFont(font)
+	self.m_Text4.Font = font
+	self.m_Text4:SetFont(font)
 
 	self:InvalidateLayout()
 end
@@ -46,10 +50,21 @@ function PANEL:PerformLayout()
 	self.m_Text2:SizeToContentsY()
 	self.m_Text2:MoveRightOf(self.m_HumanCount, 12)
 	self.m_Text2:CenterVertical()
+<<<<<<< Updated upstream
 	self.m_Text3:SetWide(self:GetWide())
 	self.m_Text3:SizeToContentsY()
 	self.m_Text3:MoveRightOf(self.m_HumanCount, 12)
 	self.m_Text3:AlignBottom(4)
+=======
+	self.m_Text3:SetWide(self:GetWide() * 1.8)
+	self.m_Text3:SizeToContentsY()
+	self.m_Text3:MoveRightOf(self.m_HumanCount, 16)
+	self.m_Text3:AlignBottom(8)
+	self.m_Text4:SetWide(self:GetWide() * 1.8)
+	self.m_Text4:SizeToContentsY()
+	self.m_Text4:MoveRightOf(self.m_HumanCount, 16)
+	self.m_Text4:AlignBottom(2)
+>>>>>>> Stashed changes
 end
 
 function PANEL:Text1Paint()
@@ -103,18 +118,18 @@ function PANEL:Text2Paint()
 			col = COLOR_GRAY
 		end
 
-		draw.SimpleText(translate.Format("zombie_invasion_in_x", util.ToMinutesSecondsCD(timeleft)), self.Font, 0, 0, col)
+		draw.SimpleText(GAMEMODE.MCSeconds and translate.Format("start_by_x", util.ToMinutesSecondsMilliseconds(timeleft)) or translate.Format("zombie_invasion_in_x", util.ToMinutesSecondsCD(timeleft)), self.Font, 0, 0, col)
 	elseif GAMEMODE:GetWaveActive() then
 		local waveend = GAMEMODE:GetWaveEnd()
 		if waveend ~= -1 then
 			local timeleft = math.max(0, waveend - CurTime())
-			draw.SimpleText(translate.Format("wave_ends_in_x", util.ToMinutesSecondsCD(timeleft)), self.Font, 0, 0, 10 < timeleft and COLOR_GRAY or Color(255, 0, 0, math.abs(math.sin(RealTime() * 8)) * 180 + 40))
+			draw.SimpleText(GAMEMODE.MCSeconds and translate.Format("wave_e_in_x", util.ToMinutesSecondsMilliseconds(timeleft)) or translate.Format("wave_ends_in_x", util.ToMinutesSecondsCD(timeleft)), self.Font, 0, 0, 10 < timeleft and COLOR_GRAY or Color(255, 0, 0, math.abs(math.sin(RealTime() * 8)) * 180 + 40))
 		end
 	else
 		local wavestart = GAMEMODE:GetWaveStart()
 		if wavestart ~= -1 then
 			local timeleft = math.max(0, wavestart - CurTime())
-			draw.SimpleText(translate.Format("next_wave_in_x", util.ToMinutesSecondsCD(timeleft)), self.Font, 0, 0, 10 < timeleft and COLOR_GRAY or Color(255, 0, 0, math.abs(math.sin(RealTime() * 8)) * 180 + 40))
+			draw.SimpleText(GAMEMODE.MCSeconds and translate.Format("next_wave_in_x", util.ToMinutesSecondsMilliseconds(timeleft)) or translate.Format("next_wave_in_x", util.ToMinutesSecondsCD(timeleft)), self.Font, 0, 0, 10 < timeleft and COLOR_GRAY or Color(255, 0, 0, math.abs(math.sin(RealTime() * 8)) * 180 + 40))
 		end
 	end
 
@@ -128,12 +143,48 @@ function PANEL:Text3Paint()
 			if toredeem > 0 then
 				draw.SimpleText(translate.Format("brains_eaten_x", MySelf:Frags().." / "..toredeem), self.Font, 0, 0, COLOR_SOFTRED)
 			else
+<<<<<<< Updated upstream
 				draw.SimpleText(translate.Format("brains_eaten_x", MySelf:Frags()), self.Font, 0, 0, COLOR_SOFTRED)
 			end
 		else
 			--draw.SimpleText(translate.Format("points_x", MySelf:GetPoints().." / "..MySelf:Frags()), self.Font, 0, 0, COLOR_DARKRED)
 			draw.SimpleText("Points: "..MySelf:GetPoints().."  Score: "..MySelf:Frags(), self.Font, 0, 0, COLOR_SOFTRED)
 		end
+=======
+				draw.SimpleText(translate.Format("brains_eaten_x", MySelf:Frags()), self.Font, 0, -6, COLOR_SOFTRED)
+			end
+		else
+			local balance = GAMEMODE:GetBalance()
+			--draw.SimpleText(translate.Format("points_x", MySelf:GetPoints().." / "..MySelf:Frags()), self.Font, 0, 0, COLOR_DARKRED)
+			draw.SimpleText(translate.Format("sboard_points_x_score_x_dps_x", MySelf:GetMScore(),math.Round(MySelf:GetDPS()),MySelf:GetPoints()), self.Font, 0, -5, COLOR_SOFTRED)
+			draw.SimpleText((MySelf:GetAddedPoints()>0 and "+" or "")..MySelf:GetAddedPoints(), self.Font, 300+(MySelf:GetMScore()>99 and MySelf:GetMScore() < 999 and 20 or MySelf:GetMScore()>999 and 40 or 0), -5, Color(255,255,255,255*((MySelf:GetAddedPointsTime()-CurTime()+3)/3)))
+		end
+	end
+
+	return true
+end
+
+function PANEL:Text4Paint()
+	if MySelf:IsValid() then
+			local balance = GAMEMODE:GetBalance()
+			local god = false
+			local d = NULL
+			for _, pl in pairs(player.GetAll()) do
+				if pl:GetZombieClassTable().GodTRUE then
+					god = true
+					d = pl
+				end
+			end
+			if god and d then
+				powergod = d:Health()/5000000 * 100
+			end
+			local rage = GAMEMODE:GetRage()
+			if !god then
+				draw.SimpleText(((0 < balance) and translate.Get("dosei_inf")..balance.."%" or ""), "ZSHUDFontTiniest", 0, 12, rage > 35000 and COLOR_RED or rage > 11500 and COLOR_YELLOW or rage > 6500 and COLOR_BLUE or COLOR_GRAY)
+			else
+				draw.SimpleText(translate.Get("power_god")..powergod.."%", "ZSHUDFontTiniest", 0, 12, COLOR_SOFTRED)
+			end
+>>>>>>> Stashed changes
 	end
 
 	return true

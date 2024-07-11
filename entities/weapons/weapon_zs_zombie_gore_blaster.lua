@@ -41,6 +41,14 @@ function SWEP:ApplyMeleeDamage(ent, trace, damage)
 			bleed:AddDamage(damage * self.BleedDamageMul)
 			bleed.Damager = self:GetOwner()
 		end
+<<<<<<< Updated upstream
+=======
+		if ent:GetBloodArmor() >= 1 then
+			self:GetOwner():SetZArmor(ent:GetBloodArmor() * 0.5 + self:GetOwner():GetZArmor())
+			ent:SetBloodArmor(0)
+			self.MeleeDamage = self.MeleeDamage + ent:GetBloodArmor() *0.2
+		end
+>>>>>>> Stashed changes
 	end
 
 	self.BaseClass.ApplyMeleeDamage(self, ent, trace, damage)

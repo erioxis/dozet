@@ -1,5 +1,12 @@
+<<<<<<< Updated upstream
 SWEP.PrintName = "'Carrion' Impact Mine Layer"
 SWEP.Description = "A mine layer that shoots out simple tripmines that attach to surfaces."
+=======
+--SWEP.PrintName = "'Carrion' Impact Mine Layer"
+--SWEP.Description = "A mine layer that shoots out simple tripmines that attach to surfaces."
+SWEP.PrintName = translate.Get("wep_mlayer")
+SWEP.Description = translate.Get("wep_d_mlayer")
+>>>>>>> Stashed changes
 
 SWEP.Slot = 4
 SWEP.SlotPos = 0
@@ -31,10 +38,14 @@ SWEP.WalkSpeed = SPEED_SLOWEST * 0.9
 
 SWEP.UseHands = true
 
-SWEP.MaxMines = 30
+SWEP.MaxMines = 4
 
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_MAXIMUM_MINES, 1)
+<<<<<<< Updated upstream
 GAMEMODE:AddNewRemantleBranch(SWEP, 1, "'Sparkler' Laser Miner", "Fires damaging laser trip mines that last several seconds", function(wept)
+=======
+GAMEMODE:AddNewRemantleBranch(SWEP, 1, translate.Get("wep_mlayer_r1"), translate.Get("wep_d_mlayer_r1"), function(wept)
+>>>>>>> Stashed changes
 	wept.Primary.Damage = wept.Primary.Damage * 0.22
 	if SERVER then
 		wept.EntModify = function(self, ent)
@@ -48,7 +59,7 @@ end)
 function SWEP:CanPrimaryAttack()
 	if self.BaseClass.CanPrimaryAttack(self) then
 		local c = 0
-		for _, ent in pairs(ents.FindByClass("projectile_impactmine")) do
+		for _, ent in ipairs(ents.FindByClass("projectile_impactmine")) do
 			if (CLIENT or ent.CreateTime + 300 > CurTime()) and ent:GetOwner() == self:GetOwner() then
 				c = c + 1
 			end

@@ -6,7 +6,7 @@ hook.Add("InitPostEntityMap", "DestroyDoor", function()
 		doors[2]:Remove()
 	end
 
-	for _, ent in pairs(ents.FindByClass("gmod_player_start")) do
+	for _, ent in ipairs(ents.FindByClass("gmod_player_start")) do
 		if ent:GetPos().z > -440 then
 			ent:Remove()
 		end

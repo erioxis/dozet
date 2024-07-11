@@ -10,6 +10,9 @@ CLASS.KnockbackScale = 0
 CLASS.Health = 3500
 CLASS.Speed = 231
 
+CLASS.Wave = 5 / 12
+CLASS.Hidden = true
+
 CLASS.CanTaunt = true
 
 CLASS.FearPerInstance = 1

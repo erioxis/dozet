@@ -1,7 +1,12 @@
 CLASS.Name = "Bad Marrow"
 CLASS.TranslationName = "class_baw"
+<<<<<<< Updated upstream
 CLASS.Description = "description_red_marrow"
 CLASS.Help = "controls_red_marrow"
+=======
+CLASS.Description = "description_baw"
+CLASS.Help = "controls_bad_marrow"
+>>>>>>> Stashed changes
 
 CLASS.Boss = true
 
@@ -109,6 +114,13 @@ function CLASS:ProcessDamage(pl, dmginfo)
 	local attacker = dmginfo:GetAttacker()
 	local dmg = dmginfo:GetDamage()
 	local hp = pl:Health()
+<<<<<<< Updated upstream
+=======
+	if dmginfo:GetInflictor().IsMelee then
+		dmginfo:SetDamage(dmginfo:GetDamage() / 2)
+	end
+	dmginfo:ScaleDamage(1.14-math.min(0.9,GAMEMODE:GetWave()*0.07))
+>>>>>>> Stashed changes
 
 	if pl:GetStatus("redmarrow") and attacker:IsPlayer() and attacker:Team() == TEAM_HUMAN then
 		dmginfo:SetDamage(0)
@@ -135,4 +147,9 @@ function CLASS:ProcessDamage(pl, dmginfo)
 		util.BlastDamageEx(pl, pl, pl:GetPos(), 55, 41, DMG_CLUB)
 		pl:GodDisable()
 	end
+<<<<<<< Updated upstream
 end
+=======
+	return dmginfo
+end
+>>>>>>> Stashed changes

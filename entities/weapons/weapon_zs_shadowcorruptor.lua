@@ -88,3 +88,19 @@ end
 function SWEP:GetSwinging()
 	return self:GetDTBool(2)
 end
+<<<<<<< Updated upstream
+=======
+
+function SWEP:ApplyMeleeDamage(pl, trace, damage)
+	if SERVER and pl:IsPlayer() then
+		local cursed = pl:GetStatus("cursed")
+		if (cursed) then 
+			pl:AddCursed(self:GetOwner(), cursed.DieTime - CurTime() + 10)
+		end
+		if (not cursed) then 
+			pl:AddCursed(self:GetOwner(), 10)
+		end
+	end
+	self.BaseClass.ApplyMeleeDamage(self, pl, trace, damage)
+end
+>>>>>>> Stashed changes

@@ -4,10 +4,11 @@ ENT.RenderGroup = RENDERGROUP_TRANSLUCENT
 ENT.m_NoNailUnfreeze = true
 ENT.NoNails = true
 
-ENT.WrenchRepairMultiplier = 23
-
+ENT.WrenchRepairMultiplier = 1
+ENT.CanPackUp = true
+ENT.PackUpTime = 0.21
 ENT.Model = "models/manhack.mdl"
-ENT.HitBoxSize = 21
+ENT.HitBoxSize = 15
 ENT.Mass = 50
 ENT.WeaponClass = "weapon_zs_manhack"
 ENT.ControllerClass = "weapon_zs_manhackcontrol"
@@ -86,4 +87,13 @@ end
 
 function ENT:GetRedLightAngles()
 	return self:GetAngles()
+end
+function ENT:SetTrinkets(sbl)
+	self.Inventory = sbl
+end
+function ENT:HasTrinket(some)
+	return self.Inventory["trinket_"..some]
+end
+function ENT:AddTrinkets(some)
+	self.Inventory[#self.Inventory+1] = some
 end

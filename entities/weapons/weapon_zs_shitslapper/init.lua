@@ -16,7 +16,7 @@ function SWEP:ApplyMeleeDamage(ent, trace, damage)
 			noknockdown = false
 			ent.NextKnockdown = CurTime() + 4
 		end
-		ent:ThrowFromPositionSetZ(trace.StartPos, ent:IsPlayer() and 600 or 1600, nil, noknockdown)
+		ent:ThrowFromPositionSetZ(trace.StartPos, ent:IsPlayer() and 600 or 1600, nil, ent:IsPlayer() and ent:IsSkillActive(SKILL_STEEL_ASS) or noknockdown)
 	end
 
 end

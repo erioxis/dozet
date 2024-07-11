@@ -1,8 +1,8 @@
 hook.Add("InitPostEntityMap", "Adding", function()
 	
 
-	for _, ent in pairs(ents.FindByClass("func_door*")) do ent:Remove() end
-	for _, ent in pairs(ents.FindByClass("trigger_teleport")) do ent:Remove() end
+	for _, ent in ipairs(ents.FindByClass("func_door*")) do ent:Remove() end
+	for _, ent in ipairs(ents.FindByClass("trigger_teleport")) do ent:Remove() end
 
 	local ent2 = ents.Create("prop_dynamic_override")
 	if ent2:IsValid() then

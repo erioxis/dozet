@@ -1,6 +1,7 @@
 function GM:RenderScreenspaceEffects()
 end
-
+local math_Clamp = math.Clamp
+local math_Round = math.Round
 GM.PostProcessingEnabled = CreateClientConVar("zs_postprocessing", 1, true, false):GetBool()
 cvars.AddChangeCallback("zs_postprocessing", function(cvar, oldvalue, newvalue)
 	GAMEMODE.PostProcessingEnabled = tonumber(newvalue) == 1
@@ -13,7 +14,7 @@ end)
 
 GM.FilmGrainOpacity = CreateClientConVar("zs_filmgrainopacity", 50, true, false):GetInt()
 cvars.AddChangeCallback("zs_filmgrainopacity", function(cvar, oldvalue, newvalue)
-	GAMEMODE.FilmGrainOpacity = math.Clamp(tonumber(newvalue) or 0, 0, 255)
+	GAMEMODE.FilmGrainOpacity = math_Clamp(tonumber(newvalue) or 0, 0, 255)
 end)
 
 GM.ColorModEnabled = CreateClientConVar("zs_colormod", "1", true, false):GetBool()
@@ -30,27 +31,27 @@ GM.AuraColorEmpty = Color(CreateClientConVar("zs_auracolor_empty_r", 255, true, 
 GM.AuraColorFull = Color(CreateClientConVar("zs_auracolor_full_r", 20, true, false):GetInt(), CreateClientConVar("zs_auracolor_full_g", 255, true, false):GetInt(), CreateClientConVar("zs_auracolor_full_b", 20, true, false):GetInt(), 255)
 
 cvars.AddChangeCallback("zs_auracolor_empty_r", function(cvar, oldvalue, newvalue)
-	GAMEMODE.AuraColorEmpty.r = math.Clamp(math.ceil(tonumber(newvalue) or 0), 0, 255)
+	GAMEMODE.AuraColorEmpty.r = math_Clamp(math.ceil(tonumber(newvalue) or 0), 0, 255)
 end)
 
 cvars.AddChangeCallback("zs_auracolor_empty_g", function(cvar, oldvalue, newvalue)
-	GAMEMODE.AuraColorEmpty.g = math.Clamp(math.ceil(tonumber(newvalue) or 0), 0, 255)
+	GAMEMODE.AuraColorEmpty.g = math_Clamp(math.ceil(tonumber(newvalue) or 0), 0, 255)
 end)
 
 cvars.AddChangeCallback("zs_auracolor_empty_b", function(cvar, oldvalue, newvalue)
-	GAMEMODE.AuraColorEmpty.b = math.Clamp(math.ceil(tonumber(newvalue) or 0), 0, 255)
+	GAMEMODE.AuraColorEmpty.b = math_Clamp(math.ceil(tonumber(newvalue) or 0), 0, 255)
 end)
 
 cvars.AddChangeCallback("zs_auracolor_full_r", function(cvar, oldvalue, newvalue)
-	GAMEMODE.AuraColorFull.r = math.Clamp(math.ceil(tonumber(newvalue) or 0), 0, 255)
+	GAMEMODE.AuraColorFull.r = math_Clamp(math.ceil(tonumber(newvalue) or 0), 0, 255)
 end)
 
 cvars.AddChangeCallback("zs_auracolor_full_g", function(cvar, oldvalue, newvalue)
-	GAMEMODE.AuraColorFull.g = math.Clamp(math.ceil(tonumber(newvalue) or 0), 0, 255)
+	GAMEMODE.AuraColorFull.g = math_Clamp(math.ceil(tonumber(newvalue) or 0), 0, 255)
 end)
 
 cvars.AddChangeCallback("zs_auracolor_full_b", function(cvar, oldvalue, newvalue)
-	GAMEMODE.AuraColorFull.b = math.Clamp(math.ceil(tonumber(newvalue) or 0), 0, 255)
+	GAMEMODE.AuraColorFull.b = math_Clamp(math.ceil(tonumber(newvalue) or 0), 0, 255)
 end)
 
 
@@ -141,7 +142,16 @@ function GM:_RenderScreenspaceEffects()
 	end
 
 	fear = math_Approach(fear, self:CachedFearPower(), FrameTime())
+<<<<<<< Updated upstream
 
+=======
+	local bers = MySelf:GetTimerBERS()
+	if bers >= CurTime() and MySelf:IsSkillActive(SKILL_BERSERK) then
+		tColorModBers["$pp_colour_addr"] = (0.015 + math_abs(math_sin(CurTime() * 2)) * 0.09) * ((bers - CurTime())/10)
+		tColorModBers["$pp_colour_brightness"] = math_min(((bers - CurTime())/10) - 0.3,0.32)
+		DrawColorModify(tColorModBers)
+	end
+>>>>>>> Stashed changes
 	if not self.PostProcessingEnabled then return end
 
 	if self.DrawPainFlash and self.HurtEffect > 0 then
@@ -212,7 +222,129 @@ hook.Add("PreDrawTranslucentRenderables", "ZFullBright", GM.FullBrightOff)
 hook.Add("PostDrawTranslucentRenderables", "ZFullBright", GM.FullBrightOn)
 hook.Add("PreDrawViewModel", "ZFullBright", GM.FullBrightOff)
 hook.Add("RenderScreenspaceEffects", "ZFullBright", GM.FullBrightOff)
+<<<<<<< Updated upstream
 
+=======
+local surface_SetDrawColor = surface.SetDrawColor
+local surface_DrawRect = surface.DrawRect
+local surface_SetTexture = surface.SetTexture
+local surface_SetMaterial = surface.SetMaterial
+local surface_DrawTexturedRect = surface.DrawTexturedRect
+
+local matGlow = Material("sprites/glow04_noz")
+local texDownEdge = surface.GetTextureID("gui/gradient_down")
+local function DrawIndicator(colHealth,screenscale,bared,time,name,formula,x,y)
+	local healthperc = math_Clamp(bared / formula, 0.01, 1)
+
+	local wid, hei = 150 * screenscale, 20 * screenscale
+
+	
+
+	local subwidth = healthperc * wid
+	local fraction = (time-CurTime())/2
+	local form = math_Clamp( fraction, 0, 1 )
+	colHealth.a = form *255
+	surface_SetDrawColor(0, 0, 0, colHealth.a)
+	surface_DrawRect(x, y, wid, hei)
+
+	
+	surface_SetDrawColor(colHealth.r * 1, colHealth.g * 0.2, colHealth.b, 40)
+	surface_SetTexture(texDownEdge)
+	surface_DrawTexturedRect(x + 2, y + 1, subwidth - 4, hei - 2)
+	surface_SetDrawColor(colHealth.r * 0.6, colHealth.g * 0.6, colHealth.b, 30)
+	surface_DrawRect(x + 2, y + 1, subwidth - 4, hei - 2)
+
+	surface_SetMaterial(matGlow)
+	surface_SetDrawColor(255, 255, 255, colHealth.a)
+	surface_DrawTexturedRect(x + 2 + subwidth - 6, y + 1 - hei/2, 4, hei * 2)
+	draw.SimpleTextBlurry(translate.Get(name.."_hud")..math_Round(bared).."/"..math_Round(formula) , "ZSHUDFontTiny", x, y - 12, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM)
+end
+local colMed = Color(33,226,43)
+local colBoun = Color(97,255,24)
+local colcham = Color(247,229,132)
+local colIce = Color(21,213,226)
+local colResnya = Color(145,9,9)
+local colAe =  Color(6,77,30)
+local colCader =  Color(50,77,210)
+function GM:DrawInductorIndicators()
+	local x = ScrW() * 0.45
+	local y = ScrH() * 0.05
+	--local base = ScrH() * 0.07
+
+	local lp = MySelf
+	if lp:IsValid() then
+		local screenscale = BetterScreenScale()
+		local medp = lp:GetProgress('mprog')
+		local caderp = lp:GetProgress('caderprog')
+		local fired = lp:GetProgress('fprog')
+		local pulsed = lp:GetProgress('pprog')
+		local bountyd = lp:GetProgress('bprog')
+		local icep = lp:GetProgress('iprog')
+		local spinprog = lp:GetProgress('spinprog')
+		local cham = lp:GetProgress('cprog')
+		local resnyad = lp:GetProgress('rprog')
+
+		local qillings = lp:GetDTInt(25)
+	
+		local medt = lp:GetPTime('mprog')
+		local cadert = lp:GetPTime('caderprog')
+		local firet =lp:GetPTime('fprog')
+		local pulset =lp:GetPTime('pprog')
+		local bountyt =lp:GetPTime('bprog')
+		local spintime = lp:GetPTime('spinprog')
+		local icet =lp:GetPTime('iprog')
+		local chamt =lp:GetPTime('cprog')
+		local resnyat =lp:GetPTime('rprog')
+
+
+		if cham > 0 and chamt >= CurTime() then
+			DrawIndicator(colcham,screenscale,cham,chamt,"cham",350* (lp:GetIndChance() or 1),x,y)
+			y = y + ScrH() * 0.07
+		end
+		if fired > 0 and lp:HasTrinket("fire_ind") and firet > CurTime() then
+			local hell = lp.HoleOfHell
+			local wep = lp:GetActiveWeapon()
+			DrawIndicator(hell  and Color(65,12,2) or Color(226,62,33),screenscale,fired,firet,hell and "hell" or "fi",(15 * ((wep and (wep.Tier or 1))+1)) * (lp:GetIndChance() or 1),x,y)
+			y = y + ScrH() * 0.07
+		end
+		if medp > 0 and lp:IsSkillActive(SKILL_PREMIUM) and medt > CurTime() then
+			DrawIndicator(colMed,screenscale,medp,medt,"mg",1800,x,y)
+			y = y + ScrH() * 0.07
+		end
+		if caderp > 0 and cadert > CurTime() then
+			DrawIndicator(colCader,screenscale,caderp,cadert,"caderb",2500,x,y)
+			y = y + ScrH() * 0.07
+		end
+		if icep > 0 and icet > CurTime() then
+			local nucl = lp:IsSkillActive(SKILL_COOL_NUCLEAR_SYN)
+			local wep = lp:GetActiveWeapon()
+			DrawIndicator(nucl and colAe or colIce,screenscale,icep,icet,lp:IsSkillActive(SKILL_CRYMAN) and "cry" or nucl and "aboom" or "ii",165 + (35 * ((wep and (wep.Tier or 1))-1) * (wep.Tier or 1)) * (lp:GetIndChance() or 1),x,y)
+			y = y + ScrH() * 0.07
+		end
+		if pulsed > 0 and lp:HasTrinket("resonance") and pulset > CurTime() then
+			local cryo =  lp:IsSkillActive(SKILL_CRYO_LASER)
+			DrawIndicator(cryo and Color(27,105,207) or Color(61,5,192),screenscale,pulsed,pulset,cryo and "ca" or "pc",20 * GAMEMODE:GetWave() * (lp:GetIndChance() or 1),x,y)
+			y = y + ScrH() * 0.07
+		end
+		if bountyd > 0 and bountyt > CurTime() then
+			DrawIndicator(colBoun,screenscale,bountyd,bountyt,"bp",2500 * (MySelf:GetProgress('bprogmul')+1),x,y)
+			y = y + ScrH() * 0.07
+		end
+		if resnyad > 0 and resnyat > CurTime() then
+			DrawIndicator(colResnya,screenscale,resnyad,resnyat,"resnya",1000,x,y)
+			y = y + ScrH() * 0.07
+		end
+		if spinprog > 0 and spintime > CurTime() then
+			DrawIndicator(colResnya,screenscale,spinprog,spintime,"spinel",2000,x,y)
+			y = y + ScrH() * 0.07
+		end
+		if qillings > 0 then
+			DrawIndicator(colResnya,screenscale,qillings,CurTime()+10,"quill",25,x,y)
+			y = y + ScrH() * 0.07
+		end
+	end
+end
+>>>>>>> Stashed changes
 local matGlow = Material("Sprites/light_glow02_add_noz")
 local colHealthEmpty = GM.AuraColorEmpty
 local colHealthFull = GM.AuraColorFull
@@ -243,6 +375,142 @@ function GM:DrawHumanIndicators()
 		end
 	end
 end
+<<<<<<< Updated upstream
+=======
+function GM:DrawZombieIndicators()
+	if MySelf:Team() ~= TEAM_HUMAN or not (MySelf:IsSkillActive(SKILL_SEEAURA) or MySelf:GetStatus("world")) or MySelf:KeyDown(IN_SPEED) or MySelf:GetStatus("curse_mutagen") then return end
+	local world = (MySelf:GetStatus("world") or MySelf:HasTrinket("broken_world"))
+	local matGlow = Material("sprites/glow04_noz")
+	local texDownEdge = surface.GetTextureID("gui/gradient_down")
+	local colHealth = Color(0, 0, 0, 240)
+	local eyepos = EyePos()
+	local range, dist, healthfrac, pos, size
+	for _, pl in pairs(team_GetPlayers(TEAM_UNDEAD)) do
+		if pl:GetStatus("feigndeath") or pl:GetStatus("mimic_q") or pl:GetRenderMode() == RENDERMODE_TRANSALPHA  then continue end
+		range = pl:GetAuraRangeSqr()/6 * (MySelf:IsSkillActive(SKILL_OLD_GOD2) and 2.5 or 1)
+		dist = pl:GetPos():DistToSqr(eyepos)
+		local lp = pl
+		if pl:Alive() and dist <= range then
+			healthfrac = math_max(pl:Health(), 0) / pl:GetMaxHealth()
+			colHealth.r = math_Approach(colHealthEmpty.r, colHealthFull.r, math_abs(colHealthEmpty.r - colHealthFull.r) * healthfrac)
+			colHealth.g = math_Approach(colHealthEmpty.g, colHealthFull.g, math_abs(colHealthEmpty.g - colHealthFull.g) * healthfrac)
+			colHealth.b = math_Approach(colHealthEmpty.b, colHealthFull.b, math_abs(colHealthEmpty.b - colHealthFull.b) * healthfrac)
+
+			pos = pl:WorldSpaceCenter()
+
+		local hcolor = COLOR_WHITE
+		local ang = EyeAngles()
+		ang:RotateAroundAxis(ang:Up(), -90)
+		ang:RotateAroundAxis(ang:Forward(), 90)
+		local nearest = pl:WorldSpaceCenter()
+		local norm = nearest - eyepos
+		norm:Normalize()
+		local dot = EyeVector():Dot(norm)
+		local dotsq = dot * dot
+		local vis = math_Clamp((dotsq * dotsq) - 0.1, 0, 1)
+		local wid, hei = 150, 6
+		local x, y = wid * -0.5 + 2, 0
+				cam.IgnoreZ(true)
+				cam.Start3D2D(nearest, ang, 0.1)
+				local screenscale = BetterScreenScale()
+				local health = lp:Health()
+				local healthperc = math_Clamp(health / lp:GetMaxHealthEx(), 0, 1)
+				local wid, hei = 300 * screenscale, 18 * screenscale
+		 
+				colHealth.r = (lp:GetInfo("zs_rhealth") + healthperc) * 100
+				colHealth.g = lp:GetInfo("zs_ghealth") - healthperc
+				colHealth.b = lp:GetInfo("zs_bhealth")
+		
+				local x = -16 * screenscale
+				local y = 115 * screenscale
+		
+				local subwidth = healthperc * wid
+		
+				draw.SimpleTextBlurry(health.."|"..pl:GetMaxHealth(), "ZSHUDFont", x * screenscale, y - 36 * screenscale, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+				if world then
+					draw.SimpleTextBlurry(lp:GetName(), "ZSHUDFont", x * screenscale, y - 96 * screenscale, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+				end
+		
+				surface_SetDrawColor(0, 0, 0, 230)
+				surface_DrawRect(x, y, wid, hei)
+		
+				surface_SetDrawColor(colHealth.r * 1, colHealth.g * 0.2, colHealth.b, 40)
+				surface_SetTexture(texDownEdge)
+				surface_DrawTexturedRect(x + 2, y + 1, subwidth - 4, hei - 2)
+				surface_SetDrawColor(colHealth.r * 0.6, colHealth.g * 0.6, colHealth.b, 30)
+				surface_DrawRect(x + 2, y + 1, subwidth - 4, hei - 2)
+		
+				surface_SetMaterial(matGlow)
+				surface_SetDrawColor(255, 255, 255, 255)
+				surface_DrawTexturedRect(x + 2 + subwidth - 6, y + 1 - hei/2, 4, hei * 2)
+		
+				local phantomhealth = math.max(lp:GetPhantomHealth(), 0)
+				healthperc = math_Clamp(phantomhealth / lp:GetMaxHealthEx(), 0, 1)
+		
+				colHealth.r = 100
+				colHealth.g = 50
+				colHealth.b = 70
+				local phantomwidth = healthperc * wid
+		
+				surface_SetDrawColor(colHealth.r, colHealth.g, colHealth.b, 40)
+				surface_SetTexture(texDownEdge)
+				surface_DrawTexturedRect(x + 2 + subwidth - 4, y + 1, phantomwidth, hei - 2)
+				surface_SetDrawColor(colHealth.r, colHealth.g, colHealth.b, 30)
+				surface_DrawRect(x + 2 + subwidth - 4, y + 1, phantomwidth, hei - 2)
+						y = y + hei + 3
+						hei = 8
+						x = wid * -0.5 + 2
+		                if pl:GetZombieClassTable().Boss then
+							draw.SimpleText("BOSS", "ZSHUDFontBig", x + 55, y - 150, COLOR_CYAN, TEXT_ALIGN_CENTER)
+						end
+						if MySelf:IsSkillActive(SKILL_MORE_INFO) then
+							y = y + 30
+							draw.SimpleText(translate.Get(pl:GetZombieClassTable().TranslationName), "ZSHUDFontBig", x + 55, y - 250, COLOR_CYAN, TEXT_ALIGN_CENTER)
+							local bloodarmor = lp:GetZArmor()
+							if bloodarmor > 0 then
+								x = 78 * screenscale
+								y = 142 * screenscale
+								wid, hei = 240 * screenscale, 14 * screenscale
+				
+								colHealth.r = 0
+								colHealth.g = 0
+								colHealth.b = 255
+								healthperc = 1
+				
+								subwidth = healthperc * wid
+				
+								draw.SimpleTextBlurry(bloodarmor, "ZSHUDFontSmall", x + wid + 12 * screenscale, y + 8 * screenscale, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+				
+								surface_SetDrawColor(0, 0, 0, 230)
+								surface_DrawRect(x, y, wid, hei)
+				
+								surface_SetDrawColor(colHealth.r * 0.6, colHealth.g * 0.6, colHealth.b, 160)
+								surface_SetTexture(texDownEdge)
+								surface_DrawTexturedRect(x + 2, y + 1, subwidth - 4, hei - 2)
+								surface_SetDrawColor(colHealth.r * 0.5, colHealth.g * 0.5, colHealth.b, 30)
+								surface_DrawRect(x + 2, y + 1, subwidth - 4, hei - 2)
+				
+								surface_SetMaterial(matGlow)
+								surface_SetDrawColor(255, 255, 255, 255)
+								surface_DrawTexturedRect(x + 2 + subwidth - 6, y + 1 - hei/2, 4, hei * 2)
+							end
+						end
+							
+				cam.End3D2D()
+				cam.IgnoreZ(false)
+		
+
+			render_SetMaterial(matGlow)
+			render_DrawSprite(pos, 13, 13, colHealth)
+			size = math_sin(self.HeartBeatTime + pl:EntIndex()) * 50 - 21
+			if size > 0 then
+				render_DrawSprite(pos, size * 1.5, size, colHealth)
+				render_DrawSprite(pos, size, size * 1.5, colHealth)
+			end
+		end
+	end
+end
+>>>>>>> Stashed changes
 
 function GM:ToggleZombieVision(onoff)
 	if onoff == nil then
@@ -295,3 +563,44 @@ function util.WhiteOut(time, fadeouttime)
 
 	hook.Add("RenderScreenspaceEffects", "WhiteOut", RenderWhiteOut)
 end
+
+
+local CModBlackOut = {
+	["$pp_colour_addr"] = 1,
+	["$pp_colour_addg"] = 1,
+	["$pp_colour_addb"] = 1,
+	["$pp_colour_brightness"] = 0,
+	["$pp_colour_contrast"] = 1,
+	["$pp_colour_colour"] = 0,
+	["$pp_colour_mulr"] = 255,
+	["$pp_colour_mulg"] = 255,
+	["$pp_colour_mulb"] = 255
+}
+local BlackOutEnd
+local BlackOutFadeTime
+local function RenderBlackOut()
+	local dt = math_max(BlackOutEnd - CurTime(), 0) / BlackOutFadeTime
+	if dt <= 0 then
+		BlackOutEnd = nil
+		BlackOutFadeTime = nil
+		hook.Remove("RenderScreenspaceEffects", "BlackOut")
+	else
+		local size = 5 + dt * 10
+		CModBlackOut["$pp_colour_contrast"] = dt ^ 2
+		DrawBloom(1 - dt, dt * 3, size, size, 1, 1, 1, 1, 1)
+		CModBlackOut["$pp_colour_mulr"] = dt ^ 2
+		CModBlackOut["$pp_colour_mulg"] = dt ^ 3
+		CModBlackOut["$pp_colour_mulb"] = dt  / 2
+		DrawColorModify(CModBlackOut)
+	end
+end
+
+function util.BlackOut(time, fadeouttime)
+	time = time or 1
+
+	BlackOutEnd = math_max(CurTime() + time, BlackOutEnd or 0)
+	BlackOutFadeTime = math_max(fadeouttime or time, BlackOutFadeTime or 0)
+
+	hook.Add("RenderScreenspaceEffects", "BlackOut", RenderBlackOut)
+end
+

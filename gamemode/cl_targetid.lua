@@ -29,11 +29,44 @@ function GM:DrawTargetID(ent, fade)
 	y = y + draw.GetFontHeight("ZSHUDFontSmaller") + 3
 
 	local healthfraction = math_max(ent:Health() / (ent:Team() == TEAM_UNDEAD and ent:GetMaxZombieHealth() or ent:GetMaxHealth()), 0)
+<<<<<<< Updated upstream
+=======
+	local bloodarmor = ent:GetBloodArmor()
+	if bloodarmor > 0 and ent:Team() == TEAM_HUMAN then
+		util.ColorCopy(COLOR_SOFTRED, colTemp)
+		draw.SimpleTextBlur(translate.Get("trg_bdarmor")..(ent:HasTrinket("curse_unknown") and "???" or math.floor(bloodarmor)), "ZSHUDFontSmaller", x, y, colTemp, TEXT_ALIGN_CENTER)
+		y = y + draw.GetFontHeight("ZSHUDFontSmaller") + 2
+	end
+	if self.MedicalAura and (MySelf:HasTrinket("processor_q4") or MySelf:HasTrinket("processor_q5")) then
+		local localy = y-90
+		for k,v in pairs(ent:GetStatuses()) do
+			local class = v:GetClass()
+			local ent = v:GetDTEntity(22)
+			local tab = GAMEMODE.Statuses[string.sub(class,8,#class)]
+			util.ColorCopy(tab.Debuff and COLOR_SOFTRED or COLOR_LIMEGREEN, colTemp)
+			draw.SimpleTextBlur(translate.Get("s_"..tab.Name).."(".. math.floor(math.max(v:GetStartTime() + v:GetDuration() - CurTime(), 0)) ..")", "ZSHUDFontTiny", x, localy, colTemp, TEXT_ALIGN_CENTER)
+			localy = localy - draw.GetFontHeight("ZSHUDFontTiny") - 2
+			if ent and ent:IsValidPlayer() then
+				util.ColorCopy(ent == MySelf and COLOR_LIMEGREEN or ent:Team() == TEAM_UNDEAD and COLOR_SOFTRED or color_white, colTemp)
+				draw.SimpleTextBlur(translate.Format("applier_x_status",ent:Name()), "ZSHUDFontTiny", x, localy, colTemp, TEXT_ALIGN_CENTER)
+				draw.SimpleTextBlur("+", "ZSHUDFontTiny", x, localy+18, colTemp, TEXT_ALIGN_CENTER)
+				localy = localy - draw.GetFontHeight("ZSHUDFontTiny") - 2
+			end
+		end
+	end
+>>>>>>> Stashed changes
 	if healthfraction ~= 1 then
 		util.ColorCopy(0.75 <= healthfraction and COLOR_HEALTHY or 0.5 <= healthfraction and COLOR_SCRATCHED or 0.25 <= healthfraction and COLOR_HURT or COLOR_CRITICAL, colTemp)
 
+<<<<<<< Updated upstream
 		local hptxt = self.HealthTargetDisplay == 1 and math_ceil(ent:Health()).." HP" or math_ceil(healthfraction * 100).."%"
 
+=======
+		local hptxt = self.HealthTargetDisplay == 1 and math_ceil(ent:Health()).." HP" or self.HealthTargetDisplay == 2 and math_ceil(ent:Health()).."|"..math_ceil(ent:GetMaxHealth()) or math_ceil(healthfraction * 100).."%"
+		if ent:HasTrinket("curse_unknown") then
+			hptxt = "?"
+		end
+>>>>>>> Stashed changes
 		draw.SimpleTextBlur(hptxt, "ZSHUDFont", x, y, colTemp, TEXT_ALIGN_CENTER)
 		y = y + draw.GetFontHeight("ZSHUDFont") + 3
 
@@ -95,7 +128,7 @@ function GM:DrawTargetID(ent, fade)
 	end
 end
 
-function GM:DrawSigilTargetHint(ent, fade)
+function GM:DrawSigilTargetHint(ent, fade, anti)
 	fade = fade or 1
 	local pos = ent:GetPos()
 	pos.z = pos.z + 16
@@ -105,10 +138,43 @@ function GM:DrawSigilTargetHint(ent, fade)
 	colTemp.a = fade * 128
 	util.ColorCopy(color_white, colTemp)
 
+<<<<<<< Updated upstream
 	draw.SimpleTextBlur("Sigil", "ZSHUDFontSmaller", x, y, colTemp, TEXT_ALIGN_CENTER)
 	y = y + draw.GetFontHeight("ZSHUDFontSmaller") + 0
 
 	draw.SimpleTextBlur("Press E to teleport", "ZSHUDFontTiny", x, y, colTemp, TEXT_ALIGN_CENTER)
+=======
+	draw.SimpleTextBlur(translate.Get("sigil_nm"..(anti and "_a" or "")), "ZSHUDFontSmaller", x, y, colTemp, TEXT_ALIGN_CENTER)
+	y = y + draw.GetFontHeight("ZSHUDFontSmaller") + 0
+
+	draw.SimpleTextBlur(translate.Get("sigil_tp"..(anti and "_a" or "")), "ZSHUDFontTiny", x, y, colTemp, TEXT_ALIGN_CENTER)
+end
+
+function GM:DrawInUseRange(ent, fade)
+	fade = fade or 1
+	local pos = ent:GetPos()
+	pos.z = pos.z + 16
+	local ts = pos:ToScreen()
+	local x, y = ts.x, math.Clamp(ts.y, 0, ScrH() * 0.95)
+
+	colTemp.a = fade * 255
+	util.ColorCopy(color_white, colTemp)
+
+	draw.SimpleTextBlur("E", "ZSHUDFontSmaller", x, y, colTemp, TEXT_ALIGN_CENTER)
+
+end
+
+function GM:DrawSigilZombieHint(ent, fade, anti)
+	fade = fade or 1
+	local pos = ent:GetPos()
+	pos.z = pos.z + 16
+	local ts = pos:ToScreen()
+	local x, y = ts.x, math.Clamp(ts.y, 0, ScrH() * 0.95)
+
+	colTemp.a = fade * 128
+	util.ColorCopy(color_white, colTemp)
+	draw.SimpleTextBlur(translate.Get('sigil_hint_health')..math.Round(ent:GetSigilHealth()).."/"..ent:GetSigilMaxHealth(), "ZSHUDFont", x, y, colTemp, TEXT_ALIGN_CENTER)
+>>>>>>> Stashed changes
 end
 
 GM.TraceTarget = NULL
@@ -139,7 +205,7 @@ function GM:HUDDrawTargetID(teamid)
 		self.TraceTargetTeam = util.TraceLine(trace).Entity
 	end
 
-	if entity:IsValid() and (entity:IsPlayer() and (entity:Team() == teamid or isspectator) or entity.Sigil) then
+	if entity:IsValid() and (entity:IsPlayer() and (entity:Team() == teamid or isspectator) or entity.Sigil or self.ShowElol and  self:FindUseEntity(MySelf, NULL) == entity) then
 		entitylist[entity] = CurTime()
 	end
 
@@ -147,7 +213,15 @@ function GM:HUDDrawTargetID(teamid)
 		if ent:IsValidPlayer() and (ent:Team() == teamid or isspectator) and CurTime() < time + 1.5 then
 			self:DrawTargetID(ent, 1 - math.Clamp((CurTime() - time) / 1.5, 0, 1))
 		elseif teamid == TEAM_HUMAN and ent.Sigil and CurTime() < time + 0.5 then
-			self:DrawSigilTargetHint(ent, 1 - math.Clamp((CurTime() - time) / 0.5, 0, 1))
+			if ent.AntiSigil then
+				self:DrawSigilTargetHint(ent, 1 - math.Clamp((CurTime() - time) / 0.5, 0, 1), true)
+			else
+				self:DrawSigilTargetHint(ent, 1 - math.Clamp((CurTime() - time) / 0.5, 0, 1))	
+			end
+		elseif teamid == TEAM_UNDEAD and ent.Sigil and CurTime() < time + 0.5 and !ent.AntiSigil then
+			self:DrawSigilZombieHint(ent, 1 - math.Clamp((CurTime() - time) / 0.5, 0, 1))	
+		elseif ent:IsValid() and CurTime() < time + .3 then
+			self:DrawInUseRange(ent, 1 - math.Clamp((CurTime() - time) / .3, 0, 1))
 		else
 			entitylist[ent] = nil
 		end

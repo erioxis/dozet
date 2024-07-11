@@ -15,6 +15,11 @@ SWEP.Primary.Ammo = "GaussEnergy"
 SWEP.Primary.Delay = 1
 SWEP.Primary.DefaultClip = 32
 
+<<<<<<< Updated upstream
+=======
+SWEP.ZombieCanPickup = true
+
+>>>>>>> Stashed changes
 SWEP.Secondary.ClipSize = 1
 SWEP.Secondary.DefaultClip = 1
 SWEP.Secondary.Ammo = "dummy"

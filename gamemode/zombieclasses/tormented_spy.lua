@@ -2,8 +2,12 @@ CLASS.Base = "wraith"
 
 CLASS.Name = "Corrupted Spy"
 CLASS.TranslationName = "class_tormented_spy"
-CLASS.Description = "description_tormented_wraith"
-CLASS.Help = "controls_tormented_wraith"
+CLASS.Description = "description_tormented_spy"
+CLASS.Help = "controls_tormented_spy"
+
+CLASS.Variations = {}
+CLASS.Original = false
+
 
 CLASS.Health = 60
 CLASS.Points = CLASS.Health/GM.NoHeadboxZombiePointRatio
@@ -72,6 +76,7 @@ if SERVER then
 
 			activ:SetTormented(CurTime())
 		end
+		return dmginfo
 	end
 end
 
@@ -88,6 +93,7 @@ function CLASS:PrePlayerDraw(pl)
 	render.SetColorModulation(0.025, 0.15, 0.065)
 	render.SuppressEngineLighting(true)
 end
+<<<<<<< Updated upstream
 if SERVER then
 	function CLASS:ProcessDamage(pl, dmginfo)
 		if dmginfo:GetInflictor().IsMelee then
@@ -95,3 +101,8 @@ if SERVER then
 		end
 	end
 	end
+=======
+
+
+
+>>>>>>> Stashed changes

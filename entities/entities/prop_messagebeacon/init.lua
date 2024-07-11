@@ -29,7 +29,6 @@ function ENT:Initialize()
 		worldhint:SetViewable(TEAM_HUMAN)
 		worldhint:SetRange(7680)
 		worldhint:SetHint(self:GetMessage())
-		worldhint:SetTranslated(true)
 	end
 end
 
@@ -68,6 +67,12 @@ end
 function ENT:SetMessageID(id)
 	self:SetDTInt(0, id)
 	self.WorldHint:SetHint(self:GetMessage())
+	self.WorldHint:SetTranslated(true)
+end
+
+function ENT:SetMessageCarefull(id)
+	self.WorldHint:SetHint(id)
+	self.WorldHint:SetTranslated(false)
 end
 
 function ENT:AltUse(activator, tr)

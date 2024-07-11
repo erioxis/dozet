@@ -1,6 +1,6 @@
 CLASS.Name = "The Genius"
 CLASS.TranslationName = "class_antimelee"
-CLASS.Description = "description_butcher"
+CLASS.Description = "description_antimelee"
 CLASS.Help = "controls_butcher"
 
 CLASS.Boss = true
@@ -9,12 +9,13 @@ CLASS.KnockbackScale = 0
 
 CLASS.Health = 1750
 CLASS.Speed = 160
-
+CLASS.CanPickupProp = true
 if SERVER then
 function CLASS:ProcessDamage(pl, dmginfo)
 	if dmginfo:GetInflictor().IsMelee then
 		dmginfo:SetDamage(dmginfo:GetDamage() / 30)
 	end
+	return dmginfo
 end
 end
 CLASS.CanTaunt = true

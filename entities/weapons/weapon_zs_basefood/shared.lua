@@ -43,7 +43,7 @@ function SWEP:CanEat()
 
 	if owner:GetStatus("sickness") then return false end
 
-	if owner:IsSkillActive(SKILL_SUGARRUSH) then
+	if owner:IsSkillActive(SKILL_SUGARRUSH) or owner:IsSkillActive(SKILL_RUB_RUB_STOMACH) then
 		return true
 	end
 
@@ -68,7 +68,7 @@ function SWEP:SecondaryAttack()
 
 	local owner = self:GetOwner()
 
-	if owner:HasTrinket("processor") then
+	if owner:HasTrinket("processor_q3") or owner:HasTrinket("processor_q5") or owner:HasTrinket("processor_q4") then
 		owner:EmitSound("weapons/bugbait/bugbait_squeeze1.wav", 65, 150)
 
 		if SERVER then
@@ -82,6 +82,13 @@ function SWEP:Reload()
 end
 
 function SWEP:Think()
+<<<<<<< Updated upstream
+=======
+	local owner = self:GetOwner()
+	if owner:IsSkillActive(SKILL_FOODHEALS) then
+		owner:GiveStatus("obed", 1)
+	 end
+>>>>>>> Stashed changes
 	if self:GetEatEndTime() > 0 then
 		local time = CurTime()
 
@@ -117,7 +124,7 @@ function SWEP:Think()
 			self:SetEatEndTime(0)
 		end
 
-		if owner:IsSkillActive(SKILL_GLUTTON) or owner:IsSkillActive(SKILL_SUGARRUSH) then return end
+		if owner:IsSkillActive(SKILL_GLUTTON) or owner:IsSkillActive(SKILL_SUGARRUSH) or owner:IsSkillActive(SKILL_RUB_RUB_STOMACH) then return end
 
 		local max = owner:IsSkillActive(SKILL_D_FRAIL) and math.floor(owner:GetMaxHealth() * 0.25) or owner:GetMaxHealth()
 		if owner:Health() >= max then
@@ -127,6 +134,7 @@ function SWEP:Think()
 end
 
 function SWEP:Holster()
+	if (self:GetOwner():GetStatus("sticky")) then return false end
 	self:SetEatStartTime(0)
 	self:SetEatEndTime(0)
 

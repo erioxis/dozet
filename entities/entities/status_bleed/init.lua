@@ -6,6 +6,7 @@ end
 
 function ENT:Think()
 	local owner = self:GetOwner()
+<<<<<<< Updated upstream
 
 	if self:GetDamage() <= 0 then
 		self:Remove()
@@ -16,13 +17,32 @@ function ENT:Think()
 
 	owner:TakeDamage(dmg, self.Damager and self.Damager:IsValid() and self.Damager:IsPlayer() and self.Damager or owner, self)
 	self:AddDamage(-dmg)
+=======
+	local lox = self.Damager and self.Damager:IsPlayer() and self.Damager:IsSkillActive(SKILL_LOX)
+	local marry =  self.Damager and self.Damager:IsPlayer() and self.Damager:IsSkillActive(SKILL_BLOODMARY)
+	if self:GetDamage() <= 0 or owner:GetZombieClassTable().Skeletal then
+		self:Remove()
+		return
+	end
+	
+	local dmg = (lox and math.Clamp(self:GetDamage() * 2, 2, 8) or math.Clamp(self:GetDamage(), 1, 4))
+	if not owner:IsSkillActive(SKILL_DEFENDBLOOD) then
+		owner.NoBleedStack = true
+		owner:TakeDamage(dmg + self:GetDamage() * 0.01 * (marry and 3 or 1), self.Damager and self.Damager:IsValid() and self.Damager:IsPlayer() and self.Damager or owner, self)
+		owner.NoBleedStack = false
+		self:AddDamage(-dmg - self:GetDamage() * 0.01)
+	elseif owner:IsSkillActive(SKILL_DEFENDBLOOD)then
+		owner:SetHealth(math.min(owner:Health() + (dmg * 2) + self:GetDamage() * 0.01,2000))
+		self:AddDamage(-dmg - self:GetDamage() * 0.01)
+	end
+>>>>>>> Stashed changes
 
 	local dir = VectorRand()
 	dir:Normalize()
 	util.Blood(owner:WorldSpaceCenter(), 3, dir, 32)
 
-	local moving = owner:GetVelocity():LengthSqr() >= 19600 --140^2
-	local ticktime = (moving and 0.65 or 1.3)/(owner.BleedSpeedMul or 1)
+	local moving = owner:GetVelocity():LengthSqr() >= 19600 --140^2 
+	local ticktime = (moving and 0.65 or 1.3)/(owner.BleedSpeedMul or 1) * (owner:IsValidLivingZombie() and 0.4 or 1)
 	self:NextThink(CurTime() + ticktime)
 	return true
 end

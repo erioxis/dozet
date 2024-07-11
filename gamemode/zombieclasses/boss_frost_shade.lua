@@ -7,8 +7,8 @@ CLASS.Help = "controls_frostshade"
 
 CLASS.Boss = true
 
-CLASS.Health = 1900
-CLASS.Speed = 170
+CLASS.Health = 3999
+CLASS.Speed = 250
 
 CLASS.Points = 30
 
@@ -68,6 +68,7 @@ if SERVER then
 				status:SetLastDamaged(CurTime())
 			end
 		end
+		return dmginfo
 	end
 
 	function CLASS:ShadeShield(pl)
@@ -86,8 +87,20 @@ if SERVER then
 				local status = pl:GiveStatus("frostshadeshield")
 				if status and status:IsValid() then
 					status:SetStateEndTime(curtime + 0.5)
+<<<<<<< Updated upstream
+=======
+					local give = 0
+					for _, ent in pairs(player.FindInSphere(pl:GetPos(), 238)) do
+						if ent:IsValidLivingZombie() and pl ~= ent then
+							local add = 255 * (GAMEMODE:GetWave() /2)
+							give = give + add
+							ent:SetZArmor(ent:GetZArmor() + add)
+						end
+					end
+					pl:AddShieldStats(give)
+>>>>>>> Stashed changes
 
-					for _, ent in pairs(ents.FindByClass("env_frostshadecontrol")) do
+					for _, ent in ipairs(ents.FindByClass("env_frostshadecontrol")) do
 						if ent:IsValid() and ent:GetOwner() == pl then
 							ent:Remove()
 							return
@@ -100,6 +113,16 @@ if SERVER then
 
 	function CLASS:AltUse(pl)
 		self:ShadeShield(pl)
+		if pl:KeyDown(IN_ATTACK) then
+			if self.Name == "Shade" then
+				pl:StripWeapons()
+				pl:SetZombieClassName("Frost Shade")
+			elseif self.Name == "Frost Shade" then
+				pl:StripWeapons()
+				pl:SetZombieClassName("Shade")
+			end
+			pl:Give(pl:GetZombieClassTable().SWEP)
+		end
 	end
 end
 

@@ -54,7 +54,11 @@ SWEP.CSMuzzleFlashes = false
 
 SWEP.Primary.Sound = Sound("weapons/zs_sawnoff/sawnoff_fire1.ogg")
 SWEP.Primary.Damage = 11.35
+<<<<<<< Updated upstream
 SWEP.Primary.NumShots = 8
+=======
+SWEP.Primary.NumShots = 5
+>>>>>>> Stashed changes
 SWEP.Primary.Delay = 0.6
 SWEP.Primary.ClipSize = 2
 SWEP.Primary.Automatic = false

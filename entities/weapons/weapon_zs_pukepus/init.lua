@@ -5,10 +5,10 @@ function SWEP:Think()
 
 	if self.PukeLeft > 0 and CurTime() >= self.NextPuke then
 		self.PukeLeft = self.PukeLeft - 1
-		self.NextEmit = CurTime() + 0.1
+		self.NextPuke = CurTime() + math.max(0.04-GAMEMODE:GetWave()*0.01,0.005)
 		pl.LastRangedAttack = CurTime()
 
-		local ent = ents.Create(self.PukeLeft % 6 == 1 and "projectile_ghoulfleshpuke" or "projectile_poisonpuke")
+		local ent = ents.Create(self.PukeLeft % 6 == 1 and "projectile_ghoulfleshpuke" or self.PukeLeft % 6 == 3 and "projectile_stickyspit" or "projectile_poisonpuke")
 		if ent:IsValid() then
 			ent:SetPos(pl:EyePos())
 			ent:SetOwner(pl)

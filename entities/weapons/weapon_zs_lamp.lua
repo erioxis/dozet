@@ -1,8 +1,15 @@
 AddCSLuaFile()
 
+<<<<<<< Updated upstream
 SWEP.PrintName = "Lamp"
 SWEP.Description = "Обычная лампа но что-то в ней не так"
 
+=======
+--SWEP.PrintName = "Lamp"
+--SWEP.Description = "Обычная лампа но что-то в ней не так"
+SWEP.PrintName = translate.Get("wep_lamp")
+SWEP.Description = translate.Get("wep_d_lamp")
+>>>>>>> Stashed changes
 if CLIENT then
 	SWEP.ViewModelFOV = 65
 	SWEP.ViewModelFlip = false
@@ -56,3 +63,28 @@ end
 function SWEP:PlayHitFleshSound()
 	self:EmitSound("physics/body/body_medium_break"..math.random(2, 4)..".wav")
 end
+function SWEP:HaveAbility() 
+	local float = self:GetDTFloat(6)
+	if float>=300 then
+		self.NoAbility = true
+	end
+end
+function SWEP:DealThink(dmginfo) 
+	if !self.NoAbility then 
+		self:SetDTFloat(6,math.min(300,self:GetDTFloat(6)+math.min(25,dmginfo:GetDamage()*0.25)))
+	else
+		self:SetDTFloat(6,self:GetDTFloat(6)-50)
+		if self:GetDTFloat(6) <= 0 then
+			self:SetDTFloat(6,0)
+			self.NoAbility = false
+		end
+		return self.MeleeDamage
+	end
+end
+if not CLIENT then return end
+	local ablicolor =  Color( 234,45,152)
+	function SWEP:DrawHUD()
+		self:Draw2DFeature( self:GetDTFloat(6)/300, nil, nil, "weapon_ability_lamp", "ZSHUDFontSmallest", ablicolor, "+menu" )
+		self.BaseClass.DrawHUD(self)
+	end
+	

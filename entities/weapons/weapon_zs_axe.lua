@@ -15,9 +15,36 @@ if CLIENT then
 	SWEP.WElements = {
 		["base"] = { type = "Model", model = "models/props/cs_militia/axe.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3, 1.399, -4), angle = Angle(0, 0, 90), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
 	}
+<<<<<<< Updated upstream
+=======
+	
+	function SWEP:PostDrawViewModel(vm, pl, wep)
+		local veles = self.VElements
+	
+		local col1 = self:GetOwner():GetWeaponColor():ToColor()
+		veles["base"].color = col1
+		local weles = self.WElements
+		weles["base"].color = col1
+	end
+>>>>>>> Stashed changes
 end
+SWEP.UsedNewWeapons = true 
 
-SWEP.Base = "weapon_zs_basemelee"
+if !SWEP.UsedNewWeapons then
+	SWEP.Base = "weapon_zs_basemelee"
+	DEFINE_BASECLASS("weapon_zs_basemelee")
+	SWEP.MeleeDamage = 45
+else
+	SWEP.Base = "weapon_zs_basemelee_modified"
+	DEFINE_BASECLASS("weapon_zs_basemelee_modified")
+	SWEP.MeleeDamage = 53/3
+	SWEP.OverPosition =  {8,5,11}
+	SWEP.Additionalism =  {-1,-1.3,-6}
+	SWEP.StaminaUse = 12	
+	
+	SWEP.HitAnim = ACT_VM_MISSCENTER
+	SWEP.MissAnim = ACT_VM_MISSCENTER
+end
 
 SWEP.ViewModel = "models/weapons/c_stunstick.mdl"
 SWEP.WorldModel = "models/props/cs_militia/axe.mdl"

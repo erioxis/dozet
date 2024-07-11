@@ -5,6 +5,14 @@ CLASS.TranslationName = "class_tormented_wraith"
 CLASS.Description = "description_tormented_wraith"
 CLASS.Help = "controls_tormented_wraith"
 
+<<<<<<< Updated upstream
+=======
+CLASS.Variations = {}
+CLASS.Original = false
+
+
+
+>>>>>>> Stashed changes
 CLASS.Health = 320
 CLASS.Points = CLASS.Health/GM.NoHeadboxZombiePointRatio
 CLASS.Speed = 168
@@ -63,6 +71,7 @@ if SERVER then
 
 			activ:SetTormented(CurTime())
 		end
+		return dmginfo
 	end
 end
 
@@ -80,10 +89,3 @@ function CLASS:PrePlayerDraw(pl)
 	render.SuppressEngineLighting(true)
 end
 
-if SERVER then
-	function CLASS:ProcessDamage(pl, dmginfo)
-		if dmginfo:GetInflictor().IsMelee then
-			dmginfo:SetDamage(dmginfo:GetDamage() / 10)
-		end
-	end
-	end

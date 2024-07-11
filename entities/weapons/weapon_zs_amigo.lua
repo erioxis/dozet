@@ -1,11 +1,17 @@
 AddCSLuaFile()
 DEFINE_BASECLASS("weapon_zs_base")
 
+<<<<<<< Updated upstream
 SWEP.PrintName = "'Amigo' Assault Rifle"
 SWEP.Description = "The Amigo gets extra headshot damage, but has a slow fire rate for an assault rifle."
 
+=======
+>>>>>>> Stashed changes
 SWEP.Slot = 2
 SWEP.SlotPos = 0
+
+SWEP.PrintName = translate.Get("wep_amigo")
+SWEP.Description = translate.Get("wep_d_amigo")
 
 if CLIENT then
 	SWEP.ViewModelFlip = false
@@ -27,20 +33,34 @@ SWEP.UseHands = true
 
 SWEP.ReloadSound = Sound("Weapon_SG552.Clipout")
 SWEP.Primary.Sound = Sound("Weapon_SG552.Single")
+<<<<<<< Updated upstream
 SWEP.Primary.Damage = 23
 SWEP.Primary.NumShots = 4
 SWEP.Primary.Delay = 0.01
 
 SWEP.Primary.ClipSize = 1
+=======
+SWEP.Primary.Damage = 23.5
+SWEP.Primary.NumShots = 1
+SWEP.Primary.Delay = 0.15
+
+SWEP.Primary.ClipSize = 25
+>>>>>>> Stashed changes
 SWEP.Primary.Automatic = true
 SWEP.Primary.Ammo = "ar2"
 GAMEMODE:SetupDefaultClip(SWEP.Primary)
 
-SWEP.ConeMax = 30
+SWEP.ConeMax = 2
 SWEP.ConeMin = 0.8
+<<<<<<< Updated upstream
 SWEP.HeadshotMulti = 6
 
 SWEP.ReloadSpeed = 2
+=======
+SWEP.HeadshotMulti = 2.1
+
+SWEP.ReloadSpeed = 0.9
+>>>>>>> Stashed changes
 
 SWEP.WalkSpeed = SPEED_SLOW
 
@@ -196,7 +216,7 @@ local branch = GAMEMODE:AddNewRemantleBranch(SWEP, 2, "'Horizon' Battle Rifle", 
 	end
 end)
 branch.Colors = {Color(110, 160, 170), Color(90, 140, 150), Color(70, 120, 130)}
-branch.NewNames = {"Focused", "Transfixed", "Orphic"}
+branch.NewNames = {"Focused", "Transfixed", "Orphic", "Mixed", "Eagly"}
 branch.Killicon = "weapon_zs_battlerifle"
 
 function SWEP:IsScoped()

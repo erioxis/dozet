@@ -5,7 +5,11 @@ CLASS.Hidden = true
 CLASS.Name = "Super Zombie"
 CLASS.TranslationName = "class_super_zombie"
 
+<<<<<<< Updated upstream
 CLASS.Health = 1500
+=======
+CLASS.Health = 35000
+>>>>>>> Stashed changes
 CLASS.Speed = SPEED_ZOMBIEESCAPE_ZOMBIE
 CLASS.Points = 5
 

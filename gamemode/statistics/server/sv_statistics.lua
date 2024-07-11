@@ -69,25 +69,5 @@ function stattrack:SaveStatTrackingFiles()
 		file.Write(stattrack:GetTrackTypeStatFile(num), Serialize({Ser = self[self:GetTypeTbl(num)]}))
 	end
 end
-timer.Create("StatTrackingSaveTimer", 60, 0, function()
-	local allplys = player.GetAll()
 
-	local skc = {}
-	for _,v in ipairs(allplys) do
-		local activ = v:GetActiveWeapon()
-		if activ and activ:IsValid() then
-			stattrack:IncreaseElementKV(STATTRACK_TYPE_WEAPON, activ:GetClass(), "HeldWeaponSaves", 1)
-		end
 
-		for i, j in pairs(v:GetActiveSkills()) do
-			skc[i] = (skc[i] or 0) + 1
-		end
-	end
-
-	for k,v in pairs(skc) do
-		stattrack:IncreaseElementKV(STATTRACK_TYPE_SKILL, GAMEMODE.Skills[k].Name, "SkillMinutes", v)
-	end
-
-	stattrack:SaveStatTrackingFiles()
-end)
-hook.Add("ShutDown", "StatTrack", function() stattrack:SaveStatTrackingFiles() end)

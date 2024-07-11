@@ -1,7 +1,14 @@
 AddCSLuaFile()
 
+<<<<<<< Updated upstream
 SWEP.PrintName = "Knife"
 SWEP.Description = "A small bladed weapon that deals double damage to the back."
+=======
+--SWEP.PrintName = "Knife"
+--SWEP.Description = "A small bladed weapon that deals x5 damage to the back.(MASSACRE MASSACRE MASSACRE MASSACRE MASSACRE MASSACRE MASSACRE MASSACRE)"
+SWEP.PrintName = translate.Get("wep_knife")
+SWEP.Description = translate.Get("wep_d_knife")
+>>>>>>> Stashed changes
 
 if CLIENT then
 	SWEP.ViewModelFlip = false
@@ -19,6 +26,10 @@ SWEP.UseHands = true
 SWEP.MeleeDamage = 31
 SWEP.MeleeRange = 52
 SWEP.MeleeSize = 0.875
+<<<<<<< Updated upstream
+=======
+SWEP.BlockMultiplierWeapon = 0.7
+>>>>>>> Stashed changes
 
 SWEP.WalkSpeed = SPEED_FASTEST
 

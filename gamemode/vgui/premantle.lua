@@ -419,6 +419,7 @@ function PANEL:Paint(w, h)
 				self.QualityDesc[i]:SetText(dtxt)
 				self.QualityDesc[i]:SizeToContents()
 			end
+			--self:ViewerStatBarUpdate(ыу,false,self.GunTab)
 
 			surface.PlaySound("zombiesurvival/ui/misc1.ogg")
 
@@ -445,7 +446,7 @@ net.Receive("zs_remantleconf", function()
 	local wepclass = ri.m_WepClass
 	local contentsqua = GAMEMODE.GunTab.QualityTier
 	local desiredqua = contentsqua and contentsqua + 1 or 1
-	local upgclass = GAMEMODE:GetWeaponClassOfQuality(not contentsqua and wepclass or GAMEMODE.GunTab.BaseQuality, desiredqua)
+	local upgclass = GAMEMODE:GetWeaponClassOfQuality(not contentsqua and wepclass or GAMEMODE.GunTab.BaseQuality, desiredqua, ri.BranchCache)
 
 	GAMEMODE.GunTab = weapons.Get(upgclass)
 	local gtbl = GAMEMODE.GunTab
@@ -477,15 +478,11 @@ function PANEL:OnMousePressed(mc)
 		local current = self.RemantleNodes[hovbranch][hovquality]
 		local prev = self.RemantleNodes[hovbranch][hovquality - 1] or hovquality == 1 and self.RemantleNodes[0][0]
 		if cqua and hovquality > cqua and prev and prev.Unlocked and not current.Locked then
-			if self.GunTab.AmmoIfHas and MySelf:GetAmmoCount(self.GunTab.Primary.Ammo) == 0 then
-				GAMEMODE:CenterNotify(COLOR_RED, "You don't have the deployable ammo type for this!")
-				surface.PlaySound("buttons/button8.wav")
 
-				return
-			end
 
 			local scost = GAMEMODE:GetUpgradeScrap(self.GunTab, hovquality)
 			if MySelf:GetAmmoCount("scrap") >= scost then
+				GAMEMODE.RemantlerInterface.BranchCache = hovbranch
 				RunConsoleCommand("zs_upgrade", hovbranch ~= 0 and hovbranch)
 
 				return
@@ -645,8 +642,13 @@ function GM:OpenRemantlerMenu(remantler)
 				tbn = EasyButton(tabpane, subcats[j], 8, 4)
 				tbn:SetFont("ZSHUDFontSmallest")
 				tbn:SetAlpha(j == 1 and 255 or 70)
+<<<<<<< Updated upstream
 				tbn:AlignRight(800 * screenscale - (ispacer - 1) * 190 * screenscale)
 				tbn:AlignTop(j <= 3 and 0 or 28)
+=======
+				tbn:AlignRight(800 * screenscale - (ispacer - 1) * 120 * screenscale)
+				tbn:AlignTop(j <= 4 and 2 or 40)
+>>>>>>> Stashed changes
 				tbn:SizeToContents()
 				tbn.DoClick = function(me)
 					for k, v in pairs(tabpane.Grids) do
@@ -686,6 +688,7 @@ function GM:OpenRemantlerMenu(remantler)
 	end
 	frame.m_SubProp = subpropertysheet
 
+
 	self:CreateItemInfoViewer(trinketsframe, frame, topspace, bottomspace, MENU_REMANTLER)
 
 	local scroller = remprop:GetChildren()[1]
@@ -722,8 +725,13 @@ function GM:OpenRemantlerMenu(remantler)
 
 	local disscraptxt = ""
 	if gtbl then
+<<<<<<< Updated upstream
 		local retscrap = self:GetDismantleScrap(gtbl, SelectedInv())
 		disscraptxt = gtbl.NoDismantle and "Cannot Dismantle" or "Dismantle for " .. retscrap .. " Scrap"
+=======
+		local retscrap = self:GetDismantleScrap(gtbl, SelectedInv(),MySelf)
+		disscraptxt = gtbl.NoDismantle and translate.Get("rem_nodism") or translate.Format("rem_dis_for",retscrap)
+>>>>>>> Stashed changes
 	end
 
 	local disscrap = EasyLabel(remantleframe, disscraptxt, "ZSHUDFontSmaller", COLOR_WHITE)
@@ -738,7 +746,6 @@ function GM:OpenRemantlerMenu(remantler)
 	compdisl:MoveBelow(disscrap, 4 * screenscale)
 	compdisl:CenterHorizontal()
 	frame.m_ComponentDis = compdisl
-
 	frame:MakePopup()
 	frame:CenterMouse()
 end

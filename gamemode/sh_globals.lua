@@ -6,6 +6,12 @@ TEAM_SURVIVORS = TEAM_SURVIVOR
 TEAM_HUMAN = TEAM_SURVIVOR
 TEAM_HUMANS = TEAM_SURVIVOR
 
+INNATE_TYPE_BOUNTY = 5
+INNATE_TYPE_ICE = 2
+INNATE_TYPE_SERRATE = 4
+INNATE_TYPE_FIRE = 3
+INNATE_TYPE_PULSE = 1
+
 DISMEMBER_HEAD = 1
 DISMEMBER_LEFTARM = 2
 DISMEMBER_RIGHTARM = 4
@@ -34,16 +40,75 @@ HM_PACIFIST = 19
 HM_SCARECROW = 20
 HM_NESTDESTROYER = 21
 HM_NESTMASTER = 22
+HM_BOUNTIES = 23
+
+BOUNTY_XP_HM = {
+[1] = 0.05,
+[2] = 0.0005,
+[3] = 0.04,
+[4] = 0.05,
+[5] = 0.07,
+[6] = 150,
+[7] = 0.05,
+[8] = 0.08,
+[9] = 0.04,
+[10] = 0.04,
+[11] = 15,
+[12] = 0.01,
+[13] = 125,
+[14] = -25,
+[15] = -1,
+[16] = 0.1,
+[17] = 0.01,
+[18] = 0.02,
+[19] = 250,
+[20] = 0.05,
+[21] = 2,
+[22] = 1,
+[23] = 15,
+}
 
 DT_PLAYER_INT_REMORTLEVEL = 5
 DT_PLAYER_INT_XP = 6
 DT_PLAYER_INT_BLOODARMOR = 7
 DT_PLAYER_INT_VOICESET = 8
+DT_PLAYER_INT_ACTIV = 10
+
+DT_PLAYER_INT_MELEE = 11
+DT_PLAYER_INT_GUNNER = 12
+DT_PLAYER_INT_MEDIC = 13
+DT_PLAYER_INT_CADER = 14
+
+DT_PLAYER_INT_ADDEDPOINTS = 15
+
+
 DT_PLAYER_BOOL_BARRICADEEXPERT = 6
 DT_PLAYER_BOOL_NECRO = 7
 DT_PLAYER_BOOL_FRAIL = 8
+<<<<<<< Updated upstream
 DT_PLAYER_FLOAT_WIDELOAD = 5
 DT_PLAYER_FLOAT_PHANTOMHEALTH = 6
+=======
+DT_PLAYER_BOOL_LABUSE = 9
+
+DT_PLAYER_FLOAT_WIDELOAD = 5
+DT_PLAYER_FLOAT_PHANTOMHEALTH = 6
+DT_PLAYER_FLOAT_DOSET_COINS = 7
+DT_PLAYER_FLOAT_STAMINA = 8
+DT_PLAYER_FLOAT_ADDEDPOINTS = 9
+DT_PLAYER_FLOAT_MAGIC = 10
+
+CHAMP_NONE = 0
+CHAMP_RED = 1
+CHAMP_WHITE = 2
+CHAMP_BLUE = 3
+CHAMP_BIG = 4
+CHAMP_SMOL = 5
+CHAMP_YELLOW = 6
+CHAMP_ETERNAL = 7
+CHAMP_PINK = 8
+CHAMP_GRAY = 9
+>>>>>>> Stashed changes
 
 VOICESET_MALE = 0
 VOICESET_FEMALE = 1
@@ -51,6 +116,8 @@ VOICESET_COMBINE = 2
 VOICESET_BARNEY = 3
 VOICESET_ALYX = 4
 VOICESET_MONK = 5
+VOICESET_MINOS = 6
+VOICESET_SISYPHIS = 7
 
 VOICELINE_PAIN_LIGHT = 0
 VOICELINE_PAIN_MED = 1
@@ -106,6 +173,7 @@ GM.MaxArmDamage = 20
 
 GM.UtilityKey = IN_SPEED
 GM.MenuKey = IN_WALK -- I would use the spawn menu but it has no IN_ key assignment.
+GM.SpecialAbilityKey = KEY_Q -- ДОБАВИЛ)
 
 GM.ArsenalCrateCommission = 0.11
 
@@ -117,6 +185,7 @@ GM.MaxNails = 4
 -- Moved from options to globals because the game is now balanced around it being static. The gamemode will BREAK if this is not 6!!
 GM.NumberOfWaves = 12
 
+<<<<<<< Updated upstream
 GM.PulsePointsMultiplier = 1.35
 
 -- The amount of damage you need to inflict to a zombie type to get a point
@@ -136,6 +205,27 @@ SPEED_FAST = SPEED_NORMAL + 7
 SPEED_FASTER = SPEED_NORMAL + 11
 SPEED_FASTEST = SPEED_NORMAL + 33
 SPEED_VKID = SPEED_NORMAL + 65
+=======
+GM.PulsePointsMultiplier = 1.75
+
+-- The amount of damage you need to inflict to a zombie type to get a point
+GM.HumanoidZombiePointRatio = 65
+GM.PoisonZombiePointRatio = 86 -- Has an enormous head hitbox
+GM.HeadcrabZombiePointRatio = 75
+GM.NoHeadboxZombiePointRatio = 54
+GM.TorsoZombiePointRatio = 85
+GM.LegsZombiePointRatio = 76
+GM.SkeletonPointRatio = GM.HumanoidZombiePointRatio/2
+
+SPEED_NORMAL = 195
+SPEED_SLOWEST = SPEED_NORMAL * 0.5
+SPEED_SLOWER = SPEED_NORMAL * 0.75
+SPEED_SLOW = SPEED_NORMAL * 0.9
+SPEED_FAST = SPEED_NORMAL * 1.1
+SPEED_FASTER = SPEED_NORMAL * 1.3
+SPEED_FASTEST = SPEED_NORMAL * 1.4
+SPEED_VKID = SPEED_NORMAL * 2
+>>>>>>> Stashed changes
 
 SPEED_ZOMBIEESCAPE_SLOWEST = 240
 SPEED_ZOMBIEESCAPE_SLOWER = 260
@@ -147,11 +237,19 @@ ZE_KNOCKBACKSCALE = 0.1
 
 MASK_HOVER = bit.bor(CONTENTS_SOLID, CONTENTS_WATER, CONTENTS_SLIME, CONTENTS_GRATE, CONTENTS_WINDOW, CONTENTS_HITBOX)
 
+<<<<<<< Updated upstream
 GM.BarricadeHealthMin = 510
 GM.BarricadeHealthMax = 5600 * 0.85
 GM.BarricadeHealthMassFactor = 3 * 0.85
 GM.BarricadeHealthVolumeFactor = 4 * 0.85
 GM.BarricadeRepairCapacity = 1.9
+=======
+GM.BarricadeHealthMin = 600
+GM.BarricadeHealthMax = 8600
+GM.BarricadeHealthMassFactor = 3.7 * 0.85
+GM.BarricadeHealthVolumeFactor = 4.5 * 0.85
+GM.BarricadeRepairCapacity = 1.8
+>>>>>>> Stashed changes
 
 GM.BossZombiePlayersRequired = 4
 
@@ -170,6 +268,7 @@ GM.BannedProps = {
 }
 
 GM.PropHealthMultipliers = {
+	["models/props_c17/oildrum001_explosive.mdl"] = 0.001
 }
 
 GM.CleanupFilter = {
@@ -212,13 +311,20 @@ GM.AmmoNames["foodsoda"] = "Soda Cans"
 GM.AmmoNames["foodmilk"] = "Milk Cartons"
 GM.AmmoNames["foodtakeout"] = "Chinese Takeouts"
 GM.AmmoNames["foodwater"] = "Water Bottles"
+GM.AmmoNames["foodsolyanka"] = "Solyanka"
 GM.AmmoNames["pulse"] = "Pulse Shots"
 GM.AmmoNames["impactmine"] = "Explosives"
 GM.AmmoNames["chemical"] = "Chemicals"
 GM.AmmoNames["repairfield"] = "Repair Fields"
+<<<<<<< Updated upstream
+=======
+GM.AmmoNames["medstation"] = "Medical Station"
+GM.AmmoNames["fridge"] = "Fridge"
+>>>>>>> Stashed changes
 GM.AmmoNames["zapper"] = "Zappers"
 GM.AmmoNames["zapper_arc"] = "Arc Zappers"
 GM.AmmoNames["remantler"] = "Remantlers"
+GM.AmmoNames["drone_s"] = "Stations"
 GM.AmmoNames["turret_buckshot"] = "Blast Turrets"
 GM.AmmoNames["turret_assault"] = "Assault Turrets"
 GM.AmmoNames["turret_super"] = "Super Turret"
@@ -262,9 +368,16 @@ GM.AmmoModels["turret_buckshot"] = "models/Combine_turrets/Floor_turret.mdl"
 GM.AmmoModels["turret_assault"] = "models/Combine_turrets/Floor_turret.mdl"
 GM.AmmoModels["turret_super"] = "models/Combine_turrets/Floor_turret.mdl"
 GM.AmmoModels["remantler"] = "models/props_lab/powerbox01a.mdl"
+GM.AmmoModels["drone_s"] = "models/props_lab/powerbox01a.mdl"
 GM.AmmoModels["scrap"] = "models/props_junk/vent001_chunk5.mdl"
 GM.AmmoModels["sniperround"] = "models/props_debris/wood_board02a.mdl"
 GM.AmmoModels["camera"] = "models/props_combine/combine_mine01.mdl"
+<<<<<<< Updated upstream
+=======
+GM.AmmoModels["sigil_port"] = "models/props_lab/lab_flourescentlight002b.mdl"
+GM.AmmoModels["medstation"] = "models/props/de_nuke/smokestack01.mdl"
+GM.AmmoModels["medstation"] = "models/props_c17/furniturefridge001a.mdl"
+>>>>>>> Stashed changes
 
 GM.AmmoIcons = {}
 GM.AmmoIcons["pistol"] = "ammo_pistol"
@@ -286,12 +399,24 @@ GM.ResistableStatuses = {
 	"enfeeble",
 	"slow",
 	"frightened",
+<<<<<<< Updated upstream
 	"frost"
+=======
+	"frost",
+	"rot",
+	"poison",
+	"sticky",
+	"dosei_inf"
+>>>>>>> Stashed changes
 }
 
 GM.ScrapVals = {
 	--6, 16, 32, 58, 92, 138
+<<<<<<< Updated upstream
 	4, 11, 16, 41, 64, 111
+=======
+	5, 12, 16, 41, 66, 122, 300, 430
+>>>>>>> Stashed changes
 }
 
 GM.ScrapValsTrinkets = {
@@ -299,7 +424,11 @@ GM.ScrapValsTrinkets = {
 }
 
 GM.DismantleMultipliers = {
+<<<<<<< Updated upstream
 	3, 6, 7, 8, 20
+=======
+	1, 1.6, 3.3, 5.5, 7.2, 9.3, 11
+>>>>>>> Stashed changes
 }
 
 -- Handled in languages file.
@@ -330,3 +459,5 @@ GM.ValidBeaconMessages = {
 	"message_beacon_24",
 	"message_beacon_25"
 }
+GM.Halloween = false
+GM.NewYear = false

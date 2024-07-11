@@ -193,7 +193,54 @@ VoiceSets[VOICESET_MONK] = {
 		Sound("vo/ravenholm/monk_death07.wav")
 	}
 }
-
+VoiceSets[VOICESET_MINOS] = {
+	[VOICELINE_GIVEAMMO] = {
+		Sound("zombiesurvival/mp_crush.ogg"),
+	},
+	[VOICELINE_PAIN_LIGHT] = {
+		Sound("zombiesurvival/mp_judgement.ogg"),
+		Sound("zombiesurvival/mp_judgement2.ogg")
+	},
+	[VOICELINE_PAIN_MED] = {
+		Sound("zombiesurvival/mp_prepare.ogg"),
+		Sound("zombiesurvival/mp_prepare2.ogg")
+	},
+	[VOICELINE_PAIN_HEAVY] = {
+		Sound("zombiesurvival/mp_useless.wav"),
+		Sound("zombiesurvival/mp_weak.ogg"),
+		Sound("zombiesurvival/mp_die2.ogg")
+	},
+	[VOICELINE_DEATH] = {
+		Sound("zombiesurvival/mp_dead.wav")
+	},
+	[VOICELINE_EYEPAIN] = {
+		Sound("zombiesurvival/mp_die.ogg"),
+		Sound("zombiesurvival/mp_die2.ogg")
+	}
+}
+VoiceSets[VOICESET_SISYPHIS] = {
+	[VOICELINE_GIVEAMMO] = {
+		Sound("zombiesurvival/sp_keepthemcoming.wav"),
+		Sound("zombiesurvival/sp_yesthatsit.wav")
+	},
+	[VOICELINE_PAIN_LIGHT] = {
+		Sound("zombiesurvival/sp_grunt.wav")
+	},
+	[VOICELINE_PAIN_MED] = {
+		Sound("zombiesurvival/sp_nicetry.wav"),
+		Sound("zombiesurvival/sp_nicetry.wav")
+	},
+	[VOICELINE_PAIN_HEAVY] = {
+		Sound("zombiesurvival/sp_thiswillhurt.wav")
+	},
+	[VOICELINE_DEATH] = {
+		Sound("zombiesurvival/sp_begone.wav"),
+		Sound("zombiesurvival/sp_begone2.wav")
+	},
+	[VOICELINE_EYEPAIN] = {
+		Sound("zombiesurvival/sp_thisprison.wav")
+	}
+}
 local meta = FindMetaTable("Player")
 if not meta then return end
 

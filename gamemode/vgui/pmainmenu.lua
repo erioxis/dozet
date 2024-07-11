@@ -185,6 +185,26 @@ function GM:ShowHelp()
 	but:DockPadding(0, 12, 0, 12)
 	but:Dock(TOP)
 	but.DoClick = function() GAMEMODE:ToggleSkillWeb() end
+	if MySelf:Team() == TEAM_HUMAN then
+		but = vgui.Create("DButton", menu)
+		but:SetFont("ZSHUDFontSmaller")
+		but:SetText(translate.Get("mm_mastery"))
+		but:SetTall(buttonhei)
+		but:DockMargin(0, 0, 0, 12)
+		but:DockPadding(0, 12, 0, 12)
+		but:Dock(TOP)
+		but.DoClick = function() GAMEMODE:CreateMasteryMenu() end
+	end
+
+
+--[[	but = vgui.Create("DButton", menu)
+	but:SetFont("ZSHUDFontSmaller")
+	but:SetText(translate.Get("mm_skillsz"))
+	but:SetTall(buttonhei)
+	but:DockMargin(0, 0, 0, 12)
+	but:DockPadding(0, 12, 0, 12)
+	but:Dock(TOP)
+	but.DoClick = function() GAMEMODE:ToggleZSkillWeb() end]]
 
 	but = vgui.Create("DButton", menu)
 	but:SetFont("ZSHUDFontSmaller")
@@ -206,3 +226,194 @@ function GM:ShowHelp()
 
 	menu:MakePopup()
 end
+<<<<<<< Updated upstream
+=======
+local exlude = {8,6,16,22,27,30,31,34,118,114,113,101,40,41,43,92,117,116,56,59,63,65,66,98,72,73,79,88,78,120,57,58,124,125,128,133,105}
+local exlude2 = {121,122,32,108,103,91,90,133}
+function GM:Stats()
+	if pMakepStats and pMakepStats:IsValid() then
+		pMakepStats:Remove()
+	end
+	MakepStats()
+end
+local curse = {
+	"trinket_curse_dropping",
+	"trinket_hurt_curse",
+	"trinket_un_curse",
+	"trinket_curse_faster",
+	"trinket_curse_slow",
+	"trinket_curse_ponos",
+	"trinket_curse_heart",
+	"trinket_curse_unknown",
+	"trinket_curse_fragility",
+	"trinket_cursedtrinket",
+	"trinket_curse_eye",
+}
+local curses_skills = {
+	SKILL_D_CURSEDTRUE,
+	SKILL_NOSEE,
+	SKILL_BARA_CURSED,
+	SKILL_CURSE_OF_MISS,
+	SKILL_ATTACHMENT_CURSE,
+	SKILL_LIVER,
+	SKILL_TRIP,
+}
+local function DoStats(self, list, neg)
+	for k,v in pairs(list:GetItems()) do 
+		v:Remove()
+	end
+	local updatetbl = table.ToAssoc(MySelf:GetActiveSkills())
+	for i=1,#GAMEMODE.SkillModifierFunctions do
+		local i = i or 1
+		local remove = false
+		local skillmodifiers = {}
+		local gm_modifiers = GAMEMODE.SkillModifiers
+		for skillid in pairs(updatetbl)  do
+			modifiers = gm_modifiers[skillid]
+			if modifiers then
+				for modid, amount in pairs(modifiers) do
+					skillmodifiers[modid] = (skillmodifiers[modid] or 0) + amount
+				end
+			end
+		end
+		local d = vgui.Create("DEXChangingLabel", bottom)
+		if neg and (skillmodifiers[i] or 0) == 0 then d:Remove() continue end
+		local c = skillmodifiers[i] or 0
+		if i >= 6 and !table.HasValue(exlude2, i) then
+			c = (c*100).."%"
+		end
+		if (skillmodifiers[i] or 0) > 0 then
+			c = "+"..c
+		end
+		local colorred = table.HasValue(exlude, i) and Color(71,231,119) or Color(238,37,37)
+		local colorgreen = table.HasValue(exlude, i) and Color(238,37,37) or Color(71,231,119)
+		d:SetChangeFunction(function()
+			return translate.Format("skillmod_n"..i,c)
+		end, true)
+		d:SetChangedFunction(function()
+			if (skillmodifiers[i] or 0) < 0 then
+				d:SetTextColor(colorred)
+			elseif (skillmodifiers[i] or 0) > 0 then
+				d:SetTextColor(colorgreen)
+			else
+				
+				d:SetTextColor(Color(255,255,255))
+			end
+		end)
+		local notbl = {10,107,71,75,82,86,87}
+		d:SetFont("DefaultFont")
+		if !table.HasValue(notbl,i) then
+			list:AddItem(d) 
+		end
+		if table.HasValue(notbl,i) then
+			d:Remove()
+		end
+	end
+	local skillsrand = GAMEMODE.MySkillsRandom
+	if #skillsrand > 0 then
+		for k,v in pairs(skillsrand) do
+			local d = vgui.Create("DEXChangingLabel", bottom)
+			d:SetFont("DefaultFont")
+			d:SetText(GAMEMODE.Skills[v].Name)
+	
+			d:SetTextColor( Color(71,231,119))
+			list:AddItem(d) 
+			for d1,p2 in pairs(string.Explode("\n", GAMEMODE.Skills[v].Description)) do 
+				local d3 = vgui.Create("DEXChangingLabel", bottom)
+				if p2:sub(1, 1) == "^" then
+					local colid = tonumber(p2:sub(2, 2)) or 0
+					local p2 = p2:sub(3)
+					d3:SetText(p2)
+					d3:SetTextColor(util.ColorIDToColor(colid, COLOR_GRAY))
+				end
+				if d3:GetText() ~= "Label" then
+					list:AddItem(d3) 
+				end
+			end
+		end
+	end
+	if GAMEMODE.AchievementsProgress["full_curse"] then return end
+	local d = vgui.Create("DEXChangingLabel", bottom)
+	d:SetFont("DefaultFont")
+	d:SetText(translate.Get("need_for_achiev"))
+	list:AddItem(d) 
+	for i=1,#curse do
+	
+		local d = vgui.Create("DEXChangingLabel", bottom)
+		d:SetFont("DefaultFont")
+		d:SetText(GAMEMODE.ZSInventoryItemData[curse[i]].PrintName)
+
+		if !MySelf:HasInventoryItem(curse[i]) then
+			d:SetTextColor(Color(238,37,37))
+		else
+			d:SetTextColor( Color(71,231,119))
+		end
+		list:AddItem(d) 
+	end
+	for i=1,#curses_skills do
+		local d = vgui.Create("DEXChangingLabel", bottom)
+		d:SetFont("DefaultFont")
+		d:SetText(GAMEMODE.Skills[curses_skills[i]].Name)
+
+		if !MySelf:IsSkillActive(curses_skills[i]) then
+			d:SetTextColor(Color(238,37,37))
+		else
+			d:SetTextColor( Color(71,231,119))
+		end
+		list:AddItem(d) 
+	end
+end
+function MakepStats()
+	PlayMenuOpenSound()
+
+	if pMakepStats and pMakepStats:IsValid() then
+		pMakepStats:Remove()
+		pMakepStats = nil
+	end
+	local g = true
+	local p = "only_changes"
+	local Window = vgui.Create("DFrame")
+	local wide = math.min(ScrW(), 500)
+	local tall = math.min(ScrH(), 800)
+	Window:SetSize(wide, tall)
+	Window:Center()
+	Window:SetTitle(" ")
+	Window:SetDeleteOnClose(false)
+	pMakepStats = Window
+
+	local y = 8
+
+
+	local label = EasyLabel(Window, translate.Get("pe_another"), "ZSScoreBoardTitle", color_white)
+	label:SetPos(wide * 0.5 - label:GetWide() * 0.5, y)
+	y = y + label:GetTall() + 8
+
+	local list = vgui.Create("DPanelList", pMakepStats)
+	list:EnableVerticalScrollbar()
+	list:EnableHorizontal(false)
+	list:SetSize(wide - 24, tall - y - 12)
+	list:SetPos(12, y)
+	list:SetPadding(8)
+	list:SetSpacing(4)
+	
+	but = vgui.Create("DButton", list)
+	but:SetFont("ZSHUDFontTiniest")
+	but:SetText(translate.Get(p))
+	but:SizeToContents()
+	but:Dock(BOTTOM)
+	but:SetTall(26)
+	but:DockMargin(0, 0, 0, 0)
+	but:DockPadding(0, 0, 0, 0)
+	but:Dock(TOP)
+	but.DoClick = function()  if g then DoStats(self,list,true) g = !g but:SetText(translate.Get("only_all")) else  DoStats(self,list) g = !g but:SetText(translate.Get(p)) end end
+	
+	DoStats(self,list)
+
+--EasyLabel(parent, text, font, textcolor)
+
+	Window:SetAlpha(0)
+	Window:AlphaTo(255, 0.15, 0)
+	Window:MakePopup()
+	return Window
+end
+>>>>>>> Stashed changes

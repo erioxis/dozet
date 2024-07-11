@@ -1,5 +1,13 @@
+<<<<<<< Updated upstream
 SWEP.PrintName = "Grave Shovel"
 SWEP.Description = "The Grave Digger's shovel. Instantly kills knocked down zombies and permanently gains damage when doing so."
+=======
+--SWEP.PrintName = "Grave Shovel"
+--SWEP.Description = "The Grave Digger's shovel. Instantly kills knocked down zombies and permanently gains damage when doing so."
+
+SWEP.PrintName = translate.Get("wep_gshovel")
+SWEP.Description = translate.Get("wep_d_gshovel")
+>>>>>>> Stashed changes
 
 SWEP.Base = "weapon_zs_basemelee"
 

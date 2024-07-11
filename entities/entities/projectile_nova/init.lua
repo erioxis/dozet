@@ -1,6 +1,6 @@
 INC_SERVER()
 
-ENT.PointsMultiplier = 1.25
+ENT.PointsMultiplier = 1.66
 
 function ENT:Initialize()
 	self.Bounces = 0

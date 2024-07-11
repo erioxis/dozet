@@ -7,6 +7,7 @@ CLASS.Wave = 0
 CLASS.Hidden = true
 CLASS.Unlocked = true
 CLASS.NotRandomStart = true
+CLASS.BetterVersion = "Glitch Creeper"
 
 CLASS.Health = 250
 CLASS.SWEP = "weapon_zs_fleshcreeper"

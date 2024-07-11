@@ -50,7 +50,7 @@ function ENT:Think()
 			for i = 1, 3 do
 				local tpos = target:WorldSpaceCenter()
 
-				for k, ent in pairs(ents.FindInSphere(tpos, 105)) do
+				for k, ent in pairs(player.FindInSphere(tpos, 105)) do
 					if not shocked[ent] and ent:IsValidLivingZombie() and not ent:GetZombieClassTable().NeverAlive then
 						if WorldVisible(tpos, ent:NearestPoint(tpos)) then
 							shocked[ent] = true

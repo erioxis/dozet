@@ -15,12 +15,24 @@ function SWEP:ServerMeleePostHitEntity(tr, hitent, damagemultiplier)
 	local owner = self:GetOwner()
 
 	if owner.GlassWeaponShouldBreak and hitent:IsPlayer() and not self.NoGlassWeapons and owner:IsSkillActive(SKILL_GLASSWEAPONS) and owner.GlassWeaponShouldBreak then
+<<<<<<< Updated upstream
 		local effectdata = EffectData()
 		effectdata:SetOrigin(owner:EyePos())
 		effectdata:SetEntity(owner)
 		util.Effect("weapon_shattered", effectdata, true, true)
 
 		owner:StripWeapon(self:GetClass())
+=======
+	    if math.random(1,6) == 5 then
+			local effectdata = EffectData()
+			effectdata:SetOrigin(owner:EyePos())
+			effectdata:SetEntity(owner)
+			util.Effect("weapon_shattered", effectdata, true, true)
+
+			owner[self:GetClass().."NOMELEE"] = CurTime() + 25
+			owner:SendLua('MySelf["'..self:GetClass()..'".."NOMELEE"] = CurTime() + 25')
+		end
+>>>>>>> Stashed changes
 	end
 end
 

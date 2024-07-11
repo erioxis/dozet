@@ -14,13 +14,8 @@ CLASS.Health = 11
 CLASS.Speed = 230
 CLASS.JumpPower = 160
 
-if SERVER then
-function CLASS:ProcessDamage(pl, dmginfo)
-	if dmginfo:GetInflictor().IsMelee then
-		dmginfo:SetDamage(dmginfo:GetDamage() / 1200)
-	end
-end
-end
+CLASS.Variations = {"Poison Headcrab",  "Fast Headcrab", "Bloodsucker Headcrab","Barbed Headcrab"}
+CLASS.Original = true
 
 
 CLASS.NoFallDamage = true
@@ -145,6 +140,16 @@ if SERVER then
 		local wep = pl:GetActiveWeapon()
 		if wep:IsValid() then wep:Reload() end
 	end
+<<<<<<< Updated upstream
+=======
+
+	function CLASS:ProcessDamage(pl, dmginfo)
+		if dmginfo:GetInflictor().IsMelee then
+			dmginfo:SetDamage(dmginfo:GetDamage() / 2)
+		end
+		return dmginfo
+	end
+>>>>>>> Stashed changes
 end
 
 if not CLIENT then return end

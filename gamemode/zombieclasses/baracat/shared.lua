@@ -4,16 +4,37 @@ CLASS.Name = "Baracat"
 CLASS.TranslationName = "class_baracat"
 CLASS.Description = "description_baracat"
 CLASS.Help = "controls_asskicker"
+<<<<<<< Updated upstream
 
 
+=======
+CLASS.Model = Model("models/player/catpants.mdl")
+CLASS.OverrideModel = Model("models/player/catpants.mdl")
+
+CLASS.Variations = {"Baragat", "Juggernaut Baracat", "Titan Baracat", "Cursed Baracat"}
+CLASS.Original = true
+
+
+CLASS.Weight = 0.6
+CLASS.Wave = 3 / 6
+
+>>>>>>> Stashed changes
 
 CLASS.Wave = 4 / 6
 
 CLASS.KnockbackScale = 0
 
 CLASS.FearPerInstance = 1
+<<<<<<< Updated upstream
 
 CLASS.Points = 5
+=======
+CLASS.NoFallDamage = true
+CLASS.NoFallSlowdown = true
+CLASS.NoSlowdown = true
+
+CLASS.Points = 3
+>>>>>>> Stashed changes
 
 CLASS.SWEP = "weapon_zs_baracat"
 
@@ -102,4 +123,9 @@ function CLASS:UpdateAnimation(pl, velocity, maxseqgroundspeed)
 	end
 
 	return true
+end
+function CLASS:PrePlayerDraw(pl)
+end
+
+function CLASS:PostPlayerDraw(pl)
 end

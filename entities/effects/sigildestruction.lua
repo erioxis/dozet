@@ -4,10 +4,10 @@ local Models = {
 	Model("models/props_debris/concrete_chunk08a.mdl")
 }
 
-local colRubble = Color(20, 20, 140)
+local colRubble = Color(237, 107, 222)
 function EFFECT:Init(data)
 	local origin = data:GetOrigin()
-	local maxs = Vector(16, 16, 72)
+	local maxs = Vector(8, 8, 35)
 	local mins = maxs * -1
 	mins.z = 0
 	local center = origin + (maxs + mins) / 2
@@ -22,7 +22,7 @@ function EFFECT:Init(data)
 
 		local ent = ClientsideModel(Models[math.random(#Models)], RENDERGROUP_TRANSLUCENT)
 		if ent:IsValid() then
-			--ent:SetModelScale(math.Rand(0.2, 0.5), 0)
+			ent:SetModelScale(math.Rand(0.2, 0.8), 0)
 			ent:SetPos(pos)
 			--[[ent:PhysicsInitBox(minbound, maxbound)
 			ent:SetCollisionBounds(minbound, maxbound)]]
@@ -34,10 +34,11 @@ function EFFECT:Init(data)
 			local phys = ent:GetPhysicsObject()
 			if phys:IsValid() then
 				phys:SetMaterial("rock")
-				phys:ApplyForceOffset(ent:GetPos() + VectorRand() * 5, dir * math.Rand(100, 800))
+				phys:ApplyForceOffset(ent:GetPos() + VectorRand() * 5, dir * math.Rand(100, 1200))
 			end
+		
 
-			SafeRemoveEntityDelayed(ent, math.Rand(25, 30))
+			SafeRemoveEntityDelayed(ent, math.Rand(15, 20))
 		end
 	end
 end

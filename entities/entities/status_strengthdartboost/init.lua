@@ -17,16 +17,26 @@ function ENT:EntityTakeDamage(ent, dmginfo)
 
 	if attacker:IsValid() and attacker:IsPlayer() and attacker:Team() == TEAM_HUMAN --[[and inflictor == wep and wep.IsMelee]] then
 		local dmg = dmginfo:GetDamage()
-		local extradamage = dmg * 0.66
+		local extradamage = dmg * 0.25
 		dmginfo:SetDamage(dmg + extradamage)
 
 		if self.Applier and self.Applier:IsValidLivingHuman() and ent:IsPlayer() and ent:Team() == TEAM_ZOMBIE then
 			local applier = self.Applier
+<<<<<<< Updated upstream
 
 			ent.DamagedBy[applier] = (ent.DamagedBy[applier] or 0) + extradamage
 			applier.StrengthBoostDamage = (applier.StrengthBoostDamage or 0) + extradamage
 			local points = extradamage / ent:GetMaxHealth() * ent:GetZombieClassTable().Points
 			applier.PointQueue = applier.PointQueue + points * 1.5
+=======
+
+
+			ent.DamagedBy[applier] = (ent.DamagedBy[applier] or 0) + extradamage
+			applier.StrengthBoostDamage = (applier.StrengthBoostDamage or 0) + extradamage
+			if GAMEMODE.ObjectiveMap then return end
+			local points = math.min(5,math.min(extradamage, ent:Health()) / ent:GetMaxHealth() * ent:GetZombieClassTable().Points)
+			applier.PointQueue = applier.PointQueue + points
+>>>>>>> Stashed changes
 
 			local pos = ent:GetPos()
 			pos.z = pos.z + 32

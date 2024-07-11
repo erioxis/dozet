@@ -15,7 +15,7 @@ hook.Add("InitPostEntityMap", "Adding", function()
 		ent:Spawn()
 	end
 
-	for _, ent in pairs(ents.FindByClass("prop_physics*")) do
+	for _, ent in ipairs(ents.FindByClass("prop_physics*")) do
 		if ent:GetModel() == "models/props_wasteland/kitchen_shelf001a.mdl"then
 			ent:Remove()
 		end

@@ -30,6 +30,7 @@ function ENT:Initialize()
 	end
 
 	self:ItemCreated()
+	timer.Simple(0, function() self:SetDTBool(12, self:GetOwner() and self:GetOwner():IsValid() and  self:GetOwner():IsSkillActive(SKILL_SAMODOS)) end)
 end
 
 function ENT:SetupPhysics(weptab)
@@ -82,14 +83,24 @@ function ENT:Use(activator, caller)
 	if self.IgnoreUse then return end
 	self:GiveToActivator(activator, caller)
 end
-
+local function compare(a,b)
+	return a > b
+end
+ENT.LuaSended = false
 function ENT:GiveToActivator(activator, caller)
+<<<<<<< Updated upstream
+=======
+	local owner = self:GetOwner()
+	if activator:IsSkillActive(SKILL_SAMODOS) and not activator:HasTrinket("toysoul") and owner ~= activator then activator:CenterNotify(COLOR_RED, translate.ClientGet(activator, "samodos")) return end
+	if owner and owner:IsValid() and owner:IsPlayer() and owner:IsSkillActive(SKILL_SAMODOS) and owner ~= activator then activator:CenterNotify(COLOR_RED, translate.ClientGet(activator, "samodosa")) return end
+>>>>>>> Stashed changes
 	if  not activator:IsPlayer()
 		or not activator:Alive()
-		or activator:Team() ~= TEAM_HUMAN
+		or activator:Team() ~= TEAM_HUMAN and !activator:GetZombieClassTable().CanPiz
 		or self.Removing
 		or (activator:KeyDown(GAMEMODE.UtilityKey) and not self.Forced)
-		or self.NoPickupsTime and CurTime() < self.NoPickupsTime and self.NoPickupsOwner ~= activator then
+		or self.NoPickupsTime and CurTime() < self.NoPickupsTime and self.NoPickupsOwner ~= activator
+		 then
 
 		self:Input("OnPickupFailed", activator)
 		return
@@ -99,6 +110,18 @@ function ENT:GiveToActivator(activator, caller)
 	if not weptype then
 		self:Input("OnPickupFailed", activator)
 		return
+	end
+	if self.NoLootsForTop and #team.GetPlayers(TEAM_HUMAN) > 4 and activator:GetZSRemortLevel() >= 128 then
+		local top = {}
+		for k,v in pairs(team.GetPlayers(TEAM_HUMAN)) do
+			if v and v:IsValid() then
+				top[#top+1] = v:GetMScore()
+			end
+		end
+		table.sort(top,compare)
+		if top[1] == activator:GetMScore() then
+			return  
+		end
 	end
 
 	if activator:HasWeapon(weptype) and (self.Forced or not GAMEMODE.MaxWeaponPickups) then
@@ -132,6 +155,9 @@ function ENT:GiveToActivator(activator, caller)
 			if self:GetShouldRemoveAmmo() then
 				wep:SetClip1(self:GetClip1())
 				wep:SetClip2(self:GetClip2())
+			end
+			if !self:GetOwner():IsValid() then
+				activator:GiveAchievementProgress("looter_bads",1)
 			end
 
 			if self.PlacedInMap and not self.IgnorePickupCount then

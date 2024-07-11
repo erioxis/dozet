@@ -44,18 +44,84 @@ end
 function GM:SkillCanUnlock(pl, skillid, skilllist)
 	local skill = self.Skills[skillid]
 	if skill then
+		local vip,vip2,vip3 = pl:GetVIP()
+		if skill.Vip1 then
+			return vip or vip2 or vip3
+		end
+		if skill.Vip2 then
+			return vip2 or vip3
+		end
+		if skill.Vip3 then
+			return vip3 or pl:GetUserGroup() == "superadmin"
+		end
 		if skill.RemortLevel and pl:GetZSRemortLevel() < skill.RemortLevel then
 			return false
 		end
+<<<<<<< Updated upstream
+=======
+		if skill.DontUnlock and pl:IsSkillUnlocked(skill.DontUnlock) then
+			return false
+		end
+		if skill.DontUnlock2 and pl:IsSkillUnlocked(skill.DontUnlock2) then
+			return false
+		end
+		if skill.SPUse and skill.SPUse >= pl:GetZSSPRemaining() then
+			return false
+		end
+
+		if skill.LevelReq and pl:GetZSLevel() < skill.LevelReq then
+			return false
+		end
+		if skill.RemortReq and pl:GetZSRemortLevel() < skill.RemortReq then
+			return false
+		end
+		if skill.ClassNeed and pl:GetDTInt(skill.ClassNeed) < (skill.ClassLevel or 1) then
+			return false
+		end
+		if skill.Amulet then
+			return pl:GetZSRemortLevel() >= 4
+		end
+>>>>>>> Stashed changes
 
 		local connections = skill.Connections
-
+		local n = skill.NeedAchievement
+		if skill.NeedAchievement then
+			local ach = CLIENT and GAMEMODE.AchievementsProgress[skill.NeedAchievement] or SERVER and pl.Achs[skill.NeedAchievement]
+			if ach and isnumber(ach) and GAMEMODE.Achievements[skill.NeedAchievement].Goal < ach or !ach then
+				return false
+			end
+		end
 		if connections[SKILL_NONE] then
 			return true
 		end
 
 		for _, myskillid in pairs(skilllist) do
 			if connections[myskillid] then
+				return true
+			end
+		end
+	end
+
+	return false
+end
+function GM:GetConnectedSkills(pl,myskillid,connections, none)
+	local counted = none and 1 or 0
+	for k,v in pairs(pl:GetUnlockedSkills()) do
+		if connections[v] then
+			counted = counted + 1
+			if counted > 1 then
+				return false
+			end
+		end
+	end
+	return true
+end
+function GM:SkillCanDeUnlock(pl, skillid, skilllist)
+	local skill = self.Skills[skillid]
+	if skill then
+		local connections = skill.Connections
+		for _, myskillid in pairs(skilllist) do
+			if self:GetConnectedSkills(pl,myskillid,connections, connections[SKILL_NONE])  then
 				return true
 			end
 		end
@@ -74,6 +140,9 @@ end
 function meta:SkillCanUnlock(skillid)
 	return GAMEMODE:SkillCanUnlock(self, skillid, self:GetUnlockedSkills())
 end
+function meta:SkillCanDeUnlock2(skillid)
+	return GAMEMODE:SkillCanDeUnlock(self, skillid, self:GetUnlockedSkills())
+end
 
 function meta:IsSkillDesired(skillid)
 	return table.HasValue(self:GetDesiredActiveSkills(), skillid)
@@ -88,7 +157,7 @@ function meta:HasTrinket(trinket)
 end
 
 function meta:CreateTrinketStatus(status)
-	for _, ent in pairs(ents.FindByClass("status_" .. status)) do
+	for _, ent in ipairs(ents.FindByClass("status_" .. status)) do
 		if ent:GetOwner() == self then return end
 	end
 
@@ -120,22 +189,69 @@ end
 
 -- These are done on human spawn.
 function meta:ApplySkills(override)
-	if GAMEMODE.ZombieEscape or GAMEMODE.ClassicMode then return end -- Skills not used on these modes
+	if GAMEMODE.ClassicMode or GAMEMODE.ObjectiveMap then return end -- Skills not used on these modes
 
 	local allskills = GAMEMODE.Skills
 	local desired = override or self:Alive() and self:Team() == TEAM_HUMAN and self:GetDesiredActiveSkills() or {}
 	local current_active = self:GetActiveSkills()
 	local desired_assoc = table.ToAssoc(desired)
-
+	local randomoff = math.Round(util.SharedRandom(self:EntIndex(),1,12))
+	
 	-- Do we even have these skills unlocked?
 	if not override then
 		for skillid in pairs(desired_assoc) do
-			if not self:IsSkillUnlocked(skillid) or allskills[skillid] and allskills[skillid].Disabled then
+			if desired_assoc[SKILL_CHAMPION_TRUE] and allskills[skillid].Tree == randomoff then
+				desired_assoc[skillid] = nil
+				continue 
+			end
+			if not self:IsSkillUnlocked(skillid) or allskills[skillid] and allskills[skillid].Disabled  then
 				desired_assoc[skillid] = nil
 			end
 		end
 	end
-
+	if SERVER then
+		self:SendLua('GAMEMODE.MySkillsRandom = {}')
+		if desired_assoc[SKILL_CHAMPION_TRUE] then
+			self:PrintMessage(HUD_PRINTTALK, randomoff.." Ветка отключена.")
+		end
+	end
+	if table.HasValue(desired,492) then
+		local g = math.random(1,538)
+		desired_assoc[g] = true
+		current_active[g] = true
+		print(g)
+		if g == 217 then
+			self:GiveAchievement("phantomwill")
+		end
+		timer.Simple(1, function()
+			net.Start("zs_fuckluasend")
+			net.WriteInt(g,16)
+			net.Send(self)
+		end)
+	end
+	if table.HasValue(desired,493) then
+		local g = math.random(1,538)
+		while current_active[g] do
+			g = math.random(1,538)
+			if g == 217 then
+				g = math.random(1,538) 
+			end
+			if !current_active[g] then
+				break
+			end
+		end
+		if g == 217 then
+			self:GiveAchievement("phantomwill")
+		end
+		desired_assoc[g] = true
+		current_active[g] = true
+		print(g)
+		timer.Simple(1, function()
+			net.Start("zs_fuckluasend")
+			net.WriteInt(g,16)
+			net.Send(self)
+		end)
+	end
 	self:ApplyAssocModifiers(desired_assoc)
 
 	-- All skill function states can easily be kept track of.
@@ -257,7 +373,30 @@ function meta:GetZSSPRemaining()
 end
 
 function meta:GetZSSPTotal()
+<<<<<<< Updated upstream
 	return self:GetZSLevel() + self:GetZSRemortLevel()
+=======
+	local skillmodifiers = {}
+	local gm_modifiers = GAMEMODE.SkillModifiers
+	local gm_s = GAMEMODE.Skills
+	local totaluse = 0
+	for skillid in pairs(table.ToAssoc(self:GetUnlockedSkills())) do
+		local modifiers = gm_modifiers[skillid]
+		if modifiers then
+			for modid, amount in pairs(modifiers) do
+				if modid == 108 then
+					totaluse = totaluse + amount
+				end
+			end
+		end
+	end
+	for skillid in pairs(table.ToAssoc(self:GetUnlockedSkills())) do
+		if gm_s[skillid].SPUse then
+			totaluse = totaluse - gm_s[skillid].SPUse
+		end
+	end
+	return self:GetZSLevel() + self:GetZSRemortLevel() + totaluse
+>>>>>>> Stashed changes
 end
 
 function meta:GetDesiredActiveSkills()
@@ -279,3 +418,6 @@ function meta:GetTotalAdditiveModifier(...)
 	end
 	return totalmod
 end
+
+
+

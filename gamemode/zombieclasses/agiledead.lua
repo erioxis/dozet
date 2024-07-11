@@ -14,7 +14,7 @@ CLASS.Unlocked = true
 CLASS.Health = 190
 CLASS.Points = CLASS.Health/GM.NoHeadboxZombiePointRatio
 CLASS.Speed = 190
-
+CLASS.Weight = 0.5
 CLASS.Hull = {Vector(-16, -16, 0), Vector(16, 16, 58)}
 CLASS.HullDuck = {Vector(-16, -16, 0), Vector(16, 16, 32)}
 CLASS.ViewOffset = Vector(0, 0, 50)
@@ -31,6 +31,7 @@ function CLASS:ProcessDamage(pl, dmginfo)
 	if dmginfo:GetInflictor().IsMelee then
 		dmginfo:SetDamage(dmginfo:GetDamage() / 3)
 	end
+	return dmginfo
 end
 end
 

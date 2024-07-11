@@ -20,7 +20,11 @@ function ENT:Initialize()
 
 	--self:EmitSound("weapons/physcannon/physcannon_charge.wav", 70, 190)
 
+<<<<<<< Updated upstream
 	self:SetMaxObjectHealth(1200)
+=======
+	self:SetMaxObjectHealth((190 * (GAMEMODE:GetWave()-1)) + (table.Count(team.GetPlayers(TEAM_HUMAN))*90))
+>>>>>>> Stashed changes
 	self:SetObjectHealth(self:GetMaxObjectHealth())
 end
 
@@ -85,6 +89,21 @@ function ENT:Think()
 			local extraduration = (1 - self:GetObjectHealth()/self:GetMaxObjectHealth()) * 10
 			owner.NextShield = fCurTime + (self.Destroyed and 12 or (2 + extraduration))
 			self:Remove()
+<<<<<<< Updated upstream
+=======
+			if self.Destroyed then
+				local give = 0
+				for _, ent in pairs(ents.FindInSphere(owner:GetPos(), 238)) do
+					if ent:IsValidLivingZombie() and pl ~= ent then
+						local toadd = 255 * (GAMEMODE:GetWave() /2)
+						give = give + toadd
+						ent:SetZArmor(ent:GetZArmor() + toadd)
+					end
+				end
+				owner:AddShieldStats(give)
+			end
+			owner:GetActiveWeapon():SetNextShadeTime(fCurTime + (self.Destroyed and 12 or (2 + extraduration)))
+>>>>>>> Stashed changes
 			return
 		elseif self:GetStateEndTime() <= fCurTime and self:GetState() == 0 and not self.Constructed then
 			self:PhysicsInit(SOLID_VPHYSICS)

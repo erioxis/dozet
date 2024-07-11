@@ -46,6 +46,28 @@ local render_DrawQuadEasy = render.DrawQuadEasy
 local render_DrawSprite = render.DrawSprite
 
 function ENT:DrawTranslucent()
+<<<<<<< Updated upstream
+=======
+        local distance = MySelf:GetPos():Distance( self:GetPos() )
+        local alpha = 255
+        local at = self:GetPos():ToScreen()
+
+
+        local ang = Angle( 0, 0, 0 )
+        local up = Vector( 0, 0, 1 )
+        local ringpos = self:GetPos()
+        local frametime = FrameTime() * 500
+        local ringsize = math.Clamp(1948 / (GAMEMODE:GetWave() * 0.33),493,1948)
+
+        render.SetMaterial( matBeam )
+        render.StartBeam( 20 )
+        for i=1, 20 do
+            render.AddBeam( ringpos + ang:Forward() * ringsize, 10, 10, Color( 255, 154, 154) )
+            ang:RotateAroundAxis( up, 20 )
+        end
+            
+        render.EndBeam()
+>>>>>>> Stashed changes
 	self:RemoveAllDecals()
 
 	local scale = self.ModelScale
@@ -119,7 +141,6 @@ function ENT:DrawTranslucent()
 	if self.Rotation >= 360 then
 		self.Rotation = self.Rotation - 360
 	end
-
 	cDraw.r = r * 255
 	cDraw.g = g * 255
 	cDraw.b = b * 255
@@ -135,7 +156,6 @@ function ENT:DrawTranslucent()
 	render_DrawQuadEasy(spritepos, up, radius, radius, cDraw, self.Rotation)
 	render_DrawQuadEasy(spritepos, up * -1, radius, radius, cDraw, self.Rotation)
 	render_DrawSprite(spritepos2, radius, radius * 2, cDraw)
-
 	if curtime < self.NextEmit then return end
 	self.NextEmit = curtime + 0.05
 

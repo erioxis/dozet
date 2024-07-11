@@ -1,9 +1,16 @@
 AddCSLuaFile()
 DEFINE_BASECLASS("weapon_zs_base")
 
+<<<<<<< Updated upstream
 SWEP.PrintName = "'Renegade' Rifle"
 SWEP.Description = "A rifle with high headshot damage and a decent clip size. Receives a resistance penetration buff if you score enough headshot kills with it."
 
+=======
+--SWEP.PrintName = "'Renegade' Rifle"
+--SWEP.Description = "A rifle with high headshot damage and a decent clip size. Receives a resistance penetration buff if you score enough headshot kills with it."
+SWEP.PrintName = translate.Get("wep_renegade")
+SWEP.Description = translate.Get("wep_d_renegade")
+>>>>>>> Stashed changes
 SWEP.Slot = 3
 SWEP.SlotPos = 0
 
@@ -98,7 +105,7 @@ SWEP.MaxStock = 2
 
 SWEP.FireAnimSpeed = 0.5
 
-GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_FIRE_DELAY, -0.13, 1)
+GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_FIRE_DELAY, -0.05, 1)
 
 function SWEP:EmitFireSound()
 	self:EmitSound(self.Primary.Sound)

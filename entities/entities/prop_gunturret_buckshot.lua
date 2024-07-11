@@ -6,8 +6,8 @@ ENT.SWEP = "weapon_zs_gunturret_buckshot"
 
 ENT.AmmoType = "buckshot"
 ENT.FireDelay = 0.85
-ENT.NumShots = 7
-ENT.Damage = 6.35
+ENT.NumShots = 5
+ENT.Damage = 14.35
 ENT.PlayLoopingShootSound = false
 ENT.Spread = 5
 ENT.SearchDistance = 225

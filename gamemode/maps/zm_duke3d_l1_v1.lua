@@ -1,13 +1,13 @@
 hook.Add("InitPostEntityMap", "Adding", function()
-	for _, ent in pairs(ents.FindByClass("info_player*")) do
+	for _, ent in ipairs(ents.FindByClass("info_player*")) do
 		ent:Remove()
 	end
 
-	for _, ent in pairs(ents.FindByClass("trigger_teleport")) do
+	for _, ent in ipairs(ents.FindByClass("trigger_teleport")) do
 		ent:Remove()
 	end
 
-	for k, ent in pairs(ents.FindByClass("func_button")) do
+	for k, ent in ipairs(ents.FindByClass("func_button")) do
 		if k >= 4 then
 			ent:Remove()
 		end

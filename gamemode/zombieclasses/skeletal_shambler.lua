@@ -11,7 +11,7 @@ CLASS.Speed = 155
 CLASS.CanTaunt = true
 
 CLASS.Points = CLASS.Health/GM.SkeletonPointRatio
-
+CLASS.Weight = 0.5
 CLASS.SWEP = "weapon_zs_skelesham"
 
 CLASS.Model = Model("models/player/skeleton.mdl")
@@ -162,16 +162,24 @@ if SERVER then
 	end
 
 	function CLASS:ProcessDamage(pl, dmginfo)
+<<<<<<< Updated upstream
 		if bit_band(dmginfo:GetDamageType(), DMG_BULLET) ~= 0 then
 			dmginfo:SetDamage(dmginfo:GetDamage() * 0.36)
 		elseif bit_band(dmginfo:GetDamageType(), DMG_SLASH) == 0 and bit_band(dmginfo:GetDamageType(), DMG_CLUB) == 0 then
 			dmginfo:SetDamage(dmginfo:GetDamage() * 0.45)
+=======
+		local inflictor = dmginfo:GetInflictor()
+		if bit_band(dmginfo:GetDamageType(), DMG_BULLET) ~= 0 and !inflictor:IsProjectile() then
+			dmginfo:SetDamage(dmginfo:GetDamage()*0.5)
+		elseif bit_band(dmginfo:GetDamageType(), DMG_SLASH) == 0 and bit_band(dmginfo:GetDamageType(), DMG_CLUB) == 0 and !inflictor:IsProjectile()  then
+			dmginfo:SetDamage(dmginfo:GetDamage()*0.5)
+>>>>>>> Stashed changes
 		end
 
 		local damage = dmginfo:GetDamage()
 		if damage >= 70 or damage < pl:Health() then return end
 
-		local attacker, inflictor = dmginfo:GetAttacker(), dmginfo:GetInflictor()
+		local attacker = dmginfo:GetAttacker()
 		if attacker == pl or not attacker:IsPlayer() or inflictor.IsMelee or inflictor.NoReviveFromKills then return end
 
 		if pl:WasHitInHead() or pl:GetStatus("shockdebuff") then return end
@@ -193,7 +201,7 @@ if SERVER then
 			status:SetReviveHeal(10)
 		end
 
-		return true
+		return dmginfo
 	end
 end
 

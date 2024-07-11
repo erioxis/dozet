@@ -27,6 +27,7 @@ end
 function ENT:OnRemove()
 	self.TeleportingSound:Stop()
 	self.TeleportingSound2:Stop()
+	self:GetOwner().SigilTeleport = nil
 end
 
 function ENT:Think()
@@ -70,5 +71,63 @@ function ENT:SetParticleColor(particle)
 	particle:SetColor(120, 202, 5)
 end
 
+<<<<<<< Updated upstream
 function ENT:Draw()
+=======
+
+	local camangs = camera:GetAngles()
+	camangs:RotateAroundAxis(camera:GetRight(), 90)
+	camangs:RotateAroundAxis(camera:GetUp(), -180)
+	camangs:RotateAroundAxis(camera:GetForward(), 180)
+	local owner = self:GetOwner()
+	CamData.origin = camera:GetPos()
+	CamData.angles = camangs --self:GetTargetSigil():GetAngles()
+	local originalRT = render.GetRenderTarget()
+	render.SetRenderTarget(rt)
+	render.RenderView(CamData)
+	--render.DrawTextureToScreen(render.GetRenderTarget())
+	render.SetRenderTarget(originalRT)
+	
+end]]
+--[[function ENT:Draw()
+	if !MySelf:KeyDown(IN_DUCK) then return end
+	local dist = EyePos():DistToSqr(self:GetPos())
+	if dist < 9000 then
+		local bpos, bang = self:LocalToWorld(CamPos), self:LocalToWorldAngles(CamAng)
+
+		cam.Start3D2D(bpos, bang, CamScale)
+		cam.IgnoreZ(true)
+		surface.SetDrawColor(255, 255, 255, 255)
+
+		local camera =  self:GetTargetSigil()
+		if camera:IsValid() then
+			matRT:SetTexture("$basetexture", rt)
+			render.DrawTextureToScreen( rt )
+		end
+
+		cam.End3D2D()
+	end
+
+	render.SetMaterial(matGlow)
+	render.DrawSprite(self:LocalToWorld(LightPos), 3, 3, COLOR_DARKBLUE)
+	render.DrawSprite(self:LocalToWorld(LightPos2), 2, 2, COLOR_HURT)
+end]]
+function ENT:ShouldDrawLocalPlayer(pl)
+	if self:GetOwner() ~= LocalPlayer() then return end
+	if !self:GetOwner():KeyDown(IN_WALK) then return end
+	return true
+end
+local ViewHullMins = Vector(-4, -4, -4)
+local ViewHullMaxs = Vector(4, 4, 4)
+function ENT:CalcView(pl, origin, angles, fov, znear, zfar)
+	if self:GetOwner() ~= pl then return end
+
+	if !self:GetOwner():KeyDown(IN_WALK) then return end
+	local trg =self:GetTargetSigil()
+	local filter = player.GetAll()
+	filter[#filter + 1] = self
+	local tr = util.TraceHull({start = trg:GetPos() + Vector(0,0,94), endpos = trg:GetPos(), mask = MASK_SHOT, filter = filter, mins = ViewHullMins, maxs = ViewHullMaxs})
+
+	return {origin = tr.HitPos + tr.HitNormal * 3}
+>>>>>>> Stashed changes
 end

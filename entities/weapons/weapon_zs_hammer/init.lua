@@ -13,7 +13,7 @@ function SWEP:Reload()
 	local ent
 	local dist
 
-	for _, e in pairs(ents.FindByClass("prop_nail")) do
+	for _, e in ipairs(ents.FindByClass("prop_nail")) do
 		if not e.m_PryingOut and e:GetParent() == trent then
 			local edist = e:GetActualPos():DistToSqr(tr.HitPos)
 			if not dist or edist < dist then
@@ -23,12 +23,16 @@ function SWEP:Reload()
 		end
 	end
 
-	if not ent or not gamemode.Call("CanRemoveNail", owner, ent) then return end
+	if not ent or not gamemode.Call("CanRemoveNail", owner, ent) or owner:Team() == TEAM_UNDEAD then return end
 
 	local nailowner = ent:GetOwner()
 	if nailowner:IsValid() and nailowner:IsPlayer() and nailowner ~= owner and nailowner:Team() == TEAM_HUMAN and not gamemode.Call("CanRemoveOthersNail", owner, nailowner, ent) then return end
 
+<<<<<<< Updated upstream
 	self:SetNextPrimaryFire(CurTime() + (#trent.Nails > 2 and 0.5 or 1))
+=======
+	self:SetNextPrimaryFire(CurTime() + (#trent.Nails > 2 and 0.5 or 1) / ((owner:GetZSRemortLevel() <= 14 and 14 or owner:GetZSRemortLevel()) * 0.09))
+>>>>>>> Stashed changes
 
 	ent.m_PryingOut = true -- Prevents infinite loops
 
@@ -62,16 +66,31 @@ function SWEP:OnMeleeHit(hitent, hitflesh, tr)
 	if not hitent:IsValid() then return end
 
 	local owner = self:GetOwner()
-
+	if owner:Team() == TEAM_UNDEAD then return end
 	if hitent.HitByHammer and hitent:HitByHammer(self, owner, tr) then
 		return
 	end
 
 	if hitent:IsNailed() then
 		if owner:IsSkillActive(SKILL_BARRICADEEXPERT) then
-			hitent.ReinforceEnd = CurTime() + 7
+			hitent:SetDTFloat(12,CurTime() + 2.5)
 			hitent.ReinforceApplier = owner
 		end
+<<<<<<< Updated upstream
+=======
+		if owner:IsSkillActive(SKILL_NANITES) then
+			hitent:SetDTFloat(13,CurTime() + 0.3)
+			hitent.naniteApplier = owner
+		end
+		if owner:IsSkillActive(SKILL_THE_CADER) then
+			hitent:SetDTFloat(14,CurTime() + 4)
+			hitent.CaderApplier = owner
+		end
+		if owner:HasTrinket("useself") then
+			hitent:SetDTFloat(15,CurTime() + 3)
+			hitent.ApplierUseSelf = owner
+		end
+>>>>>>> Stashed changes
 
 		local healstrength = self.HealStrength * GAMEMODE.NailHealthPerRepair * (owner.RepairRateMul or 1)
 		local oldhealth = hitent:GetBarricadeHealth()
@@ -128,18 +147,24 @@ function SWEP:SecondaryAttack()
 			end
 		end
 	end
-
-	if tr.MatType == MAT_GRATE or tr.MatType == MAT_CLIP then
-		owner:PrintTranslatedMessage(HUD_PRINTCENTER, "impossible")
-		return
+	if !owner:IsSkillActive(SKILL_GENIUS) then
+		if tr.MatType == MAT_GRATE or tr.MatType == MAT_CLIP then
+			owner:PrintTranslatedMessage(HUD_PRINTCENTER, "impossible")
+			return
+		end
+		if tr.MatType == MAT_GLASS then
+			owner:PrintTranslatedMessage(HUD_PRINTCENTER, "trying_to_put_nails_in_glass")
+			return
+		end
 	end
-	if tr.MatType == MAT_GLASS then
-		owner:PrintTranslatedMessage(HUD_PRINTCENTER, "trying_to_put_nails_in_glass")
-		return
-	end
 
+<<<<<<< Updated upstream
 	for _, nail in pairs(ents.FindByClass("prop_nail")) do
 		if nail:GetParent() == trent and nail:GetActualPos():DistToSqr(tr.HitPos) <= 81 then
+=======
+	for _, nail in ipairs(ents.FindByClass("prop_nail")) do
+		if nail:GetParent() == trent and nail:GetActualPos():DistToSqr(tr.HitPos) <= 41 then
+>>>>>>> Stashed changes
 			owner:PrintTranslatedMessage(HUD_PRINTCENTER, "too_close_to_another_nail")
 			return
 		end
@@ -165,13 +190,15 @@ function SWEP:SecondaryAttack()
 	local ent = trtwo.Entity
 	if trtwo.HitWorld
 	or ent:IsValid() and util.IsValidPhysicsObject(ent, trtwo.PhysicsBone) and (ent:GetMoveType() == MOVETYPE_VPHYSICS or ent:GetNailFrozen()) and not ent.NoNails and not (not ent:IsNailed() and not ent:GetPhysicsObject():IsMoveable()) and not (ent:GetMaxHealth() == 1 and ent:Health() == 0 and not ent.TotalHealth) then
-		if trtwo.MatType == MAT_GRATE or trtwo.MatType == MAT_CLIP then
-			owner:PrintTranslatedMessage(HUD_PRINTCENTER, "impossible")
-			return
-		end
-		if trtwo.MatType == MAT_GLASS then
-			owner:PrintTranslatedMessage(HUD_PRINTCENTER, "trying_to_put_nails_in_glass")
-			return
+		if !owner:IsSkillActive(SKILL_GENIUS) then
+			if trtwo.MatType == MAT_GRATE or trtwo.MatType == MAT_CLIP then
+				owner:PrintTranslatedMessage(HUD_PRINTCENTER, "impossible")
+				return
+			end
+			if trtwo.MatType == MAT_GLASS then
+				owner:PrintTranslatedMessage(HUD_PRINTCENTER, "trying_to_put_nails_in_glass")
+				return
+			end
 		end
 
 		if ent and ent:IsValid() and (ent:IsProjectile() or ent.NoNails or ent:IsNailed() and (#ent.Nails >= 8 or ent:GetPropsInContraption() >= GAMEMODE.MaxPropsInBarricade)) then return end
@@ -200,8 +227,8 @@ function SWEP:SecondaryAttack()
 
 		owner:DoAnimationEvent(ACT_HL2MP_GESTURE_RANGE_ATTACK_MELEE)
 
-		self:SetNextPrimaryFire(CurTime() + 1)
-		self:TakePrimaryAmmo(1)
+		self:SetNextPrimaryFire(CurTime() + 1 + (owner:IsSkillActive(SKILL_GENIUS)  and 3 or 0))
+		self:TakePrimaryAmmo(owner:HasTrinket("nanite_nails") and 2 or 1)
 
 		local nail = ents.Create("prop_nail")
 		if nail:IsValid() then

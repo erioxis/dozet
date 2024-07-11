@@ -71,7 +71,7 @@ function SWEP:PrimaryAttack()
 	local ent
 	for _, tr in pairs(trtbl) do
 		local test = tr.Entity
-		if test and test:IsValidLivingHuman() and gamemode.Call("PlayerCanBeHealed", test) then
+		if test and test:IsValidLivingHuman() and (!self.BloodHeal and gamemode.Call("PlayerCanBeHealed", test) or self.BloodHeal and test:GetBloodArmor()< (test.MaxBloodArmor or 35)+100) then
 			ent = test
 
 			break
@@ -82,6 +82,7 @@ function SWEP:PrimaryAttack()
 
 	local multiplier = self.MedicHealMul or 1
 	local cooldownmultiplier = self.MedicCooldownMul or 1
+<<<<<<< Updated upstream
 	local healed = owner:HealPlayer(ent, math.min(self:GetCombinedPrimaryAmmo(), self.Heal))
 	local totake = self.FixUsage and 15 or math.ceil(healed / multiplier)
 
@@ -90,6 +91,55 @@ function SWEP:PrimaryAttack()
 		owner.NextMedKitUse = self:GetNextCharge()
 
 		self:TakeCombinedPrimaryAmmo(totake)
+=======
+	local healed = 15
+	if !self.BloodHeal then
+		 healed = owner:HealPlayer(ent, owner:HasTrinket("pr_bloodpack") and self.Heal * math.max(1, self.Combo / 3) or math.min(self:GetCombinedPrimaryAmmo(), self.Heal * math.max(1, self.Combo / 3)))
+	end
+
+
+	local totake = self.FixUsage and 15 or math.ceil(healed / multiplier)
+
+	if totake > 0 then
+		if owner:IsSkillActive(SKILL_COMBOHEAL) and self.Combo ~= 26 then
+		   self.Combo = self.Combo + 1
+		   timer.Create("ComboReset", 15, 1, function() 
+				self.Combo = 0
+			end)
+		end
+		if owner:HasTrinket("pr_barapaw") and math.random(3) == 3 and SERVER then
+			ent:GiveStatus("knockdown", 1.5)
+		end
+		if self.BloodHeal and SERVER then
+			ent:SetBloodArmor(math.min(ent.MaxBloodArmor + 100, ent:GetBloodArmor() + self.Heal * 3))
+			ent.BuffedArmor = math.min(ent.MaxBloodArmor + 100, (ent.BuffedArmor or 1) + self.Heal * 3)
+			ent.WhoBuffed = owner
+		end
+		self:SetNextCharge(CurTime() + self.Primary.Delay * math.min(1, healed / self.Heal) * cooldownmultiplier)
+		if owner:IsSkillActive(SKILL_DUALHEAL) then
+			self.UltraDa = (self.UltraDa or 0) + 1
+			if self.UltraDa > 1 then
+				self:SetNextCharge(0)
+				self.UltraDa = 0
+			end
+		end
+		if owner:IsSkillActive(SKILL_WYRDREC) and !self.BloodHeal and (ent.NextBleedWyrd or 1) < CurTime()  then
+			ent.NextBleedWyrd = CurTime() + 3
+			timer.Simple( 0.1, function() owner:HealPlayer(ent, math.random(1,13)) end)
+			if math.random(500) < (60 * ((ent.BleedDamageTakenMul or 1) / (ent.BleedSpeedMul or 1))) and SERVER then
+				ent:AddBleedDamage(math.random(1,15), ent)
+			end
+		end
+		owner.NextMedKitUse = self:GetNextCharge()
+		if owner:HasTrinket("pr_bloodpack") and self:GetPrimaryAmmoCount() < 1 then
+			if SERVER then
+				owner:TakeDamage(totake)
+			end
+		else
+			self:TakeCombinedPrimaryAmmo(totake)
+		end
+>>>>>>> Stashed changes
+
 
 		self:EmitSound("items/medshot4.wav")
 

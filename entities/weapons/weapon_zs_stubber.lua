@@ -26,9 +26,13 @@ SWEP.UseHands = true
 
 SWEP.ReloadSound = Sound("Weapon_Scout.ClipOut")
 SWEP.Primary.Sound = Sound("Weapon_Scout.Single")
+<<<<<<< Updated upstream
 SWEP.Primary.Damage = 55
+=======
+SWEP.Primary.Damage = 65
+>>>>>>> Stashed changes
 SWEP.Primary.NumShots = 1
-SWEP.Primary.Delay = 1.25
+SWEP.Primary.Delay = 1.1
 SWEP.ReloadDelay = SWEP.Primary.Delay
 
 SWEP.Primary.ClipSize = 5
@@ -85,3 +89,20 @@ if CLIENT then
 		end
 	end
 end
+<<<<<<< Updated upstream
+=======
+
+SWEP.BulletCallback = function(attacker, tr, dmginfo)
+	local ent = tr.Entity
+	if SERVER and math.random(12) == 1 and ent:IsValidLivingZombie() then
+		ent:Ignite(30)
+		for __, fire in ipairs(ents.FindByClass("entityflame")) do
+			if fire:IsValid() and fire:GetParent() == ent then
+				fire:SetOwner(attacker)
+				fire:SetPhysicsAttacker(attacker)
+				fire.AttackerForward = attacker
+			end
+		end
+	end
+end
+>>>>>>> Stashed changes

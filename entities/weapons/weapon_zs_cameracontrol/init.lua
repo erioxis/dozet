@@ -13,7 +13,7 @@ end
 function SWEP:CycleCamera(reverse)
 	local cameras = {}
 
-	for _, camera in pairs(ents.FindByClass("prop_camera")) do
+	for _, camera in ipairs(ents.FindByClass("prop_camera")) do
 		if camera:IsValid() then
 			table.insert(cameras, camera)
 		end

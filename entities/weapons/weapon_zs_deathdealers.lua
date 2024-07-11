@@ -1,7 +1,15 @@
 AddCSLuaFile()
 
+<<<<<<< Updated upstream
 SWEP.PrintName = "'Deathdealers' Dual Shotguns"
 SWEP.Description = "A unique pair of fast firing, high damage shotguns. Reloads quickly by quickly replacing the shotguns used with a new pair, throwing the old away."
+=======
+--SWEP.PrintName = "'Deathdealers' Dual Shotguns"
+--SWEP.Description = "A unique pair of fast firing, high damage shotguns. Reloads quickly by quickly replacing the shotguns used with a new pair, throwing the old away."
+SWEP.PrintName = translate.Get("wep_dualshot")
+SWEP.Description = translate.Get("wep_d_dualshot")
+SWEP.ShotGunHeat = true
+>>>>>>> Stashed changes
 
 SWEP.Slot = 3
 SWEP.SlotPos = 0
@@ -60,13 +68,19 @@ SWEP.WorldModel = "models/weapons/w_pist_elite.mdl"
 SWEP.FakeWorldModel = "models/weapons/w_shotgun.mdl"
 SWEP.UseHands = true
 
+<<<<<<< Updated upstream
 SWEP.Primary.Damage = 15.75
 SWEP.Primary.NumShots = 8
+=======
+SWEP.Primary.Damage = 17.5
+SWEP.Primary.NumShots = 7
+>>>>>>> Stashed changes
 SWEP.Primary.Delay = 0.6
 
 SWEP.Primary.ClipSize = 8
 SWEP.Primary.Automatic = true
 SWEP.Primary.Ammo = "buckshot"
+SWEP.Unrealing = false
 GAMEMODE:SetupDefaultClip(SWEP.Primary)
 
 SWEP.ConeMax = 6
@@ -74,8 +88,30 @@ SWEP.ConeMin = 4
 
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_MAX_SPREAD, -0.75)
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_MIN_SPREAD, -0.5)
+<<<<<<< Updated upstream
 
 SWEP.Tier = 5
+=======
+GAMEMODE:AddNewRemantleBranch(SWEP, 1, translate.Get("wep_dualshot_r1"), translate.Get("wep_d_dualshot_r1"), function(wept)
+	wept.Primary.Delay = wept.Primary.Delay * 1.21
+	wept.Primary.Damage = wept.Primary.Damage * 0.8
+	wept.Unrealing = true
+end)
+function SWEP:OnZombieKilled()
+	local killer = self:GetOwner()
+
+	if killer:IsValid() then
+		local who = (self.Unrealing and "unreal" or "reaper")
+		local reaperstatus = killer:GiveStatus(who, 3)
+		if reaperstatus and reaperstatus:IsValid() then
+			reaperstatus:SetDTInt(1, math.min(reaperstatus:GetDTInt(1) + 1, 10*(who == "reaper" and 10 or 1)))
+			killer:EmitSound("hl1/ambience/particle_suck1.wav", 55, 150 + reaperstatus:GetDTInt(1) * 30, 0.45)
+		end
+	end
+end
+
+SWEP.Tier = 6
+>>>>>>> Stashed changes
 SWEP.MaxStock = 2
 
 function SWEP:SendReloadAnimation()
@@ -115,6 +151,12 @@ function SWEP:SendWeaponAnimation()
 	self:SendWeaponAnim(self:Clip1() % 2 == 0 and ACT_VM_PRIMARYATTACK or ACT_VM_SECONDARYATTACK)
 end
 
+function SWEP:Holster()
+	self:GetOwner():GiveStatus("reaper",0)
+	self:GetOwner():GiveStatus("unreal",0)
+	return self.BaseClass.Holster(self)
+end
+
 function SWEP:EmitFireSound()
 	self:EmitSound("weapons/shotgun/shotgun_dbl_fire.wav", 75, math.random(125, 130))
 end
@@ -134,6 +176,7 @@ function SWEP:GetTracerOrigin()
 	end
 end
 
+<<<<<<< Updated upstream
 function SWEP:OnZombieKilled()
 	local killer = self:GetOwner()
 
@@ -159,6 +202,8 @@ end
 
 if not CLIENT then return end
 
+=======
+>>>>>>> Stashed changes
 function SWEP:Draw3DHUD(vm, pos, ang)
 	self.BaseClass.Draw3DHUD(self, vm, pos, ang)
 

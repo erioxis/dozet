@@ -6,10 +6,16 @@ local DefaultFontEntity = "ZSHUDFontSmallest"
 local PANEL  = {}
 
 function PANEL:Init()
+<<<<<<< Updated upstream
 	self:DockPadding(8, 2, 8, 2)
+=======
+	self.Align = self:GetParent():GetAlign()
+	self:DockPadding( 8, 2, 8, 2 )
+	self:DockMargin( 0, 2, 0, 0 )
+>>>>>>> Stashed changes
 
-	self:SetKeyboardInputEnabled(false)
-	self:SetMouseInputEnabled(false)
+	self:SetKeyboardInputEnabled( false )
+	self:SetMouseInputEnabled( false )
 end
 
 local matGrad = Material("VGUI/gradient-r")
@@ -22,7 +28,7 @@ function PANEL:Paint()
 		surface.DrawTexturedRect(self:GetWide() * 0.25, 0, self:GetWide(), self:GetTall())
 	elseif align == CENTER then
 		surface.DrawTexturedRect(self:GetWide() * 0.25, 0, self:GetWide() * 0.25, self:GetTall())
-		surface.DrawTexturedRectRotated(self:GetWide() * 0.625, self:GetTall() / 2, self:GetWide() * 0.25, self:GetTall(), 180)
+		surface.DrawTexturedRectRotated(self:GetWide() * 0.625, self:GetTall() / 1.9, self:GetWide() * 0.25, self:GetTall(), 180)
 	else
 		surface.DrawTexturedRectRotated(self:GetWide() * 0.25, self:GetTall() / 2, self:GetWide() / 2, self:GetTall(), 180)
 	end
@@ -111,16 +117,44 @@ function PANEL:SetNotification(...)
 			avatar:DockMargin(0, (self:GetTall() - avatar:GetTall()) / 2, 0, 0)
 
 			if v:IsValid() then
+<<<<<<< Updated upstream
 				self:AddLabel(" "..v:Name(), team.GetColor(v:Team()), DefaultFontEntity)
+=======
+				local color = team.GetColor( v:Team() )
+				if v:Team() == TEAM_ZOMBIE then
+					if v:GetZombieClassTable().DemiBoss then 
+						color = Color(255,233,31)
+					elseif v:GetZombieClassTable().Boss then 
+						color = Color(216,0,0) 
+					end
+				end
+
+				self:AddLabel( " " .. v:Name(), color, GetFont() )
+>>>>>>> Stashed changes
 			else
 				self:AddLabel(" ?", team.GetColor(TEAM_UNASSIGNED), DefaultFontEntity)
 			end
 		elseif vtype == "Entity" then
+<<<<<<< Updated upstream
 			self:AddLabel("["..(v:IsValid() and v:GetClass() or "?").."]", COLOR_RED, DefaultFontEntity)
 		else
 			local text = tostring(v)
 
 			self:AddLabel(text, defaultcol, defaultfont)
+=======
+			local class =  v:GetClass()
+			if class == "curse_of_sigil" then
+				self:AddLabel( v:GetDTString(12) or "[" .. ( v:IsValid() and class or "?" ) .. "]", COLOR_RED, GetFont() )
+			else
+				self:AddLabel( "[" .. ( v:IsValid() and class or "?" ) .. "]", COLOR_RED, GetFont() )
+			end
+		else
+			local text = tostring( v )
+			if text == "#curse_of_sigil" then
+				text = translate.Get('curse_of_sigil')
+			end
+			self:AddLabel( text, defaultcol, defaultfont )
+>>>>>>> Stashed changes
 		end
 	end
 end

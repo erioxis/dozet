@@ -3,6 +3,7 @@ CLASS.TranslationName = "class_tank"
 CLASS.Description = "description_eradicator"
 CLASS.Help = "controls_eradicator"
 
+<<<<<<< Updated upstream
 CLASS.Wave = 5 / 6
 
 CLASS.Health = 1200
@@ -11,6 +12,195 @@ CLASS.Speed = 7
 CLASS.CanTaunt = true
 
 CLASS.Points = CLASS.Health/GM.HumanoidZombiePointRatio
+=======
+CLASS.Wave = 7 / 12
+
+CLASS.Pac3Out = {[1] = {
+	["children"] = {
+		[1] = {
+			["children"] = {
+			},
+			["self"] = {
+				["Skin"] = 0,
+				["Invert"] = false,
+				["LightBlend"] = 1,
+				["CellShade"] = 0,
+				["AimPartName"] = "",
+				["IgnoreZ"] = false,
+				["AimPartUID"] = "",
+				["Passes"] = 1,
+				["Name"] = "",
+				["Angles"] = Angle(9.7181339263916, -57.680168151855, -163.79695129395),
+				["DoubleFace"] = false,
+				["PositionOffset"] = Vector(0, 0, 0),
+				["BlurLength"] = 0,
+				["OwnerEntity"] = false,
+				["Brightness"] = 1,
+				["DrawOrder"] = 0,
+				["BlendMode"] = "",
+				["TintColor"] = Vector(0, 0, 0),
+				["Alpha"] = 1,
+				["LodOverride"] = -1,
+				["TargetEntityUID"] = "",
+				["BlurSpacing"] = 0,
+				["UsePlayerColor"] = false,
+				["Material"] = "",
+				["UseWeaponColor"] = false,
+				["EyeAngles"] = false,
+				["UseLegacyScale"] = false,
+				["Bone"] = "right hand",
+				["Color"] = Vector(255, 255, 255),
+				["Fullbright"] = false,
+				["BoneMerge"] = false,
+				["IsDisturbing"] = false,
+				["Position"] = Vector(4.6029663085938, 5.1891479492188, -3.0780982971191),
+				["NoTextureFiltering"] = false,
+				["AlternativeScaling"] = false,
+				["Hide"] = false,
+				["Translucent"] = false,
+				["Scale"] = Vector(1, 1, 1),
+				["ClassName"] = "model",
+				["EditorExpand"] = false,
+				["Size"] = 0.275,
+				["ModelFallback"] = "",
+				["AngleOffset"] = Angle(0, 0, 0),
+				["TextureFilter"] = 3,
+				["Model"] = "models/props_doors/door03_slotted_left.mdl",
+				["UniqueID"] = "d5c666c1c057c3934b4614c80f87b2aadd769a70fea9f48063f84edae11237dc",
+			},
+		},
+		[2] = {
+			["children"] = {
+			},
+			["self"] = {
+				["Skin"] = 0,
+				["Invert"] = false,
+				["LightBlend"] = 1,
+				["CellShade"] = 0,
+				["AimPartName"] = "",
+				["IgnoreZ"] = false,
+				["AimPartUID"] = "",
+				["Passes"] = 1,
+				["Name"] = "",
+				["Angles"] = Angle(-10.02402305603, 3.6995635032654, -163.98124694824),
+				["DoubleFace"] = false,
+				["PositionOffset"] = Vector(0, 0, 0),
+				["BlurLength"] = 0,
+				["OwnerEntity"] = false,
+				["Brightness"] = 1,
+				["DrawOrder"] = 0,
+				["BlendMode"] = "",
+				["TintColor"] = Vector(0, 0, 0),
+				["Alpha"] = 1,
+				["LodOverride"] = -1,
+				["TargetEntityUID"] = "",
+				["BlurSpacing"] = 0,
+				["UsePlayerColor"] = false,
+				["Material"] = "",
+				["UseWeaponColor"] = false,
+				["EyeAngles"] = false,
+				["UseLegacyScale"] = false,
+				["Bone"] = "head",
+				["Color"] = Vector(255, 255, 255),
+				["Fullbright"] = false,
+				["BoneMerge"] = false,
+				["IsDisturbing"] = false,
+				["Position"] = Vector(1.4063720703125, 0.31929016113281, -5.0541877746582),
+				["NoTextureFiltering"] = false,
+				["AlternativeScaling"] = false,
+				["Hide"] = false,
+				["Translucent"] = false,
+				["Scale"] = Vector(1, 1, 1),
+				["ClassName"] = "model",
+				["EditorExpand"] = false,
+				["Size"] = 0.125,
+				["ModelFallback"] = "",
+				["AngleOffset"] = Angle(0, 0, 0),
+				["TextureFilter"] = 3,
+				["Model"] = "models/props_combine/combine_barricade_short01a.mdl",
+				["UniqueID"] = "9b71fb8c55c4744768f78ce895a4d94785307304f1efdca738280db1f7be8ad4",
+			},
+		},
+		[3] = {
+			["children"] = {
+			},
+			["self"] = {
+				["Skin"] = 0,
+				["Invert"] = false,
+				["LightBlend"] = 1,
+				["CellShade"] = 0,
+				["AimPartName"] = "",
+				["IgnoreZ"] = false,
+				["AimPartUID"] = "",
+				["Passes"] = 1,
+				["Name"] = "",
+				["Angles"] = Angle(13.517804145813, -85.420585632324, -92.648002624512),
+				["DoubleFace"] = false,
+				["PositionOffset"] = Vector(0, 0, 0),
+				["BlurLength"] = 0,
+				["OwnerEntity"] = false,
+				["Brightness"] = 1,
+				["DrawOrder"] = 0,
+				["BlendMode"] = "",
+				["TintColor"] = Vector(0, 0, 0),
+				["Alpha"] = 1,
+				["LodOverride"] = -1,
+				["TargetEntityUID"] = "",
+				["BlurSpacing"] = 0,
+				["UsePlayerColor"] = false,
+				["Material"] = "",
+				["UseWeaponColor"] = false,
+				["EyeAngles"] = false,
+				["UseLegacyScale"] = false,
+				["Bone"] = "spine 1",
+				["Color"] = Vector(255, 255, 255),
+				["Fullbright"] = false,
+				["BoneMerge"] = false,
+				["IsDisturbing"] = false,
+				["Position"] = Vector(2.2723045349121, -5.2744140625, 3.0904541015625),
+				["NoTextureFiltering"] = false,
+				["AlternativeScaling"] = false,
+				["Hide"] = false,
+				["Translucent"] = false,
+				["Scale"] = Vector(1, 1, 1),
+				["ClassName"] = "model",
+				["EditorExpand"] = false,
+				["Size"] = 0.375,
+				["ModelFallback"] = "",
+				["AngleOffset"] = Angle(0, 0, 0),
+				["TextureFilter"] = 3,
+				["Model"] = "models/props_combine/suit_charger001.mdl",
+				["UniqueID"] = "e61bcc5bc23de235e67e45b2dc92781679aec83f4cfc98e98dcaa3c6addf8f8d",
+			},
+		},
+	},
+	["self"] = {
+		["DrawOrder"] = 0,
+		["UniqueID"] = "41bd7a19e8b93c94fa708fe70630b3c30a21129b31d519c0c3363b543ba23c70",
+		["Hide"] = false,
+		["TargetEntityUID"] = "",
+		["EditorExpand"] = true,
+		["OwnerName"] = "self",
+		["IsDisturbing"] = false,
+		["Name"] = "дохуя крутой",
+		["Duplicate"] = false,
+		["ClassName"] = "group",
+	},
+},
+}
+
+CLASS.Health = 500
+CLASS.Speed = 111
+CLASS.KnockbackScale = 0
+CLASS.NoSlowdown = true
+
+CLASS.CanTaunt = true
+--CLASS.BetterVersion = "Skelecringe"
+
+CLASS.Points = CLASS.Health/GM.HumanoidZombiePointRatio/2
+
+CLASS.DynamicHealth = 0.95
+>>>>>>> Stashed changes
 
 CLASS.SWEP = "weapon_zs_tank"
 
@@ -191,35 +381,72 @@ end
 
 if SERVER then
 	function CLASS:ProcessDamage(pl, dmginfo)
+<<<<<<< Updated upstream
 		if pl.EradiVived then return end
 
+=======
+		dmgblock = math.random(1,7)
+		if dmginfo:GetDamage() > 200 then 
+			dmginfo:SetDamage(200)
+		end
+	
+		if dmgblock == 1 then
+			dmginfo:SetDamage(0)
+			net.Start("zs_damageblock")
+			net.Send(pl)
+		end
+		if pl.EradiVived then return end
+		local attacker, inflictor = dmginfo:GetAttacker(), dmginfo:GetInflictor()
+		if inflictor and inflictor.IgnoreNiggers then
+			dmginfo:ScaleDamage(0.1)
+		end
+>>>>>>> Stashed changes
 		local damage = dmginfo:GetDamage()
+		
 		if damage >= 80 or damage < pl:Health() then return end
 
-		local attacker, inflictor = dmginfo:GetAttacker(), dmginfo:GetInflictor()
 		if attacker == pl or not attacker:IsPlayer() or inflictor.IsMelee or inflictor.NoReviveFromKills then return end
-
 		if pl:WasHitInHead() or pl:GetStatus("shockdebuff") then return end
 
 		local dmgtype = dmginfo:GetDamageType()
 		if bit_band(dmgtype, DMG_ALWAYSGIB) ~= 0 or bit_band(dmgtype, DMG_BURN) ~= 0 or bit_band(dmgtype, DMG_CRUSH) ~= 0 then return end
 
 		if CurTime() < (pl.NextZombieRevive or 0) then return end
+<<<<<<< Updated upstream
 		pl.NextZombieRevive = CurTime() + 4.25
 
 		dmginfo:SetDamage(0)
 		pl:SetHealth(10)
+=======
+		pl.NextZombieRevive = CurTime() + 24.25
+
+
+
+		dmginfo:SetDamage(0)
+		pl:SetHealth(500)
+>>>>>>> Stashed changes
 
 		local status = pl:GiveStatus("revive_slump")
 		if status then
+<<<<<<< Updated upstream
 			status:SetReviveTime(CurTime() + 3)
 			status:SetReviveAnim(3.15)
 			status:SetReviveHeal(130)
+=======
+			status:SetReviveTime(CurTime() + 12)
+			status:SetReviveAnim(12.1)
+			status:SetReviveHeal(500)
+>>>>>>> Stashed changes
 
 			pl.EradiVived = true
 		end
 
+<<<<<<< Updated upstream
 		return true
+=======
+
+		return dmginfo
+>>>>>>> Stashed changes
 	end
 
 	function CLASS:OnSpawned(pl)
@@ -231,7 +458,7 @@ end
 if not CLIENT then return end
 
 CLASS.Icon = "zombiesurvival/killicons/poisonzombie"
-CLASS.IconColor = Color(66, 0, 0)
+CLASS.IconColor = Color(158, 0, 0)
 
 local matSkin = Material("Models/charple/charple4_sheet.vtf")
 function CLASS:PrePlayerDrawOverrideModel(pl)

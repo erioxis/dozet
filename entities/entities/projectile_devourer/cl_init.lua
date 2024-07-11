@@ -50,7 +50,7 @@ function ENT:Draw()
 	local hookpos = self:WorldSpaceCenter()
 
 	if hooked then
-		hookpos.z = hookpos.z - 48
+		hookpos.z = hookpos.z + 48
 	end
 
 	local boneid = (owner ~= LocalPlayer() or owner:ShouldDrawLocalPlayer()) and owner:LookupBone("ValveBiped.Bip01_R_Hand")

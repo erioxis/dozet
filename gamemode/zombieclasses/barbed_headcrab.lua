@@ -4,7 +4,8 @@ CLASS.Name = "Barbed Headcrab"
 CLASS.TranslationName = "class_barbed_headcrab"
 CLASS.Description = "description_barbed_headcrab"
 CLASS.Help = "controls_barbed_headcrab"
-
+CLASS.Variations = {}
+CLASS.Original = false
 CLASS.Health = 100
 CLASS.Points = CLASS.Health/GM.HeadcrabZombiePointRatio
 CLASS.Speed = 210
@@ -18,6 +19,7 @@ function CLASS:ProcessDamage(pl, dmginfo)
 	if dmginfo:GetInflictor().IsMelee then
 		dmginfo:SetDamage(dmginfo:GetDamage() / 1200)
 	end
+	return dmginfo
 end
 end
 

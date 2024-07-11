@@ -64,15 +64,21 @@ function SWEP:PrimaryAttack()
 
 		ent:EmitSound("npc/dog/dog_servo12.wav")
 
+<<<<<<< Updated upstream
 		ent:GhostAllPlayersInMe(5)
 
+=======
+>>>>>>> Stashed changes
 		ent:SetObjectOwner(owner)
 
 		local stored = owner:PopPackedItem(ent:GetClass())
 		if stored then
 			ent:SetObjectHealth(stored[1])
 		end
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 		self:TakePrimaryAmmo(1)
 	end
 end

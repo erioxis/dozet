@@ -15,3 +15,13 @@ function CLASS:OnKilled(pl, attacker, inflictor, suicide, headshot, dmginfo)
 
 	return true
 end
+function CLASS:ProcessDamage(pl, dmginfo)
+	if dmginfo:GetInflictor().IsMelee then
+		dmginfo:SetDamage(dmginfo:GetDamage() * 5)
+	end
+	local atk = dmginfo:GetAttacker()
+	if  atk and  atk:IsPlayer() then
+		atk:SendLua("util.WhiteOut("..math.min(12,dmginfo:GetDamage()/10)..")")
+	end
+	return dmginfo
+end

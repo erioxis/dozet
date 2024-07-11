@@ -1,6 +1,13 @@
+<<<<<<< Updated upstream
 SWEP.PrintName = "'Enkindler' Fire Mine Layer"
 SWEP.Description = "A mine layer that lays mines that ignite zombies."
 
+=======
+--SWEP.PrintName = "'Enkindler' Fire Mine Layer"
+--SWEP.Description = "A mine layer that lays mines that ignite zombies."
+SWEP.PrintName = translate.Get("wep_darkek")
+SWEP.Description = translate.Get("wep_d_darkek")
+>>>>>>> Stashed changes
 SWEP.Slot = 4
 SWEP.SlotPos = 0
 
@@ -33,14 +40,18 @@ SWEP.UseHands = true
 
 SWEP.MaxMines = 6
 
+<<<<<<< Updated upstream
 SWEP.Tier = 2
+=======
+SWEP.Tier = 6
+>>>>>>> Stashed changes
 
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_MAXIMUM_MINES, 1)
 
 function SWEP:CanPrimaryAttack()
 	if self.BaseClass.CanPrimaryAttack(self) then
 		local c = 0
-		for _, ent in pairs(ents.FindByClass("projectile_impactmine_kin")) do
+		for _, ent in ipairs(ents.FindByClass("projectile_impactmine_kin")) do
 			if (CLIENT or ent.CreateTime + 300 > CurTime()) and ent:GetOwner() == self:GetOwner() then
 				c = c + 1
 			end

@@ -98,7 +98,7 @@ function meta:FireBulletsLua(src, dir, spread, num, damage, attacker, force_mul,
 			temp_ignore_team = nil
 		end
 	end
-
+	--local hull_size = hull_size or 2
 	if hull_size then
 		bullet_trace.maxs = Vector(hull_size, hull_size, hull_size) * 0.5
 		bullet_trace.mins = bullet_trace.maxs * -1
@@ -109,10 +109,14 @@ function meta:FireBulletsLua(src, dir, spread, num, damage, attacker, force_mul,
 
 	base_ang = dir:Angle()
 	temp_has_spread = spread > 0
-
+	if attacker.AltEve then
+		num = num * 2
+	end
 	if SERVER and num > 1 and attacker_player then attacker:StartDamageNumberSession() end
 
-	for i=0, num - 1 do
+
+
+	for i=0, num-1 do
 		if temp_has_spread then
 			temp_angle:Set(base_ang)
 			temp_angle:RotateAroundAxis(
@@ -129,7 +133,9 @@ function meta:FireBulletsLua(src, dir, spread, num, damage, attacker, force_mul,
 
 		bullet_trace.endpos = src + dir * max_distance
 		bullet_tr = method_to_use(bullet_trace)
-
+		--print(bullet_tr.HitTexture)
+		--self:SetMaterial(bullet_tr.HitTexture)
+		--surface.SetTexture(surface.GetTextureID(bullet_tr.HitTexture))
 		CheckFHB(bullet_tr)
 
 		local hitwater
@@ -170,6 +176,10 @@ function meta:FireBulletsLua(src, dir, spread, num, damage, attacker, force_mul,
 		if E_IsValid(ent) and use_damage then
 			if ent:IsPlayer() then
 				temp_vel_ents[ent] = temp_vel_ents[ent] or ent:GetVelocity()
+				if inflictor then
+					inflictor.DamageEyeMul = (inflictor.DamageEyeMul or 0)  + 1
+					inflictor.SpeedEyeMul = (inflictor.SpeedEyeMul or 0) + 1 
+				end
 				if SERVER then
 					ent:SetLastHitGroup(bullet_tr.HitGroup)
 					if bullet_tr.HitGroup == HITGROUP_HEAD then
@@ -184,6 +194,20 @@ function meta:FireBulletsLua(src, dir, spread, num, damage, attacker, force_mul,
 			end
 
 			ent:DispatchTraceAttack(damageinfo, bullet_tr, dir)
+		elseif !E_IsValid(ent) and SERVER and attacker_player and (attacker.FastEye or attacker.BirdEye) then
+			local die = false
+			attacker.Luls = attacker.Luls + 1
+			if math.random(1,4) == 1 and inflictor then
+				inflictor.DamageEyeMul = math.max(1,(inflictor.DamageEyeMul or 1))/2  
+				die = true
+			end
+			if attacker.FastEye and math.random(1,math.max(1,5-attacker.Luls)) == 1 and inflictor then
+				inflictor.SpeedEyeMul = 1 
+				die = true
+			end
+			if die then
+				attacker:SendLua('MySelf:EmitSound("npc/fast_zombie/wake1.wav", 100,50)')
+			end
 		end
 
 		if SERVER and num > 1 and i == num - 1 and attacker_player then
@@ -199,7 +223,6 @@ function meta:FireBulletsLua(src, dir, spread, num, damage, attacker, force_mul,
 			effectdata:SetOrigin(bullet_tr.HitPos)
 			effectdata:SetStart(src)
 			effectdata:SetNormal(bullet_tr.HitNormal)
-
 			if hitwater then
 				-- We may not impact, but we DO need to affect ragdolls on the client
 				if use_ragdoll_impact then
@@ -234,7 +257,10 @@ function meta:FireBulletsLua(src, dir, spread, num, damage, attacker, force_mul,
 	end
 	table.Empty(temp_vel_ents)
 end
-
+function meta:RealisticBulletShoot(src, dir, spread, num, damage, attacker, force_mul, tracer, callback, hull_size, hit_own_team, max_distance, filter, inflictor)
+	--damage = ((radius - nearest:Distance(epicenter)) / radius) * damage
+	self:FireBulletsLua(src, dir, spread, num, damage, attacker, force_mul, tracer, callback, hull_size, hit_own_team, max_distance, filter, inflictor)
+end
 function meta:IsValidPlayer()
 	return E_IsValid(self) and self:IsPlayer()
 end
@@ -421,7 +447,7 @@ function meta:IsBarricadeProp()
 end
 
 function meta:GetHolder()
-	for _, ent in pairs(ents.FindByClass("status_human_holding")) do
+	for _, ent in ipairs(ents.FindByClass("status_human_holding")) do
 		if ent:GetObject() == self then
 			local owner = ent:GetOwner()
 			if owner:IsPlayer() and owner:Alive() then return owner, ent end
@@ -466,8 +492,10 @@ function meta:ThrowFromPositionSetZ(pos, force, zmul, noknockdown)
 
 	if self:IsPlayer() then
 		if self:ActiveBarricadeGhosting() or self.SpawnProtection then return false end
-
-		force = force * (self.KnockbackScale or 1)
+		force = force * (self.KnockbackScale or 1) * (self:IsSkillActive(SKILL_SSS) and 0.65 or 1)
+		if self:IsSkillActive(SKILL_SSS) and math.max(math.abs(force) * math.abs(zmul), math.abs(force)) < 342 then
+			return false
+		end
 	end
 
 	if self:GetMoveType() == MOVETYPE_VPHYSICS then
@@ -577,6 +605,7 @@ end
 function meta:IsPhysicsModel(mdl)
 	return string.sub(self:GetClass(), 1, 12) == "prop_physics" and (not mdl or string.lower(self:GetModel()) == string.lower(mdl))
 end
+
 
 function meta:IsWeaponType(class)
 	return self:GetClass() == "prop_weapon" and self:GetWeaponType() == class or (self:IsWeapon() and self:GetClass() == class)

@@ -1,10 +1,20 @@
 ENT.Type = "anim"
 
+<<<<<<< Updated upstream
 ENT.MaxHealth = 450
 ENT.HealthRegen = 100
 ENT.RegenDelay = 9
 
 ENT.ModelScale = 0.70
+=======
+ENT.MaxHealth = 260
+ENT.HealthRegen = 30
+ENT.RegenDelay =2
+
+ENT.Sigil = true
+
+ENT.ModelScale = 0.45
+>>>>>>> Stashed changes
 
 ENT.m_NoNailUnfreeze = true
 ENT.NoNails = true

@@ -19,7 +19,7 @@ SWEP.Secondary.Automatic = false
 
 SWEP.UseHands = true
 
-SWEP.MaxStock = 5
+SWEP.MaxStock = 10
 
 if CLIENT then
 	SWEP.ViewModelFOV = 60
@@ -43,7 +43,11 @@ function SWEP:CanPrimaryAttack()
 
 	if owner:IsHolding() or owner:GetBarricadeGhosting() then return false end
 
+<<<<<<< Updated upstream
 	if self:GetPrimaryAmmoCount() <= 0 then
+=======
+	if self:GetPrimaryAmmoCount() <= 0  then
+>>>>>>> Stashed changes
 		self:EmitSound("Weapon_Shotgun.Empty")
 		self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
 		return false
@@ -55,6 +59,10 @@ end
 function SWEP:SecondaryAttack()
 end
 
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 function SWEP:Reload()
 end
 

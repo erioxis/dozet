@@ -1,5 +1,5 @@
 ENT.Type = "anim"
-
+ENT.IgnoreAttachments = true
 function ENT:GetDeployer()
 	return self:GetOwner()
 end

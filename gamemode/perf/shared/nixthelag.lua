@@ -42,6 +42,8 @@ hook.Add("Initialize", "NixTheLag", function()
 end)
 
 -- This probably chops off a few FPS (1 to 5) but stops many problems with frame spikes.
---[[hook.Add("Think", "ManualGC", function()
-	collectgarbage("step", 192)
-end)]]
+hook.Add("Think", "ManualGC", function()
+	if CLIENT and GAMEMODE.FixTheLag or SERVER then
+		collectgarbage("step", 192)
+	end
+end)

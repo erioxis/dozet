@@ -6,7 +6,7 @@ ENT.LastHitPeriod = 0.5
 ENT.Hitbox = "prop_hitbox_gunturret"
 
 local function RefreshTurretOwners(pl)
-	for _, ent in pairs(ents.FindByClass("prop_gunturret*")) do
+	for _, ent in ipairs(ents.FindByClass("prop_gunturret*")) do
 		if ent:IsValid() and ent:GetObjectOwner() == pl then
 			ent:ClearObjectOwner()
 			ent:ClearTarget()
@@ -58,14 +58,17 @@ function ENT:SetupPlayerSkills()
 	local owner = self:GetObjectOwner()
 	local scanspeed = 1
 	local scanangle = 1
+	local damagemul = 1
 
 	if owner:IsValid() then
 		scanspeed = scanspeed * (owner.TurretScanSpeedMul or 1)
 		scanangle = scanangle * (owner.TurretScanAngleMul or 1)
+		damagemul = damagemul * (owner.TurretDamageMul or 1)
 	end
 
 	self:SetScanSpeed(scanspeed)
 	self:SetScanMaxAngle(scanangle)
+	self.Damage = self.Damage * damagemul
 
 	self:SetupDeployableSkillHealth("TurretHealthMul")
 end
@@ -73,16 +76,48 @@ end
 function ENT:SetObjectHealth(health)
 	self:SetDTFloat(3, health)
 	if health <= 0 and not self.Destroyed then
+
 		self.Destroyed = true
 
 		local pos = self:LocalToWorld(self:OBBCenter())
+
+		local owner = self:GetObjectOwner()
+		if owner and owner:IsValidLivingHuman() and owner:IsSkillActive(SKILL_DRONE_IN_T) then
+			for _, ent in pairs(player.FindInSphere(self:GetPos(), 128)) do
+				if ent:IsValid() and ent:IsPlayer() and ent ~= owner and ent:IsValidLivingZombie() then
+					ent:TakeDamage(250, owner, self)
+				elseif ent:IsValid() and ent:IsPlayer() and ent == owner then
+					ent:TakeDamage(250, owner, self)
+				end
+			end
+			if owner and owner:IsValidLivingHuman() and owner:IsSkillActive(SKILL_EXPLOIT) and math.random(1,4) == 1 then
+				owner:Give("weapon_zs_gunturret")
+			end
+			local ent = ents.Create("prop_drone_exp")
+			if ent:IsValid() then
+				ent:SetPos(self:GetPos()+Vector(0,0,50))
+				ent:Spawn()
+				ent:SetObjectOwner(owner)
+				ent:SetupPlayerSkills()
+	
+
+				local phys = ent:GetPhysicsObject()
+				if phys:IsValid() then
+					phys:Wake()
+				end
+	
+				if not owner:HasWeapon("weapon_zs_dronecontrol") then
+					owner:Give("weapon_zs_dronecontrol")
+				end
+			end
+		end
 
 		local effectdata = EffectData()
 			effectdata:SetOrigin(pos)
 		util.Effect("Explosion", effectdata, true, true)
 
-		if self:GetObjectOwner():IsValidLivingHuman() then
-			self:GetObjectOwner():SendDeployableLostMessage(self)
+		if owner:IsValidLivingHuman() then
+			owner:SendDeployableLostMessage(self)
 		end
 
 		local amount = math.ceil(self:GetAmmo() * 0.5)
@@ -125,21 +160,29 @@ end
 
 function ENT:FireTurret(src, dir)
 	if self:GetNextFire() <= CurTime() then
-		local curammo = self:GetAmmo()
+		local curammo = mot and owner:GetBloodArmor() > 0 and owner:GetBloodArmor() or self:GetAmmo()
 		local owner = self:GetObjectOwner()
+		local mot = owner:IsSkillActive(SKILL_FLESH_MOTOR)
 		local twinvolley = self:GetManualControl() and owner:IsSkillActive(SKILL_TWINVOLLEY)
 		if curammo > (twinvolley and 1 or 0) then
 			self:SetNextFire(CurTime() + self.FireDelay * (twinvolley and 1.5 or 1))
-			self:SetAmmo(curammo - (twinvolley and 2 or 1))
-
+			local damage = self.Damage * (owner.BulletMul or 1)
+			if !(owner:IsSkillActive(SKILL_OVERHEATED_BULLET) and math.random(1,10) == 1) then
+				if mot and owner:GetBloodArmor() > 0 then
+					owner:SetBloodArmor(math.max(0,curammo - (twinvolley and 2 or 1)))
+				else
+					self:SetAmmo(curammo - (twinvolley and 2 or 1))
+				end
+			else
+				damage = damage * 1.25
+			end
 			if self:GetAmmo() == 0 then
 				owner:SendDeployableOutOfAmmoMessage(self)
 			end
-
 			self:PlayShootSound()
 
 			TEMPTURRET = self
-			self:FireBulletsLua(src, dir, self.Spread, self.NumShots * (twinvolley and 2 or 1), self.Damage, self:GetObjectOwner(), nil, nil, BulletCallback, nil, nil, nil, nil, self)
+			self:FireBulletsLua(src, dir, self.Spread, self.NumShots * (twinvolley and 2 or 1) + (mot and math.random(1,5) == 1 and 1 or 0), damage, owner, nil, nil, BulletCallback, nil, nil, nil, nil, self)
 		else
 			self:SetNextFire(CurTime() + 2)
 			self:EmitSound("npc/turret_floor/die.wav")
@@ -249,6 +292,11 @@ function ENT:OnTakeDamage(dmginfo)
 	local attacker = dmginfo:GetAttacker()
 	if not (attacker:IsValid() and attacker:IsPlayer() and attacker:Team() == TEAM_HUMAN) then
 		self:ResetLastBarricadeAttacker(attacker, dmginfo)
+		local owner =self:GetObjectOwner()
+		if owner:IsValid() and owner:IsSkillActive(SKILL_PIPIS) then
+			owner:TakeDamage(dmginfo:GetDamage()*0.33)
+			dmginfo:ScaleDamage(0.33)
+		end
 		self:SetObjectHealth(self:GetObjectHealth() - dmginfo:GetDamage())
 	end
 end

@@ -1,7 +1,10 @@
 INC_CLIENT()
 
+include("animations.lua")
+
 SWEP.ViewModelFOV = 70
 SWEP.DrawCrosshair = false
+
 
 function SWEP:Reload()
 end

@@ -30,13 +30,63 @@ local P_Team = meta.Team
 local E_IsValid = M_Entity.IsValid
 local E_GetDTBool = M_Entity.GetDTBool
 local E_GetTable = M_Entity.GetTable
+<<<<<<< Updated upstream
 
+=======
+local spraytbl = {}
+function meta:LogID()
+	return "<"..self:SteamID().."> "..self:Name()
+end
+function meta:PostSprayPlayer(sprayorigin,spraypos)
+	local spray = ents.Create("prop_spray") 
+
+	if spray:IsValid() then
+		spray:SetPos(spraypos)
+		spray:SetOwner(self)
+		spray:Spawn()
+		timer.Simple(15,function() spray:Remove() end)
+	end
+end
+>>>>>>> Stashed changes
 function meta:GetMaxHealthEx()
 	if P_Team(self) == TEAM_UNDEAD then
 		return self:GetMaxZombieHealth()
 	end
 
 	return self:GetMaxHealth()
+end
+function meta:GetVIP()
+	return (self:IsUserGroup("vip_1") or self:IsUserGroup("vip_1_nav") or self:IsUserGroup("vip_1_new") or self:GetZSRemortLevel() >= 64 or self:IsUserGroup("vip_2") or self:IsUserGroup("vip_2_nav")),(self:IsUserGroup("vip_2") or self:IsUserGroup("vip_2_nav")),(self:IsUserGroup("vip_3") or self:IsUserGroup("vip_3_nav"))
+end
+function meta:IsNavmesher()
+	return self:IsUserGroup("vip_1_nav") or self:IsUserGroup("vip_2_nav") or self:IsUserGroup("navmesher") or self:IsUserGroup("Navmesher")
+end
+function meta:SetChampion(id)
+	self:SetNW2Int("champion", id)
+end
+function meta:GetChampion()
+	return P_Team(self) == TEAM_UNDEAD and self:GetNW2Int("champion", 0) or 0
+end
+function meta:IsChampion()
+	return self:GetChampion() ~= 0
+end
+local colorschamp = {
+	CHAMP_RED = Color(143,5,5),
+	CHAMP_WHITE = Color(255,255,255),
+	CHAMP_BLUE =  Color(0,53,114),
+	CHAMP_YELLOW = Color(191,194,23),
+	CHAMP_ETERNAL = Color(211,211,211),
+	CHAMP_PINK = Color(252,109,209),
+	CHAMP_GRAY = Color(173,173,173)
+
+}
+function meta:GetChampionColor()
+	if self:IsChampion() then 
+		return colorschamp[self:GetChampion()]
+	end
+end
+function meta:GetChampTable()
+	return {Type = self:GetChampion(),Color = self:GetChampionColor()}
 end
 
 function meta:Dismember(dismembermenttype)
@@ -148,6 +198,13 @@ end
 function meta:GetBleedDamage()
 	return self.Bleed and self.Bleed:IsValid() and self.Bleed:GetDamage() or 0
 end
+function meta:SyncAngles()
+    local ang = self:EyeAngles()
+    ang.pitch = 0
+    ang.roll = 0
+    return ang
+end
+meta.GetAngles = meta.SyncAngles
 
 function meta:CallWeaponFunction(funcname, ...)
 	local wep = self:GetActiveWeapon()
@@ -287,10 +344,132 @@ end
 function meta:GetPoints()
 	return self:GetDTInt(1)
 end
+<<<<<<< Updated upstream
+=======
+function meta:SetPoints(points)
+	self:SetDTInt(1, points)
+end
+function meta:GetMScore()
+	return self:GetNWInt('metascore', metascore)	
+end
+function meta:GetDKills()
+	return self:GetNWInt('zkills', zkills)	
+end
+function meta:GetDPS()
+	return self:GetNWInt('dpsmeter', dpser) 
+end
+function meta:MetaAddScore(metascore)
+	self:SetNWInt('metascore', metascore)
+end
+function meta:SetDPS(dpser)
+	self:SetNWInt('dpsmeter', dpser)	
+end	
+function meta:SetDKills(zkills)
+	self:SetNWInt('zkills', zkills)	
+end	
+function meta:SetXPPerRound(xp)
+	self:SetNWInt('xpperround', xp)	
+end	
+function meta:GetXPPerRound()
+	return self:GetNWInt('xpperround', xp)	
+end
+function meta:AddXPPerRound(xp)
+	self:SetNWInt('xpperround', self:GetXPPerRound() + xp)	
+end	
+function meta:GetAddedPoints()
+	return self:GetDTInt(DT_PLAYER_INT_ADDEDPOINTS)
+end
+function meta:GetAddedPointsTime()
+	return self:GetDTFloat(DT_PLAYER_FLOAT_ADDEDPOINTS)
+end
+function meta:GetStyle()
+	local pable = self.StyleMoment
+	local style = 0
+	for i=1,#pable do
+		if !pable[i] then continue end
+		local v = pable[i]
+		if v.time-CurTime() <= 0 then
+			self.StyleMoment[i] = nil
+		end
+		style = style + (v.score or 0)
+	end
+	--print(style)
+	return math.Clamp(math.Round(style/1000)+1,1,9)
+end
+function meta:SetStyle(s)
+	self:SetNWString(22, s)
+end
+
+
+function meta:SetTokens(pts)
+	self:SetNWInt('btokens', pts)	
+end	
+
+function meta:GetTokens()
+	return self:GetNWInt('btokens', pts)
+end
+function meta:GetTimerBERS()
+	return self:GetNWInt('b_timer', pts)	
+end	
+
+function meta:SetTimerBERS(pts)
+	self:SetNWInt('b_timer', pts + 10)
+end
+
+function meta:GetProgress(progress)
+	return self:GetNWFloat(progress, pts)	
+end	
+function meta:SetProgress(pts, progress)
+	self:SetPTime(CurTime(), progress)
+	self:SetNWFloat(progress, pts)
+end	
+function meta:GetPTime(ptime)
+	return self:GetNWFloat(ptime.."time", pts)	
+end	
+
+function meta:SetPTime(pts, ptime)
+	self:SetNWFloat(ptime.."time", pts+5.2)
+end
+>>>>>>> Stashed changes
 
 function meta:GetBloodArmor()
 	return self:GetDTInt(DT_PLAYER_INT_BLOODARMOR)
 end
+<<<<<<< Updated upstream
+=======
+function meta:GetManaMagic()
+	return self:GetDTInt(DT_PLAYER_FLOAT_MAGIC)
+end
+function meta:GetChargesActive()
+	return self:GetDTInt(DT_PLAYER_INT_ACTIV)
+end
+local masteries2 = {['melee'] = 11,['gunner'] = 12,['medic'] = 13,['cader'] = 14}
+function meta:GetMastery(who,sum)
+	if sum then
+		return self:GetDTInt(11),self:GetDTInt(12),self:GetDTInt(13),self:GetDTInt(14)
+	end
+	local can = masteries2[who] or 11
+	return self:GetDTInt(can)
+end
+function meta:AddChargesActive(int)
+	self:SetChargesActive(self:GetChargesActive()+int)
+end
+function meta:GetDCoins()
+	return self:GetDTFloat(DT_PLAYER_FLOAT_DOSET_COINS)
+end
+
+function meta:SetEntityAvatar(ent)
+	self:SetDTEntity(3, ent)
+end
+function meta:GetEntityAvatar()
+	if !self:IsBot() then return self end 
+	return self:GetDTEntity(3)
+end
+
+function meta:GetZArmor()
+	return self:GetDTInt(DT_PLAYER_INT_ZOMBIEARMOR)
+end
+>>>>>>> Stashed changes
 
 function meta:AddLegDamage(damage)
 	if self.SpawnProtection then return end
@@ -303,10 +482,63 @@ function meta:AddLegDamage(damage)
 
 	self:SetLegDamage(legdmg)
 end
+<<<<<<< Updated upstream
 
 function meta:AddLegDamageExt(damage, attacker, inflictor, type)
 	inflictor = inflictor or attacker
 
+=======
+function meta:AttachmentDamage(damage, attacker, inflictor, type)
+	inflictor = inflictor or attacker
+	damage = damage * (attacker.ElementalMul or 1)
+	if attacker:IsSkillActive(SKILL_DOUBLE_ISSUE) and math.random(1,6) == 1 then
+		damage = damage * 2
+	end
+	
+	if type == SLOWTYPE_PULSE then
+		if SERVER then
+			if attacker:HasTrinket("resonance") then
+				attacker:SetProgress(attacker:GetProgress('pprog') + damage, 'pprog')
+
+				if attacker:GetProgress('pprog') > 20* GAMEMODE:GetWave() * (attacker:GetIndChance() or 1) and (attacker.NextInductors or 1) < CurTime() then
+					self:PulseResonance(attacker, inflictor)
+					attacker.NextInductors = CurTime() + 1.5
+				end
+			end
+			GAMEMODE:DamageAtFloater(attacker, self, self:NearestPoint(attacker:EyePos()), damage,type)
+		end
+	elseif type == SLOWTYPE_COLD then
+		if SERVER then
+			if  attacker:HasTrinket("cryoindu") and not attacker:GetActiveWeapon().AntiInd and (attacker.NextInductors or 1) < CurTime()  then
+				attacker:SetProgress(attacker:GetProgress('iprog') + damage,'iprog')
+				self:CryogenicInduction(attacker, inflictor, damage)
+			end
+			GAMEMODE:DamageAtFloater(attacker, self, self:NearestPoint(attacker:EyePos()), damage, type)
+		end
+	elseif type == SLOWTYPE_FLAME then
+		if SERVER then 
+			if  attacker:HasTrinket("fire_ind") and not attacker:GetActiveWeapon().AntiInd and (attacker.NextInductors or 1) < CurTime() then
+				attacker:SetProgress(attacker:GetProgress('fprog') + damage, 'fprog')
+				self:FireInduction(attacker, inflictor, damage)
+			end
+			GAMEMODE:DamageAtFloater(attacker, self, self:NearestPoint(attacker:EyePos()), damage, type)
+		end
+	elseif type == SLOWTYPE_CHAM then
+		if SERVER then
+			if attacker:HasTrinket("cham_storm") and self:GetZombieClassTable().BaraCat and (attacker.NextInductors or 1) < CurTime() then
+				attacker:SetProgress(attacker:GetProgress('cprog') + damage, 'cprog')
+				self:ChamStorm(attacker, inflictor, damage)
+			end
+			GAMEMODE:DamageAtFloater(attacker, self, self:NearestPoint(attacker:EyePos()), damage, type)
+		end
+	end
+	if SERVER then
+		attacker:GiveAchievementProgress("elementarno",math.Round(damage))
+	end
+end
+function meta:AddLegDamageExt(damage, attacker, inflictor, type)
+	inflictor = inflictor or attacker
+>>>>>>> Stashed changes
 	if type == SLOWTYPE_PULSE then
 		local legdmg = damage * (attacker.PulseWeaponSlowMul or 1)
 		local startleg = self:GetFlatLegDamage()
@@ -315,6 +547,7 @@ function meta:AddLegDamageExt(damage, attacker, inflictor, type)
 		if attacker.PulseImpedance then
 			self:AddArmDamage(legdmg)
 		end
+<<<<<<< Updated upstream
 
 		if SERVER and attacker:HasTrinket("resonance") then
 			attacker.AccuPulse = (attacker.AccuPulse or 0) + (self:GetFlatLegDamage() - startleg)
@@ -331,6 +564,50 @@ function meta:AddLegDamageExt(damage, attacker, inflictor, type)
 
 		if SERVER and attacker:HasTrinket("cryoindu") then
 			self:CryogenicInduction(attacker, inflictor, damage)
+=======
+		if SERVER then
+			if attacker:HasTrinket("resonance") then
+				attacker:SetProgress(attacker:GetProgress('pprog') + (self:GetFlatLegDamage() - startleg), 'pprog')
+
+				if attacker:GetProgress('pprog') > 20* GAMEMODE:GetWave() * (attacker:GetIndChance() or 1) and (attacker.NextInductors or 1) < CurTime() then
+					self:PulseResonance(attacker, inflictor)
+					attacker.NextInductors = CurTime() + 1.5
+				end
+			end
+			GAMEMODE:DamageAtFloater(attacker, self, self:NearestPoint(attacker:EyePos()), legdmg,type)
+		end
+	elseif type == SLOWTYPE_COLD then
+		local zclass =  self:GetZombieClassTable()
+		local valid = self:IsValidLivingZombie()
+		if valid and zclass.ResistFrost then return end
+		if valid and zclass.Boss then return end
+		if zclass.FireBuff then
+			damage = damage * 2
+		end
+		self:AddLegDamage(damage)
+		self:AddArmDamage(damage)
+		if SERVER then
+			if  attacker:HasTrinket("cryoindu") and not attacker:GetActiveWeapon().AntiInd and (attacker.NextInductors or 1) < CurTime()  then
+				attacker:SetProgress(attacker:GetProgress('iprog') + damage,'iprog')
+				self:CryogenicInduction(attacker, inflictor, damage)
+			end
+			GAMEMODE:DamageAtFloater(attacker, self, self:NearestPoint(attacker:EyePos()), damage, type)
+		end
+	elseif type == SLOWTYPE_FLAME then
+		local zclass =  self:GetZombieClassTable()
+		local valid = self:IsValidLivingZombie()
+		if valid and zclass.ResistFrost then return end
+		if valid and zclass.Boss then return end
+		if zclass.FireBuff then
+			damage = damage * 0.5
+		end
+		if SERVER then 
+			if  attacker:HasTrinket("fire_ind") and not attacker:GetActiveWeapon().AntiInd and (attacker.NextInductors or 1) < CurTime() then
+				attacker:SetProgress(attacker:GetProgress('fprog') + damage, 'fprog')
+				self:FireInduction(attacker, inflictor, damage)
+			end
+			GAMEMODE:DamageAtFloater(attacker, self, self:NearestPoint(attacker:EyePos()), damage, type)
+>>>>>>> Stashed changes
 		end
 	end
 end
@@ -502,8 +779,10 @@ end
 function meta:SetSpeed(speed)
 	if not speed then speed = 200 end
 
-	local runspeed = self:GetBloodArmor() > 0 and self:IsSkillActive(SKILL_CARDIOTONIC) and speed + 40 or speed
-
+	local runspeed = (!self.StaminaHAHA and self:GetBloodArmor() or self:GetStamina()) > 0 and self:IsSkillActive(SKILL_CARDIOTONIC) and speed + 40 or speed
+	if self:GetStamina() == 1 then
+		runspeed = runspeed - 100
+	end
 	self:SetWalkSpeed(speed)
 	self:SetRunSpeed(runspeed)
 	self:SetMaxSpeed(runspeed)
@@ -517,8 +796,25 @@ function meta:ResetSpeed(noset, health)
 	if not self:IsValid() then return end
 
 	if P_Team(self) == TEAM_UNDEAD then
+<<<<<<< Updated upstream
 		local speed = math.max(140, self:GetZombieClassTable().Speed * GAMEMODE.ZombieSpeedMultiplier - (GAMEMODE.ObjectiveMap and 20 or 0))
 
+=======
+		local speed = math.max(50, self:GetZombieClassTable().Speed * GAMEMODE.ZombieSpeedMultiplier - (GAMEMODE.ObjectiveMap and 20 or 0))
+    	if self.m_EasySpeed then
+			speed = speed * 1.25
+		end
+		if self:GetZombieClassTable().SpeedUp and self.GetSpeedUpTimer and self.GetSpeedUpTimer >= CurTime() then
+			speed = speed * (self.GetSpeedUpTimer/CurTime())
+			speed = speed * 1.2
+		end
+		if self:GetZombieClassTable().Stoney then
+			speed = speed * (self:GetActiveWeapon() and self:GetActiveWeapon().IsSwinging and self:GetActiveWeapon():IsSwinging() and 5.5 or 1)
+		end
+		if self:GetChampion() == CHAMP_YELLOW then
+			speed = speed * 1.5
+		end
+>>>>>>> Stashed changes
 		self:SetSpeed(speed)
 		return speed
 	end
@@ -537,6 +833,7 @@ function meta:ResetSpeed(noset, health)
 	if speed < SPEED_NORMAL then
 		speed = SPEED_NORMAL - (SPEED_NORMAL - speed) * (self.WeaponWeightSlowMul or 1)
 	end
+<<<<<<< Updated upstream
 
 	if self.SkillSpeedAdd and P_Team(self) == TEAM_HUMAN then
 		speed = speed + self.SkillSpeedAdd
@@ -544,6 +841,32 @@ function meta:ResetSpeed(noset, health)
 
 	if self:IsSkillActive(SKILL_LIGHTWEIGHT) and wep:IsValid() and wep.IsMelee then
 		speed = speed + 6
+=======
+	if P_Team(self) == TEAM_HUMAN then
+		
+		if self:IsSkillActive(SKILL_CQARMOR) then
+			speed = (GAMEMODE.ObjectiveMap and 125 or 50) + (self:IsSkillActive(SKILL_CQBOOTS) and 35 or 0)
+		else
+			if self.SkillSpeedAdd then
+				speed = speed + self.SkillSpeedAdd
+			end
+			if self:HasTrinket("altchayok") then
+				speed = speed * math.max(1, 0.5+GAMEMODE:GetWave() * 0.11)
+			end
+			if self.SPPerWave then
+				speed = speed + (self.SPPerWave * (GAMEMODE:GetWave() or 1))
+			end
+		end
+		if (self.Gear2_Used or 0) >= CurTime()  then 
+			speed = speed *0.5
+		end
+		if self:IsSkillActive(SKILL_LIGHTWEIGHT) and wep:IsValid() and wep.IsMelee then
+			speed = speed * 1.15
+		end
+		if wep.SwingingTrue then
+			speed = speed * 0.85
+		end
+>>>>>>> Stashed changes
 	end
 
 	speed = math.max(1, speed)
@@ -559,7 +882,7 @@ function meta:ResetSpeed(noset, health)
 	if not noset then
 		self:SetSpeed(speed)
 	end
-
+	speed = math.max(1, speed)
 	return speed
 end
 
@@ -728,6 +1051,19 @@ function meta:GetDynamicTraceFilter()
 	return DynamicTraceFilter
 end
 
+local function GIBS_IGNORE(ent)
+	if ent:GetClass() == "prop_playergib" then
+		return false
+	end
+
+	return true
+end
+
+
+function meta:DYNAMO_IGNORE_GIBS()
+	return GIBS_IGNORE
+end
+
 local function CheckFHB(tr)
 	if tr.Entity.FHB and tr.Entity:IsValid() then
 		tr.Entity = tr.Entity:GetParent()
@@ -776,6 +1112,21 @@ local function InvalidateCompensatedTrace(tr, start, distance)
 end
 
 function meta:CompensatedMeleeTrace(distance, size, start, dir, hit_team_members, override_team)
+	start = start or self:GetShootPos()
+	dir = dir or self:GetAimVector()
+
+	self:LagCompensation(true)
+	local tr = self:MeleeTrace(distance, size, start, dir, hit_team_members, override_team)
+	CheckFHB(tr)
+	self:LagCompensation(false)
+
+	InvalidateCompensatedTrace(tr, start, distance)
+
+	return tr
+end
+
+function meta:CompensatedMeleeTrace_Modified(distance, size, i, start, dir, hit_team_members, override_team)
+	
 	start = start or self:GetShootPos()
 	dir = dir or self:GetAimVector()
 
@@ -943,9 +1294,63 @@ function meta:NearestRemantler()
 
 	return remantler
 end
+function meta:NearestShit()
+	local pos = self:EyePos()
+
+	local remantlers = ents.FindByClass("prop_ffemitter")
+	local min, remantler = 99999
+
+	for _, ent in pairs(remantlers) do
+		local nearpoint = ent:NearestPoint(pos)
+		local trmatch = self:TraceLine(100).Entity == ent
+		local dist = trmatch and 0 or pos:DistToSqr(nearpoint)
+		if pos:DistToSqr(nearpoint) <= 10000 and dist < min then
+			remantler = ent
+		end
+	end
+
+	return remantler
+end
+function meta:NearestDS()
+	local pos = self:EyePos()
+
+	local remantlers = ents.FindByClass("prop_drone_station")
+	local min, remantler = 99999
+
+	for _, ent in pairs(remantlers) do
+		local nearpoint = ent:NearestPoint(pos)
+		local trmatch = self:TraceLine(100).Entity == ent
+		local dist = trmatch and 0 or pos:DistToSqr(nearpoint)
+		if pos:DistToSqr(nearpoint) <= 10000 and dist < min then
+			remantler = ent
+		end
+	end
+
+	return remantler
+end
 
 function meta:GetMaxZombieHealth()
+<<<<<<< Updated upstream
 	return self:GetZombieClassTable().Health
+=======
+	local lowundead = team.NumPlayers(TEAM_UNDEAD) < 4
+	local healthmulti = (GAMEMODE.ObjectiveMap or GAMEMODE.ZombieEscape) and 1 or lowundead and 1.5 or 1
+	local classtab = self:GetZombieClassTable()
+	local health = 0
+	if classtab.Boss then
+		health = classtab.Health +  (((GAMEMODE:GetWave() * 120)) * math.max(1,team.NumPlayers(TEAM_HUMAN)/2 - (team.NumPlayers(TEAM_UNDEAD)/3)))* (classtab.DynamicHealth or 1)
+	elseif classtab.DemiBoss then
+		health = classtab.Health + (((GAMEMODE:GetWave() * 30)) * team.NumPlayers(TEAM_HUMAN)) * (classtab.DynamicHealth or 1)
+	else
+		health = (classtab.Health * healthmulti) + ((GAMEMODE:GetWave() * 15) * (classtab.DynamicHealth or 1)) 
+	end
+	local health  = health * (self.m_HealthMulZS or 1) * (GAMEMODE.HPMULMAP or 1)
+	return health
+end
+function meta:SetMaxZombieHealth(add)
+	self:GetZombieClassTable().Health = add
+	self:SetMaxHealth(add)
+>>>>>>> Stashed changes
 end
 
 local oldmaxhealth = FindMetaTable("Entity").GetMaxHealth
@@ -953,8 +1358,17 @@ function meta:GetMaxHealth()
 	if P_Team(self) == TEAM_UNDEAD then
 		return self:GetMaxZombieHealth()
 	end
-
-	return oldmaxhealth(self)
+	local health = oldmaxhealth(self)
+	local champion = self:GetChampion()
+	health = health * (self:IsChampion() and ((champion == CHAMP_SMOL or champion == CHAMP_GRAY) and 0.5 or champion == CHAMP_BIG and 2 or champion == CHAMP_RED and 3 or 1.5) or 1)
+	if self.HPPerWave then
+		health = health + (self.HPPerWave * (GAMEMODE:GetWave() or 1))
+	end
+	local necrosis =  self:GetStatus('necrosis')
+	if necrosis and necrosis:IsValid() then
+		health = health * (1+math.min(0,(necrosis:GetDTInt(1)/100)))
+	end
+	return math.max(1,health)
 end
 
 if not meta.OldAlive then
@@ -993,8 +1407,11 @@ function meta:GetMeleeSpeedMul()
 	if P_Team(self) == TEAM_UNDEAD then
 		return self:GetZombieMeleeSpeedMul()
 	end
-
-	return 1 * (1 + math.Clamp(self:GetArmDamage() / GAMEMODE.MaxArmDamage, 0, 1)) / (self:GetStatus("frost") and 0.7 or 1)
+	local mul = 1
+	if self.StaminaHAHA and self:GetStamina() <= (self:IsSkillActive(SKILL_SAHA) and 50 or 33) then
+		mul = math.max(mul * (self:GetStamina()/50),0.1)
+	end
+	return 1 * (1 + math.Clamp(self:GetArmDamage() / GAMEMODE.MaxArmDamage, 0, 1)) / (self:GetStatus("frost") and 0.7 or self:GetStatus('warm') and 1.2 or 1) / (self:GetStatus("resnya") and 1.45 or 1) / (self.SoyMilk and 2 or 1) / mul
 end
 
 function meta:GetPhantomHealth()

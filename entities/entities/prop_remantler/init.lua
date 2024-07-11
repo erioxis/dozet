@@ -1,7 +1,7 @@
 INC_SERVER()
 
 local function RefreshRemantlerOwners(pl)
-	for _, ent in pairs(ents.FindByClass("prop_remantler")) do
+	for _, ent in ipairs(ents.FindByClass("prop_remantler")) do
 		if ent:IsValid() and ent:GetObjectOwner() == pl then
 			ent:SetObjectOwner(NULL)
 		end
@@ -15,6 +15,7 @@ function ENT:Initialize()
 	self.NextUse = {}
 
 	self:SetModel("models/props_lab/powerbox01a.mdl")
+<<<<<<< Updated upstream
 	self:SetUseType(SIMPLE_USE)
 	self:SetCollisionGroup(COLLISION_GROUP_WORLD)
 	
@@ -24,12 +25,21 @@ self:CollisionRulesChanged()
 	if phys:IsValid() then
 		phys:EnableMotion(false)
 		phys:AddGameFlag(FVPHYSICS_NO_IMPACT_DMG)
+=======
+	self:PhysicsInit(SOLID_VPHYSICS)
+	self:SetUseType(SIMPLE_USE)
+
+	self:CollisionRulesChanged()
+
+	local phys = self:GetPhysicsObject()
+	if phys:IsValid() then
+		phys:EnableMotion(false)
+>>>>>>> Stashed changes
 	end
 
 	self:SetMaxObjectHealth(200)
 	self:SetObjectHealth(self:GetMaxObjectHealth())
 end
-
 function ENT:SetObjectHealth(health)
 	self:SetDTFloat(0, health)
 	if health <= 0 and not self.Destroyed then
@@ -38,7 +48,13 @@ function ENT:SetObjectHealth(health)
 		if self:GetObjectOwner():IsValidLivingHuman() then
 			self:GetObjectOwner():SendDeployableLostMessage(self)
 		end
-
+		if self:GetObjectOwner():IsSkillActive(SKILL_EXPLOIT) and math.random(1,4) == 1 then
+			if math.random(1,3) ~= 1 then
+				self:GetObjectOwner():Give("weapon_zs_remantler")
+			else
+				self:GetObjectOwner():Give("weapon_zs_resupplybox")
+			end
+		end
 		local ent = ents.Create("prop_physics")
 		if ent:IsValid() then
 			ent:SetModel(self:GetModel())
@@ -121,10 +137,17 @@ function ENT:Use(activator, caller)
 		self.NextUse[uid] = CurTime() + 0.05
 		return
 	end
-
+	
+	if activator:KeyDown(IN_SPEED) then 
+		local s2 = string.sub(currentwepclass,#currentwepclass,#currentwepclass)
+		local str = tonumber(s2)
+		for i=1,((isnumber(str) or str == nil) and activator:KeyDown(IN_DUCK) and 5-(str==nil and 0 or str) or 1) do 
+			activator:SendLua("RunConsoleCommand('zs_upgrade')")
+		end 
+		return 
+	end
 	if (heldtbl.AllowQualityWeapons or heldtbl.PermitDismantle) then
 		activator:SendLua("surface.PlaySound(\"ambient/misc/shutter1.wav\")")
 	end
-
 	activator:SendLua("GAMEMODE:OpenRemantlerMenu(MySelf:NearestRemantler())")
 end

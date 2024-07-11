@@ -1,7 +1,14 @@
 AddCSLuaFile()
 
+<<<<<<< Updated upstream
 SWEP.PrintName = "'Reaper' UMP"
 SWEP.Description = "A hard hitting SMG that provides a short duration stacking damage buff if you earn a kill."
+=======
+--SWEP.PrintName = "'Reaper' UMP"
+--SWEP.Description = "A hard hitting SMG that provides a short duration stacking damage buff if you earn a kill."
+SWEP.PrintName = translate.Get("wep_riper")
+SWEP.Description = translate.Get("wep_d_riper")
+>>>>>>> Stashed changes
 
 SWEP.Slot = 2
 SWEP.SlotPos = 0
@@ -25,7 +32,11 @@ SWEP.WorldModel = "models/weapons/w_smg_ump45.mdl"
 SWEP.UseHands = true
 
 SWEP.Primary.Sound = Sound("Weapon_UMP45.Single")
+<<<<<<< Updated upstream
 SWEP.Primary.Damage = 19.125
+=======
+SWEP.Primary.Damage = 19
+>>>>>>> Stashed changes
 SWEP.Primary.NumShots = 1
 SWEP.Primary.Delay = 0.12
 
@@ -46,25 +57,31 @@ SWEP.ReloadSpeed = 1.05
 
 SWEP.Tier = 4
 SWEP.MaxStock = 3
-
+SWEP.Unrealing = false
 SWEP.IronSightsPos = Vector(-5.3, -3, 4.4)
 SWEP.IronSightsAng = Vector(-1, 0.2, 2.55)
 
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_FIRE_DELAY, -0.015)
+GAMEMODE:AddNewRemantleBranch(SWEP, 1, translate.Get("wep_reaper_r1"), translate.Get("wep_d_reaper_r1"), function(wept)
+	wept.Primary.Delay = wept.Primary.Delay * 1.45
+	wept.Primary.Damage = wept.Primary.Damage * 0.8
+	wept.Unrealing = true
+end)
 
 function SWEP:OnZombieKilled()
 	local killer = self:GetOwner()
 
 	if killer:IsValid() then
-		local reaperstatus = killer:GiveStatus("reaper", 14)
+		local who = (self.Unrealing and "unreal" or "reaper")
+		local reaperstatus = killer:GiveStatus(who, 14)
 		if reaperstatus and reaperstatus:IsValid() then
-			reaperstatus:SetDTInt(1, math.min(reaperstatus:GetDTInt(1) + 1, 3))
+			reaperstatus:SetDTInt(1, math.min(reaperstatus:GetDTInt(1) + 1, 5 * (who == "reaper" and 10 or 1)))
 			killer:EmitSound("hl1/ambience/particle_suck1.wav", 55, 150 + reaperstatus:GetDTInt(1) * 30, 0.45)
 		end
 	end
 end
 
-function SWEP.BulletCallback(attacker, tr)
+function SWEP.BulletCallback(attacker, tr, dmginfo)
 	local hitent = tr.Entity
 	if hitent:IsValidLivingZombie() and hitent:Health() <= hitent:GetMaxHealthEx() * 0.04 and gamemode.Call("PlayerShouldTakeDamage", hitent, attacker) then
 		if SERVER then
@@ -73,6 +90,7 @@ function SWEP.BulletCallback(attacker, tr)
 		hitent:TakeSpecialDamage(hitent:Health(), DMG_DIRECT, attacker, attacker:GetActiveWeapon(), tr.HitPos)
 		hitent:EmitSound("npc/roller/blade_out.wav", 80, 125)
 	end
+	dmginfo:GetInflictor().BaseClass.BulletCallback(attacker, tr, dmginfo)
 end
 
 if not CLIENT then return end

@@ -31,17 +31,22 @@ function ENT:Initialize()
 
 	local object = self:GetObject()
 	if object:IsValid() then
-		object.IgnoreMeleeTeam = TEAM_HUMAN
+		object.IgnoreMeleeTeam = self:GetOwner():Team()
 		object.IgnoreTraces = true
 		object.IgnoreBullets = true
 
+<<<<<<< Updated upstream
 		for _, ent in pairs(ents.FindByClass("logic_pickupdrop")) do
+=======
+
+		for _, ent in ipairs(ents.FindByClass("logic_pickupdrop")) do
+>>>>>>> Stashed changes
 			if ent.EntityToWatch == object:GetName() and ent:IsValid() then
 				ent:Input("onpickedup", owner, object, "")
 			end
 		end
 
-		for _, ent in pairs(ents.FindByClass("point_propnocollide")) do
+		for _, ent in ipairs(ents.FindByClass("point_propnocollide")) do
 			if ent:IsValid() and ent:GetProp() == object then
 				ent:Remove()
 			end
@@ -62,10 +67,22 @@ function ENT:Initialize()
 			object._OriginalMass = objectphys:GetMass()
 
 			objectphys:EnableGravity(false)
+<<<<<<< Updated upstream
 			objectphys:SetMass(2)
 
 			object:SetOwner(owner)
 			object:SetCollisionGroup(COLLISION_GROUP_WEAPON)
+=======
+			objectphys:SetMass(50)
+			
+			if object:GetOwner() then
+				self.OldOwner = object:GetOwner()
+			end
+			object:SetOwner(object:GetClass() ~= 'prop_databox' and object:GetOwner() or owner)
+			if object:GetCollisionGroup() ~= COLLISION_GROUP_WORLD then
+				object:SetCollisionGroup(COLLISION_GROUP_WEAPON)
+			end
+>>>>>>> Stashed changes
 			object:SetRenderMode(RENDERMODE_TRANSALPHA)
 			object:SetAlpha(180)
 
@@ -97,7 +114,7 @@ end
 local function DoubleCheck(object)
 	if not IsValid(object) then return end
 
-	for _, status in pairs(ents.FindByClass("status_human_holding")) do
+	for _, status in ipairs(ents.FindByClass("status_human_holding")) do
 		if status:IsValid() and not status.Removing and status:GetObject() == object then
 			return
 		end
@@ -165,15 +182,14 @@ function ENT:OnRemove()
 					child:CollisionRulesChanged()
 				end
 			end
-
-			object:SetOwner(NULL)
+			object:SetOwner((self.OldOwner or NULL))
 			object:CollisionRulesChanged()
 		end
 
 		object._LastDroppedBy = owner
 		object._LastDropped = CurTime()
 
-		for _, ent in pairs(ents.FindByClass("logic_pickupdrop")) do
+		for _, ent in ipairs(ents.FindByClass("logic_pickupdrop")) do
 			if ent.EntityToWatch == object:GetName() and ent:IsValid() then
 				ent:Input("ondropped", owner, object, "")
 			end
@@ -191,8 +207,8 @@ concommand.Add("_zs_rotateang", function(sender, command, arguments)
 	end
 end)
 
-local ShadowParams = {secondstoarrive = 0.01, maxangular = 1000, maxangulardamp = 10000, maxspeed = 500, maxspeeddamp = 1000, dampfactor = 0.65, teleportdistance = 0}
 function ENT:Think()
+<<<<<<< Updated upstream
 	local ct = CurTime()
 
 	local frametime = ct - (self.LastThink or ct)
@@ -283,4 +299,7 @@ function ENT:Think()
 
 	self:NextThink(ct)
 	return true
+=======
+	return GLOBAL_ROTATOR(self)
+>>>>>>> Stashed changes
 end

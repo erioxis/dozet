@@ -1,11 +1,19 @@
 AddCSLuaFile()
 
+<<<<<<< Updated upstream
 SWEP.PrintName = "'Shredder' SMG"
 SWEP.Description = "Simple SMG capable of very good damage output at the cost of long range accuracy."
 
+=======
+--SWEP.PrintName = "'Shredder' SMG"
+--SWEP.Description = "Simple SMG capable of very good damage output at the cost of long range accuracy."
+SWEP.PrintName = translate.Get("wep_shredder")
+SWEP.Description = translate.Get("wep_d_shredder")
+>>>>>>> Stashed changes
 SWEP.Slot = 2
 SWEP.SlotPos = 0
-
+SWEP.InnateDamageType = INNATE_TYPE_BOUNTY
+SWEP.InnateDamageMul = 0.04
 if CLIENT then
 	SWEP.ViewModelFlip = false
 	SWEP.ViewModelFOV = 50
@@ -48,7 +56,7 @@ SWEP.IronSightsAng = Vector(0.8, 0, 0)
 SWEP.IronSightsPos = Vector(-5.33, 7, 1.8)
 
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_RELOAD_SPEED, 0.1)
-GAMEMODE:AddNewRemantleBranch(SWEP, 1, "'Smasher' SMG", "Additional damage to skeletal enemies, inflicts force, but fires and reloads slower", function(wept)
+GAMEMODE:AddNewRemantleBranch(SWEP, 1,  translate.Get("wep_shredder2"),  translate.Get("wep_d_shredder2"), function(wept)
 	wept.Primary.Delay = 0.15
 	wept.ReloadSpeed = 0.9
 

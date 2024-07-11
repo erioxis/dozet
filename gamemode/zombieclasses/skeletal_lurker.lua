@@ -10,7 +10,7 @@ CLASS.OverrideModel = Model("models/player/skeleton.mdl")
 
 CLASS.Hull = {Vector(-16, -16, 0), Vector(16, 16, 22)}
 CLASS.HullDuck = {Vector(-16, -16, 0), Vector(16, 16, 22)}
-
+CLASS.Weight = 0.6
 CLASS.SWEP = "weapon_zs_skeletallurker"
 
 CLASS.Wave = 2 / 6
@@ -88,10 +88,11 @@ end
 if SERVER then
 function CLASS:ProcessDamage(pl, dmginfo)
 	if bit_band(dmginfo:GetDamageType(), DMG_BULLET) ~= 0 then
-		dmginfo:SetDamage(dmginfo:GetDamage() * 0.36)
+		dmginfo:SetDamage(dmginfo:GetDamage()*0.5)
 	elseif bit_band(dmginfo:GetDamageType(), DMG_SLASH) == 0 and bit_band(dmginfo:GetDamageType(), DMG_CLUB) == 0 then
-		dmginfo:SetDamage(dmginfo:GetDamage() * 0.45)
+		dmginfo:SetDamage(dmginfo:GetDamage()*0.5)
 	end
+	return dmginfo
 end
 
 function CLASS:OnKilled(pl, attacker, inflictor, suicide, headshot, dmginfo, assister)

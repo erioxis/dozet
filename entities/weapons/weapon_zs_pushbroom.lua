@@ -1,8 +1,15 @@
 AddCSLuaFile()
 
+<<<<<<< Updated upstream
 SWEP.PrintName = "Push Broom"
 SWEP.Description = "BrooooooooooOOOOOOOOOOOOOM!"
 
+=======
+--SWEP.PrintName = "Push Broom"
+--SWEP.Description = "BrooooooooooOOOOOOOOOOOOOM!"
+SWEP.PrintName = translate.Get("wep_pushbroom")
+SWEP.Description = translate.Get("wep_d_pushbroom")
+>>>>>>> Stashed changes
 if CLIENT then
 	SWEP.ViewModelFOV = 70
 
@@ -22,6 +29,9 @@ SWEP.Base = "weapon_zs_basemelee"
 SWEP.HoldType = "melee2"
 
 SWEP.DamageType = DMG_CLUB
+
+SWEP.InnateDamageType = INNATE_TYPE_BOUNTY
+SWEP.InnateDamageMul = 0.02
 
 SWEP.ViewModel = "models/weapons/c_crowbar.mdl"
 SWEP.WorldModel = "models/weapons/w_crowbar.mdl"
@@ -48,7 +58,21 @@ SWEP.DismantleDiv = 2
 
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_FIRE_DELAY, -0.08, 1)
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_MELEE_RANGE, 3, 1)
-
+function SWEP:MeleeSwing()
+	local owner = self:GetOwner()
+	local tr = owner:CompensatedMeleeTrace(self.MeleeRange * (owner.MeleeRangeMul or 1), self.MeleeSize)
+	if tr.Hit and SERVER then
+		local pos = owner:GetPos()
+		local trpos = tr.HitPos
+		if math.floor(trpos.z) == math.floor(pos.z) and math.random(1,100) == 1 then
+			local rand = math.random(1,7)
+			owner:SetPoints(owner:GetPoints()+rand)
+			owner:GiveAchievementProgress("hihi_cleaner",rand)
+			owner:SendLua('chat.AddText("Твоя зарплата! - '..rand..' за уборку территории!")')
+		end
+	end
+	self.BaseClass.MeleeSwing(self)
+end
 function SWEP:PlaySwingSound()
 	self:EmitSound("weapons/iceaxe/iceaxe_swing1.wav", 80, math.Rand(60, 65))
 end

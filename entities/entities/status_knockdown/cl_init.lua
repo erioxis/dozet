@@ -20,8 +20,7 @@ function ENT:Initialize()
 end
 
 function ENT:CreateMove(cmd)
-	if MySelf ~= self:GetOwner() then return end
-
+	if MySelf ~= self:GetOwner() and !MySelf.KnockedDown then return end
 	local ang = cmd:GetViewAngles()
 	ang.yaw = self.CommandYaw or ang.yaw
 	cmd:SetViewAngles(ang)

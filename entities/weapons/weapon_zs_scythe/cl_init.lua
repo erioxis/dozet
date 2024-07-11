@@ -82,7 +82,7 @@ function SWEP:Draw3DHUD(vm, pos, ang)
 		local ownerstatus = owner:GetStatus("reaper")
 		if ownerstatus then
 			local text = ""
-			for i = 0, ownerstatus:GetDTInt(1)-1 do
+			for i = 0, math.max(2,ownerstatus:GetDTInt(1)*0.1)-1 do
 				text = text .. "+"
 			end
 			draw.SimpleTextBlurry(text, "ZS3D2DFontSmall", x + wid/2, y + hei * 0.15, Color(60, 30, 175, 230), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)

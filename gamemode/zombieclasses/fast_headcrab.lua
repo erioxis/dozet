@@ -3,14 +3,15 @@ CLASS.TranslationName = "class_fast_headcrab"
 CLASS.Description = "description_fast_headcrab"
 CLASS.Help = "controls_fast_headcrab"
 
-CLASS.BetterVersion = "Bloodsucker Headcrab"
+
 
 CLASS.Model = Model("models/headcrab.mdl")
 
 CLASS.Wave = 2 / 6
 
 CLASS.SWEP = "weapon_zs_fastheadcrab"
-
+CLASS.Variations = {}
+CLASS.Original = false
 CLASS.Health = 20
 CLASS.Speed = 400
 CLASS.JumpPower = 250
@@ -27,12 +28,13 @@ CLASS.ViewOffsetDucked = Vector(0, 0, 10)
 CLASS.StepSize = 8
 CLASS.CrouchedWalkSpeed = 1
 CLASS.Mass = 16
-
+CLASS.Weight = 0.1
 if SERVER then
 function CLASS:ProcessDamage(pl, dmginfo)
 	if dmginfo:GetInflictor().IsMelee then
 		dmginfo:SetDamage(dmginfo:GetDamage() / 1200)
 	end
+	return dmginfo
 end
 end
 

@@ -11,7 +11,7 @@ CLASS.Health = 1922
 CLASS.Speed = 220
 
 CLASS.CanTaunt = true
-
+CLASS.CanPickupProp = true
 CLASS.FearPerInstance = 1
 
 if SERVER then
@@ -19,6 +19,7 @@ function CLASS:ProcessDamage(pl, dmginfo)
 	if dmginfo:GetInflictor().IsMelee then
 		dmginfo:SetDamage(dmginfo:GetDamage() / 4)
 	end
+	return dmginfo
 end
 end
 
@@ -30,6 +31,10 @@ CLASS.SWEP = "weapon_zs_graveshovelz"
 if SERVER then
 	function CLASS:OnSpawned(pl)
 		pl:CreateAmbience("gravediggerambience")
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 	end
 end
 

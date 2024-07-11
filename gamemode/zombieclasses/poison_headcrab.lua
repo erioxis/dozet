@@ -3,7 +3,7 @@ CLASS.TranslationName = "class_poison_headcrab"
 CLASS.Description = "description_poison_headcrab"
 CLASS.Help = "controls_poison_headcrab"
 
-CLASS.BetterVersion = "Barbed Headcrab"
+
 
 CLASS.Model = Model("models/headcrabblack.mdl")
 
@@ -11,7 +11,8 @@ CLASS.Wave = 3 / 6
 CLASS.Threshold = 0.6
 
 CLASS.SWEP = "weapon_zs_poisonheadcrab"
-
+CLASS.Variations = {}
+CLASS.Original = false
 CLASS.Health = 160
 CLASS.Speed = 110
 CLASS.JumpPower = 130

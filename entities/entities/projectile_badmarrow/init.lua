@@ -47,7 +47,7 @@ function ENT:Explode(hitpos, hitnormal, hitent)
 			if pl:IsValidLivingZombie() and not pl:GetStatus("zombie_regen") then
 				local zombieclasstbl = pl:GetZombieClassTable()
 				local ehp = zombieclasstbl.Boss and pl:GetMaxHealth() * 0.6 or pl:GetMaxHealth() * 3
-				if pl:Health() <= ehp then
+				if pl:Health() <= ehp  and pl ~= owner then
 					local status = pl:GiveStatus("zombie_regenbad")
 					if status and status:IsValid() then
 						status:SetHealLeft(75)

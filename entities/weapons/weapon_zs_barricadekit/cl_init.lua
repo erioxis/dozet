@@ -9,12 +9,22 @@ function SWEP:DrawHUD()
 	local x, y = ScrW() - wid - 64, ScrH() - hei - 72
 	local texty = y - 4 - draw.GetFontHeight("ZSHUDFont")
 
+<<<<<<< Updated upstream
 	local charges = self:GetPrimaryAmmoCount()
 	local chargetxt = "Boards: " .. charges
 	if charges > 0 then
 		draw.SimpleText(chargetxt, "ZSHUDFont", x + wid, texty, COLOR_GREEN, TEXT_ALIGN_RIGHT)
 	else
 		draw.SimpleText(chargetxt, "ZSHUDFont", x + wid, texty, COLOR_DARKRED, TEXT_ALIGN_RIGHT)
+=======
+	local charges = self:GetOwner():GetPoints()
+	local chargesb = self:GetPrimaryAmmoCount()
+	local chargetxt = "Boards: " .. chargesb
+	if chargesb >= 0 then
+		draw.SimpleText(chargetxt, "ZSHUDFont", x + wid, texty - 40, COLOR_GREEN, TEXT_ALIGN_RIGHT)
+	else
+		draw.SimpleText(chargetxt, "ZSHUDFont", x + wid, texty - 40, COLOR_DARKRED, TEXT_ALIGN_RIGHT)
+>>>>>>> Stashed changes
 	end
 
 	if GetConVar("crosshair"):GetInt() ~= 1 then return end

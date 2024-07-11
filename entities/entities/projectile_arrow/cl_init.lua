@@ -51,4 +51,5 @@ function ENT:Think()
 			dist = self.TrailPositions[i]:DistToSqr(mypos)
 		end
 	end
+	
 end

@@ -40,7 +40,7 @@ function ENT:Explode()
 	local owner = self:GetOwner()
 	local pos = self:GetPos()
 
-	for _, ent in pairs(ents.FindInSphere(pos, self.Radius)) do
+	for _, ent in pairs(player.FindInSphere(pos, self.Radius)) do
 		if ent:IsValid() and ent:IsPlayer() and ent:Alive() and (ent:Team() == TEAM_UNDEAD or ent == owner) then
 			local eyepos = ent:EyePos()
 			if TrueVisibleFilters(pos, eyepos, self, ent) then

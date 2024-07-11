@@ -30,9 +30,12 @@ function ENT:Think()
 			for _,v in ipairs(GAMEMODE.ResistableStatuses) do
 				if ent:GetStatus(v) then
 					self.Damaged[ent] = true
-
-					ent:RemoveStatus(v, false, true)
-					owner:AddPoints(0.2)
+					local status = ent:GetStatus(v)
+					owner:AddPoints(math.Clamp(status.DieTime - CurTime(),0,100)/50)
+					status:AddDie(-25)
+					if (status.DieTime - CurTime()) < 0 then
+						status:Remove()
+					end
 				end
 			end
 		end

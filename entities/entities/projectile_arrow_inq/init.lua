@@ -109,9 +109,9 @@ function ENT:Think()
 			ent:EmitSound(math.random(2) == 1 and "weapons/crossbow/hitbod"..math.random(2)..".wav" or "ambient/machines/slicer"..math.random(4)..".wav", 75, 180)
 
 			if alt then
-				local status = ent:GiveStatus("zombiestrdebuff")
+				local status = ent:GiveStatus("zombiestrdebuff", nil, owner)
 				status.DieTime = CurTime() + 5
-				status.Applier = owner
+
 			end
 
 			util.Blood(ent:WorldSpaceCenter(), math.max(0, 20 - table.Count(self.Damaged) * 2), -self:GetForward(), math.Rand(100, 300), true)

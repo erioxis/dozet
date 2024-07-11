@@ -1,7 +1,14 @@
 AddCSLuaFile()
 
+<<<<<<< Updated upstream
 SWEP.PrintName = "'Sprayer' Uzi 9mm"
 SWEP.Description = "Quite inaccurate, but has good, cheap and reliable firepower potential."
+=======
+--SWEP.PrintName = "'Sprayer' Uzi 9mm"
+--SWEP.Description = "Quite inaccurate, but has good, cheap and reliable firepower potential."
+SWEP.PrintName = translate.Get("wep_uzi")
+SWEP.Description = translate.Get("wep_d_uzi")
+>>>>>>> Stashed changes
 
 SWEP.Slot = 2
 SWEP.SlotPos = 0
@@ -70,3 +77,49 @@ GAMEMODE:AddNewRemantleBranch(SWEP, 1, "'Disperser' Uzi", "Decreases the clip si
 		end
 	end
 end)
+function SWEP:HaveAbility() 
+	local float = self:GetDTFloat(6)
+	if float>=700 then
+		self:SetDTFloat(6,float-10)
+		self.NoAbility = true
+		if !self.OldDelay then
+			self.OldDelay = self.Primary.Delay 
+		end
+		self.Primary.Delay = 0.01
+		if !self.OldCallBack then
+			self.OldCallBack = self.BulletCallback
+		end
+		self.BulletCallback = function(attacker, tr, dmginfo)
+			local ent = tr.Entity
+			if ent and ent:IsValidLivingZombie() then
+				self:SetDTFloat(6,self:GetDTFloat(6)-30)
+				if self:GetDTFloat(6) < 0 then
+					self:SetDTFloat(6,0)
+					self.NoAbility = false
+					self.BulletCallback = self.OldCallBack
+					self.Primary.Delay  = self.OldDelay
+				end
+			end
+			--self.BaseClass.BulletCallback(self,self:GetOwner(), tr, dmginfo)
+		end
+	end
+end
+function SWEP:DealThink(dmginfo) 
+	if self.NoAbility then return end
+	self:SetDTFloat(6,math.min(700,self:GetDTFloat(6)+math.min(50,dmginfo:GetDamage())))
+end
+if !CLIENT then return end
+	local ablicolor =  Color( 25,31,184)
+	function SWEP:Draw2DHUD()
+		self:Draw2DFeature( self:GetDTFloat(6)/700, nil, nil, "weapon_ability_spr", "ZSHUDFontSmallest", ablicolor, "+menu" )
+		self.BaseClass.Draw2DHUD(self)
+	end
+	
+	function SWEP:Draw3DHUD(vm, pos, ang)
+	
+		cam.Start3D2D( pos, ang, self.HUD3DScale / 6 )
+				self:Draw3DFeatureHorizontal( vm, pos+Vector(0,0,1), ang, self:GetDTFloat(6)/700, nil, nil, "weapon_ability_spr", "ZSHUDFont", ablicolor )
+		cam.End3D2D()
+		self.BaseClass.Draw3DHUD(self,vm, pos, ang)
+	end
+	

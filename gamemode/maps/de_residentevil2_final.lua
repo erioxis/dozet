@@ -9,7 +9,7 @@ hook.Add("InitPostEntityMap", "Adding", function()
 		pl:SendLua("for _,class in pairs(GAMEMODE.ZombieClasses) do class.Unlocked=true end")
 	end)
 
-	for _, ent in pairs(ents.FindByClass("prop_physics*")) do
+	for _, ent in ipairs(ents.FindByClass("prop_physics*")) do
 		ent:GetPhysicsObject():EnableMotion(true)
 	end
 end)

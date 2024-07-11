@@ -34,6 +34,7 @@ function ENT:AcceptInput(name, activator, caller, arg)
 
 		if hitent:IsNailed() then
 			local oldhealth = hitent:GetBarricadeHealth()
+<<<<<<< Updated upstream
 			if oldhealth <= 0 or oldhealth >= hitent:GetMaxBarricadeHealth() or hitent:GetBarricadeRepairs() <= 0.01 then continue end
 
 			hitent:SetBarricadeHealth(math.min(hitent:GetMaxBarricadeHealth(), hitent:GetBarricadeHealth() + math.min(hitent:GetBarricadeRepairs(), totalheal)))
@@ -60,6 +61,9 @@ function ENT:AcceptInput(name, activator, caller, arg)
 				effectdata:SetNormal((self:GetPos() - hitent:GetPos()):GetNormalized())
 				effectdata:SetMagnitude(1)
 			util.Effect("nailrepaired", effectdata, true, true)
+=======
+			hitent:SetBarricadeRepairs(math.Clamp(hitent:GetBarricadeRepairs() + totalheal, 0,hitent:GetMaxBarricadeRepairs()*1.15))
+>>>>>>> Stashed changes
 		end
 	end
 

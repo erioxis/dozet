@@ -1,6 +1,5 @@
-SWEP.PrintName = "'Sentinel' Repair Field Emitter"
-SWEP.Description = "A repair field which slowly repairs all props in a radius with a energy pulse. Consumes pulse ammo.\nPress PRIMARY ATTACK to deploy the repair field.\nPress SECONDARY ATTACK and RELOAD to rotate the repair field."
-
+SWEP.PrintName = translate.Get("wep_sent")
+SWEP.Description = translate.Get("wep_d_sent")
 SWEP.ViewModel = "models/weapons/v_pistol.mdl"
 SWEP.WorldModel = Model("models/props/de_nuke/smokestack01.mdl")
 

@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 GM.Name		=	"Zombie Survival"
 GM.Author	=	"Toyka"
 GM.Email	=	"nope"
@@ -13,6 +14,21 @@ GM.Credits = {
 	{"Samuel", "samuel_games@hotmail.com", "Board Kit models"},
 	{"Typhon", "lukas-tinel@hotmail.com", "Fear-o-meter textures"},
 	{"Benjy, The Darker One, Raox, Scott", "", "Code contributions"},
+=======
+GM.Name		=	""
+GM.Author	=	"Toyka"
+GM.Email	=	"nope"
+GM.Website	=	"https://github.com/erioxis/dozet"
+GM.mastery = {}
+
+-- No, adding a gun doesn't make your name worth being here.
+GM.Credits = {
+	{"Version", "", "ROGUE-LIKE"},
+	{"Season of ", "", "Simulation leave"},
+	{"erioxis", "Phantom coder", "dead"},
+	{"Холодное Молочко(M-I-L-K-Y)", "Phantom coder", "dead"},
+	{"Bro 3", "Thanks!", "Some models"}
+>>>>>>> Stashed changes
 
 	{"Mr. Darkness", "", "Russian translation"},
 	{"honsal", "", "Korean translation"},
@@ -49,7 +65,13 @@ include("sh_translate.lua")
 include("sh_colors.lua")
 include("sh_serialization.lua")
 include("sh_util.lua")
+<<<<<<< Updated upstream
 
+=======
+include("shared/sh_bullets.lua")
+include("sh_stamina.lua")
+include("sh_mastery.lua")
+>>>>>>> Stashed changes
 include("skillweb/sh_skillweb.lua")
 
 include("sh_options.lua")
@@ -59,7 +81,7 @@ include("sh_sigils.lua")
 include("sh_channel.lua")
 include("sh_weaponquality.lua")
 
-include("noxapi/noxapi.lua")
+
 
 include("vault/shared.lua")
 
@@ -122,7 +144,18 @@ local HITGROUP_GEAR = HITGROUP_GEAR
 local HITGROUP_STOMACH = HITGROUP_STOMACH
 local HITGROUP_LEFTLEG = HITGROUP_LEFTLEG
 local HITGROUP_RIGHTLEG = HITGROUP_RIGHTLEG
-local PTeam = FindMetaTable("Player").Team
+local metaplayer = FindMetaTable("Player")
+local PTeam = metaplayer.Team
+
+
+hook.Add( "PlayerSpray", "PostSpray", function( pl )
+	--pl:PostSprayPlayer(pl:EyePos(), pl:GetEyeTrace().HitPos)
+	if (pl.NextSprayTime or 1) >= CurTime() then return true end
+	print((pl:GetEyeTrace().HitPos))
+	print("Spray By "..pl:Nick())
+	pl.NextSprayTime = CurTime() + 10
+	return false
+end )
 
 function GM:AddCustomAmmo()
 	game.AddAmmoType({name = "dummy"})
@@ -145,15 +178,24 @@ function GM:AddCustomAmmo()
 	game.AddAmmoType({name = "drone"})
 	game.AddAmmoType({name = "pulse_cutter"})
 	game.AddAmmoType({name = "drone_hauler"})
+	game.AddAmmoType({name = "drone_healer"})
 	game.AddAmmoType({name = "rollermine"})
 	game.AddAmmoType({name = "sigilfragment"})
 	game.AddAmmoType({name = "corruptedfragment"})
 	game.AddAmmoType({name = "mediccloudbomb"})
 	game.AddAmmoType({name = "nanitecloudbomb"})
 	game.AddAmmoType({name = "repairfield"})
+<<<<<<< Updated upstream
+=======
+	game.AddAmmoType({name = "camps"})
+	game.AddAmmoType({name = "medstation"})
+	game.AddAmmoType({name = "fridge"})
+	game.AddAmmoType({name = "sigil_port"})
+>>>>>>> Stashed changes
 	game.AddAmmoType({name = "zapper"})
 	game.AddAmmoType({name = "zapper_arc"})
 	game.AddAmmoType({name = "remantler"})
+	game.AddAmmoType({name = "drone_s"})
 	game.AddAmmoType({name = "turret_buckshot"})
 	game.AddAmmoType({name = "turret_assault"})
 	game.AddAmmoType({name = "turret_rocket"})
@@ -166,8 +208,10 @@ function GM:AddCustomAmmo()
 	game.AddAmmoType({name = "foodbanana"})
 	game.AddAmmoType({name = "foodsoda"})
 	game.AddAmmoType({name = "foodmilk"})
+	game.AddAmmoType({name = "foodpill"})
 	game.AddAmmoType({name = "foodtakeout"})
 	game.AddAmmoType({name = "foodwater"})
+	game.AddAmmoType({name = "foodsolyanka"})
 end
 
 GM.Food = {}
@@ -378,7 +422,7 @@ function GM:DynamicSpawnIsValid(ent, humans, allplayers)
 	if not allplayers then allplayers = player.GetAll() end
 
 	local pos = ent:GetPos() + Vector(0, 0, 1)
-	local is_nest = ent:GetClass() == "prop_creepernest"
+	local is_nest = ent:GetClass() == "prop_creepernest" or ent:GetClass() == "prop_glitchnest" or ent.CanSpawnInMe
 	local required_distance = is_nest and self.CreeperNestDist or self.DynamicSpawnDist -- Nests have a shorter distance and no visibility requirement.
 
 	--if ent.GetNestBuilt and ent:GetNestBuilt() and not util.TraceHull({start = pos, endpos = pos + playerheight, mins = playermins, maxs = playermaxs, mask = MASK_SOLID_BRUSHONLY}).Hit then
@@ -446,7 +490,12 @@ function GM:GetDynamicSpawns(pl)
 	local tab = {}
 
 	local humans = team.GetPlayers(TEAM_HUMAN)
-	for _, nest in pairs(ents.FindByClass("prop_creepernest")) do
+	for _, nest in ipairs(ents.FindByClass("prop_creepernest")) do
+		if self:DynamicSpawnIsValid(nest, humans) then
+			table.insert(tab, nest)
+		end
+	end
+	for _, nest in ipairs(ents.FindByClass("prop_glitchnest")) do
 		if self:DynamicSpawnIsValid(nest, humans) then
 			table.insert(tab, nest)
 		end
@@ -483,11 +532,15 @@ function GM:ShouldCollide(enta, entb)
 
 	local sncb = entb.ShouldNotCollide
 	if sncb and sncb(entb, enta) then return false end
+<<<<<<< Updated upstream
 
 	--[[if enta.ShouldNotCollide and enta:ShouldNotCollide(entb) or entb.ShouldNotCollide and entb:ShouldNotCollide(enta) then
 		return false
 	end]]
 
+=======
+	
+>>>>>>> Stashed changes
 	return true
 end
 
@@ -501,6 +554,15 @@ end
 function GM:OnPlayerHitGround(pl, inwater, hitfloater, speed)
 	if inwater then return true end
 
+<<<<<<< Updated upstream
+=======
+	if SERVER then
+		if pl.FallDamageHS and pl.FallDamageHS > 0 then
+			pl:TakeDamage(pl.FallDamageHS, pl.FallAttacker and pl.FallAttacker:IsValid() and pl.FallAttacker or pl,pl.FallAttacker and  pl.FallAttacker:IsValid() and pl.FallAttacker:GetActiveWeapon() or pl)
+			pl.FallDamageHS = 0
+		end
+	end
+>>>>>>> Stashed changes
 	if speed > 64 then
 		pl.LandSlow = true
 	end
@@ -529,9 +591,22 @@ function GM:OnPlayerHitGround(pl, inwater, hitfloater, speed)
 
 	local damage = (0.1 * (speed - 525 * threshold_mul)) ^ 1.45
 	if hitfloater then damage = damage / 2 end
-
+	local pogo = pl:IsSkillActive(SKILL_POGO)
 	if SERVER then
+		if pogo then
+			local vel = pl:GetPos()
+			vel.x = 0
+			vel.y = 0
+			vel:Normalize()
+			vel.z = 650 * pl.JumpPowerMul
+			pl:SetVelocity(vel)
+		end
 		local groundent = pl:GetGroundEntity()
+		local p = pl:IsSkillActive(SKILL_VKID2) and pl:IsSkillActive(SKILL_VKID)
+		if groundent:IsValid() and groundent:IsPlayer() and PTeam(groundent) == TEAM_UNDEAD and (pl:IsSkillActive(SKILL_VKID2) or pl:IsSkillActive(SKILL_VKID)) then
+			groundent:TakeSpecialDamage(160 * self:GetWave() * (p and 2.2 or 1) * pl:GetModelScale()^2, DMG_CLUB, pl, pl, pl:GetPos())
+			return true
+		end
 		if groundent:IsValid() and groundent:IsPlayer() and PTeam(groundent) == TEAM_UNDEAD and pl:HasTrinket("curbstompers") then
 			if groundent:IsHeadcrab() then
 				groundent:TakeSpecialDamage(groundent:Health() + 70, DMG_DIRECT, pl, pl, pl:GetPos())
@@ -544,9 +619,20 @@ function GM:OnPlayerHitGround(pl, inwater, hitfloater, speed)
 				return true
 			end
 		end
+<<<<<<< Updated upstream
 	end
 
 	if math.floor(damage) > 0 then
+=======
+		if groundent:IsValid() and groundent:IsPlayer() and PTeam(groundent) == TEAM_HUMAN and groundent:GetModelScale() < 0.75 then
+			groundent:TakeSpecialDamage(30110, DMG_DIRECT, pl, pl, pl:GetPos())
+			pl:GiveAchievement("mariotrue")
+			return true
+		end
+	end
+
+	if math.floor(damage) > 0 and !pogo then
+>>>>>>> Stashed changes
 		if SERVER then
 			local h = pl:Health()
 			pl:TakeSpecialDamage(damage * damage_mul, DMG_FALL, game.GetWorld(), game.GetWorld(), pl:GetPos())
@@ -591,8 +677,9 @@ end
 
 -- This is actually only called by the engine on the server but it's here in case the client wants to know.
 local TEAM_SPECTATOR = TEAM_SPECTATOR
+local PInfo = FindMetaTable("Player").GetInfo
 function GM:PlayerCanHearPlayersVoice(listener, talker)
-	return PTeam(listener) == PTeam(talker) or PTeam(listener) == TEAM_SPECTATOR, false
+	return (PInfo(listener, "zs_voice_n") == PInfo(talker, "zs_voice_n") and PInfo(listener, "zs_voice_n") ~= "1" or PTeam(listener) == PTeam(talker)) or PTeam(listener) == TEAM_SPECTATOR, false
 end
 GM.PlayerCanHearPlayersVoiceDefault = GM.PlayerCanHearPlayersVoice
 
@@ -615,14 +702,20 @@ function GM:GetDamageResistance(fearpower)
 
 	return fearpower * 0.15
 end
-
-function GM:FindUseEntity(pl, ent)
-	if not ent:IsValid() then
-		local e = pl:TraceLine(90, MASK_SOLID, pl:GetDynamicTraceFilter()).Entity
+local function InUseRange(self, pl, ent)
+	if not ent:IsValid() or ent:GetClass() == "prop_playergib" then
+		local range = 90 + (pl:HasTrinket("marm") and  48 or 0)
+		local e = pl:TraceLine(range, MASK_SOLID, pl:GetDynamicTraceFilter()).Entity
+		if e and e:IsValid() and e:GetClass() == "prop_playergib" and !pl:IsSkillActive(SKILL_CAN_EATER) then
+			e = pl:TraceLine(range, MASK_SOLID, pl:DYNAMO_IGNORE_GIBS()).Entity
+		end
 		if e:IsValid() then return e end
 	end
 
 	return ent
+end
+function GM:FindUseEntity(pl, ent)
+	return InUseRange(self,pl,ent)
 end
 
 function GM:ShouldUseAlternateDynamicSpawn()
@@ -789,9 +882,15 @@ end
 function GM:GetRagdollEyes(pl)
 	local Ragdoll = pl:GetRagdollEntity()
 	if not Ragdoll then return end
+<<<<<<< Updated upstream
 
 	local att = Ragdoll:GetAttachment(Ragdoll:LookupAttachment("eyes"))
 	if att then
+=======
+    if pl:GetModel() == ("models/player/catpants.mdl" or "models/player/leet.mdl") then return end
+	local att = Ragdoll and Ragdoll:IsValid() and Ragdoll:GetAttachment(Ragdoll:LookupAttachment("eyes"))
+	if att then 
+>>>>>>> Stashed changes
 		att.Pos = att.Pos + att.Ang:Forward() * -2
 		att.Ang = att.Ang
 
@@ -803,9 +902,6 @@ function GM:PlayerNoClip(pl, on)
 	if pl:IsAdmin() then
 		if SERVER then
 			PrintMessage(HUD_PRINTCONSOLE, translate.Format(on and "x_turned_on_noclip" or "x_turned_off_noclip", pl:Name()))
-		end
-
-		if SERVER then
 			pl:MarkAsBadProfile()
 		end
 
@@ -814,12 +910,32 @@ function GM:PlayerNoClip(pl, on)
 
 	return false
 end
-
-function GM:IsSpecialPerson(pl, image)
+--[[function GM:EntityEmitSound(t)
+	--PrintTable(t)
+	
+	local p = t.Volume
+	local who = t.Entity
+	local tbl = {t.SoundName,t.OriginalSoundName}
+	--PrintTable(string.Explode("/",string.lower(tbl[1])))
+	local wep = who and who:IsValidPlayer() and who:GetActiveWeapon()
+	if wep and wep:IsValid() and (wep.ReloadSound or wep.Primary and wep.Primary.Sound or wep.ReloadFinishSound) and GAMEMODE.SoundVolume ~= 1 then 
+		local pathhasweapon = string.Explode("/",string.lower(tbl[1]))
+		
+		if who and who:IsValidPlayer()  and (table.HasValue(tbl,wep.Primary.Sound) or table.HasValue(tbl,wep.ReloadFinishSound) or table.HasValue(tbl,wep.ReloadSound) 
+		or table.HasValue(string.Explode("/",string.lower(tbl[2])),"weapon") 
+		or table.HasValue(pathhasweapon,")weapons") or table.HasValue(pathhasweapon,"weapons")) then
+			t.Volume = p * (who.VolumeOfWeapon or self.SoundVolume or GAMEMODE.SoundVolume or 1)
+			return true
+		end
+	end
+end]]--Возможно уничтожает звуки  нахуй
+function GM:IsSpecialPerson(pl, image, returns)
 	local img, tooltip
+	local trs = translate.Get
 
 	if pl:SteamID() == "STEAM_0:1:3307510" then
 		img = "VGUI/steam/games/icon_sourcesdk"
+<<<<<<< Updated upstream
 		tooltip = "JetBoom\nCreator of Zombie Survival!"
 	elseif pl:IsAdmin() then
 		img = "VGUI/servers/icon_robotron"
@@ -829,8 +945,48 @@ function GM:IsSpecialPerson(pl, image)
 		tooltip = "Nox Supporter"
 	end
 
+=======
+		tooltip = trs("toyka_sp")
+	elseif pl:SteamID() == "STEAM_0:0:445794125" then
+		img = "noxiousnet/cat.png"
+		tooltip = trs("normal_sp")
+	elseif pl:SteamID() == "STEAM_0:1:245602574" then
+			img = "noxiousnet/noxicon.png"
+			tooltip = trs("erioxis_sp")
+	elseif pl:IsBot() then
+		img = "icon16/wrench_orange.png"
+		tooltip = trs("bot_sp")
+	elseif pl:SteamID() == "STEAM_0:1:196107962" then
+		img = "noxiousnet/noxicon.png"
+		tooltip = trs("nickmarlya_sp")
+	elseif pl:SteamID() == "STEAM_0:1:434267757" then
+		img = "zombiesurvival/sigil.png"
+		tooltip = trs("vip_sp")
+	elseif pl:SteamID() == "STEAM_0:1:92937109" then
+		img = "noxiousnet/arsenalcrate.png"
+		tooltip = "Bruh"
+	elseif pl:SteamID() == "STEAM_0:0:103817403" then
+		img = "noxiousnet/arsenalcrate.png"
+		tooltip = trs("ap_sp")
+    elseif pl:SteamID() == "STEAM_0:1:157024537" then
+		img = "noxiousnet/noxicon.png"
+		tooltip = "Old Player"
+    elseif pl:SteamID() == "STEAM_0:0:425830924" then
+		img = "noxiousnet/goody.png"
+		tooltip =  trs("ap_gg")
+	elseif pl:IsBot() then
+		img = "icon16/wrench_orange.png"
+		tooltip = trs("bot_sp")
+	elseif pl:IsUserGroup("vip_1") or pl:IsUserGroup("vip_1_nav") or pl:IsUserGroup("vip_2") then
+		img = "noxiousnet/noxicon.png"
+		tooltip = trs("vip_sp")
+	end
+	if returns then
+		return tooltip
+	end
+>>>>>>> Stashed changes
 	if img then
-		if CLIENT then
+		if CLIENT and image then
 			image:SetImage(img)
 			image:SetTooltip(tooltip)
 		end
@@ -848,6 +1004,42 @@ end
 function GM:SetWaveEnd(time)
 	SetGlobalFloat("waveend", time)
 end
+<<<<<<< Updated upstream
+=======
+function GM:GetBalance()
+	return (self:GetRage() * self:GetWinRate()) * 0.005 + 0.01
+end
+
+function GM:GetRage()
+	return GetGlobalFloat("rage", 0)
+end
+
+function GM:SetRage(rage)
+	SetGlobalFloat("rage", rage)
+end
+
+function GM:GetDaily()
+	return GetGlobalInt("dailynum", self.DailyNum)
+end
+function GM:GetWeekly()
+	return GetGlobalInt("weekly", self.Weekly)
+end
+function GM:GetLDaily()
+	return GetGlobalInt("daily_num_last", self.LastDaily)
+end
+function GM:SetLDaily(l)
+	SetGlobalInt("daily_num_last", l or self.LastDaily)
+end
+function GM:GetWinRate()
+	return GetGlobalFloat("winrate", 0)
+end
+
+function GM:SetWinRate(winrate)
+	SetGlobalFloat("winrate", winrate)
+end
+
+
+>>>>>>> Stashed changes
 
 function GM:GetWaveStart()
 	return GetGlobalFloat("wavestart", self.WaveZeroLength)
@@ -901,4 +1093,54 @@ end
 end
 
 function GM:VehicleMove()
+end
+local dailyreward = {["Daily1"] = {Goal = 100, Reward = 2500},
+["Daily2"] = {Goal = 15000, Reward = 6500},
+["Daily3"] = {Goal = 25000, Reward = 3500},
+["Daily4"] = {Goal = 10, Reward = 4500},
+["Daily5"] = {Goal = 75, Reward = 8500},
+["Daily6"] = {Goal = 2, Reward = 8500}
+
+}
+local weekreward = {["w1"] = {Goal = 10000, Reward = 52500},
+["w2"] = {Goal = 1000000, Reward = 16500},
+["w3"] = {Goal = 4, Reward = 100000}
+}
+local num = 1
+local tbl = {Goal = 100, Reward = 2500}
+local numw = 1
+local tblw = {Goal = 100, Reward = 2500}
+local translate = translate.Get
+function GM:DoAchievements()
+    local daily = self:GetDaily()
+    tbl = dailyreward["Daily"..math.max(1,(self:GetDaily() or 1)%7)]
+ 	num =  math.max(1,(self:GetDaily() or 1)%7)
+
+   --[[self.Achievements["daily"..daily] = {
+        Name = translate("challenge_daily"..num),
+        Desc = translate("challenge_daily_d"..num),
+        Goal = tbl.Goal,
+    --    Daily = true,
+        Reward = tbl.Reward
+    }]]
+	self.Achievements["daily_post"].Name = translate("challenge_daily"..num)
+	self.Achievements["daily_post"].Desc = translate("challenge_daily_d"..num)
+	self.Achievements["daily_post"].Goal = tbl.Goal
+	self.Achievements["daily_post"].Daily = true
+	self.Achievements["oof"].Daily = true
+	self.Achievements["oof"].DailyCount = daily
+	self.Achievements["daily_post"].DailyCount = daily
+	self.Achievements["daily_post"].Reward = tbl.Reward
+    --PrintTable(self.Achievements["daily"..(daily or 1)]) print("daily"..(daily or 1))
+
+	local week = self:GetWeekly()
+    tblw = weekreward["w"..math.max(1,(week or 1)%4)]
+ 	numw =  math.max(1,(week or 1)%4)
+
+	 self.Achievements["week_post"].Name = translate("challenge_week"..numw)
+	 self.Achievements["week_post"].Desc = translate("challenge_week_d"..numw)
+	 self.Achievements["week_post"].Goal = tblw.Goal
+	 self.Achievements["week_post"].Weekly = true
+	 self.Achievements["week_post"].WeekCount = week
+	 self.Achievements["week_post"].Reward = tblw.Reward
 end

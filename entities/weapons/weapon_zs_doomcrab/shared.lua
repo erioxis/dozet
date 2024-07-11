@@ -169,4 +169,5 @@ end
 function SWEP:IsPouncing()
 	return self:GetDTBool(1)
 end
+
 SWEP.GetPouncing = SWEP.IsPouncing

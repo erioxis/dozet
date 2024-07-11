@@ -23,7 +23,7 @@ function ENT:AcceptInput(name, activator, caller, args)
 		end
 		return true
 	elseif name	== "forcedrop" then
-		for _, ent in pairs(ents.FindByClass("status_human_holding")) do
+		for _, ent in ipairs(ents.FindByClass("status_human_holding")) do
 			local object = ent:GetObject()
 			if object:IsValid() and object:GetName() == self.EntityToWatch then
 				ent:Remove()

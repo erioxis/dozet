@@ -2,6 +2,7 @@ INC_SERVER()
 
 function ENT:Initialize()
 	self:DrawShadow(false)
+	self:SetNotSolid(true)
 	self:SetModelScale(0.35, 0)
 
 	self:SetModel("models/Items/ammocrate_ar2.mdl")

@@ -25,7 +25,11 @@ SWEP.WorldModel = "models/weapons/w_pist_p228.mdl"
 SWEP.UseHands = true
 --models/weapons/w_pist_p228.mdl
 SWEP.Primary.Sound = Sound("Weapon_P228.Single")
+<<<<<<< Updated upstream
 SWEP.Primary.Damage = 19.3
+=======
+SWEP.Primary.Damage = 10.5
+>>>>>>> Stashed changes
 SWEP.Primary.NumShots = 1
 SWEP.Primary.Delay = 0.14
 
@@ -39,7 +43,11 @@ SWEP.ConeMax = 4
 SWEP.ConeMin = 0.75
 
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_CLIP_SIZE, 1)
+<<<<<<< Updated upstream
 GAMEMODE:AddNewRemantleBranch(SWEP, 1, "'Peashooter' Auto Handgun", "Fully automatic, increased clip size at the cost of accuracy", function(wept)
+=======
+GAMEMODE:AddNewRemantleBranch(SWEP, 1, translate.Get("wep_pshooter_r1"), translate.Get("wep_d_pshooter_r1"), function(wept)
+>>>>>>> Stashed changes
 	wept.Primary.Delay = 0.11
 	wept.Primary.Automatic = true
 	wept.Primary.ClipSize = math.floor(wept.Primary.ClipSize * 1.25)

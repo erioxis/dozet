@@ -5,29 +5,273 @@ end
 
 concommand.Add("zs_pointsshopbuy", function(sender, command, arguments)
 	if not (sender:IsValid() and sender:IsConnected() and sender:IsValidLivingHuman()) or #arguments == 0 then return end
-	local usescrap = arguments[2]
-
+	local usescrap = arguments[3]
 	local midwave = GAMEMODE:GetWave() < GAMEMODE:GetNumberOfWaves() / 2 or GAMEMODE:GetWave() == GAMEMODE:GetNumberOfWaves() / 2 and GAMEMODE:GetWaveActive() and CurTime() < GAMEMODE:GetWaveEnd() - (GAMEMODE:GetWaveEnd() - GAMEMODE:GetWaveStart()) / 2
 	if sender:IsSkillActive(SKILL_D_LATEBUYER) and not usescrap and midwave then
 		GAMEMODE:ConCommandErrorMessage(sender, translate.ClientGet(sender, "late_buyer_warning"))
 		return
 	end
+<<<<<<< Updated upstream
 
 	if usescrap and not sender:NearRemantler() or not usescrap and not sender:NearArsenalCrate() then
 		GAMEMODE:ConCommandErrorMessage(sender, translate.ClientGet(sender, usescrap and "need_to_be_near_remantler" or "need_to_be_near_arsenal_crate"))
 		return
 	end
 
+=======
+	if not sender.CanBuy and sender:HasTrinket("vir_pat") and not usescrap then
+		GAMEMODE:ConCommandErrorMessage(sender, translate.ClientGet(sender, "vir_pat_warning"))
+		return
+	end
+	local id = arguments[1]
+	id = tonumber(id) or id
+	local itemtab = FindItem(id)
+
+	if sender:HasTrinket("sin_envy") and (FindItem(id).Tier and FindItem(id).Tier or 1) <= 4 then
+		GAMEMODE:ConCommandErrorMessage(sender, translate.ClientGet(sender, "envy_taken"))
+		return
+	end
+
+	if sender:HasTrinket("sin_pride") and ((FindItem(id).Tier and FindItem(id).Tier or 1) >= 4) then
+		GAMEMODE:ConCommandErrorMessage(sender, translate.ClientGet(sender, "pride_taken"))
+		return
+	end
+
+>>>>>>> Stashed changes
 	if not (usescrap or gamemode.Call("PlayerCanPurchase", sender)) then
 		GAMEMODE:ConCommandErrorMessage(sender, translate.ClientGet(sender, "cant_purchase_right_now"))
 		return
 	end
+<<<<<<< Updated upstream
 
 	local id = arguments[1]
 	id = tonumber(id) or id
 	local itemtab = FindItem(id)
 
+=======
+	
+>>>>>>> Stashed changes
 	if not itemtab or not itemtab.PointShop then return end
+	if usescrap and itemtab.DontScrap then return end
+	local itemcat = itemtab.Category
+	if usescrap and not (itemcat == ITEMCAT_TRINKETS or itemcat == ITEMCAT_AMMO or itemcat == ITEMCAT_MODULES) and not itemtab.CanMakeFromScrap then return end
+
+	local points = usescrap and sender:GetAmmoCount("scrap") or sender:GetPoints()
+	local count_or_nil = arguments[2] or 1
+	local cost = itemtab.Price * count_or_nil
+	if GAMEMODE:IsClassicMode() and itemtab.NoClassicMode then
+		GAMEMODE:ConCommandErrorMessage(sender, translate.ClientFormat(sender, "cant_use_x_in_classic", itemtab.Name))
+		return
+	end
+
+	if GAMEMODE.ZombieEscape and itemtab.NoZombieEscape then
+		GAMEMODE:ConCommandErrorMessage(sender, translate.ClientFormat(sender, "cant_use_x_in_zombie_escape", itemtab.Name))
+		return
+	end
+
+	if itemtab.SkillRequirement and not sender:IsSkillActive(itemtab.SkillRequirement) then
+		GAMEMODE:ConCommandErrorMessage(sender, translate.ClientFormat(sender, "x_requires_a_skill_you_dont_have", itemtab.Name))
+		return
+	end
+
+	if itemtab.Tier and GAMEMODE.LockItemTiers and not GAMEMODE.ObjectiveMap and not GAMEMODE.ZombieEscape and not GAMEMODE:IsClassicMode() and GAMEMODE:GetNumberOfWaves() == GAMEMODE.NumberOfWaves and GAMEMODE:GetWave() + (GAMEMODE:GetWaveActive() and 0 or 1) < itemtab.Tier then
+		GAMEMODE:ConCommandErrorMessage(sender, translate.ClientFormat(sender, "tier_x_items_unlock_at_wave_y", itemtab.Tier, itemtab.Tier))
+		return
+	end
+
+	if not GAMEMODE:HasItemStocks(id) then
+		GAMEMODE:ConCommandErrorMessage(sender, translate.ClientGet(sender, "out_of_stock"))
+		return
+	end
+<<<<<<< Updated upstream
+
+	cost = usescrap and math.ceil(GAMEMODE:PointsToScrap(cost)) or math.floor(cost * (sender.ArsenalDiscount or 1))
+=======
+	local arsd = (sender.ArsenalDiscount or 1)
+	cost = usescrap and math.ceil(GAMEMODE:PointsToScrap(cost * (sender.ScrapDiscount or 1))) or math.ceil(cost * arsd)
+>>>>>>> Stashed changes
+
+	if points < cost then
+		GAMEMODE:ConCommandErrorMessage(sender, translate.ClientGet(sender, usescrap and "need_to_have_enough_scrap" or "dont_have_enough_points"))
+		return
+	end
+	if itemcat == ITEMCAT_AMMO and sender:GetMastery('gunner') > 1 and math.random(1,100) < 4 then
+		cost = 0
+	end
+
+	if itemtab.Callback then
+		itemtab.Callback( sender, count_or_nil )
+	elseif itemtab.SWEP then
+		if string.sub(itemtab.SWEP, 1, 6) ~= "weapon" then
+<<<<<<< Updated upstream
+			if GAMEMODE:GetInventoryItemType(itemtab.SWEP) == INVCAT_TRINKETS and sender:HasInventoryItem(itemtab.SWEP) then
+				local wep = ents.Create("prop_invitem")
+				if wep:IsValid() then
+					wep:SetPos(sender:GetShootPos())
+					wep:SetAngles(sender:GetAngles())
+					wep:SetInventoryItemType(itemtab.SWEP)
+					wep:Spawn()
+				end
+=======
+			if GAMEMODE:GetInventoryItemType(itemtab.SWEP) == INVCAT_TRINKETS and (sender:HasInventoryItem(itemtab.SWEP) or sender:HasInventoryItemQ(itemtab.SWEP)) then
+				return
+>>>>>>> Stashed changes
+			else
+				if itemcat ~= ITEMCAT_MODULES then
+					sender:AddInventoryItem(itemtab.SWEP)
+				else
+					local rem = sender:NearestDS()
+					local drone = rem and rem:IsValid() and rem:GetDTEntity(11) or NULL
+					if drone and drone:IsValid() then
+						drone.TrinketsIn[itemtab.SWEP] = drone.TrinketsIn[itemtab.SWEP] and drone.TrinketsIn[itemtab.SWEP] + 1 or 1
+						drone:OnUpdateTrinkets(itemtab.SWEP)
+					else
+						sender:AddInventoryItem(itemtab.SWEP)
+					end
+				end
+			end
+		elseif sender:HasWeapon(itemtab.SWEP) then
+			local stored = weapons.Get(itemtab.SWEP)
+			if stored and stored.AmmoIfHas then
+				sender:GiveAmmo(stored.Primary.DefaultClip, stored.Primary.Ammo)
+			else
+				local wep = ents.Create("prop_weapon")
+				if wep:IsValid() then
+					wep:SetPos(sender:GetShootPos())
+					wep:SetAngles(sender:GetAngles())
+					wep:SetWeaponType(itemtab.SWEP)
+					wep:SetShouldRemoveAmmo(true)
+					wep:Spawn()
+				end
+			end
+		else
+			local wep = sender:Give(itemtab.SWEP)
+			if wep and wep:IsValid() and wep.EmptyWhenPurchased and wep:GetOwner():IsValid() then
+				if wep.Primary then
+					local primary = wep:ValidPrimaryAmmo()
+					if primary then
+						sender:RemoveAmmo(math.max(0, wep.Primary.DefaultClip - wep.Primary.ClipSize), primary)
+					end
+				end
+				if wep.Secondary then
+					local secondary = wep:ValidSecondaryAmmo()
+					if secondary then
+						sender:RemoveAmmo(math.max(0, wep.Secondary.DefaultClip - wep.Secondary.ClipSize), secondary)
+					end
+				end
+			end
+		end
+
+
+	else
+		return
+	end
+<<<<<<< Updated upstream
+
+	if usescrap then
+		sender:RemoveAmmo(cost, "scrap")
+=======
+    local scrapd = sender.ScrapDiscount or 1
+	local buy = translate.ClientGet(sender,"ba_chat")
+	if usescrap then
+		sender:RemoveAmmo(math.ceil( cost ), "scrap")
+>>>>>>> Stashed changes
+		sender:SendLua("surface.PlaySound(\"buttons/lever"..math.random(5)..".wav\")")
+	else
+		sender:TakePoints( cost )
+		if sender:IsSkillActive(SKILL_CASHBACK) then
+			sender:GiveAmmo(math.ceil(cost*0.2), "scrap")
+		end
+		sender:SendLua("surface.PlaySound(\"ambient/levels/labs/coinslot1.wav\")")
+	end
+	sender:PrintTranslatedMessage(HUD_PRINTTALK, usescrap and "created_x_for_y_scrap" or "purchased_x_for_y_points", itemtab.Name, cost)
+
+	GAMEMODE:AddItemStocks(id, -1)
+
+	if usescrap then
+<<<<<<< Updated upstream
+		local nearest = sender:NearestRemantler()
+		if nearest then
+			local owner = nearest.GetObjectOwner and nearest:GetObjectOwner() or nearest:GetOwner()
+			if owner:IsValid() and owner ~= sender then
+				local scrapcom = math.ceil(cost / 8)
+				nearest:SetScraps(nearest:GetScraps() + scrapcom)
+				nearest:GetObjectOwner():CenterNotify(COLOR_GREEN, translate.Format("remantle_used", scrapcom))
+=======
+		if itemcat ~= ITEMCAT_MODULES then
+			local nearest = sender:NearestRemantler()
+			if nearest then
+				local owner = nearest.GetObjectOwner and nearest:GetObjectOwner() or nearest:GetOwner()
+				if owner:IsValid() and owner ~= sender then
+					if not sender:IsSkillActive(SKILL_SAMODOS) then
+						local scrapcom = math.ceil(cost / 6)
+						nearest:SetScraps(nearest:GetScraps() + scrapcom)
+						nearest:GetObjectOwner():GiveAchievementProgress("grem", scrapcom)
+						nearest:GetObjectOwner():CenterNotify(COLOR_GREEN, translate.ClientFormat(owner,"remantle_used", scrapcom)..sender:Nick())
+					end
+				end
+			end
+		else
+			local nearest = sender:NearestDS()
+			if nearest then
+				local owner = nearest.GetObjectOwner and nearest:GetObjectOwner() or nearest:GetOwner()
+				if owner:IsValid() and owner ~= sender then
+					local scrapcom = math.ceil(cost / 6)
+					nearest:SetScraps(nearest:GetScraps() + scrapcom)
+					nearest:GetObjectOwner():GiveAchievementProgress("grem", scrapcom)
+					nearest:GetObjectOwner():CenterNotify(COLOR_GREEN, translate.ClientFormat(owner,"remantle_used", scrapcom)..sender:Nick())
+				end
+>>>>>>> Stashed changes
+			end
+		end
+	else
+		local nearest = sender:NearestArsenalCrateOwnedByOther()
+		if nearest then
+			local owner = nearest.GetObjectOwner and nearest:GetObjectOwner() or nearest:GetOwner()
+			if owner:IsValid() then
+				local commission = cost * GAMEMODE.ArsenalCrateCommission
+				if commission > 0 then
+					owner:AddPoints(commission, nil, nil, true)
+
+					net.Start("zs_commission")
+						net.WriteEntity(nearest)
+						net.WriteEntity(sender)
+						net.WriteFloat(commission)
+					net.Send(owner)
+				end
+			end
+		end
+	end
+end)
+<<<<<<< Updated upstream
+
+=======
+concommand.Add("zs_anti_pointsshopbuy", function(sender, command, arguments)
+	if not (sender:IsValid() and sender:IsConnected() and sender:IsValidLivingHuman()) or #arguments == 0 then return end
+	local usescrap = arguments[2]
+	local sigiled = false
+	for _, sigil in pairs(ents.FindInSphere(sender:GetPos(), 200)) do
+		if sigil:IsValid() and sigil.AntiSigil then
+			sigiled = true
+		end
+	end
+	if !sigiled then GAMEMODE:ConCommandErrorMessage(sender, translate.ClientGet(sender, "no_anti_sigil")) return end
+	
+
+	local id = arguments[1]
+	--print(id)
+	id = tonumber(id) or id
+	local itemtab = FindItem(id)
+	
+
+
+	if not (usescrap or gamemode.Call("PlayerCanPurchase", sender)) then
+		GAMEMODE:ConCommandErrorMessage(sender, translate.ClientGet(sender, "cant_purchase_right_now"))
+		return
+	end
+
+
+	if not itemtab or not itemtab.APointShop then return end
 	local itemcat = itemtab.Category
 	if usescrap and not (itemcat == ITEMCAT_TRINKETS or itemcat == ITEMCAT_AMMO) and not itemtab.CanMakeFromScrap then return end
 
@@ -58,11 +302,10 @@ concommand.Add("zs_pointsshopbuy", function(sender, command, arguments)
 		GAMEMODE:ConCommandErrorMessage(sender, translate.ClientGet(sender, "out_of_stock"))
 		return
 	end
-
-	cost = usescrap and math.ceil(GAMEMODE:PointsToScrap(cost)) or math.floor(cost * (sender.ArsenalDiscount or 1))
+	cost = usescrap and math.ceil(GAMEMODE:PointsToScrap(cost)) or math.ceil(cost)
 
 	if points < cost then
-		GAMEMODE:ConCommandErrorMessage(sender, translate.ClientGet(sender, usescrap and "need_to_have_enough_scrap" or "dont_have_enough_points"))
+		timer.Create("buy"..itemtab.Name.."WARNING", 0.01,1, function()GAMEMODE:ConCommandErrorMessage(sender, translate.ClientGet(sender, usescrap and "need_to_have_enough_scrap" or "dont_have_enough_points")) end)
 		return
 	end
 
@@ -70,14 +313,8 @@ concommand.Add("zs_pointsshopbuy", function(sender, command, arguments)
 		itemtab.Callback(sender)
 	elseif itemtab.SWEP then
 		if string.sub(itemtab.SWEP, 1, 6) ~= "weapon" then
-			if GAMEMODE:GetInventoryItemType(itemtab.SWEP) == INVCAT_TRINKETS and sender:HasInventoryItem(itemtab.SWEP) then
-				local wep = ents.Create("prop_invitem")
-				if wep:IsValid() then
-					wep:SetPos(sender:GetShootPos())
-					wep:SetAngles(sender:GetAngles())
-					wep:SetInventoryItemType(itemtab.SWEP)
-					wep:Spawn()
-				end
+			if GAMEMODE:GetInventoryItemType(itemtab.SWEP) == INVCAT_TRINKETS and (sender:HasInventoryItem(itemtab.SWEP) or sender:HasInventoryItemQ(itemtab.SWEP)) then
+				return
 			else
 				sender:AddInventoryItem(itemtab.SWEP)
 			end
@@ -113,19 +350,22 @@ concommand.Add("zs_pointsshopbuy", function(sender, command, arguments)
 			end
 		end
 
-		GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_WEAPON, itemtab.SWEP, "Purchases", 1)
+
 	else
 		return
 	end
-
+    local scrapd = sender.ScrapDiscount or 1
+	local buy = "Buyed a "
 	if usescrap then
-		sender:RemoveAmmo(cost, "scrap")
+		sender:RemoveAmmo(math.ceil(cost), "scrap")
 		sender:SendLua("surface.PlaySound(\"buttons/lever"..math.random(5)..".wav\")")
+		timer.Create(buy..itemtab.Name, 0.01,1, function() sender:PrintTranslatedMessage(HUD_PRINTTALK, usescrap and "created_x_for_y_scrap" ,itemtab.Name, math.ceil(cost)) end)
 	else
 		sender:TakePoints(cost)
 		sender:SendLua("surface.PlaySound(\"ambient/levels/labs/coinslot1.wav\")")
+		timer.Create(buy..itemtab.Name, 0.01,1, function() sender:PrintTranslatedMessage(HUD_PRINTTALK, "purchased_x_for_y_points", itemtab.Name, cost) end)
 	end
-	sender:PrintTranslatedMessage(HUD_PRINTTALK, usescrap and "created_x_for_y_scrap" or "purchased_x_for_y_points", itemtab.Name, cost)
+
 
 	GAMEMODE:AddItemStocks(id, -1)
 
@@ -134,9 +374,12 @@ concommand.Add("zs_pointsshopbuy", function(sender, command, arguments)
 		if nearest then
 			local owner = nearest.GetObjectOwner and nearest:GetObjectOwner() or nearest:GetOwner()
 			if owner:IsValid() and owner ~= sender then
-				local scrapcom = math.ceil(cost / 8)
-				nearest:SetScraps(nearest:GetScraps() + scrapcom)
-				nearest:GetObjectOwner():CenterNotify(COLOR_GREEN, translate.Format("remantle_used", scrapcom))
+				if not sender:IsSkillActive(SKILL_SAMODOS) then
+					local scrapcom = math.ceil(cost / 6)
+					nearest:SetScraps(nearest:GetScraps() + scrapcom)
+					nearest:GetObjectOwner():GiveAchievementProgress("grem", scrapcom)
+					nearest:GetObjectOwner():CenterNotify(COLOR_GREEN, translate.ClientFormat(owner ,"remantle_used", scrapcom)..sender:Nick())
+				end
 			end
 		end
 	else
@@ -158,7 +401,82 @@ concommand.Add("zs_pointsshopbuy", function(sender, command, arguments)
 		end
 	end
 end)
+concommand.Add("zs_mutationshop_click", function(sender, command, arguments)
+	if not (sender:IsValid() and sender:IsConnected()) or #arguments == 0 then return end
 
+	--[[for _, pl in pairs(player.GetAll(TEAM_HUMAN)) do
+		if LASTHUMAN then
+		sender:CenterNotify(COLOR_RED, translate.ClientGet(sender, "cant_buy_mutations"))
+		sender:SendLua("surface.PlaySound(\"buttons/button10.wav\")")
+		return
+		end
+	end]]
+
+	if  gamemode.Call("ZombieCanPurchase", sender) or sender:Team() == TEAM_HUMAN then
+		sender:CenterNotify(COLOR_RED, translate.ClientGet(sender, "cant_buy_mutations"))
+		sender:SendLua("surface.PlaySound(\"buttons/button10.wav\")")
+		return
+	end
+
+	local cost
+	local hasalready = {}
+	local tokens = sender:GetTokens()
+
+	for _, id in pairs(arguments) do
+		local tab = FindMutation(id)
+		if tab and not hasalready[id] then
+			if tab.Worth and tab.Callback then
+				cost = tab.Worth
+				hasalready[id] = true
+
+			end
+		end
+	end
+
+	if cost > tokens then return end
+
+	local itemtab
+	local id = arguments[1]
+	local num = tonumber(id)
+
+	if num then
+		itemtab = GAMEMODE.Mutations[num]
+	else
+		for i, tab in pairs(GAMEMODE.Mutations) do
+			if tab.Signature == id then
+				itemtab = tab
+				break
+			end
+		end
+	end
+
+	if itemtab.Worth then
+	
+		local tokens = sender:GetTokens()
+		local cost = itemtab.Worth
+		
+		cost = math.ceil(cost)
+
+		if tokens < cost  then
+			sender:CenterNotify(COLOR_RED, translate.ClientGet(sender, "you_dont_have_enough_btokens"))
+			sender:SendLua("surface.PlaySound(\"buttons/button10.wav\")")
+			return
+		end
+		itemtab.Callback(sender)
+		sender:TakeTokens(cost)
+		sender:PrintTranslatedMessage(HUD_PRINTTALK, "purchased_x_for_y_btokens", itemtab.Name, cost )
+		sender:SendLua("surface.PlaySound(\"ambient/levels/labs/coinslot1.wav\")")
+		sender.UsedMutations = sender.UsedMutations or { }
+		table.insert( sender.UsedMutations, itemtab.Signature )
+	end
+
+	net.Start("zs_mutations_table")
+		net.WriteTable(sender.UsedMutations)
+	net.Send(sender)
+
+end)
+
+>>>>>>> Stashed changes
 concommand.Add("zs_dismantle", function(sender, command, arguments)
 	if not (sender:IsValid() and sender:IsConnected() and sender:IsValidLivingHuman()) then return end
 
@@ -168,12 +486,12 @@ concommand.Add("zs_dismantle", function(sender, command, arguments)
 	end
 
 	if invitem and not sender:HasInventoryItem(invitem) then return end
-
 	local active = sender:GetActiveWeapon()
 	local contents, wtbl = active:GetClass()
 	if not invitem then
 		wtbl = weapons.Get(contents)
-		if wtbl.NoDismantle or not (wtbl.AllowQualityWeapons or wtbl.PermitDismantle) then
+		if active.RemoveOnGive then return end
+		if wtbl.NoDismantle or not (wtbl.AllowQualityWeapons and !wtbl.CanDismantle or wtbl.PermitDismantle) then
 			GAMEMODE:ConCommandErrorMessage(sender, translate.ClientGet(sender, "cannot_dismantle"))
 			return
 		end
@@ -182,7 +500,9 @@ concommand.Add("zs_dismantle", function(sender, command, arguments)
 			sender:SendLua("surface.PlaySound(\"buttons/button10.wav\")")
 			return
 		end
-
+		--if sender:IsSkillActive(SKILL_COPPER) and math.random(1,10) == 1 and GAMEMODE:GetItemStocks(id) ~= -1 then
+		--	GAMEMODE:AddItemStocks(id, 1)
+		--end
 		potinv = GAMEMODE.Breakdowns[contents]
 	else
 		itypecat = GAMEMODE:GetInventoryItemType(invitem)
@@ -194,7 +514,16 @@ concommand.Add("zs_dismantle", function(sender, command, arguments)
 		potinv = GAMEMODE.Breakdowns[invitem]
 	end
 
+<<<<<<< Updated upstream
 	local scrap = GAMEMODE:GetDismantleScrap(wtbl or GAMEMODE.ZSInventoryItemData[invitem], invitem)
+=======
+	local scrap = GAMEMODE:GetDismantleScrap(wtbl or GAMEMODE.ZSInventoryItemData[invitem], invitem,sender)
+	if sender:IsSkillActive(SKILL_COPPER) then
+		local huhw = math.Clamp(GAMEMODE:GetWave()/10,0.05,0.7)
+		sender:SetPoints(sender:GetPoints()+scrap*huhw)
+		scrap = scrap * (1-huhw)
+	end
+>>>>>>> Stashed changes
 	net.Start("zs_ammopickup")
 		net.WriteUInt(scrap, 16)
 		net.WriteString("scrap")
@@ -214,7 +543,7 @@ concommand.Add("zs_dismantle", function(sender, command, arguments)
 		sender:UpdateAltSelectedWeapon()
 	end
 
-	GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_WEAPON, invitem or contents, "Disassembles", 1)
+
 
 	if potinv and potinv.Result then
 		sender:AddInventoryItem(potinv.Result)
@@ -227,7 +556,7 @@ end)
 
 concommand.Add("zs_upgrade", function(sender, command, arguments)
 	if not (sender:IsValid() and sender:IsConnected() and sender:IsValidLivingHuman()) then return end
-
+	if sender:HasTrinket("flower_g") then sender:TakeInventoryItem("trinket_flower_g")  return end
 	if not sender:NearRemantler() then
 		GAMEMODE:ConCommandErrorMessage(sender, translate.ClientGet(sender, "need_to_be_near_remantler"))
 		return
@@ -290,14 +619,18 @@ concommand.Add("zs_upgrade", function(sender, command, arguments)
 		net.Start("zs_remantleconf")
 		net.Send(sender)
 
-		GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_WEAPON, upgclass, "Upgrades", 1)
 	end
 
 	local owner = nearest.GetObjectOwner and nearest:GetObjectOwner() or nearest:GetOwner()
 	if owner:IsValid() and owner ~= sender then
 		local scrapcom = math.ceil(scrapcost * 0.08)
 		nearest:SetScraps(nearest:GetScraps() + scrapcom)
+<<<<<<< Updated upstream
 		nearest:GetObjectOwner():CenterNotify(COLOR_GREEN, translate.Format("remantle_used", scrapcom))
+=======
+		nearest:GetObjectOwner():GiveAchievementProgress("grem", scrapcom)
+		nearest:GetObjectOwner():CenterNotify(COLOR_GREEN, translate.ClientFormat(owner,"remantle_used", scrapcom)..sender:Nick())
+>>>>>>> Stashed changes
 	end
 end)
 
@@ -327,9 +660,7 @@ concommand.Add("worthcheckout", function(sender, command, arguments)
 			hasalready[id] = true
 		end
 	end
-
 	if cost > GAMEMODE.StartingWorth + (sender.ExtraStartingWorth or 0) then return end
-
 	hasalready = {}
 
 	for _, id in pairs(arguments) do
@@ -345,7 +676,6 @@ concommand.Add("worthcheckout", function(sender, command, arguments)
 				tab.Callback(sender)
 				hasalready[id] = true
 			elseif tab.SWEP then
-				GAMEMODE.StatTracking:IncreaseElementKV(STATTRACK_TYPE_WEAPON, tab.SWEP, "Checkouts", 1)
 
 				sender:StripWeapon(tab.SWEP) -- "Fixes" players giving each other empty weapons to make it so they get no ammo from the Worth menu purchase.
 				if GAMEMODE.ZSInventoryItemData[tab.SWEP] then
@@ -367,6 +697,67 @@ end)
 
 concommand.Add("zsdropweapon", function(sender, command, arguments)
 	local currentwep = sender:GetActiveWeapon()
+<<<<<<< Updated upstream
+=======
+	if sender:HasTrinket("curse_dropping") then
+		sender:Kill()
+		sender:TakeInventoryItem("trinket_curse_dropping")
+		
+	end
+	if sender:HasTrinket("curse_point") and sender:GetPoints() > 0 then
+		sender:SetPoints(sender:GetPoints() * 0.75)
+		sender:TakeInventoryItem("trinket_curse_point")
+		return
+	end
+	if sender:HasTrinket("hurt_curse") then
+		sender:TakeDamage(60)
+		sender:TakeInventoryItem("trinket_hurt_curse")
+	end
+	if sender:HasTrinket("un_curse") then
+		sender:SetHealth(1)
+		sender:TakeInventoryItem("trinket_un_curse")
+	end
+	if sender:HasTrinket("curse_faster") then
+		sender.zKills = sender.zKills + 50
+		sender:TakeInventoryItem("trinket_curse_faster")
+	end
+	if sender:HasTrinket("curse_slow") then
+		sender:TakeDamage(100)
+		sender:TakeInventoryItem("trinket_curse_slow")
+		
+	end
+	if sender:HasTrinket("curse_heart") then
+		sender:TakeDamage(sender:Health()  * 0.5)
+		sender:TakeInventoryItem("trinket_curse_heart")
+		
+	end
+	if sender:HasTrinket("curse_fragility") then
+		sender.LuckAdd = sender.LuckAdd - 6
+		sender:TakeInventoryItem("trinket_curse_fragility")
+	end
+	if sender:HasTrinket("curse_eye") then
+		sender:ApplySkills({})
+		sender:TakeInventoryItem("trinket_curse_eye")
+		
+	end
+	if sender:HasTrinket("curse_unknown") then
+		local c = NULL
+		for k,v in pairs(ents.GetAll()) do
+			if v:GetClass() == "info_player_zombie*" or v:GetClass() == "info_player_undead*" or v:GetClass() == "info_player_start" then
+				c = v 
+				break
+			end
+		end
+		timer.Simple(1, function() if c:IsValid() then sender:SetPos(c:GetPos())  end end)
+	end
+	if sender:HasTrinket("curse_ponos") then
+		sender:TakeInventoryItem("trinket_curse_ponos")
+		timer.Create("ponosx10", 0.5, 10, function() sender:SetVelocity(VectorRand() * math.random(200,1700)) 
+			sender:EmitSound("ambient/water/water_spray3.wav",120,45, 122)
+		end)
+		sender:GiveAchievement("ponos")
+	end
+>>>>>>> Stashed changes
 	if GAMEMODE.ZombieEscape then
 		local hwep, zwep = sender:GetWeapon("weapon_elite"), sender:GetWeapon("weapon_knife")
 		if hwep and hwep:IsValid() then
@@ -386,7 +777,15 @@ concommand.Add("zsdropweapon", function(sender, command, arguments)
 		invitem = arguments[1]
 	end
 	if invitem and not sender:HasInventoryItem(invitem) then return end
+<<<<<<< Updated upstream
 
+=======
+	if invitem == "trinket_a_flower" then sender:TakeInventoryItem("trinket_a_flower")  return end
+	if sender:HasTrinket("flower_g") then sender:TakeInventoryItem("trinket_flower_g")  return end
+	if invitem == "trinket_flower" then 	sender:TakeInventoryItem("trinket_flower") return end
+	if invitem == "trinket_clever" then  return end
+	if (currentwep and currentwep:IsValid() and currentwep).RemoveOnGive then if currentwep.AAHHH then currentwep:Remove() end return end
+>>>>>>> Stashed changes
 	if invitem or (currentwep and currentwep:IsValid()) then
 		local ent = invitem and sender:DropInventoryItemByType(invitem) or sender:DropWeaponByType(currentwep:GetClass())
 		if ent and ent:IsValid() then
@@ -396,7 +795,9 @@ concommand.Add("zsdropweapon", function(sender, command, arguments)
 			ent:SetAngles(sender:GetAngles())
 		end
 	end
+	sender:SetProgress(CurTime() +2,"giveditem")
 end)
+
 
 concommand.Add("zsemptyclip", function(sender, command, arguments)
 	if GAMEMODE.ZombieEscape then return end
@@ -422,6 +823,27 @@ concommand.Add("zsemptyclip", function(sender, command, arguments)
 		end
 	end
 end)
+<<<<<<< Updated upstream
+=======
+concommand.Add("zs_d_focusing", function(sender, command, arguments)
+	if GAMEMODE.ZombieEscape then return end
+
+	if not (sender:IsValid() and sender:Alive() and sender:Team() == TEAM_HUMAN and sender:IsSkillActive(SKILL_AMULET_4)) then return end
+	local pl = sender
+	if !pl:IsCarrying() and pl.LastHealedFocus <= CurTime() and pl.MaxBloodArmor * 0.3 <= pl:GetBloodArmor() and pl:GetBloodArmor() >= 12 then
+		pl:SetBloodArmor(math.min((pl.MaxBloodArmor * 0.3) + pl:GetBloodArmor() * 0.3, pl:GetBloodArmor() * 0.3))
+		pl:EmitSound("items/smallmedkit1.wav", 50)
+		pl:SetHealth(math.min(pl:GetMaxHealth() * 0.1 + pl:Health(), pl:GetMaxHealth()))
+		pl.LastHealedFocus = CurTime() + 1
+		if !pl:IsSkillActive(SKILL_FOODHEALS) then return end
+		for _, pl3 in pairs(player.FindInSphere(pl:GetPos(), 128 * pl:GetModelScale())) do
+			if pl3:IsValidLivingHuman() then
+				pl:HealPlayer(pl3, pl:Health() * 0.1)
+			end
+		end
+	end
+end)
+>>>>>>> Stashed changes
 
 
 function GM:TryGetLockOnTrace(sender, arguments)
@@ -477,16 +899,84 @@ concommand.Add("zsgiveammo", function(sender, command, arguments)
 				net.WriteString(ammotype)
 				net.WriteEntity(sender)
 			net.Send(ent)
-
+			sender:SetProgress(CurTime() +2,"giveditem")
 			return
 		end
+<<<<<<< Updated upstream
 	else
 		GAMEMODE:ConCommandErrorMessage(sender, translate.ClientGet(sender, "no_person_in_range"))
 	end
+=======
+
+    else
+		GAMEMODE:ConCommandErrorMessage(sender, translate.ClientGet(sender, "no_person_in_range")) 
+    end
+>>>>>>> Stashed changes
 end)
 
 concommand.Add("zsgiveweapon", function(sender, command, arguments)
 	if GAMEMODE.ZombieEscape then return end
+<<<<<<< Updated upstream
+=======
+	if sender:HasTrinket("curse_dropping") then
+		sender:Kill()
+		sender:TakeInventoryItem("trinket_curse_dropping")
+		return
+	end
+	if sender:HasTrinket("curse_point") and sender:GetPoints() > 0 then
+		sender:SetPoints(sender:GetPoints() * 0.75)
+		sender:TakeInventoryItem("trinket_curse_point")
+		return
+	end
+	if sender:HasTrinket("hurt_curse") then
+		sender:TakeDamage(60)
+		sender:TakeInventoryItem("trinket_hurt_curse")
+		return
+	end
+	if sender:HasTrinket("un_curse") then
+		sender:SetHealth(1)
+		sender:TakeInventoryItem("trinket_un_curse")
+		return
+	end
+	if sender:HasTrinket("curse_faster") then
+		sender.zKills = sender.zKills + 50
+		sender:TakeInventoryItem("trinket_curse_faster")
+		return
+	end
+	if sender:HasTrinket("curse_slow") then
+		sender:TakeDamage(100)
+		sender:TakeInventoryItem("trinket_curse_slow")
+		return
+		
+	end
+		if sender:HasTrinket("curse_heart") then
+		sender:TakeDamage(sender:Health())
+		sender:TakeInventoryItem("trinket_curse_heart")
+		
+	end
+	if sender:HasTrinket("curse_ponos") then
+		sender:TakeInventoryItem("trinket_curse_ponos")
+		timer.Create("ponosx10", 0.5, 10, function() sender:SetVelocity(VectorRand() * math.random(200,1700)) end)
+		sender:GiveAchievement("ponos")
+		return
+	end
+	if sender:HasTrinket("curse_eye") then
+		sender:ApplySkills({})
+		sender:TakeInventoryItem("trinket_curse_eye")
+		return
+	end
+	if sender:HasTrinket("curse_unknown") then
+		local c = NULL
+		for k,v in pairs(ents.GetAll()) do
+			if v:GetClass() == "info_player_zombie*" or v:GetClass() == "info_player_undead*" or v:GetClass() == "info_player_start" then
+				c = v 
+				break
+			end
+		end
+		timer.Simple(1, function() if c:IsValid() then sender:SetPos(c:GetPos())  end end)
+		return
+	end
+>>>>>>> Stashed changes
 
 	if not (sender:IsValid() and sender:Alive() and sender:Team() == TEAM_HUMAN) then return end
 
@@ -495,8 +985,18 @@ concommand.Add("zsgiveweapon", function(sender, command, arguments)
 		invitem = arguments[2]
 	end
 	if invitem and not sender:HasInventoryItem(invitem) then return end
+<<<<<<< Updated upstream
+=======
+	if invitem == "trinket_a_flower" then sender:TakeInventoryItem("trinket_a_flower")  return end
+	if sender:HasTrinket("flower_g") then sender:TakeInventoryItem("trinket_flower_g")  return end
+	if invitem == "trinket_flower" then sender:TakeInventoryItem("trinket_flower")  return end
+	if invitem == "trinket_clever" then  return end
+	if invitem and string.sub(invitem, 9, 11) == "sin" then return end
+	
+>>>>>>> Stashed changes
 
 	local currentwep = sender:GetActiveWeapon()
+	if (currentwep and currentwep:IsValid() and currentwep).RemoveOnGive then return end
 	if not invitem and not IsValid(currentwep) then return end
 
 	local ent = GAMEMODE:TryGetLockOnTrace(sender, arguments)
@@ -513,15 +1013,31 @@ concommand.Add("zsgiveweapon", function(sender, command, arguments)
 	else
 		GAMEMODE:ConCommandErrorMessage(sender, translate.ClientGet(sender, "no_person_in_range"))
 	end
+	sender:SetProgress(CurTime() +2,"giveditem")
 end)
 
 concommand.Add("zsgiveweaponclip", function(sender, command, arguments)
 	if GAMEMODE.ZombieEscape then return end
 
 	if not (sender:IsValid() and sender:Alive() and sender:Team() == TEAM_HUMAN) then return end
+<<<<<<< Updated upstream
+=======
+	if sender:HasTrinket("curse_dropping") then
+		sender:Kill()
+	end
+	if sender:HasTrinket("curse_point") and sender:GetPoints() > 0 then
+		sender:SetPoints(sender:GetPoints() * 0.75)
+		sender:TakeInventoryItem("curse_point")
+		return
+	end
+	if sender:HasTrinket("flower_g") then sender:TakeInventoryItem("trinket_flower_g")  return end
+	if invitem == "trinket_clever" then  return end
+
+>>>>>>> Stashed changes
 
 	local currentwep = sender:GetActiveWeapon()
 	if currentwep and currentwep:IsValid() then
+		if currentwep.RemoveOnGive then return end
 		local ent = GAMEMODE:TryGetLockOnTrace(sender, arguments)
 		if ent and ent:IsValidLivingHuman() then
 			if not ent:HasWeapon(currentwep:GetClass()) then
@@ -534,7 +1050,41 @@ concommand.Add("zsgiveweaponclip", function(sender, command, arguments)
 		end
 	end
 end)
+<<<<<<< Updated upstream
 
+=======
+concommand.Add("zs_stuck", function(sender, command, arguments)
+	sender.StuckUser =  (sender.StuckUser or 0) + 2 < CurTime() and CurTime() - 1 or CurTime() + 5
+	if sender:IsInWorld() and (GAMEMODE.ZombieEscape or GAMEMODE.EventTime or sender.StuckUser > CurTime()) then return end
+ 
+	if not sender:IsValid() or not sender:Alive() or sender:Team() ~= TEAM_HUMAN or sender:IsInWorld() and (CurTime() < (sender.NextStuckMoment or 0) or sender.Stuckedtrue_C + 3 >= CurTime() or sender:GetVelocity():LengthSqr() >= 900 or !sender.Stuckedtrue) then print(sender:Nick().." useless!") return end
+	local ent = NULL
+	for _, ent1 in pairs(team.GetPlayers(TEAM_HUMAN)) do
+		if ent1:IsValid() and ent1:IsPlayer() and ent1 ~= sender and (ent1.CheckedForStuck or 0) <= CurTime() then
+			ent = ent1
+			ent.CheckedForStuck = CurTime() + 1040
+			break
+		end
+	end
+	if ent == NULL then
+		for _, ent1 in ipairs(ents.FindByClass("prop_obj_sigil")) do
+			if ent1:GetClass() == "prop_obj_sigil" then
+				ent = ent1
+				break
+			end
+		end
+	end
+	if ent:IsValid() then
+		sender.NextStuckMoment = CurTime() + (sender.Stuckedtrue_C + 5 >= CurTime() and 120 or 5)
+		sender:SetPos(ent:GetPos())
+	end
+end)
+concommand.Add("fear_this", function(sender, command, arguments)
+	if arguments[1] == "baracat_sucks" and arguments[2] == "UsePromo" then
+		sender:GiveAchievement("baracat_sucks")
+	end
+end)
+>>>>>>> Stashed changes
 concommand.Add("zsdropammo", function(sender, command, arguments)
 	if GAMEMODE.ZombieEscape then return end
 
@@ -578,7 +1128,7 @@ concommand.Add("zs_shitmap_check", function(sender, command, arguments)
 	local doors = ents.FindByClass("func_door_rotating")
 	table.Add(doors, ents.FindByClass("func_movelinear"))
 	local props = ents.FindByClass("prop_physics_multiplayer")
-	local props = ents.FindByClass("prop_physics")
+	table.Add(props,  ents.FindByClass("prop_physics"))
 	local weapon = ents.FindByClass("prop_weapon")
 	local players = ents.FindByClass("player")
 
@@ -597,7 +1147,7 @@ end)
 concommand.Add("zs_shitmap_teleport_on", function(sender, command, arguments)
 	if not sender:IsSuperAdmin() then return end
 
-	for _, ent in pairs(ents.FindByClass("trigger_teleport")) do
+	for _, ent in ipairs(ents.FindByClass("trigger_teleport")) do
 		ent:Fire("enable", "", 0)
 	end
 end)
@@ -605,7 +1155,7 @@ end)
 concommand.Add("zs_shitmap_teleport_off", function(sender, command, arguments)
 	if not sender:IsSuperAdmin() then return end
 
-	for _, ent in pairs(ents.FindByClass("trigger_teleport")) do
+	for _, ent in ipairs(ents.FindByClass("trigger_teleport")) do
 		ent:Fire("enable", "", 0)
 	end
 end)
@@ -675,5 +1225,21 @@ concommand.Add("teleport", function(sender, command, arguments)
 	end
 end)
 
+<<<<<<< Updated upstream
 
+=======
+end)
+concommand.Add("zs_weapon", function(sender, command, arguments, pl)
+	if sender == nil then return end
+	if not sender:IsAdmin() then 
+		sender:PrintMessage(HUD_PRINTTALK, translate.ClientFormat(sender, "noadmin"))
+		return end
+	print(sender)
+	print("attemp to give weapon",arguments[1])
+	if arguments[1] == nil then return end
+	RunConsoleCommand("say", "https://cdn.discordapp.com/attachments/592341195917623315/969447258833682432/unknown.png")
+	sender:Give(arguments[1])
+	sender:AddInventoryItem(arguments[1])
+end)
+>>>>>>> Stashed changes
 

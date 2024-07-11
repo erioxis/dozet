@@ -1,6 +1,6 @@
 AddCSLuaFile()
 
-SWEP.PrintName = "Rollermine Control"
+SWEP.PrintName = translate.Get("control_rmine")
 SWEP.Description = "Controller for your Rollermine."
 
 if CLIENT then
@@ -57,7 +57,12 @@ function SWEP:Think()
 	end
 
 	if SERVER then
-		for _, ent in pairs(ents.FindByClass(self.EntityClass)) do
+		for _, ent in ipairs(ents.FindByClass(self.EntityClass)) do
+			if ent:IsValid() and ent:GetObjectOwner() == self:GetOwner() then
+				return
+			end
+		end
+		for _, ent in ipairs(ents.FindByClass("prop_rollermine_exp")) do
 			if ent:IsValid() and ent:GetObjectOwner() == self:GetOwner() then
 				return
 			end

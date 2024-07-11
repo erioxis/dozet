@@ -85,8 +85,9 @@ end
 if SERVER then
 function CLASS:ProcessDamage(pl, dmginfo)
 	if dmginfo:GetInflictor().IsMelee then
-		dmginfo:SetDamage(dmginfo:GetDamage() / 41)
+		dmginfo:SetDamage(dmginfo:GetDamage()*0.5)
 	end
+	return dmginfo
 end
 
 function CLASS:OnKilled(pl, attacker, inflictor, suicide, headshot, dmginfo, assister)

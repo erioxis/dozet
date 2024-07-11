@@ -1,6 +1,13 @@
+<<<<<<< Updated upstream
 SWEP.PrintName = "Luxoid"
 SWEP.Description = "Ancient Luxoid. Secondary attack unleashes a powerful swing, creating an icy explosion when aimed at the ground. Slows zombie movement and attack speed."
 
+=======
+--SWEP.PrintName = "Luxoid"
+--SWEP.Description = "Ancient Luxoid. Secondary attack unleashes a powerful swing, creating an icy explosion when aimed at the ground. Slows zombie movement and attack speed."
+SWEP.PrintName = translate.Get("wep_luxoid")
+SWEP.Description = translate.Get("wep_d_luxod")
+>>>>>>> Stashed changes
 SWEP.Base = "weapon_zs_basemelee"
 
 SWEP.ViewModel = "models/weapons/c_stunstick.mdl"
@@ -9,7 +16,14 @@ SWEP.UseHands = true
 
 SWEP.HoldType = "melee2"
 
+<<<<<<< Updated upstream
 SWEP.MeleeDamage = 132
+=======
+SWEP.InnateDamageType = INNATE_TYPE_ICE
+SWEP.InnateDamageMul = 0
+
+SWEP.MeleeDamage = 144
+>>>>>>> Stashed changes
 SWEP.MeleeRange = 83
 SWEP.MeleeSize = 3
 SWEP.MeleeKnockBack = 61
@@ -116,12 +130,21 @@ function SWEP:GetCharge()
 	return self:GetDTFloat(1)
 end
 
+<<<<<<< Updated upstream
 GAMEMODE:AddNewRemantleBranch(SWEP, 1, "Lux", "Zombie is BOOMED than kill, faster but less damage and knockback", function(wept)
 	wept.Primary.Delay = wept.Primary.Delay * 0.55
 	wept.MeleeDamage = wept.MeleeDamage * 0.3
 	wept.PointsMultiplier = 0.4
 	wept.Secondary.Delay = wept.Primary.Delay * 3
 	wept.MeleeDamageSecondaryMul = 3
+=======
+GAMEMODE:AddNewRemantleBranch(SWEP, 1, translate.Get("wep_luxoid_r1"), translate.Get("wep_d_luxoid_r1"), function(wept)
+	wept.Primary.Delay = wept.Primary.Delay * 0.66
+	wept.MeleeDamage = wept.MeleeDamage * 0.45
+	wept.PointsMultiplier = 0.6
+	wept.Secondary.Delay = wept.Primary.Delay * 2
+	wept.MeleeDamageSecondaryMul = 1.4
+>>>>>>> Stashed changes
 	
 	wept.OnZombieKilled = function(self, zombie, total, dmginfo)
 		local killer = self:GetOwner()

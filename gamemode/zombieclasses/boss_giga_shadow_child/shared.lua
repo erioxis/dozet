@@ -5,12 +5,12 @@ CLASS.TranslationName = "class_giga_shadow_child"
 CLASS.Description = "description_giga_shadow_child"
 CLASS.Help = "controls_giga_shadow_child"
 
-CLASS.Boss = true
+CLASS.DemiBoss = true
 
-CLASS.Health = 2000
+CLASS.Health = 900
 CLASS.Speed = 235
 
-CLASS.Points = 35
+CLASS.Points = 15
 
 CLASS.SWEP = "weapon_zs_gigashadowchild"
 

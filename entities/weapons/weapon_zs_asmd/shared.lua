@@ -69,6 +69,7 @@ end
 
 function SWEP.BulletCallback(attacker, tr, dmginfo)
 	dmginfo:SetDamageType(DMG_GENERIC)
+	dmginfo:GetInflictor().BaseClass.BulletCallback(attacker, tr, dmginfo)
 	return {impact = false}
 end
 

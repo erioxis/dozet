@@ -1,7 +1,7 @@
-"zombiesurvival"
+"endlesssurvival"
 {
 	"base"				"base"
-	"title"				"Zombie Survival"
+	"title"				"Endless ZS"
 	"maps"				"^zs_|^zm_|^zh_|^zps_|^zr_|^ze_"
 	"menusystem"		"1"
 

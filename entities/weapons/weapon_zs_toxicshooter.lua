@@ -90,10 +90,58 @@ function SWEP:PrimaryAttack()
 	self:ShootBullets(self.Primary.Damage, self.Primary.NumShots, self:GetCone())
 	self.IdleAnimation = CurTime() + self:SequenceDuration()
 end
-
+function SWEP:HaveAbility() 
+	local float = self:GetDTFloat(6)
+	if float>610 then
+		self:SetDTFloat(6,float-20)
+		self.NoAbility = true
+		if !self.OldCallBack then
+			self.OldCallBack = self.BulletCallback
+		end
+		self.BulletCallback = function(attacker, tr, dmginfo)
+			local ent = tr.Entity
+			if ent and ent:IsValidLivingZombie() then
+				self:SetDTFloat(6,self:GetDTFloat(6)-50)
+				local s = ent:GetStatus("radiation")
+				if !s then
+					local g = ent:GiveStatus("radiation",6, self:GetOwner())
+					g:SetDTInt(1,1)
+					g.Damager = self:GetOwner()
+				else
+					s:SetDTInt(1,s:GetDTInt(1)+2)
+					s.DieTime = s.DieTime + 2
+					s.Damager = self:GetOwner()
+				end
+				if self:GetDTFloat(6) < 0 then
+					self:SetDTFloat(6,0)
+					self.NoAbility = false
+					self.BulletCallback = self.OldCallBack
+				end
+			end
+			--self.BaseClass.BulletCallback(self,self:GetOwner(), tr, dmginfo)
+		end
+	end
+end
+function SWEP:DealThink(dmginfo) 
+	if self.NoAbility then return end
+	self:SetDTFloat(6,math.min(620,self:GetDTFloat(6)+math.min(160,dmginfo:GetDamage()*0.3)))
+end
 if not CLIENT then return end
 
 function SWEP:GetDisplayAmmo(clip, spare, maxclip)
 	local minus = self:GetAltUsage() and 0 or 1
 	return math.max(0, (clip * 2) - minus), spare * 2, maxclip * 2
 end
+	local ablicolor =  Color( 43,124,6)
+	function SWEP:Draw2DHUD()
+		self:Draw2DFeature( self:GetDTFloat(6)/610, nil, nil, "weapon_ability_tx", "ZSHUDFontSmallest", ablicolor, "+menu" )
+		self.BaseClass.Draw2DHUD(self)
+	end
+	
+	function SWEP:Draw3DHUD(vm, pos, ang)
+	
+		cam.Start3D2D( pos, ang, self.HUD3DScale / 6 )
+				self:Draw3DFeatureHorizontal( vm, pos+Vector(0,0,1), ang, self:GetDTFloat(6)/610, nil, nil, "weapon_ability_tx", "ZSHUDFont", ablicolor )
+		cam.End3D2D()
+		self.BaseClass.Draw3DHUD(self,vm, pos, ang)
+	end

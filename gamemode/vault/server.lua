@@ -1,4 +1,5 @@
 GM.VaultFolder = "zombiesurvival_vault"
+GM.VaultBalance = "zombiesurvival_maps_balance"
 GM.SkillTreeVersion = 1
 
 function GM:ShouldSaveVault(pl)
@@ -23,9 +24,22 @@ end
 --[[function GM:ShouldUseVault(pl)
 	return not self.ZombieEscape and not self:IsClassicMode()
 end]]
+<<<<<<< Updated upstream
 
 function GM:GetVaultFile(pl)
 	local steamid = pl:SteamID64() or "invalid"
+=======
+TYPE_XP = 1
+TYPE_ETERNAL = 2
+function GM:GetVaultFile(pl, type)
+	local steamid = pl:SteamID64() or "invalid"
+	local d = ""
+	if type == TYPE_XP then
+		d = "_ACH_XP"
+	elseif type == TYPE_ETERNAL then
+		d = "_INVENTORY"
+	end
+>>>>>>> Stashed changes
 
 	return self.VaultFolder.."/"..steamid:sub(-2).."/"..steamid..".txt"
 end
@@ -40,7 +54,16 @@ function GM:InitializeVault(pl)
 	pl.PointsVault = 0
 	pl:SetZSXP(0)
 end
-
+local function RemoveFuckingTrue(tb)
+	local mda = {}
+	tb = tb or {}
+	for k,v in pairs(tb) do
+		if k ~= v then
+			mda[k] = v
+		end
+	end
+	return mda
+end
 function GM:LoadVault(pl)
 	if not self:ShouldLoadVault(pl) then return end
 
@@ -71,11 +94,91 @@ function GM:LoadVault(pl)
 					pl:SkillsReset()
 					pl.SkillsRefunded = true
 				end
+<<<<<<< Updated upstream
+=======
+				if contents.UpgradableSkills then
+					pl:SetUpgradeSkills(util.DecompressBitTable(contents.UpgradableSkills), true)
+				end
+				if contents.MeleeMastery then
+					pl:SetMastery("melee",contents.MeleeMastery)
+				end
+				if contents.GunMastery then
+					pl:SetMastery("gunner",contents.GunMastery)
+				end
+				if contents.MedicMastery then
+					pl:SetMastery("medic",contents.MedicMastery)
+				end
+				if contents.CaderMastery then
+					pl:SetMastery("cader",contents.CaderMastery)
+				end
+				if contents.Zban then
+					pl.Zban = contents.Zban
+				end
+				pl.SelfCode =  contents.SelfCode or string.Random(22)..string.sub(pl:SteamID64(),9,11)
+				if contents.UsedCodes then
+					pl.UsedCodes = contents.UsedCodes
+				end
+				if contents.AchXP then
+					pl:SetDCoins(contents.AchXP)
+				end
+				if contents.RemortOldSkills then
+					pl.RemortOldSkills = util.DecompressBitTable(contents.RemortOldSkills)
+				end
+				if contents.WinsPlayer then
+					pl.WinsTotal = contents.WinsPlayer
+				end
+				if contents.LosePlayer then
+					pl.LoseTotal = contents.LosePlayer
+				end
+				if contents.OldDesiredSkills then
+					pl.OldDesiredSkills = util.DecompressBitTable(contents.OldDesiredSkills)
+				end
+				if contents.CheeseCount then
+					pl.CheeseCount = contents.CheeseCount
+					if pl.CheeseCount then
+						pl:GiveAchievement('cheese_shmich')
+					end
+				end
+			
+				pl.Season = (contents.Season or 1)
+>>>>>>> Stashed changes
 
 				pl.SkillVersion = self.SkillTreeVersion
 			end
 		end
 	end
+<<<<<<< Updated upstream
+=======
+	local filename = self:GetVaultFile(pl, TYPE_XP)
+	if file.Exists(filename, "DATA") then
+		local contents = file.Read(filename, "DATA")
+		if contents and #contents > 0 then
+			contents = Deserialize(contents)
+			if contents then
+				if contents.AchXP then
+					pl:SetDCoins(contents.AchXP)
+				end
+				pl.SkillVersion = self.SkillTreeVersion
+			end
+		end
+	end
+	local filename = self:GetVaultFile(pl, TYPE_ETERNAL)
+	if file.Exists(filename, "DATA") then
+		local contents = file.Read(filename, "DATA")
+		if contents and #contents > 0 then
+			contents = Deserialize(contents)
+			if contents then
+				if contents.Inventory then
+					for k,v in pairs(contents.Inventory) do
+						for i=1,v do
+							timer.Simple(0, function() pl:AddInventoryItem(k) end)
+						end
+					end
+				end
+			end
+		end
+	end
+>>>>>>> Stashed changes
 
 	pl.PointsVault = pl.PointsVault or 0
 end
@@ -110,18 +213,47 @@ function GM:PlayerReadyVault(pl)
 		end
 	end
 end
-
 function GM:SaveVault(pl)
 	if not self:ShouldSaveVault(pl) then return end
+<<<<<<< Updated upstream
 
+=======
+	local remort =pl:GetZSRemortLevel()
+	local saved,savek = pl.OldDesiredSkills,pl.RemortOldSkills 
+	--PrintTable(RemoveFuckingTrue(saved))
+	--PrintTable(savek)
+>>>>>>> Stashed changes
 	local tosave = {
 		Points = math.floor(pl.PointsVault),
 		XP = pl:GetZSXP(),
 		RemortLevel = pl:GetZSRemortLevel(),
 		DesiredActiveSkills = util.CompressBitTable(pl:GetDesiredActiveSkills()),
 		UnlockedSkills = util.CompressBitTable(pl:GetUnlockedSkills()),
+<<<<<<< Updated upstream
 		Version = pl.SkillVersion or self.SkillTreeVersion
+=======
+		Version = pl.SkillVersion or self.SkillTreeVersion,
+		RemortOldSkills = util.CompressBitTable(RemoveFuckingTrue(savek) or {}),
+		OldDesiredSkills = util.CompressBitTable(RemoveFuckingTrue(saved) or {}),
+		MedicMastery = pl:GetMastery("medic"),
+		MeleeMastery =pl:GetMastery("melee"),
+		GunMastery = pl:GetMastery("gunner"),
+		CaderMastery = pl:GetMastery("cader"),
+		CheeseCount = (pl.CheeseCount or 0),
+		Zban = (pl.Zban or false),
+		AchXP = pl:GetDCoins(),
+		Season = self.DozetSeason,
+		SelfCode = pl.SelfCode or string.Random(32),
+		WinsPlayer = (pl.WinsTotal or 0),
+		LosePlayer = (pl.LoseTotal or 0),
+		UsedCodes = pl.UsedCodes
 	}
+--	print(pl:SteamID64())
+	local tosavexp = {
+		AchXP = pl:GetDCoins()
+>>>>>>> Stashed changes
+	}
+
 
 	if pl.NextSkillReset and os.time() < pl.NextSkillReset then
 		tosave.NextSkillReset = pl.NextSkillReset
@@ -132,6 +264,148 @@ function GM:SaveVault(pl)
 	end
 
 	local filename = self:GetVaultFile(pl)
+<<<<<<< Updated upstream
 	file.CreateDir(string.GetPathFromFilename(filename))
 	file.Write(filename, Serialize(tosave))
 end
+=======
+	local filenamexp = self:GetVaultFile(pl,TYPE_XP)
+	file.CreateDir(string.GetPathFromFilename(filename))
+	file.Write(filename, Serialize(tosave))
+
+	file.CreateDir(string.GetPathFromFilename(filenamexp))
+	file.Write(filenamexp, Serialize(tosavexp))
+
+	local huh = {}
+	for k,v in pairs(pl:GetInventoryItems()) do
+		if GAMEMODE:GetInventoryItemType(k) == INVCAT_ETERNAL then
+			huh[k] = v
+		end
+	end
+	local tosaveinv = {
+		Inventory =  huh
+	}
+
+	local filenameinv = self:GetVaultFile(pl,TYPE_ETERNAL)
+	file.CreateDir(string.GetPathFromFilename(filenameinv))
+	file.Write(filenameinv, Serialize(tosaveinv))
+	
+end
+local num = 1
+
+function GM:SaveWinRate()
+	local DaData = self.Da
+	local tosave = {
+		Winrate = math.floor(self:GetWinRate() or 0),
+		ZSRage = math.floor(self:GetRage() or 0),
+		Da = (#DaData <= 1200 and DaData or {"mmm", "what", "yes", "ммм", "да", "что", "obed", "обед", "уютненько", "Я", "I", "you", "ты", "амням", "санбой", "пророк"}),
+		DailySecs = math.floor(self.DailySecs or os.time() +86400),
+		WeeklySecs = math.floor(self.WeeklySecs or os.time() +86400*7),
+		DailyNum = math.floor(self.DailyNum or 1),
+		Weekly = math.floor(self.Weekly or 1),
+		LastDaily = (self.LastDaily or 1)
+	}
+	num = math.max(1,(self.DailyNum or 1)%7)
+	if self.DailySecs and os.time() > self.DailySecs then
+		tosave.LastDaily = num
+		tosave.DailyNum = math.floor(self.DailyNum or 1) + 1
+		tosave.DailySecs = os.time() + 86400
+	end
+	if self.WeeklySecs and os.time() > self.WeeklySecs then
+		tosave.Weekly = math.floor(self.Weekly or 1) + 1
+		tosave.WeeklySecs = os.time() + 86400*7
+	end
+
+	local filename = "system_balance.txt"
+	file.CreateDir(string.GetPathFromFilename(filename))
+	file.Write(filename, Serialize(tosave))
+
+	local tosave = {
+		Wins = (self.WinsMAP or 0),
+		Loses = (self.LosesMAP or 0),
+		HPMUL = (self.HPMULMAP or 1),
+		PointsMul = (self.PointsMulMAP or 1),
+		DirectorMul = (self.DirectorMAP or 0),
+		Director = (self.Director or false),
+		Dif = (self.Dif or 0),
+		WinXPMulti = (self.WinXPMulti or 1)
+	}
+
+	local filename = self.VaultBalance.."/".."map_"..game.GetMap().."_balance.txt"
+	file.CreateDir(string.GetPathFromFilename(filename))
+	file.Write(filename, Serialize(tosave))
+end
+
+function GM:LoadWinRate()
+	local filename = "system_balance.txt"
+	if file.Exists(filename, "DATA") then
+		local contents = file.Read(filename, "DATA")
+		if contents and #contents > 0 then
+			contents = Deserialize(contents)
+			if contents then
+				if contents.Winrate then
+					self:SetWinRate(contents.Winrate or 1)
+				end
+				if contents.ZSRage then
+					self:SetRage(contents.ZSRage or 1)
+				end
+				if contents.Da then
+					self.Da = contents.Da or {"mmm"}
+				end
+				if contents.DailySecs then
+					self.DailySecs = contents.DailySecs or 0
+				end
+				if contents.LastDaily then
+					self.LastDaily = contents.LastDaily or 1
+					self:SetLDaily(contents.LastDaily or 1)
+				end
+				if contents.DailyNum then
+					self.DailyNum = contents.DailyNum or 1
+					SetGlobalInt("dailynum", self.DailyNum)
+				end
+				if contents.WeeklySecs then
+					self.WeeklySecs = contents.WeeklySecs or 0
+				end
+				if contents.Weekly then
+					self.Weekly = contents.Weekly or 1
+					SetGlobalInt("weekly", self.Weekly)
+				end
+				
+			end
+		end
+	end
+	local filename = self.VaultBalance.."/".."map_"..game.GetMap().."_balance.txt"
+	if file.Exists(filename, "DATA") then
+		local contents = file.Read(filename, "DATA")
+		if contents and #contents > 0 then
+			contents = Deserialize(contents)
+			if contents then
+				if contents.Wins then
+					self.WinsMAP = contents.Wins
+				end
+				if contents.Dif then
+					self.Dif = contents.Dif
+				end
+				if contents.Loses then
+					self.LosesMAP = contents.Loses
+				end
+				if contents.HPMUL then
+					self.HPMULMAP = contents.HPMUL
+				end
+				if contents.PointsMul then
+					self.PointsMulMAP = contents.PointsMul
+				end
+				if contents.DirectorMul then
+					self.DirectorMAP = contents.DirectorMul or 1
+				end
+				if contents.Director then
+					self.Director = contents.Director
+				end
+				if contents.WinXPMulti then
+					self.WinXPMulti = contents.WinXPMulti
+				end
+			end
+		end
+	end
+end
+>>>>>>> Stashed changes

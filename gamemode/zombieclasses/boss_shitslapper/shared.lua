@@ -15,7 +15,15 @@ CLASS.Points = 40
 
 CLASS.SWEP = "weapon_zs_shitslapper"
 
+<<<<<<< Updated upstream:gamemode/zombieclasses/boss_shitslapper/shared.lua
 CLASS.Health = 4000
+=======
+CLASS.Variations = nil
+CLASS.Original = nil
+
+
+CLASS.Health = 1200
+>>>>>>> Stashed changes:gamemode/zombieclasses/demiboss_shitslapper/shared.lua
 CLASS.Speed = 225
 CLASS.JumpPower = 200
 

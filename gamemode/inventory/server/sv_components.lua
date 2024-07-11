@@ -9,10 +9,34 @@ GM.StarterTrinkets = {
 	"trinket_chemistry"
 	
 }
+GM.GetActiveTrinkets = {
+	"cons_pill_unk",
+	"cons_void",
+	"cons_mantle",
+	"cons_necronomicon_q1",
+	"cons_chaos",
+	"cons_d4",
+	"cons_d1",
+	"cons_dust",
+	"cons_friendship",
+	"cons_gausscard",
+	"cons_timer",
+	"cons_flame_p",
+	"cons_minos",
+	"cons_sack_of_trinkets",
+	'cons_grandma_vase',
+	"cons_black_hole",
+	"cons_xmas_goodness",
+	"cons_deadly_vit",
+	"cons_nanites",
+	"cons_medicalbomb"
+}
 GM.StarterSoul = {
 	"trinket_bleaksoul",  -- 1
 	"trinket_spiritess",  -- 2
 	"trinket_samsonsoul",  -- 3
+	"trinket_alt_slight_soul",
+	"trinket_slight_soul",
 	"trinket_evesoul",  -- 4
     "trinket_jacobjesausoul",  -- 5
     "trinket_isaacsoul",  -- 6
@@ -38,6 +62,30 @@ GM.Via = {
 	"trinket_via2",
 	"trinket_via3",
 }
+<<<<<<< Updated upstream
+=======
+GM.Curses = {
+	"trinket_curse_dropping",
+	"trinket_hurt_curse",
+	"trinket_un_curse",
+	"trinket_curse_faster",
+	"trinket_curse_slow",
+	"trinket_curse_ponos",
+	"trinket_curse_heart",
+	"trinket_curse_unknown",
+	"trinket_curse_fragility"
+
+}
+GM.MedPremium = {
+	"trinket_pr_gold",
+	"trinket_pr_barapaw",
+	"trinket_pr_chamomile",
+	"trinket_pr_bloodpack",
+	"trinket_soulmedical"
+}
+
+
+>>>>>>> Stashed changes
 
 function GM:AddWorldPropConversionRecipe(model, result)
 	local datatab = {Result = result, Index = wcindex}

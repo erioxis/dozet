@@ -2,8 +2,15 @@ AddCSLuaFile()
 
 SWEP.Base = "weapon_zs_baseshotgun"
 
+<<<<<<< Updated upstream
 SWEP.PrintName = "'Blaster' Shotgun"
 SWEP.Description = "A basic shotgun that can deal significant amounts of damage at close range."
+=======
+--SWEP.PrintName = "'Blaster' Shotgun"
+--SWEP.Description = "A basic shotgun that can deal significant amounts of damage at close range."
+SWEP.PrintName = translate.Get("wep_blaster")
+SWEP.Description = translate.Get("wep_d_blaster")
+>>>>>>> Stashed changes
 
 if CLIENT then
 	SWEP.ViewModelFlip = false
@@ -43,12 +50,49 @@ SWEP.ReloadSound = Sound("Weapon_Shotgun.Reload")
 SWEP.PumpActivity = ACT_SHOTGUN_PUMP
 
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_CLIP_SIZE, 1)
+<<<<<<< Updated upstream
 GAMEMODE:AddNewRemantleBranch(SWEP, 1, "'Blaster' Slug Gun", "One very accurate slug round, less total damage", function(wept)
 	wept.Primary.Damage = wept.Primary.Damage * 3.7
+=======
+GAMEMODE:AddNewRemantleBranch(SWEP, 1, translate.Get("wep_blaster_r1"), translate.Get("wep_d_blaster_r1"), function(wept)
+	wept.Primary.Damage = wept.Primary.Damage * 4
+>>>>>>> Stashed changes
 	wept.Primary.NumShots = 1
 	wept.ConeMin = wept.ConeMin * 0.33
 	wept.ConeMax = wept.ConeMax * 0.5
 end)
+<<<<<<< Updated upstream
+=======
+	
+function SWEP:PrimaryAttack()
+	if not self:CanPrimaryAttack() then return end
+
+	self:SetNextPrimaryFire(CurTime() + self:GetFireDelay())
+
+	self:EmitFireSound()
+	self:TakeAmmo()
+	self:ShootBullets(self.Primary.Damage, self.Primary.NumShots, self:GetCone())
+	self.IdleAnimation = CurTime() + self:SequenceDuration()
+end
+function SWEP:DealThink(dmginfo) 
+	if self.NoAbility then return end
+	self:SetDTFloat(6,self:GetDTFloat(6)+math.min(50,dmginfo:GetDamage()*0.4))
+end
+function SWEP:HaveAbility() 
+	if self:GetDTFloat(6)> 150 then
+		self:SetDTFloat(6,0)
+		self:SetNextPrimaryFire(CurTime() + self:GetFireDelay())
+
+		self:EmitFireSound()
+		self.NoAbility = true
+		self:ShootBullets(self.Primary.Damage* 4, self.Primary.NumShots, self:GetCone())
+		self.NoAbility = false
+		self.IdleAnimation = CurTime() + self:SequenceDuration()
+	end
+end
+
+
+>>>>>>> Stashed changes
 
 function SWEP:SendWeaponAnimation()
 	self:SendWeaponAnim(ACT_VM_PRIMARYATTACK)
@@ -65,3 +109,39 @@ function SWEP:SendWeaponAnimation()
 		end
 	end)
 end
+<<<<<<< Updated upstream
+=======
+function SWEP:DealThink(dmginfo) 
+	if self.NoAbility then return end
+	self:SetDTFloat(6,self:GetDTFloat(6)+math.min(50,dmginfo:GetDamage()*0.4))
+end
+function SWEP:HaveAbility() 
+	if self:GetDTFloat(6)> 150 then
+		self:SetDTFloat(6,0)
+		self:SetNextPrimaryFire(CurTime() + self:GetFireDelay())
+
+		self:EmitFireSound()
+		self.NoAbility = true
+		self:ShootBullets(self.Primary.Damage* 4, self.Primary.NumShots, self:GetCone())
+		self.NoAbility = false
+		self.IdleAnimation = CurTime() + self:SequenceDuration()
+	end
+end
+if !CLIENT then return end
+	local ablicolor =  Color( 174,19,19)
+	function SWEP:Draw2DHUD()
+		self:Draw2DFeature( self:GetDTFloat(6)/150, nil, nil, "weapon_ability_blaster", "ZSHUDFontSmallest", ablicolor, "+menu" )
+		self.BaseClass.Draw2DHUD(self)
+	end
+	
+	function SWEP:Draw3DHUD(vm, pos, ang)
+	
+		cam.Start3D2D( pos, ang, self.HUD3DScale / 6 )
+				self:Draw3DFeatureHorizontal( vm, pos+Vector(0,0,1), ang, self:GetDTFloat(6)/150, nil, nil, "weapon_ability_blaster", "ZSHUDFont", ablicolor )
+		cam.End3D2D()
+		self.BaseClass.Draw3DHUD(self,vm, pos, ang)
+	end
+	
+
+
+>>>>>>> Stashed changes

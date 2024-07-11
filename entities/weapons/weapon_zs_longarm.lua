@@ -82,4 +82,5 @@ function SWEP.BulletCallback(attacker, tr, dmginfo)
 		local hitpos, hitnormal, normal, dmg = tr.HitPos, tr.HitNormal, tr.Normal, dmginfo:GetDamage()
 		timer.Simple(0, function() DoRicochet(attacker, hitpos, hitnormal, normal, dmg) end)
 	end
+	dmginfo:GetInflictor().BaseClass.BulletCallback(attacker, tr, dmginfo)
 end

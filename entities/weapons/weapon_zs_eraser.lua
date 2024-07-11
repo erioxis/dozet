@@ -1,8 +1,15 @@
 AddCSLuaFile()
 DEFINE_BASECLASS("weapon_zs_base")
 
+<<<<<<< Updated upstream
 SWEP.PrintName = "'Eraser' Tactical Pistol"
 SWEP.Description = "Damage increases as remaining bullets decrease."
+=======
+--SWEP.PrintName = "'Eraser' Tactical Pistol"
+--SWEP.Description = "Damage increases as remaining bullets decrease."
+SWEP.PrintName = translate.Get("wep_eraser")
+SWEP.Description = translate.Get("wep_d_eraser")
+>>>>>>> Stashed changes
 SWEP.Slot = 1
 SWEP.SlotPos = 0
 
@@ -15,6 +22,8 @@ if CLIENT then
 	SWEP.HUD3DAng = Angle(0, 0, 0)
 end
 
+SWEP.InnateDamageType = INNATE_TYPE_BOUNTY
+SWEP.InnateDamageMul = 0.06
 SWEP.Base = "weapon_zs_base"
 
 SWEP.HoldType = "pistol"
@@ -45,11 +54,21 @@ SWEP.IronSightsPos = Vector(-5.95, 0, 2.5)
 
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_RELOAD_SPEED, 0.1, 1)
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_HEADSHOT_MULTI, 0.07)
+<<<<<<< Updated upstream
 GAMEMODE:AddNewRemantleBranch(SWEP, 1, "'Cleanser' Tactical Pistol", "Less reload speed, accuracy and headshot multiplier but gains increased damage per wave", function(wept)
 	wept.ConeMax = wept.ConeMax * 1.7
 	wept.ConeMin = wept.ConeMin * 2.1
 	wept.ReloadSpeed = wept.ReloadSpeed * 0.7
 	wept.HeadshotMulti = wept.HeadshotMulti * 1.2
+=======
+GAMEMODE:AddNewRemantleBranch(SWEP, 1, translate.Get("wep_eraser_r1"), translate.Get("wep_d_eraser_r1"), function(wept)
+	wept.ConeMax = wept.ConeMax * 1.7
+	wept.ConeMin = wept.ConeMin * 2.1
+	wept.ReloadSpeed = wept.ReloadSpeed * 0.7
+	wept.HeadshotMulti = wept.HeadshotMulti * 0.8
+	wept.InnateDamageType = INNATE_TYPE_BOUNTY
+	wept.InnateDamageMul = 0.15
+>>>>>>> Stashed changes
 
 	wept.BulletCallback = function(attacker, tr, dmginfo)
 		dmginfo:SetDamage(dmginfo:GetDamage() + dmginfo:GetDamage() * GAMEMODE:GetWave()/44)

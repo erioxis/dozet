@@ -1,11 +1,40 @@
 INC_SERVER()
 
 ENT.Heal = 10
+<<<<<<< Updated upstream
 ENT.PointsMultiplier = 1.25
+=======
+ENT.PointsMultiplier = 0.7
+>>>>>>> Stashed changes
 ENT.Gravity = false
 
 function ENT:Hit(vHitPos, vHitNormal, eHitEntity, vOldVelocity)
 	if self:GetHitTime() ~= 0 then return end
+<<<<<<< Updated upstream
+=======
+	local owner = self:GetOwner()
+	if owner:IsValid() and owner:IsSkillActive(SKILL_PHIK) and eHitEntity:IsPlayer() then
+		self:Remove()
+		local source = self:ProjectileDamageSource()
+		for _, pl in pairs(ents.FindInSphere(self:GetPos(), 77)) do
+			if WorldVisible(self:LocalToWorld(Vector(0, 0, 30)), pl:NearestPoint(self:LocalToWorld(Vector(0, 0, 30)))) then
+				if pl:IsPlayer() and (pl:GetStatus("rot")) then return end
+				if pl:IsValidLivingZombie() and pl ~= owner then
+					local alt = self:GetDTBool(0)
+					pl:TakeSpecialDamage(self.Heal * 0.9, DMG_ACID,owner, owner:GetActiveWeapon())
+					pl:PoisonDamage(12, owner, self)
+					local status = pl:GiveStatus(alt and "zombiestrdebuff" or "zombiedartdebuff", nil, owner)
+					status.DieTime = CurTime() + (self.BuffDuration or 10)
+				elseif	pl:IsValidLivingHuman() and pl ~= owner then
+					local alt = self:GetDTBool(0)
+					local strstatus = pl:GiveStatus(alt and "strengthdartboost" or "medrifledefboost", (alt and 0.1 or 0.2) * (self.BuffDuration or 1), owner)
+					owner:HealPlayer(pl, self.Heal * 0.3)
+					local txt = alt and translate.ClientGet(pl,"buff_srifle") or translate.ClientGet(pl,"buff_mrifle")
+						net.Start("zs_buffby")
+						net.WriteEntity(owner)
+						net.WriteString(txt)
+					net.Send(pl)
+>>>>>>> Stashed changes
 
 	self:SetHitTime(CurTime())
 
@@ -36,9 +65,8 @@ function ENT:Hit(vHitPos, vHitNormal, eHitEntity, vOldVelocity)
 					POINTSMULTIPLIER = nil
 				end
 
-				local status = eHitEntity:GiveStatus(alt and "zombiestrdebuff" or "zombiedartdebuff")
+				local status = eHitEntity:GiveStatus(alt and "zombiestrdebuff" or "zombiedartdebuff", nil, owner)
 				status.DieTime = CurTime() + (self.BuffDuration or 10)
-				status.Applier = owner
 			elseif eHitEntity:Team() == TEAM_HUMAN then
 				local ehithp, ehitmaxhp = eHitEntity:Health(), eHitEntity:GetMaxHealth()
 
@@ -47,12 +75,15 @@ function ENT:Hit(vHitPos, vHitNormal, eHitEntity, vOldVelocity)
 					self:EmitSound("buttons/button8.wav", 70, math.random(115,128))
 					self:DoRefund(owner)
 				elseif not (owner:IsSkillActive(SKILL_RECLAIMSOL) and ehithp >= ehitmaxhp) then
-					local status = eHitEntity:GiveStatus(alt and "strengthdartboost" or "medrifledefboost", (alt and 1 or 2) * (self.BuffDuration or 10))
-					status.Applier = owner
+					local status = eHitEntity:GiveStatus(alt and "strengthdartboost" or "medrifledefboost", (alt and 1 or 2) * (self.BuffDuration or 10), owner)
 
 					owner:HealPlayer(eHitEntity, self.Heal)
 
+<<<<<<< Updated upstream
 					local txt = alt and "Strength Rifle" or "Medical Rifle"
+=======
+					local txt = alt and translate.ClientGet(eHitEntity,"buff_srifle") or translate.ClientGet(eHitEntity,"buff_mrifle")
+>>>>>>> Stashed changes
 
 					net.Start("zs_buffby")
 						net.WriteEntity(owner)

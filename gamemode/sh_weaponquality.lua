@@ -1,9 +1,17 @@
 GM.WeaponQualityModifiers = {}
 GM.WeaponQualities = {
+<<<<<<< Updated upstream
 	{"Sturdy", 1.08, "Tuned"},
 	{"Honed", 1.19, "Modified"},
 	{"Perfected", 1.30, "Reformed"},
 	{"Heavenly", 1.5, "Deadly"}
+=======
+	{translate.Get("wep_q_1"), 1.14, translate.Get("wep_r_1")},
+	{translate.Get("wep_q_2"), 1.2, translate.Get("wep_r_2")},
+	{translate.Get("wep_q_3"), 1.26, translate.Get("wep_r_3")},
+	{translate.Get("wep_q_4"), 1.38, translate.Get("wep_r_4")},
+	{translate.Get("wep_q_5"), 1.73, translate.Get("wep_r_5")}
+>>>>>>> Stashed changes
 	
 }
 GM.WeaponQualityColors = {
@@ -186,7 +194,7 @@ function GM:CreateWeaponOfQuality(i, orig, quality, classname, branch)
 		local newent = self:GetWeaponClassOfQuality(class, i)
 		local afent = scripted_ents.Get((prefix or "") .. class)
 		if cbk then cbk(afent, newent) end
-
+		afent.ClassName = nil
 		scripted_ents.Register(afent, (prefix or "") .. newent)
 		return newent
 	end
@@ -223,7 +231,7 @@ function GM:CreateWeaponOfQuality(i, orig, quality, classname, branch)
 		ent.GhostEntity = ghostent
 		ent.GhostWeapon = newclass
 	end, "status_") end
-
+	wept.ClassName = nil
 	weapons.Register(wept, newclass)
 end
 
@@ -265,12 +273,49 @@ function GM:CreateWeaponQualities()
 		end
 	end
 end
+--[[
+function GM:CreateTrinketQualities()
+	local allweapons = GAMEMODE.Skills
+	local classname
+
+	for k, v in ipairs(allweapons) do
+		classname = v.ClassName
+
+		local wept = classname.Trinket
+		if wept and wept.AllowQualityWeapons then
+			local orig = weapons.GetStored(classname)
+			orig.RemantleDescs = {}
+			orig.RemantleDescs[0] = {}
+
+			if orig.Branches then
+				for no, _ in pairs(orig.Branches) do
+					orig.RemantleDescs[no] = {}
+				end
+			end
+
+			for i, quality in ipairs(self.WeaponQualities) do
+				self:CreateWeaponOfQuality(i, orig, quality, classname)
+
+				if orig.Branches then
+					for no, tbl in pairs(orig.Branches) do
+						local ntbl = table.Copy(tbl)
+						ntbl.No = no
+
+						self:CreateWeaponOfQuality(i, orig, quality, classname, ntbl)
+					end
+				end
+			end
+		end
+	end
+end
+
+]]
 
 function GM:GetWeaponClassOfQuality(classname, quality, branch)
 	return classname.."_"..string.char(113 + (branch or 0))..quality
 end
 
-function GM:GetDismantleScrap(wtbl, invitem)
+function GM:GetDismantleScrap(wtbl, invitem, pl)
 	local itier = wtbl.Tier
 	local quatier = wtbl.QualityTier
 
@@ -279,14 +324,22 @@ function GM:GetDismantleScrap(wtbl, invitem)
 
 	local qu = (quatier or 0) + 1
 	local basicvalue = baseval * GAMEMODE.DismantleMultipliers[qu] - ((quatier or itier) and 0 or 1)
+<<<<<<< Updated upstream
 
 	return math.floor((basicvalue * (wtbl.IsMelee and 0.75 or 1)) / (wtbl.DismantleDiv or dismantlediv))
+=======
+	local mul = 1
+	if pl then
+		mul = pl.ScrapDiscount or 1
+	end
+	return math.floor((basicvalue * (wtbl.IsMelee and 0.6 or 1)) / (wtbl.DismantleDiv or dismantlediv)) * mul
+>>>>>>> Stashed changes
 end
 
 function GM:GetUpgradeScrap(wtbl, qualitychoice)
-	local itier = wtbl.Tier
+	local itier = wtbl and wtbl.Tier and wtbl.Tier or 1
 
-	return math.ceil(self.ScrapVals[itier or 1] * qualitychoice * (wtbl.IsMelee and 0.85 or 1))
+	return math.ceil(self.ScrapVals[itier or 1] * qualitychoice * (wtbl and wtbl.IsMelee and 0.85 or 1))
 end
 
 function GM:PointsToScrap(points)

@@ -5,9 +5,9 @@ ENT.NoNails = true
 function ENT:Initialize()
 	self:SetModel("models/combine_helicopter/helicopter_bomb01.mdl")
 	self:SetColor(Color(0, 255, 0))
-	self:PhysicsInitSphere(3)
+	self:PhysicsInitSphere(2)
 	self:SetSolid(SOLID_VPHYSICS)
-	self:SetModelScale(0.2, 0)
+	self:SetModelScale(0.05, 0)
 	self:DrawShadow(false)
 	self:SetupGenericProjectile(true)
 	self:SetMaterial("models/shadertest/shader2")
@@ -72,7 +72,7 @@ function ENT:Explode()
 	if owner:IsValidLivingHuman() then
 		local source = self:ProjectileDamageSource()
 		local pos = self:GetPos()
-		local radius = 29
+		local radius = 50
 
 		local function InflictInRadius(func)
 			for _, ent in pairs(util.BlastAlloc(source, owner, pos, radius * (owner.ExpDamageRadiusMul or 1))) do
@@ -88,7 +88,7 @@ function ENT:Explode()
 					ent.Corrosion = CurTime()
 				elseif type == 1 then
 					ent:Ignite(5)
-					for __, fire in pairs(ents.FindByClass("entityflame")) do
+					for __, fire in ipairs(ents.FindByClass("entityflame")) do
 						if fire:IsValid() and fire:GetParent() == ent then
 							fire:SetOwner(owner)
 							fire:SetPhysicsAttacker(owner)

@@ -1,6 +1,11 @@
 SWEP.PrintName = "'Hyena' Sticky Bomb Launcher"
 SWEP.Description = "Fires explosives that will stick to surfaces and enemies until detonated. Bombs take 3 seconds to reach maximum damage. Alt fire will remotely detonate bombs."
+<<<<<<< Updated upstream
 
+=======
+SWEP.PrintName = translate.Get("wep_hyena")
+SWEP.Description = translate.Get("wep_d_hyena")
+>>>>>>> Stashed changes
 SWEP.Base = "weapon_zs_baseproj"
 
 SWEP.HoldType = "ar2"
@@ -43,10 +48,20 @@ end)
 
 function SWEP:CanPrimaryAttack()
 	if self.BaseClass.CanPrimaryAttack(self) then
+<<<<<<< Updated upstream
 		local c = 0
 		for _, ent in pairs(ents.FindByClass("projectile_bomb_sticky")) do
 			if ent:GetOwner() == self:GetOwner() then
 				c = c + 1
+=======
+		if self.Fix <= CurTime() then 
+			self.Fix = CurTime() + 0.2
+			local c = 0
+			for _, ent in ipairs(ents.FindByClass("projectile_bomb_sticky")) do
+				if ent:GetOwner() == self:GetOwner() then
+					c = c + 1
+				end
+>>>>>>> Stashed changes
 			end
 		end
 
