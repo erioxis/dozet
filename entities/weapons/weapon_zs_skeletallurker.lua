@@ -44,8 +44,6 @@ end
 function SWEP:PostDrawViewModel(vm, wep, pl)
 	render.ModelMaterialOverride(nil)
 end
-<<<<<<< Updated upstream
-=======
 
 function SWEP:ApplyMeleeDamage(pl, trace, damage)
 	if SERVER and pl:IsPlayer() then
@@ -59,4 +57,3 @@ function SWEP:ApplyMeleeDamage(pl, trace, damage)
 	end
 	self.BaseClass.ApplyMeleeDamage(self, pl, trace, damage)
 end
->>>>>>> Stashed changes

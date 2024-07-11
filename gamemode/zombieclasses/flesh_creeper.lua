@@ -9,7 +9,7 @@ CLASS.Unlocked = true
 CLASS.NotRandomStart = true
 CLASS.BetterVersion = "Glitch Creeper"
 
-CLASS.Health = 250
+CLASS.Health = 30
 CLASS.SWEP = "weapon_zs_fleshcreeper"
 CLASS.Model = Model("models/antlion.mdl")
 CLASS.Speed = 190

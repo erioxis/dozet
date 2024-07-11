@@ -44,18 +44,12 @@ function PANEL:PerformLayout()
 
 	self.m_Text1:SetWide(self:GetWide())
 	self.m_Text1:SizeToContentsY()
-	self.m_Text1:MoveRightOf(self.m_HumanCount, 12)
+	self.m_Text1:MoveRightOf(self.m_HumanCount, 16)
 	self.m_Text1:AlignTop(4)
 	self.m_Text2:SetWide(self:GetWide())
 	self.m_Text2:SizeToContentsY()
-	self.m_Text2:MoveRightOf(self.m_HumanCount, 12)
+	self.m_Text2:MoveRightOf(self.m_HumanCount, 16)
 	self.m_Text2:CenterVertical()
-<<<<<<< Updated upstream
-	self.m_Text3:SetWide(self:GetWide())
-	self.m_Text3:SizeToContentsY()
-	self.m_Text3:MoveRightOf(self.m_HumanCount, 12)
-	self.m_Text3:AlignBottom(4)
-=======
 	self.m_Text3:SetWide(self:GetWide() * 1.8)
 	self.m_Text3:SizeToContentsY()
 	self.m_Text3:MoveRightOf(self.m_HumanCount, 16)
@@ -64,7 +58,6 @@ function PANEL:PerformLayout()
 	self.m_Text4:SizeToContentsY()
 	self.m_Text4:MoveRightOf(self.m_HumanCount, 16)
 	self.m_Text4:AlignBottom(2)
->>>>>>> Stashed changes
 end
 
 function PANEL:Text1Paint()
@@ -83,10 +76,10 @@ function PANEL:Text1Paint()
 			text = translate.Get("zombie_escape")
 
 			-- I'm gonna leave this as 2 for now, since it is 2 on NoX.
-			--if GAMEMODE.RoundLimit > 0 then
+			if GAMEMODE.RoundLimit > 0 then
 				round = GAMEMODE.CurrentRound
 				text = text .. " - " .. translate.Format("round_x_of_y", round, 2)
-			--end
+			end
 		else
 			local maxwaves = GAMEMODE:GetNumberOfWaves()
 			if maxwaves ~= -1 then
@@ -96,6 +89,12 @@ function PANEL:Text1Paint()
 				end
 			elseif not GAMEMODE:GetWaveActive() then
 				text = translate.Get("intermission")
+			end
+			if GAMEMODE.RoundLimit > 0 then
+				round = GAMEMODE.CurrentRound
+				if text then
+					text = text .. " - " .. translate.Format("round_x_of_y", round, 3)
+				end
 			end
 		end
 	end
@@ -141,16 +140,8 @@ function PANEL:Text3Paint()
 		if MySelf:Team() == TEAM_UNDEAD then
 			local toredeem = GAMEMODE:GetRedeemBrains()
 			if toredeem > 0 then
-				draw.SimpleText(translate.Format("brains_eaten_x", MySelf:Frags().." / "..toredeem), self.Font, 0, 0, COLOR_SOFTRED)
+				draw.SimpleText(translate.Format("brains_eaten_x", MySelf:Frags().." / "..toredeem), self.Font, 0, -6, COLOR_SOFTRED)
 			else
-<<<<<<< Updated upstream
-				draw.SimpleText(translate.Format("brains_eaten_x", MySelf:Frags()), self.Font, 0, 0, COLOR_SOFTRED)
-			end
-		else
-			--draw.SimpleText(translate.Format("points_x", MySelf:GetPoints().." / "..MySelf:Frags()), self.Font, 0, 0, COLOR_DARKRED)
-			draw.SimpleText("Points: "..MySelf:GetPoints().."  Score: "..MySelf:Frags(), self.Font, 0, 0, COLOR_SOFTRED)
-		end
-=======
 				draw.SimpleText(translate.Format("brains_eaten_x", MySelf:Frags()), self.Font, 0, -6, COLOR_SOFTRED)
 			end
 		else
@@ -184,7 +175,6 @@ function PANEL:Text4Paint()
 			else
 				draw.SimpleText(translate.Get("power_god")..powergod.."%", "ZSHUDFontTiniest", 0, 12, COLOR_SOFTRED)
 			end
->>>>>>> Stashed changes
 	end
 
 	return true
@@ -193,13 +183,13 @@ end
 local matGradientLeft = CreateMaterial("gradient-l", "UnlitGeneric", {["$basetexture"] = "vgui/gradient-l", ["$vertexalpha"] = "1", ["$vertexcolor"] = "1", ["$ignorez"] = "1", ["$nomip"] = "1"})
 function PANEL:Paint(w, h)
 	surface.SetDrawColor(0, 0, 0, 180)
-	surface.DrawRect(0, 0, w * 0.4, h)
+	surface.DrawRect(0, 0, w * 0.4, h * 5)
 	surface.SetMaterial(matGradientLeft)
-	surface.DrawTexturedRect(w * 0.4, 0, w * 0.6, h)
-	--surface.DrawLine(0, h - 1, w, h - 1)
+	surface.DrawTexturedRect(w * 0.4, 0, w * 0.6, h * 3)
+	surface.DrawLine(0, h - 1, w, h - 1)
 	surface.SetDrawColor(0, 0, 0, 250)
 	surface.SetMaterial(matGradientLeft)
-	surface.DrawTexturedRect(0, h - 1, w, 1)
+	surface.DrawTexturedRect(0, h - 1, w, 2)
 
 	return true
 end

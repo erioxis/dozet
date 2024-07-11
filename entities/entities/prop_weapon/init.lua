@@ -88,16 +88,14 @@ local function compare(a,b)
 end
 ENT.LuaSended = false
 function ENT:GiveToActivator(activator, caller)
-<<<<<<< Updated upstream
-=======
 	local owner = self:GetOwner()
 	if activator:IsSkillActive(SKILL_SAMODOS) and not activator:HasTrinket("toysoul") and owner ~= activator then activator:CenterNotify(COLOR_RED, translate.ClientGet(activator, "samodos")) return end
 	if owner and owner:IsValid() and owner:IsPlayer() and owner:IsSkillActive(SKILL_SAMODOS) and owner ~= activator then activator:CenterNotify(COLOR_RED, translate.ClientGet(activator, "samodosa")) return end
->>>>>>> Stashed changes
 	if  not activator:IsPlayer()
 		or not activator:Alive()
 		or activator:Team() ~= TEAM_HUMAN and !activator:GetZombieClassTable().CanPiz
 		or self.Removing
+		or activator:GetInfo("zs_nopickuploot") == "1"
 		or (activator:KeyDown(GAMEMODE.UtilityKey) and not self.Forced)
 		or self.NoPickupsTime and CurTime() < self.NoPickupsTime and self.NoPickupsOwner ~= activator
 		 then

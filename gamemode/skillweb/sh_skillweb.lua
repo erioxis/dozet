@@ -5,9 +5,7 @@ function GM:LevelForXP(xp)
 	--return math.floor(1 + 1 * math.sqrt(xp))
 	return math.floor(1 + 0.25 * math.sqrt(xp))
 end
-
 function GM:XPForLevel(level)
-	--return level * level - 2 * level + 1
 	return 16 * level * level - 32 * level + 16
 end
 
@@ -21,7 +19,7 @@ function GM:ProgressForXP(xp)
 	return (xp - current_level_xp) / (next_level_xp - current_level_xp)
 end
 
-GM.MaxLevel = 60
+GM.MaxLevel = 100
 GM.MaxXP = GM:XPForLevel(GM.MaxLevel)
 
 -- Makes sure all skill connections are double linked
@@ -57,8 +55,6 @@ function GM:SkillCanUnlock(pl, skillid, skilllist)
 		if skill.RemortLevel and pl:GetZSRemortLevel() < skill.RemortLevel then
 			return false
 		end
-<<<<<<< Updated upstream
-=======
 		if skill.DontUnlock and pl:IsSkillUnlocked(skill.DontUnlock) then
 			return false
 		end
@@ -81,7 +77,6 @@ function GM:SkillCanUnlock(pl, skillid, skilllist)
 		if skill.Amulet then
 			return pl:GetZSRemortLevel() >= 4
 		end
->>>>>>> Stashed changes
 
 		local connections = skill.Connections
 		local n = skill.NeedAchievement
@@ -136,7 +131,6 @@ if not meta then return end
 function meta:IsSkillUnlocked(skillid)
 	return table.HasValue(self:GetUnlockedSkills(), skillid)
 end
-
 function meta:SkillCanUnlock(skillid)
 	return GAMEMODE:SkillCanUnlock(self, skillid, self:GetUnlockedSkills())
 end
@@ -373,9 +367,6 @@ function meta:GetZSSPRemaining()
 end
 
 function meta:GetZSSPTotal()
-<<<<<<< Updated upstream
-	return self:GetZSLevel() + self:GetZSRemortLevel()
-=======
 	local skillmodifiers = {}
 	local gm_modifiers = GAMEMODE.SkillModifiers
 	local gm_s = GAMEMODE.Skills
@@ -396,7 +387,6 @@ function meta:GetZSSPTotal()
 		end
 	end
 	return self:GetZSLevel() + self:GetZSRemortLevel() + totaluse
->>>>>>> Stashed changes
 end
 
 function meta:GetDesiredActiveSkills()
@@ -409,6 +399,9 @@ end
 
 function meta:GetUnlockedSkills()
 	return self.UnlockedSkills or {}
+end
+function meta:UpgradesSkill()
+	return self.UpgradableSkills or {}
 end
 
 function meta:GetTotalAdditiveModifier(...)

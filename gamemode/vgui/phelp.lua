@@ -28,10 +28,10 @@ function MakepCredits()
 	frame:SetTitle(" ")
 	frame:SetKeyboardInputEnabled(false)
 
-	local label = EasyLabel(frame, GAMEMODE.Name.." Credits", "ZSHUDFontNS", color_white)
+	local label = EasyLabel(frame, GAMEMODE.Name.."ZS Version", "ZSHUDFontNS", color_white)
 	label:AlignTop(y)
 	label:CenterHorizontal()
-	y = y + label:GetTall() + 8
+	y = y + label:GetTall() + 10
 
 	for authorindex, authortab in ipairs(GAMEMODE.Credits) do
 		local lineleft = EasyLabel(frame, string.Replace(authortab[1], "@", "(at)"), "ZSHUDFontSmallestNS", color_white)

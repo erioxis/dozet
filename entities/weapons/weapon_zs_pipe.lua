@@ -1,7 +1,8 @@
 AddCSLuaFile()
 
-SWEP.PrintName = "Lead Pipe"
-SWEP.Description = "Тяжелая вещица,но обладает хорошим оглушением зомби"
+
+SWEP.PrintName = ""..translate.Get("wep_pipe")
+SWEP.Description = ""..translate.Get("wep_d_pipe")
 
 if CLIENT then
 	SWEP.ViewModelFlip = false

@@ -6,9 +6,10 @@ CLASS.Help = "controls_ghoul"
 CLASS.Wave = 0
 CLASS.Unlocked = true
 
-CLASS.BetterVersion = "Noxious Ghoul"
+CLASS.Variations = {"Noxious Ghoul", "Elder Ghoul", "Frigid Ghoul"}
+CLASS.Original = true
 
-CLASS.Health = 210
+CLASS.Health = 260
 CLASS.Speed = 175
 CLASS.Weight = 0.9
 CLASS.Points = CLASS.Health/GM.HumanoidZombiePointRatio

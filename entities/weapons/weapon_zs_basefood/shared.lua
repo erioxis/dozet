@@ -10,6 +10,7 @@ SWEP.UseHands = true
 
 SWEP.HoldType = "slam"
 SWEP.SwingHoldType = "camera"
+SWEP.BlockTrue = false
 
 SWEP.Primary.ClipSize = 1
 SWEP.Primary.Automatic = false
@@ -51,7 +52,7 @@ function SWEP:CanEat()
 		return owner:GetBloodArmor() < owner.MaxBloodArmor + (40 * owner.MaxBloodArmorMul)
 	end
 
-	local max = owner:IsSkillActive(SKILL_D_FRAIL) and math.floor(owner:GetMaxHealth() * 0.25) or owner:GetMaxHealth()
+	local max = owner:IsSkillActive(SKILL_D_FRAIL) and math.floor(owner:GetMaxHealth() * 0.44) or owner:GetMaxHealth()
 	return owner:Health() < max
 end
 
@@ -82,13 +83,10 @@ function SWEP:Reload()
 end
 
 function SWEP:Think()
-<<<<<<< Updated upstream
-=======
 	local owner = self:GetOwner()
 	if owner:IsSkillActive(SKILL_FOODHEALS) then
 		owner:GiveStatus("obed", 1)
 	 end
->>>>>>> Stashed changes
 	if self:GetEatEndTime() > 0 then
 		local time = CurTime()
 
@@ -126,7 +124,7 @@ function SWEP:Think()
 
 		if owner:IsSkillActive(SKILL_GLUTTON) or owner:IsSkillActive(SKILL_SUGARRUSH) or owner:IsSkillActive(SKILL_RUB_RUB_STOMACH) then return end
 
-		local max = owner:IsSkillActive(SKILL_D_FRAIL) and math.floor(owner:GetMaxHealth() * 0.25) or owner:GetMaxHealth()
+		local max = owner:IsSkillActive(SKILL_D_FRAIL) and math.floor(owner:GetMaxHealth() * 0.44) or owner:GetMaxHealth()
 		if owner:Health() >= max then
 			self:SetEatEndTime(0)
 		end
@@ -137,11 +135,15 @@ function SWEP:Holster()
 	if (self:GetOwner():GetStatus("sticky")) then return false end
 	self:SetEatStartTime(0)
 	self:SetEatEndTime(0)
-
+	self:GetOwner():RemoveStatus("obed", true, true)
 	return true
 end
 
 function SWEP:Deploy()
+	local owner = self:GetOwner()
+	if owner:IsSkillActive(SKILL_FOODHEALS) then
+		owner:GiveStatus("obed", 1)
+	end
 	gamemode.Call("WeaponDeployed", self:GetOwner(), self)
 	return true
 end

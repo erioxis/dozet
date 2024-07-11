@@ -10,7 +10,7 @@ function ENT:RefreshMaxTime()
 end
 
 function ENT:SetMaxTime(time)
-	self:SetDTFloat(3, time)
+	self:SetDTFloat(2, time)
 end
 
 function ENT:GetMaxTime()

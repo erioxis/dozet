@@ -9,8 +9,5 @@ SWEP.DeployClass = "prop_manhack_saw"
 SWEP.ControlWeapon = "weapon_zs_manhackcontrol_saw"
 
 SWEP.Primary.Ammo = "manhack_saw"
-<<<<<<< Updated upstream
-=======
 
 SWEP.Tier = 6
->>>>>>> Stashed changes

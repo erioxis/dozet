@@ -5,7 +5,7 @@ CLASS.Help = "controls_wilowisp"
 
 CLASS.Boss = true
 
-CLASS.KnockbackScale = 0
+CLASS.KnockbackScale = 1
 
 CLASS.FearPerInstance = 0.05
 

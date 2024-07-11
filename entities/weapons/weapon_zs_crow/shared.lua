@@ -24,6 +24,7 @@ SWEP.SwingHoldType = "grenade"
 
 function SWEP:Initialize()
 	self:HideViewAndWorldModel()
+	local owner = self:GetOwner()
 end
 
 function SWEP:OnRemove()

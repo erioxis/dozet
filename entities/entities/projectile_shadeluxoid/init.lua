@@ -9,6 +9,7 @@ function ENT:Initialize()
 	self:SetSolid(SOLID_VPHYSICS)
 	self:SetCollisionGroup(COLLISION_GROUP_PROJECTILE)
 	self:SetCustomCollisionCheck(true)
+	self.DieTime = CurTime() + 7
 
 	local phys = self:GetPhysicsObject()
 	if phys:IsValid() then
@@ -22,7 +23,9 @@ function ENT:Think()
 	if self.PhysicsData then
 		self:Hit(self.PhysicsData.HitPos, self.PhysicsData.HitNormal, self.PhysicsData.HitEntity)
 	end
-
+	if self.DieTime <= CurTime() then
+		self:Remove()
+	end
 	if self.Exploded then
 		self:Remove()
 	end
@@ -55,6 +58,7 @@ function ENT:Hit(vHitPos, vHitNormal, hitent)
 			local scalar = ((110 - nearest:Distance(vHitPos)) / 110)
 
 			ent:GiveStatus("frost", scalar * 10)
+			ent:AttachmentDamage(30*scalar,owner,self , SLOWTYPE_COLD)
 			ent:AddLegDamageExt(30 * scalar, owner, self, SLOWTYPE_COLD)
 		end
 	end

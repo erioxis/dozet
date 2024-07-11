@@ -38,15 +38,13 @@ function ENT:RenderInfo(pos, ang, owner)
 	cam.Start3D2D(pos, ang, 0.075)
 		draw.SimpleText(translate.Get("resupply_box"), "ZS3D2DFont2", 0, -130, (MySelf.NextUse or 0) <= CurTime() and COLOR_GREEN or COLOR_DARKRED, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 
-		local caches = MySelf.Stowage and MySelf.StowageCaches
+		local caches = (MySelf.StowageCaches or 0)
 
 		local timeremain = math.ceil(math.max(0, (MySelf.NextUse or 0) - CurTime()))
 		if MySelf.NextUse then
 			draw.SimpleText(timeremain > 0 and timeremain or translate.Get("ready"), "ZS3D2DFont2", 0, -60, (MySelf.NextUse or 0) <= CurTime() and COLOR_GREEN or COLOR_DARKRED, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 		end
-		if caches then
-			draw.SimpleText(caches .. " Uses Left", "ZS3D2DFont2Small", 0, 0, caches > 0 and COLOR_GREEN or COLOR_DARKRED, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
-		end
+		draw.SimpleText(caches .. (translate.Get("uleft")), "ZS3D2DFont2Small", 0, 0, caches > 0 and COLOR_GREEN or COLOR_DARKRED, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 
 		self:Draw3DHealthBar(math.Clamp(self:GetObjectHealth() / self:GetMaxObjectHealth(), 0, 1), nil, 190)
 
@@ -58,7 +56,7 @@ function ENT:RenderInfo(pos, ang, owner)
 			local ammotype = GAMEMODE.CachedResupplyAmmoType
 			ammotype = GAMEMODE.AmmoNames[ammotype] or ammotype
 
-			draw.SimpleText("["..ammotype.."]", "ZS3D2DFont2Smaller", 0, 70, COLOR_GRAY, TEXT_ALIGN_CENTER)
+			draw.SimpleText("["..translate.Get(string.lower(string.Implode("",string.Explode(" ","ammo_"..ammotype)))).."]", "ZS3D2DFont2Smaller", 0, 70, COLOR_GRAY, TEXT_ALIGN_CENTER)
 		end
 	cam.End3D2D()
 end
@@ -76,7 +74,7 @@ function ENT:Draw()
 
 	cam.Start3D2D(self:LocalToWorld(vOffsetEE), ang, 0.01)
 
-		draw.SimpleText("NIGGERSSSSS", "ZS3D2DFont2", 0, 0, color_white, TEXT_ALIGN_CENTER)
+		draw.SimpleText("Want some baracats?", "ZS3D2DFont2", 0, 0, color_white, TEXT_ALIGN_CENTER)
 
 	cam.End3D2D()
 end

@@ -1,12 +1,6 @@
-<<<<<<< Updated upstream
-SWEP.PrintName = "'Helios' Gluon Gun"
-SWEP.Description = "Projects a stream of gluons at the target, causing immense damage. Hard to wield and aim, and builds up heat over time."
-
-=======
 
 SWEP.PrintName = translate.Get("wep_gluon")
 SWEP.Description = translate.Get("wep_d_gluon")
->>>>>>> Stashed changes
 SWEP.Base = "weapon_zs_base"
 
 SWEP.HoldType = "physgun"
@@ -17,11 +11,11 @@ SWEP.ShowViewModel = false
 SWEP.ShowWorldModel = false
 SWEP.UseHands = true
 
-SWEP.Primary.Damage = 17
+SWEP.Primary.Damage = 77
 SWEP.Primary.NumShots = 1
-SWEP.Primary.Delay = 0.02
+SWEP.Primary.Delay = 0.15
 SWEP.Primary.KnockbackScale = 0.1
-SWEP.Primary.MaxDistance = 1028
+SWEP.Primary.MaxDistance = 208
 
 SWEP.Primary.ClipSize = 30
 SWEP.Primary.Automatic = true
@@ -31,7 +25,7 @@ GAMEMODE:SetupDefaultClip(SWEP.Primary)
 SWEP.ConeMax = 0
 SWEP.ConeMin = 0
 
-SWEP.Tier = 4
+SWEP.Tier = 5
 SWEP.MaxStock = 3
 
 SWEP.HeatBuildShort = 0.10
@@ -50,13 +44,8 @@ SWEP.TracerName = "tracer_gluon"
 
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_SHORT_TEAM_HEAT, -0.01, 1)
 
-<<<<<<< Updated upstream
-local branch = GAMEMODE:AddNewRemantleBranch(SWEP, 1, "'Hades' Higgs Gun", "Has a pulse slowing effect but deals less damage", function(wept)
-	wept.Primary.Damage = wept.Primary.Damage * 10.5/12.5
-=======
 local branch = GAMEMODE:AddNewRemantleBranch(SWEP, 1, translate.Get("wep_gluon_r1"), translate.Get("wep_d_gluon_r1"), function(wept)
 	wept.Primary.Damage = wept.Primary.Damage * 0.8
->>>>>>> Stashed changes
 	wept.TracerName = "tracer_higgs"
 	wept.EmitStartFiringSound = function(self)
 		self:EmitSound("ambient/machines/teleport1.wav", 75, 210)
@@ -65,25 +54,18 @@ local branch = GAMEMODE:AddNewRemantleBranch(SWEP, 1, translate.Get("wep_gluon_r
 	wept.FireSoundPitch = 96
 	wept.LegDamage = true
 end)
-<<<<<<< Updated upstream
-branch.Colors = {Color(160, 160, 160), Color(105, 105, 105), Color(50, 50, 50)}
-branch.NewNames = {"Deep", "Deeplands", "Void", "Null"}
-
-GAMEMODE:AddNewRemantleBranch(SWEP, 2, "'Tartarus' Muon Gun", "Deals more damage with heat, but can overheat and damage you, reduced range", function(wept)
-=======
 branch.Colors = {Color(160, 160, 160), Color(105, 105, 105), Color(50, 50, 50), Color(108, 0, 122), Color(6, 0, 118)}
 branch.NewNames = {"Deep", "Deeplands", "Void", "Null", "VOIDLING"}
 
 GAMEMODE:AddNewRemantleBranch(SWEP, 2, translate.Get("wep_gluon_r2"), translate.Get("wep_d_gluon_r2"), function(wept)
->>>>>>> Stashed changes
 	wept.GluonDamage = function(self)
 		return wept.Primary.Damage + (self:GetShortHeat() * 0.25 * wept.Primary.Damage)
 	end
 	wept.TracerName = "tracer_muon"
 	wept.FireSoundPitch = 65
 	wept.Overheat = true
-	wept.Primary.MaxDistance = 512
-end).Colors = {Color(150, 110, 180), Color(130, 90, 160), Color(110, 60, 150)}
+	wept.Primary.MaxDistance = 128
+end).Colors = {Color(150, 110, 180), Color(130, 90, 160), Color(110, 60, 150), Color(110, 120, 150)}
 
 function SWEP:Initialize()
 	self.FiringSound = CreateSound(self, "^thrusters/rocket02.wav")

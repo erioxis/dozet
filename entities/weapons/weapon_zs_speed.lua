@@ -1,6 +1,8 @@
 AddCSLuaFile()
 
-SWEP.PrintName = "Need For VKid"
+--SWEP.PrintName = "Need For VKid"
+SWEP.PrintName = ""..translate.Get("wep_vkid")
+SWEP.Description = ""..translate.Get("wep_d_vkid")
 
 if CLIENT then
 	SWEP.ViewModelFOV = 75
@@ -33,10 +35,10 @@ SWEP.ViewModel = "models/weapons/v_sledgehammer/c_sledgehammer.mdl"
 SWEP.WorldModel = "models/weapons/w_crowbar.mdl"
 SWEP.UseHands = true
 
-SWEP.MeleeDamage = 230
-SWEP.MeleeRange = 75
-SWEP.MeleeSize = 4
-SWEP.MeleeKnockBack = 17
+SWEP.MeleeDamage = 99230
+SWEP.MeleeRange = 9975
+SWEP.MeleeSize = 994
+SWEP.MeleeKnockBack = 1997
 
 SWEP.Primary.Delay = 1.7
 
@@ -47,9 +49,9 @@ SWEP.SwingOffset = Vector(0, -30, 0)
 SWEP.SwingTime = 1.33
 SWEP.SwingHoldType = "melee"
 
-SWEP.Tier = 5
+SWEP.Tier = 7
 
-SWEP.Knockback = -111
+SWEP.Knockback = -56
 
 function SWEP:PlaySwingSound()
 	self:EmitSound("weapons/iceaxe/iceaxe_swing1.wav", 75, math.random(20, 25))
@@ -76,16 +78,12 @@ function SWEP:PrimaryAttack()
 	if not self:CanPrimaryAttack() then return end
 
 	local owner = self:GetOwner()
-<<<<<<< Updated upstream
-
-=======
 	if SERVER then
    		 owner:GiveAchievement("1to1")
 	end
 	if self:GetOwner():IsValid() then
 		self:GetOwner():GiveStatus("sigildef", 12)
 	end
->>>>>>> Stashed changes
 
 	owner:ViewPunch( 0.1 * Angle(math.Rand(-0.1, -0.7), math.Rand(-2.1, 0.5), 0))
 

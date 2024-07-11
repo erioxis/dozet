@@ -1,8 +1,10 @@
 AddCSLuaFile()
 DEFINE_BASECLASS("weapon_zs_base")
 
-SWEP.PrintName = "'Gauss Eagle'"
-SWEP.Description = "Big damage for first shoot,less damage for last shot." --SWEP.Description = "This high-powered handgun has the ability to pierce through multiple zombies. The bullet's power decreases by half which each zombie it hits."
+--SWEP.PrintName = "'Gauss Eagle'"
+--SWEP.Description = "Big damage for first shoot,less damage for last shot.(More clip = more damage!!!)" --SWEP.Description = "This high-powered handgun has the ability to pierce through multiple zombies. The bullet's power decreases by half which each zombie it hits."
+SWEP.PrintName = translate.Get("wep_gaeagle")
+SWEP.Description = translate.Get("wep_d_gaeagle")
 SWEP.Slot = 1
 SWEP.SlotPos = 0
 
@@ -18,7 +20,7 @@ if CLIENT then
 	SWEP.IronSightsPos = Vector(-6.35, 5, 1.7)
 end
 
-
+SWEP.PointsMultiplier = 0.8
 SWEP.Base = "weapon_zs_base"
 SWEP.HoldType = "pistol"
 SWEP.ViewModelFOV = 70
@@ -30,12 +32,12 @@ SWEP.ShowViewModel = true
 SWEP.ShowWorldModel = true
 SWEP.ViewModelBoneMods = {}
 SWEP.Primary.Sound = Sound("Weapon_Deagle.Single")
-SWEP.Primary.Damage = 54
+SWEP.Primary.Damage = 98
 SWEP.Primary.NumShots = 1
-SWEP.Primary.Delay = 0.27
-SWEP.Primary.KnockbackScale = 4
-SWEP.MaxStock = 3
-SWEP.Primary.ClipSize = 8
+SWEP.Primary.Delay = 0.66
+SWEP.Primary.KnockbackScale = 2
+SWEP.MaxStock = 1
+SWEP.Primary.ClipSize = 12
 SWEP.Primary.Automatic = false
 SWEP.Primary.Ammo = "pistol"
 GAMEMODE:SetupDefaultClip(SWEP.Primary)
@@ -43,20 +45,10 @@ GAMEMODE:SetupDefaultClip(SWEP.Primary)
 SWEP.ConeMax = 3.4
 SWEP.ConeMin = 1.25
 
-SWEP.ReloadSpeed = 0.7
+SWEP.ReloadSpeed = 0.3
 
 SWEP.FireAnimSpeed = 1.8
 
-<<<<<<< Updated upstream
-SWEP.Tier = 4
-
-GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_CLIP_SIZE, 1)
-function SWEP:ShootBullets(dmg, numbul, cone)
-	dmg = dmg + dmg * (5 * self:Clip1() / self.Primary.ClipSize)
-
-	BaseClass.ShootBullets(self, dmg, numbul, cone)
-end
-=======
 SWEP.Tier = 7
 
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_CLIP_SIZE, 2)
@@ -101,4 +93,3 @@ function SWEP:PrimaryAttack()
 	self.IdleAnimation = CurTime() + self:SequenceDuration()
 end
 
->>>>>>> Stashed changes

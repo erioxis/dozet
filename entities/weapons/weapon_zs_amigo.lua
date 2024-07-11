@@ -1,12 +1,6 @@
 AddCSLuaFile()
 DEFINE_BASECLASS("weapon_zs_base")
 
-<<<<<<< Updated upstream
-SWEP.PrintName = "'Amigo' Assault Rifle"
-SWEP.Description = "The Amigo gets extra headshot damage, but has a slow fire rate for an assault rifle."
-
-=======
->>>>>>> Stashed changes
 SWEP.Slot = 2
 SWEP.SlotPos = 0
 
@@ -33,34 +27,20 @@ SWEP.UseHands = true
 
 SWEP.ReloadSound = Sound("Weapon_SG552.Clipout")
 SWEP.Primary.Sound = Sound("Weapon_SG552.Single")
-<<<<<<< Updated upstream
-SWEP.Primary.Damage = 23
-SWEP.Primary.NumShots = 4
-SWEP.Primary.Delay = 0.01
-
-SWEP.Primary.ClipSize = 1
-=======
 SWEP.Primary.Damage = 23.5
 SWEP.Primary.NumShots = 1
 SWEP.Primary.Delay = 0.15
 
 SWEP.Primary.ClipSize = 25
->>>>>>> Stashed changes
 SWEP.Primary.Automatic = true
 SWEP.Primary.Ammo = "ar2"
 GAMEMODE:SetupDefaultClip(SWEP.Primary)
 
 SWEP.ConeMax = 2
 SWEP.ConeMin = 0.8
-<<<<<<< Updated upstream
-SWEP.HeadshotMulti = 6
-
-SWEP.ReloadSpeed = 2
-=======
 SWEP.HeadshotMulti = 2.1
 
 SWEP.ReloadSpeed = 0.9
->>>>>>> Stashed changes
 
 SWEP.WalkSpeed = SPEED_SLOW
 

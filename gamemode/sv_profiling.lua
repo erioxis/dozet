@@ -3,7 +3,7 @@
 GM.ProfilerNodes = {}
 GM.ProfilerNodesAnti = {}
 GM.ProfilerFolder = "zsprofiler"
-GM.ProfilerFolderPreMade = "profiler_premade"
+GM.ProfilerFolderPreMade = "profilerpremade"
 GM.ProfilerVersion = 0
 GM.MaxProfilerNodes = 256
 
@@ -93,10 +93,6 @@ end
 
 function GM:LoadProfiler()
 	if not self:ProfilerEnabled() or self.ProfilerIsPreMade then return end
-
-	if self.UseOnlineProfiles and not NDB then
-		http.Fetch("http://www.noxiousnet.com/zs_nodes/"..mapname..".txt", FetchNodes)
-	end
 
 	local filename = self:GetProfilerFile()
 	if file.Exists(filename, "DATA") then

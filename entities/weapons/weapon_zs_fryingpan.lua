@@ -1,12 +1,7 @@
 AddCSLuaFile()
 
-<<<<<<< Updated upstream
-SWEP.PrintName = "Frying Pan"
-
-=======
 SWEP.PrintName = translate.Get("wep_fryingpan")
 SWEP.Description = translate.Get("wep_d_fryingpan")
->>>>>>> Stashed changes
 if CLIENT then
 	SWEP.ViewModelFlip = false
 	SWEP.ViewModelFOV = 55

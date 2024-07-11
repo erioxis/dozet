@@ -1,13 +1,7 @@
-<<<<<<< Updated upstream
-SWEP.PrintName = "'Enkindler' Fire Mine Layer"
-SWEP.Description = "A mine layer that lays mines that ignite zombies."
-
-=======
 --SWEP.PrintName = "'Enkindler' Fire Mine Layer"
 --SWEP.Description = "A mine layer that lays mines that ignite zombies."
 SWEP.PrintName = translate.Get("wep_darkek")
 SWEP.Description = translate.Get("wep_d_darkek")
->>>>>>> Stashed changes
 SWEP.Slot = 4
 SWEP.SlotPos = 0
 
@@ -21,13 +15,13 @@ SWEP.WorldModel = "models/weapons/w_rocket_launcher.mdl"
 SWEP.ViewModelFOV = 60
 
 SWEP.Primary.Sound = Sound("weapons/grenade_launcher1.wav")
-SWEP.Primary.Delay = 1
+SWEP.Primary.Delay = 0.3
 
-SWEP.Primary.Damage = 36.5
-SWEP.Primary.ClipSize = 1
+SWEP.Primary.Damage = 210
+SWEP.Primary.ClipSize = 4
 SWEP.Primary.Automatic = false
 SWEP.Primary.Ammo = "impactmine"
-SWEP.Primary.DefaultClip = 7
+SWEP.Primary.DefaultClip = 16
 
 SWEP.ReloadSound = Sound("weapons/ar2/ar2_reload.wav")
 
@@ -38,13 +32,9 @@ SWEP.WalkSpeed = SPEED_SLOWEST * 0.9
 
 SWEP.UseHands = true
 
-SWEP.MaxMines = 6
+SWEP.MaxMines = 5
 
-<<<<<<< Updated upstream
-SWEP.Tier = 2
-=======
 SWEP.Tier = 6
->>>>>>> Stashed changes
 
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_MAXIMUM_MINES, 1)
 

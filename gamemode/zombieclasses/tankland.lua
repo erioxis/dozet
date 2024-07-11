@@ -1,18 +1,8 @@
 CLASS.Name = "Tanked"
 CLASS.TranslationName = "class_tank"
-CLASS.Description = "description_eradicator"
+CLASS.Description = "description_tank"
 CLASS.Help = "controls_eradicator"
 
-<<<<<<< Updated upstream
-CLASS.Wave = 5 / 6
-
-CLASS.Health = 1200
-CLASS.Speed = 7
-
-CLASS.CanTaunt = true
-
-CLASS.Points = CLASS.Health/GM.HumanoidZombiePointRatio
-=======
 CLASS.Wave = 7 / 12
 
 CLASS.Pac3Out = {[1] = {
@@ -200,20 +190,13 @@ CLASS.CanTaunt = true
 CLASS.Points = CLASS.Health/GM.HumanoidZombiePointRatio/2
 
 CLASS.DynamicHealth = 0.95
->>>>>>> Stashed changes
 
 CLASS.SWEP = "weapon_zs_tank"
 
 CLASS.Model = Model("models/player/zombie_classic_hbfix.mdl")
 CLASS.OverrideModel = Model("models/Zombie/Poison.mdl")
 
-if SERVER then
-function CLASS:ProcessDamage(pl, dmginfo)
-	if dmginfo:GetInflictor().IsMelee then
-		dmginfo:SetDamage(dmginfo:GetDamage() / 20)
-	end
-end
-end
+
 
 
 CLASS.VoicePitch = 0.6
@@ -381,10 +364,6 @@ end
 
 if SERVER then
 	function CLASS:ProcessDamage(pl, dmginfo)
-<<<<<<< Updated upstream
-		if pl.EradiVived then return end
-
-=======
 		dmgblock = math.random(1,7)
 		if dmginfo:GetDamage() > 200 then 
 			dmginfo:SetDamage(200)
@@ -400,7 +379,6 @@ if SERVER then
 		if inflictor and inflictor.IgnoreNiggers then
 			dmginfo:ScaleDamage(0.1)
 		end
->>>>>>> Stashed changes
 		local damage = dmginfo:GetDamage()
 		
 		if damage >= 80 or damage < pl:Health() then return end
@@ -412,41 +390,33 @@ if SERVER then
 		if bit_band(dmgtype, DMG_ALWAYSGIB) ~= 0 or bit_band(dmgtype, DMG_BURN) ~= 0 or bit_band(dmgtype, DMG_CRUSH) ~= 0 then return end
 
 		if CurTime() < (pl.NextZombieRevive or 0) then return end
-<<<<<<< Updated upstream
-		pl.NextZombieRevive = CurTime() + 4.25
-
-		dmginfo:SetDamage(0)
-		pl:SetHealth(10)
-=======
 		pl.NextZombieRevive = CurTime() + 24.25
 
 
 
 		dmginfo:SetDamage(0)
 		pl:SetHealth(500)
->>>>>>> Stashed changes
 
+
+		if dmginfo:GetInflictor().IsMelee then
+			dmginfo:SetDamage(dmginfo:GetDamage() / 20)
+		end
+		if bit_band(dmginfo:GetDamageType(), DMG_BULLET) ~= 0 then
+			dmginfo:SetDamage(dmginfo:GetDamage() * 0.5)
+		elseif bit_band(dmginfo:GetDamageType(), DMG_SLASH) == 0 and bit_band(dmginfo:GetDamageType(), DMG_CLUB) == 0 then
+			dmginfo:SetDamage(dmginfo:GetDamage() * 0.5)
+		end
 		local status = pl:GiveStatus("revive_slump")
 		if status then
-<<<<<<< Updated upstream
-			status:SetReviveTime(CurTime() + 3)
-			status:SetReviveAnim(3.15)
-			status:SetReviveHeal(130)
-=======
 			status:SetReviveTime(CurTime() + 12)
 			status:SetReviveAnim(12.1)
 			status:SetReviveHeal(500)
->>>>>>> Stashed changes
 
 			pl.EradiVived = true
 		end
 
-<<<<<<< Updated upstream
-		return true
-=======
 
 		return dmginfo
->>>>>>> Stashed changes
 	end
 
 	function CLASS:OnSpawned(pl)

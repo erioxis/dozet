@@ -1,32 +1,27 @@
 INC_SERVER()
 
+
 function ENT:PlayerSet(pPlayer, bExists)
 	pPlayer:SendLua("MySelf:EmitSound(\"buttons/button1.wav\", 50, 35, 0.5)")
 
 	if self:GetStartTime() == 0 then
 		self:SetStartTime(CurTime())
 	end
-
 	hook.Add("EntityTakeDamage", self, self.EntityTakeDamage)
 end
-
 function ENT:Think()
 	local owner = self:GetOwner()
 	local froms = self:GetFromSigil()
 
 	if CurTime() >= self:GetEndTime() then
-<<<<<<< Updated upstream
-		if self:GetTargetSigil():IsValid() then
-=======
 		if froms and froms:IsValid() and self:GetTargetSigil() and self:GetTargetSigil():IsValid() and (owner:Team() == TEAM_HUMAN or self:GetTargetSigil():GetSigilCorrupted()) then
->>>>>>> Stashed changes
 			owner:DoSigilTeleport(self:GetTargetSigil(), froms, self:GetClass() == "status_corruptedteleport")
 		end
 
 		self:Remove()
 	end
 
-	if froms and froms:IsValid() and not froms:IsWeapon() and (froms:GetSigilCorrupted() or owner:GetPos():DistToSqr(froms:GetPos()) > 16384) then
+	if froms and froms:IsValid() and not froms:IsWeapon() and (froms:GetSigilCorrupted() or owner:GetPos():DistToSqr(froms:GetPos()) > 16384) and !owner:IsValidLivingZombie() then
 		self:Remove()
 	end
 

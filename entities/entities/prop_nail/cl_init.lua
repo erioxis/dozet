@@ -208,11 +208,13 @@ function ENT:Draw()--[[
 				surface.SetDrawColor(0, 0, 0, 210 * vis)
 				surface.DrawRect(x - 1, y, mrps/5 + mrps/50 + 1, hei)
 
-				for i = 0, repairs, 200 do
-					local val = math.Clamp(repairs - i, 0, 200)
+				for i = 0, repairs, 100 do
+					local val = math.Clamp(repairs - i, 0, 100)
 
 					surface.SetDrawColor(100, 170, 215, 240 * vis)
 					surface.DrawRect(x + 1 + i/5 + i/50, y + 1, val/5, hei - 2)
+
+
 				end
 
 				local mu = math.Clamp(nhp / mnhp, 0, 1)
@@ -238,18 +240,12 @@ function ENT:Draw()--[[
 				if displayowner then
 					local col = redname and colDead or colText
 					col.a = 125 * vis
-<<<<<<< Updated upstream
-
-					draw.SimpleText(displayowner, "ZS3D2DUnstyleSmallest", 0, y + 20, col, TEXT_ALIGN_CENTER)
-					draw.SimpleText(math.floor(nhp) .. "/" .. math.floor(self:GetMaxNailHealth()), "ZS3D2DUnstyleTiny", x + 25, y - 30, col, TEXT_ALIGN_CENTER)
-=======
 					if scale then 
 						x = x * 3
 						y = y * 2
 					end
 					colNail.r = 255 - green
 					draw.SimpleText(displayowner, "ZS3D2DUnstyleSmallest", 0, y + 20, col, TEXT_ALIGN_CENTER)
->>>>>>> Stashed changes
 				end
 				draw.SimpleText(math.floor(nhp) .. "/" .. math.floor(self:GetMaxNailHealth()), (scale and "ZS3D2DUnstyleSmaller" or "ZS3D2DUnstyleNail"), x + 25, y - 30,  colNail, TEXT_ALIGN_CENTER)
 					draw.SimpleText(math.floor(repairs) .. "/" .. math.floor(mrps), (scale and "ZS3D2DUnstyleSmaller" or  "ZS3D2DUnstyleNail"), x + 25, y - 50, COLOR_CYAN, TEXT_ALIGN_CENTER)

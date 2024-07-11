@@ -39,11 +39,14 @@ local function SetWeaponViewerSWEP(self, swep, category, comps)
 		mins, maxs = viewer.ModelPanel.Entity:GetRenderBounds()
 	end
 	viewer.ModelPanel:SetCamPos(mins:Distance(maxs) * Vector(1.15, 0.75, 0.5))
-	viewer.ModelPanel:SetLookAt((mins + maxs) / 2)
+	viewer.ModelPanel:SetLookAt((mins + maxs) / 3)
 	viewer.m_VBG:SetVisible(true)
 
 	if sweptable.NoDismantle then
 		desctext = desctext .. "\nCannot be dismantled for scrap."
+	end
+	if GAMEMODE.Breakdowns[swep] then
+		desctext = desctext ..translate.Get("on_dismantle_give")..GAMEMODE.ZSInventoryItemData[GAMEMODE.Breakdowns[swep].Result].PrintName
 	end
 
 	viewer.m_Desc:MoveBelow(viewer.m_VBG, 8)

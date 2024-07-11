@@ -32,8 +32,6 @@ end
 function ENT:OnRemove()
 	self:RemoveModels()
 end
-<<<<<<< Updated upstream
-=======
 local colNail = Color(0, 0, 5, 220)
 local colText = Color(240, 240, 240, 105)
 local colDead = Color(230, 80, 80, 95)
@@ -222,4 +220,3 @@ end
 	render.DrawWireframeBox( tr.HitPos, Angle( 0, 0, 0 ), mins, maxs, clr, true )
 
 end]]
->>>>>>> Stashed changes

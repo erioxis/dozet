@@ -32,11 +32,12 @@ SWEP.PounceDelay = 1.25
 SWEP.PounceVelocity = 700
 
 SWEP.RoarTime = 1.6
-
+SWEP.AutoCheck = false
 SWEP.Secondary.Automatic = false
 
 SWEP.NextClimbSound = 0
 SWEP.NextAllowPounce = 0
+
 function SWEP:Think()
 	BaseClass.Think(self)
 

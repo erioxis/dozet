@@ -54,16 +54,17 @@ GM.StarterSoul = {
 	"trinket_cainsoul",   --18
 	"trinket_lazarussoul",	-- 19
 	"trinket_forsoul",  -- 20
-	"trinket_starsoul"  -- 21
+	"trinket_starsoul",  -- 21
+	"trinket_teasoul",  -- 22
+	"trinket_sugersoul", -- 23
+	"trinket_nulledsoul"  -- 24
 }
 GM.Via = {
 	"trinket_via",
 	"trinket_via1",
 	"trinket_via2",
-	"trinket_via3",
+	"trinket_via3"
 }
-<<<<<<< Updated upstream
-=======
 GM.Curses = {
 	"trinket_curse_dropping",
 	"trinket_hurt_curse",
@@ -85,7 +86,6 @@ GM.MedPremium = {
 }
 
 
->>>>>>> Stashed changes
 
 function GM:AddWorldPropConversionRecipe(model, result)
 	local datatab = {Result = result, Index = wcindex}

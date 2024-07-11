@@ -2,15 +2,10 @@ AddCSLuaFile()
 
 SWEP.Base = "weapon_zs_baseshotgun"
 
-<<<<<<< Updated upstream
-SWEP.PrintName = "'Sweeper' Shotgun"
-SWEP.Description = "A pump shotgun with a modest shell number and packs a hefty punch."
-=======
 --SWEP.PrintName = "'Sweeper' Shotgun"
 --SWEP.Description = "A pump shotgun with a modest shell number and packs a hefty punch."
 SWEP.PrintName = translate.Get("wep_sweeper")
 SWEP.Description = translate.Get("wep_d_sweeper")
->>>>>>> Stashed changes
 
 if CLIENT then
 	SWEP.ViewModelFlip = false

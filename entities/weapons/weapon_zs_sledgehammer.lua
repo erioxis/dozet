@@ -1,7 +1,9 @@
 AddCSLuaFile()
 
-SWEP.PrintName = "Sledgehammer"
-SWEP.Description = "A heavy, but powerful melee weapon. A target struck by the force of it will receive considerable knockback."
+--SWEP.PrintName = "Sledgehammer"
+--SWEP.Description = "A heavy, but powerful melee weapon. A target struck by the force of it will receive considerable knockback."
+SWEP.PrintName = ""..translate.Get("wep_sledge")
+SWEP.Description = ""..translate.Get("wep_d_sledge")
 
 if CLIENT then
 	SWEP.ViewModelFOV = 75
@@ -49,8 +51,6 @@ end
 function SWEP:PlayHitFleshSound()
 	self:EmitSound("physics/body/body_medium_break"..math.random(2, 4)..".wav", 75, math.Rand(86, 90))
 end
-<<<<<<< Updated upstream
-=======
 function SWEP:ApplyMeleeDamage(pl, trace, damage)
 	if SERVER and pl:IsPlayer() then
 		local cursed = pl:GetStatus("cursed")
@@ -63,4 +63,3 @@ function SWEP:ApplyMeleeDamage(pl, trace, damage)
 	end
 	self.BaseClass.ApplyMeleeDamage(self, pl, trace, damage)
 end
->>>>>>> Stashed changes

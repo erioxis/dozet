@@ -8,10 +8,10 @@ local cam = cam
 local Particles = {}
 
 local col = Color(220, 0, 0)
+local col1 = Color(33, 65, 209)
 local colprop = Color(220, 220, 0)
 hook.Add("PostDrawTranslucentRenderables", "DrawDamage", function()
 	if #Particles == 0 then return end
-
 	local done = true
 	local curtime = CurTime()
 
@@ -24,24 +24,15 @@ hook.Add("PostDrawTranslucentRenderables", "DrawDamage", function()
 	end
 
 	for _, particle in pairs(Particles) do
-<<<<<<< Updated upstream
-		if particle and curtime < particle.DieTime then
-			local c = particle.Type == 1 and colprop or col
-=======
 		if particle and curtime < (particle.DieTime or 1) then
 			local c = particle.Type == 1 and colprop or not particle.Bool and col or col1
->>>>>>> Stashed changes
 
 			done = false
 
 			c.a = math.Clamp(particle.DieTime - curtime, 0, 1) * 220
-
+			local victim = particle.Entity
 			cam.Start3D2D(particle:GetPos(), ang, 0.1 * GAMEMODE.DamageNumberScale)
-<<<<<<< Updated upstream
-				draw.SimpleText(particle.Amount, "ZS3D2DFont2", 0, 0, c, TEXT_ALIGN_CENTER, TEXT_ALIGN_BOTTOM)
-=======
 			draw.SimpleText(particle.Amount..(victim:IsPlayer() and GAMEMODE.ShowPercDmg and !particle.Bool and " ("..math.Round((particle.Amount/(victim and victim:IsValidLivingZombie() and victim:GetMaxZombieHealth() or victim:IsValid() and victim:GetMaxHealth() or victim.PropHealth or 1) * 100)).."%)" or ""), "ZS3D2DFont2", 0, 0, c, TEXT_ALIGN_CENTER, TEXT_ALIGN_BOTTOM)
->>>>>>> Stashed changes
 			cam.End3D2D()
 		end
 	end
@@ -58,8 +49,10 @@ end)
 local gravity = Vector(0, 0, -500)
 function EFFECT:Init(data)
 	local pos = data:GetOrigin()
+	local bool = (data:GetAttachment() or -1)
 	local amount = data:GetMagnitude()
 	local Type = data:GetScale()
+	local victim = data:GetEntity()
 	local velscal = GAMEMODE.DamageNumberSpeed
 
 	local vel = VectorRand()
@@ -80,6 +73,8 @@ function EFFECT:Init(data)
 	particle:SetVelocity(math.Clamp(amount, 5, 50) * 4 * vel * velscal)
 
 	particle.Amount = amount
+	particle.Entity = victim
+	particle.Bool = bool == 1
 	particle.DieTime = CurTime() + 2 * GAMEMODE.DamageNumberLifetime
 	particle.Type = Type
 

@@ -1,17 +1,11 @@
 AddCSLuaFile()
 
-SWEP.Base = "weapon_zs_fists"
+SWEP.Base = "weapon_zs_fistz"
 
-SWEP.PrintName = "Power Fists"
-SWEP.Description = "A pair of power fists. They are slower than conventional fist combat, but pack a hefty pulse powered punch."
-
-<<<<<<< Updated upstream
-=======
 --SWEP.PrintName = "Power Fists"
 --SWEP.Description = "A pair of power fists. They are slower than conventional fist combat, but pack a hefty pulse powered punch."
 SWEP.PrintName = translate.Get("wep_powerfists")
 SWEP.Description = translate.Get("wep_d_powerfists")
->>>>>>> Stashed changes
 if CLIENT then
 	SWEP.ViewModelFOV = 65
 	SWEP.ViewModelFlip = false
@@ -45,8 +39,9 @@ SWEP.Weight = 4
 
 SWEP.MeleeDamage = 86
 SWEP.LegDamage = 17
+SWEP.HitDistance = 66
 
-SWEP.Unarmed = false
+SWEP.Unarmed = true
 
 SWEP.Undroppable = false
 SWEP.NoPickupNotification = false
@@ -59,13 +54,13 @@ SWEP.SwingSound = Sound( "weapons/zs_power/power1.ogg" )
 SWEP.HitSound = Sound( "weapons/zs_power/power4.wav" )
 
 SWEP.FistKnockback = true
-SWEP.MeleeKnockBack = 200
+SWEP.MeleeKnockBack = 0
 
 SWEP.Primary.Delay = 0.65
 
 SWEP.Tier = 4
 
-GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_FIRE_DELAY, -0.07, 1)
+GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_FIRE_DELAY, -0.009, 1)
 
 function SWEP:OnMeleeHit(hitent, hitflesh, tr)
 	if hitent:IsValid() then

@@ -13,12 +13,8 @@ end
 function meta:HealPlayer(pl, amount, pointmul, nobymsg, poisononly)
 	local healed, rmv = 0, 0
 
-<<<<<<< Updated upstream
-	local health, maxhealth = pl:Health(), pl:IsSkillActive(SKILL_D_FRAIL) and math.floor(pl:GetMaxHealth() * 0.25) or pl:GetMaxHealth()
-=======
 	local cashhealth = pl:GetMaxHealth()
 	local health, maxhealth = pl:Health(), pl:IsSkillActive(SKILL_D_FRAIL) and math.floor(cashhealth * 0.44) or pl:IsSkillActive(SKILL_ABUSE) and math.floor(cashhealth * 0.25) or cashhealth
->>>>>>> Stashed changes
 	local missing_health = maxhealth - health
 	local poison = pl:GetPoisonDamage()
 	local bleed = pl:GetBleedDamage()
@@ -30,14 +26,8 @@ function meta:HealPlayer(pl, amount, pointmul, nobymsg, poisononly)
 
 	amount = amount * multiplier
 
+
 	-- Heal bleed first.
-<<<<<<< Updated upstream
-	if not poisononly and bleed > 0 then
-		rmv = math.min(amount, bleed)
-		pl:AddBleedDamage(-rmv)
-		healed = healed + rmv
-		amount = amount - rmv
-=======
 	if self.RemedyRegen then
 		pl.UltraCharge = pl.UltraCharge+ 1
 		if pl.UltraCharge >= 32 - (self:HasTrinket("remedy_q5") and 10 or 0) then
@@ -67,7 +57,6 @@ function meta:HealPlayer(pl, amount, pointmul, nobymsg, poisononly)
 			healed = healed + rmv
 			amount = amount - rmv
 		end
->>>>>>> Stashed changes
 	end
 	if  amount > 7 and pl:GetStatus('serrated') then
 		pl:RemoveStatus('serrated')
@@ -113,12 +102,8 @@ function meta:HealPlayer(pl, amount, pointmul, nobymsg, poisononly)
 end
 
 local healthpropscalar = {
-<<<<<<< Updated upstream
-	["models/props_c17/door01_left.mdl"] = 0.7
-=======
 	["models/props_c17/door01_left.mdl"] = 2,
 	["models/props_c17/oildrum001_explosive.mdl"] = 0.001
->>>>>>> Stashed changes
 }
 
 function meta:GetDefaultBarricadeHealth()
@@ -459,8 +444,8 @@ function meta:DamageNails(attacker, inflictor, damage, dmginfo)
 
 	if self:GetDTFloat(12) and CurTime() < self:GetDTFloat(12) and self.ReinforceApplier and self.ReinforceApplier:IsValidLivingHuman() then
 		local applier = self.ReinforceApplier
-		local multi = 0.92
-		local dmgbefore = damage * 0.08
+		local multi = 0.88
+		local dmgbefore = damage * 0.1
 		local points = dmgbefore / 8
 
 		dmginfo:SetDamage(dmginfo:GetDamage() * multi)
@@ -469,8 +454,6 @@ function meta:DamageNails(attacker, inflictor, damage, dmginfo)
 		applier.PropDef = (applier.PropDef or 0) + dmgbefore
 		applier:AddPoints(points)
 	end
-<<<<<<< Updated upstream
-=======
 	if self:GetDTFloat(13) and CurTime() < self:GetDTFloat(13) and self.naniteApplier and self.naniteApplier:IsValidLivingHuman() then
 		local applier = self.naniteApplier
 		local multi = 0.20
@@ -509,10 +492,9 @@ function meta:DamageNails(attacker, inflictor, damage, dmginfo)
 		applier.PropDef = (applier.PropDef or 0) + dmgbefore
 		applier:AddPoints(points)
 	end
->>>>>>> Stashed changes
 
 	if gamemode.Call("IsEscapeDoorOpen") then
-		local multi = gamemode.Call("GetEscapeStage") * 1.5
+		local multi = gamemode.Call("GetEscapeStage") * 5
 
 		dmginfo:SetDamage(dmginfo:GetDamage() * multi)
 		damage = damage * multi
@@ -530,9 +512,6 @@ function meta:DamageNails(attacker, inflictor, damage, dmginfo)
 			dmginfo:SetDamage(damage)
 			self:AddUselessDamage(damage)
 		end
-<<<<<<< Updated upstream
-
-=======
 		if attacker.Zban then
 			dmginfo:SetDamage(0)
 			damage = 0
@@ -576,7 +555,6 @@ function meta:DamageNails(attacker, inflictor, damage, dmginfo)
 			end
 		end
 		damage = dmginfo:GetDamage()
->>>>>>> Stashed changes
 		GAMEMODE:DamageFloater(attacker, self, dmginfo:GetDamagePosition(), dmginfo:GetDamage())
 	end
 

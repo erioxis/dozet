@@ -7,12 +7,12 @@ CLASS.TranslationName = "class_chem_zombie"
 CLASS.Description = "description_chem_zombie"
 CLASS.Help = "controls_chem_zombie"
 
-CLASS.Wave = 6 / 6
+CLASS.Wave = 11 / 12
 --CLASS.Sanity = 2 / 3
-CLASS.Health = 345
+CLASS.Health = 3000
 CLASS.SWEP = "weapon_zs_chemzombie"
 CLASS.Model = Model("models/Zombie/Poison.mdl")
-CLASS.Speed = 160
+CLASS.Speed = 220
 
 CLASS.Points = 15
 
@@ -88,7 +88,7 @@ if SERVER then
 		if DUMMY_CHEMZOMBIE:IsValid() then
 			DUMMY_CHEMZOMBIE:SetPos(pos)
 		end
-		util.PoisonBlastDamage(DUMMY_CHEMZOMBIE, pl, pos, 128, 85, true)
+		util.PoisonBlastDamage(DUMMY_CHEMZOMBIE, pl, pos, 320, 125, true)
 
 		pl:CheckRedeem()
 	end

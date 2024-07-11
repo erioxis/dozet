@@ -6,11 +6,11 @@ function ENT:Initialize()
 	self:SetModel("models/props_junk/sawblade001a.mdl")
 	self:PhysicsInitSphere(1)
 	self:SetSolid(SOLID_VPHYSICS)
-	self:SetModelScale(0.25, 0)
+	self:SetModelScale(0.45, 0)
 	self:SetMoveType(MOVETYPE_VPHYSICS)
 	self:SetupGenericProjectile(false)
 
-	self:Fire("kill", "", 3)
+	self:Fire("kill", "", 23)
 end
 
 function ENT:PhysicsUpdate(phys)
@@ -20,9 +20,9 @@ end
 function ENT:PhysicsCollide(data, phys)
 	if self.HitData then return end
 
-	if self.Bounces <= 3 and data.HitEntity and data.HitEntity:IsWorld() then
+	if self.Bounces <= 8 and data.HitEntity and data.HitEntity:IsWorld() then
 		local normal = data.OurOldVelocity:GetNormalized()
-		phys:SetVelocityInstantaneous((2 * data.HitNormal * data.HitNormal:Dot(normal * -1) + normal) * 1500)
+		phys:SetVelocityInstantaneous((2 * data.HitNormal * data.HitNormal:Dot(normal * -1) + normal) * 820)
 
 		self:EmitSound("physics/metal/sawblade_stick3.wav", 70, 250)
 
@@ -46,7 +46,6 @@ function ENT:Think()
 
 		util.Blood(tr.Entity:WorldSpaceCenter(), math.max(0, 15), -self:GetForward(), math.Rand(100, 300), true)
 
-		self:Remove()
 	elseif self.HitData then
 		self:Remove()
 	end

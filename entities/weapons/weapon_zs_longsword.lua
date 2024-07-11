@@ -1,14 +1,9 @@
 AddCSLuaFile()
 
-<<<<<<< Updated upstream
-SWEP.PrintName = "Type XIIIa Longsword"
-SWEP.Description = "Can cleave through multiple zombies in one swing."
-=======
 --SWEP.PrintName = "Type XIIIa Longsword"
 --SWEP.Description = "Can cleave through multiple zombies in one swing."
 SWEP.PrintName = translate.Get("wep_lsword")
 SWEP.Description = translate.Get("wep_d_lsword")
->>>>>>> Stashed changes
 
 if CLIENT then
 	SWEP.ViewModelFOV = 55
@@ -43,7 +38,7 @@ SWEP.WorldModel = "models/weapons/w_crowbar.mdl"
 SWEP.UseHands = true
 
 SWEP.MeleeDamage = 90
-SWEP.MeleeRange = 67
+SWEP.MeleeRange = 110
 SWEP.MeleeSize = 2.5
 
 SWEP.Primary.Delay = 1.25

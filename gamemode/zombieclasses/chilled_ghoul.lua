@@ -5,10 +5,11 @@ CLASS.TranslationName = "class_chilled_ghoul"
 CLASS.Description = "description_chilled_ghoul"
 CLASS.Help = "controls_chilled_ghoul"
 
-CLASS.BetterVersion = "Frigid Revenant"
 
 CLASS.Wave = 0
 CLASS.Unlocked = true
+CLASS.Original = false
+CLASS.Variations = {}
 
 CLASS.Health = 220
 CLASS.Speed = 175

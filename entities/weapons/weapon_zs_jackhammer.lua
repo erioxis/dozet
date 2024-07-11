@@ -1,7 +1,9 @@
 AddCSLuaFile()
 
-SWEP.PrintName = "'Jackhammer' Drum Shotgun"
-SWEP.Description = "An automatic drum shotgun with a large clip size."
+--SWEP.PrintName = "'Jackhammer' Drum Shotgun"
+--SWEP.Description = "An automatic drum shotgun with a large clip size."
+SWEP.PrintName = ""..translate.Get("wep_jackhammer")
+SWEP.Description = ""..translate.Get("wep_d_jackhammer")
 
 if CLIENT then
 	SWEP.Slot = 3
@@ -73,7 +75,7 @@ SWEP.Tier = 4
 
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_MAX_SPREAD, -1.125)
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_MIN_SPREAD, -0.81)
-GAMEMODE:AddNewRemantleBranch(SWEP, 1, "'Anvil' Drum Shotgun", "Uses 3 shells at once, slightly more damage, reduced accuracy", function(wept)
+GAMEMODE:AddNewRemantleBranch(SWEP, 1, ""..translate.Get("wep_jackhammer_r1"), ""..translate.Get("wep_d_jackhammer_r1"), function(wept)
 	wept.Primary.NumShots = wept.Primary.NumShots * 3
 	wept.Primary.Delay = wept.Primary.Delay * 3.3
 	wept.Primary.Damage = wept.Primary.Damage * 1.1

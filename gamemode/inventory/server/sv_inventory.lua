@@ -26,10 +26,7 @@ function meta:AddInventoryItem(item)
 
 	return true
 end
-<<<<<<< Updated upstream
-=======
 
->>>>>>> Stashed changes
 
 function meta:TakeInventoryItem(item)
 	if not self:HasInventoryItem(item) then return false end
@@ -80,8 +77,6 @@ net.Receive("zs_trycraft", function(len, pl)
 
 	pl:TryAssembleItem(component, weapon)
 end)
-<<<<<<< Updated upstream
-=======
 local demiboss = {
 	"comp_soul_alt_h",
 	"comp_soul_health",
@@ -281,7 +276,6 @@ net.Receive("zs_upgrade_trinket", function(len, pl)
 	pl:AddInventoryItem(newi)
 	pl:TakeInventoryItem(item)
 end)
->>>>>>> Stashed changes
 
 function meta:TryAssembleItem(component, heldclass)
 	local heldwep, desiassembly = self:GetWeapon(heldclass)
@@ -307,6 +301,7 @@ function meta:TryAssembleItem(component, heldclass)
 			desiassembly = assembly
 			break
 		end
+
 	end
 
 	if not desiassembly then
@@ -323,12 +318,9 @@ function meta:TryAssembleItem(component, heldclass)
 
 		self:AddInventoryItem(desiassembly)
 		self:CenterNotify(COLOR_LIMEGREEN, translate.ClientGet(self, "crafting_successful"), color_white, "   ("..GAMEMODE.ZSInventoryItemData[desiassembly].PrintName..")")
-<<<<<<< Updated upstream
-=======
 		if desiassembly == "trinket_toykasoul" then
 			self:GiveAchievement("soul")
 		end
->>>>>>> Stashed changes
 	else
 		desitable = weapons.Get(desiassembly)
 		if (not desitable.AmmoIfHas and self:HasWeapon(desiassembly)) or not self:TakeInventoryItem(component) then return end
@@ -357,8 +349,6 @@ function meta:TryAssembleItem(component, heldclass)
 	self:SendLua("surface.PlaySound(\"buttons/lever"..math.random(5)..".wav\")")
 
 end
-<<<<<<< Updated upstream
-=======
 function meta:TryTakeItem(component)
 	local heldwep, desiassembly = self:GetWeapon(heldclass)
 
@@ -404,7 +394,6 @@ function meta:TryTakeItem(component)
 	end
 	self:SendLua("surface.PlaySound(\"buttons/lever"..math.random(5)..".wav\")")
 end
->>>>>>> Stashed changes
 
 function meta:DropInventoryItemByType(itype)
 	if GAMEMODE.ZombieEscape then return end
@@ -414,6 +403,7 @@ function meta:DropInventoryItemByType(itype)
 	if ent:IsValid() then
 		ent:SetInventoryItemType(itype)
 		ent:Spawn()
+		ent:SetOwner(self)
 		ent.DroppedTime = CurTime()
 
 		self:TakeInventoryItem(itype)
@@ -428,8 +418,6 @@ function meta:DropAllInventoryItems()
 	local vVel = self:GetVelocity()
 	local zmax = self:OBBMaxs().z * 0.75
 	for invitem, count in pairs(self:GetInventoryItems()) do
-<<<<<<< Updated upstream
-=======
 		if self:HasTrinket("flower") then
 			self:TakeInventoryItem("trinket_flower")
 		end
@@ -442,7 +430,6 @@ function meta:DropAllInventoryItems()
 		if self:HasTrinket("a_flower") then
 			self:TakeInventoryItem("trinket_a_flower")
 		end
->>>>>>> Stashed changes
 		for i = 1, count do
 			local ent = self:DropInventoryItemByType(invitem)
 			if ent and ent:IsValid() then

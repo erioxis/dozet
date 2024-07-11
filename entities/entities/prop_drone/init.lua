@@ -124,7 +124,7 @@ function ENT:OnTakeDamage(dmginfo)
 end
 
 function ENT:Use(activator, caller)
-	if not activator:IsPlayer() or activator:Team() ~= TEAM_HUMAN or not self:GetObjectOwner():IsValid() or activator:GetInfo("zs_nousetodeposit") ~= "0" then return end
+	if not activator:IsPlayer() or activator:Team() ~= TEAM_HUMAN or not self:GetObjectOwner():IsValid() or activator:GetInfo("zs_nousetodeposit") ~= "0" and not activator:GetInfo("zs_nousetodeposit") == "0" and activator ~= self:GetObjectOwner() then return end
 
 	local ammotype = self.AmmoType
 	local curammo = self:GetAmmo()

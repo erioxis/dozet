@@ -1,15 +1,9 @@
 AddCSLuaFile()
 
-<<<<<<< Updated upstream
-SWEP.PrintName = "Lamp"
-SWEP.Description = "Обычная лампа но что-то в ней не так"
-
-=======
 --SWEP.PrintName = "Lamp"
 --SWEP.Description = "Обычная лампа но что-то в ней не так"
 SWEP.PrintName = translate.Get("wep_lamp")
 SWEP.Description = translate.Get("wep_d_lamp")
->>>>>>> Stashed changes
 if CLIENT then
 	SWEP.ViewModelFOV = 65
 	SWEP.ViewModelFlip = false
@@ -34,11 +28,14 @@ SWEP.HoldType = "melee2"
 
 SWEP.DamageType = DMG_CLUB
 
-SWEP.MeleeDamage = 67
+SWEP.Tier = 1
+
+SWEP.MeleeDamage = 45
 SWEP.MeleeRange = 120
 SWEP.MeleeSize = 1
+SWEP.BlockMultiplierWeapon = 0.5
 
-SWEP.Primary.Delay = 1.2
+SWEP.Primary.Delay = 1.3
 
 SWEP.WalkSpeed = SPEED_SLOW
 
@@ -48,7 +45,7 @@ SWEP.SwingTime = 0.4
 SWEP.SwingHoldType = "melee"
 
 SWEP.AllowQualityWeapons = true
-SWEP.DismantleDiv = 2
+
 
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_FIRE_DELAY, -0.1)
 

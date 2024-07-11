@@ -6,10 +6,10 @@ CLASS.Name = "Elder Ghoul"
 CLASS.TranslationName = "class_elderghoul"
 CLASS.Description = "description_elderghoul"
 CLASS.Help = "controls_elderghoul"
+CLASS.Original = false
+CLASS.Variations = {}
 
-CLASS.BetterVersion = "Noxious Ghoul"
-
-CLASS.Health = 310
+CLASS.Health = 510
 CLASS.Speed = 175
 
 CLASS.Points = CLASS.Health/GM.HumanoidZombiePointRatio

@@ -2,10 +2,10 @@ SWEP.PrintName = "барааааааааааааааа"
 
 SWEP.Base = "weapon_zs_zombie"
 
-SWEP.MeleeDelay = 0.45
+SWEP.MeleeDelay = 0.56
 SWEP.MeleeReach = 70
 SWEP.MeleeSize = 3
-SWEP.MeleeDamage = 3
+SWEP.MeleeDamage = 10
 
 SWEP.DelayWhenDeployed = true
 

@@ -1,15 +1,9 @@
 AddCSLuaFile()
 
-<<<<<<< Updated upstream
-SWEP.PrintName = "'Battleaxe' Handgun"
-SWEP.Description = "An accurate, reliable pistol with considerable damage."
-
-=======
 --SWEP.PrintName = "'Battleaxe' Handgun"
 --SWEP.Description = "An accurate, reliable pistol with considerable damage."
 SWEP.PrintName = translate.Get("wep_baxe")
 SWEP.Description = translate.Get("wep_d_baxe")
->>>>>>> Stashed changes
 SWEP.Slot = 1
 SWEP.SlotPos = 0
 
@@ -31,7 +25,7 @@ SWEP.WorldModel = "models/weapons/w_pist_usp.mdl"
 SWEP.UseHands = true
 
 SWEP.Primary.Sound = Sound("Weapon_USP.Single")
-SWEP.Primary.Damage = 24
+SWEP.Primary.Damage = 27
 SWEP.Primary.NumShots = 1
 SWEP.Primary.Delay = 0.2
 

@@ -1,14 +1,9 @@
 AddCSLuaFile()
 
-<<<<<<< Updated upstream
-SWEP.PrintName = "'Classic' Rifle"
-SWEP.Description = "Хаха классика."
-=======
 --SWEP.PrintName = "'Classic' Rifle"
 --SWEP.Description = "Хаха классика."
 SWEP.PrintName = translate.Get("wep_classic")
 SWEP.Description = translate.Get("wep_d_classic")
->>>>>>> Stashed changes
 SWEP.Slot = 3
 SWEP.SlotPos = 0
 
@@ -64,17 +59,16 @@ SWEP.IronSightsAng = Vector(0, 0, 0)
 
 SWEP.WalkSpeed = SPEED_SLOWER
 
-SWEP.Tier = 4
+SWEP.Tier = 6
 
 SWEP.TracerName = "AR2Tracer"
 
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_RELOAD_SPEED, 0.3)
-<<<<<<< Updated upstream
-GAMEMODE:AddNewRemantleBranch(SWEP, 1, "'Classix' Заебал бомбить", "Uses twice as much ammo, reloads slowly, but overkill damage is dealt as an explosion", function(wept)
-=======
 GAMEMODE:AddNewRemantleBranch(SWEP, 1, translate.Get("wep_classic_r1"), translate.Get("wep_d_classic_r1"), function(wept)
->>>>>>> Stashed changes
 	wept.Primary.ClipSize = 4
+	wept.Primary.NumShots = 1
+	wept.Primary.Damage = wept.Primary.Damage * 2.5
+	wept.HeadshotMulti = 4
 	wept.RequiredClip = 4
 	wept.ReloadSpeed = 0.6
 

@@ -1,9 +1,9 @@
 local PANEL = {}
 
-PANEL.IdealPing = 50
-PANEL.MaxPing = 400
+PANEL.IdealPing = 30
+PANEL.MaxPing = 1000
 PANEL.RefreshTime = 1
-PANEL.PingBars = 5
+PANEL.PingBars = 10
 
 PANEL.m_Player = NULL
 PANEL.m_Ping = 0

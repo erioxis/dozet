@@ -1,7 +1,7 @@
 INC_CLIENT()
 
 ENT.RenderGroup = RENDERGROUP_TRANSLUCENT
-
+local matBeam = Material("Effects/laser1", "smooth")
 function ENT:Initialize()
 	self:DrawShadow(false)
 	self:SetRenderFX(kRenderFxDistort)
@@ -30,8 +30,9 @@ ENT.Rotation = math.random(360)
 
 local matWhite = Material("models/debug/debugwhite")
 local matGlow = Material("sprites/light_glow02_add")
-local cDraw = Color(255, 15, 120)
+
 local cDrawWhite = Color(0, 255, 255)
+local cDraw = Color(125, 0, 0)
 
 local math_sin = math.sin
 local math_cos = math.cos
@@ -46,8 +47,6 @@ local render_DrawQuadEasy = render.DrawQuadEasy
 local render_DrawSprite = render.DrawSprite
 
 function ENT:DrawTranslucent()
-<<<<<<< Updated upstream
-=======
         local distance = MySelf:GetPos():Distance( self:GetPos() )
         local alpha = 255
         local at = self:GetPos():ToScreen()
@@ -67,7 +66,6 @@ function ENT:DrawTranslucent()
         end
             
         render.EndBeam()
->>>>>>> Stashed changes
 	self:RemoveAllDecals()
 
 	local scale = self.ModelScale
@@ -182,4 +180,5 @@ function ENT:DrawTranslucent()
 	particle:SetCollide(true)
 
 	emitter:Finish() emitter = nil collectgarbage("step", 64)
+	
 end

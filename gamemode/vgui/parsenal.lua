@@ -3,7 +3,7 @@ local function pointslabelThink(self)
 	if self.m_LastPoints ~= points then
 		self.m_LastPoints = points
 
-		self:SetText("Points to spend: "..points)
+		self:SetText(translate.Get("spendpoints")..points)
 		self:SizeToContents()
 	end
 end
@@ -18,6 +18,7 @@ hook.Add("Think", "ArsenalMenuThink", function()
 		end
 	end
 end)
+
 
 local function ArsenalMenuCenterMouse(self)
 	local x, y = self:GetPos()
@@ -48,20 +49,16 @@ local function CanBuy(item, pan)
 	if item.MaxStock and not GAMEMODE:HasItemStocks(item.Signature) then
 		return false
 	end
-<<<<<<< Updated upstream
-
-	if not pan.NoPoints and MySelf:GetPoints() < math.floor(item.Price * (MySelf.ArsenalDiscount or 1)) then
-=======
 	local arsd = (MySelf.ArsenalDiscount or 1)
 	if not pan.NoPoints and MySelf:GetPoints() < math.ceil(item.Price * arsd) then
->>>>>>> Stashed changes
 		return false
-	elseif pan.NoPoints and MySelf:GetAmmoCount("scrap") < math.ceil(GAMEMODE:PointsToScrap(item.Price)) then
+	elseif pan.NoPoints and MySelf:GetAmmoCount("scrap") < math.ceil(GAMEMODE:PointsToScrap(item.Price * (MySelf.ScrapDiscount or 1))) then
 		return false
 	end
 
 	return true
 end
+
 
 local function ItemPanelThink(self)
 	local itemtab = FindItem(self.ID)
@@ -77,6 +74,7 @@ local function ItemPanelThink(self)
 				self.NameLabel:InvalidateLayout()
 			end
 		end
+
 
 		if self.StockLabel then
 			local stocks = GAMEMODE:GetItemStocks(self.ID)
@@ -203,6 +201,7 @@ function GM:SupplyItemViewerDetail(viewer, sweptable, shoptbl, from)
 	viewer.m_Title:PerformLayout()
 
 	local desctext = sweptable.Description or ""
+	local bruh = ""
 	if not self.ZSInventoryItemData[shoptbl.SWEP] then
 		local mins, maxs = 0,0
 		if sweptable.WorldModel ~= "" then
@@ -216,11 +215,8 @@ function GM:SupplyItemViewerDetail(viewer, sweptable, shoptbl, from)
 		viewer.m_VBG:SetVisible(true)
 
 		if sweptable.NoDismantle then
-			desctext = desctext .. "\nCannot be dismantled for scrap."
+			desctext = desctext ..translate.Get("nodismantled")
 		end
-<<<<<<< Updated upstream
-
-=======
 		if GAMEMODE.Breakdowns[shoptbl.SWEP] then
 			bruh = bruh ..translate.Get("on_dismantle_give")..self.ZSInventoryItemData[GAMEMODE.Breakdowns[shoptbl.SWEP].Result].PrintName
 		end
@@ -229,7 +225,6 @@ function GM:SupplyItemViewerDetail(viewer, sweptable, shoptbl, from)
 		end
 		viewer.m_Bruh:MoveBelow(viewer.m_VBG, 328)
 		viewer.m_Bruh:SetFont("ZSBodyTextFontBig")
->>>>>>> Stashed changes
 		viewer.m_Desc:MoveBelow(viewer.m_VBG, 8)
 		viewer.m_Desc:SetFont("ZSBodyTextFont")
 	else
@@ -241,12 +236,10 @@ function GM:SupplyItemViewerDetail(viewer, sweptable, shoptbl, from)
 
 		viewer.m_Desc:MoveBelow(viewer.m_Title, 20)
 		viewer.m_Desc:SetFont("ZSBodyTextFontBig")
+		viewer.m_Bruh:MoveBelow(viewer.m_Title, 20)
+		viewer.m_Bruh:SetFont("ZSBodyTextFontBig")
 	end
 	viewer.m_Desc:SetText(desctext)
-<<<<<<< Updated upstream
-
-	self:ViewerStatBarUpdate(viewer, shoptbl.Category ~= ITEMCAT_GUNS and shoptbl.Category ~= ITEMCAT_MELEE, sweptable)
-=======
 	viewer.m_Bruh:SetText(bruh)
 	if from then
 		self:ViewerStatBarUpdate(viewer, false, sweptable)
@@ -254,12 +247,11 @@ function GM:SupplyItemViewerDetail(viewer, sweptable, shoptbl, from)
 		self:ViewerStatBarUpdate(viewer, shoptbl.Category ~= ITEMCAT_GUNS and shoptbl.Category ~= ITEMCAT_MELEE, sweptable)
 	end
 	
->>>>>>> Stashed changes
 
 	if self:HasPurchaseableAmmo(sweptable) and self.AmmoNames[string.lower(sweptable.Primary.Ammo)] then
 		local lower = string.lower(sweptable.Primary.Ammo)
 
-		viewer.m_AmmoType:SetText(self.AmmoNames[lower])
+		viewer.m_AmmoType:SetText(translate.Get(string.lower(string.Implode("",string.Explode(" ","ammo_"..GAMEMODE.AmmoNames[lower])))))
 		viewer.m_AmmoType:PerformLayout()
 
 		local ki = killicon.Get(self.AmmoIcons[lower])
@@ -303,27 +295,20 @@ local function ItemPanelDoClick(self)
 
 	local purb = viewer.m_PurchaseB
 	purb.ID = self.ID
-<<<<<<< Updated upstream
-	purb.DoClick = function() RunConsoleCommand("zs_pointsshopbuy", self.ID, self.NoPoints and "scrap") end
-=======
 
 	purb.DoClick = function() RunConsoleCommand("zs_pointsshopbuy", self.ID, 1,self.NoPoints and "scrap") end
->>>>>>> Stashed changes
 	purb:SetPos(canammo and viewer:GetWide() / 4 - viewer:GetWide() / 8 - 20 or viewer:GetWide() / 4, viewer:GetTall() - 64 * screenscale)
 	purb:SetVisible(true)
 
 	local purl = viewer.m_PurchaseLabel
-	purl:SetPos(purb:GetWide() / 2 - purl:GetWide() / 2, purb:GetTall() * 0.35 - purl:GetTall() * 0.5)
+	purl:SetPos(purb:GetWide() / 2 - purl:GetWide() / 2, purb:GetTall() * 0.35 - purl:GetTall() * 0.3)
 	purl:SetVisible(true)
 	local ppurbl = viewer.m_PurchasePrice
-	local price = self.NoPoints and math.ceil(GAMEMODE:PointsToScrap(shoptbl.Worth)) or math.floor(shoptbl.Worth * (MySelf.ArsenalDiscount or 1))
+	local price = self.NoPoints and math.ceil(GAMEMODE:PointsToScrap(shoptbl.Worth)) or math.ceil(shoptbl.Worth * (MySelf.ArsenalDiscount or 1))
 	ppurbl:SetText(price .. (self.NoPoints and " Scrap" or " Points"))
 	ppurbl:SizeToContents()
 	ppurbl:SetPos(purb:GetWide() / 2 - ppurbl:GetWide() / 2, purb:GetTall() * 0.75 - ppurbl:GetTall() * 0.5)
 	ppurbl:SetVisible(true)
-<<<<<<< Updated upstream
-
-=======
 	ppurbl:Refresh()
 	local brkdown = GAMEMODE.Breakdowns
 	if brkdown[sweptable] and brkdown[sweptable].Result then
@@ -355,7 +340,6 @@ local function ItemPanelDoClick(self)
 		purl:SizeToContents()
 		purb:SetSize(viewer:GetWide() / 2, 34 * screenscale)
 	end
->>>>>>> Stashed changes
 	purb = viewer.m_AmmoB
 	if canammo then
 		purb.AmmoType = GAMEMODE.AmmoToPurchaseNames[sweptable.Primary.Ammo]
@@ -369,12 +353,8 @@ local function ItemPanelDoClick(self)
 	purl:SetVisible(canammo)
 
 	ppurbl = viewer.m_AmmoPrice
-<<<<<<< Updated upstream
-	price = math.floor(9 * (MySelf.ArsenalDiscount or 1))
-=======
 	local arsd = (MySelf.ArsenalDiscount or 1)
 	price = math.ceil(9 * arsd)
->>>>>>> Stashed changes
 	ppurbl:SetText(price .. " Points")
 	ppurbl:SizeToContents()
 	ppurbl:SetPos(purb:GetWide() / 2 - ppurbl:GetWide() / 2, purb:GetTall() * 0.75 - ppurbl:GetTall() * 0.5)
@@ -454,9 +434,6 @@ function GM:AddShopItem(list, i, tab, issub, nopointshop)
 	itempan.DoClick = ItemPanelDoClick
 	itempan.DoRightClick = function()
 		local menu = DermaMenu(itempan)
-<<<<<<< Updated upstream
-		menu:AddOption("Buy", function() RunConsoleCommand("zs_pointsshopbuy", itempan.ID, itempan.NoPoints and "scrap") end)
-=======
 		menu:AddOption(translate.Get("buy"), function() RunConsoleCommand("zs_pointsshopbuy", itempan.ID,  nil,itempan.NoPoints and "scrap") end)
 		if tab.Category == ITEMCAT_AMMO and MySelf:IsValid() and MySelf:GetPoints() >= math.ceil((tab.Price * (MySelf.ArsenalDiscount or 1)) * 2) then
 			menu:AddOption(translate.Get("buy").." x2", function() timer.Create("x2ammobuy",0, 2, function() RunConsoleCommand("zs_pointsshopbuy", itempan.ID,  nil,itempan.NoPoints and "scrap") end) end)
@@ -473,11 +450,10 @@ function GM:AddShopItem(list, i, tab, issub, nopointshop)
 				end)
 			end
 		end
->>>>>>> Stashed changes
 		menu:Open()
 	end
-	list:AddItem(itempan)
 
+	list:AddItem(itempan)
 	if nottrinkets then
 		local mdlframe = vgui.Create("DPanel", itempan)
 		mdlframe:SetSize(wid/2 * screenscale, 100/2 * screenscale)
@@ -506,44 +482,37 @@ function GM:AddShopItem(list, i, tab, issub, nopointshop)
 	end
 
 	local name = tab.Name or ""
-	local namelab = EasyLabel(itempan, name, "ZSHUDFontSmaller", COLOR_WHITE)
-	namelab:SetPos(12 * screenscale, itempan:GetTall() * (nottrinkets and 0.8 or 0.7) - namelab:GetTall() * 0.5)
+	local namelab = EasyLabel(itempan, name, "ZSHUDFontTiniest", COLOR_WHITE)
+	namelab:SetPos(12 * screenscale, itempan:GetTall() * (nottrinkets and 0.8 or 0.7) - namelab:GetTall() * 0.44)
 	if missing_skill then
 		namelab:SetAlpha(30)
 	end
 	itempan.NameLabel = namelab
 
-	local alignri = (issub and (320 + 32) or (nopointshop and 32 or 20)) * screenscale
+	local alignri = (issub and (220 + 32) or (nopointshop and 32 or 20)) * screenscale
 
 	local pricelabel = EasyLabel(itempan, "", "ZSHUDFontTiny")
 	if missing_skill then
 		pricelabel:SetTextColor(COLOR_RED)
 		pricelabel:SetText(GAMEMODE.Skills[tab.SkillRequirement].Name)
 	else
-<<<<<<< Updated upstream
-		local points = math.floor(tab.Price * (MySelf.ArsenalDiscount or 1))
-=======
 		local arsd = (MySelf.ArsenalDiscount or 1)
 		local points = math.ceil(tab.Price * arsd)
->>>>>>> Stashed changes
 		local price = tostring(points)
 	--	if GAMEMODE:GetWave() <= 4 and MySelf.ArsenalDiscount <= 0.75 then
 	--		price = price..translate.Get("max_p")
 	--	end
 		if nopointshop then
-			price = tostring(math.ceil(self:PointsToScrap(tab.Price)))
+			price = tostring(math.ceil(self:PointsToScrap(tab.Price * (MySelf.ScrapDiscount or 1))))
 		end
 		pricelabel:SetText(price..(nopointshop and " Scrap" or " Points"))
 	end
 	pricelabel:SizeToContents()
 	pricelabel:AlignRight(alignri)
+		pricelabel:Refresh()
 
 	if tab.MaxStock then
-<<<<<<< Updated upstream
-		local stocklabel = EasyLabel(itempan, tab.MaxStock.." remaining", "ZSHUDFontTiny")
-=======
 		local stocklabel = EasyLabel(itempan, tab.MaxStock..translate.Get("remaining"), "ZSHUDFontTiny")
->>>>>>> Stashed changes
 		stocklabel:SizeToContents()
 		stocklabel:AlignRight(alignri)
 		stocklabel:SetPos(itempan:GetWide() - stocklabel:GetWide(), itempan:GetTall() * 0.45 - stocklabel:GetTall() * 0.5)
@@ -561,7 +530,7 @@ function GM:AddShopItem(list, i, tab, issub, nopointshop)
 	if not nottrinkets and tab.SubCategory then
 		local catlabel = EasyLabel(itempan, GAMEMODE.ItemSubCategories[tab.SubCategory], "ZSBodyTextFont")
 		catlabel:SizeToContents()
-		catlabel:SetPos(10, itempan:GetTall() * 0.3 - catlabel:GetTall() * 0.5)
+		catlabel:SetPos(10, itempan:GetTall() * 0.3 - catlabel:GetTall() * 0.4)
 	end
 
 	return itempan
@@ -575,6 +544,7 @@ function GM:ConfigureMenuTabs(tabs, tabhei, callback)
 		tab.GetTabHeight = function()
 			return tabhei
 		end
+
 		tab.PerformLayout = function(me)
 			me:ApplySchemeSettings()
 
@@ -625,12 +595,12 @@ function GM:CreateItemViewerGenericElems(viewer)
 
 	local vtitle = EasyLabel(viewer, "", "ZSHUDFontSmaller", COLOR_GRAY)
 	vtitle:SetContentAlignment(8)
-	vtitle:SetSize(viewer:GetWide(), 24 * screenscale)
+	vtitle:SetSize(viewer:GetWide(), 54 * screenscale)
 	viewer.m_Title = vtitle
 
 	local vammot = EasyLabel(viewer, "", "ZSBodyTextFontBig", COLOR_GRAY)
 	vammot:SetContentAlignment(8)
-	vammot:SetSize(viewer:GetWide(), 16 * screenscale)
+	vammot:SetSize(viewer:GetWide(), 26 * screenscale)
 	vammot:MoveBelow(vtitle, 20)
 	vammot:CenterHorizontal(0.35)
 	viewer.m_AmmoType = vammot
@@ -658,7 +628,7 @@ function GM:CreateItemViewerGenericElems(viewer)
 	viewer.ModelPanel = modelpanel
 
 	local itemdesc = vgui.Create("DLabel", viewer)
-	itemdesc:SetFont("ZSBodyTextFont")
+	itemdesc:SetFont("ZSHUDFontTiniest")
 	itemdesc:SetTextColor(COLOR_GRAY)
 	itemdesc:SetMultiline(true)
 	itemdesc:SetWrap(true)
@@ -668,6 +638,20 @@ function GM:CreateItemViewerGenericElems(viewer)
 	itemdesc:SetText("")
 	itemdesc:MoveBelow(vbg, 8)
 	viewer.m_Desc = itemdesc
+
+
+	local itemdesc2 = vgui.Create("DLabel", viewer)
+	itemdesc2:SetFont("ZSBodyTextFontBig")
+	itemdesc2:SetTextColor(COLOR_PURPLE)
+	itemdesc2:SetMultiline(true)
+	itemdesc2:SetWrap(true)
+	itemdesc2:SetAutoStretchVertical(true)
+	itemdesc2:SetWide(viewer:GetWide() - 16)
+	itemdesc2:CenterHorizontal()
+	itemdesc2:SetText("")
+	itemdesc2:MoveBelow(vbg, -16)
+	viewer.m_Bruh = itemdesc2
+
 
 	local itemstats, itemsbs, itemsvs = {}, {}, {}
 	for i = 1, 6 do
@@ -737,15 +721,11 @@ function GM:CreateItemInfoViewer(frame, propertysheet, topspace, bottomspace, me
 
 	local purchaseb = vgui.Create("DButton", viewer)
 	purchaseb:SetText("")
-	purchaseb:SetSize(viewer:GetWide() / 2, 54 * screenscale)
+	purchaseb:SetSize(viewer:GetWide() / 2, 34 * screenscale)
 	purchaseb:SetVisible(false)
 	viewer.m_PurchaseB = purchaseb
 
-<<<<<<< Updated upstream
-	local namelab = EasyLabel(purchaseb, "Purchase", "ZSBodyTextFontBig", COLOR_WHITE)
-=======
 	local namelab = EasyLabel(purchaseb, translate.Get("purchase"), "ZSBodyTextFontBig", COLOR_WHITE)
->>>>>>> Stashed changes
 	namelab:SetVisible(false)
 	viewer.m_PurchaseLabel = namelab
 
@@ -753,13 +733,17 @@ function GM:CreateItemInfoViewer(frame, propertysheet, topspace, bottomspace, me
 	pricelab:SetVisible(false)
 	viewer.m_PurchasePrice = pricelab
 
+	local itm = EasyLabel(purchaseb, "", "ZSBodyTextFont", COLOR_WHITE)
+	itm:SetVisible(false)
+	viewer.m_ItemDSM = itm
+
 	local ammopb = vgui.Create("DButton", viewer)
 	ammopb:SetText("")
 	ammopb:SetSize(viewer:GetWide() / 4, 54 * screenscale)
 	ammopb:SetVisible(false)
 	viewer.m_AmmoB = ammopb
 
-	namelab = EasyLabel(ammopb, "Ammo", "ZSBodyTextFontBig", COLOR_WHITE)
+	namelab = EasyLabel(ammopb, translate.Get("ammo"), "ZSBodyTextFontBig", COLOR_WHITE)
 	namelab:SetVisible(false)
 	viewer.m_AmmoL = namelab
 
@@ -781,11 +765,7 @@ function GM:OpenArsenalMenu()
 		return
 	end
 	local screenscale = BetterScreenScale()
-<<<<<<< Updated upstream
-	local wid, hei = math.min(ScrW(), 900) * screenscale, math.min(ScrH(), 800) * screenscale
-=======
 	local wid, hei = math.min(ScrW(), 1400) * screenscale, math.min(ScrH(), 850) * screenscale
->>>>>>> Stashed changes
 	local tabhei = 24 * screenscale
 
 	local frame = vgui.Create("DFrame")
@@ -793,7 +773,8 @@ function GM:OpenArsenalMenu()
 	frame:Center()
 	frame:SetDeleteOnClose(false)
 	frame:SetTitle(" ")
-	frame:SetDraggable(false)
+	frame:SetDraggable(true)
+	frame:Refresh()
 	if frame.btnClose and frame.btnClose:IsValid() then frame.btnClose:SetVisible(false) end
 	if frame.btnMinim and frame.btnMinim:IsValid() then frame.btnMinim:SetVisible(false) end
 	if frame.btnMaxim and frame.btnMaxim:IsValid() then frame.btnMaxim:SetVisible(false) end
@@ -804,15 +785,9 @@ function GM:OpenArsenalMenu()
 	local topspace = vgui.Create("DPanel", frame)
 	topspace:SetWide(wid - 16)
 
-<<<<<<< Updated upstream
-	local title = EasyLabel(topspace, "The Points Shop", "ZSHUDFontSmall", COLOR_WHITE)
-	title:CenterHorizontal()
-	local subtitle = EasyLabel(topspace, "For all of your zombie apocalypse needs!", "ZSHUDFontTiny", COLOR_WHITE)
-=======
 	local title = EasyLabel(topspace, translate.Get("pointshop1"), "ZSHUDFontSmall", COLOR_WHITE)
 	title:CenterHorizontal()
 	local subtitle = EasyLabel(topspace, translate.Get("pointshop1_desc"), "ZSHUDFontTiny", COLOR_WHITE)
->>>>>>> Stashed changes
 	subtitle:CenterHorizontal()
 	subtitle:MoveBelow(title, 4)
 
@@ -821,11 +796,7 @@ function GM:OpenArsenalMenu()
 	topspace:AlignTop(8)
 	topspace:CenterHorizontal()
 
-<<<<<<< Updated upstream
-	local wsb = EasyButton(topspace, "Worth Menu", 8, 4)
-=======
 	local wsb = EasyButton(topspace, translate.Get("worthshop1"), 8, 4)
->>>>>>> Stashed changes
 	wsb:SetFont("ZSHUDFontSmaller")
 	wsb:SizeToContents()
 	wsb:AlignRight(8)
@@ -866,8 +837,6 @@ function GM:OpenArsenalMenu()
 	propertysheet:MoveBelow(topspace, 4)
 	propertysheet:SetPadding(1)
 	propertysheet:CenterHorizontal(0.33)
-<<<<<<< Updated upstream
-=======
 	--propertysheet:SetPos(30,12)
 	propertysheet:SetVerticalScrollbarEnabled(true)
 
@@ -876,7 +845,6 @@ function GM:OpenArsenalMenu()
 	--scroller:SetVisible(true)
 	--scroller:SetPos(scroller:GetX()-132*screenscale, scroller:GetY())
 
->>>>>>> Stashed changes
 
 	for catid, catname in ipairs(GAMEMODE.ItemCategories) do
 		local hasitems = false
@@ -888,20 +856,15 @@ function GM:OpenArsenalMenu()
 		end
 
 		if hasitems then
+		
 			local tabpane = vgui.Create("DPanel", propertysheet)
 			tabpane.Paint = function() end
 			tabpane.Grids = {}
 			tabpane.Buttons = {}
 
-<<<<<<< Updated upstream
-			local usecats = catid == ITEMCAT_GUNS or catid == ITEMCAT_MELEE or catid == ITEMCAT_TRINKETS
-			local trinkets = catid == ITEMCAT_TRINKETS
-			local offset = 64 * screenscale
-=======
 			local usecats = catid == ITEMCAT_GUNS or catid == ITEMCAT_MELEE or catid == ITEMCAT_TRINKETS or catid == ITEMCAT_MODULES
 			local trinkets = catid == ITEMCAT_TRINKETS or catid == ITEMCAT_MODULES
 			local offset = 84 * screenscale
->>>>>>> Stashed changes
 
 			local itemframe = vgui.Create("DScrollPanel", tabpane)
 			itemframe:SetSize(propertysheet:GetWide(), propertysheet:GetTall() - (usecats and (32 + offset) or 32))
@@ -911,15 +874,13 @@ function GM:OpenArsenalMenu()
 			local mkgrid = function()
 				local list = vgui.Create("DGrid", itemframe)
 				list:SetPos(0, 0)
-				list:SetSize(propertysheet:GetWide() - 312, propertysheet:GetTall())
-				list:SetCols(2)
+				list:SetSize(propertysheet:GetWide() - 325, propertysheet:GetTall())
+				list:SetCols(3)
 				list:SetColWide(280 * screenscale)
 				list:SetRowHeight((trinkets and 64 or 100) * screenscale)
 
 				return list
 			end
-<<<<<<< Updated upstream
-=======
 			if catid == ITEMCAT_AMMO  then
 				slider = vgui.Create( "DNumSlider", propertysheet)
 				slider:SetDefaultValue(1)
@@ -933,27 +894,22 @@ function GM:OpenArsenalMenu()
 				itemframe:AddItem(slider)
 			end
 
->>>>>>> Stashed changes
 
 			local subcats = GAMEMODE.ItemSubCategories
 			if usecats then
 				local ind, tbn = 1
 				for i = ind, (trinkets and #subcats or 6) do
-<<<<<<< Updated upstream
-					local ispacer = trinkets and ((i-1) % 3)+1 or i
-=======
 					local ispacer = trinkets and ((i-1) % 4)+1 or i
->>>>>>> Stashed changes
 					local start = i == (catid == ITEMCAT_GUNS and 2 or ind)
-
-					tbn = EasyButton(tabpane, trinkets and subcats[i] or ("Tier " .. i), 2, 8)
+					local trs = translate.Get
+					tbn = EasyButton(tabpane, trinkets and subcats[i] or (trs("w_tier") .. i), 1, 8)
 					tbn:SetFont(trinkets and "ZSHUDFontSmallest" or "ZSHUDFontSmall")
 					tbn:SetAlpha(start and 255 or 70)
 					tbn:AlignRight((trinkets and -35 or -15) * screenscale -
 						(ispacer - ind) * (ind == 1 and (trinkets and 190 or 110) or 200) * screenscale
 					)
-					tbn:AlignTop(trinkets and i <= 3 and 0 or trinkets and 28 or 16)
-					tbn:SetContentAlignment(6)
+					tbn:AlignTop(trinkets and i <= 4 and 0 or trinkets and 32 or 16)
+					tbn:SetContentAlignment(8)
 					tbn:SizeToContents()
 					tbn.DoClick = function(me)
 						for k, v in pairs(tabpane.Grids) do
@@ -969,9 +925,8 @@ function GM:OpenArsenalMenu()
 			else
 				tabpane.Grid = mkgrid()
 			end
-
 			local sheet = propertysheet:AddSheet(catname, tabpane, GAMEMODE.ItemCategoryIcons[catid], false, false)
-			sheet.Panel:SetPos(0, tabhei + 2)
+			sheet.Panel:SetPos(50, tabhei + 2)
 
 			for i, tab in ipairs(GAMEMODE.Items) do
 				if tab.PointShop and tab.Category == catid then

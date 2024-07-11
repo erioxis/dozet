@@ -7,7 +7,8 @@ CLASS.Wave = 5 / 6
 
 CLASS.Health = 346
 CLASS.Speed = 155
-
+CLASS.Original = false
+CLASS.Variations = {}
 CLASS.CanTaunt = true
 
 CLASS.Points = CLASS.Health/GM.SkeletonPointRatio
@@ -162,18 +163,11 @@ if SERVER then
 	end
 
 	function CLASS:ProcessDamage(pl, dmginfo)
-<<<<<<< Updated upstream
-		if bit_band(dmginfo:GetDamageType(), DMG_BULLET) ~= 0 then
-			dmginfo:SetDamage(dmginfo:GetDamage() * 0.36)
-		elseif bit_band(dmginfo:GetDamageType(), DMG_SLASH) == 0 and bit_band(dmginfo:GetDamageType(), DMG_CLUB) == 0 then
-			dmginfo:SetDamage(dmginfo:GetDamage() * 0.45)
-=======
 		local inflictor = dmginfo:GetInflictor()
 		if bit_band(dmginfo:GetDamageType(), DMG_BULLET) ~= 0 and !inflictor:IsProjectile() then
 			dmginfo:SetDamage(dmginfo:GetDamage()*0.5)
 		elseif bit_band(dmginfo:GetDamageType(), DMG_SLASH) == 0 and bit_band(dmginfo:GetDamageType(), DMG_CLUB) == 0 and !inflictor:IsProjectile()  then
 			dmginfo:SetDamage(dmginfo:GetDamage()*0.5)
->>>>>>> Stashed changes
 		end
 
 		local damage = dmginfo:GetDamage()

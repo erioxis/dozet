@@ -4,10 +4,6 @@ CLASS.Name = "Baracat"
 CLASS.TranslationName = "class_baracat"
 CLASS.Description = "description_baracat"
 CLASS.Help = "controls_asskicker"
-<<<<<<< Updated upstream
-
-
-=======
 CLASS.Model = Model("models/player/catpants.mdl")
 CLASS.OverrideModel = Model("models/player/catpants.mdl")
 
@@ -18,41 +14,37 @@ CLASS.Original = true
 CLASS.Weight = 0.6
 CLASS.Wave = 3 / 6
 
->>>>>>> Stashed changes
 
-CLASS.Wave = 4 / 6
 
 CLASS.KnockbackScale = 0
-
+CLASS.BaraCat = true
 CLASS.FearPerInstance = 1
-<<<<<<< Updated upstream
-
-CLASS.Points = 5
-=======
 CLASS.NoFallDamage = true
 CLASS.NoFallSlowdown = true
 CLASS.NoSlowdown = true
 
 CLASS.Points = 3
->>>>>>> Stashed changes
 
 CLASS.SWEP = "weapon_zs_baracat"
 
-CLASS.Health = 560
-CLASS.Speed = 410
-CLASS.JumpPower = 400
+CLASS.Health = 120
+CLASS.Speed = 870
+CLASS.JumpPower = 1400
 
 
-CLASS.ModelScale = 0.7
+CLASS.ModelScale = 0.65
 CLASS.Hull = {Vector(-16, -16, 0), Vector(16, 16, 32)}
 CLASS.HullDuck = {Vector(-16, -16, 0), Vector(16, 16, 32)}
 CLASS.ViewOffset = Vector(0, 0, 32 * CLASS.ModelScale)
 CLASS.ViewOffsetDucked = Vector(0, 0, 32 * CLASS.ModelScale)
 CLASS.StepSize = 25
 CLASS.CrouchedWalkSpeed = 1
-CLASS.Mass = DEFAULT_MASS * CLASS.ModelScale * 0.5
+CLASS.Mass = DEFAULT_MASS * CLASS.ModelScale * 0.65
 
---CLASS.NoCollideAll = true
+CLASS.NoCollideAll = true
+
+
+CLASS.CanFeignDeath = false
 
 CLASS.CantDuck = true
 

@@ -29,9 +29,17 @@ net.Receive("zs_code_get", function(length)
 end)
 
 
+
 net.Receive("zs_nextboss", function(length)
 	GAMEMODE.NextBossZombie = net.ReadEntity()
-	GAMEMODE.NextBossZombieClass = GAMEMODE.ZombieClasses[net.ReadUInt(8)].Name
+
+	GAMEMODE.NextBossZombieClass = net.ReadString()
+end)
+net.Receive("zs_deminextboss", function(length)
+	GAMEMODE.NextDemiBossZombies = net.ReadFloat()
+	GAMEMODE.NextDemiBossZombie = net.ReadEntity()
+
+	GAMEMODE.NextDemiBossZombieClass = net.ReadString()
 end)
 net.Receive("zs_fuckluasend", function(length)
 	local g = net.ReadInt(16)
@@ -146,18 +154,20 @@ end)
 
 net.Receive("zs_dmg", function(length)
 	local damage = net.ReadUInt(16)
+	local bool = net.ReadBool()
 	local pos = net.ReadVector()
+	local e	= net.ReadEntity()
 
 	if DamageFloaters then
 		local effectdata = EffectData()
 			effectdata:SetOrigin(pos)
+			effectdata:SetAttachment((bool and 1 or 2))
 			effectdata:SetMagnitude(damage)
 			effectdata:SetScale(0)
+			effectdata:SetEntity(e)
 		util.Effect("damagenumber", effectdata)
 	end
 end)
-<<<<<<< Updated upstream
-=======
 net.Receive("zs_at_dmg", function(length)
 	local typed = net.ReadUInt(4)
 	local damage = net.ReadUInt(16)
@@ -219,16 +229,17 @@ net.Receive("HNS.AchievementsGet", function()
 
 end)
 
->>>>>>> Stashed changes
 
 net.Receive("zs_dmg_prop", function(length)
 	local damage = net.ReadUInt(16)
+	local bool = net.ReadBool()
 	local pos = net.ReadVector()
 
 	if DamageFloaters then
 		local effectdata = EffectData()
 			effectdata:SetOrigin(pos)
 			effectdata:SetMagnitude(damage)
+			effectdata:SetAttachment((bool and 2 or 1))
 			effectdata:SetScale(1)
 		util.Effect("damagenumber", effectdata)
 	end
@@ -308,6 +319,12 @@ end)
 net.Receive("zs_classunlock", function(length)
 	GAMEMODE:CenterNotify(COLOR_GREEN, translate.Format("x_unlocked", net.ReadString()))
 end)
+net.Receive("zs_weaponblocked", function(length)
+	GAMEMODE:CenterNotify(COLOR_RED, translate.Format("weaponblocked", net.ReadString()))
+end)
+net.Receive("zs_getacurse", function(length)
+	GAMEMODE:CenterNotify(COLOR_RED, translate.Format("getacurse", net.ReadString()))
+end)
 
 net.Receive( "zs_illegalmechanism", function( length )
 	GAMEMODE:CenterNotify( COLOR_CYAN, translate.Format( "points_for_illegalmechanism", net.ReadInt( 16 ) ) )
@@ -372,8 +389,6 @@ net.Receive("zs_boss_spawned", function(length)
 		MySelf:EmitSound(string.format("npc/zombie_poison/pz_alert%d.wav", math.random(1, 2)), 0, math.random(95, 105))
 	end
 end)
-<<<<<<< Updated upstream
-=======
 net.Receive("zs_champion", function(length)
 	local classindex = net.ReadUInt(8)
 	local classtbl = GAMEMODE.ZombieClasses[classindex]
@@ -436,7 +451,6 @@ net.Receive("zs_demiboss_spawned", function(length)
 		GAMEMODE:CenterNotify(kid, " ", COLOR_YELLOW, translate.Get("x_has_risen_demi"), kid)
 	end
 end)
->>>>>>> Stashed changes
 net.Receive("zs_boss_slain", function(length)
 	local ent = net.ReadEntity()
 	local classindex = net.ReadUInt(8)
@@ -449,6 +463,16 @@ net.Receive("zs_boss_slain", function(length)
 
 	if MySelf:IsValid() then
 		MySelf:EmitSound("ambient/atmosphere/cave_hit4.wav", 0, 150)
+	end
+end)
+net.Receive("zs_demiboss_slain", function(length)
+	local ent = net.ReadEntity()
+	local classindex = net.ReadUInt(8)
+	local classtbl = GAMEMODE.ZombieClasses[classindex]
+	local ki = {killicon = classtbl.SWEP}
+
+	if ent:IsValid() then
+		GAMEMODE:TopNotify(ki, " ", COLOR_YELLOW, translate.Format("demi_boss_dead", ent:Name(), translate.Get(ent:GetZombieClassTable().TranslationName)), ki)
 	end
 end)
 
@@ -507,10 +531,13 @@ net.Receive("zs_endround", function(length)
 end)
 
 net.Receive("zs_healother", function(length)
-	if net.ReadBool() then
-		gamemode.Call("HealedOtherPlayer", net.ReadEntity(), net.ReadFloat())
+	local bool = net.ReadBool()
+	local ent = net.ReadEntity()
+	local amount = net.ReadFloat()
+	if bool then
+		gamemode.Call("HealedOtherPlayer", ent, amount)
 	else
-		GAMEMODE:CenterNotify({killicon = "weapon_zs_medicalkit"}, " ", COLOR_GREEN, translate.Format("healed_x_for_y", net.ReadEntity():Name(), net.ReadFloat()))
+		GAMEMODE:CenterNotify({killicon = "weapon_zs_medicalkit"},"","",{pl_h = ent,amount = amount, other = true})
 	end
 end)
 
@@ -568,12 +595,13 @@ end)
 
 net.Receive("zs_ammopickup", function(length)
 	local amount = net.ReadUInt(16)
-	local ammotype = net.ReadString()
-	local ico = GAMEMODE.AmmoIcons[ammotype] or "weapon_zs_resupplybox"
+	local ammotype2 = net.ReadString()
+	local ico = GAMEMODE.AmmoIcons[ammotype2] or "weapon_zs_resupplybox"
 
-	ammotype = GAMEMODE.AmmoNames[ammotype] or ammotype
+	local ammotype = GAMEMODE.AmmoNames[ammotype2] or ammotype2
+	--ammotype = translate.Get(string.lower(string.Implode("",string.Explode(" ","ammo_"..ammotype)) or ammotype))
 
-	GAMEMODE:CenterNotify({killicon = ico}, " ", COLOR_GREEN, translate.Format("obtained_x_y_ammo", amount, ammotype))
+	GAMEMODE:CenterNotify({killicon = ico},"","",{ammotype = (GAMEMODE.AmmoNames[ammotype2] or ammotype2),amount = amount})
 end)
 
 net.Receive("zs_ammogive", function(length)
@@ -588,6 +616,14 @@ net.Receive("zs_ammogive", function(length)
 
 	GAMEMODE:CenterNotify({killicon = ico}, " ", COLOR_GREEN, translate.Format("gave_x_y_ammo_to_z", amount, ammotype, ent:Name()))
 end)
+net.Receive("zs_credit_takepoints", function(length)
+	local amount = math.Round(net.ReadFloat())
+
+	local ico = "weapon_zs_resupplybox"
+
+
+	GAMEMODE:CenterNotify({killicon = ico}, " ", COLOR_GREEN, translate.Format("taken_x_by_credit", amount))
+end)
 
 net.Receive("zs_ammogiven", function(length)
 	local amount = net.ReadUInt(16)
@@ -599,7 +635,7 @@ net.Receive("zs_ammogiven", function(length)
 
 	ammotype = GAMEMODE.AmmoNames[ammotype] or ammotype
 
-	GAMEMODE:CenterNotify({killicon = ico}, " ", COLOR_GREEN, translate.Format("obtained_x_y_ammo_from_z", amount, ammotype, ent:Name()))
+	GAMEMODE:CenterNotify({killicon = ico}, " ", COLOR_GREEN, translate.Format("obtained_x_y_ammo_from_z", amount, translate.Get(string.lower(string.Implode("",string.Explode(" ","ammo_"..ammotype)))), ent:Name()))
 end)
 
 net.Receive("zs_deployablelost", function(length)
@@ -636,8 +672,6 @@ net.Receive("zs_trinketconsumed", function(length)
 
 	GAMEMODE:CenterNotify({killicon = "weapon_zs_trinket"}, " ", COLOR_RORANGE, translate.Format("trinket_consumed", trinket))
 end)
-<<<<<<< Updated upstream
-=======
 net.Receive("zs_trinketcorrupt", function(length)
 	local trinket = (GAMEMODE.ZSInventoryItemData[net.ReadString()].PrintName or "?")
 	local who = net.ReadString()
@@ -681,7 +715,6 @@ net.Receive("zs_medpremium", function(length)
 	GAMEMODE:CenterNotify({killicon = "weapon_zs_trinket"}, " ", COLOR_GREEN, translate.Format("premiumget", GAMEMODE.ZSInventoryItemData[drop].PrintName))
 end)
 
->>>>>>> Stashed changes
 
 net.Receive("zs_invitem", function(length)
 	local invitemt = net.ReadString()
@@ -716,7 +749,7 @@ net.Receive("zs_healby", function(length)
 
 	if not ent:IsValidPlayer() then return end
 
-	GAMEMODE:CenterNotify({killicon = "weapon_zs_medicalkit"}, " ", COLOR_GREEN, translate.Format("healed_x_by_y", ent:Name(), amount))
+	GAMEMODE:CenterNotify({killicon = "weapon_zs_medicalkit"},"","",{pl_h = ent,amount = amount, other = false})
 end)
 
 net.Receive("zs_buffby", function(length)
@@ -725,7 +758,7 @@ net.Receive("zs_buffby", function(length)
 
 	if not ent:IsValidPlayer() then return end
 
-	GAMEMODE:CenterNotify({killicon = "weapon_zs_medicgun"}, " ", COLOR_GREEN, translate.Format("buffed_x_with_y", ent:Name(), buff))
+	GAMEMODE:CenterNotify({killicon = "weapon_zs_medicgun"}, "","",{pl = ent,weapon = buff, me = true})
 end)
 
 net.Receive("zs_buffwith", function(length)

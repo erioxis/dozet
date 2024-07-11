@@ -15,6 +15,7 @@ local function CollideCallbackSmall(particle, hitpos, hitnormal)
 end
 
 local function CollideCallback(oldparticle, hitpos, hitnormal)
+   if not MySelf:KeyDown(IN_SPEED) then return end
 	if oldparticle:GetDieTime() == 0 then return end
 	oldparticle:SetDieTime(0)
 

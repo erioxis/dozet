@@ -26,8 +26,6 @@ SWEP.Primary.Ammo = "foodpill"
 SWEP.FoodHealth = -345
 SWEP.FoodEatTime = 1
 SWEP.FoodIsLiquid = true
-<<<<<<< Updated upstream
-=======
 function SWEP:Eat()
 	local owner = self:GetOwner()
 
@@ -98,4 +96,3 @@ function SWEP:Eat()
 		owner:StripWeapon(self:GetClass())
 	end
 end
->>>>>>> Stashed changes

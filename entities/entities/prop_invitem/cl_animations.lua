@@ -1,5 +1,6 @@
 function ENT:RenderModels(ble, cmod)
 	if not self.WElements then return end
+	if MySelf:GetInfo("zs_nopickuploot") == "1" then return end
 
 	if not self.wRenderOrder then
 		self.wRenderOrder = {}
@@ -135,6 +136,7 @@ function ENT:GetBoneOrientation( basetab, tab, bone_override )
 end
 
 function ENT:CreateModels( tab )
+	if MySelf:GetInfo("zs_nopickuploot") == "1" then return end
 	if (!tab) then return end
 
 	for k, v in pairs( tab ) do

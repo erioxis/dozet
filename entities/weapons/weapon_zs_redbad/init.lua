@@ -57,8 +57,6 @@ function SWEP:SecondaryAttack()
 	timer.Simple(0.6, function() DoSwing(owner, self) end)
 	timer.Simple(0.75, function() DoFleshThrow(owner, self) end)
 end
-<<<<<<< Updated upstream
-=======
 
 function SWEP:ApplyMeleeDamage(pl, trace, damage)
 	if SERVER and pl:IsPlayer() then
@@ -79,4 +77,3 @@ function SWEP:ApplyMeleeDamage(pl, trace, damage)
 	end
 	self.BaseClass.ApplyMeleeDamage(self, pl, trace, damage)
 end
->>>>>>> Stashed changes

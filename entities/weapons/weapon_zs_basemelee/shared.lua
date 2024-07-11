@@ -16,8 +16,6 @@ SWEP.Secondary.ClipSize = 1
 SWEP.Secondary.DefaultClip = 1
 SWEP.Secondary.Ammo = "dummy"
 SWEP.Secondary.Automatic = true
-<<<<<<< Updated upstream
-=======
 SWEP.BlockTrue = true
 SWEP.IgnoreNiggers = false
 SWEP.Move = true
@@ -27,12 +25,12 @@ SWEP.BlockMultiplierWeapon = 0.3
 
 
 SWEP.Block = false
->>>>>>> Stashed changes
 
 SWEP.WalkSpeed = SPEED_FAST
 
 SWEP.IsMelee = true
 SWEP.MeleeFlagged = false
+SWEP.zKills = 0
 
 SWEP.HoldType = "melee"
 SWEP.SwingHoldType = "grenade"
@@ -51,12 +49,18 @@ SWEP.SwingOffset = Vector(0, 0, 0)
 
 SWEP.AllowQualityWeapons = false
 
+
+
+
+
 SWEP.Weight = 4
 
 local MAT_FLESH = MAT_FLESH
 local MAT_BLOODYFLESH = MAT_BLOODYFLESH
 local MAT_ANTLION = MAT_ANTLION
 local MAT_ALIENFLESH = MAT_ALIENFLESH
+
+
 
 function SWEP:Initialize()
 	GAMEMODE:DoChangeDeploySpeed(self)
@@ -67,8 +71,6 @@ function SWEP:Initialize()
 		self:Anim_Initialize()
 	end
 end
-<<<<<<< Updated upstream
-=======
 
 function SWEP:SetBlock(bool)
    self:SetDTBool(31, bool)
@@ -82,7 +84,6 @@ function SWEP:SetChargeBlock(bool)
  function SWEP:GetChargeBlock()
 	return self:GetDTBool(30)
  end
->>>>>>> Stashed changes
 
 function SWEP:SetupDataTables()
 	self:NetworkVar("Int", 0, "PowerCombo")
@@ -109,27 +110,60 @@ function SWEP:Think()
 		self.IdleAnimation = nil
 		self:SendWeaponAnim(ACT_VM_IDLE)
 	end
+	if self.BlockTrue then
+		if self:GetChargeBlock() and self:GetOwner():KeyReleased(IN_ATTACK2) then
+			self:SetBlock(false)
+			self:SetHoldType(self.HoldType)
+			self:SetWeaponSwingHoldType(self.SwingHoldType)
+			self:SetChargeBlock(false) 
+			self.ParryTiming = false
+		end
+	end
 
 	if self:IsSwinging() and self:GetSwingEnd() <= CurTime() then
 		self:StopSwinging()
 		self:MeleeSwing()
 	end
 end
-
+function SWEP:Move(mv)
+	if self:GetBlockState() and mv:KeyDown(IN_ATTACK2) and not self:GetOwner():GetBarricadeGhosting() then
+		mv:SetMaxSpeed(50)
+		mv:SetMaxClientSpeed(50)	
+		mv:SetSideSpeed(mv:GetSideSpeed() * 0.5)
+	end
+end
 function SWEP:SecondaryAttack()
+	if self.BlockTrue then
+	if self:GetNextSecondaryFire() <= CurTime() and not self:GetOwner():IsHolding() then
+		self:SetBlock(true)
+		self:SetHoldType("revolver")
+		self:SetWeaponSwingHoldType("revolver")
+		self:SetChargeBlock(true) 
+		self.Block = true
+		timer.Create("trueparrydead1",0.35,1, function() 
+			if !self:IsValid() or !self:GetOwner():IsValid() then return false end
+			self.ParryTiming = false
+		end)
+		timer.Create("trueparry",0.25,1, function() 
+			if !self:IsValid() or !self:GetOwner():IsValid() then return false end
+			self.ParryTiming = true
+		end)
+		self:SetNextSecondaryFire(CurTime() + 0.75)
+	end
+
+end
 end
 
+
+
 function SWEP:Reload()
+    self.Block = nil
+	self:SetBlock(false)
 	return false
 end
 
 function SWEP:CanPrimaryAttack()
-<<<<<<< Updated upstream
-	if self:GetOwner():IsHolding() or self:GetOwner():GetBarricadeGhosting() then return false end
-
-=======
 	if self:GetOwner():IsHolding() or self:GetOwner():GetBarricadeGhosting() or (self:GetOwner()[self:GetClass().."NOMELEE"] or 0) > CurTime() then return false end
->>>>>>> Stashed changes
 	return self:GetNextPrimaryFire() <= CurTime() and not self:IsSwinging()
 end
 
@@ -150,7 +184,9 @@ end
 
 function SWEP:PrimaryAttack()
 	if not self:CanPrimaryAttack() then return end
+
 	self:SetNextAttack()
+	
 
 	if self.SwingTime == 0 then
 		self:MeleeSwing()
@@ -175,14 +211,15 @@ function SWEP:Holster()
 
 		return true
 	end
-
+	if self.Block then
+		self:SetBlock(false)
+	end
 	return false
+
 end
 
 function SWEP:StartSwinging()
 	local owner = self:GetOwner()
-<<<<<<< Updated upstream
-=======
 	if self:GetBlockState() then
 		self.ParryTiming = false
 	end
@@ -190,7 +227,6 @@ function SWEP:StartSwinging()
 		owner:AddStamina(-(self.StaminaUse or 13))
 	end
 
->>>>>>> Stashed changes
 
 	if self.StartSwingAnimation then
 		self:SendWeaponAnim(self.StartSwingAnimation)
@@ -244,8 +280,6 @@ function SWEP:MeleeSwing()
 			damagemultiplier = damagemultiplier * 0.85
 		end
 	end
-<<<<<<< Updated upstream
-=======
 	if owner.StaminaHAHA and owner:IsSkillActive(SKILL_SAHA) then
 		if owner:GetStamina() <= 50 then
 			damagemultiplier = damagemultiplier * 1.33
@@ -264,7 +298,6 @@ function SWEP:MeleeSwing()
 	 
 
 
->>>>>>> Stashed changes
 
 	local hitent = tr.Entity
 	local hitflesh = tr.MatType == MAT_FLESH or tr.MatType == MAT_BLOODYFLESH or tr.MatType == MAT_ANTLION or tr.MatType == MAT_ALIENFLESH
@@ -306,10 +339,6 @@ function SWEP:MeleeSwing()
 		self:ServerMeleePostHitEntity(tr, hitent, damagemultiplier)
 	end
 end
-<<<<<<< Updated upstream
-
-function SWEP:PlayerHitUtil(owner, damage, hitent, dmginfo)
-=======
 function SWEP:OnMeleeHit(hitent, hitflesh, tr)
 	local ent = hitent
 	if IsFirstTimePredicted() then
@@ -356,7 +385,6 @@ function SWEP:PlayerHitUtil(owner, damage, hitent, dmginfo)
 	if owner:IsSkillActive(SKILL_HELPER) and SERVER and block then
 		hitent:GiveStatus("target", 10,owner)
 	end
->>>>>>> Stashed changes
 	if owner.MeleePowerAttackMul and owner.MeleePowerAttackMul > 1 then
 		self:SetPowerCombo(self:GetPowerCombo() + 1)
 
@@ -378,9 +406,6 @@ function SWEP:PlayerHitUtil(owner, damage, hitent, dmginfo)
 		dmginfo:SetDamage(damage)
 	end
 end
-<<<<<<< Updated upstream
-
-=======
 function SWEP:OnZombieKilled()
 	owner = self:GetOwner()
 	if owner:IsSkillActive(SKILL_BLOODLOST) then
@@ -392,7 +417,6 @@ function SWEP:OnZombieKilled()
 end
 
 local tierscale = {["0tier"] = 1,["1tier"] = 1.05,["2tier"] = 1.09,["3tier"] = 1.15,["4tier"] = 1.12, ["5tier"] = 1.09, ["6tier"] = 1.05, ["7tier"] = 1}
->>>>>>> Stashed changes
 function SWEP:PostHitUtil(owner, hitent, dmginfo, tr, vel)
 	if self.PointsMultiplier then
 		POINTSMULTIPLIER = self.PointsMultiplier
@@ -445,15 +469,6 @@ function SWEP:MeleeHitEntity(tr, hitent, damagemultiplier)
 
 	local owner = self:GetOwner()
 
-<<<<<<< Updated upstream
-	if SERVER and hitent:IsPlayer() and not self.NoGlassWeapons and owner:IsSkillActive(SKILL_GLASSWEAPONS) then
-		damagemultiplier = damagemultiplier * 3.5
-		owner.GlassWeaponShouldBreak = not owner.GlassWeaponShouldBreak
-	end
-
-	local damage = self.MeleeDamage * damagemultiplier
-
-=======
 	if SERVER then
 		if hitent:IsPlayer() then
 			local wep = hitent:GetActiveWeapon() 
@@ -472,7 +487,6 @@ function SWEP:MeleeHitEntity(tr, hitent, damagemultiplier)
 	end
 
 	local damage = (self.MeleeDamage * damagemultiplier) * (self:GetBlockState() and 0.4 or 1)
->>>>>>> Stashed changes
 	local dmginfo = DamageInfo()
 	dmginfo:SetDamagePosition(tr.HitPos)
 	dmginfo:SetAttacker(owner)
@@ -505,6 +519,8 @@ function SWEP:MeleeHitEntity(tr, hitent, damagemultiplier)
 
 	self:PostHitUtil(owner, hitent, dmginfo, tr, vel)
 end
+
+
 
 function SWEP:StopSwinging()
 	self:SetSwingEnd(0)
@@ -548,6 +564,7 @@ function SWEP:SetWeaponHoldType( t )
 	t = string.lower( t )
 	local index = ActIndex[ t ]
 
+
 	if ( index == nil ) then
 		Msg( "SWEP:SetWeaponHoldType - ActIndex[ \""..t.."\" ] isn't set! (defaulting to normal)\n" )
 		t = "normal"
@@ -589,3 +606,4 @@ function SWEP:TranslateActivity( act )
 
 	return self.ActivityTranslate and self.ActivityTranslate[act] or -1
 end
+

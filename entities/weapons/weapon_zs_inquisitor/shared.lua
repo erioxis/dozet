@@ -1,6 +1,7 @@
-SWEP.PrintName = "'Inquisitor' Crossbow"
-SWEP.Description = "A practical design in a one-hand version. Pierces up to two zombies to deal extra damage."
-
+--SWEP.PrintName = "'Inquisitor' Crossbow"
+--SWEP.Description = "A practical design in a one-hand version. Pierces up to two zombies to deal extra damage."
+SWEP.PrintName = " "..translate.Get("wep_inq")
+SWEP.Description = " "..translate.Get("wep_d_inq")
 SWEP.Base = "weapon_zs_baseproj"
 
 SWEP.HoldType = "pistol"
@@ -34,7 +35,7 @@ SWEP.Tier = 2
 
 SWEP.Primary.ProjVelocity = 1600
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_RELOAD_SPEED, 0.06)
-GAMEMODE:AddNewRemantleBranch(SWEP, 1, "'Absolver' Crossbow", "Higher velocity, more damage, but does not pierce, reloads slower", function(wept)
+GAMEMODE:AddNewRemantleBranch(SWEP, 1, ""..translate.Get("wep_inq_r1"), " "..translate.Get("wep_d_inq_r1"), function(wept)
 	wept.Primary.Damage = wept.Primary.Damage * 1.2
 	wept.Primary.ProjVelocity = 2100
 	wept.Primary.Projectile = "projectile_arrow_cha"

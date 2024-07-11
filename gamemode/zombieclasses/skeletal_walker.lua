@@ -7,6 +7,8 @@ CLASS.Wave = 3 / 12
 
 CLASS.Health = 260
 CLASS.Speed = 150
+CLASS.Variations = {"Skeletal Walker", "Shadow Walker",  "Skeletal Shambler", "Skeletal Crawler", "Shadow Lurker", "Frigid Revenant"}
+CLASS.Original = true
 
 CLASS.CanTaunt = true
 
@@ -14,7 +16,6 @@ CLASS.Points = CLASS.Health/GM.SkeletonPointRatio
 CLASS.Weight = 0.7
 CLASS.SWEP = "weapon_zs_skeleton"
 
-CLASS.BetterVersion = "Skeletal Shambler"
 
 CLASS.Model = Model("models/player/skeleton.mdl")
 
@@ -152,20 +153,12 @@ if SERVER then
 	end
 
 	function CLASS:ProcessDamage(pl, dmginfo)
-<<<<<<< Updated upstream
-		if bit_band(dmginfo:GetDamageType(), DMG_BULLET) ~= 0 then
-			dmginfo:SetDamage(dmginfo:GetDamage() * 0.36)
-		elseif bit_band(dmginfo:GetDamageType(), DMG_SLASH) == 0 and bit_band(dmginfo:GetDamageType(), DMG_CLUB) == 0 then
-			dmginfo:SetDamage(dmginfo:GetDamage() * 0.45)
-		end
-=======
 			if bit_band(dmginfo:GetDamageType(), DMG_BULLET) ~= 0 then
 				dmginfo:SetDamage(dmginfo:GetDamage()*0.3)
 			elseif bit_band(dmginfo:GetDamageType(), DMG_SLASH) == 0 and bit_band(dmginfo:GetDamageType(), DMG_CLUB) == 0 then
 				dmginfo:SetDamage(dmginfo:GetDamage()*0.3)
 			end
 		return dmginfo
->>>>>>> Stashed changes
 	end
 end
 

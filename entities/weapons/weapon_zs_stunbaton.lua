@@ -1,7 +1,8 @@
 AddCSLuaFile()
 
-SWEP.PrintName = "Stun Baton"
-SWEP.Description = "АБСОЛЮТНО БЕЗОПАСНО!(не умеет поджигать)."
+SWEP.PrintName = ""..translate.Get("wep_stunbuton")
+SWEP.Description = ""..translate.Get("wep_d_stunbuton")--"АБСОЛЮТНО БЕЗОПАСНО!(не умеет поджигать)."
+
 
 if CLIENT then
 	SWEP.ViewModelFOV = 50
@@ -15,11 +16,11 @@ SWEP.UseHands = true
 
 SWEP.HoldType = "melee"
 
-SWEP.MeleeDamage = 22
-SWEP.LegDamage = 32
+SWEP.MeleeDamage = 12
+SWEP.LegDamage = 7
 SWEP.MeleeRange = 49
 SWEP.MeleeSize = 1.5
-SWEP.Primary.Delay = 0.7
+SWEP.Primary.Delay = 0.77
 
 SWEP.SwingTime = 0.25
 SWEP.SwingRotation = Angle(60, 0, 0)
@@ -49,8 +50,6 @@ function SWEP:OnMeleeHit(hitent, hitflesh, tr)
 	if hitent:IsValid() and hitent:IsPlayer() then
 		hitent:AddLegDamageExt(self.LegDamage, self:GetOwner(), self, SLOWTYPE_PULSE)
 	end
-<<<<<<< Updated upstream
-=======
 	local ent = tr.Entity
 	if SERVER and math.random(5) == 1 and ent:IsValidLivingZombie() then
 		ent:Ignite(30)
@@ -61,5 +60,5 @@ function SWEP:OnMeleeHit(hitent, hitflesh, tr)
 			end
 		end
 	end
->>>>>>> Stashed changes
 end
+

@@ -89,6 +89,7 @@ function player.GetAllSpectators()
 end
 
 function FindStartingItem(id)
+	if not id then return false end
 	local item = FindItem(id)
 	if item and item.WorthShop then return item end
 end
@@ -133,7 +134,28 @@ function math.unrandom(min, max, need, inv, chances)
 end
 
 function FindItem(id)
+	if not id then return false end
 	return GAMEMODE.Items[id]
+end
+
+function FindMutation(id)
+	if not id then return end
+
+	local t
+
+	local num = tonumber(id)
+	if num then
+		t = GAMEMODE.Mutations[num]
+	else
+		for i, tab in pairs(GAMEMODE.Mutations) do
+			if tab.Signature == id then
+				t = tab
+				break
+			end
+		end
+	end
+
+	if t and t.MutationShop then return t end
 end
 
 -- DEPRECATED behavior. CachedInvisibleEntities and filter tables is nonsense. Move to using functions.
@@ -215,6 +237,11 @@ function WorldVisible(posa, posb)
 	WorldVisibleTrace.endpos = posb
 	return not util.TraceLine(WorldVisibleTrace).Hit
 end
+function WorldVisiblePos(posa, posb)
+	WorldVisibleTrace.start = posa
+	WorldVisibleTrace.endpos = posb
+	return util.TraceLine(WorldVisibleTrace).HitPos
+end
 
 function CosineInterpolation(y1, y2, mu)
 	local mu2 = (1 - math.cos(mu * math.pi)) / 2
@@ -286,20 +313,10 @@ function util.Blood(pos, amount, dir, force, noprediction)
 		effectdata:SetOrigin(pos)
 		effectdata:SetMagnitude(amount)
 		effectdata:SetNormal(dir)
-		effectdata:SetScale(math.max(128, force))
+		effectdata:SetScale(math.max(32, force))
 	util.Effect("bloodstream", effectdata, nil, noprediction)
 end
 
-<<<<<<< Updated upstream
-function util.BlastDamagePlayer(inf, att, center, radius, damage, damagetype, taperfactor)
-	if not att:IsValidPlayer() then ErrorNoHalt("[BlastDamagePlayer] Tried to use a nonplayer") end
-
-	util.BlastDamageEx(inf, att, center, radius * (att.ExpDamageRadiusMul or 1), damage * (att.ExplosiveDamageMul or 1), damagetype, taperfactor)
-end
-
--- I had to make this since the default function checks visibility vs. the entitiy's center and not the nearest position.
-function util.BlastDamageEx(inflictor, attacker, epicenter, radius, damage, damagetype, taperfactor)
-=======
 function util.BlastDamagePlayer(inf, att, center, radius, damage, damagetype, taperfactor, doinddamage, ignoreprop)
 	if not att:IsValidPlayer() then ErrorNoHalt("[BlastDamagePlayer] Tried to use a nonplayer") end
 
@@ -333,7 +350,6 @@ end
 
 -- I had to make this since the default function checks visibility vs. the entitiy's center and not the nearest position.
 --[[function util.BlastDamageEx(inflictor, attacker, epicenter, radius, damage, damagetype, taperfactor, bool)
->>>>>>> Stashed changes
 	local basedmg = damage
 
 	for _, ent in pairs(ents.FindInSphere(epicenter, radius)) do
@@ -343,11 +359,7 @@ end
 				or TrueVisibleFilters(epicenter, ent:EyePos(), inflictor, attacker, ent)
 				or TrueVisibleFilters(epicenter, ent:WorldSpaceCenter(), inflictor, attacker, ent) then
 
-<<<<<<< Updated upstream
-				ent:TakeSpecialDamage(((radius - nearest:Distance(epicenter)) / radius) * basedmg, damagetype, attacker, inflictor, nearest)
-=======
 				ent:TakeSpecialDamage((((radius - nearest:Distance(epicenter)) / radius) * basedmg) * (ent == attacker and bool and (ent.IndDamageTaken or 1) or 1), damagetype, attacker, inflictor, nearest)
->>>>>>> Stashed changes
 
 				if taperfactor and ent:IsPlayer() then
 					basedmg = basedmg * taperfactor

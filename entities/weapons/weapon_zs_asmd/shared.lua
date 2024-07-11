@@ -1,7 +1,6 @@
 DEFINE_BASECLASS("weapon_zs_base")
 
-SWEP.PrintName = "'ASMD' Shock Rifle"
-
+SWEP.PrintName = " "..translate.Get("wep_asmd")
 SWEP.Slot = 3
 SWEP.SlotPos = 0
 

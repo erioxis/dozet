@@ -10,7 +10,6 @@ CLASS.Boss = true
 CLASS.Health = 3999
 CLASS.Speed = 250
 
-CLASS.Points = 30
 
 CLASS.SWEP = "weapon_zs_frostshade"
 
@@ -87,8 +86,6 @@ if SERVER then
 				local status = pl:GiveStatus("frostshadeshield")
 				if status and status:IsValid() then
 					status:SetStateEndTime(curtime + 0.5)
-<<<<<<< Updated upstream
-=======
 					local give = 0
 					for _, ent in pairs(player.FindInSphere(pl:GetPos(), 238)) do
 						if ent:IsValidLivingZombie() and pl ~= ent then
@@ -98,7 +95,6 @@ if SERVER then
 						end
 					end
 					pl:AddShieldStats(give)
->>>>>>> Stashed changes
 
 					for _, ent in ipairs(ents.FindByClass("env_frostshadecontrol")) do
 						if ent:IsValid() and ent:GetOwner() == pl then

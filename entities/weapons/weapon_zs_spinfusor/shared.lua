@@ -1,12 +1,7 @@
-<<<<<<< Updated upstream
-SWEP.PrintName = "'Spinfusor' Pulse Disc Launcher"
-SWEP.Description = "Launches pulse projectiles that react on walls, sending energy back in the direction they travelled."
-=======
 --SWEP.PrintName = "'Spinfusor' Pulse Disc Launcher"
 --SWEP.Description = "Launches pulse projectiles that react on walls, sending energy back in the direction they travelled."
 SWEP.PrintName = translate.Get("wep_spinner")
 SWEP.Description = translate.Get("wep_d_spinner")
->>>>>>> Stashed changes
 
 SWEP.Slot = 3
 SWEP.SlotPos = 0

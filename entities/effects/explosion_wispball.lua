@@ -66,9 +66,9 @@ function EFFECT:Init(data)
 			local visionaltermul = MySelf.VisionAlterDurationMul or 1
 			if power > 0.5 then
 				--MySelf:SetDSP(35)
-				util.WhiteOut(power * 4 * visionaltermul, 2 * visionaltermul)
+				util.WhiteOut(power * 2 * visionaltermul, 2 * visionaltermul)
 			elseif power > 0 then
-				util.WhiteOut(power * 4 * visionaltermul)
+				util.WhiteOut(power * 2 * visionaltermul)
 			end
 		end
 	end

@@ -1,13 +1,14 @@
 SWEP.Base = "weapon_zs_basemelee"
 
-SWEP.PrintName = "Carpenter's Hammer"
-SWEP.Description = "A simple but extremely useful tool. Allows you to hammer in nails to make barricades.\nPress SECONDARY FIRE to hammer in nail. It will be attached to whatever is behind it.\nPress RELOAD to take a nail out.\nUse PRIMARY FIRE to bash zombie brains or to repair damaged nails.\nYou get a point bonus for repairing damaged nails but a point penalty for removing another player's nails."
+SWEP.PrintName = translate.Get("wep_hammer")
+SWEP.Description = translate.Get("wep_d_hammer")
 
 SWEP.DamageType = DMG_CLUB
 
 SWEP.ViewModel = "models/weapons/v_hammer/c_hammer.mdl"
 SWEP.WorldModel = "models/weapons/w_hammer.mdl"
 SWEP.UseHands = true
+SWEP.BlockTrue = false
 
 SWEP.Primary.ClipSize = 1
 SWEP.Primary.Automatic = true
@@ -20,13 +21,8 @@ SWEP.Secondary.DefaultClip = 1
 SWEP.Secondary.Ammo = "dummy"
 
 --SWEP.MeleeDamage = 35 -- Reduced due to instant swing speed
-<<<<<<< Updated upstream
-SWEP.MeleeDamage = 21
-SWEP.MeleeRange = 57
-=======
 SWEP.MeleeDamage = 1
 SWEP.MeleeRange = 56
->>>>>>> Stashed changes
 SWEP.MeleeSize = 0.3
 
 SWEP.MaxStock = 10
@@ -49,6 +45,7 @@ SWEP.AllowQualityWeapons = true
 GAMEMODE:SetPrimaryWeaponModifier(SWEP, WEAPON_MODIFIER_FIRE_DELAY, -0.07)
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_MELEE_RANGE, 3, 1)
 
+
 function SWEP:SetNextAttack()
 	local owner = self:GetOwner()
 	local armdelay = owner:GetMeleeSpeedMul()
@@ -62,3 +59,4 @@ end
 function SWEP:PlayRepairSound(hitent)
 	hitent:EmitSound("npc/dog/dog_servo"..math.random(7, 8)..".wav", 70, math.random(100, 105))
 end
+

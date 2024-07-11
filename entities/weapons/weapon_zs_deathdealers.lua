@@ -1,15 +1,10 @@
 AddCSLuaFile()
 
-<<<<<<< Updated upstream
-SWEP.PrintName = "'Deathdealers' Dual Shotguns"
-SWEP.Description = "A unique pair of fast firing, high damage shotguns. Reloads quickly by quickly replacing the shotguns used with a new pair, throwing the old away."
-=======
 --SWEP.PrintName = "'Deathdealers' Dual Shotguns"
 --SWEP.Description = "A unique pair of fast firing, high damage shotguns. Reloads quickly by quickly replacing the shotguns used with a new pair, throwing the old away."
 SWEP.PrintName = translate.Get("wep_dualshot")
 SWEP.Description = translate.Get("wep_d_dualshot")
 SWEP.ShotGunHeat = true
->>>>>>> Stashed changes
 
 SWEP.Slot = 3
 SWEP.SlotPos = 0
@@ -68,13 +63,8 @@ SWEP.WorldModel = "models/weapons/w_pist_elite.mdl"
 SWEP.FakeWorldModel = "models/weapons/w_shotgun.mdl"
 SWEP.UseHands = true
 
-<<<<<<< Updated upstream
-SWEP.Primary.Damage = 15.75
-SWEP.Primary.NumShots = 8
-=======
 SWEP.Primary.Damage = 17.5
 SWEP.Primary.NumShots = 7
->>>>>>> Stashed changes
 SWEP.Primary.Delay = 0.6
 
 SWEP.Primary.ClipSize = 8
@@ -88,10 +78,6 @@ SWEP.ConeMin = 4
 
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_MAX_SPREAD, -0.75)
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_MIN_SPREAD, -0.5)
-<<<<<<< Updated upstream
-
-SWEP.Tier = 5
-=======
 GAMEMODE:AddNewRemantleBranch(SWEP, 1, translate.Get("wep_dualshot_r1"), translate.Get("wep_d_dualshot_r1"), function(wept)
 	wept.Primary.Delay = wept.Primary.Delay * 1.21
 	wept.Primary.Damage = wept.Primary.Damage * 0.8
@@ -111,7 +97,6 @@ function SWEP:OnZombieKilled()
 end
 
 SWEP.Tier = 6
->>>>>>> Stashed changes
 SWEP.MaxStock = 2
 
 function SWEP:SendReloadAnimation()
@@ -176,34 +161,6 @@ function SWEP:GetTracerOrigin()
 	end
 end
 
-<<<<<<< Updated upstream
-function SWEP:OnZombieKilled()
-	local killer = self:GetOwner()
-
-	if killer:IsValid() then
-		local reaperstatus = killer:GiveStatus("reaper", 10)
-		if reaperstatus and reaperstatus:IsValid() then
-			reaperstatus:SetDTInt(1, math.min(reaperstatus:GetDTInt(1) + 1, 100))
-			killer:EmitSound("hl1/ambience/particle_suck1.wav", 55, 150 + reaperstatus:GetDTInt(1) * 30, 0.45)
-		end
-	end
-end
-
-function SWEP.BulletCallback(attacker, tr)
-	local hitent = tr.Entity
-	if hitent:IsValidLivingZombie() and hitent:Health() <= hitent:GetMaxHealthEx() * 0.04 and gamemode.Call("PlayerShouldTakeDamage", hitent, attacker) then
-		if SERVER then
-			hitent:SetWasHitInHead()
-		end
-		hitent:TakeSpecialDamage(hitent:Health(), DMG_DIRECT, attacker, attacker:GetActiveWeapon(), tr.HitPos)
-		hitent:EmitSound("npc/roller/blade_out.wav", 80, 125)
-	end
-end
-
-if not CLIENT then return end
-
-=======
->>>>>>> Stashed changes
 function SWEP:Draw3DHUD(vm, pos, ang)
 	self.BaseClass.Draw3DHUD(self, vm, pos, ang)
 

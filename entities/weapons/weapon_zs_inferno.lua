@@ -1,15 +1,9 @@
 AddCSLuaFile()
 
-<<<<<<< Updated upstream
-SWEP.PrintName = "'Inferno' AUG"
-SWEP.Description = "A very accurate assault rifle with great damage output and a high clip size."
-
-=======
 --SWEP.PrintName = "'Inferno' AUG"
 --SWEP.Description = "A very accurate assault rifle with great damage output and a high clip size."
 SWEP.PrintName = translate.Get("wep_inferno")
 SWEP.Description = translate.Get("wep_d_inferno")
->>>>>>> Stashed changes
 SWEP.Slot = 2
 SWEP.SlotPos = 0
 
@@ -59,25 +53,4 @@ SWEP.MaxStock = 3
 SWEP.IronSightsAng = Vector(-1, -1, 0)
 SWEP.IronSightsPos = Vector(-3, 4, 3)
 
-<<<<<<< Updated upstream
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_RELOAD_SPEED, 0.1)
-GAMEMODE:AddNewRemantleBranch(SWEP, 1, "'Inferno' Incendiary Rifle", "Fires incendiary assault rifle rounds,overdamage!", function(wept)
-	wept.Primary.Damage = wept.Primary.Damage * 2
-
-	wept.BulletCallback = function(attacker, tr, dmginfo)
-		local ent = tr.Entity
-		if SERVER and math.random(6) == 1 and ent:IsValidLivingZombie() then
-			ent:Ignite(40)
-			for __, fire in pairs(ents.FindByClass("entityflame")) do
-				if fire:IsValid() and fire:GetParent() == ent then
-					fire:SetOwner(attacker)
-					fire:SetPhysicsAttacker(attacker)
-					fire.AttackerForward = attacker
-				end
-			end
-		end
-	end
-end)
-=======
-GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_RELOAD_SPEED, 0.1)
->>>>>>> Stashed changes

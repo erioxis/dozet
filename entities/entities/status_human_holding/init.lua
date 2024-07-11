@@ -35,12 +35,8 @@ function ENT:Initialize()
 		object.IgnoreTraces = true
 		object.IgnoreBullets = true
 
-<<<<<<< Updated upstream
-		for _, ent in pairs(ents.FindByClass("logic_pickupdrop")) do
-=======
 
 		for _, ent in ipairs(ents.FindByClass("logic_pickupdrop")) do
->>>>>>> Stashed changes
 			if ent.EntityToWatch == object:GetName() and ent:IsValid() then
 				ent:Input("onpickedup", owner, object, "")
 			end
@@ -57,6 +53,9 @@ function ENT:Initialize()
 			objectphys:AddGameFlag(FVPHYSICS_NO_IMPACT_DMG)
 			objectphys:AddGameFlag(FVPHYSICS_NO_NPC_IMPACT_DMG)
 
+			
+
+
 			self:SetObjectMass(objectphys:GetMass())
 
 			object.PreHoldCollisionGroup = object.PreHoldCollisionGroup or object:GetCollisionGroup()
@@ -67,12 +66,6 @@ function ENT:Initialize()
 			object._OriginalMass = objectphys:GetMass()
 
 			objectphys:EnableGravity(false)
-<<<<<<< Updated upstream
-			objectphys:SetMass(2)
-
-			object:SetOwner(owner)
-			object:SetCollisionGroup(COLLISION_GROUP_WEAPON)
-=======
 			objectphys:SetMass(50)
 			
 			if object:GetOwner() then
@@ -82,7 +75,6 @@ function ENT:Initialize()
 			if object:GetCollisionGroup() ~= COLLISION_GROUP_WORLD then
 				object:SetCollisionGroup(COLLISION_GROUP_WEAPON)
 			end
->>>>>>> Stashed changes
 			object:SetRenderMode(RENDERMODE_TRANSALPHA)
 			object:SetAlpha(180)
 
@@ -98,7 +90,7 @@ function ENT:Initialize()
 					child.PreHoldAlpha = child.PreHoldAlpha or child:GetAlpha()
 					child.PreHoldRenderMode = child.PreHoldRenderMode or child:GetRenderMode()
 
-					child:SetAlpha(180)
+					child:SetAlpha(110)
 					child:SetRenderMode(RENDERMODE_TRANSALPHA)
 				end
 
@@ -107,6 +99,8 @@ function ENT:Initialize()
 			end
 
 			object:CollisionRulesChanged()
+			
+
 		end
 	end
 end
@@ -202,104 +196,16 @@ concommand.Add("_zs_rotateang", function(sender, command, arguments)
 	local y = tonumbersafe(arguments[2])
 
 	if x and y then
+--		angle:RotateAroundAxis(angle:Right(),ho)
+--angle:RotateAroundAxis(angle:Up(),range-(range*2)*((num)/maxNum))
 		sender.InputMouseX = math.NormalizeAngle(x)--sender.InputMouseX + math.Clamp(x * 0.02, -180, 180)
-		sender.InputMouseY = math.NormalizeAngle(y)--sender.InputMouseY + math.Clamp(y * 0.02, -180, 180)
+		sender.InputMouseY = math.NormalizeAngle(y)--sender.InputMouseY + math.Clamp(y * 0.02, -180, 180) --sender.InputMouseY + math.Clamp(y * 0.02, -180, 180)
+		--sender.InputMouseX = math.Clamp(x * 0.02, -180, 180)
+		--sender.InputMouseY = math.Clamp(y * 0.02, -180, 180)
 	end
 end)
 
 function ENT:Think()
-<<<<<<< Updated upstream
-	local ct = CurTime()
-
-	local frametime = ct - (self.LastThink or ct)
-	self.LastThink = ct
-
-	local object = self:GetObject()
-	local owner = self:GetOwner()
-	if not object:IsValid() or object:IsNailed() or not owner:IsValid() or not owner:Alive() or owner:Team() ~= TEAM_HUMAN then
-		self:Remove()
-		return
-	end
-
-	local shootpos = owner:GetShootPos()
-	local nearestpoint = object:NearestPoint(shootpos)
-
-	local objectphys = object:GetPhysicsObject()
-	if object:GetMoveType() ~= MOVETYPE_VPHYSICS or not objectphys:IsValid() or owner:GetGroundEntity() == object then
-		self:Remove()
-		return
-	end
-
-	if self:GetIsHeavy() then
-		if self:GetHingePos():DistToSqr(self:GetPullPos()) >= 4096 then
-			self:Remove()
-			return
-		end
-	elseif nearestpoint:DistToSqr(shootpos) >= 4096 then
-		self:Remove()
-		return
-	end
-
-	objectphys:Wake()
-
-	if owner:KeyPressed(IN_ATTACK) then
-		object:SetPhysicsAttacker(owner)
-
-		self:Remove()
-		return
-	elseif self:GetIsHeavy() then
-		local pullpos = self:GetPullPos()
-		local hingepos = self:GetHingePos()
-		objectphys:ApplyForceOffset(objectphys:GetMass() * frametime * 450 * (pullpos - hingepos):GetNormalized(), hingepos)
-	elseif owner:KeyDown(IN_ATTACK2) and not owner:GetActiveWeapon().NoPropThrowing then
-		owner:ConCommand("-attack2")
-		objectphys:ApplyForceCenter(objectphys:GetMass() * math.Clamp(1.25 - math.min(1, (object:OBBMins():Length() + object:OBBMaxs():Length()) / CARRY_DRAG_VOLUME), 0.25, 1) * 500 * owner:GetAimVector() * (owner.ObjectThrowStrengthMul or 1))
-		object:SetPhysicsAttacker(owner)
-
-		self:Remove()
-		return
-	else
-		if not self.ObjectPosition or not owner:KeyDown(IN_SPEED) then
-			local obbcenter = object:OBBCenter()
-			local objectpos = shootpos + owner:GetAimVector() * 48
-			objectpos = objectpos - obbcenter.z * object:GetUp()
-			objectpos = objectpos + obbcenter.y * object:GetRight()
-			objectpos = objectpos - obbcenter.x * object:GetForward()
-			self.ObjectPosition = objectpos
-			if not self.ObjectAngles then
-				self.ObjectAngles = object:GetAngles()
-			end
-		end
-
-		if owner:KeyDown(IN_SPEED) then
-			if owner:KeyPressed(IN_SPEED) then
-				self.ObjectAngles = object:GetAngles()
-			end
-		elseif owner:KeyDown(IN_WALK) then
-			local xdiff = math.NormalizeAngle(self.StartX - (owner.InputMouseX or 0))
-			local ydiff = math.NormalizeAngle(self.StartY - (owner.InputMouseY or 0))
-			local sxdiff = xdiff * FrameTime() * 8
-			local sydiff = ydiff * FrameTime() * 8
-
-			self.ObjectAngles:RotateAroundAxis(owner:GetUp(), sxdiff)
-			self.ObjectAngles:RotateAroundAxis(owner:GetRight(), sydiff)
-
-			self.StartX = math.NormalizeAngle(self.StartX - (sxdiff))
-			self.StartY = math.NormalizeAngle(self.StartY - (sydiff))
-		end
-
-		ShadowParams.pos = self.ObjectPosition
-		ShadowParams.angle = self.ObjectAngles
-		ShadowParams.deltatime = frametime
-		objectphys:ComputeShadowControl(ShadowParams)
-	end
-
-	object:SetPhysicsAttacker(owner)
-	object.LastHeld = CurTime()
-
-	self:NextThink(ct)
-	return true
-=======
 	return GLOBAL_ROTATOR(self)
->>>>>>> Stashed changes
 end
+

@@ -9,117 +9,6 @@ function statusValueFunction(statusname)
 	end
 end
 
-local statusdisplays = {
-{
-	Color = Color(180, 200, 0),
-	Name = "POISON!",
-	ValFunc = function(self, lp)
-		return lp:GetPoisonDamage()
-	end,
-	Max = GM.MaxPoisonDamage or 50,
-	Icon = Material("zombiesurvival/poison.png")
-},
-{
-	Color = Color(220, 0, 0),
-	Name = "BLEED!",
-	ValFunc = function(self, lp)
-		return lp:GetBleedDamage()
-	end,
-	Max = GM.MaxBleedDamage or 50,
-	Icon = Material("zombiesurvival/bleed.png")
-},
-{
-	Color = Color(255, 50, 50),
-	Name = "ENFEEBLE!",
-	ValFunc = statusValueFunction("enfeeble"),
-	Max = 10,
-	Icon = Material("zombiesurvival/infeeble.png")
-},
-{
-	Color = Color(90, 90, 90),
-	Name = "DIM VISION!",
-	ValFunc = statusValueFunction("dimvision"),
-	Max = 10,
-	Icon = Material("zombiesurvival/dim_vision.png")
-},
-{
-	Color = Color(75, 140, 75),
-	Name = "SLOW!",
-	ValFunc = statusValueFunction("slow"),
-	Max = 8,
-	Icon = Material("zombiesurvival/slow.png")
-},
-{
-	Color = Color(0, 135, 255),
-	Name = "FROST!",
-	ValFunc = statusValueFunction("frost"),
-	Max = 9,
-	Icon = Material("zombiesurvival/frost.png")
-},
-{
-	Color = Color(155, 0, 255),
-	Name = "TREMOR!",
-	ValFunc = statusValueFunction("frightened"),
-	Max = 10,
-	Icon = Material("zombiesurvival/tremors.png")
-},
-{
-	Color = Color(255, 120, 0),
-	Name = "SICKNESS!",
-	ValFunc = statusValueFunction("sickness"),
-	Max = 15,
-	Icon = Material("zombiesurvival/sickness.png")
-},
-{
-	Color = Color(157, 75, 20),
-	Name = "KNOCK DOWN!",
-	ValFunc = statusValueFunction("knockdown"),
-	Max = 5,
-	Icon = Material("zombiesurvival/knock_down.png")
-},
-{
-	Color = Color(200, 100, 90),
-	Name = "STRENGTH!",
-	ValFunc = statusValueFunction("strengthdartboost"),
-	Max = 10,
-	Icon = Material("zombiesurvival/strength_shot.png")
-},
-{
-	Color = Color(170, 200, 120),
-	Name = "ADRENALINE!",
-	ValFunc = statusValueFunction("adrenalineamp"),
-	Max = 10,
-	Icon = Material("zombiesurvival/speed_up.png")
-},
-{
-	Color = Color(130, 220, 110),
-	Name = "SPEED!",
-	ValFunc = statusValueFunction("healdartboost"),
-	Max = 10,
-	Icon = Material("zombiesurvival/speed_up.png")
-},
-{
-	Color = Color(90, 120, 220),
-	Name = "DEFENCE!",
-	ValFunc = statusValueFunction("medrifledefboost"),
-	Max = 10,
-	Icon = Material("zombiesurvival/defense.png")
-},
-{
-	Color = Color(130, 30, 140),
-	Name = "REAPER!",
-	ValFunc = statusValueFunction("reaper"),
-	Max = 14,
-	Icon = Material("zombiesurvival/reaper.png")
-},
-{
-	Color = Color(235, 160, 40),
-	Name = "Renegade!",
-	ValFunc = statusValueFunction("renegade"),
-	Max = 14,
-	Icon = Material("zombiesurvival/headshot_stacks.png")
-}
-}
 
 local PANEL = {}
 
@@ -131,11 +20,11 @@ function PANEL:Init()
 
 	self.StatusPanels = {}
 
-	for _, statusdisp in pairs(statusdisplays) do
+	for _, statusdisp in pairs(GAMEMODE.Statuses) do
 		status = vgui.Create("ZSStatus", self)
 		status:SetAlpha(240)
 		status:SetColor(statusdisp.Color)
-		status:SetMemberName(statusdisp.Name)
+		status:SetMemberName(translate.Get("s_"..statusdisp.Name))
 		status.GetMemberValue = statusdisp.ValFunc
 		if status.ValFunc2 then
 			status.GetMemberValue2 = statusdisp.ValFunc2
@@ -195,7 +84,7 @@ function PANEL:GetMemberName() return self.MemberName end
 function PANEL:Init()
 	self:SetColor(Color(255, 255, 255))
 	self:SetTall(BetterScreenScale() * 68)
-	self:SetWide(BetterScreenScale() * 50)
+	self:SetWide(BetterScreenScale() * 120)
 end
 
 function PANEL:StatusThink(lp)
@@ -221,7 +110,7 @@ function PANEL:StatusThink(lp)
 		self:SetWide(0)
 		self:GetParent():InvalidateLayout()
 	elseif self.MemberValue > 0.1 and self:GetWide() == 0 then
-		self:SetWide(BetterScreenScale() * 50)
+		self:SetWide(BetterScreenScale() * 65)
 		self:GetParent():InvalidateLayout()
 	end
 end
@@ -247,6 +136,8 @@ function PANEL:Paint(w, h)
 	surface.DrawTexturedRect(w/2 - boxsize/2, h/2 - boxsize/2, boxsize, boxsize)
 	surface.SetDrawColor(col.r * 0.8, col.g * 0.8, col.b * 0.8, col.a * 0.3)
 	surface.DrawRect(w/2 - boxsize/2, h/2 - boxsize/2, boxsize, boxsize)
+
+
 
 	local perc = function(add) return math.Clamp((value - max * add) / (max * 0.25), 0, 1) end
 
@@ -283,9 +174,6 @@ function PANEL:Paint(w, h)
 	)
 
 	local t1 = math.ceil(value)
-<<<<<<< Updated upstream
-	draw.SimpleText(t1, "ZSHUDFontSmall", w / 2, y + h / 2 - boxsize/2 + 5, color_white_alpha230, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
-=======
 	--local t2 = t1
 	--if self.MemberValue2 then
 	--	t2 = t2.."|"..self.LerpMemberValue2
@@ -307,7 +195,6 @@ function PANEL:Paint(w, h)
 	if nm then
 		draw.SimpleText(nm, (string.len(nm) >= 8 and "ZSHUDFontTiniestStatus2" or "ZSHUDFontTiniestStatus"), w / 2, y + h / 2.5 - boxsize/2 + 5, color_white_alpha230, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 	end
->>>>>>> Stashed changes
 end
 
 vgui.Register("ZSStatus", PANEL, "Panel")

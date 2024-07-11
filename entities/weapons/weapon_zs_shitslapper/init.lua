@@ -11,6 +11,8 @@ function SWEP:ApplyMeleeDamage(ent, trace, damage)
 		ent:KnockDown()
 		ent:SetGroundEntity(NULL)
 		ent:SetVelocity(vel)]]
+
+
 		local noknockdown = true
 		if CurTime() >= (ent.NextKnockdown or 0) then
 			noknockdown = false
@@ -20,3 +22,4 @@ function SWEP:ApplyMeleeDamage(ent, trace, damage)
 	end
 
 end
+

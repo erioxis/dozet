@@ -98,8 +98,6 @@ end
 function ENT:UpdateTransmitState()
 	return TRANSMIT_ALWAYS
 end
-<<<<<<< Updated upstream
-=======
 function ENT:Think()
 	for _, ent in pairs(player.FindInSphere(self:GetPos(), 22648)) do
 		if ent ~= self and ent:IsValidLivingHuman() then
@@ -110,4 +108,3 @@ function ENT:Think()
 		end
 	end
 end
->>>>>>> Stashed changes

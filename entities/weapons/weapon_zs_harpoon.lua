@@ -1,15 +1,9 @@
 AddCSLuaFile()
 
-<<<<<<< Updated upstream
-SWEP.PrintName = "Harpoon"
-SWEP.Description = "The harpoon has a very long range for a melee weapon. The harpoon can be thrown to impale into zombies, dealing damage over time."
-
-=======
 --SWEP.PrintName = "Harpoon"
 --SWEP.Description = "The harpoon has a very long range for a melee weapon. The harpoon can be thrown to impale into zombies, dealing damage over time."
 SWEP.PrintName = translate.Get("wep_harpoon")
 SWEP.Description = translate.Get("wep_d_harpoon")
->>>>>>> Stashed changes
 if CLIENT then
 	SWEP.ViewModelFOV = 60
 
@@ -37,13 +31,13 @@ SWEP.ViewModel = "models/weapons/c_stunstick.mdl"
 SWEP.WorldModel = "models/weapons/w_crowbar.mdl"
 SWEP.UseHands = true
 
-SWEP.MeleeDamage = 71
+SWEP.MeleeDamage = 138
 SWEP.MeleeRange = 51
 SWEP.MeleeSize = 0.8
 
-SWEP.Primary.Delay = 1.65
+SWEP.Primary.Delay = 1.22
 
-SWEP.Tier = 2
+SWEP.Tier = 4
 
 SWEP.WalkSpeed = SPEED_SLOWER
 

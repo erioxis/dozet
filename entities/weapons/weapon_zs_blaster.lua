@@ -2,15 +2,10 @@ AddCSLuaFile()
 
 SWEP.Base = "weapon_zs_baseshotgun"
 
-<<<<<<< Updated upstream
-SWEP.PrintName = "'Blaster' Shotgun"
-SWEP.Description = "A basic shotgun that can deal significant amounts of damage at close range."
-=======
 --SWEP.PrintName = "'Blaster' Shotgun"
 --SWEP.Description = "A basic shotgun that can deal significant amounts of damage at close range."
 SWEP.PrintName = translate.Get("wep_blaster")
 SWEP.Description = translate.Get("wep_d_blaster")
->>>>>>> Stashed changes
 
 if CLIENT then
 	SWEP.ViewModelFlip = false
@@ -20,6 +15,8 @@ if CLIENT then
 	SWEP.HUD3DScale = 0.02
 	SWEP.HUD3DBone = "SS.Grip.Dummy"
 end
+SWEP.IsChangeWeapon = 1
+SWEP.ChangeMode = 0
 
 SWEP.HoldType = "shotgun"
 
@@ -30,8 +27,8 @@ SWEP.UseHands = false
 SWEP.ReloadDelay = 0.67
 
 SWEP.Primary.Sound = Sound("Weapon_Shotgun.NPC_Single")
-SWEP.Primary.Damage = 11
-SWEP.Primary.NumShots = 6
+SWEP.Primary.Damage = 5.6
+SWEP.Primary.NumShots = 5
 SWEP.Primary.Delay = 0.6
 
 SWEP.Primary.ClipSize = 6
@@ -39,7 +36,7 @@ SWEP.Primary.Automatic = false
 SWEP.Primary.Ammo = "buckshot"
 GAMEMODE:SetupDefaultClip(SWEP.Primary)
 
-SWEP.ConeMax = 6
+SWEP.ConeMax = 5
 SWEP.ConeMin = 2.3
 
 SWEP.WalkSpeed = SPEED_SLOWER
@@ -49,20 +46,15 @@ SWEP.ReloadSound = Sound("Weapon_Shotgun.Reload")
 
 SWEP.PumpActivity = ACT_SHOTGUN_PUMP
 
+
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_CLIP_SIZE, 1)
-<<<<<<< Updated upstream
-GAMEMODE:AddNewRemantleBranch(SWEP, 1, "'Blaster' Slug Gun", "One very accurate slug round, less total damage", function(wept)
-	wept.Primary.Damage = wept.Primary.Damage * 3.7
-=======
 GAMEMODE:AddNewRemantleBranch(SWEP, 1, translate.Get("wep_blaster_r1"), translate.Get("wep_d_blaster_r1"), function(wept)
 	wept.Primary.Damage = wept.Primary.Damage * 4
->>>>>>> Stashed changes
 	wept.Primary.NumShots = 1
-	wept.ConeMin = wept.ConeMin * 0.33
-	wept.ConeMax = wept.ConeMax * 0.5
+	wept.ConeMin = wept.ConeMin * 0.45
+	wept.ConeMax = wept.ConeMax * 0.2
+
 end)
-<<<<<<< Updated upstream
-=======
 	
 function SWEP:PrimaryAttack()
 	if not self:CanPrimaryAttack() then return end
@@ -92,7 +84,6 @@ function SWEP:HaveAbility()
 end
 
 
->>>>>>> Stashed changes
 
 function SWEP:SendWeaponAnimation()
 	self:SendWeaponAnim(ACT_VM_PRIMARYATTACK)
@@ -109,8 +100,6 @@ function SWEP:SendWeaponAnimation()
 		end
 	end)
 end
-<<<<<<< Updated upstream
-=======
 function SWEP:DealThink(dmginfo) 
 	if self.NoAbility then return end
 	self:SetDTFloat(6,self:GetDTFloat(6)+math.min(50,dmginfo:GetDamage()*0.4))
@@ -144,4 +133,3 @@ if !CLIENT then return end
 	
 
 
->>>>>>> Stashed changes

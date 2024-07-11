@@ -1,8 +1,10 @@
 AddCSLuaFile()
 DEFINE_BASECLASS("weapon_zs_base")
 
-SWEP.PrintName = "'Stubber' Rifle"
-SWEP.Description = "Your basic bolt action sniper rifle, capable of providing good damage on headshots."
+--SWEP.PrintName = "'Stubber' Rifle"
+--SWEP.Description = "Your basic bolt action sniper rifle, capable of providing good damage on headshots."
+SWEP.PrintName = ""..translate.Get("wep_stubber")
+SWEP.Description = ""..translate.Get("wep_d_stubber")
 
 SWEP.Slot = 3
 SWEP.SlotPos = 0
@@ -26,11 +28,7 @@ SWEP.UseHands = true
 
 SWEP.ReloadSound = Sound("Weapon_Scout.ClipOut")
 SWEP.Primary.Sound = Sound("Weapon_Scout.Single")
-<<<<<<< Updated upstream
-SWEP.Primary.Damage = 55
-=======
 SWEP.Primary.Damage = 65
->>>>>>> Stashed changes
 SWEP.Primary.NumShots = 1
 SWEP.Primary.Delay = 1.1
 SWEP.ReloadDelay = SWEP.Primary.Delay
@@ -50,6 +48,8 @@ SWEP.IronSightsPos = Vector(5.015, -8, 2.52)
 SWEP.IronSightsAng = Vector(0, 0, 0)
 
 SWEP.WalkSpeed = SPEED_SLOW
+
+
 
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_CLIP_SIZE, 1)
 GAMEMODE:AddNewRemantleBranch(SWEP, 1, "'Prodder' Rifle", "Slightly more headshot damage and zoom, half clip and increased fire delay", function(wept)
@@ -89,8 +89,6 @@ if CLIENT then
 		end
 	end
 end
-<<<<<<< Updated upstream
-=======
 
 SWEP.BulletCallback = function(attacker, tr, dmginfo)
 	local ent = tr.Entity
@@ -105,4 +103,3 @@ SWEP.BulletCallback = function(attacker, tr, dmginfo)
 		end
 	end
 end
->>>>>>> Stashed changes

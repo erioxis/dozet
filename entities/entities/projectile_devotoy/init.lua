@@ -9,7 +9,7 @@ function ENT:Initialize()
 	self:SetModelScale(2.2, 0)
 	self:SetupGenericProjectile(false)
 
-	self.DieTime = CurTime() + 5
+	self.DieTime = CurTime() + 1
 	self.LastPhysicsUpdate = UnPredictedCurTime()
 end
 
@@ -54,8 +54,9 @@ function ENT:Hit(vHitPos, vHitNormal, ent)
 			if ent:IsValidLivingHuman() then
 				self.Exploded = true
 
-				ent:TakeSpecialDamage(13, DMG_GENERIC, owner, self)
-				ent:KnockDown()
+				ent:TakeSpecialDamage(3, DMG_GENERIC, owner, self)
+				ent:GiveStatus("knockdown",1.3)
+				owner:TakeDamage(120)
 
 				local status = ent:GiveStatus("devourer")
 				if status and status:IsValid() then

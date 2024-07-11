@@ -7,8 +7,6 @@ function SWEP:ApplyMeleeDamage(ent, trace, damage)
 
 	self.BaseClass.ApplyMeleeDamage(self, ent, trace, damage)
 end
-<<<<<<< Updated upstream
-=======
 
 function SWEP:ApplyMeleeDamage(pl, trace, damage)
 	if SERVER and pl:IsPlayer() then
@@ -22,4 +20,3 @@ function SWEP:ApplyMeleeDamage(pl, trace, damage)
 	end
 	self.BaseClass.ApplyMeleeDamage(self, pl, trace, damage)
 end
->>>>>>> Stashed changes

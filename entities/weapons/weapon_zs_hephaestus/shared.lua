@@ -1,5 +1,7 @@
-SWEP.PrintName = "'Hephaestus' Tau Cannon"
-SWEP.Description = "Also known as the Gauss Gun. Launches tau projectiles at incredibly high speeds."
+--SWEP.PrintName = "'Hephaestus' Tau Cannon"
+--SWEP.Description = "Also known as the Gauss Gun. Launches tau projectiles at incredibly high speeds."
+SWEP.PrintName = translate.Get("wep_tau")
+SWEP.Description = translate.Get("wep_d_tau")
 
 SWEP.Base = "weapon_zs_base"
 
@@ -12,7 +14,7 @@ SWEP.ShowWorldModel = false
 SWEP.UseHands = true
 
 SWEP.Primary.Sound = Sound("weapons/gauss/fire1.wav")
-SWEP.Primary.Damage = 26.5
+SWEP.Primary.Damage = 45.85
 SWEP.Primary.NumShots = 1
 SWEP.Primary.Delay = 0.2
 
@@ -28,10 +30,10 @@ SWEP.HeadshotMulti = 1.5
 
 SWEP.ChargeDelay = 0.12
 
-SWEP.Tier = 5
+SWEP.Tier = 6
 
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_FIRE_DELAY, -0.01)
-GAMEMODE:AddNewRemantleBranch(SWEP, 1, "'Prometheus' Tau Cannon", "Bounces at low angles, three weaker shots, charges faster, increased fire delay", function(wept)
+GAMEMODE:AddNewRemantleBranch(SWEP, 1, ""..translate.Get("wep_tau_r1"), ""..translate.Get("wep_d_tau_r1"), function(wept)
 	wept.Primary.Delay = wept.Primary.Delay * 1.4
 	wept.Primary.Damage = wept.Primary.Damage * 1.2/3
 	wept.Primary.NumShots = 3
@@ -50,8 +52,6 @@ GAMEMODE:AddNewRemantleBranch(SWEP, 1, "'Prometheus' Tau Cannon", "Bounces at lo
 			local hitpos, hitnormal, normal, dmg = tr.HitPos, tr.HitNormal, tr.Normal, dmginfo:GetDamage() * 1.2
 			timer.Simple(0, function() DoRicochet(attacker, hitpos, hitnormal, normal, dmg) end)
 		end
-<<<<<<< Updated upstream
-=======
 		return {impact = false}
 	end
 end)
@@ -88,12 +88,12 @@ local branch = GAMEMODE:AddNewRemantleBranch(SWEP, 2, ""..translate.Get("wep_tau
 			effectdata:SetScale(1)
 				util.Effect("cball_explode", effectdata)		
 
->>>>>>> Stashed changes
 
 		return {impact = false}
 	end
 end)
-
+branch.Colors = {Color(122, 50, 255), Color(233, 161, 255), Color(136, 8, 255), Color(111, 0, 255), Color(42, 4, 102)}
+branch.NewNames = {translate.Get("wep_tau_colorq1"), translate.Get("wep_tau_colorq2"), translate.Get("wep_tau_colorq3"), translate.Get("wep_tau_colorq4"), translate.Get("wep_tau_colorq5")}
 SWEP.WalkSpeed = SPEED_SLOW
 SWEP.FireAnimSpeed = 1
 

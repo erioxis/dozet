@@ -5,20 +5,14 @@ CLASS.TranslationName = "class_zombie_gore_blaster"
 CLASS.Description = "description_zombie_gore_blaster"
 CLASS.Help = "controls_zombie_gore_blaster"
 
-CLASS.BetterVersion = "Chem Burster"
-
 CLASS.Wave = 0
 CLASS.Unlocked = true
 
 CLASS.Health = 170
 CLASS.Speed = 180
 CLASS.Revives = false
-<<<<<<< Updated upstream
-
-=======
 CLASS.Original = false
 CLASS.Weight = 1
->>>>>>> Stashed changes
 CLASS.Points = CLASS.Health/GM.HumanoidZombiePointRatio
 
 CLASS.SWEP = "weapon_zs_zombie_gore_blaster"

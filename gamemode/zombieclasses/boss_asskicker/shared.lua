@@ -190,12 +190,22 @@ CLASS.Pac3Out = {[1] = {
 }
 CLASS.SWEP = "weapon_zs_asskicker"
 
-CLASS.Health = 4500
+CLASS.Health = 1560
 CLASS.Speed = 340
-CLASS.JumpPower = 340
+CLASS.JumpPower = 910
+
+CLASS.Variations = false
+
+CLASS.NoSlowdown = true
+
+CLASS.CanMerge = true 
+
+CLASS.BaraCat = true
 
 CLASS.NoFallDamage = true
 CLASS.NoFallSlowdown = true
+
+CLASS.CanFeignDeath = false
 
 CLASS.ModelScale = 1.32
 CLASS.Hull = {Vector(-16, -16, 0), Vector(16, 16, 32)}
@@ -204,7 +214,7 @@ CLASS.ViewOffset = Vector(0, 0, 32 * CLASS.ModelScale)
 CLASS.ViewOffsetDucked = Vector(0, 0, 32 * CLASS.ModelScale)
 CLASS.StepSize = 25
 CLASS.CrouchedWalkSpeed = 1
-CLASS.Mass = DEFAULT_MASS * CLASS.ModelScale * 0.5
+CLASS.Mass = DEFAULT_MASS * CLASS.ModelScale * 0.4
 
 --CLASS.NoCollideAll = true
 

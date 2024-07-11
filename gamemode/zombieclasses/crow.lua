@@ -14,12 +14,8 @@ CLASS.PainSounds = {"NPC_Crow.Pain"}
 CLASS.DeathSounds = {"NPC_Crow.Die"}
 
 CLASS.Unlocked = true
-<<<<<<< Updated upstream
-CLASS.Hidden = false
-=======
 CLASS.Hidden = true
 CLASS.Weight = 0
->>>>>>> Stashed changes
 
 CLASS.Hull = {Vector(-4, -4, 0), Vector(4, 4, 9)}
 CLASS.HullDuck = {Vector(-4, -4, 0), Vector(4, 4, 9)}
@@ -29,9 +25,11 @@ CLASS.CrouchedWalkSpeed = 1
 CLASS.StepSize = 8
 CLASS.Mass = 2
 
+CLASS.CrowDa = true
+
 CLASS.NoUse = false
 CLASS.NoGibs = true
-CLASS.NoCollideAll = false
+CLASS.NoCollideAll = true
 CLASS.NoFallDamage = true
 CLASS.NoFallSlowdown = true
 CLASS.NeverAlive = false

@@ -92,3 +92,4 @@ end
 function SWEP:PlayAlertSound()
 	self:GetOwner():EmitSound("npc/stalker/breathing3.wav", 70, math.random(80, 90))
 end
+

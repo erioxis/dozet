@@ -1,10 +1,6 @@
 AddCSLuaFile()
 
-<<<<<<< Updated upstream
-SWEP.PrintName = "Pot"
-=======
 SWEP.PrintName = translate.Get("wep_pot")
->>>>>>> Stashed changes
 
 if CLIENT then
 	SWEP.ViewModelFlip = false

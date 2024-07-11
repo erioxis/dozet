@@ -1,7 +1,7 @@
 AddCSLuaFile()
 
-SWEP.PrintName = "Baxe"
-SWEP.Description = "Balance."
+--SWEP.PrintName = "Axe"
+SWEP.PrintName = translate.Get("wep_axe")
 
 if CLIENT then
 	SWEP.ViewModelFOV = 55
@@ -15,8 +15,6 @@ if CLIENT then
 	SWEP.WElements = {
 		["base"] = { type = "Model", model = "models/props/cs_militia/axe.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3, 1.399, -4), angle = Angle(0, 0, 90), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
 	}
-<<<<<<< Updated upstream
-=======
 	
 	function SWEP:PostDrawViewModel(vm, pl, wep)
 		local veles = self.VElements
@@ -26,7 +24,6 @@ if CLIENT then
 		local weles = self.WElements
 		weles["base"].color = col1
 	end
->>>>>>> Stashed changes
 end
 SWEP.UsedNewWeapons = true 
 
@@ -52,14 +49,14 @@ SWEP.UseHands = true
 
 SWEP.HoldType = "melee2"
 
-SWEP.MeleeDamage = 71
-SWEP.MeleeRange = 71
-SWEP.MeleeSize = 1.71
-SWEP.MeleeKnockBack =  71
+SWEP.MeleeDamage = 53
+SWEP.MeleeRange = 53
+SWEP.MeleeSize = 1.53
+SWEP.MeleeKnockBack =  53
 
 SWEP.WalkSpeed = SPEED_FAST
 
-SWEP.SwingTime = 0.71
+SWEP.SwingTime = 0.53
 SWEP.SwingRotation = Angle(0, -20, -40)
 SWEP.SwingOffset = Vector(10, 0, 0)
 SWEP.SwingHoldType = "melee"

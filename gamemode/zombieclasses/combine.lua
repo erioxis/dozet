@@ -1,28 +1,47 @@
-CLASS.Name = "Combine"
+CLASS.Name = "Prushor Luminos"
 CLASS.TranslationName = "class_zombienie"
-CLASS.Description = "description_zombie"
+CLASS.Description = "description_zombienie"
 CLASS.Help = "controls_zombie"
 
-
+CLASS.Model = Model("models/player/combine_super_soldier.mdl")
 
 CLASS.CanTaunt = true
 
 CLASS.SWEP = "weapon_zs_zombinie"
 
-CLASS.Model = Model("models/player/zombie_classic_hbfix.mdl")
-CLASS.OverrideModel = Model("models/player/zombie_lacerator2.mdl")
+
+
 if SERVER then
 function CLASS:ProcessDamage(pl, dmginfo)
-	if dmginfo:GetInflictor().IsMelee then
-		dmginfo:SetDamage(dmginfo:GetDamage() / 5)
+	local d = math.random(1,2)
+	local attacker = dmginfo:GetAttacker()
+	if dmginfo:GetInflictor().IsMelee and d == 1 then
+		dmginfo:SetDamage(0)
+		if attacker:IsPlayer() then
+			GAMEMODE:BlockFloater(attacker, pl, dmginfo:GetDamagePosition())
+		end
+	elseif !dmginfo:GetInflictor().IsMelee and d == 2 then
+		dmginfo:SetDamage(0)
+		if attacker:IsPlayer() then
+			GAMEMODE:BlockFloater(attacker, pl, dmginfo:GetDamagePosition())
+		end
 	end
 	return dmginfo
 end
+function CLASS:OnKilled(pl, attacker, inflictor, suicide, headshot, dmginfo)
+	if math.random(1,5) == 5  then
+		local d = pl:GetPos()
+		timer.Simple(5, function() pl:SetPos((d or Vector(0,0,0))) end)
+			
+	end
+
+	return true
+end
 end
 
-CLASS.Wave = 3 
-CLASS.Health = 350
-CLASS.Speed = 190
+CLASS.Wave = 4 / 12
+CLASS.Health = 600
+CLASS.Speed = 210
 
 CLASS.VoicePitch = 0.65
 
@@ -149,23 +168,6 @@ function CLASS:DoAnimationEvent(pl, event, data)
 	end
 end
 
-if SERVER then
-	function CLASS:ProcessDamage(pl, dmginfo)
-		local wep = pl:GetActiveWeapon()
-		if wep:IsValid() and wep.GetBattlecry and wep:GetBattlecry() > CurTime() then
-			dmginfo:SetDamage(dmginfo:GetDamage() * 0.5)
-		end
-	end
-
-	function CLASS:OnKilled(pl, attacker, inflictor, suicide, headshot, dmginfo)
-		local fakedeath = pl:FakeDeath(234, self.ModelScale)
-		if fakedeath and fakedeath:IsValid() then
-			fakedeath:SetModel(self.OverrideModel)
-		end
-
-		return true
-	end
-end
 
 if not CLIENT then return end
 

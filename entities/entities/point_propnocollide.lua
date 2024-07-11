@@ -109,8 +109,4 @@ function ENT:Think()
 
 	self:NextThink(CurTime())
 	return true
-<<<<<<< Updated upstream
 end
-=======
-end
->>>>>>> Stashed changes

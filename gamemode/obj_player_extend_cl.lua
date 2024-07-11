@@ -13,6 +13,7 @@ function meta:FixModelAngles(velocity)
 	self:SetPoseParameter("move_yaw", math.NormalizeAngle(velocity:Angle().yaw - eye.y))
 end
 
+
 function meta:RemoveAllStatus(bSilent, bInstant)
 end
 
@@ -23,14 +24,10 @@ function meta:HasWon()
 	return self:Team() == TEAM_HUMAN and self:GetObserverMode() == OBS_MODE_ROAMING
 end
 
-<<<<<<< Updated upstream
-function meta:GetStatus(sType)
-=======
 
 function meta:GetStatus(sType)	
->>>>>>> Stashed changes
 	local ent = self["status_"..sType]
-	if ent and ent:GetOwner() == self then return ent end
+	if ent and ent:IsValid() and ent:GetOwner() == self then return ent end
 end
 
 function meta:GiveStatus(sType, fDie)
@@ -231,9 +228,9 @@ end
 function meta:SetZombieClass(cl)
 	self:CallZombieFunction0("SwitchedAway")
 
-	local classtab = GAMEMODE.ZombieClasses[cl]
+	local classtab =  GAMEMODE.ZombieClasses[cl]
 	if classtab then
-		self.Class = classtab.Index or cl
+		self.Class = (classtab.Index or cl)
 		self:CallZombieFunction0("SwitchedTo")
 	end
 end

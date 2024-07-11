@@ -4,14 +4,18 @@ SWEP.PrintName = "Ancient Nightmare"
 
 SWEP.Base = "weapon_zs_zombie"
 
-SWEP.MeleeDamage = 75
+SWEP.MeleeDamage = 55
 SWEP.SlowDownScale = 0.3
+SWEP.MeleeDamageVsProps = 33
+SWEP.MeleeReach = 32
+
+SWEP.m_IsStealthWeapon = true
+SWEP.StealthMeterTick = 0.05
+SWEP.LastStealthMeterCheck = 0
 
 function SWEP:Reload()
 	self:SecondaryAttack()
 end
-<<<<<<< Updated upstream
-=======
 function SWEP:MeleeHit(ent, trace, damage, forcescale)
 	if not ent:IsPlayer() then
 		damage = self.MeleeDamageVsProps
@@ -33,7 +37,6 @@ function SWEP:ApplyMeleeDamage(pl, trace, damage)
 	end
 	self.BaseClass.ApplyMeleeDamage(self, pl, trace, damage)
 end
->>>>>>> Stashed changes
 
 function SWEP:PlayAlertSound()
 	self:GetOwner():EmitSound("npc/barnacle/barnacle_tongue_pull"..math.random(3)..".wav")
@@ -44,18 +47,13 @@ function SWEP:PlayAttackSound()
 	self:EmitSound("npc/barnacle/barnacle_bark"..math.random(2)..".wav", 75, 85)
 end
 
-<<<<<<< Updated upstream
-=======
 
 
->>>>>>> Stashed changes
 if not CLIENT then return end
-
-function SWEP:ViewModelDrawn()
-	render.ModelMaterialOverride(0)
+function SWEP:PreDrawViewModel(vm)
+	self:GetOwner():CallZombieFunction0("PrePlayerDraw")
 end
 
-local matSheet = Material("Models/Charple/Charple1_sheet")
-function SWEP:PreDrawViewModel(vm)
-	render.ModelMaterialOverride(matSheet)
+function SWEP:PostDrawViewModel(vm)
+	self:GetOwner():CallZombieFunction0("PostPlayerDraw")
 end

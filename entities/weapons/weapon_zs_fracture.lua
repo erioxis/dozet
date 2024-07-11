@@ -3,8 +3,10 @@ AddCSLuaFile()
 SWEP.Base = "weapon_zs_baseshotgun"
 DEFINE_BASECLASS("weapon_zs_baseshotgun")
 
-SWEP.PrintName = "'Fracture' Shotgun"
-SWEP.Description = "A pump shotgun that shoots in a line spread."
+--SWEP.PrintName = "'Fracture' Shotgun"
+--SWEP.Description = "A pump shotgun that shoots in a line spread."
+SWEP.PrintName = ""..translate.Get("wep_fracture")
+SWEP.Description = ""..translate.Get("wep_d_fracture")
 
 if CLIENT then
 	SWEP.ViewModelFlip = false
@@ -49,8 +51,8 @@ SWEP.ShowWorldModel = false
 SWEP.ReloadDelay = 0.9
 
 SWEP.Primary.Sound = Sound("Weapon_M3.Single")
-SWEP.Primary.Damage = 7
-SWEP.Primary.NumShots = 15
+SWEP.Primary.Damage = 10
+SWEP.Primary.NumShots = 5
 SWEP.Primary.Delay = 1
 
 SWEP.Primary.ClipSize = 6
@@ -86,7 +88,7 @@ end
 
 function SWEP:ShootBullets(dmg, numbul, cone)
 	local owner = self:GetOwner()
-	local sprd = (self.AttackContext and 2 or 2.75)*cone/6
+	local sprd = (self.AttackContext and 2 or 2.75)*cone/3
 	local recp = self.AttackContext and 2 or 1.25
 
 	self:SendWeaponAnimation()

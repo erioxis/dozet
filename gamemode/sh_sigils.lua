@@ -6,13 +6,8 @@ ESCAPESTAGE_DEATH = 3
 function GM:GetSigils()
 	local sigils = {}
 
-<<<<<<< Updated upstream
-	for _, ent in pairs(ents.FindByClass("prop_obj_sigil")) do
-		if ent:IsValid() and ent:GetSigilHealthBase() ~= 0 then
-=======
 	for _, ent in ipairs(ents.FindByClass("prop_obj_sigil")) do
 		if ent:IsValid() and ent.GetSigilHealthBase and ent:GetSigilHealthBase() ~= 0 then
->>>>>>> Stashed changes
 			sigils[#sigils + 1] = ent
 		end
 	end

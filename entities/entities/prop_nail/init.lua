@@ -28,8 +28,6 @@ function ENT:OnDamaged(damage, attacker, inflictor, dmginfo)
 	end
 end
 
-<<<<<<< Updated upstream
-=======
 ENT.TimeNext = CurTime() + 0.5
 ENT.NextLivingThink = 0
 function ENT:Think()
@@ -62,8 +60,8 @@ function ENT:Think()
 	end
 end
 
->>>>>>> Stashed changes
 function ENT:AttachTo(baseent, attachent, physbone, physbone2)
+    self.EntPos = baseent:GetPos()
 	self:SetBaseEntity(baseent)
 	self:SetAttachEntity(attachent, physbone, physbone2)
 

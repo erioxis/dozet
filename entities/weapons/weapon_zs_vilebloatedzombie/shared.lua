@@ -6,10 +6,10 @@ SWEP.MeleeDamage = 25
 SWEP.PoisonDmgMul = 1.3
 SWEP.MeleeForceScale = 1.25
 
-SWEP.Primary.Delay = 0.5
+SWEP.Primary.Delay = 0.9
 
-SWEP.NextPuke = 0
-SWEP.PukeLeft = 0
+SWEP.NextPuke = 10
+SWEP.PukeLeft = 3
 
 function SWEP:ApplyMeleeDamage(ent, trace, damage)
 	if ent:IsPlayer() then

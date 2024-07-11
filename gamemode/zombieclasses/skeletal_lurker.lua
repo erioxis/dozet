@@ -7,7 +7,8 @@ CLASS.Help = "controls_skeletal_lurker"
 
 CLASS.Model = Model("models/zombie/classic_torso.mdl")
 CLASS.OverrideModel = Model("models/player/skeleton.mdl")
-
+CLASS.Original = false
+CLASS.Variations = {}
 CLASS.Hull = {Vector(-16, -16, 0), Vector(16, 16, 22)}
 CLASS.HullDuck = {Vector(-16, -16, 0), Vector(16, 16, 22)}
 CLASS.Weight = 0.6

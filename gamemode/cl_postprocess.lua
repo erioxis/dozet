@@ -111,15 +111,15 @@ local tColorModZombie = {
 }
 
 local tColorModZombieVision = {
-	["$pp_colour_colour"] = 3,
+	["$pp_colour_colour"] = 1,
 	["$pp_colour_brightness"] = -0.1,
 	["$pp_colour_contrast"] = 1,
 	["$pp_colour_mulr"]	= 0,
 	["$pp_colour_mulg"] = 0,
 	["$pp_colour_mulb"] = 0,
-	["$pp_colour_addr"] = 0.3,
-	["$pp_colour_addg"] = 0,
-	["$pp_colour_addb"] = 0.6
+	["$pp_colour_addr"] = 0,
+	["$pp_colour_addg"] = 0,02,
+	["$pp_colour_addb"] = 0
 }
 
 local tColorModNightVision = {
@@ -133,6 +133,17 @@ local tColorModNightVision = {
 	["$pp_colour_addg"] = 0,
 	["$pp_colour_addb"] = 0
 }
+local tColorModBers = {
+	["$pp_colour_colour"] = 0.99,
+	["$pp_colour_brightness"] = 0,
+	["$pp_colour_contrast"] = 1.5,
+	["$pp_colour_mulr"] = 1.5,
+	["$pp_colour_mulg"] = 0,
+	["$pp_colour_mulb"] = 0,
+	["$pp_colour_addr"] = 0,
+	["$pp_colour_addg"] = 0,
+	["$pp_colour_addb"] = 0.2
+}
 
 local redview = 0
 local fear = 0
@@ -142,21 +153,18 @@ function GM:_RenderScreenspaceEffects()
 	end
 
 	fear = math_Approach(fear, self:CachedFearPower(), FrameTime())
-<<<<<<< Updated upstream
-
-=======
 	local bers = MySelf:GetTimerBERS()
 	if bers >= CurTime() and MySelf:IsSkillActive(SKILL_BERSERK) then
 		tColorModBers["$pp_colour_addr"] = (0.015 + math_abs(math_sin(CurTime() * 2)) * 0.09) * ((bers - CurTime())/10)
 		tColorModBers["$pp_colour_brightness"] = math_min(((bers - CurTime())/10) - 0.3,0.32)
 		DrawColorModify(tColorModBers)
 	end
->>>>>>> Stashed changes
 	if not self.PostProcessingEnabled then return end
 
 	if self.DrawPainFlash and self.HurtEffect > 0 then
 		DrawSharpen(1, math_min(6, self.HurtEffect * 3))
 	end
+
 
 	if self.ColorModEnabled then
 		if not MySelf:Alive() and MySelf:GetObserverMode() ~= OBS_MODE_CHASE then
@@ -222,9 +230,6 @@ hook.Add("PreDrawTranslucentRenderables", "ZFullBright", GM.FullBrightOff)
 hook.Add("PostDrawTranslucentRenderables", "ZFullBright", GM.FullBrightOn)
 hook.Add("PreDrawViewModel", "ZFullBright", GM.FullBrightOff)
 hook.Add("RenderScreenspaceEffects", "ZFullBright", GM.FullBrightOff)
-<<<<<<< Updated upstream
-
-=======
 local surface_SetDrawColor = surface.SetDrawColor
 local surface_DrawRect = surface.DrawRect
 local surface_SetTexture = surface.SetTexture
@@ -344,7 +349,6 @@ function GM:DrawInductorIndicators()
 		end
 	end
 end
->>>>>>> Stashed changes
 local matGlow = Material("Sprites/light_glow02_add_noz")
 local colHealthEmpty = GM.AuraColorEmpty
 local colHealthFull = GM.AuraColorFull
@@ -375,8 +379,6 @@ function GM:DrawHumanIndicators()
 		end
 	end
 end
-<<<<<<< Updated upstream
-=======
 function GM:DrawZombieIndicators()
 	if MySelf:Team() ~= TEAM_HUMAN or not (MySelf:IsSkillActive(SKILL_SEEAURA) or MySelf:GetStatus("world")) or MySelf:KeyDown(IN_SPEED) or MySelf:GetStatus("curse_mutagen") then return end
 	local world = (MySelf:GetStatus("world") or MySelf:HasTrinket("broken_world"))
@@ -510,7 +512,6 @@ function GM:DrawZombieIndicators()
 		end
 	end
 end
->>>>>>> Stashed changes
 
 function GM:ToggleZombieVision(onoff)
 	if onoff == nil then

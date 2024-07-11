@@ -214,7 +214,7 @@ function meta:FireBulletsLua(src, dir, spread, num, damage, attacker, force_mul,
 			local dmg, dmgpos, haspl = attacker:PopDamageNumberSession()
 
 			if dmg > 0 and dmgpos then
-				GAMEMODE:DamageFloater(attacker, ent, dmgpos, dmg, haspl)
+				GAMEMODE:DamageFloater(attacker, ent, dmgpos, dmg, nil, haspl)
 			end
 		end
 
@@ -311,6 +311,12 @@ function meta:TakeSpecialDamage(damage, damagetype, attacker, inflictor, hitpos,
 	if not inflictor or not E_IsValid(inflictor) then inflictor = attacker end
 
 	local dmginfo = DamageInfo()
+	if damagetype == DMG_BURN and self:IsPlayer() and self:GetZombieClassTable().FireBuff then
+		damage = 0
+	end
+	if damagetype == DMG_DROWN and self:IsPlayer() and self:GetZombieClassTable().ResistFrost then
+		damage = 0
+	end
 	dmginfo:SetDamage(damage)
 	if attacker then
 		dmginfo:SetAttacker(attacker)
@@ -538,7 +544,6 @@ function meta:PoisonDamage(damage, attacker, inflictor, hitpos, noreduction, ins
 	local dmginfo = DamageInfo()
 
 	if self:IsPlayer() then
-		if P_Team(self) ~= TEAM_HUMAN then return end
 
 		--[[if self.BuffResistant then
 			damage = damage / 2

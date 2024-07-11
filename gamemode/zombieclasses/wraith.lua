@@ -7,8 +7,8 @@ CLASS.Variations = {CLASS.Name, "Corrupted Wraith", "Corrupted Spy", "Necros Wra
 CLASS.Original = true
 
 
-CLASS.Wave = 0
-CLASS.Unlocked = true
+CLASS.Wave = 2 / 6
+CLASS.Gravity = 0.5
 
 CLASS.Health = 233
 
@@ -93,8 +93,6 @@ function CLASS:UpdateAnimation(pl, velocity, maxseqgroundspeed)
 	return true
 end
 
-<<<<<<< Updated upstream
-=======
 if SERVER then
 	function CLASS:ProcessDamage(pl, dmginfo)
 		if dmginfo:GetInflictor().IsMelee then
@@ -103,7 +101,6 @@ if SERVER then
 	end
 	return dmginfo
 end
->>>>>>> Stashed changes
 function CLASS:DoAnimationEvent(pl, event, data)
 	if event == PLAYERANIMEVENT_ATTACK_PRIMARY then
 		pl:AnimRestartGesture(GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_GMOD_GESTURE_RANGE_ZOMBIE_SPECIAL, true)

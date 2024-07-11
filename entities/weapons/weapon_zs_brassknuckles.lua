@@ -1,17 +1,11 @@
 AddCSLuaFile()
 
-SWEP.Base = "weapon_zs_fists"
+SWEP.Base = "weapon_zs_fistz"
 
-SWEP.PrintName = "Brass Knuckles"
-SWEP.Description = "A pair of brass knuckles used to concentrate strikes from one's fists, increasing the damage done, while keeping their movement speed up."
-
-<<<<<<< Updated upstream
-=======
 --SWEP.PrintName = "Brass Knuckles"
 --SWEP.Description = "A pair of brass knuckles used to concentrate strikes from one's fists, increasing the damage done, while keeping their movement speed up."
 SWEP.PrintName = translate.Get("wep_bknuck")
 SWEP.Description = translate.Get("wep_d_bknuck")
->>>>>>> Stashed changes
 if CLIENT then
 	SWEP.ViewModelFOV = 52
 	SWEP.ViewModelFlip = false
@@ -30,23 +24,21 @@ if CLIENT then
 	}
 end
 
-<<<<<<< Updated upstream
-=======
 a = math.random(20,40)
 SWEP.InnateDamageType = INNATE_TYPE_BOUNTY
 SWEP.InnateDamageMul = 0.3
 
->>>>>>> Stashed changes
 SWEP.WalkSpeed = SPEED_FASTEST
 
 SWEP.ViewModel = "models/weapons/c_arms_citizen.mdl"
 SWEP.WorldModel	= "models/weapons/w_grenade.mdl"
 
 SWEP.Weight = 4
+SWEP.HitDistance = 61
 
-SWEP.MeleeDamage = 22.5
+SWEP.MeleeDamage = a
 
-SWEP.Unarmed = false
+SWEP.Unarmed = true
 
 SWEP.Undroppable = false
 SWEP.NoPickupNotification = false
@@ -56,9 +48,6 @@ SWEP.NoGlassWeapons = false
 
 SWEP.AllowQualityWeapons = true
 
-<<<<<<< Updated upstream
-GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_FIRE_DELAY, -0.06)
-=======
 
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_FIRE_DELAY, -0.0136)
 function SWEP:SetupDataTables()
@@ -223,4 +212,3 @@ function SWEP:PostDrawViewModel(vm, pl, wep)
 	--render.SetMaterial(matBeam)
 	--render.DrawSprite(owner:LocalToWorld(Vector(0,0,20)), 32, 32, COLOR_WHITE)
 end
->>>>>>> Stashed changes

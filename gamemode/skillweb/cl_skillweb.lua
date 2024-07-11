@@ -28,11 +28,7 @@ end)
 net.Receive("zs_skill_is_unlocked", function(length)
 	local skillid = net.ReadUInt(16)
 	local yesno = net.ReadBool()
-<<<<<<< Updated upstream
-
-=======
 	
->>>>>>> Stashed changes
 	if MySelf:IsValid() then
 		MySelf:SetSkillUnlocked(skillid, yesno)
 	end
@@ -154,17 +150,6 @@ local function SaveSkillLoadout(name)
 	GAMEMODE.SavedSkillLoadouts[#GAMEMODE.SavedSkillLoadouts + 1] = {name, MySelf:GetDesiredActiveSkills()}
 	file.Write(GAMEMODE.SkillLoadoutsFile, Serialize(GAMEMODE.SavedSkillLoadouts))
 end
-<<<<<<< Updated upstream
-
--- For getting the positions of skill webs. See skillwebgrid.png
--- The file is not used in the gamemode so feel free to edit it.
-function GM:GenerateFromSkillWebGrid()
-	local mat = Material("zombiesurvival/skillwebgrid.png")
-	local w, h = mat:Width(), mat:Height()
-	local prelines = {}
-	local lines = {}
-	local col
-=======
 
 function GM:GenerateFromSkillWebGrid()
 	local mat = Material("zombiesurvival/skillwebgrid.png")
@@ -314,44 +299,8 @@ local function DestroySkill(self, skill)
 	net.SendToServer()
 	
 	self:DisplayMessage(name..translate.Get("s_unl_destroy"), COLOR_GREEN)
->>>>>>> Stashed changes
 
 end
-<<<<<<< Updated upstream
-
-local hoveredskill
-
-local REMORT_SKILL = {Name = "Remort", Description = "Go even further beyond.\nLose all skills, experience, skill points, and levels.\nStart at level 1 but with 1 extra skill point.\nCan remort multiple times for multiple extra skill points."}
-
-
-local PANEL = {}
-
-AccessorFunc( PANEL, "vCamPos",			"CamPos" )
-AccessorFunc( PANEL, "fFOV",			"FOV" )
-AccessorFunc( PANEL, "vLookatPos",		"LookAt" )
-AccessorFunc( PANEL, "aLookAngle",		"LookAng" )
-AccessorFunc( PANEL, "colAmbientLight",	"AmbientLight" )
-
-PANEL.CreationTime = 0
-PANEL.DesiredZoom = 5000
-PANEL.ZoomChange = 0
-PANEL.DesiredTree = 0
-PANEL.ShadeAlpha = 0
-PANEL.ShadeVelocity = 0
-
-local offsets = {
-	[TREE_HEALTHTREE] = {0, 16},
-	[TREE_SPEEDTREE] = {0, -14},
-	[TREE_GUNTREE] = {13, -7},
-	[TREE_MELEETREE] = {13, 8},
-	[TREE_BUILDINGTREE] = {-14, 9},
-	[TREE_SUPPORTTREE] = {-11, -7},
-	[TREE_POINTTREE] = {-20, 0},
-	[TREE_ANCIENTTREE] = {-17, -10}
-}
-
-=======
->>>>>>> Stashed changes
 function PANEL:Init()
 	local allskills = GAMEMODE.Skills
 	local node
@@ -413,10 +362,6 @@ function PANEL:Init()
 			node:SetAngles(Angle(0, 0, -rads * 180/math.pi))
 			node:SetModelScale(5, 0)
 
-<<<<<<< Updated upstream
-	local top = vgui.Create("Panel", self)
-	top:SetSize(ScrW(), 256)
-=======
 			--node:SetModel(node_models[tree])
 			node.Skill = treenode
 			node.SkillID = -tree - 1
@@ -457,7 +402,6 @@ function PANEL:Init()
 	
 	local top = vgui.Create("Panel", self)  top:SetSize(ScrW(), 256)
 	
->>>>>>> Stashed changes
 	top:SetMouseInputEnabled(false)
 	local skillname = vgui.Create("DLabel", top)
 	skillname:SetFont("ZSHUDFont")
@@ -489,14 +433,10 @@ function PANEL:Init()
 	bottomleftup:SetSize(190 * screenscale, 120 * screenscale)
 	
 	local quickstats = {}
-<<<<<<< Updated upstream
-	for i=1,3 do
-=======
 	
 	for i=1,5 do
->>>>>>> Stashed changes
 		local hpstat = vgui.Create("DLabel", bottomleftup)
-		hpstat:SetFont("ZSHUDFontSmaller")
+		hpstat:SetFont("ZSHUDFontTiniestStatus")
 		hpstat:SetTextColor(COLOR_WHITE)
 		hpstat:SetContentAlignment(8)
 		hpstat:Dock(TOP)
@@ -545,7 +485,7 @@ function PANEL:Init()
 	
 	local savebtn = vgui.Create("DButton", bottomleft)
 	savebtn:SetFont("ZSHUDFontSmallest")
-	savebtn:SetText("Save")
+	savebtn:SetText(translate.Get("s_save"))
 	savebtn:SizeToContents()
 	savebtn:SetTall(bottomleft:GetTall() / 5)
 	savebtn:Dock(BOTTOM)
@@ -555,12 +495,7 @@ function PANEL:Init()
 		local frame = Derma_StringRequest("Save skill loadout", "Enter a name for this skill loadout.", "Name",  function(strTextOut)
 			SaveSkillLoadout(strTextOut)
 			UpdateDropDown(dropdown)
-<<<<<<< Updated upstream
-
-			self:DisplayMessage("Skill loadout '" .. strTextOut .."' saved!", COLOR_GREEN)
-=======
 			self:DisplayMessage(translate.Format("s_loadout_s",strTextOut), COLOR_GREEN)
->>>>>>> Stashed changes
 		end,
 		
 		function(strTextOut)
@@ -575,7 +510,7 @@ function PANEL:Init()
 	
 	local loadbtn = vgui.Create("DButton", bottomleft)
 	loadbtn:SetFont("ZSHUDFontSmallest")
-	loadbtn:SetText("Load")
+	loadbtn:SetText(translate.Get("s_load"))
 	loadbtn:SizeToContents()
 	loadbtn:SetTall(bottomleft:GetTall() / 5)
 	loadbtn:Dock(BOTTOM)
@@ -597,13 +532,8 @@ function PANEL:Init()
 		net.Start("zs_skill_set_desired")
 			net.WriteTable(newloadout)
 		net.SendToServer()
-<<<<<<< Updated upstream
-
-		self:DisplayMessage("Skill loadout '" .. nlname .."' loaded!", COLOR_GREEN)
-=======
 		
 		self:DisplayMessage(translate.Format("s_loadout",nlname), COLOR_GREEN)
->>>>>>> Stashed changes
 	end
 	
 	local bottomlefttop = vgui.Create("DEXRoundedPanel", self)
@@ -611,8 +541,8 @@ function PANEL:Init()
 	bottomlefttop:SetSize(160 * screenscale, 130 * screenscale)
 	
 	local activateall = vgui.Create("DButton", bottomlefttop)
-	activateall:SetFont("ZSHUDFontSmallest")
-	activateall:SetText("Activate All")
+	activateall:SetFont(translate.Get("s_act_font") or "ZSHUDFontTiny")
+	activateall:SetText(translate.Get("s_act_all"))
 	activateall:SizeToContents()
 	activateall:SetTall(activateall:GetTall())
 	activateall:Dock(TOP)
@@ -620,9 +550,9 @@ function PANEL:Init()
 		surface.PlaySound("zombiesurvival/ui/misc1.ogg")
 		
 		if #MySelf:GetUnlockedSkills() == 0 then
-			self:DisplayMessage("You have no skills to activate!", COLOR_RED)
+			self:DisplayMessage(translate.Get("s_no_act"), COLOR_RED)
 		else
-			self:DisplayMessage("All unlocked skills activated.", COLOR_GREEN)
+			self:DisplayMessage(translate.Get("s_yes_act"), COLOR_GREEN)
 		end
 		
 		net.Start("zs_skills_all_desired")
@@ -632,7 +562,7 @@ function PANEL:Init()
 	
 	local deactivateall = vgui.Create("DButton", bottomlefttop)
 	deactivateall:SetFont("ZSHUDFontSmallest")
-	deactivateall:SetText("Deactivate All")
+	deactivateall:SetText(translate.Get("s_dact_all"))
 	deactivateall:SizeToContents()
 	deactivateall:SetTall(deactivateall:GetTall())
 	deactivateall:DockMargin(0, 5, 0, 0)
@@ -641,9 +571,9 @@ function PANEL:Init()
 		surface.PlaySound("zombiesurvival/ui/misc1.ogg")
 		
 		if #MySelf:GetUnlockedSkills() == 0 then
-			self:DisplayMessage("You have no skills to deactivate!", COLOR_RED)
+			self:DisplayMessage(translate.Get("s_no_dact"), COLOR_RED)
 		else
-			self:DisplayMessage("All unlocked skills deactivated.", COLOR_RED)
+			self:DisplayMessage(translate.Get("s_yes_dact"), COLOR_GREEN)
 		end
 
 		
@@ -655,23 +585,18 @@ function PANEL:Init()
 	
 	local reset = vgui.Create("DButton", bottomlefttop)
 	reset:SetFont("ZSHUDFontSmaller")
-<<<<<<< Updated upstream
-	reset:SetText(resettime <= 0 and "Reset" or (days .. " days left"))
-	reset:SetDisabled(resettime > 0)
-=======
 	reset:SetText(translate.Get("s_reset"))
->>>>>>> Stashed changes
 	reset:SizeToContents()
 	reset:SetTall(reset:GetTall())
 	reset:DockMargin(0, 5, 0, 0)
 	reset:Dock(TOP)
 	reset.DoClick = function(me)
 		Derma_Query(
-			"Reset all skills and refund SP?\nYou can only do this once per week.",
-			"Warning",
+			translate.Get("s_reset1"),
+			translate.Get("s_reset2"),
 			"OK",
 			function() net.Start("zs_skills_reset") net.SendToServer() end,
-			"Cancel",
+			translate.Get("cancel"),
 			function() end
 		)
 	end
@@ -680,12 +605,7 @@ function PANEL:Init()
 	topright:DockPadding(10, 10, 10, 10)
 	
 	local quit = vgui.Create("DButton", topright)
-<<<<<<< Updated upstream
-	quit:SetText("Quit")
-	quit:SetFont("ZSHUDFont")
-=======
 	quit:SetText(translate.Get("quit"))  quit:SetFont("ZSHUDFont")
->>>>>>> Stashed changes
 	quit:Dock(FILL)
 	quit.DoClick = function()
 		if self.DesiredTree == 0 then
@@ -715,8 +635,6 @@ function PANEL:Init()
 	local bottom = vgui.Create("DEXRoundedPanel", self)
 	bottom:SetSize(600 * screenscale, math.Clamp(84 * screenscale, 70, 125))
 	bottom:DockPadding(10, 10, 10, 10)
-<<<<<<< Updated upstream
-=======
 	if MySelf:IsSkillUnlocked(SKILL_INF_POWER) then
 	--	local bottom1 = vgui.Create("DLabel", self)
 		--bottom1:SetSize(1200 * screenscale, math.Clamp(84 * screenscale, 40, 125))
@@ -787,7 +705,6 @@ function PANEL:Init()
 
 	dropdown:AddChoice('Gunnery')
 	dropdown:AddChoice('Medic')
->>>>>>> Stashed changes
 
 	dropdown.OnSelect = function( index, text, data )	
 		quepro:SetText(translate.Get("s_unlockthis"))
@@ -795,7 +712,7 @@ function PANEL:Init()
 	end
 	local spremaining = vgui.Create("DEXChangingLabel", bottom)
 	spremaining:SetChangeFunction(function()
-		return "Unused skill points: "..MySelf:GetZSSPRemaining()
+		return translate.Get("hud_uu_sp")..MySelf:GetZSSPRemaining()
 	end, true)
 	
 	spremaining:SetChangedFunction(function()
@@ -824,63 +741,28 @@ function PANEL:Init()
 	contextmenu:SetVisible(false)
 	
 	local button = vgui.Create("DButton", contextmenu)
-<<<<<<< Updated upstream
-	button:SetText("Activate")
-	button:SetFont("ZSHUDFontSmall")
-	button:SetDisabled(false)
-	button:SetSize(128 * screenscale, 32 * screenscale)
-=======
 	button:SetText(translate.Get("s_activate"))
 	button:SetFont(translate.Get("s_act_font") or "ZSHUDFontTiny")
 	button:SetDisabled(false)
 	button:SetSize(128 * screenscale, 64 * screenscale)
->>>>>>> Stashed changes
 	button:AlignTop()
 	button:CenterHorizontal()
 	button.DoClick = function(me)
 		local skillid = contextmenu.SkillID
 		local name = allskills[skillid].Name
 		if MySelf:IsSkillDesired(skillid) then
-<<<<<<< Updated upstream
-			net.Start("zs_skill_is_desired")
-				net.WriteUInt(skillid, 16)
-				net.WriteBool(false)
-			net.SendToServer()
-
-			self:DisplayMessage(name.." deactivated.")
-		elseif MySelf:IsSkillUnlocked(skillid) then
-			net.Start("zs_skill_is_desired")
-				net.WriteUInt(skillid, 16)
-				net.WriteBool(true)
-			net.SendToServer()
-
-			self:DisplayMessage(name.." activated.", COLOR_DARKGREEN)
-		else
-			net.Start("zs_skill_is_unlocked")
-				net.WriteUInt(skillid, 16)
-				net.WriteBool(true)
-			net.SendToServer()
-
-			self:DisplayMessage(name.." unlocked and activated!", COLOR_GREEN)
-=======
 			DeactivateSkill(self, skillid)
 		elseif MySelf:IsSkillUnlocked(skillid) then
 			ActivateSkill(self, skillid)
 		else
 			UnlockSkill(self, skillid)
->>>>>>> Stashed changes
 		end
 
 		contextmenu:SetVisible(false)
 	end
-<<<<<<< Updated upstream
-	contextmenu.Button = button
-
-=======
 	
 	contextmenu.Button = button
 	
->>>>>>> Stashed changes
 	local messagebox = vgui.Create("Panel", self)
 	messagebox:SetSize(850 * screenscale, 48)
 	messagebox.Paint = function(me, w, h)
@@ -906,7 +788,7 @@ function PANEL:Init()
 	local warningtext = vgui.Create("DLabel", self)
 	warningtext:SetTextColor(COLOR_RED)
 	warningtext:SetFont("ZSHUDFontSmall")
-	warningtext:SetText("Changes applied on respawn!")
+	warningtext:SetText(translate.Get("s_c_apl_resp"))
 	warningtext:SizeToContents()
 	warningtext:SetKeyboardInputEnabled(false)
 	warningtext:SetMouseInputEnabled(false)
@@ -960,17 +842,10 @@ function PANEL:UpdateQuickStats()
 			end
 		end
 	end
-<<<<<<< Updated upstream
-
-	for i=1,3 do
-		local prefix = i == 1 and "Health" or i == 2 and "Speed" or "Worth"
-		local val = i == 2 and SPEED_NORMAL or 100
-=======
 		
 	for i=1,5 do
 		local prefix = i == 1 and translate.Get("skill_add_health") or i == 2 and translate.Get("skill_add_speed") or i == 4 and translate.Get("skill_add_bloodarmor") or i == 5 and translate.Get("skill_add_amulet") or translate.Get("skill_add_worth")
 		local val = i == 2 and SPEED_NORMAL or i == 1 and 100 or i == 4 and 25 or i == 5 and ((0 + MySelf:GetZSRemortLevel() / 4) or 0) or GAMEMODE.StartingWorth
->>>>>>> Stashed changes
 		self.QuickStats[i]:SetText(prefix .. " : " .. (val + (skillmodifiers[i] or 0)))
 	end
 end
@@ -1085,13 +960,8 @@ function PANEL:GenerateParticles()
 		particle = {}
 		particle[1] = Vector(dist, math.Rand(-710, 710), math.Rand(-710, 710))
 		particle[2] = math.Rand(0, 360)
-<<<<<<< Updated upstream
-		particle[3] = math.Rand(-1, 5)
-		particle[4] = math.Rand(6002, 4002)
-=======
 		particle[3] = math.Rand(-5, 5)
 		particle[4] = math.Rand(180, 190) * size_m
->>>>>>> Stashed changes
 		particle[5] = math.Rand(30, 90)
 		particles[i] = particle
 	end
@@ -1149,11 +1019,7 @@ function PANEL:DoEdgeScroll(deltatime)
 	if scrolldir.y ~= 0 or scrolldir.z ~= 0 and self.ContextMenu and self.ContextMenu:IsVisible() then
 		self.ContextMenu:SetVisible(false)
 	end
-<<<<<<< Updated upstream
-
-=======
 		
->>>>>>> Stashed changes
 	camera_velocity = LerpVector(deltatime * (scrolldir.y == 0 and scrolldir.z == 0 and 3 or 1), camera_velocity, scrolldir)
 		
 	if camera_velocity.y ~= 0 or camera_velocity.z ~= 0 then
@@ -1189,16 +1055,13 @@ local nodecolors = {
 	[TREE_MELEETREE] = {1.5, 7, 7},
 	[TREE_GUNTREE] = {5, 2, 2},
 	[TREE_POINTTREE] = {7, 10, 4},
-<<<<<<< Updated upstream
-	[TREE_ANCIENTTREE] = {255, 255, 255}
-=======
 	[TREE_ANCIENTTREE] = {2, 2, 2.5},
 	[TREE_DEFENSETREE] = {4, 4, 4.6},
 	[TREE_DONATETREE] = {2, 0, 5},
 	[TREE_USELESSTREE] = {2.3, 3, 9},
 	[TREE_RESNYA] = {50, 15,20}
->>>>>>> Stashed changes
 }
+
 
 local matBeam = Material("effects/laser1")
 local matGlow = Material("sprites/glow04_noz")
@@ -1223,10 +1086,6 @@ function PANEL:Paint(w, h)
 		
 	campos.x = math.Approach(campos.x, self.DesiredZoom, dt * 13500)
 	self:SetCamPos(campos)
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
 	surface.SetDrawColor(0, 0, 0, 252)
 	surface.DrawRect(0, 0, w, h)
 	ang = self.aLookAngle
@@ -1277,11 +1136,7 @@ function PANEL:Paint(w, h)
 			end
 				
 			skill = node.Skill
-<<<<<<< Updated upstream
-
-=======
 				
->>>>>>> Stashed changes
 			if skill.Disabled then
 				continue
 			end
@@ -1309,16 +1164,9 @@ function PANEL:Paint(w, h)
 								colBeam.r = 128
 								colBeam.g = 40
 								colBeam.b = 40
-<<<<<<< Updated upstream
-
-								beamsize = 2
-							end
-
-=======
 								beamsize = 2
 							end
 								
->>>>>>> Stashed changes
 							if hoveredskill == node.SkillID or hoveredskill == connectid then
 								add = math.abs(math.sin(realtime * math.pi)) * 120
 								colBeam.r = math.min(colBeam.r + add, 255)
@@ -1418,23 +1266,6 @@ function PANEL:Paint(w, h)
 				render_SetColorModulation(sat / divs[1] / 1.25, sat / divs[2] / 1.25, sat / divs[3] / 1.25)
 				notunlockable = true
 			end
-<<<<<<< Updated upstream
-
-			render_ModelMaterialOverride(matWhite)
-			render_SetBlend(0.95)
-
-			node:DrawModel()
-
-			render_SetBlend(1)
-			render_ModelMaterialOverride()
-
-			render_SetColorModulation(1, 1, 1)
-
-			if self.DesiredZoom < 9500 then
-				local colo = skill.Disabled and COLOR_DARKGRAY or selected and color_white or notunlockable and COLOR_MIDGRAY or COLOR_GRAY
-
-				draw_SimpleText(skill.Name, skillid <= -1 and "ZS3D2DFont2Big" or "ZS3D2DFont2", 0, 0, colo, TEXT_ALIGN_CENTER)
-=======
 				
 			if skillid <= -2 and !skill.Hidden1 and !skill.Hidden  then
 				render_ModelMaterialOverride()
@@ -1504,7 +1335,6 @@ function PANEL:Paint(w, h)
 					draw_SimpleText(translate.Get("s_need_testing"),"ZS3D2DFontSmall", 0, xskill, colo, TEXT_ALIGN_CENTER)
 					xskill = xskill + 32 * screenscale
 				end
->>>>>>> Stashed changes
 			end
 			if GAMEMODE.AddDesc and !skill.Hidden1 and skillid == hoveredskill then
 				--local c = string.Explode("\n", skill.Description)
@@ -1551,13 +1381,9 @@ function PANEL:Paint(w, h)
 					render.DrawQuadEasy(nodepos, to_camera, size, size, particlecolors[-skillid - 1] or color_white, angle)
 				end
 			elseif not skill.Disabled then
-<<<<<<< Updated upstream
-				colGlow.r = sat * 255 colGlow.g = sat * 255 colGlow.b = sat * 255
-=======
 				colGlow.r = sat * 255
 				colGlow.g = sat * 255
 				colGlow.b = sat * 255
->>>>>>> Stashed changes
 				if MySelf:IsSkillDesired(skillid) then
 					colGlow.r = colGlow.r / 4
 					colGlow.g = colGlow.g / 4
@@ -1646,11 +1472,7 @@ function PANEL:OnMousePressed(mc)
 			local mx, my = gui.MousePos()
 			local can_remort = MySelf:CanSkillsRemort()
 			contextmenu:SetPos(mx - contextmenu:GetWide() / 2, my - contextmenu:GetTall() / 2)
-<<<<<<< Updated upstream
-
-=======
 				
->>>>>>> Stashed changes
 			if hoveredskill == -1 and can_remort then
 				Derma_Query(
 					"Are you ABSOLUTELY sure you want to remort?\nYou will revert to level 1, lose all skills, but have 1 extra SP.\nThis cannot be undone!",
@@ -1667,7 +1489,7 @@ function PANEL:OnMousePressed(mc)
 					
 				return
 			elseif hoveredskill == -1 then
-				self:DisplayMessage("You need to be level 60 to remort!", COLOR_RED)
+				self:DisplayMessage("You need to be level 100 to remort!", COLOR_RED)
 				surface.PlaySound("buttons/button8.wav")
 				return
 			elseif hoveredskill <= -1 then
@@ -1696,21 +1518,11 @@ function PANEL:OnMousePressed(mc)
 						
 					return
 				end
-<<<<<<< Updated upstream
-
-=======
 					
 				if GAMEMODE.OneClickSkill  then DeactivateSkill(self, hoveredskill) return end
->>>>>>> Stashed changes
 				contextmenu.Button:SetText("Deactivate")
 					
 			elseif MySelf:IsSkillUnlocked(hoveredskill) then
-<<<<<<< Updated upstream
-				contextmenu.Button:SetText("Activate")
-			elseif MySelf:SkillCanUnlock(hoveredskill) then
-				if MySelf:GetZSSPRemaining() >= 1 then
-					contextmenu.Button:SetText("Unlock")
-=======
 				if GAMEMODE.OneClickSkill  then  ActivateSkill(self, hoveredskill)return end
 				contextmenu.Button:SetText("Activate")
 			elseif MySelf:SkillCanUnlock(hoveredskill) then
@@ -1743,7 +1555,6 @@ function PANEL:OnMousePressed(mc)
 					else
 					    return
 					end
->>>>>>> Stashed changes
 				else
 					self:DisplayMessage("You need SP to unlock this skill!", COLOR_RED)
 					surface.PlaySound("buttons/button8.wav")
@@ -1757,18 +1568,12 @@ function PANEL:OnMousePressed(mc)
 					
 				return
 			end
-<<<<<<< Updated upstream
-
-=======
 				
->>>>>>> Stashed changes
 			contextmenu.SkillID = hoveredskill
 			contextmenu:SetVisible(true)
 		else
 			contextmenu:SetVisible(false)
 		end
-<<<<<<< Updated upstream
-=======
 	elseif mc == MOUSE_RIGHT and not hoveredskill then
 		if self.DesiredTree == 0 then
 			self:Remove()
@@ -1795,7 +1600,6 @@ function PANEL:OnMousePressed(mc)
 		end
 	elseif mc == MOUSE_RIGHT and hoveredskill then
 		DestroySkill(self, hoveredskill) 
->>>>>>> Stashed changes
 	end
 end
 	
@@ -1832,7 +1636,7 @@ function GM:DrawXPBar(x, y, w, h, xpw, barwm, hm, level)
 	local rlevel = MySelf:GetZSRemortLevel()
 	local append = ""
 	if rlevel > 0 then
-		append = " // R.Level "..rlevel
+		append = rlevel
 	end
 	surface.SetDrawColor(0, 0, 0, 220)
 	surface.DrawRect(x, y, barw, 4)
@@ -1841,7 +1645,7 @@ function GM:DrawXPBar(x, y, w, h, xpw, barwm, hm, level)
 	surface.SetDrawColor(0, 170, 0, 160)
 	surface.DrawRect(x, y + 2, barw * progress, 2)
 	if level == GAMEMODE.MaxLevel then
-		draw_SimpleText("Level MAX"..append, "ZSXPBar", xpw / 2, h / 2 + y, COLOR_GREEN, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+		draw_SimpleText(translate.Get("hud_lvl_max")..append, "ZSXPBar", xpw / 2, h / 2 + y, COLOR_GREEN, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 	else
 		if progress > 0 then
 			local lx = x + barw * progress - 1
@@ -1852,14 +1656,8 @@ function GM:DrawXPBar(x, y, w, h, xpw, barwm, hm, level)
 			lx = x + barw - 1
 			surface.DrawLine(lx, y - 1, lx, y + 5)
 		end
-<<<<<<< Updated upstream
-
-		draw_SimpleText("Level "..level..append, "ZSXPBar", x, h / 2 + y, COLOR_WHITE, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-		draw_SimpleText(string.CommaSeparate(xp).." / "..string.CommaSeparate(GAMEMODE:XPForLevel(level + 1)).." XP", "ZSXPBar", x + barw, h / 2 + y, COLOR_WHITE, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
-=======
 		draw_SimpleText(translate.Format("hud_r_lvl", level)..(rlevel >= 1 and translate.Get("hud_remort") or "")..append, "ZSXPBar", x, h / 2 + y, COLOR_WHITE, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 		draw_SimpleText(string.CommaSeparate(xp).." / "..string.CommaSeparate(GAMEMODE:XPForLevel(level + 1))..translate.Get("hud_xp"), "ZSXPBar", x + barw, h / 2 + y, COLOR_WHITE, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
->>>>>>> Stashed changes
 	end
 end
 	
@@ -1915,11 +1713,7 @@ function PANEL:Paint(w, h)
 		
 	if sp > 0 then
 		colFlash.a = 90 + math.abs(math.sin(RealTime() * 2)) * 160
-<<<<<<< Updated upstream
-		draw_SimpleText(sp.." SP", "ZSHUDFontSmallest", w - 2, h / 2, colFlash, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
-=======
 		draw_SimpleText(sp..translate.Get("hud_sp"), sp < 100 and "ZSHUDFontSmallest" or "ZSHUDFontTiny", w - 2 , h / 2 - (sp > 100 and 5 or 0)*BetterScreenScale(), colFlash, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
->>>>>>> Stashed changes
 	end
 end
 	
@@ -1935,16 +1729,9 @@ function GM:ToggleSkillWeb()
 		
 	self.SkillWeb = vgui.Create("ZSSkillWeb")
 end
-<<<<<<< Updated upstream
-
-local meta = FindMetaTable("Player")
-if not meta then return end
-
-=======
 	
 local meta = FindMetaTable("Player") if not meta then return end
 	
->>>>>>> Stashed changes
 function meta:SetSkillDesired(skillid, desired)
 	local desiredskills = self:GetDesiredActiveSkills()
 		

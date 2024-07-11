@@ -17,6 +17,7 @@ local P_Team = M_Player.Team
 local P_KeyDown = M_Player.KeyDown
 local P_SyncAngles = M_Player.SyncAngles
 local P_CallZombieFunction1 = M_Player.CallZombieFunction1
+local P_GetZombieClassTable = M_Player.GetZombieClassTable
 local P_GetLegDamage = M_Player.GetLegDamage
 local P_GetBarricadeGhosting = M_Player.GetBarricadeGhosting
 local P_GetActiveWeapon = M_Player.GetActiveWeapon
@@ -82,6 +83,7 @@ function GM:Move(pl, move)
 	if P_Team(pl) == TEAM_HUMAN then
 		if P_GetBarricadeGhosting(pl) and not E_GetDTBool(pl, 1) then
 			-- Use 7, because friction will amount this to a velocity of 1 roughly.
+			
 			phase = pt.NoGhosting and E_GetDTFloat(pl, DT_PLAYER_FLOAT_WIDELOAD) > curtime()
 			M_SetMaxClientSpeed(move, math_min(M_GetMaxClientSpeed(move), phase and 7 or (30 * (pt.BarricadePhaseSpeedMul or 1))))
 		elseif not pt.NoBWSpeedPenalty then
@@ -95,8 +97,6 @@ function GM:Move(pl, move)
 				end
 			end
 		end
-<<<<<<< Updated upstream
-=======
 			local wep = P_GetActiveWeapon(pl)
 			if wep.Move then
 				wep:Move(move) 
@@ -135,11 +135,10 @@ function GM:Move(pl, move)
 					M_SetVelocity( move, vel )
 				end
 			end
->>>>>>> Stashed changes
 	else
 		if pt.SpawnProtection then
-			M_SetMaxSpeed(move, M_GetMaxSpeed(move) * 1.30)
-			M_SetMaxClientSpeed(move, M_GetMaxClientSpeed(move) * 1.30)
+			M_SetMaxSpeed(move, M_GetMaxSpeed(move) * 1.90)
+			M_SetMaxClientSpeed(move, M_GetMaxClientSpeed(move) * 1.90)
 		end
 		local wep = P_GetActiveWeapon(pl)
 		if wep.Move then
@@ -149,7 +148,7 @@ function GM:Move(pl, move)
 	end
 
 	legdmg = P_GetLegDamage(pl)
-	if legdmg > 0 then
+	if legdmg > 0 and !(P_GetZombieClassTable(pl).NoSlowdown or pt.m_Zombie_MoanGuard) then
 		M_SetMaxClientSpeed(move, M_GetMaxClientSpeed(move) * (1 - math_min(1, legdmg / GM_MaxLegDamage)))
 	end
 end

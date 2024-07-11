@@ -1,4 +1,5 @@
 CreateClientConVar("zs_bossclass", "", true, true)
+CreateClientConVar("zs_demibossclass", "", true, true)
 
 local Window
 local HoveredClassWindow
@@ -32,38 +33,51 @@ end
 local PANEL = {}
 
 PANEL.Rows = 2
+local ZombieClass = ""
 
 local bossmode = false
+local demiboss = false
+local var = false
 local function BossTypeDoClick(self)
+	if var then return end
 	bossmode = not bossmode
+	demiboss = false
 	GAMEMODE:OpenClassSelect()
+end
+local function DemiBossTypeDoClick(self)
+	if var then return end
+	demiboss = not demiboss
+	bossmode = false
+	GAMEMODE:OpenClassSelect()
+end
+local function VarTypeDoClick(self)
+	var = not var
+	GAMEMODE:OpenClassSelect()
+end
+local function RedeemTrue12(pl)
+    pl:Redeem()
 end
 
 function PANEL:Init()
 	self.ClassButtons = {}
 
-<<<<<<< Updated upstream
-	self.ClassTypeButton = EasyButton(nil, bossmode and "Open Normal Class Selection" or "Open Boss Class Selection", 8, 4)
-=======
 	self.ClassTypeButton = EasyButton(nil, bossmode and not demiboss and translate.Get("vgui_open_class") or translate.Get("vgui_open_class_b"), 8, 4)
->>>>>>> Stashed changes
 	self.ClassTypeButton:SetFont("ZSHUDFontSmall")
 	self.ClassTypeButton:SizeToContents()
 	self.ClassTypeButton.DoClick = BossTypeDoClick
 
-<<<<<<< Updated upstream
-	self.CloseButton = EasyButton(nil, "Close", 8, 4)
-=======
 	self.DemiClassTypeButton = EasyButton(nil, demiboss and translate.Get("vgui_open_class") or translate.Get("vgui_open_class_db"), 8, 4)
 	self.DemiClassTypeButton:SetFont("ZSHUDFontSmall")
 	self.DemiClassTypeButton:SizeToContents()
 	self.DemiClassTypeButton.DoClick = DemiBossTypeDoClick
 
 	self.CloseButton = EasyButton(nil, translate.Get('mm_close'), 8, 4)
->>>>>>> Stashed changes
 	self.CloseButton:SetFont("ZSHUDFontSmall")
 	self.CloseButton:SizeToContents()
-	self.CloseButton.DoClick = function() Window:Remove() end
+	self.CloseButton.DoClick = function()  var = false ZombieClass = "" Window:Remove()  end
+
+
+
 
 	self.ButtonGrid = vgui.Create("DGrid", self)
 	self.ButtonGrid:SetContentAlignment(5)
@@ -75,25 +89,22 @@ function PANEL:Init()
 	for i=1, #GAMEMODE.ZombieClasses do
 		local classtab = GAMEMODE.ZombieClasses[GAMEMODE:GetBestAvailableZombieClass(i)]
 
-		if classtab and not classtab.Disabled and not already_added[classtab.Index] then
+		if classtab and not classtab.Disabled and not already_added[classtab.Index] and (!classtab.Variations or classtab.Original) and ZombieClass ~= classtab.Name and !var then
 			already_added[classtab.Index] = true
 
 			local ok
 			if bossmode then
-<<<<<<< Updated upstream
-				ok = classtab.Boss
-=======
 				ok = classtab.Boss and (!classtab.Hidden or GAMEMODE:GetWave()>= (classtab.Wave and classtab.Wave or 32) )
 				
 			
 			elseif demiboss and not bossmode then
 				ok = classtab.DemiBoss and not classtab.Hidden
->>>>>>> Stashed changes
 			else
-				ok = not classtab.Boss and
+				ok = not classtab.Boss and not classtab.DemiBoss and
 					(not classtab.Hidden or classtab.CanUse and classtab:CanUse(MySelf)) and
 					(not GAMEMODE.ObjectiveMap or classtab.Unlocked)
 			end
+			
 
 			if ok then
 				if not use_better_versions or not classtab.BetterVersionOf or GAMEMODE:IsClassUnlocked(classtab.Index) then
@@ -106,8 +117,6 @@ function PANEL:Init()
 					self.ButtonGrid:AddItem(button)
 				end
 			end
-<<<<<<< Updated upstream
-=======
 		elseif classtab and not classtab.Disabled and not already_added[classtab.Index] and classtab.Variations and var and ZombieClass == classtab.Name then
 			for k,v in pairs(classtab.Variations) do
 					for i=1, #GAMEMODE.ZombieClasses do
@@ -145,7 +154,6 @@ function PANEL:Init()
 						end
 					end
 			end
->>>>>>> Stashed changes
 		end
 	end
 
@@ -168,6 +176,10 @@ function PANEL:PerformLayout()
 	self.ClassTypeButton:MoveAbove(self, 16)
 	self.ClassTypeButton:CenterHorizontal()
 
+	self.DemiClassTypeButton:MoveAbove(self, 64)
+	self.DemiClassTypeButton:SetSize(502, 30)
+	self.DemiClassTypeButton:CenterHorizontal()
+
 	self.CloseButton:MoveAbove(self, 16)
 	self.CloseButton:CenterHorizontal(0.9)
 
@@ -179,6 +191,7 @@ end
 function PANEL:OnRemove()
 	self.ClassTypeButton:Remove()
 	self.CloseButton:Remove()
+	self.DemiClassTypeButton:Remove()
 end
 
 local texUpEdge = surface.GetTextureID("gui/gradient_up")
@@ -249,18 +262,32 @@ function PANEL:DoClick()
 		if self.ClassTable.Boss then
 			RunConsoleCommand("zs_bossclass", self.ClassTable.Name)
 			GAMEMODE:CenterNotify(translate.Format("boss_class_select", self.ClassTable.Name))
+		elseif self.ClassTable.DemiBoss then
+				RunConsoleCommand("zs_demibossclass", self.ClassTable.Name)
+				GAMEMODE:CenterNotify(translate.Format("boss_class_select", self.ClassTable.Name))
+
 		else
-			net.Start("zs_changeclass")
-				net.WriteString(self.ClassTable.Name)
-				net.WriteBool(GAMEMODE.SuicideOnChangeClass)
-			net.SendToServer()
+			if ((!self.ClassTable.Variations or !self.ClassTable.Original and var) or self.ClassTable.Name == ZombieClass) then
+				net.Start("zs_changeclass")
+					net.WriteString(self.ClassTable.Name)
+					net.WriteBool(GAMEMODE.SuicideOnChangeClass)
+				net.SendToServer()
+				VarTypeDoClick(self)
+			elseif self.ClassTable.Variations and self.ClassTable.Original and not var and self.ClassTable.Name ~= ZombieClass then
+				ZombieClass = self.ClassTable.Name
+				VarTypeDoClick(self)
+				return
+			end
 		end
 	end
 
 	surface.PlaySound("buttons/button15.wav")
 
 	Window:Remove()
+	ZombieClass = ""
+	var = false
 	bossmode = false
+	demiboss = false
 end
 
 function PANEL:Paint()
@@ -287,11 +314,7 @@ function PANEL:Think()
 	local enabled
 	if MySelf:GetZombieClass() == self.ClassTable.Index then
 		enabled = 2
-<<<<<<< Updated upstream
-	elseif self.ClassTable.Boss or gamemode.Call("IsClassUnlocked", self.ClassTable.Index) then
-=======
 	elseif (self.ClassTable.Boss and !self.ClassTable.Hidden) or gamemode.Call("IsClassUnlocked", self.ClassTable.Index) or self.ClassTable.DemiBoss then
->>>>>>> Stashed changes
 		enabled = 1
 	else
 		enabled = 0
@@ -352,7 +375,28 @@ function PANEL:RemoveDescLabels()
 
 	self.DescLabels = {}
 end
-
+local function GetMaxZombieHealth(classtab)
+	local lowundead = team.NumPlayers(TEAM_UNDEAD) < 4
+	local healthmulti = (GAMEMODE.ObjectiveMap or GAMEMODE.ZombieEscape) and 1 or lowundead and 1.5 or 1
+	local health = 0
+	if classtab.Boss then
+		health = classtab.Health +  (((GAMEMODE:GetWave() * 250)) * math.max(1,team.NumPlayers(TEAM_HUMAN)/2 - (team.NumPlayers(TEAM_UNDEAD)/3)))* (classtab.DynamicHealth or 1)
+	elseif classtab.DemiBoss then
+		health = classtab.Health + (((GAMEMODE:GetWave() * 80)) * team.NumPlayers(TEAM_HUMAN)) * (classtab.DynamicHealth or 1)
+	else
+		health = (classtab.Health * healthmulti) + ((GAMEMODE:GetWave() * 45) * (classtab.DynamicHealth or 1)) 
+	end
+	return health
+end
+local function GetZombieName(name)
+	for i=1, #GAMEMODE.ZombieClasses do
+		local classtab = GAMEMODE.ZombieClasses[GAMEMODE:GetBestAvailableZombieClass(i)]
+		if classtab.Name == name then
+			return translate.Get(classtab.TranslationName)
+		end
+	end
+	return ""
+end
 function PANEL:CreateDescLabels()
 	self:RemoveDescLabels()
 
@@ -374,6 +418,7 @@ function PANEL:CreateDescLabels()
 		end
 	end
 
+
 	table.insert(lines, " ")
 	table.Add(lines, string.Explode("\n", translate.Get(classtable.Description)))
 
@@ -381,7 +426,24 @@ function PANEL:CreateDescLabels()
 		table.insert(lines, " ")
 		table.Add(lines, string.Explode("\n", translate.Get(classtable.Help)))
 	end
-
+	
+	if classtable.SWEP then
+		table.insert(lines, " ")
+		table.Add(lines, string.Explode("\n", translate.Get("p_dmg")..":"..(weapons.Get(classtable.SWEP).MeleeDamage or 1)))
+		table.Add(lines, string.Explode("\n", translate.Get("skill_add_health")..":"..GetMaxZombieHealth(classtable)))
+		table.Add(lines, string.Explode("\n", translate.Get("skill_add_speed")..":"..classtable.Speed))
+		if weapons.Get(classtable.SWEP).MeleeDamageVsProps then
+			table.Add(lines, string.Explode("\n", translate.Get("p_dmg_prop")..":"..(weapons.Get(classtable.SWEP).MeleeDamageVsProps or 1)))
+		end
+	end
+	if classtable.Variations and classtable.Original and !var then
+		table.insert(lines, " ")
+		table.Add(lines, string.Explode(" ", translate.Get("variations_z")))
+		table.insert(lines, " ")
+		for k,v in pairs(classtable.Variations) do 
+			table.Add(lines, string.Explode("\n", GetZombieName(v)))
+		end
+	end
 	for i, line in ipairs(lines) do
 		local label = vgui.Create("DLabel", self)
 		local notwaveone = classtable.Wave and classtable.Wave > 0
@@ -392,6 +454,7 @@ function PANEL:CreateDescLabels()
 		end
 		label:SetFont(i == 1 and notwaveone and "ZSBodyTextFontBig" or "ZSBodyTextFont")
 		label:SizeToContents()
+
 		table.insert(self.DescLabels, label)
 	end
 end

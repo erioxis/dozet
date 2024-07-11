@@ -5,8 +5,40 @@ function SWEP:Eat()
 
 	if owner:IsSkillActive(SKILL_SUGARRUSH) then
 		local boost = owner:GiveStatus("adrenalineamp", 14)
+		
 		if boost and boost:IsValid() then
 			boost:SetSpeed(35)
+		end
+	end
+	if owner:IsSkillActive(SKILL_DEATHCURSE) then
+		local cursed = owner:GetStatus("cursed")
+		if (cursed) then 
+			owner:AddCursed(self:GetOwner(), cursed.DieTime - CurTime() - 900)
+			owner:GiveStatus("medrifledefboost", 35)
+		end
+
+	end
+	if owner:HasTrinket("sin_gluttony") then
+		debuff = math.random(1,6)
+		if debuff == 1 then
+			owner:GiveStatus("medrifledefboost", 15)
+		elseif debuff == 2 then
+			owner:GiveStatus("rot", 3)
+		elseif debuff == 3 then
+			owner:GiveStatus("frost", 15)
+		elseif debuff == 4 then
+			owner:AddPoisonDamage(15, self)
+		elseif debuff == 5 then
+			owner:GiveStatus("reaper", 70)
+		else
+			owner:GiveStatus("strengthdartboost", 70)
+		end
+	end
+	if owner:IsSkillActive(SKILL_FOODHEALS) then
+		for _, pl in pairs(ents.FindInSphere(owner:GetPos(), 128 * self:GetModelScale())) do
+            if pl:IsValidLivingHuman() then
+				owner:HealPlayer(pl, self.FoodHealth * (owner.FoodRecoveryMul or 1))
+			end
 		end
 	end
 
@@ -33,8 +65,5 @@ function SWEP:Eat()
 		owner:StripWeapon(self:GetClass())
 	end
 end
-<<<<<<< Updated upstream
-=======
 function SWEP:PostEat()
 end
->>>>>>> Stashed changes

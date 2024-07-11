@@ -2,8 +2,10 @@ AddCSLuaFile()
 
 --in memory of Gormaoife 1999-2016 rip
 
-SWEP.PrintName = "'Splinter' Sawed-Off Shotgun"
-SWEP.Description = "Can fire both rounds at once for higher burst damage."
+--SWEP.PrintName = "'Splinter' Sawed-Off Shotgun"
+--SWEP.Description = "Can fire both rounds at once for higher burst damage."
+SWEP.PrintName = ""..translate.Get("wep_sawedoff")
+SWEP.Description = ""..translate.Get("wep_d_sawedoff")
 
 SWEP.Slot = 3
 SWEP.SlotPos = 0
@@ -54,11 +56,7 @@ SWEP.CSMuzzleFlashes = false
 
 SWEP.Primary.Sound = Sound("weapons/zs_sawnoff/sawnoff_fire1.ogg")
 SWEP.Primary.Damage = 11.35
-<<<<<<< Updated upstream
-SWEP.Primary.NumShots = 8
-=======
 SWEP.Primary.NumShots = 5
->>>>>>> Stashed changes
 SWEP.Primary.Delay = 0.6
 SWEP.Primary.ClipSize = 2
 SWEP.Primary.Automatic = false
@@ -83,7 +81,7 @@ SWEP.DryFireSound = Sound("Weapon_Shotgun.Empty")
 
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_MAX_SPREAD, -1.125, 1)
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_MIN_SPREAD, -1.069, 1)
-GAMEMODE:AddNewRemantleBranch(SWEP, 1, "'Splinter' Slug Gun", "Single accurate slug round, less total damage", function(wept)
+GAMEMODE:AddNewRemantleBranch(SWEP, 1, ""..translate.Get("wep_sawedoff_r1"), ""..translate.Get("wep_d_sawedoff_r1"), function(wept)
 	wept.Primary.Damage = wept.Primary.Damage * 5.5
 	wept.Primary.NumShots = 1
 	wept.ConeMin = wept.ConeMin * 0.15

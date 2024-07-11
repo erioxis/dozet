@@ -9,6 +9,7 @@ function ENT:Think()
 			local extraduration = (1 - self:GetObjectHealth()/self:GetMaxObjectHealth()) * 10
 			owner.NextShield = fCurTime + (self.Destroyed and 12 or (2 + extraduration))
 			self:Remove()
+			owner:GetActiveWeapon():SetNextShadeTime(fCurTime + (self.Destroyed and 12 or (2 + extraduration)))
 			return
 		elseif self:GetStateEndTime() <= fCurTime and self:GetState() == 0 and not self.Constructed then
 			self:PhysicsInit(SOLID_VPHYSICS)

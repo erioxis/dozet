@@ -1,12 +1,6 @@
 SWEP.Base = "weapon_zs_graveshovel"
 SWEP.ZombieOnly = false
 
-<<<<<<< Updated upstream
-SWEP.MeleeDamage = 40
-SWEP.MeleeKnockBack = 160
-
-SWEP.Primary.Delay = 0.4
-=======
 SWEP.MeleeDamage = 32
 SWEP.MeleeKnockBack = 16
 SWEP.MeleeRange = 63
@@ -16,9 +10,8 @@ SWEP.Primary.Delay = 0.46
 SWEP.BlockTrue = false
 SWEP.CanPickup = true
 SWEP.OneTapDevo = true
->>>>>>> Stashed changes
 
-SWEP.ViewModel = Model("models/weapons/v_pza.mdl")
+SWEP.ViewModel = Model("models/weapons/c_crowbar.mdl")
 SWEP.WorldModel = "models/weapons/w_crowbar.mdl"
 
 AccessorFuncDT(SWEP, "HookTime", "Float", 1)
@@ -27,7 +20,7 @@ GAMEMODE:SetPrimaryWeaponModifier(SWEP, WEAPON_MODIFIER_FIRE_DELAY, -0.054)
 function SWEP:SecondaryAttack()
 	if CurTime() < self:GetNextPrimaryFire() or CurTime() < self:GetNextSecondaryFire() then return end
 
-	self:SetNextSecondaryFire(CurTime() + 0.25)
+	self:SetNextSecondaryFire(CurTime() + 0.45 + (self.Primary.Delay * 0.5))
 	self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
 
 	self:SetSwingAnimTime(CurTime() + 0.3)
@@ -36,7 +29,7 @@ function SWEP:SecondaryAttack()
 
 	self:EmitSound("npc/headcrab_poison/ph_poisonbite3.wav", 75, 46)
 
-	self:SetHookTime(CurTime() + 0.5)
+	self:SetHookTime(CurTime() + 0.35)
 end
 
 function SWEP:Think()
@@ -44,7 +37,7 @@ function SWEP:Think()
 		self:SetHookTime(0)
 
 		self:EmitSound("physics/flesh/flesh_squishy_impact_hard"..math.random(2, 4)..".wav", 72, math.random(70, 83))
-		self:SendWeaponAnim(ACT_VM_SECONDARYATTACK)
+		
 
 		if SERVER then
 			self:ThrowHook()

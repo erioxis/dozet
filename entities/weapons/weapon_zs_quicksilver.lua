@@ -1,9 +1,10 @@
 AddCSLuaFile()
 DEFINE_BASECLASS("weapon_zs_base")
 
-SWEP.PrintName = "'Quicksilver' Semi-Auto Rifle"
-SWEP.Description = "A semi automatic sniper rifle. Has good fire rate, large clip size and a decent damage per shot."
-
+--SWEP.PrintName = "'Quicksilver' Semi-Auto Rifle"
+--SWEP.Description = "A semi automatic sniper rifle. Has good fire rate, large clip size and a decent damage per shot."
+SWEP.PrintName = ""..translate.Get("wep_sliver")
+SWEP.Description = ""..translate.Get("wep_d_sliver")
 SWEP.Slot = 3
 SWEP.SlotPos = 0
 

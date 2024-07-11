@@ -1,6 +1,7 @@
-SWEP.PrintName = "Great Scythe"
-SWEP.Description = "A great scythe that can pierce and cut through multiple zombies. Has a 3 hit combo, the last hit deals extra damage.Gave reaper stack when you kill zombie"
-
+--SWEP.PrintName = "Great Scythe"
+--SWEP.Description = "A great scythe that can pierce and cut through multiple zombies. Has a 3 hit combo, the last hit deals extra damage.Gave reaper stack when you kill zombie"
+SWEP.PrintName = ""..translate.Get("wep_gscythe")
+SWEP.Description = ""..translate.Get("wep_d_gscythe")
 SWEP.Base = "weapon_zs_basemelee"
 
 SWEP.HoldType = "melee2"
@@ -89,7 +90,7 @@ function SWEP:MeleeSwing()
 	end
 
 	if combo == 2 then
-		damagemultiplier = damagemultiplier * 1.35
+		damagemultiplier = damagemultiplier * 1.55
 	end
 	if owner:IsSkillActive(SKILL_CURSE_OF_MISS) and math.random(1,3) == 1 and SERVER then
 		GAMEMODE:BlockFloater(owner, NULL, tr.HitPos, 1)
@@ -162,11 +163,6 @@ function SWEP:MeleeHitEntity(tr, hitent, damagemultiplier, damage)
 			owner.GlassWeaponShouldBreak = not owner.GlassWeaponShouldBreak
 		end
 
-<<<<<<< Updated upstream
-	if SERVER and hitent:IsPlayer() and owner:IsSkillActive(SKILL_GLASSWEAPONS) then
-		damagemultiplier = damagemultiplier * 3.5
-		owner.GlassWeaponShouldBreak = not owner.GlassWeaponShouldBreak
-=======
 		if hitent:IsPlayer() and owner:IsSkillActive(SKILL_SOULNET) then
 			damagemultiplier = damagemultiplier * 1.06
 
@@ -174,7 +170,6 @@ function SWEP:MeleeHitEntity(tr, hitent, damagemultiplier, damage)
 		if owner.ShineAndHit and hitent.IdealHit then
 			damagemultiplier = damagemultiplier * 1.4
 		end
->>>>>>> Stashed changes
 	end
 
 	damage = damage * damagemultiplier
@@ -282,3 +277,17 @@ function SWEP:OnZombieKilled()
 		end
 	end
 end
+
+--[[if owner:IsSkillActive(SKILL_BLOODLOST) then
+
+function SWEP:OnZombieKilled()
+	 local killer = self:GetOwner()
+
+	 if killer:IsValid() then
+		 local reaperstatus1 = killer:GiveStatus("bloodlust", 10)
+		 if reaperstatus1 and reaperstatus1:IsValid() then
+			reaperstatus1:SetDTInt(1, math.min(reaperstatus1:GetDTInt(1) + 1, 10))
+			killer:EmitSound("hl1/ambience/particle_suck1.wav", 55, 150 + reaperstatus1:GetDTInt(1) * 10, 0.45)
+		 end
+	 end
+end]]

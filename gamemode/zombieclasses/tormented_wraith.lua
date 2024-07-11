@@ -5,19 +5,16 @@ CLASS.TranslationName = "class_tormented_wraith"
 CLASS.Description = "description_tormented_wraith"
 CLASS.Help = "controls_tormented_wraith"
 
-<<<<<<< Updated upstream
-=======
 CLASS.Variations = {}
 CLASS.Original = false
 
 
 
->>>>>>> Stashed changes
 CLASS.Health = 320
 CLASS.Points = CLASS.Health/GM.NoHeadboxZombiePointRatio
 CLASS.Speed = 168
 
-CLASS.Wave = 2 / 6
+CLASS.Wave = 3 / 6
 
 CLASS.SWEP = "weapon_zs_tormentedwraith"
 

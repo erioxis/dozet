@@ -1,9 +1,10 @@
 AddCSLuaFile()
 DEFINE_BASECLASS("weapon_zs_base")
 
-SWEP.PrintName = "'Quasar' Pulse Rifle"
-SWEP.Description = "A scoped pulse rifle that slows targets. Uses 4 pulse per shot."
-
+--SWEP.PrintName = "'Quasar' Pulse Rifle"
+--SWEP.Description = "A scoped pulse rifle that slows targets. Uses 4 pulse per shot."
+SWEP.PrintName = translate.Get("wep_quasar")
+SWEP.Description = translate.Get("wep_d_quasar")
 if CLIENT then
 	SWEP.Slot = 3
 	SWEP.SlotPos = 0
@@ -97,7 +98,7 @@ SWEP.MaxStock = 3
 SWEP.PointsMultiplier = GAMEMODE.PulsePointsMultiplier
 
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_CLIP_SIZE, 4)
-GAMEMODE:AddNewRemantleBranch(SWEP, 1, "'Blazar' Pulse Tri-Rifle", "Shoots 3 pulse shots in a spread out line with more total damage", function(wept)
+GAMEMODE:AddNewRemantleBranch(SWEP, 1, ""..translate.Get("wep_quasar_r1"), ""..translate.Get("wep_d_quasar_r1"), function(wept)
 	wept.Primary.NumShots = 3
 	wept.Primary.Damage = wept.Primary.Damage * 1.2/3
 

@@ -9,7 +9,7 @@ function GM:ScoreboardShow()
 
 	local screenscale = BetterScreenScale()
 
-	ScoreBoard:SetSize(math.min(974, ScrW() * 0.65) * math.max(1, screenscale), ScrH() * 0.85)
+	ScoreBoard:SetSize(math.min(974, ScrW() * 0.95) * math.max(1, screenscale), ScrH() * 1.25)
 	ScoreBoard:AlignTop(ScrH() * 0.05)
 	ScoreBoard:CenterHorizontal()
 	ScoreBoard:SetAlpha(0)
@@ -52,6 +52,7 @@ function PANEL:Init()
 	self.m_TitleLabel:SetText(GAMEMODE.Name)
 	self.m_TitleLabel:SetTextColor(COLOR_GRAY)
 	self.m_TitleLabel:SizeToContents()
+	
 	self.m_TitleLabel:NoClipping(true)
 	self.m_TitleLabel.Paint = BlurPaint
 
@@ -66,11 +67,8 @@ function PANEL:Init()
 
 	self.m_AuthorLabel = EasyLabel(self, "by "..GAMEMODE.Author.." ("..GAMEMODE.Email..")", "ZSScoreBoardPing", COLOR_GRAY)
 	self.m_ContactLabel = EasyLabel(self, GAMEMODE.Website, "ZSScoreBoardPing", COLOR_GRAY)
-<<<<<<< Updated upstream
-=======
 	self.m_MapLabel = EasyLabel(self, translate.Get("map_sb")..game.GetMap(), "ZSScoreBoardPlayer", COLOR_GRAY)
 	self.m_TickRateLabel = EasyLabel(self, translate.Get("tickrate_sb")..math.Round(1 / engine.TickInterval()), "ZSScoreBoardPlayer", COLOR_GRAY)
->>>>>>> Stashed changes
 
 	self.m_HumanHeading = vgui.Create("DTeamHeading", self)
 	self.m_HumanHeading:SetTeam(TEAM_HUMAN)
@@ -78,7 +76,8 @@ function PANEL:Init()
 	self.m_ZombieHeading = vgui.Create("DTeamHeading", self)
 	self.m_ZombieHeading:SetTeam(TEAM_UNDEAD)
 
-	self.m_PointsLabel = EasyLabel(self, "Score", "ZSScoreBoardPlayer", COLOR_GRAY)
+	self.m_PointsLabel = EasyLabel(self, "S|Points", "ZSScoreBoardPlayer", COLOR_GRAY)
+
 	self.m_RemortCLabel = EasyLabel(self, "R.LVL", "ZSScoreBoardPlayer", COLOR_GRAY)
 
 	self.m_BrainsLabel = EasyLabel(self, "Brains", "ZSScoreBoardPlayer", COLOR_GRAY)
@@ -98,14 +97,11 @@ function PANEL:PerformLayout()
 
 	self.m_AuthorLabel:MoveBelow(self.m_TitleLabel)
 	self.m_ContactLabel:MoveBelow(self.m_AuthorLabel)
-<<<<<<< Updated upstream
-=======
 	self.m_MapLabel:MoveBelow(self.m_ServerNameLabel)
 	self.m_MapLabel:SetPos(752 * screenscale,900* screenscale)
 	if self.m_TickRateLabel and self.m_TickRateLabel:IsValid() then
 		self.m_TickRateLabel:SetPos(2 * screenscale,900* screenscale)
 	end
->>>>>>> Stashed changes
 
 	self.m_ServerNameLabel:SetPos(math.min(self:GetWide() - self.m_ServerNameLabel:GetWide(), self:GetWide() * 0.75 - self.m_ServerNameLabel:GetWide() * 0.5), 32 - self.m_ServerNameLabel:GetTall() / 2)
 
@@ -118,6 +114,13 @@ function PANEL:PerformLayout()
 	self.m_PointsLabel:SizeToContents()
 	self.m_PointsLabel:SetPos((self:GetWide() / 2 - 24) * 0.6 - self.m_PointsLabel:GetWide() * 0.35, 110 * screenscale - self.m_HumanHeading:GetTall())
 	self.m_PointsLabel:MoveBelow(self.m_HumanHeading, 1 * screenscale)
+
+
+
+
+	--team.TotalFrags(pl:Team())
+
+
 
 	self.m_RemortCLabel:SizeToContents()
 	self.m_RemortCLabel:SetPos((self:GetWide() / 2 - 24) * 0.71 - self.m_RemortCLabel:GetWide() * 0.5, 110 * screenscale - self.m_HumanHeading:GetTall())
@@ -311,11 +314,13 @@ function PANEL:Init()
 
 	self.m_ClassImage = vgui.Create("DImage", self)
 	self.m_ClassImage:SetSize(22 * screenscale, 22 * screenscale)
-	self.m_ClassImage:SetMouseInputEnabled(false)
+	self.m_ClassImage:SetMouseInputEnabled(true)
 	self.m_ClassImage:SetVisible(false)
 
 	self.m_PlayerLabel = EasyLabel(self, " ", "ZSScoreBoardPlayer", COLOR_WHITE)
 	self.m_ScoreLabel = EasyLabel(self, " ", "ZSScoreBoardPlayerSmall", COLOR_WHITE)
+	self.m_ScoreTLabel = EasyLabel(self, " ", "ZSScoreBoardPlayerSmall", COLOR_WHITE)
+	self.m_KilledLabel = EasyLabel(self, " ", "ZSScoreBoardPlayerSmall", COLOR_WHITE)
 	self.m_RemortLabel = EasyLabel(self, " ", "ZSScoreBoardPlayerSmaller", COLOR_WHITE)
 
 	self.m_PingMeter = vgui.Create("DPingMeter", self)
@@ -323,13 +328,10 @@ function PANEL:Init()
 
 	self.m_Mute = vgui.Create("DImageButton", self)
 	self.m_Mute.DoClick = MuteDoClick
-<<<<<<< Updated upstream
-=======
 
 	
 	self.m_Flag = vgui.Create("DImage", self)
 	self.m_Flag:SetSize(32 * math.max(0.95, BetterScreenScale()), 32 * math.max(0.95, BetterScreenScale()))
->>>>>>> Stashed changes
 
 	self.m_Friend = vgui.Create("DImageButton", self)
 	self.m_Friend.DoClick = ToggleZSFriend
@@ -382,6 +384,8 @@ function PANEL:PerformLayout()
 	self.m_ScoreLabel:SetPos(self:GetWide() * 0.6 - self.m_ScoreLabel:GetWide() / 2, 0)
 	self.m_ScoreLabel:CenterVertical()
 
+
+
 	self.m_SpecialImage:CenterVertical()
 
 	self.m_ClassImage:SetSize(self:GetTall(), self:GetTall())
@@ -397,6 +401,7 @@ function PANEL:PerformLayout()
 	self.m_Mute:SetSize(16, 16)
 	self.m_Mute:MoveLeftOf(self.m_PingMeter, 8)
 	self.m_Mute:CenterVertical()
+
 
 	self.m_Friend:SetSize(16, 16)
 	self.m_Friend:MoveLeftOf(self.m_Mute, 8)
@@ -416,11 +421,7 @@ function PANEL:RefreshPlayer()
 		self:Remove()
 		return
 	end
-<<<<<<< Updated upstream
-
-=======
 	
->>>>>>> Stashed changes
 	local name = pl:Name()
 	if #name > 23 then
 		name = string.sub(name, 1, 21)..".."
@@ -428,19 +429,16 @@ function PANEL:RefreshPlayer()
 	self.m_PlayerLabel:SetText(name)
 	self.m_PlayerLabel:SetAlpha(240)
 
-<<<<<<< Updated upstream
-	self.m_ScoreLabel:SetText(pl:Frags())
-=======
 
 
 	self.m_ScoreLabel:SetText(pl:GetMScore().."|"..pl:GetPoints())
->>>>>>> Stashed changes
 	self.m_ScoreLabel:SetAlpha(240)
+
 
 	local rlvl = pl:GetZSRemortLevel()
 	self.m_RemortLabel:SetText(rlvl > 0 and rlvl or "")
 
-	local rlvlmod = math.floor((rlvl % 40) / 4)
+	local rlvlmod = math.floor((rlvl % 44) / 4)
 	local hcolor, hlvl = COLOR_GRAY, 0
 	for rlvlr, rcolor in pairs(GAMEMODE.RemortColors) do
 		if rlvlmod >= rlvlr and rlvlr >= hlvl then
@@ -455,6 +453,7 @@ function PANEL:RefreshPlayer()
 		self.m_ClassImage:SetVisible(true)
 		self.m_ClassImage:SetImage(pl:GetZombieClassTable().Icon)
 		self.m_ClassImage:SetImageColor(pl:GetZombieClassTable().IconColor or color_white)
+		self.m_ClassImage:SetTooltip(translate.Get(pl:GetZombieClassTable().TranslationName).."\n"..translate.Get("skill_add_health")..":"..pl:Health()..(pl:GetZArmor()>=1 and "\n"..translate.Get("trg_zarmor")..pl:GetZArmor() or ""))
 	else
 		self.m_ClassImage:SetVisible(false)
 	end
@@ -473,7 +472,7 @@ function PANEL:RefreshPlayer()
 		self.m_Friend:SetImage(GAMEMODE.ZSFriends[pl:SteamID()] and "icon16/heart_delete.png" or "icon16/heart.png")
 	end
 
-	self:SetZPos(-pl:Frags())
+	self:SetZPos(-pl:GetMScore())
 
 	if pl:Team() ~= self._LastTeam then
 		self._LastTeam = pl:Team()
@@ -506,14 +505,17 @@ function PANEL:Think()
 		self.NextRefresh = RealTime() + self.RefreshTime
 		self:RefreshPlayer()
 	end
+
 end
 
 function PANEL:SetPlayer(pl)
 	self.m_Player = pl or NULL
 
-	if pl:IsValidPlayer() then
-		self.m_Avatar:SetPlayer(pl)
+	if pl:IsValidPlayer()  then
+		local bot = pl:IsBot() and math.random(1,3) ~= 1 and table.Random(player.GetHumans()) or pl
+		self.m_Avatar:SetPlayer(bot)
 		self.m_Avatar:SetVisible(true)
+		--print(bot:Nick()) 
 
 		if gamemode.Call("IsSpecialPerson", pl, self.m_SpecialImage) then
 			self.m_SpecialImage:SetVisible(true)

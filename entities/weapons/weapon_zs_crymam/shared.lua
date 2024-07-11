@@ -1,6 +1,7 @@
 SWEP.PrintName = "'Crymam' MOM"
 SWEP.Description = "Die NOW"
-
+SWEP.PrintName = " "..translate.Get("wep_crymam")
+SWEP.Description = " "..translate.Get("wep_d_crymam")
 SWEP.Base = "weapon_zs_baseproj"
 
 SWEP.HoldType = "ar2"
@@ -16,7 +17,7 @@ SWEP.Primary.ClipSize = 19
 SWEP.Primary.Automatic = true
 SWEP.Primary.Ammo = "impactmine"
 SWEP.Primary.DefaultClip = 19
-SWEP.Primary.Damage = 31
+SWEP.Primary.Damage = 18
 
 SWEP.ConeMin = 0.0001
 SWEP.ConeMax = 0.0001
@@ -25,18 +26,18 @@ SWEP.WalkSpeed = SPEED_SLOW
 
 SWEP.Tier = 5
 
-SWEP.MaxBombs = 7
+SWEP.MaxBombs = 3
 
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_RELOAD_SPEED, 0.1)
 GAMEMODE:AddNewRemantleBranch(SWEP, 1, "'Lynx'", "'Better damage but less max bombs'", function(wept)
-	wept.Primary.Damage = wept.Primary.Damage * 5
+	wept.Primary.Damage = wept.Primary.Damage * 3
 	if SERVER then
 		wept.EntModify = function(self, ent)
 			self:SetNextSecondaryFire(CurTime() + 0.2)
 			ent:SetDTBool(0, true)
 		end
 	end
-	wept.MaxBombs = 1
+	wept.MaxBombs = 3
 	if CLIENT then
 		wept.VElements.clipbase.color = Color(30, 95, 150)
 	end

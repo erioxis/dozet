@@ -1,6 +1,6 @@
 AddCSLuaFile()
 
-SWEP.PrintName = "Electrohammer"
+SWEP.PrintName = ""..translate.Get("wep_ehammer")
 
 if CLIENT then
 
@@ -21,11 +21,7 @@ end
 
 SWEP.Base = "weapon_zs_hammer"
 
-<<<<<<< Updated upstream
-SWEP.MeleeDamage = 41
-=======
 SWEP.MeleeDamage = 1
->>>>>>> Stashed changes
 SWEP.HealStrength = 1.6
 
 SWEP.ViewModel = "models/weapons/v_hammer/c_hammer.mdl"

@@ -22,14 +22,14 @@ CLASS.Speed = 300
 CLASS.NoFallDamage = true
 CLASS.NoFallSlowdown = true
 
-CLASS.ModelScale = 2
-CLASS.Hull = {Vector(-16, -16, 0), Vector(16, 16, 12 * CLASS.ModelScale)}
-CLASS.HullDuck = {Vector(-16, -16, 0), Vector(16, 16, 12 * CLASS.ModelScale)}
+CLASS.ModelScale = 1.8
+CLASS.Hull = {Vector(-8, -8, 0), Vector(8, 8, 10 * CLASS.ModelScale)}
+CLASS.HullDuck = {Vector(-8, -8, 0), Vector(8, 8, 10 * CLASS.ModelScale)}
 CLASS.ViewOffset = Vector(0, 0, 48)
 CLASS.ViewOffsetDucked = Vector(0, 0, 48)
 CLASS.StepSize = 8 * CLASS.ModelScale
 CLASS.CrouchedWalkSpeed = 1
-CLASS.Mass = 11 * CLASS.ModelScale
+CLASS.Mass = 2 * CLASS.ModelScale
 
 --CLASS.NoCollideAll = true
 

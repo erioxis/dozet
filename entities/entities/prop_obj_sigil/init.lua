@@ -1,6 +1,7 @@
 INC_SERVER()
 
 ENT.HealthLock = 0
+ENT.Immune = false
 
 function ENT:Initialize()
 	self:DrawShadow(false)
@@ -19,6 +20,9 @@ function ENT:Initialize()
 		if phys:IsValid() then
 			phys:EnableMotion(false)
 		end
+	if GAMEMODE:GetWave() <= 7 then
+		self.Immune = true
+	end
 
 	self:CollisionRulesChanged()
 
@@ -41,29 +45,44 @@ function ENT:Initialize()
 		--ent:SetParent(self) -- Prevents collisions
 		self:DeleteOnRemove(ent)
 	end
-		local ent = ents.Create("func_arsenalzone")
+	--[[local ent = ents.Create("prop_dynamic")
 	if ent:IsValid() then
 		ent:SetPos(self:GetPos())
 		ent:SetAngles(self:GetAngles())
+		ent:SetModel("models/dav0r/hoverball.mdl")
+		ent:SetCollisionGroup( COLLISION_GROUP_WORLD )
+		ent:PhysicsInit(SOLID_NONE)
 		ent:Spawn()
+		ent:SetModelScale(104)
+		ent:DrawShadow(false)
+		ent:SetRenderFX(kRenderFxDistort)
 		ent:SetOwner(self)
-		ent:SetParent(self) -- Prevents collisions
-	
-	end
+		--ent:SetParent(self) -- Prevents collisions
+		self:DeleteOnRemove(ent)
+	end]]
 end
 
 function ENT:Use(pl)
 	if pl.NextSigilTPTry and pl.NextSigilTPTry >= CurTime() then return end
-
-	if pl:Team() == TEAM_HUMAN and pl:Alive() and not self:GetSigilCorrupted() then
+	local sigilsc = 0
+	for _, ent in pairs(ents.GetAll()) do 
+		if ent:GetClass() == "prop_obj_sigil" then
+			sigilsc = sigilsc + 1
+		end
+	end
+	if  sigilsc > 5 then 
+		pl:GiveAchievement("happy")
+	end
+	if pl:Team() == TEAM_HUMAN and pl:Alive() and not self:GetSigilCorrupted() or pl:Team() == TEAM_UNDEAD and pl:Alive() and self:GetSigilCorrupted() then
 		local tpexist = pl:GetStatus("sigilteleport")
 		if tpexist and tpexist:IsValid() then return end
 
-		if GAMEMODE:NumUncorruptedSigils() >= 2 then
+		if GAMEMODE:NumUncorruptedSigils() >= 2 or pl:Team() == TEAM_UNDEAD and GAMEMODE:NumCorruptedSigils() >= 2 then
 			local status = pl:GiveStatus("sigilteleport")
 			if status:IsValid() then
 				status:SetFromSigil(self)
-				status:SetEndTime(CurTime() + 1 * (pl.SigilTeleportTimeMul or 1))
+				status:SetEndTime(CurTime() + 3 * (pl.SigilTeleportTimeMul or 1))
+				pl:GiveAchievement("waytobest")
 
 				pl.NextSigilTPTry = CurTime() + 2
 			end
@@ -78,10 +97,6 @@ for _, wep in pairs(weapons.GetList()) do
 end
 function ENT:OnTakeDamage(dmginfo)
 	if self:GetSigilHealth() <= 0 or dmginfo:GetDamage() <= 0 then return end
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
 	local attacker = dmginfo:GetAttacker()
 	if  attacker:IsPlayer() and  (attacker:GetZombieClassTable().BaraCat or attacker:GetZombieClassTable().CanPiz) or dmginfo:GetInflictor() and dmginfo:GetInflictor():GetClass() == "weapon_zs_fistz"  then return end
 
@@ -89,8 +104,8 @@ function ENT:OnTakeDamage(dmginfo)
 		if self:CanBeDamagedByTeam(attacker:Team()) then
 			if attacker:Team() == TEAM_HUMAN then
 				local dmgtype = dmginfo:GetDamageType()
-				if bit.band(dmgtype, DMG_SLASH) ~= 0 or bit.band(dmgtype, DMG_CLUB) ~= 0 then
-					dmginfo:SetDamage(dmginfo:GetDamage() * 1.6)
+				if bit.band(dmgtype, DMG_SLASH) ~= 0 or bit.band(dmgtype, DMG_CLUB) ~= 0 or bit.band(dmgtype, DMG_BULLET) ~= 0 and attacker:IsSkillActive(SKILL_UNSIGIL)  then
+					dmginfo:SetDamage(dmginfo:GetDamage() * 0.5 * (attacker:IsSkillActive(SKILL_UNSIGIL) and 0.1 or 1))
 				else
 					dmginfo:SetDamage(0)
 					return
@@ -106,11 +121,6 @@ function ENT:OnTakeDamage(dmginfo)
 				if self:GetSigilCorrupted() then
 					gamemode.Call("PreOnSigilUncorrupted", self, dmginfo)
 					self:SetSigilCorrupted(false)
-<<<<<<< Updated upstream
-					self:SetSigilHealthBase(self.MaxHealth)
-					self:SetSigilLastDamaged(0)
-					gamemode.Call("OnSigilUncorrupted", self, dmginfo)
-=======
 					self:SetSigilLastDamaged(0)
 					gamemode.Call("OnSigilUncorrupted", self, dmginfo)
 					attacker:GiveAchievementProgress("cleaner", 1)
@@ -123,20 +133,17 @@ function ENT:OnTakeDamage(dmginfo)
 						self.NoMoreLoots = true
 						attacker.NoLootsFromSigil = true
 					end
->>>>>>> Stashed changes
 				else
 					gamemode.Call("PreOnSigilCorrupted", self, dmginfo)
+					self.HealthLock = CurTime() + 4
 					self:SetSigilCorrupted(true)
-<<<<<<< Updated upstream
-					self:SetSigilHealthBase(self.MaxHealth)
-=======
->>>>>>> Stashed changes
 					self:SetSigilLastDamaged(0)
 					gamemode.Call("OnSigilCorrupted", self, dmginfo)
+					if !self.Immune then self:Remove() return end
 				end
 			end
 		elseif attacker:Team() == TEAM_UNDEAD then
-			self.HealthLock = CurTime() + 1
+			self.HealthLock = CurTime() + 2.1
 		end
 	end
 end
@@ -144,8 +151,6 @@ end
 function ENT:UpdateTransmitState()
 	return TRANSMIT_ALWAYS
 end
-<<<<<<< Updated upstream
-=======
 function ENT:Think()
 	for _, ent in pairs(player.FindInSphere(self:GetPos(), math.Clamp(1948 / (GAMEMODE:GetWave() * 0.33),493,1948))) do
 		if ent and ent:IsValid() then
@@ -163,4 +168,3 @@ function ENT:OnRemove()
 	util.Effect("sigildestruction",efc)
 end
 
->>>>>>> Stashed changes

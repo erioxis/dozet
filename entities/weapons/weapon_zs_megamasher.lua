@@ -1,6 +1,6 @@
 
-SWEP.PrintName = "Mega Masher"
-
+--SWEP.PrintName = "Mega Masher"
+SWEP.PrintName = ""..translate.Get("wep_megamasher")
 if CLIENT then
 	SWEP.ViewModelFOV = 75
 
@@ -65,15 +65,22 @@ function SWEP:PlayHitFleshSound()
 end
 
 function SWEP:OnMeleeHit(hitent, hitflesh, tr)
+	local ent = hitent
 	if IsFirstTimePredicted() then
-		local effectdata = EffectData()
-			effectdata:SetOrigin(tr.HitPos)
-			effectdata:SetNormal(tr.HitNormal)
-		util.Effect("explosion", effectdata)
+		if ent:IsPlayer() and SERVER then
+			for i = 1, math.random(3) do
+				for _, ent in pairs(ents.FindInSphere(tr.HitPos, 28)) do
+					if ent:IsValid() and ent:IsPlayer() and ent ~= self:GetOwner() and ent:IsValidLivingZombie() then
+						ent:TakeDamage((self.MeleeDamage * i) * 0.55, self:GetOwner(), self)
+						break
+					end
+				end
+			end
+		end
 	end
 end
 
-GAMEMODE:AddNewRemantleBranch(SWEP, 1, "MegaMesh", "Zombie is BOOMED than kill, faster but less damage and knockback", function(wept)
+GAMEMODE:AddNewRemantleBranch(SWEP, 1, ""..translate.Get("wep_megamasher_r1"), ""..translate.Get("wep_d_megamasher_r1"), function(wept)
 	wept.Primary.Delay = wept.Primary.Delay * 0.2
 	wept.MeleeDamage = wept.MeleeDamage * 0.3
 	wept.MeleeKnockBack = 612
@@ -90,10 +97,11 @@ GAMEMODE:AddNewRemantleBranch(SWEP, 1, "MegaMesh", "Zombie is BOOMED than kill, 
 					killer:GiveStatus("strengthdartboost", 15)
 				end
 	
-
+            if not killer:IsSkillActive(SKILL_SIGILIBERATOR) or (not killer:GetStatus("strengthdartboost")) then
 			timer.Simple(0.15, function()
 				util.BlastDamagePlayer(killer:GetActiveWeapon(), killer, pos, 72, minushp, DMG_ALWAYSGIB, 3)
 			end)
+		end
 
 			local effectdata = EffectData()
 				effectdata:SetOrigin(pos)

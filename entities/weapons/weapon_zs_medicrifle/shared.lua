@@ -1,5 +1,7 @@
-SWEP.PrintName = "'Convalescence' Medical Rifle"
-SWEP.Description = "Fires fast-moving medical darts which can heal at a range. Darts can also inflict damage to zombies as well as reduce their damage output."
+--SWEP.PrintName = "'Convalescence' Medical Rifle"
+--SWEP.Description = "Fires fast-moving medical darts which can heal at a range. Darts can also inflict damage to zombies as well as reduce their damage output."
+SWEP.PrintName = " "..translate.Get("wep_medicrifle")
+SWEP.Description = " "..translate.Get("wep_d_medicrifle")
 SWEP.Slot = 4
 SWEP.SlotPos = 0
 
@@ -16,33 +18,33 @@ SWEP.CSMuzzleFlashes = false
 
 SWEP.ReloadSound = Sound("Weapon_Pistol.Reload")
 
-SWEP.Primary.Delay = 0.85
+SWEP.Primary.Delay = 1.3
 SWEP.Primary.ClipSize = 64
-SWEP.Primary.DefaultClip = 120
+SWEP.Primary.DefaultClip = 60
 SWEP.Primary.Ammo = "Battery"
 
 SWEP.RequiredClip = 8
-SWEP.Primary.Damage = 75
-SWEP.ReloadSpeed = 1
+SWEP.Primary.Damage = 10
+SWEP.ReloadSpeed = 2
 
 SWEP.WalkSpeed = SPEED_SLOW
 
 SWEP.ConeMax = 0
 SWEP.ConeMin = 0
 
-SWEP.FireAnimSpeed = 1.4
+SWEP.FireAnimSpeed = 2
 
-SWEP.BuffDuration = 10
+SWEP.BuffDuration = 5
 
 SWEP.Tier = 2
 
 SWEP.AllowQualityWeapons = true
 
-SWEP.Heal = 10
+SWEP.Heal = 4.5
 
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_BUFF_DURATION, 3)
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_HEALING, 1.1)
-GAMEMODE:AddNewRemantleBranch(SWEP, 1, "'Invigorator' Strength Rifle", "Strength boost instead of defence, and makes zombies more vulnerable to damage instead", function(wept)
+GAMEMODE:AddNewRemantleBranch(SWEP, 1, ""..translate.Get("wep_medicrifle_r1"), ""..translate.Get("wep_d_medicrifle_r1"), function(wept)
 	if SERVER then
 		wept.EntModify = function(self, ent)
 			local owner = self:GetOwner()
@@ -81,30 +83,16 @@ function SWEP:CanSecondaryAttack()
 	return self:GetNextSecondaryFire() <= CurTime()
 end
 
-function SWEP:SecondaryAttack()
-	if not self:CanSecondaryAttack() then return end
 
-	self:SetNextSecondaryFire(CurTime() + 0.1)
-
-	local owner = self:GetOwner()
-	if not owner:IsSkillActive(SKILL_SMARTTARGETING) then return end
-
-	local targetent = owner:CompensatedMeleeTrace(2048, 2, nil, nil, true).Entity
-	local locked = targetent and targetent:IsValidLivingHuman() and gamemode.Call("PlayerCanBeHealed", targetent)
-
-	if CLIENT then
-		self:EmitSound(locked and "npc/scanner/combat_scan4.wav" or "npc/scanner/scanner_scan5.wav", 65, locked and 75 or 200)
-	end
-	self:SetSeekedPlayer(locked and targetent)
-end
 
 function SWEP:SetSeekedPlayer(ent)
-	self:SetDTEntity(6, ent)
+	self:SetDTEntity(16, ent)
 end
 
 function SWEP:GetSeekedPlayer()
-	return self:GetDTEntity(6)
+	return self:GetDTEntity(16)
 end
+
 
 function SWEP:Deploy()
 	if CLIENT then
@@ -129,4 +117,22 @@ function SWEP:OnRemove()
 		hook.Remove("PostPlayerDraw", "PostPlayerDrawMedical")
 		GAMEMODE.MedicalAura = false
 	end
+end
+
+function SWEP:SecondaryAttack()
+	if not self:CanPrimaryAttack() then return end
+
+	self:SetNextPrimaryFire(CurTime() + self:GetFireDelay()/2)
+
+	local owner = self:GetOwner()
+	if not owner:IsSkillActive(SKILL_SMARTTARGETING) then return end
+
+	local targetent = owner:CompensatedMeleeTrace(2048, 2, nil, nil, true).Entity
+	local locked = targetent and targetent:IsValidLivingHuman()
+
+	if CLIENT then
+		self:EmitSound(locked and "npc/scanner/combat_scan4.wav" or "npc/scanner/scanner_scan5.wav", 65, locked and 75 or 200)
+	end
+	if not targetent:IsValidLivingHuman() then return end
+	self:SetSeekedPlayer(locked and targetent)
 end

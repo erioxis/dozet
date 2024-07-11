@@ -19,13 +19,8 @@ CLASS.VoicePitch = 0.65
 
 CLASS.SWEP = "weapon_zs_redmarrow"
 
-<<<<<<< Updated upstream
-CLASS.Health = 2400
-CLASS.Speed = 165
-=======
 CLASS.Health = 2200
 CLASS.Speed = 215
->>>>>>> Stashed changes
 
 CLASS.Skeletal = true
 
@@ -58,6 +53,9 @@ function CLASS:PlayPainSound(pl)
 	return true
 end
 
+function CLASS:IgnoreLegDamage(pl, dmginfo)
+	return true
+end
 function CLASS:PlayDeathSound(pl)
 	pl:EmitSound("npc/stalker/go_alert2a.wav", 75, 75, 0.5)
 	pl:EmitSound("npc/stalker/go_alert2a.wav", 75, 85, 0.5)
@@ -108,30 +106,22 @@ function CLASS:ProcessDamage(pl, dmginfo)
 	local dmg = dmginfo:GetDamage()
 	local hp = pl:Health()
 
-	if pl:GetStatus("redmarrow") and attacker:IsPlayer() and attacker:Team() == TEAM_HUMAN then
+	if pl:GetStatus("redmarrow") and attacker:IsPlayer() and attacker:Team() == TEAM_HUMAN or pl:GetStatus("redmarrow") then
 		dmginfo:SetDamage(0)
 		dmginfo:ScaleDamage(0)
 		dmg = 0
 	end
+	if dmg >= 120 then
+		dmginfo:SetDamage(50)
+	end
 
-<<<<<<< Updated upstream
-	local numthreshold = math_Clamp(math_ceil(hp / 200), 1, 9)
-	local dmgthreshold = math_Clamp(numthreshold * 200 - 200, 1, 1600)
-=======
 
 	local numthreshold = math_Clamp(math_ceil(hp / 250), 1, 5)
 	local dmgthreshold = math_Clamp(numthreshold * 250 - 100, 1, 4500)
->>>>>>> Stashed changes
 
 	local newhp = hp - dmg
 	local nulldmg = dmgthreshold - newhp
 
-<<<<<<< Updated upstream
-	if newhp <= dmgthreshold and pl["bloodth"..numthreshold] then
-		pl["bloodth"..numthreshold] = false
-		dmginfo:SetDamage(dmg - nulldmg)
-		pl:GiveStatus("redmarrow", 3)
-=======
 	local slavec = math.random(1,6)
 	if slavec == 1 and attacker:IsPlayer() then
 		attacker:GiveStatus("dimvision", 1)
@@ -154,7 +144,6 @@ function CLASS:ProcessDamage(pl, dmginfo)
 			end
 		end
 		pl:AddShieldStats(give)
->>>>>>> Stashed changes
 
 		local effectdata = EffectData()
 			effectdata:SetOrigin(pl:WorldSpaceCenter())
@@ -165,11 +154,4 @@ function CLASS:ProcessDamage(pl, dmginfo)
 		pl:GodDisable()
 	end
 	return dmginfo
-end
-if SERVER then
-function CLASS:ProcessDamage(pl, dmginfo)
-	if dmginfo:GetInflictor().IsMelee then
-		dmginfo:SetDamage(dmginfo:GetDamage() / 6)
-	end
-end
 end

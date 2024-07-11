@@ -8,7 +8,7 @@ function ENT:Initialize()
 	self:SetMoveType(MOVETYPE_NONE)
 	self:SetModelScale(1.03, 0)
 
-	self.DieTime = CurTime() + 10
+	self.DieTime = CurTime() + 0
 end
 
 function ENT:AttachTo(ent)

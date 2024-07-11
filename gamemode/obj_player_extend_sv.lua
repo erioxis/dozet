@@ -25,8 +25,6 @@ function meta:ProcessDamage(dmginfo)
 	if self.DamageVulnerability and not dmgbypass then
 		dmginfo:SetDamage(dmginfo:GetDamage() * self.DamageVulnerability)
 	end
-<<<<<<< Updated upstream
-=======
 	local time = CurTime()
 	if P_Team(self) == TEAM_HUMAN and attacker:IsValidLivingZombie() then
 		self:GiveAchievementProgress("tanked", math.Round((dmginfo:GetDamage() or 1)))
@@ -68,7 +66,6 @@ function meta:ProcessDamage(dmginfo)
 			dmginfo:ScaleDamage(1-red)
 		end
 	end
->>>>>>> Stashed changes
 
 	if attacker.AttackerForward and attacker.AttackerForward:IsValid() then
 		dmginfo:SetAttacker(attacker.AttackerForward)
@@ -90,30 +87,11 @@ function meta:ProcessDamage(dmginfo)
 		end
 		local damage = dmginfo:GetDamage()
 		if self.SpawnProtection then
-			dmginfo:SetDamage(0)
-			dmginfo:ScaleDamage(0)
+			dmginfo:SetDamage(1)
+			dmginfo:ScaleDamage(0.1)
 			dmginfo:SetDamageForce(vector_origin)
 			return 
 		end
-<<<<<<< Updated upstream
-
-		local corrosion = self.Corrosion and self.Corrosion + 2 > CurTime()
-		if self ~= attacker and not corrosion and not dmgbypass then
-			dmginfo:SetDamage(dmginfo:GetDamage() * GAMEMODE:GetZombieDamageScale(dmginfo:GetDamagePosition(), self))
-		end
-
-		self.ShouldFlinch = true
-
-		if attacker:IsValidLivingHuman() and inflictor:IsValid() and inflictor == attacker:GetActiveWeapon() then
-			local damage = dmginfo:GetDamage()
-			local wep = attacker:GetActiveWeapon()
-			local attackermaxhp = math.floor(attacker:GetMaxHealth() * (attacker:IsSkillActive(SKILL_D_FRAIL) and 0.25 or 1))
-
-			if wep.IsMelee then
-				if attacker:IsSkillActive(SKILL_CHEAPKNUCKLE) and math.abs(self:GetForward():Angle().yaw - attacker:GetForward():Angle().yaw) <= 90 then
-					self:AddLegDamage(12)
-				end
-=======
 		local mxap = self:GetMaxHealth()
 		if !dmgbypass then
 			if self:GetChampion() == CHAMP_ETERNAL then
@@ -307,19 +285,11 @@ function meta:ProcessDamage(dmginfo)
 					end
 				end
 
->>>>>>> Stashed changes
 
 				if attacker.MeleeDamageToBloodArmorMul and attacker.MeleeDamageToBloodArmorMul > 0 and attacker:GetBloodArmor() < attacker.MaxBloodArmor and !attacker:IsSkillActive(SKILL_BLOODHACK) then
 					attacker:SetBloodArmor(math.min(attacker.MaxBloodArmor, attacker:GetBloodArmor() + math.min(damage, self:Health()) * attacker.MeleeDamageToBloodArmorMul * attacker.BloodarmorGainMul))
 				end
 
-<<<<<<< Updated upstream
-				if attacker:IsSkillActive(SKILL_HEAVYSTRIKES) and not self:GetZombieClassTable().Boss and (wep.IsFistWeapon and attacker:IsSkillActive(SKILL_CRITICALKNUCKLE) or wep.MeleeKnockBack > 0) then
-					attacker:TakeSpecialDamage(damage * (wep.Unarmed and 1 or 0.08), DMG_SLASH, self, self:GetActiveWeapon())
-				end
-
-				if attacker:IsSkillActive(SKILL_BLOODLUST) and attacker:GetPhantomHealth() > 0 and attacker:Health() < attackermaxhp then
-=======
 
 				if attacker:IsSkillActive(SKILL_HEAVYSTRIKES) and not classtable.Boss and (wep.IsFistWeapon and attacker:IsSkillActive(SKILL_CRITICALKNUCKLE) or wep.MeleeKnockBack > 0) then
 					self.FallDamageHS = damage*0.45
@@ -339,26 +309,17 @@ function meta:ProcessDamage(dmginfo)
 
 	
 				if attacker:IsSkillActive(SKILL_BLOODLUST) and attacker:GetPhantomHealth() > 0 and health < attackermaxhp then
->>>>>>> Stashed changes
 					local toheal = math.min(attacker:GetPhantomHealth(), math.min(self:Health(), damage * 0.65))
 					attacker:SetHealth(math.min(health + toheal, attackermaxhp))
 					attacker:SetPhantomHealth(attacker:GetPhantomHealth() - toheal)
 				end
 
-<<<<<<< Updated upstream
-				if attacker:HasTrinket("sharpkit") then
-					dmginfo:SetDamage(dmginfo:GetDamage() * (1 + self:GetFlatLegDamage()/75))
-				end
-
-				if wep.Culinary and attacker:IsSkillActive(SKILL_MASTERCHEF) and math.random(9) == 1 then
-=======
 				if attacker:IsSkillActive(SKILL_BLOODLIFE) and !self:GetZombieClassTable().Boss  then
 					damage = damage + (attacker:GetBloodArmor() * 0.05)
 				end
 				
 
 				if wep.Culinary and attacker:IsSkillActive(SKILL_MASTERCHEF) and math.random(1,5,1,attacker) == 1 then
->>>>>>> Stashed changes
 					self.ChefMarkOwner = attacker
 					self.ChefMarkTime = time + 1
 				end
@@ -376,11 +337,6 @@ function meta:ProcessDamage(dmginfo)
 		if classtable.Boss and damage >= (mxap * 0.11) then
 			damage = math.min(damage, (mxap * 0.06))
 		end
-<<<<<<< Updated upstream
-
-		return not dmgbypass and self:CallZombieFunction1("ProcessDamage", dmginfo)
-	end
-=======
 		if attacker:IsValidLivingHuman() then
 			attacker:SetDPS(attacker:GetDPS() + damage)
 			timer.Simple(1, function() if attacker:IsValid() then attacker:SetDPS(attacker:GetDPS() - damage) end end)
@@ -471,9 +427,9 @@ function meta:ProcessDamage(dmginfo)
 		
 		return true
     end 
->>>>>>> Stashed changes
 
 	-- Opted for multiplicative.
+
 	if attacker == self and dmgtype ~= DMG_CRUSH and dmgtype ~= DMG_FALL and self.SelfDamageMul then
 		damage = damage * self.SelfDamageMul
 		if self:GetMastery('gunner') > 4 and math.random(1,20) == 1 then
@@ -488,10 +444,7 @@ function meta:ProcessDamage(dmginfo)
 		damage = damage * self.FireDamageTakenMul
 	end
 
-<<<<<<< Updated upstream
-=======
 	local classtablea = attacker:IsPlayer() and attacker:GetZombieClassTable() or {}
->>>>>>> Stashed changes
 	if inflictor:IsValid() and (inflictor:IsPhysicsModel() or inflictor.IsPhysbox) and self:IsValidLivingHuman() then
 		local forcedamp = self:HasTrinket("forcedamp")
 		local noadj = attacker:IsValidLivingZombie() and classtablea.NoAdjustPhysDamage
@@ -507,12 +460,6 @@ function meta:ProcessDamage(dmginfo)
 		end
 
 	end
-<<<<<<< Updated upstream
-
-	if attacker:IsValid() and attacker:IsPlayer() and inflictor:IsValid() and attacker:Team() == TEAM_UNDEAD then
-		if inflictor == attacker:GetActiveWeapon() then
-			local damage = dmginfo:GetDamage()
-=======
 	if attacker:IsValid() and attacker:IsPlayer() and inflictor:IsValid() and mywep.IsMelee and mywep.Block and  math.abs(self:GetForward():Angle().yaw - attacker:GetForward():Angle().yaw) >= 90 then
 		damage = damage * ((0.90 * (self.BlockMultiplier or 1)) * (1-( mywep.BlockMultiplierWeapon or 0.3)))
 		if self:IsSkillActive(SKILL_TRUEBLOCK) and mywep.ParryTiming then 
@@ -616,7 +563,6 @@ function meta:ProcessDamage(dmginfo)
 			if (GAMEMODE:GetBalance() * 0.05) >= 0.1 then
 				damage = damage *  (1 + (math.Clamp(GAMEMODE:GetBalance() * 0.05,-0.1,0.5)))
 			end
->>>>>>> Stashed changes
 
 			if self:IsBarricadeGhosting() then
 				self:SetLegDamage(21 * (self.SlowEffTakenMul or 1))
@@ -636,8 +582,6 @@ function meta:ProcessDamage(dmginfo)
 					end
 				end
 			end
-<<<<<<< Updated upstream
-=======
 			if self:IsSkillActive(SKILL_AMULET_1) then
 				local amuletrng = math.randomr(1, math.Round(math.max(2,10 / (self.CarefullMelody_DMG *0.5))),2,self)
 				if amuletrng == 2 then
@@ -653,7 +597,6 @@ function meta:ProcessDamage(dmginfo)
 					self.CarefullMelody_DMG = self.CarefullMelody_DMG + 1
 				end
 			end
->>>>>>> Stashed changes
 
 
 			if bit.band(dmgtype, DMG_SLASH) ~= 0 or inflictor.IsMelee or mywep.ParryTiming and attacker:IsPlayer() then
@@ -661,8 +604,6 @@ function meta:ProcessDamage(dmginfo)
 					attacker:TakeSpecialDamage(self.BarbedArmor, DMG_SLASH, self, self)
 					attacker:AddArmDamage(self.BarbedArmor)
 				end
-<<<<<<< Updated upstream
-=======
 				if self:IsSkillActive(SKILL_TRUEBLOCK) and mywep.ParryTiming then
 			       attacker:TakeDamage(mywep.MeleeDamage * 6, self, mywep)
 				end
@@ -698,32 +639,12 @@ function meta:ProcessDamage(dmginfo)
 				end
 					
 				
->>>>>>> Stashed changes
 
 				if self.BarbedArmorPercent and self.BarbedArmorPercent > 0 then
 					attacker:TakeSpecialDamage(damage * self.BarbedArmorPercent, DMG_SLASH, self, self)
 				end
 
-<<<<<<< Updated upstream
-				if self:HasTrinket("lazarussoul") and (not self.LastReactiveFlash or self.LastReactiveFlash + 1 < CurTime()) then
-					attacker:ScreenFade(SCREENFADE.IN, nil, 1, 1)
-					attacker:SetDSP(36)
-					attacker:GiveStatus("disorientation", 1)
-					attacker:GiveStatus("dimvision", 1)
-
-					self:EmitSound("weapons/flashbang/flashbang_explode2.wav")
-
-					local effectdata = EffectData()
-						effectdata:SetOrigin(self:GetPos())
-					util.Effect("HelicopterMegaBomb", effectdata)
-				end
-
-					self.LastReactiveFlash = CurTime()
-					self.ReactiveFlashMessage = nil
-					if self:HasTrinket("reactiveflasher") and (not self.LastReactiveFlash or self.LastReactiveFlash + 10 < CurTime()) then
-=======
 				if self:HasTrinket("reactiveflasher") and (self.LastReactiveFlash and self.LastReactiveFlash + 75 < time) then
->>>>>>> Stashed changes
 					attacker:ScreenFade(SCREENFADE.IN, nil, 1, 1)
 					attacker:SetDSP(36)
 					attacker:GiveStatus("disorientation", 2)
@@ -748,21 +669,6 @@ function meta:ProcessDamage(dmginfo)
 					self.LastBleakSoul = time
 					self.BleakSoulMessage = nil
 				end
-<<<<<<< Updated upstream
-								if self:HasTrinket("lazarussoul") and (not self.LastBleakSoul or self.LastBleakSoul + 1 < CurTime()) then
-					attacker:GiveStatus("burn", 50)
-					attacker:SetGroundEntity(nil)
-					attacker:SetLocalVelocity((attacker:GetPos() - self:GetPos()):GetNormalized() * 450 + Vector(0, 0, 140))
-
-					self:EmitSound("ambient/creatures/town_child_scream1.wav", 70, 60)
-					self:EmitSound("npc/stalker/go_alert2a.wav", 70, 45, 0.25)
-
-					self.LastBleakSoul = CurTime()
-					self.BleakSoulMessage = nil
-				end
-				
-				
-=======
 
 
 				if self:IsSkillActive(SKILL_TTIMES) and math.random(1,100) <= 5 then
@@ -838,7 +744,6 @@ function meta:ProcessDamage(dmginfo)
 					end 
 					return true
 				end
->>>>>>> Stashed changes
 
 				if self:HasTrinket("iceburst") and (not self.LastIceBurst or self.LastIceBurst + 40 < time) then
 					attacker:AddLegDamageExt(41, attacker, attacker, SLOWTYPE_COLD)
@@ -865,8 +770,6 @@ function meta:ProcessDamage(dmginfo)
 				end
 			end
 
-<<<<<<< Updated upstream
-=======
 			if self:IsSkillActive(SKILL_UPLOAD) and not self:GetStatus("hshield") then
 					
 				local cursed5 = self:GetStatus("hollowing")
@@ -882,18 +785,16 @@ function meta:ProcessDamage(dmginfo)
 				damage = 0
 			end
 
->>>>>>> Stashed changes
 			if self.HasHemophilia and (damage >= 4 and dmgtype == 0 or bit.band(dmgtype, DMG_TAKE_BLEED) ~= 0) then
 				local bleed = self:GiveStatus("bleed")
 				if bleed and bleed:IsValid() then
-					bleed:AddDamage(damage * 0.25)
+					local damage = damage * (self:IsSkillActive(SKILL_DEFENDBLOOD) and 0.1 or 1)
+					bleed:AddDamage((damage * 0.25) * (self:IsSkillActive(SKILL_LOX) and 2 or 1))
 					if attacker:IsValid() and attacker:IsPlayer() then
 						bleed.Damager = attacker
 					end
 				end
 			end
-<<<<<<< Updated upstream
-=======
 			if  attacker.m_DeathClaws then
 				if !self:IsSkillActive(SKILL_DEFENDBLOOD) then
 					local bleed = self:GiveStatus("bleed")
@@ -907,38 +808,24 @@ function meta:ProcessDamage(dmginfo)
 					damage = damage * 2
 				end
 			end
->>>>>>> Stashed changes
 		elseif inflictor:IsProjectile() then
 			if self.ProjDamageTakenMul and not dmgbypass then
 				dmginfo:SetDamage(dmginfo:GetDamage() * self.ProjDamageTakenMul)
 			end
 		end
 	end
-<<<<<<< Updated upstream
-
-	self.NextBloodArmorRegen = CurTime() + 3
-=======
 	self.NextBloodArmorRegen = time + 3
->>>>>>> Stashed changes
 	if self:GetBloodArmor() > 0 then
 		if damage > 0 then
 			if damage >= self:GetBloodArmor() and self:IsSkillActive(SKILL_BLOODLETTER) then
 				local bleed = self:GiveStatus("bleed")
 				if bleed and bleed:IsValid() then
-					bleed:AddDamage(2)
+					bleed:AddDamage(2 * (self:IsSkillActive(SKILL_LOX) and 2 or 1))
 					bleed.Damager = self
 				end
 			end
 
 
-<<<<<<< Updated upstream
-			local ratio = 0.5 + self.BloodArmorDamageReductionAdd + (self:IsSkillActive(SKILL_IRONBLOOD) and self:Health() <= self:GetMaxHealth() * 0.5 and 0.25 or 0)
-			local absorb = math.min(self:GetBloodArmor(), damage * ratio)
-			dmginfo:SetDamage(damage - absorb)
-			self:SetBloodArmor(self:GetBloodArmor() - absorb)
-
-			if attacker:IsValid() and attacker:IsPlayer() then
-=======
 			local ratio = math.max(0.5 + self.BloodArmorDamageReductionAdd + (self:IsSkillActive(SKILL_IRONBLOOD) and self:Health() <= self:GetMaxHealth() * 0.5 and 0.25 or 0),0.05) * (self:IsSkillActive(SKILL_HYPERGLYCEMIA) and 1-self:GetBloodArmor()/self.MaxBloodArmor or 1)
 			local absorb = math.min(self:GetBloodArmor(), damage * ratio) * (self:IsSkillActive(SKILL_LEUKEMIA) and math.random(1,4) == 1 and 0 or 1)
 			dmginfo:SetDamage(damage - absorb)
@@ -952,18 +839,14 @@ function meta:ProcessDamage(dmginfo)
 				self.BuffedArmor = math.max((self.BuffedArmor or 0)-absorb*2,0)
 			end
 			if attacker:IsValid() and attacker:IsPlayer() and absorb >= 1 then
->>>>>>> Stashed changes
 				local myteam = attacker:Team()
 				local otherteam = P_Team(self)
 				attacker.DamageDealt[myteam] = attacker.DamageDealt[myteam] + absorb
 
 				if myteam == TEAM_UNDEAD and otherteam == TEAM_HUMAN then
 					attacker:AddLifeHumanDamage(absorb)
-<<<<<<< Updated upstream
-=======
 					attacker:AddTokens(math.Round(absorb))
 					GAMEMODE:DamageFloater(attacker, self, dmginfo:GetDamagePosition()  - Vector(0,0,-12), absorb, true, nil, true)
->>>>>>> Stashed changes
 				end
 			end
 
@@ -972,6 +855,7 @@ function meta:ProcessDamage(dmginfo)
 			end
 		end
 	end
+
 
 	if self:IsSkillActive(SKILL_BLOODLUST) and attacker:IsValid() and attacker:IsPlayer() and inflictor:IsValid() and attacker:Team() == TEAM_UNDEAD then
 		self:SetPhantomHealth(math.min(self:GetPhantomHealth() + damage / 2, self:GetMaxHealth()))
@@ -982,10 +866,6 @@ function meta:ProcessDamage(dmginfo)
 
 		self.ShouldFlinch = true
 	end
-<<<<<<< Updated upstream
-end
-
-=======
 	if self:IsSkillActive(SKILL_MOREDAMAGE) and damage > 30  then
 		damage = math.max(30,damage-70)
 	end
@@ -1038,7 +918,6 @@ function meta:GiveRandomStatus(time, exlude)
 	return self:GiveStatus(give, time)
 end
 
->>>>>>> Stashed changes
 GM.TrinketRecharges = {
 	reactiveflasher = {"ReactiveFlashMessage", "LastReactiveFlash", "Reactive Flasher", 35},
 	bleaksoul = {"BleakSoulMessage", "LastBleakSoul", "Bleak Soul", 15},
@@ -1093,16 +972,14 @@ function meta:GetBossZombieIndex()
 	end
 
 	if #bossclasses == 0 then return -1 end
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
 	local desired = self:GetInfo("zs_bossclass") or ""
 	if GAMEMODE:IsBabyMode() then
 		desired = "Giga Gore Child"
-	elseif desired == "[RANDOM]" or desired == "" then
-		desired = "Giga Gore Child"
+	elseif desired == "" then
+		desired = table.Random(bosses)
 	end
+
+
 
 	local bossindex
 	for _, classindex in pairs(bossclasses) do
@@ -1112,7 +989,35 @@ function meta:GetBossZombieIndex()
 			break
 		end
 	end
+	return bossindex or bossclasses[1]
+end
+function meta:GetDemiBossZombieIndex()
+	local bossclasses = {}
+	local bossnames = {}
+	for _, classtable in pairs(GAMEMODE.ZombieClasses) do
+		if classtable.DemiBoss then
+			--print(classtable.Name)
+			table.insert(bossnames, classtable.Name)
+			table.insert(bossclasses, classtable.Index)
+		end
+	end
 
+	if #bossclasses == 0 then return -1 end
+	local desired = self:GetInfo("zs_demibossclass") or ""
+	if desired == "" then
+		desired = table.Random(bossnames)
+	end
+
+
+
+	local bossindex
+	for _, classindex in pairs(bossclasses) do
+		local classtable = GAMEMODE.ZombieClasses[classindex]
+		if string.lower(classtable.Name) == string.lower(desired) then
+			bossindex = classindex
+			break
+		end
+	end
 	return bossindex or bossclasses[1]
 end
 
@@ -1176,12 +1081,6 @@ function meta:SetBloodArmor( armor )
 		end
 	end
 end
-<<<<<<< Updated upstream
-
-function meta:SetBloodArmor(armor)
-	self:SetDTInt(DT_PLAYER_INT_BLOODARMOR, armor)
-end
-=======
 function meta:AddBloodArmor( armor )
 	self:SetBloodArmor( self:GetBloodArmor() + armor )
 end
@@ -1202,7 +1101,6 @@ end
 function meta:SetZArmor(armor)
 	self:SetDTInt(DT_PLAYER_INT_ZOMBIEARMOR, math.min(armor, self:GetMaxHealth()*2.5))
 end
->>>>>>> Stashed changes
 
 function meta:WouldDieFrom(damage, hitpos)
 	return self:Health() <= damage * GAMEMODE:GetZombieDamageScale(hitpos, self)
@@ -1210,7 +1108,7 @@ end
 
 function meta:KnockDown(time)
 	if P_Team(self) == TEAM_HUMAN then
-		self:GiveStatus("knockdown", time or 3)
+		self:GiveStatus("knockdown", time or 2)
 	end
 end
 
@@ -1281,10 +1179,15 @@ function meta:SendLifeStats()
 		net.WriteUInt(math.ceil(self.LifeShieldGiven or 0), 16)
 	net.Send(self)
 end
+function meta:Block()
+    dmginfo:SetDamage(0)
+    return dmginfo:GetDamage()
+end
 
 function meta:AddLifeBarricadeDamage(amount)
 	self.LifeBarricadeDamage = self.LifeBarricadeDamage + amount
 	self.WaveBarricadeDamage = self.WaveBarricadeDamage + amount
+
 
 	if not self:Alive() and not self:GetZombieClassTable().NeverAlive then
 		timer.Simple(0, function() if self:IsValid() then self:SendLifeStats() end end)
@@ -1340,8 +1243,6 @@ function meta:AddPoisonDamage(damage, attacker)
 	end
 end
 
-<<<<<<< Updated upstream
-=======
 function meta:AddCursed(attacker, count,bruh,bruh,yes)
 	--damage = math.ceil(damage)
 	self:GiveStatus("cursed", count,attacker,nil,yes).Inflictor = attacker
@@ -1363,7 +1264,6 @@ function meta:AddBurn(attacker, count)
 	local status = self:GiveStatus("burn", count)
 	status.Damager = attacker
 end
->>>>>>> Stashed changes
 
 function meta:AddBleedDamage(damage, attacker)
 	--damage = math.ceil(damage)
@@ -1371,12 +1271,12 @@ function meta:AddBleedDamage(damage, attacker)
 	if damage > 0 then
 		local status = self:GiveStatus("bleed")
 		if status and status:IsValid() then
-			status:AddDamage(damage, attacker)
+			status:AddDamage(damage * (self:IsSkillActive(SKILL_LOX) and 2 or 1), attacker)
 		end
 	else
 		local status = self:GiveStatus("bleed")
 		if status and status:IsValid() then
-			status:AddDamage(damage)
+			status:AddDamage(damage * (self:IsSkillActive(SKILL_LOX) and 2 or 1))
 		end
 	end
 end
@@ -1621,6 +1521,8 @@ function meta:RemoveAllStatus(bSilent, bInstant)
 	end
 end
 
+
+
 function meta:RemoveStatus(sType, bSilent, bInstant, sExclude)
 	local removed
 
@@ -1644,13 +1546,6 @@ function meta:GetStatus(sType)
 	if ent and ent:IsValid() and ent:GetOwner() == self then return ent end
 end
 
-<<<<<<< Updated upstream
-function meta:GiveStatus(sType, fDie)
-	local resistable = table.HasValue(GAMEMODE.ResistableStatuses, sType)
-
-	if resistable and self:IsSkillActive(SKILL_HAEMOSTASIS) and self:GetBloodArmor() >= 2 then
-		self:SetBloodArmor(self:GetBloodArmor() - 2)
-=======
 function meta:GetStatuses()
 	local statutes = {} 
 	
@@ -1674,13 +1569,12 @@ function meta:GiveStatus(sType, fDie, applier, ignoredouble, adding, show)
 	local fDie2 = fDie / math.max(1 + (self.BloodArmorDamageReductionAdd or 1),1)
 	if resistable and self:IsSkillActive(SKILL_HAEMOSTASIS) and self:GetBloodArmor() >= 2 * fDie2 then
 		self:SetBloodArmor(self:GetBloodArmor() - 2 * fDie2)
->>>>>>> Stashed changes
 		return
 	end
-
-	if resistable and self:HasTrinket("biocleanser") and (not self.LastBioCleanser or self.LastBioCleanser + 20 < CurTime()) then
+	if resistable and self:HasTrinket("biocleanser") and (not self.LastBioCleanser or self.LastBioCleanser + 10 < CurTime()) then
 		self.LastBioCleanser = CurTime()
 		self.BioCleanserMessage = nil
+		return
 	end
 	local cur = self:GetStatus(sType)
 	if !show and cur and applier and (self.NextFloatingStatuss[sType] or 0) < CurTime() then
@@ -1743,8 +1637,8 @@ end
 function meta:SecondWind(pl)
 	if self.Gibbed or self:Alive() or P_Team(self) ~= TEAM_UNDEAD then return end
 
-	local pos = self:GetPos()
-	local angles = self:EyeAngles()
+	local pos = (self:GetPos() or Vector(0,0,0))
+	local angles = (self:EyeAngles() or Vector(0,0,0))
 	local lastattacker = self:GetLastAttacker()
 	local dclass = self.DeathClass
 	self.DeathClass = nil
@@ -1791,19 +1685,17 @@ end
 function meta:DropWeaponByType(class)
 	if GAMEMODE.ZombieEscape then return end
 
+
 	local wep = self:GetWeapon(class)
 	if wep and wep:IsValid() and not wep.Undroppable then
 		local ent = ents.Create("prop_weapon")
 		if ent:IsValid() then
 			ent:SetWeaponType(class)
 			ent:Spawn()
-<<<<<<< Updated upstream
-=======
 			ent:SetOwner(self)
 			if wep.OnDropDo then
 				wep:OnDropDo(ent)
 			end
->>>>>>> Stashed changes
 
 			if wep.AmmoIfHas then
 				local ammocount = wep:GetPrimaryAmmoCount()
@@ -1826,6 +1718,7 @@ function meta:DropWeaponByType(class)
 end
 
 function meta:DropAllWeapons()
+
 	local vPos = self:GetPos()
 	local vVel = self:GetVelocity()
 	local zmax = self:OBBMaxs().z * 0.75
@@ -1865,6 +1758,7 @@ function meta:DropAmmoByType(ammotype, amount)
 		ent:SetAmmoType(ammotype)
 		ent:SetAmmo(amount)
 		ent:Spawn()
+		ent:SetOwner(self)
 		ent.DroppedTime = CurTime()
 
 		self:RemoveAmmo(amount, ammotype)
@@ -2024,37 +1918,21 @@ local function DoDropStart(pl)
 end
 
 function meta:Resupply(owner, obj)
-	if GAMEMODE:GetWave() <= 0 then return end
 
 	local stockpiling = self:IsSkillActive(SKILL_STOCKPILE)
-<<<<<<< Updated upstream
-	local stowage = self:IsSkillActive(SKILL_STOWAGE)
-	
-
-	if (stowage and (self.StowageCaches or 0) <= 0) or (not stowage and CurTime() < (self.NextResupplyUse or 0)) then
-=======
 	
 
 	if (self.StowageCaches or 0) <= 0 then
->>>>>>> Stashed changes
 		self:CenterNotify(COLOR_RED, translate.ClientGet(self, "no_ammo_here"))
 		return
 	end
-
-	if not stowage then
-		self.NextResupplyUse = CurTime() + GAMEMODE.ResupplyBoxCooldown * (self.ResupplyDelayMul or 1) * (stockpiling and 2 or 1)
-
-		net.Start("zs_nextresupplyuse")
-			net.WriteFloat(self.NextResupplyUse)
-		net.Send(self)
-	else
 		self.StowageCaches = self.StowageCaches - 1
 
 		net.Start("zs_stowagecaches")
 			net.WriteInt(self.StowageCaches, 12)
 			net.WriteBool(false)
 		net.Send(self)
-	end
+
 
 	local ammotype = self:GetResupplyAmmoType()
 	local amount = GAMEMODE.AmmoCache[ammotype] * (self.RessuplyMul or 1) * (owner.RessuplyEff or 1)
@@ -2077,7 +1955,7 @@ function meta:Resupply(owner, obj)
 
 		self:GiveAmmo(amount, ammotype)
 
-		if self:IsSkillActive(SKILL_FORAGER) and math.random(3) == 1 and #GAMEMODE.Food > 0 then
+		if self:IsSkillActive(SKILL_FORAGER) and math.random(7) == 1 and #GAMEMODE.Food > 0 then
 			self:Give(GAMEMODE.Food[math.random(#GAMEMODE.Food)])
 		end
 		if self:IsSkillActive(SKILL_INSIGHT) then
@@ -2093,12 +1971,13 @@ function meta:Resupply(owner, obj)
 			net.Start("zs_commission")
 				net.WriteEntity(obj)
 				net.WriteEntity(self)
-				net.WriteFloat(0.15)
+				net.WriteFloat(1)
 			net.Send(owner)
 		end
 
 	return true
 end
+
 
 -- Lets other players know about our maximum health.
 meta.OldSetMaxHealth = FindMetaTable("Entity").SetMaxHealth
@@ -2164,11 +2043,6 @@ function meta:AddPoints(points, floatingscoreobject, fmtype, nomul)
 		if wholepoints <= 0 then return end
 		self.PointsToAbsorb = nil
 	end
-<<<<<<< Updated upstream
-
-	self:AddFrags(wholepoints)
-	self:SetPoints(self:GetPoints() + wholepoints)
-=======
     if not self:HasTrinket("sin_greed") then
 		self:AddFrags(wholepoints)
 		self:MetaAddScore(self:GetMScore() + wholepoints)
@@ -2178,7 +2052,6 @@ function meta:AddPoints(points, floatingscoreobject, fmtype, nomul)
 		self:MetaAddScore(self:GetMScore() + wholepoints * 2)
 		self:SetPoints(self:GetPoints() + wholepoints * 2)
 	end
->>>>>>> Stashed changes
 
 	if self.PointsVault then
 		self.PointsVault = self.PointsVault + wholepoints * GAMEMODE.PointSaving
@@ -2187,24 +2060,6 @@ function meta:AddPoints(points, floatingscoreobject, fmtype, nomul)
 	if floatingscoreobject then
 		self:FloatingScore(floatingscoreobject, "floatingscore", wholepoints, fmtype or FM_NONE)
 	end
-<<<<<<< Updated upstream
-
-	local xp = wholepoints
-	if GAMEMODE.HumanXPMulti and GAMEMODE.HumanXPMulti >= 0 then
-		xp = xp * GAMEMODE.HumanXPMulti
-		local wholexp = math.floor(xp)
-		local xpremainder = xp - wholexp
-		if xpremainder > 0 then
-			self.XPRemainder = self.XPRemainder + xpremainder
-			local xpcarryover = math.floor(self.XPRemainder)
-			xp = wholexp + xpcarryover
-			self.XPRemainder = self.XPRemainder - xpcarryover
-		end
-	end
-
-	self:AddZSXP(xp * (self.RedeemBonus and 1.15 or 1))
-
-=======
 	if self:GetPoints() > 0 then
 		local xp = wholepoints * (self.XPMulti or 1)
 		local xp = xp *	(self.AddXPMulti or 1)
@@ -2226,7 +2081,6 @@ function meta:AddPoints(points, floatingscoreobject, fmtype, nomul)
 		self:UpdateStyle({time = CurTime()+3+(math.random(1,20)*0.2),text = Format("%s POINTS & %s XP!",wholepoints,xp),score = wholepoints*5})
 	end
 
->>>>>>> Stashed changes
 	gamemode.Call("PlayerPointsAdded", self, wholepoints)
 end
 
@@ -2236,6 +2090,14 @@ function meta:TakePoints(points)
 	if self.PointsVault then
 		self.PointsVault = self.PointsVault - points
 	end
+end
+
+function meta:AddTokens(pts)
+	self:SetNWInt('btokens', self:GetTokens() + pts)
+end
+
+function meta:TakeTokens(pts)
+	self:SetNWInt('btokens', self:GetTokens() - pts)
 end
 
 function meta:UpdateAllZombieClasses()
@@ -2289,7 +2151,7 @@ function meta:SetZombieClass(cl, onlyupdate, filter)
 	if classtab then
 		self.Class = cl
 		if P_Team(self) == TEAM_UNDEAD then
-			self:DoHulls(cl)
+			self:DoHulls((cl))
 		end
 		self:CallZombieFunction0("SwitchedTo")
 
@@ -2307,7 +2169,7 @@ function meta:DoHulls(classid, teamid)
 	teamid = teamid or P_Team(self)
 	classid = classid or self:GetZombieClass()
 	if teamid == TEAM_UNDEAD then
-		local classtab = GAMEMODE.ZombieClasses[classid]
+		local classtab =  GAMEMODE.ZombieClasses[classid]
 		if classtab then
 			if self:Alive() then
 				self:SetMoveType(classtab.MoveType or MOVETYPE_WALK)
@@ -2327,11 +2189,6 @@ function meta:DoHulls(classid, teamid)
 			
 			local scale = (self:IsChampion() and (self:GetChampion() == CHAMP_SMOL and 0.75 or self:GetChampion() == CHAMP_BIG and 1.3 or 1.1) or 1)
 			if classtab.ModelScale then
-<<<<<<< Updated upstream
-				self:SetModelScale(classtab.ModelScale, 0)
-			elseif self:GetModelScale() ~= DEFAULT_MODELSCALE then
-				self:SetModelScale(DEFAULT_MODELSCALE, 0)
-=======
 			    if self.m_Gigachad then
 					self:SetModelScale(classtab.ModelScale * 1.5 * scale, 0)
 				else
@@ -2343,7 +2200,6 @@ function meta:DoHulls(classid, teamid)
 				else
 					self:SetModelScale(DEFAULT_MODELSCALE * scale, 0)
 				end
->>>>>>> Stashed changes
 			end
 
 			if not classtab.Hull or not classtab.HullDuck then
@@ -2384,6 +2240,9 @@ function meta:DoHulls(classid, teamid)
 			if self:GetBloodColor() ~= bloodcolor then
 				self:SetBloodColor(bloodcolor)
 			end
+			if self.m_Zombie_16 then
+				self:Give("weapon_zs_grenade_z")
+			end
 
 			self:DrawShadow(not classtab.NoShadow)
 			self:SetRenderMode(classtab.RenderMode or RENDERMODE_NORMAL)
@@ -2391,6 +2250,9 @@ function meta:DoHulls(classid, teamid)
 			self.NoCollideAll = classtab.NoCollideAll or (classtab.ModelScale or 1) ~= DEFAULT_MODELSCALE
 			--self.NoCollideInside = classtab.NoCollideInside or (classtab.ModelScale or 1) ~= DEFAULT_MODELSCALE
 			self.AllowTeamDamage = classtab.AllowTeamDamage
+			self.CanMerge = classtab.CanMerge
+			self.BaraCat = classtab.BaraCat
+			self.MergePiece1 = classtab.MergePiece1
 			self.NeverAlive = classtab.NeverAlive
 			self.KnockbackScale = classtab.KnockbackScale
 			local phys = self:GetPhysicsObject()
@@ -2483,11 +2345,8 @@ function meta:Redeem(silent, noequip)
 			net.WriteEntity(self)
 		net.Broadcast()
 	end
-<<<<<<< Updated upstream
-=======
 	timer.Simple(0.05,function() self:GodEnable() end )
 	timer.Simple(7,function() 	if self:IsValid() then self:GodDisable() end end )
->>>>>>> Stashed changes
 
 	gamemode.Call("PostPlayerRedeemed", self)
 end
@@ -2499,6 +2358,7 @@ function meta:RedeemNextFrame()
 		end
 	end)
 end
+
 
 local walltrace = {mask = MASK_SOLID_BRUSHONLY, mins = Vector(-8, -8, -8), maxs = Vector(8, 8, 8)}
 function meta:ShouldCrouchJumpPunish()
@@ -2515,11 +2375,13 @@ function meta:ShouldCrouchJumpPunish()
 end
 
 function meta:TakeBrains(amount)
+	self:MetaAddScore(self:GetMScore() - amount)
 	self:AddFrags(-amount)
 	self.BrainsEaten = self.BrainsEaten - 1
 end
 
 function meta:AddBrains(amount)
+	self:MetaAddScore(self:GetMScore() + amount)
 	self:AddFrags(amount)
 	self.BrainsEaten = self.BrainsEaten + 1
 	self:CheckRedeem()
@@ -2781,7 +2643,7 @@ function meta:DoSigilTeleport(target, from, corrupted)
 		return
 	end
 
-	if self:IsValidLivingHuman() and target:IsValid() and corrupted == target:GetSigilCorrupted() then
+	if (self:IsValidLivingHuman() or self:IsValidLivingZombie()) and target:IsValid() and (self:IsValidLivingHuman() and corrupted == target:GetSigilCorrupted() or self:IsValidLivingZombie()) then
 		if CurTime() >= (self._NextSigilTeleportEffect or 0) then
 			self._NextSigilTeleportEffect = CurTime() + 0.25
 
@@ -2804,6 +2666,7 @@ function meta:DoSigilTeleport(target, from, corrupted)
 		end
 		hook.Add("Move", self, function(_, p, mv)
 			if p == self then
+
 				hook.Remove("Move", p)
 				mv:SetOrigin(movepos)
 			end
@@ -2825,34 +2688,6 @@ function meta:DoSigilTeleport(target, from, corrupted)
 	end
 end
 
-<<<<<<< Updated upstream
-local bossdrops = {
-	"trinket_bleaksoul",  -- 1
-	"trinket_spiritess",  -- 2
-	"trinket_samsonsoul",  -- 3
-	"trinket_evesoul",  -- 4
-    "trinket_jacobjesausoul",  -- 5
-    "trinket_isaacsoul",  -- 6
-    "trinket_magdalenesoul",  -- 7
-    "trinket_lilithsoul",  -- 8
-    "trinket_whysoul",  -- 9
-    "trinket_blanksoul", -- 10
-    "trinket_classixsoul",  -- 11
-	"trinket_darksoul",  --12
-	"trinket_eriosoul",  --13
-	"trinket_aposoul",  --14
-	"trinket_betsoul",  --15
-	"trinket_lostsoul",  --16
-	"trinket_greedsoul",  --17
-	"trinket_cainsoul",   --18
-	"trinket_lazarussoul",	-- 19
-	"trinket_forsoul",  -- 20
-	"trinket_starsoul"  -- 21
-}
-
-function meta:MakeBossDrop()
-	local drop = table.Random(bossdrops)
-=======
 
 local demiboss = {
 	"comp_soul_alt_h",
@@ -2932,7 +2767,6 @@ end
 function meta:Make1BossDrop(killer)
 	if math.random(1,3) == 1 then return end
 	local drop = table.Random(bossdrops1)
->>>>>>> Stashed changes
 	local inv = string.sub(drop, 1, 4) ~= "weap"
 
 	local pos = self:LocalToWorld(self:OBBCenter())
@@ -2946,13 +2780,9 @@ function meta:Make1BossDrop(killer)
 			ent:SetWeaponType(drop)
 		end
 		ent:Spawn()
-<<<<<<< Updated upstream
-
-=======
 		if killer and killer:IsValidLivingHuman() then
 			ent:SetOwner(killer)
 		end
->>>>>>> Stashed changes
 		local phys = ent:GetPhysicsObject()
 		if phys:IsValid() then
 			phys:Wake()
@@ -2961,10 +2791,7 @@ function meta:Make1BossDrop(killer)
 		end
 	end
 end
-<<<<<<< Updated upstream
-=======
 
->>>>>>> Stashed changes
 
 function meta:UpdateAltSelectedWeapon()
 	net.Start("zs_updatealtselwep")
@@ -3038,10 +2865,6 @@ function meta:GetBountyPicker()
 	return false
 end
 function meta:GetRandomStartingItem()
-<<<<<<< Updated upstream
-	local pool = {}
-
-=======
 	if self:IsSkillActive(SKILL_EQUIPPED) then
 		return true
 	end
@@ -3050,28 +2873,12 @@ function meta:GetRandomFood()
 	local pool = {}
 
 
->>>>>>> Stashed changes
 	if self:IsSkillActive(SKILL_PREPAREDNESS) and #GAMEMODE.Food > 0 then
 		pool[#pool + 1] = GAMEMODE.Food[math.random(#GAMEMODE.Food)]
 	end
-
-	if self:IsSkillActive(SKILL_EQUIPPED) then
-		pool[#pool + 1] = GAMEMODE.StarterTrinkets[math.random(#GAMEMODE.StarterTrinkets)]
-	end
-	if self:IsSkillActive(SKILL_SOULNET) then
-		pool[#pool + 1] = GAMEMODE.StarterSoul[math.random(#GAMEMODE.StarterSoul)]
-	end
-	if self:IsSkillActive(SKILL_CLASSIX1) then
-		pool[#pool + 1] = GAMEMODE.Via[math.random(#GAMEMODE.Via)]
-	end
-
 	if #pool > 0 then
 		return pool[math.random(#pool)]
 	end
-<<<<<<< Updated upstream
-end
-
-=======
 
 end
 
@@ -3153,55 +2960,19 @@ local function DoCryoArc(attacker, inflictor, pl, damage)
 		end
 	end
 end
->>>>>>> Stashed changes
 function meta:PulseResonance(attacker, inflictor)
 	-- Weird things happen with multishot weapons..
 
 	timer.Create("PulseResonance" .. attacker:UniqueID(), 0.06, 1, function()
 		if not attacker:IsValid() or not self:IsValid() or (self.Cascaded or 1) >= CurTime() then return end
 
-<<<<<<< Updated upstream
-		attacker.AccuPulse = 0
-=======
 		attacker:SetProgress(0,'pprog')
 		self.Cascaded = CurTime() + 4
->>>>>>> Stashed changes
 
 		local pos = self:WorldSpaceCenter()
 		pos.z = pos.z + 16
 
 		if attacker:IsValidLivingHuman() then
-<<<<<<< Updated upstream
-			util.BlastDamagePlayer(inflictor, attacker, pos, 100, 75, DMG_ALWAYSGIB, 0.7)
-			for _, ent in pairs(util.BlastAlloc(inflictor, attacker, pos, 100 * (attacker.ExpDamageRadiusMul or 1))) do
-				if ent:IsValidLivingPlayer() and gamemode.Call("PlayerShouldTakeDamage", ent, attacker) then
-					ent:AddLegDamageExt(5, attacker, inflictor, SLOWTYPE_PULSE)
-				end
-			end
-		end
-
-		local effectdata = EffectData()
-			effectdata:SetOrigin(pos)
-			effectdata:SetNormal(attacker:GetShootPos())
-		util.Effect("explosion_shockcore", effectdata)
-	end)
-end
-
-function meta:CryogenicInduction(attacker, inflictor, damage)
-	if self:Health() > self:GetMaxHealthEx() * (damage/100) or math.random(50) > damage then return end
-
-	timer.Create("Cryogenic" .. attacker:UniqueID(), 0.06, 1, function()
-		if not attacker:IsValid() or not self:IsValid() then return end
-
-		local pos = self:WorldSpaceCenter()
-		pos.z = pos.z + 16
-
-		self:TakeSpecialDamage(self:Health() + 210, DMG_DIRECT, attacker, inflictor, pos)
-
-		if attacker:IsValidLivingHuman() then
-			util.BlastDamagePlayer(inflictor, attacker, pos, 100, self:GetMaxHealthEx() * 0.80, DMG_DROWN, 0.83)
-			for _, ent in pairs(util.BlastAlloc(inflictor, attacker, pos, 100 * (attacker.ExpDamageRadiusMul or 1))) do
-=======
 			if !attacker:IsSkillActive(SKILL_CRYO_LASER) then
 				util.BlastDamagePlayer(inflictor, attacker, pos, 85, 75, DMG_ALWAYSGIB, 0.7)
 				local effectdata = EffectData()
@@ -3297,7 +3068,6 @@ function meta:CryogenicInduction(attacker, inflictor, damage)
 			local pos = self:WorldSpaceCenter()
 			pos.z = pos.z + 16
 			for _, ent in pairs(util.BlastAlloc(inflictor, attacker, pos, 150)) do
->>>>>>> Stashed changes
 				if ent:IsValidLivingPlayer() and gamemode.Call("PlayerShouldTakeDamage", ent, attacker) then
 					local sta = ent:GetStatus("radiation") 
 					if sta then
@@ -3320,8 +3090,6 @@ function meta:CryogenicInduction(attacker, inflictor, damage)
 		end
 	end)
 end
-<<<<<<< Updated upstream
-=======
 function meta:FireInduction(attacker, inflictor, damage)
 	if not self:GetZombieClassTable().Boss then
 		if attacker:GetProgress('fprog') >= ((15 * ((attacker:GetActiveWeapon().Tier or 1)+1))) * (attacker:GetIndChance() or 1) then
@@ -3383,7 +3151,6 @@ function meta:ChamStorm(attacker, inflictor, damage)
 			end)
 		end
 end
->>>>>>> Stashed changes
 
 function meta:SetPhantomHealth(amount)
 	self:SetDTFloat(DT_PLAYER_FLOAT_PHANTOMHEALTH, amount)

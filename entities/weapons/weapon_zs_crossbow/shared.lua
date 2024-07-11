@@ -1,13 +1,7 @@
-<<<<<<< Updated upstream
-SWEP.PrintName = "'Impaler' Crossbow"
-SWEP.Description = "This ancient weapon can easily skewer groups of zombies."
-
-=======
 --SWEP.PrintName = "'Impaler' Crossbow"
 --SWEP.Description = "This ancient weapon can easily skewer groups of zombies."
 SWEP.PrintName = translate.Get("wep_crossbow")
 SWEP.Description = translate.Get("wep_d_crossbow")
->>>>>>> Stashed changes
 SWEP.Base = "weapon_zs_baseproj"
 
 SWEP.HoldType = "crossbow"
@@ -21,11 +15,7 @@ SWEP.CSMuzzleFlashes = false
 SWEP.Primary.Sound = Sound("Weapon_Crossbow.Single")
 SWEP.Primary.Delay = 2.0
 SWEP.Primary.Automatic = true
-<<<<<<< Updated upstream
-SWEP.Primary.Damage = 90
-=======
 SWEP.Primary.Damage = 195
->>>>>>> Stashed changes
 
 SWEP.Primary.ClipSize = 1
 SWEP.Primary.Ammo = "XBowBolt"

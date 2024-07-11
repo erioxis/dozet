@@ -21,6 +21,8 @@ CLASS.Original = true
 CLASS.NoFallDamage = true
 CLASS.NoFallSlowdown = true
 
+CLASS.DynamicHealth = 0.2
+
 CLASS.Points = CLASS.Health/GM.HeadcrabZombiePointRatio
 
 CLASS.Hull = {Vector(-12, -12, 0), Vector(12, 12, 18.1)}
@@ -140,8 +142,6 @@ if SERVER then
 		local wep = pl:GetActiveWeapon()
 		if wep:IsValid() then wep:Reload() end
 	end
-<<<<<<< Updated upstream
-=======
 
 	function CLASS:ProcessDamage(pl, dmginfo)
 		if dmginfo:GetInflictor().IsMelee then
@@ -149,8 +149,8 @@ if SERVER then
 		end
 		return dmginfo
 	end
->>>>>>> Stashed changes
 end
+
 
 if not CLIENT then return end
 

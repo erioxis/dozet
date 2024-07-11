@@ -9,11 +9,11 @@ function ENT:ShouldNotCollide(ent)
 		if owner:IsValid() and owner:Team() == TEAM_UNDEAD then return true end
 	end
 
+
 	local colgroup = ent:GetCollisionGroup()
 	if ent.IsBarricadeObject or colgroup == COLLISION_GROUP_PLAYER or colgroup == COLLISION_GROUP_WEAPON or colgroup == COLLISION_GROUP_NONE then
 		return true
 	end
-
 	return false
 end
 

@@ -2,8 +2,10 @@ AddCSLuaFile()
 
 SWEP.Base = "weapon_zs_basemelee"
 
-SWEP.PrintName = "Shade Manipulator"
-SWEP.Description = "Stealed from shade,this high tech machine"
+--SWEP.PrintName = "Shade Manipulator"
+--SWEP.Description = "Stealed from shade,this high tech machine"
+SWEP.PrintName = translate.Get("wep_luxoids")
+SWEP.Description = translate.Get("wep_d_luxoids")
 
 SWEP.ViewModel = Model("models/weapons/v_crowbar.mdl")
 SWEP.WorldModel = Model("models/weapons/w_crowbar.mdl")
@@ -23,6 +25,7 @@ SWEP.MeleeRange = 61
 SWEP.MeleeSize = 0.76
 SWEP.PrimaryDelay = 0.47
 SWEP.Tier = 4
+SWEP.BlockTrue = false
 
 
 function SWEP:PrimaryAttack()
@@ -39,7 +42,7 @@ function SWEP:PrimaryAttack()
 
 				if CLIENT then return end
 
-				local vel = owner:GetAimVector() * 2000
+				local vel = owner:GetAimVector() * 2000 * (owner:GetModelScale() or 1)
 
 				local phys = obj:GetPhysicsObject()
 				if phys:IsValid() and phys:IsMoveable() and phys:GetMass() <= 500 then

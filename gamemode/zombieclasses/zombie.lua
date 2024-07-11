@@ -3,19 +3,11 @@ CLASS.TranslationName = "class_zombie"
 CLASS.Description = "description_zombie"
 CLASS.Help = "controls_zombie"
 
-CLASS.BetterVersion = "Eradicator"
-
 CLASS.Wave = 0
 CLASS.Unlocked = true
 CLASS.IsDefault = true
 CLASS.Order = 0
 
-<<<<<<< Updated upstream
-CLASS.Health = 310
-CLASS.Speed = 175
-CLASS.Revives = true
-
-=======
 CLASS.Health = 200
 CLASS.Speed = 195
 CLASS.Revives = true
@@ -24,7 +16,6 @@ CLASS.Original = true
 
 CLASS.DynamicHealth = 1
 CLASS.Weight = 0.95
->>>>>>> Stashed changes
 CLASS.CanTaunt = true
 
 CLASS.Points = CLASS.Health/GM.HumanoidZombiePointRatio

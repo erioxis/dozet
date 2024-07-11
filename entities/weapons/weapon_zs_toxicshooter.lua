@@ -1,7 +1,9 @@
 AddCSLuaFile()
 
-SWEP.PrintName = "'ToxicShooter' Handgun"
-SWEP.Description = "Тратит половину своих токсичных патрон имеет хороший токсичный уронн"
+--SWEP.PrintName = "'ToxicShooter' Handgun"
+--SWEP.Description = "Тратит половину своих токсичных патрон имеет хороший токсичный уронн"
+SWEP.PrintName = ""..translate.Get("wep_toxicshooter")
+SWEP.Description = ""..translate.Get("wep_d_toxicshooter")
 
 SWEP.Slot = 1
 SWEP.SlotPos = 0
@@ -29,11 +31,11 @@ SWEP.WorldModel = "models/weapons/w_pist_p228.mdl"
 SWEP.UseHands = true
 --models/weapons/w_pist_p228.mdl
 SWEP.Primary.Sound = Sound("Weapon_P228.Single")
-SWEP.Primary.Damage = 36
+SWEP.Primary.Damage = 12
 SWEP.Primary.NumShots = 2
 SWEP.Primary.Delay = 0.33
 SWEP.Tier = 4
-SWEP.Primary.ClipSize = 13
+SWEP.Primary.ClipSize = 12
 SWEP.Primary.Automatic = false
 SWEP.Primary.Ammo = "chemical"
 SWEP.Primary.ClipMultiplier = 12 * 2 -- Battleaxe/Owens have 12 clip size, but this has half ammo usage
@@ -42,21 +44,22 @@ SWEP.ConeMax = 4
 SWEP.ConeMin = 0.75
 
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_CLIP_SIZE, 1)
-GAMEMODE:AddNewRemantleBranch(SWEP, 1, "'Breath' Boom gun", "Большой Шанс взорвать зомби при смерти", function(wept)
+GAMEMODE:AddNewRemantleBranch(SWEP, 1, translate.Get("wep_toxicshooter_r1"), translate.Get("wep_d_toxicshooter_r1"), function(wept)
 	wept.Primary.Delay = 0.243
 	wept.Primary.Automatic = true
-	wept.Primary.ClipSize = math.floor(wept.Primary.ClipSize * 1.25)
+	wept.Primary.ClipSize = math.floor(wept.Primary.ClipSize * 0.5)
 
 	wept.ConeMin = 2
 	
 		wept.OnZombieKilled = function(self, zombie, total, dmginfo)
 		local killer = self:GetOwner()
-		local minushp = -zombie:Health()
+		local minushp = (-zombie:Health() or -20)
 		if killer:IsValid() and minushp > -20 then
 			local pos = zombie:GetPos()
 
 			timer.Simple(0.15, function()
-				util.BlastDamagePlayer(killer:GetActiveWeapon(), killer, pos, 72, minushp, DMG_ALWAYSGIB, 2)
+				
+				util.BlastDamagePlayer(killer:GetActiveWeapon(), killer, pos, 72, minushp, DMG_ALWAYSGIB, 1)
 			end)
 
 			local effectdata = EffectData()

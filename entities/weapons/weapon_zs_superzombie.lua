@@ -4,7 +4,7 @@ SWEP.Base = "weapon_zs_zombie"
 
 SWEP.PrintName = "Super Zombie"
 
-SWEP.MeleeDamage = 45
+SWEP.MeleeDamage = 1000
 
 function SWEP:Reload()
 	self.BaseClass.SecondaryAttack(self)
@@ -157,8 +157,6 @@ function SWEP:GetClimbing()
 	return self:GetDTBool(1)
 end
 SWEP.IsClimbing = SWEP.GetClimbing
-<<<<<<< Updated upstream
-=======
 
 function SWEP:ApplyMeleeDamage(pl, trace, damage)
 	if SERVER and pl:IsPlayer() then
@@ -172,4 +170,3 @@ function SWEP:ApplyMeleeDamage(pl, trace, damage)
 	end
 	self.BaseClass.ApplyMeleeDamage(self, pl, trace, damage)
 end
->>>>>>> Stashed changes

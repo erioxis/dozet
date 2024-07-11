@@ -1,13 +1,7 @@
-<<<<<<< Updated upstream
-SWEP.PrintName = "CLASSIXXXXX"
-SWEP.Description = "Свежая струя говна в тебя летит."
-
-=======
 --SWEP.PrintName = "CLASSIXXXXX"
 --SWEP.Description = "Свежая струя говна в тебя летит."
 SWEP.PrintName = translate.Get("wep_classixx")
 SWEP.Description = translate.Get("wep_d_classixx")
->>>>>>> Stashed changes
 SWEP.Base = "weapon_zs_base"
 
 SWEP.HoldType = "ar2"
@@ -19,17 +13,11 @@ SWEP.ShowViewModel = true
 SWEP.ShowWorldModel = true
 SWEP.UseHands = true
 
-<<<<<<< Updated upstream
-SWEP.Primary.Damage = 133
-SWEP.Primary.NumShots = 2
-SWEP.Primary.Delay = 0.6
-=======
 SWEP.Primary.Damage = 3667
 SWEP.Primary.NumShots = 1
 SWEP.Primary.Delay = 0.4
->>>>>>> Stashed changes
 SWEP.Primary.KnockbackScale = 0.1
-SWEP.Primary.MaxDistance = 1024
+SWEP.Primary.MaxDistance = 2028
 
 SWEP.Primary.ClipSize = 30
 SWEP.Primary.Automatic = true
@@ -39,7 +27,7 @@ GAMEMODE:SetupDefaultClip(SWEP.Primary)
 SWEP.ConeMax = 0
 SWEP.ConeMin = 0
 
-SWEP.Tier = 5
+SWEP.Tier = 7
 SWEP.MaxStock = 3
 
 SWEP.HeatBuildShort = 0.10
@@ -47,16 +35,11 @@ SWEP.HeatBuildLong = 0.045
 SWEP.HeatVentShort = 0.16
 SWEP.HeatVentLong = 0.13
 SWEP.HeatDecayShort = 0.1
-SWEP.HeatDecayLong = 0.01
+SWEP.HeatDecayLong = 0.05
 SWEP.HeatInitialLong = 0.05
 
-<<<<<<< Updated upstream
-SWEP.WalkSpeed = SPEED_SLOWEST * 0.9
-SWEP.FireAnimSpeed = 0.24
-=======
 SWEP.WalkSpeed = SPEED_SLOWEST * 0.1
 SWEP.FireAnimSpeed = 0.27
->>>>>>> Stashed changes
 SWEP.FireSoundPitch = 125
 
 SWEP.TracerName = "tracer_gluon"

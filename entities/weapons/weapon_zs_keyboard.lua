@@ -1,13 +1,6 @@
 AddCSLuaFile()
-<<<<<<< Updated upstream
-
-SWEP.PrintName = "Keyboard"
-SWEP.Description = "You overfilled by fury and shields!."
-
-=======
 SWEP.PrintName = translate.Get("wep_keyboard")
 SWEP.Description = translate.Get("wep_d_keyboard")
->>>>>>> Stashed changes
 
 if CLIENT then
 	SWEP.ViewModelFOV = 55
@@ -38,13 +31,13 @@ SWEP.ViewModel = "models/weapons/c_stunstick.mdl"
 SWEP.WorldModel = "models/props_c17/computer01_keyboard.mdl"
 SWEP.UseHands = true
 
-SWEP.MeleeDamage = 32
-SWEP.MeleeRange = 61
-SWEP.MeleeSize = 0.8
+SWEP.MeleeDamage = 22
+SWEP.MeleeRange = 69
+SWEP.MeleeSize = 0.66
 
-SWEP.Primary.Delay = 0.56
+SWEP.Primary.Delay = 0.66
 
-SWEP.SwingTime = 0.45
+SWEP.SwingTime = 0.55
 SWEP.SwingRotation = Angle(30, -30, -30)
 SWEP.SwingOffset = Vector(0, -30, 0)
 SWEP.SwingHoldType = "grenade"
@@ -58,10 +51,6 @@ function SWEP:OnZombieKilled(zombie, total, dmginfo)
 	if killer:IsValid() then
 		killer:GiveStatus("medrifledefboost", 3) 
 		killer:GiveStatus("strengthdartboost", 4)
-<<<<<<< Updated upstream
-		killer:GiveStatus("bleed")
-		end
-=======
 		killer:GiveStatus("keyboard", 7)
 	end	
 end
@@ -82,7 +71,6 @@ function SWEP:ApplyMeleeDamage(ent, trace, damage)
 	end
 
 	self.BaseClass.ApplyMeleeDamage(self, ent, trace, damage)
->>>>>>> Stashed changes
 end
 
 

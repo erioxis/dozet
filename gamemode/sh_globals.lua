@@ -71,6 +71,7 @@ BOUNTY_XP_HM = {
 DT_PLAYER_INT_REMORTLEVEL = 5
 DT_PLAYER_INT_XP = 6
 DT_PLAYER_INT_BLOODARMOR = 7
+DT_PLAYER_INT_ZOMBIEARMOR = 9
 DT_PLAYER_INT_VOICESET = 8
 DT_PLAYER_INT_ACTIV = 10
 
@@ -85,10 +86,6 @@ DT_PLAYER_INT_ADDEDPOINTS = 15
 DT_PLAYER_BOOL_BARRICADEEXPERT = 6
 DT_PLAYER_BOOL_NECRO = 7
 DT_PLAYER_BOOL_FRAIL = 8
-<<<<<<< Updated upstream
-DT_PLAYER_FLOAT_WIDELOAD = 5
-DT_PLAYER_FLOAT_PHANTOMHEALTH = 6
-=======
 DT_PLAYER_BOOL_LABUSE = 9
 
 DT_PLAYER_FLOAT_WIDELOAD = 5
@@ -108,7 +105,6 @@ CHAMP_YELLOW = 6
 CHAMP_ETERNAL = 7
 CHAMP_PINK = 8
 CHAMP_GRAY = 9
->>>>>>> Stashed changes
 
 VOICESET_MALE = 0
 VOICESET_FEMALE = 1
@@ -142,6 +138,7 @@ DIR_LEFT = 3
 SLOWTYPE_PULSE = 1
 SLOWTYPE_COLD = 2
 SLOWTYPE_FLAME = 3
+SLOWTYPE_CHAM = 4
 
 -- Made because these are constantly swapped in different gmod updates for some bizzare reason.
 TEXT_ALIGN_TOP_REAL = 3
@@ -156,9 +153,9 @@ DEFAULT_MASS = 80
 DEFAULT_MODELSCALE = 1
 
 -- Humans can not carry OR drag anything heavier than this (in kg.)
-CARRY_MAXIMUM_MASS = 300
+CARRY_MAXIMUM_MASS = 450
 -- Humans can not carry anything with a volume more than this (OBBMins():Length() + OBBMaxs():Length()).
-CARRY_MAXIMUM_VOLUME = 300
+CARRY_MAXIMUM_VOLUME = 450
 -- Objects with more mass than this will be dragged instead of carried.
 CARRY_DRAG_MASS = 145
 -- Anything bigger than this is dragged regardless of mass.
@@ -175,37 +172,16 @@ GM.UtilityKey = IN_SPEED
 GM.MenuKey = IN_WALK -- I would use the spawn menu but it has no IN_ key assignment.
 GM.SpecialAbilityKey = KEY_Q -- ДОБАВИЛ)
 
-GM.ArsenalCrateCommission = 0.11
+GM.ArsenalCrateCommission = 0.45
 
 GM.BaseDeploySpeed = 1 -- Put this back to 1 to increase the value of it
 
-GM.ExtraHealthPerExtraNail = 60
+GM.ExtraHealthPerExtraNail = 300
 GM.MaxNails = 4
 
 -- Moved from options to globals because the game is now balanced around it being static. The gamemode will BREAK if this is not 6!!
 GM.NumberOfWaves = 12
 
-<<<<<<< Updated upstream
-GM.PulsePointsMultiplier = 1.35
-
--- The amount of damage you need to inflict to a zombie type to get a point
-GM.HumanoidZombiePointRatio = 83
-GM.PoisonZombiePointRatio = 100 -- Has an enormous head hitbox
-GM.HeadcrabZombiePointRatio = 60
-GM.NoHeadboxZombiePointRatio = 78
-GM.TorsoZombiePointRatio = 80
-GM.LegsZombiePointRatio = 60
-GM.SkeletonPointRatio = GM.HumanoidZombiePointRatio/3
-
-SPEED_NORMAL = 230
-SPEED_SLOWEST = SPEED_NORMAL - 60
-SPEED_SLOWER = SPEED_NORMAL - 30
-SPEED_SLOW = SPEED_NORMAL - 8
-SPEED_FAST = SPEED_NORMAL + 7
-SPEED_FASTER = SPEED_NORMAL + 11
-SPEED_FASTEST = SPEED_NORMAL + 33
-SPEED_VKID = SPEED_NORMAL + 65
-=======
 GM.PulsePointsMultiplier = 1.75
 
 -- The amount of damage you need to inflict to a zombie type to get a point
@@ -225,7 +201,6 @@ SPEED_FAST = SPEED_NORMAL * 1.1
 SPEED_FASTER = SPEED_NORMAL * 1.3
 SPEED_FASTEST = SPEED_NORMAL * 1.4
 SPEED_VKID = SPEED_NORMAL * 2
->>>>>>> Stashed changes
 
 SPEED_ZOMBIEESCAPE_SLOWEST = 240
 SPEED_ZOMBIEESCAPE_SLOWER = 260
@@ -237,21 +212,14 @@ ZE_KNOCKBACKSCALE = 0.1
 
 MASK_HOVER = bit.bor(CONTENTS_SOLID, CONTENTS_WATER, CONTENTS_SLIME, CONTENTS_GRATE, CONTENTS_WINDOW, CONTENTS_HITBOX)
 
-<<<<<<< Updated upstream
-GM.BarricadeHealthMin = 510
-GM.BarricadeHealthMax = 5600 * 0.85
-GM.BarricadeHealthMassFactor = 3 * 0.85
-GM.BarricadeHealthVolumeFactor = 4 * 0.85
-GM.BarricadeRepairCapacity = 1.9
-=======
 GM.BarricadeHealthMin = 600
 GM.BarricadeHealthMax = 8600
 GM.BarricadeHealthMassFactor = 3.7 * 0.85
 GM.BarricadeHealthVolumeFactor = 4.5 * 0.85
 GM.BarricadeRepairCapacity = 1.8
->>>>>>> Stashed changes
 
 GM.BossZombiePlayersRequired = 4
+
 
 GM.HumanGibs = {
 Model("models/gibs/HGIBS.mdl"),
@@ -316,11 +284,8 @@ GM.AmmoNames["pulse"] = "Pulse Shots"
 GM.AmmoNames["impactmine"] = "Explosives"
 GM.AmmoNames["chemical"] = "Chemicals"
 GM.AmmoNames["repairfield"] = "Repair Fields"
-<<<<<<< Updated upstream
-=======
 GM.AmmoNames["medstation"] = "Medical Station"
 GM.AmmoNames["fridge"] = "Fridge"
->>>>>>> Stashed changes
 GM.AmmoNames["zapper"] = "Zappers"
 GM.AmmoNames["zapper_arc"] = "Arc Zappers"
 GM.AmmoNames["remantler"] = "Remantlers"
@@ -328,6 +293,7 @@ GM.AmmoNames["drone_s"] = "Stations"
 GM.AmmoNames["turret_buckshot"] = "Blast Turrets"
 GM.AmmoNames["turret_assault"] = "Assault Turrets"
 GM.AmmoNames["turret_super"] = "Super Turret"
+GM.AmmoNames["sigil_port"] = "Sigil Portable"
 GM.AmmoNames["scrap"] = "Scrap"
 
 GM.AmmoTranslations = {}
@@ -372,12 +338,9 @@ GM.AmmoModels["drone_s"] = "models/props_lab/powerbox01a.mdl"
 GM.AmmoModels["scrap"] = "models/props_junk/vent001_chunk5.mdl"
 GM.AmmoModels["sniperround"] = "models/props_debris/wood_board02a.mdl"
 GM.AmmoModels["camera"] = "models/props_combine/combine_mine01.mdl"
-<<<<<<< Updated upstream
-=======
 GM.AmmoModels["sigil_port"] = "models/props_lab/lab_flourescentlight002b.mdl"
 GM.AmmoModels["medstation"] = "models/props/de_nuke/smokestack01.mdl"
 GM.AmmoModels["medstation"] = "models/props_c17/furniturefridge001a.mdl"
->>>>>>> Stashed changes
 
 GM.AmmoIcons = {}
 GM.AmmoIcons["pistol"] = "ammo_pistol"
@@ -399,36 +362,24 @@ GM.ResistableStatuses = {
 	"enfeeble",
 	"slow",
 	"frightened",
-<<<<<<< Updated upstream
-	"frost"
-=======
 	"frost",
 	"rot",
 	"poison",
 	"sticky",
 	"dosei_inf"
->>>>>>> Stashed changes
 }
 
 GM.ScrapVals = {
 	--6, 16, 32, 58, 92, 138
-<<<<<<< Updated upstream
-	4, 11, 16, 41, 64, 111
-=======
 	5, 12, 16, 41, 66, 122, 300, 430
->>>>>>> Stashed changes
 }
 
 GM.ScrapValsTrinkets = {
-	3, 6, 9, 15, 17, 21
+	3, 6, 7, 12, 15, 20, 36
 }
 
 GM.DismantleMultipliers = {
-<<<<<<< Updated upstream
-	3, 6, 7, 8, 20
-=======
 	1, 1.6, 3.3, 5.5, 7.2, 9.3, 11
->>>>>>> Stashed changes
 }
 
 -- Handled in languages file.

@@ -2,6 +2,7 @@ INC_SERVER()
 AddCSLuaFile("cl_animations.lua")
 
 ENT.CleanupPriority = 1
+ENT.Soul = nil
 
 function ENT:Initialize()
 	self.ObjHealth = 200
@@ -28,6 +29,7 @@ function ENT:Initialize()
 end
 
 function ENT:Use(activator, caller)
+
 	self:GiveToActivator(activator, caller)
 end
 
@@ -35,6 +37,7 @@ function ENT:GiveToActivator(activator, caller)
 	if  not activator:IsPlayer()
 		or not activator:Alive()
 		or activator:Team() ~= TEAM_HUMAN
+		or activator:GetInfo("zs_nopickuploot") == "1"
 		or self.Removing
 		or self.IgnoreUse
 		or (activator:KeyDown(GAMEMODE.UtilityKey) and not self.Forced)
@@ -42,11 +45,8 @@ function ENT:GiveToActivator(activator, caller)
 
 		return
 	end
-<<<<<<< Updated upstream
-=======
 	if activator:IsSkillActive(SKILL_SAMODOS) and self:GetOwner() ~= activator then activator:CenterNotify(COLOR_RED, translate.ClientGet(activator, "samodos")) return end
 	if self:GetOwner() and self:GetOwner():IsValid() and self:GetOwner():IsPlayer() and self:GetOwner():IsSkillActive(SKILL_SAMODOS) and self:GetOwner() ~= activator then activator:CenterNotify(COLOR_RED, translate.ClientGet(activator, "samodosa")) return end
->>>>>>> Stashed changes
 
 	local itype = self:GetInventoryItemType()
 	if not itype then
@@ -54,15 +54,11 @@ function ENT:GiveToActivator(activator, caller)
 	end
 
 	local itypecat = GAMEMODE:GetInventoryItemType(itype)
-<<<<<<< Updated upstream
-	if itypecat == INVCAT_TRINKETS and activator:HasInventoryItem(itype) then
-=======
 	if activator:GetZSRemortLevel() <= 4 and string.sub(itype, 1,11) == "trinket_sin" then
 		activator:CenterNotify(COLOR_RED, translate.ClientGet(activator, "samodosa"))
 		return
 	end
 	if (itypecat == INVCAT_TRINKETS and (activator:HasInventoryItem(itype) or activator:HasInventoryItemQ(itype)  or activator:HasInventoryItemQ(string.sub(itype,0,#itype-3))) or activator:HasInventoryItem(string.sub(itype,0,#itype-3))) and !( GAMEMODE.ZSInventoryItemData[itype].OnlyDrones or GAMEMODE.ZSInventoryItemData[itype].Stackable)  then
->>>>>>> Stashed changes
 		activator:CenterNotify(COLOR_RED, translate.ClientGet(activator, "you_already_have_this_trinket"))
 		return
 	end

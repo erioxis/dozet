@@ -28,9 +28,10 @@ function GM:FloatingScore(victim, effectname, frags, flags, override_allow)
 	effectdata:SetOrigin(pos)
 	effectdata:SetScale(flags or 0)
 	if effectname == "floatingscore_und" then
-		effectdata:SetMagnitude(math.Round(frags or GAMEMODE.ZombieClasses[victim:GetZombieClass()].Points or 1, 2))
+		effectdata:SetMagnitude(math.Round((frags or GAMEMODE.ZombieClasses[victim:GetZombieClass()].Points or 1), 2))
 	else
 		effectdata:SetMagnitude(math.Round(frags or 1, 2))
 	end
+	--effectdata:SetEntity(victim or NULL) 
 	util.Effect(effectname, effectdata, true, true)
 end

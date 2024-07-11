@@ -23,11 +23,9 @@ SWEP.WorldModel = "models/props/cs_office/water_bottle.mdl"
 
 SWEP.Primary.Ammo = "foodpill"
 
-SWEP.FoodHealth = 45
+SWEP.FoodHealth = -45
 SWEP.FoodEatTime = 3
 SWEP.FoodIsLiquid = true
-<<<<<<< Updated upstream
-=======
 
 function SWEP:Eat()
 	local owner = self:GetOwner()
@@ -86,4 +84,3 @@ function SWEP:Eat()
 	end
 end
 
->>>>>>> Stashed changes

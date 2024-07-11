@@ -12,7 +12,7 @@ function ENT:Move(pl, mv)
 		--if objectphys:IsValid() then
 			mv:SetMaxSpeed(math.max(
 				mv:GetMaxSpeed() / 4,
-				mv:GetMaxSpeed() - self:GetObjectMass() * CARRY_SPEEDLOSS_PERKG * pl.PropCarrySlowMul)
+				mv:GetMaxSpeed() - self:GetObjectMass() * CARRY_SPEEDLOSS_PERKG * (pl.PropCarrySlowMul or 1))
 			)
 			mv:SetMaxClientSpeed(mv:GetMaxSpeed())
 		--end
@@ -78,11 +78,8 @@ function ENT:GetHingePos()
 
 	return self:GetObjectPos()
 end
-<<<<<<< Updated upstream
-=======
 
 function ENT:ShouldNotCollide(ent)
 	local object = self:GetObject()
 	return object:IsPlayer() and object:Team() == TEAM_HUMAN or object:IsProjectile() or ent.NoCollideProp
 end
->>>>>>> Stashed changes

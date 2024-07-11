@@ -5,11 +5,11 @@ CLASS.Help = "controls_bonemesh"
 
 CLASS.Boss = true
 
-CLASS.KnockbackScale = 0
+CLASS.KnockbackScale = 1
 
 CLASS.CanTaunt = true
 
-CLASS.Health = 4500
+CLASS.Health = 2500
 CLASS.Speed = 195
 
 
@@ -33,6 +33,7 @@ CLASS.PainSounds = {"npc/zombie/zombie_pain1.wav", "npc/zombie/zombie_pain2.wav"
 CLASS.DeathSounds = {"npc/zombie/zombie_die1.wav", "npc/zombie/zombie_die2.wav", "npc/zombie/zombie_die3.wav"}
 
 local math_random = math.random
+local bit_band = bit.band
 
 local STEPSOUNDTIME_NORMAL = STEPSOUNDTIME_NORMAL
 local STEPSOUNDTIME_WATER_FOOT = STEPSOUNDTIME_WATER_FOOT
@@ -64,11 +65,6 @@ function CLASS:PlayerStepSoundTime(pl, iType, bWalking)
 end
 
 if SERVER then
-<<<<<<< Updated upstream
-function CLASS:ProcessDamage(pl, dmginfo)
-	if dmginfo:GetInflictor().IsMelee then
-		dmginfo:SetDamage(dmginfo:GetDamage() / 2)
-=======
 	function CLASS:ProcessDamage(pl, dmginfo)
 		local attacker = dmginfo:GetAttacker()
 		local dmg = dmginfo:GetDamage()
@@ -85,9 +81,7 @@ function CLASS:ProcessDamage(pl, dmginfo)
 
 
 		return dmginfo
->>>>>>> Stashed changes
 	end
-end
 end
 
 function CLASS:CalcMainActivity(pl, velocity)

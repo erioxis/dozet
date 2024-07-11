@@ -1,12 +1,7 @@
-<<<<<<< Updated upstream
-SWEP.PrintName = "'Nomer' Pulse Revolver"
-SWEP.Description = "STONE."
-=======
 --SWEP.PrintName = "'Nomer' Pulse Revolver"
 --SWEP.Description = "STONE."
 SWEP.PrintName = translate.Get("wep_nome")
 SWEP.Description = translate.Get("wep_d_nome")
->>>>>>> Stashed changes
 
 SWEP.Base = "weapon_zs_baseproj"
 
@@ -45,19 +40,7 @@ SWEP.Tier = 2
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_MAX_SPREAD, -0.7, 1)
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_MIN_SPREAD, -0.4, 1)
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_FIRE_DELAY, -0.05, 1)
-GAMEMODE:AddNewRemantleBranch(SWEP, 1, "'Novx' Pulse Revolver", "Fires two projectiles in a wavy formation", function(wept)
-	wept.Primary.Damage = wept.Primary.Damage * 1.5
-	wept.Primary.ProjVelocity = 450
-	wept.Primary.NumShots = 2
-	wept.Primary.ClipSize = 70
-	wept.SameSpread = true
-	if SERVER then
-		wept.EntModify = function(self, ent)
-			ent:SetDTBool(0, true)
-			ent.Branch = true
-		end
-	end
-end)
+
 
 function SWEP:EmitFireSound()
 	self:EmitSound("weapons/stunstick/alyx_stunner2.wav", 72, 219, 0.75)

@@ -1,8 +1,11 @@
 AddCSLuaFile()
 DEFINE_BASECLASS("weapon_zs_baseshotgun")
 
-SWEP.PrintName = "'Tiny' Slug Rifle"
-SWEP.Description = "This powerful rifle deals massive damage on a head shot."
+--SWEP.PrintName = "'Tiny' Slug Rifle"
+--SWEP.Description = "This powerful rifle deals massive damage on a head shot."
+SWEP.PrintName = ""..translate.Get("wep_tiny")
+SWEP.Description = ""..translate.Get("wep_d_tiny")
+
 SWEP.Slot = 3
 SWEP.SlotPos = 0
 
@@ -64,7 +67,7 @@ SWEP.Primary.Automatic = false
 SWEP.Primary.Ammo = "357"
 SWEP.Primary.DefaultClip = 10
 
-SWEP.HeadshotMulti = 5
+SWEP.HeadshotMulti = 4
 
 SWEP.Primary.Gesture = ACT_HL2MP_GESTURE_RANGE_ATTACK_CROSSBOW
 SWEP.ReloadGesture = ACT_HL2MP_GESTURE_RELOAD_SHOTGUN
@@ -72,7 +75,7 @@ SWEP.ReloadGesture = ACT_HL2MP_GESTURE_RELOAD_SHOTGUN
 SWEP.ConeMax = 6
 SWEP.ConeMin = 0.25
 
-SWEP.Tier = 4
+SWEP.Tier = 5
 SWEP.MaxStock = 3
 
 SWEP.IronSightsPos = Vector(0, 0, 0)
@@ -128,18 +131,18 @@ function SWEP.BulletCallback(attacker, tr, dmginfo)
 
 		if gamemode.Call("PlayerShouldTakeDamage", ent, attacker) then
 			dmginfo:SetDamageType(DMG_DIRECT)
-			dmginfo:SetDamage(dmginfo:GetDamage() + ent:GetMaxHealthEx() * 0.95)
+			dmginfo:SetDamage(dmginfo:GetDamage() + ent:GetMaxHealthEx() * 0.85)
 		end
 	end
 	dmginfo:GetInflictor().BaseClass.BulletCallback(attacker, tr, dmginfo)
 end
 
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_RELOAD_SPEED, 0.4)
-GAMEMODE:AddNewRemantleBranch(SWEP, 1, "Triple", "Uses twice as much ammo, reloads faster, but overkill damage is dealt as an explosion", function(wept)
+GAMEMODE:AddNewRemantleBranch(SWEP, 1, ""..translate.Get("wep_tiny_r1"), ""..translate.Get("wep_d_tiny_r1"), function(wept)
 	wept.Primary.ClipSize = 12
 	wept.RequiredClip = 2
 	wept.ReloadSpeed = 1.1
-	wept.HeadshotMulti = 18
+	wept.HeadshotMulti = 2
 
 	wept.OnZombieKilled = function(self, zombie, total, dmginfo)
 		local killer = self:GetOwner()
@@ -152,7 +155,7 @@ GAMEMODE:AddNewRemantleBranch(SWEP, 1, "Triple", "Uses twice as much ammo, reloa
 			end
 
 			timer.Simple(0.15, function()
-				util.BlastDamagePlayer(killer:GetActiveWeapon(), killer, pos, 72, minushp, DMG_ALWAYSGIB, 3)
+				util.BlastDamagePlayer(killer:GetActiveWeapon(), killer, pos, 72, minushp, DMG_ALWAYSGIB, 1)
 			end)
 
 			local effectdata = EffectData()

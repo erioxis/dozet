@@ -42,6 +42,7 @@ function GM:_CreateMove(cmd)
 		return
 	end
 
+
 	-- Don't allow jumping if our legs are damaged or we're pulse slowed
 	if MySelf:GetLegDamage() >= 0.5 then
 		PressJump(cmd, false)
@@ -76,7 +77,7 @@ function GM:_CreateMove(cmd)
 				end
 			else
 				local maxhealth = MySelf:GetMaxHealth()
-				local threshold = MySelf.HasPalsy and maxhealth - 1 or maxhealth * 0.25
+				local threshold = MySelf.HasPalsy and maxhealth - 1 or maxhealth * 0.44
 				local health = MySelf:Health()
 				local frightened = MySelf:GetStatus("frightened")
 				local gunsway = MySelf.GunSway

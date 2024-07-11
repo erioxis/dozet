@@ -1,15 +1,16 @@
-SWEP.ZombieOnly = false
+SWEP.ZombieOnly = true
 SWEP.IsMelee = true
 
 SWEP.PrintName = "Zombie"
 
 SWEP.ViewModel = Model("models/Weapons/v_zombiearms.mdl")
 SWEP.WorldModel = ""
+SWEP.ShowWorldModel = false
 
 SWEP.MeleeDelay = 0.74
 SWEP.MeleeReach = 48
 SWEP.MeleeSize = 4.5 --1.5
-SWEP.MeleeDamage = 46
+SWEP.MeleeDamage = 33
 SWEP.MeleeForceScale = 1
 SWEP.MeleeDamageType = DMG_SLASH
 
@@ -373,19 +374,25 @@ end
 function SWEP:KnockedDown(status, exists)
 	self:StopSwinging()
 end
-
 function SWEP:StopMoaning()
 	if not self:IsMoaning() then return end
-	self:SetMoaning(false)
-
-	self:StopMoaningSound()
+	if not self.Owner.m_Zombie_MoanGuard then
+		self:SetMoaning(false)
+		self.Owner:ResetSpeed()
+		self:StopMoaningSound()
+	end
 end
 
 function SWEP:StartMoaning()
+	if not self.Owner.m_Zombie_Moan then return end
+
 	if self:IsMoaning() or IsValid(self:GetOwner().Revive) or IsValid(self:GetOwner().FeignDeath) then return end
 	self:SetMoaning(true)
+	
 
 	self:SetMoanHealth(self:GetOwner():Health())
+
+	self.Owner:SetWalkSpeed( self.Owner:GetMaxSpeed() * 1.6 )
 
 	self:StartMoaningSound()
 end

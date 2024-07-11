@@ -1,7 +1,7 @@
 AddCSLuaFile()
 
-SWEP.PrintName = "Sawhack"
-
+--SWEP.PrintName = "Sawhack"
+SWEP.PrintName = ""..translate.Get("wep_sawhack")
 if CLIENT then
 	SWEP.ViewModelFOV = 60
 
@@ -31,15 +31,15 @@ SWEP.HoldType = "melee2"
 
 SWEP.Primary.Delay = 0.45
 
-SWEP.MeleeDamage = 32
-SWEP.MeleeRange = 55
+SWEP.MeleeDamage = 34
+SWEP.MeleeRange = 66
 SWEP.MeleeSize = 1.9
 SWEP.MeleeKnockBack = 100
 SWEP.MeleeViewPunchScale = 0.25
 
 SWEP.WalkSpeed = SPEED_FAST
 
-SWEP.SwingTime = 0.15
+SWEP.SwingTime = 0.11
 SWEP.SwingRotation = Angle(0, -35, -50)
 SWEP.SwingOffset = Vector(10, 0, 0)
 SWEP.HoldType = "melee2"

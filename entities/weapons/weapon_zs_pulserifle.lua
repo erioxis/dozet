@@ -1,13 +1,8 @@
 AddCSLuaFile()
 DEFINE_BASECLASS("weapon_zs_base")
 
-<<<<<<< Updated upstream
-SWEP.PrintName = "'Adonis' Улучшенная версия"
-SWEP.Description = "Прошлая версия была пистолетом но ее чертежи затерялись."
-=======
 SWEP.PrintName = translate.Get("wep_adonis")
 SWEP.Description = translate.Get("wep_d_adonis")
->>>>>>> Stashed changes
 
 SWEP.Slot = 2
 SWEP.SlotPos = 0
@@ -36,11 +31,11 @@ SWEP.CSMuzzleFlashes = false
 
 SWEP.ReloadSound = Sound("Weapon_SMG1.Reload")
 SWEP.Primary.Sound = Sound("Airboat.FireGunHeavy")
-SWEP.Primary.Damage = 51
+SWEP.Primary.Damage = 32
 SWEP.Primary.NumShots = 1
 SWEP.Primary.Delay = 0.17
 
-SWEP.Primary.ClipSize = 28
+SWEP.Primary.ClipSize = 12
 SWEP.Primary.Automatic = true
 SWEP.Primary.Ammo = "pulse"
 GAMEMODE:SetupDefaultClip(SWEP.Primary)
@@ -63,15 +58,11 @@ SWEP.FireAnimSpeed = 0.4
 SWEP.LegDamage = 50
 
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_FIRE_DELAY, -0.014, 1)
-<<<<<<< Updated upstream
-GAMEMODE:AddNewRemantleBranch(SWEP, 1, "'Servitor' Pulse Rifle", "Refreshes zapper cooldown on kill, more leg damage, reduced accuracy and reload speed", function(wept)
-=======
 GAMEMODE:AddNewRemantleBranch(SWEP, 1, translate.Get("wep_adonis_r1"), translate.Get("wep_d_adonis_r1"), function(wept)
->>>>>>> Stashed changes
 	wept.ConeMin = 2.25
 	wept.ConeMax = 3.75
 	wept.ReloadSpeed = 0.2
-	wept.LegDamage = 39
+	wept.LegDamage = 45
 
 	wept.OnZombieKilled = function(self)
 		local killer = self:GetOwner()

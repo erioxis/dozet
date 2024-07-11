@@ -1,8 +1,6 @@
 INC_CLIENT()
 
 ENT.ColorModulation = Color(0.25, 1, 0.25)
-<<<<<<< Updated upstream
-=======
 function ENT:Draw()
 	if MySelf:GetInfo("zs_nopickuploot") == "1" or MySelf:Team() == TEAM_UNDEAD or MySelf:KeyDown(IN_SPEED) then return end
 	local drawinfo
@@ -62,4 +60,3 @@ function ENT:Draw()
 	end
 
 end
->>>>>>> Stashed changes

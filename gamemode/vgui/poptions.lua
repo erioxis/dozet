@@ -20,9 +20,13 @@ function MakepOptions()
 
 	local y = 8
 
-	local label = EasyLabel(Window, "Options", "ZSScoreBoardTitle", color_white)
-	label:SetPos(wide * 0.5 - label:GetWide() * 0.5, y)
+	local label = EasyLabel(Window, "", "ZSScoreBoardSubTitle", color_white) -- translate.Get("mm_options")
+	label:SetPos(wide * 0.5 - label:GetWide() * 0.1, y)
+	label:SetZPos(4)
 	y = y + label:GetTall() + 8
+	local sheet = vgui.Create( "DPropertySheet", Window )
+	sheet:Dock( FILL )
+
 
 	local list = vgui.Create("DPanelList", pOptions)
 	list:EnableVerticalScrollbar()
@@ -31,13 +35,8 @@ function MakepOptions()
 	list:SetPos(12, y)
 	list:SetPadding(8)
 	list:SetSpacing(4)
-
 	gamemode.Call("AddExtraOptions", list, Window)
 
-<<<<<<< Updated upstream
-	local check = vgui.Create("DCheckBoxLabel", Window)
-	check:SetText("Always display nail health")
-=======
 	local list3 = vgui.Create("DPanelList", pOptions)
 	list3:EnableVerticalScrollbar()
 	list3:EnableHorizontal(false)
@@ -90,15 +89,11 @@ function MakepOptions()
 
 	local check = vgui.Create("DCheckBoxLabel", Window)
 	check:SetText(translate.Get("op_naildisplay"))
->>>>>>> Stashed changes
 	check:SetConVar("zs_alwaysshownails")
 	check:SizeToContents()
 	list:AddItem(check)
 
 	check = vgui.Create("DCheckBoxLabel", Window)
-<<<<<<< Updated upstream
-	check:SetText("Always third person knockdown camera")
-=======
 	check:SetText(translate.Get("op_ozu"))
 	check:SetConVar("zs_fixthelag")
 	check:SizeToContents()
@@ -106,7 +101,6 @@ function MakepOptions()
 
 	check = vgui.Create("DCheckBoxLabel", Window)
 	check:SetText(translate.Get("op_knockdown_camera"))
->>>>>>> Stashed changes
 	check:SetConVar("zs_thirdpersonknockdown")
 	check:SizeToContents()
 	list3:AddItem(check)
@@ -117,20 +111,16 @@ function MakepOptions()
 	check:SizeToContents()
 	list3:AddItem(check)
 
+
 	check = vgui.Create("DCheckBoxLabel", Window)
-<<<<<<< Updated upstream
-	check:SetText("Always volunteer to start as a zombie")
-=======
 	check:SetText(translate.Get("op_bezombie"))
->>>>>>> Stashed changes
 	check:SetConVar("zs_alwaysvolunteer")
 	check:SizeToContents()
 	list:AddItem(check)
+	
+
 
 	check = vgui.Create("DCheckBoxLabel", Window)
-<<<<<<< Updated upstream
-	check:SetText("Always quick buy from arsenal and remantler")
-=======
 	check:SetText(translate.Get("op_show_dmgp"))
 	check:SetConVar("zs_show_dmg_in_perc")
 	check:SizeToContents()
@@ -202,45 +192,34 @@ function MakepOptions()
 
 	check = vgui.Create("DCheckBoxLabel", Window)
 	check:SetText(translate.Get("op_alwaysquickbuy"))
->>>>>>> Stashed changes
 	check:SetConVar("zs_alwaysquickbuy")
 	check:SizeToContents()
 	list:AddItem(check)
 
 	check = vgui.Create("DCheckBoxLabel", Window)
-<<<<<<< Updated upstream
-	check:SetText("Automatic suicide when changing classes")
-=======
 	check:SetText(translate.Get("op_suicidechange"))
->>>>>>> Stashed changes
 	check:SetConVar("zs_suicideonchange")
 	check:SizeToContents()
 	list:AddItem(check)
 
 	check = vgui.Create("DCheckBoxLabel", Window)
-<<<<<<< Updated upstream
-	check:SetText("Disable automatic redeeming (next round)")
-=======
 	check:SetText(translate.Get("op_redeem"))
->>>>>>> Stashed changes
 	check:SetConVar("zs_noredeem")
+	check:SizeToContents()
+	list:AddItem(check)
+	local check = vgui.Create("DCheckBoxLabel", Window)
+	check:SetText(translate.Get("op_nodiscord"))
+	check:SetConVar("zs_nodiscord")
 	check:SizeToContents()
 	list:AddItem(check)
 
 	check = vgui.Create("DCheckBoxLabel", Window)
-<<<<<<< Updated upstream
-	check:SetText("Disable pressing use to deposit ammo in deployables")
-=======
 	check:SetText(translate.Get("op_deposit"))
->>>>>>> Stashed changes
 	check:SetConVar("zs_nousetodeposit")
 	check:SizeToContents()
 	list:AddItem(check)
 
 	check = vgui.Create("DCheckBoxLabel", Window)
-<<<<<<< Updated upstream
-	check:SetText("Disable use to prop pickup (only pickup items)")
-=======
 	check:SetText(translate.Get("op_showdeployable"))
 	check:SetConVar("zs_show_deployable_info")
 	check:SizeToContents()
@@ -248,141 +227,126 @@ function MakepOptions()
 
 	check = vgui.Create("DCheckBoxLabel", Window)
 	check:SetText(translate.Get("op_noproppickup"))
->>>>>>> Stashed changes
 	check:SetConVar("zs_nopickupprops")
 	check:SizeToContents()
 	list:AddItem(check)
+	
+	check = vgui.Create("DCheckBoxLabel", Window)
+	check:SetText(translate.Get("op_nolootpickup"))
+	check:SetConVar("zs_nopickuploot")
+	check:SizeToContents()
+	list2:AddItem(check)
 
 	check = vgui.Create("DCheckBoxLabel", Window)
-<<<<<<< Updated upstream
-	check:SetText("Disable iron sights view model translation")
-=======
 	check:SetText(translate.Get("op_noironsights"))
->>>>>>> Stashed changes
 	check:SetConVar("zs_noironsights")
 	check:SizeToContents()
 	list3:AddItem(check)
 
 	check = vgui.Create("DCheckBoxLabel", Window)
-<<<<<<< Updated upstream
-	check:SetText("Disable crosshair rotate")
-=======
 	check:SetText(translate.Get("op_nocrosshairrotate"))
->>>>>>> Stashed changes
 	check:SetConVar("zs_nocrosshairrotate")
 	check:SizeToContents()
 	list3:AddItem(check)
 
 	check = vgui.Create("DCheckBoxLabel", Window)
-<<<<<<< Updated upstream
-	check:SetText("Disable ironsight scopes")
-=======
 	check:SetText(translate.Get("op_disablescopes"))
->>>>>>> Stashed changes
 	check:SetConVar("zs_disablescopes")
 	check:SizeToContents()
 	list3:AddItem(check)
 
 	check = vgui.Create("DCheckBoxLabel", Window)
-<<<<<<< Updated upstream
-	check:SetText("Display experience")
-=======
 	check:SetText(translate.Get("op_xpdisplay"))
->>>>>>> Stashed changes
 	check:SetConVar("zs_drawxp")
 	check:SizeToContents()
 	list3:AddItem(check)
 
 	check = vgui.Create("DCheckBoxLabel", Window)
-	check:SetText("Don't show point floaters")
+	check:SetText(translate.Get("op_nofloatingscore"))
 	check:SetConVar("zs_nofloatingscore")
 	check:SizeToContents()
 	list3:AddItem(check)
 
 	check = vgui.Create("DCheckBoxLabel", Window)
-<<<<<<< Updated upstream
-	check:SetText("Don't hide arsenal and resupply packs")
-=======
 	check:SetText(translate.Get("op_hidepacks"))
->>>>>>> Stashed changes
 	check:SetConVar("zs_hidepacks")
 	check:SizeToContents()
 	list2:AddItem(check)
 
 	check = vgui.Create("DCheckBoxLabel", Window)
-	check:SetText("Don't hide friends via transparency")
+	check:SetText(translate.Get("op_donthidefriends"))
 	check:SetConVar("zs_showfriends")
 	check:SizeToContents()
 	list4:AddItem(check)
 
 	check = vgui.Create("DCheckBoxLabel", Window)
-	check:SetText("Draw crosshair in ironsights.")
+	check:SetText(translate.Get("op_drawscore"))
 	check:SetConVar("zs_ironsightscrosshair")
 	check:SizeToContents()
 	list3:AddItem(check)
 
 	check = vgui.Create("DCheckBoxLabel", Window)
-	check:SetText("Enable ambient music")
+	check:SetText(translate.Get("op_musicon"))
 	check:SetConVar("zs_beats")
 	check:SizeToContents()
 	list:AddItem(check)
 
 	check = vgui.Create("DCheckBoxLabel", Window)
-	check:SetText("Enable last human music")
+	check:SetText(translate.Get("op_lhmusic"))
 	check:SetConVar("zs_playmusic")
 	check:SizeToContents()
 	list:AddItem(check)
 
 	check = vgui.Create("DCheckBoxLabel", Window)
-	check:SetText("Enable post processing")
+	check:SetText(translate.Get("op_postprocc"))
 	check:SetConVar("zs_postprocessing")
 	check:SizeToContents()
 	list4:AddItem(check)
 
 	check = vgui.Create("DCheckBoxLabel", Window)
-	check:SetText("Enable film grain")
+	check:SetText(translate.Get("op_filmgrain"))
 	check:SetConVar("zs_filmgrain")
 	check:SizeToContents()
 	list4:AddItem(check)
 
 	check = vgui.Create("DCheckBoxLabel", Window)
-	check:SetText("Enable Color Mod")
+	check:SetText(translate.Get("op_colormod"))
 	check:SetConVar("zs_colormod")
 	check:SizeToContents()
 	list3:AddItem(check)
 
 	check = vgui.Create("DCheckBoxLabel", Window)
-	check:SetText("Enable pain flashes")
+	check:SetText(translate.Get("op_painflash"))
 	check:SetConVar("zs_drawpainflash")
 	check:SizeToContents()
 	list:AddItem(check)
 
 	check = vgui.Create("DCheckBoxLabel", Window)
-	check:SetText("Enable font effects")
+	check:SetText(translate.Get("op_fonteffect"))
 	check:SetConVar("zs_fonteffects")
 	check:SizeToContents()
 	list4:AddItem(check)
 
 	check = vgui.Create("DCheckBoxLabel", Window)
-	check:SetText("Enable human health auras")
+	check:SetText(translate.Get("op_humanaura"))
 	check:SetConVar("zs_auras")
 	check:SizeToContents()
 	list4:AddItem(check)
 
 	check = vgui.Create("DCheckBoxLabel", Window)
-	check:SetText("Enable damage indicators")
+	check:SetText(translate.Get("op_indicators"))
 	check:SetConVar("zs_damagefloaters")
 	check:SizeToContents()
 	list3:AddItem(check)
 
 	check = vgui.Create("DCheckBoxLabel", Window)
-	check:SetText("Enable movement view roll")
+	check:SetText(translate.Get("op_movroll"))
 	check:SetConVar("zs_movementviewroll")
 	check:SizeToContents()
 	list3:AddItem(check)
 
 	check = vgui.Create("DCheckBoxLabel", Window)
-	check:SetText("Enable message beacon visibility")
+	check:SetText(translate.Get("op_beaconind"))
 	check:SetConVar("zs_messagebeaconshow")
 	check:SizeToContents()
 	list4:AddItem(check)
@@ -396,30 +360,27 @@ function MakepOptions()
 	
 
 	check = vgui.Create("DCheckBoxLabel", Window)
-	check:SetText("Film Mode (disable most of the HUD)")
+	check:SetText(translate.Get("op_filmmod"))
 	check:SetConVar("zs_filmmode")
 	check:SizeToContents()
 	list3:AddItem(check)
 
 	check = vgui.Create("DCheckBoxLabel", Window)
-	check:SetText("Hide view models")
+	check:SetText(translate.Get("op_viewmodels"))
 	check:SetConVar("zs_hideviewmodels")
 	check:SizeToContents()
 	list4:AddItem(check)
 
 	check = vgui.Create("DCheckBoxLabel", Window)
-	check:SetText("Prevent being picked as a boss zombie")
+	check:SetText(translate.Get("op_noboss"))
 	check:SetConVar("zs_nobosspick")
 	check:SizeToContents()
 	list:AddItem(check)
 
 	check = vgui.Create("DCheckBoxLabel", Window)
-	check:SetText("Show damage indicators through walls")
+	check:SetText(translate.Get("op_dmgindicator_wall"))
 	check:SetConVar("zs_damagefloaterswalls")
 	check:SizeToContents()
-<<<<<<< Updated upstream
-	list:AddItem(check)
-=======
 	list4:AddItem(check)
 	check = vgui.Create("DCheckBoxLabel", Window)
 	check:SetText(translate.Get("op_color_c"))
@@ -447,7 +408,6 @@ function MakepOptions()
 
 
 
->>>>>>> Stashed changes
 
 	list3:AddItem(EasyLabel(Window, "Weapon HUD display style", "DefaultFontSmall", color_white))
 	local dropdown = vgui.Create("DComboBoxEx", Window)
@@ -465,10 +425,11 @@ function MakepOptions()
 	list3:AddItem(EasyLabel(Window, "Health target display style", "DefaultFontSmall", color_white))
 	dropdown = vgui.Create("DComboBoxEx", Window)
 	dropdown:SetMouseInputEnabled(true)
-	dropdown:AddChoice("% of health")
+	dropdown:AddChoice("Health|Max Health")
 	dropdown:AddChoice("Health amount")
+	dropdown:AddChoice("Health %")
 	dropdown.OnSelect = function(me, index, value, data)
-		RunConsoleCommand("zs_healthtargetdisplay", value == "Health amount" and 1 or 0)
+		RunConsoleCommand("zs_healthtargetdisplay", value == "Health %" and 3 or value == "Health amount" and 1 or 2)
 	end
 	dropdown:SetText(GAMEMODE.HealthTargetDisplay == 1 and "Health amount" or GAMEMODE.HealthTargetDisplay == 3 and "Health %" or "% of health")
 	dropdown:SetTextColor(color_white)
@@ -487,8 +448,6 @@ function MakepOptions()
 	dropdown:SetTextColor(color_white)
 	list3:AddItem(dropdown)
 
-<<<<<<< Updated upstream
-=======
 
 	list3:AddItem(EasyLabel(Window, "Font", "DefaultFontSmall", color_white))
 	dropdown = vgui.Create("DComboBoxEx", Window)
@@ -503,26 +462,9 @@ function MakepOptions()
 	dropdown:SetTextColor(color_white)
 	list3:AddItem(dropdown)
 
->>>>>>> Stashed changes
 	list:AddItem(EasyLabel(Window, "Prop rotation snap angle", "DefaultFontSmall", color_white))
 	dropdown = vgui.Create("DComboBoxEx", Window)
 	dropdown:SetMouseInputEnabled(true)
-<<<<<<< Updated upstream
-	dropdown:AddChoice("No snap")
-	dropdown:AddChoice("15 degrees")
-	dropdown:AddChoice("30 degrees")
-	dropdown:AddChoice("45 degrees")
-	dropdown:AddChoice("90 degrees")
-	dropdown.OnSelect = function(me, index, value, data)
-		RunConsoleCommand("zs_proprotationsnap", value == "15 degrees" and 15 or value == "30 degrees" and 30 or value == "45 degrees" and 45 or value == "90" and 90 or value)
-	end
-	dropdown:SetText(GAMEMODE.PropRotationSnap == 15 and "15 degrees"
-		or GAMEMODE.PropRotationSnap == 30 and "30 degrees"
-		or GAMEMODE.PropRotationSnap == 45 and "45 degrees"
-		or GAMEMODE.PropRotationSnap == 90 and "90 degrees"
-		or "No snap")
-	dropdown:SetTextColor(color_black)
-=======
 	dropdown:AddChoice(translate.Get("op_deg_no"))
 	dropdown:AddChoice("15 angles")
 	dropdown:AddChoice("30 angles")
@@ -537,7 +479,6 @@ function MakepOptions()
 		or GAMEMODE.PropRotationSnap == 90 and "90"..translate.Get("op_deg")
 		or translate.Get("op_deg_no"))
 	dropdown:SetTextColor(color_white)
->>>>>>> Stashed changes
 	list:AddItem(dropdown)
 
 	list3:AddItem(EasyLabel(Window, "Human ambient beat set", "DefaultFontSmall", color_white))
@@ -628,7 +569,7 @@ function MakepOptions()
 
 	slider = vgui.Create("DNumSlider", Window)
 	slider:SetDecimals(1)
-	slider:SetMinMax(0.5, 2)
+	slider:SetMinMax(0.5, 3)
 	slider:SetConVar("zs_dmgnumberscale")
 	slider:SetText("Damage number size")
 	slider:SizeToContents()
@@ -636,7 +577,7 @@ function MakepOptions()
 
 	slider = vgui.Create("DNumSlider", Window)
 	slider:SetDecimals(1)
-	slider:SetMinMax(0, 1)
+	slider:SetMinMax(0, 3)
 	slider:SetConVar("zs_dmgnumberspeed")
 	slider:SetText("Damage number speed")
 	slider:SizeToContents()
@@ -644,14 +585,12 @@ function MakepOptions()
 
 	slider = vgui.Create("DNumSlider", Window)
 	slider:SetDecimals(1)
-	slider:SetMinMax(0.2, 1.5)
+	slider:SetMinMax(0.2, 3.5)
 	slider:SetConVar("zs_dmgnumberlife")
 	slider:SetText("Damage number lifetime")
 	slider:SizeToContents()
 	list3:AddItem(slider)
 
-<<<<<<< Updated upstream
-=======
 
 	
 	slider = vgui.Create("DNumSlider", Window)
@@ -677,7 +616,6 @@ function MakepOptions()
 	slider:SizeToContents()
 	list3:AddItem(slider)
 
->>>>>>> Stashed changes
 	slider = vgui.Create("DNumSlider", Window)
 	slider:SetDecimals(1)
 	slider:SetMinMax(0, 255)
@@ -688,7 +626,7 @@ function MakepOptions()
 
 	slider = vgui.Create("DNumSlider", Window)
 	slider:SetDecimals(1)
-	slider:SetMinMax(0.7, 1.6)
+	slider:SetMinMax(0.7, 2.6)
 	slider:SetConVar("zs_interfacesize")
 	slider:SetText("Interface/HUD scale")
 	slider:SizeToContents()
@@ -732,9 +670,6 @@ function MakepOptions()
 	slider:SetConVar("zs_transparencyradius3p")
 	slider:SetText("Transparency radius in third person")
 	slider:SizeToContents()
-<<<<<<< Updated upstream
-	list:AddItem(slider)
-=======
 	list3:AddItem(colpicker)
 	list3:AddItem(EasyLabel(Window, "F3 Background Color"))
 	local colpicker = vgui.Create("DColorMixer", Window)	
@@ -767,7 +702,6 @@ function MakepOptions()
 	list3:AddItem(colpicker)
 
 
->>>>>>> Stashed changes
 
 	list3:AddItem(EasyLabel(Window, "Crosshair primary color"))
 	local colpicker = vgui.Create("DColorMixer", Window)

@@ -36,8 +36,6 @@ end
 function ENT:OnRemove()
 	self:RemoveModels()
 end
-<<<<<<< Updated upstream
-=======
 
 local matExpert = Material("zombiesurvival/padlock.png")
 local matHeart = Material("icon16/heart.png")
@@ -198,4 +196,3 @@ function ENT:Draw()
 		OldHud(self)
 	end
 end
->>>>>>> Stashed changes

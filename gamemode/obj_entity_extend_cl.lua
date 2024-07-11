@@ -36,7 +36,7 @@ end
 function meta:HealPlayer(pl, amount)
 	local healed, rmv = 0, 0
 
-	local health, maxhealth = pl:Health(), pl:GetDTBool(DT_PLAYER_BOOL_FRAIL) and math.floor(pl:GetMaxHealth() * 0.25) or pl:GetMaxHealth()
+	local health, maxhealth = pl:Health(), pl:GetDTBool(DT_PLAYER_BOOL_FRAIL) and math.floor(pl:GetMaxHealth() * 0.44) or pl:GetMaxHealth()
 	local missing_health = maxhealth - health
 	local poison = pl:GetPoisonDamage()
 	local bleed = pl:GetBleedDamage()
@@ -128,24 +128,6 @@ function meta:TransAlphaToMe()
 	return 1
 end
 
-<<<<<<< Updated upstream
-GM.CachedArsenalEntities = {}
-timer.Create("CacheArsenalEntities", 0.5, 0, function()
-	if not GAMEMODE then return end
-	GAMEMODE.CachedArsenalEntities = {}
-
-	local arseents = {}
-	table.Add(arseents, ents.FindByClass("prop_arsenalcrate"))
-	table.Add(arseents, ents.FindByClass("status_arsenalpack"))
-
-	for _, v in pairs(player.GetAll()) do
-		if v ~= MySelf and not v:HasTrinket("arsenalpack") and v:HasWeapon("weapon_zs_arsenalcrate") then
-			table.insert(arseents, v)
-		end
-	end
-
-	GAMEMODE.CachedArsenalEntities = arseents
-=======
 GM.CachedGiftEntities = {}
 GM.CachedGift2Entities = {}
 timer.Create("CacheGiftEntities", 3, 0, function()
@@ -187,7 +169,6 @@ timer.Create("CacheAltarSigil", 25, 0, function()
 
 
 	GAMEMODE.CachedAltarsSigilEntities = asigil
->>>>>>> Stashed changes
 end)
 
 GM.CachedResupplyEntities = {}

@@ -32,6 +32,7 @@ function SWEP:PlayAttackSound()
 	self:EmitSound("npc/fast_zombie/wake1.wav", 70, math.random(115, 140))
 end
 
+
 if not CLIENT then return end
 
 local matSheet = Material("models/props_c17/doll01")
@@ -43,8 +44,6 @@ end
 function SWEP:PostDrawViewModel(vm, wep, pl)
 	render.ModelMaterialOverride(nil)
 end
-<<<<<<< Updated upstream
-=======
 
 function SWEP:ApplyMeleeDamage(pl, trace, damage)
 	if SERVER and pl:IsPlayer() then
@@ -58,4 +57,3 @@ function SWEP:ApplyMeleeDamage(pl, trace, damage)
 	end
 	self.BaseClass.ApplyMeleeDamage(self, pl, trace, damage)
 end
->>>>>>> Stashed changes

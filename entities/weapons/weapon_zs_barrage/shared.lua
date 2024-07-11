@@ -1,6 +1,6 @@
-SWEP.PrintName = "'Barrage' Grenade Launcher"
-SWEP.Description = "Fires multiple grenades that detonate on impact with enemies or on the third bounce."
 
+SWEP.PrintName = " "..translate.Get("wep_barrage")
+SWEP.Description = " "..translate.Get("wep_d_barrage")
 SWEP.Base = "weapon_zs_baseproj"
 
 SWEP.HoldType = "smg"

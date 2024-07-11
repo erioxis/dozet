@@ -1,7 +1,7 @@
 AddCSLuaFile()
 
-SWEP.PrintName = "'Proliferator' SMG"
-SWEP.Description = "Hold right click to use the Storm firing mode: fire rate is reduced to 60% but a wider fan of bullets are fired."
+SWEP.PrintName = ""..translate.Get("wep_proliferator")
+SWEP.Description = ""..translate.Get("wep_d_proliferator")
 SWEP.Slot = 2
 SWEP.SlotPos = 0
 
@@ -47,10 +47,10 @@ SWEP.UseHands = true
 
 SWEP.Primary.Sound = Sound("weapons/zs_scar/scar_fire1.ogg")
 SWEP.Primary.Damage = 7.2
-SWEP.Primary.NumShots = 3
-SWEP.Primary.Delay = 0.15
+SWEP.Primary.NumShots = 2
+SWEP.Primary.Delay = 0.11
 
-SWEP.Primary.ClipSize = 28
+SWEP.Primary.ClipSize = 12
 SWEP.Primary.Automatic = true
 SWEP.Primary.Ammo = "smg1"
 GAMEMODE:SetupDefaultClip(SWEP.Primary)

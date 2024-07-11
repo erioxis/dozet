@@ -1,4 +1,4 @@
-SWEP.PrintName = "LuxoidzZZ"
+SWEP.PrintName = "Luxoid Z"
 
 SWEP.Base = "weapon_zs_basemelee"
 

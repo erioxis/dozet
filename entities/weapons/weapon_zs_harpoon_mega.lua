@@ -1,7 +1,9 @@
 AddCSLuaFile()
 
-SWEP.PrintName = "Harpoon MEGA"
-SWEP.Description = "MEGAAAA."
+--SWEP.PrintName = "Harpoon MEGA"
+--SWEP.Description = "MEGAAAA."
+SWEP.PrintName = ""..translate.Get("wep_harpoon_m")
+SWEP.Description = ""..translate.Get("wep_d_harpoon_m")
 
 if CLIENT then
 	SWEP.ViewModelFOV = 60
@@ -27,13 +29,13 @@ SWEP.ViewModel = "models/weapons/c_stunstick.mdl"
 SWEP.WorldModel = "models/weapons/w_crowbar.mdl"
 SWEP.UseHands = true
 
-SWEP.MeleeDamage = 134
+SWEP.MeleeDamage = 321
 SWEP.MeleeRange = 51
 SWEP.MeleeSize = 1.6
 SWEP.MaxStock = 2
 SWEP.Primary.Delay = 1.98
 
-SWEP.Tier = 5
+SWEP.Tier = 6
 
 SWEP.WalkSpeed = SPEED_SLOWER
 
@@ -92,5 +94,33 @@ function SWEP:SecondaryAttack()
 
 		owner:StripWeapon(self:GetClass())
 	end
+end
+
+
+
+function SWEP:Think()
+	if self.IdleAnimation and self.IdleAnimation <= CurTime() then
+		self.IdleAnimation = nil
+		self:SendWeaponAnim(ACT_VM_IDLE)
+	end
+
+	if self:IsSwinging() and self:GetSwingEnd() <= CurTime() then
+		self:StopSwinging()
+		self:MeleeSwing()
+	end
+	if SERVER then
+		pos = self:GetOwner():GetPos()
+	for _, ent in pairs(ents.FindInSphere(pos, 200)) do
+		if ent:IsPlayer() and ent:Team() == TEAM_UNDEAD then
+			if not ent:GetZombieClassTable().Boss then
+				if ent:Health() < 4500 then
+					local dir = (pos - ent:NearestPoint(pos)):GetNormalized()
+			  	 	ent:SetVelocity(32 * dir * 0.66)
+				end
+			end
+		end
+	end
+	
+end
 end
 

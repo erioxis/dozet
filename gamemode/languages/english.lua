@@ -17,10 +17,6 @@ RULES FOR TRANSLATORS!!
 ]]
 
 translate.AddLanguage("en", "English")
-<<<<<<< Updated upstream
-
--- Various gamemode stuff
-=======
 
 local GOOD = "^"..3
 local BAD = "^"..2
@@ -438,7 +434,6 @@ LANGUAGE.purchase                                = "Purchase"
 LANGUAGE.upgrade_just =  "Upgrade"
 LANGUAGE.ammo                                = "Ammo"
 LANGUAGE.remaining                                = " remaining"
->>>>>>> Stashed changes
 LANGUAGE.minute_points_added						= "No damage received for a whole minute! Added %d points."
 LANGUAGE.infliction_reached_class_unlocked			= "%d%% infliction has been reached! %s unlocked!"
 LANGUAGE.infliction_reached							= "%d%% of humans have died!"
@@ -449,6 +444,7 @@ LANGUAGE.banned_for_life_warning					= "You have the Banned for Life skill activ
 LANGUAGE.late_buyer_warning							= "You have the Late Buyer skill active so you can't purchase anything until the second half!"
 LANGUAGE.late_buyer_finished						= "The late buyer period has finished. You can now purchase items from the arsenal."
 LANGUAGE.need_to_be_near_arsenal_crate				= "You need to be near an Arsenal Crate to purchase items!"
+LANGUAGE.no_anti_sigil				= "You need to be near an Anti-sigil to purchase items!"
 LANGUAGE.need_to_be_near_remantler					= "You need to be near a Remantler!"
 LANGUAGE.cant_purchase_right_now					= "You can't purchase anything right now."
 LANGUAGE.dont_have_enough_points					= "You don't have enough points."
@@ -465,8 +461,6 @@ LANGUAGE.that_life									= "That life..."
 LANGUAGE.x_damage_to_barricades						= "%d damage to barricades"
 LANGUAGE.x_damage_to_humans							= "%d damage to humans"
 LANGUAGE.x_brains_eaten								= "%d brains eaten"
-<<<<<<< Updated upstream
-=======
 LANGUAGE.x_shield_given								= "%d armor given."
 LANGUAGE.premiumget								= "You get %s from med premium"
 LANGUAGE.caderget								= "You get a cader bounty!"
@@ -624,7 +618,6 @@ LANGUAGE.e_errorium_3                                        = "Micro piece of e
 LANGUAGE.e_errorium_3_d                                        = "Need for upgrading mastery.\nγ-material"
 
 
->>>>>>> Stashed changes
 
 LANGUAGE.press_jump_to_free_roam					= "Press JUMP to free roam"
 LANGUAGE.press_rmb_to_cycle_targets					= "Press RMB to cycle targets"
@@ -636,8 +629,6 @@ LANGUAGE.press_reload_to_spawn_at_normal_point		= "Press RELOAD to spawn at a no
 LANGUAGE.press_walk_to_spawn_as_x					= "Press %s to spawn as a %s"
 LANGUAGE.press_rmb_to_spawn_close					= "Press RMB to spawn close to survivors"
 LANGUAGE.press_left_and_right_to_cycle_targets		= "Press STRAFE LEFT and STRAFE RIGHT to cycle targets"
-<<<<<<< Updated upstream
-=======
 --weapon
 --LANGUAGE.wep_		= ""
 --LANGUAGE.wep_d_		= ""
@@ -1230,8 +1221,8 @@ LANGUAGE.wep_d_luxoids		= "Stealed from shade,this high tech machine.\n R - Summ
 LANGUAGE.wep_sawhack		= "Sawhack"
 LANGUAGE.wep_powerfists7		= "Ultra-powered fists"
 LANGUAGE.wep_d_powerfists7		= "Ultra-powered fists with special core for damage boosting"
->>>>>>> Stashed changes
 
+--Some
 LANGUAGE.observing_x								= "Observing %s (%d)"
 LANGUAGE.observing_x_simple							= "Observing %s"
 LANGUAGE.waiting_for_next_wave						= "Waiting for the next wave to begin..."
@@ -1251,6 +1242,7 @@ LANGUAGE.you_cant_purchase_now						= "You can't purchase items right now."
 LANGUAGE.no_ammo_here								= "There's no ammo here right now."
 LANGUAGE.you_redeemed								= "You have redeemed!"
 LANGUAGE.x_redeemed									= "%s has redeemed!"
+LANGUAGE.x_redeemed_y									= "%s has redeemed by %s!"
 LANGUAGE.kill_the_last_human						= "Kill the last human!"
 LANGUAGE.kick_the_last_human						= "Kick the last human!"
 LANGUAGE.you_are_the_last_human						= "YOU ARE THE LAST HUMAN!"
@@ -1272,8 +1264,6 @@ LANGUAGE.scrap_for_surviving						= "You've gained %d scrap for surviving."
 LANGUAGE.you_are_x									= "You are %s!"
 LANGUAGE.x_has_risen_as_y							= "%s has risen as %s!!"
 LANGUAGE.x_has_risen								= "A boss zombie has risen!"
-<<<<<<< Updated upstream
-=======
 LANGUAGE.you_champion = "You're a champion!"
 LANGUAGE.s_champion = "%s Become a champion!"
 
@@ -1286,7 +1276,6 @@ LANGUAGE.and_lmao							= " and "
 LANGUAGE.x_has_transed								= "A boss zombie has merged!"
 
 LANGUAGE.x_has_risen_demi								= "Demi-boss zombie has risen!"
->>>>>>> Stashed changes
 LANGUAGE.x_has_been_slain_as_y						= "%s has been slain as %s!"
 LANGUAGE.cant_use_worth_anymore						= "You can't use the Worth menu any more!"
 LANGUAGE.class_not_unlocked_will_be_unlocked_x		= "That class is not unlocked yet. It will be unlocked at the start of wave %d."
@@ -1336,12 +1325,9 @@ LANGUAGE.resist_x									= "Resist: %d%%"
 LANGUAGE.right_click_to_hammer_nail					= "Right click to hammer in a nail."
 LANGUAGE.nails_x									= "Nails: %d"
 LANGUAGE.resupply_box								= "Resupply Box"
-<<<<<<< Updated upstream
-=======
 LANGUAGE.resupply_box_d								="Allows survivors to get ammunition for their current weapon. Each person can only use the box once every so often.\nPress PRIMARY ATTACK to deploy the box.\nPress SECONDARY ATTACK and RELOAD to rotate the box."
 LANGUAGE.fridge								= "Fridge"
 LANGUAGE.fridge_d								="Allows survivors to get food. Each person can only use the box once every so often.\nPress PRIMARY ATTACK to deploy the fridge.\nPress SECONDARY ATTACK and RELOAD to rotate the fridge."
->>>>>>> Stashed changes
 LANGUAGE.purchase_now								= "Purchase now!"
 LANGUAGE.integrity_x								= "Integrity: %d%%"
 LANGUAGE.empty										= "EMPTY"
@@ -1375,13 +1361,16 @@ LANGUAGE.buffed_x_with_a_y							= "Buffed %s with a %s"
 LANGUAGE.removed_your_nail							= "%s removed one of your nails"
 LANGUAGE.giving_items_to							= "Giving items to %s"
 LANGUAGE.weapon_remantler							= "Weapon Remantler"
+LANGUAGE.weapon_remantler_d = "A deployable device capable of disassembling weapons into scrap, and upgrading weapons with scrap.\nIt can be used to assemble trinkets with scrap also.\nPress PRIMARY ATTACK to deploy the remantler.\nPress SECONDARY ATTACK and RELOAD to rotate the remantler."
 LANGUAGE.remantle_success							= "Weapon Remantled:"
-LANGUAGE.remantle_used								= "%d scrap has been created in your remantler."
+LANGUAGE.remantle_used								= "%d scrap has been created in your remantler by "
 LANGUAGE.remantle_cannot							= "You already have an upgraded weapon of this type."
 LANGUAGE.teleporting_to_sigil						= "Teleporting to Sigil %s"
 LANGUAGE.press_shift_to_cancel						= "Press SHIFT to cancel"
 LANGUAGE.point_at_a_sigil_to_choose_destination		= "Point at another sigil to choose destination."
 LANGUAGE.frail_healdart_warning						= "Healing blocked because %s has DEBUFF: FRAIL!"
+LANGUAGE.have_skill_frail						= "Person have frail! You can't give them weapon or ammo"
+LANGUAGE.have_skill_samodos						= "Person have NML! You can't give them weapon or ammo"
 LANGUAGE.obtained_a_inv								= "%s added to inventory"
 LANGUAGE.you_already_have_this_trinket				= "You already have this trinket in your inventory."
 LANGUAGE.they_already_have_this_trinket				= "They already have this trinket in their inventory."
@@ -1391,26 +1380,20 @@ LANGUAGE.obtained_inv_item_from_z					= "Obtained %s from %s added to inventory"
 LANGUAGE.deployable_lost							= "Your %s was lost."
 LANGUAGE.deployable_claimed							= "You've claimed a %s."
 LANGUAGE.trinket_consumed							= "Your %s has been consumed and activated."
-<<<<<<< Updated upstream
-=======
 
 LANGUAGE.trinket_activated							= "Has been %s activated."
 
 LANGUAGE.trinket_dead							= "Your %s has been corrupted by %s."
 LANGUAGE.pointsdoubled							= "End wave points had been doubled"
->>>>>>> Stashed changes
 LANGUAGE.ran_out_of_ammo						 	= "Your %s has run out of ammo."
 LANGUAGE.trinket_recharged							= "Your %s has recharged and is ready to use again."
 LANGUAGE.evolves_in_to_x_on_wave_y					= "Evolves in to %s on wave %d."
 
-<<<<<<< Updated upstream
-=======
 LANGUAGE.w_tier					= "Tier "
 LANGUAGE.w_quality				= "Quality: "
 
->>>>>>> Stashed changes
 -- Sigils point objectives
-LANGUAGE.sigil										= "Сигил"
+LANGUAGE.sigil										= "Sigil"
 --LANGUAGE.sigil_destroyed							= "A Sanity Sigil has been destroyed. The Undead grow stronger!"
 LANGUAGE.sigil_corrupted							= "A Sanity Sigil has been corrupted. The Undead grow more resilient."
 LANGUAGE.sigil_corrupted_last						= "The last Sanity Sigil has been corrupted! The Undead grow very resilient!"
@@ -1436,7 +1419,7 @@ LANGUAGE.x_has_remorted_to_rl_y						= "%s has remorted to remort level %d!!"
 LANGUAGE.you_have_reset_all							= "All of your skills, XP, and skill points have been reset."
 
 -- Message beacon messages
-LANGUAGE.message_beacon_1							= "Досет лучший"
+LANGUAGE.message_beacon_1							= "Doset is best"
 LANGUAGE.message_beacon_2							= "Need defense here"
 LANGUAGE.message_beacon_3							= "Need turrets here"
 LANGUAGE.message_beacon_4							= "Need arsenal crates here"
@@ -1464,11 +1447,6 @@ LANGUAGE.message_beacon_25							= "БАРАКОТ!!!!!"
 
 -- Class names
 LANGUAGE.class_zombie								= "Zombie"
-<<<<<<< Updated upstream
-LANGUAGE.class_zombienie             ="Zombine"
-LANGUAGE.class_baracat								= "Baracat"
-LANGUAGE.class_zombie_gore_blaster					= "Gore Blaster Zombie"
-=======
 LANGUAGE.class_dzombie								= "Buffed Zombie"
 LANGUAGE.class_zombienie             ="Buttling"
 LANGUAGE.class_baracat								= "Berecat"
@@ -1485,7 +1463,6 @@ LANGUAGE.class_baragat								= "Baragat"
 LANGUAGE.class_zombie_gore_blaster					= "Gore Blaster Zombie"
 LANGUAGE.class_zombie_gore_blaster_demi					= "Gore Explosive Zombie"
 LANGUAGE.class_cosmic_zombie					= "Cosmic Zombie"
->>>>>>> Stashed changes
 LANGUAGE.class_poison_zombie						= "Poison Zombie"
 LANGUAGE.class_wild_poison_zombie					= "Wild Poison Zombie"
 LANGUAGE.class_fast_zombie							= "Fast Zombie"
@@ -1510,11 +1487,13 @@ LANGUAGE.class_the_tickle_monster					= "The Tickle Monster"
 LANGUAGE.class_nightmare							= "Nightmare"
 LANGUAGE.class_ancient_nightmare					= "Ancient Nightmare"
 LANGUAGE.class_devourer								= "Devourer"
+LANGUAGE.class_devourer_d								= "Eater"
 LANGUAGE.class_pukepus								= "Pukepus"
 LANGUAGE.class_antimelee							= "Anti Cading"
 LANGUAGE.description_antimelee             ="The dead cader has been powered by dosei.\nNever give him a Carpenter hammer...\nGive debuff for cade's (+150% taking damage)"
 LANGUAGE.class_bonemesh								= "Bonemesh"
 LANGUAGE.class_crow									= "Crow"
+LANGUAGE.class_crow_gatling									= "Gatling Crow"
 LANGUAGE.class_wilowisp								= "Jack"
 LANGUAGE.class_coolwisp								= "Cool Jack"
 LANGUAGE.class_zombie_torso							= "Zombie Torso"
@@ -1554,8 +1533,6 @@ LANGUAGE.class_destroyer							= "Destroyer"
 LANGUAGE.class_lacerator_charging					= "Charger"
 LANGUAGE.class_eradicator							= "Eradicator"
 LANGUAGE.class_howler								= "Howler"
-<<<<<<< Updated upstream
-=======
 LANGUAGE.class_mprime								= "King Minos"
 LANGUAGE.class_sprime								= "King Syphysis"
 LANGUAGE.wep_o_mode								= "xd mode"
@@ -1568,19 +1545,11 @@ LANGUAGE.wep_j_sis								= "Hmmm Mode"
 
 LANGUAGE.class_tim								= "Giga-Tim"
 LANGUAGE.class_slime								= "Sisus Lime"
->>>>>>> Stashed changes
 LANGUAGE.class_extinctioncrab						= "Extinction Crab"
 LANGUAGE.class_tormented_boss						= "Soul Of Death"
 LANGUAGE.class_shadow_r      						= "Shadow nigger"
-LANGUAGE.class_bartor        						= "Baracat Torso"
+LANGUAGE.class_bartor        						= "Berecat Torso"
 LANGUAGE.class_baw								    = "Bad Marrow"
-<<<<<<< Updated upstream
--- Class descriptions
-LANGUAGE.description_zombie							= "The basic zombie is very durable and has powerful claws.\nIt's hard to keep down, especially if not shot in the head."
-LANGUAGE.description_zombie_gore_blaster			= "Gore Blaster Zombies send viscera in all direction when killed which can cause minor harm.\nTheir claws can also inflict bleeding."
-LANGUAGE.description_poison_zombie					= "This mutated zombie is not only extremely durable but has abnormal strength.\nIts body is extremely toxic and will even tear out and toss its own flesh at things too far away to hit."
-LANGUAGE.description_baracat					= "Тойка охуел и добавил баракat..."
-=======
 LANGUAGE.class_eraditor							= "Eraditor"
 LANGUAGE.class_megacringe							= "Cringe++"
 LANGUAGE.class_cringe   						= "Cringe+"
@@ -1643,7 +1612,6 @@ LANGUAGE.description_o_stoney						= "Don't take damage while not attacking\n Wh
 LANGUAGE.description_zdreams						= "Dreams deal a big damage vs magic.\n25% Immune for magic."
 LANGUAGE.description_zdreams2						= "Dreams deal a big damage vs magic.\nImmune for magic."
 LANGUAGE.description_baragat					= "More deadly than baracat!Dosei have big power..."
->>>>>>> Stashed changes
 LANGUAGE.description_wild_poison_zombie				= "An erratic mutation of the poison zombie, making it stronger and tankier.\nIts flesh toss is much more sporadic and deadly."
 LANGUAGE.description_fast_zombie					= "This boney cadaver is much faster than other zombies.\nThey aren't much of a threat by themselves but can reach nearly any area by climbing with their razor sharp claws\nThey also have no problem hunting down weak or hurt humans."
 LANGUAGE.description_fast_zombie_slingshot			= "An abnormal Fast Zombie with a powerful lunge.\nThe force applied is so great that it destroys their lower body, sending what's left at incredible speed.\nThe impact it causes will leave humans crippled for a while."
@@ -1662,15 +1630,13 @@ LANGUAGE.description_bloodsucker_headcrab			= "Bloodsuckers are stockier fast he
 LANGUAGE.description_poison_headcrab				= "This Headcrab is full of deadly neurotoxins.\nOne bite is usually enough to kill an adult human.\nIt also has the ability to spit a less potent version of its poisons.\nThe spit is just as deadly if its victim is hit in the face."
 LANGUAGE.description_barbed_headcrab				= "This Headcrab bristles with sharp quills.\nIt can project a bristle at high speed inflicting bleeding upon unlucky humans."
 LANGUAGE.description_the_tickle_monster				= "Said to be the monster that hides in your closet at night to drag you from your bed.\nThe Tickle Monster's almost elastic arms make it extremely hard to outrun and they also make it an ideal barricade destroyer."
-<<<<<<< Updated upstream
-=======
 LANGUAGE.description_cringedemi				= "Said to be THE WORLD GLITCH for breaking the world.\nHave small immunity for bullet and ranged arms."
 LANGUAGE.description_skel				= "Best form of cringe.\nHave immunity for bullet and ranged arms."
 LANGUAGE.description_sigil				= "Revived Sigil and full cringe."
->>>>>>> Stashed changes
 LANGUAGE.description_nightmare						= "An extremely rare mutation gives the Nightmare its abnormal abilities.\nStronger than the every day zombie in almost every way, the Nightmare is a force to be reckoned with.\nOne swipe of its claws is enough to put down almost any person."
-LANGUAGE.description_ancient_nightmare				= "An elderly Nightmare that has been roaming the land for ages.\nIts body has been tempered by the years, making it sturdier and less mobile but still formidable up close."
+LANGUAGE.description_ancient_nightmare				= "An elderly Nightmare that has been roaming the land for ages.\nIts body has been tempered by the years, making it cursed and less mobile but still formidable up close."
 LANGUAGE.description_devourer						= "A horrific malformation of bone and flesh, with a throwable rib that pierces into victims to reel them in.\nNot very fast on its own but incredibly dangerous to deal with alone."
+LANGUAGE.description_devourer_d						= "A horrific malformation of bone and flesh, with a throwable rib that pierces into victims to reel them in.\nNot very fast on its own but incredibly dangerous to deal with alone.\nLike apples."
 LANGUAGE.description_pukepus						= "The rotting body of the Puke Pus is comprised entirely of organs used for the generation of poison.\nIt's capable of vomiting gallons of poison puke at a time making it extremely dangerous."
 LANGUAGE.description_bonemesh						= "Disfigured and mangled, the Bonemesh is capable of tossing blood bombs.\nEach bomb is comprised of bones and flesh that damages humans while giving precious food to other zombies."
 LANGUAGE.description_crow							= "Carrion Crows are more of a pest than they were before the infection.\nThey feed on infected flesh and become 'carriers' for the undead.\n"
@@ -1710,10 +1676,6 @@ LANGUAGE.description_lacerator_charging				= "These brutes can run deceptively f
 LANGUAGE.description_eradicator						= "Bringers of death and destruction. The Eradicators sport a durable body that require a lot of fire power to take down.\nUnless shot in the head, they are almost garanteed to rise again."
 LANGUAGE.description_howler							= "A terrifying flesh titan with a piercing shriek.\nIts howl inspires the undead and instills fear in the living."
 LANGUAGE.description_extinctioncrab					= "Vile diseases churn within this giant headcrab.\nThe spores it spits will afflict those near it, reducing the effectiveness of healing."
-<<<<<<< Updated upstream
-
--- Class control schemes
-=======
 LANGUAGE.description_bnightmare						= "An extremely rare mutation gives the Nightmare its abnormal abilities.\nStronger than the every day zombie in almost every way, the Bloody Nightmare is a force to be reckoned with.\nOne swipe of its claws is enough to put down almost any person."
 LANGUAGE.description_baw						= "Zombie last fate.\nStronger than the every day zombie in almost every way, have immune to high damage.\nFast swips of the claws."
 LANGUAGE.description_king_fast						= "Fast zombie evolution.\nGood demiboss!Can easily kill humans."
@@ -1730,7 +1692,6 @@ LANGUAGE.controls_pyro						= "> PRIMARY: Igniting Claws\n> SECONDARY: Scream\n>
 LANGUAGE.description_gd						= "> PRIMARY: Midas touch"
 LANGUAGE.controls_stoney						= "> PRIMARY: Claws\n> SECONDARY: Scream\n> SPRINT: Feign death"
 LANGUAGE.controls_o_stoney						= "> PRIMARY: Hit\n> SECONDARY: Block\n> SPRINT: Feign death"
->>>>>>> Stashed changes
 LANGUAGE.controls_zombie							= "> PRIMARY: Claws\n> SECONDARY: Scream\n> RELOAD: Moan\n> SPRINT: Feign death\n> ON FATAL HIT IN LEGS: Revive / Transform"
 LANGUAGE.controls_zombie_gore_blaster				= "> PRIMARY: Claws\n> ON HIT HUMAN: Bleed\n> SECONDARY: Scream\n> SPRINT: Feign death\n> ON DEATH: Gore Blast"
 LANGUAGE.controls_poison_zombie						= "> PRIMARY: Claws\n> SECONDARY: Flesh toss\n> RELOAD: Scream"
@@ -1754,17 +1715,17 @@ LANGUAGE.controls_poison_headcrab					= "> PRIMARY: Lunge attack\n> SECONDARY: S
 LANGUAGE.controls_barbed_headcrab					= "> PRIMARY: Lunge attack\n> SECONDARY: Spit bristle\n> ON HIT HUMAN: Strong bleed\n> RELOAD: Scream"
 LANGUAGE.controls_the_tickle_monster				= "> PRIMARY: Elastic claws\n> SECONDARY: Moan"
 LANGUAGE.controls_nightmare							= "> PRIMARY: Death touch\n> SECONDARY: Moan"
-LANGUAGE.controls_ancient_nightmare					= "> PRIMARY: Death claw\n> SECONDARY: Moan"
+LANGUAGE.controls_ancient_nightmare					= "> PRIMARY: Death cursed claw\n> SECONDARY: Moan"
 LANGUAGE.controls_devourer							= "> PRIMARY: Claw\n> SECONDARY: Reel target in with projectile"
 LANGUAGE.controls_pukepus							= "> PRIMARY: Puke\n> ON DAMAGE TAKEN: Poison spray\n> ON DEATH: Poison explosion"
 LANGUAGE.controls_bonemesh							= "> PRIMARY: Claws\n> SECONDARY: Toss blood bomb"
 LANGUAGE.controls_wraith							= "> PRIMARY: Claws\n> SECONDARY: Scream\n> INVISIBILITY BASED ON MOVEMENT AND VIEW DISTANCE"
 LANGUAGE.controls_tormented_wraith					= "> PRIMARY: Claws\n> SECONDARY: Scream\n> INVISIBILITY BASED ON MOVEMENT AND VIEW DISTANCE\n> MADDENED WHEN TAKING DAMAGE BELOW 70 HP"
-LANGUAGE.controls_chem_burster						= "> PRIMARY: Death Charge\n> ON DEATH: Poison Bomb (power based on charge time)"
+LANGUAGE.controls_chem_burster						= "> PRIMARY: Splash Attack\n> ON DEATH: Poison Bomb "
 LANGUAGE.controls_shade								= "> PRIMARY: Throw\n> SECONDARY: Lift\n> RELOAD: Pull rock from ground\n> SPRINT: Channel shield"
 LANGUAGE.controls_frostshade						= "> PRIMARY: Throw\n> SECONDARY: Lift\n> RELOAD: Create ice missile\n> SPRINT: Channel frost shield"
-LANGUAGE.controls_butcher							= "> PRIMARY: Chop"
-LANGUAGE.controls_gravedigger						= "> PRIMARY: Smack"
+LANGUAGE.controls_butcher							= "> PRIMARY: Chop\n SECONDARY: Block"
+LANGUAGE.controls_gravedigger						= "> PRIMARY: Smack\n SECONDARY: Hook"
 LANGUAGE.controls_flesh_creeper						= "> PRIMARY: Head Smash\n> SECONDARY: Nest\n> RELOAD: Leap"
 LANGUAGE.controls_glitch_creeper						= "> PRIMARY: Head Smash\n> SECONDARY: Old Nest\n> RELOAD: Leap"
 LANGUAGE.controls_gore_child						= "> PRIMARY: Claws"
@@ -1788,9 +1749,6 @@ LANGUAGE.controls_destroyer							= "> PRIMARY: Deadly Claws\n> SECONDARY: Lunge
 LANGUAGE.controls_lacerator_charging				= "> PRIMARY: Bleeding Claws\n> ON HIT HUMAN: Bleed\n> SECONDARY: Charge\n> RELOAD: Scream"
 LANGUAGE.controls_eradicator						= "> PRIMARY: Claws\n> SECONDARY: Scream\n> ON FATAL HIT: Revive"
 LANGUAGE.controls_howler							= "> PRIMARY: Claws\n> SECONDARY: Howl\n> RELOAD: Moan"
-<<<<<<< Updated upstream
-LANGUAGE.controls_extinctioncrab					= "> PRIMARY: Leap Attack\n> SECONDARY: Extinction Spore"
-=======
 LANGUAGE.controls_mprime							= "> PRIMARY: Die!\n> SECONDARY: Judge!\n> RELOAD: Judge Mode Change\n> RELOAD + SECONDARY: Die Mode Change"
 LANGUAGE.controls_tim							= "> PRIMARY: Giga-Attack\n> SECONDARY: Block\nEvery wave have other melee"
 LANGUAGE.controls_slime							= "> PRIMARY: Attack(+9% Damage per attack on 1 entity)"
@@ -2681,7 +2639,6 @@ LANGUAGE.skill_yes_reg_d2 = "-11% received healing"
 LANGUAGE.skill_madness = "Chronic Alcoholism"
 LANGUAGE.skill_madness_d1 = "+15% blood armor damage absorption\n"
 LANGUAGE.skill_madness_d2 = "Screen in madness!!!"
->>>>>>> Stashed changes
 
 LANGUAGE.skill_gir = "Gier II"
 LANGUAGE.skill_gir_d1 = "On dash give debuff on 2 secs(-50% speed)\n"
@@ -2797,12 +2754,11 @@ LANGUAGE.help_cont_being_a_zombie					= [[<p>Tips for this section:
 <li>The Horde Meter at the bottom of the screen indicates how much of a damage and knockback resistance you have. Huddle up with other zombies for a big resistance when taking down strongholds!</li>
 <li>If you don't have enough zombies to take down a barricade, try hunting for new "team mates" elsewhere.</li>
 <li>If an area is too dark, try pressing your FLASHLIGHT button to toggle night vision.</li>
+<li>You can buy mutagens on F2.</li>
 </ul></p>
 ]]
 
 -- Place any custom stuff below here...
-<<<<<<< Updated upstream
-=======
 
 LANGUAGE.title_classm                              = "Class Mutations"
 LANGUAGE.title_bossm                              = "Boss Mutations"
@@ -3560,4 +3516,3 @@ LANGUAGE.s_need_11 = "Need mastery of melee: "
 LANGUAGE.s_need_12 = "Need mastery of gunnery: "
 LANGUAGE.s_need_13 = "Need mastery of medic: "
 LANGUAGE.s_need_14 = "Need mastery of cader: "
->>>>>>> Stashed changes

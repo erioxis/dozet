@@ -3,18 +3,17 @@ CLASS.TranslationName = "class_butcher"
 CLASS.Description = "description_butcher"
 CLASS.Help = "controls_butcher"
 
-CLASS.Boss = true
+CLASS.DemiBoss = true
 
 CLASS.KnockbackScale = 0
 
-CLASS.Health = 3211
-CLASS.Speed = 370
+CLASS.Health = 500
+CLASS.Speed = 1200
 
 CLASS.CanTaunt = true
 
 CLASS.FearPerInstance = 1
 
-CLASS.Points = 120
 
 CLASS.SWEP = "weapon_zs_butcherknifez"
 

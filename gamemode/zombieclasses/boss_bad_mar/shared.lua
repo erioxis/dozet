@@ -1,12 +1,7 @@
 CLASS.Name = "Bad Marrow"
 CLASS.TranslationName = "class_baw"
-<<<<<<< Updated upstream
-CLASS.Description = "description_red_marrow"
-CLASS.Help = "controls_red_marrow"
-=======
 CLASS.Description = "description_baw"
 CLASS.Help = "controls_bad_marrow"
->>>>>>> Stashed changes
 
 CLASS.Boss = true
 
@@ -22,25 +17,19 @@ CLASS.VoicePitch = 0.65
 
 CLASS.SWEP = "weapon_zs_redbad"
 
-CLASS.Health = 4550
+CLASS.Health = 3400
 CLASS.Speed = 210
 
 CLASS.Skeletal = true
 
-if SERVER then
-function CLASS:ProcessDamage(pl, dmginfo)
-	if dmginfo:GetInflictor().IsMelee then
-		dmginfo:SetDamage(dmginfo:GetDamage() / 7)
-	end
-end
-end
+
 
 
 local ACT_HL2MP_SWIM_PISTOL = ACT_HL2MP_SWIM_PISTOL
 local ACT_HL2MP_IDLE_CROUCH_ZOMBIE = ACT_HL2MP_IDLE_CROUCH_ZOMBIE
 local ACT_HL2MP_WALK_CROUCH_ZOMBIE_01 = ACT_HL2MP_WALK_CROUCH_ZOMBIE_01
 local ACT_HL2MP_RUN_ZOMBIE = ACT_HL2MP_RUN_ZOMBIE
-
+local bit_band = bit.band
 local math_random = math.random
 local math_ceil = math.ceil
 local math_Clamp = math.Clamp
@@ -114,22 +103,20 @@ function CLASS:ProcessDamage(pl, dmginfo)
 	local attacker = dmginfo:GetAttacker()
 	local dmg = dmginfo:GetDamage()
 	local hp = pl:Health()
-<<<<<<< Updated upstream
-=======
 	if dmginfo:GetInflictor().IsMelee then
 		dmginfo:SetDamage(dmginfo:GetDamage() / 2)
 	end
 	dmginfo:ScaleDamage(1.14-math.min(0.9,GAMEMODE:GetWave()*0.07))
->>>>>>> Stashed changes
 
-	if pl:GetStatus("redmarrow") and attacker:IsPlayer() and attacker:Team() == TEAM_HUMAN then
+
+	if pl:GetStatus("redmad") and attacker:IsPlayer() and attacker:Team() == TEAM_HUMAN then
 		dmginfo:SetDamage(0)
 		dmginfo:ScaleDamage(0)
 		dmg = 0
 	end
 
-	local numthreshold = math_Clamp(math_ceil(hp / 200), 1, 9)
-	local dmgthreshold = math_Clamp(numthreshold * 200 - 200, 1, 1600)
+	local numthreshold = math_Clamp(math_ceil(hp / 100), 1, 9)
+	local dmgthreshold = math_Clamp(numthreshold * 100 - 100, 1, 800)
 
 	local newhp = hp - dmg
 	local nulldmg = dmgthreshold - newhp
@@ -137,7 +124,7 @@ function CLASS:ProcessDamage(pl, dmginfo)
 	if newhp <= dmgthreshold and pl["bloodth"..numthreshold] then
 		pl["bloodth"..numthreshold] = false
 		dmginfo:SetDamage(dmg - nulldmg)
-		pl:GiveStatus("redmarrow", 45)
+		pl:GiveStatus("redmarrow", 15)
 
 		local effectdata = EffectData()
 			effectdata:SetOrigin(pl:WorldSpaceCenter())
@@ -147,9 +134,5 @@ function CLASS:ProcessDamage(pl, dmginfo)
 		util.BlastDamageEx(pl, pl, pl:GetPos(), 55, 41, DMG_CLUB)
 		pl:GodDisable()
 	end
-<<<<<<< Updated upstream
-end
-=======
 	return dmginfo
 end
->>>>>>> Stashed changes

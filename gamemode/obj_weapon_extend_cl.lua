@@ -206,8 +206,6 @@ function meta:DrawCrosshairCross()
 	else
 		baserot = math.NormalizeAngle(baserot + vel:Dot(EyeAngles():Right()) * math.min(10, len / 40000))
 	end
-<<<<<<< Updated upstream
-=======
 	local firedelay = MySelf:GetActiveWeapon():GetNextPrimaryFire() - CurTime() 
 		local scrW1 = ScrW()
 		local scrH1 = ScrH()
@@ -247,7 +245,6 @@ function meta:DrawCrosshairCross()
 			surface_SetDrawColor(255, 255, 255, 255)
 			surface_DrawTexturedRect(x + 2 + subwidth - 6, y + 1 - hei/2, 4, hei * 2)
 		end
->>>>>>> Stashed changes
 
 	local ang = Angle(0, 0, baserot)
 	for i=0, 359, 360 / GAMEMODE.CrosshairLines do
@@ -264,12 +261,6 @@ function meta:DrawCrosshairDot()
 	local screenscale = BetterScreenScale()
 	local size = 4 * thickness
 	local hsize = size/2
-<<<<<<< Updated upstream
-
-	surface.SetDrawColor(GAMEMODE.CrosshairColor2)
-	surface.DrawRect(x - hsize, y - hsize, size, size)
-	surface.SetDrawColor(0, 0, 0, GAMEMODE.CrosshairColor2.a)
-=======
 	local wepi = MySelf:GetActiveWeapon()
 	local firedelay = wepi:GetNextPrimaryFire() - CurTime()-0.045
 	local ratio = (wepi.IsMelee and wepi.MeleeDelay or 1) / firedelay
@@ -283,7 +274,6 @@ function meta:DrawCrosshairDot()
 	surface_SetDrawColor(GAMEMODE.CrosshairColor2)
 	surface_DrawRect(x - hsize, y - hsize, size, size)
 	surface_SetDrawColor(0, 0, 0, GAMEMODE.CrosshairColor2.a)
->>>>>>> Stashed changes
 	surface.DrawOutlinedRect(x - hsize, y - hsize, size, size)
 	if MySelf:HasTrinket("autoreload") and MySelf:GetNWFloat("autoreload") > CurTime() then
 		local screenscale = BetterScreenScale()

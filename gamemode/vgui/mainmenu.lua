@@ -45,7 +45,7 @@ function GM:OpenMainMenu()
 	button.Tooltip = "mainmenu_tooltip_supporter"
 
 	button = vgui.Create("ZSMenuButton", MainMenu)
-	button:SetText("CREDITS")
+	button:SetText("Version of DZS")
 	button:SizeToContents()
 	button:Dock(BOTTOM)
 	button:DockMargin(70, 8, 0, 0)
@@ -93,3 +93,4 @@ function PANEL:Paint()
 end
 
 vgui.Register("ZSMenuButton", PANEL, "Button")
+

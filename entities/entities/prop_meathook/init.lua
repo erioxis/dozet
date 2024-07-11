@@ -11,26 +11,11 @@ function ENT:Initialize()
 end
 
 function ENT:Drop()
-	local ent = ents.Create("prop_weapon")
-	if ent:IsValid() then
-		ent:SetWeaponType(self.BaseWeapon)
-		ent:SetPos(self:GetPos())
-		ent:SetAngles(self:GetAngles())
-		ent:Spawn()
 
 		local owner = self:GetOwner()
 		if owner:IsValidHuman() then
-			ent.NoPickupsTime = CurTime() + 15
-			ent.NoPickupsOwner = owner
+			owner:Give(self.BaseWeapon)
 		end
-
-		local phys = ent:GetPhysicsObject()
-		if phys:IsValid() then
-			phys:Wake()
-			phys:AddAngleVelocity(VectorRand() * 200)
-			phys:SetVelocityInstantaneous(Vector(0, 0, 200))
-		end
-	end
 
 	self:Remove()
 end

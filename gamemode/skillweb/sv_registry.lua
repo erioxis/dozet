@@ -1,9 +1,6 @@
+
 GM:SetSkillModifierFunction(SKILLMOD_HEALTH, function(pl, amount)
-<<<<<<< Updated upstream
-	local current = pl:GetMaxHealth()
-=======
 	local current = pl:GetMaxHealth() - ((pl.HPPerWave or 0) * GAMEMODE:GetWave())
->>>>>>> Stashed changes
 	local new = 100 + math.Clamp(amount, -99, 1000)
 	pl:SetMaxHealth(new)
 	pl:SetHealth(math.Clamp(pl:Health() / current * new,1,pl:GetMaxHealth() ))
@@ -21,6 +18,8 @@ GM:SetSkillModifierFunction(SKILLMOD_POINTS, function(pl, amount)
 	end
 end)
 
+
+
 GM:SetSkillModifierFunction(SKILLMOD_SCRAP_START, function(pl, amount)
 	if not pl.AdjustedStartScrapSkill then
 		pl:GiveAmmo(amount, "scrap")
@@ -35,6 +34,7 @@ end)
 GM:SetSkillModifierFunction(SKILLMOD_FALLDAMAGE_DAMAGE_MUL, function(pl, amount)
 	pl.FallDamageDamageMul = math.Clamp(amount + 1.0, 0.0, 1000.0)
 end)
+
 
 GM:SetSkillModifierFunction(SKILLMOD_FALLDAMAGE_RECOVERY_MUL, function(pl, amount)
 	pl.FallDamageRecoveryMul = math.Clamp(amount + 1.0, 0.0, 1000.0)
@@ -104,16 +104,15 @@ GM:SetSkillModifierFunction(SKILLMOD_FIELD_DELAY_MUL, function(pl, amount)
 	pl.FieldDelayMul = math.Clamp(amount + 1.0, 0.01, 10.0)
 end)
 
+
 GM:AddSkillModifier(SKILL_TURRETOVERLOAD, SKILLMOD_TURRET_SCANSPEED_MUL, 1.0)
+
+
+
+
 
 GM:AddSkillModifier(SKILL_TURRETLOCK, SKILLMOD_TURRET_SCANANGLE_MUL, -0.9)
 
-<<<<<<< Updated upstream
-GM:AddSkillModifier(SKILL_WORTHINESS1, SKILLMOD_POINTS, -1)
-GM:AddSkillModifier(SKILL_WORTHINESS2, SKILLMOD_POINTS, -1)
-GM:AddSkillModifier(SKILL_WORTHINESS3, SKILLMOD_POINTS, -1)
-GM:AddSkillModifier(SKILL_WORTHINESS4, SKILLMOD_POINTS, -1)
-=======
 GM:AddSkillModifier(SKILL_WORTHINESS1, SKILLMOD_POINTS, -6)
 GM:AddSkillModifier(SKILL_WORTHINESS2, SKILLMOD_POINTS, -6)
 GM:AddSkillModifier(SKILL_WORTHINESS3, SKILLMOD_POINTS, -6)
@@ -121,7 +120,6 @@ GM:AddSkillModifier(SKILL_WORTHINESS4, SKILLMOD_POINTS, -6)
 GM:AddSkillModifier(SKILL_WORTHINESS5, SKILLMOD_POINTS, -6)
 
 GM:AddSkillModifier(SKILL_CREDIT, SKILLMOD_POINTS, 65)
->>>>>>> Stashed changes
 
 GM:AddSkillModifier(SKILL_GOOD_BOUNTY, SKILLMOD_POINTS, -31)
 
@@ -152,8 +150,6 @@ GM:AddSkillModifier(SKILL_TECHNICIAN, SKILLMOD_FIELD_RANGE_MUL, 0.03)
 GM:AddSkillModifier(SKILL_TECHNICIAN, SKILLMOD_FIELD_DELAY_MUL, -0.03)
 
 GM:AddSkillModifier(SKILL_PITCHER, SKILLMOD_PROP_THROW_STRENGTH_MUL, 0.9)
-<<<<<<< Updated upstream
-=======
 
 GM:AddSkillModifier(SKILL_POINTFUL, SKILLMOD_POINTS, 10)
 GM:AddSkillModifier(SKILL_POINTMEGA, SKILLMOD_POINTS, 50)
@@ -166,4 +162,3 @@ GM:AddSkillModifier(SKILL_BADBUYER, SKILLMOD_POINTS, -900)
 
 GM:AddSkillModifier(SKILL_D_CLUMSY, SKILLMOD_POINTS, 10)
 GM:AddSkillModifier(SKILL_JEW, SKILLMOD_POINTS, 50)
->>>>>>> Stashed changes

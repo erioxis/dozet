@@ -1,7 +1,3 @@
--- unobstructed path has a flaw where people in the air are considered a straight path (on ground check?)
--- have an icon that indicates they're a bot?
--- give them a better class?
-
 ZSBOTS = {}
 
 local TEAM_HUMAN = TEAM_HUMAN

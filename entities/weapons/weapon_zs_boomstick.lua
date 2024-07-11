@@ -2,16 +2,10 @@ AddCSLuaFile()
 
 SWEP.Base = "weapon_zs_baseshotgun"
 
-<<<<<<< Updated upstream
-SWEP.PrintName = "Boom Stick"
-SWEP.Description = "This shotgun allows you to load up to four shells in the chamber at once. Hold down reload for faster loading of each shell."
-
-=======
 --SWEP.PrintName = "Boom Stick"
 --SWEP.Description = "This shotgun allows you to load up to four shells in the chamber at once. Hold down reload for faster loading of each shell."
 SWEP.PrintName = translate.Get("wep_boomstick")
 SWEP.Description = translate.Get("wep_d_boomstick")
->>>>>>> Stashed changes
 if CLIENT then
 	SWEP.HUD3DBone = "ValveBiped.Gun"
 	SWEP.HUD3DPos = Vector(1.65, 0, -8)
@@ -29,8 +23,8 @@ SWEP.CSMuzzleFlashes = false
 SWEP.ReloadDelay = 0.81
 
 SWEP.Primary.Sound = Sound("weapons/shotgun/shotgun_dbl_fire.wav")
-SWEP.Primary.Damage = 51
-SWEP.Primary.NumShots = 3
+SWEP.Primary.Damage = 43
+SWEP.Primary.NumShots = 6
 SWEP.Primary.Delay = 1.2
 
 SWEP.Recoil = 7.5
@@ -44,11 +38,11 @@ SWEP.ConeMax = 11.5
 SWEP.ConeMin = 10
 
 SWEP.Tier = 5
-SWEP.MaxStock = 4
+SWEP.MaxStock = 3
 
 SWEP.WalkSpeed = SPEED_SLOWER
 SWEP.FireAnimSpeed = 0.6
-SWEP.Knockback = 76
+SWEP.Knockback = 72
 
 SWEP.PumpActivity = ACT_SHOTGUN_PUMP
 SWEP.PumpSound = Sound("Weapon_Shotgun.Special1")
@@ -56,11 +50,7 @@ SWEP.ReloadSound = Sound("Weapon_Shotgun.Reload")
 
 GAMEMODE:SetPrimaryWeaponModifier(SWEP, WEAPON_MODIFIER_RELOAD_SPEED, 0.07)
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_CLIP_SIZE, 1)
-<<<<<<< Updated upstream
-GAMEMODE:AddNewRemantleBranch(SWEP, 1, "Lithe Stick", "Decreased damage but faster reload, more knockback and more move speed", function(wept)
-=======
 GAMEMODE:AddNewRemantleBranch(SWEP, 1, translate.Get("wep_boomstick_r1"), translate.Get("wep_d_boomstick_r1"), function(wept)
->>>>>>> Stashed changes
 	wept.Primary.Damage = wept.Primary.Damage * 0.30
 	wept.ReloadSpeed = wept.ReloadSpeed * 1.3
 	wept.Primary.Delay = wept.Primary.Delay * 0.9

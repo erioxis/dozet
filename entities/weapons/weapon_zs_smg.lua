@@ -1,15 +1,9 @@
 AddCSLuaFile()
 
-<<<<<<< Updated upstream
-SWEP.PrintName = "'Shredder' SMG"
-SWEP.Description = "Simple SMG capable of very good damage output at the cost of long range accuracy."
-
-=======
 --SWEP.PrintName = "'Shredder' SMG"
 --SWEP.Description = "Simple SMG capable of very good damage output at the cost of long range accuracy."
 SWEP.PrintName = translate.Get("wep_shredder")
 SWEP.Description = translate.Get("wep_d_shredder")
->>>>>>> Stashed changes
 SWEP.Slot = 2
 SWEP.SlotPos = 0
 SWEP.InnateDamageType = INNATE_TYPE_BOUNTY
@@ -42,6 +36,8 @@ SWEP.Primary.Automatic = true
 SWEP.Primary.Ammo = "smg1"
 GAMEMODE:SetupDefaultClip(SWEP.Primary)
 
+SWEP.IgnoreResist2 = false
+
 SWEP.Primary.Gesture = ACT_HL2MP_GESTURE_RANGE_ATTACK_SHOTGUN
 SWEP.ReloadGesture = ACT_HL2MP_GESTURE_RELOAD_SMG1
 
@@ -59,13 +55,14 @@ GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_RELOAD_SPEED, 0.1)
 GAMEMODE:AddNewRemantleBranch(SWEP, 1,  translate.Get("wep_shredder2"),  translate.Get("wep_d_shredder2"), function(wept)
 	wept.Primary.Delay = 0.15
 	wept.ReloadSpeed = 0.9
+	wept.IgnoreResist2 = true
 
 	wept.BulletCallback = function(attacker, tr, dmginfo)
 		local trent = tr.Entity
 
 		if SERVER and trent and trent:IsValidZombie() then
 			if trent:GetZombieClassTable().Skeletal then
-				dmginfo:SetDamage(dmginfo:GetDamage() * 1.2)
+				dmginfo:SetDamage(dmginfo:GetDamage() * 3)
 			end
 
 			if math.random(6) == 1 then

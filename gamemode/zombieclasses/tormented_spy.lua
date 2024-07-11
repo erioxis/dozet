@@ -9,11 +9,13 @@ CLASS.Variations = {}
 CLASS.Original = false
 
 
-CLASS.Health = 60
+CLASS.Health = 3
 CLASS.Points = CLASS.Health/GM.NoHeadboxZombiePointRatio
 CLASS.Speed = 450
 
 CLASS.Wave = 5 / 6
+
+CLASS.DynamicHealth = 0
 
 CLASS.SWEP = "weapon_zs_tormentedspy"
 
@@ -22,8 +24,8 @@ function CLASS:Move(pl, move)
 	if not wep.GetTormented then return end
 
 	if CurTime() < wep:GetTormented() + 2 then
-		move:SetMaxSpeed(225)
-		move:SetMaxClientSpeed(225)
+		move:SetMaxSpeed(925)
+		move:SetMaxClientSpeed(925)
 	end
 
 	if pl:KeyDown(IN_SPEED) then
@@ -31,16 +33,6 @@ function CLASS:Move(pl, move)
 		move:SetMaxClientSpeed(100)
 	end
 end
-
-if SERVER then
-function CLASS:ProcessDamage(pl, dmginfo)
-	if dmginfo:GetInflictor().IsMelee then
-		dmginfo:SetDamage(dmginfo:GetDamage() / 1000)
-	end
-end
-end
-
-
 function CLASS:PlayDeathSound(pl)
 	for i=1, 4 do
 		pl:EmitSound("zombiesurvival/wraithdeath4.ogg", 75, math.random(80, 140), 0.6, CHAN_AUTO + i)
@@ -93,16 +85,6 @@ function CLASS:PrePlayerDraw(pl)
 	render.SetColorModulation(0.025, 0.15, 0.065)
 	render.SuppressEngineLighting(true)
 end
-<<<<<<< Updated upstream
-if SERVER then
-	function CLASS:ProcessDamage(pl, dmginfo)
-		if dmginfo:GetInflictor().IsMelee then
-			dmginfo:SetDamage(dmginfo:GetDamage() / 30)
-		end
-	end
-	end
-=======
 
 
 
->>>>>>> Stashed changes

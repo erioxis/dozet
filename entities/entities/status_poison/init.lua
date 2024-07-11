@@ -50,10 +50,6 @@ function ENT:Think()
 		self:Remove()
 	end
 
-<<<<<<< Updated upstream
-	self:NextThink(CurTime() + 2 / (owner.PoisonSpeedMul or 1))
-=======
 	self:NextThink(CurTime() + 2 / (owner:IsValidLivingZombie() and 0.5 or owner.PoisonSpeedMul or 1))
->>>>>>> Stashed changes
 	return true
 end

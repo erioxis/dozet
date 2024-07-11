@@ -1,7 +1,7 @@
 AddCSLuaFile()
 
-SWEP.PrintName = "Medical Kit"
-SWEP.Description = "An advanced kit of medicine, bandages, and morphine.\nVery useful for keeping a group of survivors healthy.\nUse PRIMARY FIRE to heal other players.\nUse SECONDARY FIRE to heal yourself.\nHealing other players is not only faster but you get a nice point bonus!"
+SWEP.PrintName = translate.Get("wep_medkit")
+SWEP.Description = translate.Get("wep_d_medkit")
 SWEP.Slot = 4
 SWEP.SlotPos = 0
 
@@ -19,12 +19,14 @@ SWEP.WorldModel = "models/weapons/w_medkit.mdl"
 SWEP.ViewModel = "models/weapons/c_medkit.mdl"
 SWEP.UseHands = true
 
-SWEP.Heal = 19
-SWEP.Primary.Delay = 7
+SWEP.Heal = 14
+SWEP.Primary.Delay = 6.3
 
 SWEP.Primary.ClipSize = 30
 SWEP.Primary.DefaultClip = 150
 SWEP.Primary.Ammo = "Battery"
+
+SWEP.UltraCharge = 0
 
 SWEP.Secondary.DelayMul = 13 / SWEP.Primary.Delay
 SWEP.Secondary.HealMul = 11 / SWEP.Heal
@@ -36,19 +38,32 @@ SWEP.Secondary.Ammo = "dummy"
 SWEP.WalkSpeed = SPEED_NORMAL
 
 SWEP.HealRange = 36
+SWEP.UltraDa = 1
+
+SWEP.Combo = 0
 
 SWEP.NoMagazine = true
 SWEP.AllowQualityWeapons = true
+
 
 SWEP.HoldType = "slam"
 
 GAMEMODE:SetPrimaryWeaponModifier(SWEP, WEAPON_MODIFIER_HEALCOOLDOWN, -0.8)
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_HEALRANGE, 4, 1)
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_HEALING, 1.5)
-GAMEMODE:AddNewRemantleBranch(SWEP, 1, "Restoration Kit", "Always uses the same amount of ammo, increased cooldown", function(wept)
+local branch = GAMEMODE:AddNewRemantleBranch(SWEP, 1, ""..translate.Get("wep_medkit_r1"), ""..translate.Get("wep_d_medkit_r1"), function(wept)
 	wept.FixUsage = true
-	wept.Primary.Delay = wept.Primary.Delay * 1.3
+	wept.Primary.Delay = wept.Primary.Delay * 1.5
 end)
+branch.Colors = {Color(255, 160, 50), Color(215, 120, 50), Color(175, 100, 40), Color(10, 115, 15), Color(36, 32, 32)}
+branch.NewNames = {translate.Get("wep_r_1"), translate.Get("wep_r_2"), translate.Get("wep_r_3"), translate.Get("wep_r_4"), translate.Get("wep_r_5")}
+local branch = GAMEMODE:AddNewRemantleBranch(SWEP, 2, ""..translate.Get("wep_medkit_f1"), ""..translate.Get("wep_d_medkit_f1"), function(wept)
+	wept.BloodHeal = true
+	wept.Primary.Delay = wept.Primary.Delay * 0.5
+	wept.Heal = wept.Heal * 0.3
+end)
+branch.Colors = {Color(255, 160, 50), Color(215, 120, 50), Color(175, 100, 40), Color(10, 115, 15), Color(36, 32, 32)}
+branch.NewNames = {"Bloody", "Bloodlust", "Blood-shed", "Biggy blood", "Blud"}
 
 function SWEP:Initialize()
 	self:SetWeaponHoldType(self.HoldType)
@@ -65,8 +80,9 @@ end
 function SWEP:PrimaryAttack()
 	if not self:CanPrimaryAttack() then return end
 
-	local owner = self:GetOwner()
 
+	local owner = self:GetOwner()
+	if  owner:IsSkillActive(SKILL_FOREVERALONE) then return end
 	local trtbl = owner:CompensatedPenetratingMeleeTrace(self.HealRange, 2, nil, nil, true)
 	local ent
 	for _, tr in pairs(trtbl) do
@@ -82,16 +98,6 @@ function SWEP:PrimaryAttack()
 
 	local multiplier = self.MedicHealMul or 1
 	local cooldownmultiplier = self.MedicCooldownMul or 1
-<<<<<<< Updated upstream
-	local healed = owner:HealPlayer(ent, math.min(self:GetCombinedPrimaryAmmo(), self.Heal))
-	local totake = self.FixUsage and 15 or math.ceil(healed / multiplier)
-
-	if totake > 0 then
-		self:SetNextCharge(CurTime() + self.Primary.Delay * math.min(1, healed / self.Heal) * cooldownmultiplier)
-		owner.NextMedKitUse = self:GetNextCharge()
-
-		self:TakeCombinedPrimaryAmmo(totake)
-=======
 	local healed = 15
 	if !self.BloodHeal then
 		 healed = owner:HealPlayer(ent, owner:HasTrinket("pr_bloodpack") and self.Heal * math.max(1, self.Combo / 3) or math.min(self:GetCombinedPrimaryAmmo(), self.Heal * math.max(1, self.Combo / 3)))
@@ -138,7 +144,6 @@ function SWEP:PrimaryAttack()
 		else
 			self:TakeCombinedPrimaryAmmo(totake)
 		end
->>>>>>> Stashed changes
 
 
 		self:EmitSound("items/medshot4.wav")
@@ -147,12 +152,15 @@ function SWEP:PrimaryAttack()
 
 		owner:DoAttackEvent()
 		self.IdleAnimation = CurTime() + self:SequenceDuration()
+
 	end
+
 end
 
 function SWEP:SecondaryAttack()
 	local owner = self:GetOwner()
 	if not self:CanPrimaryAttack() or not gamemode.Call("PlayerCanBeHealed", owner) then return end
+	if owner:IsSkillActive(SKILL_PREMIUM) then return end
 
 	local multiplier = self.MedicHealMul or 1
 	local cooldownmultiplier = self.MedicCooldownMul or 1
@@ -214,13 +222,15 @@ function SWEP:GetNextCharge()
 	return self:GetDTFloat(0)
 end
 
+
 function SWEP:CanPrimaryAttack()
 	local owner = self:GetOwner()
 	if owner:IsHolding() or owner:GetBarricadeGhosting() then return false end
-
 	if self:GetPrimaryAmmoCount() <= 0 then
+		if owner:HasTrinket("pr_bloodpack") and owner:Health() >= owner:GetMaxHealth() * 0.25 then
+			return self:GetNextCharge() <= CurTime() and (owner.NextMedKitUse or 0) <= CurTime()
+		end
 		self:EmitSound("items/medshotno1.wav")
-
 		self:SetNextCharge(CurTime() + 0.75)
 		owner.NextMedKitUse = self:GetNextCharge()
 		return false
@@ -257,6 +267,10 @@ function SWEP:DrawHUD()
 	draw.SimpleText(self.PrintName, "ZSHUDFontSmall", x, texty, COLOR_GREEN, TEXT_ALIGN_LEFT)
 
 	local charges = self:GetPrimaryAmmoCount()
+	combo = self.Combo
+		if combo > 0 then
+			draw.SimpleText("Combo:"..combo, "ZSHUDFontSmall", x, texty * 0.95, COLOR_GREEN, TEXT_ALIGN_LEFT)
+		end
 	if charges > 0 then
 		draw.SimpleText(charges, "ZSHUDFontSmall", x + wid, texty, COLOR_GREEN, TEXT_ALIGN_RIGHT)
 	else
@@ -267,3 +281,4 @@ function SWEP:DrawHUD()
 		self:DrawCrosshairDot()
 	end
 end
+

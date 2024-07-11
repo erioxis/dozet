@@ -1,25 +1,18 @@
 GM.WeaponQualityModifiers = {}
 GM.WeaponQualities = {
-<<<<<<< Updated upstream
-	{"Sturdy", 1.08, "Tuned"},
-	{"Honed", 1.19, "Modified"},
-	{"Perfected", 1.30, "Reformed"},
-	{"Heavenly", 1.5, "Deadly"}
-=======
 	{translate.Get("wep_q_1"), 1.14, translate.Get("wep_r_1")},
 	{translate.Get("wep_q_2"), 1.2, translate.Get("wep_r_2")},
 	{translate.Get("wep_q_3"), 1.26, translate.Get("wep_r_3")},
 	{translate.Get("wep_q_4"), 1.38, translate.Get("wep_r_4")},
 	{translate.Get("wep_q_5"), 1.73, translate.Get("wep_r_5")}
->>>>>>> Stashed changes
 	
 }
 GM.WeaponQualityColors = {
 	{Color(235, 110, 165), Color(172, 111, 105)},
 	{Color(120, 90, 175), Color(35, 110, 245)},
 	{Color(160, 3, 5), Color(0, 100, 100)},
-	{Color(255, 3, 5), Color(0, 166, 200)}
-	
+	{Color(180, 3, 5), Color(0, 166, 200)},
+	{Color(255, 0, 0), Color(30, 100, 200)}
 }
 
 WEAPON_MODIFIER_MIN_SPREAD = 1
@@ -67,7 +60,7 @@ end
 function GM:AttachWeaponModifier(swep, modifier, amount, qualitystart)
 	if not swep.AltRemantleModifiers then swep.AltRemantleModifiers = {} end
 
-	local datatab = {Amount = amount, QualityStart = qualitystart or 2}
+	local datatab = {Amount = amount, QualityStart = qualitystart or 1}
 	swep.AltRemantleModifiers[modifier] = datatab
 end
 
@@ -155,7 +148,7 @@ function GM:CreateWeaponOfQuality(i, orig, quality, classname, branch)
 	wept.Branch = branch and branch.No
 
 	if wept.PrintName then
-		wept.PrintName = (branch and branch.NewNames and branch.NewNames[i] or branch and quality[4] or quality[1]).." "..(branch and branch.PrintName or wept.PrintName)
+		wept.PrintName = (branch and branch.NewNames and branch.NewNames[i] or branch and quality[3] or quality[1]).." "..(branch and branch.PrintName or wept.PrintName)
 	end
 
 	if wept.PrimaryRemantleModifier then
@@ -324,16 +317,11 @@ function GM:GetDismantleScrap(wtbl, invitem, pl)
 
 	local qu = (quatier or 0) + 1
 	local basicvalue = baseval * GAMEMODE.DismantleMultipliers[qu] - ((quatier or itier) and 0 or 1)
-<<<<<<< Updated upstream
-
-	return math.floor((basicvalue * (wtbl.IsMelee and 0.75 or 1)) / (wtbl.DismantleDiv or dismantlediv))
-=======
 	local mul = 1
 	if pl then
 		mul = pl.ScrapDiscount or 1
 	end
 	return math.floor((basicvalue * (wtbl.IsMelee and 0.6 or 1)) / (wtbl.DismantleDiv or dismantlediv)) * mul
->>>>>>> Stashed changes
 end
 
 function GM:GetUpgradeScrap(wtbl, qualitychoice)

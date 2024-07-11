@@ -3,7 +3,17 @@ INC_CLIENT()
 ENT.Sound1 = Sound("ambient/levels/labs/teleport_preblast_suckin1.wav")
 ENT.Sound2 = Sound("ambient/levels/labs/teleport_mechanism_windup3.wav")
 ENT.ParticleMaterial = "sprites/glow04_noz"
+local w, h = 320, 256
+local x, y = -w / 2, -h / 2
+local rt = GetRenderTarget("prop_obj_sigil", w * 2, h * 2)
+local matRT = Material("prop_obj_sigil")
+local CamPos = Vector(6, -2, 0)
+local LightPos = Vector(7.4, 8, 3)
+local LightPos2 = Vector(7.4, 8, 1)
+local CamAng = Angle(0, 90, 90)
+local CamScale = 0.05
 
+local matGlow = Material("sprites/glow04_noz")
 function ENT:Initialize()
 	self:DrawShadow(false)
 	self:SetRenderBounds(Vector(-40, -40, -18), Vector(40, 40, 80))
@@ -20,7 +30,8 @@ function ENT:Initialize()
 	if self:GetStartTime() == 0 then
 		self:SetStartTime(CurTime())
 	end
-
+	hook.Add("ShouldDrawLocalPlayer", self, self.ShouldDrawLocalPlayer)
+	hook.Add("CalcView", self, self.CalcView)
 	owner.SigilTeleport = self
 end
 
@@ -31,6 +42,7 @@ function ENT:OnRemove()
 end
 
 function ENT:Think()
+
 	local owner = self:GetOwner()
 	if owner ~= LocalPlayer() then return end
 
@@ -68,12 +80,14 @@ function ENT:Think()
 end
 
 function ENT:SetParticleColor(particle)
-	particle:SetColor(120, 202, 5)
+	particle:SetColor(38, 102, 255)
 end
+local CamData = {x = 0, y = 0, w = h * 2, h = h * 2, drawhud = false, drawmonitors = false, drawviewmodel = false, aspectratio = w / h}
+--[[function ENT:Draw()
+	--if !MySelf:KeyDown(IN_DUCK) then return end
+	local camera = self:GetTargetSigil()
+	if not camera:IsValid() then return end
 
-<<<<<<< Updated upstream
-function ENT:Draw()
-=======
 
 	local camangs = camera:GetAngles()
 	camangs:RotateAroundAxis(camera:GetRight(), 90)
@@ -129,5 +143,4 @@ function ENT:CalcView(pl, origin, angles, fov, znear, zfar)
 	local tr = util.TraceHull({start = trg:GetPos() + Vector(0,0,94), endpos = trg:GetPos(), mask = MASK_SHOT, filter = filter, mins = ViewHullMins, maxs = ViewHullMaxs})
 
 	return {origin = tr.HitPos + tr.HitNormal * 3}
->>>>>>> Stashed changes
 end

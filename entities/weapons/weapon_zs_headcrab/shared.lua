@@ -261,8 +261,6 @@ end
 
 util.PrecacheSound("npc/antlion/digdown1.wav")
 util.PrecacheSound("npc/antlion/digup1.wav")
-<<<<<<< Updated upstream
-=======
 
 function SWEP:ApplyMeleeDamage(pl, trace, damage)
 	if SERVER and pl:IsPlayer() then
@@ -276,4 +274,3 @@ function SWEP:ApplyMeleeDamage(pl, trace, damage)
 	end
 	self.BaseClass.ApplyMeleeDamage(self, pl, trace, damage)
 end
->>>>>>> Stashed changes

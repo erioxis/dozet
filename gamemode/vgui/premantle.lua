@@ -3,7 +3,7 @@ local function ScrapLabelThink(self)
 	if self.m_LastScrap ~= scrap then
 		self.m_LastScrap = scrap
 
-		self:SetText("Scrap for usage: "..scrap)
+		self:SetText(translate.Get("rem_cost_i_u")..scrap)
 		self:SizeToContents()
 	end
 end
@@ -115,8 +115,8 @@ function PANEL:Init()
 	end
 
 	self:SetCamPos( Vector( 20000, 0, 0 ) )
-	self:SetLookAt( Vector( 0, 0, 0 ) )
-	self:SetFOV( 7 )
+	self:SetLookAt( Vector( 0, 190, 100 ) )
+	self:SetFOV( 12 )
 
 	self:SetAmbientLight( Color( 50, 50, 50 ) )
 
@@ -136,7 +136,7 @@ function PANEL:Init()
 	local desc = {}
 	for i=1, 5 do
 		local qualityd = vgui.Create("DLabel", top)
-		qualityd:SetFont("ZSHUDFontSmallest")
+		qualityd:SetFont("ZS3D2DFontTiny")
 		qualityd:SetTextColor(COLOR_GRAY)
 		qualityd:SetContentAlignment(8)
 		qualityd:Dock(TOP)
@@ -144,11 +144,11 @@ function PANEL:Init()
 	end
 
 	local bottom = vgui.Create("Panel", self)
-	bottom:SetSize(ScrW(), 36 * screenscale)
+	bottom:SetSize(ScrW(), 46 * screenscale)
 	bottom:SetMouseInputEnabled(false)
 
 	local scrapcost = vgui.Create("DLabel", bottom)
-	scrapcost:SetFont("ZSHUDFontSmaller")
+	scrapcost:SetFont("ZSHUDFontSmall")
 	scrapcost:SetTextColor(COLOR_WHITE)
 	scrapcost:SetContentAlignment(2)
 	scrapcost:Dock(TOP)
@@ -256,15 +256,15 @@ function PANEL:Paint(w, h)
 
 						local beamsize = 4
 						if othernode.Unlocked then
-							colBeam.r = 32
-							colBeam.g = 128
-							colBeam.b = 255
+							colBeam.r = 60
+							colBeam.g = 255
+							colBeam.b = 120
 						elseif node.Unlocked then
 							colBeam.r = 255
 							colBeam.g = 192
 							colBeam.b = 0
 						else
-							colBeam.r = 128
+							colBeam.r = 0
 							colBeam.g = 40
 							colBeam.b = 40
 
@@ -300,7 +300,7 @@ function PANEL:Paint(w, h)
 	hovquality = nil
 	hovbranch = nil
 
-	local angle = (realtime * 180) % 360
+	local angle = (realtime * 90) % 180
 
 	for branch, nodes in pairs(self.RemantleNodes) do
 		for id, node in pairs(nodes) do
@@ -308,7 +308,7 @@ function PANEL:Paint(w, h)
 				nodepos = node:GetPos()
 				selected = intersectpos and nodepos:DistToSqr(intersectpos) <= 36
 
-				cam.Start3D2D(node:GetPos() - to_camera * 8, Angle(0, 90, 90), 0.08)
+				cam.Start3D2D(node:GetPos() - to_camera * 16, Angle(0, 90, 90), 0.08)
 				surface.DisableClipping(true)
 				DisableClipping(true)
 
@@ -338,7 +338,7 @@ function PANEL:Paint(w, h)
 				render.ModelMaterialOverride()
 				render.SetColorModulation(1, 1, 1)
 
-				local txt = "Standard"
+				local txt = translate.Get("rem_standart")
 				local quals = GAMEMODE.WeaponQualities[id]
 				if quals then
 					txt = node.Name or branch == 0 and quals[1] or quals[3]
@@ -375,7 +375,7 @@ function PANEL:Paint(w, h)
 	end
 
 	if intersectpos then
-		intersectpos = intersectpos + Vector(16, 0, 0)
+		intersectpos = intersectpos + Vector(8, 0, 0)
 		render.SetMaterial(matGlow)
 		render.DrawQuadEasy(intersectpos, to_camera, 12, 12, color_white, realtime * 90)
 	end
@@ -390,18 +390,18 @@ function PANEL:Paint(w, h)
 		self.Bottom:Stop()
 
 		if hovquality and hovbranch then
-			local txt, scost = "Standard", ""
+			local txt, scost = translate.Get("rem_standart"), ""
 
 			local quals = GAMEMODE.WeaponQualities[hovquality]
 			if quals then
 				txt = self.RemantleNodes[hovbranch][hovquality].Name or hovbranch == 0 and quals[1] or quals[3]
-				scost = GAMEMODE:GetUpgradeScrap(self.GunTab, hovquality)
+				scost = math.floor(GAMEMODE:GetUpgradeScrap(self.GunTab, hovquality) * (MySelf.ScrapDiscount or 1))
 			end
 
 			self.QualityName:SetText(txt)
 			self.QualityName:SizeToContents()
 
-			self.ScrapCost:SetText(scost ~= "" and "Scrap Cost: " .. scost or "")
+			self.ScrapCost:SetText(scost ~= "" and translate.Get("rem_cost") .. scost or "")
 			self.ScrapCost:SetTextColor(scost ~= "" and MySelf:GetAmmoCount("scrap") >= scost and COLOR_WHITE or COLOR_RED)
 			self.ScrapCost:SizeToContents()
 
@@ -411,7 +411,7 @@ function PANEL:Paint(w, h)
 
 			for i=1, 5 do
 				dtxt = " "
-				if txt ~= "Standard" and altdesc and altdescs and altdescs[i] then
+				if txt ~= translate.Get("rem_standart") and altdesc and altdescs and altdescs[i] then
 					dtxt = altdescs[i]
 				end
 
@@ -460,7 +460,7 @@ net.Receive("zs_remantleconf", function()
 	ri.m_ContentsLabel:CenterHorizontal()
 
 	local retscrap = GAMEMODE:GetDismantleScrap(gtbl)
-	local disscraptxt = gtbl.NoDismantle and "Cannot Dismantle" or "Dismantle for " .. retscrap .. " Scrap"
+	local disscraptxt = gtbl.NoDismantle and translate.Get("rem_nodism") or translate.Format("rem_dis_for",retscrap)
 
 	ri.m_Dismantle:SetText(disscraptxt)
 	ri.m_Dismantle:SizeToContents()
@@ -480,20 +480,20 @@ function PANEL:OnMousePressed(mc)
 		if cqua and hovquality > cqua and prev and prev.Unlocked and not current.Locked then
 
 
-			local scost = GAMEMODE:GetUpgradeScrap(self.GunTab, hovquality)
+			local scost = math.floor(GAMEMODE:GetUpgradeScrap(self.GunTab, hovquality) * (MySelf.ScrapDiscount or 1))
 			if MySelf:GetAmmoCount("scrap") >= scost then
 				GAMEMODE.RemantlerInterface.BranchCache = hovbranch
 				RunConsoleCommand("zs_upgrade", hovbranch ~= 0 and hovbranch)
 
 				return
 			else
-				GAMEMODE:CenterNotify(COLOR_RED, "You need enough scrap to upgrade this weapon!")
+				GAMEMODE:CenterNotify(COLOR_RED, translate.Get("rem_enough_scr"))
 				surface.PlaySound("buttons/button8.wav")
 
 				return
 			end
 		else
-			GAMEMODE:CenterNotify(COLOR_RED, "You must upgrade your weapon to the correct quality first!")
+			GAMEMODE:CenterNotify(COLOR_RED,translate.Get("rem_q_first"))
 			surface.PlaySound("buttons/button8.wav")
 
 			return
@@ -514,7 +514,7 @@ function GM:OpenRemantlerMenu(remantler)
 	end
 
 	local screenscale = BetterScreenScale()
-	local wid, hei = math.min(ScrW(), 900) * screenscale, math.min(ScrH(), 800) * screenscale
+	local wid, hei = math.min(ScrW(), 1000) * screenscale, math.min(ScrH(), 800) * screenscale
 	local tabhei = 24 * screenscale
 
 	local frame = vgui.Create("DFrame")
@@ -548,9 +548,9 @@ function GM:OpenRemantlerMenu(remantler)
 	local topspace = vgui.Create("DPanel", frame)
 	topspace:SetWide(wid - 16)
 
-	local title = EasyLabel(topspace, "Weapon Remantler", "ZSHUDFontSmall", COLOR_WHITE)
+	local title = EasyLabel(topspace, translate.Get("weapon_remantler"), "ZSHUDFontSmall", COLOR_WHITE)
 	title:CenterHorizontal()
-	local subtitle = EasyLabel(topspace, "Dismantle weapons into scrap and use scrap to upgrade weapons!", "ZSHUDFontTiny", COLOR_WHITE)
+	local subtitle = EasyLabel(topspace,  translate.Get("rem_title_d"), "ZSHUDFontTiny", COLOR_WHITE)
 	subtitle:CenterHorizontal()
 	subtitle:MoveBelow(title, 4)
 
@@ -562,12 +562,12 @@ function GM:OpenRemantlerMenu(remantler)
 	local bottomspace = vgui.Create("DPanel", frame)
 	bottomspace:SetWide(topspace:GetWide())
 
-	local pointslabel = EasyLabel(bottomspace, "Scrap for usage: 0", "ZSHUDFontTiny", COLOR_GREEN)
+	local pointslabel = EasyLabel(bottomspace, translate.Get("rem_cost_i_u").."0", "ZSHUDFontTiny", COLOR_GREEN)
 	pointslabel:AlignTop(4)
 	pointslabel:AlignLeft(8)
 	pointslabel.Think = ScrapLabelThink
 
-	local lab = EasyLabel(bottomspace, "Disassembling your weapons cannot be reversed!", "ZSHUDFontTiny")
+	local lab = EasyLabel(bottomspace, translate.Get("rep_dis_we"), "ZSHUDFontTiny")
 	lab:AlignTop(4)
 	lab:AlignRight(4)
 	frame.m_AdviceLabel = lab
@@ -588,20 +588,20 @@ function GM:OpenRemantlerMenu(remantler)
 	remprop:SetPadding(0)
 
 	local remantleframe = vgui.Create("DPanel", remprop)
-	local sheet = remprop:AddSheet("Remantling", remantleframe, "icon16/arrow_up.png", false, false)
+	local sheet = remprop:AddSheet(translate.Get("rem_t_remling"), remantleframe, "icon16/arrow_up.png", false, false)
 	sheet.Panel:SetPos(0, tabhei + 2)
 	remantleframe.Paint = function(me, w, h) surface.SetDrawColor(31, 33, 35, 255) surface.DrawRect(0, 0, w, h) end
 	remantleframe:SetSize(wid - 8, boty - topy - 8 - topspace:GetTall())
 
 	local trinketsframe = vgui.Create("DPanel")
-	sheet = remprop:AddSheet("Trinkets", trinketsframe, GAMEMODE.ItemCategoryIcons[ITEMCAT_TRINKETS], false, false)
+	sheet = remprop:AddSheet(translate.Get("rem_t_trink"),  trinketsframe, GAMEMODE.ItemCategoryIcons[ITEMCAT_TRINKETS], false, false)
 	sheet.Panel:SetPos(0, tabhei + 2)
-	trinketsframe:SetSize(wid - 8, boty - topy - 8 - topspace:GetTall())
+	trinketsframe:SetSize(wid - 16, boty - topy - 8 - topspace:GetTall())
 	trinketsframe:SetPaintBackground(false)
 	frame.TrinketsFrame = trinketsframe
 
 	local ammoframe = vgui.Create("DPanel")
-	sheet = remprop:AddSheet("Ammunition", ammoframe, GAMEMODE.ItemCategoryIcons[ITEMCAT_AMMO], false, false)
+	sheet = remprop:AddSheet(translate.Get("rem_t_ammo"), ammoframe, GAMEMODE.ItemCategoryIcons[ITEMCAT_AMMO], false, false)
 	sheet.Panel:SetPos(0, tabhei + 2)
 	ammoframe:SetSize(wid - 8, boty - topy - 8 - topspace:GetTall())
 	ammoframe:SetPaintBackground(true)
@@ -618,7 +618,7 @@ function GM:OpenRemantlerMenu(remantler)
 			tabpane.Buttons = {}
 			tabpane:SetSize(curframe:GetWide(), curframe:GetTall())
 
-			local offset = 64 * screenscale
+			local offset = 72 * screenscale
 			local itemframe = vgui.Create("DScrollPanel", tabpane)
 			itemframe:SetSize(curframe:GetWide(), curframe:GetTall() - offset - 32)
 			itemframe:SetPos(0, offset)
@@ -637,18 +637,13 @@ function GM:OpenRemantlerMenu(remantler)
 			local subcats = GAMEMODE.ItemSubCategories
 			local tbn
 			for j = 1, #subcats do
-				local ispacer = ((j-1) % 3)+1
+				local ispacer = ((j-1) % 4)+1
 
-				tbn = EasyButton(tabpane, subcats[j], 8, 4)
-				tbn:SetFont("ZSHUDFontSmallest")
+				tbn = EasyButton(tabpane, subcats[j], 9, 4)
+				tbn:SetFont("ZS3D2DFontTiny")
 				tbn:SetAlpha(j == 1 and 255 or 70)
-<<<<<<< Updated upstream
-				tbn:AlignRight(800 * screenscale - (ispacer - 1) * 190 * screenscale)
-				tbn:AlignTop(j <= 3 and 0 or 28)
-=======
 				tbn:AlignRight(800 * screenscale - (ispacer - 1) * 120 * screenscale)
 				tbn:AlignTop(j <= 4 and 2 or 40)
->>>>>>> Stashed changes
 				tbn:SizeToContents()
 				tbn.DoClick = function(me)
 					for k, v in pairs(tabpane.Grids) do
@@ -671,16 +666,16 @@ function GM:OpenRemantlerMenu(remantler)
 			local list = vgui.Create("DGrid", curframe)
 			list:SetPos(0, 0)
 			list:SetSize(curframe:GetWide() - 312, curframe:GetTall())
-			list:SetCols(3)
+			list:SetCols(2)
 			list:SetColWide(290 * screenscale)
-			list:SetRowHeight(100 * screenscale)
+			list:SetRowHeight(120 * screenscale)
 
 			list:SetPos(8, 16)
 			list:SetWide(ammoframe:GetWide() - 16)
-			list:SetTall(ammoframe:GetTall() - 32)
+			list:SetTall(ammoframe:GetTall() - 38)
 
 			for j, tab in ipairs(GAMEMODE.Items) do
-				if tab.PointShop and tab.Category == ITEMCAT_AMMO or tab.CanMakeFromScrap then
+				if tab.PointShop and tab.Category == ITEMCAT_AMMO and not tab.DontScrap or tab.CanMakeFromScrap then
 					self:AddShopItem(list, j, tab, false, true)
 				end
 			end
@@ -709,7 +704,7 @@ function GM:OpenRemantlerMenu(remantler)
 
 	frame.RemantlePath = vgui.Create("ZSRemantlePath", upgpathf)
 
-	local disabtn = EasyButton(remantleframe, "Dismantle Weapon", 8, 4)
+	local disabtn = EasyButton(remantleframe, translate.Get("rem_dismantle"), 8, 4)
 	disabtn:SetFont("ZSHUDFont")
 	disabtn:SizeToContents()
 	disabtn:MoveBelow(upgpathf, 32 * screenscale)
@@ -725,13 +720,8 @@ function GM:OpenRemantlerMenu(remantler)
 
 	local disscraptxt = ""
 	if gtbl then
-<<<<<<< Updated upstream
-		local retscrap = self:GetDismantleScrap(gtbl, SelectedInv())
-		disscraptxt = gtbl.NoDismantle and "Cannot Dismantle" or "Dismantle for " .. retscrap .. " Scrap"
-=======
 		local retscrap = self:GetDismantleScrap(gtbl, SelectedInv(),MySelf)
 		disscraptxt = gtbl.NoDismantle and translate.Get("rem_nodism") or translate.Format("rem_dis_for",retscrap)
->>>>>>> Stashed changes
 	end
 
 	local disscrap = EasyLabel(remantleframe, disscraptxt, "ZSHUDFontSmaller", COLOR_WHITE)

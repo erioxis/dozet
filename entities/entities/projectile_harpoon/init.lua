@@ -63,7 +63,7 @@ function ENT:Hit(vHitPos, vHitNormal, vel, hitent)
 			ent:Spawn()
 
 			if owner:IsValidHuman() then
-				ent.NoPickupsTime = CurTime() + 15
+				ent.NoPickupsTime = CurTime() + 10
 				ent.NoPickupsOwner = self:GetOwner()
 			end
 

@@ -4,9 +4,9 @@ CLASS.Name = "The Grave Darkness"
 CLASS.TranslationName = "class_gravedigger"
 CLASS.Description = "description_gravedigger"
 CLASS.Help = "controls_gravedigger"
-
+CLASS.KnockbackScale = 1
 CLASS.Boss = true
-
+CLASS.DemiBoss = false
 CLASS.Health = 1922
 CLASS.Speed = 220
 
@@ -31,10 +31,7 @@ CLASS.SWEP = "weapon_zs_graveshovelz"
 if SERVER then
 	function CLASS:OnSpawned(pl)
 		pl:CreateAmbience("gravediggerambience")
-<<<<<<< Updated upstream
-=======
 
->>>>>>> Stashed changes
 	end
 end
 

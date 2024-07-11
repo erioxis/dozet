@@ -1,6 +1,6 @@
-SWEP.PrintName = "'Artemis' Dual Crossbows"
-SWEP.Description = "A pair of miniature crossbows. Fires quick successions of explosive bolts."
 
+SWEP.PrintName = " "..translate.Get("wep_artemis")
+SWEP.Description = " "..translate.Get("wep_d_artemis")
 SWEP.Slot = 3
 SWEP.SlotPos = 0
 
@@ -70,6 +70,7 @@ GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_CLIP_SIZE, 1, 1)
 GAMEMODE:AddNewRemantleBranch(SWEP, 1, "'Actaeon' Dual Crossbows", "Bolts pierce slightly instead of exploding, and inflict damage vulnerability, less damage", function(wept)
 	wept.Primary.Damage = wept.Primary.Damage * 0.75
 	wept.Primary.Projectile = "projectile_arrow_inq"
+	wept.PointsMultiplier = 3.5
 	wept.EntModify = function(self, ent)
 		ent:SetDTBool(0, true)
 	end

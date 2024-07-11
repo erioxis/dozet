@@ -1,8 +1,9 @@
 AddCSLuaFile()
 
-SWEP.PrintName = "'Owens' Handgun"
-SWEP.Description = "A somewhat less accurate pistol that fires two shots that deal respectable total damage."
-
+--SWEP.PrintName = "'Owens' Handgun"
+--SWEP.Description = "A somewhat less accurate pistol that fires two shots that deal respectable total damage."
+SWEP.PrintName = translate.Get("wep_owens")
+SWEP.Description = translate.Get("wep_d_owens")
 SWEP.Slot = 1
 SWEP.SlotPos = 0
 
@@ -34,7 +35,7 @@ SWEP.CSMuzzleFlashes = false
 
 SWEP.ReloadSound = Sound("Weapon_Pistol.Reload")
 SWEP.Primary.Sound = Sound("Weapon_Pistol.NPC_Single")
-SWEP.Primary.Damage = 14.2
+SWEP.Primary.Damage = 9.4
 SWEP.Primary.NumShots = 2
 SWEP.Primary.Delay = 0.2
 
@@ -46,8 +47,8 @@ GAMEMODE:SetupDefaultClip(SWEP.Primary)
 
 SWEP.ReloadSpeed = 0.7
 
-SWEP.ConeMax = 4
-SWEP.ConeMin = 2.5
+SWEP.ConeMax = 5
+SWEP.ConeMin = 3.5
 
 SWEP.IronSightsPos = Vector(-5.95, 3, 2.75)
 SWEP.IronSightsAng = Vector(-0.15, -1, 2)

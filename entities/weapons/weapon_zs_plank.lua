@@ -1,12 +1,7 @@
 AddCSLuaFile()
 
-<<<<<<< Updated upstream
-SWEP.PrintName = "Plank"
-SWEP.Description = "Обычная доска..."
-=======
 SWEP.PrintName = translate.Get("wep_plank")
 
->>>>>>> Stashed changes
 
 if CLIENT then
 	SWEP.ViewModelFOV = 55
@@ -76,24 +71,6 @@ function SWEP:PostOnMeleeMiss(tr)
 	self:SetDTInt(2, 0)
 end
 
-<<<<<<< Updated upstream
-GAMEMODE:AddNewRemantleBranch(SWEP, 1, "'Planket'", "Give Bleed when you hit zombie,less damage,", function(wept)
-wept.MeleeDamage = 13
-wept.ApplyMeleeDamage = function(ent, trace, damage)
-	if SERVER and ent:IsPlayer() then
-
-		local bleed = ent:GiveStatus("bleed")
-		if bleed and bleed:IsValid() then
-		
-			bleed.Damager = self:GetOwner()
-			bleed:AddDamage(6)
-		end
-	end
-
-	self.BaseClass.ApplyMeleeDamage(self, ent, trace, damage)
-end
-end)
-=======
 GAMEMODE:AddNewRemantleBranch(SWEP, 1, translate.Get("wep_plank_r1"), translate.Get("wep_plank_d_r1"), function(wept)
 	wept.MeleeDamage = wept.MeleeDamage * 0.8
 	wept.BleedDamage = wept.MeleeDamage * 2
@@ -133,4 +110,3 @@ GAMEMODE:AddNewRemantleBranch(SWEP, 1, translate.Get("wep_plank_r1"), translate.
 	end
 
 end)
->>>>>>> Stashed changes

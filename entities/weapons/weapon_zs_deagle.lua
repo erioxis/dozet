@@ -1,7 +1,9 @@
 AddCSLuaFile()
 
-SWEP.PrintName = "'Zombie Drill' Desert Eagle"
-SWEP.Description = "This handgun uses high-powered rounds that have more knockback than others." --SWEP.Description = "This high-powered handgun has the ability to pierce through multiple zombies. The bullet's power decreases by half which each zombie it hits."
+--"'Zombie Drill' Desert Eagle"
+-- "This handgun uses high-powered rounds that have more knockback than others." --SWEP.Description = "This high-powered handgun has the ability to pierce through multiple zombies. The bullet's power decreases by half which each zombie it hits."
+SWEP.PrintName = ""..translate.Get("wep_deagle")
+SWEP.Description = ""..translate.Get("wep_d_deagle")
 SWEP.Slot = 1
 SWEP.SlotPos = 0
 

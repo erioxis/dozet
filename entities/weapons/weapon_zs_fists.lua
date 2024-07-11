@@ -1,7 +1,7 @@
 AddCSLuaFile()
 SWEP.PrintName = "Fists"
 
-SWEP.Base = "weapon_zs_basemelee"
+SWEP.Base = "weapon_zs_hammer"
 
 SWEP.ViewModel = "models/weapons/c_arms_citizen.mdl"
 SWEP.WorldModel	= ""
@@ -12,15 +12,19 @@ SWEP.HoldType = "fist"
 SWEP.WalkSpeed = SPEED_NORMAL
 SWEP.OldWalkSpeed = 0
 
-SWEP.MeleeDamage = 15
+SWEP.MeleeDamage = 9
 SWEP.DamageType = DMG_CLUB
 SWEP.UppercutDamageMultiplier = 3
 SWEP.HitDistance = 40
 SWEP.MeleeKnockBack = 0
 
 SWEP.ViewModelFOV = 52
-
+SWEP.Primary.Ammo = "scrap"
+SWEP.Primary.DefaultClip = 5
 SWEP.AutoSwitchFrom = true
+SWEP.HealStrength = 0.05
+
+SWEP.GoodAttackPerk = 0
 
 SWEP.Unarmed = true
 
@@ -29,7 +33,7 @@ SWEP.NoPickupNotification = true
 SWEP.NoDismantle = true
 SWEP.NoGlassWeapons = true
 
-SWEP.Primary.Delay = 0.6
+SWEP.Primary.Delay = 0.67
 
 SWEP.Weight = 2 -- This is the second crappiest weapon you could hope for, besides food
 SWEP.SlotPos = 100
@@ -99,6 +103,7 @@ function SWEP:PrimaryAttack(right)
 			owner:GetViewModel():SetPlaybackRate(0.5 / armdelay)
 		end
 	end
+
 
 	self:SetNextMeleeAttack( time + hitdelay )
 
@@ -178,12 +183,21 @@ function SWEP:DealDamage()
 		if anim == "fists_uppercut" then
 			damagemultiplier = damagemultiplier * self.UppercutDamageMultiplier
 		end
+			if owner:IsSkillActive(SKILL_GOODATTACK) then
+			    if self.GoodAttackPerk == 3 then
+					damagemultiplier = damagemultiplier * 3
+					self.GoodAttackPerk = 0
+				else
+					self.GoodAttackPerk = self.GoodAttackPerk + 1 
+				end
+			end		
 
 		local damage = self.MeleeDamage * damagemultiplier
 		local dmginfo = self:GenerateDamageInfo(damage, tr.HitPos)
 
 		local vel
 		if hitent:IsPlayer() then
+
 			self:PlayerHitUtil(owner, damage, hitent, dmginfo)
 
 			if SERVER then

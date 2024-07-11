@@ -17,11 +17,8 @@ SWEP.Primary.DefaultClip = 0
 SWEP.Primary.Automatic = false
 SWEP.Primary.Ammo = "pistol"
 SWEP.RequiredClip = 1
-<<<<<<< Updated upstream
-=======
 SWEP.Souleater = 0
 SWEP.NoAmmoFrom = false
->>>>>>> Stashed changes
 
 SWEP.Secondary.ClipSize = 1
 SWEP.Secondary.DefaultClip = 1
@@ -76,13 +73,6 @@ function SWEP:Initialize()
 		self:Anim_Initialize()
 	end
 end
-<<<<<<< Updated upstream
-
-function SWEP:PrimaryAttack()
-	if not self:CanPrimaryAttack() then return end
-
-	self:SetNextPrimaryFire(CurTime() + self:GetFireDelay())
-=======
 SWEP.xThreeDamage = 0
 SWEP.NextBimbimbambam = 0
 function SWEP:PrimaryAttack()
@@ -113,7 +103,6 @@ function SWEP:PrimaryAttack()
 			ent:SetPos(owner:GetShootPos())
 			ent:SetOwner(owner)
 			ent:Spawn()
->>>>>>> Stashed changes
 
 			ent.ProjDamage = self.Primary.Damage  * 4 * (!owner:IsSkillActive(SKILL_AND_AGAIN) and self.Primary.NumShots or 1) * (self.xThreeDamage%3 == 2 and 3 or 1) * (owner:IsSkillActive(SKILL_BIG_WAVE) and GAMEMODE:GetWave()*0.22 or 1)
 			ent.Team = owner:Team()
@@ -130,12 +119,8 @@ function SWEP:PrimaryAttack()
 	end
 	self:EmitFireSound()
 	self:TakeAmmo()
-<<<<<<< Updated upstream
-	self:ShootBullets(self.Primary.Damage, self.Primary.NumShots, self:GetCone())
-=======
 	self:ShootBullets(self.Primary.Damage * dmg, self.Primary.NumShots, self:GetCone())
 	self:SetShotgunHeat(CurTime()+(self.ShotGunHeatTimeMul or 1.2))
->>>>>>> Stashed changes
 	self.IdleAnimation = CurTime() + self:SequenceDuration()
 end
 
@@ -167,6 +152,7 @@ function SWEP:Reload()
 		self:EmitReloadSound()
 	end
 end
+
 
 function SWEP:GetPrimaryClipSize()
 	local owner = self:GetOwner()
@@ -225,14 +211,10 @@ function SWEP:GetCone()
 
 	local orphic = not owner.Orphic and 1 or self:GetIronsights() and 0.9 or 1.1
 	local tiervalid = (self.Tier or 1) <= 3
-<<<<<<< Updated upstream
-	local spreadmul = (owner.AimSpreadMul or 1) - ((tiervalid and owner:HasTrinket("refinedsub")) and 0.27 or 0)
-=======
 	local spreadmul = ((owner.AimSpreadMul or 1) - ((tiervalid and owner:HasTrinket("refinedsub")) and 0.27 or 0))
 	if self.ShotGunHeat then
 		spreadmul = spreadmul + 3*math.Clamp(self:GetShotgunHeat()-CurTime(),0,1)
 	end
->>>>>>> Stashed changes
 
 	if owner.TrueWooism then
 		return (basecone + conedelta * 0.5 ^ self.ConeRamp) * spreadmul * orphic
@@ -306,15 +288,8 @@ function SWEP:Holster()
 end
 
 SWEP.AU = 0
+SWEP.Eater = nil
 function SWEP:TakeAmmo()
-<<<<<<< Updated upstream
-	if self.AmmoUse then
-		self.AU = self.AU + self.AmmoUse
-		if self.AU >= 1 then
-			local use = math.floor(self.AU)
-			self:TakePrimaryAmmo(use)
-			self.AU = self.AU - use
-=======
 	if self.Eater then return  end
 	local own = self:GetOwner():IsSkillActive(SKILL_D_FINGERS)
 	for i=1, (own and 2 or 1) do
@@ -328,10 +303,7 @@ function SWEP:TakeAmmo()
 			end
 		else
 			self:TakePrimaryAmmo(self.RequiredClip)
->>>>>>> Stashed changes
 		end
-	else
-		self:TakePrimaryAmmo(self.RequiredClip)
 	end
 end
 
@@ -361,13 +333,11 @@ end
 
 function SWEP:CanPrimaryAttack()
 	if self:GetOwner():IsHolding() or self:GetOwner():GetBarricadeGhosting() or self:GetReloadFinish() > 0 then return false end
-
-	if self:Clip1() < self.RequiredClip then
+	if self:Clip1() < self.RequiredClip and not self:GetOwner():HasTrinket("ultra_mag") or  self:GetOwner():HasTrinket("ultra_mag") and self:GetOwner():GetAmmoCount(self.Primary.Ammo) < self.RequiredClip then
 		self:EmitSound(self.DryFireSound)
 		self:SetNextPrimaryFire(CurTime() + math.max(0.25, self.Primary.Delay))
 		return false
 	end
-
 	return self:GetNextPrimaryFire() <= CurTime()
 end
 
@@ -471,7 +441,7 @@ function SWEP:ShootBullets(dmg, numbul, cone)
 	end
 
 	owner:LagCompensation(true)
-	owner:FireBulletsLua(owner:GetShootPos(), owner:GetAimVector(), cone, numbul, dmg, nil, self.Primary.KnockbackScale, self.TracerName, self.BulletCallback, self.Primary.HullSize, nil, self.Primary.MaxDistance, nil, self)
+	owner:FireBulletsLua(owner:GetShootPos(), owner:GetAimVector(), cone, numbul, dmg  * (owner.BulletMul or 1), nil, self.Primary.KnockbackScale, self.TracerName, self.BulletCallback, self.Primary.HullSize, nil, self.Primary.MaxDistance, nil, self)
 	owner:LagCompensation(false)
 
 	if self.PointsMultiplier then

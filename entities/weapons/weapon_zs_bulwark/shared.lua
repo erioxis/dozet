@@ -1,6 +1,7 @@
-SWEP.PrintName = "'Bulwark' Minigun"
-SWEP.Description = "Необычный миниган,с очень маленьким уроном но при этом обладая дробью."
-
+--SWEP.PrintName = "'Bulwark' Minigun"
+--SWEP.Description = "Необычный миниган,с очень маленьким уроном но при этом обладая дробью."
+SWEP.PrintName = " "..translate.Get("wep_bulwark")
+SWEP.Description = " "..translate.Get("wep_d_bulwark")
 SWEP.Base = "weapon_zs_base"
 
 SWEP.HoldType = "shotgun"
@@ -11,11 +12,11 @@ SWEP.ShowViewModel = false
 SWEP.ShowWorldModel = false
 SWEP.UseHands = true
 
-SWEP.Primary.Damage = 5
-SWEP.Primary.NumShots = 5
-SWEP.Primary.Delay = 0.18
+SWEP.Primary.Damage = 24
+SWEP.Primary.NumShots = 3
+SWEP.Primary.Delay = 0.32
 
-SWEP.Primary.ClipSize = 200
+SWEP.Primary.ClipSize = 100
 SWEP.Primary.Automatic = true
 SWEP.Primary.Ammo = "smg1"
 GAMEMODE:SetupDefaultClip(SWEP.Primary)
@@ -23,20 +24,20 @@ GAMEMODE:SetupDefaultClip(SWEP.Primary)
 SWEP.Secondary.Automatic = true
 
 SWEP.ConeMax = 10
-SWEP.ConeMin = 3
+SWEP.ConeMin = 4
 
 SWEP.Recoil = 0.5
 
 SWEP.Tier = 5
 SWEP.MaxStock = 2
 
-GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_MAX_SPREAD, -0.769)
-GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_MIN_SPREAD, -0.656)
+GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_MAX_SPREAD, -0.169)
+GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_MIN_SPREAD, -0.256)
 GAMEMODE:AddNewRemantleBranch(SWEP, 1, "'Citadel' Minicannon", "Uses 3 ammo per shot, shoots slower, but more damage and accuracy", function(wept)
-	wept.Primary.Damage = wept.Primary.Damage * 2
+	wept.Primary.Damage = wept.Primary.Damage * 5
 	wept.ConeMin = wept.ConeMin * 2
 	wept.ConeMax = wept.ConeMax * 2
-	wept.Primary.Delay = wept.Primary.Delay * 2
+	wept.Primary.Delay = wept.Primary.Delay * 4
 	wept.Recoil = 4
 
 	wept.TakeAmmo = function(self)
@@ -53,8 +54,8 @@ GAMEMODE:AddNewRemantleBranch(SWEP, 1, "'Citadel' Minicannon", "Uses 3 ammo per 
 	end
 end)
 
-SWEP.WalkSpeed = SPEED_SLOWEST * 0.30
-SWEP.FireAnimSpeed = 0.3
+SWEP.WalkSpeed = SPEED_SLOWEST * 0.55
+SWEP.FireAnimSpeed = 0.33
 
 function SWEP:Initialize()
 	self.BaseClass.Initialize(self)

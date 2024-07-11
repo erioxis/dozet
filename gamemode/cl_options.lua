@@ -8,18 +8,14 @@ GM.ItemCategoryIcons = {
 	[ITEMCAT_TOOLS] = "icon16/wrench.png",
 	[ITEMCAT_DEPLOYABLES] = "icon16/package.png",
 	[ITEMCAT_OTHER] = "icon16/world.png",
-<<<<<<< Updated upstream
-	[ITEMCAT_TRINKETS] = "icon16/ruby.png" --[[,
-	[ITEMCAT_RETURNS] = "icon16/user_delete.png"]]
-=======
 	[ITEMCAT_TRINKETS] = "icon16/ruby.png", 
 	[ITEMCAT_SPECIAL] = "icon16/user_delete.png",
 	[ITEMCAT_MAGIC] = "icon16/user_delete.png",
 	[ITEMCAT_MODULES] = "icon16/ruby.png",
->>>>>>> Stashed changes
 }
 
 GM.RemortColors = {
+	[10] = COLOR_BLUE,
 	[9] = COLOR_TAN,
 	[8] = COLOR_BROWN,
 	[7] = COLOR_RPINK,
@@ -30,17 +26,17 @@ GM.RemortColors = {
 	[2] = COLOR_RORANGE,
 	[1] = COLOR_RED
 }
-
+local trs = translate.Get
 GM.SpeedToText = {
-	[SPEED_NORMAL] = "Normal",
-	[SPEED_SLOWEST] = "Very Slow",
-	[SPEED_SLOWER] = "Quite Slow",
-	[SPEED_SLOW] = "Slow",
-	[SPEED_FAST] = "Fast",
-	[SPEED_FASTER] = "Quite Fast",
-	[SPEED_FASTEST] = "Very Fast",
-	[SPEED_VKID] = "Dudeeee",
-	[-1] = "Ultra Slow",
+	[SPEED_NORMAL] = trs("p_speed1"),
+	[SPEED_SLOWEST] = trs("p_speed2"),
+	[SPEED_SLOWER] = trs("p_speed3"),
+	[SPEED_SLOW] = trs("p_speed4"),
+	[SPEED_FAST] = trs("p_speed5"),
+	[SPEED_FASTER] = trs("p_speed6"),
+	[SPEED_FASTEST] = trs("p_speed7"),
+	[SPEED_VKID] = trs("p_speed8"),
+	[-1] = trs("p_speed9"),
 }
 
 GM.AmmoToPurchaseNames = {
@@ -56,25 +52,19 @@ GM.AmmoToPurchaseNames = {
 }
 
 GM.WeaponStatBarVals = {
-	{"MeleeDamage", "Damage", 2, 140, false},
-	{"MeleeRange", "Range", 30, 100, false},
-	{"MeleeSize", "Size", 0.2, 3, false},
+	{"MeleeDamage", trs("p_dmg"), 2, 640, false},
+	{"MeleeRange",  trs("p_rng"), 30, 100, false},
+	{"MeleeSize", trs("p_sze"), 0.2, 3, false},
 
-	{"Damage", "Damage", 1, 105, false, "Primary"},
-	{"Delay", "Attack Delay", 0.05, 2, true, "Primary"},
-	{"ClipSize", "Clip Size", 1, 35, false, "Primary"},
+	{"Damage", trs("p_dmg"), 1, 506, false, "Primary"},
+	{"Delay", trs("p_atd"), 0.05, 3, true, "Primary"},
+	{"ClipSize", trs("p_cze"), 1, 35, false, "Primary"},
 
-<<<<<<< Updated upstream
-	{"ConeMin", "Min Spread", 0, 5, true},
-	{"ConeMax", "Max Spread", 1.5, 7, true},
-	{"WalkSpeed", "Move Speed", 200, 250, false}
-=======
 	{"ConeMin",  trs("p_min_spr"), 0, 5, true},
 	{"ConeMax",  trs("p_max_spr"), 1, 7, true},
 	{"ReloadSpeed", trs("p_r_speed"), 0.05, 3, true, "Primary"},
 	{"BlockMultiplierWeapon",trs("p_block_m"),0,1,false},
 	{"WalkSpeed", trs("p_msp"), 200, 350, false}
->>>>>>> Stashed changes
 }
 
 GM.LifeStatsLifeTime = 5
@@ -92,7 +82,7 @@ cvars.AddChangeCallback("zs_crosshair_colr2", function(cvar, oldvalue, newvalue)
 cvars.AddChangeCallback("zs_crosshair_colg2", function(cvar, oldvalue, newvalue) GAMEMODE.CrosshairColor2.g = tonumber(newvalue) or 255 end)
 cvars.AddChangeCallback("zs_crosshair_colb2", function(cvar, oldvalue, newvalue) GAMEMODE.CrosshairColor2.b = tonumber(newvalue) or 255 end)
 cvars.AddChangeCallback("zs_crosshair_cola2", function(cvar, oldvalue, newvalue) GAMEMODE.CrosshairColor2.a = tonumber(newvalue) or 255 end)
-
+cvars.AddChangeCallback("zs_crosshair_colb2", function(cvar, oldvalue, newvalue) GAMEMODE.CrosshairColor2.b = tonumber(newvalue) or 255 end)
 GM.FilmMode = CreateClientConVar("zs_filmmode", "0", true, false):GetBool()
 cvars.AddChangeCallback("zs_filmmode", function(cvar, oldvalue, newvalue)
 	GAMEMODE.FilmMode = tonumber(newvalue) == 1
@@ -141,11 +131,9 @@ end)
 
 CreateClientConVar("zs_alwaysvolunteer", "0", true, true)
 CreateClientConVar("zs_nobosspick", "0", true, true)
+CreateClientConVar("zs_blockunable", "0", true, true)
+CreateClientConVar("zs_blockposition", "0", true, true)
 CreateClientConVar("zs_nousetodeposit", "0", true, true)
-<<<<<<< Updated upstream
-CreateClientConVar("zs_nopickupprops", "0", true, true)
-
-=======
 CreateClientConVar("zs_mge_phrases", "0", true, true)
 
 
@@ -160,13 +148,10 @@ GM.FixTheLag = CreateClientConVar("zs_fixthelag", "0", true, false):GetBool()
 cvars.AddChangeCallback("zs_fixthelag", function(cvar, oldvalue, newvalue)
 	GAMEMODE.FixTheLag = tonumber(newvalue) == 1
 end)
->>>>>>> Stashed changes
 GM.DisableScopes = CreateClientConVar("zs_disablescopes", "0", true, false):GetBool()
 cvars.AddChangeCallback("zs_disablescopes", function(cvar, oldvalue, newvalue)
 	GAMEMODE.DisableScopes = tonumber(newvalue) == 1
 end)
-<<<<<<< Updated upstream
-=======
 GM.RGB_HP = CreateClientConVar("zs_rgb_ura", "0", true, false):GetBool()
 cvars.AddChangeCallback("zs_rgb_ura", function(cvar, oldvalue, newvalue)
 	GAMEMODE.RGB_HP = tonumber(newvalue) == 1
@@ -231,7 +216,6 @@ GM.ShowPercDmg = CreateClientConVar("zs_show_dmg_in_perc", "0", true, false):Get
 cvars.AddChangeCallback("zs_show_dmg_in_perc", function(cvar, oldvalue, newvalue)
 	GAMEMODE.ShowPercDmg = tonumber(newvalue) == 1
 end)
->>>>>>> Stashed changes
 
 GM.GoofyAhhHud = CreateClientConVar("zs_goofy_ahh_hud", "0", true, false):GetBool()
 cvars.AddChangeCallback("zs_goofy_ahh_hud", function(cvar, oldvalue, newvalue)
@@ -250,8 +234,6 @@ cvars.AddChangeCallback("zs_x_y", function(cvar, oldvalue, newvalue)
 	GAMEMODE.X_Y_Skill = math.Clamp(tonumber(newvalue) or 20, 12, 45)
 end)
 
-<<<<<<< Updated upstream
-=======
 GM.Alpha_P = math.Clamp(CreateClientConVar("zs_alpha_p", 90, true, false):GetFloat(), 0, 1)
 cvars.AddChangeCallback("zs_alpha_p", function(cvar, oldvalue, newvalue)
 	GAMEMODE.Alpha_P = math.Clamp(tonumber(newvalue) or 1, 0, 1)
@@ -288,7 +270,6 @@ cvars.AddChangeCallback("zs_bg_col_b", function(cvar, oldvalue, newvalue)
 	GAMEMODE.BG_B = math.Clamp(tonumber(newvalue) or 0, 0, 255)
 end)
 
->>>>>>> Stashed changes
 GM.ThirdPersonKnockdown = CreateClientConVar("zs_thirdpersonknockdown", "1", true, false):GetBool()
 cvars.AddChangeCallback("zs_thirdpersonknockdown", function(cvar, oldvalue, newvalue)
 	GAMEMODE.ThirdPersonKnockdown = tonumber(newvalue) == 1
@@ -424,6 +405,38 @@ end)
 GM.TransparencyRadius3p = math.Clamp(CreateClientConVar("zs_transparencyradius3p", 140, true, false):GetInt(), 0, GM.TransparencyRadiusMax) ^ 2
 cvars.AddChangeCallback("zs_transparencyradius3p", function(cvar, oldvalue, newvalue)
 	GAMEMODE.TransparencyRadius3p = math.Clamp(tonumber(newvalue) or 0, 0, GAMEMODE.TransparencyRadiusMax) ^ 2
+end)
+GM.XRadiusBlock = CreateClientConVar("zs_x_block_func", 140, true, false):GetInt(), 0, GM.XRadiusBlock
+cvars.AddChangeCallback("zs_x_block_func", function(cvar, oldvalue, newvalue)
+	GAMEMODE.XRadiusBlock = math.Clamp(tonumber(newvalue) or 0, 0, 3000)
+end)
+GM.YRadiusBlock = CreateClientConVar("zs_block_func", 140, true, false):GetInt(), 0, GM.YRadiusBlock
+cvars.AddChangeCallback("zs_block_func", function(cvar, oldvalue, newvalue)
+	GAMEMODE.YRadiusBlock = math.Clamp(tonumber(newvalue) or 0, 0, 300)
+end)
+GM.RHealth = CreateClientConVar("zs_rhealth", 140, true, false):GetInt(), 0, GM.XRadiusBlock
+cvars.AddChangeCallback("zs_rhealth", function(cvar, oldvalue, newvalue)
+	GAMEMODE.RHealth = math.Clamp(tonumber(newvalue) or 0, 0, 255)
+end)
+GM.GHealth = CreateClientConVar("zs_ghealth", 140, true, false):GetInt(), 0, GM.YRadiusBlock
+cvars.AddChangeCallback("zs_ghealth", function(cvar, oldvalue, newvalue)
+	GAMEMODE.GHealth = math.Clamp(tonumber(newvalue) or 0, 0, 255)
+end)
+GM.BHealth = CreateClientConVar("zs_bhealth", 140, true, false):GetInt(), 0, GM.YRadiusBlock
+cvars.AddChangeCallback("zs_bhealth", function(cvar, oldvalue, newvalue)
+	GAMEMODE.BHealth = math.Clamp(tonumber(newvalue) or 0, 0, 255)
+end)
+GM.Rblood = CreateClientConVar("zs_rblood", 140, true, false):GetInt(), 0, GM.XRadiusBlock
+cvars.AddChangeCallback("zs_rblood", function(cvar, oldvalue, newvalue)
+	GAMEMODE.Rblood = math.Clamp(tonumber(newvalue) or 0, 0, 255)
+end)
+GM.Gblood = CreateClientConVar("zs_gblood", 140, true, false):GetInt(), 0, GM.YRadiusBlock
+cvars.AddChangeCallback("zs_gblood", function(cvar, oldvalue, newvalue)
+	GAMEMODE.Gblood = math.Clamp(tonumber(newvalue) or 0, 0, 255)
+end)
+GM.Bblood = CreateClientConVar("zs_bblood", 140, true, false):GetInt(), 0, GM.YRadiusBlock
+cvars.AddChangeCallback("zs_bblood", function(cvar, oldvalue, newvalue)
+	GAMEMODE.Bblood = math.Clamp(tonumber(newvalue) or 0, 0, 255)
 end)
 
 GM.MovementViewRoll = CreateClientConVar("zs_movementviewroll", "0", true, false):GetBool()

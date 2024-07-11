@@ -12,4 +12,3 @@ SWEP.ShowWorldModel = false
 SWEP.Primary.Ammo = "molotov"
 SWEP.Primary.Sound = Sound("ambient/fire/mtov_flame2.wav")
 
-SWEP.MaxStock = 8

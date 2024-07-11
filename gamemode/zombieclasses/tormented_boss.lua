@@ -1,6 +1,6 @@
 CLASS.Base = "wraith"
 
-CLASS.Name = "Corrupted Boss"
+CLASS.Name = "Soul Of Child"
 CLASS.TranslationName = "class_tormented_boss"
 CLASS.Description = "description_tormented_wraith"
 CLASS.Help = "controls_tormented_wraith"
@@ -97,14 +97,4 @@ function CLASS:PrePlayerDraw(pl)
 	render.SetColorModulation(0.025, 0.15, 0.065)
 	render.SuppressEngineLighting(true)
 end
-<<<<<<< Updated upstream
-if SERVER then
-	function CLASS:ProcessDamage(pl, dmginfo)
-		if dmginfo:GetInflictor().IsMelee then
-			dmginfo:SetDamage(dmginfo:GetDamage() / 7)
-		end
-	end
-	end
-=======
 
->>>>>>> Stashed changes

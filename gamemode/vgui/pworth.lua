@@ -102,6 +102,10 @@ local function ClearCartDoClick()
 
 	surface.PlaySound("buttons/button11.wav")
 end
+local function OpenArsenal(self)
+	GAMEMODE:OpenArsenalMenu()
+	pWorth:Close()
+end
 
 local function ClickWorthButton(id)
 	local result = true
@@ -278,21 +282,25 @@ function MakepWorth()
 		local cartpan = vgui.Create("DEXRoundedPanel")
 		cartpan:SetCursor("pointer")
 		cartpan:SetSize(list:GetWide(), panhei)
+		local priceall = 0
+		local names = ""
+		for k, v in ipairs(savetab) do
+			if type(v) == "table" then
+				for _, name in pairs(v) do
+					priceall = (FindStartingItem(name) and FindStartingItem(name).Worth or 0) + priceall
+					names = (FindStartingItem(name) and (FindStartingItem(name).Name or weapons.Get(FindStartingItem(name)).PrintName) or "?")..","..names
 
-<<<<<<< Updated upstream
-=======
 				end
 			end
 		end
 		--local priceall = translate.Get("w_cost")..priceall
 		names = string.sub(names,0, string.len(names)-1)
 		
->>>>>>> Stashed changes
 		local cartname = savetab[1]
 
 		local x = 8
 		local limitedscale = math.Clamp(screenscale, 1, 1.5)
-
+		lol = 0
 		if defaultcart == cartname then
 			local defimage = vgui.Create("DImage", cartpan)
 			defimage:SetImage("icon16/heart.png")
@@ -300,19 +308,15 @@ function MakepWorth()
 			defimage:SetSize(16 * limitedscale, 16 * limitedscale)
 			defimage:SetMouseInputEnabled(true)
 			defimage:SetTooltip("This is your default cart.\nIf you join the game late then you'll spawn with this cart.")
-			defimage:SetPos(x, cartpan:GetTall() * 0.5 - defimage:GetTall() * 0.5)
+			defimage:SetPos(x, cartpan:GetTall() * 0.3 - defimage:GetTall() * 0.5)
 			x = x + defimage:GetWide() + 4
+			lol = defimage:GetWide()
 		end
 
-<<<<<<< Updated upstream
-		local cartnamelabel = EasyLabel(cartpan, cartname, panfont)
-		cartnamelabel:SetPos(x, cartpan:GetTall() * 0.5 - cartnamelabel:GetTall() * 0.5)
-=======
 		local cartnamelabel = EasyLabel(cartpan, cartname.." - "..translate.Get("w_cost")..priceall, panfont)
 		cartnamelabel:SetPos(x, cartpan:GetTall() * 0.3 - cartnamelabel:GetTall() * 0.5)
 		local cartnamelabel2 = EasyLabel(cartpan, names, nil, Color(238,255,87))
 		cartnamelabel2:SetPos(x - (defaultcart == cartname and lol + 4 or 0), cartpan:GetTall() * 0.76 - cartnamelabel2:GetTall() * 0.2)
->>>>>>> Stashed changes
 
 		x = cartpan:GetWide()
 
@@ -407,6 +411,14 @@ function MakepWorth()
 	randombutton:AlignBottom(8)
 	randombutton:AlignRight(8)
 	randombutton.DoClick = RandDoClick
+	
+	local arsop = vgui.Create("DButton", frame)
+	arsop:SetFont("ZSHUDFontTiny")
+	arsop:SetText(translate.Get("gui_oa"))
+	arsop:SetSize(190 * screenscale, 16 * screenscale)
+	arsop:AlignBottom(8)
+	arsop:AlignRight(128)
+	arsop.DoClick = OpenArsenal
 
 	local clearbutton = vgui.Create("DButton", frame)
 	clearbutton:SetFont("ZSHUDFontTiny")

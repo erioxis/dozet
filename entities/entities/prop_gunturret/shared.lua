@@ -12,7 +12,7 @@ ENT.Spread = 2
 ENT.SearchDistance = 768
 ENT.MinimumAimDot = 0.5
 ENT.DefaultAmmo = 0 --250
-ENT.MaxAmmo = 1000
+ENT.MaxAmmo = 9999
 ENT.MaxHealth = 150
 ENT.ModelScale = 1
 

@@ -19,15 +19,6 @@ local function ContentsPaint(self, w, h)
 		local thealth = lp:Health()
 		local gp = (((lp:GetZSRemortLevel() / 4) or 0) + (lp.AmuletPiece or 0)) < 0 and lp:Team() == TEAM_HUMAN
 		local screenscale = BetterScreenScale()
-<<<<<<< Updated upstream
-		local health = math.max(lp:Health(), 0)
-		local healthperc = math.Clamp(health / lp:GetMaxHealthEx(), 0, 1)
-		local wid, hei = 300 * screenscale, 18 * screenscale
-
-		colHealth.r = (1 - healthperc) * 255
-		colHealth.g = healthperc * 10
-		colHealth.b = 40
-=======
 		local health2 = 0
 		local sin = math.max(0,math.sin(CurTime() * 2))
 		local health = math_Clamp(thealth, 1,lp:GetMaxHealthEx())
@@ -41,15 +32,10 @@ local function ContentsPaint(self, w, h)
 		if GAMEMODE.RGB_HP then
 			colHealth = HSVToColor(CurTime()*110 % 360, 1, 1)
 		end 
->>>>>>> Stashed changes
 
 		local x = 18 * screenscale
 		local y = 115 * screenscale
 		local subwidth = healthperc * wid
-<<<<<<< Updated upstream
-
-		draw.SimpleTextBlurry(health, "ZSHUDFont", x + wid + 12 * screenscale, y + 8 * screenscale, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-=======
 		if thealth > lp:GetMaxHealthEx() then
 			health2 = " (+"..math.Round(thealth-lp:GetMaxHealthEx())..")"
 			oldh2 = math.Round(thealth-lp:GetMaxHealthEx())
@@ -60,24 +46,15 @@ local function ContentsPaint(self, w, h)
 		end
 		local txt = math.Round(health)..(health2 ~= 0 and health2 or "")..(gp and " x"..((((lp:GetZSRemortLevel() / 4) or 0) + (lp.AmuletPiece or 0))-2)*-1 or "")
 		draw.SimpleTextBlurry(txt, ((gp or string.len(txt)>= 10) and "ZSHUDFontSmall"or"ZSHUDFont"), x + wid + 18 * screenscale, y + 8 * screenscale, colHealth, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
->>>>>>> Stashed changes
 
 		surface_SetDrawColor(0, 0, 0, 230)
 		surface_DrawRect(x, y, wid, hei)
 
-<<<<<<< Updated upstream
-		surface.SetDrawColor(colHealth.r * 0.6, colHealth.g * 0.6, colHealth.b, 160)
-		surface.SetTexture(texDownEdge)
-		surface.DrawTexturedRect(x + 2, y + 1, subwidth - 4, hei - 2)
-		surface.SetDrawColor(colHealth.r * 0.6, colHealth.g * 0.6, colHealth.b, 30)
-		surface.DrawRect(x + 2, y + 1, subwidth - 4, hei - 2)
-=======
 		surface_SetDrawColor(colHealth.r * 1, colHealth.g * 0.2, colHealth.b, 40)
 		surface_SetTexture(texDownEdge)
 		surface_DrawTexturedRect(x + 2, y + 1, subwidth - 4, hei - 2)
 		surface_SetDrawColor(colHealth.r * 0.6, colHealth.g * 0.6, colHealth.b, 30)
 		surface_DrawRect(x + 2, y + 1, subwidth - 4, hei - 2)
->>>>>>> Stashed changes
 
 		surface_SetMaterial(matGlow)
 		surface_SetDrawColor(255, 255, 255, 255)
@@ -86,19 +63,6 @@ local function ContentsPaint(self, w, h)
 		local phantomhealth = math.max(lp:GetPhantomHealth(), 0)
 		healthperc = math_Clamp(phantomhealth / lp:GetMaxHealthEx(), 0, 1)
 
-<<<<<<< Updated upstream
-		colHealth.r = 255
-		colHealth.g = 120
-		colHealth.b = 90
-		local phantomwidth = healthperc * wid
-
-		surface.SetDrawColor(colHealth.r, colHealth.g, colHealth.b, 160)
-		surface.SetTexture(texDownEdge)
-		surface.DrawTexturedRect(x + 2 + subwidth - 4, y + 1, phantomwidth, hei - 2)
-		surface.SetDrawColor(colHealth.r, colHealth.g, colHealth.b, 30)
-		surface.DrawRect(x + 2 + subwidth - 4, y + 1, phantomwidth, hei - 2)
-
-=======
 		colHealth.r = 100
 		colHealth.g = 50
 		colHealth.b = 70
@@ -119,7 +83,6 @@ local function ContentsPaint(self, w, h)
 			surface_SetDrawColor(194, 12, 155, 50)
 			surface_DrawRect(x, y, wid, hei * 2)
 		end
->>>>>>> Stashed changes
 		if lp:Team() == TEAM_HUMAN then
 			local bloodarmor = lp:GetBloodArmor()
 			local max = math.Round((lp.MaxBloodArmor or 25))
@@ -132,12 +95,6 @@ local function ContentsPaint(self, w, h)
 				y = 142 * screenscale
 				wid, hei = GAMEMODE.Size_BABar * screenscale, 14 * screenscale
 
-<<<<<<< Updated upstream
-				healthperc = math.Clamp(bloodarmor / (lp.MaxBloodArmor or 10), 0, 1)
-				colHealth.r = 50 + healthperc * 205
-				colHealth.g = 0
-				colHealth.b = (1 - healthperc) * 50
-=======
 				healthperc = math_Clamp(bloodarmor / max, 0, 1)
 				colHealth.r = lp:GetInfo("zs_rblood") + healthperc * 2.5
 				colHealth.g = lp:GetInfo("zs_gblood")
@@ -176,7 +133,6 @@ local function ContentsPaint(self, w, h)
 				if GAMEMODE.RGB_HP then
 					colHealth = HSVToColor(CurTime()*120 % 360, 1, 1)
 				end
->>>>>>> Stashed changes
 
 				subwidth = wid
 

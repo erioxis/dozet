@@ -1,13 +1,7 @@
-<<<<<<< Updated upstream
-SWEP.PrintName = "'Ripper' Discblade Launcher"
-SWEP.Description = "An unusual weapon capable of launching sharp discs which bounce and that can headshot zombies."
-
-=======
 --SWEP.PrintName = "'Ripper' Discblade Launcher"
 --SWEP.Description = "An unusual weapon capable of launching sharp discs which bounce and that can headshot zombies."
 SWEP.PrintName = translate.Get("wep_ripper")
 SWEP.Description = translate.Get("wep_d_ripper")
->>>>>>> Stashed changes
 SWEP.Base = "weapon_zs_baseproj"
 
 SWEP.HoldType = "crossbow"

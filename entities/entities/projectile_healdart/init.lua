@@ -10,7 +10,7 @@ function ENT:Initialize()
 	self:SetModelScale(0.3, 0)
 	self:SetupGenericProjectile(self.Gravity)
 
-	self:Fire("kill", "", 30)
+	self:Fire("kill", "", 3)
 
 	if self:GetSeeked():IsValidLivingHuman() and self:GetOwner():IsValidLivingHuman() then
 		local owner = self:GetOwner()
@@ -34,9 +34,6 @@ function ENT:Think()
 	end
 
 	local parent = self:GetParent()
-	if parent:IsValid() and parent:IsPlayer() and not parent:Alive() then
-		self:Remove()
-	end
 
 	if self:GetSeeked():IsValidLivingHuman() then
 		local target = self:GetSeeked()
@@ -61,8 +58,6 @@ function ENT:DoRefund(owner)
 end
 
 function ENT:AttachToPlayer(vHitPos, eHitEntity)
-<<<<<<< Updated upstream
-=======
 	local owner = self:GetOwner()
 	if owner:IsValid() and owner:IsSkillActive(SKILL_PHIK) then
 		self:Remove()
@@ -78,7 +73,6 @@ function ENT:AttachToPlayer(vHitPos, eHitEntity)
 			end
 		end
 	end
->>>>>>> Stashed changes
 	self:AddEFlags(EFL_SETTING_UP_BONES)
 
 	local followed = false
@@ -102,7 +96,7 @@ function ENT:Hit(vHitPos, vHitNormal, eHitEntity, vOldVelocity)
 
 	self:SetHitTime(CurTime())
 
-	self:Fire("kill", "", 10)
+	self:Fire("kill", "", 0.04)
 
 	local owner = self:GetOwner()
 	if not owner:IsValid() then owner = self end
@@ -121,7 +115,7 @@ function ENT:Hit(vHitPos, vHitNormal, eHitEntity, vOldVelocity)
 		if eHitEntity:IsPlayer() and eHitEntity:Team() ~= TEAM_UNDEAD then
 			local ehithp, ehitmaxhp = eHitEntity:Health(), eHitEntity:GetMaxHealth()
 
-			if eHitEntity:IsSkillActive(SKILL_D_FRAIL) and ehithp >= ehitmaxhp * 0.25 then
+			if eHitEntity:IsSkillActive(SKILL_D_FRAIL) and ehithp >= ehitmaxhp * 0.33 or eHitEntity:IsSkillActive(SKILL_ABUSE) and ehithp >= ehitmaxhp * 0.25 then
 				owner:CenterNotify(COLOR_RED, translate.Format("frail_healdart_warning", eHitEntity:GetName()))
 				self:EmitSound("buttons/button8.wav", 70, math.random(115,128))
 				self:DoRefund(owner)
@@ -139,7 +133,6 @@ function ENT:Hit(vHitPos, vHitNormal, eHitEntity, vOldVelocity)
 	end
 
 	self:SetAngles(vOldVelocity:Angle())
-
 	local effectdata = EffectData()
 		effectdata:SetOrigin(vHitPos)
 		effectdata:SetNormal(vHitNormal)
@@ -157,4 +150,9 @@ function ENT:PhysicsCollide(data, phys)
 	end
 
 	self:NextThink(CurTime())
+end
+function ENT:OnRemove()
+	local owner = self:GetOwner()
+	if !owner then owner = self end
+
 end

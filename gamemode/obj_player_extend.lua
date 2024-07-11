@@ -30,9 +30,6 @@ local P_Team = meta.Team
 local E_IsValid = M_Entity.IsValid
 local E_GetDTBool = M_Entity.GetDTBool
 local E_GetTable = M_Entity.GetTable
-<<<<<<< Updated upstream
-
-=======
 local spraytbl = {}
 function meta:LogID()
 	return "<"..self:SteamID().."> "..self:Name()
@@ -47,7 +44,6 @@ function meta:PostSprayPlayer(sprayorigin,spraypos)
 		timer.Simple(15,function() spray:Remove() end)
 	end
 end
->>>>>>> Stashed changes
 function meta:GetMaxHealthEx()
 	if P_Team(self) == TEAM_UNDEAD then
 		return self:GetMaxZombieHealth()
@@ -221,6 +217,9 @@ function meta:ClippedName()
 
 	return name
 end
+function meta:GetIndChance()
+	return self:GetNW2Float(12)
+end
 
 function meta:SigilTeleportDestination(not_from_sigil, corrupted)
 	local sigils = corrupted and GAMEMODE:GetCorruptedSigils() or GAMEMODE:GetUncorruptedSigils()
@@ -246,10 +245,13 @@ function meta:SigilTeleportDestination(not_from_sigil, corrupted)
 	end
 
 	dist = -1
+
 	for i, sigil in pairs(sigils) do
 		if i == icurrent then continue end
+		
+	
 
-		spos = sigil:GetPos() - mypos
+		spos = sigil:GetPos()- mypos 
 		spos:Normalize()
 		d = spos:Dot(eyevector)
 		if d > dist then
@@ -277,7 +279,7 @@ function meta:DispatchAltUse()
 end
 
 function meta:MeleeViewPunch(damage)
-	local maxpunch = (damage + 25) * 0.5
+	local maxpunch = (damage + 25) * 0.01
 	local minpunch = -maxpunch
 	self:ViewPunch(Angle(math.Rand(minpunch, maxpunch), math.Rand(minpunch, maxpunch), math.Rand(minpunch, maxpunch)))
 end
@@ -341,11 +343,10 @@ function meta:SetZombieClassName(classname)
 	end
 end
 
+
 function meta:GetPoints()
 	return self:GetDTInt(1)
 end
-<<<<<<< Updated upstream
-=======
 function meta:SetPoints(points)
 	self:SetDTInt(1, points)
 end
@@ -430,13 +431,10 @@ end
 function meta:SetPTime(pts, ptime)
 	self:SetNWFloat(ptime.."time", pts+5.2)
 end
->>>>>>> Stashed changes
 
 function meta:GetBloodArmor()
 	return self:GetDTInt(DT_PLAYER_INT_BLOODARMOR)
 end
-<<<<<<< Updated upstream
-=======
 function meta:GetManaMagic()
 	return self:GetDTInt(DT_PLAYER_FLOAT_MAGIC)
 end
@@ -469,7 +467,6 @@ end
 function meta:GetZArmor()
 	return self:GetDTInt(DT_PLAYER_INT_ZOMBIEARMOR)
 end
->>>>>>> Stashed changes
 
 function meta:AddLegDamage(damage)
 	if self.SpawnProtection then return end
@@ -482,12 +479,6 @@ function meta:AddLegDamage(damage)
 
 	self:SetLegDamage(legdmg)
 end
-<<<<<<< Updated upstream
-
-function meta:AddLegDamageExt(damage, attacker, inflictor, type)
-	inflictor = inflictor or attacker
-
-=======
 function meta:AttachmentDamage(damage, attacker, inflictor, type)
 	inflictor = inflictor or attacker
 	damage = damage * (attacker.ElementalMul or 1)
@@ -538,33 +529,14 @@ function meta:AttachmentDamage(damage, attacker, inflictor, type)
 end
 function meta:AddLegDamageExt(damage, attacker, inflictor, type)
 	inflictor = inflictor or attacker
->>>>>>> Stashed changes
 	if type == SLOWTYPE_PULSE then
 		local legdmg = damage * (attacker.PulseWeaponSlowMul or 1)
 		local startleg = self:GetFlatLegDamage()
-
+		
 		self:AddLegDamage(legdmg)
 		if attacker.PulseImpedance then
 			self:AddArmDamage(legdmg)
 		end
-<<<<<<< Updated upstream
-
-		if SERVER and attacker:HasTrinket("resonance") then
-			attacker.AccuPulse = (attacker.AccuPulse or 0) + (self:GetFlatLegDamage() - startleg)
-
-			if attacker.AccuPulse > 80 then
-				self:PulseResonance(attacker, inflictor)
-			end
-		end
-	elseif type == SLOWTYPE_COLD then
-		if self:IsValidLivingZombie() and self:GetZombieClassTable().ResistFrost then return end
-
-		self:AddLegDamage(damage)
-		self:AddArmDamage(damage)
-
-		if SERVER and attacker:HasTrinket("cryoindu") then
-			self:CryogenicInduction(attacker, inflictor, damage)
-=======
 		if SERVER then
 			if attacker:HasTrinket("resonance") then
 				attacker:SetProgress(attacker:GetProgress('pprog') + (self:GetFlatLegDamage() - startleg), 'pprog')
@@ -607,7 +579,6 @@ function meta:AddLegDamageExt(damage, attacker, inflictor, type)
 				self:FireInduction(attacker, inflictor, damage)
 			end
 			GAMEMODE:DamageAtFloater(attacker, self, self:NearestPoint(attacker:EyePos()), damage, type)
->>>>>>> Stashed changes
 		end
 	end
 end
@@ -690,6 +661,9 @@ end
 
 function meta:GetZombieClass()
 	return self.Class or GAMEMODE.DefaultZombieClass
+end
+function meta:GetHumanClass()
+	return self.HClass or GAMEMODE.DefaultHumanClass
 end
 
 local ZombieClasses = {}
@@ -796,10 +770,6 @@ function meta:ResetSpeed(noset, health)
 	if not self:IsValid() then return end
 
 	if P_Team(self) == TEAM_UNDEAD then
-<<<<<<< Updated upstream
-		local speed = math.max(140, self:GetZombieClassTable().Speed * GAMEMODE.ZombieSpeedMultiplier - (GAMEMODE.ObjectiveMap and 20 or 0))
-
-=======
 		local speed = math.max(50, self:GetZombieClassTable().Speed * GAMEMODE.ZombieSpeedMultiplier - (GAMEMODE.ObjectiveMap and 20 or 0))
     	if self.m_EasySpeed then
 			speed = speed * 1.25
@@ -814,7 +784,6 @@ function meta:ResetSpeed(noset, health)
 		if self:GetChampion() == CHAMP_YELLOW then
 			speed = speed * 1.5
 		end
->>>>>>> Stashed changes
 		self:SetSpeed(speed)
 		return speed
 	end
@@ -833,15 +802,6 @@ function meta:ResetSpeed(noset, health)
 	if speed < SPEED_NORMAL then
 		speed = SPEED_NORMAL - (SPEED_NORMAL - speed) * (self.WeaponWeightSlowMul or 1)
 	end
-<<<<<<< Updated upstream
-
-	if self.SkillSpeedAdd and P_Team(self) == TEAM_HUMAN then
-		speed = speed + self.SkillSpeedAdd
-	end
-
-	if self:IsSkillActive(SKILL_LIGHTWEIGHT) and wep:IsValid() and wep.IsMelee then
-		speed = speed + 6
-=======
 	if P_Team(self) == TEAM_HUMAN then
 		
 		if self:IsSkillActive(SKILL_CQARMOR) then
@@ -866,7 +826,6 @@ function meta:ResetSpeed(noset, health)
 		if wep.SwingingTrue then
 			speed = speed * 0.85
 		end
->>>>>>> Stashed changes
 	end
 
 	speed = math.max(1, speed)
@@ -983,6 +942,7 @@ function meta:ShouldNotCollide(ent)
 
 	return false
 end
+
 
 meta.OldSetHealth = FindMetaTable("Entity").SetHealth
 function meta:SetHealth(health)
@@ -1329,10 +1289,9 @@ function meta:NearestDS()
 	return remantler
 end
 
+
+
 function meta:GetMaxZombieHealth()
-<<<<<<< Updated upstream
-	return self:GetZombieClassTable().Health
-=======
 	local lowundead = team.NumPlayers(TEAM_UNDEAD) < 4
 	local healthmulti = (GAMEMODE.ObjectiveMap or GAMEMODE.ZombieEscape) and 1 or lowundead and 1.5 or 1
 	local classtab = self:GetZombieClassTable()
@@ -1350,7 +1309,6 @@ end
 function meta:SetMaxZombieHealth(add)
 	self:GetZombieClassTable().Health = add
 	self:SetMaxHealth(add)
->>>>>>> Stashed changes
 end
 
 local oldmaxhealth = FindMetaTable("Entity").GetMaxHealth
@@ -1370,6 +1328,7 @@ function meta:GetMaxHealth()
 	end
 	return math.max(1,health)
 end
+
 
 if not meta.OldAlive then
 	meta.OldAlive = meta.Alive
@@ -1400,7 +1359,7 @@ function meta:GetRight()
 end
 
 function meta:GetZombieMeleeSpeedMul()
-	return 1 * (1 + math.Clamp(self:GetArmDamage() / GAMEMODE.MaxArmDamage, 0, 1)) / (self:GetStatus("zombie_battlecry") and 1.2 or 1)
+	return 1 * (1 + math.Clamp(self:GetArmDamage() / GAMEMODE.MaxArmDamage, 0, 1)) / (self:GetStatus("zombie_battlecry") and 1.8 or 1)
 end
 
 function meta:GetMeleeSpeedMul()

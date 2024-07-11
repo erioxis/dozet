@@ -1,14 +1,9 @@
 AddCSLuaFile()
 
-<<<<<<< Updated upstream
-SWEP.PrintName = "Knife"
-SWEP.Description = "A small bladed weapon that deals double damage to the back."
-=======
 --SWEP.PrintName = "Knife"
 --SWEP.Description = "A small bladed weapon that deals x5 damage to the back.(MASSACRE MASSACRE MASSACRE MASSACRE MASSACRE MASSACRE MASSACRE MASSACRE)"
 SWEP.PrintName = translate.Get("wep_knife")
 SWEP.Description = translate.Get("wep_d_knife")
->>>>>>> Stashed changes
 
 if CLIENT then
 	SWEP.ViewModelFlip = false
@@ -23,17 +18,14 @@ SWEP.ViewModel = "models/weapons/cstrike/c_knife_t.mdl"
 SWEP.WorldModel = "models/weapons/w_knife_t.mdl"
 SWEP.UseHands = true
 
-SWEP.MeleeDamage = 31
+SWEP.MeleeDamage = 12
 SWEP.MeleeRange = 52
 SWEP.MeleeSize = 0.875
-<<<<<<< Updated upstream
-=======
 SWEP.BlockMultiplierWeapon = 0.7
->>>>>>> Stashed changes
 
 SWEP.WalkSpeed = SPEED_FASTEST
 
-SWEP.Primary.Delay = 0.66
+SWEP.Primary.Delay = 0.61
 
 SWEP.HitDecal = "Manhackcut"
 
@@ -47,7 +39,7 @@ SWEP.NoHitSoundFlesh = true
 
 SWEP.AllowQualityWeapons = true
 
-GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_FIRE_DELAY, -0.085)
+GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_FIRE_DELAY, -0.057)
 
 function SWEP:PlaySwingSound()
 	self:EmitSound("weapons/knife/knife_slash"..math.random(2)..".wav")
@@ -64,7 +56,7 @@ end
 function SWEP:OnMeleeHit(hitent, hitflesh, tr)
 	if hitent:IsValid() and hitent:IsPlayer() and not self.m_BackStabbing and math.abs(hitent:GetForward():Angle().yaw - self:GetOwner():GetForward():Angle().yaw) <= 90 then
 		self.m_BackStabbing = true
-		self.MeleeDamage = self.MeleeDamage * 17
+		self.MeleeDamage = self.MeleeDamage * 5
 	end
 end
 
@@ -72,7 +64,7 @@ function SWEP:PostOnMeleeHit(hitent, hitflesh, tr)
 	if self.m_BackStabbing then
 		self.m_BackStabbing = false
 
-		self.MeleeDamage = self.MeleeDamage / 17
+		self.MeleeDamage = self.MeleeDamage / 5
 	end
 end
 

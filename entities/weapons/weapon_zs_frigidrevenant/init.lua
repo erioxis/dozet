@@ -1,15 +1,5 @@
 INC_SERVER()
 
-<<<<<<< Updated upstream
-function SWEP:ApplyMeleeDamage(ent, trace, damage)
-	if ent:IsPlayer() then
-		ent:GiveStatus("dimvision", 6)
-		local gt = ent:GiveStatus("frost", 8)
-		local owner = self:GetOwner()
-
-		if gt and gt:IsValid() then
-			gt.Applier = owner
-=======
 function SWEP:ApplyMeleeDamage(pl, trace, damage)
 	if SERVER and pl:IsPlayer() then
 	if not pl:IsSkillActive(SKILL_ANTINEGR) then
@@ -42,10 +32,8 @@ function SWEP:ApplyMeleeDamage(pl, trace, damage)
 			end
 					local gt = pl:GiveStatus("frost", 8)
 						pl:AddCursed(self:GetOwner(), 5)
->>>>>>> Stashed changes
 		end
-		ent:AddLegDamageExt(12, owner, self, SLOWTYPE_COLD)
 	end
-
-	self.BaseClass.ApplyMeleeDamage(self, ent, trace, damage)
+	end
+	self.BaseClass.ApplyMeleeDamage(self, pl, trace, damage)
 end

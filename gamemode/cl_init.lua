@@ -33,6 +33,7 @@ include("vgui/dteamheading.lua")
 include("vgui/dmodelkillicon.lua")
 
 include("vgui/dexroundedpanel.lua")
+
 include("vgui/dexroundedframe.lua")
 include("vgui/dexrotatedimage.lua")
 include("vgui/dexnotificationslist.lua")
@@ -43,9 +44,11 @@ include("vgui/pmainmenu.lua")
 include("vgui/poptions.lua")
 include("vgui/phelp.lua")
 include("vgui/pclassselect.lua")
+include("vgui/phumanclass.lua")
 include("vgui/pweapons.lua")
 include("vgui/pendboard.lua")
 include("vgui/pworth.lua")
+
 include("vgui/parsenal.lua")
 include("vgui/dcombobox_fix.lua")
 include("vgui/parsenal_anti.lua")
@@ -58,6 +61,12 @@ include("vgui/zsgamestate.lua")
 include("vgui/zshealtharea.lua")
 include("vgui/zs_dozet_hp.lua")
 include("vgui/zsstatusarea.lua")
+include("vgui/mutshop.lua")
+include("vgui/achievements.lua")
+include("vgui/pstatus.lua")
+
+include("sh_achievements_table.lua")
+
 
 include("cl_dermaskin.lua")
 include("cl_deathnotice.lua")
@@ -91,7 +100,7 @@ end)
 -- Remove when model decal crash is fixed.
 --[[function util.Decal()
 end]]
-
+UsedMutations = {}
 -- Save on global lookup time.
 local collectgarbage = collectgarbage
 local render = render
@@ -318,7 +327,9 @@ function GM:_InputMouseApply(cmd, x, y, ang)
 		self:InputMouseApplyOTS(cmd, x, y, ang)
 	end
 end
-
+function GM:ZSChallenges()
+    vgui.Create("ZS.Challenges")
+end
 function GM:_GUIMousePressed(mc)
 end
 
@@ -508,6 +519,8 @@ function GM.PostPlayerDrawMedical(pl)
 			render_SetBlend((1 - dist / MedicalAuraDistance) * 0.1 * (1 + math.abs(math.sin((CurTime() + pl:EntIndex()) * 4)) * 0.05))
 			render_SetColorModulation(1 - green, green, pl:GetDTBool(DT_PLAYER_BOOL_FRAIL) and 1 or 0)
 				pl:DrawModel()
+			render_SetColorModulation(1 - green, green, pl:GetDTBool(DT_PLAYER_BOOL_LABUSE) and 0.3 or 0)
+				pl:DrawModel()
 			render_SetColorModulation(1, 1, 1)
 			render_SetBlend(1)
 			render_ModelMaterialOverride()
@@ -666,10 +679,6 @@ function GM:DrawFearMeter(power, screenscale)
 			draw_SimpleTextBlurry(translate.Format("resist_x", math.ceil(self:GetDamageResistance(currentpower) * 100)), "ZSDamageResistance", w * 0.5, my + size * 0.75, Color(currentpower * 200, 200 - currentpower * 200, 0, 255), TEXT_ALIGN_CENTER)
 		end
 	end
-<<<<<<< Updated upstream
-
-	if self:GetUseSigils() and self.MaxSigils > 0 then
-=======
 	local sigilsc = 0
 	for _, ent in ipairs(ents.FindByClass("prop_obj_sigil")) do 
 		if ent:IsValid() then
@@ -719,16 +728,15 @@ function GM:DrawFearMeter(power, screenscale)
 		end
 	end]]
 	if  sigilsc > 0 then
->>>>>>> Stashed changes
 		local sigwid, sighei = screenscale * 18, screenscale * 36
 		local extrude = size * 0.25 + sighei / 2
 		local angle_current = -180
-		local angle_step = 180 / (self.MaxSigils - 1)
+		local angle_step = 180 / (sigilsc - 1)
 		local rad, sigil, health, maxhealth, corrupt, damageflash, sigx, sigy, healthfrac
 
 		local sigils = GAMEMODE.CachedSigils
 		local corruptsigils = 0
-		for i=1, self.MaxSigils do
+		for i=1, sigilsc do
 			sigil = sigils[i]
 			health = 0
 			maxhealth = 0
@@ -1070,7 +1078,7 @@ function GM:DrawPackUpBar(x, y, fraction, notowner, screenscale)
 	draw_SimpleText(notowner and CurTime() % 2 < 1 and translate.Format("requires_x_people", 4) or notowner and translate.Get("packing_others_object") or translate.Get("packing"), "ZSHUDFontSmall", x, y - draw_GetFontHeight("ZSHUDFontSmall") - 2, col, TEXT_ALIGN_CENTER)
 end
 
-local colSigilTeleport = Color(125, 215, 255, 220)
+local colSigilTeleport = Color(236, 65, 131, 220)
 function GM:DrawSigilTeleportBar(x, y, fraction, target, screenscale)
 	local maxbarwidth = 270 * screenscale
 	local barheight = 11 * screenscale
@@ -1080,7 +1088,7 @@ function GM:DrawSigilTeleportBar(x, y, fraction, target, screenscale)
 	local letter = "?"
 	for i, sigil in ipairs(ents.FindByClass("prop_obj_sigil")) do
 		if target == sigil then
-			letter = string.char(64 + i)
+			letter = string.char(65 + i)
 			break
 		end
 	end
@@ -1094,6 +1102,7 @@ function GM:DrawSigilTeleportBar(x, y, fraction, target, screenscale)
 	draw_SimpleText(translate.Format("teleporting_to_sigil", letter), "ZSHUDFontSmall", x, y - draw_GetFontHeight("ZSHUDFontSmall") - 2, colSigilTeleport, TEXT_ALIGN_CENTER)
 	draw_SimpleText(translate.Get("press_shift_to_cancel"), "ZSHUDFontSmaller", x, y + draw_GetFontHeight("ZSHUDFontSmaller") - 16, colSigilTeleport, TEXT_ALIGN_CENTER)
 	draw_SimpleText(translate.Get("point_at_a_sigil_to_choose_destination"), "ZSHUDFontSmaller", x, y + draw_GetFontHeight("ZSHUDFontSmaller") * 2 - 16, colSigilTeleport, TEXT_ALIGN_CENTER)
+	draw_SimpleText(translate.Get("duck_for_remove"), "ZSHUDFontSmaller", x, y + draw_GetFontHeight("ZSHUDFontSmaller") + 48, colSigilTeleport, TEXT_ALIGN_CENTER)
 end
 
 function GM:HumanHUD(screenscale)
@@ -1146,18 +1155,13 @@ function GM:HumanHUD(screenscale)
 			draw_SimpleTextBlurry(translate.Get("breath").." ", "ZSHUDFontSmall", w * 0.4, h * 0.35 + 6, COLOR_LBLUE, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
 		end
 	end
-
+	self:DrawInductorIndicators()
 	local lockon = self.HumanMenuLockOn
 	if lockon and self:ValidMenuLockOnTarget(MySelf, lockon) then
 		local txth = draw_GetFontHeight("ZSHUDFontSmall")
 		draw_SimpleTextBlurry(translate.Format("giving_items_to", lockon:Name()), "ZSHUDFontSmall", w * 0.5, h * 0.55 + txth, COLOR_GRAY, TEXT_ALIGN_CENTER)
 	end
-<<<<<<< Updated upstream
-
-	if gamemode.Call("PlayerCanPurchase", MySelf) then
-=======
 	if gamemode.Call("PlayerCanPurchase", MySelf) and GAMEMODE.NewbieMode and (!GAMEMODE:GetWaveActive() or GAMEMODE:GetWave() == 0) then
->>>>>>> Stashed changes
 		draw_SimpleTextBlurry(translate.Get("press_f2_for_the_points_shop"), "ZSHUDFontSmall", w * 0.5, screenscale * 135, COLOR_GRAY, TEXT_ALIGN_CENTER)
 	end
 end
@@ -1170,14 +1174,8 @@ function GM:_HUDPaint()
 
 	self:HUDDrawTargetID(myteam, screenscale)
 
-<<<<<<< Updated upstream
-	if self:GetWave() > 0 then
-		self:DrawFearMeter(self:CachedFearPower(), screenscale)
-	end
-=======
 	self:DrawFearMeter(self:CachedFearPower(), screenscale)
 	self:DrawDeployables(0, screenscale)
->>>>>>> Stashed changes
 
 	if myteam == TEAM_UNDEAD then
 		self:ZombieHUD()
@@ -1227,14 +1225,10 @@ end
 local colLifeStats = Color(255, 50, 50, 255)
 local colorWhiter = Color(255, 255, 255, 255)
 function GM:ZombieHUD()
-<<<<<<< Updated upstream
-	if self.LifeStatsEndTime and CurTime() < self.LifeStatsEndTime and (self.LifeStatsBarricadeDamage > 0 or self.LifeStatsHumanDamage > 0 or self.LifeStatsBrainsEaten > 0) then
-=======
 	if sigiltp and sigiltp:IsValid() then
 		self:DrawSigilTeleportBar(w * 0.5, h * 0.55, 1 - sigiltp:GetTimeRemaining() / sigiltp:GetMaxTime(), sigiltp:GetTargetSigil(), screenscale)
 	end
 	if self.LifeStatsEndTime and CurTime() < self.LifeStatsEndTime and (self.LifeStatsBarricadeDamage > 0 or self.LifeStatsHumanDamage > 0 or self.LifeStatsBrainsEaten > 0 or self.LifeStatsDamageReduced > 0) then
->>>>>>> Stashed changes
 		colLifeStats.a = math.Clamp((self.LifeStatsEndTime - CurTime()) / (self.LifeStatsLifeTime * 0.33), 0, 1) * 255
 
 		local th = draw_GetFontHeight("ZSHUDFontSmall")
@@ -1291,16 +1285,16 @@ function GM:ZombieHUD()
 
 	if not self:GetWaveActive() and self:GetWave() ~= 0 then
 		local pl = GAMEMODE.NextBossZombie
-<<<<<<< Updated upstream
-=======
 		local demipl = math.floor(math.max(((#team.GetPlayers(TEAM_UNDEAD) * 0.5) - 1),1))
->>>>>>> Stashed changes
 		if pl and pl:IsValid() then
 			local x, y = ScrW() / 2, ScrH() * 0.3 + draw_GetFontHeight("ZSHUDFont")
 			if pl == MySelf then
 				draw_SimpleTextBlur(translate.Format("you_will_be_x_soon", translate.Get(GAMEMODE.ZombieClasses[GAMEMODE.NextBossZombieClass].TranslationName)), "ZSHUDFont", x, y, Color(255, 50, 50), TEXT_ALIGN_CENTER)
 			else
 				draw_SimpleTextBlur(translate.Format("x_will_be_y_soon", pl:Name(), translate.Get(GAMEMODE.ZombieClasses[GAMEMODE.NextBossZombieClass].TranslationName)), "ZSHUDFont", x, y, COLOR_GRAY, TEXT_ALIGN_CENTER)
+			end
+			if demipl >= 1 then
+				draw_SimpleTextBlur(translate.Get("demibosses").." "..demipl, "ZSHUDFontSmall", x, y - 25, COLOR_YELLOW, TEXT_ALIGN_CENTER)
 			end
 		end
 	end
@@ -1331,48 +1325,10 @@ function GM:_PostDrawTranslucentRenderables()
 		self:DrawSigilIndicators()
 		self:DrawResupplyIndicators()
 		self:DrawRemantlerIndicators()
+		self:DrawGiftIndicators()
 		self:DrawHumanIndicators()
+		self:DrawZombieIndicators()
 		self:DrawNestIndicators()
-<<<<<<< Updated upstream
-	end
-end
-
-function GM:DrawCrateIndicators()
-	if P_Team(MySelf) ~= TEAM_HUMAN or not MySelf:IsSkillActive(SKILL_INSIGHT) then return end
-
-	local pos, distance, ang, deployable, alpha
-	local eyepos = EyePos()
-
-	surface_SetMaterial(matArsenal)
-
-	for i, arsenal in pairs(GAMEMODE.CachedArsenalEntities) do
-		if not arsenal:IsValid() then continue end
-		deployable = arsenal.GetObjectOwner
-
-		pos = arsenal:GetPos()
-		pos.z = pos.z + (arsenal:IsPlayer() and 32 or (deployable and 12 or -8))
-		distance = eyepos:DistToSqr(pos)
-
-		if (distance >= 6400 and distance <= 1048576) and (not deployable or not WorldVisible(eyepos, pos)) then -- Limited to Scavenger's Eyes distance.
-			ang = (eyepos - pos):Angle()
-			ang:RotateAroundAxis(ang:Right(), 270)
-			ang:RotateAroundAxis(ang:Up(), 90)
-			alpha = math.min(220, math.sqrt(distance / 4))
-
-			cam_IgnoreZ(true)
-			cam_Start3D2D(pos, ang, math.max(250, math.sqrt(distance)) / 5000)
-
-			surface_SetDrawColor(255, 255, 255, alpha)
-			surface_DrawTexturedRect(-123, -113, 248, 228)
-
-			draw_SimpleTextBlurry("Arsenal Crate", "ZS3D2DFont2Big", 0, 128, COLOR_GRAY, TEXT_ALIGN_CENTER)
-
-			cam_End3D2D()
-			cam_IgnoreZ(false)
-		end
-	end
-end
-=======
 		self:DrawAntiSigilIndicators()
 		self:DrawAltarIndicators()
 		self:DrawZombieSpawnIndicators()
@@ -1380,10 +1336,9 @@ end
 	end
 end
 
->>>>>>> Stashed changes
 
 function GM:DrawResupplyIndicators()
-	if P_Team(MySelf) ~= TEAM_HUMAN or not MySelf:IsSkillActive(SKILL_ACUITY) then return end
+	if P_Team(MySelf) ~= TEAM_HUMAN then return end
 
 	local pos, distance, ang, deployable, alpha
 	local eyepos = EyePos()
@@ -1421,7 +1376,7 @@ function GM:DrawResupplyIndicators()
 end
 
 function GM:DrawRemantlerIndicators()
-	if P_Team(MySelf) ~= TEAM_HUMAN or not MySelf:IsSkillActive(SKILL_VISION) then return end
+	if P_Team(MySelf) ~= TEAM_HUMAN then return end
 
 	local pos, distance, ang, deployable, alpha
 	local eyepos = EyePos()
@@ -1432,6 +1387,8 @@ function GM:DrawRemantlerIndicators()
 		if not remantler:IsValid() then continue end
 		deployable = remantler.GetObjectOwner
 
+		
+
 		pos = remantler:GetPos()
 		pos.z = pos.z + (remantler:IsPlayer() and 32 or (deployable and 12 or -8))
 		distance = eyepos:DistToSqr(pos)
@@ -1441,6 +1398,7 @@ function GM:DrawRemantlerIndicators()
 			ang:RotateAroundAxis(ang:Right(), 270)
 			ang:RotateAroundAxis(ang:Up(), 90)
 			alpha = math.min(220, math.sqrt(distance / 4))
+		
 
 			cam_IgnoreZ(true)
 			cam_Start3D2D(pos, ang, math.max(250, math.sqrt(distance)) / 5000)
@@ -1448,16 +1406,13 @@ function GM:DrawRemantlerIndicators()
 			surface_SetDrawColor(255, 255, 255, alpha)
 			surface_DrawTexturedRect(-128, -128, 256, 256)
 
-			draw_SimpleTextBlurry("Weapon Remantler", "ZS3D2DFont2Big", 0, 128, COLOR_GRAY, TEXT_ALIGN_CENTER)
+			draw_SimpleTextBlurry(translate.Get("weapon_remantler"), "ZS3D2DFont2Big", 0, 128, COLOR_GRAY, TEXT_ALIGN_CENTER)
 
 			cam_End3D2D()
 			cam_IgnoreZ(false)
 		end
 	end
 end
-<<<<<<< Updated upstream
-
-=======
 
 function GM:DrawAntiSigilIndicators()
 	if P_Team(MySelf) ~= TEAM_HUMAN then return end
@@ -1609,7 +1564,6 @@ function GM:DrawGiftIndicators()
 		end
 	end
 end
->>>>>>> Stashed changes
 function GM:DrawNestIndicators()
 	if P_Team(MySelf) ~= TEAM_ZOMBIE then return end
 
@@ -1724,7 +1678,7 @@ function GM:DrawSigilIndicators()
 				surface_DrawTexturedRectUV(-64, -128, 128, 256 * missinghealthfrac, 0, 0, 1, missinghealthfrac)
 			end
 
-			draw_SimpleTextBlurry(string.char(64 + i), "ZS3D2DFont2Big", 0, 128, COLOR_GRAY, TEXT_ALIGN_CENTER)
+			draw_SimpleTextBlurry(string.char(65 + i), "ZS3D2DFont2Big", 0, 128, COLOR_GRAY, TEXT_ALIGN_CENTER)
 
 			render_FogMode(oldfogmode)
 			cam_End3D2D()
@@ -1769,45 +1723,21 @@ function GM:_CachedFearPower()
 	return Current
 end
 
-function surface.CreateLegacyFont(font, size, weight, antialias, additive, name, shadow, outline, blursize)
-	surface.CreateFont(name, {font = font, size = size, weight = weight, antialias = antialias, additive = additive, shadow = shadow, outline = outline, blursize = blursize})
+function surface.CreateLegacyFont(font, size, weight, antialias, additive, name, shadow, outline, blursize, extended)
+	surface.CreateFont(name, {font = font, size = size, weight = weight, antialias = antialias, additive = additive, shadow = shadow, outline = outline, blursize = blursize, extended = extended})
 end
 
-local fontfamily = "Ghoulish Fright AOE"
-local fontfamilysm = "Remington Noiseless"
-local fontfamily3d = "hidden"
 local fontsizeadd = 8
 local fontweight = 0
-<<<<<<< Updated upstream
-=======
 local standard = (GM.FontPL == "" and "Open Sans Condensed" or GM.FontPL == "Open Sans Condensed" and "Open Sans Condensed" or GM.FontPL == "Ghoulish Fright" and "Ghoulish Fright AOE Regular" or GM.FontPL == "PixelMplus10" and "PixelMplus10 Regular" or "Open Sans Condensed")
 local fontfamily = standard
 local fontfamilysm = standard
 local fontfamily3d = standard
->>>>>>> Stashed changes
 
 function GM:Create3DFonts()
 	local fontsizeadd3D = 0
 	local fontweight3D = 0
 
-<<<<<<< Updated upstream
-	surface.CreateLegacyFont(fontfamily3d, 28 + fontsizeadd3D, fontweight3D, false, false,  "ZS3D2DFontSmaller", false, true)
-	surface.CreateLegacyFont(fontfamily3d, 48 + fontsizeadd3D, fontweight3D, false, false,  "ZS3D2DFontSmall", false, true)
-	surface.CreateLegacyFont(fontfamily3d, 72 + fontsizeadd3D, fontweight3D, false, false, "ZS3D2DFont", false, true)
-	surface.CreateLegacyFont(fontfamily3d, 128 + fontsizeadd3D, fontweight3D, false, false, "ZS3D2DFontBig", false, true)
-	surface.CreateLegacyFont(fontfamily3d, 28 + fontsizeadd3D, fontweight3D, false, false,  "ZS3D2DFontSmallerBlur", false, false, 16)
-	surface.CreateLegacyFont(fontfamily3d, 48 + fontsizeadd3D, fontweight3D, false, false,  "ZS3D2DFontSmallBlur", false, false, 16)
-	surface.CreateLegacyFont(fontfamily3d, 72 + fontsizeadd3D, fontweight3D, false, false, "ZS3D2DFontBlur", false, false, 16)
-	surface.CreateLegacyFont(fontfamily3d, 128 + fontsizeadd3D, fontweight3D, false, false, "ZS3D2DFontBigBlur", false, false, 16)
-	surface.CreateLegacyFont(fontfamily, 40 + fontsizeadd3D, fontweight3D, false, false,  "ZS3D2DFont2Smaller", false, true)
-	surface.CreateLegacyFont(fontfamily, 48 + fontsizeadd3D, fontweight3D, false, false,  "ZS3D2DFont2Small", false, true)
-	surface.CreateLegacyFont(fontfamily, 72 + fontsizeadd3D, fontweight3D, false, false, "ZS3D2DFont2", false, true)
-	surface.CreateLegacyFont(fontfamily, 128 + fontsizeadd3D, fontweight3D, false, false, "ZS3D2DFont2Big", false, true)
-	surface.CreateLegacyFont(fontfamily, 40 + fontsizeadd3D, fontweight3D, false, false,  "ZS3D2DFont2SmallerBlur", false, false, 16)
-	surface.CreateLegacyFont(fontfamily, 48 + fontsizeadd3D, fontweight3D, false, false,  "ZS3D2DFont2SmallBlur", false, false, 16)
-	surface.CreateLegacyFont(fontfamily, 72 + fontsizeadd3D, fontweight3D, false, false, "ZS3D2DFont2Blur", false, false, 16)
-	surface.CreateLegacyFont(fontfamily, 128 + fontsizeadd3D, fontweight3D, false, false, "ZS3D2DFont2BigBlur", false, false, 16)
-=======
 	surface.CreateLegacyFont(fontfamily3d, 16, fontweight3D, false, false,  "ZS3D2DFontSuperTiny2", false, true, nil, true)
 	surface.CreateLegacyFont(fontfamily3d, 18, fontweight3D, false, false,  "ZS3D2DFontSuperTiny", false, true, nil, true)
 	surface.CreateLegacyFont(fontfamily3d, 22, fontweight3D, false, false,  "ZS3D2DFontTiny", false, true, nil, true)
@@ -1828,11 +1758,11 @@ function GM:Create3DFonts()
 	surface.CreateLegacyFont(fontfamily, 48 + fontsizeadd3D, fontweight3D, false, false,  "ZS3D2DFont2SmallBlur", false, false, 16, true)
 	surface.CreateLegacyFont(fontfamily, 72 + fontsizeadd3D, fontweight3D, false, false, "ZS3D2DFont2Blur", false, false, 16, true)
 	surface.CreateLegacyFont(fontfamily, 128 + fontsizeadd3D, fontweight3D, false, false, "ZS3D2DFont2BigBlur", false, false, 16, true)
->>>>>>> Stashed changes
 
 	surface.CreateLegacyFont(fontfamilysm, 14 + fontsizeadd3D, fontweight3D, false, false,  "ZS3D2DUnstyleTiny", false, true)
 	surface.CreateLegacyFont(fontfamilysm, 24 + fontsizeadd3D, fontweight3D, false, false,  "ZS3D2DUnstyleSmallest", false, true)
 	surface.CreateLegacyFont(fontfamilysm, 36 + fontsizeadd3D, fontweight3D, false, false,  "ZS3D2DUnstyleSmaller", false, true)
+	surface.CreateLegacyFont(fontfamilysm, 22 + fontsizeadd3D, fontweight3D, false, false,  "ZS3D2DUnstyleNail", false, true)
 end
 
 function GM:CreateNonScaleFonts()
@@ -1867,14 +1797,6 @@ function GM:CreateScalingFonts()
 	surface.CreateLegacyFont("csd", screenscale * 72, 100, true, false, "zsdeathnoticecspa", false, false)
 	surface.CreateLegacyFont("HL2MP", screenscale * 72, 100, true, false, "zsdeathnoticepa", false, false)
 
-<<<<<<< Updated upstream
-	surface.CreateLegacyFont(fontfamily, screenscale * (16 + fontsizeadd), fontweight, fontaa, false, "ZSHUDFontTiny", fontshadow, fontoutline)
-	surface.CreateLegacyFont(fontfamily, screenscale * (20 + fontsizeadd), fontweight, fontaa, false, "ZSHUDFontSmallest", fontshadow, fontoutline)
-	surface.CreateLegacyFont(fontfamily, screenscale * (22 + fontsizeadd), fontweight, fontaa, false, "ZSHUDFontSmaller", fontshadow, fontoutline)
-	surface.CreateLegacyFont(fontfamily, screenscale * (28 + fontsizeadd), fontweight, fontaa, false, "ZSHUDFontSmall", fontshadow, fontoutline)
-	surface.CreateLegacyFont(fontfamily, screenscale * (42 + fontsizeadd), fontweight, fontaa, false, "ZSHUDFont", fontshadow, fontoutline)
-	surface.CreateLegacyFont(fontfamily, screenscale * (72 + fontsizeadd), fontweight, fontaa, false, "ZSHUDFontBig", fontshadow, fontoutline)
-=======
 	surface.CreateLegacyFont(fontfamily, screenscale * (5 + fontsizeadd), fontweight, fontaa, false, "ZSHUDFontTiniestStatus2", fontshadow, fontoutline, nil, true)
 	surface.CreateLegacyFont(fontfamily, screenscale * (10 + fontsizeadd), fontweight, fontaa, false, "ZSHUDFontTiniestStatus", fontshadow, fontoutline, nil, true)
 	surface.CreateLegacyFont(fontfamily, screenscale * (18 + fontsizeadd),  fontweight, fontaa, false,  "ZS3D2DFontSuperTinyBlur", fontshadow, fontoutline, nil, true)
@@ -1885,7 +1807,6 @@ function GM:CreateScalingFonts()
 	surface.CreateLegacyFont(fontfamily, screenscale * (30 + fontsizeadd), fontweight, fontaa, false, "ZSHUDFontSmall", fontshadow, fontoutline, nil, true)
 	surface.CreateLegacyFont(fontfamily, screenscale * (42 + fontsizeadd), fontweight, fontaa, false, "ZSHUDFont", fontshadow, fontoutline, nil, true)
 	surface.CreateLegacyFont(fontfamily, screenscale * (72 + fontsizeadd), fontweight, fontaa, false, "ZSHUDFontBig", fontshadow, fontoutline, nil, true)
->>>>>>> Stashed changes
 	surface.CreateLegacyFont(fontfamily, screenscale * (16 + fontsizeadd), fontweight, fontaa, false, "ZSHUDFontTinyBlur", false, false, 8)
 	surface.CreateLegacyFont(fontfamily, screenscale * (22 + fontsizeadd), fontweight, fontaa, false, "ZSHUDFontSmallerBlur", false, false, 8)
 	surface.CreateLegacyFont(fontfamily, screenscale * (24 + fontsizeadd), fontweight, fontaa, false, "ZSHUDFontSmallestBlur", false, false, 8)
@@ -1914,8 +1835,8 @@ function GM:CreateScalingFonts()
 
 	surface.CreateLegacyFont(fontfamilysm, screenscale * 13, fontweight, fontaa, false, "ZSBodyTextFontSmall", fontshadow)
 
-	surface.CreateLegacyFont(fontfamilysm, screenscale * 15, fontweight, fontaa, false, "ZSBodyTextFont", fontshadow, fontoutline)
-	surface.CreateLegacyFont(fontfamilysm, screenscale * 20, fontweight, fontaa, false, "ZSBodyTextFontBig", fontshadow, fontoutline)
+	surface.CreateLegacyFont(fontfamilysm, screenscale * 15 * (standard == "Ghoulish Fright AOE Regular" and 1.2 or 1), fontweight, fontaa, false, "ZSBodyTextFont", fontshadow, fontoutline)
+	surface.CreateLegacyFont(fontfamilysm, screenscale * 26, fontweight, fontaa, false, "ZSBodyTextFontBig", fontshadow, fontoutline)
 
 	surface.CreateLegacyFont(fontfamily, screenscale * (20 + fontsizeadd), 0, true, false, "ZSDamageResistance", false, true)
 	surface.CreateLegacyFont(fontfamily, screenscale * (20 + fontsizeadd), 0, true, false, "ZSDamageResistanceBlur", false, true)
@@ -1962,11 +1883,7 @@ function GM:CreateVGUI()
 	self.GameStatePanel = vgui.Create("ZSGameState")
 	self.GameStatePanel:SetTextFont("ZSHUDFontSmaller")
 	self.GameStatePanel:SetAlpha(220)
-<<<<<<< Updated upstream
-	self.GameStatePanel:SetSize(screenscale * 420, screenscale * 80)
-=======
 	self.GameStatePanel:SetSize(screenscale * 580, screenscale * 135)
->>>>>>> Stashed changes
 	self.GameStatePanel:ParentToHUD()
 
 	self.TopNotificationHUD = vgui.Create("DEXNotificationsList")
@@ -2221,7 +2138,7 @@ function GM:HumanMenu()
 
 	local hei = draw_GetFontHeight("ZSHUDFontSmall")
 
-	local selecteditemtitle = EasyLabel(panel, "Selected Item", "ZSHUDFontSmall", color_white)
+	local selecteditemtitle = EasyLabel(panel, translate.Get("si_hud"), "ZSHUDFontSmall", color_white)
 	selecteditemtitle:SetContentAlignment(5)
 	panel:AddItem(selecteditemtitle)
 
@@ -2232,7 +2149,7 @@ function GM:HumanMenu()
 
 	local gwbtn = vgui.Create("DButton")
 	gwbtn:SetFont("ZSHUDFontSmaller")
-	gwbtn:SetText("Give Item")
+	gwbtn:SetText(translate.Get("gi_hud"))
 	gwbtn:SetSize(panel:GetWide() - 8 * screenscale, hei - 4 * screenscale)
 	gwbtn:CenterHorizontal()
 	gwbtn.DoClick = GiveWeapon
@@ -2240,7 +2157,7 @@ function GM:HumanMenu()
 
 	gwbtn = vgui.Create("DButton")
 	gwbtn:SetFont("ZSHUDFontSmaller")
-	gwbtn:SetText("Give Item and 5 clips")
+	gwbtn:SetText(translate.Get("gi_5_hud"))
 	gwbtn:SetSize(panel:GetWide() - 8 * screenscale, hei - 4 * screenscale)
 	gwbtn:CenterHorizontal()
 	gwbtn.DoClick = GiveWeaponClip
@@ -2248,7 +2165,7 @@ function GM:HumanMenu()
 
 	gwbtn = vgui.Create("DButton")
 	gwbtn:SetFont("ZSHUDFontSmaller")
-	gwbtn:SetText("Drop Item")
+	gwbtn:SetText(translate.Get("ditem_hud"))
 	gwbtn:SetSize(panel:GetWide() - 8 * screenscale, hei - 4 * screenscale)
 	gwbtn:CenterHorizontal()
 	gwbtn.DoClick = DropWeapon
@@ -2256,7 +2173,7 @@ function GM:HumanMenu()
 
 	gwbtn = vgui.Create("DButton")
 	gwbtn:SetFont("ZSHUDFontSmaller")
-	gwbtn:SetText("Empty Weapon Clip")
+	gwbtn:SetText(translate.Get("ewc_hud"))
 	gwbtn:SetSize(panel:GetWide() - 8 * screenscale, hei - 4 * screenscale)
 	gwbtn:CenterHorizontal()
 	gwbtn.DoClick = EmptyClip
@@ -2265,7 +2182,7 @@ function GM:HumanMenu()
 	
 	gwbtn = vgui.Create("DButton")
 	gwbtn:SetFont("ZSHUDFontSmaller")
-	gwbtn:SetText("Dismantle Item")
+	gwbtn:SetText(translate.Get("di_hud"))
 	gwbtn:SetSize(panel:GetWide() - 8 * screenscale, hei - 4 * screenscale)
 	gwbtn:CenterHorizontal()
 	gwbtn.DoClick = DismantleWeapon
@@ -2377,8 +2294,6 @@ function GM:_CalcView(pl, origin, angles, fov, znear, zfar)
 	if pl.Confusion and pl.Confusion:IsValid() then
 		pl.Confusion:CalcView(pl, origin, angles, fov, znear, zfar)
 	end
-<<<<<<< Updated upstream
-=======
 	local time = CurTime()
 	if pl:IsSkillActive(SKILL_MADNESS) then
 		angles.roll = angles.roll + math.sin(time * 0.7) * 22
@@ -2403,7 +2318,6 @@ function GM:_CalcView(pl, origin, angles, fov, znear, zfar)
 			elseif 0 < curr then
 				redview = math_Approach(redview, 0, FrameTime() * 0.2)
 			end
->>>>>>> Stashed changes
 
 			tColorModHuman["$pp_colour_addr"] = redview * (0.035 + math.abs(math_sin(CurTime() * 2)) * 0.14)
 			tColorModHuman["$pp_colour_brightness"] = 0.5 * -0.045
@@ -2585,7 +2499,7 @@ function GM:_PrePlayerDraw(pl)
 
 	if self.m_ZombieVision and myteam == TEAM_UNDEAD and theirteam == TEAM_HUMAN then
 		local dist = pl:GetPos():DistToSqr(EyePos())
-		if dist <= pl:GetAuraRangeSqr() and (not pl:GetDTBool(DT_PLAYER_BOOL_NECRO) or dist >= 27500) then
+		if dist <= pl:GetAuraRangeSqr() and (not pl:GetDTBool(DT_PLAYER_BOOL_NECRO) or dist >= 27500) and not pl:IsSkillActive(SKILL_INVISIBLE_MAN) then
 			undo = true
 			local healthfrac = pl:Health() / pl:GetMaxHealth()
 
@@ -2726,6 +2640,12 @@ function GM:EndRound(winner, nextmap)
 		end
 	end)
 end
+net.Receive("zs_mutations_table", function(len)
+	local mutationstable = net.ReadTable()
+	if mutationstable then
+		UsedMutations = mutationstable
+	end
+end)
 
 function GM:WeaponDeployed(pl, wep)
 	self:DoChangeDeploySpeed(wep)
@@ -2746,12 +2666,8 @@ end
 function GM:KeyPress(pl, key)
 	if key == self.MenuKey then
 		local team = P_Team(pl)
-<<<<<<< Updated upstream
-		if team == TEAM_HUMAN and pl:Alive() and not pl:IsHolding() then
-=======
 		local d = pl:GetStatus("sigilteleport")
 		if team == TEAM_HUMAN and pl:Alive() and not pl:IsHolding()then
->>>>>>> Stashed changes
 			gamemode.Call("HumanMenu")
 		elseif team == TEAM_ZOMBIE and not pl:Alive() then
 			gamemode.Call("ZombieSpawnMenu")

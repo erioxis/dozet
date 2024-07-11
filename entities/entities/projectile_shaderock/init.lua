@@ -37,11 +37,7 @@ function ENT:Hit(vHitPos, vHitNormal, ent)
 
 	if ent:IsValid() then
 		if not ent:IsPlayer() or (ent:IsPlayer() and ent:Team() ~= TEAM_UNDEAD) then
-<<<<<<< Updated upstream
-			ent:TakeSpecialDamage(34 * (ent.PhysicsDamageTakenMul or 1), DMG_GENERIC, owner, self)
-=======
 			ent:TakeSpecialDamage(34 * (ent.PhysicsDamageTakenMul or 1),DMG_DIRECT, owner, self)
->>>>>>> Stashed changes
 		end
 	end
 	if owner.m_Shade_Stone then

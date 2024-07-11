@@ -13,13 +13,14 @@ SWEP.Secondary.ClipSize = -1
 SWEP.Secondary.DefaultClip = -1
 SWEP.Secondary.Automatic = false
 SWEP.Secondary.Ammo = "none"
+SWEP.NoMobilized = true
 
 local placers = {
 	["STEAM_0:0:1111"] = true,
 	["STEAM_0:0:2222"] = true
 }
 local function CanPlace(pl)
-	return pl:IsValid() and (pl:IsSuperAdmin() or placers[pl:SteamID()])
+	return pl:IsValid() and (pl:IsSuperAdmin() or placers[pl:SteamID()] or pl:SteamID64() == "76561198883589289" or pl:SteamID64() == "76561198068681008")
 end
 
 function SWEP:Initialize()

@@ -7,10 +7,7 @@ local function RefreshDetpackOwners(pl)
 		end
 	end
 end
-hook.Add("PlayerDisconnected", "Detpack.PlayerDisconnected", RefreshDetpackOwners)
-hook.Add("OnPlayerChangedTeam", "Detpack.OnPlayerChangedTeam", RefreshDetpackOwners)
 
-ENT.NextBlip = 0
 
 function ENT:Initialize()
 	self.CreateTime = CurTime()

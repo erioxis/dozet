@@ -11,8 +11,6 @@ function SWEP:ApplyMeleeDamage(ent, trace, damage)
 		ent:KnockDown()
 		ent:SetGroundEntity(NULL)
 		ent:SetVelocity(vel)]]
-<<<<<<< Updated upstream
-=======
 		if math.random(9) == 1 and ent:IsPlayer() then
 			if ent:HasTrinket("antibaracat") then ent:ThrowFromPositionSetZ(trace.StartPos, ent:IsPlayer() and 600 or 1600, nil, noknockdown) 	self.BaseClass.ApplyMeleeDamage(self, ent, trace, damage) return end
 			timer.Simple(3, function()
@@ -25,13 +23,13 @@ function SWEP:ApplyMeleeDamage(ent, trace, damage)
 		if math.random(60) == 1 and not ent:IsPlayer() and not ent:GetClass() == "prop_obj_sigil" then
 			ent:Remove()
 		end
->>>>>>> Stashed changes
 		local noknockdown = true
-		if CurTime() >= (ent.NextKnockdown or 0) then
+		if CurTime() >= (ent.NextKnockdown or 0) and ent:IsPlayer() then
 			noknockdown = false
-			ent.NextKnockdown = CurTime() + 6
+			ent.NextKnockdown = CurTime() + 12
+			ent:GiveStatus("knockdown",6)
 		end
-		ent:ThrowFromPositionSetZ(trace.StartPos, ent:IsPlayer() and 600 or 1600, nil, noknockdown)
+		ent:ThrowFromPositionSetZ(trace.StartPos, ent:IsPlayer() and 1200 or 3200, nil)
 	end
 
 	self.BaseClass.ApplyMeleeDamage(self, ent, trace, damage)

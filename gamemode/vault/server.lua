@@ -1,6 +1,8 @@
 GM.VaultFolder = "zombiesurvival_vault"
 GM.VaultBalance = "zombiesurvival_maps_balance"
 GM.SkillTreeVersion = 1
+GM.DozetSeason = 2
+GM.OldSeason = 1
 
 function GM:ShouldSaveVault(pl)
 	-- Always push accumulated points in to the vault if we have any.
@@ -24,11 +26,6 @@ end
 --[[function GM:ShouldUseVault(pl)
 	return not self.ZombieEscape and not self:IsClassicMode()
 end]]
-<<<<<<< Updated upstream
-
-function GM:GetVaultFile(pl)
-	local steamid = pl:SteamID64() or "invalid"
-=======
 TYPE_XP = 1
 TYPE_ETERNAL = 2
 function GM:GetVaultFile(pl, type)
@@ -39,9 +36,8 @@ function GM:GetVaultFile(pl, type)
 	elseif type == TYPE_ETERNAL then
 		d = "_INVENTORY"
 	end
->>>>>>> Stashed changes
 
-	return self.VaultFolder.."/"..steamid:sub(-2).."/"..steamid..".txt"
+	return self.VaultFolder..d.."/"..steamid:sub(-2).."/"..steamid..d..".txt"
 end
 
 function GM:SaveAllVaults()
@@ -74,9 +70,9 @@ function GM:LoadVault(pl)
 			contents = Deserialize(contents)
 			if contents then
 				pl.PointsVault = contents.Points
-
+				local remort = contents.RemortLevel
 				if contents.RemortLevel then
-					pl:SetZSRemortLevel(contents.RemortLevel)
+					pl:SetZSRemortLevel(remort)
 				end
 				if contents.XP then
 					pl:SetZSXP(contents.XP)
@@ -94,8 +90,6 @@ function GM:LoadVault(pl)
 					pl:SkillsReset()
 					pl.SkillsRefunded = true
 				end
-<<<<<<< Updated upstream
-=======
 				if contents.UpgradableSkills then
 					pl:SetUpgradeSkills(util.DecompressBitTable(contents.UpgradableSkills), true)
 				end
@@ -141,14 +135,11 @@ function GM:LoadVault(pl)
 				end
 			
 				pl.Season = (contents.Season or 1)
->>>>>>> Stashed changes
 
 				pl.SkillVersion = self.SkillTreeVersion
 			end
 		end
 	end
-<<<<<<< Updated upstream
-=======
 	local filename = self:GetVaultFile(pl, TYPE_XP)
 	if file.Exists(filename, "DATA") then
 		local contents = file.Read(filename, "DATA")
@@ -178,7 +169,6 @@ function GM:LoadVault(pl)
 			end
 		end
 	end
->>>>>>> Stashed changes
 
 	pl.PointsVault = pl.PointsVault or 0
 end
@@ -215,23 +205,16 @@ function GM:PlayerReadyVault(pl)
 end
 function GM:SaveVault(pl)
 	if not self:ShouldSaveVault(pl) then return end
-<<<<<<< Updated upstream
-
-=======
 	local remort =pl:GetZSRemortLevel()
 	local saved,savek = pl.OldDesiredSkills,pl.RemortOldSkills 
 	--PrintTable(RemoveFuckingTrue(saved))
 	--PrintTable(savek)
->>>>>>> Stashed changes
 	local tosave = {
 		Points = math.floor(pl.PointsVault),
 		XP = pl:GetZSXP(),
-		RemortLevel = pl:GetZSRemortLevel(),
+		RemortLevel = remort,
 		DesiredActiveSkills = util.CompressBitTable(pl:GetDesiredActiveSkills()),
 		UnlockedSkills = util.CompressBitTable(pl:GetUnlockedSkills()),
-<<<<<<< Updated upstream
-		Version = pl.SkillVersion or self.SkillTreeVersion
-=======
 		Version = pl.SkillVersion or self.SkillTreeVersion,
 		RemortOldSkills = util.CompressBitTable(RemoveFuckingTrue(savek) or {}),
 		OldDesiredSkills = util.CompressBitTable(RemoveFuckingTrue(saved) or {}),
@@ -251,7 +234,6 @@ function GM:SaveVault(pl)
 --	print(pl:SteamID64())
 	local tosavexp = {
 		AchXP = pl:GetDCoins()
->>>>>>> Stashed changes
 	}
 
 
@@ -264,11 +246,6 @@ function GM:SaveVault(pl)
 	end
 
 	local filename = self:GetVaultFile(pl)
-<<<<<<< Updated upstream
-	file.CreateDir(string.GetPathFromFilename(filename))
-	file.Write(filename, Serialize(tosave))
-end
-=======
 	local filenamexp = self:GetVaultFile(pl,TYPE_XP)
 	file.CreateDir(string.GetPathFromFilename(filename))
 	file.Write(filename, Serialize(tosave))
@@ -408,4 +385,3 @@ function GM:LoadWinRate()
 		end
 	end
 end
->>>>>>> Stashed changes

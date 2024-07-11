@@ -4,7 +4,7 @@ SWEP.PrintName = "Flesh Creeper"
 
 SWEP.MeleeDelay = 0.5
 SWEP.MeleeReach = 52
-SWEP.MeleeDamage = 27
+SWEP.MeleeDamage = 9
 SWEP.MeleeForceScale = 1.25
 SWEP.MeleeSize = 4.5 --3
 SWEP.MeleeDamageType = DMG_SLASH
@@ -80,7 +80,7 @@ end
 
 function SWEP:ApplyMeleeDamage(ent, trace, damage)
 	if ent.ZombieConstruction then
-		damage = damage * 3
+		damage = damage * 20
 	end
 
 	self.BaseClass.ApplyMeleeDamage(self, ent, trace, damage)

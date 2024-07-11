@@ -1,9 +1,7 @@
 INC_SERVER()
-
+ENT.Heal = 10
 function ENT:Hit(vHitPos, vHitNormal, eHitEntity, vOldVelocity)
 	if self:GetHitTime() ~= 0 then return end
-<<<<<<< Updated upstream
-=======
 	local owner = self:GetOwner()
 	self:SetDTEntity(5,self:GetOwner())
 	local oldowner = self:GetDTEntity(5)
@@ -24,10 +22,9 @@ function ENT:Hit(vHitPos, vHitNormal, eHitEntity, vOldVelocity)
 			end
 		end
 	end
->>>>>>> Stashed changes
 	self:SetHitTime(CurTime())
 
-	self:Fire("kill", "", 10)
+	self:Fire("kill", "", 0.04)
 
 	local owner = self:GetOwner()
 	if not owner:IsValid() then owner = self end
@@ -47,7 +44,7 @@ function ENT:Hit(vHitPos, vHitNormal, eHitEntity, vOldVelocity)
 		if eHitEntity:IsPlayer() and eHitEntity:Team() ~= TEAM_UNDEAD then
 			local strstatus = eHitEntity:GiveStatus(alt and "medrifledefboost" or "strengthdartboost", (alt and 2 or 1) * (self.BuffDuration or 10), owner)
 
-			local txt = alt and "Defence Shot Gun" or "Strength Shot Gun"
+			local txt = alt and translate.Get("buff_mdart") or translate.Get("buff_bdart")
 
 			net.Start("zs_buffby")
 				net.WriteEntity(owner)
@@ -78,4 +75,7 @@ function ENT:Hit(vHitPos, vHitNormal, eHitEntity, vOldVelocity)
 			effectdata:SetEntity(NULL)
 		end
 	util.Effect(alt and "hit_healdart2" or "hit_strengthdart", effectdata)
+	if oldowner:IsSkillActive(SKILL_PHIK) then
+		self:Remove()
+	end
 end

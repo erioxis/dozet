@@ -7,13 +7,8 @@ CLASS.Help = "controls_ancient_nightmare"
 
 CLASS.Boss = true
 
-<<<<<<< Updated upstream
-CLASS.Health = 3601
-CLASS.Speed = 165
-=======
 CLASS.Health = 1900
 CLASS.Speed = 110
->>>>>>> Stashed changes
 
 CLASS.Points = 30
 
@@ -25,6 +20,10 @@ CLASS.OverrideModel = false
 CLASS.Skeletal = true
 
 local math_random = math.random
+local math_min = math.min
+local math_max = math.max
+local string_format = string.format
+local bit_band = bit.band
 
 function CLASS:PlayerFootstep(pl, vFootPos, iFoot, strSoundName, fVolume, pFilter)
 	if math_random(2) == 1 then
@@ -35,8 +34,6 @@ function CLASS:PlayerFootstep(pl, vFootPos, iFoot, strSoundName, fVolume, pFilte
 
 	return true
 end
-<<<<<<< Updated upstream
-=======
 function CLASS:Think()
 	for _, ent in pairs(ents.FindInSphere(pl:GetPos(), 560)) do
         if ent:IsPlayer() and ent:IsValidLivingHuman() then
@@ -71,17 +68,11 @@ function CLASS:GetAlpha(pl)
 
 	return math_Clamp(vis, MySelf:IsValid() and MySelf:Team() == TEAM_UNDEAD and 0.137 or 0, 0.7)
 end
->>>>>>> Stashed changes
 
 if not CLIENT then return end
 
+
 CLASS.Icon = "zombiesurvival/killicons/ancient_nightmare"
 
-if SERVER then
-function CLASS:ProcessDamage(pl, dmginfo)
-	if dmginfo:GetInflictor().IsMelee then
-		dmginfo:SetDamage(dmginfo:GetDamage() / 3)
-	end
-end
-end
+
 

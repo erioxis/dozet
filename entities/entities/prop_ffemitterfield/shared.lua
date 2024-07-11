@@ -14,6 +14,7 @@ AccessorFuncDT(ENT, "Emitter", "Entity", 0)
 AccessorFuncDT(ENT, "LastDamaged", "Float", 0)
 
 function ENT:ShouldNotCollide(ent)
+	if #team.GetPlayers(TEAM_HUMAN) == 1 then return true end
 	if ent:IsProjectile() then
 		local owner = ent:GetOwner()
 		if owner:IsValid() then

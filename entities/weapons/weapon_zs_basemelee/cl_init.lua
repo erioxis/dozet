@@ -15,13 +15,13 @@ function SWEP:TranslateFOV(fov)
 	return GAMEMODE.FOVLerp * fov
 end
 
+
+
 function SWEP:DrawWeaponSelection(x, y, w, h, alpha)
 	self:BaseDrawWeaponSelection(x, y, w, h, alpha)
 end
 
 function SWEP:DrawHUD()
-<<<<<<< Updated upstream
-=======
 		
 	local wid, hei = 10, 900
 	local x, y = ScrW() + wid - 960, ScrH() - hei - 72
@@ -36,13 +36,10 @@ function SWEP:DrawHUD()
 	if self.Draw2DHUD then
 		self:Draw2DHUD()
 	end
->>>>>>> Stashed changes
 	if GetConVar("crosshair"):GetInt() ~= 1 then return end
 	self:DrawCrosshairDot()
 end
 
-<<<<<<< Updated upstream
-=======
 function SWEP:Draw2DHUD()
 	if self.DrawDrawAbility2DHUD then
 		self:DrawDrawAbility2DHUD(ScrW() + wid - 960, ScrH() - hei - 72)
@@ -53,7 +50,6 @@ end
 
 
 
->>>>>>> Stashed changes
 function SWEP:OnRemove()
 	self:Anim_OnRemove()
 end
@@ -63,6 +59,7 @@ function SWEP:ViewModelDrawn()
 end
 
 function SWEP:PreDrawViewModel(vm)
+
 	if self.ShowViewModel == false then
 		render.SetBlend(0)
 	end
@@ -106,6 +103,7 @@ function SWEP:GetHUD3DPos(vm)
 end
 
 local ghostlerp = 0
+local ghostlerp1 = 0
 function SWEP:GetViewModelPosition(pos, ang)
 	local owner = self:GetOwner()
 	if self:IsSwinging() then
@@ -136,28 +134,22 @@ function SWEP:GetViewModelPosition(pos, ang)
 	elseif ghostlerp > 0 then
 		ghostlerp = math.max(0, ghostlerp - FrameTime() * 5)
 	end
-<<<<<<< Updated upstream
-=======
 	if not self:GetBlockState() then
 		ghostlerp1 = math.max(0, ghostlerp1 - FrameTime() * 2)
 	elseif self:GetBlockState() then
 		ghostlerp1 = math.min(1, ghostlerp1 +FrameTime()* 1.3)--1.1
 	end
->>>>>>> Stashed changes
 
 	if ghostlerp > 0 then
 		pos = pos + 3.5 * ghostlerp * ang:Up()
 		ang:RotateAroundAxis(ang:Right(), -30 * ghostlerp)
 	end
-<<<<<<< Updated upstream
-=======
 	if ghostlerp1 > 0 then
 		pos = pos - 3.5 * ghostlerp1 * ang:Up()
 		pos = pos - 8.5 * ghostlerp1 * ang:Right()
 		ang:RotateAroundAxis(ang:Right(), 10 * ghostlerp1)
 		ang:RotateAroundAxis(ang:Forward(), 20 * ghostlerp1)
 	end
->>>>>>> Stashed changes
 
 	return pos, ang
 end

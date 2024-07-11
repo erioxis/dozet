@@ -3,11 +3,8 @@ DEFINE_BASECLASS("weapon_zs_base")
 
 SWEP.PrintName = "'Bullet Storm' SMG"
 SWEP.Description = "Hold right click to use the Storm firing mode: fire rate is reduced to 60% but two bullets are fired at once."
-<<<<<<< Updated upstream
-=======
 SWEP.PrintName = translate.Get("wep_bulletstorm")
 SWEP.Description = translate.Get("wep_d_gale")
->>>>>>> Stashed changes
 SWEP.Slot = 2
 SWEP.SlotPos = 0
 

@@ -1,10 +1,6 @@
+
 INC_SERVER()
 
-<<<<<<< Updated upstream
-function SWEP:ApplyMeleeDamage(ent, trace, damage)
-	if ent:IsPlayer() then
-		ent:GiveStatus("dimvision", 6)
-=======
 function SWEP:ApplyMeleeDamage(pl, trace, damage)
 	if SERVER and pl:IsPlayer() then
 	if not pl:IsSkillActive(SKILL_ANTINEGR) then
@@ -34,8 +30,7 @@ function SWEP:ApplyMeleeDamage(pl, trace, damage)
 			end
 						pl:AddCursed(self:GetOwner(), 5)
 		end
->>>>>>> Stashed changes
 	end
-
-	self.BaseClass.ApplyMeleeDamage(self, ent, trace, damage)
+	end
+	self.BaseClass.ApplyMeleeDamage(self, pl, trace, damage)
 end

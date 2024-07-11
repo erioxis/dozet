@@ -24,7 +24,7 @@ CLASS.OverrideModel = Model("models/player/charple.mdl")
 if SERVER then
 function CLASS:ProcessDamage(pl, dmginfo)
 	if dmginfo:GetInflictor().IsMelee then
-		dmginfo:SetDamage(dmginfo:GetDamage() / 4)
+		dmginfo:SetDamage(dmginfo:GetDamage() * 2)
 	end
 	return dmginfo
 end

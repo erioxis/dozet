@@ -29,6 +29,7 @@ end
 local matWireframe = Material("models/wireframe")
 local matWhite = Material("models/debug/debugwhite")
 function ENT:DrawTranslucent()
+	if MySelf:GetInfo("zs_nopickuploot") == "1" then return end
 	if not MySelf:IsValid() or MySelf:Team() ~= TEAM_HUMAN then
 		self:DrawPreciseModel()
 		return

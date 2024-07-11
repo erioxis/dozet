@@ -1,14 +1,9 @@
 AddCSLuaFile()
 
-<<<<<<< Updated upstream
-SWEP.PrintName = "'Reaper' UMP"
-SWEP.Description = "A hard hitting SMG that provides a short duration stacking damage buff if you earn a kill."
-=======
 --SWEP.PrintName = "'Reaper' UMP"
 --SWEP.Description = "A hard hitting SMG that provides a short duration stacking damage buff if you earn a kill."
 SWEP.PrintName = translate.Get("wep_riper")
 SWEP.Description = translate.Get("wep_d_riper")
->>>>>>> Stashed changes
 
 SWEP.Slot = 2
 SWEP.SlotPos = 0
@@ -32,13 +27,9 @@ SWEP.WorldModel = "models/weapons/w_smg_ump45.mdl"
 SWEP.UseHands = true
 
 SWEP.Primary.Sound = Sound("Weapon_UMP45.Single")
-<<<<<<< Updated upstream
-SWEP.Primary.Damage = 19.125
-=======
 SWEP.Primary.Damage = 19
->>>>>>> Stashed changes
 SWEP.Primary.NumShots = 1
-SWEP.Primary.Delay = 0.12
+SWEP.Primary.Delay = 0.22
 
 SWEP.Primary.ClipSize = 30
 SWEP.Primary.Automatic = true

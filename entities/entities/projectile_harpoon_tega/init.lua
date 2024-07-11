@@ -3,7 +3,7 @@ INC_SERVER()
 local vector_origin = vector_origin
 
 ENT.NextDamage = 0
-ENT.TicksLeft = 50
+ENT.TicksLeft = 30
 
 function ENT:Initialize()
 	self:SetModel("models/props_junk/harpoon002a.mdl")
@@ -13,7 +13,7 @@ function ENT:Initialize()
 	self:EmitSound("weapons/iceaxe/iceaxe_swing1.wav", 75, math.random(35, 45))
 
 	self:Fire("kill", "", 50)
-	self.DieTime = CurTime() + 6
+	self.DieTime = CurTime() + 3
 	self.LastPhysicsUpdate = UnPredictedCurTime()
 end
 
@@ -49,7 +49,7 @@ function ENT:Think()
 				self.NextDamage = CurTime() + 0.15
 
 				util.Blood((parent:NearestPoint(self:GetPos()) + parent:WorldSpaceCenter()) / 2, math.random(4, 9), Vector(0, 0, 1), 100)
-				parent:TakeSpecialDamage((self.ProjDamage or 55) * 0.085, DMG_SLASH, self:GetOwner(), self)
+				parent:TakeSpecialDamage((self.ProjDamage or 55) * 0.105, DMG_SLASH, self:GetOwner(), self)
 			end
 		else
 			self:Remove()

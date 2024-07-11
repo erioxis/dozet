@@ -1,7 +1,9 @@
 AddCSLuaFile()
 
-SWEP.PrintName = "Shovel"
-SWEP.Description = "Лопата убивает всех кто упал!"
+--"Shovel"
+-- "Лопата убивает всех кто упал!"
+SWEP.PrintName = ""..translate.Get("wep_shovel")
+SWEP.Description = ""..translate.Get("wep_d_shovel")
 
 if CLIENT then
 	SWEP.ViewModelFOV = 60

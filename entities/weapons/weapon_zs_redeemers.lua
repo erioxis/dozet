@@ -1,6 +1,8 @@
 AddCSLuaFile()
 
-SWEP.PrintName = "'Redeemers' Dual Handguns"
+--SWEP.PrintName = "'Redeemers' Dual Handguns"
+SWEP.PrintName = ""..translate.Get("wep_redeemers")
+
 SWEP.Slot = 1
 SWEP.SlotPos = 0
 
@@ -22,11 +24,11 @@ SWEP.WorldModel = "models/weapons/w_pist_elite.mdl"
 SWEP.UseHands = true
 
 SWEP.Primary.Sound = Sound("Weapon_ELITE.Single")
-SWEP.Primary.Damage = 33
+SWEP.Primary.Damage = 16
 SWEP.Primary.NumShots = 1
-SWEP.Primary.Delay = 0.15
+SWEP.Primary.Delay = 0.31
 
-SWEP.Primary.ClipSize = 30
+SWEP.Primary.ClipSize = 22
 SWEP.Primary.Automatic = true
 SWEP.Primary.Ammo = "pistol"
 SWEP.Primary.DefaultClip = 150
@@ -35,9 +37,20 @@ SWEP.ConeMax = 2.75
 SWEP.ConeMin = 2.1
 
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_RELOAD_SPEED, 0.1)
+function SWEP:PrimaryAttack()
+	if not self:CanPrimaryAttack() then return end
+	if self:GetOwner():Team() == TEAM_UNDEAD then return end
+	self:SetNextPrimaryFire(CurTime() + self:GetFireDelay())
+
+	self:EmitFireSound()
+	self:TakeAmmo()
+	self:ShootBullets(self.Primary.Damage, self.Primary.NumShots, self:GetCone())
+	self.IdleAnimation = CurTime() + self:SequenceDuration()
+end
 
 function SWEP:SecondaryAttack()
 end
+
 
 function SWEP:SendWeaponAnimation()
 	self:SendWeaponAnim(self:Clip1() % 2 == 0 and ACT_VM_PRIMARYATTACK or ACT_VM_SECONDARYATTACK)

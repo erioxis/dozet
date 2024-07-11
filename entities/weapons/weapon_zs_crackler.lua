@@ -1,8 +1,9 @@
 AddCSLuaFile()
 
-SWEP.PrintName = "'Crackler' Assault Rifle"
-SWEP.Description = "An unsophisticated assault rifle which has good damage and accuracy."
-
+--SWEP.PrintName = "'Crackler' Assault Rifle"
+--SWEP.Description = "An unsophisticated assault rifle which has good damage and accuracy."
+SWEP.PrintName = translate.Get("wep_cracker")
+SWEP.Description = translate.Get("wep_d_cracker")
 SWEP.Slot = 2
 SWEP.SlotPos = 0
 
@@ -23,9 +24,11 @@ SWEP.ViewModel = "models/weapons/cstrike/c_rif_famas.mdl"
 SWEP.WorldModel = "models/weapons/w_rif_famas.mdl"
 SWEP.UseHands = true
 
+local a = math.Round(util.SharedRandom("Cracker_Rand",12,25,math.random(12,25)))
+
 SWEP.ReloadSound = Sound("Weapon_FAMAS.Clipout")
 SWEP.Primary.Sound = Sound("Weapon_FAMAS.Single")
-SWEP.Primary.Damage = 15
+SWEP.Primary.Damage = a
 SWEP.Primary.NumShots = 1
 SWEP.Primary.Delay = 0.175
 
@@ -45,13 +48,9 @@ SWEP.IronSightsPos = Vector(-3, 3, 2)
 
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_MAX_SPREAD, -0.375, 1)
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_MIN_SPREAD, -0.2, 1)
-<<<<<<< Updated upstream
-GAMEMODE:AddNewRemantleBranch(SWEP, 1, "'Crackler' Combat Rifle", "Loses automatic fire rate but gains a bit of damage and accuracy", function(wept)
-=======
 GAMEMODE:AddNewRemantleBranch(SWEP, 1, translate.Get("wep_cracker"), translate.Get("wep_d_cracker_r1"), function(wept)
->>>>>>> Stashed changes
 	wept.Primary.Damage = wept.Primary.Damage * 1.2
-	wept.Primary.Delay = wept.Primary.Delay * 2
+	wept.Primary.Delay = wept.Primary.Delay * 1.2
 	wept.Primary.ClipSize = 15
 	wept.ConeMin = wept.ConeMin * 0.7
 	wept.ConeMax = wept.ConeMax * 0.7

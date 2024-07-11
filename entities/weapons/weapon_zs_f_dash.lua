@@ -28,10 +28,10 @@ SWEP.FoodHealth = 100
 SWEP.FoodEatTime = 0.1
 
 SWEP.Primary.ClipSize = 1
-SWEP.ReloadSpeed = 1
+SWEP.ReloadSpeed = 2
 SWEP.Primary.Delay = 0.15
 
-SWEP.Knockback = -354
+SWEP.Knockback = -522
 
 function SWEP:PrimaryAttack()
 	if not self:CanPrimaryAttack() then return end
@@ -45,6 +45,8 @@ function SWEP:PrimaryAttack()
 
 	owner:SetGroundEntity(NULL)
 	owner:SetVelocity(-self.Knockback * clip * owner:GetAimVector())
+	owner:GiveStatus("dimvision",5)
+	owner:GiveStatus("rot",3)
 
 
 end

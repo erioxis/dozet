@@ -1,17 +1,11 @@
 INC_SERVER()
 
 ENT.Heal = 10
-<<<<<<< Updated upstream
-ENT.PointsMultiplier = 1.25
-=======
 ENT.PointsMultiplier = 0.7
->>>>>>> Stashed changes
 ENT.Gravity = false
 
 function ENT:Hit(vHitPos, vHitNormal, eHitEntity, vOldVelocity)
 	if self:GetHitTime() ~= 0 then return end
-<<<<<<< Updated upstream
-=======
 	local owner = self:GetOwner()
 	if owner:IsValid() and owner:IsSkillActive(SKILL_PHIK) and eHitEntity:IsPlayer() then
 		self:Remove()
@@ -34,11 +28,18 @@ function ENT:Hit(vHitPos, vHitNormal, eHitEntity, vOldVelocity)
 						net.WriteEntity(owner)
 						net.WriteString(txt)
 					net.Send(pl)
->>>>>>> Stashed changes
 
+					net.Start("zs_buffwith")
+						net.WriteEntity(pl)
+						net.WriteString(txt)
+					net.Send(owner)
+				end
+			end
+		end
+	end
 	self:SetHitTime(CurTime())
 
-	self:Fire("kill", "", 10)
+	self:Fire("kill", "", 0.04)
 
 	local owner = self:GetOwner()
 	if not owner:IsValid() then owner = self end
@@ -70,20 +71,18 @@ function ENT:Hit(vHitPos, vHitNormal, eHitEntity, vOldVelocity)
 			elseif eHitEntity:Team() == TEAM_HUMAN then
 				local ehithp, ehitmaxhp = eHitEntity:Health(), eHitEntity:GetMaxHealth()
 
-				if eHitEntity:IsSkillActive(SKILL_D_FRAIL) and ehithp >= ehitmaxhp * 0.25 then
+				if eHitEntity:IsSkillActive(SKILL_D_FRAIL) or eHitEntity:IsSkillActive(SKILL_ABUSE) and ehithp >= ehitmaxhp * 0.44 then
 					owner:CenterNotify(COLOR_RED, translate.Format("frail_healdart_warning", eHitEntity:GetName()))
 					self:EmitSound("buttons/button8.wav", 70, math.random(115,128))
 					self:DoRefund(owner)
+
+		
 				elseif not (owner:IsSkillActive(SKILL_RECLAIMSOL) and ehithp >= ehitmaxhp) then
 					local status = eHitEntity:GiveStatus(alt and "strengthdartboost" or "medrifledefboost", (alt and 1 or 2) * (self.BuffDuration or 10), owner)
 
 					owner:HealPlayer(eHitEntity, self.Heal)
 
-<<<<<<< Updated upstream
-					local txt = alt and "Strength Rifle" or "Medical Rifle"
-=======
 					local txt = alt and translate.ClientGet(eHitEntity,"buff_srifle") or translate.ClientGet(eHitEntity,"buff_mrifle")
->>>>>>> Stashed changes
 
 					net.Start("zs_buffby")
 						net.WriteEntity(owner)
@@ -97,6 +96,7 @@ function ENT:Hit(vHitPos, vHitNormal, eHitEntity, vOldVelocity)
 				else
 					self:DoRefund(owner)
 				end
+				
 			end
 		else
 			self:DoRefund(owner)

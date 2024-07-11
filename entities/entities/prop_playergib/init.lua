@@ -76,8 +76,6 @@ function ENT:Think()
 		self:Remove()
 	end
 end
-<<<<<<< Updated upstream
-=======
 function ENT:Use(activator, caller)
 	if self.NextUse > CurTime() or activator and activator:IsValidLivingHuman() and activator:GetProgress("parasite_prog") >= CurTime() or (activator.NextGibEat or 1) >= CurTime()  then return end
 	activator.NextGibEat = CurTime() + 0.2
@@ -113,15 +111,14 @@ function ENT:Use(activator, caller)
 		util.Blood(self:GetPos(), math.random(2), Vector(0, 0, 1), 100, self:GetDTInt(0), true)
 	end
 end
->>>>>>> Stashed changes
 
 function ENT:StartTouch(ent)
 	if self.DieTime ~= 0 and ent:IsValidLivingZombie() and ent:Health() < ent:GetMaxZombieHealth() and not ent:GetStatus("shockdebuff") --[[and not ent:GetZombieClassTable().Boss]] then
 		self.DieTime = 0
 
-		ent:SetHealth(math.min(ent:GetMaxZombieHealth(), ent:Health() + 10))
+		ent:SetHealth(math.min(ent:GetMaxZombieHealth(), ent:Health() + 40))
 
 		self:EmitSound("physics/body/body_medium_break"..math.random(2, 4)..".wav")
 		util.Blood(self:GetPos(), math.random(2), Vector(0, 0, 1), 100, self:GetDTInt(0), true)
-	end
+    end
 end

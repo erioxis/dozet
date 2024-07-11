@@ -2,15 +2,10 @@ AddCSLuaFile()
 
 SWEP.Base = "weapon_zs_basemelee"
 
-<<<<<<< Updated upstream
-SWEP.PrintName = "Ice Shade Manipulator"
-SWEP.Description = "A high-tech device, useful for crowds of zombies, has endless ice blocks "
-=======
 ---"Ice Shade Manipulator"
 --- "A high-tech device, useful for crowds of zombies, has endless ice blocks "
 SWEP.PrintName = translate.Get("wep_shadeice")
 SWEP.Description = translate.Get("wep_d_shadeice")
->>>>>>> Stashed changes
 
 SWEP.ViewModel = Model("models/weapons/v_crowbar.mdl")
 SWEP.WorldModel = Model("models/weapons/w_crowbar.mdl")
@@ -33,6 +28,7 @@ SWEP.MeleeRange = 61
 SWEP.MeleeSize = 0.76
 SWEP.PrimaryDelay = 0.47
 SWEP.Tier = 3
+SWEP.Thinkdada = 0
 
 
 function SWEP:PrimaryAttack()
@@ -49,7 +45,7 @@ function SWEP:PrimaryAttack()
 
 				if CLIENT then return end
 
-				local vel = owner:GetAimVector() * 1000
+				local vel = owner:GetAimVector() * 1000 * (owner:GetModelScale() or 1)
 
 				local phys = obj:GetPhysicsObject()
 				if phys:IsValid() and phys:IsMoveable() and phys:GetMass() <= 500 then
@@ -61,9 +57,11 @@ function SWEP:PrimaryAttack()
 					obj:EmitSound(")weapons/physcannon/superphys_launch"..math.random(4)..".wav")
 					obj.LastShadeLaunch = CurTime()
 				end
+				if ent:IsValid() and self.Thinkdada <= CurTime() then
+					ent:Remove()
+					self.Thinkdada = CurTime() + 0.2
+				end 
 			end
-
-			ent:Remove()
 		end
 	end
 end

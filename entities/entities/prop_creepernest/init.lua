@@ -3,6 +3,7 @@ INC_SERVER()
 ENT.NextDecay = 0
 ENT.BuildsThisTick = 0
 ENT.ZombieConstruction = true
+ENT.NKiller = NULL
 
 function ENT:Initialize()
 	self:SetModel("models/props_wasteland/antlionhill.mdl")
@@ -62,6 +63,9 @@ function ENT:OnTakeDamage(dmginfo)
 	if self:GetNestHealth() <= 0 or dmginfo:GetDamage() <= 0 then return end
 
 	local attacker = dmginfo:GetAttacker()
+	if attacker:IsPlayer() then
+		self.NKiller = attacker
+	end
 	if attacker:IsValid() and attacker:IsPlayer() and attacker:Team() == TEAM_UNDEAD then
 		local owner = self:GetNestOwner()
 		if !(attacker:GetZombieClassTable().Name == "Flesh Creeper" or attacker:GetZombieClassTable().Name == "Glitch Creeper")  then
@@ -112,13 +116,14 @@ function ENT:Destroy()
 	self.Destroyed = true
 
 	local pos = self:WorldSpaceCenter()
-
+    
 	local effectdata = EffectData()
 		effectdata:SetEntity(self)
 		effectdata:SetOrigin(pos)
 	util.Effect("gib_player", effectdata, true, true)
 
 	util.Blood(pos, 100, self:GetUp(), 256)
+
 
 	self:Fire("kill", "", 0.01)
 end
@@ -128,14 +133,11 @@ function ENT:OnRemove()
 		for _, pl in pairs(team.GetPlayers(TEAM_UNDEAD)) do
 			pl:CenterNotify(COLOR_RED, translate.ClientFormat(pl, "nest_destroyed", name))
 		end
-<<<<<<< Updated upstream
-=======
 		for _, pl in pairs(player.GetAll()) do
 			if self.NKiller:IsValid() and self.NKiller:IsPlayer() then
 				pl:TopNotify(COLOR_YELLOW ,{killicon = "nest"},translate.ClientGet(pl,"nest_destroyed_killicon"),{killicon = (self.NKiller:GetActiveWeapon():GetClass() or "nest")}, self.NKiller)
 			end
 		end
->>>>>>> Stashed changes
 
 
 		local pos = self:WorldSpaceCenter()

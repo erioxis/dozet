@@ -1,14 +1,9 @@
 AddCSLuaFile()
 
-<<<<<<< Updated upstream
-SWEP.PrintName = "'Sprayer' Uzi 9mm"
-SWEP.Description = "Quite inaccurate, but has good, cheap and reliable firepower potential."
-=======
 --SWEP.PrintName = "'Sprayer' Uzi 9mm"
 --SWEP.Description = "Quite inaccurate, but has good, cheap and reliable firepower potential."
 SWEP.PrintName = translate.Get("wep_uzi")
 SWEP.Description = translate.Get("wep_d_uzi")
->>>>>>> Stashed changes
 
 SWEP.Slot = 2
 SWEP.SlotPos = 0

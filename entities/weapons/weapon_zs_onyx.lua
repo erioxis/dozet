@@ -1,9 +1,10 @@
 AddCSLuaFile()
 DEFINE_BASECLASS("weapon_zs_base")
 
-SWEP.PrintName = "'Onyx' Rifle"
-SWEP.Description = "Reliable balanced sniper rifle with good accuracy, clip size and damage."
-
+--SWEP.PrintName = "'Onyx' Rifle"
+--SWEP.Description = "Reliable balanced sniper rifle with good accuracy, clip size and damage."
+SWEP.PrintName = ""..translate.Get("wep_onyx")
+SWEP.Description = ""..translate.Get("wep_d_onyx")
 SWEP.Slot = 3
 SWEP.SlotPos = 0
 

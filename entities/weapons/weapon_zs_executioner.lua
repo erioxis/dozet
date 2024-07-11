@@ -1,14 +1,9 @@
 AddCSLuaFile()
 
-<<<<<<< Updated upstream
-SWEP.PrintName = "'Executioner' Axe"
-SWEP.Description = "Instantly kills zombies brought bellow 5% of their max health."
-=======
 --SWEP.PrintName = "'Executioner' Axe"
 --SWEP.Description = "Instantly kills zombies brought bellow 13% of their max health."
 SWEP.PrintName = translate.Get("wep_exec")
 SWEP.Description = translate.Get("wep_d_exec")
->>>>>>> Stashed changes
 
 if CLIENT then
 	SWEP.ViewModelFOV = 55

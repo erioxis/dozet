@@ -1,15 +1,9 @@
 AddCSLuaFile()
 
-<<<<<<< Updated upstream
-SWEP.PrintName = "Push Broom"
-SWEP.Description = "BrooooooooooOOOOOOOOOOOOOM!"
-
-=======
 --SWEP.PrintName = "Push Broom"
 --SWEP.Description = "BrooooooooooOOOOOOOOOOOOOM!"
 SWEP.PrintName = translate.Get("wep_pushbroom")
 SWEP.Description = translate.Get("wep_d_pushbroom")
->>>>>>> Stashed changes
 if CLIENT then
 	SWEP.ViewModelFOV = 70
 

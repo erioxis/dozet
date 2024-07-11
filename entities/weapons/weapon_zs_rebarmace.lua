@@ -1,8 +1,9 @@
 AddCSLuaFile()
 
-SWEP.PrintName = "Rebar Mace"
-SWEP.Description = "Disorients zombies hit."
-
+--SWEP.PrintName = "Rebar Mace"
+--SWEP.Description = "Disorients zombies hit."
+SWEP.PrintName = ""..translate.Get("wep_rebarmace")
+SWEP.Description = ""..translate.Get("wep_d_rebarmace")
 if CLIENT then
 	SWEP.ViewModelFlip = false
 	SWEP.ViewModelFOV = 60

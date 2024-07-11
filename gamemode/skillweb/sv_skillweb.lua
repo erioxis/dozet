@@ -4,8 +4,6 @@ net.Receive("zs_skill_is_desired", function(length, pl)
 
 	pl:SetSkillDesired(skillid, desired)
 end)
-<<<<<<< Updated upstream
-=======
 
 local rememberedskills = {}
 local function  CycleDo(skillid,k,pl)
@@ -75,7 +73,6 @@ net.Receive("zs_repeat", function(length, pl)
 	local args = net.ReadTable()
 	pl:CenterNotify(args)
 end)
->>>>>>> Stashed changes
 
 net.Receive("zs_skills_desired", function(length, pl)
 	local desired = {}
@@ -87,8 +84,6 @@ net.Receive("zs_skills_desired", function(length, pl)
 	end
 	pl:SetDesiredActiveSkills(desired)
 end)
-<<<<<<< Updated upstream
-=======
 
 
 net.Receive("zs_xp_ach", function(length, pl)
@@ -97,7 +92,6 @@ net.Receive("zs_xp_ach", function(length, pl)
 	pl:AddZSXP(xp)
 	pl:SetDCoins(pl:GetDCoins() - xp)
 end)
->>>>>>> Stashed changes
 
 net.Receive("zs_skills_all_desired", function(length, pl)
 	if net.ReadBool() then
@@ -113,13 +107,9 @@ net.Receive("zs_skills_all_desired", function(length, pl)
 		pl:SetDesiredActiveSkills(desired)
 	end
 end)
-<<<<<<< Updated upstream
-
-=======
 net.Receive("zs_secret", function(length, pl)
 	GAMEMODE:WritePromo(net.ReadString(),net.ReadEntity())
 end)
->>>>>>> Stashed changes
 net.Receive("zs_skill_set_desired", function(length, pl)
 	local skillset = net.ReadTable()
 	local assoc = table.ToAssoc(skillset)
@@ -144,35 +134,19 @@ net.Receive("zs_skill_is_destroyed", function(length, pl)
 	local activate = net.ReadBool()
 	local skill = GAMEMODE.Skills[skillid]
 
-<<<<<<< Updated upstream
-	if skill and not pl:IsSkillUnlocked(skillid) and pl:GetZSSPRemaining() >= 1 and pl:SkillCanUnlock(skillid) and not skill.Disabled then
-		pl:SetSkillUnlocked(skillid, true)
-
-		local msg = "You've unlocked a skill: "..skill.Name
-		pl:CenterNotify(msg)
-		pl:PrintMessage(HUD_PRINTTALK, msg)
-
-		if activate then
-			pl:SetSkillDesired(skillid, true)
-		end
-=======
 	if skill and pl:IsSkillUnlocked(skillid) and pl:SkillCanDeUnlock2(skillid) and not skill.Disabled then
 		pl:SetSkillUnlocked(skillid, false)
 		pl:SetSkillDesired(skillid, false)
->>>>>>> Stashed changes
 	end
 end)
 
 net.Receive("zs_skills_remort", function(length, pl)
 	if pl:CanSkillsRemort() then
 		pl:SkillsRemort()
-<<<<<<< Updated upstream
-=======
 		pl:GiveAchievement("remorting")
 		if GAMEMODE:GetWeekly()%4 == 3 then
 			pl:GiveAchievementProgress("week_post",1)
 		end
->>>>>>> Stashed changes
 	end
 end)
 
@@ -311,11 +285,6 @@ function meta:SetZSXP(xp)
 	self:SetDTInt(DT_PLAYER_INT_XP, math.Clamp(xp, 0, GAMEMODE.MaxXP))
 end
 
-<<<<<<< Updated upstream
-function meta:AddZSXP(xp)
-	-- TODO: Level change checking. Cache the "XP for next level" in the vault load and compare it here instead of checking every add.
-	self:SetZSXP(self:GetZSXP() + xp)
-=======
 function meta:AddZSXP(xp, ach)
     -- TODO: Level change checking. Cache the "XP for next level" in the vault load and compare it here instead of checking every add.
     if ach then
@@ -327,7 +296,6 @@ function meta:AddZSXP(xp, ach)
         self:SetZSXP(self:GetZSXP() + floored)
         self.XPRemainder = self.XPRemainder - floored
     end
->>>>>>> Stashed changes
 end
 
 -- Done on team switch to anything except human.
@@ -351,12 +319,17 @@ function meta:SendSkillDesired(skillid, desired)
 		net.WriteUInt(skillid, 16)
 		net.WriteBool(desired)
 	net.Send(self)
-end
+end									
 
 function meta:SendSkillUnlocked(skillid, unlocked)
 	net.Start("zs_skill_is_unlocked")
 		net.WriteUInt(skillid, 16)
 		net.WriteBool(unlocked)
+	net.Send(self)
+end
+function meta:SendSkillUpgraded(skillid, upgraded)
+	net.Start("zs_skill_upgraged")
+		net.WriteUInt(skillid, 16)
 	net.Send(self)
 end
 
@@ -391,11 +364,7 @@ function meta:SetUnlockedSkills(skills, nosend)
 end
 
 function meta:SkillsRemort()
-<<<<<<< Updated upstream
-	local rl = self:GetZSRemortLevel() + 1
-=======
 	local rl = self:GetZSRemortLevel() + (self:GetZSRemortLevel() >= 64 and 1 or 2)
->>>>>>> Stashed changes
 	local myname = self:Name()
 
 	self:SetZSRemortLevel(rl)
@@ -422,7 +391,7 @@ end
 function meta:SkillsReset()
 	self:SetUnlockedSkills({})
 	self:SetDesiredActiveSkills({})
-	self.NextSkillReset = os.time() + 0 -- 1 week
+	self.NextSkillReset = os.time() + 0 
 
 	self:CenterNotify(COLOR_CYAN, translate.ClientGet(self, "you_have_reset_all"))
 end

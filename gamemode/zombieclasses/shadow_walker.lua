@@ -3,13 +3,13 @@ CLASS.TranslationName = "class_shadow_walker"
 CLASS.Description = "description_shadow_walker"
 CLASS.Help = "controls_shadow_lurker"
 
-CLASS.BetterVersion = "Frigid Revenant"
 
 CLASS.Model = Model("models/player/corpse1.mdl")
 CLASS.OverrideModel = Model("models/player/skeleton.mdl")
 
 CLASS.CanTaunt = true
-
+CLASS.Original = false
+CLASS.Variations = {}
 CLASS.SWEP = "weapon_zs_shadowwalker"
 
 CLASS.Wave = 2 / 6
@@ -144,16 +144,18 @@ if SERVER then
 function CLASS:AltUse(pl)
 	pl:StartFeignDeath()
 end
+function CLASS:OnKilled(pl, attacker, inflictor, suicide, headshot, dmginfo)
+	if attacker:IsPlayer() and dmginfo:GetDamage() < 100 and inflictor.IsMelee and attacker ~= pl then
+		attacker:GiveAchievement("niggerbruh")
+	end
+
+	return true
+end
 
 function CLASS:ProcessDamage(pl, dmginfo)
-<<<<<<< Updated upstream
-	if dmginfo:GetInflictor().IsMelee then
-		dmginfo:SetDamage(dmginfo:GetDamage() / 30)
-=======
 	local attacker = dmginfo:GetAttacker()
 	if attacker and attacker ~= pl and dmginfo:GetInflictor() and dmginfo:GetInflictor().IsMelee  then
 		dmginfo:SetDamage(dmginfo:GetDamage()*0.3)
->>>>>>> Stashed changes
 	end
 	return dmginfo
 end

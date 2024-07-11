@@ -4,8 +4,6 @@ function SWEP:Reload()
 	if CurTime() < self:GetNextPrimaryFire() then return end
 
 	local owner = self:GetOwner()
-	if owner:GetBarricadeGhosting() then return end
-
 	local tr = owner:CompensatedMeleeTrace(self.MeleeRange, self.MeleeSize)
 	local trent = tr.Entity
 	if not trent:IsValid() or not trent:IsNailed() then return end
@@ -28,11 +26,7 @@ function SWEP:Reload()
 	local nailowner = ent:GetOwner()
 	if nailowner:IsValid() and nailowner:IsPlayer() and nailowner ~= owner and nailowner:Team() == TEAM_HUMAN and not gamemode.Call("CanRemoveOthersNail", owner, nailowner, ent) then return end
 
-<<<<<<< Updated upstream
-	self:SetNextPrimaryFire(CurTime() + (#trent.Nails > 2 and 0.5 or 1))
-=======
 	self:SetNextPrimaryFire(CurTime() + (#trent.Nails > 2 and 0.5 or 1) / ((owner:GetZSRemortLevel() <= 14 and 14 or owner:GetZSRemortLevel()) * 0.09))
->>>>>>> Stashed changes
 
 	ent.m_PryingOut = true -- Prevents infinite loops
 
@@ -62,7 +56,7 @@ function SWEP:Reload()
 	end
 end
 
-function SWEP:OnMeleeHit(hitent, hitflesh, tr)
+function SWEP:OnMeleeHit(hitent, hitflesh, tr, dmginfo)
 	if not hitent:IsValid() then return end
 
 	local owner = self:GetOwner()
@@ -71,13 +65,15 @@ function SWEP:OnMeleeHit(hitent, hitflesh, tr)
 		return
 	end
 
+	if hitent:GetClass() == "prop_door_rotating" and owner:IsSkillActive(SKILL_HAMMERDOOR) then
+		hitent:TakeDamage(350, owner, hitent)
+	end
+
 	if hitent:IsNailed() then
 		if owner:IsSkillActive(SKILL_BARRICADEEXPERT) then
 			hitent:SetDTFloat(12,CurTime() + 2.5)
 			hitent.ReinforceApplier = owner
 		end
-<<<<<<< Updated upstream
-=======
 		if owner:IsSkillActive(SKILL_NANITES) then
 			hitent:SetDTFloat(13,CurTime() + 0.3)
 			hitent.naniteApplier = owner
@@ -90,7 +86,6 @@ function SWEP:OnMeleeHit(hitent, hitflesh, tr)
 			hitent:SetDTFloat(15,CurTime() + 3)
 			hitent.ApplierUseSelf = owner
 		end
->>>>>>> Stashed changes
 
 		local healstrength = self.HealStrength * GAMEMODE.NailHealthPerRepair * (owner.RepairRateMul or 1)
 		local oldhealth = hitent:GetBarricadeHealth()
@@ -113,7 +108,7 @@ function SWEP:OnMeleeHit(hitent, hitflesh, tr)
 end
 
 function SWEP:SecondaryAttack()
-	if self:GetPrimaryAmmoCount() <= 0 or CurTime() < self:GetNextPrimaryFire() or self:GetOwner():GetBarricadeGhosting() then return end
+	if self:GetPrimaryAmmoCount() <= 0 or CurTime() < self:GetNextPrimaryFire() then return end
 
 	local owner = self:GetOwner()
 
@@ -158,13 +153,8 @@ function SWEP:SecondaryAttack()
 		end
 	end
 
-<<<<<<< Updated upstream
-	for _, nail in pairs(ents.FindByClass("prop_nail")) do
-		if nail:GetParent() == trent and nail:GetActualPos():DistToSqr(tr.HitPos) <= 81 then
-=======
 	for _, nail in ipairs(ents.FindByClass("prop_nail")) do
 		if nail:GetParent() == trent and nail:GetActualPos():DistToSqr(tr.HitPos) <= 41 then
->>>>>>> Stashed changes
 			owner:PrintTranslatedMessage(HUD_PRINTCENTER, "too_close_to_another_nail")
 			return
 		end

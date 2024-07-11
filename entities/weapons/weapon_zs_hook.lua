@@ -1,7 +1,9 @@
 AddCSLuaFile()
 
-SWEP.PrintName = "Meat Hook"
-SWEP.Description = "Impales itself into zombies, dealing damage over time for a seconds. The hook can be recollected by the owner."
+--SWEP.PrintName = "Meat Hook"
+--SWEP.Description = "Impales itself into zombies, dealing damage over time for a seconds. The hook can be recollected by the owner."
+SWEP.PrintName = ""..translate.Get("wep_hook")
+SWEP.Description = ""..translate.Get("wep_d_hook")
 
 if CLIENT then
 	SWEP.ViewModelFlip = false

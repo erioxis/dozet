@@ -33,29 +33,28 @@ function MakepEndBoard(winner)
 
 	local y = 8
 
+
 	local heading
 	if localwin then
 		surface.PlaySound("beams/beamstart5.wav")
-		heading = EasyLabel(frame, "You have won!", "ZSHUDFontBig", COLOR_CYAN)
+		heading = EasyLabel(frame, translate.Get("win_endboard"), "ZSHUDFontBig", COLOR_CYAN)
 	else
 		surface.PlaySound("ambient/levels/citadel/strange_talk"..math.random(3, 11)..".wav")
-		heading = EasyLabel(frame, "You have lost.", "ZSHUDFontBig", COLOR_RED)
+		heading = EasyLabel(frame, translate.Get("lose_endboard"), "ZSHUDFontBig", COLOR_RED)
 	end
 	heading:SetPos(wid * 0.5 - heading:GetWide() * 0.5, y)
 	y = y + heading:GetTall() + 16
 
 	local subheading
 	if localwin then
-		subheading = EasyLabel(frame, "The humans have survived for now.", "ZSHUDFontSmaller", COLOR_WHITE)
-	else
-		subheading = EasyLabel(frame, "The undead army grows stronger.", "ZSHUDFontSmaller", COLOR_LIMEGREEN)
+		subheading = EasyLabel(frame, translate.Get("win_endboard_1"), "ZSHUDFontSmaller", COLOR_WHITE)
+	else 
+		subheading = EasyLabel(frame, translate.Format("lose_endboard_d1", GAMEMODE:GetWave()), "ZSHUDFontSmaller", COLOR_LIMEGREEN)
 	end
+	xpadded = EasyLabel(frame, translate.Get("xp_added")..math.Round(MySelf:GetXPPerRound()), "ZSHUDFontTiny", COLOR_RED)
 	subheading:SetPos(wid * 0.5 - subheading:GetWide() * 0.5, y)
 	y = y + subheading:GetTall() + 2
 
-<<<<<<< Updated upstream
-	local svpan = EasyLabel(frame, "Honorable Mentions", "ZSHUDFontSmall", COLOR_WHITE)
-=======
 	xpadded:SetPos(wid * 0.5 - xpadded:GetWide() * 0.1, y)
 	y = y + xpadded:GetTall() + 2
 
@@ -66,7 +65,6 @@ function MakepEndBoard(winner)
 
 
 	local svpan = EasyLabel(frame, translate.Get("hom_men"), "ZSHUDFontSmall", COLOR_WHITE)
->>>>>>> Stashed changes
 	svpan:SetPos(wid * 0.5 - svpan:GetWide() * 0.5, y)
 	y = y + svpan:GetTall() + 2
 

@@ -6,9 +6,9 @@ SWEP.PrintName = "Tormented SPY"
 SWEP.MeleeDelay = 0.3
 SWEP.MeleeReach = 48
 SWEP.MeleeSize = 4.5
-SWEP.MeleeDamage = 71
-SWEP.MeleeDamageType = DMG_SLASH
+SWEP.MeleeDamage = 231
 SWEP.MeleeAnimationDelay = 0
+SWEP.MeleeDamageVsProps = 22
 
 SWEP.Secondary.Delay = 0.88
 
@@ -16,6 +16,13 @@ SWEP.ViewModel = Model("models/weapons/v_pza.mdl")
 SWEP.WorldModel = ""
 
 AccessorFuncDT(SWEP, "Tormented", "Float", 1)
+function SWEP:MeleeHit(ent, trace, damage, forcescale)
+	if not ent:IsPlayer() then
+		damage = self.MeleeDamageVsProps
+	end
+
+	self.BaseClass.MeleeHit(self, ent, trace, damage, forcescale)
+end
 
 function SWEP:PrimaryAttack()
 	local owner = self:GetOwner()
@@ -25,9 +32,10 @@ function SWEP:PrimaryAttack()
 	self:SetNextPrimaryFire(CurTime() + self.Primary.Delay * armdelay)
 
 	self.MeleeDelay = 0.6
-	self.MeleeDamage = 61
+	self.MeleeDamage = 251
 	self:StartSwinging()
 end
+
 
 function SWEP:SecondaryAttack()
 	local owner = self:GetOwner()
@@ -80,6 +88,19 @@ function SWEP:StartSwinging(secondary)
 		self.IdleAnimation = CurTime() + (self:SequenceDuration() + (self.MeleeAnimationDelay or 0)) * armdelay
 	else
 		self:Swung()
+	end
+end
+function SWEP:OnMeleeHit(hitent, hitflesh, tr)
+	if hitent:IsValid() and hitent:IsPlayer() and not self.m_BackStabbing and math.abs(hitent:GetForward():Angle().yaw - self:GetOwner():GetForward():Angle().yaw) <= 90 then
+		self.m_BackStabbing = true
+		self.MeleeDamage = self.MeleeDamage * 10
+	end
+end
+function SWEP:PostOnMeleeHit(hitent, hitflesh, tr)
+	if self.m_BackStabbing then
+		self.m_BackStabbing = false
+
+		self.MeleeDamage = self.MeleeDamage / 10
 	end
 end
 

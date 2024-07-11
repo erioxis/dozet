@@ -1,7 +1,9 @@
 INC_SERVER()
+function SWEP:FindZapperTarget(pos, owner)
+	local target
+	local targethealth = 99999
+	local isheadcrab
 
-<<<<<<< Updated upstream
-=======
 	for k, ent in pairs(player.FindInSphere(pos, 135)) do
 		if ent:IsValidLivingZombie() and not ent:GetZombieClassTable().NeverAlive then
 			isheadcrab = ent:IsHeadcrab()
@@ -18,7 +20,6 @@ INC_SERVER()
 
 	return target
 end
->>>>>>> Stashed changes
 function SWEP:OnMeleeHit(hitent, hitflesh, tr)
 	local secondary = self:IsCharging()
 
@@ -31,9 +32,6 @@ function SWEP:OnMeleeHit(hitent, hitflesh, tr)
 
 	local owner = self:GetOwner()
 	if hitent:IsValid() and hitent:IsPlayer() then
-<<<<<<< Updated upstream
-		hitent:AddLegDamageExt(secondary and 18 or 15, owner, self, SLOWTYPE_COLD)
-=======
 		hitent:AddLegDamageExt(secondary and 18 or 15, owner, self, SLOWTYPE_PULSE)
 	end
 	if hitent:IsPlayer() and hitent:IsValidLivingZombie() then
@@ -77,7 +75,6 @@ function SWEP:OnMeleeHit(hitent, hitflesh, tr)
 				end
 			end
 		end
->>>>>>> Stashed changes
 	end
 
 	if tr.HitWorld and tr.HitNormal.z > 0.8 and hitent == Entity(0) and secondary then

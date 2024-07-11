@@ -8,11 +8,7 @@ ENT.Radius = 700
 if CLIENT then return end
 
 ENT.Classes = table.ToAssoc(
-<<<<<<< Updated upstream
-	{"prop_ammo", "prop_invitem", "prop_weapon", "prop_physics_multiplayer", "prop_physics"}
-=======
 	{"prop_ammo", "prop_invitem", "prop_weapon", "prop_hp"}
->>>>>>> Stashed changes
 )
 ENT.Force = 30
 ENT.ForceDelay = 0.1
@@ -39,7 +35,7 @@ function ENT:Think()
 			local phys = ent:GetPhysicsObject()
 			local pos = owner:KeyDown(IN_ATTACK) and owner:GetEyeTrace().HitPos or pos
 			local dir = (pos - ent:NearestPoint(pos)):GetNormalized()
-			phys:ApplyForceCenter(phys:GetMass() * self.Force * dir)
+			phys:ApplyForceCenter((phys:GetMass() or 2) * self.Force * dir)
 			ent:SetPhysicsAttacker(owner, 4)
 			--print(GAMEMODE.ZSInventoryItemData[ent:GetInventoryItemType()].NoMagnet)
 			if (ent:GetPos() - self:GetPos()):LengthSqr() <= 5600  then

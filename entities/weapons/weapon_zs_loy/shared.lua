@@ -1,7 +1,9 @@
 
 
-SWEP.PrintName = " X axe  "
-SWEP.Description = "This is really big AXEEEE."
+--SWEP.PrintName = "Axel"
+--SWEP.Description = "The Ancient axe of Toy,Have 1.5x points multiplier.Big Damage for big knockback"
+SWEP.PrintName = ""..translate.Get("wep_axel")
+SWEP.Description = ""..translate.Get("wep_d_axel")
 
 
 
@@ -12,19 +14,19 @@ SWEP.WorldModel = "models/props/cs_militia/axe.mdl"
 SWEP.UseHands = true
 
 SWEP.HoldType = "melee2"
-SWEP.PointsMultiplier = 1.3
-SWEP.Tier = 5
-SWEP.MaxStock = 2
+SWEP.PointsMultiplier = 1.5
+SWEP.Tier = 7
+SWEP.MaxStock = 1
 
 
-SWEP.MeleeDamage = 154
+SWEP.MeleeDamage = 411
 SWEP.MeleeRange = 78
 SWEP.MeleeSize = 4
 SWEP.MeleeKnockBack = 1000
 
 SWEP.WalkSpeed = 160
 
-SWEP.SwingTime = 0.33
+SWEP.SwingTime = 0.23
 SWEP.SwingRotation = Angle(0, -20, -40)
 SWEP.SwingOffset = Vector(10, 0, 0)
 SWEP.SwingHoldType = "melee"
@@ -33,7 +35,7 @@ SWEP.HitDecal = "Manhackcut"
 
 SWEP.AllowQualityWeapons = true
 
-GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_MELEE_RANGE, 0,6)
+GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_MELEE_RANGE, 0.6)
 
 function SWEP:PlaySwingSound()
 	self:EmitSound("weapons/iceaxe/iceaxe_swing1.wav", 75, math.random(65, 70))

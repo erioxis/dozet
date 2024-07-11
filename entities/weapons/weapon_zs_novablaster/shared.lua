@@ -1,6 +1,9 @@
-SWEP.PrintName = "'Nova Blaster' Pulse Revolver"
-SWEP.Description = "Combines the ricochet properties of the magnum into a bouncing pulse projectile, that slows zombies."
+--SWEP.PrintName = "'Nova Blaster' Pulse Revolver"
+--SWEP.Description = "Combines the ricochet properties of the magnum into a bouncing pulse projectile, that slows zombies."
 
+a = math.random(20,50)
+SWEP.PrintName = ""..translate.Get("wep_pulseblaster")
+SWEP.Description = ""..translate.Get("wep_d_pulseblaster")
 SWEP.Base = "weapon_zs_baseproj"
 
 SWEP.HoldType = "revolver"
@@ -15,7 +18,7 @@ SWEP.CSMuzzleFlashes = false
 
 SWEP.Primary.Sound = Sound("Weapon_357.Single")
 SWEP.Primary.Delay = 0.65
-SWEP.Primary.Damage = 46
+SWEP.Primary.Damage = a
 SWEP.Primary.NumShots = 1
 
 SWEP.Primary.ClipSize = 27
@@ -38,7 +41,7 @@ SWEP.Tier = 2
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_MAX_SPREAD, -0.7, 1)
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_MIN_SPREAD, -0.4, 1)
 GAMEMODE:AttachWeaponModifier(SWEP, WEAPON_MODIFIER_FIRE_DELAY, -0.05, 1)
-GAMEMODE:AddNewRemantleBranch(SWEP, 1, "'Nova Helix' Pulse Revolver", "Fires two projectiles in a wavy formation", function(wept)
+GAMEMODE:AddNewRemantleBranch(SWEP, 1, ""..translate.Get("wep_d_pulseblaster_r1"), ""..translate.Get("wep_d_pulseblaster_r1"), function(wept)
 	wept.Primary.Damage = wept.Primary.Damage * 0.6
 	wept.Primary.ProjVelocity = 450
 	wept.Primary.NumShots = 2

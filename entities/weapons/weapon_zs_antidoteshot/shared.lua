@@ -1,5 +1,7 @@
-SWEP.PrintName = "'Purger' Antidote Handgun"
-SWEP.Description = "Fires piercing antidote blasts. Heals poison and cleanses statuses."
+--SWEP.PrintName = "'Purger' Antidote Handgun"
+--SWEP.Description = "Fires piercing antidote blasts. Heals poison and cleanses statuses."
+SWEP.PrintName = translate.Get("wep_antidoteshot")
+SWEP.Description = translate.Get("wep_d_antidoteshot")
 SWEP.Slot = 4
 SWEP.SlotPos = 0
 

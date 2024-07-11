@@ -1,7 +1,7 @@
 INC_SERVER()
 
 local vector_origin = vector_origin
-
+ENT.NextHook = 1
 function ENT:Initialize()
 	self:SetModel("models/gibs/HGIBS_rib.mdl")
 	self:PhysicsInitSphere(13)
@@ -10,7 +10,7 @@ function ENT:Initialize()
 	self:SetupGenericProjectile(false)
 	self.trg = NULL
 
-	self.DieTime = CurTime() + 1.1
+	self.DieTime = CurTime() + 10
 	self.LastPhysicsUpdate = UnPredictedCurTime()
 end
 
@@ -20,7 +20,7 @@ function ENT:PhysicsUpdate(phys)
 	local dt = (UnPredictedCurTime() - self.LastPhysicsUpdate)
 	self.LastPhysicsUpdate = UnPredictedCurTime()
 
-	phys:AddVelocity(self.InitVelocity * dt * -1.8)
+	phys:AddVelocity(self.InitVelocity * dt * -0.3)
 end
 function compare(a,b)
 	return a.Health < b.Health
@@ -35,8 +35,6 @@ function ENT:Think()
 	elseif self.DieTime < CurTime() then
 		self:Remove()
 	end
-<<<<<<< Updated upstream
-=======
 	if GAMEMODE.ObjectiveMap or !self:GetOwner().HookingTime then return end
 	if !self.trg:IsValid() then
 		local targets = {}
@@ -68,7 +66,6 @@ function ENT:Think()
 		self.NextHook = CurTime() + 0.11
 	end
 	
->>>>>>> Stashed changes
 end
 
 function ENT:OnRemove()
@@ -91,10 +88,6 @@ function ENT:Hit(vHitPos, vHitNormal, ent)
 			if ent:IsValidLivingHuman() then
 				self.Exploded = true
 
-<<<<<<< Updated upstream
-				ent:TakeSpecialDamage(8, DMG_GENERIC, owner, self)
-				ent:KnockDown()
-=======
 
 				ent:TakeSpecialDamage((math.random(12) == 12 and 69 or 23), (math.random(3) == 3 and DMG_DIRECT or DMG_GENERIC), owner, self)
 				ent:KnockDown()
@@ -102,7 +95,6 @@ function ENT:Hit(vHitPos, vHitNormal, ent)
 				if !ent:GetActiveWeapon().ResistDamage then
 					ent:GiveStatus("knockdown_dir",1)
 				end
->>>>>>> Stashed changes
 
 				local status = ent:GiveStatus("devourer")
 				if status and status:IsValid() then

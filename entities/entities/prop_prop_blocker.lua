@@ -11,12 +11,6 @@ function ENT:Initialize()
 	self:DrawShadow(false)
 	self:SetNoDraw(true)
 
-<<<<<<< Updated upstream
-	if SERVER then
-		self:PhysicsInitBox(Vector(-20, -20, 0), Vector(20, 20, 86))
-	end
-=======
->>>>>>> Stashed changes
 
 	self:SetCustomCollisionCheck(true)
 	self:CollisionRulesChanged()

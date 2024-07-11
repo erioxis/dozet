@@ -1,5 +1,7 @@
-SWEP.PrintName = "'Slinger' Bolt Pistol"
-SWEP.Description = "A slow loading, inaccurate bolt pistol with no special properties."
+--SWEP.PrintName = "'Slinger' Bolt Pistol"
+--SWEP.Description = "A slow loading, inaccurate bolt pistol with no special properties."
+SWEP.PrintName = ""..translate.Get("wep_slinger")
+SWEP.Description = ""..translate.Get("wep_d_slinger")
 
 SWEP.Base = "weapon_zs_baseproj"
 
@@ -18,10 +20,10 @@ SWEP.CSMuzzleFlashes = false
 SWEP.Primary.Sound = Sound("Weapon_Crossbow.Single")
 SWEP.Primary.Delay = 1
 SWEP.Primary.Automatic = true
-SWEP.Primary.Damage = 59
+SWEP.Primary.Damage = 94
 
 SWEP.Primary.ClipSize = 1
-SWEP.Primary.Ammo = "XBowBolt"
+SWEP.Primary.Ammo = "GaussEnergy"
 SWEP.Primary.ClipMultiplier = 2
 GAMEMODE:SetupDefaultClip(SWEP.Primary)
 
@@ -51,8 +53,8 @@ local branch = GAMEMODE:AddNewRemantleBranch(SWEP, 2, "'Hurler' Bolt Pistol", "G
 		end
 	end
 end)
-branch.Colors = {Color(255, 160, 150), Color(215, 120, 150), Color(175, 100, 140)}
-branch.NewNames = {"Range", "Seeker", "Searcher"}
+branch.Colors = {Color(255, 160, 150), Color(215, 120, 150), Color(175, 100, 140), Color(175, 100, 200), Color(175, 100, 14)}
+branch.NewNames = {"Range", "Seeker", "Searcher", "Finder", "Meta"}
 
 function SWEP:SendReloadAnimation()
 	self:SendWeaponAnim(ACT_VM_DRAW)

@@ -6,18 +6,6 @@ end
 
 function ENT:Think()
 	local owner = self:GetOwner()
-<<<<<<< Updated upstream
-
-	if self:GetDamage() <= 0 then
-		self:Remove()
-		return
-	end
-
-	local dmg = math.Clamp(self:GetDamage(), 1, 2)
-
-	owner:TakeDamage(dmg, self.Damager and self.Damager:IsValid() and self.Damager:IsPlayer() and self.Damager or owner, self)
-	self:AddDamage(-dmg)
-=======
 	local lox = self.Damager and self.Damager:IsPlayer() and self.Damager:IsSkillActive(SKILL_LOX)
 	local marry =  self.Damager and self.Damager:IsPlayer() and self.Damager:IsSkillActive(SKILL_BLOODMARY)
 	if self:GetDamage() <= 0 or owner:GetZombieClassTable().Skeletal then
@@ -35,7 +23,6 @@ function ENT:Think()
 		owner:SetHealth(math.min(owner:Health() + (dmg * 2) + self:GetDamage() * 0.01,2000))
 		self:AddDamage(-dmg - self:GetDamage() * 0.01)
 	end
->>>>>>> Stashed changes
 
 	local dir = VectorRand()
 	dir:Normalize()

@@ -26,36 +26,15 @@ function ENT:Initialize()
 	self:ItemCreated()
 end
 
-function ENT:SetAmmoType(ammotype)
-	self:SetModel(GAMEMODE.AmmoModels[string.lower(ammotype)] or "models/Items/BoxMRounds.mdl")
-	self.m_AmmoType = ammotype
-end
-
-function ENT:GetAmmoType()
-	return self.m_AmmoType or "pistol"
-end
-
-function ENT:SetAmmo(ammo)
-	self.m_Ammo = tonumber(ammo) or self:GetAmmo()
-end
-
-function ENT:GetAmmo()
-	return self.m_Ammo or 0
-end
-
 function ENT:Use(activator, caller)
 	if self.IgnoreUse then return end
 	self:GiveToActivator(activator, caller)
 end
 
 function ENT:GiveToActivator(activator, caller)
-<<<<<<< Updated upstream
-	if activator:IsPlayer() and activator:Alive() and not activator:KeyDown(GAMEMODE.UtilityKey) and activator:Team() == TEAM_HUMAN and not self.Removing and not (self.NoPickupsTime and CurTime() < self.NoPickupsTime and self.NoPickupsOwner ~= activator) then
-=======
 	if activator:IsSkillActive(SKILL_SAMODOS) and self:GetOwner() ~= activator then activator:CenterNotify(COLOR_RED, translate.ClientGet(activator, "samodos")) return end
 	if self:GetOwner() and self:GetOwner():IsValid() and self:GetOwner():IsPlayer() and self:GetOwner():IsSkillActive(SKILL_SAMODOS) and self:GetOwner() ~= activator then activator:CenterNotify(COLOR_RED, translate.ClientGet(activator, "samodosa")) return end
 	if activator:IsPlayer() and activator:Alive() and not activator:KeyDown(GAMEMODE.UtilityKey) and (activator:Team() == TEAM_HUMAN or activator:GetZombieClassTable().CanPiz) and not self.Removing and not (self.NoPickupsTime and CurTime() < self.NoPickupsTime and self.NoPickupsOwner ~= activator) then
->>>>>>> Stashed changes
 		if self.IgnorePickupCount or (not self.PlacedInMap or not GAMEMODE.MaxAmmoPickups or (activator.AmmoPickups or 0) < GAMEMODE.MaxAmmoPickups or team.NumPlayers(TEAM_HUMAN) <= 1) then
 			if self.PlacedInMap and GAMEMODE.WeaponRequiredForAmmo and team.NumPlayers(TEAM_HUMAN) > 1 then
 				local hasweapon = false

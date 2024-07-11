@@ -1,20 +1,3 @@
-<<<<<<< Updated upstream
-GM.Name		=	"Zombie Survival"
-GM.Author	=	"Toyka"
-GM.Email	=	"nope"
-GM.Website	=	"why"
-
--- No, adding a gun doesn't make your name worth being here.
-GM.Credits = {
-	{"Toyka", "HEHE", "Programmer"},
-	{"Lmao", "HAHA", "none"},
-	{"hehe", "HIHI", "none"},
-	{"Austin \"Little Nemo\" Killey", "austin_odyssey@yahoo.com", "Ambient music"},
-	{"Zombie Panic: Source", "http://www.zombiepanic.org/", "Melee weapon sounds"},
-	{"Samuel", "samuel_games@hotmail.com", "Board Kit models"},
-	{"Typhon", "lukas-tinel@hotmail.com", "Fear-o-meter textures"},
-	{"Benjy, The Darker One, Raox, Scott", "", "Code contributions"},
-=======
 GM.Name		=	""
 GM.Author	=	"Toyka"
 GM.Email	=	"nope"
@@ -23,23 +6,12 @@ GM.mastery = {}
 
 -- No, adding a gun doesn't make your name worth being here.
 GM.Credits = {
-	{"Version", "", "ROGUE-LIKE"},
+	{"Version", "", "10.1.3"},
 	{"Season of ", "", "Simulation leave"},
 	{"erioxis", "Phantom coder", "dead"},
 	{"Холодное Молочко(M-I-L-K-Y)", "Phantom coder", "dead"},
 	{"Bro 3", "Thanks!", "Some models"}
->>>>>>> Stashed changes
 
-	{"Mr. Darkness", "", "Russian translation"},
-	{"honsal", "", "Korean translation"},
-	{"rui_troia", "", "Portuguese translation"},
-	{"Shinyshark", "", "Dutch translation"},
-	{"Kradar", "", "Italian translation"},
-	{"Raptor", "", "German translation"},
-	{"The Special Duckling", "", "Danish translation"},
-	{"ptown, Dr. Broly", "", "Spanish translation"},
-
-	{"Anyone else on GitHub or who I've forgotten", "", "Various contributions"},
 }
 
 if file.Exists(GM.FolderName.."/gamemode/maps/"..game.GetMap()..".lua", "LUA") then
@@ -47,7 +19,7 @@ if file.Exists(GM.FolderName.."/gamemode/maps/"..game.GetMap()..".lua", "LUA") t
 end
 
 function GM:GetNumberOfWaves()
-	local default = GetGlobalBool("classicmode") and 10 or self.NumberOfWaves
+	local default = GetGlobalBool("classicmode") and 100 or self.NumberOfWaves
 	local num = GetGlobalInt("numwaves", default) -- This is controlled by logic_waves.
 	return num == -2 and default or num
 end
@@ -65,13 +37,9 @@ include("sh_translate.lua")
 include("sh_colors.lua")
 include("sh_serialization.lua")
 include("sh_util.lua")
-<<<<<<< Updated upstream
-
-=======
 include("shared/sh_bullets.lua")
 include("sh_stamina.lua")
 include("sh_mastery.lua")
->>>>>>> Stashed changes
 include("skillweb/sh_skillweb.lua")
 
 include("sh_options.lua")
@@ -80,6 +48,7 @@ include("sh_animations.lua")
 include("sh_sigils.lua")
 include("sh_channel.lua")
 include("sh_weaponquality.lua")
+include("sh_achievements_table.lua")
 
 
 
@@ -95,11 +64,11 @@ include_library("ammoexpand")
 ----------------------
 
 GM.EndRound = true
-GM.StartingWorth = 160
+GM.StartingWorth = 135 
 GM.ZombieVolunteers = {}
 
-team.SetUp(TEAM_ZOMBIE, "Undead", Color(0, 255, 0, 255))
-team.SetUp(TEAM_SURVIVORS, "Survivor", Color(0, 160, 255, 255))
+team.SetUp(TEAM_ZOMBIE, "Undead", Color(32, 241, 32, 176))
+team.SetUp(TEAM_SURVIVORS, "Survivor", Color(0, 63, 99))
 
 local validmodels = player_manager.AllValidModels()
 validmodels["tf01"] = nil
@@ -181,17 +150,15 @@ function GM:AddCustomAmmo()
 	game.AddAmmoType({name = "drone_healer"})
 	game.AddAmmoType({name = "rollermine"})
 	game.AddAmmoType({name = "sigilfragment"})
+	game.AddAmmoType({name = "xmas_tree"})
 	game.AddAmmoType({name = "corruptedfragment"})
 	game.AddAmmoType({name = "mediccloudbomb"})
 	game.AddAmmoType({name = "nanitecloudbomb"})
 	game.AddAmmoType({name = "repairfield"})
-<<<<<<< Updated upstream
-=======
 	game.AddAmmoType({name = "camps"})
 	game.AddAmmoType({name = "medstation"})
 	game.AddAmmoType({name = "fridge"})
 	game.AddAmmoType({name = "sigil_port"})
->>>>>>> Stashed changes
 	game.AddAmmoType({name = "zapper"})
 	game.AddAmmoType({name = "zapper_arc"})
 	game.AddAmmoType({name = "remantler"})
@@ -333,6 +300,21 @@ function GM:GetBestAvailableZombieClass(baseclass_id)
 	end
 
 	return self.ZombieClasses[baseclass_id].Index
+end
+function GM:GetBestAvailableHumanClass(baseclass_id)
+
+		local baseclass
+
+		while true do
+			baseclass = self.HumanClasses[baseclass_id]
+			if baseclass and baseclass.BetterVersion and self:IsClassUnlocked(baseclass.BetterVersion) then
+				baseclass_id = baseclass.BetterVersion
+			else
+				break
+			end
+		end
+
+	return self.HumanClasses[baseclass_id].Index
 end
 
 function GM:ShouldUseBetterVersionSystem()
@@ -532,15 +514,7 @@ function GM:ShouldCollide(enta, entb)
 
 	local sncb = entb.ShouldNotCollide
 	if sncb and sncb(entb, enta) then return false end
-<<<<<<< Updated upstream
-
-	--[[if enta.ShouldNotCollide and enta:ShouldNotCollide(entb) or entb.ShouldNotCollide and entb:ShouldNotCollide(enta) then
-		return false
-	end]]
-
-=======
 	
->>>>>>> Stashed changes
 	return true
 end
 
@@ -554,15 +528,12 @@ end
 function GM:OnPlayerHitGround(pl, inwater, hitfloater, speed)
 	if inwater then return true end
 
-<<<<<<< Updated upstream
-=======
 	if SERVER then
 		if pl.FallDamageHS and pl.FallDamageHS > 0 then
 			pl:TakeDamage(pl.FallDamageHS, pl.FallAttacker and pl.FallAttacker:IsValid() and pl.FallAttacker or pl,pl.FallAttacker and  pl.FallAttacker:IsValid() and pl.FallAttacker:GetActiveWeapon() or pl)
 			pl.FallDamageHS = 0
 		end
 	end
->>>>>>> Stashed changes
 	if speed > 64 then
 		pl.LandSlow = true
 	end
@@ -589,6 +560,7 @@ function GM:OnPlayerHitGround(pl, inwater, hitfloater, speed)
 		damage_mul = pl.FallDamageDamageMul or 1
 	end
 
+
 	local damage = (0.1 * (speed - 525 * threshold_mul)) ^ 1.45
 	if hitfloater then damage = damage / 2 end
 	local pogo = pl:IsSkillActive(SKILL_POGO)
@@ -611,19 +583,14 @@ function GM:OnPlayerHitGround(pl, inwater, hitfloater, speed)
 			if groundent:IsHeadcrab() then
 				groundent:TakeSpecialDamage(groundent:Health() + 70, DMG_DIRECT, pl, pl, pl:GetPos())
 			elseif groundent:IsTorso() then
-				groundent:TakeSpecialDamage(50, DMG_CLUB, pl, pl, pl:GetPos())
+				groundent:TakeSpecialDamage(77, DMG_CLUB, pl, pl, pl:GetPos())
 			end
 
 			if math.floor(damage) > 0 then
-				groundent:TakeSpecialDamage(damage * 5, DMG_CLUB, pl, pl, pl:GetPos())
+				groundent:TakeSpecialDamage(damage * 3, DMG_CLUB, pl, pl, pl:GetPos())
 				return true
 			end
 		end
-<<<<<<< Updated upstream
-	end
-
-	if math.floor(damage) > 0 then
-=======
 		if groundent:IsValid() and groundent:IsPlayer() and PTeam(groundent) == TEAM_HUMAN and groundent:GetModelScale() < 0.75 then
 			groundent:TakeSpecialDamage(30110, DMG_DIRECT, pl, pl, pl:GetPos())
 			pl:GiveAchievement("mariotrue")
@@ -632,7 +599,6 @@ function GM:OnPlayerHitGround(pl, inwater, hitfloater, speed)
 	end
 
 	if math.floor(damage) > 0 and !pogo then
->>>>>>> Stashed changes
 		if SERVER then
 			local h = pl:Health()
 			pl:TakeSpecialDamage(damage * damage_mul, DMG_FALL, game.GetWorld(), game.GetWorld(), pl:GetPos())
@@ -657,7 +623,7 @@ function GM:OnPlayerHitGround(pl, inwater, hitfloater, speed)
 end
 
 function GM:PlayerCanBeHealed(pl)
-	local maxhp = pl:IsSkillActive(SKILL_D_FRAIL) and math.floor(pl:GetMaxHealth() * 0.25) or pl:GetMaxHealth()
+	local maxhp = pl:IsSkillActive(SKILL_D_FRAIL) and math.floor(pl:GetMaxHealth() * 0.44) or pl:IsSkillActive(SKILL_ABUSE) and math.floor(pl:GetMaxHealth() * 0.25) or pl:GetMaxHealth()
 
 	return pl:Health() < maxhp or pl:GetPoisonDamage() > 0 or pl:GetBleedDamage() > 0
 end
@@ -666,7 +632,10 @@ function GM:PlayerCanPurchase(pl)
 	if CLIENT and self.CanPurchaseCacheTime and self.CanPurchaseCacheTime >= CurTime() then
 		return self.CanPurchaseCache
 	end
-	local canpurchase = PTeam(pl) == TEAM_HUMAN and self:GetWave() > 0 and pl:Alive() and pl:NearArsenalCrate()
+	local canpurchase = PTeam(pl) == TEAM_HUMAN and pl:Alive()
+	function pl:ZombieCanPurchase(pl)
+		return pl:Team() == TEAM_UNDEAD and self:GetWave() > 0
+	end
 
 	if CLIENT then
 		self.CanPurchaseCache = canpurchase
@@ -697,10 +666,10 @@ end
 
 function GM:GetDamageResistance(fearpower)
 	if self.MaxSigils > 0 and self:GetUseSigils() then
-		return fearpower * 0.1 + self:NumSigilsCorrupted() / self.MaxSigils * 0.2
+		return fearpower * 0.04 + self:NumSigilsCorrupted() / self.MaxSigils * 0.35
 	end
 
-	return fearpower * 0.15
+	return fearpower * 0.30
 end
 local function InUseRange(self, pl, ent)
 	if not ent:IsValid() or ent:GetClass() == "prop_playergib" then
@@ -776,6 +745,7 @@ function GM:GetTeamRallyGroups(teamid)
 
 	local plys = team.GetPlayers(teamid)
 	local plpos, group
+	
 
 	for _, pl in pairs(plys) do
 		if not ingroup[pl] and pl:Alive() then
@@ -882,15 +852,9 @@ end
 function GM:GetRagdollEyes(pl)
 	local Ragdoll = pl:GetRagdollEntity()
 	if not Ragdoll then return end
-<<<<<<< Updated upstream
-
-	local att = Ragdoll:GetAttachment(Ragdoll:LookupAttachment("eyes"))
-	if att then
-=======
     if pl:GetModel() == ("models/player/catpants.mdl" or "models/player/leet.mdl") then return end
 	local att = Ragdoll and Ragdoll:IsValid() and Ragdoll:GetAttachment(Ragdoll:LookupAttachment("eyes"))
 	if att then 
->>>>>>> Stashed changes
 		att.Pos = att.Pos + att.Ang:Forward() * -2
 		att.Ang = att.Ang
 
@@ -933,19 +897,8 @@ function GM:IsSpecialPerson(pl, image, returns)
 	local img, tooltip
 	local trs = translate.Get
 
-	if pl:SteamID() == "STEAM_0:1:3307510" then
+	if pl:SteamID() == "STEAM_0:0:426833142" then
 		img = "VGUI/steam/games/icon_sourcesdk"
-<<<<<<< Updated upstream
-		tooltip = "JetBoom\nCreator of Zombie Survival!"
-	elseif pl:IsAdmin() then
-		img = "VGUI/servers/icon_robotron"
-		tooltip = "Admin"
-	elseif pl:IsNoxSupporter() then
-		img = "noxiousnet/noxicon.png"
-		tooltip = "Nox Supporter"
-	end
-
-=======
 		tooltip = trs("toyka_sp")
 	elseif pl:SteamID() == "STEAM_0:0:445794125" then
 		img = "noxiousnet/cat.png"
@@ -984,7 +937,6 @@ function GM:IsSpecialPerson(pl, image, returns)
 	if returns then
 		return tooltip
 	end
->>>>>>> Stashed changes
 	if img then
 		if CLIENT and image then
 			image:SetImage(img)
@@ -1004,8 +956,6 @@ end
 function GM:SetWaveEnd(time)
 	SetGlobalFloat("waveend", time)
 end
-<<<<<<< Updated upstream
-=======
 function GM:GetBalance()
 	return (self:GetRage() * self:GetWinRate()) * 0.005 + 0.01
 end
@@ -1039,7 +989,6 @@ function GM:SetWinRate(winrate)
 end
 
 
->>>>>>> Stashed changes
 
 function GM:GetWaveStart()
 	return GetGlobalFloat("wavestart", self.WaveZeroLength)
