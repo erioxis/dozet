@@ -204,7 +204,7 @@ local function InventoryAdd( item, category, i, self,custom, big)
 
 		itempan.Owner = self
 		itempan.Item = item
-		itempan.SWEP =  custom or GAMEMODE.ZSInventoryItemData[ item ]
+		itempan.SWEP =  custom or GAMEMODE.ZSInventoryItemData[ item ] or weapons.Get(item)
 		itempan.DoClick = ItemPanelDoClick
 		itempan.Category = category
 		itempan:Center()
@@ -216,7 +216,7 @@ local function InventoryAdd( item, category, i, self,custom, big)
 		desc:SetFont("ZSHUDFontTiny")
 		desc:SetWrap(true)
 
-		desc:SetText(itempan.SWEP.Description)
+		desc:SetText(itempan.SWEP.Description or "")
 
 		local mdlframe = vgui.Create("DPanel", itempan)
 		mdlframe:SizeToContents()
@@ -268,7 +268,7 @@ function GM:OpenBounty(table2)
 		return
 	end
 	for i=1,#table2 do
-		if GAMEMODE.ZSInventoryItemData[table2[i]] and GAMEMODE.ZSInventoryItemData[table2[i]].Bounty then
+		if GAMEMODE.ZSInventoryItemData[table2[i]] and GAMEMODE.ZSInventoryItemData[table2[i]].Bounty or weapons.Get(table2[i]) then
 			InventoryAdd(table2[i],INVCAT_TRINKETS,i,panel)
 		else
 			InventoryAdd("trinket_"..table2[i],INVCAT_TRINKETS,i,panel, false, big)

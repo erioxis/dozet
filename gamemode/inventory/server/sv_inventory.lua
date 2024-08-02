@@ -121,10 +121,15 @@ net.Receive("zs_bounty_add", function(len, pl)
 		pl:AddZSXP(3600,true)
 		return
 	end
-	pl:AddInventoryItem(item)
-	net.Start("zs_invitem")
-	net.WriteString(item)
-net.Send(pl)
+	if !weapons.Get(item) then
+		pl:AddInventoryItem(item)
+		net.Start("zs_invitem")
+		net.WriteString(item)
+	net.Send(pl)
+	else
+		pl:Give(item)
+	end
+	
 end)
 function GM:OnTrinketActivate(trinket, pl) 
 	pl.LastUsedTrinket = trinket

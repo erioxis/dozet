@@ -86,6 +86,9 @@ function ENT:DrawTranslucent()
 			else
 				draw.SimpleTextBlurry(translate.Get("empty"), "ZS3D2DFont", 0, 550, COLOR_RED, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 			end
+			if self:GetAlt() then
+				draw.SimpleTextBlurry(translate.Get('alter_mode'), "ZS3D2DFont", 0, 640, COLOR_GREEN, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+			end
 		cam.End3D2D()
 	end
 end

@@ -140,14 +140,14 @@ end
 local function SaveSkillLoadout(name)
 	for i, cart in ipairs(GAMEMODE.SavedSkillLoadouts) do
 		if string.lower(cart[1]) == string.lower(name) then
-			cart[1] = name  cart[2] = MySelf:GetDesiredActiveSkills()
+			cart[1] = name  cart[2][1] = MySelf:GetDesiredActiveSkills() cart[2][2] = MySelf:GetUnlockedSkills()
 			file.Write(GAMEMODE.SkillLoadoutsFile, Serialize(GAMEMODE.SavedSkillLoadouts))
 			
 			return
 		end
 	end
 	
-	GAMEMODE.SavedSkillLoadouts[#GAMEMODE.SavedSkillLoadouts + 1] = {name, MySelf:GetDesiredActiveSkills()}
+	GAMEMODE.SavedSkillLoadouts[#GAMEMODE.SavedSkillLoadouts + 1] = {name, {MySelf:GetDesiredActiveSkills(),MySelf:GetUnlockedSkills()}}
 	file.Write(GAMEMODE.SkillLoadoutsFile, Serialize(GAMEMODE.SavedSkillLoadouts))
 end
 
@@ -517,24 +517,29 @@ function PANEL:Init()
 	loadbtn.DoClick = function(me)
 		surface.PlaySound("zombiesurvival/ui/misc1.ogg")
 		
-		local newloadout, nlname
+		local newloadout, nlname, unlcoked
 		
 		for _, v in pairs(GAMEMODE.SavedSkillLoadouts) do
 			if v[1] == dropdown:GetSelected() then
-				newloadout = v[2]  nlname = v[1]
+				newloadout = v[2][1] unlcoked = v[2][2]  nlname = v[1]
 				
 				break
 			end
 		end
 		
 		if not newloadout then return end
-		
-		net.Start("zs_skill_set_desired")
+		for k,v in pairs(newloadout) do
+			newloadout[v] = true
+		end
+		net.Start("zs_skill_comeback")
+			net.WriteString('2')
+			net.WriteTable(unlcoked)
 			net.WriteTable(newloadout)
 		net.SendToServer()
 		
 		self:DisplayMessage(translate.Format("s_loadout",nlname), COLOR_GREEN)
 	end
+	
 	
 	local bottomlefttop = vgui.Create("DEXRoundedPanel", self)
 	bottomlefttop:DockPadding(10, 10, 10, 10)
@@ -1689,6 +1694,11 @@ function PANEL:Think()
 		if new_level ~= 1 and self.FirstLevelChange then
 			GAMEMODE:CenterNotify(translate.Format("you_ascended_to_level_x", new_level))
 			surface.PlaySound("weapons/physcannon/energy_disintegrate"..math.random(4, 5)..".wav")
+			for i=1,(new_level-self.PlayerLevel) do
+				net.Start('zs_autobuild')
+				net.WriteInt(i,32)
+				net.SendToServer()
+			end
 		else
 			self.FirstLevelChange = true
 		end

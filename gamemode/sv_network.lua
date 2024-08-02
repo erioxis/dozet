@@ -25,6 +25,10 @@
 	util.AddNetworkString("zs_skills_active_branch")
 	util.AddNetworkString("zs_admin_give_t")
 
+	util.AddNetworkString("zs_autobuild")
+
+	
+
 	
 
 	

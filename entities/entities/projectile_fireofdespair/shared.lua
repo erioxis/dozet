@@ -1,7 +1,7 @@
 ENT.Type = "anim"
 
 function ENT:ShouldNotCollide(ent)
-	return isplayer( ent )
+	return ent:IsPlayer()
 end
 
 function ENT:Initialize()

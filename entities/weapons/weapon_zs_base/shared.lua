@@ -220,7 +220,7 @@ function SWEP:GetCone()
 		return (basecone + conedelta * 0.5 ^ self.ConeRamp) * spreadmul * orphic
 	end
 
-	if not owner:OnGround() or self.ConeMax == basecone then return self.ConeMax * (self.ShotGunHeat and math.max(1,(3*math.Clamp(self:GetShotgunHeat()-CurTime(),0,1))) or 1) end
+	if not owner:OnGround() or self.ConeMax == basecone then return (self.ConeMax * (self.ShotGunHeat and math.max(1,(3*math.Clamp(self:GetShotgunHeat()-CurTime(),0,1))) or 1)) * spreadmul end
 
 	local multiplier = math.min(owner:GetVelocity():Length() / self.WalkSpeed, 1) * 0.5
 

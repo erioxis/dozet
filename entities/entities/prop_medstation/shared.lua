@@ -51,6 +51,21 @@ function ENT:GetAmmo()
 	return self:GetDTInt(0)
 end
 
+function ENT:SetAlt(boolean)
+	self:SetDTBool(0, boolean)
+end
+
+function ENT:GetAlt()
+	return self:GetDTBool(0)
+end
+
+
 function ENT:ClearObjectOwner()
 	self:SetObjectOwner(NULL)
+end
+function ENT:HitByWrench(wep, owner, tr)
+	if owner and owner == self:GetObjectOwner() and wep:GetBlockState() and wep:GetClass() == 'weapon_zs_wrench'  then
+		self:SetAlt(!self:GetAlt())
+	end
+	return false
 end

@@ -6,7 +6,7 @@ GM.mastery = {}
 
 -- No, adding a gun doesn't make your name worth being here.
 GM.Credits = {
-	{"Version", "", "10.1.3"},
+	{"Version", "", "10.1.4"},
 	{"Season of ", "", "Simulation leave"},
 	{"erioxis", "Phantom coder", "dead"},
 	{"Холодное Молочко(M-I-L-K-Y)", "Phantom coder", "dead"},
@@ -509,6 +509,7 @@ function GM:PrecacheResources()
 end
 
 function GM:ShouldCollide(enta, entb)
+	if enta.NoCollideFull or entb.NoCollideFull then return false end
 	local snca = enta.ShouldNotCollide
 	if snca and snca(enta, entb) then return false end
 

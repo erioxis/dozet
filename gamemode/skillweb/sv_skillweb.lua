@@ -194,7 +194,7 @@ net.Receive("zs_skill_comeback", function(length, pl)
 			if !GAMEMODE.Skills[v] or GAMEMODE.Skills[v].Hidden or GAMEMODE.Skills[v].Hidden1 then continue end
 			UnlockSkills(pl,v,GAMEMODE.Skills[v],war[v])--
 		end
-	elseif build ~= "1" then
+	elseif build ~= "1" and build ~= "2" then
 		local hih = table.Copy(builds)
 		local mda = hih[build]['Unlocked']
 		
@@ -211,8 +211,20 @@ net.Receive("zs_skill_comeback", function(length, pl)
 		for k,v in pairs(user) do
 			timer.Create(k..v.."skill222",0,4, function() UnlockSkills(pl,k,GAMEMODE.Skills[k],pleh[k]) end)
 		end
+	else
+		local tabled = net.ReadTable()
+		local tabled2 = net.ReadTable()
+		if tabled then
+			for k,v in ipairs(tabled) do
+				timer.Create(k..v.."skill222",0,2, function() if !UnlockSkills(pl,v,GAMEMODE.Skills[v],tabled2[v]) then
+					pl:AddLevelUp(v, tabled2[v])
+				end 
+			end)
+			end
+		end
 	end
 end)
+
 
 function GM:WriteSkillBits(t)
 	t = table.ToAssoc(t)

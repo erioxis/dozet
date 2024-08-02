@@ -38,7 +38,7 @@ end
 function ENT:HitByWrench(wep, owner, tr)
 	return true
 end
-
+local exlude = {["prop_physics"] = true ,["prop_physics_multiplayer"] = true}
 function ENT:ShouldNotCollide(ent)
-	return ent:IsPlayer() and ent:Team() == TEAM_HUMAN or ent:IsProjectile() or table.HasValue({"prop_physics","prop_physics_multiplayer"},ent:GetClass())
+	return ent:IsPlayer() and ent:Team() == TEAM_HUMAN or ent:IsProjectile() or exlude[ent:GetClass()]
 end

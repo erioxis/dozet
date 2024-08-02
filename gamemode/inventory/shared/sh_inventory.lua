@@ -45,6 +45,10 @@ function GM:GetInventoryItemType(item)
 	return -1
 end
 
+function GM:GetTrinketBaseName(item)  
+	return string.gsub(item, "_q%d$", "", 1) -- спасибо молочку за идею
+end 
+
 local index = 1
 function GM:AddInventoryItemData(intname, name, description, weles, tier, stocks, icon, bounty, b2)
 	local datatab = {PrintName = name, DroppedEles = weles, Tier = tier, Description = description, Stocks = stocks, Index = index, Icon = icon, Bounty = bounty, BountyNeed = b2}
@@ -384,6 +388,8 @@ GM:AddInventoryItemData("cons_starter_pack",		trs("c_starter_pack"),			trs("c_st
 		net.WriteTable(g)
 	net.Send(pl)
 end,0)
+
+
 GM:AddInventoryItemData("cons_wildcard",		trs("c_wildcard"),			trs("c_wildcard_d"),								"models/props_c17/trappropeller_lever.mdl", 4, nil, nil, function(pl) 
 	local lcall = pl.LastCall or "cons_void"
 	local callback = GAMEMODE.ZSInventoryItemData[lcall].Bounty

@@ -3076,6 +3076,7 @@ function GM:PlayerInitialSpawnRound(pl)
 	pl.Redeemedhaha = false
 
 	pl.CrowKills = 0
+	pl:StockLevelUp()
 	pl.GetBounty = nil
 	pl.MedicalBounty = 0
 	pl.CadersBounties = 0
@@ -6202,6 +6203,7 @@ function GM:WaveStateChanged(newstate, pl)
 							zarplataBlyad = zarplataBlyad + whywave*2
 						end
 					end
+					pl:AddPoints(zarplataBlyad)
 					net.Start( "zs_illegalmechanism" )
 						net.WriteInt(zarplataBlyad,16)
 					net.Send( pl )
@@ -6415,4 +6417,36 @@ net.Receive('zs_shield_abuse', function(len, sender)
 		local oldang  = field:GetAngles()
 		field:SetAngles(Angle(func == "x_yaw" and add or oldang.p,func == "y_yaw" and add or oldang.y, func == "z_yaw" and add or oldang.r))
 	end
+end)
+
+local function UnlockSkills(pl,skillid,skill,activate)
+	if skill and not pl:IsSkillUnlocked(skillid) and (pl:GetZSSPRemaining() >= 1 or skill.Amulet) and pl:SkillCanUnlock(skillid) and not skill.Disabled then
+		pl:SetSkillUnlocked(skillid, true)
+
+		local msg = translate.Get("skill_discover")..skill.Name
+		pl:CenterNotify(msg)
+		pl:PrintMessage(HUD_PRINTTALK, msg)
+
+		if activate then
+			pl:SetSkillDesired(skillid, true)
+		end
+		return true
+	end
+	return pl:IsSkillUnlocked(skillid) 
+end
+local function Checking(sender, id) 
+	if id > 25 then
+		return
+	end
+	local skill = sender.AutoBuildingLevel[id]
+	if skill and UnlockSkills(sender,skill[1],GAMEMODE.Skills[skill[1]],skill[2]) then
+		sender:RemoveLevelUp()
+	else
+		Checking(sender, id+1) 
+	end
+end
+net.Receive('zs_autobuild', function(len, sender)
+	if !sender or !sender:IsValid() then return end
+	local counts = net.ReadInt(32)
+	Checking(sender,counts)
 end)

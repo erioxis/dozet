@@ -50,7 +50,7 @@ function ENT:Hit(vHitPos, vHitNormal, eHitEntity)
 		effectdata:SetNormal(vHitNormal)
 	util.Effect("explosion_doomball", effectdata)
 
-	for i=1,15 do
+	for i=1,GAMEMODE:GetWave()*2 do
 		local ent = ents.Create('prop_glitch_crab')
 		if ent:IsValid() then
 			ent:SetPos(vHitPos)

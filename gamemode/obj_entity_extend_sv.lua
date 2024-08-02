@@ -835,7 +835,7 @@ GM.ProjectileThickness = 3
 
 function meta:ProjectileTraceAhead(phys)
 	if not self.Touched then
-		local human = self:GetOwner() == TEAM_HUMAN
+		local human = IsValid(self:GetOwner()) and self:GetOwner():Team() == TEAM_HUMAN
 		local vel = self.PreVel or phys:GetVelocity()
 		if self.PreVel then self.PreVel = nil end
 
@@ -863,7 +863,7 @@ function meta:ProjectileTraceAhead(phys)
 			if trace.Entity then
 				local ent = trace.Entity
 
-				if human and (ent:IsValidLivingZombie() or ent.ZombieConstruction) or ent:IsValidLivingHuman() then
+				if human and (ent:IsValidLivingZombie() or ent.ZombieConstruction) or !human and ent:IsValidLivingHuman() then
 					self.Touched = trace
 				end
 

@@ -603,7 +603,9 @@ function meta:DispatchTraceAttack(dmginfo, tr, dir)
 	if self.NoTraceAttack then
 		self:TakeDamageInfo(dmginfo)
 	else
-		OldDispatch(self, dmginfo, tr, dir)
+		if IsValid(self) then
+			OldDispatch(self, dmginfo, tr, dir)
+		end
 	end
 end
 

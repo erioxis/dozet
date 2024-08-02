@@ -1737,6 +1737,8 @@ LANGUAGE.new_f2                                 = "НОВОЕ!"
 LANGUAGE.promocode_added_in_cb = "Твой промокод (%s) добавлен в буфер обмена!"
 LANGUAGE.g2p_promo_self = "Свой промокод"
 
+LANGUAGE.alter_mode = "АЛЬТ.РЕЖИМ"
+
 LANGUAGE.s_unl_destroy = " успешно заблокирован!"
 
 LANGUAGE.bounty_1 = "3 случайных осколка души"

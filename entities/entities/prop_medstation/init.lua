@@ -129,7 +129,7 @@ function ENT:OnPackedUp(pl)
 
 	self:Remove()
 end
-
+ENT.NextStatus = 0
 function ENT:Think()
 	if self.Destroyed then
 		self:Remove()
@@ -143,6 +143,9 @@ function ENT:Think()
 	local owner = self:GetObjectOwner()
 	local totalheal = self.HealValue * (owner.MedicHealMul or 1)
 	local vPos = self:GetPos()
+	local alter = self:GetAlt()
+	local hihi = 0
+	local used = {}
 	local target, lowesthp = nil, 9999
 	for _, hitent in pairs(player.FindInSphere(pos, self.MaxDistance)) do
 		local p = hitent:GetPos()
@@ -152,6 +155,38 @@ function ENT:Think()
 				if hp < hitent:GetMaxHealth() and lowesthp > hp then
 					target, lowesthp = hitent, hp
 				end
+				if alter then
+					used[#used + 1] = hitent
+					hihi = hihi + 1
+					if hihi > 3 then
+						break 
+					end
+				end
+			end
+		elseif hitent:IsValidLivingZombie() and self.NextStatus < CurTime() then
+			timer.Simple(0, function() self.NextStatus = CurTime() + 2 end)
+			if alter then
+				hitent:GiveStatus('slow',3,owner)
+			else
+				hitent:GiveStatus('zombiestrdebuff',3,owner)
+			end
+		end
+	end
+	if alter then
+		totalheal = totalheal/(hihi+2)
+		for k,v in ipairs(used) do
+			v:EmitSound("npc/dog/dog_servo"..math.random(7, 8)..".wav", 70, math.random(100, 105))
+			
+			totalheal = owner:HealPlayer(v, totalheal)
+			local effectdata = EffectData()
+				effectdata:SetOrigin((v:NearestPoint(vPos) + v:WorldSpaceCenter()) / 2)
+				effectdata:SetEntity(v)
+			util.Effect("hit_healdart", effectdata, true, true)
+			self:SetAmmo(self:GetAmmo() - totalheal/2)
+			self:SetSequence(0)
+			count = count + 1
+			if owner ~= target then
+				owner.PointQueue = owner.PointQueue + 0.6
 			end
 		end
 	end
@@ -173,6 +208,7 @@ function ENT:Think()
 			owner.PointQueue = owner.PointQueue + 0.6
 		end
 	end
+
 
 	if count > 0 then
 		self:SetNextRepairPulse(CurTime() + 0.8)

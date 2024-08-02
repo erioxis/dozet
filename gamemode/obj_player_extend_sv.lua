@@ -2093,7 +2093,7 @@ function meta:TakePoints(points)
 end
 
 function meta:AddTokens(pts)
-	self:SetNWInt('btokens', self:GetTokens() + pts)
+	self:SetNWInt('btokens', self:GetTokens() + math.abs(pts))
 end
 
 function meta:TakeTokens(pts)
@@ -3171,4 +3171,28 @@ function meta:BarricadeExpertPrecedence(otherpl)
 	end
 
 	return -1
+end
+
+function meta:StockLevelUp()
+	self.AutoBuildingLevel = {}
+end
+function meta:AddLevelUp(skillid, bruh)
+	for k,v in pairs(self.AutoBuildingLevel) do
+		if v[1] == skillid and v[2] == bruh then
+			return
+		end
+	end
+	self.AutoBuildingLevel[#self.AutoBuildingLevel+1] = {skillid,bruh}
+end
+function meta:GetLevelUp()
+	return self.AutoBuildingLevel[#self.AutoBuildingLevel]
+end
+function meta:RemoveLevelUp()
+	local oldtable = table.Copy(self.AutoBuildingLevel)
+	for k,v in pairs(oldtable) do
+		self.AutoBuildingLevel[k] = nil
+		if k > 1 then
+			self.AutoBuildingLevel[k-1] = v
+		end
+	end
 end
